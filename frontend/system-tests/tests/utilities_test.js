@@ -496,7 +496,7 @@ describe.only('Test Suite: utilities_test for Additions/Modification/Deletion/Vi
             await driver.findElement(By.xpath("//oj-button[@id='[[i18n.buttons.save.id]]']/button/div/span/img")).click();
             await driver.sleep(2400);
             console.log("Click Home Image");
-            await driver.findElement(By.xpath("//span[starts-with(@id, 'home')]")).click();
+            await driver.findElement(By.xpath("//*[starts-with(@id, 'home')]")).click();
             await driver.sleep(4800);
             console.log("Click WDT Model Tree");
             await driver.findElement(By.xpath("//*[@id='modeling']/img")).click();
@@ -535,15 +535,15 @@ describe.only('Test Suite: utilities_test for Additions/Modification/Deletion/Vi
             await driver.sleep(2400);
             console.log("Click at 'test' Searches Node");
             await driver.findElement(
-                By.xpath("//span[text()='test']")).click();
+                By.xpath("//*[text()='test']")).click();
             await driver.sleep(2400);
-            driver.findElements(By.xpath("//td[text()='testJMSServer-1']")).then((elements) => {
+            driver.findElements(By.xpath("//*[text()='testJMSServer-1']")).then((elements) => {
                 if (elements.length > 0) {
                     console.log("Element testJMSServer-1 exit");
-                    console.log("Test PASS");
+                    console.log("TEST PASS");
                 } else {
                     console.log("Element testJMSServer-1 doesn't exit");
-                    console.log("Test FAIL");
+                    console.log("TEST FAIL");
                 }
             });
         } catch (e) {

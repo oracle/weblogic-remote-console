@@ -63,7 +63,7 @@ define([
                 ViewModelUtils.failureResponseDefaultHandling(response.failure);
               });
           };
-  
+
           setTimeout(onTimeout.bind(self, beanTree), 5);
         });
 
@@ -97,7 +97,17 @@ define([
 
         binding = viewParams.signaling.dataProviderRemoved.add((removedDataProvider) => {
           if (removedDataProvider.id === Runtime.getDataProviderId()) {
-            self.title.setEmpty();
+            if (CoreUtils.isNotUndefinedNorNull(removedDataProvider.domainStatus)) {
+              if (removedDataProvider.domainStatus.pollWhenQuiesced) {
+                self.title.setLabel(oj.Translations.getTranslatedString('wrc-content-area-header.title.home'));
+              }
+              else {
+                self.title.setEmpty();
+              }
+            }
+            else {
+              self.title.setEmpty();
+            }
           }
         });
 
@@ -137,7 +147,7 @@ define([
           onChangesDiscarded: discardChangeManagerChanges
         }
       });
-      
+
       this.beanPathHistoryIconModuleConfig = ModuleElementUtils.createConfig({
         name: 'content-area/header/beanpath-history-icon',
         params: {
@@ -145,7 +155,7 @@ define([
           signaling: viewParams.signaling
         }
       });
-      
+
       this.contentAreaHeaderIconbarModuleConfig = ModuleElementUtils.createConfig({
         name: 'content-area/header/header-iconbar',
         params: {
@@ -194,13 +204,13 @@ define([
               // Hide the "Dashboards" shortcut icon
               moduleConfig.viewModel.setShortcutIconVisibility('dashboards', false);
             });
-          
+
           self.shoppingCartMenuModuleConfig
             .then(moduleConfig => {
               // Hide the "Shopping Cart" menu launcher icon
               moduleConfig.viewModel.setIconbarIconVisibility('shoppingcart', false);
             });
-  
+
           self.beanPathHistoryIconModuleConfig
             .then(moduleConfig => {
               // Hide the "Bean Path History" icon

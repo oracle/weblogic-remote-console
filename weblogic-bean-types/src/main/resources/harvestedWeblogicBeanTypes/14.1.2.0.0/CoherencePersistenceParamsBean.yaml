@@ -1,0 +1,79 @@
+# Copyright (c) 2020, 2024, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.descriptor.SettableBean
+derivedTypes: [
+  ]
+descriptionHTML: 'Bean to override default Persistence environments in Coherence '
+name: weblogic.coherence.descriptor.wl.CoherencePersistenceParamsBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The active directory for the default persistence environment.
+    If no value is specified, the directory which will be used is the coherence/active
+    sub-directory under Domain Home directory. </p> '
+  name: ActiveDirectory
+  redeployNeeded: true
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The backup directory for the default persistence environment.
+    If no value is specified, the directory which will be used is the coherence/backup
+    sub-directory under Domain Home directory. </p> '
+  name: BackupDirectory
+  redeployNeeded: true
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: on-demand
+  descriptionHTML: '<p>The default persistence mode. </p> '
+  legalValues:
+  - on-demand
+  - active
+  - active-backup
+  - active-async
+  name: DefaultPersistenceMode
+  redeployNeeded: true
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The events directory for the default persistence environment
+    used to store durable events. If no value is specified, the directory which will
+    be used is the coherence/events sub-directory under Domain Home directory. </p> '
+  name: EventsDirectory
+  redeployNeeded: true
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The snapshot directory for the default persistence environment.
+    If no value is specified, the directory which will be used is coherence/snapshot
+    sub-directory under Domain Home directory. </p> '
+  name: SnapshotDirectory
+  redeployNeeded: true
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The trash directory for the default persistence environment.
+    If no value is specified, the directory which will be used is coherence/trash
+    sub-directory under Domain Home directory. </p> '
+  name: TrashDirectory
+  redeployNeeded: true
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+roles:
+  allowed:
+  - Deployer

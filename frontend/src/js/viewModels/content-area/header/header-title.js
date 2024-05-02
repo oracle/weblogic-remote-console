@@ -20,6 +20,14 @@ function (
 ) {
     function HeaderTitle() {
       this.i18n = {
+        'ariaLabel': {
+          'region': {
+            'value': oj.Translations.getTranslatedString('wrc-content-area-header.ariaLabel.region.title.value')
+          },
+          'popup': {
+            'value': oj.Translations.getTranslatedString('wrc-content-area-header.ariaLabel.popup.provider.value')
+          }
+        },
         'icons': {
           'info': {
             iconFile: 'data-providers-info-icon-brn_24x24', visible: ko.observable(true),
@@ -64,17 +72,6 @@ function (
       this.headerTitle.description(title.description);
       this.headerTitle.classList(title.classList);
       this.headerTitle.provider(title.provider);
-/*
-//MLW
-      These individual checks for undefined and null are not
-      needed, because the createEmptyTitle() function always
-      returns a title with defined and not null values.
-
-      if (CoreUtils.isNotUndefinedNorNull(title.label)) this.headerTitle.label(title.label);
-      if (CoreUtils.isNotUndefinedNorNull(title.description)) this.headerTitle.description(title.description);
-      if (CoreUtils.isNotUndefinedNorNull(title.classList)) this.headerTitle.classList(title.classList);
-      if (CoreUtils.isNotUndefinedNorNull(title.provider)) this.headerTitle.provider(title.provider);
- */
     }
 
     function createEmptyTitle() {
@@ -100,7 +97,7 @@ function (
         title.label = (['ancillary','home'].includes(beanTree.type) ? oj.Translations.getTranslatedString('wrc-content-area-header.title.home') : oj.Translations.getTranslatedString(`wrc-content-area-header.title.${beanTree.type}`));
         title.classList = 'cfe-provider-icon';
       }
- 
+
       if (CoreUtils.isNotUndefinedNorNull(beanTree.provider)) {
         title.label = `${title.label} (`;
         title['provider'] = {
@@ -142,6 +139,12 @@ function (
       change: function(beanTree) {
         const title = createTitle(beanTree);
         setTitle.call(this, title);
+      },
+      setLabel: function(label) {
+        if (typeof label === 'string') {
+          if (label.slice(-1) !== '(') label += ' (';
+          this.headerTitle.label(label);
+        }
       },
       setEmpty: function() {
         const title = createEmptyTitle();

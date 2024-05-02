@@ -1,0 +1,41 @@
+# Copyright (c) 2024, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: []
+baseTypes:
+- weblogic.management.deployment.DBean
+derivedTypes:
+- weblogic.management.descriptor.ProviderMessageDrivenDescriptorDBean
+- weblogic.management.descriptor.ResourceAdapterMessageDrivenDescriptorDBean
+name: weblogic.management.descriptor.MessageDrivenDescriptorDBean
+properties:
+- name: InitSuspendSeconds
+  type: int
+  descriptionHTML: >
+    <p>The initial number of seconds to suspend an MDB's JMS connection
+    when a JMS resource outage is detected.</p>
+    <p>The default value is 5.</p>
+  writable: true
+  defaultValue:
+    value:
+      value: 5
+- name: JmsPollingIntervalSeconds
+  type: int
+  descriptionHTML: >
+    <p>The number of seconds between each attempt by an MDB to reconnect
+    to either a JMS destination or Resource Adapter.</p>
+    <p>The default value is 10.</p>
+  writable: true
+  defaultValue:
+    value:
+      value: 10
+- name: MaxSuspendSeconds
+  type: int
+  descriptionHTML: >
+    <p>The maximum number of seconds to suspend an MDB's JMS connection
+    when a JMS resource outage is detected.</p>
+    <p>The default value is 60.</p>
+  writable: true
+  defaultValue:
+    value:
+      value: 60

@@ -1,0 +1,71 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.security.ImportMBean
+- weblogic.management.utils.NameListerMBean
+- weblogic.management.security.ExportMBean
+- weblogic.management.security.ProviderMBean
+derivedTypes:
+- weblogic.security.providers.saml.registry.SAMLRelyingPartyRegistryMBean
+- weblogic.security.providers.saml.registry.SAMLAssertingPartyRegistryMBean
+descriptionHTML: '<p>The SAMLPartnerRegistry is used manage a registry of SAML          partners
+  and associated trusted certificates that is stored          in the embedded LDAP
+  server.</p> '
+name: weblogic.security.providers.saml.registry.SAMLPartnerRegistryMBean
+properties:
+- defaultValue:
+    value:
+      value: SAMLPartnerRegistry
+  descriptionHTML: ' '
+  name: Name
+  type: java.lang.String
+- array: true
+  defaultValue:
+    value:
+      value:
+      - Partners
+      - Certificates
+      - Passwords
+  descriptionHTML: '<p>A SAML Partner Registry can export all partners, no partners,
+    only enabled partners,             only disabled partners or a list of partners.            It
+    can export all certificates, no certificates, only certificates referenced by
+    partners,             or a list of certificates.</p> '
+  name: SupportedExportConstraints
+  type: java.lang.String
+- array: true
+  defaultValue:
+    value:
+      value:
+      - XML Partner Registry
+      - JKS KeyStore
+      - LDIF Template
+  descriptionHTML: '<p>A SAML Partner Registry may be exported as an XML document.</p> '
+  name: SupportedExportFormats
+  type: java.lang.String
+- array: true
+  defaultValue:
+    value:
+      value:
+      - Partners
+      - Certificates
+      - ImportMode
+  descriptionHTML: '<p>A SAML Partner Registry can import all partners, no partners,
+    only enabled partners,             only disabled partners or a list of partners.            It
+    can import all certificates, no certificates, only certificates referenced by
+    partners,             or a list of certificates.                                The
+    import mode can be rename, replace or fail for conflict resolution.</p> '
+  name: SupportedImportConstraints
+  type: java.lang.String
+- array: true
+  defaultValue:
+    value:
+      value:
+      - XML Partner Registry
+      - JKS KeyStore
+  descriptionHTML: '<p>A SAML Partner Registry can import partner information and
+    certificates from an XML document.</p> '
+  name: SupportedImportFormats
+  type: java.lang.String

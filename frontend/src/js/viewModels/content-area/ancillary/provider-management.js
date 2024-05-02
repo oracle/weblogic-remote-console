@@ -255,6 +255,39 @@ define([
 
         self.signalBindings.push(binding);
 
+        binding = viewParams.signaling.adminServerShutdown.add(() => {
+          const dataProvider = DataProviderManager.getDataProviderById(Runtime.getDataProviderId());
+          if (CoreUtils.isNotUndefinedNorNull(dataProvider) &&
+            CoreUtils.isNotUndefinedNorNull(dataProvider.domainStatus)
+          ) {
+            if (dataProvider.domainStatus['pollWhenQuiesced'] === false) {
+              refreshDataProviders(self.project);
+              dataProvider.domainStatus['pollWhenQuiesced'] = true;
+            }
+            self.providersModuleConfig
+              .then(moduleConfig => {
+                moduleConfig.viewModel.onDeactivateDataProvider(dataProvider, 'deactivate')
+                  .then(reply => {
+                    if (dataProvider.type === DataProvider.prototype.Type.ADMINSERVER.name) {
+                      const messageLine = {
+                        messageHTML: oj.Translations.getTranslatedString('wrc-message-line.messages.adminServerShutdown.details'),
+                        severity: 'warning',
+                        pollWhenQuiesced: true
+                      };
+                      viewParams.signaling.domainStatusPollingCompleted.dispatch(messageLine);
+                    }
+                  })
+                  .catch(failure => {
+                    ViewModelUtils.failureResponseDefaultHandling(failure);
+                  });
+
+              });
+          }
+
+        });
+
+        self.signalBindings.push(binding);
+
         binding = viewParams.signaling.startupTaskChosen.add((startupTask) => {
           self.toolbarMoreMenuClickListener({
             currentTarget: {
@@ -307,21 +340,17 @@ define([
 
       this.onOjFocus = (event)=> {
         removeDialogResizableHandleNodes(event);
-        self.providersModuleConfig
-          .then(moduleConfig => {
-            // Refresh the providers oj-navigation-list
-            moduleConfig.viewModel.refreshConnectionsModels(self.project);
-            // Disable keyboard focus using the "Tab" key, on to all
-            // of the oj-label help.definition attributes. That is
-            // where we store field-level help in the "?" icons. We
-            // need to do this after JET has rendered the oj-label,
-            // because that is where it does the tabindex="0" behind
-            // the developer's back.
-            $('oj-label > div.oj-label-group > span > a').attr({'tabindex': '-1'});
-            // Trigger a focusin event, so the focus goes to the
-            // providers oj-navigation-list
-            $('#connections-models').trigger('focusin');
-          });
+        refreshDataProviders(self.project);
+        // Disable keyboard focus using the "Tab" key on all
+        // of the oj-label help.definition attributes. That is
+        // where we store field-level help in the "?" icons. We
+        // need to do this after JET has rendered the oj-label,
+        // because that is where it does the tabindex="0" under
+        // the covers.
+        $('oj-label > div.oj-label-group > span > a').attr({'tabindex': '-1'});
+        // Trigger a focusin event, so the focus goes to the
+        // providers oj-navigation-list
+        $('#connections-models').trigger('focusin');
       };
 
       this.onOjBeforeClose = function (event) {
@@ -447,7 +476,7 @@ define([
           chooser.val('');
         }
       };
-  
+
       function initializeDialogFields() {
         return {id: '0123456789012', name: '', type: DataProvider.prototype.Type.ADMINSERVER.name};
       }
@@ -630,6 +659,15 @@ define([
         return ConsoleProjectManager.removeById(self.project.id);
       }
 
+      function refreshDataProviders(project) {
+        self.providersModuleConfig
+          .then(moduleConfig => {
+            // Refresh the providers oj-navigation-list
+            moduleConfig.viewModel.refreshConnectionsModels(project);
+          });
+
+      }
+
       function performProjectElectronMenuAction(switching) {
         function switchToProject(project) {
           project = ConsoleProjectManager.createFromEntry(switching.to);
@@ -675,7 +713,7 @@ define([
           id: event.target.value,
           accepts: 'application/yaml,application/x-yaml,application/json,text/plain'
         };
-  
+
         switch(dialogParams.id) {
           case ProviderManagement.prototype.Actions.connections.add.id:
             viewParams.signaling.providerManagementActionChosen.dispatch(dialogParams.id, dialogParams, ProviderManagement.prototype.Actions);
@@ -876,7 +914,7 @@ define([
           }
         }
       }
-  
+
     }
 
     ProviderManagement.prototype.Actions = Object.freeze({

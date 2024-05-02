@@ -19,6 +19,7 @@ define(['ojs/ojresponsiveutils', 'ojs/ojresponsiveknockoututils', 'wrc-frontend/
     const MESSAGE_LINE_HEIGHt = 36;
     const RIGHT_PANEL_FIXED_MIN_WIDTH = parseInt(ViewModelUtils.getCustomCssProperty('form-container-fixed-min-width'), 10);
     const SPA_RESIZER_POSITION = [469];
+    const INFO_ICON_WIDTH = 46;
     const ONE_COLUMN_DIVISOR = 1.835;
     const TWO_COLUMN_DIVISOR = 3.68;
 
@@ -83,7 +84,6 @@ define(['ojs/ojresponsiveutils', 'ojs/ojresponsiveknockoututils', 'wrc-frontend/
         globalBody['observee'] = {};
         globalBody['observer'] = new ResizeObserver(entries => {
           for (const entry of entries) {
-//MLW            console.log(`entry.target.className=${entry.target.className}`);
             const key = (entry.target.className.includes('left_panel') ? 'left_panel' : entry.target.className);
             resizerData[key] = entry.contentRect;
           }
@@ -131,17 +131,16 @@ define(['ojs/ojresponsiveutils', 'ojs/ojresponsiveknockoututils', 'wrc-frontend/
       document.documentElement.style.setProperty('--content-area-body-toolbars-calc-max-width', `${maxWidthVariable}px`);
 
       maxWidthVariable = (resizerData.NAVSTRIP_WIDTH + resizerData.left_panel.width + resizerData.PANEL_RESIZER_WIDTH + LEFT_PANEL_MIN_WIDTH_MARGIN);
-      document.documentElement.style.setProperty('--instructions-calc-max-width', `${maxWidthVariable}px`);
+      document.documentElement.style.setProperty('--instructions-calc-max-width', `${maxWidthVariable + INFO_ICON_WIDTH}px`);
+      document.documentElement.style.setProperty('--introduction-calc-max-width', `${maxWidthVariable}px`);
       document.documentElement.style.setProperty('--content-area-body-content-calc-max-width', `${maxWidthVariable}px`);
 
       maxWidthVariable = (resizerData.NAVSTRIP_WIDTH + resizerData.left_panel.width + resizerData.PANEL_RESIZER_WIDTH + LEFT_PANEL_MIN_WIDTH_MARGIN);
       document.documentElement.style.setProperty('--table-container-calc-max-width', `${maxWidthVariable}px`);
 
-      maxWidthVariable = (resizerData.NAVSTRIP_WIDTH + resizerData.left_panel.width + resizerData.PANEL_RESIZER_WIDTH + RIGHT_PANEL_MIN_WIDTH_MARGIN);
-      document.documentElement.style.setProperty('--help-table-calc-min-width', `${maxWidthVariable}px`);
-
       maxWidthVariable = (resizerData.NAVSTRIP_WIDTH + resizerData.left_panel.width + resizerData.PANEL_RESIZER_WIDTH);
       document.documentElement.style.setProperty('--beanpath-history-container-calc-min-width', `${maxWidthVariable}px`);
+      document.documentElement.style.setProperty('--help-table-calc-min-width', `${maxWidthVariable}px`);
 
       maxWidthVariable = (resizerData['right_panel'].width);
       document.documentElement.style.setProperty('--textarea-resizable-both-calc-width', `${maxWidthVariable}px`);

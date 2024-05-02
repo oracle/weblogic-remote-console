@@ -1,0 +1,65 @@
+# Copyright (c) 2024, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: []
+baseTypes:
+- weblogic.management.deployment.DBean
+name: weblogic.management.descriptor.SessionDescriptorDBean
+# Can't just specify weblogic.j2ee.descriptor.wl.SessionDescriptorBean as a base type
+# since it @excludes all the properties.  Repeat them here instead:
+properties:
+- name: CookieMaxAgeSecs
+  type: int
+  descriptionHTML: >
+    <p>The life span of the session cookie (in seconds) after which it
+    expires on the client. This value can be set as any integer</p>
+    <p>The default value is -1 (unlimited).</p>
+  defaultValue:
+    value:
+      value: -1
+  writable: true
+- name: DebugEnabled
+  type: boolean
+  descriptionHTML: >
+    <p>Specifies whether to add JSP line numbers to generated class files to aid in debugging.</p>
+    <p>The default value is false.</p>
+  defaultValue:
+    value:
+      value: false
+  writable: true
+- name: InvalidationIntervalSecs
+  type: int
+  descriptionHTML: >
+    <p>The time (in seconds) that WebLogic Server waits between doing
+    house-cleaning checks for timed-out and invalid sessions, and deleting
+    the old sessions and freeing up memory.</p>
+    <p>The default value is 60.</p>
+  defaultValue:
+    value:
+      value: 60
+  writable: true
+- name: MaxInMemorySessions
+  type: int
+  descriptionHTML: >
+    <p>The maximum number of sessions to retain in memory.</p>
+    <p>The default value -1 (unlimited).  Any negative value works the same as -1.</p>
+  defaultValue:
+    value:
+      value: -1
+  writable: true
+- name: MonitoringAttributeName
+  type: java.lang.String
+  descriptionHTML: >
+    The monitoring attribute.
+  writable: true
+- name: TimeoutSecs
+  type: int
+  descriptionHTML: >
+    <p>The amount of time (in seconds) that a session can remain inactive
+    before it is invalidated. This value has a lower precedence than the
+    timeout value set in web.xml.</p>
+    <p>The default value is 3600.</p>
+  defaultValue:
+    value:
+      value: 3600
+  writable: true

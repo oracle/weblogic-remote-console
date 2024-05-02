@@ -1,0 +1,42 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.runtime.RuntimeMBean
+derivedTypes: [
+  ]
+descriptionHTML: '<p>This MBean provides deployment operations for a library..</p> '
+name: weblogic.management.runtime.LibDeploymentRuntimeMBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The library''s implementation version, null if none is set</p> '
+  name: ImplementationVersion
+  type: java.lang.String
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The library''s identifier.</p> '
+  name: LibraryIdentifier
+  type: java.lang.String
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The library''s name.</p> '
+  name: LibraryName
+  type: java.lang.String
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The name of the partition the library is in.</p> '
+  excludeFromRest: ' '
+  name: PartitionName
+  supported: false
+  type: java.lang.String
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The library''s specification version, null if none is set</p> '
+  name: SpecificationVersion
+  type: java.lang.String
+roles:
+  allowed:
+  - Deployer

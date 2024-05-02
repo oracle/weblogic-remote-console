@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2021, 2023, Oracle and/or its affiliates.
+ * Copyright (c) 2021, 2024, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
@@ -19,7 +19,7 @@ define(['js-yaml', 'wrc-frontend/microservices/common/id-generator', './data-pro
     function addDataProvider(entry) {
       let newDataProvider;
       if (CoreUtils.isNotUndefinedNorNull(entry) && CoreUtils.isNotUndefinedNorNull(entry.id)) {
-        const index = dataproviders.map(dataProvider => dataProvider.id).indexOf(entry.id);
+        const index = dataproviders.findIndex(dataProvider => dataProvider.id === entry.id);
         if (index === -1) {
           // This means that there was no match on entry.id
           // or entry.name, so create a new data provider and
@@ -39,7 +39,7 @@ define(['js-yaml', 'wrc-frontend/microservices/common/id-generator', './data-pro
 
     function removeDataProviderById(id) {
       if (CoreUtils.isNotUndefinedNorNull(id)) {
-        const index = dataproviders.map(dataProvider => dataProvider.id).indexOf(id);
+        const index = dataproviders.findIndex(dataProvider => dataProvider.id === id);
         if (index !== -1) {
           clearRunningTimer(dataproviders[index]);
           dataproviders[index].removeStatus();
@@ -804,7 +804,7 @@ define(['js-yaml', 'wrc-frontend/microservices/common/id-generator', './data-pro
           this.listDataProviders()
             .then(reply => {
               reply.body.data.forEach((listItem) => {
-                const index = dataproviders.map(item => item.id).indexOf(listItem.id);
+                const index = dataproviders.findIndex(item => item.id === listItem.id);
                 if (index !== -1) {
                   listItem.state = listItem.state || CoreTypes.Domain.ConnectState.DISCONNECTED.name;
                   dataproviders[index].putValue('state', listItem.state);

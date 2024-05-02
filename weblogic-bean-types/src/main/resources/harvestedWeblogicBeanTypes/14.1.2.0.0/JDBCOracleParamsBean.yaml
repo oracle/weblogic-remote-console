@@ -1,0 +1,182 @@
+# Copyright (c) 2020, 2024, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.descriptor.SettableBean
+derivedTypes: [
+  ]
+descriptionHTML: 'Contains the Oracle database-related parameters of a data source.  <p>
+  Configuration parameters for a data source''s Oracle-specific behavior are specified
+  using a Oracle parameters bean. </p> '
+name: weblogic.j2ee.descriptor.wl.JDBCOracleParamsBean
+properties:
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: 'Indicates a configured Active GridLink datasource. This attributed
+    is set to <code>true</code> when using the console to create an Active GridLink
+    datasource. It is ignored if FanEnabled is <code>true</code> or OnsNodeList is
+    a non-null string. '
+  name: ActiveGridlink
+  redeployNeeded: true
+  restartNeeded: true
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: Session
+  descriptionHTML: '<p>Specifies the affinity policy for the datasource.</p> Options
+    include: <ul> <li>Transaction: Transaction affinity</li> <li>Session: Web-session
+    affinity</li> <li>Data: Data affinity</li> </ul> The default value is Session. '
+  legalValues:
+  - Transaction
+  - Session
+  - Data
+  - None
+  name: AffinityPolicy
+  redeployNeeded: true
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The name of the Connection Initialization Callback class. </p>
+    <p>This name is automatically passed to <code>registerConnectionInitializationCallback</code>
+    when a data source is created. The class must implement <code>oracle.ucp.jdbc.ConnectionInitializationCallback</code>.</p> '
+  name: ConnectionInitializationCallback
+  redeployNeeded: true
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Enables the data source to subscribe to and process Oracle
+    FAN events.</p>  <p>This attribute is only applicable for RAC configurations that
+    publish FAN notification events using the ONS protocol.</p> '
+  name: FanEnabled
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>A comma-separate list of ONS daemon listen addresses and ports
+    to which connect to for receiving ONS-based FAN events. It is required when connecting
+    to Oracle 11g databases and optional when connecting to Oracle database releases
+    12c and higher.</p> '
+  name: OnsNodeList
+  redeployNeeded: true
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The location of the Oracle wallet file in which the SSL certificates
+    are stored. Only required when the ONS client is configured to communicate with
+    ONS daemons using SSL.</p> '
+  name: OnsWalletFile
+  redeployNeeded: true
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The wallet password attribute that is included as part of the
+    ONS client configuration string. This attribute is only required when ONS is configured
+    to use the SSL protocol.</p>  <p>The value is stored in an encrypted form in the
+    descriptor file and when displayed in an administration console.</p> '
+  encrypted: true
+  getRoles:
+    allowed:
+    - Deployer
+  name: OnsWalletPassword
+  redeployNeeded: true
+  restartNeeded: true
+  setRoles:
+    allowed:
+    - Deployer
+  transient: true
+  type: java.lang.String
+  writable: true
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: '<p>The encrypted database password as set with <code>setOnsWalletPassword()</code>,
+    or with <code>setOnsWalletPasswordEncrypted(byte[] bytes)</code>.</p> '
+  encrypted: true
+  getRoles:
+    allowed:
+    - Deployer
+  name: OnsWalletPasswordEncrypted
+  redeployNeeded: true
+  restartNeeded: true
+  type: byte
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  deprecated: '12.2.1.3.1 '
+  descriptionHTML: '<p>This option no longer does anything.</p> '
+  name: OracleEnableJavaNetFastPath
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue:
+    derivedDefault: true
+  deprecated: '14.1.2.0.0 '
+  descriptionHTML: '<p>Enables the Oracle JDBC optimize UTF-8 conversion option (no
+    longer supported).</p> '
+  name: OracleOptimizeUtf8Conversion
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Enables Oracle JDBC Proxy Authentication.</p>  <ul> <li>Only
+    applicable for the Oracle driver.</li> <li>Requires WebLogic Server user IDs are
+    mapped to database user IDs using credential mapping.</li> </ul> '
+  name: OracleProxySession
+  redeployNeeded: true
+  restartNeeded: true
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: true
+  descriptionHTML: 'Rebalancing connections incurs overhead due to connection creation
+    to the new instance, and the closing of connections to existing instances, which
+    may impact application performance under load, cause database logon storms, etc.
+    When the value is set to false, connections to existing instances are preserved
+    and new connections are distributed across running instances as necessary. '
+  name: RebalanceOnUpEvent
+  redeployNeeded: true
+  restartNeeded: true
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: 3600
+  descriptionHTML: '<p>The amount of time, in seconds, a data source allows for Application
+    Continuity replay processing before timing out and ending a replay session context.</p>
+    <ul> <li>When set to zero (0) seconds, replay processing (failover) is disabled,
+    although begin/endRequest are still called. You can use this for collecting coverage
+    and measuring performance.</li> <li>The default value is 3600 seconds.</li> <li>See
+    <code>oracle.ucp.jdbc.ConnectionInitializationCallback</code>.</li></ul> '
+  name: ReplayInitiationTimeout
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>If enabled, Oracle database credentials are used in getConnection
+    instead of application server credentials. The database credentials are used to
+    get a proxy session without requiring any work in the credential mapper.</p> '
+  name: UseDatabaseCredentials
+  redeployNeeded: true
+  restartNeeded: true
+  type: boolean
+  writable: true
+roles:
+  allowed:
+  - Deployer

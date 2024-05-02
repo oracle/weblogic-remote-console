@@ -1,4 +1,4 @@
-// Copyright (c) 2021, 2023, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2024, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.webapp;
@@ -104,9 +104,10 @@ public class GetPageResponseMapper extends ResponseMapper<Page> {
     for (TableRow tableRowValues : table.getRows()) {
       builder.add(tableRowToJson(tableRowValues));
     }
-    BeanTreePath btp = getPage().getSelf();
-    if (btp.isCollection()) {
-      getEntityBuilder().add("deletable", btp.isDeletable());
+    String kind = getPage().getBeanTreePathKind();
+    if (getInvocationContext().getBeanTreePath().isCollection()) {
+      boolean deletable = ("creatableCollection".equals(kind) || "deletableCollection".equals(kind));
+      getEntityBuilder().add("deletable", deletable);
     }
     getEntityBuilder().add("data", builder);
   }
@@ -177,7 +178,7 @@ public class GetPageResponseMapper extends ResponseMapper<Page> {
           pagePath.getRDJQueryParams()
         ).asJsonObject()
       );
-    String kind = getBeanTreePathKind(btp);
+    String kind = getPage().getBeanTreePathKind();
     if (kind != null) {
       // This is a kind the CFE needs to know about
       builder.add("kind", kind);
@@ -222,27 +223,6 @@ public class GetPageResponseMapper extends ResponseMapper<Page> {
 
   private String computeCustomFilteringDashboardCreateFormQueryParams(BeanTreePath btp) {
     return "?view=createForm&" + FilteringDashboardDefManager.computePathQueryParam(btp);
-  }
-
-  private String getBeanTreePathKind(BeanTreePath btp) {
-    if (btp.isOptionalSingleton()) {
-      if (btp.isCreatable()) {
-        return "creatableOptionalSingleton";
-      }
-      if (btp.isDeletable()) {
-        return "deletableOptionalSingleton";
-      }
-      return "nonCreatableOptionalSingleton";
-    } else if (btp.isCollection()) {
-      if (btp.isCreatable()) {
-        return "creatableCollection";
-      }
-      if (btp.isDeletable()) {
-        return "deletableCollection";
-      }
-      return "nonCreatableCollection";
-    }
-    return null; // This isn't a kind the CFE needs to know about today
   }
 
   private void addBreadCrumbs() {

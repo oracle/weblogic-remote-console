@@ -1,0 +1,76 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.j2ee.descriptor.wl.DestinationBean
+derivedTypes:
+- weblogic.j2ee.descriptor.wl.UniformDistributedTopicBean
+descriptionHTML: '<p>Topics are used for asynchronous peer communications.  A message
+  delivered to a topic will be distributed to all topic consumers.  Several aspects
+  of a topics behavior can be configured with a topic bean.</p> '
+name: weblogic.j2ee.descriptor.wl.TopicBean
+properties:
+- defaultValue:
+    value:
+      value: Replicated
+  descriptionHTML: '<p> The uniform distributed topic message Forwarding Policy specifies
+    whether a sent message is forwarded to all members. </p>  <p>The valid values
+    are:</p> <ul> <li><b>Replicated</b> - The default. All physical topic members
+    receive each sent message. If a message arrives at one of the physical topic members,
+    a copy of this message is forwarded to the other members of that uniform distributed
+    topic. A subscription on any one particular member will get a copy of any message
+    sent to the uniform distributed topic logical name or to any particular uniform
+    distributed topic member.</li>  <li><b>Partitioned</b> - The physical member receiving
+    the message is the only member of the uniform distributed topic that is aware
+    of the message. When a message is published to the logical name of a Partitioned
+    uniform distributed topic, it will only arrive on one particular physical topic
+    member. Once a message arrives on a physical topic member, the message is not
+    forwarded to the rest of the members of the uniform distributed destination, and
+    subscribers on other physical topic members do not get a copy of that message.
+    The Partitioned capability was added in WebLogic 10.3.4 (11gR1PS3).</li> </ul>
+    <p>A publisher that uses a logical JNDI name of a Replicated distributed topic
+    is created on one member and every send call  publishes messages to the same member
+    regardless the value of the <code>Load Balancing Enabled</code> attribute. This
+    is behavior is backward compatible with previous WebLogic Server releases when
+    using a uniform distributed topic. Under the same conditions, a Partitioned distributed
+    topic publishes to the same member only when the value of the <code>Load Balancing
+    Enabled</code> attribute is set to false. If the value of the <code>Load Balancing
+    Enabled</code> attribute is to true, a publisher to a Partitioned distributed
+    topic publishes messages that are load balanced accross all the members of the
+    uniform distributed topic. </p>  <p>Most new applications will use the new Partitioned
+    forwarding policy in combination with a logical subscription topology on a uniform
+    distributed topic that consists of: (1) a same named physical subscription created
+    directly on each physical member, (2) a Client ID Policy of Unrestricted, and
+    (3) a Subscription Sharing Policy of <code>Sharable</code>. WL 10.3.4 Message
+    Driven Beans (MDBs) provides a Topic Messages Distribution Mode option to automatically
+    setup this kind of topology.</p>  <p> Note: This attribute is ignored by standalone/singleton
+    Topics, it only applies to distributed topics. </p> '
+  legalValues:
+  - Partitioned
+  - Replicated
+  name: ForwardingPolicy
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Gets the multicast parameters for this destination.</p>  <p>
+    Topics with certain quality of service allowments can receive a signifigant performance
+    boost by using multicast to receive messages rather than using a connection oriented
+    protocol like TCP.  These parameters can be configured with the bean returned.
+    </p> '
+  name: Multicast
+  relationship: containment
+  type: weblogic.j2ee.descriptor.wl.MulticastParamsBean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Gets the subscription parameters for this topic.</p>  <p><code>TopicSubscriptionParamsBean</code>
+    specifies topic subscription parameters.</p> '
+  name: TopicSubscriptionParams
+  relationship: containment
+  type: weblogic.j2ee.descriptor.wl.TopicSubscriptionParamsBean
+roles:
+  allowed:
+  - Deployer

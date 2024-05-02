@@ -1,0 +1,22 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.configuration.DeploymentMBean
+derivedTypes:
+- weblogic.management.configuration.MailSessionMBean
+descriptionHTML: 'Represents a Java EE resource manager connection factory in a Java
+  EE app. MBeans for resource manager connection factories extend this interface.
+  For example, a MailSessionMBean. '
+name: weblogic.management.configuration.RMCFactoryMBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The JNDI Name associated with this resource.</p> '
+  name: JNDIName
+  nullable: true
+  restartNeeded: true
+  type: java.lang.String
+  writable: true

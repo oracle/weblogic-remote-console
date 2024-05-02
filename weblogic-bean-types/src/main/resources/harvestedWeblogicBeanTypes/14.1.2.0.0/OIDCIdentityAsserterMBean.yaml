@@ -1,0 +1,110 @@
+# Copyright (c) 2020, 2024, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.security.authentication.IdentityAsserterMBean
+- weblogic.management.security.authentication.IdentityDomainAuthenticatorMBean
+- weblogic.management.security.authentication.ServletAuthenticationFilterMBean
+derivedTypes: [
+  ]
+descriptionHTML: '<p>The MBean that represents configuration atrributes for the WebLogic                   OpenID
+  Connect Identity Assertion provider.                   The WebLogic OpenID Connect
+  Identity Assertion provider supports identity assertion                   using
+  OIDC tokens from the OpenID Connect 1.0 on top of OAuth 2.0 protocol. The                   provider
+  supports the identity assertion using the ID tokens                   granted from
+  the OIDC Provider (OP).</p> '
+name: weblogic.security.providers.authentication.OIDCIdentityAsserterMBean
+properties:
+- array: true
+  defaultValue:
+    value:
+      value:
+      - oidc_token
+  descriptionHTML: '<p>The token types that are currently active.</p> '
+  name: ActiveTypes
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: 120
+  descriptionHTML: '<p>The allowable variance, in seconds, for the token Expiration,
+    Issued At, and Not Before attributes.</p> '
+  name: ClockSkew
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: WebLogic OpenID Connect Identity Assertion provider
+  descriptionHTML: '<p>A short description of the WebLogic OpenID Connect Identity
+    Assertion provider.</p> '
+  name: Description
+  type: java.lang.String
+- defaultValue:
+    value:
+      value: 10
+  descriptionHTML: '<p>Specifies the maximum number of entries to OIDC JWKS cache.</p> '
+  name: KeyCacheSize
+  type: java.lang.Integer
+  writable: true
+- defaultValue:
+    value:
+      value: 300
+  descriptionHTML: '<p>The time-to-live (TTL) of the OIDC JWKS cache, in seconds.</p> '
+  name: KeyCacheTTL
+  type: java.lang.Integer
+  writable: true
+- defaultValue:
+    value:
+      value: OIDCIdentityAsserter
+  descriptionHTML: ' '
+  name: Name
+  type: java.lang.String
+- defaultValue:
+    value:
+      value: weblogic.security.providers.authentication.OIDCIdentityAsserterProviderImpl
+  descriptionHTML: '<p>The name of the Java class used to load the WebLogic OpenID
+    Connect Identity Assertion provider.</p> '
+  name: ProviderClassName
+  type: java.lang.String
+- defaultValue:
+    value:
+      value: 500
+  descriptionHTML: '<p>Specifies the maximum number of entries to OIDC request holder
+    cache.</p> '
+  name: RequestCacheSize
+  type: java.lang.Integer
+  writable: true
+- defaultValue:
+    value:
+      value: 300
+  descriptionHTML: '<p>The time-to-live (TTL) of the OIDC request holder cache, in
+    seconds.</p> '
+  name: RequestCacheTTL
+  type: java.lang.Integer
+  writable: true
+- array: true
+  defaultValue:
+    value:
+      value:
+      - oidc_token
+  descriptionHTML: '<p>The types of tokens supported by the OpenID Connect provider.</p> '
+  name: SupportedTypes
+  type: java.lang.String
+- defaultValue:
+    value:
+      value: '1.0'
+  descriptionHTML: '<p>The version number of the WebLogic OpenID Connect Identity
+    Assertion provider.</p> '
+  name: Version
+  type: java.lang.String
+- defaultValue:
+    value:
+      value: true
+  descriptionHTML: '<p>Determines whether to allow identity assertion to authenticate
+    WebLogic Server users who are not represented in the security store.</p> '
+  name: VirtualUserAllowed
+  type: boolean
+  writable: true

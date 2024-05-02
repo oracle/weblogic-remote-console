@@ -1,0 +1,47 @@
+# Copyright (c) 2024, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: []
+baseTypes:
+- weblogic.management.deployment.DBean
+name: weblogic.management.descriptor.JspDescriptorDBean
+properties:
+- name: Keepgenerated
+  type: boolean
+  descriptionHTML: >
+    <p>Specifies whether to save the Java files that are generated as an
+    intermediary step in the JSP compilation process.</p>
+    <p>The default value is -1.</p>
+  defaultValue:
+    value:
+      value: false
+  writable: true
+- name: PageCheckSeconds
+  type: int
+  descriptionHTML: >
+    <p>The interval (in seconds) at which WebLogic Server checks to see if
+    JSP files have changed and need recompiling.</p>
+    <ul>
+      <li>The value -1 means never check the pages. This is the default
+      value in production environments.</li>
+      <li>The value 0 means always check the pages.</li>
+      <li>The value 1 means check the pages every second. This is the
+      default value in development environments.</li>
+    </ul>
+  defaultValue:
+    productionModeValue:
+      value: -1
+    value:
+      value: 1
+  writable: true
+- name: Verbose
+  type: boolean
+  descriptionHTML: >
+    <p>Specifies whether to print debugging info to the browser during compilation.</p>
+    <p>The default value is false in production environments and true in development environments.</p>
+  defaultValue:
+    productionModeValue:
+      value: false
+    value:
+      value: true
+  writable: true

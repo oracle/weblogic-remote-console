@@ -1,4 +1,4 @@
-// Copyright (c) 2020, 2021, Oracle Corporation and/or its affiliates.
+// Copyright (c) 2020, 2024, Oracle Corporation and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.filter;
@@ -18,7 +18,7 @@ public class ClientAuthFeature implements Feature {
    *
    * @return JAX-RS Feature
    */
-  public static Feature authorization(String authHeader) {
+  public static Feature authorization(ClientAuthHeader authHeader) {
     return new ClientAuthFeature(authHeader);
   }
 
@@ -27,7 +27,7 @@ public class ClientAuthFeature implements Feature {
    *
    * @param authHeader The HTTP Authorization header value
    */
-  ClientAuthFeature(String authHeader) {
+  ClientAuthFeature(ClientAuthHeader authHeader) {
     this.filter = new ClientAuthFilter(authHeader);
   }
 

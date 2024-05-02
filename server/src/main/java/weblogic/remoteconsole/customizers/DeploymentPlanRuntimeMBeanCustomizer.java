@@ -1,4 +1,4 @@
-// Copyright (c) 2023, Oracle and/or its affiliates.
+// Copyright (c) 2023, 2024, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.customizers;
@@ -67,6 +67,7 @@ public class DeploymentPlanRuntimeMBeanCustomizer {
     Path wlsPath = new Path("domainRuntime.deploymentManager");
     wlsPath.addComponent(isApp ? "appDeploymentRuntimes" : "libDeploymentRuntimes");
     wlsPath.addComponent(deployment);
+    wlsPath.addComponent("configuration");
     wlsPath.addComponent("deploymentPlan");
     JsonObjectBuilder args = Json.createObjectBuilder();
     args.add("deploymentPlan", planXml);
@@ -95,11 +96,12 @@ public class DeploymentPlanRuntimeMBeanCustomizer {
     // Use the WLS REST api directly to set the value / operation
     // since the domain runtime bean repo is read-only.
     // The bean tree path is
-    //   DomainRuntime/DeploymentManager/AppDeploymentRuntimes/<app>/DeploymentPlan
+    //   DomainRuntime/DeploymentManager/AppDeploymentRuntimes/<app>/Configuration/DeploymentPlan
     String appName = ic.getBeanTreePath().getPath().getComponents().get(3);
     String varAssignmentName = ic.getIdentifier();
     Path wlsRestPath = new Path("domainRuntime.deploymentManager.appDeploymentRuntimes");
     wlsRestPath.addComponent(appName);
+    wlsRestPath.addComponent("configuration");
     wlsRestPath.addComponent("deploymentPlan");
     wlsRestPath.addComponent("variableAssignments");
     wlsRestPath.addComponent(varAssignmentName);

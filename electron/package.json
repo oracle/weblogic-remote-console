@@ -2,14 +2,15 @@
   "name": "weblogic-remote-console",
   "productName": "WebLogic Remote Console",
   "homepage": "https://github.com/oracle/weblogic-remote-console",
-  "version": "2.4.8",
+  "version": "2.4.9",
   "main": "app/main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "electron . dev",
     "pack": "electron-builder --dir",
     "dist": "electron-builder -p never",
-    "eslint": "node_modules/eslint/bin/eslint.js  -f compact app/*.js app/js/*.js"
+    "eslint": "node_modules/eslint/bin/eslint.js  -f compact app/*.js app/js/*.js",
+    "eslint-wib": "node_modules\\.bin\\eslint  -f compact app/*.js app/js/*.js"
   },
   "repository": {
     "type": "git",

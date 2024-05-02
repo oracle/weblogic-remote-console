@@ -1,0 +1,16 @@
+# Copyright (c) 2024, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+createResourceMethod: weblogic.remoteconsole.customizers.DescriptorBeanCustomizer.createResource
+
+editable: true
+disableMBeanJavadoc: true
+supportsFilteringDashboards: false
+
+properties:
+- name: Name
+  helpHTML: The environment entry's name.
+- name: EnvEntryType
+  label: Type
+- name: EnvEntryValue
+  label: Value

@@ -1,7 +1,7 @@
 /*! Copyright (c) 2020, 2024, Oracle and/or its affiliates. All rights reserved. */
 
 :root {
-    --wdt-model-designer-content-offset-width: 1060;
+    --wdt-model-designer-content-offset-width: 1070;
 }
 
 wdt-model-designer:not(.oj-complete){

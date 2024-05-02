@@ -1,5 +1,7 @@
 # Copyright (c) 2020, 2024, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+# TODO: Should  add the new properties for upload case only if the extension supports uploadAndDeploy
 introductionHTML: Create a new Application Deployment
 sections:
 - properties:
@@ -41,44 +43,25 @@ sections:
       type: java.io.InputStream
       writable: true
       descriptionHTML: "Select the deployment plan document to upload to the Administration Server and deploy."
-  - name: StartApplicationUpload
-    label: Start Application
-    required: false
-    definition:
-      name: StartApplicationUpload
-      type: boolean
-      writable: false
-      defaultValue:
-        value:
-          value: true
-      descriptionHTML: "Application starts immediately upon deployment."
-
-- usedIf:
-    property: Upload
-    values:
-    - false
-  properties:
-  - name: SourcePath
-  - name: PlanPath
-  - name: NonNullStagingMode
+  - name: StageModeUpload
     label: "Staging Mode"
     legalValues:
-    - value: "default"
-      label: "Default"
-    - value: "nostage"
-      label: "No Stage"
-    - value: "stage"
-      label: "Stage"
-    - value: "external_stage"
-      label: "External Stage"
+      - value: "default"
+        label: "Default"
+      - value: "nostage"
+        label: "No Stage"
+      - value: "stage"
+        label: "Stage"
+      - value: "external_stage"
+        label: "External Stage"
     definition:
-      name: NonNullStagingMode
+      name: StageModeUpload
       type: java.lang.String
       legalValues:
-      - "default"
-      - "nostage"
-      - "stage"
-      - "external_stage"
+        - "default"
+        - "nostage"
+        - "stage"
+        - "external_stage"
       writable: true
       defaultValue:
         value:
@@ -90,7 +73,64 @@ sections:
          set, it cannot be changed while the application is configured in the domain. The
          only way to change the staging mode is to undeploy and then redeploy the application.</p>
        <p>This attribute overrides the server''s staging mode. </p> '
-
+  - name: OnDeploymentUpload
+    label: On Deployment
+    legalValues:
+      - value: "doNotStart"
+        label: "Do not start application"
+      - value: "start"
+        label: "Start Application"
+      - value: "startInAdminMode"
+        label: "Start application in admin mode (only services admin requests)"
+    definition:
+      name: OnDeploymentUpload
+      type: java.lang.String
+      legalValues:
+        - "doNotStart"
+        - "start"
+        - "startInAdminMode"
+      writable: true
+      defaultValue:
+        value:
+          value: "doNotStart"
+      descriptionHTML: 'Start the application on deployment.'
+- usedIf:
+    property: Upload
+    values:
+    - false
+  properties:
+  - name: SourcePath
+  - name: PlanPath
+  - name: StageMode
+    label: "Staging Mode"
+    legalValues:
+      - value: "default"
+        label: "Default"
+      - value: "nostage"
+        label: "No Stage"
+      - value: "stage"
+        label: "Stage"
+      - value: "external_stage"
+        label: "External Stage"
+    definition:
+      name: StageMode
+      type: java.lang.String
+      legalValues:
+        - "default"
+        - "nostage"
+        - "stage"
+        - "external_stage"
+      writable: true
+      defaultValue:
+        value:
+          value: "default"
+      descriptionHTML: '<p>Specifies whether a deployment''s files are copied from a source
+         on the Administration Server to the Managed Server''s staging area during application
+         preparation. </p> <p>Staging mode for an application can only be set the first
+         time the application is deployed. Once the staging mode for an application is
+         set, it cannot be changed while the application is configured in the domain. The
+         only way to change the staging mode is to undeploy and then redeploy the application.</p>
+       <p>This attribute overrides the server''s staging mode. </p> '
   - name: OnDeployment
     legalValues:
       - value: "doNotStart"

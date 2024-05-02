@@ -51,12 +51,6 @@ define([
               id: 'view-alerts', iconFile: '', disabled: false,
               value: oj.Translations.getTranslatedString('wrc-alerts.menus.alerts.view.value')
             }
-          },
-          'labels': {
-            'alerts': {
-              'singular': {value: oj.Translations.getTranslatedString('wrc-alerts.labels.alerts.singular.value')},
-              'plural': {value: oj.Translations.getTranslatedString('wrc-alerts.labels.alerts.plural.value')}
-            }
           }
         }
       };
@@ -137,21 +131,14 @@ define([
         event.preventDefault();
     
         const beanTree = getBeanTree('monitoring');
-    
+
         if (CoreUtils.isNotUndefinedNorNull(beanTree) && self.alerts.counts.total() > 0) {
-          let word = (self.alerts.counts.error() === 1 ? oj.Translations.getTranslatedString('wrc-alerts.labels.alerts.singular.value') : oj.Translations.getTranslatedString('wrc-alerts.labels.alerts.plural.value'));
-            self.i18n.menus.alerts.error.value(
-            oj.Translations.getTranslatedString('wrc-alerts.menus.alerts.error.value', self.alerts.counts.error(), word)
-          );
-          word = (self.alerts.counts.warning() === 1 ? oj.Translations.getTranslatedString('wrc-alerts.labels.alerts.singular.value') : oj.Translations.getTranslatedString('wrc-alerts.labels.alerts.plural.value'));
-          self.i18n.menus.alerts.warning.value(
-            oj.Translations.getTranslatedString('wrc-alerts.menus.alerts.warning.value', self.alerts.counts.warning(), word)
-          );
-          word = (self.alerts.counts.info() === 1 ? oj.Translations.getTranslatedString('wrc-alerts.labels.alerts.singular.value') : oj.Translations.getTranslatedString('wrc-alerts.labels.alerts.plural.value'));
-          self.i18n.menus.alerts.info.value(
-            oj.Translations.getTranslatedString('wrc-alerts.menus.alerts.info.value', self.alerts.counts.info(), word)
-          );
-      
+          // Bug 36356471 - Remove translation properities for singular/plural
+          // representation of the words alert and alerts.
+          self.i18n.menus.alerts.error.value(oj.Translations.getTranslatedString('wrc-alerts.menus.alerts.error.value', self.alerts.counts.error()));
+          self.i18n.menus.alerts.warning.value(oj.Translations.getTranslatedString('wrc-alerts.menus.alerts.warning.value', self.alerts.counts.warning()));
+          self.i18n.menus.alerts.info.value(oj.Translations.getTranslatedString('wrc-alerts.menus.alerts.info.value', self.alerts.counts.info()));
+
           document.getElementById('alertsMenu').open(event);
         }
       };

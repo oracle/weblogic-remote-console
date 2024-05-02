@@ -81,6 +81,7 @@ define([
               submitButtonLabel: oj.Translations.getTranslatedString('wrc-common.buttons.done.label'),
               formLayout: {
                 options: {
+                  name: 'overlay-wlsform',
                   labelWidthPcnt: '24%',
                   maxColumns: '1',
                   fullWidth: true

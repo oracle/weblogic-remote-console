@@ -1,0 +1,47 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.runtime.RuntimeMBean
+derivedTypes: [
+  ]
+descriptionHTML: '<p>Provides methods that transition servers from one state to another.
+  This class is instantiated only on the Administration Server, but you can use it
+  to transition the states of all managed Coherence cache servers.</p>  <p>To start
+  Coherence cache servers, you must first configure a Node Manager on each Coherence
+  cache server''s host machine.</p> '
+name: weblogic.management.runtime.CoherenceServerLifeCycleRuntimeMBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: 'The number of times the server has been restarted using the Node
+    Manager since its creation. The first start does not count. The count is valid
+    only if the Node Manager is used to start and restart the server every time. '
+  name: NodeManagerRestartCount
+  type: int
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The current state of the server.</p> Server states are described
+    in "Managing Server Startup and Shutdown for Oracle WebLogic Server." '
+  name: State
+  type: java.lang.String
+- defaultValue: {
+    }
+  descriptionHTML: '<p>An integer that identifies the current state of the server.
+    Values range from <code>0</code> to <code>8</code>.</p> '
+  exclude: true
+  name: StateVal
+  supported: false
+  type: int
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: 'Gets pre-existing server life cycle tasks. '
+  name: Tasks
+  relationship: containment
+  type: weblogic.management.runtime.CoherenceServerLifeCycleTaskRuntimeMBean
+roles:
+  allowed:
+  - Operator

@@ -1,0 +1,74 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.security.authentication.AuthenticatorMBean
+- weblogic.management.security.authentication.IdentityDomainAuthenticatorMBean
+- weblogic.management.security.authentication.GroupMembershipHierarchyCacheMBean
+derivedTypes:
+- weblogic.security.providers.authentication.CustomDBMSAuthenticatorMBean
+- weblogic.security.providers.authentication.ReadOnlySQLAuthenticatorMBean
+descriptionHTML: '<p>This MBean contains attributes for DBMS Authentication providers.</p> '
+name: weblogic.security.providers.authentication.DBMSAuthenticatorMBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The name of the JDBC data source used for database access.</p> '
+  name: DataSourceName
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: Provider that performs DBMS authentication
+  descriptionHTML: '<p>A short description of the DBMS Authentication provider.</p> '
+  name: Description
+  type: java.lang.String
+- defaultValue:
+    value:
+      value: unlimited
+  descriptionHTML: '<p>Specifies whether recursive group membership searching is unlimited         or
+    limited. Valid values are <code>unlimited</code> and         <code>limited</code>.</p> '
+  legalValues:
+  - unlimited
+  - limited
+  name: GroupMembershipSearching
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: 0
+  descriptionHTML: '<p>This specifies how many levels of group membership can be searched.         This
+    setting is valid only if Group Membership Searching is set to         <code>limited</code>.
+    Valid values are 0 and positive integers. For         example, 0 indicates only
+    direct group memberships will be found, a         positive number indicates the
+    number of levels to go down.</p> '
+  name: MaxGroupMembershipSearchLevel
+  type: java.lang.Integer
+  writable: true
+- defaultValue:
+    value:
+      value: DBMSAuthenticator
+  descriptionHTML: ' '
+  name: Name
+  type: java.lang.String
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Indicates whether plaintext passwords are allowed to be used.</p> '
+  name: PlaintextPasswordsEnabled
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: weblogic.security.providers.authentication.DBMSAuthenticationProviderImpl
+  descriptionHTML: '<p>The name of the Java class for the DBMS Authentication         provider.</p> '
+  name: ProviderClassName
+  type: java.lang.String
+- defaultValue:
+    value:
+      value: '1.0'
+  descriptionHTML: '<p>The version number of the DBMS Authentication provider.</p> '
+  name: Version
+  type: java.lang.String

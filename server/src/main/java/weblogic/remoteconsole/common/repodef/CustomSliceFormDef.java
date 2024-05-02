@@ -1,4 +1,4 @@
-// Copyright (c) 2022, 2023, Oracle and/or its affiliates.
+// Copyright (c) 2022, 2024, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef;
@@ -15,6 +15,9 @@ import weblogic.remoteconsole.common.utils.ListUtils;
  */
 public class CustomSliceFormDef implements SliceFormDef {
   private CustomFormDef formDef = new CustomFormDef();
+  private boolean setReadOnly = false;
+  private boolean readOnly;
+  private SlicesDef slicesDef;
   private List<PagePropertyDef> advancedPropertyDefs = new ArrayList<>();
   private SliceFormPresentationDef presentationDef;
 
@@ -23,8 +26,47 @@ public class CustomSliceFormDef implements SliceFormDef {
 
   public CustomSliceFormDef(SliceFormDef toClone) {
     formDef = new CustomFormDef(toClone);
+    readOnly = toClone.isReadOnly();
+    slicesDef = toClone.getSlicesDef();
     getAdvancedPropertyDefs().addAll(ListUtils.nonNull(toClone.getAdvancedPropertyDefs()));
     setPresentationDef(toClone.getPresentationDef());
+  }
+
+  @Override
+  public boolean isReadOnly() {
+    if (setReadOnly) {
+      return readOnly;
+    }
+    for (PagePropertyDef propertyDef : getAllPropertyDefs()) {
+      if (propertyDef.isUpdateWritable()) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  public void setReadOnly(boolean val) {
+    readOnly = val;
+    setReadOnly = true;
+  }
+
+  public CustomSliceFormDef readOnly(boolean val) {
+    setReadOnly(val);
+    return this;
+  }
+
+  @Override
+  public SlicesDef getSlicesDef() {
+    return slicesDef;
+  }
+
+  public void setSlicesDef(SlicesDef val) {
+    slicesDef = val;
+  }
+
+  public CustomSliceFormDef slicesDef(SlicesDef val) {
+    setSlicesDef(val);
+    return this;
   }
 
   @Override

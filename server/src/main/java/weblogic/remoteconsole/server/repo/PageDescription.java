@@ -28,10 +28,8 @@ import weblogic.remoteconsole.common.repodef.PageActionParamDef;
 import weblogic.remoteconsole.common.repodef.PageActionPollingDef;
 import weblogic.remoteconsole.common.repodef.PageDef;
 import weblogic.remoteconsole.common.repodef.PageFieldPresentationDef;
-import weblogic.remoteconsole.common.repodef.PagePath;
 import weblogic.remoteconsole.common.repodef.PagePropertyDef;
 import weblogic.remoteconsole.common.repodef.PagePropertyExternalHelpDef;
-import weblogic.remoteconsole.common.repodef.PagesPath;
 import weblogic.remoteconsole.common.repodef.SliceDef;
 import weblogic.remoteconsole.common.repodef.SliceFormDef;
 import weblogic.remoteconsole.common.repodef.SliceFormPresentationDef;
@@ -115,7 +113,7 @@ public class PageDescription {
 
   private JsonObject sliceFormDefToJson(SliceFormDef sliceFormDef) {
     JsonObjectBuilder builder = Json.createObjectBuilder();
-    addIfNotEmpty(builder, "slices", slicesDefToJson(getSlicesDef(sliceFormDef.getPagePath())));
+    addIfNotEmpty(builder, "slices", slicesDefToJson(sliceFormDef.getSlicesDef()));
     JsonArray properties = sliceFormPropertyDefsToJson(sliceFormDef.getPropertyDefs());
     JsonArray advancedProperties = sliceFormPropertyDefsToJson(sliceFormDef.getAdvancedPropertyDefs());
     JsonArray sections = sliceFormSectionDefsToJson(sliceFormDef.getSectionDefs());
@@ -135,7 +133,7 @@ public class PageDescription {
 
   private JsonObject sliceTableDefToJson(SliceTableDef sliceTableDef) {
     JsonObjectBuilder builder = Json.createObjectBuilder();
-    addIfNotEmpty(builder, "slices", slicesDefToJson(getSlicesDef(sliceTableDef.getPagePath())));
+    addIfNotEmpty(builder, "slices", slicesDefToJson(sliceTableDef.getSlicesDef()));
     addIfNotEmpty(builder, "displayedColumns", columnPropertyDefsToJson(sliceTableDef.getDisplayedColumnDefs()));
     List<PagePropertyDef> sortedHiddenColumns = sortHiddenColumnDefs(sliceTableDef.getHiddenColumnDefs());
     addIfNotEmpty(builder, "hiddenColumns", columnPropertyDefsToJson(sortedHiddenColumns));
@@ -170,11 +168,6 @@ public class PageDescription {
     JsonObjectBuilder builder = Json.createObjectBuilder();
     builder.add("properties", actionParamDefsToJson(inputFormDef.getParamDefs()));
     return builder.build();
-  }
-
-  private SlicesDef getSlicesDef(PagePath pagePath) {
-    PagesPath pagesPath = pagePath.getPagesPath();
-    return pagesPath.getPageRepoDef().getSlicesDef(pagesPath.getTypeDef());
   }
 
   private JsonArray slicesDefToJson(SlicesDef slicesDef) {

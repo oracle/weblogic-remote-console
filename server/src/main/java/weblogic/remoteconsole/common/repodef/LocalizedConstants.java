@@ -79,6 +79,12 @@ public class LocalizedConstants {
       "Troubleshoot"
     );
 
+  public static final LocalizableString WEBLOGIC_REST_DELEGATION_NOT_WORKING_DETAILS_LABEL =
+    addConstant(
+      "weblogicRestDelegationNotWorkingDetailsLabel",
+      "Details"
+    );
+
   // Indicates that a WLS domain version isn't one that the remote console supports.
   public static final LocalizableString UNSUPPORTED_DOMAIN_VERSION =
     addConstant(
@@ -485,6 +491,12 @@ public class LocalizedConstants {
   public static final LocalizableString MBEAN_OPERATION_EXTERNAL_HELP_INTRO_LABEL =
     addConstant("mbeanOperationExternalHelpIntroLabel", "MBean Operation:");
 
+  public static final LocalizableString UNLOCK_USER_SUCCESS =
+    addConstant(
+      "mbeanOperationUnlockUserSuccess",
+      "The unlock user action completed successfully."
+    );
+
   public static final LocalizableString SSO_TOKEN_UNAVAILABLE =
     addConstant(
       "ssoTokenUnavailable",
@@ -754,6 +766,20 @@ public class LocalizedConstants {
     addConstant(
       "consoleRestExtensionNotInstalled",
       "not installed"
+    );
+
+  public static final LocalizableString READONLY_DEPLOYMENT_CONFIGURATION_PAGE_INTRO =
+    addConstant(
+      "readOnlyDeploymentConfigurationPageIntro",
+      "<p>Note: You cannot modify this deployment's configuration because"
+      + " the deployment does not have a deployment plan.</p>"
+    );
+
+  public static final LocalizableString AUTODEPLOYED_DEPLOYMENT_CONFIGURATION_PAGE_INTRO =
+    addConstant(
+      "autoDeployedDeploymentConfigurationPageIntro",
+      "<p>Note: You cannot modify this deployment's configuration because"
+      + " the deployment is auto-deployed.</p>"
     );
 
   // Returns all of the constants (used when the resource bundles are generated at build time)

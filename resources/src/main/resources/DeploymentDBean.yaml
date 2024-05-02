@@ -1,0 +1,39 @@
+# Copyright (c) 2024, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: []
+baseTypes:
+- weblogic.management.deployment.DBean
+derivedTypes:
+- weblogic.management.descriptor.ApplicationDeploymentDBean
+- weblogic.management.descriptor.EjbJarDeploymentDBean
+- weblogic.management.descriptor.WebAppDeploymentDBean
+name: weblogic.management.descriptor.DeploymentDBean
+properties:
+- name: ModuleType
+  type: java.lang.String
+  descriptionHTML: >
+    The type of deployment: Enterprise Application, EJB Jar, Resource Adapter, Web Application, and so on.
+  legalValues:
+  - value: ear
+    label: Enterprise Application
+  - value: ejb
+    label: EJB Jar
+  - value: rar
+    label: Resource Adapter
+  - value: war
+    label: Web Application
+
+  legalValues:
+  - ear
+  - ejb
+  - rar
+  - war
+- name: DeploymentType
+  type: java.lang.String
+  descriptionHTML: >
+    Indicates how this application was deployed.
+  legalValues:
+  - autoDeployed
+  - deployedWithPlan
+  - deployedWithoutPlan

@@ -21,21 +21,21 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'oj
           }
         },
         buttons: {
-          'save': { id: 'save', iconFile: ko.observable('save-icon-blk_24x24'), disabled: ko.observable(false),
+          'save': { id: 'overlay-save', iconFile: ko.observable('save-icon-blk_24x24'), disabled: ko.observable(false),
             label: ko.observable(oj.Translations.getTranslatedString('wrc-form-toolbar.buttons.save.label'))
           },
-          'cancel': { id: 'cancel', iconFile: 'cancel-icon-blk_24x24', disabled: false, visible: ko.observable(true),
+          'cancel': { id: 'overlay-cancel', iconFile: 'cancel-icon-blk_24x24', disabled: false, visible: ko.observable(true),
             label: oj.Translations.getTranslatedString('wrc-common.buttons.cancel.label')
           },
-          'finish': { id: 'finish', iconFile: 'add-icon-blk_24x24', disabled: ko.observable(true),
+          'finish': { id: 'overlay-finish', iconFile: 'add-icon-blk_24x24', disabled: ko.observable(true),
             label: oj.Translations.getTranslatedString('wrc-form-toolbar.buttons.finish.label')
           }
         },
         icons: {
-          'save': { id: 'save', iconFile: 'save-icon-blk_24x24',
+          'save': { id: 'overlay-save', iconFile: 'save-icon-blk_24x24',
             tooltip: oj.Translations.getTranslatedString('wrc-form-toolbar.icons.save.tooltip')
           },
-          'create': { id: 'create', iconFile: 'add-icon-blk_24x24',
+          'create': { id: 'overlay-create', iconFile: 'add-icon-blk_24x24',
             tooltip: oj.Translations.getTranslatedString('wrc-form-toolbar.icons.create.tooltip')
           },
           'help': { iconFile: 'toggle-help-on-blk_24x24',
@@ -139,7 +139,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'oj
               const results = createActionInputFormPayload();
               const pageState = hasIncompleteRequiredFields(results);
               if (pageState.succeeded) {
-                const options = {action: viewParams.overlayDialogParams.action, label: viewParams.overlayDialogParams.title};
+                const options = {name: 'overlay-wlsform', action: viewParams.overlayDialogParams.action, label: viewParams.overlayDialogParams.title};
                 if (CoreUtils.isNotUndefinedNorNull(viewParams.overlayDialogParams['multipartForm'])) {
                   options['multipartForm'] = viewParams.overlayDialogParams.multipartForm;
                 }
@@ -167,9 +167,17 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'oj
         }
       );
 
+      this.infoIconKeyUp = (event) => {
+        ViewModelUtils.infoIconHTMLEventListener(event);
+      };
+
+      this.infoIconClick = (event) => {
+        ViewModelUtils.infoIconHTMLEventListener(event);
+      };
+
       this.helpPageClick = function (event) {
         function toggleToolbarButtonsVisibility(visible) {
-          const ele = document.getElementById('form-toolbar-buttons');
+          const ele = document.getElementById('overlay-form-toolbar-buttons');
           ele.style.display = (visible ? 'none' : 'inline-flex');
         }
 
@@ -191,7 +199,14 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'oj
       this.helpIconClick = function (event) {
         new HelpForm(viewParams).handleHelpIconClicked(event);
       };
-      
+
+      this.helpTopicLinkClick = function (event) {
+        new HelpForm(
+          viewParams.parentRouter.data.pdjData(),
+          viewParams.perspective.id
+        ).handleHelpTopicLinkClicked(event);
+      };
+
       this.onOjFocus = (event) => {
         ViewModelUtils.setFocusFirstIncompleteField('input.oj-inputtext-input, input.oj-inputpassword-input, textarea.oj-textarea-input');
       };
@@ -296,7 +311,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'oj
         let dataPayload = {};
         var data = self.rdjData.data;
 
-        const formElement = document.getElementById('wlsform');
+        const formElement = document.getElementById('overlay-wlsform');
         if (CoreUtils.isUndefinedOrNull(formElement)) {
           return dataPayload;
         }
@@ -581,20 +596,6 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'oj
           return rtnval;
         }
 
-        function getBindHTML(pdjData, rdjData) {
-          let bindHtml = '<p>';
-          if (CoreUtils.isNotUndefinedNorNull(viewParams.overlayDialogParams.instructions)) {
-            bindHtml = `<p>${viewParams.overlayDialogParams.instructions}</p>`;
-          }
-          else if (CoreUtils.isNotUndefinedNorNull(rdjData.introductionHTML)) {
-            bindHtml = rdjData.introductionHTML;
-          }
-          else if (CoreUtils.isNotUndefinedNorNull(pdjData.introductionHTML)) {
-            bindHtml = pdjData.introductionHTML;
-          }
-          return bindHtml;
-        }
-        
         var pdjData = viewParams.parentRouter.data.pdjData();
         var rdjData = viewParams.parentRouter.data.rdjData();
 
@@ -605,8 +606,8 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'oj
         self.pdjData = viewParams.parentRouter.data.pdjData();
         self.rdjData = viewParams.parentRouter.data.rdjData();
         
-        const bindHtml = getBindHTML(self.pdjData, self.rdjData);
-        self.introductionHTML({ view: HtmlUtils.stringToNodeArray(bindHtml) });
+        const bindHtml = PageDefinitionHelper.createIntroduction(self.pdjData, self.rdjData, '#overlay-intro');
+        self.introductionHTML({view: HtmlUtils.stringToNodeArray(bindHtml), data: self});
         
         pdjData = viewParams.parentRouter.data.pdjData();
         rdjData = viewParams.parentRouter.data.rdjData();
@@ -694,7 +695,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'oj
 
         let ele;
         self.perspectiveMemory.nthChildrenItems.call(self.perspectiveMemory).forEach((nthChild) => {
-          ele = document.querySelector('#wlsform > div > div:nth-child(' + nthChild.row + ') > div:nth-child(' + nthChild.col + ')');
+          ele = document.querySelector('#overlay-wlsform > div > div:nth-child(' + nthChild.row + ') > div:nth-child(' + nthChild.col + ')');
           if (ele !== null && typeof nthChild.minHeight !== 'undefined') {
             ele.style['min-height'] = nthChild.minHeight;
             ele = document.getElementById(`${nthChild.name}|input`);
@@ -709,7 +710,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'oj
 
       function renderWizardForm(rdjData) {
         const div = document.createElement('div');
-        div.setAttribute('id', 'cfe-form');
+        div.setAttribute('id', 'overlay-cfe-form');
         div.style.display = 'block';
 
         //wizard form always use single column. If this is changed, the param calling populateFormLayout will need to change.
@@ -751,7 +752,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'oj
 
       function renderForm(pdjData, rdjData) {
         const div = document.createElement('div');
-        div.setAttribute('id', 'cfe-form');
+        div.setAttribute('id', 'overlay-cfe-form');
         div.style.display = 'block';
 
         const properties = getSliceProperties(pdjData);
@@ -773,11 +774,11 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'oj
         const isReadOnly = (self.readonly() && (['configuration','view','security','composite'].indexOf(viewParams.perspective.id) !== -1));
 
         if (hasFormLayoutSections) {
-          formLayout = PageDefinitionFormLayouts.createSectionedFormLayout({labelWidthPcnt: '45%', maxColumns: '1', isReadOnly: isReadOnly, isSingleColumn: isSingleColumn}, pdjTypes, rdjData, pdjData, populateFormLayout);
+          formLayout = PageDefinitionFormLayouts.createSectionedFormLayout({name: 'overlay-wlsform', labelWidthPcnt: '45%', maxColumns: '1', isReadOnly: isReadOnly, isSingleColumn: isSingleColumn}, pdjTypes, rdjData, pdjData, populateFormLayout);
           div.append(formLayout);
         }
         else if (isUseCheckBoxesForBooleans) {
-          formLayout = PageDefinitionFormLayouts.createCheckBoxesFormLayout({labelWidthPcnt: '45%', maxColumns: '1', fullWidth: true} );
+          formLayout = PageDefinitionFormLayouts.createCheckBoxesFormLayout({name: 'overlay-wlsform', labelWidthPcnt: '45%', maxColumns: '1', fullWidth: true} );
           div.append(formLayout);
         }
         else {
@@ -786,11 +787,11 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'oj
             div.append(formLayout);
           }
           else if (isSingleColumn) {
-            formLayout = PageDefinitionFormLayouts.createSingleColumnFormLayout({labelWidthPcnt: '32%', maxColumns: '1', fullWidth: true});
+            formLayout = PageDefinitionFormLayouts.createSingleColumnFormLayout({name: 'overlay-wlsform', labelWidthPcnt: '32%', maxColumns: '1', fullWidth: true});
             div.append(formLayout);
           }
           else {
-            formLayout = PageDefinitionFormLayouts.createTwoColumnFormLayout({labelWidthPcnt: '45%', maxColumns: '2'});
+            formLayout = PageDefinitionFormLayouts.createTwoColumnFormLayout({name: 'overlay-wlsform', labelWidthPcnt: '45%', maxColumns: '2'});
             div.append(formLayout);
           }
         }

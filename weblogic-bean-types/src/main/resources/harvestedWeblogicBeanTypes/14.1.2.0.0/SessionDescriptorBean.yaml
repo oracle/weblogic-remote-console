@@ -1,0 +1,385 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes: [
+  ]
+derivedTypes: [
+  ]
+descriptionHTML: ' '
+name: weblogic.j2ee.descriptor.wl.SessionDescriptorBean
+properties:
+- defaultValue:
+    value:
+      value: true
+  descriptionHTML: ' '
+  exclude: true
+  name: HttpProxyCachingOfCookies
+  restartNeeded: true
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: 4096
+  descriptionHTML: ' '
+  exclude: true
+  name: MaxSavePostSize
+  supported: false
+  type: int
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: ' '
+  exclude: true
+  name: PersistentStorePool
+  restartNeeded: true
+  supported: false
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: -1
+  descriptionHTML: 'A -ve value indicates unlimited in-memory sessions '
+  exclude: true
+  name: MaxInMemorySessions
+  supported: false
+  type: int
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: ' '
+  exclude: true
+  name: CookieComment
+  restartNeeded: true
+  supported: false
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: ' '
+  exclude: true
+  name: InvalidateOnRelogin
+  restartNeeded: true
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: ' '
+  exclude: true
+  name: CookieDomain
+  restartNeeded: true
+  supported: false
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: WLCOOKIE
+  descriptionHTML: ' '
+  exclude: true
+  name: PersistentStoreCookieName
+  restartNeeded: true
+  supported: false
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: 3600
+  descriptionHTML: ' '
+  exclude: true
+  name: TimeoutSecs
+  supported: false
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: JSESSIONID
+  descriptionHTML: ' '
+  exclude: true
+  name: CookieName
+  restartNeeded: true
+  supported: false
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: 30
+  descriptionHTML: ' '
+  exclude: true
+  name: PersistentAsyncQueueTimeout
+  restartNeeded: true
+  supported: false
+  type: int
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: ' '
+  exclude: true
+  name: MonitoringAttributeName
+  supported: false
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: 180
+  descriptionHTML: ' '
+  exclude: true
+  name: PersistentSessionFlushInterval
+  restartNeeded: true
+  supported: false
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: 20
+  descriptionHTML: ' '
+  exclude: true
+  name: AuthCookieIdLength
+  restartNeeded: true
+  supported: false
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: true
+  descriptionHTML: ' '
+  exclude: true
+  name: CookiesEnabled
+  restartNeeded: true
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: -1
+  descriptionHTML: ' '
+  exclude: true
+  name: CookieMaxAgeSecs
+  supported: false
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: ' '
+  exclude: true
+  name: SharingEnabled
+  restartNeeded: true
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: 52
+  descriptionHTML: ' '
+  exclude: true
+  name: IdLength
+  restartNeeded: true
+  supported: false
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: wl_max_inactive_interval
+  descriptionHTML: ' '
+  exclude: true
+  name: JdbcColumnNameMaxInactiveInterval
+  restartNeeded: true
+  supported: false
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: 100
+  descriptionHTML: ' '
+  exclude: true
+  name: PersistentSessionFlushThreshold
+  restartNeeded: true
+  supported: false
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: memory
+  descriptionHTML: ' '
+  exclude: true
+  legalValues:
+  - memory
+  - replicated
+  - replicated_if_clustered
+  - file
+  - jdbc
+  - cookie
+  - async-replicated
+  - async-replicated-if-clustered
+  - async-jdbc
+  - coherence-web
+  name: PersistentStoreType
+  restartNeeded: true
+  supported: false
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: ' '
+  exclude: true
+  name: DebugEnabled
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: none
+  descriptionHTML: ' '
+  exclude: true
+  legalValues:
+  - none
+  - plugin
+  - host-server-names
+  name: ExtendedSessionFormat
+  restartNeeded: true
+  supported: false
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: ' '
+  exclude: true
+  name: PersistentDataSourceJNDIName
+  restartNeeded: true
+  supported: false
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: ' '
+  exclude: true
+  name: EncodeSessionIdInQueryParams
+  restartNeeded: true
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: 60
+  descriptionHTML: ' '
+  exclude: true
+  name: InvalidationIntervalSecs
+  supported: false
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: /
+  descriptionHTML: ' '
+  exclude: true
+  name: CookiePath
+  restartNeeded: true
+  supported: false
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: ' '
+  exclude: true
+  name: CookieSecure
+  restartNeeded: true
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: true
+  descriptionHTML: ' '
+  exclude: true
+  name: TrackingEnabled
+  restartNeeded: true
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: 1024
+  descriptionHTML: ' '
+  exclude: true
+  name: CacheSize
+  restartNeeded: true
+  supported: false
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: session_db
+  descriptionHTML: ' '
+  exclude: true
+  name: PersistentStoreDir
+  restartNeeded: true
+  supported: false
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: ' '
+  exclude: true
+  name: UrlRewritingEnabled
+  restartNeeded: true
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: 20
+  descriptionHTML: ' '
+  exclude: true
+  name: SavePostTimeoutIntervalSecs
+  supported: false
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: true
+  descriptionHTML: ' '
+  exclude: true
+  name: CookieHttpOnly
+  restartNeeded: true
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: wl_servlet_sessions
+  descriptionHTML: ' '
+  exclude: true
+  name: PersistentStoreTable
+  restartNeeded: true
+  supported: false
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: 40
+  descriptionHTML: ' '
+  exclude: true
+  name: SavePostTimeoutSecs
+  supported: false
+  type: int
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: ' '
+  exclude: true
+  name: Id
+  restartNeeded: true
+  supported: false
+  type: java.lang.String
+  writable: true
+roles:
+  allowed:
+  - Deployer

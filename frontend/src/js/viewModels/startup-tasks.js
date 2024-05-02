@@ -41,6 +41,13 @@ define([
       const self = this;
 
       this.i18n = {
+        'ariaLabel': {
+          'cards': {
+            'panel': {
+              'value': oj.Translations.getTranslatedString('wrc-startup-tasks.ariaLabel.cards.panel.value')
+            }
+          }
+        },
         'buttons': {
           'ok': { disabled: ko.observable(false),
             'label': ko.observable(oj.Translations.getTranslatedString('wrc-common.buttons.ok.label'))

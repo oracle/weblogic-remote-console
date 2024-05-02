@@ -1,0 +1,28 @@
+# Copyright (c) 2024, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+createResourceMethod: weblogic.remoteconsole.customizers.CreatableDescriptorBeanCustomizer.createResource
+
+editable: true
+disableMBeanJavadoc: true
+supportsFilteringDashboards: false
+
+properties:
+- name: Name
+  helpHTML: The outbound connection pool instance's name.
+- name: EnableAccessOutsideApp
+  label: Access Outside App Enabled
+- name: EnableGlobalAccessToClasses
+  label: Global Access To Classes Enabled
+
+actions:
+- name: "createCollectionChild"
+  label: "New"
+  actionMethod: weblogic.remoteconsole.customizers.CreatableDescriptorBeanCustomizer.createCollectionChild
+  polling:
+    reloadSeconds: 2
+    maxAttempts: 2
+  inputForm:
+    introductionHTML: "Create a new instance in this outbound connection pool group"
+    parameters:
+    - name: "Name"

@@ -1,0 +1,68 @@
+# Copyright (c) 2020, 2024, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.runtime.RuntimeMBean
+derivedTypes: [
+  ]
+descriptionHTML: '<p>This MBean provides deployment operations.</p>  <p>A DeploymentManager
+  object is a stateless interface into the WebLogic Server deployment framework. It
+  currently provides access to the AppDeploymentRuntimeMBeans that allow the user
+  to start and stop deployments. In the future, this MBean may be enhanced with operations
+  to support deployment applications to the domain, as well as extended WebLogic Server
+  deployment features, such as production redeployment and partial deployment of modules
+  in an enterprise application.</p>  <p> Starting in WebLogic Server 14.1.2, this
+  MBean also provides access to the DBClientDataDeploymentRuntimeMBeans that allow
+  the user to deploy, undeploy or redeploy DBClientData modules.</p>  <p>This MBean
+  emits notifications when an application is created or removed and when the application
+  state changes.  The notification types are:</p> <ul> <li>appdeployment.created</li>
+  <li>appdeployment.deleted</li> <li>appdeployment.state.new</li> <li>appdeployment.state.prepared</li>
+  <li>appdeployment.state.admin</li> <li>appdeployment.state.active</li> <li>appdeployment.state.retired</li>
+  <li>appdeployment.state.failed</li> <li>appdeployment.state.update.pending</li>
+  <li>appdeployment.state.unknown</li> </ul>  <p>The userdata is the object name of
+  the application.</p> '
+name: weblogic.management.runtime.DeploymentManagerMBean
+properties:
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: '<p>Provides access to the applications that are deployed in the
+    domain.</p> '
+  name: AppDeploymentRuntimes
+  relationship: containment
+  type: weblogic.management.runtime.AppDeploymentRuntimeMBean
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: 'Provides access to the dbclientdata instances that are deployed
+    to the domain. '
+  name: DBClientDataDeploymentRuntimes
+  relationship: containment
+  type: weblogic.management.runtime.DBClientDataDeploymentRuntimeMBean
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: '<p>Provides access to the deployment operations that have been
+    performed on this domain.</p> '
+  name: DeploymentProgressObjects
+  relationship: containment
+  type: weblogic.management.runtime.DeploymentProgressObjectMBean
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: 'Provides access to the libraries that are deployed to the domain. '
+  name: LibDeploymentRuntimes
+  relationship: containment
+  type: weblogic.management.runtime.LibDeploymentRuntimeMBean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The maximum number of progress objects allowed.</p> '
+  name: MaximumDeploymentProgressObjectsCount
+  restartNeeded: true
+  type: int
+  writable: true
+roles:
+  allowed:
+  - Deployer

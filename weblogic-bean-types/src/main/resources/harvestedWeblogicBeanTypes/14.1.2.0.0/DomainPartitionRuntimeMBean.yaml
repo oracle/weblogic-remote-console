@@ -1,0 +1,66 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.runtime.RuntimeMBean
+derivedTypes: [
+  ]
+descriptionHTML: '<p>This class is used for domain level partition handling. </p> '
+name: weblogic.management.runtime.DomainPartitionRuntimeMBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Provides access to the service interface used to manage app
+    runtime state in this partition.</p> '
+  name: AppRuntimeStateRuntime
+  relationship: containment
+  type: weblogic.management.runtime.AppRuntimeStateRuntimeMBean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Provides access to the service interface to the interface that
+    is used to deploy new customer applications or modules into this partition.</p> '
+  exclude: true
+  name: DeployerRuntime
+  relationship: containment
+  supported: false
+  type: weblogic.management.runtime.DeployerRuntimeMBean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Provides access to the service interface to the interface that
+    is used to deploy new customer applications or modules into this partition.</p> '
+  name: DeploymentManager
+  relationship: containment
+  type: weblogic.management.runtime.DeploymentManagerMBean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Provides access to the service interface used to manage named
+    edit sessions in this partition.</p> '
+  name: EditSessionConfigurationManager
+  relationship: containment
+  type: weblogic.management.runtime.EditSessionConfigurationManagerMBean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Returns partition ID value for corresponding partition.</p> '
+  excludeFromRest: ' '
+  name: PartitionID
+  supported: false
+  type: java.lang.String
+- defaultValue: {
+    }
+  descriptionHTML: 'Returns the partition life cycle run-time MBean for this partition. '
+  excludeFromRest: ' '
+  name: PartitionLifeCycleRuntime
+  relationship: containment
+  supported: false
+  type: weblogic.management.runtime.PartitionLifeCycleRuntimeMBean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Provides access to to the service interface that is used to
+    manipulate user file system content for this partition.</p> '
+  excludeFromRest: ' '
+  name: PartitionUserFileSystemManager
+  relationship: containment
+  supported: false
+  type: weblogic.management.runtime.PartitionUserFileSystemManagerMBean

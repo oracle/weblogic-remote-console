@@ -1,0 +1,109 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.security.authentication.IdentityAsserterMBean
+- weblogic.management.security.authentication.IdentityDomainAuthenticatorMBean
+- weblogic.management.utils.LDAPServerMBean
+derivedTypes: [
+  ]
+descriptionHTML: '<p>The MBean that represents configuration atrributes for the WebLogic
+  LDAP X509 Identity Assertion provider.               The WebLogic LDAP X509 Identity
+  Assertion provider supports certificate authentication.</p> '
+name: weblogic.security.providers.authentication.LDAPX509IdentityAsserterMBean
+properties:
+- array: true
+  defaultValue:
+    value:
+      value:
+      - X.509
+  descriptionHTML: '<p>The token types that are currently active.</p> '
+  name: ActiveTypes
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: userCertificate;binary
+  descriptionHTML: '<p>The name of the LDAP attribute representing the user''s identity.</p> '
+  name: CertificateAttribute
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: ou=people,ou=$subj.ou,o=$subj.o,c=$subj.c
+  descriptionHTML: '<p>Mapping of certificate attributes to directory attributes.</p> '
+  name: CertificateMapping
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The credential (generally a password) used to authenticate
+    the LDAP user                  that is defined in the Principal attribute.</p> '
+  encrypted: true
+  name: Credential
+  type: java.lang.String
+  writable: true
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: ' '
+  encrypted: true
+  name: CredentialEncrypted
+  type: byte
+  writable: true
+- defaultValue:
+    value:
+      value: Provider that performs identity assertion for X.509 certificates
+  descriptionHTML: '<p>A short description of the WebLogic LDAP X509 Identity Assertion
+    provider.</p> '
+  name: Description
+  type: java.lang.String
+- defaultValue:
+    value:
+      value: LDAPX509IdentityAsserter
+  descriptionHTML: ' '
+  name: Name
+  type: java.lang.String
+- defaultValue:
+    value:
+      value: weblogic.security.providers.authentication.LDAPX509IdentityAsserterProviderImpl
+  descriptionHTML: '<p>The name of the Java class used to load the WebLogic LDAP X509
+    Identity Assertion provider.</p> '
+  name: ProviderClassName
+  type: java.lang.String
+- array: true
+  defaultValue:
+    value:
+      value:
+      - X.509
+  descriptionHTML: '<p>The token types supported by the WebLogic LDAP X509 Identity
+    Assertion provider.</p> '
+  name: SupportedTypes
+  type: java.lang.String
+- array: true
+  defaultValue:
+    value:
+      value:
+      - cn=$subj.cn
+  descriptionHTML: '<p>The name of the certificate attribute from the subject DN used
+    to find the user in the directory.</p> '
+  name: UserFilterAttributes
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: cn
+  descriptionHTML: '<p>The name of the LDAP attribute used to assert the user''s identity.</p> '
+  name: UsernameAttribute
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: '1.0'
+  descriptionHTML: '<p>The version number of the WebLogic LDAP X509 Identity Assertion
+    provider.</p> '
+  name: Version
+  type: java.lang.String

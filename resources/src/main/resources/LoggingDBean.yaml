@@ -1,0 +1,105 @@
+# Copyright (c) 2024, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: []
+baseTypes:
+- weblogic.management.deployment.DBean
+name: weblogic.management.descriptor.LoggingDBean
+# Can't just specify weblogic.j2ee.descriptor.wl.LoggingBean as a base type
+# since it @excludes all the properties.  Repeat them here instead:
+properties:
+- name: FileCount
+  type: int
+  descriptionHTML: >
+    <p>The maximum number of log files that the application creates when
+    it rotates the log. This number does not include the file that the
+    application uses to store current messages.</p>
+    <p>The default value is 7.</p>
+  defaultValue:
+    value:
+      value: 7
+  writable: true
+- name: FileSizeLimit
+  type: int
+  descriptionHTML: >
+    <p>The file size in kilobytes that triggers the application to move
+    log messages to a separate file.</p>
+    <p>The default value is 500.</p>
+  defaultValue:
+    value:
+      value: 500
+  writable: true
+- name: FileTimeSpan
+  type: int
+  descriptionHTML: >
+    <p>The interval (in hours) at which the application saves old log
+    messages to another file.</p>
+    <p>The default value is 24.</p>
+  defaultValue:
+    value:
+      value: 24
+  writable: true
+- name: LogFilename
+  type: java.lang.String
+  descriptionHTML: >
+    <p>The name of the file that stores current log messages.</p>
+  writable: true
+  redeployNeeded: true
+- name: LogFileRotationDir
+  type: java.lang.String
+  descriptionHTML: >
+    <p>The directory where the rotated log files will be stored. By
+    default the rotated files are stored in the same directory where the
+    log file is stored.</p>
+  writable: true
+- name: LoggingEnabled
+  type: boolean
+  descriptionHTML: >
+    <p>Specifies whether to enable logging for this Web application.</p>
+    <p>The default value is true.</p>
+  defaultValue:
+    value:
+      value: true
+  writable: true
+- name: NumberOfFilesLimited
+  type: boolean
+  descriptionHTML: >
+    <p>Indicates whether to limit the number of log files that the
+    application creates to store old messages.</p>
+    <p>The default value is false.</p>
+  defaultValue:
+    value:
+      value: false
+  writable: true
+- name: RotateLogOnStartup
+  type: boolean
+  descriptionHTML: >
+    <p>Specifies whether the application rotates its log file during its startup cycle.</p>
+    <p>The default value is true.</p>
+  defaultValue:
+    value:
+      value: true
+  writable: true
+- name: RotationTime
+  type: java.lang.String
+  descriptionHTML: >
+    <p>Determines the start time (hour, in 24-hour format, and minute) for
+    a time-based rotation sequence.</p>
+    <p>The default value is '00:00'.</p>
+  defaultValue:
+    value:
+      value: "00:00"
+  writable: true
+- name: RotationType
+  type: java.lang.String
+  descriptionHTML: >
+    <p>Criteria for moving old log messages to a separate file.</p>
+    <p>The default value is 'bySize'.</p>
+  defaultValue:
+    value:
+      value: bySize
+  writable: true
+  legalValues:
+  - bySize
+  - byTime
+  - none

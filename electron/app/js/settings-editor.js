@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2023, Oracle and/or its affiliates.
+ * Copyright (c) 2023,2024, Oracle and/or its affiliates.
  * Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
  * @ignore
  */
@@ -30,10 +30,10 @@ const SettingsEditor = (() => {
       return true;
     if (/^Windows-[A-Z]+$/.test(preferences.networking.trustStoreType))
       return true;
-    if (preferences.networking.trustStoreType == 'KeyChainStore')
+    if (preferences.networking.trustStoreType === 'KeyChainStore')
       return true;
     return false;
-  }
+  };
 
   function load() {
     const path = ConfigJSON.getPath();
@@ -42,29 +42,31 @@ const SettingsEditor = (() => {
       try {
         data = JSON.parse(fs.readFileSync(path).toString());
       }
-      catch(err) { }
+      catch (err) {
+        console.error(err);
+      }
     }
     const otherList = [];
     for (var key in data) {
-      if (key == 'proxy') {
+      if (key === 'proxy') {
         preferences.value('networking.proxy', data[key]);
       }
-      else if (key == 'javax.net.ssl.trustStoreType') {
+      else if (key === 'javax.net.ssl.trustStoreType') {
         preferences.value('networking.trustStoreType', data[key]);
       }
-      else if (key == 'javax.net.ssl.trustStore') {
+      else if (key === 'javax.net.ssl.trustStore') {
         preferences.value('networking.trustStore', data[key]);
       }
-      else if (key == 'javax.net.ssl.trustStoreKey') {
+      else if (key === 'javax.net.ssl.trustStoreKey') {
         preferences.value('networking.trustStoreKey', data[key]);
       }
-      else if (key == 'console.connectTimeoutMillis') {
+      else if (key === 'console.connectTimeoutMillis') {
         preferences.value('networking.connectTimeoutMillis', data[key]);
       }
-      else if (key == 'console.readTimeoutMillis') {
+      else if (key === 'console.readTimeoutMillis') {
         preferences.value('networking.readTimeoutMillis', data[key]);
       }
-      else if (key == 'console.disableHostnameVerification') {
+      else if (key === 'console.disableHostnameVerification') {
         preferences.value('networking.disableHostnameVerification', data[key]);
       }
       else
@@ -75,7 +77,7 @@ const SettingsEditor = (() => {
   }
 
   function addValue(data, key, value) {
-    if (value && (value != '')) {
+    if (value && (value !== '')) {
       data[key]=value;
     }
   }
@@ -103,7 +105,7 @@ const SettingsEditor = (() => {
     const string =
       preferences.value('networking.proxy').replace('socks:', 'socks5:');
     preferences.value('networking.proxy', string);
-    if ((string != '') && (string != 'DIRECT')) {
+    if ((string !== '') && (string !== 'DIRECT')) {
       try {
         const protocol = new URL(string).protocol;
         const validProtocols = [ 'socks4:', 'socks5:', 'http:', 'https:' ];

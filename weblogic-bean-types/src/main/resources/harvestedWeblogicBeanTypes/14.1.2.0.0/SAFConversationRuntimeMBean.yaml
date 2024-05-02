@@ -1,0 +1,30 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.runtime.RuntimeMBean
+derivedTypes: [
+  ]
+descriptionHTML: '<p>This class is used for monitoring a WebLogic SAF conversation.</p> '
+name: weblogic.management.runtime.SAFConversationRuntimeMBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The name of the conversation.</p> '
+  name: ConversationName
+  type: java.lang.String
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The URL of the destination.</p> '
+  name: DestinationURL
+  type: java.lang.String
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The quality of service (QOS) for the SAF conversation.</p>  <p>The
+    quality-of-service values are:</p>  <ul> <li> <code>weblogic.management.runtime.SAFConstants.QOS_EXACTLY_ONCE</code></li>  <li>
+    <code>weblogic.management.runtime.SAFConstants.QOS_ATLEAST_ONCE</code></li>  <li>
+    <code>weblogic.management.runtime.SAFConstants.QOS_ATMOST_ONCE</code></li> </ul> '
+  name: QOS
+  type: java.lang.String

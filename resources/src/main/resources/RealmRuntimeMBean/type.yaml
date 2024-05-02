@@ -1,0 +1,45 @@
+# Copyright (c) 2024, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions:
+
+- name: "unlockUser"
+  label: "Unlock User"
+  actionMethod: weblogic.remoteconsole.customizers.RealmRuntimeMBeanCustomizer.unlockUser
+  inputForm:
+    introductionHTML: >
+      <p>If a user unsuccessfully attempts to log into a WebLogic Server instance more than
+      the configured number of retry attempts, they are locked out of further access.</p>
+      <p>Unlock the user so they can log in again.</p>
+    parameters:
+    - name: userName
+      label: "Unlock Username"
+      required: true
+    - name: identityDomain
+      label: "In Identity Domain"
+    helpTopics:
+    - label: "Understanding Security for Oracle WebLogic Server"
+      href: "scovr/index.html"
+      type: "edocs"
+    - label: "Protecting User Accounts"
+      href: "secmg/domain.html#SECMG414"
+      type: "edocs"
+  mbeanOperation:
+    type: UserLockoutManagerRuntimeMBean
+    operation: clearLockout
+  definition:
+    type: "void"
+    descriptionHTML: >
+        <p>Unlocks a user account.</p>
+    roles:
+      allowed:
+      - Admin
+    parameters:
+    - name: "userName"
+      type: "java.lang.String"
+      descriptionHTML: >
+          <p>A user name.</p>
+    - name: "identityDomain"
+      type: "java.lang.String"
+      descriptionHTML: >
+          <p>The identity domain of the user. May be null.</p>

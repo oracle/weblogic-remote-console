@@ -773,7 +773,7 @@ define(['./parsed-expression-tree', 'wrc-frontend/microservices/policy-managemen
             // See if child.children contains an expression node
             // with a uid property, and the value assigned to
             // that uid property equals targetUid.
-            const index = child.children.map(item => item.uid).indexOf(targetUid);
+            const index = child.children.findIndex(item => item.uid === targetUid);
             if (index !== -1) {
               if (child.type === 'negate') {
                 // We found the expression node with a uid property

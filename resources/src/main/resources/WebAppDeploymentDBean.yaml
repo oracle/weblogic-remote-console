@@ -1,0 +1,39 @@
+# Copyright (c) 2024, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: []
+baseTypes:
+- weblogic.management.descriptor.DeploymentDBean
+derivedTypes: []
+name: weblogic.management.descriptor.WebAppDeploymentDBean
+properties:
+- name: ContextRoot
+  type: java.lang.String
+  descriptionHTML: >
+    <p>Specifies context root to override the default value
+    (name of exploded directory or name of the WAR file minus the ".war" extension).</p>
+  writable: true
+  redeployNeeded: true
+- name: SessionDescriptor
+  type: weblogic.management.descriptor.SessionDescriptorDBean
+  relationship: containment
+- name: ContainerDescriptor
+  type: weblogic.management.descriptor.ContainerDescriptorDBean
+  relationship: containment
+- name: JspDescriptor
+  type: weblogic.management.descriptor.JspDescriptorDBean
+  relationship: containment
+- name: JASPICContainer
+  type: weblogic.management.descriptor.JASPICContainerDBean
+  relationship: containment
+- name: Logging
+  type: weblogic.management.descriptor.LoggingDBean
+  relationship: containment
+- name: Ejbs
+  type: weblogic.management.descriptor.EjbDBean
+  array: true
+  relationship: containment
+- name: EnvEntries
+  type: weblogic.management.descriptor.EnvEntryDBean
+  array: true
+  relationship: containment

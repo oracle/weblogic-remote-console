@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+ * Copyright (c) 2020, 2024, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
@@ -567,7 +567,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'wrc-frontend/micro
         }
         const dataProvider = this.getDataProvider();
         if (dataProvider && dataProvider.modelProperties) {
-          const index = dataProvider.modelProperties.map(property => property.Name).indexOf(propertyName);
+          const index = dataProvider.modelProperties.findIndex(property => property.Name === propertyName);
           if (index !== -1) {
             rtnval = dataProvider.modelProperties[index].Value;
           }
@@ -577,7 +577,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'wrc-frontend/micro
       setModelPropertyValue: function(propertyName, propertyValue) {
         const dataProvider = this.getDataProvider();
         if (dataProvider && dataProvider.modelProperties) {
-          const index = dataProvider.modelProperties.map(property => property.Name).indexOf(propertyName);
+          const index = dataProvider.modelProperties.findIndex(property => property.Name === propertyName);
           if (index !== -1) {
             if (CoreUtils.isNotUndefinedNorNull(propertyValue))
               dataProvider.modelProperties[index].Value = propertyValue;
@@ -589,7 +589,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'wrc-frontend/micro
       addModelProperty: function(propertyName, propertyValue ='') {
         const dataProvider = this.getDataProvider();
         if (dataProvider && dataProvider.modelProperties) {
-          const index = dataProvider.modelProperties.map(property => property.Name).indexOf(propertyName);
+          const index = dataProvider.modelProperties.findIndex(property => property.Name === propertyName);
           if (index === -1) {
             const property = {
               uid: getNextUID(dataProvider.modelProperties),
@@ -605,7 +605,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'wrc-frontend/micro
         if (CoreUtils.isNotUndefinedNorNull(propertyName)) {
           const dataProvider = this.getDataProvider();
           if (dataProvider && dataProvider.modelProperties) {
-            const index = dataProvider.modelProperties.map(property => property.Name).indexOf(propertyName);
+            const index = dataProvider.modelProperties.findIndex(property => property.Name === propertyName);
             if (index !== -1) {
               dataProvider.modelProperties.splice(index, 1);
             }

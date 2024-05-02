@@ -1,0 +1,18 @@
+# Copyright (c) 2020, 2024, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.configuration.ConfigurationMBean
+derivedTypes: [
+  ]
+descriptionHTML: '<p>Entry point for remote domain JTA participants.</p> '
+name: weblogic.management.configuration.JTARemoteDomainMBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Returns the connection URL for a remote domain.</p> '
+  name: URL
+  type: java.lang.String
+  writable: true

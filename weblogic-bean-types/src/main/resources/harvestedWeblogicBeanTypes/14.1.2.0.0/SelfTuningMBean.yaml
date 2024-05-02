@@ -1,0 +1,101 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.configuration.ConfigurationMBean
+derivedTypes: [
+  ]
+descriptionHTML: 'SelfTuning MBean contains the global work manager component MBeans. '
+name: weblogic.management.configuration.SelfTuningMBean
+properties:
+- array: true
+  creators:
+  - weblogic.management.configuration.CapacityMBean
+  defaultValue: {
+    }
+  descriptionHTML: 'All the capacity definitions. '
+  name: Capacities
+  relationship: containment
+  type: weblogic.management.configuration.CapacityMBean
+- array: true
+  creators:
+  - weblogic.management.configuration.ContextRequestClassMBean
+  defaultValue: {
+    }
+  descriptionHTML: 'All the context request classes. '
+  name: ContextRequestClasses
+  relationship: containment
+  type: weblogic.management.configuration.ContextRequestClassMBean
+- array: true
+  creators:
+  - weblogic.management.configuration.FairShareRequestClassMBean
+  defaultValue: {
+    }
+  descriptionHTML: 'All the fair share request classes. '
+  name: FairShareRequestClasses
+  relationship: containment
+  type: weblogic.management.configuration.FairShareRequestClassMBean
+- array: true
+  creators:
+  - weblogic.management.configuration.MaxThreadsConstraintMBean
+  defaultValue: {
+    }
+  descriptionHTML: 'All the maximum threads constraints. '
+  name: MaxThreadsConstraints
+  relationship: containment
+  type: weblogic.management.configuration.MaxThreadsConstraintMBean
+- array: true
+  creators:
+  - weblogic.management.configuration.MinThreadsConstraintMBean
+  defaultValue: {
+    }
+  descriptionHTML: 'All the minimum threads constraints. '
+  name: MinThreadsConstraints
+  relationship: containment
+  type: weblogic.management.configuration.MinThreadsConstraintMBean
+- defaultValue:
+    value:
+      value: 50
+  descriptionHTML: 'A desired percentage of thread usage by a partition compared to
+    the thread usage by all partitions. It is recommended that the sum of this value
+    for all the partitions running in a WLS domain add up to 100, but it is not strictly
+    enforced. When they do not add up to 100, WLS assigns thread-usage times to different
+    partitions based on their relative values. This attribute is for use in the global
+    domain only. Use the PartitionWorkManager MBean for specifying partition fair
+    share values for partitions. '
+  excludeFromRest: ' '
+  name: PartitionFairShare
+  supported: false
+  type: int
+  writable: true
+- array: true
+  creators:
+  - weblogic.management.configuration.ResponseTimeRequestClassMBean
+  defaultValue: {
+    }
+  descriptionHTML: 'All the response time request classes. '
+  name: ResponseTimeRequestClasses
+  relationship: containment
+  type: weblogic.management.configuration.ResponseTimeRequestClassMBean
+- array: true
+  creators:
+  - weblogic.management.configuration.WorkManagerMBean
+  defaultValue: {
+    }
+  descriptionHTML: 'All the defined Work Managers. <p> A note about dynamic additions
+    and deletions of Work Managers in a running server. Only applications or modules
+    deployed or re-deployed after the changes are made can pick up newly added Work
+    Managers. Existing production applications resolve their dispatch-policies to
+    Work Managers during deployment time. Once the application is exported and in
+    production mode, the server does not swap Work Managers. The tight binding helps
+    performance and also avoids issues such as what happens to inflight work in the
+    old Work Manager. This attribute is marked as dynamic so that new applications
+    (re)deployed can pick up the Work Manager changes. Please note that this applies
+    only to resolving dispatch-policies to Work Managers. Existing attributes within
+    a Work Manager, like fair-share and constraints, can be modified without requiring
+    a redeploy. </p> '
+  name: WorkManagers
+  relationship: containment
+  type: weblogic.management.configuration.WorkManagerMBean

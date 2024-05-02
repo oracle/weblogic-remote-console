@@ -11,17 +11,19 @@
  */
 define([
   'ojs/ojcore',
-  'wrc-frontend/microservices/preferences/preferences-manager',
+  'wrc-frontend/apis/data-operations',
   'wrc-frontend/apis/message-displaying',
-  'wrc-frontend/core/utils',
+  'wrc-frontend/microservices/preferences/preferences-manager',
+  'wrc-frontend/core/runtime',
   'wrc-frontend/core/types',
   'wrc-frontend/core/utils',
   'ojs/ojlogger'
 ],
   function (
     oj,
-    PreferencesManager,
+    DataOperations,
     MessageDisplaying,
+    PreferencesManager,
     Runtime,
     CoreTypes,
     CoreUtils,
@@ -34,7 +36,7 @@ define([
       'messages': {
         'connectionRefused': {
           'summary': oj.Translations.getTranslatedString('wrc-view-model-utils.messages.connectionRefused.summary'),
-            'details': oj.Translations.getTranslatedString('wrc-view-model-utils.messages.connectionRefused.details')
+          'details': oj.Translations.getTranslatedString('wrc-view-model-utils.messages.connectionRefused.details')
         }
       }
     };
@@ -47,7 +49,93 @@ define([
         }, PreferencesManager.notifications.autoCloseInterval()
       );
     }
-  
+
+    function failureResponseDefaultHandling (response, severity) {
+      // For a coding error, the response will be
+      // the JavaScript Error. If that is the case,
+      // then re-create the response object with
+      // the actual failureType and failureReason
+      // properties.
+      if (CoreUtils.isError(response) ||
+        CoreUtils.isError(response.failureReason)
+      ) {
+        if (CoreTypes.isConnectionResponseFailure(response)) {
+          severity = 'warning';
+          response = {
+            failureType: CoreTypes.FailureType.CONNECTION_REFUSED,
+            failureReason: response.failureReason.message
+          };
+        }
+        else {
+          response = {
+            failureType: CoreTypes.FailureType.UNEXPECTED,
+            failureReason: response
+          };
+        }
+      }
+
+      if (PreferencesManager.notifications.showPopupForFailureResponsesPreference()) {
+        let messageSummary, messageDetails;
+        // The end user's "showPopupForFailureResponses"
+        // preference setting has a value of true, so
+        // display the message. Use response.failureReason
+        // to craft the summary property.
+        if (response.failureType === CoreTypes.FailureType.CONNECTION_REFUSED) {
+          messageSummary = oj.Translations.getTranslatedString('wrc-view-model-utils.messages.connectionRefused.summary');
+          messageDetails = oj.Translations.getTranslatedString('wrc-view-model-utils.messages.connectionRefused.details');
+        }
+        else {
+          messageSummary = (CoreUtils.isError(response.failureReason) ? response.failureReason.name : oj.Translations.getTranslatedString('wrc-view-model-utils.labels.unexpectedErrorResponse.value'));
+          messageDetails = response.failureReason;
+          // Look for a response message to use for the message details displayed to the user
+          if (CoreUtils.isNotUndefinedNorNull(response?.body?.messages)
+            && CoreUtils.isNotUndefinedNorNull(response.body.messages[0]?.message)) {
+            messageDetails = response.body.messages[0].message;
+            severity = CoreUtils.isNotUndefinedNorNull(response.body.messages[0]?.severity) ? response.body.messages[0].severity : severity;
+          }
+        }
+
+        // Assign 'error' to severity, if parameter wasn't provided
+        severity = (severity || 'error');
+
+        // Set value of severity to "info", if an invalid value was
+        // assigned to the severity parameter.
+        if (!['error', 'warning', 'info'].includes(severity)) severity = 'info';
+
+        // Display failure type message.
+        MessageDisplaying.displayMessage(
+          {
+            severity: severity,
+            summary: messageSummary,
+            detail: messageDetails
+          }
+        );
+      }
+
+      if (PreferencesManager.logging.logFailureResponses()) {
+        // The end user's "logFailureResponses"
+        // preference setting has a value of true, so
+        // log the failure reason.
+        if (CoreUtils.isError(response.failureReason)) {
+          // Failure was caused by a JavaScript Error
+          // Create log message with ERROR severity that
+          // is the stacktrace for the Error.
+          Logger.error(`${response.failureReason.stack}`);
+        }
+        else {
+          // Failure was transport-related, so the
+          // failureReason will be the statusText
+          // of the HTTP response.
+          Logger.error(`statusText=${response.failureReason}`);
+        }
+      }
+
+      // Return response, as this utility function is
+      // just for the "default" handling of a failure
+      // response.
+      return response;
+    }
+
     return {
       i18n: i18n,
 
@@ -134,85 +222,7 @@ define([
        * @param {"error"|"warn"|"info"} [severity] - Optional severity to use for ``failureReason``. The possible values are: "error", "warn" and "info". The value "info" will be used, if not provided or not one of the possible values.
        * @returns {{body: {data: any, messages?: any}}|{failureType: FailureType, failureReason?: any}|{Error}}
        */
-      failureResponseDefaultHandling: function (response, severity) {
-        // For a coding error, the response will be
-        // the JavaScript Error. If that is the case,
-        // then re-create the response object with
-        // the actual failureType and failureReason
-        // properties.
-        if (CoreUtils.isError(response) ||
-          CoreUtils.isError(response.failureReason)
-        ) {
-          if (CoreTypes.isConnectionResponseFailure(response)) {
-            severity = 'warning';
-            response = {
-              failureType: CoreTypes.FailureType.CONNECTION_REFUSED,
-              failureReason: response.failureReason.message
-            };
-          }
-          else {
-            response = {
-              failureType: CoreTypes.FailureType.UNEXPECTED,
-              failureReason: response
-            };
-          }
-        }
-
-        if (PreferencesManager.notifications.showPopupForFailureResponsesPreference()) {
-          let messageSummary, messageDetails;
-          // The end user's "showPopupForFailureResponses"
-          // preference setting has a value of true, so
-          // display the message. Use response.failureReason
-          // to craft the summary property.
-          if (response.failureType === CoreTypes.FailureType.CONNECTION_REFUSED) {
-            messageSummary = this.i18n.messages.connectionRefused.summary;
-            messageDetails = this.i18n.messages.connectionRefused.details;
-          }
-          else {
-            messageSummary = (CoreUtils.isError(response.failureReason) ? response.failureReason.name : this.i18n.labels.unexpectedErrorResponse.value);
-            messageDetails = response.failureReason;
-          }
-
-          // Assign 'error' to severity, if parameter wasn't provided
-          severity = (severity || 'error');
-
-          // Set value of severity to "info", if an invalid value was
-          // assigned to the severity parameter.
-          if (!['error', 'warning', 'info'].includes(severity)) severity = 'info';
-
-          // Display failure type message.
-          MessageDisplaying.displayMessage(
-            {
-              severity: severity,
-              summary: messageSummary,
-              detail: messageDetails
-            }
-          );
-        }
-
-        if (PreferencesManager.logging.logFailureResponses()) {
-          // The end user's "logFailureResponses"
-          // preference setting has a value of true, so
-          // log the failure reason.
-          if (CoreUtils.isError(response.failureReason)) {
-            // Failure was caused by a JavaScript Error
-            // Create log message with ERROR severity that
-            // is the stacktrace for the Error.
-            Logger.error(`${response.failureReason.stack}`);
-          }
-          else {
-            // Failure was transport-related, so the
-            // failureReason will be the statusText
-            // of the HTTP response.
-            Logger.error(`statusText=${response.failureReason}`);
-          }
-        }
-
-        // Return response, as this utility function is
-        // just for the "default" handling of a failure
-        // response.
-        return response;
-      },
+      failureResponseDefaultHandling: failureResponseDefaultHandling,
 
       /**
        * Sets the cursor to a given ``type``
@@ -291,38 +301,78 @@ define([
       },
 
       /**
-       * Use ``download`` attribute on an ``<a>`` HTML tag, to download a file to the local filesystem.
-       * @param {{filepath: string, fileContents: string, mediaType: string}} options - JS object with properties containing data for the file to be downloaded.
-       */
+      * Use ``download`` attribute on an ``<a>`` HTML tag, to download a file to the local filesystem.
+      * @param {{filepath: string, fileContents?: string, href?: string, target?: string, mediaType?: string}} options - JS object with properties containing data for the file to be downloaded.
+      */
       downloadFile: (options) => {
-        const link = document.createElement('a');
-        if (options.fileContents) {
-          const blob = new Blob([options.fileContents], {type: options.mediaType});
-          link.href = URL.createObjectURL(blob);
+        function createHiddenLink() {
+          const link = document.createElement('a');
+          Object.assign(link.style, { visibility: 'hidden', width: 0, height: 0, overflow: 'hidden', position: 'absolute'});
+          return link;
         }
-        else if (options.href) {
-          link.href = options.href;
+
+        function triggerDownload(options, link, downloadBlob) {
+          link.download = options.filepath;
+          link.href = window.URL.createObjectURL(downloadBlob);
           if (options.target) link.target = options.target;
           if (options.mediaType) link.type = options.mediaType;
+          link.click();
+          link.remove();
         }
-        link.download = options.filepath;
-        Object.assign(link.style, {
-          visibility: 'hidden',
-          width: 0,
-          height: 0,
-          overflow: 'hidden',
-          position: 'absolute'
-        });
-        link.onclick = function(event) {
-          const that = this;
-          setTimeout(function() {
-            window.URL.revokeObjectURL(that.href);
-          }, 1500);
-        };
-        link.click();
-        link.remove();
+
+        function handleFailureResponse(response) {
+          if (CoreUtils.isNotUndefinedNorNull(response) && CoreUtils.isError(response)) {
+            failureResponseDefaultHandling(response, 'error');
+          }
+          else if (CoreUtils.isNotUndefinedNorNull(response) && CoreUtils.isNotUndefinedNorNull(response.failure)) {
+            failureResponseDefaultHandling(response.failure);
+          }
+          else if (CoreUtils.isNotUndefinedNorNull(response) && CoreUtils.isNotUndefinedNorNull(response.body)) {
+            MessageDisplaying.displayResponseMessages(response.body.messages);
+          }
+          else {
+            failureResponseDefaultHandling(response);
+          }
+        }
+
+        let downloadBlob;
+
+        if (options.fileContents) {
+          downloadBlob = new Blob([options.fileContents], {type: options.mediaType});
+          const link = createHiddenLink();
+          link.href = window.URL.createObjectURL(downloadBlob);
+          link.onclick = function(event) {
+            const that = this;
+            setTimeout(function() {
+              window.URL.revokeObjectURL(that.href);
+            }, 1500);
+          };
+          triggerDownload(options, link, downloadBlob);
+        }
+        else {
+          DataOperations.href.downloadFile(options)
+            .then(reply => {
+              const link = createHiddenLink();
+              reply.blob()
+                .then(blob => {
+                  downloadBlob = blob;
+                  triggerDownload(options, link, downloadBlob);
+                })
+                .finally (() => {
+                  if (CoreUtils.isNotUndefinedNorNull(downloadBlob)) {
+                    window.URL.revokeObjectURL(downloadBlob);
+                  }
+                });
+
+            })
+            .catch(response => {
+              handleFailureResponse(response);
+            });
+
+        }
+
       },
-    
+
         /**
        * Uses a given ``router`` to go to a given ``path``, calling a can exit callback, if specified
        * @param {object} router
@@ -509,6 +559,17 @@ define([
         }
         else {
           window.open(event.target.attributes['data-external-help-link'].value, '_blank', 'noopener noreferrer');
+        }
+      },
+      infoIconHTMLEventListener: (event) => {
+        if (!Runtime.getProperty('features.pageInfo.disabled')) {
+          if (event.type === 'click' || event.key === 'Enter') {
+            const popup = event.currentTarget.querySelector('.cfe-page-info-popup');
+            if (popup !== null) {
+              const toggleState = getComputedStyle(popup).getPropertyValue('--page-info-popup-toggle-state');
+              popup.style.setProperty('--page-info-popup-toggle-state', toggleState === 'visible' ? 'hidden' : 'visible');
+            }
+          }
         }
       }
 

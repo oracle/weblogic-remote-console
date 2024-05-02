@@ -21,17 +21,12 @@ public class FrontendManager {
   private static final int MAX_ENTRIES_CHECK = 10;
   private static final int HOUR = 3600 * 1000;
 
-  public static synchronized Frontend find(String id) {
-    return frontends.get(id);
+  public static synchronized Frontend find(String id, String subId) {
+    return frontends.get(Frontend.makeFullID(id, subId));
   }
 
-
-  public static synchronized Frontend create() {
-    return create(null);
-  }
-
-  public static synchronized Frontend create(String id) {
-    Frontend ret = new Frontend(id);
+  public static synchronized Frontend create(String id, String subId) {
+    Frontend ret = new Frontend(id, subId);
     if (frontends.size() >= MAX_ENTRIES_CHECK) {
       Frontend oldest = null;
       for (Frontend walk : frontends.values()) {
@@ -43,23 +38,25 @@ public class FrontendManager {
       }
       if ((frontends.size() > 10 * MAX_ENTRIES_CHECK)
           || oldest.getLastRequestTime() + HOUR < new Date().getTime()) {
-        LOGGER.fine("Terminating frontend: " + oldest.getID() + ", " + oldest);
+        LOGGER.fine("Terminating frontend: " + oldest.getFullID() + ", " + oldest);
         oldest.terminate();
-        frontends.remove(oldest.getID());
+        frontends.remove(oldest.getFullID());
       }
     }
     LOGGER.fine("Creating frontend with ID: " + ret.getID());
-    frontends.put(ret.getID(), ret);
+    frontends.put(id + "-" + subId, ret);
     return ret;
   }
 
   public static synchronized boolean destroy(String id) {
-    Frontend frontend = find(id);
-    if (frontend == null) {
-      return false;
+    boolean ret = false;
+    for (Frontend frontend : frontends.values()) {
+      if (frontend.getID().equals(id)) {
+        frontend.terminate();
+        frontends.remove(frontend.getFullID());
+        ret = true;
+      }
     }
-    frontend.terminate();
-    frontends.remove(id);
-    return true;
+    return ret;
   }
 }

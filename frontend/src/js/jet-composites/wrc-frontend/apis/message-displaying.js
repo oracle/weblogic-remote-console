@@ -80,6 +80,12 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'ojs/ojlogger'],
         'seeJavascriptConsole': i18n.messages.seeJavascriptConsole
       },
 
+      getOverallSeverity: function(messages) {
+        const severities = messages.map(({severity}) => severity);
+        if (severities.length === 0) severities.push('info');
+        return severities.filter((severity, index) => severities.indexOf(severity) === index)[0];
+      },
+
       /**
        * Displays `message` as a popup message.
        * <p>The optional `autoCloseInterval` parameter is ignored if `message.severity !=== "confirmation"`</p>only </p>
@@ -87,16 +93,18 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'ojs/ojlogger'],
        * @param {number} [autoCloseInterval] - Optionally, the number of milliseconds to leave message up, before auto-closing it. 1500 milliseconds (1.5 seconds) will be used, if the parameter is missing.
        */
       displayMessage: function(message, autoCloseInterval) {
-        if (typeof message.severity === 'undefined') message['severity'] = 'confirmation';
-        getPopupMessageSentSignal().dispatch(null);
-        if (autoCloseInterval && ['confirmation', 'info'].includes(message.severity) ) {
-          getPopupMessageSentSignal().dispatch(message, autoCloseInterval || 1500);
-        }
-        else {
-          getPopupMessageSentSignal().dispatch(message);
+        if (typeof message !== 'undefined') {
+          if (typeof message.severity === 'undefined') message['severity'] = 'confirmation';
+          getPopupMessageSentSignal().dispatch(null);
+          if (autoCloseInterval && ['confirmation', 'info'].includes(message.severity) ) {
+            getPopupMessageSentSignal().dispatch(message, autoCloseInterval || 1500);
+          }
+          else {
+            getPopupMessageSentSignal().dispatch(message);
+          }
         }
       },
-  
+
       /**
        * Displays `message` if `failureType` is not in the failure type cache.
        * <p>A very simple algorithm is used to manage items in the failure type cache. If <code>failureType</code> is in the cache, then the milliseconds for when the item was added to the cache is subtracted from Date.now(). If the difference is greater than <code>retainForInterval</code>, then <code>message</code> is displayed.</p>
@@ -146,16 +154,36 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'ojs/ojlogger'],
        * @returns {Array}
        */
       displayResponseMessages: function(responseMessages, autoCloseInterval) {
+        const getMessageText = (message) => {
+          let messageText = 'No message provided.';
+          if (message.message) {
+            messageText = message.message;
+          }
+          else if (message.detail) {
+            messageText = message.detail;
+          }
+          return messageText;
+        };
+
+        const listifyMessage = (messageText) => {
+          let retVal = '';
+          const messageLines = messageText.split(/\r?\n|\r|\n/g);
+
+          messageLines.forEach(message => { retVal += `<li>${message}</li>` });
+
+          return retVal;
+        }
+
         let rtnval = [];
 
         if (typeof responseMessages !== 'undefined') {
           let errorMessagesHTML = '<ul>', errorSummary = i18n.messages.responseMessages.summary;
           responseMessages.forEach((message) => {
             if (typeof message === 'object') {
-              errorMessagesHTML += '<li>' + message.message + '</li>';
+              errorMessagesHTML += listifyMessage(getMessageText(message));
             }
             else {
-              errorMessagesHTML += '<li>' + message + '</li>';
+              errorMessagesHTML += listifyMessage(message);
             }
           });
           if (errorMessagesHTML.indexOf('<li>') !== -1) {

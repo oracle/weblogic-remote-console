@@ -19,7 +19,8 @@ displayedColumns:
 - name: "State.IntendedState"
 - name: "ApplicationName"
 - name: "ApplicationVersion"
-- name: "DeploymentPlan.PlanPath"
+#- name: "Configuration.PlanPath"
+#- name: "Configuration.AutoDeployedApp"
 
 actions:
 - name: "startActions"

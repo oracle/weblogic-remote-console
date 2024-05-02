@@ -77,7 +77,6 @@ define(['ojs/ojcore', 'wrc-frontend/microservices/actions-management/declarative
       function processActionInputFormDataReply(reply, endpoint) {
         const pdjData = reply.body.data.get('pdjData');
         const rdjData = reply.body.data.get('rdjData');
-//MLW-1        DeclarativeActionsManager.updatePDJTypesActionInputProperties(pdjData);
         const actionInputFormStyle = DeclarativeActionsManager.getActionInputFormStyle(pdjData);
         if (CoreUtils.isNotUndefinedNorNull(actionInputFormStyle)) {
           if (actionInputFormStyle === DeclarativeActionsManager.ActionInputFormStyle.ACTION_POPUP.name) {

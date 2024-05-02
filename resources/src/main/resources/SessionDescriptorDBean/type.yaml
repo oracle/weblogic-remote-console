@@ -1,0 +1,18 @@
+# Copyright (c) 2024, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+createResourceMethod: weblogic.remoteconsole.customizers.DescriptorBeanCustomizer.createResource
+
+editable: true
+disableMBeanJavadoc: true
+supportsFilteringDashboards: false
+
+properties:
+- name: CookieMaxAgeSecs
+  label: Session cookies max age (in seconds)
+- name: InvalidationIntervalSecs
+  label: Session Invalidation Interval (in seconds)
+- name: MaxInMemorySessions
+  label: Maximum in-memory Sessions
+- name: TimeoutSecs
+  label: Session Timeout (in seconds)

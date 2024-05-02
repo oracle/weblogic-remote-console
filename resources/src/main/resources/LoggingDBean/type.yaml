@@ -1,0 +1,23 @@
+# Copyright (c) 2024, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+createResourceMethod: weblogic.remoteconsole.customizers.DescriptorBeanCustomizer.createResource
+
+editable: true
+disableMBeanJavadoc: true
+supportsFilteringDashboards: false
+
+properties:
+- name: LogFileRotationDir
+  label: Log Rotation Directory
+- name: RotationType
+  helpHTML: >
+    <p>Criteria for moving old log messages to a separate file.</p>
+    <p>The default value is 'By Size'.</p>
+  legalValues:
+  - value: bySize
+    label: By Size
+  - value: byTime
+    label: By Time
+  - value: none
+    label: None

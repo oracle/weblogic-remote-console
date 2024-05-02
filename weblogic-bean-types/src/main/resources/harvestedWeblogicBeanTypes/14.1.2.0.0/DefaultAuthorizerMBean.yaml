@@ -1,0 +1,81 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.security.ImportMBean
+- weblogic.management.security.authorization.PolicyConsumerMBean
+- weblogic.management.security.authorization.PolicyListerMBean
+- weblogic.management.security.authorization.PolicyAuxiliaryMBean
+- weblogic.management.security.ExportMBean
+- weblogic.management.security.authorization.DeployableAuthorizerMBean
+- weblogic.management.security.authorization.PredicateEditorMBean
+- weblogic.management.security.ApplicationVersionerMBean
+derivedTypes: [
+  ]
+descriptionHTML: '<p>This MBean represents configuration attributes for the WebLogic       Authorization
+  provider.</p> '
+name: weblogic.security.providers.authorization.DefaultAuthorizerMBean
+properties:
+- defaultValue:
+    value:
+      value: WebLogic Authorization Provider
+  descriptionHTML: '<p>A short description of the WebLogic Authorization provider.</p> '
+  name: Description
+  type: java.lang.String
+- defaultValue:
+    value:
+      value: DefaultAuthorizer
+  descriptionHTML: ' '
+  name: Name
+  type: java.lang.String
+- defaultValue:
+    value:
+      value: weblogic.security.providers.authorization.DefaultAuthorizationProviderImpl
+  descriptionHTML: '<p>The name of this WebLogic Authorization provider. </p> '
+  name: ProviderClassName
+  type: java.lang.String
+- array: true
+  defaultValue:
+    value:
+      value:
+      - ''
+  descriptionHTML: '<p>The security policies that you want exported from this         Authorization
+    provider''s database. If none are specified, all are         exported.</p> '
+  name: SupportedExportConstraints
+  type: java.lang.String
+- array: true
+  defaultValue:
+    value:
+      value:
+      - DefaultAtz
+  descriptionHTML: '<p>The format of the file to export. The list of supported export         formats
+    is determined by this Authorization provider.</p> '
+  name: SupportedExportFormats
+  type: java.lang.String
+- array: true
+  defaultValue:
+    value:
+      value:
+      - ''
+  descriptionHTML: '<p>The security policies that you want to be imported into this         Authorization
+    provider''s database. If none are specified, all are         imported.</p> '
+  name: SupportedImportConstraints
+  type: java.lang.String
+- array: true
+  defaultValue:
+    value:
+      value:
+      - DefaultAtz
+  descriptionHTML: '<p>The format of the file to import. The list of supported import         formats
+    is determined by the Authorization provider from which the         security policies
+    were originally exported.</p> '
+  name: SupportedImportFormats
+  type: java.lang.String
+- defaultValue:
+    value:
+      value: '1.0'
+  descriptionHTML: '<p>The version of the WebLogic Authorization provider.</p> '
+  name: Version
+  type: java.lang.String

@@ -1,0 +1,62 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.runtime.RuntimeMBean
+derivedTypes:
+- weblogic.management.runtime.JaxRsResourceRuntimeMBean
+descriptionHTML: 'Base class for JAX-RS resources. '
+name: weblogic.management.runtime.JaxRsUriRuntimeMBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: 'Get the flag indicating whether the resource is extended or is
+    a core of exposed RESTful API. <p> Extended resource model components are helper
+    components that are not considered as a core of a RESTful API. These can be for
+    example <code>OPTIONS</code> resource methods added by model processors or <code>application.wadl</code>
+    resource producing the WADL. Both resource are rather supportive than the core
+    of RESTful API. </p> '
+  name: Extended
+  type: boolean
+- defaultValue: {
+    }
+  descriptionHTML: 'Get execution statistics that contain measurements of times only
+    for execution of resource methods. Durations average time, minimum time and maximum
+    time measure only time of execution of resource methods code. It does not involve
+    other request processing phases. '
+  name: MethodsStatistics
+  relationship: containment
+  type: weblogic.management.runtime.JaxRsExecutionStatisticsRuntimeMBean
+- defaultValue: {
+    }
+  descriptionHTML: 'The relative path that is assigned to this resource. '
+  name: Path
+  type: java.lang.String
+- defaultValue: {
+    }
+  descriptionHTML: 'Get execution statistics that contain measurements of times for
+    whole processing from time when request comes into the Jersey application until
+    the response is written to the underlying IO container. The statistics involves
+    only requests that were matched to resource methods defined in getMethodsStatistics(). '
+  name: RequestStatistics
+  relationship: containment
+  type: weblogic.management.runtime.JaxRsExecutionStatisticsRuntimeMBean
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: 'Return the resource methods available under this resource. '
+  name: ResourceMethods
+  relationship: containment
+  type: weblogic.management.runtime.JaxRsResourceMethodRuntimeMBean
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: 'Return the resource methods available under this resource. '
+  name: SubResourceLocators
+  relationship: containment
+  type: weblogic.management.runtime.JaxRsSubResourceLocatorRuntimeMBean
+roles:
+  allowed:
+  - Operator

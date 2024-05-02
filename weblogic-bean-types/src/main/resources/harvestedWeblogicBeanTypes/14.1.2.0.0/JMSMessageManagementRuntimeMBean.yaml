@@ -1,0 +1,33 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.runtime.JMSMessageCursorRuntimeMBean
+derivedTypes:
+- weblogic.management.runtime.JMSDurableSubscriberRuntimeMBean
+- weblogic.management.runtime.JMSDestinationRuntimeMBean
+descriptionHTML: 'This interface defines the common management functionality for both
+  Queues and Topics '
+name: weblogic.management.runtime.JMSMessageManagementRuntimeMBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Returns the number of messages that have been deleted from
+    the destination.</p> '
+  name: MessagesDeletedCurrentCount
+  type: java.lang.Long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Returns the number of messages that have been moved from the
+    destination.</p> '
+  name: MessagesMovedCurrentCount
+  type: java.lang.Long
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: '<p>Returns JMS message management tasks.</p> '
+  name: Tasks
+  relationship: containment
+  type: weblogic.management.runtime.JMSMessageManagementTaskRuntimeMBean

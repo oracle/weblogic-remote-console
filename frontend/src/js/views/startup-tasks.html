@@ -1,8 +1,8 @@
 <!--
- Copyright (c) 2023, Oracle and/or its affiliates.
+ Copyright (c) 2023,2024, Oracle and/or its affiliates.
  The Universal Permissive License (UPL), Version 1.0
 -->
-<section id="startup-task-container" class="oj-web-applayout-max-width oj-sm-web-padding-horizontal">
+<div id="startup-task-container" role="region" :aria-label="[[i18n.ariaLabel.cards.panel.value]]" class="oj-web-applayout-max-width oj-sm-web-padding-horizontal">
   <div class="oj-flex">
     <oj-bind-for-each data="[[startupTaskItems]]">
       <template>
@@ -26,7 +26,7 @@
       </template>
     </oj-bind-for-each>
   </div>
-</section>
+</div>
 
 <oj-dialog
   id="startupTaskChooserDialog"
@@ -34,7 +34,7 @@
   initial-visibility="hide"
 >
   <div slot="body">
-    <div class="cfe-dialog-prompt">
+    <div id="startup-task-chooser-instructions" :aria-label="[[i18n.dialog.instructions()]]" class="cfe-dialog-prompt">
       <span data-bind="text: [[i18n.dialog.instructions()]]"></span>
     </div>
 
@@ -44,6 +44,7 @@
           id="startup-task-chooser-radioset"
           label-edge="inside"
           value="{{dialogFields().startupTask}}"
+          aria-labelledby="startup-task-chooser-instructions"
         >
           <oj-bind-for-each data="[[dialogFields().startupTasks]]" as="item">
             <template>

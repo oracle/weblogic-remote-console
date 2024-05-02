@@ -1,0 +1,37 @@
+# Copyright (c) 2020, 2024, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.configuration.ConfigurationMBean
+derivedTypes: [
+  ]
+descriptionHTML: 'A mbean used to configure the attributes of the health score service. '
+name: weblogic.management.configuration.HealthScoreMBean
+properties:
+- defaultValue:
+    value:
+      value: 5
+  descriptionHTML: 'The interval time (in seconds) that WebLogic Server will call
+    the health score plugin for calculating the server''s health score. '
+  name: CalculateIntervalSecs
+  restartNeeded: true
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: 'Indicates whether the health score service is enabled. '
+  name: Enabled
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: weblogic.health.DefaultHealthScorePlugin
+  descriptionHTML: 'The class name of the health score plugin to be instantiated and
+    used by the health score service to calculate the health score of the server. '
+  name: PluginClassName
+  restartNeeded: true
+  type: java.lang.String
+  writable: true

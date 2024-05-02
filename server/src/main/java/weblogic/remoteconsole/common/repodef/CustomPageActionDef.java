@@ -1,4 +1,4 @@
-// Copyright (c) 2023, Oracle and/or its affiliates.
+// Copyright (c) 2023, 2024, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef;
@@ -21,6 +21,8 @@ public class CustomPageActionDef implements PageActionDef {
   private PageDef pageDef;
   private LocalizableString label;
   private LocalizableString helpLabel;
+  private LocalizableString successMessage;
+  private LocalizableString failureMessage;
   private String actionMethod;
   private LocalizableString helpSummaryHTML;
   private LocalizableString detailedHelpHTML;
@@ -40,6 +42,8 @@ public class CustomPageActionDef implements PageActionDef {
     setPageDef(toClone.getPageDef());
     setLabel(toClone.getLabel());
     setHelpLabel(toClone.getHelpLabel());
+    setSuccessMessage(toClone.getSuccessMessage());
+    setFailureMessage(toClone.getFailureMessage());
     setActionMethod(toClone.getActionMethod());
     setHelpSummaryHTML(toClone.getHelpSummaryHTML());
     setDetailedHelpHTML(toClone.getDetailedHelpHTML());
@@ -91,6 +95,34 @@ public class CustomPageActionDef implements PageActionDef {
 
   public CustomPageActionDef helpLabel(LocalizableString val) {
     setHelpLabel(val);
+    return this;
+  }
+
+  @Override
+  public LocalizableString getSuccessMessage() {
+    return successMessage;
+  }
+
+  public void setSuccessMessage(LocalizableString val) {
+    successMessage = val;
+  }
+
+  public CustomPageActionDef successMessage(LocalizableString val) {
+    setSuccessMessage(val);
+    return this;
+  }
+
+  @Override
+  public LocalizableString getFailureMessage() {
+    return failureMessage;
+  }
+
+  public void setFailureMessage(LocalizableString val) {
+    failureMessage = val;
+  }
+
+  public CustomPageActionDef failureMessage(LocalizableString val) {
+    setFailureMessage(val);
     return this;
   }
 

@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2020, 2022, Oracle and/or its affiliates.
+ * Copyright (c) 2020, 2024, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
@@ -58,6 +58,7 @@ define(['ojs/ojcore', 'wrc-frontend/core/runtime'],
       const reply = {};
       const headers = new Headers();
       headers.append('User-Agent', USER_AGENT);
+      headers.append('Unique-Id', Runtime.getUniqueId());
       if (Runtime.getProperty('X-Session-Token'))
         headers.append('X-Session-Token', Runtime.getProperty('X-Session-Token'));
       return fetch(url, {
@@ -81,10 +82,29 @@ define(['ojs/ojcore', 'wrc-frontend/core/runtime'],
       });
     }
 
+    function getHRef(url) {
+      const reply = {};
+      const headers = new Headers();
+      headers.append('User-Agent', USER_AGENT);
+      headers.append('Unique-Id', Runtime.getUniqueId());
+      if (Runtime.getProperty('X-Session-Token'))
+        headers.append('X-Session-Token', Runtime.getProperty('X-Session-Token'));
+      return fetch(url, {
+        method: 'get',
+        credentials: 'include',
+        headers: headers
+      })
+        .then(status)
+        .then(response => {
+          return response;
+        });
+    }
+
     function getPostHeaders(contentType, authorization) {
       const headers = new Headers();
       headers.append('Content-type', (contentType || APPLICATION_JSON));
       headers.append('User-Agent', USER_AGENT);
+      headers.append('Unique-Id', Runtime.getUniqueId());
       if (typeof authorization !== 'undefined') {
         headers.append('Authorization', authorization);
       }
@@ -132,6 +152,7 @@ define(['ojs/ojcore', 'wrc-frontend/core/runtime'],
     function _delete(url) {
       const reply = {};
       const headers = new Headers();
+      headers.append('Unique-Id', Runtime.getUniqueId());
       headers.append('User-Agent', USER_AGENT);
       if (Runtime.getProperty('X-Session-Token'))
         headers.append('X-Session-Token', Runtime.getProperty('X-Session-Token'));
@@ -175,6 +196,10 @@ define(['ojs/ojcore', 'wrc-frontend/core/runtime'],
 
       get: function (url) {
         return get(url);
+      },
+
+      getHRef: function (url) {
+        return getHRef(url);
       },
 
       post: function (url, content, contentType, authorization) {

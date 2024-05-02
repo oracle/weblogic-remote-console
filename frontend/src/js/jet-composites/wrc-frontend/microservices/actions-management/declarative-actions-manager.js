@@ -14,6 +14,7 @@ define([
     'wrc-frontend/apis/data-operations',
     'wrc-frontend/microservices/page-definition/utils',
     'wrc-frontend/common/page-definition-helper',
+    'wrc-frontend/common/confirmations-dialog',
     'wrc-frontend/integration/viewModels/utils',
     'wrc-frontend/core/runtime',
     'wrc-frontend/core/types',
@@ -28,6 +29,7 @@ define([
     DataOperations,
     PageDefinitionUtils,
     PageDefinitionHelper,
+    ConfirmationsDialog,
     ViewModelUtils,
     Runtime,
     CoreTypes,
@@ -35,7 +37,7 @@ define([
     Logger
   ) {
     let backendActions = [], frontendActions;
-  
+
     YamlParser.parse(WrcActionsFileContents)
       .then(config => {
         if (config && config.actions && config.actions.backend) {
@@ -63,9 +65,33 @@ define([
       },
       labels: {
         'cannotDetermineExactCause': {value: oj.Translations.getTranslatedString('wrc-pdj-actions.labels.cannotDetermineExactCause.value')}
+      },
+      buttons: {
+        yes: {
+          disabled: false,
+          label: oj.Translations.getTranslatedString('wrc-common.buttons.yes.label')
+        },
+        no: {
+          disabled: false,
+          label: oj.Translations.getTranslatedString('wrc-common.buttons.no.label')
+        },
+        ok: {
+          disabled: false,
+          label: oj.Translations.getTranslatedString('wrc-common.buttons.ok.label')
+        },
+        cancel: {
+          disabled: false,
+          visible: ko.observable(false),
+          label: oj.Translations.getTranslatedString('wrc-common.buttons.cancel.label')
+        }
+      },
+      dialog: {
+        title: ko.observable(''),
+        instructions: ko.observable(''),
+        prompt: ko.observable('')
       }
     };
-    
+
     function getActionEndpoint(rdjActions, action = '') {
       let endpoint;
       if (CoreUtils.isNotUndefinedNorNull(rdjActions)) {
@@ -99,7 +125,7 @@ define([
       if (checkedRows.size > 0) {
         for (const rowKeyValue of Array.from(checkedRows)) {
           const index = rdjData.data.map(row => row.identity.value.resourceData).indexOf(rowKeyValue);
-          
+
           if (index !== -1 && CoreUtils.isNotUndefinedNorNull(rdjData.data[index].identifier)) {
             const row = {value: rdjData.data[index].identifier.value};
             actionDataPayload.rows.value.push(row);
@@ -112,11 +138,11 @@ define([
             const identifierIndex = rdjData.data.findIndex(row => row.identifier?.value === rowKeyValue);
 
             if (identifierIndex !== -1) {
-               row = rdjData.data[identifierIndex].identifier;
+              row = rdjData.data[identifierIndex].identifier;
             }
             else {
               // assume that the rowKeyValue is a path to a resource 
-               row = { value: { resourceData: rowKeyValue } };
+              row = { value: { resourceData: rowKeyValue } };
             }
             actionDataPayload.rows.value.push(row);
           }
@@ -159,7 +185,7 @@ define([
           false
         );
       }
-      
+
       // If all went well inside the createMultipartFormData()
       // call, then the form data for the multipart-form will
       // be assigned to multipartFormDataPayload.formData. Otherwise,
@@ -222,7 +248,7 @@ define([
           disabled: ko.observable(menuItem.disabled)
         };
         if (CoreUtils.isNotUndefinedNorNull(menuItem.menus)) {
-          
+
           let option = document.createElement('oj-option');
           option.setAttribute('id', menuItem.name);
           option.setAttribute('value', menuItem.name);
@@ -386,7 +412,7 @@ define([
       }
       return rtnval;
     }
-  
+
     function getRowSelectionProperty(pdjData) {
       let rtnval = 'none';
       if (CoreUtils.isNotUndefinedNorNull(pdjData.table)) {
@@ -461,11 +487,13 @@ define([
         }
         return rtnval;
       }
-  
+
       if (declarativeActions.checkedRows.size !== 1) {
         for (let i = 0; i < declarativeActions.buttons.length; i++) {
-          declarativeActions.buttons[i].disabled = true;
-          buttons[declarativeActions.buttons[i].name].disabled(true);
+          if (declarativeActions.buttons[i].rows !== 'none' && declarativeActions.navigationProperty !== 'none' && declarativeActions.rowSelectionProperty !== 'none' && declarativeActions.rowSelectionRequired !== false) {
+            declarativeActions.buttons[i].disabled = true;
+            buttons[declarativeActions.buttons[i].name].disabled(true);
+          }
         }
       }
       else if (declarativeActions.checkedRows.size === 1) {
@@ -483,7 +511,7 @@ define([
               else {
                 actions = declarativeActions.buttons.filter(action => CoreUtils.isNotUndefinedNorNull(action.constraint));
               }
-    
+
               for (const action of actions) {
                 // At this point, we already know that action has a
                 // constraint property. What we don't know is whether
@@ -538,7 +566,7 @@ define([
       }
 
       let disabledState;
-  
+
       const filtered = declarativeActions.buttons.filter(action => CoreUtils.isUndefinedOrNull(action.constraint));
 
       for (let i = 0; i < filtered.length; i++) {
@@ -582,7 +610,7 @@ define([
       return DataOperations.actions.postActionData(endpoint.resourceData, dataPayload)
         .then(reply => {
           return {
-            succeeded: true,
+            succeeded: reply.transport.status === 200,
             messages: reply.body.messages
           };
         })
@@ -590,10 +618,10 @@ define([
           if (response.failureType === CoreTypes.FailureType.CBE_REST_API) {
             return handlePostActionDataResponse(response, actionLabel, addActionNotPerformedMessage);
           }
-          
+
         });
     }
-    
+
     /**
      *
      * @param {string} actionLabel
@@ -616,7 +644,7 @@ define([
           return handlePostActionDataResponse(response, actionLabel, addActionNotPerformedMessage);
         });
     }
-    
+
     function handlePostActionDataResponse(response, actionLabel, addActionNotPerformedMessage) {
       if (response.failureType === CoreTypes.FailureType.CBE_REST_API) {
         const reply = {
@@ -636,6 +664,9 @@ define([
             }
             reply['messages'] = response.body.messages;
           }
+        }
+        else if (response.transport.status === 404 || response.transport.status === 502) {
+          reply['transport'] = {status: 502, statusText: 'Bad Gateway'};
         }
         else {
           reply['messages'] = [{
@@ -665,7 +696,7 @@ define([
       }
 
     }
-    
+
     async function performDownloadAction(rdjData, declarativeActions, options) {
       function createDownloadActionReply(replies) {
         const reply = {messages: []};
@@ -754,6 +785,98 @@ define([
       return Promise.resolve({succeeded: true, messages: []});
     }
 
+    async function defaultPerformAction(rdjData, declarativeActions, options) {
+      const dataPayload = getActionDataPayload(rdjData, options, declarativeActions.checkedRows);
+      const endpoint = getActionEndpoint(rdjData.actions, options.action);
+      return postActionData(options.label, endpoint, dataPayload);
+    }
+
+    async function performExecutionOrderConstrainedAction(rdjData, declarativeActions, options) {
+      const executionOrderConstraint = getExecutionOrderConstraint(rdjData, declarativeActions);
+      if (executionOrderConstraint.enabled) {
+        if (executionOrderConstraint.requiresConfirm) {
+          return showConfirmationDialog(executionOrderConstraint)
+            .then(reply => {
+              if (reply) {
+                options['pollingIntervalOverride'] = -1;
+                return defaultPerformAction(rdjData, declarativeActions, options)
+                  .then(reply => {
+                    delete reply.messages;
+                    return Promise.resolve(reply);
+                  });
+              }
+              else {
+                return Promise.resolve({succeeded: false});
+              }
+            })
+        }
+        else {
+          const response = {
+            transport: {
+              status: 400,
+              statusText: 'Bad Request'
+            },
+            body: {
+              messages: [
+                {
+                  'severity': 'error',
+                  'message': oj.Translations.getTranslatedString('wrc-message-line.messages.shutdownSequenceError.details')
+                }
+              ]
+            },
+            failureType: CoreTypes.FailureType.CBE_REST_API,
+            failureReason: 'Bad Request'
+          };
+          return handlePostActionDataResponse(response, options.label, true);
+        }
+      }
+      else{
+        return defaultPerformAction(rdjData, declarativeActions, options);
+      }
+    }
+
+    function getExecutionOrderConstraint(rdjData, declarativeActions) {
+      const executionOrderConstraint = {enabled: false, requiresConfirm: false};
+      if (declarativeActions.checkedRows.size > 0) {
+        const rowKeyName = declarativeActions.rowSelectionProperty;
+        for (const rowKeyValue of Array.from(declarativeActions.checkedRows)) {
+          const row = rdjData.data.find(row => CoreUtils.isNotUndefinedNorNull(row.identity) && row.identity.value.resourceData === rowKeyValue);
+          if (CoreUtils.isNotUndefinedNorNull(row) && row.identity.value.label === 'AdminServer') {
+            executionOrderConstraint.enabled = true;
+            executionOrderConstraint.requiresConfirm = true;
+            if (rowKeyName === 'identity') {
+              executionOrderConstraint['label'] = row.identity.value.label;
+              executionOrderConstraint['resourceData'] = row.identity.value.resourceData;
+            }
+          }
+        }
+      }
+
+      return executionOrderConstraint;
+    }
+
+    function showConfirmationDialog(executionOrderConstraint) {
+      return new Promise(function (resolve) {
+        i18n.dialog.title(oj.Translations.getTranslatedString('wrc-confirm-dialogs.adminServerShutdown.title.value'));
+        i18n.dialog.prompt(oj.Translations.getTranslatedString('wrc-confirm-dialogs.adminServerShutdown.prompt.value', executionOrderConstraint.label));
+        i18n.buttons.cancel.visible(false);
+        ConfirmationsDialog.showConfirmDialog('ShutdownAdminServer', i18n)
+          .then(reply => {
+            switch (reply.exitButton) {
+              case 'yes':
+                resolve(true);
+                break;
+              case 'no':
+                resolve(false);
+                break;
+              case 'cancel':
+                resolve(null);
+                break;
+            }
+          });
+      });
+    }
+
     /**
      *
      * @param {string} pdjAction
@@ -777,6 +900,14 @@ define([
       }
 
       return actionPolling;
+    }
+
+    function isExecutionOrderConstrainedAction(action) {
+      return (['forceShutdown', 'gracefulShutdown'].includes(action));
+    }
+
+    function getActionConstraints(pdjActions) {
+      return (pdjActions.filter(item => CoreUtils.isNotUndefinedNorNull(item.constraint)).length > 0);
     }
 
     function getPDJActionPolling(declarativeActions, action) {
@@ -827,16 +958,16 @@ define([
       isRowSelectionRequired: (pdjData) => {
         return rowSelectionRequired(pdjData);
       },
-      
+
       ActionInputFormStyle: Object.freeze({
         CONFIRM_DIALOG: {name: 'CONFIRM_DIALOG'},
         ACTION_POPUP: {name: 'ACTION_POPUP'}
       }),
-      
+
       hasFrontendActions: () => {
         return (frontendActions.length > 0);
       },
-      
+
       hasActions: (pdjData) => {
         return hasActions(pdjData);
       },
@@ -844,16 +975,11 @@ define([
       hasActionInputForm: (rdjActions, action) => {
         return hasActionInputForm(rdjActions, action);
       },
-  
+
       hasSliceFormActionInput: (pdjData) => {
         return hasSliceFormActionInput(pdjData);
       },
-  
-      hasActionConstraints: (action = '') => {
-        let filtered = backendActions.filter(item => item.constraint && item.id === action);
-        return (filtered.length > 0);
-      },
-  
+
       willAffectChangeManager: (action = '') => {
         let filtered = backendActions.filter(item => item.affectsChangeManager && item.id === action);
         return (filtered.length > 0);
@@ -921,7 +1047,7 @@ define([
           const pdjAction = createPDJAction(settingsAction, rdjData, pdjData);
           if (PageDefinitionHelper.hasTable(pdjData)) {
             if (hasActions(pdjData)) {
-              const index = pdjData.table.actions.map(item => item.name).indexOf(settingsAction.id);
+              const index = pdjData.table.actions.findIndex(item => item.name === settingsAction.id);
               if (index === -1) {
                 pdjData.table.actions.unshift(pdjAction);
               }
@@ -934,7 +1060,7 @@ define([
           }
           else if (PageDefinitionHelper.hasSliceTable(pdjData)) {
             if (hasActions(pdjData)) {
-              const index = pdjData.sliceTable.actions.map(item => item.name).indexOf(settingsAction.id);
+              const index = pdjData.sliceTable.actions.findIndex(item => item.name === settingsAction.id);
               if (index === -1) {
                 pdjData.sliceTable.actions.unshift(pdjAction);
               }
@@ -946,7 +1072,7 @@ define([
             }
           }
 
-          const index = buttons.map(button => button.name).indexOf(pdjAction.name);
+          const index = buttons.findIndex(button => button.name === pdjAction.name);
 
           if (index === -1) {
             const button = {};
@@ -969,7 +1095,7 @@ define([
 
         if (CoreUtils.isNotUndefinedNorNull(declarativeActions.isDeletable) && declarativeActions.isDeletable) {
           if (frontendActions.length > 0) {
-            const index = frontendActions.map(item => item.id).indexOf(action);
+            const index = frontendActions.findIndex(item => item.id === action);
             if (index !== -1) {
               addPDJAction(declarativeActions.buttons, frontendActions[index], rdjData, pdjData);
             }
@@ -986,11 +1112,11 @@ define([
             declarativeActions['rowSelectionProperty'] = getRowSelectionProperty(pdjData);
             declarativeActions['isDeletable'] = PageDefinitionHelper.isDeletable(rdjData);
             declarativeActions['navigationProperty'] = getNavigationProperty(pdjData);
-            declarativeActions['hasActionConstraints'] = (backendActions.filter(item => CoreUtils.isNotUndefinedNorNull(item.constraint)).length > 0);
+            declarativeActions['hasActionConstraints'] = getActionConstraints(pdjActions);
             declarativeActions.dataRowsCount = rdjData.data.length;
             declarativeActions.buttons = [];
             for (const pdjAction of pdjActions) {
-              const index = backendActions.map(item => item.id).indexOf(pdjAction.name);
+              const index = backendActions.findIndex(item => item.id === pdjAction.name);
               if (index !== -1) {
                 const button = {};
                 button['name'] = pdjAction.name;
@@ -1033,8 +1159,7 @@ define([
                         const subMenuItem = {
                           name: subMenu.name,
                           label: subMenu.label,
-                          disabled: (declarativeActions.rowSelectionRequired),
-                          //rows: subMenu.rows
+                          disabled: (declarativeActions.rowSelectionRequired)
                         };
                         if (CoreUtils.isNotUndefinedNorNull(subMenu.polling)) {
                           subMenuItem['polling'] = getActionPollingObject(subMenu);
@@ -1111,7 +1236,7 @@ define([
         }
       },
 
-      getPDJActionPollingObject: (declarativeActions, action) => {
+      getPDJActionPollingObject: (rdjData, declarativeActions, action) => {
         return getPDJActionPolling(declarativeActions, action);
       },
 
@@ -1132,7 +1257,7 @@ define([
         let iconFile = 'action-empty-icon-blk_24x24';
         const settingsActions = [...backendActions, ...frontendActions];
         if (settingsActions.length > 0) {
-          const index = settingsActions.map(item => item.id).indexOf(action);
+          const index = settingsActions.findIndex(item => item.id === action);
           if (index !== -1) {
             iconFile = settingsActions[index].iconFile;
           }
@@ -1147,10 +1272,11 @@ define([
         else if (options.isDeleteAction) {
           return performDeleteAction(rdjData, declarativeActions, options);
         }
+        else if (isExecutionOrderConstrainedAction(options.action)) {
+          return performExecutionOrderConstrainedAction(rdjData, declarativeActions, options);
+        }
         else {
-          const dataPayload = getActionDataPayload(rdjData, options, declarativeActions.checkedRows);
-          const endpoint = getActionEndpoint(rdjData.actions, options.action);
-          return postActionData(options.label, endpoint, dataPayload);
+          return defaultPerformAction(rdjData, declarativeActions, options);
         }
       },
 

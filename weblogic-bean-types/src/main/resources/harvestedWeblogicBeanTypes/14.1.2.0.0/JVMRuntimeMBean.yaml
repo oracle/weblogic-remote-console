@@ -1,0 +1,84 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.runtime.RuntimeMBean
+derivedTypes:
+- weblogic.management.runtime.JRockitRuntimeMBean
+descriptionHTML: '<p>Provides methods for retrieving information about the Java Virtual
+  Machine (JVM) within with the current server instance is running. You cannot change
+  the JVM''s operating parameters while the JVM is active. Instead, use the startup
+  options that are described in the JVM''s documentation.</p>  <p>The WebLogic JVM
+  contains only one of these Runtime MBeans:</p> <ul> <li> <p>If the JVM is an instance
+  of a JRockit JDK, then the JVM contains <code>JRockitRuntime MBean</code>.</p></li>  <li>
+  <p> Otherwise, it contains the <code>JVMRuntimeMBean</code>.</p></li> </ul> '
+name: weblogic.management.runtime.JVMRuntimeMBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The current amount of memory (in bytes) that is available in
+    the JVM heap.</p> '
+  name: HeapFreeCurrent
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Percentage of the maximum memory that is free.</p> '
+  name: HeapFreePercent
+  type: int
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The current size (in bytes) of the JVM heap.</p> '
+  name: HeapSizeCurrent
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The maximum free memory configured for this JVM.</p> '
+  name: HeapSizeMax
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Returns the vendor of the JVM.</p>  <p>The vendor of the JVM
+    that this server runs.</p>  system property java.vm.vendor is returned '
+  name: JavaVMVendor
+  type: java.lang.String
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Returns the vendor of Java.</p>  <p>The vendor of Java that
+    this server runs.</p> '
+  name: JavaVendor
+  type: java.lang.String
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Returns the vendor version of Java.</p>  <p>The vendor version
+    of Java that this server runs.</p> '
+  name: JavaVendorVersion
+  type: java.lang.String
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The Java version of the JVM.</p> '
+  name: JavaVersion
+  type: java.lang.String
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Returns the operating system on which the JVM is running.</p>  <p>The
+    operating system on which the JVM is running.</p> '
+  name: OSName
+  type: java.lang.String
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The version of the operating system on which the JVM is running.</p> '
+  name: OSVersion
+  type: java.lang.String
+- defaultValue: {
+    }
+  descriptionHTML: '<p>JVM thread dump. Thread dump is available only on 1.5 VM</p> '
+  name: ThreadStackDump
+  type: java.lang.String
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The number of milliseconds that the Virtual Machine has been
+    running.</p> '
+  name: Uptime
+  type: long

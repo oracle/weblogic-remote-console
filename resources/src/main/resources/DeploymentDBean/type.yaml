@@ -1,0 +1,29 @@
+# Copyright (c) 2024, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+createResourceMethod: weblogic.remoteconsole.customizers.DescriptorBeanCustomizer.createResource
+
+subTypeDiscriminatorProperty: Type
+subTypes:
+- type: weblogic.management.descriptor.ApplicationDeploymentDBean
+  value: Application
+- type: weblogic.management.descriptor.ConnectorDeploymentDBean
+  value: Connector
+- type: weblogic.management.descriptor.EjbJarDeploymentDBean
+  value: EjbJar
+- type: weblogic.management.descriptor.WebAppDeploymentDBean
+  value: WebApp
+
+properties:
+- name: Name
+  helpHTML: The deployment's name.
+- name: ModuleType
+  legalValues:
+  - value: ear
+    label: Enterprise Application
+  - value: ejb
+    label: EJB Jar
+  - value: rar
+    label: Resource Adapter
+  - value: war
+    label: Web Application

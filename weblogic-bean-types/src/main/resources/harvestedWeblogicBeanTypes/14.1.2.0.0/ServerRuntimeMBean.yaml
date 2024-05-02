@@ -1,0 +1,670 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.runtime.RuntimeMBean
+derivedTypes: [
+  ]
+descriptionHTML: '<p>Provides methods for retrieving runtime information about a server
+  instance and for transitioning a server from one state to another.</p> '
+name: weblogic.management.runtime.ServerRuntimeMBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The time when the server was started.</p> '
+  name: ActivationTime
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Indicates whether the server is an Administration Server.</p> '
+  name: AdminServer
+  type: boolean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The address on which the Administration Server is listening
+    for connections. For example, this might return the string: santiago</p> '
+  name: AdminServerHost
+  type: java.lang.String
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The port on which the Administration Server is listening for
+    connections.</p> '
+  name: AdminServerListenPort
+  type: int
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Indicates whether the port that the server uses for administrative
+    traffic is configured to use a secure protocol.</p> '
+  name: AdminServerListenPortSecure
+  type: boolean
+- defaultValue: {
+    }
+  deprecated: '9.0.0.0 Replaced by getAdministrationURL '
+  descriptionHTML: '<p>The port on which this server is listening for administrative
+    requests.</p> '
+  name: AdministrationPort
+  supported: false
+  type: int
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Indicates whether the administration port is enabled on the
+    server</p> '
+  name: AdministrationPortEnabled
+  type: boolean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The URL that the server and its clients use for administrative
+    connections.</p>  <p>If no administration channel is enabled, then this method
+    returns the URL for connections through the default channel. If the default channel
+    is de-activated, this method returns the URL for a secure channel. If no secure
+    channel is enabled, the method returns null.</p>  <p>The returned URL will be
+    consistent with dynamic channel updates.</p> '
+  name: AdministrationURL
+  type: java.lang.String
+- defaultValue: {
+    }
+  descriptionHTML: 'Gets the progress meter bean which can be used to view the progress
+    of a booting server '
+  exclude: true
+  getRoles:
+    allowed:
+    - Operator
+  name: AggregateProgress
+  relationship: containment
+  supported: false
+  type: weblogic.management.runtime.AggregateProgressMBean
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: '<p> Returns the list of currently running Applications </p> '
+  name: ApplicationRuntimes
+  relationship: containment
+  type: weblogic.management.runtime.ApplicationRuntimeMBean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Return an MBean which represents this server''s view of its
+    AsyncReplicationRuntime, if any.</p> '
+  name: AsyncReplicationRuntime
+  relationship: containment
+  type: weblogic.management.runtime.AsyncReplicationRuntimeMBean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Gets the BatchJobRepositoryRuntimeMBean for this server.</p> '
+  name: BatchJobRepositoryRuntime
+  relationship: containment
+  type: weblogic.management.runtime.BatchJobRepositoryRuntimeMBean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Get statistics for system-level class loading.</p> '
+  name: ClassLoaderRuntime
+  relationship: containment
+  type: weblogic.management.runtime.ClassLoaderRuntimeMBean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Indicates whether the server is the ClusterMaster of a cluster
+    which is configured for server migration.</p> '
+  exclude: true
+  name: ClusterMaster
+  supported: false
+  type: boolean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Return an MBean which represents this server''s view of its
+    cluster, if any.</p> '
+  name: ClusterRuntime
+  relationship: containment
+  type: weblogic.management.runtime.ClusterRuntimeMBean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The ConcurrentManagedObjectsRuntimeMBean for this server.</p> '
+  name: ConcurrentManagedObjectsRuntime
+  relationship: containment
+  type: weblogic.management.runtime.ConcurrentManagedObjectsRuntimeMBean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The access point for server wide control and monitoring of
+    the Connector Container.</p> '
+  name: ConnectorServiceRuntime
+  relationship: containment
+  type: weblogic.management.runtime.ConnectorServiceRuntimeMBean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The absolute path of the directory from which the server was
+    started.</p>  <p>This may be used in conjunction with other relative paths in
+    ServerMBean to compute full paths.</p> '
+  name: CurrentDirectory
+  type: java.lang.String
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Return the machine on which the server is running. This will
+    be different from the configuration if the server gets migrated automatically.</p> '
+  name: CurrentMachine
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Return an MBean which exposes this server''s default execute
+    queue.</p> '
+  name: DefaultExecuteQueueRuntime
+  relationship: containment
+  type: weblogic.management.runtime.ExecuteQueueRuntimeMBean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The URL that clients use to connect to this server''s default
+    network channel.</p>  <p>The returned value indicates the default protocol, listen
+    address and listen port:</p>  <p><i>protocol</i>://<i>listen-address</i>:<i>listen-port</i></p>  <p>Note:
+    The default protocol, listen address and listen port are persisted in the domain''s
+    <code>config.xml</code> file, however when a server instance is started, command-line
+    options can override these persisted values. This <code>getDefaultURL</code> method
+    returns the URL values that are currently being used, not necessarily the values
+    that are specified in <code>config.xml</code>.</p>  <p>The returned URL will be
+    consistent with dynamic channel updates.</p> '
+  name: DefaultURL
+  type: java.lang.String
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Return an MBean which represents Cumulative Status of the XML
+    Cache.</p> '
+  name: EntityCacheCumulativeRuntime
+  relationship: containment
+  type: weblogic.management.runtime.EntityCacheCumulativeRuntimeMBean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Return an MBean which represents Current Status of the XML
+    Cache.</p> '
+  name: EntityCacheCurrentStateRuntime
+  relationship: containment
+  type: weblogic.management.runtime.EntityCacheCurrentStateRuntimeMBean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Return an MBean which represents Historical Status of the XML
+    Cache.</p> '
+  name: EntityCacheHistoricalRuntime
+  relationship: containment
+  type: weblogic.management.runtime.EntityCacheCumulativeRuntimeMBean
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: '<p>Returns an array of MBeans which exposes this server''s active
+    execute queues.</p> '
+  name: ExecuteQueueRuntimes
+  relationship: containment
+  type: weblogic.management.runtime.ExecuteQueueRuntimeMBean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The health state of the server as reported by the server''s
+    self-health monitoring.</p>  <p>For example, the server can report if it is overloaded
+    by too many requests, if it needs more memory resources, or if it will soon fail
+    for other reasons.</p> '
+  name: HealthState
+  type: weblogic.health.HealthState
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The HealthState object returned as a CompositeData type.</p> '
+  name: HealthStateJMX
+  type: javax.management.openmbean.CompositeData
+- defaultValue: {
+    }
+  descriptionHTML: 'Returns true if sitconfig is applied. '
+  name: InSitConfigState
+  type: boolean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The JDBCServiceRuntimeMBean for this server.</p> '
+  name: JDBCServiceRuntime
+  relationship: containment
+  type: weblogic.management.runtime.JDBCServiceRuntimeMBean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The JMSRuntimeMBean for this server.</p> '
+  name: JMSRuntime
+  relationship: containment
+  type: weblogic.management.runtime.JMSRuntimeMBean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The transaction RuntimeMBean for this server.</p> '
+  name: JTARuntime
+  relationship: containment
+  type: weblogic.management.runtime.JTARuntimeMBean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The JVMRuntimeMBean for this server.</p> '
+  name: JVMRuntime
+  relationship: containment
+  type: weblogic.management.runtime.JVMRuntimeMBean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The JoltConnectionServiceRuntimeMBean for this server.</p> '
+  name: JoltRuntime
+  relationship: containment
+  type: weblogic.management.runtime.JoltConnectionServiceRuntimeMBean
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: '<p> Returns all deployed Libraries </p> '
+  name: LibraryRuntimes
+  relationship: containment
+  type: weblogic.management.runtime.LibraryRuntimeMBean
+- defaultValue: {
+    }
+  deprecated: '9.0.0.0 Replaced by getURL '
+  descriptionHTML: '<p>The address on which this server is listening for connections
+    through the default network channel.</p>  <p>For example this might return the
+    string: <code>santiago/172.17.9.220</code>.</p>  <p>You can configure other network
+    channels for this server, and the other channels can use different listen addresses.</p> '
+  name: ListenAddress
+  restInternal: needed by the WLS console
+  type: java.lang.String
+- defaultValue: {
+    }
+  deprecated: '9.0.0.0 Replaced by getURL '
+  descriptionHTML: '<p>The port on which this server is listening for connections.</p> '
+  name: ListenPort
+  restInternal: needed by the WLS console
+  type: int
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Indicates whether the default listen port is enabled on the
+    server.</p> '
+  name: ListenPortEnabled
+  type: boolean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The object which generates notifications on behalf of the logging
+    subystem.</p> '
+  name: LogBroadcasterRuntime
+  relationship: containment
+  type: weblogic.management.runtime.LogBroadcasterRuntimeMBean
+- defaultValue: {
+    }
+  deprecated: '12.1.3.0 '
+  descriptionHTML: '<p>Return the MBean which provides access to the control interface
+    for WLS server logging.</p> '
+  name: LogRuntime
+  relationship: containment
+  supported: false
+  type: weblogic.management.runtime.LogRuntimeMBean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Return an MBean which represents this server''s view of its
+    MANAsyncReplicationRuntime, if any.</p> '
+  name: MANAsyncReplicationRuntime
+  relationship: containment
+  type: weblogic.management.runtime.MANAsyncReplicationRuntimeMBean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Return an MBean which represents this server''s view of its
+    MANReplicationRuntime, if any.</p> '
+  name: MANReplicationRuntime
+  relationship: containment
+  type: weblogic.management.runtime.MANReplicationRuntimeMBean
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: '<p>Return the runtimeMBeans for JavaMail Mail Sessions</p> '
+  name: MailSessionRuntimes
+  relationship: containment
+  type: weblogic.management.runtime.MailSessionRuntimeMBean
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: '<p>Returns an array of RuntimeMBeans which exposes this server''s
+    globally defined MaxThreadsConstraints.</p> '
+  name: MaxThreadsConstraintRuntimes
+  relationship: containment
+  type: weblogic.management.runtime.MaxThreadsConstraintRuntimeMBean
+- defaultValue: {
+    }
+  deprecated: '12.1.3.0 Replaced by getMessagingBridgeRuntimes '
+  descriptionHTML: '<p> The MessagingBridgeRuntimeMBean for this server </p> '
+  name: MessagingBridgeRuntime
+  relationship: containment
+  supported: false
+  type: weblogic.management.runtime.MessagingBridgeRuntimeMBean
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: '<p> The MessagingBridgeRuntimeMBeans for this server </p> '
+  name: MessagingBridgeRuntimes
+  relationship: containment
+  type: weblogic.management.runtime.MessagingBridgeRuntimeMBean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The Oracle Middleware installation directory. </p> '
+  name: MiddlewareHome
+  type: java.lang.String
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: '<p>Returns an array of RuntimeMBeans which exposes this server''s
+    globally defined MinThreadsConstraints.</p> '
+  name: MinThreadsConstraintRuntimes
+  relationship: containment
+  type: weblogic.management.runtime.MinThreadsConstraintRuntimeMBean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The current number of sockets registered for socket muxing
+    on this server.</p> '
+  name: OpenSocketsCurrentCount
+  type: int
+- defaultValue: {
+    }
+  deprecated: 'WLS can no longer find out what ORACLE_HOME is '
+  descriptionHTML: '<p>The directory where Oracle products are installed. Deprecated
+    since 10.3.3</p> '
+  name: OracleHome
+  supported: false
+  type: java.lang.String
+- defaultValue: {
+    }
+  descriptionHTML: '<p> Determine the overall health state of this server, taking
+    into account the health of each of its subsystems.</p> '
+  name: OverallHealthState
+  type: weblogic.health.HealthState
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The overall health state of this server returned as a CompositeData
+    type.</p> '
+  name: OverallHealthStateJMX
+  type: javax.management.openmbean.CompositeData
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: '<p> Returns the list of partition runtime beans</p> '
+  excludeFromRest: ' '
+  name: PartitionRuntimes
+  relationship: containment
+  supported: false
+  type: weblogic.management.runtime.PartitionRuntimeMBean
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: 'Returns information about installed patches on the server as an
+    array of Strings. Each element of the array describes a patch, which is of the
+    form: <p>BugNumber;PatchID;DateApplied;Description</p> '
+  getRoles:
+    allowed:
+    - Monitor
+  name: PatchList
+  type: java.lang.String
+- defaultValue: {
+    }
+  deprecated: '12.2.1.0.0 replaced by getPathServiceRuntimes '
+  descriptionHTML: '<p>Domain scoped PathServiceRuntimeMBean for this server.</p> '
+  name: PathServiceRuntime
+  relationship: containment
+  supported: false
+  type: weblogic.management.runtime.PathServiceRuntimeMBean
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: '<p>Array of all PathServiceRuntimeMBean instances for Domain partition.</p> '
+  name: PathServiceRuntimes
+  relationship: containment
+  type: weblogic.management.runtime.PathServiceRuntimeMBean
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: '<p> Returns all the partitions that need to be restarted in order
+    to activate configuration changes</p> '
+  exclude: true
+  name: PendingRestartPartitions
+  supported: false
+  type: java.lang.String
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: '<p> Returns all the System Resources that need to be restarted
+    </p> '
+  exclude: true
+  name: PendingRestartSystemResources
+  supported: false
+  type: java.lang.String
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: '<p>Returns the mbeans that provides runtime information for each
+    PersistentStore.</p> '
+  name: PersistentStoreRuntimes
+  relationship: containment
+  type: weblogic.management.runtime.PersistentStoreRuntimeMBean
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: '<p>Returns an array of RuntimeMBeans which exposes this server''s
+    globally defined Request Classes.</p> '
+  name: RequestClassRuntimes
+  relationship: containment
+  type: weblogic.management.runtime.RequestClassRuntimeMBean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Indicates whether the server must be restarted in order to
+    activate configuration changes.</p> '
+  name: RestartRequired
+  type: boolean
+- defaultValue: {
+    }
+  deprecated: 'This attribute always returns a value of 0. Please use ServerLifeCycleRuntimeMBean.getNodeManagerRestartCount()
+    if the NodeManager is used to start servers '
+  descriptionHTML: '<p>The total number of restarts for this server since the cluster
+    was last started.</p> '
+  name: RestartsTotalCount
+  supported: false
+  type: int
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The SAFRuntimeMBean for this server.</p> '
+  name: SAFRuntime
+  relationship: containment
+  type: weblogic.management.runtime.SAFRuntimeMBean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Return the MBean which provides access to the monitoring statistics
+    for WLS SNMP Agent.</p> '
+  name: SNMPAgentRuntime
+  relationship: containment
+  type: weblogic.management.runtime.SNMPAgentRuntimeMBean
+- defaultValue: {
+    }
+  deprecated: '9.0.0.0 Replaced by getURL '
+  descriptionHTML: '<p>The address on which this server is listening for SSL connections.
+    For example this might return the string: santiago/172.17.9.220</p> '
+  name: SSLListenAddress
+  supported: false
+  type: java.lang.String
+- defaultValue: {
+    }
+  deprecated: '9.0.0.0 Replaced by getURL '
+  descriptionHTML: '<p>The port on which this server is listening for SSL connections.</p> '
+  name: SSLListenPort
+  restInternal: needed by the WLS console
+  type: int
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Indicates whether the default SSL listen port is enabled on
+    the server</p> '
+  name: SSLListenPortEnabled
+  type: boolean
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: '<p>The network channels that are currently configured on the server.</p> '
+  name: ServerChannelRuntimes
+  relationship: containment
+  type: weblogic.management.runtime.ServerChannelRuntimeMBean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Get the classpath for this server including domain/lib contents
+    that are automatically picked up and appended to the classpath.</p> '
+  name: ServerClasspath
+  type: java.lang.String
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Return the MBean which provides access to the control interface
+    for WLS server logging.</p> '
+  name: ServerLogRuntime
+  relationship: containment
+  type: weblogic.management.runtime.ServerLogRuntimeMBean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Return the ServerSecurityRuntimeMBean for this server.</p> '
+  name: ServerSecurityRuntime
+  relationship: containment
+  type: weblogic.management.runtime.ServerSecurityRuntimeMBean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Returns a map of ServerService names and their versions. The
+    key is the service name and the value is the version string. This method is provided
+    primarily for console and is not intended for remote use.</p> '
+  exclude: true
+  name: ServerServiceVersions
+  supported: false
+  type: java.util.HashMap
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The amount of time taken for the server to transition from
+    <code>STARTING</code> to <code>RUNNING</code> state.</p> '
+  exclude: true
+  name: ServerStartupTime
+  supported: false
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Check if the server is shutting down.</p> '
+  exclude: true
+  name: ShuttingDown
+  supported: false
+  type: boolean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Get the runtime interface to publish single sign-on services
+    information.</p> '
+  name: SingleSignOnServicesRuntime
+  relationship: containment
+  type: weblogic.management.runtime.SingleSignOnServicesRuntimeMBean
+- defaultValue: {
+    }
+  deprecated: 'Use getOpenSocketsCurrentCount instead. Both methods return the same
+    value. This method is being deprecated in favor of the other method. '
+  descriptionHTML: '<p>The total number of registrations for socket muxing on this
+    sever.</p> '
+  name: SocketsOpenedTotalCount
+  supported: false
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>It returns the end state for the server if it''s transitioning
+    or the current state if it is already in stable state</p> '
+  exclude: true
+  name: StableState
+  supported: false
+  type: int
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The current life cycle state of this server.</p>  <p>For example,
+    a server can be in a RUNNING state in which it can receive and process requests
+    or in an ADMIN state in which it can receive only administrative requests.</p> '
+  name: State
+  type: java.lang.String
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Returns current state of the server as in integer. weblogic.management.runtime.ServerStates
+    has more information about the available server states</p> '
+  name: StateVal
+  type: int
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: '<p>Returns an array of health states for major subsystems in the
+    server. Exposed only to console to display a table of health states</p> '
+  exclude: true
+  name: SubsystemHealthStates
+  supported: false
+  type: weblogic.health.HealthState
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Get the self-tuning thread pool''s runtime information. This
+    call will return <code>null</code> if the self-tuning implementation is not enabled.</p> '
+  name: ThreadPoolRuntime
+  relationship: containment
+  type: weblogic.management.runtime.ThreadPoolRuntimeMBean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Get the runtime information about the WebLogic timer implementation.
+    </p> '
+  exclude: true
+  name: TimeServiceRuntime
+  relationship: containment
+  supported: false
+  type: weblogic.management.runtime.TimeServiceRuntimeMBean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Get the runtime information about the WebLogic timer implementation.
+    </p> '
+  name: TimerRuntime
+  relationship: containment
+  type: weblogic.management.runtime.TimerRuntimeMBean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Return an MBean which represents this server''s view of its
+    WANReplicationRuntime, if any.</p> '
+  name: WANReplicationRuntime
+  relationship: containment
+  type: weblogic.management.runtime.WANReplicationRuntimeMBean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Return the MBean which provides access to all Diagnostic runtime
+    MBeans.</p> '
+  name: WLDFRuntime
+  relationship: containment
+  type: weblogic.management.runtime.WLDFRuntimeMBean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The WTCRuntimeMBean for this server.</p> '
+  name: WTCRuntime
+  relationship: containment
+  type: weblogic.management.runtime.WTCRuntimeMBean
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: '<p> Returns all the initialized webservers </p> '
+  name: WebServerRuntimes
+  relationship: containment
+  type: weblogic.management.runtime.WebServerRuntimeMBean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The directory where the WebLogic Server instance (server) is
+    installed, without the trailing "/server".</p> '
+  name: WeblogicHome
+  type: java.lang.String
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The version of this WebLogic Server instance (server).</p> '
+  name: WeblogicVersion
+  type: java.lang.String
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: '<p>Returns an array of MBeans which exposes this server''s active
+    internal WorkManagers.</p> '
+  name: WorkManagerRuntimes
+  relationship: containment
+  type: weblogic.management.runtime.WorkManagerRuntimeMBean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>This is non-null only when this server is running as a host
+    to a front-end proxy (HttpClusterServlet) instance.</p> '
+  name: WseeClusterFrontEndRuntime
+  relationship: containment
+  type: weblogic.management.runtime.WseeClusterFrontEndRuntimeMBean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Get statistics for web services reliable messaging across the
+    entire server if any web service is deployed that employs reliable messaging.
+    This MBean is null otherwise.</p> '
+  name: WseeWsrmRuntime
+  relationship: containment
+  type: weblogic.management.runtime.WseeWsrmRuntimeMBean

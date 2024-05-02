@@ -7,13 +7,16 @@ Copyright (c) 2020, 2024, Oracle and/or its affiliates. The Universal Permissive
     <img id="recent-pages-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.icons.history.iconFile + '.png', 'title': i18n.icons.history.tooltip, alt: i18n.icons.history.tooltip}"/>
   </div>
 
+  <a class="cfe-hidden-accesskey-link" href="#"
+    accesskey="B" tabindex="-1" on-click="[[hiddenAccessKeyClickHandler]]" aria-hidden="true"
+  >
+  </a>
   <div id="beanpath-history-dropdown" class="oj-flex-item  oj-md-align-self-center">
     <oj-combobox-one
       id="beanpath-history-entries"
       options="{{beanPathHistoryOptions}}"
       value='{{selectedBeanPath}}'
       readonly="false"
-      accesskey="'"
     >
     </oj-combobox-one>
   </div>

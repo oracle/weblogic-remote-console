@@ -98,6 +98,12 @@ public class LocalizedConsoleRestExtensionConstants {
             + "the administration server's upload directory.  Remove and add it instead."
     );
 
+    // {0} is the bean name
+    addConstant(
+        "descriptorBeanNotRemovable",
+        "''{0}'' cannot be removed because it is defined in the application''s deployment descriptors."
+    );
+
   }
 
   // Find the LocalizableString for a key.

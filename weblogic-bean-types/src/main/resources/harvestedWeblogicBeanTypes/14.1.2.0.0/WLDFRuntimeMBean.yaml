@@ -1,0 +1,69 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.runtime.RuntimeMBean
+derivedTypes: [
+  ]
+descriptionHTML: '<p>This interface provides access to all the runtime MBeans for
+  the WebLogic Diagnostic Framework (WLDF).</p> '
+name: weblogic.management.runtime.WLDFRuntimeMBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The MBean that represents this server''s view of its diagnostic
+    accessor.</p> '
+  name: WLDFAccessRuntime
+  relationship: containment
+  type: weblogic.management.runtime.WLDFAccessRuntimeMBean
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: '<p>The MBeans that represent this server''s view of its diagnostic
+    archives.</p> '
+  name: WLDFArchiveRuntimes
+  relationship: containment
+  type: weblogic.management.runtime.WLDFArchiveRuntimeMBean
+- defaultValue: {
+    }
+  descriptionHTML: 'The WLDF Control RuntimeMBean '
+  name: WLDFControlRuntime
+  relationship: containment
+  type: weblogic.management.runtime.WLDFControlRuntimeMBean
+- defaultValue: {
+    }
+  descriptionHTML: ' '
+  name: WLDFDebugPatchesRuntime
+  relationship: containment
+  type: weblogic.management.runtime.WLDFDebugPatchesRuntimeMBean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The MBean that represents this server''s view of its diagnostic
+    harvester.</p> '
+  name: WLDFHarvesterRuntime
+  relationship: containment
+  type: weblogic.management.runtime.WLDFHarvesterRuntimeMBean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The MBean that represents this server''s view of its diagnostic
+    image source.</p> '
+  name: WLDFImageRuntime
+  relationship: containment
+  type: weblogic.management.runtime.WLDFImageRuntimeMBean
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: '<p>The MBeans that represent this server''s view of its diagnostic
+    server instrumentation.</p> '
+  name: WLDFInstrumentationRuntimes
+  relationship: containment
+  type: weblogic.management.runtime.WLDFInstrumentationRuntimeMBean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The MBean that represents this server''s view of its diagnostic
+    policy and action component.</p> '
+  name: WLDFWatchNotificationRuntime
+  relationship: containment
+  type: weblogic.management.runtime.WLDFWatchNotificationRuntimeMBean

@@ -1,0 +1,14 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.runtime.RuntimeMBean
+derivedTypes: [
+  ]
+descriptionHTML: '<p>This interface is used to publish SAML 2.0 local site meta-data
+  for single sign-on services.</p> '
+name: weblogic.management.runtime.SingleSignOnServicesRuntimeMBean
+properties: [
+  ]

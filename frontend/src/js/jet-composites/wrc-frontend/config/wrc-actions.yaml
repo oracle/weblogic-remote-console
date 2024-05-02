@@ -71,6 +71,8 @@ actions:
       iconFile: action-import-3d-icon-blk_24x24
     - id: publishSingleSignOnServices
       iconFile: action-publish-icon-blk_24x24
+    - id: unlockUser
+      iconFile: action-unlock-blk_24x24
     - id: moveDown
       iconFile: action-movedown-blk_24x24
       constraint:
@@ -81,6 +83,8 @@ actions:
       constraint:
         type: rowIndex
         value: first
+    - id: createCollectionChild
+      iconFile: action-create-icon-blk_24x24
 
   frontend:
     - id: new

@@ -160,7 +160,10 @@ describe.only('Test Suite: services_test for JMS, JTA, JDBC, Datasource, Messagi
         try {
             await services.createJDBCSystemResource(driver,"testJDBCSysRes-2","testJdbcJNDIName-2","AdminServer",
                 dbSourceType, dbType, dbDriver, dbName, dbHost, dbPort, dbUser, dbPassword);
-            await admin.saveToShoppingCart(driver,"finish");
+            await driver.sleep(4800);
+            console.log("Click Finish button to save testJDBCSysRes-2 to shopping cart. ");
+            await driver.findElement(By.xpath("//*[@id='[[i18n.buttons.finish.id]]']/button")).click();
+            await driver.sleep(4800);
             console.log("Create a new JDBC Store");
             await admin.createNewMBeanObject(driver,"testJDBCStore-2",2,"configuration","Services",
                 "JDBC Stores","","","searchselect","oj-searchselect-filter-Targets|input","Targets","AdminServer");
@@ -172,7 +175,7 @@ describe.only('Test Suite: services_test for JMS, JTA, JDBC, Datasource, Messagi
             await admin.deleteMBeanObject(driver,"testJDBCStore-2","JDBC Stores",2,"configuration",
                 "Services","JDBC Stores","","","",4);
             await admin.deleteMBeanObject(driver,"testJDBCSysRes-2","Data Sources",2,"configuration",
-                "Services","Data Sources","","","",7);
+                "Services","Data Sources","","","",6);
             console.log("TEST PASS ");
         } catch (e) {
             await admin.takeScreenshot(driver, file);

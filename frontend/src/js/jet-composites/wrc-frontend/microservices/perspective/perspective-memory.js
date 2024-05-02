@@ -90,7 +90,7 @@ define(['wrc-frontend/microservices/perspective/perspective-manager'],
         // They aren't, so use built-in map function
         // to look for index of JS object in addToArchive
         // array, with a name that matches key.
-        const index = this.contentPage.switches.addToArchive.map(item => item.name).indexOf(key);
+        const index = this.contentPage.switches.addToArchive.findIndex(item => item.name === key);
         if (index !== -1) {
           // Found one, so figure out the fieldName
           // for switch value we're working with.
@@ -280,7 +280,7 @@ define(['wrc-frontend/microservices/perspective/perspective-manager'],
           // we should still use this opportunity
           // to update the addToArchive array, if
           // we can.
-          const index = this.contentPage.switches.addToArchive.map(item => item.name).indexOf(key);
+          const index = this.contentPage.switches.addToArchive.findIndex(item => item.name === key);
           if (index !== -1) {
             if (fieldName.startsWith('Source')) fieldName = 'SourcePath';
             if (fieldName.startsWith('Plan')) fieldName = 'PlanPath';
@@ -346,7 +346,7 @@ define(['wrc-frontend/microservices/perspective/perspective-manager'],
           // to look for index of JS object in
           // addToArchive array, with a name that
           // matches key.
-          const index = this.contentPage.switches.addToArchive.map(item => item.name).indexOf(key);
+          const index = this.contentPage.switches.addToArchive.findIndex(item => item.name === key);
           if (index !== -1) {
             // Found one, so use index and built-in
             // splice function to remove JS object
@@ -378,7 +378,7 @@ define(['wrc-frontend/microservices/perspective/perspective-manager'],
             this.wizard.usedIf[key] = [];
             entry = this.wizard.usedIf[key];
           }
-          const index = entry.map(item => item.property).indexOf(fieldName);
+          const index = entry.findIndex(item => item.property === fieldName);
           if (index !== -1) {
             entry[index].value = fieldValue;
           }

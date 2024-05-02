@@ -1,0 +1,21 @@
+# Copyright (c) 2020, 2024, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.runtime.RuntimeMBean
+derivedTypes: [
+  ]
+descriptionHTML: '<p>This MBean provides deployment operations for a DBClientData
+  module.</p> '
+name: weblogic.management.runtime.DBClientDataDeploymentRuntimeMBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The DBClientData''s name.</p> '
+  name: DBClientDataName
+  type: java.lang.String
+roles:
+  allowed:
+  - Deployer

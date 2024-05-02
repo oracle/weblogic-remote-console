@@ -117,9 +117,9 @@
 
     <!-- Customize button is visible on form toolbar when a slice table is rendered -->
     <div class="cfe-table-customizer">
-      <a class="table-customizer-expander" :id="[[i18n.buttons.customize.id]]" href="#" on-click="[[customizeAction]]" data-state="collapsed">
+      <a class="table-customizer-expander" :id="[[i18n.buttons.customize.id]]" href="#" on-click="[[customizeAction]]" data-state="collapsed" accesskey="'">
         <img class="button-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.buttons.customize.iconFile + '.png', alt: i18n.buttons.customize.label}"/>
-        <span class="button-label" data-bind="text: [[i18n.buttons.customize.label]]"></span>
+        <span aria-hidden="true" class="button-label" data-bind="text: [[i18n.buttons.customize.label]]"></span>
         <span id="table-customizer-toggler" class="oj-fwk-icon oj-fwk-icon-caret03-s"></span>
       </a>
     </div>
@@ -131,7 +131,7 @@
         chroming="borderless"
         disabled="[[i18n.buttons.dashboard.disabled]]"
       >
-        <img class="button-icon" slot="startIcon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.buttons.dashboard.iconFile + '.png', alt: i18n.buttons.dashboard.label}" />
+        <img aria-hidden="true" class="button-icon" slot="startIcon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.buttons.dashboard.iconFile + '.png', alt: i18n.buttons.dashboard.label}" />
         <span class="button-label">
           <oj-bind-text value="[[i18n.buttons.dashboard.label]]"></oj-bind-text>
         </span>
@@ -151,8 +151,9 @@
             href="#"
             on-click="[[landingPageClick]]"
             accesskey="L"
+            :aria-label="[[i18n.ariaLabel.icons.landing.value]]"
           >
-            <img id="landing-page-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.icons.landing.iconFile + '.png', alt: i18n.icons.landing.tooltip, 'title': i18n.icons.landing.tooltip}"/>
+            <img id="landing-page-icon" aria-hidden="true" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.icons.landing.iconFile + '.png', alt: i18n.icons.landing.tooltip, 'title': i18n.icons.landing.tooltip}"/>
           </a>
         </div>
 
@@ -181,6 +182,22 @@
           <img id="page-help-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + [[!showHelp() ? 'toggle-help-on-blk_24x24' : 'toggle-help-off-blk_24x24' ]] + '.png', alt: i18n.icons.help.tooltip}" />
         </a>
       </div>
+
+      <oj-bind-if test="[[i18n.icons.reset.visible()]]">
+        <div class="toolbar-separator-vertical" tabindex="-1">
+          <!-- TODO: Replace with span that has icon class once cfe-iconfonts  is ready -->
+          <img data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.icons.separator.iconFile + '.png', alt: i18n.icons.separator.tooltip}"/>
+        </div>
+
+        <div id="reset-toolbar-icon" class="oj-flex-item cfe-content-area-body-iconbar-icon"
+          on-keyup="[[registerFormIconbarIconsKeyUpFocuser('.cfe-content-area-body-iconbar-icon')]]"
+          data-key-focuser-id=".cfe-content-area-body-iconbar-icon"
+        >
+          <a on-click="[[syncClick]]" on-keyup="[[resetIconKeyUp]]" data-bind="attr: {href: '#', 'title': i18n.icons.reset.tooltip}">
+            <img id="reset-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.icons.reset.iconFile + '.png', alt: i18n.icons.reset.tooltip}" data-interval="0" />
+          </a>
+        </div>
+      </oj-bind-if>
 
       <oj-bind-if test="[[showAutoSyncIcons]]">
         <div class="toolbar-separator-vertical" tabindex="-1">

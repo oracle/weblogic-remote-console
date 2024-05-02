@@ -1,0 +1,42 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.security.authentication.AuthenticationProviderMBean
+derivedTypes:
+- weblogic.security.providers.authentication.VirtualUserAuthenticatorMBean
+- weblogic.security.providers.authentication.LoginExceptionPropagatorMBean
+- weblogic.security.providers.authentication.DBMSAuthenticatorMBean
+- weblogic.security.providers.authentication.OracleIdentityCloudIntegratorMBean
+- weblogic.security.providers.saml.SAMLAuthenticatorMBean
+descriptionHTML: 'The SSPI MBean that all Authentication providers with login services
+  must extend. This MBean provides a ControlFlag to determine whether the Authentication
+  provider is a REQUIRED, REQUISITE, SUFFICIENT, or OPTIONAL part of the login sequence. '
+name: weblogic.management.security.authentication.AuthenticatorMBean
+properties:
+- defaultValue:
+    value:
+      value: REQUIRED
+  descriptionHTML: '<p>Returns how the login sequence uses the Authentication provider.</p>  <p>A
+    <code>REQUIRED</code> value specifies this LoginModule must succeed. Even if it
+    fails, authentication proceeds down the list of LoginModules for the configured
+    Authentication providers. This setting is the default.</p>  <p>A <code>REQUISITE</code>
+    value specifies this LoginModule must succeed. If other Authentication providers
+    are configured and this LoginModule succeeds, authentication proceeds down the
+    list of LoginModules. Otherwise, control is return to the application.</p>  <p>A
+    <code>SUFFICIENT</code> value specifies this LoginModule need not succeed. If
+    it does succeed, return control to the application. If it fails and other Authentication
+    providers are configured, authentication proceeds down the LoginModule list.</p>  <p>An
+    <code>OPTIONAL</code> value specifies this LoginModule need not succeed. Whether
+    it succeeds or fails, authentication proceeds down the LoginModule list.</p> '
+  legalValues:
+  - REQUIRED
+  - REQUISITE
+  - SUFFICIENT
+  - OPTIONAL
+  name: ControlFlag
+  restartNeeded: true
+  type: java.lang.String
+  writable: true

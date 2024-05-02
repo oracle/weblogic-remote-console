@@ -1,0 +1,34 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.runtime.RuntimeMBean
+derivedTypes: [
+  ]
+descriptionHTML: '<p>This class is used to:</p> <ul> <li>query statistics of WTC connections.</li>
+  <li>query statistics of WTC imported and exported services.</li> </ul> '
+name: weblogic.management.runtime.WTCStatisticsRuntimeMBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Returns all statistics data for all configured WTC connections.</p> '
+  excludeFromRest: No default REST mapping for TabularData
+  name: ConnectionStatistics
+  supported: false
+  type: javax.management.openmbean.TabularData
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Returns all statistics data for all exported services.</p> '
+  excludeFromRest: No default REST mapping for TabularData
+  name: ExportedServiceStatistics
+  supported: false
+  type: javax.management.openmbean.TabularData
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Returns all statistics data for all imported services.</p> '
+  excludeFromRest: No default REST mapping for TabularData
+  name: ImportedServiceStatistics
+  supported: false
+  type: javax.management.openmbean.TabularData

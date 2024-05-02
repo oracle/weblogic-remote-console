@@ -1,4 +1,4 @@
-// Copyright (c) 2021, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2024, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef;
@@ -34,5 +34,13 @@ public interface SliceFormDef extends FormDef {
       }
     }
     return true;
+  }
+
+  // Get this page's slice defs.
+  public default SlicesDef getSlicesDef() {
+    return
+      getPagePath().getPagesPath().getPageRepoDef().getSlicesDef(
+        getPagePath().getPagesPath().getTypeDef()
+      );
   }
 }

@@ -1,0 +1,41 @@
+# Copyright (c) 2024, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: []
+baseTypes:
+- weblogic.management.deployment.DBean
+derivedTypes: []
+name: weblogic.management.descriptor.PoolDBean
+properties:
+- name: IdleTimeoutSeconds
+  type: int
+  descriptionHTML: >
+    <p>The maximum length of time (in seconds) an EJB should remain in the
+    cache or free pool before it is passivated or removed.</p>
+    <p>The default value is 0.</p>
+  writable: true
+  defaultValue:
+    value:
+      value: 0
+- name: InitialBeansInFreePool
+  type: int
+  descriptionHTML: >
+    <p>The initial number of beans in the free pool.</p>
+    <p>The default value is 0.</p>
+  writable: true
+  defaultValue:
+    value:
+      value: 0
+- name: MaxBeansInFreePool
+  type: int
+  descriptionHTML: >
+    <p>The maximum number of beans in the free pool. When an EJB has been
+    in the free pool for the number of seconds specified in Idle Timeout,
+    and the total number of beans in the free pool approaches the maximum
+    beans in free pool specified in this field, idle beans are removed
+    from the free pool.</p>
+    <p>The default value is 1000.</p>
+  writable: true
+  defaultValue:
+    value:
+      value: 1000

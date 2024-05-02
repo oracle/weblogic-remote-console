@@ -1,0 +1,23 @@
+# Copyright (c) 2024, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: []
+baseTypes:
+- weblogic.management.deployment.MessageDrivenDescriptorDBean
+derivedTypes: []
+name: weblogic.management.descriptor.ProviderMessageDrivenDescriptorDBean
+properties:
+- name: MaxMessagesInTransaction
+  type: int
+  descriptionHTML: >
+    <p>The maximum number of messages that can be in a transaction for an MDB.</p>
+    <p>The default value is 1.</p>
+  writable: true
+  defaultValue:
+    value:
+      value: 1
+- name: ProviderUrl
+  type: java.lang.String
+  descriptionHTML: >
+    <p>The URL to be used by the initial context.</p>
+  writable: true

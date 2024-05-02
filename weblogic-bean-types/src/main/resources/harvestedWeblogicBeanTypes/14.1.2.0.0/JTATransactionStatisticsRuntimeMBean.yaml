@@ -1,0 +1,92 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.runtime.JTAStatisticsRuntimeMBean
+derivedTypes:
+- weblogic.management.runtime.JTARuntimeMBean
+- weblogic.management.runtime.TransactionNameRuntimeMBean
+descriptionHTML: 'This interface contains general JTA transaction runtime statistics. '
+name: weblogic.management.runtime.JTATransactionStatisticsRuntimeMBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The total number of seconds that transactions were active for
+    all committed transactions.</p> '
+  name: SecondsActiveTotalCount
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The total number of transactions that were abandoned since
+    the server was started.</p> '
+  name: TransactionAbandonedTotalCount
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The total number of LLR transactions that were committed since
+    the server was started.</p> '
+  name: TransactionLLRCommittedTotalCount
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The total number of transactions with no enlisted resources
+    that were committed since the server was started.</p> '
+  name: TransactionNoResourcesCommittedTotalCount
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The total number of transactions with only one enlisted resource
+    that were one-phase committed since the server was started.</p> '
+  name: TransactionOneResourceOnePhaseCommittedTotalCount
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The total number of transactions with more than one enlisted
+    resource that were one-phase committed due to read-only optimization since the
+    server was started.</p> '
+  name: TransactionReadOnlyOnePhaseCommittedTotalCount
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The number of transactions that were rolled back due to an
+    application error.</p> '
+  name: TransactionRolledBackAppTotalCount
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The number of transactions that were rolled back due to a resource
+    error.</p> '
+  name: TransactionRolledBackResourceTotalCount
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The number of transactions that were rolled back due to an
+    internal system error.</p> '
+  name: TransactionRolledBackSystemTotalCount
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The number of transactions that were rolled back due to a timeout
+    expiration.</p> '
+  name: TransactionRolledBackTimeoutTotalCount
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The total number of two phase commit transactions that were
+    committed with TLog since the server was started.</p> '
+  name: TransactionTwoPhaseCommittedLoggedTotalCount
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The total number of two phase commited transactions that were
+    committed without TLog since the server was started.</p> '
+  name: TransactionTwoPhaseCommittedNotLoggedTotalCount
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The total number of transactions with more than one enlisted
+    resource that were two-phase committed since the server was started.</p> '
+  name: TransactionTwoPhaseCommittedTotalCount
+  type: long

@@ -31,7 +31,11 @@ define([
       this.i18n = {
         app: {
           version: { value: Runtime.getProperty(Runtime.PropertyName.CFE_VERSION) },
-          name: ko.observable()
+          name: ko.observable(),
+          tooltip: { value: oj.Translations.getTranslatedString('wrc-header.tooltips.appName.value') },
+          region: {
+            ariaLabel: {value: oj.Translations.getTranslatedString('wrc-header.region.ariaLabel.value')}
+          }
         },
         labels: {
           connectivity: {
@@ -59,7 +63,7 @@ define([
               tooltip: oj.Translations.getTranslatedString('wrc-connectivity.icons.insecure.tooltip')
             }
           }
-        },
+        }
       };
 
       // Initialize instance-scope variables used in header.html
@@ -196,6 +200,15 @@ define([
         // the JS engine.
         self.signalBindings = [];
       }.bind(this);
+
+      this.brandingAreaAppRestClickListener = () => {
+        ViewModelUtils.abandonUnsavedChanges('exit', self.canExitCallback)
+          .then(reply => {
+            if (reply) {
+              window.location.href = '/';
+            }
+          });
+      }
 
       this.brandingAreaIconbarClickListener = (event) => {
         ViewModelUtils.abandonUnsavedChanges('exit', self.canExitCallback)

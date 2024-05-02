@@ -46,7 +46,7 @@ define([
       };
 
       this.tabModuleConfig = ko.observable({ view: [], viewModel: null });
-  
+
       this.perspectiveMemory = PerspectiveMemoryManager.getPerspectiveMemory('home');
 
       this.signalBindings = [];
@@ -74,7 +74,9 @@ define([
                     const result = getKeyUpFocusSelector();
                     if (result.selector !== null) {
                       const rule = KeyUpFocuser.getLastExecutedRule(result.selector);
-                      if (rule.focusIndexValue !== -1) {
+                      if (rule.focusIndexValue !== -1 &&
+                        CoreUtils.isNotUndefinedNorNull($(result.selector)[rule.focusIndexValue])
+                      ) {
                         $(result.selector)[rule.focusIndexValue].focus();
                       }
                     }
@@ -143,12 +145,12 @@ define([
         const tabNode = self.i18n.tabstrip.tabs.find(item => item.id === id);
         selectTabNode(tabNode);
       };
-  
+
       function getKeyUpFocusSelector() {
         const result = {selector: null, hasFocusIndexValue: false};
-    
+
         let card = document.querySelector('.startup-task-panel-card');
-    
+
         if (card !== null) {
           result.selector = '.startup-task-panel-card';
           result.hasFocusIndexValue = true;
@@ -161,7 +163,7 @@ define([
             result.hasFocusIndexValue = true;
           }
         }
-    
+
         return result;
       }
 
@@ -184,7 +186,7 @@ define([
           self.router.go(tabNode.id);
         }
       }
-  
+
       function targetTabNodeExclusively(tabId) {
         self.i18n.tabstrip.tabs.forEach((tab) => {
           tab.visible(tab.id === tabId);
@@ -199,7 +201,7 @@ define([
        */
       function getTabNode(tabId) {
         let tabNode;
-        const index = self.i18n.tabstrip.tabs.map(tab => tab.id).indexOf(tabId);
+        const index = self.i18n.tabstrip.tabs.findIndex(tab => tab.id === tabId);
         if (index !== -1) tabNode = self.i18n.tabstrip.tabs[index];
         return tabNode;
       }

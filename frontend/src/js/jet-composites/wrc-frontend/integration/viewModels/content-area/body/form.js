@@ -7,8 +7,8 @@
 
 'use strict';
 
-define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 'ojs/ojarraydataprovider', 'ojs/ojhtmlutils', 'ojs/ojknockout-keyset', 'ojs/ojkeyset', 'wrc-frontend/common/dialog-fields', 'wrc-frontend/common/controller', 'wrc-frontend/apis/data-operations', 'wrc-frontend/apis/message-displaying', 'wrc-frontend/microservices/change-management/change-manager', 'wrc-frontend/microservices/navtree/navtree-manager', 'wrc-frontend/microservices/perspective/perspective-memory-manager', './unsaved-changes-dialog', './set-sync-interval-dialog', './actions-input-dialog', './container-resizer', './container-accessibility', './table-templates', './table-sorter', 'wrc-frontend/microservices/page-definition/common', 'wrc-frontend/microservices/page-definition/types', 'wrc-frontend/microservices/page-definition/fields', 'wrc-frontend/microservices/page-definition/options-sources', 'wrc-frontend/microservices/page-definition/actions-input', 'wrc-frontend/microservices/page-definition/form-layouts', 'wrc-frontend/microservices/page-definition/unset', 'wrc-frontend/microservices/page-definition/usedifs', 'wrc-frontend/microservices/page-definition/utils', './create-form', './wdt-form', './help-form', './policy-form', 'wrc-frontend/microservices/customize/table-manager', 'wrc-frontend/microservices/actions-management/declarative-actions-manager', 'wrc-frontend/common/page-definition-helper', 'wrc-frontend/microservices/policy-management/policy-manager', 'wrc-frontend/integration/viewModels/utils', 'wrc-frontend/core/utils', 'wrc-frontend/core/types', 'wrc-frontend/core/runtime', 'ojs/ojcontext', 'ojs/ojlogger', 'ojs/ojknockout', 'ojs/ojtable', 'ojs/ojbinddom', 'ojs/ojinputtext', 'ojs/ojlabel', 'ojs/ojswitch', 'ojs/ojselectcombobox', 'ojs/ojformlayout', 'ojs/ojasyncvalidator-regexp', 'ojs/ojconveyorbelt', 'ojs/ojmessages', 'ojs/ojmodule-element', 'ojs/ojmodule', 'cfe-multi-select/loader', 'cfe-property-list-editor/loader', 'cfe-policy-editor/loader', 'ojs/ojselectsingle', 'ojs/ojresponsiveutils', 'ojs/ojresponsiveknockoututils', 'ojs/ojcheckboxset', 'ojs/ojradioset'],
-  function (oj, ko, Router, ModuleElementUtils, ArrayDataProvider, HtmlUtils, keySet, ojkeyset_1, DialogFields, Controller, DataOperations, MessageDisplaying, ChangeManager, NavtreeManager, PerspectiveMemoryManager, UnsavedChangesDialog, SetSyncIntervalDialog, ActionsInputDialog, ContentAreaContainerResizer, ContentAreaContainerAccessibility, TableTemplates, TableSorter, PageDefinitionCommon, PageDataTypes, PageDefinitionFields, PageDefinitionOptionsSources, PageDefinitionActionsInput, PageDefinitionFormLayouts, PageDefinitionUnset, PageDefinitionUsedIfs, PageDefinitionUtils, CreateForm, WdtForm, HelpForm, PolicyForm, TableCustomizerManager, DeclarativeActionsManager, PageDefinitionHelper, PolicyManager, ViewModelUtils, CoreUtils, CoreTypes, Runtime, Context, Logger) {
+define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 'ojs/ojarraydataprovider', 'ojs/ojhtmlutils', 'ojs/ojknockout-keyset', 'ojs/ojkeyset', 'wrc-frontend/common/dialog-fields', 'wrc-frontend/common/controller', 'wrc-frontend/apis/data-operations', 'wrc-frontend/apis/message-displaying', 'wrc-frontend/microservices/change-management/change-manager', 'wrc-frontend/microservices/navtree/navtree-manager', 'wrc-frontend/microservices/perspective/perspective-memory-manager', 'wrc-frontend/microservices/page-definition/common', 'wrc-frontend/microservices/page-definition/types', 'wrc-frontend/microservices/page-definition/fields', 'wrc-frontend/microservices/page-definition/options-sources', 'wrc-frontend/microservices/page-definition/actions-input', 'wrc-frontend/microservices/page-definition/form-layouts', 'wrc-frontend/microservices/page-definition/unset', 'wrc-frontend/microservices/page-definition/usedifs', 'wrc-frontend/microservices/page-definition/utils', './container-resizer', './container-accessibility', './table-templates', './table-sorter', './policy-form', './create-form', './help-form', './wdt-form', './unsaved-changes-dialog', './set-sync-interval-dialog', './actions-input-dialog', 'wrc-frontend/microservices/customize/table-manager', 'wrc-frontend/microservices/actions-management/declarative-actions-manager', 'wrc-frontend/common/page-definition-helper', 'wrc-frontend/microservices/policy-management/policy-manager', 'wrc-frontend/integration/viewModels/utils', 'wrc-frontend/core/utils', 'wrc-frontend/core/types', 'wrc-frontend/core/runtime', 'ojs/ojcontext', 'ojs/ojlogger', 'ojs/ojknockout', 'ojs/ojtable', 'ojs/ojbinddom', 'ojs/ojinputtext', 'ojs/ojlabel', 'ojs/ojswitch', 'ojs/ojselectcombobox', 'ojs/ojformlayout', 'ojs/ojasyncvalidator-regexp', 'ojs/ojconveyorbelt', 'ojs/ojmessages', 'ojs/ojmodule-element', 'ojs/ojmodule', 'cfe-multi-select/loader', 'cfe-property-list-editor/loader', 'cfe-policy-editor/loader', 'ojs/ojselectsingle', 'ojs/ojresponsiveutils', 'ojs/ojresponsiveknockoututils', 'ojs/ojcheckboxset', 'ojs/ojradioset'],
+  function (oj, ko, Router, ModuleElementUtils, ArrayDataProvider, HtmlUtils, keySet, ojkeyset_1, DialogFields, Controller, DataOperations, MessageDisplaying, ChangeManager, NavtreeManager, PerspectiveMemoryManager, PageDefinitionCommon, PageDataTypes, PageDefinitionFields, PageDefinitionOptionsSources, PageDefinitionActionsInput, PageDefinitionFormLayouts, PageDefinitionUnset, PageDefinitionUsedIfs, PageDefinitionUtils, ContentAreaContainerResizer, ContentAreaContainerAccessibility, TableTemplates, TableSorter, PolicyForm, CreateForm, HelpForm, WdtForm, UnsavedChangesDialog, SetSyncIntervalDialog, ActionsInputDialog, TableCustomizerManager, DeclarativeActionsManager, PageDefinitionHelper, PolicyManager, ViewModelUtils, CoreUtils, CoreTypes, Runtime, Context, Logger) {
     function FormViewModel(viewParams) {
 
       const self = this;
@@ -240,9 +240,11 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
           signaling: viewParams.signaling,
           perspective: viewParams.perspective,
           getDeclarativeActions: getDeclarativeActions,
+          onAdminServerShutdown: handleAdminServerShutdown,
           onSyncClicked: setSyncInterval,
           onActionPollingStarted: startActionPolling,
           onActionButtonClicked: handleActionButtonClicked,
+          onActionButtonsRefreshed: refreshActionsStripButtons,
           onActionInputButtonClicked: handleActionInputButtonClicked,
           onActionInputFormCompleted: handleActionInputFormCompleted,
           onCheckedRowsRefreshed: refreshCheckedRowsKeySet,
@@ -541,6 +543,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
           reloadRdjData();
         }
         renderPage();
+        restoreDirtyFieldsValues();
       };
 
       function updateModelConsole(offsetHeight) {
@@ -605,8 +608,11 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
             onChangeManagerModified(options);
           }
 
-          const actionPolling = DeclarativeActionsManager.getPDJActionPollingObject(self.declarativeActions, options.action);
           const pdjData = viewParams.parentRouter.data.pdjData();
+          const rdjData = viewParams.parentRouter.data.rdjData();
+
+          const actionPolling = DeclarativeActionsManager.getPDJActionPollingObject(rdjData, self.declarativeActions, options.action);
+
           if (!DeclarativeActionsManager.hasSliceFormActionInput(pdjData)) {
             DeclarativeActionsManager.onCheckedRowsSubmitted(self.declarativeActions, options);
           }
@@ -678,8 +684,26 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
         if (CoreUtils.isNotUndefinedNorNull(actionPolling.pollCount)) {
           reloadRdjData();
           actionPolling.pollCount += 1;
-          onActionPollingIntervalCompleted()
+          onActionPollingIntervalCompleted();
         }
+      }
+
+      function setCheckedRowsDisabledState(state) {
+        const nodeList = document.querySelectorAll('#table .oj-selectorbox');
+        if (nodeList !== null) {
+          const arr = Array.from(nodeList);
+          arr.forEach((node) => {
+            if (state)
+              node.setAttribute('disabled', '');
+            else
+              node.removeAttribute('disabled');
+          });
+        }
+      }
+
+      function handleAdminServerShutdown() {
+        viewParams.signaling.adminServerShutdown.dispatch();
+        viewParams.signaling.modeChanged.dispatch(CoreTypes.Console.RuntimeMode.DETACHED.name);
       }
 
       function handleActionButtonClicked(options) {
@@ -745,12 +769,10 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
               });
           })
           .catch(failure => {
-            if (CoreUtils.isNotUndefinedNorNull(failure.messages)) {
-              MessageDisplaying.displayResponseMessages(failure.messages);
-            }
-            else {
-              ViewModelUtils.failureResponseDefaultHandling(failure);
-            }
+            self.tableActionsStripModuleConfig
+              .then(moduleConfig => {
+                moduleConfig.viewModel.handleActionButtonClickedFailure(failure, options);
+              });
           })
           .finally(() => {
             ViewModelUtils.setPreloaderVisibility(false);
@@ -1233,7 +1255,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
         ).handleHelpIconClicked(event);
       };
 
-      this.helpTopiclinkClick = function (event) {
+      this.helpTopicLinkClick = function (event) {
         new HelpForm(
           viewParams.parentRouter.data.pdjData(),
           viewParams.perspective.id
@@ -2022,12 +2044,29 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
                   dataPayload[key] = {value: value};
                 }
                 else {
-                  // The field was updated then set back to the server value
-                  // thus clear the property from being marked as dirty...
+                  if (CoreUtils.isNotUndefinedNorNull(self.pageRedoHistory[key]) &&
+                    self.pageRedoHistory[key].value !== value
+                  ) {
+                    self.dirtyFields.delete(key);
+                    if (CoreUtils.isNotUndefinedNorNull(keepSaveToOrig)) {
+                      dataPayload[key] = {value: value};
+                    }
+                  }
+                  else if (data[key].set) {
+                    unsetProperty({field: key, disabled: false, unset: true});
+                    restoreUnsetFieldsApplyHighlighting();
+                    dataPayload[key] = {value: value};
+                  }
+                  else {
+                    dataPayload[key] = {value: value};
+                  }
+/*
+//MLW
                   self.dirtyFields.delete(key);
                   if (CoreUtils.isNotUndefinedNorNull(keepSaveToOrig)) {
                     dataPayload[key] = {value: value};
                   }
+ */
                 }
               }
             }
@@ -2319,10 +2358,13 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
         let offsetMaxHeight = self.contentAreaContainerResizer.getOffsetMaxHeight('#form-container', offsetHeightCSSVariable, options);
 
         if (hasSliceTable) {
-          document.documentElement.style.setProperty('--table-container-calc-max-height', `${offsetMaxHeight + 10}px`);
+          document.documentElement.style.setProperty('--table-container-calc-max-height', `${offsetMaxHeight + 15}px`);
+          document.documentElement.style.setProperty('--form-container-calc-max-height', `${offsetMaxHeight+ 15}px`);
+        }
+        else {
+          document.documentElement.style.setProperty('--form-container-calc-max-height', `${offsetMaxHeight}px`);
         }
 
-        document.documentElement.style.setProperty('--form-container-calc-max-height', `${offsetMaxHeight}px`);
         document.documentElement.style.setProperty('--help-table-calc-max-height', `${offsetMaxHeight}px`);
       }
 
@@ -2360,9 +2402,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
 
             renderFormLayout(pdjData, rdjData);
           }
-          else {
-            restoreDirtyFieldsValues();
-          }
+          restoreDirtyFieldsValues();
         }
 
         self.formTabStripModuleConfig
@@ -2558,29 +2598,14 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
         }
         else {
           const rdjData = viewParams.parentRouter.data.rdjData();
-          const dataPayload = '';
-          const isDashboardSliceLayout = rdjData.navigation.startsWith('Dashboards');
-          const hasEmptyDataPayload = (CoreUtils.isUndefinedOrNull(dataPayload) || (Object.keys(dataPayload).length === 0));
-
-          let messageText;
-
-          if (hasEmptyDataPayload && ['configuration'].includes(viewParams.perspective.id) ||
-            isDashboardSliceLayout || isPolicyExpressionSliceLayout() ||
-            isPolicyAdvancedSliceWritableField(dataPayload)
-          ) {
-            messageText = self.i18n.messages.savedTo.notSaved;
-          }
-
-          if (CoreUtils.isNotUndefinedNorNull(messageText)) {
-            let message = {
-              severity: 'info',
-              message: messageText
-            };
-            MessageDisplaying.displayMessage({
-              severity: message.severity,
-              summary: message.message
-            }, 2500);
-          }
+          const options = {
+            isPolicyExpressionSliceLayout: isPolicyExpressionSliceLayout(),
+            isPolicyAdvancedSliceWritableField: isPolicyAdvancedSliceWritableField(''),
+            isDashboardSliceLayout: rdjData.navigation.startsWith('Dashboards'),
+            isReadWriteSliceLayout: !isReadOnlyFormLayout(),
+            hasEmptyDataPayload: true
+          };
+          showSaveConfirmationPopup(options, 3000);
         }
       }
 
@@ -2710,7 +2735,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
       /**
        * Method to perform "post-Save" activities for a successful save operation, based on the values of specific parameters.
        * <p>The assumption here is that the save operation was successful, with regards to the Promise returned. This means that a Promise rejection should not result in this method being called.</p>
-       * @param {{body: {data: any, messages?: any}}} response - The response object return from the successful save operation.
+       * @param {{transport?: {status: string, statusText: string}, body?: {data: any, messages?: any},failureType?: any,failureReason?: any}} response - The response object return from the successful save operation.
        * @param {string} dataAction - Query parameter that was used with the successful save operation.
        * @param {object} dataPayload - JSON payload that was used in the successful save operation.
        * @param {"create"|"finish"|"update"|"autoDownload"} eventType - The type of event that was associated with the successful save operation.
@@ -2722,10 +2747,11 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
         let retval = false;
 
         const properties = getSliceProperties(self.pdjData, includeAdvancedFields);
-        const bodyMessages = ViewModelUtils.getResponseBodyMessages(response, properties);
-        if (bodyMessages.length > 0) {
-          if (viewParams.perspective.id !== 'configuration') {
-            MessageDisplaying.displayErrorMessagesHTML(bodyMessages, oj.Translations.getTranslatedString('wrc-message-displaying.messages.responseMessages.summary'));
+        const responseBodyMessages = ViewModelUtils.getResponseBodyMessages(response, properties);
+
+        if (responseBodyMessages.length > 0) {
+          if (!isEditing()) {
+            MessageDisplaying.displayResponseMessages(responseBodyMessages);
             return retval;
           }
         }
@@ -2739,13 +2765,22 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
         if (CoreUtils.isNotUndefinedNorNull(response) && CoreUtils.isError(response)) {
           ViewModelUtils.failureResponseDefaultHandling(response, 'error');
         }
-        else if (CoreUtils.isNotUndefinedNorNull(response.failureType) && response.body.messages.length === 0) {
-          saveFailedNoMessages(dataAction, dataPayload, isEdit);
+        else if (CoreUtils.isNotUndefinedNorNull(response) && CoreUtils.isNotUndefinedNorNull(response.failureType)) {
+          if (responseBodyMessages.length > 0) {
+            MessageDisplaying.displayMessagesAsHTML(
+              responseBodyMessages,
+              oj.Translations.getTranslatedString('wrc-message-displaying.messages.responseMessages.summary'),
+              MessageDisplaying.getOverallSeverity(responseBodyMessages)
+            );
+            if (isEditing()) {
+              postCompensatingTransaction(dataAction, dataPayload, isEdit);
+            }
+          }
+          else {
+            saveFailedNoMessages(dataAction, dataPayload, isEdit);
+          }
         }
-        else if (CoreUtils.isNotUndefinedNorNull(response.failureType)) {
-          postCompensatingTransaction(dataAction, dataPayload, isEdit);
-        }
-        else if (response.body.messages.length === 0) {
+        else if (responseBodyMessages.length === 0) {
           const identity = (CoreUtils.isNotUndefinedNorNull(response.body.data) && CoreUtils.isNotUndefinedNorNull(response.body.data.resourceData) && CoreUtils.isNotUndefinedNorNull(response.body.data.resourceData.resourceData) ? response.body.data.resourceData.resourceData : undefined);
           if (['configuration', 'security'].includes(viewParams.perspective.id)) {
             viewParams.signaling.unsavedChangesDetected.dispatch(undefined);
@@ -2770,6 +2805,14 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
           }
           retval = true;
         }
+        else if (responseBodyMessages.length > 0) {
+          MessageDisplaying.displayMessagesAsHTML(
+            responseBodyMessages,
+            oj.Translations.getTranslatedString('wrc-message-displaying.messages.responseMessages.summary'),
+            MessageDisplaying.getOverallSeverity(responseBodyMessages)
+          );
+          retval = true;
+        }
 
         return retval;
       }
@@ -2783,6 +2826,45 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
               ]);
               moduleConfig.viewModel.renderToolbarButtons('create');
             });
+        }
+      }
+
+      /**
+       *
+       * @param {{isPolicyExpressionSliceLayout: boolean, isPolicyAdvancedSliceWritableField: boolean, isDashboardSliceLayout: boolean, isReadWriteSliceLayout: boolean, hasEmptyDataPayload: boolean}} options
+       * @param {number} [autoCloseInterval===2500] - Optionally, the number of milliseconds to leave message up, before auto-closing it. 1500 milliseconds (1.5 seconds) will be used, if the parameter is missing.
+       * @private
+       */
+      function showSaveConfirmationPopup(options, autoCloseInterval = 2500) {
+        const popupMessage = {text: '', severity: 'info'};
+
+        if (Runtime.getRole() === CoreTypes.Console.RuntimeRole.APP.name) {
+          if (!options.hasEmptyDataPayload) {
+            if (viewParams.perspective.id === 'configuration') {
+              popupMessage.text = self.i18n.messages.savedTo.shoppingcart;
+              popupMessage.severity = 'confirmation';
+            }
+            else if (['monitoring', 'security'].includes(viewParams.perspective.id)) {
+              popupMessage.text = self.i18n.messages.savedTo.generic;
+              popupMessage.severity = 'confirmation';
+            }
+          }
+          else if (options.isDashboardSliceLayout || options.isPolicyExpressionSliceLayout ||
+            options.isPolicyAdvancedSliceWritableField
+          ) {
+            popupMessage.text = self.i18n.messages.savedTo.generic;
+            popupMessage.severity = 'confirmation';
+          }
+          else {
+            popupMessage.text = self.i18n.messages.savedTo.notSaved;
+          }
+        }
+
+        if (popupMessage.text !== '') {
+          MessageDisplaying.displayMessage({
+            severity: popupMessage.severity,
+            summary: popupMessage.text
+          }, autoCloseInterval);
         }
       }
 
@@ -2899,47 +2981,25 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
         if (isEdit) {
           if (PageDefinitionHelper.hasRDJData(viewParams.parentRouter)) {
             const rdjData = viewParams.parentRouter.data.rdjData();
-            const isDashboardSliceLayout = rdjData.navigation.startsWith('Dashboards');
-            const isReadWriteSliceLayout = !isReadOnlyFormLayout();
-            const hasEmptyDataPayload = (CoreUtils.isUndefinedOrNull(dataPayload) || (Object.keys(dataPayload).length === 0));
+            const options = {
+              isPolicyExpressionSliceLayout: isPolicyExpressionSliceLayout(),
+              isPolicyAdvancedSliceWritableField: isPolicyAdvancedSliceWritableField(dataPayload),
+              isDashboardSliceLayout: rdjData.navigation.startsWith('Dashboards'),
+              isReadWriteSliceLayout: !isReadOnlyFormLayout(),
+              hasEmptyDataPayload: (CoreUtils.isUndefinedOrNull(dataPayload) || (Object.keys(dataPayload).length === 0)),
+            };
 
-            let messageText;
+            showSaveConfirmationPopup(options);
 
-            if (Runtime.getRole() === CoreTypes.Console.RuntimeRole.APP.name) {
-
-              if (!hasEmptyDataPayload && ['configuration'].includes(viewParams.perspective.id)) {
-                messageText = self.i18n.messages.savedTo.shoppingcart;
-              }
-              else if (isDashboardSliceLayout || isPolicyExpressionSliceLayout() ||
-                isPolicyAdvancedSliceWritableField(dataPayload)
-              ) {
-                messageText = self.i18n.messages.savedTo.generic;
-              }
-              else if (!hasEmptyDataPayload && isReadWriteSliceLayout) {
-                messageText = self.i18n.messages.savedTo.generic;
-              }
-            }
-
-            if (CoreUtils.isNotUndefinedNorNull(messageText) && messageText !== '') {
-              let message = {
-                severity: 'confirmation',
-                message: messageText
-              };
-              MessageDisplaying.displayMessage({
-                severity: message.severity,
-                summary: message.message
-              }, 2500);
-            }
-
-            if (!hasEmptyDataPayload) {
-              if (isDashboardSliceLayout || isReadWriteSliceLayout ||
+            if (!options.hasEmptyDataPayload) {
+              if (options.isDashboardSliceLayout || options.isReadWriteSliceLayout ||
                 ['configuration', 'modeling', 'security', 'properties'].indexOf(viewParams.perspective.id) !== -1
               ) {
                 if (CoreUtils.isNotUndefinedNorNull(self.wdtForm)) {
                   submitContentFileChanges(eventType);
                 }
 
-                if (!isDashboardSliceLayout && (viewParams.perspective.id === 'configuration')) {
+                if (!options.isDashboardSliceLayout && (viewParams.perspective.id === 'configuration')) {
                   updateShoppingCart(eventType);
                 }
               }
@@ -3185,33 +3245,46 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
                 });
             }
 
-            // Preserve changes that occurred AFTER a save was
-            // done, so they will be available after the data
-            // is refreshed from the reload.
-            const dataPayload = getDirtyFieldsPayload();
-            if (CoreUtils.isUndefinedOrNull(rdjData) || CoreUtils.isUndefinedOrNull(rdjData.data)) {
-              // reload rdjData did not get any data
-              signalGotoLandingPage('No RDJ data!');
+            const pdjData = viewParams.parentRouter.data.pdjData();
+            if (self.isSliceTable(pdjData)) {
+              const results = populateSliceTableDataProvider(rdjData, pdjData);
+              const span = document.querySelector('#totalRow > span');
+              if (span !== null) {
+                span.innerText = oj.Translations.getTranslatedString('wrc-table.labels.totalRows.value', results.sliceTableRows.length);
+              }
             }
-            resetPageRedoHistory();
-            cacheDataPayload(dataPayload);
-            restoreDirtyFieldsValues();
-            self.formToolbarModuleConfig
-              .then((moduleConfig) => {
-                moduleConfig.viewModel.renderToolbarButtons('sync');
-                // Be mindful that there is a change subscription
-                // (setup earlier in the this.connected callback)
-                // on viewParams.parentRouter.data.rdjData, so the
-                // next line will trigger that subscription. If
-                // you look at that subscription. you will see that
-                // it calls renderPage.bind(this, undefined). That
-                // passes undefined as the value of resetPageHistory.
-                viewParams.parentRouter.data.rdjData(rdjData);
-              });
+            else {
+              // Preserve changes that occurred AFTER a save was
+              // done, so they will be available after the data
+              // is refreshed from the reload.
+              const dataPayload = getDirtyFieldsPayload();
+              if (CoreUtils.isUndefinedOrNull(rdjData) || CoreUtils.isUndefinedOrNull(rdjData.data)) {
+                // reload rdjData did not get any data
+                signalGotoLandingPage('No RDJ data!');
+              }
+              resetPageRedoHistory();
+              cacheDataPayload(dataPayload);
+              restoreDirtyFieldsValues();
+              self.formToolbarModuleConfig
+                .then((moduleConfig) => {
+                  moduleConfig.viewModel.renderToolbarButtons('sync');
+                  // Be mindful that there is a change subscription
+                  // (setup earlier in the this.connected callback)
+                  // on viewParams.parentRouter.data.rdjData, so the
+                  // next line will trigger that subscription. If
+                  // you look at that subscription. you will see that
+                  // it calls renderPage.bind(this, undefined). That
+                  // passes undefined as the value of resetPageHistory.
+                  viewParams.parentRouter.data.rdjData(rdjData);
+                });
+            }
           })
           .catch(response => {
             if (response.failureType === CoreTypes.FailureType.NOT_FOUND) {
               signalGotoLandingPage('Form reload unable to find page data, goto landing page.');
+            }
+            if (response.failureType === CoreTypes.FailureType.CBE_REST_API) {
+              return Promise.reject(response);
             }
             else {
               MessageDisplaying.displayResponseMessages(response.body.messages);
@@ -3295,12 +3368,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
         const isSliceTable = self.isSliceTable(pdjData);
         adjustSliceTableCustomizer(isSliceTable);
 
-        // DON'T USE optional chaining, here!! It's not supported
-        // in the JS compiler (esprima) that JET uses, when it does
-        // a release build of a JET web app.
-        let slices = (CoreUtils.isNotUndefinedNorNull(pdjData.sliceForm) && CoreUtils.isNotUndefinedNorNull(pdjData.sliceForm.slices) ? pdjData.sliceForm.slices : CoreUtils.isNotUndefinedNorNull(pdjData.sliceTable) && CoreUtils.isNotUndefinedNorNull(pdjData.sliceTable.slices) ? pdjData.sliceTable.slices : undefined);
-
-        if (isEdit && CoreUtils.isNotUndefinedNorNull(slices) && slices.length > 0) {
+        if (isEdit) {
           self.formTabStripModuleConfig
             .then((moduleConfig) => {
               const currentSlice = moduleConfig.viewModel.getCurrentSlice();
@@ -3325,8 +3393,8 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
         }
 
         const toggleHelpIntroduction = self.i18n.introduction.toggleHelp.text.replace('{0}', '<img src=\'../../images/' + self.i18n.introduction.toggleHelp.iconFile + '\' alt=' + self.i18n.introduction.toggleHelp.text + '\'\'">');
-        const bindHtml = getIntroductionHtml(pdjData.introductionHTML, rdjData.introductionHTML);
-        self.introductionHTML({view: HtmlUtils.stringToNodeArray(bindHtml)});
+        const bindHtml = PageDefinitionHelper.createIntroduction(pdjData, rdjData);
+        self.introductionHTML({view: HtmlUtils.stringToNodeArray(bindHtml), data: self});
 
         // Update function-scoped pdjData variable from router data
         pdjData = viewParams.parentRouter.data.pdjData();
@@ -3347,11 +3415,6 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
           self.perspectiveMemory.contentPage.nthChildren = [];
           renderFormLayout(pdjData, rdjData);
         }
-      }
-
-      function getIntroductionHtml(pdjIntro, rdjIntro) {
-        const bindHtml = (CoreUtils.isNotUndefinedNorNull(rdjIntro) ? rdjIntro : pdjIntro);
-        return (CoreUtils.isNotUndefinedNorNull(bindHtml) ? bindHtml : '<p>');
       }
 
       function rerenderWizardForm(pdjData, rdjData, direction, removed) {
@@ -3453,12 +3516,12 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
 
               if (isPolicyExpressionSliceLayout()) {
                 if (CoreUtils.isNotUndefinedNorNull(self.policyForm)) {
-                  const bindHtml = getIntroductionHtml(pdjData.introductionHTML, rdjData.introductionHTML);
+                  const bindHtml = PageDefinitionHelper.createIntroduction(pdjData, rdjData);
                   if (self.policyForm.section === 'Policy') {
-                    self.introductionHTML({view: HtmlUtils.stringToNodeArray(`${bindHtml}${oj.Translations.getTranslatedString('wrc-policy-management.instructions.policyEditor.value')}`)});
+                    self.introductionHTML({view: HtmlUtils.stringToNodeArray(`${bindHtml}${oj.Translations.getTranslatedString('wrc-policy-management.instructions.policyEditor.value')}`), data: self });
                   }
                   else {
-                    self.introductionHTML({view: HtmlUtils.stringToNodeArray(bindHtml)});
+                    self.introductionHTML({view: HtmlUtils.stringToNodeArray(bindHtml), data: self });
                   }
 
                   const pdjTypes = new PageDataTypes(pdjData.sliceForm.properties, viewParams.perspective.id);
@@ -3960,9 +4023,11 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
             if (properties.filter(property => ['ThreadStackDump', 'DeploymentPlan'].includes(property.name)).length > 0) {
               options.labelWidthPcnt = '18%';
             }
+            else if (properties.filter(property => ['ServerLifeCycleRuntime_ConnectionStatus_StackTrace'].includes(property.name)).length > 0) {
+              options.labelWidthPcnt = '15%';
+            }
             formLayout = PageDefinitionFormLayouts.createSingleColumnFormLayout(options);
             div.append(formLayout);
-//MLW               document.documentElement.style.setProperty('--form-input-min-width', '32em');
           }
           else {
             formLayout = PageDefinitionFormLayouts.createTwoColumnFormLayout({
@@ -4067,10 +4132,18 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
             const ele = document.getElementById('table');
             if (ele !== null) {
               ele.setAttribute('data-clipboard-copycelldata', target.innerText);
-              ele.setAttribute('data-clipboard-copyrowdata', target.parentElement.innerText.replace(/^\t/, ''));
+              ele.setAttribute('data-clipboard-copyrowdata', target.parentElement.parentElement.innerText.replace(/^\t/, ''));
             }
           }
         }
+      };
+
+      this.infoIconKeyUp = (event) => {
+        ViewModelUtils.infoIconHTMLEventListener(event);
+      };
+
+      this.infoIconClick = (event) => {
+        ViewModelUtils.infoIconHTMLEventListener(event);
       };
 
       function createFieldValueSubscription(valueSubscriptions, name, replacer) {
@@ -4708,6 +4781,74 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
           return totalRows;
         }
 
+        const results = populateSliceTableDataProvider(rdjData, pdjData);
+
+        sliceTableFormLayout.setAttribute('data', '[[sliceTableDataProvider]]');
+        sliceTableFormLayout.setAttribute('data-row-key', results.rowKey);
+        sliceTableFormLayout.setAttribute('id', 'table');
+        sliceTableFormLayout.setAttribute('class', 'wlstable');
+        sliceTableFormLayout.setAttribute('aria-labelledbyl', 'intro');
+        sliceTableFormLayout.setAttribute('display', 'grid');
+        sliceTableFormLayout.setAttribute('scroll-policy', 'loadMoreOnScroll');
+        sliceTableFormLayout.setAttribute('scroll-policy-options', '{"fetchSize": 10000}');
+
+        if (params.rowSelectionRequired) {
+          sliceTableFormLayout.setAttribute('selection-mode', (results.selectableRows.length > 0 ? '{"row": "multiple"}' : '{"row": "none"}'));
+          sliceTableFormLayout.setAttribute('on-checked-rows-changed', 'checkedRowsChanged');
+        }
+        else {
+          sliceTableFormLayout.setAttribute('selection-mode', (results.selectableRows.length > 0 ? '{"row": "single"}' : '{"row": "none"}'));
+        }
+
+        sliceTableFormLayout.setAttribute('select-all-control', 'hidden');
+        sliceTableFormLayout.setAttribute('on-selected-changed', '[[sliceTableRowsSelectedChanged]]');
+        sliceTableFormLayout.setAttribute('on-click', '[[sliceTableOnClickListener]]');
+        sliceTableFormLayout.setAttribute('on-keyup', '[[sliceTableOnKeyupListener]]');
+        sliceTableFormLayout.setAttribute('on-oj-sort', '[[onSortListener]]');
+        sliceTableFormLayout.setAttribute('selected', '{{selectedRows}}');
+        sliceTableFormLayout.setAttribute('columns', '[[columnDataProvider]]');
+        sliceTableFormLayout.setAttribute('columns-default', '[[tableSortable]]');
+        sliceTableFormLayout.setAttribute('data-default-template', 'cellTemplate');
+
+        const totalRowsHTML = createTotalRowsHTML(results.sliceTableRows);
+        sliceTableFormLayout.append(totalRowsHTML);
+
+        self['sliceTableRowsSelectedChanged'] = (event) => {
+          const onCheckedRowsChanged = event.currentTarget.attributes['on-checked-rows-changed'];
+          if (CoreUtils.isNotUndefinedNorNull(onCheckedRowsChanged) &&
+            CoreUtils.isNotUndefinedNorNull(onCheckedRowsChanged.value) &&
+            self.declarativeActions.rowSelectionRequired
+          ) {
+            self[onCheckedRowsChanged.value](event);
+          }
+          const ele = document.getElementById('table');
+          if (ele !== null) {
+            ele.setAttribute('data-default-template', 'cellTemplate');
+          }
+        };
+
+        self['sliceTableOnClickListener'] = (event) => {
+          if ((event.target.className !== 'oj-selectorbox') &&
+            (event.currentTarget.dataset.rowKey === '_identity')
+          ) {
+            if (!self.declarativeActions.rowSelectionRequired ||
+              (self.declarativeActions.navigationProperty === 'identity')
+            ) {
+              onRowSelectedEvent(event);
+            }
+          }
+        };
+
+        self['sliceTableOnKeyupListener'] = (event) => {
+          if (!event.shiftKey && !event.altKey && !event.ctrlKey && !event.metaKey) {
+            if (event.key === 'Enter') {
+              onRowSelectedEvent(event);
+            }
+          }
+        };
+      }
+
+      function populateSliceTableDataProvider(rdjData, pdjData) {
         function getSliceTableRows(rdjData, perspectiveId, displayedColumns, hiddenColumns) {
           // Setup PDJ type information for display
           let columns = displayedColumns;
@@ -4791,78 +4932,21 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
         );
 
         const rowKey = getRowKey(sliceTableRows);
-        const selectableRows = (rowKey === '_rowIndex' ? sliceTableRows : sliceTableRows.filter(row => CoreUtils.isNotUndefinedNorNull(row[rowKey])));
+
+        const results = {
+          rowKey: rowKey,
+          sliceTableRows: sliceTableRows,
+          selectableRows: (rowKey === '_rowIndex' ? sliceTableRows : sliceTableRows.filter(row => CoreUtils.isNotUndefinedNorNull(row[rowKey])))
+        };
 
         const arrayDataProvider = getSliceTableDataProvider(
-          selectableRows,
+          results.selectableRows,
           pdjData.sliceTable.displayedColumns[0].name,
           'ascending'
         );
         self.sliceTableDataProvider(arrayDataProvider);
 
-        sliceTableFormLayout.setAttribute('data', '[[sliceTableDataProvider]]');
-        sliceTableFormLayout.setAttribute('data-row-key', rowKey);
-        sliceTableFormLayout.setAttribute('id', 'table');
-        sliceTableFormLayout.setAttribute('class', 'wlstable');
-        sliceTableFormLayout.setAttribute('aria-label', 'Table');
-        sliceTableFormLayout.setAttribute('display', 'grid');
-        sliceTableFormLayout.setAttribute('scroll-policy', 'loadMoreOnScroll');
-        sliceTableFormLayout.setAttribute('scroll-policy-options', '{"fetchSize": 10000}');
-
-        if (params.rowSelectionRequired) {
-          sliceTableFormLayout.setAttribute('selection-mode', (selectableRows.length > 0 ? '{"row": "multiple"}' : '{"row": "none"}'));
-          sliceTableFormLayout.setAttribute('on-checked-rows-changed', 'checkedRowsChanged');
-        }
-        else {
-          sliceTableFormLayout.setAttribute('selection-mode', (selectableRows.length > 0 ? '{"row": "single"}' : '{"row": "none"}'));
-        }
-
-        sliceTableFormLayout.setAttribute('select-all-control', 'hidden');
-        sliceTableFormLayout.setAttribute('on-selected-changed', '[[sliceTableRowsSelectedChanged]]');
-        sliceTableFormLayout.setAttribute('on-click', '[[sliceTableOnClickListener]]');
-        sliceTableFormLayout.setAttribute('on-keyup', '[[sliceTableOnKeyupListener]]');
-        sliceTableFormLayout.setAttribute('on-oj-sort', '[[onSortListener]]');
-        sliceTableFormLayout.setAttribute('selected', '{{selectedRows}}');
-        sliceTableFormLayout.setAttribute('columns', '[[columnDataProvider]]');
-        sliceTableFormLayout.setAttribute('columns-default', '[[tableSortable]]');
-        sliceTableFormLayout.setAttribute('data-default-template', 'cellTemplate');
-
-        const totalRowsHTML = createTotalRowsHTML(sliceTableRows);
-        sliceTableFormLayout.append(totalRowsHTML);
-
-        self['sliceTableRowsSelectedChanged'] = (event) => {
-          const onCheckedRowsChanged = event.currentTarget.attributes['on-checked-rows-changed'];
-          if (CoreUtils.isNotUndefinedNorNull(onCheckedRowsChanged) &&
-            CoreUtils.isNotUndefinedNorNull(onCheckedRowsChanged.value) &&
-            self.declarativeActions.rowSelectionRequired
-          ) {
-            self[onCheckedRowsChanged.value](event);
-          }
-          const ele = document.getElementById('table');
-          if (ele !== null) {
-            ele.setAttribute('data-default-template', 'cellTemplate');
-          }
-        };
-
-        self['sliceTableOnClickListener'] = (event) => {
-          if ((event.target.className !== 'oj-selectorbox') &&
-            (event.currentTarget.dataset.rowKey === '_identity')
-          ) {
-            if (!self.declarativeActions.rowSelectionRequired ||
-              (self.declarativeActions.navigationProperty === 'identity')
-            ) {
-              onRowSelectedEvent(event);
-            }
-          }
-        };
-
-        self['sliceTableOnKeyupListener'] = (event) => {
-          if (!event.shiftKey && !event.altKey && !event.ctrlKey && !event.metaKey) {
-            if (event.key === 'Enter') {
-              onRowSelectedEvent(event);
-            }
-          }
-        };
+        return results;
       }
 
       this.onSortListener = (event) => {
@@ -4970,7 +5054,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
         if (CoreUtils.isUndefinedOrNull(dataProvider['modelArchiveEntries'])) {
           dataProvider.putValue('modelArchiveEntries', []);
         }
-        const index = dataProvider.modelArchiveEntries.map(modelArchiveEntry => modelArchiveEntry.archivePath).indexOf(initialValue);
+        const index = dataProvider.modelArchiveEntries.findIndex(modelArchiveEntry => modelArchiveEntry.archivePath === initialValue);
         if (index !== -1) {
           dataProvider.modelArchiveEntries.splice(index, 1);
         }
@@ -5171,7 +5255,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
             if (isEditing() && CoreUtils.isNotUndefinedNorNull(initialValue) && initialValue.startsWith('wlsdeploy/')) {
               const paths = self.wdtForm.getModelArchivePaths([self.rdjData.data.SourcePath, self.rdjData.data.PlanPath], self.wdtForm);
               if (paths.length > 0) {
-                const index = paths.map(path => path).indexOf(initialValue);
+                const index = paths.findIndex(path => path === initialValue);
                 if (index !== -1) {
                   self.wdtForm.deleteModelArchiveEntry([paths[index]], self.wdtForm);
                 }

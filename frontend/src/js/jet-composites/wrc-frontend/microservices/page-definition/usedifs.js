@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2020, 2022, Oracle and/or its affiliates.
+ * Copyright (c) 2020, 2024, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
@@ -197,10 +197,10 @@ define(['./common', 'wrc-frontend/core/utils'],
                     enabled = newValue;
                   }
                   else {
-                    enabled = (value !== newValue);
+                    enabled = (value === newValue);
                   }
                   // Assign enabled variable to knockout variable.
-                  form[`${PageDefinitionCommon.FIELD_DISABLED}${name}`](enabled);
+                  form[`${PageDefinitionCommon.FIELD_DISABLED}${name}`](!enabled);
                 }
                 else if (CoreUtils.isUndefinedOrNull(newValue) || (newValue === '')) {
                   // It's possible for newValue to be undefined or an empty.

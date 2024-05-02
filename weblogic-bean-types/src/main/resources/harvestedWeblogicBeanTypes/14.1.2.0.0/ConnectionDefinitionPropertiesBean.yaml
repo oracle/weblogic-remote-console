@@ -1,0 +1,95 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.descriptor.SettableBean
+derivedTypes: [
+  ]
+descriptionHTML: 'An XML connection-definition-propertiesType(@http://www.bea.com/ns/weblogic/90).
+  This is a complex type. '
+name: weblogic.j2ee.descriptor.wl.ConnectionDefinitionPropertiesBean
+properties:
+- array: true
+  creators:
+  - weblogic.j2ee.descriptor.AuthenticationMechanismBean
+  defaultValue: {
+    }
+  descriptionHTML: 'Gets array of all "authentication-mechanism" elements '
+  exclude: true
+  name: AuthenticationMechanisms
+  relationship: containment
+  supported: false
+  type: weblogic.j2ee.descriptor.AuthenticationMechanismBean
+- defaultValue: {
+    }
+  descriptionHTML: 'Gets the "id" attribute '
+  exclude: true
+  name: Id
+  restartNeeded: true
+  supported: false
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: 'Gets the "logging" element '
+  exclude: true
+  name: Logging
+  relationship: containment
+  supported: false
+  type: weblogic.j2ee.descriptor.wl.LoggingBean
+- defaultValue: {
+    }
+  descriptionHTML: 'Gets the "pool-params" element '
+  exclude: true
+  name: PoolParams
+  relationship: containment
+  supported: false
+  type: weblogic.j2ee.descriptor.wl.PoolParamsBean
+- defaultValue: {
+    }
+  descriptionHTML: 'Gets the "properties" element '
+  exclude: true
+  name: Properties
+  relationship: containment
+  supported: false
+  type: weblogic.j2ee.descriptor.wl.ConfigPropertiesBean
+- defaultValue: {
+    }
+  descriptionHTML: 'Gets the "reauthentication-support" element '
+  exclude: true
+  name: ReauthenticationSupport
+  redeployNeeded: true
+  restartNeeded: true
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: 'Gets the "res-auth" element '
+  exclude: true
+  name: ResAuth
+  redeployNeeded: true
+  restartNeeded: true
+  supported: false
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: NoTransaction
+  descriptionHTML: 'Gets the "transaction-support" element '
+  exclude: true
+  legalValues:
+  - NoTransaction
+  - LocalTransaction
+  - XATransaction
+  name: TransactionSupport
+  redeployNeeded: true
+  restartNeeded: true
+  supported: false
+  type: java.lang.String
+  writable: true
+roles:
+  allowed:
+  - Deployer

@@ -225,30 +225,32 @@ public class AppDeploymentRuntimeMBeanCustomizer {
   // Validate that the app doesn't already have a plan
   public static Response<Void> customizeCreatePlanActionInputForm(InvocationContext ic, Page page) {
     Response<Void> response = new Response<>();
-    // ic.getIdentities() is null when called from a form, and an array of 1 when called from a table:
-    BeanTreePath appBTP = (ic.getIdentities() == null) ? ic.getBeanTreePath() : ic.getIdentities().get(0);
-    InvocationContext appIC = new InvocationContext(ic, appBTP);
-    BeanTypeDef typeDef = appBTP.getTypeDef();
-    BeanPropertyDef planPathPropertyDef = typeDef.getPropertyDef(new Path("DeploymentPlan.PlanPath"));
+    BeanTreePath appRtBTP = (ic.getIdentities() == null) ? ic.getBeanTreePath() : ic.getIdentities().get(0);
+    String appName = appRtBTP.getLastSegment().getKey(); // MyApp
+    Path appCfgPath = new Path("Domain.AppDeployments").childPath(appName); // Domain/AppDeployments/MyApp
+    BeanTreePath appCfgBTP = BeanTreePath.create(appRtBTP.getBeanRepo(), appCfgPath);
+    InvocationContext appCfgIc = new InvocationContext(ic, appCfgBTP);
+    BeanTypeDef appCfgTypeDef = appCfgBTP.getTypeDef();
+    BeanPropertyDef planPathPropertyDef = appCfgTypeDef.getPropertyDef(new Path("AbsolutePlanPath"));
     // Don't return whether properties are set.
     BeanReaderRepoSearchBuilder builder =
-        ic.getPageRepo().getBeanRepo().asBeanReaderRepo().createSearchBuilder(appIC, false);
-    builder.addProperty(appBTP, planPathPropertyDef);
+        ic.getPageRepo().getBeanRepo().asBeanReaderRepo().createSearchBuilder(appCfgIc, false);
+    builder.addProperty(appCfgBTP, planPathPropertyDef);
     Response<BeanReaderRepoSearchResults> searchResponse = builder.search();
     if (!searchResponse.isSuccess()) {
       return response.copyUnsuccessfulResponse(searchResponse);
     }
-    BeanSearchResults beanResults = searchResponse.getResults().getBean(appBTP);
+    BeanSearchResults beanResults = searchResponse.getResults().getBean(appCfgBTP);
     if (beanResults == null) {
       return response.setNotFound();
     }
     Value planPath = beanResults.getValue(planPathPropertyDef);
-    if (planPath != null) {
+    if (planPath.asString().getValue() != null) {
       response.setUserBadRequest();
       response.addFailureMessage(
         ic.getLocalizer().localizeString(
           LocalizedConstants.APPLICATION_HAS_PLAN,
-          appBTP.getLastSegment().getKey(), // the application's name
+          appName, // the application's name
           planPath.asString().getValue()
         )
       );
@@ -307,29 +309,32 @@ public class AppDeploymentRuntimeMBeanCustomizer {
   public static Response<Void> commonPlanActionInputForm(InvocationContext ic, Page page, boolean needToExist) {
     Response<Void> response = new Response<>();
     // ic.getIdentities() is null when called from a form, and an array of 1 when called from a table:
-    BeanTreePath appBTP = (ic.getIdentities() == null) ? ic.getBeanTreePath() : ic.getIdentities().get(0);
-    InvocationContext appIC = new InvocationContext(ic, appBTP);
-    BeanTypeDef typeDef = appBTP.getTypeDef();
-    BeanPropertyDef planPathPropertyDef = typeDef.getPropertyDef(new Path("DeploymentPlan.PlanPath"));
+    BeanTreePath appRtBTP = (ic.getIdentities() == null) ? ic.getBeanTreePath() : ic.getIdentities().get(0);
+    String appName = appRtBTP.getLastSegment().getKey(); // MyApp
+    Path appCfgPath = new Path("Domain.AppDeployments").childPath(appName); // Domain/AppDeployments/MyApp
+    BeanTreePath appCfgBTP = BeanTreePath.create(appRtBTP.getBeanRepo(), appCfgPath);
+    InvocationContext appCfgIc = new InvocationContext(ic, appCfgBTP);
+    BeanTypeDef appCfgTypeDef = appCfgBTP.getTypeDef();
+    BeanPropertyDef planPathPropertyDef = appCfgTypeDef.getPropertyDef(new Path("AbsolutePlanPath"));
     // Don't return whether properties are set.
     BeanReaderRepoSearchBuilder builder =
-        ic.getPageRepo().getBeanRepo().asBeanReaderRepo().createSearchBuilder(appIC, false);
-    builder.addProperty(appBTP, planPathPropertyDef);
+        ic.getPageRepo().getBeanRepo().asBeanReaderRepo().createSearchBuilder(appCfgIc, false);
+    builder.addProperty(appCfgBTP, planPathPropertyDef);
     Response<BeanReaderRepoSearchResults> searchResponse = builder.search();
     if (!searchResponse.isSuccess()) {
       return response.copyUnsuccessfulResponse(searchResponse);
     }
-    BeanSearchResults beanResults = searchResponse.getResults().getBean(appBTP);
+    BeanSearchResults beanResults = searchResponse.getResults().getBean(appCfgBTP);
     if (beanResults == null) {
       return response.setNotFound();
     }
     Value planPath = beanResults.getValue(planPathPropertyDef);
-    if (needToExist && planPath == null) {
+    if (needToExist && planPath.asString().getValue() == null) {
       response.setUserBadRequest();
       response.addFailureMessage(
           ic.getLocalizer().localizeString(
               LocalizedConstants.APPLICATION_HAS_NO_PLAN,
-              appBTP.getLastSegment().getKey() // the application's name
+              appName
           )
       );
     } else {

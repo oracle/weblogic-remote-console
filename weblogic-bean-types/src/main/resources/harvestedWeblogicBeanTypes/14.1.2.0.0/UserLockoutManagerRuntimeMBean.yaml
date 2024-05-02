@@ -1,0 +1,55 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.runtime.RuntimeMBean
+derivedTypes: [
+  ]
+descriptionHTML: '<p>This class is used to monitor and manage per security realm user
+  lockout information.</p> '
+name: weblogic.management.runtime.UserLockoutManagerRuntimeMBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: 'Returns the number of invalid logins attempted since this server
+    has been started and lockouts have been enabled.  In a cluster, this method returns
+    the number of invalid logins attempted that have occured since the cluster has
+    been started because all servers share login failure information. '
+  name: InvalidLoginAttemptsTotalCount
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: 'Returns the highest number of users with concurrent unexpired
+    or uncleared invalid login attempts.  Invalid login attempts expire as specified
+    by <code>LockoutResetDuration</code>. This count is useful in determining whether
+    the <code>LockoutCacheSize</code> needs to be modified. '
+  name: InvalidLoginUsersHighCount
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: 'Returns the number of users that are currently locked out of this
+    server. '
+  name: LockedUsersCurrentCount
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: 'Returns the number of invalid logins attempted since this server
+    has been started and lockouts have been enabled. '
+  name: LoginAttemptsWhileLockedTotalCount
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: 'Returns the number times users have been unlocked since this server
+    has been started. '
+  name: UnlockedUsersTotalCount
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: 'Returns the number of user lockouts that have occured since this
+    server has been started.  In a cluster, this method returns the number of user
+    lockouts that have occured since the cluster has been started because all servers
+    share login failure information. '
+  name: UserLockoutTotalCount
+  type: long

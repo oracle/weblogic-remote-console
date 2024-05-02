@@ -18,7 +18,7 @@
     "@types/node": "^12.11.7",
     "@types/sinon": "^9.0.0",
     "chai": "^4.3.7",
-    "chromedriver": "^119.0.1",
+    "chromedriver": "^122.0.6",
     "dotenv": "^8.2.0",
     "eslint": "^8.41.0",
     "fixture": "^0.1.2",
@@ -38,12 +38,15 @@
     "karma-typescript": "^5.5.3",
     "mocha": "^10.2.0",
     "prettier": "2.5.1",
-    "puppeteer": "^21.5.1",
+    "puppeteer": "^22.4.1",
     "selenium-webdriver": "^4.8.2",
     "sinon": "^9.0.2",
     "ts-sinon": "^1.2.0",
     "typescript": "^3.6.4",
     "yargs": "^16.0.3"
+  },
+  "overrides": {
+      "express": "4.19.2"
   },
   "engines": {
     "node": ">=12.21.0"
@@ -51,6 +54,7 @@
   "scripts": {
     "test": "npx karma start unit-tests/karma.conf.js",
     "eslint": "node_modules/eslint/bin/eslint.js --rulesdir eslint-rules/ -f compact src/js",
+    "eslint-win": "node_modules\\.bin\\eslint --rulesdir eslint-rules/ -f compact src/js",
     "sync-nls-file": "node src/resources/nls/create-translation-bundles.js -p src/resources/nls/frontend.properties -o src/js/resources/nls"
   },
   "private": true

@@ -1,0 +1,35 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.j2ee.descriptor.wl.NamedEntityBean
+derivedTypes:
+- weblogic.j2ee.descriptor.wl.ForeignDestinationBean
+- weblogic.j2ee.descriptor.wl.ForeignConnectionFactoryBean
+descriptionHTML: 'This bean represents a foreign entity (one not part of the local
+  JNDI naming context) advertised through JNDI. This entity will have a name associated
+  with it in its home domain, and a possibly different name in the local domain. '
+name: weblogic.j2ee.descriptor.wl.ForeignJNDIObjectBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The name that the remote object will be bound to in the local
+    server''s JNDI tree. This is the name that should be used to look up the object
+    on the local server.</p> '
+  name: LocalJNDIName
+  redeployNeeded: true
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    derivedDefault: true
+  descriptionHTML: '<p>The name of the remote object that will be looked up in the
+    remote JNDI directory.</p> '
+  name: RemoteJNDIName
+  type: java.lang.String
+  writable: true
+roles:
+  allowed:
+  - Deployer

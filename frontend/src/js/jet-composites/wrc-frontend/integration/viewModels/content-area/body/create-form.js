@@ -793,7 +793,7 @@ define([
       hasDeploymentPathData: function () {
         let rtnval = (typeof this.backingData.attributes['SourcePath'] !== 'undefined');
         if (!rtnval && CoreUtils.isNotUndefinedNorNull(this.pdjData.createForm) &&  CoreUtils.isNotUndefinedNorNull(this.pdjData.createForm.properties)) {
-          const index = this.pdjData.createForm.properties.map(property => property.name).indexOf('SourcePath');
+          const index = this.pdjData.createForm.properties.findIndex(property => property.name === 'SourcePath');
           rtnval = (index !== -1);
         }
         return rtnval;

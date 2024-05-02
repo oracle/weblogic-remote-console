@@ -1,0 +1,25 @@
+# Copyright (c) 2024, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+createResourceMethod: weblogic.remoteconsole.customizers.DescriptorBeanCustomizer.createResource
+
+subTypeDiscriminatorProperty: Type
+subTypes:
+- type: weblogic.management.descriptor.ProviderMessageDrivenDescriptorDBean
+  value: ProviderMessageDrivenDescriptor
+- type: weblogic.management.descriptor.ResourceAdapterMessageDrivenDescriptorDBean
+  value: ResourceAdapterMessageDrivenDescriptor
+
+properties:
+- name: Type
+  legalValues:
+  - value: ProviderMessageDrivenDescriptor
+    label: Provider
+  - value: ResourceAdapterMessageDrivenDescriptor
+    label: Resource Adapter
+- name: InitSuspendSeconds
+  label: Init Suspend (in seconds)
+- name: JmsPollingIntervalSeconds
+  label: Polling Interval (in seconds)
+- name: MaxSuspendSeconds
+  label: Max Suspend (in seconds)

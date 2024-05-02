@@ -1,0 +1,74 @@
+# Copyright (c) 2024, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: []
+baseTypes:
+- weblogic.management.deployment.DBean
+name: weblogic.management.descriptor.ContainerDescriptorDBean
+properties:
+- name: IndexDirectoryEnabled
+  type: boolean
+  descriptionHTML: >
+    <p>Specifies whether the target should automatically generate an HTML
+    directory listing if no suitable index file is found.</p>
+    <p>The default value is false.</p>
+  defaultValue:
+    value:
+      value: false
+  writable: true
+- name: IndexDirectorySortBy
+  type: java.lang.String
+  descriptionHTML: >
+    <p>Specifies the way in which index directories are sorted.</p>
+    <p>The default value is 'NAME'.</p>
+  defaultValue:
+    value:
+      value: NAME
+  legalValues:
+  - NAME
+  - LAST_MODIFIED
+  - SIZE
+  writable: true
+- name: MinimumNativeFileSize
+  type: long
+  descriptionHTML: >
+    <p>The minimum file size in Bytes for using native I/O.</p>
+    <p>The default value is 4096.</p>
+  defaultValue:
+    value:
+      value: 4096
+  writable: true
+- name: ResourceReloadCheckSecs
+  type: int
+  descriptionHTML: >
+    <p>The amount of time (in seconds) that WebLogic Server waits to check
+    if a resource was modified and needs to be reloaded.</p>
+    <p>The default value is -1 in production environments and 1 in development environments.</p>
+  defaultValue:
+    productionModeValue:
+      value: -1
+    value:
+      value: 1
+  writable: true
+- name: ServletReloadCheckSecs
+  type: int
+  descriptionHTML: >
+    <p>The amount of time (in seconds) that WebLogic Server waits to check
+    if a servlet was modified and needs to be reloaded.</p>
+    <p>The default value is -1 in production environments and 1 in development environments.</p>
+  defaultValue:
+    productionModeValue:
+      value: -1
+    value:
+      value: 1
+  writable: true
+- name: SessionMonitoringEnabled
+  type: boolean
+  descriptionHTML: >
+    <p>Specifies whether runtime MBeans will be created for session monitoring.</p>
+    <p>The default value is false.</p>
+  defaultValue:
+    value:
+      value: false
+  writable: true
+  # deprecated

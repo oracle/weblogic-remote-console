@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2023, Oracle and/or its affiliates.
+ * Copyright (c) 2023,2024, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
@@ -244,7 +244,13 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/apis/message-displaying', 'wrc-f
        * Handle the customizer button event by opening or closing the table customizer.
        */
       toggleCustomizerState: function(event) {
-        return toggleCustomizer(event);
+        const toggleState = toggleCustomizer(event);
+        if (toggleState === 'expanded') {
+          const selector = (this.hiddenColumns().length > 0 ? '#unselectedColumnList' : '#selectedColumnList');
+          const columnList = document.querySelector(selector);
+          if (columnList !== null) columnList.focus();
+        }
+        return toggleState;
       },
 
       /**

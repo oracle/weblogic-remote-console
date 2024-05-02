@@ -2,7 +2,7 @@
 # Licensed under the Universal Permissive License v 1.0 as shown at http://oss.oracle.com/licenses/upl.
 
 name: WebLogic Remote Console
-version: '2.4.8'
+version: '2.4.9'
 kind: remote
 console-backend:
   name: Oracle WebLogic Console Backend Microprofile Server
@@ -168,6 +168,8 @@ features:
   whatsNew:
     disabled: true
   howDoI:
+    disabled: true
+  pageInfo:
     disabled: true
   iconbarIcons:
     relocated: true

@@ -83,6 +83,11 @@ define([
       }
 
       this.i18n = {
+        'ariaLabel': {
+          'navstrip': {
+            'value': oj.Translations.getTranslatedString('wrc-navigation.ariaLabel.navstrip.value')
+          }
+        },
         icons: {
           'configuration': { iconFile: 'navstrip-icon-readwrite-configuration-blk_48x48',
             tooltip: oj.Translations.getTranslatedString('wrc-navstrip.icons.configuration.tooltip')
@@ -108,11 +113,6 @@ define([
           'nodata': { iconFile: 'navstrip-icon-nodata-blk_48x48',
             tooltip: oj.Translations.getTranslatedString('wrc-common.tooltips.noData.value')
           }
-        },
-        'navstrip': {
-          ariaLabel: {
-            value: oj.Translations.getTranslatedString('wrc-navigation.navstrip.ariaLabel.value')
-          }
         }
       };
 
@@ -125,15 +125,7 @@ define([
         // this module. In fact, the code for the add needs to
         // be moved here physically.
 
-        let binding = viewParams.signaling.navtreeToggled.add((source, expanded) => {
-          if (expanded) {
-//MLW            clearBuiltInsSelection();
-          }
-        });
-
-        self.signalBindings.push(binding);
-
-        binding = viewParams.signaling.projectSwitched.add((fromProject) => {
+        let binding = viewParams.signaling.projectSwitched.add((fromProject) => {
           clearNavStripIcons();
           clearBuiltInsSelection();
         });
@@ -153,7 +145,6 @@ define([
             Runtime.getDomainConnectState(),
             dataProvider
           );
-//MLW          viewParams.signaling.beanTreeChanged.dispatch({name: 'home', type: 'home', label: oj.Translations.getTranslatedString('wrc-content-area-header.toolbar.buttons.home.label'), provider: {id: dataProvider.id, name: dataProvider.name, type: dataProvider.typr}});
         });
 
         self.signalBindings.push(binding);
@@ -217,20 +208,6 @@ define([
             if (target !== null) $(target).focus();
           }
         }
-      };
-
-      /**
-       * Returns the NLS translated string for the tooltip of a navstrip item.
-       * <p>It allows us to do two main things:
-       * <ol>
-       *   <li>Avoid putting oj.Translations.getTranlatedString() functions in the .html</li>
-       *   <li>To restrict the use of the oj.Translations.getTranlatedString() function to the i18n object</li>
-       * </ol>
-       * @param {string} id
-       * @returns {string}
-       */
-      this.getTooltip = function(id) {
-        return self.i18n.icons[id].tooltip;
       };
 
       this.builtInsBeforeSelectEventHandler = function(event) {

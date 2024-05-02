@@ -51,6 +51,7 @@ import weblogic.remoteconsole.common.utils.WebLogicVersion;
 import weblogic.remoteconsole.common.utils.WebLogicVersions;
 import weblogic.remoteconsole.server.ConsoleBackendRuntimeConfig;
 import weblogic.remoteconsole.server.filter.ClientAuthFeature;
+import weblogic.remoteconsole.server.filter.ClientAuthHeader;
 import weblogic.remoteconsole.server.utils.ResponseHelper;
 import weblogic.remoteconsole.server.utils.WebLogicRestClient;
 import weblogic.remoteconsole.server.utils.WebLogicRestRequest;
@@ -230,7 +231,7 @@ public class ConnectionManager {
    */
   public ConnectionResponse tryConnection(
     String domainUrl,
-    String auth,
+    ClientAuthHeader auth,
     List<Locale> locales,
     boolean insecure,
     String proxyOverride) {
@@ -265,7 +266,7 @@ public class ConnectionManager {
     Client client = builder.build();
 
     // Obtain the username from the authorization header
-    String username = getUsernameFromHeader(auth);
+    String username = getUsernameFromHeader(auth.getAuthHeader());
     if (username == null) {
       username = DEFAULT_USERNAME_UNKNOWN;
     }

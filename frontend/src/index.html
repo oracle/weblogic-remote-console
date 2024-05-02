@@ -27,6 +27,7 @@
     <link id="oraclefont-2010" href="js/jet-composites/wrc-frontend/1.0.0/css/fonts/2010.1.0/OracleFont/OracleFont.min.css" type="text/css" rel="stylesheet"/>
     <link id="uxiconfont-2110" href="js/jet-composites/wrc-frontend/1.0.0/css/fonts/2110.1.0/images/iconfont/ojuxIconFont.min.css" type="text/css" rel="stylesheet"/>
     <link id="uxiconfont-2404" href="js/jet-composites/wrc-frontend/1.0.0/css/fonts/2404.0.0/images/iconfont/ojuxIconFont.min.css" type="text/css" rel="stylesheet"/>
+    <link id="fontawesome-470" href="js/jet-composites/wrc-frontend/1.0.0/css/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css" rel="stylesheet"/>
 
     <link href="js/jet-composites/wrc-frontend/1.0.0/css/tool.css" type="text/css" rel="stylesheet" />
     <link href="css/app.css" type="text/css" rel="stylesheet"/>
@@ -41,15 +42,15 @@
   <div id="middle-container" class="oj-flex oj-sm-flex-items-initial oj-sm-flex-wrap-nowrap" data-runtime-role="app">
     <oj-module config='[[navStripModuleConfig]]'></oj-module>
 
-    <div id="spa-resizer" class="resizer_panel oj-flex oj-sm-flex-items-initial oj-sm-flex-wrap-nowrap">
+    <div id="spa-resizer" :aria-label="[[i18n.ariaLabel.panelResizer.value]]" class="resizer_panel oj-flex oj-sm-flex-items-initial oj-sm-flex-wrap-nowrap">
 
-      <div id="navtree-container" class="oj-flex-item">
+      <nav id="navtree-container" class="oj-flex-item">
         <div class="left_panel">
-          <nav :aria-label="[[i18n.navtree.ariaLabel.value]]">
+          <div>
             <oj-bind-dom config="[[navtree.html]]"></oj-bind-dom>
-          </nav>
+          </div>
         </div>
-      </div>
+      </nav>
 
       <main class="right_panel">
         <div id="content-area-container" class="oj-flex oj-sm-flex-direction-column oj-sm-flex-wrap-nowrap">

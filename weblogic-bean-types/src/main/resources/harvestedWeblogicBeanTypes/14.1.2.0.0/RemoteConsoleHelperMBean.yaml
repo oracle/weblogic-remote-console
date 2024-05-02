@@ -1,0 +1,61 @@
+# Copyright (c) 2020, 2024, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.configuration.ConfigurationMBean
+derivedTypes: [
+  ]
+descriptionHTML: 'RemoteConsoleHelperMBean is a specific MBean to configure the Remote
+  Console Helper deployment attributes. '
+name: weblogic.management.configuration.RemoteConsoleHelperMBean
+properties:
+- defaultValue:
+    value:
+      value: console
+  descriptionHTML: '<p>The context path used in URLs that specify the Remote Console
+    Helper. </p> '
+  name: ContextPath
+  redeployNeeded: true
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: REMOTECONSOLESESSION
+  descriptionHTML: '<p>The cookie name used by the Remote Console Helper. </p> '
+  name: CookieName
+  redeployNeeded: true
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: true
+  descriptionHTML: '<p>Determine if the Remote Console Helper session cookie is protected
+    so that it is only visible to the helper. This may prevent use of this shared
+    cookie in other applications.</p> '
+  name: ProtectedCookieEnabled
+  redeployNeeded: true
+  restartNeeded: true
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: 600
+  descriptionHTML: '<p>The session timeout value (in seconds) for the Remote Console
+    Helper. </p> '
+  name: SessionTimeout
+  redeployNeeded: true
+  restartNeeded: true
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: 60
+  descriptionHTML: '<p>The token timeout (in minutes) of the user token from the Remote
+    Console Helper. </p> '
+  name: TokenTimeout
+  type: int
+  writable: true

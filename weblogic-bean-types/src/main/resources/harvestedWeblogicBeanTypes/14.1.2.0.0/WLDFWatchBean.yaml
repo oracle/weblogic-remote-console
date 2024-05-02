@@ -1,0 +1,117 @@
+# Copyright (c) 2020, 2024, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.diagnostics.descriptor.WLDFBean
+derivedTypes: [
+  ]
+descriptionHTML: '<p>Defines policies and actions.</p> <p>Note: As of WebLogic Server
+  12.2.1, the terms <i>watch</i> and <i>notification</i> are replaced by <i>policy</i>
+  and <i>action</i>, respectively. However, the definition of these terms has not
+  changed.</p> '
+name: weblogic.diagnostics.descriptor.WLDFWatchBean
+properties:
+- defaultValue:
+    value:
+      value: 60000
+  descriptionHTML: '<p>For automatic alarms, the time period, in milliseconds, to
+    wait after the policy evaluates to <code>true</code> before the alarm is automatically
+    reset.</p>  <p>The default reset period is 60000 milliseconds, which is equivalent
+    to 60 seconds.</p> '
+  name: AlarmResetPeriod
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: None
+  descriptionHTML: '<p>The alarm type for the policy: manual or automatic. The default
+    alarm type is manual.</p>  <p>Once a manually set alarm has triggered, it must
+    be reset through the WebLogic Server Administration Console or programmatically
+    before it can trigger again. An automatic reset alarm will reset after the specified
+    time period has elapsed.</p> '
+  legalValues:
+  - None
+  - ManualReset
+  - AutomaticReset
+  name: AlarmType
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: true
+  descriptionHTML: '<p>Specifies whether this policy is enabled.</p> '
+  name: Enabled
+  type: boolean
+  writable: true
+- defaultValue:
+    derivedDefault: true
+  descriptionHTML: 'Returns the expression language type used by the policy, either
+    "EL" or "WLDF" (deprecated). '
+  name: ExpressionLanguage
+  type: java.lang.String
+  writable: true
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: '<p>The actions enabled for this policy.</p> '
+  name: Notifications
+  relationship: reference
+  type: weblogic.diagnostics.descriptor.WLDFNotificationBean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The expression used to evaluate the policy.</p> '
+  name: RuleExpression
+  nullable: true
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: Harvester
+  descriptionHTML: '<p>The expression type for the policy: <code>HARVESTER_RULE_TYPE</code>
+    refers to harvested data, <code>LOG_RULE_TYPE</code> refers to server log entry
+    data, <code>DOMAIN_LOG_RULE_TYPE</code> refers to domain log entry data, and <code>EVENT_DATA_RULE_TYPE</code>
+    refers to instrumentation event data. The default type is <code>HARVESTER_RULE_TYPE</code>.</p>  <p>For
+    information on policy expressions, see "Using the Diagnostics Framework for Oracle
+    WebLogic Server" at <a href="http://docs.oracle.com/middleware/home/index.html"
+    shape="rect">http://docs.oracle.com/middleware/home/index.html</a>.</p> '
+  legalValues:
+  - Harvester
+  - Log
+  - DomainLog
+  - EventData
+  name: RuleType
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Defines the evaluation frequency for Harvester type rules,
+    in seconds.</p>  <p>The default frequency is 5 minutes (300 seconds), minimum
+    is 5 seconds.</p> '
+  name: Schedule
+  relationship: containment
+  type: weblogic.diagnostics.descriptor.WLDFScheduleBean
+- defaultValue:
+    value:
+      value: Notice
+  descriptionHTML: '<p>The severity level of the actions sent when this policy evaluates
+    to <code>true</code>. When set, this level overrides the default value provided
+    in the parent MBean. However, if no severity level is set (null), the value provided
+    in the parent MBean is returned.</p>  <p>The severity levels are the same levels
+    used by the logging framework and the weblogic.logging.Severities class.</p> '
+  legalValues:
+  - Info
+  - Warning
+  - Error
+  - Notice
+  - Critical
+  - Alert
+  - Emergency
+  name: Severity
+  type: java.lang.String
+  writable: true
+roles:
+  allowed:
+  - Deployer

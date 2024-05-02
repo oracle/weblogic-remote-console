@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2022, 2023, Oracle and/or its affiliates.
+ * Copyright (c) 2022, 2024, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
@@ -37,10 +37,15 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/apis/data-operations', 'wrc-fron
         //setup for security warning link.
         binding = viewParams.signaling.dataProviderSelected.add(dataProvider => {
           this.canExitCallback = undefined;
-          // setup the simple search
-          this.simpleSearchPerspective(dataProvider.beanTrees[0].type);
-          this.simpleSearchResourceData(dataProvider.beanTrees[0].simpleSearch);
-          setSimpleSearchState(CoreUtils.isNotUndefinedNorNull(this.simpleSearchResourceData()));
+          if (CoreUtils.isNotUndefinedNorNull(dataProvider) &&
+            CoreUtils.isNotUndefinedNorNull(dataProvider.beanTrees) &&
+            dataProvider.beanTrees.length > 0
+          ) {
+            // setup the simple search
+            this.simpleSearchPerspective(dataProvider.beanTrees[0].type);
+            this.simpleSearchResourceData(dataProvider.beanTrees[0].simpleSearch);
+            setSimpleSearchState(CoreUtils.isNotUndefinedNorNull(this.simpleSearchResourceData()));
+          }
         });
 
         self.signalBindings.push(binding);

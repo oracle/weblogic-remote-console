@@ -1,0 +1,45 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.diagnostics.accessor.runtime.EditableArchiveRuntimeMBean
+derivedTypes:
+- weblogic.management.runtime.WLDFWlstoreArchiveRuntimeMBean
+descriptionHTML: '<p>Use this interface to retrieve statistical information associated
+  with WLDF archives that use WebLogic Store for data storage.</p> '
+name: weblogic.diagnostics.accessor.runtime.WlstoreArchiveRuntimeMBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Number of records deleted since the server was started.</p> '
+  name: DeletionCount
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Cumulative time, in milliseconds, spent to delete records since
+    the server was started.</p> '
+  name: DeletionTime
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Number of index pages.</p> '
+  name: IndexPageCount
+  type: int
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Number of records created since the server was started.</p> '
+  name: InsertionCount
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Cumulative time, in milliseconds, spent to insert records since
+    the server was started.</p> '
+  name: InsertionTime
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Total number of records in the archive</p> '
+  name: RecordCount
+  type: long

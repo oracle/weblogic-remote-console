@@ -1,0 +1,46 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.runtime.RuntimeMBean
+derivedTypes: [
+  ]
+descriptionHTML: 'Information about the progress of a booting subsystem '
+name: weblogic.management.runtime.ProgressMBean
+properties:
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: 'The set of work this subsystem is working on at this time.  The
+    subsystem may be working on multiple items of work at the same time on different
+    threads, in which case this array will be larger than size one.  The subsystem
+    may be working on nothing at the moment (even if in state IN_PROGRESS) in which
+    case this will return an array of length zero.  In FINAL state this will return
+    null.  IN FAILED state this will return the work that failed (which may be zero-length
+    as the failure may be unrelated to the work that was done) '
+  exclude: true
+  name: CurrentWork
+  supported: false
+  type: java.lang.String
+- defaultValue: {
+    }
+  descriptionHTML: 'The name of the subsystem reporting progress '
+  exclude: true
+  name: Name
+  supported: false
+  type: java.lang.String
+- defaultValue: {
+    }
+  descriptionHTML: 'The current state of this subsystem. <ol> <li>IN_PROGRESS - The
+    subsystem is currently booting toward a final state</li> <li>FINAL - The subsystem
+    has successfully booted</li> <li>FAILED - The subsystem has encountered a fatal
+    error during boot and is no longer progressing</li> </ol> '
+  exclude: true
+  name: State
+  supported: false
+  type: java.lang.String
+roles:
+  allowed:
+  - Operator

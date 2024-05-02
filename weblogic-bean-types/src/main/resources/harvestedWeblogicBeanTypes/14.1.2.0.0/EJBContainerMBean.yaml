@@ -1,0 +1,105 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.configuration.ConfigurationMBean
+derivedTypes:
+- weblogic.management.configuration.EJBComponentMBean
+descriptionHTML: 'This MBean is used to specify EJB container-wide settings.  These
+  can be overridden by a specific EJBComponentMBean. '
+name: weblogic.management.configuration.EJBContainerMBean
+properties:
+- defaultValue:
+    value:
+      value: null
+  descriptionHTML: '<p>Returns the extra options passed to ejbc during the dynamic
+    ejbc of a jar file. For example: -J-mx128m By default this value is null. If no
+    ExtraEJBCOptions are specified on the EJBComponent, the default will be pulled
+    from the Server.ExtraEJBCOptions.</p> '
+  name: ExtraEjbcOptions
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: null
+  descriptionHTML: '<p>The extra options passed to rmic during server-side generation
+    are noted here. The default for this attribute must be null. If no ExtraRmicOptions
+    are specified on the EJBComponent, the default will be pulled from Server.ExtraRmicOptions.</p> '
+  name: ExtraRmicOptions
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Indicates whether the ForceGeneration is enabled.</p> '
+  name: ForceGeneration
+  restartNeeded: true
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: null
+  descriptionHTML: '<p>The path to the Java compiler to use to compile EJBs (e.g.
+    "sj" or "javac"). Note: the default must be null. If no JavaCompiler is specified
+    on this specific EJBComponent, the default will be pulled in the following order
+    from - EJBContainerMBean - Server.JavaCompiler.</p> '
+  name: JavaCompiler
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: null
+  descriptionHTML: '<p>Provides a list of the options to append to the Java compiler
+    classpath when you compile Java code.</p> '
+  name: JavaCompilerPostClassPath
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: null
+  descriptionHTML: '<p>Provides a list of the options to prepend to the Java compiler
+    classpath when you compile Java code.</p> '
+  name: JavaCompilerPreClassPath
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: true
+  descriptionHTML: '<p>indicates whether KeepGenerated is enabled and the ejbc source
+    files will be kept.</p> '
+  name: KeepGenerated
+  restartNeeded: true
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: tmp_ejb
+  deprecated: ' '
+  descriptionHTML: '<p>Return the temporary directory where generated files are stored
+    by ejbc. Deprecated: All EJB compiler output is now stored in the EJBCompilerCache
+    subdirectory of the server staging directory. This directory should not be described
+    as "temporary" since removing it would cause the EJB compiler to be rerun as necessary
+    the next time the server is restarted.</p> '
+  name: TmpPath
+  restartNeeded: true
+  supported: false
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: 'false'
+  deprecated: 'Deprecated as of 10.3.3.0 in favor of ServerDebugMBean.getDebugEjbDeployment() '
+  descriptionHTML: '<p>Indicates whether the VerboseEJBDeployment is enabled.</p> '
+  name: VerboseEJBDeploymentEnabled
+  restartNeeded: true
+  supported: false
+  type: java.lang.String
+  writable: true

@@ -1,0 +1,67 @@
+# Copyright (c) 2024, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: []
+baseTypes:
+- weblogic.management.descriptor.DeploymentDBean
+derivedTypes: []
+name: weblogic.management.descriptor.ConnectorDeploymentDBean
+properties:
+- name: OutboundConnectionPoolGroups
+  type: weblogic.management.descriptor.OutboundConnectionPoolGroupDBean
+  array: true
+  relationship: containment
+- name: Properties
+  type: weblogic.management.descriptor.ConfigPropertyDBean
+  array: true
+  relationship: containment
+- name: DeployAsAWhole
+  type: boolean
+  descriptionHTML: >
+    <p>Specifies whether the resource adapter is deployed as a whole.</p>
+    <p>If set to <code>true</code> (the default), the resource adapter
+    deployment automatically fails if an error occurs in any outbound
+    connection pool. If set to <code>false</code>, in a resource adapter
+    that is configured with multiple outbound connection pools, deployment
+    succeeds (but in a HEALTH_CRITICAL state) even if an error occurs
+    during the creation or configuration of at least one outbound
+    connection pool.</p>
+    <p>Note that a resource adapter's health state can be monitored from
+    the adapter deployment's <b>Monitoring &gt; Health</b> page.</p>
+    <p>The default value is true.</p>
+  defaultValue:
+    value:
+      value: true
+  writable: true
+  redeployNeeded: true
+- name: EnableAccessOutsideApp
+  type: boolean
+  descriptionHTML: >
+    <p>Specifies whether this resource adapter can be accessed from outside the application.</p>
+    <p>The default value is false.</p>
+  defaultValue:
+    value:
+      value: false
+  writable: true
+  redeployNeeded: true
+- name: EnableGlobalAccessToClasses
+  type: boolean
+  descriptionHTML: >
+    <p>Specifies whether access to resource adapter classes is enabled.</p>
+    <p>The default value is false.</p>
+  defaultValue:
+    value:
+      value: false
+  writable: true
+  redeployNeeded: true
+- name: JNDIName
+  type: java.lang.String
+  descriptionHTML: >
+    <p>The JNDI name of the resource adapter bean.</p>
+  writable: true
+- name: NativeLibdir
+  type: java.lang.String
+  descriptionHTML: >
+    <p>The directory where native libraries are stored.</p>
+  writable: true
+  redeployNeeded: true

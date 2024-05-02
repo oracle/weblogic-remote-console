@@ -1,0 +1,48 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.j2ee.descriptor.wl.DistributedDestinationBean
+derivedTypes: [
+  ]
+descriptionHTML: 'A distributed queue is one that can be load-balanced across a cluster. '
+name: weblogic.j2ee.descriptor.wl.DistributedQueueBean
+properties:
+- array: true
+  creators:
+  - weblogic.j2ee.descriptor.wl.DistributedDestinationMemberBean
+  defaultValue: {
+    }
+  descriptionHTML: '<p>The list of all queue members that make up the aggregate distributed
+    queue.</p> <p> The name of the specific queue and any configuration information
+    about that queue (such as its relative weight) can be configured in the distributed
+    queue member. </p> '
+  name: DistributedQueueMembers
+  relationship: containment
+  supported: false
+  type: weblogic.j2ee.descriptor.wl.DistributedDestinationMemberBean
+- defaultValue:
+    value:
+      value: -1
+  descriptionHTML: '<p>The number of seconds after which a distributed queue member
+    with no consumers will wait before forwarding its messages to other distributed
+    queue members that do have consumers.</p>  <p>The default value of -1 disables
+    this feature so that no messages are forwarded to other distributed queue members.</p> '
+  name: ForwardDelay
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: true
+  descriptionHTML: '<p>Determines whether or not the delivery count is reset during
+    message forwarding between distributed queue members.</p>  <p>The default value
+    of true resets the delivery counts on messages when they are forwarded to another
+    distributed queue member.</p> '
+  name: ResetDeliveryCountOnForward
+  type: boolean
+  writable: true
+roles:
+  allowed:
+  - Deployer

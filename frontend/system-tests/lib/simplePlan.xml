@@ -8,7 +8,7 @@
     </variable>
   </variable-definition>
   <module-override>
-    <module-name>sample.war</module-name>
+    <module-name>simple.war</module-name>
     <module-type>war</module-type>
     <module-descriptor external="true">
       <root-element>weblogic-web-app</root-element>
@@ -28,5 +28,5 @@
       </variable-assignment>
     </module-descriptor>
   </module-override>
-  <config-root>/Users/davinguy/Oracle/newConsole/domains/141200/WLSLoad31_jdk21/domain.run/servers/AdminServer/upload/sample/plan</config-root>
+  <config-root>servers/AdminServer/upload/simple/plan</config-root>
 </deployment-plan>

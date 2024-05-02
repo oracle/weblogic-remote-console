@@ -1,4 +1,4 @@
-// Copyright (c) 2021, 2023, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2024, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.webapp;
@@ -190,16 +190,19 @@ public class InvokeActionHelper {
 
   private Response<Void> aggregateRowResponses(List<Response<Void>> rowResponses) {
     Response<Void> response = new Response<>();
+    Response<Void> successesResponse = new Response<>();
+    Response<Void> failuresResponse = new Response<>();
     boolean someRowsSucceeded = false;
     for (Response<Void> rowResponse : rowResponses) {
-      response.copyMessages(rowResponse);
       if (rowResponse.isSuccess()) {
         // This row succeeded.
+        successesResponse.copyMessages(rowResponse);
         someRowsSucceeded = true;
         // Some of the work succeed - send back a 200.
         response.setSuccess(null);
       } else {
         // This row failed
+        failuresResponse.copyMessages(rowResponse);
         if (someRowsSucceeded) {
           // Send back a 200 because some of the rows succeeded.
         } else {
@@ -214,6 +217,9 @@ public class InvokeActionHelper {
         }
       }
     }
+    // Display the failure messages first:
+    response.copyMessages(failuresResponse);
+    response.copyMessages(successesResponse);
     return response;
   }
 

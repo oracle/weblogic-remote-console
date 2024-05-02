@@ -1,0 +1,25 @@
+# Copyright (c) 2024, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+createResourceMethod: weblogic.remoteconsole.customizers.DescriptorBeanCustomizer.createResource
+
+editable: true
+disableMBeanJavadoc: true
+supportsFilteringDashboards: false
+
+properties:
+- name: IndexDirectorySortBy
+  helpHTML: >
+    <p>Specifies the way in which index directories are sorted.</p>
+    <p>The default value is 'Name'.</p>
+  legalValues:
+  - value: NAME
+    label: Name
+  - value: LAST_MODIFIED
+    label: Last Modified
+  - value: SIZE
+    label: Size
+- name: ResourceReloadCheckSecs
+  label: Resource Reload Check (in seconds)
+- name: ServletReloadCheckSecs
+  label: Servlet Reload Check (in seconds)

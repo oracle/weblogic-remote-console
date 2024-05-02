@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2023, Oracle and/or its affiliates.
+ * Copyright (c) 2023,2024, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
@@ -52,12 +52,12 @@ define(
       },
       addMenu: (menu) => {
         if (menu instanceof Menu) {
-          const index = this.submenu.map(item => item.id).indexOf(menu.id);
+          const index = this.submenu.findIndex(item => item.id === menu.id);
           if (index === -1) this.submenu.push(menu);
         }
       },
       removeMenu: (menuId) => {
-        const index = this.submenu.map(item => item.id).indexOf(menuId);
+        const index = this.submenu.findIndex(item => item.id === menuId);
         if (index !== -1) this.submenu.splice(index, 1);
       }
 

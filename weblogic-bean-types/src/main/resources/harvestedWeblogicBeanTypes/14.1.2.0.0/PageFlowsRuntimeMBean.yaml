@@ -1,0 +1,51 @@
+# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: [
+  ]
+baseTypes:
+- weblogic.management.runtime.RuntimeMBean
+derivedTypes: [
+  ]
+descriptionHTML: 'This MBean just hides the lazy construction of PageFlowRuntimeMBeans
+  and provides a top-level reset() operation for all PageFlows in the webapp. It also
+  minimizes the impact on the WebAppRuntimeMBean. '
+name: weblogic.management.runtime.PageFlowsRuntimeMBean
+properties:
+- defaultValue: {
+    }
+  deprecated: ' '
+  descriptionHTML: ' '
+  name: AppName
+  supported: false
+  type: java.lang.String
+- defaultValue: {
+    }
+  deprecated: ' '
+  descriptionHTML: ' '
+  name: ContextPath
+  supported: false
+  type: java.lang.String
+- defaultValue: {
+    }
+  deprecated: ' '
+  descriptionHTML: ' '
+  name: HttpServerName
+  supported: false
+  type: java.lang.String
+- array: true
+  defaultValue: {
+    }
+  deprecated: ' '
+  descriptionHTML: ' '
+  name: PageFlows
+  relationship: containment
+  supported: false
+  type: weblogic.management.runtime.PageFlowRuntimeMBean
+- defaultValue: {
+    }
+  deprecated: ' '
+  descriptionHTML: ' '
+  name: ServerName
+  supported: false
+  type: java.lang.String

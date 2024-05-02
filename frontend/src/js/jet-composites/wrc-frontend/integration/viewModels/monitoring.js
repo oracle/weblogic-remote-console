@@ -106,11 +106,11 @@ define([
         const setRuntimeReadOnlyProperty = () => {
           Runtime.setProperty(Runtime.PropertyName.CFE_IS_READONLY, viewParams.beanTree.readOnly);
         };
-  
+
         const sendBeanTreeChangedSignal = ()  => {
           viewParams.signaling.beanTreeChanged.dispatch(viewParams.beanTree);
         };
-  
+
         setRuntimeReadOnlyProperty();
         sendBeanTreeChangedSignal();
 
@@ -209,9 +209,9 @@ define([
               });
           }
         });
-  
+
         self.signalBindings.push(binding);
-  
+
       }.bind(this);
 
       this.disconnected = function () {
@@ -320,7 +320,7 @@ define([
           }
         }
       }.bind(this);
-  
+
       function toggleBeanPathHistory(visible) {
         if (CoreUtils.isUndefinedOrNull(visible)) {
           const value = ViewModelUtils.getCustomCssProperty('--beanpath-history-container-calc-display');
@@ -358,7 +358,7 @@ define([
             }
             // Send signal saying bean path was added
             viewParams.signaling.beanPathAdded.dispatch(reply.body.data.name, breadcrumbLabels, viewParams.beanTree);
-      
+
             return reply;
           });
       }
@@ -374,9 +374,9 @@ define([
         // remain encoded to form proper URIs for the beantree
         self.path(pathParam);
 
-        ViewModelUtils.setPreloaderVisibility(true);
-  
         if (pathParam.endsWith('DomainRuntime/MessageCenter/Alerts')) {
+          ViewModelUtils.setPreloaderVisibility(true);
+
           DataOperations.messageCenter.getData(pathParam)
             .then(reply => {
               return addBeanPath(reply);
@@ -402,7 +402,7 @@ define([
                 // gets to a bean that still exists.
                 const newPathParam = pathParam.split('/').slice(0, -1).join('/');
                 const newRawPath = encodeURIComponent(newPathParam);
-      
+
                 if (newRawPath !== '') {
                   renderPage(newRawPath);
                 }
@@ -414,8 +414,10 @@ define([
             .finally(() => {
               ViewModelUtils.setPreloaderVisibility(false);
             });
-          }
+        }
         else {
+          ViewModelUtils.setPreloaderVisibility(true);
+
           DataOperations.mbean.get(pathParam)
             .then(reply => {
               return addBeanPath(reply);
@@ -430,7 +432,7 @@ define([
                 reply.body.data.get('pdjData'),
                 rawPath
               );
-      
+
               viewParams.signaling.navtreeUpdated.dispatch({
                 update: true,
                 path: reply.body.data.get('rdjData').navigation,
@@ -446,7 +448,7 @@ define([
                 // gets to a bean that still exists.
                 const newPathParam = pathParam.split('/').slice(0, -1).join('/');
                 const newRawPath = encodeURIComponent(newPathParam);
-        
+
                 if (newRawPath !== '') {
                   renderPage(newRawPath);
                 }

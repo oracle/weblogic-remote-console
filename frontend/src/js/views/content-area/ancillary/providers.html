@@ -8,16 +8,17 @@
 -->
 <input class="cfe-file-chooser" id="file-chooser" type="file"/>
 
-<oj-navigation-list aria-label="Choose a connections/model item"
+<oj-navigation-list
   id="connections-models"
   data="[[connectionsModelsDataProvider]]"
   drill-mode="none"
   display="all"
   selection="{{connectionsModelsSelectedItem}}"
   on-selection-changed="[[connectionsModelsSelectedItemChanged]]"
+  :aria-label="[[i18n.ariaLabel.connectionsModels.value]]"
 >
   <template slot="itemTemplate" data-oj-as="item">
-    <li role="list" data-bind="attr: {id: item.data.id}" class="cfe-project-provider-listitem">
+    <li role="list" data-bind="attr: {id: item.data.id}" class="cfe-project-provider-listitem" tabindex="0">
       <a href="#"
         :data-item-id="[[item.data.id]]"
          on-keyup="[[registerKeyUpFocuser('.cfe-project-provider-iconbar')]]"
@@ -34,16 +35,18 @@
            data-item-action="info" :data-item-type="[[item.data.type]]"
            :data-item-id="[[item.data.id]]"
            on-click="[[connectionsModelsIconBarClickListener]]"
+           :aria-label="[[i18n.icons.info.tooltip]]"
         >
-          <img class="cfe-project-provider-iconbar-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.icons.info.iconFile + '.png', 'title': i18n.icons.info.tooltip, alt: i18n.icons.info.tooltip}" />
+          <img class="cfe-project-provider-iconbar-icon" aria-hidden="true" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.icons.info.iconFile + '.png', 'title': i18n.icons.info.tooltip, alt: i18n.icons.info.tooltip}" />
         </a>
         <oj-bind-if test="[[!item.data?.settings?.local]]">
           <a href="#" class="cfe-project-provider-iconbar-link"
              data-item-action="edit" :data-item-type="[[item.data.type]]"
             :data-item-id="[[item.data.id]]"
             on-click="[[connectionsModelsIconBarClickListener]]"
+             :aria-label="[[i18n.icons.edit.tooltip]]"
           >
-            <img class="cfe-project-provider-iconbar-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.icons.edit.iconFile + '.png', 'title': i18n.icons.edit.tooltip, alt: i18n.icons.edit.tooltip}" />
+            <img class="cfe-project-provider-iconbar-icon" aria-hidden="true" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.icons.edit.iconFile + '.png', 'title': i18n.icons.edit.tooltip, alt: i18n.icons.edit.tooltip}" />
           </a>
         </oj-bind-if>
         <oj-bind-if test="[[!item.data?.settings?.local && item.data.state === 'connected']]">
@@ -51,8 +54,9 @@
              data-item-action="deactivate" :data-item-type="[[item.data.type]]"
             :data-item-id="[[item.data.id]]"
             on-click="[[connectionsModelsIconBarClickListener]]"
+             :aria-label="[[i18n.icons.deactivate.tooltip]]"
           >
-            <img class="cfe-project-provider-iconbar-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.icons.deactivate.iconFile + '.png', 'title': i18n.icons.deactivate.tooltip, alt: i18n.icons.deactivate.tooltip}" />
+            <img class="cfe-project-provider-iconbar-icon" aria-hidden="true" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.icons.deactivate.iconFile + '.png', 'title': i18n.icons.deactivate.tooltip, alt: i18n.icons.deactivate.tooltip}" />
           </a>
         </oj-bind-if>
         <oj-bind-if test="[[!item.data?.settings?.local]]">
@@ -60,8 +64,9 @@
              data-item-action="delete" :data-item-type="[[item.data.type]]"
             :data-item-id="[[item.data.id]]"
             on-click="[[connectionsModelsIconBarClickListener]]"
+            :aria-label="[[i18n.icons.delete.tooltip]]"
           >
-            <img class="cfe-project-provider-iconbar-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.icons.delete.iconFile + '.png', 'title': i18n.icons.delete.tooltip, alt: i18n.icons.delete.tooltip}" />
+            <img class="cfe-project-provider-iconbar-icon" aria-hidden="true" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.icons.delete.iconFile + '.png', 'title': i18n.icons.delete.tooltip, alt: i18n.icons.delete.tooltip}" />
           </a>
         </oj-bind-if>
       </span>
@@ -185,11 +190,11 @@
   on-oj-close="[[onOjClose]]"
 >
   <div slot="body">
-    <div class="cfe-dialog-prompt">
+    <div id="domain-connect-dialog-instructions" class="cfe-dialog-prompt">
       <span data-bind="text: [[i18n.dialog.instructions()]]"></span>
     </div>
 
-    <oj-form-layout id="domain-connect-form-layout" label-edge="start" label-width="48%">
+    <oj-form-layout id="domain-connect-form-layout" aria-labelledby="domain-connect-dialog-instructions" label-edge="start" label-width="48%">
       <oj-label data-help-key="name" slot="label" label-edge="start" for="connection-name-field" on-click="[[helpIconClick]]">
         <oj-bind-text value="[[i18n.labels.connections.name.value + '*']]"></oj-bind-text>
       </oj-label>
@@ -242,7 +247,7 @@
             <span class="oj-radiocheckbox-label-text">
             </span>
           </label -->
-          <label for="insecure-checkbox" aria-label="Insecure Checkbox"></label>
+          <label for="insecure-checkbox" :aria-label="[[i18n.ariaLabel.insecureCheckbox.value]]"></label>
         </span>
       </div>
     </oj-form-layout>
@@ -270,11 +275,11 @@
   on-oj-close="[[onOjClose]]"
 >
   <div slot="body">
-    <div class="cfe-dialog-prompt">
+    <div id="model-dialog-instructions" class="cfe-dialog-prompt">
       <span data-bind="text: [[i18n.dialog.instructions()]]"></span>
     </div>
 
-    <oj-form-layout id="model-form-layout" class="cfe-dialog-form-layout" label-edge="start" label-width="26%">
+    <oj-form-layout id="model-form-layout" aria-labelledby="model-dialog-instructions" class="cfe-dialog-form-layout" label-edge="start" label-width="26%">
       <oj-label data-help-key="name" slot="label" label-edge="start" for="model-name-field" on-click="[[helpIconClick]]">
         <oj-bind-text value="[[i18n.dialog.nameLabel() + '*']]"></oj-bind-text>
       </oj-label>
@@ -285,7 +290,7 @@
       </oj-label>
       <div>
         <oj-bind-if test="[[dialogFields().action === 'new']]">
-          <oj-input-text id="model-file-field" class="cfe-file-chooser-field" value="{{contentFile}}" placeholder="e.g. mynewfile.ext" readonly="[[dialogFields().readonly]]"></oj-input-text>
+          <oj-input-text id="model-file-field" :aria-label="[[i18n.ariaLabel.filePath.value]]" class="cfe-file-chooser-field" value="{{contentFile}}" placeholder="e.g. mynewfile.ext" readonly="[[dialogFields().readonly]]"></oj-input-text>
           <a href="#"
              :data-input="[[dialogFields().id]]"
              :data-input-type="[[dialogFields().type]]"
@@ -302,7 +307,7 @@
           </oj-bind-if>
         </oj-bind-if>
         <oj-bind-if test="[[dialogFields().action === 'existing']]">
-          <oj-input-text id="model-file-field" :class="[[isReloadable() ? 'cfe-file-reloader-field' : 'cfe-file-chooser-field']]" value="{{contentFile}}" readonly="[[dialogFields().readonly]]"></oj-input-text>
+          <oj-input-text id="model-file-field" :aria-label="[[i18n.ariaLabel.filePath.value]]" :class="[[isReloadable() ? 'cfe-file-reloader-field' : 'cfe-file-chooser-field']]" value="{{contentFile}}" readonly="[[dialogFields().readonly]]"></oj-input-text>
           <a href="#"
              :data-input="[[dialogFields().id]]"
              :data-input-type="[[dialogFields().type]]"
@@ -310,14 +315,6 @@
           >
             <img class="choose-file-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.dialog.iconFile() + '.png', 'title': i18n.dialog.tooltip, alt: i18n.dialog.tooltip}"/>
           </a>
-          <oj-bind-if test="[[isReloadable()]]">
-            <a href="#" index="-1"
-               :data-input="[[dialogFields().id]]"
-               on-click="[[reloadFileClickListener]]"
-            >
-              <img class="reload-file-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.icons.reload.iconFile + '.png', 'title': i18n.icons.reload.tooltip, alt: i18n.icons.reload.tooltip}" />
-            </a>
-          </oj-bind-if>
         </oj-bind-if>
       </div>
 
@@ -356,11 +353,11 @@
   on-oj-close="[[onOjClose]]"
 >
   <div slot="body">
-    <div class="cfe-dialog-prompt">
+    <div id="model-composite-dialog-instructions" class="cfe-dialog-prompt">
       <span data-bind="text: [[i18n.dialog.instructions()]]"></span>
     </div>
 
-    <oj-form-layout id="model-composite-form-layout" class="cfe-dialog-form-layout" label-edge="start" label-width="26%">
+    <oj-form-layout id="model-composite-form-layout" aria-labelledby="model-composite-dialog-instructions" class="cfe-dialog-form-layout" label-edge="start" label-width="26%">
       <oj-label data-help-key="name" slot="label" label-edge="start" for="model-composite-name-field" on-click="[[helpIconClick]]">
         <oj-bind-text value="[[i18n.labels.composite.name.value + '*']]"></oj-bind-text>
       </oj-label>
