@@ -12,20 +12,20 @@
     <title>Administration Servers :: WebLogic Remote Console</title>
 
     
-    <link href="/weblogic-remote-console/css/nucleus.css?1710208437" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/fontawesome-all.min.css?1710208437" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/hybrid.css?1710208437" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/featherlight.min.css?1710208437" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/perfect-scrollbar.min.css?1710208437" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/auto-complete.css?1710208437" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/atom-one-dark-reasonable.css?1710208437" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/theme.css?1710208437" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/tabs.css?1710208437" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/hugo-theme.css?1710208437" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/nucleus.css?1714663206" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/fontawesome-all.min.css?1714663206" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/hybrid.css?1714663206" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/featherlight.min.css?1714663206" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/perfect-scrollbar.min.css?1714663206" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/auto-complete.css?1714663206" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/atom-one-dark-reasonable.css?1714663206" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/theme.css?1714663206" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/tabs.css?1714663206" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/hugo-theme.css?1714663206" rel="stylesheet">
     
     
 
-    <script src="/weblogic-remote-console/js/jquery-3.6.0.min.js?1710208437"></script>
+    <script src="/weblogic-remote-console/js/jquery-3.6.0.min.js?1714663206"></script>
 
     <style>
       :root #header + #content > #left > #rlblock_left{
@@ -59,14 +59,14 @@
     <span data-search-clear=""><i class="fas fa-times"></i></span>
 </div>
 
-<script type="text/javascript" src="/weblogic-remote-console/js/lunr.min.js?1710208437"></script>
-<script type="text/javascript" src="/weblogic-remote-console/js/auto-complete.js?1710208437"></script>
+<script type="text/javascript" src="/weblogic-remote-console/js/lunr.min.js?1714663206"></script>
+<script type="text/javascript" src="/weblogic-remote-console/js/auto-complete.js?1714663206"></script>
 <script type="text/javascript">
     
         var baseurl = "https:\/\/oracle.github.io\/weblogic-remote-console";
     
 </script>
-<script type="text/javascript" src="/weblogic-remote-console/js/search.js?1710208437"></script>
+<script type="text/javascript" src="/weblogic-remote-console/js/search.js?1714663206"></script>
 
     
   </div>
@@ -784,7 +784,7 @@
         <li><a href="#app-test">Test application deployment</a></li>
         <li><a href="#view-an-applications-current-state">View an application&rsquo;s current state</a></li>
         <li><a href="#review-an-applications-runtime-statistics">Review an application&rsquo;s runtime statistics</a></li>
-        <li><a href="#deployment-plans">Deployment Plans</a></li>
+        <li><a href="#configure-deployment">Configure Deployment</a></li>
       </ul>
     </li>
   </ul>
@@ -900,7 +900,7 @@ As with the Administration Console, your management capabilities will be limited
 
 <h3 id="shopping_cart">Shopping cart</h3>
 <p>The Shopping Cart (equivalent to the Change List in the WebLogic Server Administration Console) holds all the pending changes for the current session in the WebLogic Remote Console. In the shopping cart, you can see if any changes are pending, commit those changes or discard them entirely.</p>
-<p>If you installed the console extension, <code>console-rest-ext-7.0.war</code>, then you can also see the specific changes you&rsquo;ve made and the status of the lock in the Change Manager.</p>
+<p>If you installed the console extension, <code>console-rest-ext-8.0.war</code>, then you can also see the specific changes you&rsquo;ve made and the status of the lock in the Change Manager.</p>
 <p>Open the Shopping Cart menu and click <strong>View Changes</strong> to see your pending changes.</p>
 <p>Some changes can be activated immediately (dynamic) while other changes require a server restart to activate (non-dynamic). When you need to activate non-dynamic changes, navigate to the <strong>Environment</strong> &gt; <strong>Servers</strong> node in the Monitoring perspective to see which servers need a restart.</p>
 <p>If you need to undo a change, you must discard all Shopping Cart contents or manually revert the change in the Edit Tree perspective.</p>
@@ -1039,30 +1039,83 @@ As with the Administration Console, your management capabilities will be limited
 <li>In the <strong>Monitoring Tree</strong>, navigate to <strong>Deployments</strong> &gt; <strong>Application Runtime Data</strong> and choose the application for which you want to view runtime information.</li>
 <li>Explore the child nodes of the selected application to see its various runtime data.</li>
 </ol>
-<h3 id="deployment-plans">Deployment Plans</h3>
-<p>You can use a deployment plan  to specify deployment property values for an application. A deployment plan is an optional document that works with or overrides your application&rsquo;s deployment descriptors to configure an application for deployment to a specific WebLogic Server environment. Deployment plans are written in XML.</p>
+<h3 id="configure-deployment">Configure Deployment</h3>
+<p>After you deploy an application, you can configure additional settings to meet the needs of your environment.</p>
+<ol>
+<li>
+<p>If you haven&rsquo;t already, create a deployment plan for the application. You can view the default configuration settings but they are read-only until you create a deployment plan. For more information, see <a href="#deployment-plan">Deployment Plans</a>.</p>
+<p><strong>Note</strong>: You cannot create a deployment plan for applications that were auto-deployed.</p>
+<ol>
+<li>
+<p>In the <strong>Monitoring Tree</strong>, navigate to <strong>Deployments</strong> &gt; <strong>Application Management</strong> and select your application.</p>
+</li>
+<li>
+<p>Click <strong>Create Plan</strong>.</p>
+</li>
+<li>
+<p>In the <strong>Plan Path</strong> field, enter a file path for the new deployment plan. You should create the new deployment plan for a single application within a <code>plan/</code> subdirectory of the application&rsquo;s root directory. Deployment plans must be in XML format and should be called <code>plan.xml</code>.</p>
+</li>
+<li>
+<p>Click <strong>Done</strong>. WebLogic Server will create a basic deployment plan.</p>
+<p><strong>Note</strong>: You can see the deployment plan for an application under <strong>Deployments</strong> &gt; <strong>Application Management</strong> &gt; <em>myApplication</em> &gt; <strong>Deployment Plan (Advanced)</strong>.</p>
+</li>
+</ol>
+</li>
+<li>
+<p>Go to <strong>Deployments</strong> &gt; <strong>Application Management</strong> &gt; <em>myApplication</em> &gt; <strong>Configuration</strong>. Explore the Configuration node and its children to see the available deployment configuration options.</p>
+<p><strong>Note</strong>: The contents of the Configuration node and its children differ based on application type. For example, web applications include settings for container descriptors while resource adapters include settings for outbound connection pools.</p>
+</li>
+<li>
+<p>Click <strong>Save</strong> as you make changes. Any changes that you make to the <strong>Configuration</strong> node and its children are automatically reflected in the deployment plan.</p>
+</li>
+<li>
+<p>Update and possibly redeploy your application to apply your changes. See <a href="#redeploy-app">Update or redeploy an application</a> for instructions.</p>
+</li>
+</ol>
+<h4 id="redeploy-app">Update or redeploy an application</h4>
+<p>If your changes are dynamic, then you only need to update the deployment plan. However, if your changes include non-dynamic changes, you must redeploy the application to propagate the changes from the deployment plan to the application.</p>
+<p>For more information, see <a href="https://docs.oracle.com/en/middleware/standalone/weblogic-server/14.1.1.0/depgd/redeploy.html#GUID-69BCEEBE-D19A-4B55-B14D-DAA10A209C21">Overview of Redeployment Strategies</a> in <em>Deploying Applications to Oracle WebLogic Server</em>.</p>
+<p>To update or redeploy an application with an updated deployment settings.</p>
+<ol>
+<li>In the <strong>Monitoring Tree</strong>, navigate to <strong>Deployments</strong> &gt; <strong>Application Management</strong> and select your application.</li>
+<li>Click <strong>Update/Redeploy</strong>.</li>
+<li>Choose one of the options:
+<ul>
+<li>Update with New Deployment Plan:
+<ul>
+<li><strong>Deployment Plan on Server</strong>: Updates the application using a new deployment plan located on the server. This option only applies dynamic changes to the application.</li>
+<li><strong>Deployment Plan on Local Machine</strong>: Updates the application using a new deployment plan located on the local machine and then uploads it to the Administration Server&rsquo;s upload directory. This option only applies dynamic changes to the application.</li>
+</ul>
+</li>
+<li><strong>Update with Modified Existing Deployment Plan</strong>: Updates the existing deployment plan. This option only applies dynamic changes to the application.</li>
+<li>Redeploy:
+<ul>
+<li><strong>Deployment Plan and Source on Server</strong>: Updates a deployment plan located on the server and redeploys the application. Use this option if your changes include non-dynamic changes that require the application to restart.</li>
+<li><strong>Deployment Plan and Source on Local Machine</strong>: Updates a deployment plan located on the local machine and redeploys the application. Use this option if your changes include non-dynamic changes that the application to restart.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<h4 id="deployment-plan">Deployment Plans</h4>
+<p>You can use a deployment plan to specify deployment property values for an application. A deployment plan is an optional document that works with or overrides your application&rsquo;s deployment descriptors to configure an application for deployment to a specific WebLogic Server environment. Deployment plans are written in XML.</p>
 <p>For more information, see <a href="https://docs.oracle.com/en/middleware/standalone/weblogic-server/14.1.1.0/depgd/config.html#GUID-29545865-3AC0-4777-8243-A85CDB04F33C">Understanding WebLogic Server Deployment Plans</a> in Deploying Applications to Oracle WebLogic Server.</p>
-<h4 id="create-a-deployment-plan">Create a Deployment Plan</h4>
+<p><strong>Note</strong>: You cannot create a deployment plan for applications that were auto-deployed.</p>
+<p>Generally, if you need to modify the deployment settings of an application, you should use the Configuration node (as described in <a href="#configure-deployment">Configure Deployment</a>), instead of manually editing the deployment plan.</p>
+<h5 id="create-a-deployment-plan">Create a Deployment Plan</h5>
 <ol>
 <li>In the <strong>Monitoring Tree</strong>, navigate to <strong>Deployments</strong> &gt; <strong>Application Management</strong> and select your application.</li>
 <li>Click <strong>Create Plan</strong>.</li>
-<li>Copy the file path to the deployment plan into the <strong>Plan Path</strong> field. Deployment plans must be in XML format and should be called <code>plan.xml</code>. It&rsquo;s recommended that you store a deployment plan for a single application in its own <code>plan/</code> subdirectory of the application&rsquo;s root directory.</li>
+<li>In the <strong>Plan Path</strong> field, enter a file path for the new deployment plan. You should create the new deployment plan for a single application within a <code>plan/</code> subdirectory of the application&rsquo;s root directory. Deployment plans must be in XML format and should be called <code>plan.xml</code>.</li>
 <li>Click <strong>Done</strong>.</li>
 </ol>
-<h4 id="update-dep-plan">Update a Deployment Plan</h4>
-<p>You can update a deployment plan with new deployment instructions for an application.</p>
-<p>For more information, see <a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/12.2.1.4/depgd/export.html#GUID-CE85B546-1757-4AE3-BC82-E2C8EC202D0C">Manually Customizing the Deployment Plan</a> in Deploying Applications to Oracle WebLogic Server.</p>
+<h5 id="update-dep-plan">Update a Deployment Plan</h5>
+<p>You can manually edit a deployment plan to update it with new deployment instructions for an application.</p>
+<p>For more information, see <a href="https://docs.oracle.com/en/middleware/standalone/weblogic-server/14.1.1.0/depgd/export.html#GUID-CE85B546-1757-4AE3-BC82-E2C8EC202D0C">Manually Customizing the Deployment Plan</a> in Deploying Applications to Oracle WebLogic Server.</p>
 <ol>
-<li>In the <strong>Monitoring Tree</strong>, navigate to <strong>Deployments</strong> &gt; <strong>Application Management</strong> &gt; <em>yourApplication</em> &gt; <strong>Deployment Plan</strong>.</li>
-<li>You can edit the individual variable assignments within a deployment plan or the deployment plan as a whole:
+<li>In the <strong>Monitoring Tree</strong>, navigate to <strong>Deployments</strong> &gt; <strong>Application Management</strong> &gt; <em>myApplication</em> &gt; <strong>Deployment Plan (Advanced)</strong>.</li>
+<li>You can edit the the deployment plan as a whole or the individual variable assignments within a deployment plan:
 <ul>
-<li>To edit individual variable assignments:
-<ol>
-<li>Select the variable assignment module that you want to edit and click <strong>Edit</strong>.</li>
-<li>Enter a value and, if updating an array, choose an operation.</li>
-<li>Click <strong>Done</strong>.</li>
-</ol>
-</li>
 <li>To edit a deployment plan document:
 <ol>
 <li>Select the <strong>Deployment Plan</strong> tab.</li>
@@ -1070,23 +1123,16 @@ As with the Administration Console, your management capabilities will be limited
 <li>Click <strong>Save</strong>.</li>
 </ol>
 </li>
+<li>To edit individual variable assignments:
+<ol>
+<li>Select the variable assignment module that you want to edit and click <strong>Edit</strong>.</li>
+<li>Enter a value and, if updating an array, choose an operation.</li>
+<li>Click <strong>Done</strong>.</li>
+</ol>
+</li>
 </ul>
 </li>
-<li>Navigate back up to <strong>Deployments</strong> &gt; <strong>Application Management</strong>.</li>
-<li>Select your application and click <strong>Update</strong>.</li>
-<li><strong>Optional</strong>: Redeploy your application.</li>
-</ol>
-
-<div class="notices note" ><p>If your changes include non-dynamic changes, you must redeploy the application to propagate the changes from the deployment plan to the application.</p>
-<p>For more information, see <a href="https://docs.oracle.com/en/middleware/standalone/weblogic-server/14.1.1.0/depgd/redeploy.html#GUID-69BCEEBE-D19A-4B55-B14D-DAA10A209C21">Overview of Redeployment Strategies</a> in Deploying Applications to Oracle WebLogic Server.</p>
-</div>
-
-<h4 id="redeploy-app">Redeploy an application</h4>
-<p>To redeploy an application with an updated deployment plan.</p>
-<ol>
-<li>If necessary, follow the instructions at <a href="#update-dep-plan">Update a deployment plan</a> to modify an application&rsquo;s deployment plan.</li>
-<li>In the <strong>Monitoring Tree</strong>, navigate to <strong>Deployments</strong> &gt; <strong>Application Management</strong> and select your application.</li>
-<li>Click <strong>Redeploy</strong>.</li>
+<li>You will need to update and possibly redeploy your application to apply your changes. See <a href="#redeploy-app">Update or redeploy an application</a> for instructions.</li>
 </ol>
 
 
@@ -1561,19 +1607,19 @@ As with the Administration Console, your management capabilities will be limited
     <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
       <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
     </div>
-    <script src="/weblogic-remote-console/js/clipboard.min.js?1710208437"></script>
-    <script src="/weblogic-remote-console/js/perfect-scrollbar.min.js?1710208437"></script>
-    <script src="/weblogic-remote-console/js/perfect-scrollbar.jquery.min.js?1710208437"></script>
-    <script src="/weblogic-remote-console/js/jquery.sticky.js?1710208437"></script>
-    <script src="/weblogic-remote-console/js/featherlight.min.js?1710208437"></script>
-    <script src="/weblogic-remote-console/js/highlight.pack.js?1710208437"></script>
+    <script src="/weblogic-remote-console/js/clipboard.min.js?1714663206"></script>
+    <script src="/weblogic-remote-console/js/perfect-scrollbar.min.js?1714663206"></script>
+    <script src="/weblogic-remote-console/js/perfect-scrollbar.jquery.min.js?1714663206"></script>
+    <script src="/weblogic-remote-console/js/jquery.sticky.js?1714663206"></script>
+    <script src="/weblogic-remote-console/js/featherlight.min.js?1714663206"></script>
+    <script src="/weblogic-remote-console/js/highlight.pack.js?1714663206"></script>
     <script>hljs.initHighlightingOnLoad();</script>
-    <script src="/weblogic-remote-console/js/modernizr.custom-3.6.0.js?1710208437"></script>
-    <script src="/weblogic-remote-console/js/learn.js?1710208437"></script>
-    <script src="/weblogic-remote-console/js/hugo-learn.js?1710208437"></script>
+    <script src="/weblogic-remote-console/js/modernizr.custom-3.6.0.js?1714663206"></script>
+    <script src="/weblogic-remote-console/js/learn.js?1714663206"></script>
+    <script src="/weblogic-remote-console/js/hugo-learn.js?1714663206"></script>
     
         
-            <script src="/weblogic-remote-console/mermaid/mermaid.js?1710208437"></script>
+            <script src="/weblogic-remote-console/mermaid/mermaid.js?1714663206"></script>
         
         <script>
             mermaid.initialize({ startOnLoad: true });

@@ -14,7 +14,7 @@
       <guid>https://oracle.github.io/weblogic-remote-console/userguide/providers/administration-server/security-data/</guid>
       <description>You can manage security data and supported security providers for your domain in the Security Data tree perspective.
 You must be logged in as a user with the Admin role and have the WebLogic Remote Console extension installed to access this perspective. See Install the WebLogic Remote Console for instructions.
- Any changes you make within the Security Data perspective are immediate - you don&amp;rsquo;t need to commit or reboot the server to apply your changes.</description>
+ Any changes you make within the Security Data perspective are immediate - you don&amp;rsquo;t need to commit or restart the server to apply your changes.</description>
     </item>
     
   </channel>

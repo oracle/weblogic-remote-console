@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Development on WebLogic Remote Console</title>
+    <link>https://oracle.github.io/weblogic-remote-console/2.4.8/develop/</link>
+    <description>Recent content in Development on WebLogic Remote Console</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 01 Sep 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://oracle.github.io/weblogic-remote-console/2.4.8/develop/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Build from source</title>
+      <link>https://oracle.github.io/weblogic-remote-console/2.4.8/develop/build-source/</link>
+      <pubDate>Wed, 01 Sep 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://oracle.github.io/weblogic-remote-console/2.4.8/develop/build-source/</guid>
+      <description>Prerequisites Before you can build the WebLogic Remote Console, you need to install the following software in your local build environment:
+ Java SE 11+ Maven 3.6.1+ Node.js 14.16+ This download includes npm. Oracle JET 15.1.0 client libraries To install the required Oracle JET software, run npm install --location=global @oracle/ojet-cli@~15.1.0. On Linux and macOS, you will need to use sudo.  You can verify you&amp;rsquo;ve installed the correct versions of the listed software by running the following commands:</description>
+    </item>
+    
+    <item>
+      <title>Contribute to WebLogic Remote Console</title>
+      <link>https://oracle.github.io/weblogic-remote-console/2.4.8/develop/contribute/</link>
+      <pubDate>Wed, 01 Sep 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://oracle.github.io/weblogic-remote-console/2.4.8/develop/contribute/</guid>
+      <description>We welcome contributions to this repository from anyone.
+If you want to submit a pull request to fix a bug or enhance an existing feature, please first open an issue and link to that issue when you submit your pull request.
+If you have any questions about a possible submission, feel free to open an issue too.
+Contributing to the WebLogic Remote Console repository Pull requests can be made under The Oracle Contributor Agreement (OCA).</description>
+    </item>
+    
+    <item>
+      <title>Contribute to the documentation</title>
+      <link>https://oracle.github.io/weblogic-remote-console/2.4.8/develop/docs-contribute/</link>
+      <pubDate>Wed, 01 Sep 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://oracle.github.io/weblogic-remote-console/2.4.8/develop/docs-contribute/</guid>
+      <description>The WebLogic Remote Console documentation is produced using the Hugo static site generator. The webpages are created in markdown and hosted within the same repository as the WebLogic Remote Console. This makes it easy to suggest edits and improvements directly to the documentation.
+To make an update to the documentation:
+  Clone the repository.
+$ git clone https://github.com/oracle/weblogic-remote-console   Create a new branch.
+$ git checkout -b &amp;lt;your-branch&amp;gt;   Make your changes to the documentation.</description>
+    </item>
+    
+  </channel>
+</rss>
