@@ -274,6 +274,10 @@ properties:
 - name: TransactionPublicSecureChannelName
   label: JTA Public Secure Channel Name
 
+- name: XMLEntityCache
+  optionsSources:
+  - Domain/XMLEntityCaches
+
 children:
 
 - name: JTAMigratableTarget
@@ -282,7 +286,4 @@ children:
 - name: NetworkAccessPoints
   label: Channels
 
-# Remove this once WDT offline support is added:
 - name: HealthScore
-  requiredCapabilities:
-  - AdminServerConnection

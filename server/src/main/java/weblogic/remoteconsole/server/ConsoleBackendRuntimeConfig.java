@@ -199,7 +199,7 @@ public class ConsoleBackendRuntimeConfig {
   }
 
   public static String getVersion() {
-    return "2.4.9";
+    return "2.4.10";
   }
 
   public static String getProxy() {

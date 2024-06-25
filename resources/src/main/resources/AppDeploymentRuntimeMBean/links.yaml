@@ -16,3 +16,13 @@ instanceLinks:
 - label: Application Configuration
   root: DomainConfiguration
   resourceData: Domain/AppDeployments/<AppDeploymentRuntime>
+- label: Application Runtime Data
+  root: DomainRuntimeMonitoring
+  resourceData: DomainRuntime/AggregatedApplicationRuntimes/<AppDeploymentRuntime>
+  notFoundMessage: This application was not found on any of the currently running servers.
+- label: Application Runtime Data Dashboard
+  root: DomainRuntimeMonitoring
+  resourceData: "DomainRuntime/Dashboards/Application Runtime Data"
+- label: Deployment Tasks Dashboard
+  root: DomainRuntimeMonitoring
+  resourceData: "DomainRuntime/Dashboards/Deployment Tasks"

@@ -32,6 +32,7 @@ define(['jquery'],
         nudgeMaxWidth: 0,
         focusRule: {key: 'Escape', selector: '#home'},
         accesskey: '\\',
+        ariaLabel: '',
         onDragStart: $.noop,
         onDragEnd: $.noop,
         onDrag: $.noop
@@ -67,7 +68,7 @@ define(['jquery'],
             resizer_id = id;
             current_resizer_index = resizer.index() - i - 1;
           })
-          .attr({tabindex: 0, accesskey: settings.accesskey})
+          .attr({tabindex: 0, accesskey: settings.accesskey, role: 'application', 'aria-label' : settings.ariaLabel})
           .on('mouseleave', () => {
             resizer_id = null;
             current_resizer_index = null;
@@ -184,7 +185,7 @@ define(['jquery'],
                 props[dim_name] = dim_px - pw - sw_sum;
                 props[pos_name] = pw + sw_sum;
                 panel_last.css(props);
-                self.css('visiblity', '');
+                self.css('visibility', '');
               }
               if (!silent) {
                 self.trigger('resizer.resize');

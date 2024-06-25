@@ -146,7 +146,7 @@ properties:
   label: Single Logout Enabled
 
 - name: ServiceProviderSingleLogoutBinding
-  label: Preferred Binding
+  label: Single Logout Binding
 
 - name: AssertionSubjectSessionTimeoutCheckEnabled
   label: Assertion Subject Session Timeout Check

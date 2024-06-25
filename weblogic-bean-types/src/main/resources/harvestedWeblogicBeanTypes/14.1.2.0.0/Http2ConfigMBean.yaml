@@ -11,6 +11,13 @@ descriptionHTML: '<p> The local setting of an HTTP/2 connection on a web server.
 name: weblogic.management.configuration.Http2ConfigMBean
 properties:
 - defaultValue:
+    derivedDefault: true
+  descriptionHTML: '<p> Gets the number of CONTINUATION frames allowed per stream.
+    </p> '
+  name: ContinuationFramesLimit
+  type: int
+  writable: true
+- defaultValue:
     value:
       value: 60
   descriptionHTML: '<p>Gets the frame count limit reset interval</p> '

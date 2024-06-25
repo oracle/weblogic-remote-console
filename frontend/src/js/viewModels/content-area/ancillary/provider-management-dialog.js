@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2023, Oracle and/or its affiliates.
+ * Copyright (c) 2023,2024, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
@@ -69,6 +69,9 @@ define(['knockout'],
         i18n.buttons.ok.disabled(false);
 
         projectDialog.open();
+
+        const ele = document.querySelector('#importProjectDialog_layer');
+        if (ele !== null) ele.removeAttribute('aria-modal');
       });
     }
 
@@ -131,6 +134,9 @@ define(['knockout'],
         i18n.buttons.ok.disabled(false);
 
         projectDialog.open();
+
+        const ele = document.querySelector('#exportProjectDialog_layer');
+        if (ele !== null) ele.removeAttribute('aria-modal');
       });
     }
 
@@ -167,7 +173,15 @@ define(['knockout'],
         projectBusyDialog.addEventListener('keyup', onKeyUp);
 
         projectBusyDialog.open();
+
+        const ele = document.querySelector('#projectBusyDialog_layer');
+        if (ele !== null) ele.removeAttribute('aria-modal');
       });
+    }
+
+    function correctJETControlOATBIssues() {
+      const ele = document.querySelector('#projectChooserDialog_layer');
+      if (ele !== null) ele.removeAttribute('aria-modal');
     }
 
   //public:

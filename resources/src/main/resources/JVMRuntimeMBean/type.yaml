@@ -1,6 +1,19 @@
-# Copyright (c) 2023, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2023, 2024, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 properties:
 - name: ThreadStackDump
   multiLineString: true
+
+actions:
+- name: runGC
+  label: Garbage Collect
+  successMessage: Started garbage collection.
+  failureMessage: Garbage collection failed.
+  disableMBeanJavadoc: true
+  # poll since the stats on the page will change after GC:
+  polling:
+    reloadSeconds: 2
+    maxAttempts: 5
+  helpHTML: >
+    <p>Starts garbage collection and finalization algorithms within the JVM.</p>

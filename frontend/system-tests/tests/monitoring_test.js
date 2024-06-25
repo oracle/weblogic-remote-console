@@ -89,12 +89,12 @@ describe.only('Test Suite: monitoring_test for Navtree Monitoring functionality'
                 "Scheduling", "Work Manager Runtimes", "JmsAsyncQueue");
             await admin.goToNavTreeLevelThreeLink(driver, "monitoring",
                 "Scheduling", "Work Manager Runtimes", "OneWayJTACoordinatorWM");
-            await admin.goToNavTreeLevelTwoLink(driver, "monitoring",
-                "Scheduling", "Managed Executor Service Runtimes");
-            await admin.goToNavTreeLevelTwoLink(driver, "monitoring",
-                "Scheduling", "Managed Scheduled Executor Service Runtimes");
-            await admin.goToNavTreeLevelTwoLink(driver, "monitoring",
-                "Scheduling", "Managed Thread Factory Runtimes");
+            await admin.goToNavTreeLevelThreeLink(driver, "monitoring",
+                "Scheduling", "Concurrent Managed Objects Runtime","Managed Executor Service Runtimes");
+            await admin.goToNavTreeLevelThreeLink(driver, "monitoring",
+                "Scheduling", "Concurrent Managed Objects Runtime", "Managed Scheduled Executor Service Runtimes");
+            await admin.goToNavTreeLevelThreeLink(driver, "monitoring",
+                "Scheduling", "Concurrent Managed Objects Runtime", "Managed Thread Factory Runtimes");
             console.log("TEST PASS ");
         } catch (e) {
             await admin.takeScreenshot(driver, file);

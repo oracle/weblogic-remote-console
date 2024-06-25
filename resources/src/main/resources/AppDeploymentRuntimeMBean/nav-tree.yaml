@@ -2,7 +2,8 @@
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 contents:
-- child: State.Servers
+- child: State.Servers # for old extensions
+- child: StateV2.Servers
 - child: Configuration.Deployment
   label: Configuration
 - child: Configuration.DeploymentPlan

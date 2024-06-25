@@ -12,6 +12,7 @@ define([
   'knockout',
   'wrc-frontend/common/keyup-focuser',
   'wrc-frontend/microservices/perspective/perspective-memory-manager',
+  'wrc-frontend/common/page-definition-helper',
   'wrc-frontend/integration/viewModels/utils',
   'wrc-frontend/core/runtime',
   'wrc-frontend/core/types',
@@ -25,6 +26,7 @@ define([
     ko,
     KeyUpFocuser,
     PerspectiveMemoryManager,
+    PageDefinitionHelper,
     ViewModelUtils,
     Runtime,
     CoreTypes,
@@ -57,7 +59,7 @@ define([
           'delete': { id: 'delete', iconFile: 'delete-icon-blk_24x24', disabled: true,
             label: oj.Translations.getTranslatedString('wrc-table-toolbar.buttons.delete.label')
           },
-          'customize': { id: 'customize', iconFile: 'table-customizer-icon-blk_24x24',
+          'customize': { id: 'customize', iconFile: 'table-customizer-icon-blk_24x24', visible: ko.observable(false),
             label: oj.Translations.getTranslatedString('wrc-table-toolbar.buttons.customize.label')
           },
           'dashboard': { id: 'dashboard', iconFile: 'custom-view-icon-blk_24x24', disabled: false, visible: ko.observable(false),
@@ -76,6 +78,9 @@ define([
           },
           'help': { iconFile: 'toggle-help-on-blk_24x24',
             tooltip: oj.Translations.getTranslatedString('wrc-table-toolbar.icons.help.tooltip')
+          },
+          'reset': { iconFile: 'action-reset-icon-blk_24x24', visible: ko.observable(false),
+            tooltip: oj.Translations.getTranslatedString('wrc-common.ariaLabel.icons.reset.value')
           },
           'sync': { iconFile: ko.observable('sync-off-icon-blk_24x24'),
             tooltip: oj.Translations.getTranslatedString('wrc-table-toolbar.icons.sync.tooltip'),
@@ -187,7 +192,21 @@ define([
     
         return result.keyUpCallback;
       };
-  
+
+      this.resetIconKeyUp = (event) => {
+        if (event.key === 'Enter') {
+          simulateSyncIconClickEvent(event.currentTarget.firstElementChild);
+        }
+      };
+
+      function simulateSyncIconClickEvent(node) {
+        event.preventDefault();
+        const attr = node.attributes['data-interval'];
+        if (CoreUtils.isNotUndefinedNorNull(attr)) {
+          handleSyncIconEvent(node);
+        }
+      }
+
       function onKeyUpFocuserActionSelect(event) {
         function simulateHelpIconClickEvent(event) {
           const link = document.querySelector(`#${event.target.id} > a`);
@@ -195,14 +214,6 @@ define([
             event.preventDefault();
             const event1 = new Event('click', {bubbles: true});
             link.dispatchEvent(event1);
-          }
-        }
-  
-        function simulateSyncIconClickEvent(node) {
-          event.preventDefault();
-          const attr = node.attributes['data-interval'];
-          if (CoreUtils.isNotUndefinedNorNull(attr)) {
-            handleSyncIconEvent(node);
           }
         }
   
@@ -228,6 +239,10 @@ define([
         }
       }
 
+      function showResetPageIcon(value) {
+        self.i18n.icons.reset.visible(value);
+      }
+
       function resetIconsVisibleState(state) {
         self.showAutoSyncIcons(state);
       }
@@ -244,6 +259,9 @@ define([
         }
         self.i18n.buttons.dashboard.visible(isDashboard);
         resetIconsVisibleState(self.perspective.id === 'monitoring');
+        showResetPageIcon(['configuration'].includes(self.perspective.id));
+        const pdjData = viewParams.parentRouter?.data?.pdjData();
+        this.i18n.buttons.customize.visible(PageDefinitionHelper.hasTable(pdjData));
       }.bind(this);
 
       this.toggleHistoryClick = function (event) {
@@ -366,7 +384,9 @@ define([
       };
 
       this.customizeAction = (event) => {
-        viewParams.onCustomizeButtonClicked(event);
+        if (self.i18n.buttons.customize.visible()) {
+          viewParams.onCustomizeButtonClicked(event);
+        }
       };
 
       this.dashboardAction = (event) => {

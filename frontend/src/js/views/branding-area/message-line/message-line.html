@@ -8,7 +8,7 @@ Copyright (c) 2023, 2024, Oracle and/or its affiliates.
     <div class="oj-flex-item" data-bind="html: messageLine.message()"></div>
     <oj-bind-if test="[[messageLine.link.label() !== '']]">
       <div class="oj-flex-item oj-helper-margin-start-auto cfe-message-line-link-button">
-        <a href="#" on-click="[[messageLineLinkClickHandler]]">
+        <a href="#" on-click="[[messageLineLinkClickHandler]]" role="link" :aria-label="[[messageLine.message() + messageLine.link.label()]]">
           <span>
             <oj-bind-text value="[[messageLine.link.label()]]"></oj-bind-text>
           </span>

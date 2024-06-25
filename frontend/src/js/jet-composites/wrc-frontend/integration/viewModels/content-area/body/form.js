@@ -769,10 +769,12 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
               });
           })
           .catch(failure => {
-            self.tableActionsStripModuleConfig
-              .then(moduleConfig => {
-                moduleConfig.viewModel.handleActionButtonClickedFailure(failure, options);
-              });
+            if (CoreUtils.isNotUndefinedNorNull(failure.messages)) {
+              MessageDisplaying.displayResponseMessages(failure.messages);
+            }
+            else {
+              ViewModelUtils.failureResponseDefaultHandling(failure);
+            }
           })
           .finally(() => {
             ViewModelUtils.setPreloaderVisibility(false);
@@ -2044,6 +2046,15 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
                   dataPayload[key] = {value: value};
                 }
                 else {
+/*
+//MLW-1
+                  // The field was updated then set back to the server value
+                  // thus clear the property from being marked as dirty...
+                  self.dirtyFields.delete(key);
+                  if (CoreUtils.isNotUndefinedNorNull(keepSaveToOrig)) {
+                    dataPayload[key] = {value: value};
+                  }
+*/
                   if (CoreUtils.isNotUndefinedNorNull(self.pageRedoHistory[key]) &&
                     self.pageRedoHistory[key].value !== value
                   ) {
@@ -2060,13 +2071,6 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
                   else {
                     dataPayload[key] = {value: value};
                   }
-/*
-//MLW
-                  self.dirtyFields.delete(key);
-                  if (CoreUtils.isNotUndefinedNorNull(keepSaveToOrig)) {
-                    dataPayload[key] = {value: value};
-                  }
- */
                 }
               }
             }
@@ -2354,6 +2358,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
           isPolicyForm: isPolicyExpressionSliceLayout()
         };
         const hasSliceTable = self.isSliceTable(self.pdjData);
+        options.containerType = (hasSliceTable ? 'sliceTable' : 'form');
         const offsetHeightCSSVariable = (hasSliceTable ? 'table-container-resizer-offset-max-height' : 'form-container-resizer-offset-max-height');
         let offsetMaxHeight = self.contentAreaContainerResizer.getOffsetMaxHeight('#form-container', offsetHeightCSSVariable, options);
 
@@ -2596,7 +2601,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
         if (self.isDirty()) {
           saveBean(eventType);
         }
-        else {
+        else if (isEditing()) {
           const rdjData = viewParams.parentRouter.data.rdjData();
           const options = {
             isPolicyExpressionSliceLayout: isPolicyExpressionSliceLayout(),
@@ -2677,6 +2682,14 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
           delete dataPayload['VerifySourcePath'];
           delete dataPayload['VerifyPlan'];
           delete dataPayload['VerifyPlanPath'];
+          if (viewParams.perspective.id === 'modeling') {
+            if (CoreUtils.isNotUndefinedNorNull(dataPayload['StagingModeUpload'])) {
+              dataPayload['StagingMode'] = dataPayload['OnDeployment'];
+              delete dataPayload['StagingModeUpload'];
+            }
+            delete dataPayload['OnDeployment'];
+            delete dataPayload['OnDeploymentUpload'];
+          }
           if (CoreUtils.isNotUndefinedNorNull(dataPayload['formData'])) {
             const formData = dataPayload['formData'];
             delete dataPayload['formData'];
@@ -2751,8 +2764,14 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
 
         if (responseBodyMessages.length > 0) {
           if (!isEditing()) {
-            MessageDisplaying.displayResponseMessages(responseBodyMessages);
-            return retval;
+            if (!isMessagesSeverityInfo(responseBodyMessages)) {
+              MessageDisplaying.displayResponseMessages(responseBodyMessages);
+              return retval;
+            }
+            // Display info messages from the create form
+            MessageDisplaying.displayMessagesAsHTML(responseBodyMessages,
+              oj.Translations.getTranslatedString('wrc-message-displaying.messages.responseMessages.summary'),
+              MessageDisplaying.getOverallSeverity(responseBodyMessages));
           }
         }
 
@@ -2780,12 +2799,12 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
             saveFailedNoMessages(dataAction, dataPayload, isEdit);
           }
         }
-        else if (responseBodyMessages.length === 0) {
+        else if ((responseBodyMessages.length === 0) || (!isEditing() && isMessagesSeverityInfo(responseBodyMessages))) {
           const identity = (CoreUtils.isNotUndefinedNorNull(response.body.data) && CoreUtils.isNotUndefinedNorNull(response.body.data.resourceData) && CoreUtils.isNotUndefinedNorNull(response.body.data.resourceData.resourceData) ? response.body.data.resourceData.resourceData : undefined);
           if (['configuration', 'security'].includes(viewParams.perspective.id)) {
             viewParams.signaling.unsavedChangesDetected.dispatch(undefined);
           }
-          saveSucceeded(eventType, dataPayload, isEdit, identity, response.body.messages);
+          saveSucceeded(eventType, dataPayload, isEdit, identity, []);
           if (isWdtForm() && Runtime.getRole() === CoreTypes.Console.RuntimeRole.TOOL.name) {
             const dataProvider = self.wdtForm.getDataProvider();
             if (dataProvider.modelArchiveEntries) {
@@ -2815,6 +2834,11 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
         }
 
         return retval;
+      }
+
+      function isMessagesSeverityInfo(responseBodyMessages) {
+        const errorMsg = responseBodyMessages.find((msg) => msg.severity !== 'info');
+        return (errorMsg ? false : true);
       }
 
       function resetToolbarButtons() {
@@ -3335,10 +3359,12 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
           return rtnval;
         }
 
-        // Declare function-scoped pdjData variable and initialize it from router data
-        var pdjData = viewParams.parentRouter.data.pdjData();
-        // Declare function-scoped rdjData variable and initialize it from router data
-        var rdjData = viewParams.parentRouter.data.rdjData();
+        let pdjData = viewParams.parentRouter.data.pdjData();
+        let rdjData = viewParams.parentRouter.data.rdjData();
+
+        if (PageDefinitionHelper.hasTable(pdjData)) {
+          return;
+        }
 
         // The loadRdjDoNotClearDirty flag is set when we try to
         // reload the rdj, but not clear up dirty fields. One use
@@ -3352,7 +3378,11 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
         }
 
         if (PageDefinitionHelper.hasSliceTable(pdjData)) {
-          updateTableSortSettings(pdjData);
+          self.formToolbarModuleConfig
+            .then((moduleConfig) => {
+              moduleConfig.viewModel.showTableCustomizerIcon(true);
+              updateTableSortSettings(pdjData);
+            });
         }
 
         const isEdit = getIsEdit(pdjData);
@@ -4238,7 +4268,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
               onBlurFormLayout({target: {id: name, type: 'blur', cancelable: false, cancelBubble: true}});
             }
             else if (ViewModelUtils.isElectronApiAvailable()) {
-              notifyUnsavedChanges(self.isDirty());
+//MLW-1              notifyUnsavedChanges(self.isDirty());
             }
           }
         };
@@ -4513,14 +4543,11 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
             if (viewParams.perspective.id === 'modeling' && name === 'Upload') {
               Logger.log('[FORM] Suppressing creation of "Upload" label!');
             }
-            else if (viewParams.perspective.id === 'modeling' && name === 'NonNullStagingMode') {
-              Logger.log('[FORM] Suppressing creation of "NonNullStagingMode" label!');
+            else if (viewParams.perspective.id === 'modeling' && name === 'OnDeployment') {
+              Logger.log('[FORM] Suppressing display of "OnDeployment" label!');
             }
-            else if (viewParams.perspective.id === 'modeling' && name === 'AdminMode') {
-              Logger.log('[FORM] Suppressing creation of "AdminMode" label!');
-            }
-            else if (viewParams.perspective.id === 'modeling' && name === 'StartApplicationUpload') {
-              Logger.log('[FORM] Suppressing display of "StartApplicationUpload" label!');
+            else if (viewParams.perspective.id === 'modeling' && name === 'OnDeploymentUpload') {
+              Logger.log('[FORM] Suppressing display of "OnDeploymentUpload" label!');
             }
             else if (Runtime.getRole() === CoreTypes.Console.RuntimeRole.APP.name && name.indexOf('Verify') !== -1) {
               Logger.log('[FORM] Suppressing creation of "VerifyXXX" field labels!');
@@ -4727,14 +4754,11 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
           if (viewParams.perspective.id === 'modeling' && name === 'Upload') {
             Logger.log('[FORM] Suppressing display of "Upload" field!');
           }
-          else if (viewParams.perspective.id === 'modeling' && name === 'NonNullStagingMode') {
-            Logger.log('[FORM] Suppressing display of "Upload" field!');
+          else if (viewParams.perspective.id === 'modeling' && name === 'OnDeployment') {
+            Logger.log('[FORM] Suppressing display of "OnDeployment" field!');
           }
-          else if (viewParams.perspective.id === 'modeling' && name === 'AdminMode') {
-            Logger.log('[FORM] Suppressing display of "Upload" field!');
-          }
-          else if (viewParams.perspective.id === 'modeling' && name === 'StartApplicationUpload') {
-            Logger.log('[FORM] Suppressing display of "StartApplicationUpload" field!');
+          else if (viewParams.perspective.id === 'modeling' && name === 'OnDeploymentUpload') {
+            Logger.log('[FORM] Suppressing display of "OnDeploymentUpload" field!');
           }
           else if (Runtime.getRole() === CoreTypes.Console.RuntimeRole.APP.name &&
             name.indexOf('Verify') !== -1) {

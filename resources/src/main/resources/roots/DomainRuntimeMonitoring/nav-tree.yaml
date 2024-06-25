@@ -44,9 +44,7 @@ contents:
   - child: DomainRuntime.AggregatedMaxThreadsConstraintRuntimes
   - child: DomainRuntime.AggregatedRequestClassRuntimes
   - child: DomainRuntime.AggregatedWorkManagerRuntimes
-  - child: DomainRuntime.AggregatedConcurrentManagedObjectsRuntime.ManagedExecutorServiceRuntimes
-  - child: DomainRuntime.AggregatedConcurrentManagedObjectsRuntime.ManagedScheduledExecutorServiceRuntimes
-  - child: DomainRuntime.AggregatedConcurrentManagedObjectsRuntime.ManagedThreadFactoryRuntimes
+  - child: DomainRuntime.AggregatedConcurrentManagedObjectsRuntime
 - label: Deployments
   type: group
   contents:

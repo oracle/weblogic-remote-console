@@ -13,6 +13,7 @@ define([
   'wrc-frontend/common/keyup-focuser',
   'wrc-frontend/microservices/perspective/perspective-memory-manager',
   'wrc-frontend/microservices/change-management/change-manager',
+  'wrc-frontend/common/page-definition-helper',
   'wrc-frontend/integration/viewModels/utils',
   'wrc-frontend/core/runtime',
   'wrc-frontend/core/types',
@@ -27,6 +28,7 @@ define([
     KeyUpFocuser,
     PerspectiveMemoryManager,
     ChangeManager,
+    PageDefinitionHelper,
     ViewModelUtils,
     Runtime,
     CoreTypes,
@@ -69,7 +71,7 @@ define([
           'cancel': { id: 'cancel', iconFile: 'cancel-icon-blk_24x24', disabled: false, visible: ko.observable(false),
             label: oj.Translations.getTranslatedString('wrc-common.buttons.cancel.label')
           },
-          'customize': { id: 'customize', iconFile: 'table-customizer-icon-blk_24x24', disabled: false, visible: ko.observable(false),
+          'customize': { id: 'customize', iconFile: 'table-customizer-icon-blk_24x24', visible: ko.observable(false),
             label: oj.Translations.getTranslatedString('wrc-form-toolbar.buttons.customize.label')
           },
           'dashboard': { id: 'dashboard', iconFile: 'custom-view-icon-blk_24x24', disabled: false, visible: ko.observable(false),
@@ -324,6 +326,8 @@ define([
       }
 
       this.renderToolbarButtons = async function (eventType, hasNonReadOnlyFields) {
+        const rdjData = viewParams.parentRouter?.data?.rdjData();
+        const pdjData = viewParams.parentRouter?.data?.pdjData();
         let buttonId;
         if ((['modeling','properties','configuration','security'].includes(self.perspective.id)) && !self.readonly()) {
           const renderingInfo = await viewParams.onToolbarRendering(eventType);
@@ -405,8 +409,6 @@ define([
           if (eventType === 'delete') showBlankForm();
         }
         else if (self.perspective.id === 'monitoring') {
-          const rdjData = viewParams.parentRouter?.data?.rdjData();
-          const pdjData = viewParams.parentRouter?.data?.pdjData();
           if (CoreUtils.isNotUndefinedNorNull(rdjData?.dashboardCreateForm)) {
             if (CoreUtils.isNotUndefinedNorNull(pdjData?.sliceTable?.readOnly)) {
               self.i18n.buttons.dashboard.visible(pdjData.sliceTable.readOnly);
@@ -428,7 +430,7 @@ define([
 
         this.resetIconsVisibleState(self.perspective.id === 'monitoring');
         showResetPageIcon(['configuration'].includes(self.perspective.id));
-
+        this.showTableCustomizerIcon(PageDefinitionHelper.hasSliceTable(pdjData));
       }.bind(this);
 
       function showBlankForm(){
@@ -473,6 +475,10 @@ define([
         ele = document.getElementById('page-help-toolbar-icon');
         if (ele !== null) ele.style.visibility = 'visible';
       }
+
+      this.showTableCustomizerIcon = function (value) {
+        self.i18n.buttons.customize.visible(value);
+      };
 
       this.toggleHistoryClick = function (event) {
         const withHistoryVisible = !self.showBeanPathHistory();
@@ -668,7 +674,9 @@ define([
       );
 
       this.customizeAction = (event) => {
-        if (self.i18n.buttons.customize.visible()) viewParams.onCustomizeButtonClicked(event);
+        if (self.i18n.buttons.customize.visible()) {
+          viewParams.onCustomizeButtonClicked(event);
+        }
       };
     }
 

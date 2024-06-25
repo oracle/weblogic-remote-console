@@ -1,4 +1,4 @@
-// Copyright (c) 2021, 2023, Oracle Corporation and/or its affiliates.
+// Copyright (c) 2021, 2024, Oracle Corporation and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.customizers;
@@ -12,14 +12,14 @@ import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
 
-import weblogic.jdbc.utils.JDBCDriverAttribute;
-import weblogic.jdbc.utils.JDBCDriverInfo;
-import weblogic.jdbc.utils.JDBCDriverInfoException;
-import weblogic.jdbc.utils.JDBCURLHelper;
-import weblogic.jdbc.utils.JDBCURLHelperFactory;
 import weblogic.remoteconsole.common.repodef.LocalizedConstants;
 import weblogic.remoteconsole.common.utils.Path;
 import weblogic.remoteconsole.common.utils.StringUtils;
+import weblogic.remoteconsole.jdbc.utils.JDBCDriverAttribute;
+import weblogic.remoteconsole.jdbc.utils.JDBCDriverInfo;
+import weblogic.remoteconsole.jdbc.utils.JDBCDriverInfoException;
+import weblogic.remoteconsole.jdbc.utils.JDBCURLHelper;
+import weblogic.remoteconsole.jdbc.utils.JDBCURLHelperFactory;
 import weblogic.remoteconsole.server.repo.ArrayValue;
 import weblogic.remoteconsole.server.repo.BeanPropertyValue;
 import weblogic.remoteconsole.server.repo.BeanPropertyValues;
@@ -566,9 +566,17 @@ public class JDBCSystemResourceMBeanCreatableCollectionResource extends Creatabl
     // Convert the populated database driver into the corresponding weblogic bean properties
     private void convertDriverInfoToMBeanProperties(String datasourceType, JDBCDriverInfo driverInfo) {
       // copy the driver class name to the weblogic bean properties
+      String driverClassName = driverInfo.getDriverClassName();
+      if (DATASOURCE_TYPE_UCP.equals(datasourceType)) {
+        if (driverClassName.indexOf("XA") == -1) {
+          driverClassName = "oracle.ucp.jdbc.PoolDataSourceImpl";
+        } else {
+          driverClassName = "oracle.ucp.jdbc.PoolXADataSourceImpl";
+        }
+      }
       addPropertyValue(
         "JDBCResource.JDBCDriverParams.DriverName",
-        new SettableValue(new StringValue(driverInfo.getDriverClassName()), true)
+        new SettableValue(new StringValue(driverClassName), true)
       );
 
       // Create a JDBCURLHelper, which maps from driver properties to weblogic properties

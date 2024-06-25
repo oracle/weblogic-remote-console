@@ -1,4 +1,4 @@
-// Copyright (c) 2021, 2023, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2024, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef.schema;
@@ -24,7 +24,7 @@ public class BeanFieldDefCustomizerSource extends BeanValueDefCustomizerSource {
   private StringValue helpHTML = new StringValue();
   private BooleanValue required = new BooleanValue();
   private ListValue<String> optionsSources = new ListValue<>();
-  private BooleanValue allowNullReference = new BooleanValue();
+  private BooleanValue allowNullReference = new BooleanValue(true);
   private StringValue getMethod = new StringValue();
   private StringValue optionsMethod = new StringValue();
   private Value<BeanFieldPresentationDefSource> presentation = new Value<>(new BeanFieldPresentationDefSource());

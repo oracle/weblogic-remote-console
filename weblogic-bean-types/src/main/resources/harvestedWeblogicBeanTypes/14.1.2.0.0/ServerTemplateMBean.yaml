@@ -909,10 +909,7 @@ properties:
   type: int
   writable: true
 - defaultValue:
-    secureModeValue:
-      value: false
-    value:
-      value: true
+    derivedDefault: true
   descriptionHTML: '<p>Specifies whether this server can be reached through the default
     plain-text (non-SSL) listen port.</p>  <p>If you disable this listen port, you
     must enable the default SSL listen port.</p>  <p>You can define additional listen

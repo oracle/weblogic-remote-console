@@ -341,6 +341,7 @@ define([
       this.onOjFocus = (event)=> {
         removeDialogResizableHandleNodes(event);
         refreshDataProviders(self.project);
+        $('#provider-management-dialog').attr({'aria-labelledby': 'provider-management-dialog-title'});
         // Disable keyboard focus using the "Tab" key on all
         // of the oj-label help.definition attributes. That is
         // where we store field-level help in the "?" icons. We

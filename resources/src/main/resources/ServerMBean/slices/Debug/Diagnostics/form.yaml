@@ -1,4 +1,4 @@
-# Copyright (c) 2020, 2021, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2024, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 introductionHTML: >
   Use this page to manage the diagnostics-related server debug flags; that is, the flags
@@ -15,7 +15,9 @@ properties:
 - name: ServerDebug.DebugBeanTreeHarvesterDataCollection
 - name: ServerDebug.DebugBeanTreeHarvesterResolution
 - name: ServerDebug.DebugBeanTreeHarvesterThreading
+- name: ServerDebug.DebugDebugPatches
 - name: ServerDebug.DebugDiagnosticAccessor
+- name: ServerDebug.DebugDiagnosticActionWrapper
 - name: ServerDebug.DebugDiagnosticArchive
 - name: ServerDebug.DebugDiagnosticArchiveRetirement
 - name: ServerDebug.DebugDiagnosticCollections
@@ -25,18 +27,22 @@ properties:
 - name: ServerDebug.DebugDiagnosticImage
 - name: ServerDebug.DebugDiagnosticInstrumentation
 - name: ServerDebug.DebugDiagnosticInstrumentationActions
+- name: ServerDebug.DebugDiagnosticInstrumentationClassInfo
 - name: ServerDebug.DebugDiagnosticInstrumentationConfig
 - name: ServerDebug.DebugDiagnosticInstrumentationEvents
+- name: ServerDebug.DebugDiagnosticInstrumentationResult
 - name: ServerDebug.DebugDiagnosticInstrumentationWeaving
 - name: ServerDebug.DebugDiagnosticInstrumentationWeavingMatches
 - name: ServerDebug.DebugDiagnosticJdbcArchive
 - name: ServerDebug.DebugDiagnosticLifecycleHandlers
+- name: ServerDebug.DebugDiagnosticNotifications
 - name: ServerDebug.DebugDiagnosticQuery
 - name: ServerDebug.DebugDiagnosticRuntimeControlDriver
 - name: ServerDebug.DebugDiagnosticRuntimeControlService
 - name: ServerDebug.DebugDiagnosticWatch
 - name: ServerDebug.DebugDiagnosticWatchEvents
 - name: ServerDebug.DebugDiagnosticWatchEventsDetails
+- name: ServerDebug.DebugDiagnosticWatchUtils
 - name: ServerDebug.DebugDiagnosticWlstoreArchive
 - name: ServerDebug.DebugDiagnosticsBeanExtensionResolver
 - name: ServerDebug.DebugDiagnosticsBeanInfoProviders
@@ -54,14 +60,21 @@ properties:
 - name: ServerDebug.DebugDiagnosticsHarvesterTreeBeanPlugin
 - name: ServerDebug.DebugDiagnosticsMBeanELResolver
 - name: ServerDebug.DebugDiagnosticsModule
+- name: ServerDebug.DebugDiagnosticsNotifications
 - name: ServerDebug.DebugDiagnosticsScriptAction
+- name: ServerDebug.DebugDiagnosticsTimer
+- name: ServerDebug.DebugDiagnosticsTimerService
 - name: ServerDebug.DebugDiagnosticsUtils
 - name: ServerDebug.DebugDiagnosticsValueTracingELResolver
 - name: ServerDebug.DebugDomainLogHandler
 - name: ServerDebug.DebugElasticActions
 - name: ServerDebug.DebugExpressionBeanLocalizer
 - name: ServerDebug.DebugExpressionExtensionsManager
+- name: ServerDebug.DebugHarvesterTypeInfoCache
 - name: ServerDebug.DebugLoggingConfiguration
+- name: ServerDebug.DebugMBeanEventHandler
+- name: ServerDebug.DebugMBeanEventHandlerSummary
+- name: ServerDebug.DebugMBeanEventHandlerWork
 - name: ServerDebug.DebugMBeanHarvesterControl
 - name: ServerDebug.DebugMBeanHarvesterDataCollection
 - name: ServerDebug.DebugMBeanHarvesterResolution
@@ -75,3 +88,5 @@ properties:
 - name: ServerDebug.DebugSNMPExtensionProvider
 - name: ServerDebug.DebugSNMPProtocolTCP
 - name: ServerDebug.DebugSNMPToolkit
+- name: ServerDebug.DebugWatchScalingActions
+- name: ServerDebug.ScriptExecutorCommand

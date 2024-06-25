@@ -3,7 +3,7 @@ Copyright (c) 2020, 2024, Oracle Corporation and/or its affiliates.
  The Universal Permissive License (UPL), Version 1.0
 -->
 <div id="gallery-container" role="region" :aria-label="[[i18n.ariaLabel.cards.panel.value]]" class="oj-web-applayout-max-width oj-sm-web-padding-horizontal">
-  <div class="oj-flex">
+  <div class="oj-flex" role="application">
     <oj-bind-for-each data="[[galleryItems]]">
       <template>
         <div :class="[['panel-card-padding oj-flex oj-flex-item oj-sm-flex-items-1 ' + (galleryItems().length > 1 ? 'oj-sm-12 oj-md-4 oj-lg-3' : 'oj-sm-9')]]">

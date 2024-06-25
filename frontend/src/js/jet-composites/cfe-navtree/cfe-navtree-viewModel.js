@@ -145,7 +145,14 @@ define([
               }
               else if (CoreUtils.isNotUndefinedNorNull(response) && CoreUtils.isNotUndefinedNorNull(response.failureType)) {
                 if (response.failureType === CoreTypes.FailureType.CBE_REST_API) {
-                  if (response.transport.status !== 404) Logger.error(JSON.stringify(response));
+                  if (response.transport.status === 504) {
+                    if (CoreUtils.isNotUndefinedNorNull(response.body.messages) && response.body.messages.length > 0) {
+                      ViewModelUtils.displayFailureResponseMessages(response.body.messages);
+                    }
+                  }
+                  else if (response.transport.status !== 404) {
+                    Logger.error(JSON.stringify(response));
+                  }
                 }
                 else if (response.failureType === CoreTypes.FailureType.UNEXPECTED) {
                   Logger.error(JSON.stringify(response));
@@ -238,7 +245,14 @@ define([
               }
               else if (CoreUtils.isNotUndefinedNorNull(response) && CoreUtils.isNotUndefinedNorNull(response.failureType)) {
                 if (response.failureType === CoreTypes.FailureType.CBE_REST_API) {
-                  if (response.transport.status !== 404) Logger.error(JSON.stringify(response));
+                  if (response.transport.status === 504) {
+                    if (CoreUtils.isNotUndefinedNorNull(response.body.messages) && response.body.messages.length > 0) {
+                      ViewModelUtils.displayFailureResponseMessages(response.body.messages);
+                    }
+                  }
+                  else if (response.transport.status !== 404) {
+                    Logger.error(JSON.stringify(response));
+                  }
                 }
                 else {
                   ViewModelUtils.failureResponseDefaultHandling(response);
@@ -305,7 +319,14 @@ define([
                   }
                   else if (CoreUtils.isNotUndefinedNorNull(response) && CoreUtils.isNotUndefinedNorNull(response.failureType)) {
                     if (response.failureType === CoreTypes.FailureType.CBE_REST_API) {
-                      if (response.transport.status !== 404) Logger.error(JSON.stringify(response));
+                      if (response.transport.status === 504) {
+                        if (CoreUtils.isNotUndefinedNorNull(response.body.messages) && response.body.messages.length > 0) {
+                          ViewModelUtils.displayFailureResponseMessages(response.body.messages);
+                        }
+                      }
+                      else if (response.transport.status !== 404) {
+                        Logger.error(JSON.stringify(response));
+                      }
                     }
                     else {
                       ViewModelUtils.failureResponseDefaultHandling(response);
@@ -553,7 +574,31 @@ define([
         .then(() => {
           resolve = this.addBusyState({ description: '#nav fetching data' });
           self.navtreeManager.expandNode(nodeId)
-            .catch(error => {})
+            .catch(response => {
+              if (CoreUtils.isNotUndefinedNorNull(response) && CoreUtils.isError(response)) {
+                ViewModelUtils.failureResponseDefaultHandling(response, 'error');
+              }
+              else if (CoreUtils.isNotUndefinedNorNull(response) && CoreUtils.isNotUndefinedNorNull(response.failureType)) {
+                if (response.failureType === CoreTypes.FailureType.CBE_REST_API) {
+                  if (response.transport.status === 504) {
+                    if (CoreUtils.isNotUndefinedNorNull(response.body.messages) && response.body.messages.length > 0) {
+                      ViewModelUtils.displayFailureResponseMessages(response.body.messages);
+                    }
+                  }
+                  else if (response.transport.status !== 404) {
+                    if (CoreUtils.isNotUndefinedNorNull(response.body.messages) && response.body.messages.length > 0) {
+                      ViewModelUtils.displayFailureResponseMessages(response.body.messages);
+                    }
+                  }
+                  else {
+                    Logger.error(JSON.stringify(response));
+                  }
+                }
+                else {
+                  ViewModelUtils.failureResponseDefaultHandling(response);
+                }
+              }
+            })
             .finally(() => {
               if (resolve) resolve();
             });

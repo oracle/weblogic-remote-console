@@ -83,7 +83,7 @@ public class AppDeploymentMBeanUploadableCreatableBeanCollectionResource
     @Override
     protected Properties getDeploymentOptions() {
       Properties deploymentOptions = new Properties();
-      String stageMode = getStringProperty("StageMode", false);
+      String stageMode = getStringProperty("StagingMode", false);
       if (stageMode != null && !stageMode.equals("default")) {
         deploymentOptions.setProperty("stageMode", stageMode);
       }
@@ -170,7 +170,7 @@ public class AppDeploymentMBeanUploadableCreatableBeanCollectionResource
     private JsonObject formPropertyToJasonObject(List<FormProperty> formProperties) {
       JsonObjectBuilder builder = Json.createObjectBuilder();
       setStringValue(formProperties, "Name", "name", builder);
-      setStringValue(formProperties, "StageModeUpload", "stageMode", builder);
+      setStringValue(formProperties, "StagingModeUpload", "stageMode", builder);
       setStringValue(formProperties, "OnDeploymentUpload", "onDeployment", builder);
       setArrayValue(formProperties, "Targets", "targets", builder);
       return builder.build();

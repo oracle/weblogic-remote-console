@@ -708,6 +708,7 @@ define([
 
       function setFormContainerMaxHeight(withHistoryVisible) {
         const options = {
+          containerType: 'table',
           withHistoryVisible: withHistoryVisible,
           withHelpVisible: self.showHelp(),
           isPolicyForm: false
@@ -1127,18 +1128,6 @@ define([
                 }
               });
           })
-/*
-//MLW
-          .then(() => {
-            self.tableToolbarModuleConfig.then((moduleConfig) => {
-              moduleConfig.viewModel.changeManager({
-                isLockOwner: true,
-                hasChanges: true,
-                supportsChanges: true,
-              });
-            });
-          })
- */
           .catch((response) => {
             // Announce that shopping cart icon and menu need to
             // be refreshed, because the delete rejection may have
@@ -1428,9 +1417,7 @@ define([
         const pdjData = viewParams.parentRouter.data.pdjData();
         const rdjData = viewParams.parentRouter.data.rdjData();
 
-        // If the observable updates and no longer references a table
-        // do nothing.. ${perspective.id}.js will route
-        if (CoreUtils.isUndefinedOrNull(pdjData.table)) {
+        if (!PageDefinitionHelper.hasTable(pdjData)) {
           return;
         }
 

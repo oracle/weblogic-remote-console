@@ -1,11 +1,27 @@
-# Copyright (c) 2020, 2022, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2024, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 collectionLinks:
-- label: Libraries
+- label: Library Configurations
   root: DomainConfiguration
   resourceData: Domain/Libraries
+- label: Library Management
+  root: DomainRuntimeMonitoring
+  resourceData: DomainRuntime/DeploymentManager/LibDeploymentRuntimes
+- label: Deployment Tasks Dashboard
+  root: DomainRuntimeMonitoring
+  resourceData: "DomainRuntime/Dashboards/Deployment Tasks"
+
 instanceLinks:
 - label: Library Configuration
   root: DomainConfiguration
   resourceData: Domain/Libraries/<LibraryRuntime>
+- label: Library Management
+  root: DomainRuntimeMonitoring
+  resourceData: DomainRuntime/DeploymentManager/LibDeploymentRuntimes/<LibraryRuntime>
+- label: Library Runtime Data
+  root: DomainRuntimeMonitoring
+  resourceData: DomainRuntime/AggregatedLibraryRuntimes/<LibraryRuntime>
+- label: Deployment Tasks Dashboard
+  root: DomainRuntimeMonitoring
+  resourceData: "DomainRuntime/Dashboards/Deployment Tasks"

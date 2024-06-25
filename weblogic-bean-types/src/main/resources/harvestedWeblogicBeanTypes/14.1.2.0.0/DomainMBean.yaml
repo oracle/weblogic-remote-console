@@ -717,6 +717,16 @@ properties:
   relationship: containment
   supported: false
   type: weblogic.management.configuration.LifecycleManagerEndPointMBean
+- defaultValue:
+    secureModeValue:
+      value: false
+    value:
+      value: true
+  descriptionHTML: '<p>Returns the domain-wide setting for isListenPortEnabled. Can
+    be overridden at the server level.</p> '
+  name: ListenPortEnabled
+  type: boolean
+  writable: true
 - defaultValue: {
     }
   descriptionHTML: '<p>Return the domain logfile configuration for this domain.</p> '
@@ -1173,6 +1183,16 @@ properties:
   relationship: containment
   supported: false
   type: weblogic.management.configuration.SNMPTrapDestinationMBean
+- defaultValue:
+    secureModeValue:
+      value: true
+    value:
+      value: false
+  descriptionHTML: '<p>Returns the domain-wide value for isSSLEnabled. Can be overridden
+    at the server level.</p> '
+  name: SSLEnabled
+  type: boolean
+  writable: true
 - defaultValue: {
     }
   descriptionHTML: '<p>Return the (new) security configuration for this domain.</p> '

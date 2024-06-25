@@ -903,20 +903,24 @@ div.cfe-form-tabstrip a.oj-tabbar-focused-element.oj-tabbar-item-content.oj-tabb
 {
 /*
   min-width: var(--form-container-fixed-min-width);
+//MLW-1  min-width: calc(100vw - var(--content-area-body-toolbars-calc-max-width));
 */
-  min-width: calc(100vw - var(--content-area-body-toolbars-calc-max-width));
 }
 
 #table-toolbar-container
 {
-  min-width: calc(100vw - var(--content-area-body-toolbars-calc-max-width));
+/*
+//MLW-1  min-width: calc(100vw - var(--content-area-body-toolbars-calc-max-width));
+*/
   margin-top: .325rem;
 }
 
 #form-toolbar-container,
 #table-toolbar-container
 {
-  max-width: calc(100vw - var(--content-area-body-toolbars-calc-max-width));
+/*
+//MLW-1  max-width: calc(100vw - var(--content-area-body-toolbars-calc-max-width));
+*/
   padding-left: .325rem;
 }
 
@@ -938,7 +942,9 @@ div.cfe-form-tabstrip a.oj-tabbar-focused-element.oj-tabbar-item-content.oj-tabb
   padding: 0.325rem;
   min-height: 1.875rem;
   max-height: var(--introduction-max-height);
-  max-width: calc(100vw - var(--introduction-calc-max-width));
+/*
+//MLW-1  max-width: calc(100vw - var(--introduction-calc-max-width));
+*/
   margin-bottom: .625rem;
   overflow: auto;
   overflow-wrap: break-word;
@@ -1061,7 +1067,9 @@ div.cfe-form-tabstrip a.oj-tabbar-focused-element.oj-tabbar-item-content.oj-tabb
 
 div[id="show-advanced-fields-container"]
 {
-  width: calc(100vw - var(--content-area-body-content-calc-max-width));
+/*
+//MLW-1  width: calc(100vw - var(--content-area-body-content-calc-max-width));
+*/
 }
 
 oj-switch .oj-switch-thumb:focus-visible

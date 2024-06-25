@@ -43,7 +43,7 @@ sections:
       type: java.io.InputStream
       writable: true
       descriptionHTML: "Select the deployment plan document to upload to the Administration Server and deploy."
-  - name: StageModeUpload
+  - name: StagingModeUpload
     label: "Staging Mode"
     legalValues:
       - value: "default"
@@ -55,7 +55,7 @@ sections:
       - value: "external_stage"
         label: "External Stage"
     definition:
-      name: StageModeUpload
+      name: StagingModeUpload
       type: java.lang.String
       legalValues:
         - "default"
@@ -101,7 +101,7 @@ sections:
   properties:
   - name: SourcePath
   - name: PlanPath
-  - name: StageMode
+  - name: StagingMode
     label: "Staging Mode"
     legalValues:
       - value: "default"
@@ -113,7 +113,7 @@ sections:
       - value: "external_stage"
         label: "External Stage"
     definition:
-      name: StageMode
+      name: StagingMode
       type: java.lang.String
       legalValues:
         - "default"

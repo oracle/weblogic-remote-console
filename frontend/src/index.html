@@ -5,8 +5,10 @@
 -->
 <html lang="en-US">
   <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="viewport-fit=cover, width=device-width, initial-scale=1">
+    <meta http-equiv="x-ua-compatible" content="IE=edge"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <link href="images/favicon-32.png" type="image/x-icon" rel="icon"/>
     <!--
         !!! DO NOT DELETE THE FOLLOWING HREFS BECAUSE YOU MAY NEED THEM TO RETRIEVE !!!
@@ -42,7 +44,7 @@
   <div id="middle-container" class="oj-flex oj-sm-flex-items-initial oj-sm-flex-wrap-nowrap" data-runtime-role="app">
     <oj-module config='[[navStripModuleConfig]]'></oj-module>
 
-    <div id="spa-resizer" :aria-label="[[i18n.ariaLabel.panelResizer.value]]" class="resizer_panel oj-flex oj-sm-flex-items-initial oj-sm-flex-wrap-nowrap">
+    <div id="spa-resizer" class="resizer_panel oj-flex oj-sm-flex-items-initial oj-sm-flex-wrap-nowrap">
 
       <nav id="navtree-container" class="oj-flex-item">
         <div class="left_panel">
@@ -52,7 +54,7 @@
         </div>
       </nav>
 
-      <main class="right_panel">
+      <main class="right_panel" aria-labelledby="spa-resizer">
         <div id="content-area-container" class="oj-flex oj-sm-flex-direction-column oj-sm-flex-wrap-nowrap">
           <!-- row 1 -->
           <div id="content-area-header" class="oj-flex-item">

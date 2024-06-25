@@ -1,0 +1,29 @@
+# Copyright (c) 2024, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions: []
+baseTypes:
+- weblogic.management.runtime.RuntimeMBean
+derivedTypes: []
+name: weblogic.management.runtime.DeploymentStateV2RuntimeMBean
+properties:
+- name: State
+  type: java.lang.String
+  descriptionHTML: >
+    The state of this deployment.
+  legalValues:
+  - STATE_NOT_TARGETED
+  - STATE_DOWN
+  - STATE_MIXED
+  - STATE_NEW
+  - STATE_FAILED
+  - STATE_RETIRED
+  - STATE_PREPARED
+  - STATE_ADMIN
+  - STATE_ACTIVE
+  - STATE_UPDATE_PENDING
+  - STATE_NOT_RESPONDING
+- name: Servers
+  relationship: containment
+  type: weblogic.management.runtime.DeploymentServerStateV2RuntimeMBean
+  array: true

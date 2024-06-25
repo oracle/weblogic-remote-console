@@ -1,27 +1,87 @@
-# Copyright (c) 2020, 2021, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2020, 2024, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
 properties:
+- name: DebugAbbreviation
+  useUnlocalizedNameAsLabel: true
+
+- name: DebugConnection
+  useUnlocalizedNameAsLabel: true
+
+- name: DebugDGCEnrollment
+  useUnlocalizedNameAsLabel: true
+
+- name: DebugFailOver
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugIIOPConnection
-  label: DebugIIOPConnection
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugIIOPMarshal
-  label: DebugIIOPMarshal
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugIIOPOTS
-  label: DebugIIOPOTS
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugIIOPReplacer
-  label: DebugIIOPReplacer
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugIIOPSecurity
-  label: DebugIIOPSecurity
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugIIOPStartup
-  label: DebugIIOPStartup
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugIIOPTransport
-  label: DebugIIOPTransport
+  useUnlocalizedNameAsLabel: true
+
+- name: DebugKernel
+  useUnlocalizedNameAsLabel: true
+
+- name: DebugLoadBalancing
+  useUnlocalizedNameAsLabel: true
+
+- name: DebugLocalRemoteJVM
+  useUnlocalizedNameAsLabel: true
+  offlineName: DebugLocalRemoteJvm
+
+- name: DebugMessaging
+  useUnlocalizedNameAsLabel: true
+
+- name: DebugMuxer
+  useUnlocalizedNameAsLabel: true
+
+- name: DebugMuxerConnection
+  useUnlocalizedNameAsLabel: true
+
+- name: DebugMuxerDetail
+  useUnlocalizedNameAsLabel: true
+
+- name: DebugMuxerException
+  useUnlocalizedNameAsLabel: true
+
+- name: DebugMuxerTimeout
+  useUnlocalizedNameAsLabel: true
+
+- name: DebugRJVMRequestResponse
+  useUnlocalizedNameAsLabel: true
+  offlineName: DebugRjvmRequestResponse
+
+- name: DebugRouting
+  useUnlocalizedNameAsLabel: true
+
+- name: DebugSelfTuning
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugWorkContext
-  label: DebugWorkContext
+  useUnlocalizedNameAsLabel: true
+
+- name: DefaultRJVMDiagMessages
+  useUnlocalizedNameAsLabel: true
+  offlineName: DefaultRjvmDiagMessages
+
+- name: ForceGCEachDGCPeriod
+  useUnlocalizedNameAsLabel: true
+
+- name: LogDGCStatistics
+  useUnlocalizedNameAsLabel: true

@@ -71,9 +71,7 @@ properties:
 - defaultValue: {
     }
   descriptionHTML: '<p>Gets debugAbbrevs attribute of ServerDebugMBean</p> '
-  exclude: true
   name: DebugAbbrevs
-  supported: false
   type: boolean
   writable: true
 - defaultValue: {
@@ -134,9 +132,7 @@ properties:
 - defaultValue: {
     }
   descriptionHTML: '<p>Gets debugAppClient attribute of ServerDebugMBean</p> '
-  exclude: true
   name: DebugAppClient
-  supported: false
   type: boolean
   writable: true
 - defaultValue:
@@ -149,9 +145,7 @@ properties:
 - defaultValue: {
     }
   descriptionHTML: '<p>Gets debugAppContainerTools attribute of ServerDebugMBean</p> '
-  exclude: true
   name: DebugAppContainerTools
-  supported: false
   type: boolean
   writable: true
 - defaultValue:
@@ -164,9 +158,7 @@ properties:
 - defaultValue: {
     }
   descriptionHTML: '<p>Gets debugAppTiming attribute of ServerDebugMBean</p> '
-  exclude: true
   name: DebugAppTiming
-  supported: false
   type: boolean
   writable: true
 - defaultValue:
@@ -179,25 +171,19 @@ properties:
 - defaultValue: {
     }
   descriptionHTML: '<p>Gets debugAttach attribute of ServerDebugMBean</p> '
-  exclude: true
   name: DebugAttach
-  supported: false
   type: boolean
   writable: true
 - defaultValue: {
     }
   descriptionHTML: '<p>Gets debugBackgroundDeployment attribute of ServerDebugMBean</p> '
-  exclude: true
   name: DebugBackgroundDeployment
-  supported: false
   type: boolean
   writable: true
 - defaultValue: {
     }
   descriptionHTML: '<p>Gets debugBatchConnector attribute of ServerDebugMBean</p> '
-  exclude: true
   name: DebugBatchConnector
-  supported: false
   type: boolean
   writable: true
 - defaultValue: {
@@ -236,9 +222,7 @@ properties:
 - defaultValue: {
     }
   descriptionHTML: '<p>Gets debugCAT attribute of ServerDebugMBean</p> '
-  exclude: true
   name: DebugCAT
-  supported: false
   type: boolean
   writable: true
 - defaultValue:
@@ -265,9 +249,13 @@ properties:
 - defaultValue: {
     }
   descriptionHTML: '<p>Gets debugChannel attribute of ServerDebugMBean</p> '
-  exclude: true
   name: DebugChannel
-  supported: false
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Gets debugChannelMap attribute of ServerDebugMBean</p> '
+  name: DebugChannelMap
   type: boolean
   writable: true
 - defaultValue:
@@ -280,9 +268,7 @@ properties:
 - defaultValue: {
     }
   descriptionHTML: '<p>Gets debugClassLoadingConsistencyChecker attribute of ServerDebugMBean</p> '
-  exclude: true
   name: DebugClassLoadingConsistencyChecker
-  supported: false
   type: boolean
   writable: true
 - defaultValue: {
@@ -348,12 +334,11 @@ properties:
   name: DebugClusterVerbose
   type: boolean
   writable: true
-- defaultValue: {
-    }
+- defaultValue:
+    value:
+      value: false
   descriptionHTML: '<p>Gets debugCoherence attribute of ServerDebugMBean</p> '
-  exclude: true
   name: DebugCoherence
-  supported: false
   type: boolean
   writable: true
 - defaultValue:
@@ -496,25 +481,19 @@ properties:
 - defaultValue: {
     }
   descriptionHTML: '<p>Gets debugDataSourceInterceptor attribute of ServerDebugMBean</p> '
-  exclude: true
   name: DebugDataSourceInterceptor
-  supported: false
   type: boolean
   writable: true
 - defaultValue: {
     }
   descriptionHTML: '<p>Gets debugDebugPatches attribute of ServerDebugMBean</p> '
-  exclude: true
   name: DebugDebugPatches
-  supported: false
   type: boolean
   writable: true
 - defaultValue: {
     }
   descriptionHTML: '<p>Gets debugDefaultStoreVerbose attribute of ServerDebugMBean</p> '
-  exclude: true
   name: DebugDefaultStoreVerbose
-  supported: false
   type: boolean
   writable: true
 - defaultValue: {
@@ -655,9 +634,7 @@ properties:
 - defaultValue: {
     }
   descriptionHTML: '<p>Gets debugDiagnosticInstrumentationClassInfo attribute of ServerDebugMBean</p> '
-  exclude: true
   name: DebugDiagnosticInstrumentationClassInfo
-  supported: false
   type: boolean
   writable: true
 - defaultValue: {
@@ -675,9 +652,7 @@ properties:
 - defaultValue: {
     }
   descriptionHTML: '<p>Gets debugDiagnosticInstrumentationResult attribute of ServerDebugMBean</p> '
-  exclude: true
   name: DebugDiagnosticInstrumentationResult
-  supported: false
   type: boolean
   writable: true
 - defaultValue: {
@@ -707,9 +682,7 @@ properties:
 - defaultValue: {
     }
   descriptionHTML: '<p>Gets debugDiagnosticNotifications attribute of ServerDebugMBean</p> '
-  exclude: true
   name: DebugDiagnosticNotifications
-  supported: false
   type: boolean
   writable: true
 - defaultValue: {
@@ -866,9 +839,7 @@ properties:
 - defaultValue: {
     }
   descriptionHTML: '<p>Gets debugDiagnosticsNotifications attribute of ServerDebugMBean</p> '
-  exclude: true
   name: DebugDiagnosticsNotifications
-  supported: false
   type: boolean
   writable: true
 - defaultValue: {
@@ -880,9 +851,7 @@ properties:
 - defaultValue: {
     }
   descriptionHTML: '<p>Gets debugDiagnosticsTimer attribute of ServerDebugMBean</p> '
-  exclude: true
   name: DebugDiagnosticsTimer
-  supported: false
   type: boolean
   writable: true
 - defaultValue:
@@ -914,9 +883,7 @@ properties:
 - defaultValue: {
     }
   descriptionHTML: '<p>Gets debugDomainUpgradeServerService attribute of ServerDebugMBean</p> '
-  exclude: true
   name: DebugDomainUpgradeServerService
-  supported: false
   type: boolean
   writable: true
 - defaultValue:
@@ -985,6 +952,13 @@ properties:
 - defaultValue:
     secureModeValue:
       value: false
+  descriptionHTML: '<p>Debug EJB MDB Listener processing</p> '
+  name: DebugEjbMdbListener
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
   descriptionHTML: '<p>Debug EJB metadata processing</p> '
   name: DebugEjbMetadata
   type: boolean
@@ -1020,9 +994,7 @@ properties:
 - defaultValue: {
     }
   descriptionHTML: '<p>Gets debugEjbTimerStore attribute of ServerDebugMBean</p> '
-  exclude: true
   name: DebugEjbTimerStore
-  supported: false
   type: boolean
   writable: true
 - defaultValue:
@@ -1100,9 +1072,7 @@ properties:
 - defaultValue: {
     }
   descriptionHTML: '<p>Gets debugExpressionPoller attribute of ServerDebugMBean</p> '
-  exclude: true
   name: DebugExpressionPoller
-  supported: false
   type: boolean
   writable: true
 - defaultValue:
@@ -1136,9 +1106,7 @@ properties:
 - defaultValue: {
     }
   descriptionHTML: '<p>Gets debugFileOwnerFixer attribute of ServerDebugMBean</p> '
-  exclude: true
   name: DebugFileOwnerFixer
-  supported: false
   type: boolean
   writable: true
 - defaultValue:
@@ -1151,9 +1119,7 @@ properties:
 - defaultValue: {
     }
   descriptionHTML: '<p>Gets debugHarvesterTypeInfoCache attribute of ServerDebugMBean</p> '
-  exclude: true
   name: DebugHarvesterTypeInfoCache
-  supported: false
   type: boolean
   writable: true
 - defaultValue:
@@ -1229,9 +1195,7 @@ properties:
 - defaultValue: {
     }
   descriptionHTML: '<p>Gets debugIIOPDetail attribute of ServerDebugMBean</p> '
-  exclude: true
   name: DebugIIOPDetail
-  supported: false
   type: boolean
   writable: true
 - defaultValue:
@@ -1243,10 +1207,8 @@ properties:
   writable: true
 - defaultValue: {
     }
-  descriptionHTML: '<p>Gets debugIIOPRepalcer attribute of ServerDebugMBean</p> '
-  exclude: true
-  name: DebugIIOPRepalcer
-  supported: false
+  descriptionHTML: '<p>Gets debugIIOPReplacer attribute of ServerDebugMBean</p> '
+  name: DebugIIOPReplacer
   type: boolean
   writable: true
 - defaultValue:
@@ -1435,6 +1397,20 @@ properties:
 - defaultValue:
     value:
       value: false
+  descriptionHTML: '<p>Debug for JMS Client message send and receive</p> '
+  name: DebugJMSClient
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Detailed debug for JMS Client send and receive</p> '
+  name: DebugJMSClientStackTrace
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: false
   descriptionHTML: '<p>Debug JMSCommon processing</p> '
   name: DebugJMSCommon
   type: boolean
@@ -1449,9 +1425,7 @@ properties:
 - defaultValue: {
     }
   descriptionHTML: '<p>Gets debugJMSCrossDomainSecurity attribute of ServerDebugMBean</p> '
-  exclude: true
   name: DebugJMSCrossDomainSecurity
-  supported: false
   type: boolean
   writable: true
 - defaultValue:
@@ -1485,17 +1459,20 @@ properties:
 - defaultValue: {
     }
   descriptionHTML: '<p>Gets debugJMSDispatcherUtilsVerbose attribute of ServerDebugMBean</p> '
-  exclude: true
   name: DebugJMSDispatcherUtilsVerbose
-  supported: false
   type: boolean
   writable: true
 - defaultValue: {
     }
   descriptionHTML: '<p>Gets debugJMSDispatcherVerbose attribute of ServerDebugMBean</p> '
-  exclude: true
   name: DebugJMSDispatcherVerbose
-  supported: false
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Debug JMS Dispatcher Wire Protocol</p> '
+  name: DebugJMSDispatcherWire
   type: boolean
   writable: true
 - defaultValue:
@@ -1508,33 +1485,25 @@ properties:
 - defaultValue: {
     }
   descriptionHTML: '<p>Gets debugJMSDotNetProxy attribute of ServerDebugMBean</p> '
-  exclude: true
   name: DebugJMSDotNetProxy
-  supported: false
   type: boolean
   writable: true
 - defaultValue: {
     }
   descriptionHTML: '<p>Gets debugJMSDotNetT3Server attribute of ServerDebugMBean</p> '
-  exclude: true
   name: DebugJMSDotNetT3Server
-  supported: false
   type: boolean
   writable: true
 - defaultValue: {
     }
   descriptionHTML: '<p>Gets debugJMSDotNetTransport attribute of ServerDebugMBean</p> '
-  exclude: true
   name: DebugJMSDotNetTransport
-  supported: false
   type: boolean
   writable: true
 - defaultValue: {
     }
   descriptionHTML: '<p>Gets debugJMSDurSub attribute of ServerDebugMBean</p> '
-  exclude: true
   name: DebugJMSDurSub
-  supported: false
   type: boolean
   writable: true
 - defaultValue:
@@ -1572,9 +1541,7 @@ properties:
 - defaultValue: {
     }
   descriptionHTML: '<p>Gets debugJMSJNDI attribute of ServerDebugMBean</p> '
-  exclude: true
   name: DebugJMSJNDI
-  supported: false
   type: boolean
   writable: true
 - defaultValue:
@@ -1673,9 +1640,7 @@ properties:
 - defaultValue: {
     }
   descriptionHTML: '<p>Gets debugJMXContext attribute of ServerDebugMBean</p> '
-  exclude: true
   name: DebugJMXContext
-  supported: false
   type: boolean
   writable: true
 - defaultValue: {
@@ -1732,9 +1697,7 @@ properties:
 - defaultValue: {
     }
   descriptionHTML: '<p>Gets debugJPA attribute of ServerDebugMBean</p> '
-  exclude: true
   name: DebugJPA
-  supported: false
   type: boolean
   writable: true
 - defaultValue:
@@ -1747,9 +1710,7 @@ properties:
 - defaultValue: {
     }
   descriptionHTML: '<p>Gets debugJTA2PCDetail attribute of ServerDebugMBean</p> '
-  exclude: true
   name: DebugJTA2PCDetail
-  supported: false
   type: boolean
   writable: true
 - defaultValue:
@@ -2013,9 +1974,7 @@ properties:
 - defaultValue: {
     }
   descriptionHTML: '<p>Gets debugKodoWeblogic attribute of ServerDebugMBean</p> '
-  exclude: true
   name: DebugKodoWeblogic
-  supported: false
   type: boolean
   writable: true
 - defaultValue:
@@ -2029,9 +1988,7 @@ properties:
 - defaultValue: {
     }
   descriptionHTML: '<p>Gets debugLegacy attribute of ServerDebugMBean</p> '
-  exclude: true
   name: DebugLegacy
-  supported: false
   type: boolean
   writable: true
 - defaultValue:
@@ -2065,25 +2022,19 @@ properties:
 - defaultValue: {
     }
   descriptionHTML: '<p>Gets debugMBeanEventHandler attribute of ServerDebugMBean</p> '
-  exclude: true
   name: DebugMBeanEventHandler
-  supported: false
   type: boolean
   writable: true
 - defaultValue: {
     }
   descriptionHTML: '<p>Gets debugMBeanEventHandlerSummary attribute of ServerDebugMBean</p> '
-  exclude: true
   name: DebugMBeanEventHandlerSummary
-  supported: false
   type: boolean
   writable: true
 - defaultValue: {
     }
   descriptionHTML: '<p>Gets debugMBeanEventHandlerWork attribute of ServerDebugMBean</p> '
-  exclude: true
   name: DebugMBeanEventHandlerWork
-  supported: false
   type: boolean
   writable: true
 - defaultValue: {
@@ -2113,9 +2064,7 @@ properties:
 - defaultValue: {
     }
   descriptionHTML: '<p>Gets debugMBeanLocalization attribute of ServerDebugMBean</p> '
-  exclude: true
   name: DebugMBeanLocalization
-  supported: false
   type: boolean
   writable: true
 - defaultValue: {
@@ -2145,17 +2094,13 @@ properties:
 - defaultValue: {
     }
   descriptionHTML: '<p>Gets debugMailSessionDeployment attribute of ServerDebugMBean</p> '
-  exclude: true
   name: DebugMailSessionDeployment
-  supported: false
   type: boolean
   writable: true
 - defaultValue: {
     }
   descriptionHTML: '<p>Gets debugManagedBean attribute of ServerDebugMBean</p> '
-  exclude: true
   name: DebugManagedBean
-  supported: false
   type: boolean
   writable: true
 - defaultValue:
@@ -2250,17 +2195,13 @@ properties:
 - defaultValue: {
     }
   descriptionHTML: '<p>Gets debugMigrationInfo attribute of ServerDebugMBean</p> '
-  exclude: true
   name: DebugMigrationInfo
-  supported: false
   type: boolean
   writable: true
 - defaultValue: {
     }
   descriptionHTML: '<p>Gets debugNIO attribute of ServerDebugMBean</p> '
-  exclude: true
   name: DebugNIO
-  supported: false
   type: boolean
   writable: true
 - defaultValue:
@@ -2280,9 +2221,7 @@ properties:
 - defaultValue: {
     }
   descriptionHTML: '<p>Gets debugPageFlowMonitoring attribute of ServerDebugMBean</p> '
-  exclude: true
   name: DebugPageFlowMonitoring
-  supported: false
   type: boolean
   writable: true
 - defaultValue: {
@@ -2351,25 +2290,19 @@ properties:
 - defaultValue: {
     }
   descriptionHTML: '<p>Gets debugPubSubBayeux attribute of ServerDebugMBean</p> '
-  exclude: true
   name: DebugPubSubBayeux
-  supported: false
   type: boolean
   writable: true
 - defaultValue: {
     }
   descriptionHTML: '<p>Gets debugPubSubChannel attribute of ServerDebugMBean</p> '
-  exclude: true
   name: DebugPubSubChannel
-  supported: false
   type: boolean
   writable: true
 - defaultValue: {
     }
   descriptionHTML: '<p>Gets debugPubSubClient attribute of ServerDebugMBean</p> '
-  exclude: true
   name: DebugPubSubClient
-  supported: false
   type: boolean
   writable: true
 - defaultValue:
@@ -2382,17 +2315,13 @@ properties:
 - defaultValue: {
     }
   descriptionHTML: '<p>Gets debugPubSubSecurity attribute of ServerDebugMBean</p> '
-  exclude: true
   name: DebugPubSubSecurity
-  supported: false
   type: boolean
   writable: true
 - defaultValue: {
     }
   descriptionHTML: '<p>Gets debugPubSubServer attribute of ServerDebugMBean</p> '
-  exclude: true
   name: DebugPubSubServer
-  supported: false
   type: boolean
   writable: true
 - defaultValue:
@@ -2527,9 +2456,7 @@ properties:
 - defaultValue: {
     }
   descriptionHTML: '<p>Gets debugRMIDetailed attribute of ServerDebugMBean</p> '
-  exclude: true
   name: DebugRMIDetailed
-  supported: false
   type: boolean
   writable: true
 - defaultValue:
@@ -2552,9 +2479,7 @@ properties:
 - defaultValue: {
     }
   descriptionHTML: '<p>Gets debugRedefAttach attribute of ServerDebugMBean</p> '
-  exclude: true
   name: DebugRedefAttach
-  supported: false
   type: boolean
   writable: true
 - defaultValue:
@@ -2581,9 +2506,7 @@ properties:
 - defaultValue: {
     }
   descriptionHTML: '<p>Gets debugRequestManager attribute of ServerDebugMBean</p> '
-  exclude: true
   name: DebugRequestManager
-  supported: false
   type: boolean
   writable: true
 - defaultValue: {
@@ -2698,9 +2621,7 @@ properties:
 - defaultValue: {
     }
   descriptionHTML: '<p>Gets debugSNMPMib attribute of ServerDebugMBean</p> '
-  exclude: true
   name: DebugSNMPMib
-  supported: false
   type: boolean
   writable: true
 - defaultValue: {
@@ -2725,9 +2646,7 @@ properties:
 - defaultValue: {
     }
   descriptionHTML: '<p>Gets debugScrubberStartService attribute of ServerDebugMBean</p> '
-  exclude: true
   name: DebugScrubberStartService
-  supported: false
   type: boolean
   writable: true
 - defaultValue:
@@ -2952,9 +2871,7 @@ properties:
 - defaultValue: {
     }
   descriptionHTML: '<p>Gets debugServerRuntime attribute of ServerDebugMBean</p> '
-  exclude: true
   name: DebugServerRuntime
-  supported: false
   type: boolean
   writable: true
 - defaultValue:
@@ -2967,17 +2884,13 @@ properties:
 - defaultValue: {
     }
   descriptionHTML: '<p>Gets debugServerShutdownStatistics attribute of ServerDebugMBean</p> '
-  exclude: true
   name: DebugServerShutdownStatistics
-  supported: false
   type: boolean
   writable: true
 - defaultValue: {
     }
   descriptionHTML: '<p>Gets debugServerShutdownTimer attribute of ServerDebugMBean</p> '
-  exclude: true
   name: DebugServerShutdownTimer
-  supported: false
   type: boolean
   writable: true
 - defaultValue:
@@ -2991,17 +2904,13 @@ properties:
 - defaultValue: {
     }
   descriptionHTML: '<p>Gets debugServerStartupTimer attribute of ServerDebugMBean</p> '
-  exclude: true
   name: DebugServerStartupTimer
-  supported: false
   type: boolean
   writable: true
 - defaultValue: {
     }
   descriptionHTML: '<p>Gets debugSingletonServices attribute of ServerDebugMBean</p> '
-  exclude: true
   name: DebugSingletonServices
-  supported: false
   type: boolean
   writable: true
 - defaultValue: {
@@ -3020,17 +2929,13 @@ properties:
 - defaultValue: {
     }
   descriptionHTML: '<p>Gets debugSpringStatistics attribute of ServerDebugMBean</p> '
-  exclude: true
   name: DebugSpringStatistics
-  supported: false
   type: boolean
   writable: true
 - defaultValue: {
     }
   descriptionHTML: '<p>Gets debugStore attribute of ServerDebugMBean</p> '
-  exclude: true
   name: DebugStore
-  supported: false
   type: boolean
   writable: true
 - defaultValue:
@@ -3045,9 +2950,7 @@ properties:
 - defaultValue: {
     }
   descriptionHTML: '<p>Gets debugStoreCache attribute of ServerDebugMBean</p> '
-  exclude: true
   name: DebugStoreCache
-  supported: false
   type: boolean
   writable: true
 - defaultValue:
@@ -3133,9 +3036,7 @@ properties:
 - defaultValue: {
     }
   descriptionHTML: '<p>Gets debugStubGeneration attribute of ServerDebugMBean</p> '
-  exclude: true
   name: DebugStubGeneration
-  supported: false
   type: boolean
   writable: true
 - defaultValue:
@@ -3164,9 +3065,7 @@ properties:
 - defaultValue: {
     }
   descriptionHTML: '<p>Gets debugUnicastMessaging attribute of ServerDebugMBean</p> '
-  exclude: true
   name: DebugUnicastMessaging
-  supported: false
   type: boolean
   writable: true
 - defaultValue:
@@ -3179,17 +3078,13 @@ properties:
 - defaultValue: {
     }
   descriptionHTML: '<p>Gets debugValidation attribute of ServerDebugMBean</p> '
-  exclude: true
   name: DebugValidation
-  supported: false
   type: boolean
   writable: true
 - defaultValue: {
     }
   descriptionHTML: '<p>Gets debugValidationClassLoading attribute of ServerDebugMBean</p> '
-  exclude: true
   name: DebugValidationClassLoading
-  supported: false
   type: boolean
   writable: true
 - defaultValue:
@@ -3244,9 +3139,7 @@ properties:
 - defaultValue: {
     }
   descriptionHTML: '<p>Gets debugWTCTdomPdu attribute of ServerDebugMBean</p> '
-  exclude: true
   name: DebugWTCTdomPdu
-  supported: false
   type: boolean
   writable: true
 - defaultValue:
@@ -3273,17 +3166,13 @@ properties:
 - defaultValue: {
     }
   descriptionHTML: '<p>Gets debugWatchScalingActions attribute of ServerDebugMBean</p> '
-  exclude: true
   name: DebugWatchScalingActions
-  supported: false
   type: boolean
   writable: true
 - defaultValue: {
     }
   descriptionHTML: '<p>Gets debugWebAppDI attribute of ServerDebugMBean</p> '
-  exclude: true
   name: DebugWebAppDI
-  supported: false
   type: boolean
   writable: true
 - defaultValue:
@@ -3311,9 +3200,7 @@ properties:
 - defaultValue: {
     }
   descriptionHTML: '<p>Gets debugWebSocket attribute of ServerDebugMBean</p> '
-  exclude: true
   name: DebugWebSocket
-  supported: false
   type: boolean
   writable: true
 - defaultValue:
@@ -3497,9 +3384,7 @@ properties:
 - defaultValue: {
     }
   descriptionHTML: '<p>Gets glassFishWebAppParser attribute of ServerDebugMBean</p> '
-  exclude: true
   name: GlassFishWebAppParser
-  supported: false
   type: boolean
   writable: true
 - defaultValue:
@@ -3581,9 +3466,7 @@ properties:
 - defaultValue: {
     }
   descriptionHTML: '<p>Gets oSGiForApps attribute of ServerDebugMBean</p> '
-  exclude: true
   name: OSGiForApps
-  supported: false
   type: boolean
   writable: true
 - defaultValue:
@@ -3625,17 +3508,13 @@ properties:
 - defaultValue: {
     }
   descriptionHTML: '<p>Gets scriptExecutorCommand attribute of ServerDebugMBean</p> '
-  exclude: true
   name: ScriptExecutorCommand
-  supported: false
   type: boolean
   writable: true
 - defaultValue: {
     }
   descriptionHTML: '<p>Gets securityEncryptionService attribute of ServerDebugMBean</p> '
-  exclude: true
   name: SecurityEncryptionService
-  supported: false
   type: boolean
   writable: true
 - defaultValue: {
@@ -3681,17 +3560,13 @@ properties:
 - defaultValue: {
     }
   descriptionHTML: '<p>Gets t3HttpUpgradeHandler attribute of ServerDebugMBean</p> '
-  exclude: true
   name: T3HttpUpgradeHandler
-  supported: false
   type: boolean
   writable: true
 - defaultValue: {
     }
   descriptionHTML: '<p>Gets warExtraction attribute of ServerDebugMBean</p> '
-  exclude: true
   name: WarExtraction
-  supported: false
   type: boolean
   writable: true
 - defaultValue: {

@@ -120,19 +120,24 @@ define([
       return result;
     }
 
-    function getActionDataPayload(rdjData, options, checkedRows) {
+    function getActionDataPayload(rdjData, options,  declarativeActions) {
       const actionDataPayload = {rows: {value: []}};
-      if (checkedRows.size > 0) {
-        for (const rowKeyValue of Array.from(checkedRows)) {
-          const index = rdjData.data.map(row => row.identity.value.resourceData).indexOf(rowKeyValue);
+      if ( declarativeActions.checkedRows.size > 0) {
+        for (const rowKeyValue of Array.from( declarativeActions.checkedRows)) {
+          let row;
+          const index = rdjData.data.findIndex(row => row?.identity && row.identity.value.resourceData === rowKeyValue);
 
-          if (index !== -1 && CoreUtils.isNotUndefinedNorNull(rdjData.data[index].identifier)) {
-            const row = {value: rdjData.data[index].identifier.value};
-            actionDataPayload.rows.value.push(row);
+          if (index !== -1) {
+            if (CoreUtils.isNotUndefinedNorNull(rdjData.data[index].identifier)) {
+              row = {value: rdjData.data[index].identifier.value};
+              actionDataPayload.rows.value.push(row);
+            }
+            else {
+              row = { value: { resourceData: rowKeyValue } };
+              actionDataPayload.rows.value.push(row);
+            }
           }
           else {
-            let row;
-
             // the checked row might refer to rdjData.data[x].identifier.value such as invoking an aggregate action on a sliceTable..
             // if that is the case pass the entire identifier to the backend
             const identifierIndex = rdjData.data.findIndex(row => row.identifier?.value === rowKeyValue);
@@ -655,6 +660,9 @@ define([
           if (message.indexOf('Read timed out') !== -1) {
             reply['succeeded'] = true;
           }
+          else if (response?.transport?.status === 504) {
+            reply['messages'] = response.body.messages;
+          }
           else {
             if (addActionNotPerformedMessage) {
               response.body.messages.unshift({
@@ -786,7 +794,7 @@ define([
     }
 
     async function defaultPerformAction(rdjData, declarativeActions, options) {
-      const dataPayload = getActionDataPayload(rdjData, options, declarativeActions.checkedRows);
+      const dataPayload = getActionDataPayload(rdjData, options, declarativeActions);
       const endpoint = getActionEndpoint(rdjData.actions, options.action);
       return postActionData(options.label, endpoint, dataPayload);
     }
@@ -906,10 +914,6 @@ define([
       return (['forceShutdown', 'gracefulShutdown'].includes(action));
     }
 
-    function getActionConstraints(pdjActions) {
-      return (pdjActions.filter(item => CoreUtils.isNotUndefinedNorNull(item.constraint)).length > 0);
-    }
-
     function getPDJActionPolling(declarativeActions, action) {
       let actionPolling = {
         action: action,
@@ -935,6 +939,7 @@ define([
           }
         }
       }
+
       return actionPolling;
     }
 
@@ -1006,7 +1011,7 @@ define([
           },
           minWidth: parseInt(ViewModelUtils.getCustomCssProperty('overlayDialog-actionInput-width'), 10)
         };
-        if (['updatePlanOnServer', 'uploadAndUpdate', 'updateExisting',
+        if (['updatePlanOnServer', 'uploadAndUpdate',
           'redeploySourceOnServer', 'uploadAndRedeploy'].includes(action)) {
           formLayout.options.labelWidthPcnt = '28%';
           formLayout.minWidth = 850;
@@ -1112,7 +1117,6 @@ define([
             declarativeActions['rowSelectionProperty'] = getRowSelectionProperty(pdjData);
             declarativeActions['isDeletable'] = PageDefinitionHelper.isDeletable(rdjData);
             declarativeActions['navigationProperty'] = getNavigationProperty(pdjData);
-            declarativeActions['hasActionConstraints'] = getActionConstraints(pdjActions);
             declarativeActions.dataRowsCount = rdjData.data.length;
             declarativeActions.buttons = [];
             for (const pdjAction of pdjActions) {
@@ -1140,6 +1144,7 @@ define([
                 if (CoreUtils.isNotUndefinedNorNull(pdjAction.polling)) {
                   button['polling'] = getActionPollingObject(pdjAction);
                 }
+
                 if (pdjAction.actions) {
                   button['menus'] = [];
                   for (const menu of pdjAction.actions) {
@@ -1174,6 +1179,7 @@ define([
               }
             }
             declarativeActions['willAffectChangeManager'] = (declarativeActions.buttons.filter(item => CoreUtils.isNotUndefinedNorNull(item.affectsChangeManager)).length > 0);
+            declarativeActions['hasActionConstraints'] = (declarativeActions.buttons.filter(item => CoreUtils.isNotUndefinedNorNull(item?.constraint?.type) && item.constraint.type === 'rowIndex').length > 0);
           }
         }
       },

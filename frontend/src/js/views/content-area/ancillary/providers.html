@@ -18,7 +18,7 @@
   :aria-label="[[i18n.ariaLabel.connectionsModels.value]]"
 >
   <template slot="itemTemplate" data-oj-as="item">
-    <li role="list" data-bind="attr: {id: item.data.id}" class="cfe-project-provider-listitem" tabindex="0">
+    <li role="application" data-bind="attr: {id: item.data.id}" class="cfe-project-provider-listitem" tabindex="0">
       <a href="#"
         :data-item-id="[[item.data.id]]"
          on-keyup="[[registerKeyUpFocuser('.cfe-project-provider-iconbar')]]"

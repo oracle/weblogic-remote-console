@@ -48,7 +48,6 @@
     <table
       id="help-table"
       class="oj-table-element oj-component-initnode"
-      role="application"
       aria-labelledby="help-table"
       x-ms-format-detection="none"
     >
@@ -99,7 +98,7 @@
 
 <oj-dialog id="syncIntervalDialog" dialog-title="[[i18n.dialogSync.title]]" initial-visibility="hide" cancel-behavior="icon">
   <div slot="body">
-    <div class="cfe-dialog-prompt">
+    <div id="sync-interval-instructions" :aria-label="[[i18n.dialogSync.instructions]]" class="cfe-dialog-prompt">
       <span data-bind="text: [[i18n.dialogSync.instructions]]"></span>
     </div>
 

@@ -51,8 +51,10 @@ describe.only('Test Suite: services_test for JMS, JTA, JDBC, Datasource, Messagi
     //Test Case:
     // Create->modify(general tab)->delete testJMSServer-1
     //
-    it('1. Test Category: GAT/Risk1\n \t Test Scenario: create->modify->delete a new testJMSServer-1 ', async function() {
+    it('1. Test Category: GAT/Risk1\n \t Test Scenario: testJMSServer-1 : create->modify->delete a new testJMSServer-1 ', async function() {
         file = "testJMSServer-1.png";
+        console.log("-----Start to run testJMSServer-1 test case....");
+        console.log("------------------------------------------------");
         try {
             await admin.createNewMBeanObject(driver,"testJMSServer-1",2,"configuration","Services","JMS Servers");
             await driver.sleep(7200);
@@ -71,9 +73,11 @@ describe.only('Test Suite: services_test for JMS, JTA, JDBC, Datasource, Messagi
     //Test Case:
     // Create->assign(Target tab) to testJMSSystemRes-1, validate the operation then delete testJMSSystemRes-1
     //
-    it('2. Test Category: GAT/Risk1\n \t Test Scenario: Create->assign(All Target) to testJMSSystemRes-1, ' +
+    it('2. Test Category: GAT/Risk1\n \t Test Scenario: testJMSSystemRes-1: Create->assign(All Target) to testJMSSystemRes-1, ' +
         'validate the operation then delete testJMSSystemRes-1 ', async function() {
         file = "testJMSSystemRes-1.png";
+        console.log("-----Start to run testJMSSystemRes-1 test case....");
+        console.log("--------------------------------------------------");
         try {
             await admin.createNewMBeanObject(driver,"testJMSSysRes-1",2,"configuration","Services","JMS System Resources");
             await driver.sleep(1200);
@@ -92,8 +96,10 @@ describe.only('Test Suite: services_test for JMS, JTA, JDBC, Datasource, Messagi
     //Test Case:
     // Create->modify(general tab)->delete testFileStore-1
     //
-    it('3. Test Category: GAT/Risk1\n \t Test Scenario: create->modify->delete a new testFileStore-1 ', async function() {
+    it('3. Test Category: GAT/Risk1\n \t Test Scenario: testFileStore-1: create->modify->delete a new testFileStore-1 ', async function() {
         file = "testFileStore-1.png";
+        console.log("-----Start to run testFileStore-1 test case....");
+        console.log("-----------------------------------------------");
         try {
             await admin.goToLandingPanelSubTreeCard(driver,"Edit Tree","ServicesChevron","File Stores");
             await admin.createNewMBeanFromLandingPage(driver,"testFileStore-1");
@@ -132,8 +138,10 @@ describe.only('Test Suite: services_test for JMS, JTA, JDBC, Datasource, Messagi
     //Test Case:
     // Create a Generic Oracle JDBC System Resource (testJDBCSysRes-1), save than delete it.
     //
-    it('4. Test Category: GAT/Risk1\n \t Test Scenario: create->save->delete a new testJDBCSysRes-1 ', async function() {
+    it('4. Test Category: GAT/Risk1\n \t Test Scenario: testJDBCSysRes-1: create->save->delete a new testJDBCSysRes-1 ', async function() {
         file = "testJDBCSysRes-1.png";
+        console.log("-----Start to run testJDBCSysRes-1 test case....");
+        console.log("------------------------------------------------");
         try {
             await services.createJDBCSystemResource(driver,"testJDBCSysRes-1","testJdbcJNDIName-1","All",
                 dbSourceType, dbType, dbDriver, dbName, dbHost, dbPort, dbUser, dbPassword);
@@ -153,10 +161,12 @@ describe.only('Test Suite: services_test for JMS, JTA, JDBC, Datasource, Messagi
     // Create JDBC Store (testJDBCStore-2), assign testJDBCSysRes-2 to testJDBCStore-2
     // Delete testJDBCStore-2 and testJDBCSysRes-2 after work done
     //
-    it('5. Test Category: GAT/Risk1\n \t Test Scenario: create testJDBCSysRes-2, create testJDBCStore-2, ' +
+    it('5. Test Category: GAT/Risk1\n \t Test Scenario: testJDBCStore-2: create testJDBCSysRes-2, create testJDBCStore-2, ' +
         'assign testJDBCSysRes-2 to testJDBCStore-2 - Validate the operation, ' +
         'delete testJDBCSysRes-2 and testJDBCStore-2', async function() {
         file = "testJDBCStore-2.png";
+        console.log("-----Start to run testJDBCStore-2 test case....");
+        console.log("-----------------------------------------------");
         try {
             await services.createJDBCSystemResource(driver,"testJDBCSysRes-2","testJdbcJNDIName-2","AdminServer",
                 dbSourceType, dbType, dbDriver, dbName, dbHost, dbPort, dbUser, dbPassword);
@@ -187,8 +197,10 @@ describe.only('Test Suite: services_test for JMS, JTA, JDBC, Datasource, Messagi
     // Create XML Registry (testXMLRegistry-1)
     // Delete testXMLRegistry-1
     //
-    it('6. Test Category: GAT/Risk1\n \t Test Scenario: create/save/delete testXMLRegistry-1 ', async function() {
+    it('6. Test Category: GAT/Risk1\n \t Test Scenario: testXMLRegistry-1: create/save/delete testXMLRegistry-1 ', async function() {
         file = "testXMLRegistry-1.png";
+        console.log("-----Start to run testXMLRegistry-1 test case....");
+        console.log("-------------------------------------------------");
         try {
             await admin.goToLandingPanelSubTreeCard(driver,"Edit Tree","ServicesChevron","XML Registries");
             await driver.sleep(8400);
@@ -220,8 +232,10 @@ describe.only('Test Suite: services_test for JMS, JTA, JDBC, Datasource, Messagi
     // Create XML Entity Caches (testEntityCache-1)
     // Delete testEntityCache-1
     //
-    it.skip('7. Test Category: GAT/Risk1\n \t Test Scenario: create/save/delete testEntityCache-1 ', async function() {
+    it('7. Test Category: GAT/Risk1\n \t Test Scenario: testXMLEntityCache-1: create/save/delete testEntityCache-1 ', async function() {
         file = "testXMLEntityCache-1.png";
+        console.log("-----Start to run testXMLEntityCache-1 test case....");
+        console.log("----------------------------------------------------");
         try {
             await admin.createNewMBeanObject(driver,"testEntityCache-1",2,"configuration","Services","XML Entity Caches");
             await admin.deleteMBeanObject(driver,"testEntityCache-1","XML Entity Caches",2,"configuration",
@@ -237,8 +251,10 @@ describe.only('Test Suite: services_test for JMS, JTA, JDBC, Datasource, Messagi
     // Create MailSession (testMailSession-1)
     // Delete testMailSession-1
     //
-    it.skip('8. Test Category: GAT/Risk1\n \t Test Scenario: create/save/delete testMailSession-1 ', async function() {
+    it('8. Test Category: GAT/Risk1\n \t Test Scenario: testMailSession-1: create/save/delete testMailSession-1 ', async function() {
         file = "testMailSession-1.png";
+        console.log("-----Start to run testMailSession-1 test case....");
+        console.log("--------------------------------------------------");
         try {
             await admin.createNewMBeanObject(driver,"testMailSession-1",2,"configuration","Services","Mail Sessions",
                     "","","input","JNDIName|input","testJNDIName");
@@ -255,8 +271,10 @@ describe.only('Test Suite: services_test for JMS, JTA, JDBC, Datasource, Messagi
     // Create MessagingBridge (testMessagingBridge-1)
     // Delete testMessagingBridge-1
     //
-    it('9. Test Category: GAT/Risk1\n \t Test Scenario: create/save/delete testMessagingBridge-1 ', async function() {
+    it('9. Test Category: GAT/Risk1\n \t Test Scenario: testMessagingBridge-1: create/save/delete testMessagingBridge-1 ', async function() {
         file = "testMessagingBridge-1.png";
+        console.log("-----Start to run testMessagingBridge-1 test case....");
+        console.log("-----------------------------------------------------");
         try {
             await admin.createNewMBeanObject(driver,"testMessagingBridge-1",2,"configuration","Services","Messaging Bridges");
             await admin.deleteMBeanObject(driver,"testMessagingBridge-1","Messaging Bridges",2,"configuration",
@@ -273,9 +291,11 @@ describe.only('Test Suite: services_test for JMS, JTA, JDBC, Datasource, Messagi
     // Create Foreign JNDI Providers (testForeignJNDIProviders-1)
     // Delete testForeignJNDIProviders-1
     //
-    it('10. Test Category: GAT/Risk1\n \t Test Scenario: create/save/delete testForeignJNDIProviders-1 ',
+    it('10. Test Category: GAT/Risk1\n \t Test Scenario: testForeignJNDIProviders-1: create/save/delete testForeignJNDIProviders-1 ',
         async function() {
         file = "testForeignJNDIProviders-1.png";
+        console.log("-----Start to run testForeignJNDIProviders-1 test case....");
+        console.log("----------------------------------------------------------");
         try {
             await admin.createNewMBeanObject(driver,"testForeignJNDIProviders-1",2,"configuration","Services",
                 "Foreign JNDI Providers");
@@ -292,10 +312,13 @@ describe.only('Test Suite: services_test for JMS, JTA, JDBC, Datasource, Messagi
     // Osgi Frameworks is deprecated.
     // Create Osgi Frameworks (testOsgiFrameworks-1)
     // Delete testOsgiFrameworks-1
+    // Feature: deprecated
     //
-    it.skip('11. Test Category: GAT/Risk1\n \t Test Scenario: create/save/delete testOsgiFrameworks-1 ',
+    it.skip('11. Test Category: GAT/Risk1\n \t Test Scenario: testOsgiFrameworks-1: create/save/delete testOsgiFrameworks-1 ',
         async function() {
             file = "testOsgiFrameworks-1.png";
+            console.log("-----Start to run testOsgiFrameworks-1 test case..........");
+            console.log("----------------------------------------------------------");
             try {
                 await admin.createNewMBeanObject(driver,"testOsgiFrameworks-1",2,"configuration","Services",
                     "Osgi Frameworks");
@@ -312,9 +335,11 @@ describe.only('Test Suite: services_test for JMS, JTA, JDBC, Datasource, Messagi
     // Create JTA (testJMSBridgeDestinations-1)
     // Delete testJMSBridgeDestinations-1
     //
-    it('12. Test Category: GAT/Risk1\n \t Test Scenario: create/save/delete testJMSBridgeDestinations-1 ',
+    it('12. Test Category: GAT/Risk1\n \t Test Scenario: testJMSBridgeDestinations-1: create/save/delete testJMSBridgeDestinations-1 ',
         async function() {
             file = "testJMSBridgeDestinations-1.png";
+            console.log("-----Start to run testJMSBridgeDestinations-1 test case..........");
+            console.log("-----------------------------------------------------------------");
             try {
                 await admin.createNewMBeanObject(driver,"testJMSBridgeDestinations-1",2,"configuration","Services",
                     "JMS Bridge Destinations");
@@ -330,8 +355,10 @@ describe.only('Test Suite: services_test for JMS, JTA, JDBC, Datasource, Messagi
     //Test Case:
     // Create FileStore with Eclipse... menu from JMSServer
     //
-    it('14. Test Category: GAT/Risk1\n \t Test Scenario: create->fileStore->EclipseMenu from testJMSServer-2 ', async function() {
+    it('14. Test Category: GAT/Risk1\n \t Test Scenario: testFileStoreFromJMSServer-2: create->fileStore->EclipseMenu from testJMSServer-2 ', async function() {
         file = "testFileStoreFromJMSServer-2.png";
+        console.log("-----Start to run testFileStoreFromJMSServer-2 test case..........");
+        console.log("------------------------------------------------------------------");
         try {
             await admin.createNewMBeanObject(driver,"testJMSServer-2",2,"configuration","Services","JMS Servers");
             await driver.sleep(1200);
@@ -352,9 +379,12 @@ describe.only('Test Suite: services_test for JMS, JTA, JDBC, Datasource, Messagi
 
     //Test Case:
     // Create JDBCStore with Eclipse... menu from JMSServer
+    // WC-1616
     //
-    it.skip('15. Test Category: GAT/Risk1\n \t Test Scenario: create->JDBCStore->EclipseMenu from testJMSServer-3 ', async function() {
+    it.skip('15. Test Category: GAT/Risk1\n \t Test Scenario: testJDBCStoreFromJMSServer-: create->JDBCStore->EclipseMenu from testJMSServer-3 ', async function() {
         file = "testJDBCStoreFromJMSServer-3.png";
+        console.log("-----Start to run testJDBCStoreFromJMSServer-3 test case..........");
+        console.log("------------------------------------------------------------------");
         try {
             await admin.createNewMBeanObject(driver,"testJMSServer-3",2,"configuration","Services","JMS Servers");
             await driver.sleep(4800);

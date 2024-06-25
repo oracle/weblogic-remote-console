@@ -55,7 +55,4 @@ properties:
 
 children:
 
-# Remove this once WDT offline support is added:
 - name: JTARemoteDomains
-  requiredCapabilities:
-  - AdminServerConnection

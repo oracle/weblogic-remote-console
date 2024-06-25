@@ -1,4 +1,4 @@
-# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2024, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 actions: [
@@ -13,8 +13,7 @@ properties:
 - defaultValue: {
     }
   descriptionHTML: '<p>The PartitionFairShareRuntimeMBean for this partition.</p> '
-  excludeFromRest: Copyright (c) 2014,2015, Oracle and/or its affiliates. All rights
-    reserved.
+  excludeFromRest: ' '
   name: FairShareRuntime
   relationship: containment
   supported: false
@@ -28,8 +27,7 @@ properties:
 - defaultValue: {
     }
   descriptionHTML: '<p>The PartitionMinThreadsConstraintRuntimeMBean for this partition.</p> '
-  excludeFromRest: Copyright (c) 2014,2015, Oracle and/or its affiliates. All rights
-    reserved.
+  excludeFromRest: ' '
   name: MinThreadsConstraintCapRuntime
   relationship: containment
   supported: false

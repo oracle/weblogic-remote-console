@@ -2,9 +2,6 @@
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 collectionLinks:
-- label: Application Runtime Data
-  root: DomainRuntimeMonitoring
-  resourceData: DomainRuntime/AggregatedApplicationRuntimes
 - label: Application Management
   root: DomainRuntimeMonitoring
   resourceData: DomainRuntime/DeploymentManager/AppDeploymentRuntimes
@@ -16,10 +13,13 @@ collectionLinks:
   resourceData: "DomainRuntime/Dashboards/Deployment Tasks"
 
 instanceLinks:
-- label: Runtime Data
+- label: Application Management
+  root: DomainRuntimeMonitoring
+  resourceData: DomainRuntime/DeploymentManager/AppDeploymentRuntimes/<AppDeployment>
+- label: Application Runtime Data
   root: DomainRuntimeMonitoring
   resourceData: DomainRuntime/AggregatedApplicationRuntimes/<AppDeployment>
   notFoundMessage: This application was not found on any of the currently running servers.
-- label: Status
+- label: Deployment Tasks Dashboard
   root: DomainRuntimeMonitoring
-  resourceData: DomainRuntime/DeploymentManager/AppDeploymentRuntimes/<AppDeployment>
+  resourceData: "DomainRuntime/Dashboards/Deployment Tasks"

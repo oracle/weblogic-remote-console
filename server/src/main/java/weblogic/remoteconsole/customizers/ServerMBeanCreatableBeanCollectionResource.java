@@ -1,4 +1,4 @@
-// Copyright (c) 2023, Oracle Corporation and/or its affiliates.
+// Copyright (c) 2023, 2024, Oracle Corporation and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.customizers;
@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.json.JsonObject;
 
+import weblogic.remoteconsole.common.repodef.LocalizedConstants;
 import weblogic.remoteconsole.server.repo.BeanTreePath;
 import weblogic.remoteconsole.server.repo.FormProperty;
 import weblogic.remoteconsole.server.repo.InvocationContext;
@@ -55,6 +56,9 @@ public class ServerMBeanCreatableBeanCollectionResource extends CreatableBeanCol
         if (!r.isSuccess()) {
           cleanupFailedCreate(ic, newServerBTP);
           return response.copyUnsuccessfulResponse(r);
+        } else {
+          response.addSuccessMessage(
+            ic.getLocalizer().localizeString(LocalizedConstants.CLONED_SERVER_NOT_ALL_SETTINGS_COPIED));
         }
       }
       return response.setSuccess(null);

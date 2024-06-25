@@ -43,9 +43,11 @@ describe.only('Test Suite: utilities_test for Additions/Modification/Deletion/Vi
     //
     //Test Case:
     // Validate Addition and Modification items in Shopping Cart of (Server, ServerTemplate and Cluster) Objects
-    it('1. Test Category: GAT/Risk1\n \t Test Scenario: Validate Addition and Modification items in Shopping Cart of (Server, ServerTemplate and Cluster) ' +
+    it('1. Test Category: GAT/Risk1\n \t Test Scenario: testShoppingCart-1: Validate Addition and Modification items in Shopping Cart of (Server, ServerTemplate and Cluster) ' +
         'Objects', async function() {
-        file = "TestShoppingCart-1.png";
+        file = "testShoppingCart-1.png";
+        console.log("-----Start to run testShoppingCart-1 test case....");
+        console.log("--------------------------------------------------");
         try {
             await admin.createMBeanObjectFromLandingPage(driver,"TestCluster-1","Edit Tree","EnvironmentChevron",
                 "Clusters",1);
@@ -97,9 +99,11 @@ describe.only('Test Suite: utilities_test for Additions/Modification/Deletion/Vi
     // Validate Deletion items in Shopping Cart (Server, ServerTemplate and Cluster) Objects
     // Validate toggle icon to collapse and expand Shopping Cart Menu section
     //
-    it('2. Test Category: GAT/Risk1\n \t Test Scenario: Validate Removal items in Shopping Cart for (Server and Cluster) Objects and toggle ' +
+    it('2. Test Category: GAT/Risk1\n \t Test Scenario: testShoppingCart-2: Validate Removal items in Shopping Cart for (Server and Cluster) Objects and toggle ' +
         'icon to collapse/expand Shopping Cart Menu section', async function() {
-        file = "TestShoppingCart-2.png";
+        file = "testShoppingCart-2.png";
+        console.log("-----Start to run testShoppingCart-2 test case....");
+        console.log("--------------------------------------------------");
         try {
             let object_count = 2;
             await admin.createMBeanObjectFromLandingPage(driver,"TestCluster-1","Edit Tree","EnvironmentChevron",
@@ -139,9 +143,11 @@ describe.only('Test Suite: utilities_test for Additions/Modification/Deletion/Vi
     // Validate Toggle Visibility of History Icon and its functionality for (Server, ServerTemplate and Cluster) Objects
     // Validate History of MBean Tree View Action Bar
     //
-    it('3. Test Category: GAT/Risk1\n \t Test Scenario: Validate Toggle Visibility of History Icon and its functionality for ' +
+    it('3. Test Category: GAT/Risk1\n \t Test Scenario: testToggleVisibility: Validate Toggle Visibility of History Icon and its functionality for ' +
         '(Server, ServerTemplate and Cluster) Objects, And History of MBean Tree View Action Bar', async function() {
-        file = "TestUtilities_Icon-1.png";
+        file = "testToggleVisibility.png";
+        console.log("-----Start to run testToggleVisibility test case....");
+        console.log("--------------------------------------------------");
         try {
             let object_count = 3;
             await admin.createMBeanObjectFromLandingPage(driver,"TestCluster-2","Edit Tree","EnvironmentChevron",
@@ -198,9 +204,11 @@ describe.only('Test Suite: utilities_test for Additions/Modification/Deletion/Vi
     // Validate Auto-reload Interval and Stop Reload Interval functionality for Server Object
     // Validate Home Landing-Page icon
     //
-    it('4. Test Category: GAT/Risk1\n \t Test Scenario: Validate Auto-reload Interval and Stop Reload Interval functionality ' +
+    it('4. Test Category: GAT/Risk1\n \t Test Scenario: testAutoReload: Validate Auto-reload Interval and Stop Reload Interval functionality ' +
         'for Server Object. Validate Home Landing-Page icon', async function() {
-        file = "TestUtilities_Icon-2.png";
+        file = "testAutoReload.png";
+        console.log("-----Start to run testAutoReload test case....");
+        console.log("--------------------------------------------------");
         try {
             let object_count = 1;
             let reloadValue = 5;
@@ -246,8 +254,10 @@ describe.only('Test Suite: utilities_test for Additions/Modification/Deletion/Vi
     // Create->modify(Cluster Customize menu)-> Test Available Columns, Selected Columns
     // removeRight, removeLeft, addAllRight and addAllLeft arrow, Apply and Reset buttons.
     //
-    it('5. Test Category: GAT/Risk3\n \t Test Scenario: Customize menu of Cluster ', async function() {
-        file = "customizeCluster-1.png";
+    it('5. Test Category: GAT/Risk3\n \t Test Scenario: testCustomizeMenu-1: Customize menu of Cluster ', async function() {
+        file = "testCustomizeMenu-1.png";
+        console.log("-----Start to run testCustomizeMenu-1 test case....");
+        console.log("--------------------------------------------------");
         try {
             await admin.goToNavTreeLevelTwoLink(driver,"configuration","Environment","Clusters");
             await driver.sleep(1200);
@@ -301,8 +311,10 @@ describe.only('Test Suite: utilities_test for Additions/Modification/Deletion/Vi
     // From Edit Tree -> Environment -> Servers page -> enter to search Admin keyword
     // The search will yield 3 elements (AdminJMSServer, AdminServer, MyAdminJMWModule)
     // Click at AdminServer 2nd row -> validate if AdminServer edit page shows up
-    it('6. Test Category: GAT/Risk3\n \t Test Scenario: Search Utility for Admin key word ', async function() {
-        file = "searchUtilityAdminKeyWord.png";
+    it('6. Test Category: GAT/Risk3\n \t Test Scenario: testSearchUtility-1: Search Utility for Admin key word ', async function() {
+        file = "testSearchUtility-1.png";
+        console.log("-----Start to run testSearchUtility-1 test case....");
+        console.log("---------------------------------------------------");
         try {
             await admin.goToNavTreeLevelOneLink(driver,"configuration","Environment");
             await driver.sleep(1200);
@@ -346,9 +358,11 @@ describe.only('Test Suite: utilities_test for Additions/Modification/Deletion/Vi
     // Click Reset -> Add All Left -> Cancel button
     // Click select breadcrumbs-container menu to switch back to Edit Tree view
     // Click to look for AdminJMSServer name in test page for confirm if operation successful
-    it('7. Test Category: GAT/Risk3\n \t Test Scenario: Search Utility for Server key word ' +
+    it('7. Test Category: GAT/Risk3\n \t Test Scenario: testSearchUtility-2: Search Utility for Server key word ' +
         'Test out breadcrumbs-container menu, Reset, Cancel, Arrow button....', async function() {
-        file = "searchUtilityWithServerKeyWord.png";
+        file = "testSearchUtility-2.png";
+        console.log("-----Start to run testSearchUtility-2 test case....");
+        console.log("---------------------------------------------------");
         try {
             await admin.goToNavStripImageMenuLink(driver,"configuration");
             await driver.sleep(1200);
@@ -432,10 +446,12 @@ describe.only('Test Suite: utilities_test for Additions/Modification/Deletion/Vi
     // Go to Recently Search box and check if 'test' keyword appears in Search box
     // Click at 'test' search keyword
     // Verify search will yield 4 elements (testServer-1, testCluster-1, testMachine-1, testJMSServer-1,....)
-    it('8. Test Category: GAT/Risk1\n \t Test Scenario: Search Utility with WDT Provider, ' +
+    it('8. Test Category: GAT/Risk1\n \t Test Scenario: testWDTSearchUtility: Search Utility with WDT Provider, ' +
         'test search keyword will yield 4 elements (testServer-1, testCluster-1, testMachine-1, testJMSServer-1)',
         async function () {
-        file = "searchWithTestKeyWordForWDTProvider.png";
+        file = "testWDTSearchUtility.png";
+        console.log("-----Start to run testWDTSearchUtility test case....");
+        console.log("----------------------------------------------------");
         try {
             const projFile = "frontend/system-tests/lib/domainProject.json";
             const path = require('path');

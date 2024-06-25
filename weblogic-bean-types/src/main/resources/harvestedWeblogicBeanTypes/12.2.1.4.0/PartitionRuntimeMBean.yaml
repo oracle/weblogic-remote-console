@@ -1,4 +1,4 @@
-# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2024, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 actions: [
@@ -102,7 +102,7 @@ properties:
     }
   descriptionHTML: 'The overall health state of this partition returned as a CompositeData
     type. '
-  excludeFromRest: ${excludeFromRest}
+  excludeFromRest: ' '
   name: OverallHealthStateJMX
   supported: false
   type: javax.management.openmbean.CompositeData
@@ -220,7 +220,7 @@ properties:
     }
   descriptionHTML: 'The health states for major subsystems in the partition as an
     array of CompositeData type. '
-  excludeFromRest: ${excludeFromRest}
+  excludeFromRest: ' '
   name: SubsystemHealthStatesJMX
   supported: false
   type: javax.management.openmbean.CompositeData

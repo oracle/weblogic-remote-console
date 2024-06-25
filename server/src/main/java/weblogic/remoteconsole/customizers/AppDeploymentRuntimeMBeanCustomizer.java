@@ -124,50 +124,6 @@ public class AppDeploymentRuntimeMBeanCustomizer {
       );
   }
 
-
-  /**
-   * Customize the AppDeploymentRuntimeMBean's update action
-   */
-  public static Response<Value> updateExisting(
-    InvocationContext ic,
-    PageActionDef pageActionDef,
-    List<FormProperty> formProperties
-  ) {
-    // Get the old plan path from the domainConfig tree first:
-    Response<Value> response = new Response<>();
-    // Don't return whether properties are set.
-    BeanReaderRepoSearchBuilder builder =
-      ic.getPageRepo().getBeanRepo().asBeanReaderRepo().createSearchBuilder(ic, false);
-    String appName = ic.getBeanTreePath().getLastSegment().getKey();
-
-    BeanTreePath appBeanPath =
-      BeanTreePath.create(
-        ic.getBeanTreePath().getBeanRepo(),
-        (new Path("Domain.AppDeployments")).childPath(appName)
-      );
-    BeanPropertyDef planPropertyDef =
-      appBeanPath.getTypeDef().getPropertyDef(new Path("AbsolutePlanPath"));
-    builder.addProperty(appBeanPath, planPropertyDef);
-    Response<BeanReaderRepoSearchResults> searchResponse = builder.search();
-    if (!searchResponse.isSuccess()) {
-      return response.copyUnsuccessfulResponse(searchResponse);
-    }
-    BeanSearchResults appResults = searchResponse.getResults().getBean(appBeanPath);
-    if (appResults == null) {
-      // the app doesn't exist
-      return response.setNotFound();
-    }
-    Value planPath = appResults.getValue(planPropertyDef);
-    // Now invoke the low level update action:
-    return
-      customizeAction(
-        ic,
-        "update_targets_plan_deploymentOptions",
-        new Properties(),
-        Map.of("plan", planPath)
-      );
-  }
-
   /**
    * Customize the AppDeploymentRuntimeMBean's update action, the Deployment Plan Path may be changed.
    */
@@ -220,9 +176,8 @@ public class AppDeploymentRuntimeMBeanCustomizer {
     return null;
   }
 
-
-
   // Validate that the app doesn't already have a plan
+  // and return the default plan path
   public static Response<Void> customizeCreatePlanActionInputForm(InvocationContext ic, Page page) {
     Response<Void> response = new Response<>();
     BeanTreePath appRtBTP = (ic.getIdentities() == null) ? ic.getBeanTreePath() : ic.getIdentities().get(0);
@@ -255,7 +210,33 @@ public class AppDeploymentRuntimeMBeanCustomizer {
         )
       );
     } else {
-      response.setSuccess(null);
+      BeanReaderRepoSearchBuilder builder2 =
+          ic.getPageRepo().getBeanRepo().asBeanReaderRepo().createSearchBuilder(ic, false);
+      BeanPropertyDef defaultPlanPathPropertyDef =
+          appRtBTP.getTypeDef().getPropertyDef(new Path("Configuration.DefaultPlanPath"));
+      builder2.addProperty(appRtBTP, defaultPlanPathPropertyDef);
+      Response<BeanReaderRepoSearchResults> searchResponseRT = builder2.search();
+      if (!searchResponseRT.isSuccess()) {
+        return response.copyUnsuccessfulResponse(searchResponseRT);
+      }
+      BeanSearchResults beanResultsRT = searchResponseRT.getResults().getBean(appRtBTP);
+      if (beanResultsRT == null) {
+        response.setSuccess(null);
+        return response;
+      }
+      Value defaultPlanPathValue = beanResultsRT.getValue(defaultPlanPathPropertyDef);
+      if (defaultPlanPathValue == null) {
+        response.setSuccess(null);
+      } else {
+        List<FormProperty> oldProperties = page.asForm().getProperties();
+        List<FormProperty> newProperties =
+            List.of(
+                createFormProperty("PlanPath", oldProperties, defaultPlanPathValue)
+            );
+        oldProperties.clear();
+        oldProperties.addAll(newProperties);
+        response.setSuccess(null);
+      }
     }
     return response;
   }
@@ -299,11 +280,6 @@ public class AppDeploymentRuntimeMBeanCustomizer {
 
   public static Response<Void> customizeUpdatePlanActionInputForm(InvocationContext ic, Page page) {
     return commonPlanActionInputForm(ic, page, false);
-  }
-
-  // Validate that the app does have a plan and pass back the plan path.
-  public static Response<Void> customizeEditExistingActionInputForm(InvocationContext ic, Page page) {
-    return commonPlanActionInputForm(ic, page, true);
   }
 
   public static Response<Void> commonPlanActionInputForm(InvocationContext ic, Page page, boolean needToExist) {

@@ -1,4 +1,4 @@
-# Copyright (c) 2021, 2022 Oracle Corporation and/or its affiliates.
+# Copyright (c) 2021, 2024, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 introductionHTML: >
@@ -11,6 +11,9 @@ properties:
   - name: "CoherenceMemberConfig.UnicastListenAddress"
   - name: "CoherenceMemberConfig.UnicastListenPort"
   - name: "CoherenceMemberConfig.UnicastPortAutoAdjustAttempts"
+  - name: "CoherenceMemberConfig.LocalStorageEnabled"
+  - name: "CoherenceMemberConfig.CoherenceWebLocalStorageEnabled"
+  - name: "CoherenceMemberConfig.CoherenceWebFederatedStorageEnabled"
+  - name: "CoherenceMemberConfig.SiteName"
   - name: "CoherenceMemberConfig.RackName"
   - name: "CoherenceMemberConfig.RoleName"
-  - name: "CoherenceMemberConfig.SiteName"

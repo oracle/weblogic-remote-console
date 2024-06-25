@@ -1,5 +1,6 @@
 # Copyright (c) 2020, 2024, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
 properties:
 
 - name: ClassChangeNotifier
@@ -14,16 +15,58 @@ properties:
 - name: ClassloaderWebApp
   useUnlocalizedNameAsLabel: true
 
+- name: DebugAbbrevs
+  useUnlocalizedNameAsLabel: true
+
 - name: DebugAllowList
+  useUnlocalizedNameAsLabel: true
+
+- name: DebugAppAnnoLookup
+  useUnlocalizedNameAsLabel: true
+
+- name: DebugAppAnnoQuery
+  useUnlocalizedNameAsLabel: true
+
+- name: DebugAppAnnoQueryVerbose
+  useUnlocalizedNameAsLabel: true
+
+- name: DebugAppAnnoScanData
+  useUnlocalizedNameAsLabel: true
+
+- name: DebugAppAnnoScanVerbose
+  useUnlocalizedNameAsLabel: true
+
+- name: DebugAppAnnoVerboseLookup
   useUnlocalizedNameAsLabel: true
 
 - name: DebugAppAnnotations
   useUnlocalizedNameAsLabel: true
 
+- name: DebugAppClient
+  useUnlocalizedNameAsLabel: true
+
 - name: DebugAppContainer
   useUnlocalizedNameAsLabel: true
 
+- name: DebugAppContainerTools
+  useUnlocalizedNameAsLabel: true
+
+- name: DebugAppMetadataCache
+  useUnlocalizedNameAsLabel: true
+
+- name: DebugAppTiming
+  useUnlocalizedNameAsLabel: true
+
 - name: DebugAsyncQueue
+  useUnlocalizedNameAsLabel: true
+
+- name: DebugAttach
+  useUnlocalizedNameAsLabel: true
+
+- name: DebugBackgroundDeployment
+  useUnlocalizedNameAsLabel: true
+
+- name: DebugBatchConnector
   useUnlocalizedNameAsLabel: true
 
 - name: DebugBeanTreeHarvesterControl
@@ -38,21 +81,38 @@ properties:
 - name: DebugBeanTreeHarvesterThreading
   useUnlocalizedNameAsLabel: true
 
-# deprecated
-# - name: DebugBootstrapServlet
-#   useUnlocalizedNameAsLabel: true
+- name: DebugBuzzProtocol
+  useUnlocalizedNameAsLabel: true
 
-# removed in 14.1.2
-# - name: DebugBuzzProtocol
-#   useUnlocalizedNameAsLabel: true
-#
-# - name: DebugBuzzProtocolDetails
-#   useUnlocalizedNameAsLabel: true
-#
-# - name: DebugBuzzProtocolHttp
-#   useUnlocalizedNameAsLabel: true
+- name: DebugBuzzProtocolDetails
+  useUnlocalizedNameAsLabel: true
+
+- name: DebugBuzzProtocolHttp
+  useUnlocalizedNameAsLabel: true
+
+- name: DebugCAT
+  useUnlocalizedNameAsLabel: true
+  offlineName: DebugCat
+
+- name: DebugCWebGlobalReaper
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugCertRevocCheck
+  useUnlocalizedNameAsLabel: true
+
+- name: DebugCertificateCheck
+  useUnlocalizedNameAsLabel: true
+
+- name: DebugChannel
+  useUnlocalizedNameAsLabel: true
+
+- name: DebugChannelMap
+  useUnlocalizedNameAsLabel: true
+
+- name: DebugClassLoadingArchiveChecker
+  useUnlocalizedNameAsLabel: true
+
+- name: DebugClassLoadingConsistencyChecker
   useUnlocalizedNameAsLabel: true
 
 - name: DebugClassLoadingContextualTrace
@@ -79,6 +139,12 @@ properties:
 - name: DebugClusterHeartbeats
   useUnlocalizedNameAsLabel: true
 
+- name: DebugClusterVerbose
+  useUnlocalizedNameAsLabel: true
+
+- name: DebugCoherence
+  useUnlocalizedNameAsLabel: true
+
 - name: DebugConcurrent
   useUnlocalizedNameAsLabel: true
 
@@ -86,16 +152,16 @@ properties:
   useUnlocalizedNameAsLabel: true
 
 - name: DebugConcurrentMES
-  offlineName: DebugConcurrentMes
   useUnlocalizedNameAsLabel: true
+  offlineName: DebugConcurrentMes
 
 - name: DebugConcurrentMSES
-  offlineName: DebugConcurrentMses
   useUnlocalizedNameAsLabel: true
+  offlineName: DebugConcurrentMses
 
 - name: DebugConcurrentMTF
-  offlineName: DebugConcurrentMtf
   useUnlocalizedNameAsLabel: true
+  offlineName: DebugConcurrentMtf
 
 - name: DebugConcurrentTransaction
   useUnlocalizedNameAsLabel: true
@@ -111,6 +177,18 @@ properties:
 
 - name: DebugConsensusLeasing
   useUnlocalizedNameAsLabel: true
+
+- name: DebugDLB
+  useUnlocalizedNameAsLabel: true
+  offlineName: DebugDlb
+
+- name: DebugDLBFine
+  useUnlocalizedNameAsLabel: true
+  offlineName: DebugDlbFine
+
+- name: DebugDLBFinest
+  useUnlocalizedNameAsLabel: true
+  offlineName: DebugDlbFinest
 
 - name: DebugDRSCalls
   useUnlocalizedNameAsLabel: true
@@ -130,9 +208,14 @@ properties:
 - name: DebugDRSUpdateStatus
   useUnlocalizedNameAsLabel: true
 
-# excluded
-# - name: DebugDefaultStoreVerbose
-#   useUnlocalizedNameAsLabel: true
+- name: DebugDataSourceInterceptor
+  useUnlocalizedNameAsLabel: true
+
+- name: DebugDebugPatches
+  useUnlocalizedNameAsLabel: true
+
+- name: DebugDefaultStoreVerbose
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugDeploy
   useUnlocalizedNameAsLabel: true
@@ -164,7 +247,13 @@ properties:
 - name: DebugDescriptor
   useUnlocalizedNameAsLabel: true
 
+- name: DebugDeserializationTimeLimit
+  useUnlocalizedNameAsLabel: true
+
 - name: DebugDiagnosticAccessor
+  useUnlocalizedNameAsLabel: true
+
+- name: DebugDiagnosticActionWrapper
   useUnlocalizedNameAsLabel: true
 
 - name: DebugDiagnosticArchive
@@ -194,10 +283,16 @@ properties:
 - name: DebugDiagnosticInstrumentationActions
   useUnlocalizedNameAsLabel: true
 
+- name: DebugDiagnosticInstrumentationClassInfo
+  useUnlocalizedNameAsLabel: true
+
 - name: DebugDiagnosticInstrumentationConfig
   useUnlocalizedNameAsLabel: true
 
 - name: DebugDiagnosticInstrumentationEvents
+  useUnlocalizedNameAsLabel: true
+
+- name: DebugDiagnosticInstrumentationResult
   useUnlocalizedNameAsLabel: true
 
 - name: DebugDiagnosticInstrumentationWeaving
@@ -210,6 +305,9 @@ properties:
   useUnlocalizedNameAsLabel: true
 
 - name: DebugDiagnosticLifecycleHandlers
+  useUnlocalizedNameAsLabel: true
+
+- name: DebugDiagnosticNotifications
   useUnlocalizedNameAsLabel: true
 
 - name: DebugDiagnosticQuery
@@ -230,6 +328,9 @@ properties:
 - name: DebugDiagnosticWatchEventsDetails
   useUnlocalizedNameAsLabel: true
 
+- name: DebugDiagnosticWatchUtils
+  useUnlocalizedNameAsLabel: true
+
 - name: DebugDiagnosticWlstoreArchive
   useUnlocalizedNameAsLabel: true
 
@@ -240,12 +341,12 @@ properties:
   useUnlocalizedNameAsLabel: true
 
 - name: DebugDiagnosticsELContext
-  offlineName: DebugDiagnosticsElContext
   useUnlocalizedNameAsLabel: true
+  offlineName: DebugDiagnosticsElContext
 
 - name: DebugDiagnosticsELResolver
-  offlineName: DebugDiagnosticsElResolver
   useUnlocalizedNameAsLabel: true
+  offlineName: DebugDiagnosticsElResolver
 
 - name: DebugDiagnosticsExpressionEvaluators
   useUnlocalizedNameAsLabel: true
@@ -278,23 +379,35 @@ properties:
   useUnlocalizedNameAsLabel: true
 
 - name: DebugDiagnosticsMBeanELResolver
-  offlineName: DebugDiagnosticsMBeanElResolver
   useUnlocalizedNameAsLabel: true
+  offlineName: DebugDiagnosticsMBeanElResolver
 
 - name: DebugDiagnosticsModule
   useUnlocalizedNameAsLabel: true
 
+- name: DebugDiagnosticsNotifications
+  useUnlocalizedNameAsLabel: true
+
 - name: DebugDiagnosticsScriptAction
+  useUnlocalizedNameAsLabel: true
+
+- name: DebugDiagnosticsTimer
+  useUnlocalizedNameAsLabel: true
+
+- name: DebugDiagnosticsTimerService
   useUnlocalizedNameAsLabel: true
 
 - name: DebugDiagnosticsUtils
   useUnlocalizedNameAsLabel: true
 
 - name: DebugDiagnosticsValueTracingELResolver
-  offlineName: DebugDiagnosticsValueTracingElResolver
   useUnlocalizedNameAsLabel: true
+  offlineName: DebugDiagnosticsValueTracingElResolver
 
 - name: DebugDomainLogHandler
+  useUnlocalizedNameAsLabel: true
+
+- name: DebugDomainUpgradeServerService
   useUnlocalizedNameAsLabel: true
 
 - name: DebugDynamicSingletonServices
@@ -324,6 +437,9 @@ properties:
 - name: DebugEjbMdbConnection
   useUnlocalizedNameAsLabel: true
 
+- name: DebugEjbMdbListener
+  useUnlocalizedNameAsLabel: true
+
 - name: DebugEjbMetadata
   useUnlocalizedNameAsLabel: true
 
@@ -336,9 +452,11 @@ properties:
 - name: DebugEjbSwapping
   useUnlocalizedNameAsLabel: true
 
-# excluded
-# - name: DebugEjbTimerStore
-#   abel: DebugEjbTimerStore
+- name: DebugEjbSwappingVerbose
+  useUnlocalizedNameAsLabel: true
+
+- name: DebugEjbTimerStore
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugEjbTimers
   useUnlocalizedNameAsLabel: true
@@ -352,6 +470,12 @@ properties:
 - name: DebugEmbeddedLDAP
   useUnlocalizedNameAsLabel: true
 
+- name: DebugEmbeddedLDAPLogLevel
+  useUnlocalizedNameAsLabel: true
+
+- name: DebugEmbeddedLDAPLogToConsole
+  useUnlocalizedNameAsLabel: true
+
 - name: DebugEmbeddedLDAPWriteOverrideProps
   useUnlocalizedNameAsLabel: true
 
@@ -361,13 +485,43 @@ properties:
 - name: DebugExpressionExtensionsManager
   useUnlocalizedNameAsLabel: true
 
+- name: DebugFailOverVerbose
+  useUnlocalizedNameAsLabel: true
+
+- name: DebugFederatedConfig
+  useUnlocalizedNameAsLabel: true
+
+- name: DebugFileChangeObserver
+  useUnlocalizedNameAsLabel: true
+
 - name: DebugFileDistributionServlet
+  useUnlocalizedNameAsLabel: true
+
+- name: DebugFileOwnerFixer
+  useUnlocalizedNameAsLabel: true
+
+- name: DebugGenericMethodDescriptor
+  useUnlocalizedNameAsLabel: true
+
+- name: DebugHarvesterTypeInfoCache
+  useUnlocalizedNameAsLabel: true
+
+- name: DebugHealth
+  useUnlocalizedNameAsLabel: true
+
+- name: DebugHealthCheck
   useUnlocalizedNameAsLabel: true
 
 - name: DebugHealthScore
   useUnlocalizedNameAsLabel: true
 
+- name: DebugHk2Statistics
+  useUnlocalizedNameAsLabel: true
+
 - name: DebugHttp
+  useUnlocalizedNameAsLabel: true
+
+- name: DebugHttp2SendWindowSize
   useUnlocalizedNameAsLabel: true
 
 - name: DebugHttpConcise
@@ -379,11 +533,17 @@ properties:
 - name: DebugHttpSessions
   useUnlocalizedNameAsLabel: true
 
-# deprecated
-# - name: DebugIIOP
-#   useUnlocalizedNameAsLabel: true
+- name: DebugHttpSessionsConcise
+  useUnlocalizedNameAsLabel: true
+
+- name: DebugIIOPDetail
+  useUnlocalizedNameAsLabel: true
+  offlineName: DebugIiopDetail
 
 - name: DebugIIOPNaming
+  useUnlocalizedNameAsLabel: true
+
+- name: DebugIIOPReplacer
   useUnlocalizedNameAsLabel: true
 
 - name: DebugIIOPTunneling
@@ -398,38 +558,30 @@ properties:
 - name: DebugJDBCConn
   useUnlocalizedNameAsLabel: true
 
-# deprecated
-# - name: DebugJDBCDriverLogging
-#   abel: DebugJDBCDriverLogging
-
 - name: DebugJDBCInternal
   useUnlocalizedNameAsLabel: true
 
 - name: DebugJDBCONS
-  offlineName: DebugJdbcons
   useUnlocalizedNameAsLabel: true
+  offlineName: DebugJdbcons
 
 - name: DebugJDBCRAC
-  offlineName: DebugJdbcrac
   useUnlocalizedNameAsLabel: true
+  offlineName: DebugJdbcrac
 
 - name: DebugJDBCRMI
   useUnlocalizedNameAsLabel: true
 
 - name: DebugJDBCReplay
-  offlineName: DebugJdbcReplay
   useUnlocalizedNameAsLabel: true
+  offlineName: DebugJdbcReplay
 
 - name: DebugJDBCSQL
   useUnlocalizedNameAsLabel: true
 
 - name: DebugJDBCUCP
-  offlineName: DebugJdbcucp
   useUnlocalizedNameAsLabel: true
-
-# deprecated
-# - name: DebugJMSAME
-#   useUnlocalizedNameAsLabel: true
+  offlineName: DebugJdbcucp
 
 - name: DebugJMSBackEnd
   useUnlocalizedNameAsLabel: true
@@ -438,12 +590,16 @@ properties:
   useUnlocalizedNameAsLabel: true
 
 - name: DebugJMSCDS
+  useUnlocalizedNameAsLabel: true
   offlineName: DebugJmscds
-  useUnlocalizedNameAsLabel: true
 
-- name: DebugJMSCICHelper
-  offlineName: DebugJmscicHelper
+- name: DebugJMSClient
   useUnlocalizedNameAsLabel: true
+  offlineName: DebugJmsClient
+
+- name: DebugJMSClientStackTrace
+  useUnlocalizedNameAsLabel: true
+  offlineName: DebugJmsClientStackTrace
 
 - name: DebugJMSCommon
   useUnlocalizedNameAsLabel: true
@@ -451,92 +607,71 @@ properties:
 - name: DebugJMSConfig
   useUnlocalizedNameAsLabel: true
 
-# excluded
 - name: DebugJMSCrossDomainSecurity
-  offlineName: DebugJmsCrossDomainSecurity
   useUnlocalizedNameAsLabel: true
+  offlineName: DebugJmsCrossDomainSecurity
 
 - name: DebugJMSDispatcher
   useUnlocalizedNameAsLabel: true
 
 - name: DebugJMSDispatcherLifecycle
-  offlineName: DebugJmsDispatcherLifecycle
   useUnlocalizedNameAsLabel: true
+  offlineName: DebugJmsDispatcherLifecycle
 
 - name: DebugJMSDispatcherProxy
-  offlineName: DebugJmsDispatcherProxy
   useUnlocalizedNameAsLabel: true
+  offlineName: DebugJmsDispatcherProxy
 
 - name: DebugJMSDispatcherRMI
+  useUnlocalizedNameAsLabel: true
   offlineName: DebugJmsDispatcherRmi
-  useUnlocalizedNameAsLabel: true
 
-# excluded
 - name: DebugJMSDispatcherUtilsVerbose
-  offlineName: DebugJmsDispatcherUtilsVerbose
   useUnlocalizedNameAsLabel: true
+  offlineName: DebugJmsDispatcherUtilsVerbose
 
-# excluded
 - name: DebugJMSDispatcherVerbose
-  offlineName: DebugJmsDispatcherUtilsVerbose
   useUnlocalizedNameAsLabel: true
+  offlineName: DebugJmsDispatcherVerbose
+
+- name: DebugJMSDispatcherWire
+  useUnlocalizedNameAsLabel: true
+  offlineName: DebugJmsDispatcherWire
 
 - name: DebugJMSDistTopic
   useUnlocalizedNameAsLabel: true
 
-# excluded
 - name: DebugJMSDotNetProxy
+  useUnlocalizedNameAsLabel: true
   offlineName: DebugJmsDotNetProxy
-  useUnlocalizedNameAsLabel: true
 
-# excluded
 - name: DebugJMSDotNetT3Server
+  useUnlocalizedNameAsLabel: true
   offlineName: DebugJmsDotNetT3Server
-  useUnlocalizedNameAsLabel: true
 
-# excluded
 - name: DebugJMSDotNetTransport
+  useUnlocalizedNameAsLabel: true
   offlineName: DebugJmsDotNetTransport
-  useUnlocalizedNameAsLabel: true
 
-# excluded
 - name: DebugJMSDurSub
-  offlineName: DebugJmsDurSub
   useUnlocalizedNameAsLabel: true
-
-# deprecated
-# - name: DebugJMSDurableSubscribers
-#   useUnlocalizedNameAsLabel: true
+  offlineName: DebugJmsDurSub
 
 - name: DebugJMSFrontEnd
   useUnlocalizedNameAsLabel: true
 
-# deprecated
-# - name: DebugJMSJDBCScavengeOnFlush
-#   useUnlocalizedNameAsLabel: true
-
 - name: DebugJMSInvocableVerbose
+  useUnlocalizedNameAsLabel: true
   offlineName: DebugJmsInvocableVerbose
-  useUnlocalizedNameAsLabel: true
 
-# excluded
 - name: DebugJMSJNDI
-  offlineName: DebugJmsjndi
   useUnlocalizedNameAsLabel: true
-
-# deprecated
-# - name: DebugJMSLocking
-#   useUnlocalizedNameAsLabel: true
+  offlineName: DebugJmsjndi
 
 - name: DebugJMSMessagePath
   useUnlocalizedNameAsLabel: true
 
 - name: DebugJMSModule
-  useUnlocalizedNameAsLabel: true
-
-# excluded
-- name: DebugJMSOBS
-  offlineName: DebugJmsobs
   useUnlocalizedNameAsLabel: true
 
 - name: DebugJMSPauseResume
@@ -545,35 +680,30 @@ properties:
 - name: DebugJMSSAF
   useUnlocalizedNameAsLabel: true
 
-# deprecated
-# - name: DebugJMSStore
-#   offlineName: DebugJmsStore
-#   useUnlocalizedNameAsLabel: true
-
 - name: DebugJMST3Server
-  offlineName: DebugJmst3Server
   useUnlocalizedNameAsLabel: true
+  offlineName: DebugJmst3Server
 
 - name: DebugJMSWrappers
   useUnlocalizedNameAsLabel: true
-
-# deprecated
-# - name: DebugJMSXA
-#   useUnlocalizedNameAsLabel: true
 
 - name: DebugJMX
   useUnlocalizedNameAsLabel: true
 
 - name: DebugJMXCompatibility
-  offlineName: DebugJmxCompatibility
   useUnlocalizedNameAsLabel: true
+  offlineName: DebugJmxCompatibility
+
+- name: DebugJMXContext
+  useUnlocalizedNameAsLabel: true
+  offlineName: DebugJmxContext
 
 - name: DebugJMXCore
   useUnlocalizedNameAsLabel: true
 
 - name: DebugJMXCoreConcise
-  offlineName: DebugJmxCoreConcise
   useUnlocalizedNameAsLabel: true
+  offlineName: DebugJmxCoreConcise
 
 - name: DebugJMXDomain
   useUnlocalizedNameAsLabel: true
@@ -584,24 +714,32 @@ properties:
 - name: DebugJMXRuntime
   useUnlocalizedNameAsLabel: true
 
+- name: DebugJNDI
+  useUnlocalizedNameAsLabel: true
+
+- name: DebugJNDIFactories
+  useUnlocalizedNameAsLabel: true
+
+- name: DebugJNDIResolution
+  useUnlocalizedNameAsLabel: true
+
+- name: DebugJPA
+  useUnlocalizedNameAsLabel: true
+  offlineName: DebugJpa
+
 - name: DebugJTA2PC
   useUnlocalizedNameAsLabel: true
 
-# excluded
 - name: DebugJTA2PCDetail
-  offlineName: DebugJta2PcDetail
   useUnlocalizedNameAsLabel: true
+  offlineName: DebugJta2PcDetail
 
 - name: DebugJTA2PCStackTrace
   useUnlocalizedNameAsLabel: true
 
-# deprecated
-# - name: DebugJTAAPI
-#   useUnlocalizedNameAsLabel: true
-
 - name: DebugJTACDI
-  offlineName: DebugJtacdi
   useUnlocalizedNameAsLabel: true
+  offlineName: DebugJtacdi
 
 - name: DebugJTAGateway
   useUnlocalizedNameAsLabel: true
@@ -633,26 +771,18 @@ properties:
 - name: DebugJTANonXA
   useUnlocalizedNameAsLabel: true
 
+- name: DebugJTAPeerSiteRecovery
+  useUnlocalizedNameAsLabel: true
+  offlineName: DebugJtaPeerSiteRecovery
+
 - name: DebugJTAPropagate
   useUnlocalizedNameAsLabel: true
-
-# deprecated
-# - name: DebugJTARMI
-#   useUnlocalizedNameAsLabel: true
 
 - name: DebugJTARecovery
   useUnlocalizedNameAsLabel: true
 
-# deprecated
-# - name: DebugJTARecoveryStackTrace
-#   useUnlocalizedNameAsLabel: true
-
 - name: DebugJTAResourceHealth
   useUnlocalizedNameAsLabel: true
-
-# deprecated
-# - name: JTATransactionName
-#   useUnlocalizedNameAsLabel: true
 
 - name: DebugJTATLOG
   useUnlocalizedNameAsLabel: true
@@ -662,6 +792,10 @@ properties:
 
 - name: DebugJTAXAStackTrace
   useUnlocalizedNameAsLabel: true
+
+- name: DebugJVMID
+  useUnlocalizedNameAsLabel: true
+  offlineName: DebugJvmid
 
 - name: DebugJpaDataCache
   useUnlocalizedNameAsLabel: true
@@ -696,13 +830,31 @@ properties:
 - name: DebugJpaTool
   useUnlocalizedNameAsLabel: true
 
+- name: DebugKodoWeblogic
+  useUnlocalizedNameAsLabel: true
+
 - name: DebugLeaderElection
+  useUnlocalizedNameAsLabel: true
+
+- name: DebugLegacy
   useUnlocalizedNameAsLabel: true
 
 - name: DebugLibraries
   useUnlocalizedNameAsLabel: true
 
+- name: DebugLifecycleManager
+  useUnlocalizedNameAsLabel: true
+
 - name: DebugLoggingConfiguration
+  useUnlocalizedNameAsLabel: true
+
+- name: DebugMBeanEventHandler
+  useUnlocalizedNameAsLabel: true
+
+- name: DebugMBeanEventHandlerSummary
+  useUnlocalizedNameAsLabel: true
+
+- name: DebugMBeanEventHandlerWork
   useUnlocalizedNameAsLabel: true
 
 - name: DebugMBeanHarvesterControl
@@ -717,6 +869,9 @@ properties:
 - name: DebugMBeanHarvesterThreading
   useUnlocalizedNameAsLabel: true
 
+- name: DebugMBeanLocalization
+  useUnlocalizedNameAsLabel: true
+
 - name: DebugMBeanTypeUtilQueue
   useUnlocalizedNameAsLabel: true
 
@@ -729,16 +884,14 @@ properties:
 - name: DebugMBeanTypingUtility
   useUnlocalizedNameAsLabel: true
 
-- name: DebugManagementServicesResource
+- name: DebugMailSessionDeployment
   useUnlocalizedNameAsLabel: true
 
-# excluded
-# - name: DebugMessagingBridgeDumpToConsole
-#   useUnlocalizedNameAsLabel: true
+- name: DebugManagedBean
+  useUnlocalizedNameAsLabel: true
 
-# excluded
-# - name: DebugMessagingBridgeDumpToLog
-#   useUnlocalizedNameAsLabel: true
+- name: DebugManagementServicesResource
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugMessagingBridgeRuntime
   useUnlocalizedNameAsLabel: true
@@ -755,10 +908,26 @@ properties:
 - name: DebugMessagingKernelBoot
   useUnlocalizedNameAsLabel: true
 
+- name: DebugMessagingKernelVerbose
+  useUnlocalizedNameAsLabel: true
+
 - name: DebugMessagingOwnableLock
   useUnlocalizedNameAsLabel: true
 
+- name: DebugMigrationInfo
+  useUnlocalizedNameAsLabel: true
+
+- name: DebugNIO
+  useUnlocalizedNameAsLabel: true
+  offlineName: DebugNio
+
 - name: DebugNodeManagerRuntime
+  useUnlocalizedNameAsLabel: true
+
+- name: DebugOPatchUtils
+  useUnlocalizedNameAsLabel: true
+
+- name: DebugPageFlowMonitoring
   useUnlocalizedNameAsLabel: true
 
 - name: DebugPatchingRuntime
@@ -770,16 +939,30 @@ properties:
 - name: DebugPathSvcVerbose
   useUnlocalizedNameAsLabel: true
 
-# excluded
-# - name: DebugPersistentStoreManager
-#   useUnlocalizedNameAsLabel: true
+- name: DebugPubSubBayeux
+  useUnlocalizedNameAsLabel: true
+
+- name: DebugPubSubChannel
+  useUnlocalizedNameAsLabel: true
+
+- name: DebugPubSubClient
+  useUnlocalizedNameAsLabel: true
+
+- name: DebugPubSubMBean
+  useUnlocalizedNameAsLabel: true
+
+- name: DebugPubSubSecurity
+  useUnlocalizedNameAsLabel: true
+
+- name: DebugPubSubServer
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugRA
   useUnlocalizedNameAsLabel: true
 
 - name: DebugRAClassloader
-  offlineName: DebugRaClassloader
   useUnlocalizedNameAsLabel: true
+  offlineName: DebugRaClassloader
 
 - name: DebugRAConnEvents
   useUnlocalizedNameAsLabel: true
@@ -807,8 +990,6 @@ properties:
 
 - name: DebugRASecurityCtx
   useUnlocalizedNameAsLabel: true
-  helpHTML: >
-    Debug the resouce adapters' connection pools' security contexts.
 
 - name: DebugRAWork
   useUnlocalizedNameAsLabel: true
@@ -825,11 +1006,22 @@ properties:
 - name: DebugRAXAwork
   useUnlocalizedNameAsLabel: true
 
-- name: DebugRESTNotifications
-  offlineName: DebugRestNotifications
+- name: DebugRCM
   useUnlocalizedNameAsLabel: true
+  offlineName: DebugRcm
+
+- name: DebugRESTNotifications
+  useUnlocalizedNameAsLabel: true
+  offlineName: DebugRestNotifications
+
+- name: DebugRMIDetailed
+  useUnlocalizedNameAsLabel: true
+  offlineName: DebugRmiDetailed
 
 - name: DebugReadyApp
+  useUnlocalizedNameAsLabel: true
+
+- name: DebugRedefAttach
   useUnlocalizedNameAsLabel: true
 
 - name: DebugReplication
@@ -839,6 +1031,9 @@ properties:
   useUnlocalizedNameAsLabel: true
 
 - name: DebugReplicationSize
+  useUnlocalizedNameAsLabel: true
+
+- name: DebugRequestManager
   useUnlocalizedNameAsLabel: true
 
 - name: DebugRestJersey1Integration
@@ -853,16 +1048,8 @@ properties:
 - name: DebugSAFAdmin
   useUnlocalizedNameAsLabel: true
 
-# deprecated
-# - name: DebugSAFLifeCycle
-#   useUnlocalizedNameAsLabel: true
-
 - name: DebugSAFManager
   useUnlocalizedNameAsLabel: true
-
-# deprecated
-# - name: DebugSAFMessagePath
-#   useUnlocalizedNameAsLabel: true
 
 - name: DebugSAFReceivingAgent
   useUnlocalizedNameAsLabel: true
@@ -880,27 +1067,30 @@ properties:
   useUnlocalizedNameAsLabel: true
 
 - name: DebugSNMPAgent
-  offlineName: DebugSnmpAgent
   useUnlocalizedNameAsLabel: true
+  offlineName: DebugSnmpAgent
 
 - name: DebugSNMPExtensionProvider
-  offlineName: DebugSnmpExtensionProvider
   useUnlocalizedNameAsLabel: true
+  offlineName: DebugSnmpExtensionProvider
+
+- name: DebugSNMPMib
+  useUnlocalizedNameAsLabel: true
+  offlineName: DebugSnmpMib
 
 - name: DebugSNMPProtocolTCP
-  offlineName: DebugSnmpProtocolTcp
   useUnlocalizedNameAsLabel: true
+  offlineName: DebugSnmpProtocolTcp
 
 - name: DebugSNMPToolkit
-  offlineName: DebugSnmpToolkit
   useUnlocalizedNameAsLabel: true
+  offlineName: DebugSnmpToolkit
 
 - name: DebugScaContainer
   useUnlocalizedNameAsLabel: true
 
-# excluded
-# - name: DebugSecurity
-#   useUnlocalizedNameAsLabel: true
+- name: DebugScrubberStartService
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugSecurityAdjudicator
   useUnlocalizedNameAsLabel: true
@@ -923,9 +1113,6 @@ properties:
 - name: DebugSecurityEEngine
   useUnlocalizedNameAsLabel: true
 
-- name: DebugSecurityEncryptionService
-  useUnlocalizedNameAsLabel: true
-
 - name: DebugSecurityJACC
   useUnlocalizedNameAsLabel: true
 
@@ -944,10 +1131,6 @@ properties:
 - name: DebugSecurityPredicate
   useUnlocalizedNameAsLabel: true
 
-# obsolete
-# - name: DebugSecurityProfiler
-#   useUnlocalizedNameAsLabel: true
-
 - name: DebugSecurityRealm
   useUnlocalizedNameAsLabel: true
 
@@ -955,20 +1138,20 @@ properties:
   useUnlocalizedNameAsLabel: true
 
 - name: DebugSecuritySAML2Atn
-  offlineName: DebugSecuritySaml2Atn
   useUnlocalizedNameAsLabel: true
+  offlineName: DebugSecuritySaml2Atn
 
 - name: DebugSecuritySAML2CredMap
-  offlineName: DebugSecuritySaml2CredMap
   useUnlocalizedNameAsLabel: true
+  offlineName: DebugSecuritySaml2CredMap
 
 - name: DebugSecuritySAML2Lib
-  offlineName: DebugSecuritySaml2Lib
   useUnlocalizedNameAsLabel: true
+  offlineName: DebugSecuritySaml2Lib
 
 - name: DebugSecuritySAML2Service
-  offlineName: DebugSecuritySaml2Service
   useUnlocalizedNameAsLabel: true
+  offlineName: DebugSecuritySaml2Service
 
 - name: DebugSecuritySAMLAtn
   useUnlocalizedNameAsLabel: true
@@ -980,8 +1163,8 @@ properties:
   useUnlocalizedNameAsLabel: true
 
 - name: DebugSecuritySAMLService
-  offlineName: DebugSecuritySamlService
   useUnlocalizedNameAsLabel: true
+  offlineName: DebugSecuritySamlService
 
 - name: DebugSecuritySSL
   useUnlocalizedNameAsLabel: true
@@ -995,34 +1178,53 @@ properties:
 - name: DebugSecurityUserLockout
   useUnlocalizedNameAsLabel: true
 
-- name: DebugSelfTuning
-  useUnlocalizedNameAsLabel: true
-
 - name: DebugServerLifeCycle
   useUnlocalizedNameAsLabel: true
 
 - name: DebugServerMigration
   useUnlocalizedNameAsLabel: true
 
+- name: DebugServerRuntime
+  useUnlocalizedNameAsLabel: true
+
+- name: DebugServerShutdownHandler
+  useUnlocalizedNameAsLabel: true
+
+- name: DebugServerShutdownStatistics
+  useUnlocalizedNameAsLabel: true
+
+- name: DebugServerShutdownTimer
+  useUnlocalizedNameAsLabel: true
+
 - name: DebugServerStartStatistics
+  useUnlocalizedNameAsLabel: true
+
+- name: DebugServerStartupTimer
+  useUnlocalizedNameAsLabel: true
+
+- name: DebugSingletonServices
   useUnlocalizedNameAsLabel: true
 
 - name: DebugSituationalConfig
   useUnlocalizedNameAsLabel: true
 
-# excluded
-# - name: DebugStore
-#   useUnlocalizedNameAsLabel: true
+- name: DebugSpringMBeans
+  useUnlocalizedNameAsLabel: true
+
+- name: DebugSpringStatistics
+  useUnlocalizedNameAsLabel: true
+
+- name: DebugStore
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugStoreAdmin
   useUnlocalizedNameAsLabel: true
 
-- name: DebugStoreConnectionCaching
+- name: DebugStoreCache
   useUnlocalizedNameAsLabel: true
 
-# excluded
-# - name: DebugStoreCache
-#   useUnlocalizedNameAsLabel: true
+- name: DebugStoreConnectionCaching
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugStoreIOLogical
   useUnlocalizedNameAsLabel: true
@@ -1036,44 +1238,71 @@ properties:
 - name: DebugStoreIOPhysicalVerbose
   useUnlocalizedNameAsLabel: true
 
-# deprecated
-# - name: DebugStoreXA
-#   useUnlocalizedNameAsLabel: true
+- name: DebugStubGeneration
+  useUnlocalizedNameAsLabel: true
 
-# deprecated
-# - name: DebugStoreXAVerbose
-#   useUnlocalizedNameAsLabel: true
+- name: DebugTunnelingConnection
+  useUnlocalizedNameAsLabel: true
+
+- name: DebugTunnelingConnectionTimeout
+  useUnlocalizedNameAsLabel: true
 
 - name: DebugURLResolution
   useUnlocalizedNameAsLabel: true
 
-- name: DebugWTCConfig
-  offlineName: DebugWtcConfig
+- name: DebugUnicastMessaging
   useUnlocalizedNameAsLabel: true
+
+- name: DebugValidateWorkManager
+  useUnlocalizedNameAsLabel: true
+
+- name: DebugValidation
+  useUnlocalizedNameAsLabel: true
+
+- name: DebugValidationClassLoading
+  useUnlocalizedNameAsLabel: true
+
+- name: DebugVerboseRCM
+  useUnlocalizedNameAsLabel: true
+  offlineName: DebugVerboseRcm
+
+- name: DebugWANReplicationDetails
+  useUnlocalizedNameAsLabel: true
+
+- name: DebugWTCConfig
+  useUnlocalizedNameAsLabel: true
+  offlineName: DebugWtcConfig
 
 - name: DebugWTCCorbaEx
-  offlineName: DebugWtcCorbaEx
   useUnlocalizedNameAsLabel: true
+  offlineName: DebugWtcCorbaEx
 
 - name: DebugWTCGwtEx
-  offlineName: DebugWtcGwtEx
   useUnlocalizedNameAsLabel: true
+  offlineName: DebugWtcGwtEx
 
 - name: DebugWTCJatmiEx
+  useUnlocalizedNameAsLabel: true
   offlineName: DebugWtcJatmiEx
-  useUnlocalizedNameAsLabel: true
 
-- name: DebugWTCTDomPdu
-  offlineName: DebugWtcTdomPdu
+- name: DebugWTCTdomPdu
   useUnlocalizedNameAsLabel: true
+  offlineName: DebugWtcTdomPdu
 
 - name: DebugWTCUData
-  offlineName: DebugWtcuData
   useUnlocalizedNameAsLabel: true
+  offlineName: DebugWtcuData
 
 - name: DebugWTCtBridgeEx
-  offlineName: DebugWtCtBridgeEx
   useUnlocalizedNameAsLabel: true
+  offlineName: DebugWtCtBridgeEx
+
+- name: DebugWatchScalingActions
+  useUnlocalizedNameAsLabel: true
+
+- name: DebugWebAppDI
+  useUnlocalizedNameAsLabel: true
+  offlineName: DebugWebAppDi
 
 - name: DebugWebAppIdentityAssertion
   useUnlocalizedNameAsLabel: true
@@ -1084,94 +1313,43 @@ properties:
 - name: DebugWebAppSecurity
   useUnlocalizedNameAsLabel: true
 
+- name: DebugWebSocket
+  useUnlocalizedNameAsLabel: true
+
 - name: DefaultStore
+  useUnlocalizedNameAsLabel: true
+
+- name: DeploymentState
+  useUnlocalizedNameAsLabel: true
+
+- name: GlassFishWebAppParser
   useUnlocalizedNameAsLabel: true
 
 - name: ListenThreadDebug
   useUnlocalizedNameAsLabel: true
 
+- name: OSGiForApps
+  useUnlocalizedNameAsLabel: true
+  offlineName: OsGiForApps
+
 - name: RedefiningClassLoader
   useUnlocalizedNameAsLabel: true
 
-- name: DebugRCM
-  offlineName: DebugRcm
+- name: ScriptExecutorCommand
   useUnlocalizedNameAsLabel: true
 
-- name: DebugVerboseRCM
-  offlineName: DebugVerboseRcm
+- name: SecurityEncryptionService
   useUnlocalizedNameAsLabel: true
 
-# excluded
-- name: DebugCAT
-  offlineName: DebugCat
+- name: ServerHelper
   useUnlocalizedNameAsLabel: true
 
-# excluded
-- name: DebugIIOPDetail
-  offlineName: DebugIiopDetail
+- name: T3HttpUpgradeHandler
   useUnlocalizedNameAsLabel: true
 
-# excluded
-- name: DebugIIOPRepalcer
-  offlineName: DebugIiopRepalcer
+- name: WarExtraction
   useUnlocalizedNameAsLabel: true
 
-# excluded
-- name: DebugJMXContext
-  offlineName: DebugJmxContext
+- name: WebRjvmSupport
   useUnlocalizedNameAsLabel: true
 
-# excluded
-- name: DebugJPA
-  offlineName: DebugJpa
-  useUnlocalizedNameAsLabel: true
-
-# excluded
-- name: DebugMBeanCIC
-  offlineName: DebugMBeanCic
-  useUnlocalizedNameAsLabel: true
-
-# excluded
-- name: DebugNIO
-  offlineName: DebugNio
-  useUnlocalizedNameAsLabel: true
-
-# excluded
-- name: DebugPartitionJMX
-  offlineName: DebugPartitionJmx
-  useUnlocalizedNameAsLabel: true
-
-# excluded
-- name: DebugRMIDetailed
-  offlineName: DebugRmiDetailed
-  useUnlocalizedNameAsLabel: true
-
-# excluded
-- name: DebugRMIRequestPerf
-  offlineName: DebugRmiRequestPerf
-  useUnlocalizedNameAsLabel: true
-
-# excluded
-- name: DebugSNMPMib
-  offlineName: DebugSnmpMib
-  useUnlocalizedNameAsLabel: true
-
-# excluded
-- name: DebugStoreRCM
-  offlineName: DebugStoreRcm
-  useUnlocalizedNameAsLabel: true
-
-# excluded
-- name: DebugStoreRCMVerbose
-  offlineName: DebugStoreRcmVerbose
-  useUnlocalizedNameAsLabel: true
-
-# excluded
-- name: DebugWebAppDI
-  offlineName: DebugWebAppDi
-  useUnlocalizedNameAsLabel: true
-
-# excluded
-- name: OSGiForApps
-  offlineName: OsGiForApps
-  useUnlocalizedNameAsLabel: true

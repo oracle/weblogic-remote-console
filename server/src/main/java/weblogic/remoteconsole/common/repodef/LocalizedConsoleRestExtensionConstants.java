@@ -86,6 +86,25 @@ public class LocalizedConsoleRestExtensionConstants {
       "The plan path ''{0}'' must end in ''.xml''."
     );
 
+    // {0} is the plan path
+    // {1} is domain home
+    addConstant(
+        "planPathNotUnderDomainRoot",
+        "The plan path ''{0}'' must be under domain home:  ''{1}''"
+    );
+
+    // {0} is the plan path
+    addConstant(
+        "planPathIsADirectory",
+        "The plan path ''{0}'' is a directory.  Specify a file name ended with .xml "
+    );
+
+    // {0} is the plan path
+    addConstant(
+        "planPathAlreadyExists",
+        "The plan path ''{0}'' already exists.  Overwriting an existing file is not allowed."
+    );
+
     // {0} is the configured staging mode.
     addConstant(
         "stageModeNotSupported",

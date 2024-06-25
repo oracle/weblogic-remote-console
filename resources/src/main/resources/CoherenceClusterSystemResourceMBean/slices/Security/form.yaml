@@ -3,8 +3,12 @@
 
 introductionHTML: >
   <p>Use this page to enable the Coherence security framework. 
-      If you do not enable security, then any non-WebLogic Server JVM can access the Coherence cluster without going through WebLogic Server authorization.
-  </p>
+  If you do not enable security, then any non-WebLogic Server JVM can access the
+  Coherence cluster without going through WebLogic Server authorization.</p>
+  <p>To use an identity asserter, configure one in a custom operational override file 
+  then restart each server that is part of the Coherence cluster
+  (specifying <code>-Dcoherence.override=/path/to/custom/override.xml</code>).
+  The page help includes links to the corresponding Coherence documentation.</p>
 
 properties:
 - name: "CoherenceClusterResource.CoherenceClusterParams.SecurityFrameworkEnabled"
@@ -31,3 +35,9 @@ helpTopics:
 - label: "Cluster Addressing Information"
   href: "clust/setup.html#CLUST440"
   type: "edocs"
+- label: "Securing Coherence Extend Client Connections "
+  href: "secure/securing-extend-client-connections.html"
+  type: "CoherenceEdocs"
+- label: "Understanding Coherence Configuration"
+  href: "develop-applications/understanding-configuration.html"
+  type: "CoherenceEdocs"

@@ -44,3 +44,6 @@ properties:
 - name: "State"
   type: weblogic.management.runtime.DeploymentStateRuntimeMBean
   relationship: containment
+- name: "StateV2"
+  type: weblogic.management.runtime.DeploymentStateV2RuntimeMBean
+  relationship: containment

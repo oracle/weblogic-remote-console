@@ -5,6 +5,7 @@ package weblogic.remoteconsole.server.repo;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Map;
 import java.util.logging.Logger;
 
@@ -50,7 +51,8 @@ public class FrontendManager {
 
   public static synchronized boolean destroy(String id) {
     boolean ret = false;
-    for (Frontend frontend : frontends.values()) {
+    // Clone the list to avoid a ConcurrentModificationException
+    for (Frontend frontend : new LinkedList<Frontend>(frontends.values())) {
       if (frontend.getID().equals(id)) {
         frontend.terminate();
         frontends.remove(frontend.getFullID());

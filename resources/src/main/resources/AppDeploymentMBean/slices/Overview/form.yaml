@@ -14,6 +14,8 @@ properties:
   - name: "PlanDir"
   - name: "SourcePath"
   - name: "PlanPath"
+  - name: "AbsoluteSourcePath"
+  - name: "AbsolutePlanPath"
   - name: "StagingMode"
   - name: "PlanStagingMode"
   - name: "DeploymentPrincipalName"

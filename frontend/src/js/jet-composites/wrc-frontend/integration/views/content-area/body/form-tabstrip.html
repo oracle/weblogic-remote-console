@@ -7,7 +7,7 @@
   <div id="cfe-form-tabstrip-container" class="cfe-form-tabstrip">
     <oj-bind-for-each data="[[tabDataProviders]]">
       <template>
-        <div class="oj-flex-item oj-sm-12 tabbar-container oj-sm-padding-2x-horizontal">
+        <div class="oj-flex-item oj-sm-12 tabbar-container oj-sm-padding-2x-horizontal" role="application">
           <oj-conveyor-belt content-parent="#tab1" data-oj-binding-provider="none">
             <oj-tab-bar accesskey="]" id="tab1" edge="top" layout="condense" selection="{{$current.data.selection}}" on-selection-changed="[[selectionChanged.bind($current.data)]]" data="[[$current.data.dataProvider]]">
               <template slot="itemTemplate" data-oj-as="item">

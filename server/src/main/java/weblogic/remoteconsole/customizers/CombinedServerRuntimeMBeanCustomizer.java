@@ -1,14 +1,14 @@
-// Copyright (c) 2022, 2023, Oracle and/or its affiliates.
+// Copyright (c) 2022, 2024, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.customizers;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 import weblogic.remoteconsole.common.repodef.BeanActionDef;
 import weblogic.remoteconsole.common.repodef.BeanPropertyDef;
-import weblogic.remoteconsole.common.repodef.BeanTypeDef;
 import weblogic.remoteconsole.common.repodef.PageActionDef;
 import weblogic.remoteconsole.common.utils.Path;
 import weblogic.remoteconsole.common.utils.StringUtils;
@@ -27,6 +27,8 @@ import weblogic.remoteconsole.server.webapp.BaseResource;
  * Custom code for processing the CombinedServerRuntimeMBean 
  */
 public class CombinedServerRuntimeMBeanCustomizer {
+
+  private static final Logger LOGGER = Logger.getLogger(CombinedServerRuntimeMBeanCustomizer.class.getName());
 
   private CombinedServerRuntimeMBeanCustomizer() {
   }
@@ -72,14 +74,6 @@ public class CombinedServerRuntimeMBeanCustomizer {
     return delegateToServerLifeCycleRuntimeAction(ic, "forceSuspend");
   }
 
-  public static Response<Value> forceShutdown(
-    InvocationContext ic,
-    PageActionDef pageActionDef,
-    List<FormProperty> formProperties
-  ) {
-    return delegateToServerLifeCycleRuntimeAction(ic, "forceShutdown");
-  }
-
   public static Response<Value> restartSSL(
     InvocationContext ic,
     PageActionDef pageActionDef,
@@ -102,6 +96,21 @@ public class CombinedServerRuntimeMBeanCustomizer {
     );
   }
 
+  public static Response<Value> forceShutdown(
+    InvocationContext ic,
+    PageActionDef pageActionDef,
+    List<FormProperty> formProperties
+  ) {
+    Response<Value> response = new Response<>();
+    Response<BeanReaderRepoSearchResults> searchResponse = getShutdownProperties(ic, true);
+    if (!searchResponse.isSuccess()) {
+      return response.copyUnsuccessfulResponse(searchResponse);
+    }
+    boolean adminServer = isAdminServer(ic, searchResponse.getResults());
+    response = delegateToServerLifeCycleRuntimeAction(ic, "forceShutdown");
+    return getShutdownResponse(response, adminServer);
+  }
+
   public static Response<Value> shutdown(
     InvocationContext ic,
     PageActionDef pageActionDef,
@@ -109,79 +118,112 @@ public class CombinedServerRuntimeMBeanCustomizer {
   ) {
     // Get the configured timeout and whether to ignore sessions from the corresponding server mbean,
     // then invoke shutdown on the server lifecycle runtime mbean passing in those values.
-
     Response<Value> response = new Response<>();
-    BeanTypeDef serverMBeanTypeDef =
-      ic.getPageRepo().getBeanRepo().getBeanRepoDef().getTypeDef("ServerMBean");
-    BeanPropertyDef timeoutPropertyDef =
-      serverMBeanTypeDef.getPropertyDef(new Path("GracefulShutdownTimeout"));
-    BeanPropertyDef ignoreSessionsPropertyDef =
-      serverMBeanTypeDef.getPropertyDef(new Path("IgnoreSessionsDuringShutdown"));
-    Response<BeanSearchResults> searchResponse =
-      getServerConfigurationProperties(
-        ic,
-        timeoutPropertyDef,
-        ignoreSessionsPropertyDef
-      );
+    Response<BeanReaderRepoSearchResults> searchResponse = getShutdownProperties(ic, false);
     if (!searchResponse.isSuccess()) {
       return response.copyUnsuccessfulResponse(searchResponse);
     }
-    BeanSearchResults searchResults = searchResponse.getResults();
+    BeanReaderRepoSearchResults searchResults = searchResponse.getResults();
+    BeanSearchResults serverResults = searchResults.getBean(getServerBeanPath(ic));
+    if (serverResults == null) {
+      return response.setNotFound();
+    }
+    boolean adminServer = isAdminServer(ic, searchResults);
     BeanTreePath realPath = getRealBeanTreePath(ic, "DomainRuntime.ServerLifeCycleRuntimes", "");
     BeanActionDef actionDef =
       realPath.getTypeDef().getActionDef(new Path("shutdown_timeout_ignoreSessions"));
     List<BeanActionArg> args = List.of(
       new BeanActionArg(
         actionDef.getParamDef("timeout"),
-        getServerPropertyValue(searchResults, timeoutPropertyDef)
+        getRequiredPropertyValue(serverResults, getGracefulShutdownTimeoutPropertyDef(ic))
       ),
       new BeanActionArg(
         actionDef.getParamDef("ignoreSessions"),
-        getServerPropertyValue(searchResults, ignoreSessionsPropertyDef)
+        getRequiredPropertyValue(serverResults, getIgnoreSessionsDuringShutdownPropertyDef(ic))
       )
     );
-    return ic.getPageRepo().getBeanRepo().asBeanReaderRepo().invokeAction(ic, realPath, actionDef, args);
+    response = ic.getPageRepo().getBeanRepo().asBeanReaderRepo().invokeAction(ic, realPath, actionDef, args);
+    return getShutdownResponse(response, adminServer);
   }
 
-  /*
-   * Get some configuration properties for the server corresponding to the
-   * ServerLifeCycleRuntimeMBean the user invoked.
-   * 404s if the server doesn't exist
-   */
-  private static Response<BeanSearchResults> getServerConfigurationProperties(
+  private static Response<Value> getShutdownResponse(Response<Value> invokeResponse, boolean adminServer) {
+    if (adminServer) {
+      // The basic flow is:
+      // a) the CBE makes a REST API call to the admin server to shutdown the admin server
+      // b) WLS calls the REST api impl
+      // c) the REST api impl calls the mbean api to shutdown the admin server (it returns a task)
+      // d) the REST api impl polls the returned task to see when it completes for up to 2 seconds
+      // e) the REST api impl returns a response
+      // f) the admin server sends the response to the client
+      //
+      // The admin server can shut down anytime after (c).
+      // Various responses can come back depending on that timing, for example:
+      // a) 200 with a warning message that the task is null
+      // b) 200 with no messages
+      // c) 400
+      // d) 500
+      // e) 503
+      //
+      // Just swallow the actual response and return a normal 200.
+      if (!invokeResponse.isSuccess() || !invokeResponse.getMessages().isEmpty()) {
+        LOGGER.finest(
+          "Ignoring timing-related issues shutting down the admin server."
+          + " status: " + invokeResponse.getStatus()
+          + " messages: " + invokeResponse.getMessages()
+        );
+      }
+      return new Response<Value>().setSuccess(null);
+    }
+    return invokeResponse;
+  }
+
+  private static Response<BeanReaderRepoSearchResults> getShutdownProperties(
     InvocationContext ic,
-    BeanPropertyDef... serverPropertyDefs
+    boolean isForceShutdown
   ) {
     Response<BeanSearchResults> response = new Response<>();
     // Don't return whether properties are set.
     BeanReaderRepoSearchBuilder builder =
       ic.getPageRepo().getBeanRepo().asBeanReaderRepo().createSearchBuilder(ic, false);
-    BeanTreePath serverBeanPath =
-      BeanTreePath.create(
-        ic.getBeanTreePath().getBeanRepo(),
-        new Path("Domain.Servers." + getServerName(ic))
-      );
-    for (BeanPropertyDef serverPropertyDef : serverPropertyDefs) {
-      builder.addProperty(serverBeanPath, serverPropertyDef);
+    builder.addProperty(getDomainBeanPath(ic), getAdminServerNamePropertyDef(ic));
+    if (!isForceShutdown) {
+      builder.addProperty(getServerBeanPath(ic), getGracefulShutdownTimeoutPropertyDef(ic));
+      builder.addProperty(getServerBeanPath(ic), getIgnoreSessionsDuringShutdownPropertyDef(ic));
     }
-    Response<BeanReaderRepoSearchResults> searchResponse = builder.search();
-    if (!searchResponse.isSuccess()) {
-      return response.copyUnsuccessfulResponse(searchResponse);
-    }
-    BeanSearchResults serverResults = searchResponse.getResults().getBean(serverBeanPath);
-    if (serverResults != null) {
-      response.setSuccess(serverResults);
-    } else {
-      // the server doesn't exist
-      response.setNotFound();
-    }
-    return response;
+    return builder.search();
   }
 
-  /**
-   * Get a server mbean property value from the search results.
-   */
-  private static Value getServerPropertyValue(BeanSearchResults searchResults, BeanPropertyDef propertyDef) {
+  private static boolean isAdminServer(InvocationContext ic, BeanReaderRepoSearchResults searchResults) {
+    BeanSearchResults domainResults = searchResults.getBean(getDomainBeanPath(ic));
+    if (domainResults == null) {
+      throw new AssertionError("Couldn't find domain bean results");
+    }
+    String adminServerName =
+      getRequiredPropertyValue(domainResults, getAdminServerNamePropertyDef(ic)).asString().getValue();
+    return getServerName(ic).equals(adminServerName);
+  }
+
+  private static BeanPropertyDef getAdminServerNamePropertyDef(InvocationContext ic) {
+    return getDomainBeanPath(ic).getTypeDef().getPropertyDef(new Path("AdminServerName"));
+  }
+
+  private static BeanPropertyDef getGracefulShutdownTimeoutPropertyDef(InvocationContext ic) {
+    return getServerBeanPath(ic).getTypeDef().getPropertyDef(new Path("GracefulShutdownTimeout"));
+  }
+
+  private static BeanPropertyDef getIgnoreSessionsDuringShutdownPropertyDef(InvocationContext ic) {
+    return getServerBeanPath(ic).getTypeDef().getPropertyDef(new Path("IgnoreSessionsDuringShutdown"));
+  }
+
+  private static BeanTreePath getDomainBeanPath(InvocationContext ic) {
+    return BeanTreePath.create(ic.getBeanTreePath().getBeanRepo(), new Path("Domain"));
+  }
+
+  private static BeanTreePath getServerBeanPath(InvocationContext ic) {
+    return BeanTreePath.create(ic.getBeanTreePath().getBeanRepo(), new Path("Domain.Servers." + getServerName(ic)));
+  }
+
+  private static Value getRequiredPropertyValue(BeanSearchResults searchResults, BeanPropertyDef propertyDef) {
     Value value = searchResults.getValue(propertyDef);
     if (value == null) {
       throw new AssertionError("Couldn't find value for " + propertyDef.getPropertyPath());

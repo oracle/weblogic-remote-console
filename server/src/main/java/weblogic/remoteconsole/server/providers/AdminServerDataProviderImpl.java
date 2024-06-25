@@ -139,7 +139,7 @@ public class AdminServerDataProviderImpl implements AdminServerDataProvider {
     return TYPE_NAME;
   }
 
-  private boolean isLocal() {
+  public boolean isLocal() {
     return local;
   }
 
@@ -455,6 +455,9 @@ public class AdminServerDataProviderImpl implements AdminServerDataProvider {
       }
     }
     ret.add("mode", "standalone");
+    if (isLocal()) {
+      ret.add("local", true);
+    }
     ret.add("anyConnectionAttemptSuccessful", isAnyConnectionAttemptSuccessful());
     ret.add("lastConnectionAttemptSuccessful", isLastConnectionAttemptSuccessful());
     Connection connection = null;

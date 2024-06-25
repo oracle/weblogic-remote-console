@@ -56,7 +56,7 @@ define({
   },
   "wrc-footer": {
     "text": {
-      "copyrightLegal": "[[wlsrc/frontend/src/resources/nls/frontend.properties:::wrc-footer.text.copyrightLegal:::Copyright Â© 2020, 2022, Oracle and/or its affiliates.<br/>Oracle is a registered trademark of Oracle Corporation and/or its affiliates. Other names may be trademarks of their respective owners.<br/>]]",
+      "copyrightLegal": "[[wlsrc/frontend/src/resources/nls/frontend.properties:::wrc-footer.text.copyrightLegal:::Copyright Â© 2020, 2024, Oracle and/or its affiliates.<br/>Oracle is a registered trademark of Oracle Corporation and/or its affiliates. Other names may be trademarks of their respective owners.<br/>]]",
       "builtWith": "[[wlsrc/frontend/src/resources/nls/frontend.properties:::wrc-footer.text.builtWith:::Built with Oracle JET]]"
     }
   },
@@ -295,14 +295,14 @@ define({
     },
     "instructions": {
       "selectItems": {
-        "value": "[[wlsrc/frontend/src/resources/nls/frontend.properties:::wrc-table-toolbar.instructions.selectItems.value:::Select items you want to perform ''{0}'' operation on.]]"
+        "value": "[[wlsrc/frontend/src/resources/nls/frontend.properties:::wrc-table-toolbar.instructions.selectItems.value:::Select items you want to perform '{0}' operation on.]]"
       }
     },
     "messages": {
       "action": {
         "cannotPerform": {
           "summary": "[[wlsrc/frontend/src/resources/nls/frontend.properties:::wrc-table-toolbar.messages.action.cannotPerform.summary:::Message]]",
-          "detail": "[[wlsrc/frontend/src/resources/nls/frontend.properties:::wrc-table-toolbar.messages.action.cannotPerform.detail:::Cannot perform ''{0}'' action while auto-reload is running! Please click the ''{1}'' icon to stop it, first.]]"
+          "detail": "[[wlsrc/frontend/src/resources/nls/frontend.properties:::wrc-table-toolbar.messages.action.cannotPerform.detail:::Cannot perform '{0}' action while auto-reload is running! Please click the '{1}' icon to stop it, first.]]"
         }
       }
     },
@@ -518,7 +518,7 @@ define({
       "action": {
         "unableToPerform": {
           "summary": "[[wlsrc/frontend/src/resources/nls/frontend.properties:::wrc-pdj-actions.messages.action.cannotPerform.summary:::Message]]",
-          "detail": "[[wlsrc/frontend/src/resources/nls/frontend.properties:::wrc-pdj-actions.messages.action.cannotPerform.detail:::Cannot perform ''{0}'' action while auto-reload is running! Please click the ''{1}'' icon to stop it, first.]]"
+          "detail": "[[wlsrc/frontend/src/resources/nls/frontend.properties:::wrc-pdj-actions.messages.action.cannotPerform.detail:::Cannot perform '{0}' action while auto-reload is running! Please click the '{1}' icon to stop it, first.]]"
         }
       }
     },
@@ -565,7 +565,7 @@ define({
     "messages": {
       "noNotFoundMessage": {
         "summary": "[[wlsrc/frontend/src/resources/nls/frontend.properties:::wrc-pdj-crosslinks.messages.noNotFoundMessage.summary:::Message]]",
-        "detail": "[[wlsrc/frontend/src/resources/nls/frontend.properties:::wrc-pdj-crosslinks.messages.noNotFoundMessage.detail:::RDJ did not contain a ''notFoundMessage'' field for the ''{0}'' item.]]"
+        "detail": "[[wlsrc/frontend/src/resources/nls/frontend.properties:::wrc-pdj-crosslinks.messages.noNotFoundMessage.detail:::RDJ did not contain a 'notFoundMessage' field for the '{0}' item.]]"
       }
     }
   },

@@ -1,11 +1,11 @@
-# Copyright (c) 2020, 2022, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2024, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 referenceable: true
 
 properties:
 
 - name: CoherenceClusterResource.CoherenceFederationParams.FederationTopology
-  label: Hidden Federation Topology
+  label: Federation Topology
   helpSummaryHTML: >
     <p>Specify the federation topology.</p>
 
@@ -42,6 +42,14 @@ properties:
     <p>In almost all cases, you should deploy the Coherence cluster to an entire cluster,
     not individual servers in a cluster.</p>
     <p>Ensure that this Coherence Cluster is selected in the Coherence slice of the server or cluster. </p>
+
+# Make the custom cluster configuration file related properties read-only
+# since the Remote Console doesn't support configuring them.
+# See WC-1288
+- name: UsingCustomClusterConfigurationFile
+  writable: never
+- name: CustomClusterConfigurationFileName
+  writable: never
 
 children:
 - name: CoherenceClusterResource

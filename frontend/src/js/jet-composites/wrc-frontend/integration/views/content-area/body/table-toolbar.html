@@ -32,13 +32,15 @@
           </oj-bind-if>
 
           <!-- Customize button is always visible on a table toolbar -->
-          <div class="cfe-table-customizer">
-            <a class="table-customizer-expander" :id="[[i18n.buttons.customize.id]]" href="#" on-click="[[customizeAction]]" data-state="collapsed" accesskey="'">
-              <img class="button-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.buttons.customize.iconFile + '.png', alt: i18n.buttons.customize.label}"/>
-              <span aria-hidden="true" class="button-label" data-bind="text: [[i18n.buttons.customize.label]]"></span>
-              <span id="table-customizer-toggler" class="oj-fwk-icon oj-fwk-icon-caret03-s"></span>
-            </a>
-          </div>
+          <oj-bind-if test="[[i18n.buttons.customize.visible()]]">
+            <div class="cfe-table-customizer">
+              <a :id="[[i18n.buttons.customize.id]]" accesskey="." class="table-customizer-expander" data-state="collapsed" href="#" on-click="[[customizeAction]]">
+                <img class="button-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.buttons.customize.iconFile + '.png', alt: i18n.buttons.customize.label}"/>
+                <span aria-hidden="true" class="button-label" data-bind="text: [[i18n.buttons.customize.label]]"></span>
+                <span id="table-customizer-toggler" class="oj-fwk-icon oj-fwk-icon-caret03-s"></span>
+              </a>
+            </div>
+          </oj-bind-if>
 
           <oj-bind-if test="[[i18n.buttons.dashboard.visible()]]">
             <oj-button
@@ -99,10 +101,30 @@
         on-keyup="[[registerTableIconbarIconsKeyUpFocuser('.cfe-content-area-body-iconbar-icon')]]"
         data-key-focuser-id=".cfe-content-area-body-iconbar-icon"
       >
-        <a on-click="[[helpPageClick]]" data-bind="attr: {href: '#', 'title': i18n.icons.help.tooltip}">
-          <img id="page-help-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + [[!showHelp() ? 'toggle-help-on-blk_24x24' : 'toggle-help-off-blk_24x24' ]] + '.png', alt: i18n.icons.help.tooltip}"/>
+        <a
+          on-click="[[helpPageClick]]"
+          href="#"
+          accesskey="/"
+        >
+          <img id="page-help-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + [[!showHelp() ? 'toggle-help-on-blk_24x24' : 'toggle-help-off-blk_24x24' ]] + '.png', alt: i18n.icons.help.tooltip, title: i18n.icons.help.tooltip}" />
         </a>
       </div>
+
+      <oj-bind-if test="[[i18n.icons.reset.visible()]]">
+        <div class="toolbar-separator-vertical" tabindex="-1">
+          <!-- TODO: Replace with span that has icon class once cfe-iconfonts  is ready -->
+          <img data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.icons.separator.iconFile + '.png', alt: i18n.icons.separator.tooltip}"/>
+        </div>
+
+        <div class="oj-flex-item cfe-content-area-body-iconbar-icon" data-key-focuser-id=".cfe-content-area-body-iconbar-icon"
+          id="reset-toolbar-icon"
+          on-keyup="[[registerTableIconbarIconsKeyUpFocuser('.cfe-content-area-body-iconbar-icon')]]"
+        >
+          <a data-bind="attr: {href: '#', 'title': i18n.icons.reset.tooltip}" on-click="[[syncClick]]" on-keyup="[[resetIconKeyUp]]">
+            <img data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.icons.reset.iconFile + '.png', alt: i18n.icons.reset.tooltip}" data-interval="0" id="reset-icon" />
+          </a>
+        </div>
+      </oj-bind-if>
 
       <oj-bind-if test="[[showAutoSyncIcons]]">
         <div class="toolbar-separator-vertical" tabindex="-1">

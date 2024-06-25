@@ -1,4 +1,4 @@
-# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2024, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 actions: [
@@ -286,7 +286,7 @@ properties:
     storage will not be cleared if the previous work request processed by the self-tuning
     thread pool thread was for the same partition, whereas with eagerThreadLocalCleanup
     set, the threadlocals storage will also be cleared in this case. '
-  excludeFromRest: ${excludeFromRest}
+  excludeFromRest: ' '
   name: IsolatePartitionThreadLocals
   restartNeeded: true
   supported: false

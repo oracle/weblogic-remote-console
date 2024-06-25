@@ -137,6 +137,7 @@ define([
         this.backingData.attributes[property.name] = {
           type: 'conditional',
           default: (typeof this.rdjData.data[property.name] !== 'undefined' ? this.rdjData.data[property.name].value : undefined),
+          changed: false,
           value: undefined,
           required: (typeof property.required === 'undefined' ? false : property.required),
           visible: true,
@@ -294,9 +295,26 @@ define([
     }
 
     /**
+     *
+     * @param {string} fieldName
+     * @private
+     */
+    function computeBackingDataAttributeValue(fieldName) {
+      const attr = this.backingData.attributes[fieldName];
+      if (attr?.usedIf?.parent && this.backingData.attributes[attr.usedIf.parent.name]) {
+        if (this.backingData.attributes[attr.usedIf.parent.name].changed) {
+          if (CoreUtils.isUndefinedOrNull(attr.usesDefault)) attr['usesDefault'] = true;
+          if (attr.usesDefault) {
+            this.backingData.attributes[fieldName].value = this.backingData.attributes[fieldName].default;
+          }
+        }
+      }
+    }
+
+    /**
      * This method should only be called if this.backingData.attributes[fieldName].type === "conditional"
-     * @param fieldName
-     * @param fieldValue
+     * @param {string} fieldName
+     * @param {any} fieldValue
      * @returns {{removed: Array, rerender: boolean}}
      */
     function updateUsedIfDataValue(fieldName, fieldValue) {
@@ -304,6 +322,7 @@ define([
       const attr = this.backingData.attributes[fieldName];
       let oldValue = attr.value;
       if (typeof oldValue !== 'undefined' && oldValue !== fieldValue && !Array.isArray(oldValue)) {
+        attr.changed = true;
         Logger.log(`[CREATEFORM] fieldName=${fieldName}, oldValue=${oldValue}, newValue=${fieldValue}`);
         result.removed = removeUsedIfDataValues.call(this, fieldName);
         result.rerender = (result.removed.length > 0);
@@ -415,6 +434,7 @@ define([
         // The change to a "usedIf" dependent field DOES NOT necessitate
         // a re-rendering.
         this.backingData.attributes[fieldName].value = fieldValue;
+        this.backingData.attributes[fieldName]['usesDefault'] = false;
       }
     }
 
@@ -730,6 +750,7 @@ define([
             if (typeof this.backingData.attributes[name] !== 'undefined') {
               if (typeof this.backingData.attributes[name].value !== 'undefined') {
                 if (CoreUtils.isUndefinedOrNull(fieldValuesFrom)) {
+                  computeBackingDataAttributeValue.call(this, name);
                   value = pdjTypes.getConvertedObservableValue(name, this.backingData.attributes[name].value);
                 }
                 else {

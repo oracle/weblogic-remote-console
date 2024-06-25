@@ -370,11 +370,17 @@ define([
           const ele1 = document.getElementById(subtreeName + 'Chevron');
           if (visible) {
             ele.style.display = 'none';
-            if (ele1 !== null) ele1.setAttribute('class', 'landing-page-panel-chevron oj-fwk-icon oj-fwk-icon-caret03-s');
+            if (ele1 !== null) {
+              ele1.setAttribute('class', 'landing-page-panel-chevron oj-fwk-icon oj-fwk-icon-caret03-s');
+              ele1.setAttribute('aria-expanded', false);
+            }
           }
           else {
             ele.style.display = 'block';
-            if (ele1 !== null) ele1.setAttribute('class', 'landing-page-panel-chevron oj-fwk-icon oj-fwk-icon-caret03-n');
+            if (ele1 !== null) {
+              ele1.setAttribute('class', 'landing-page-panel-chevron oj-fwk-icon oj-fwk-icon-caret03-n');
+              ele1.setAttribute('aria-expanded', true);
+            }
           }
         }
       }

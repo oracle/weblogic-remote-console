@@ -176,7 +176,9 @@ class PagePropertyDefImpl implements PagePropertyDef {
     }
     if (isReference()) {
       if (isReferenceAsReferences() || !isArray()) {
-        return true;
+        if (beanPropertyDefImpl.getCustomizerSource().isAllowNullReference()) {
+          return true;
+        }
       }
     }
     return false;

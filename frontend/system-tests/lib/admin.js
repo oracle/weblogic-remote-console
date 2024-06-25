@@ -697,7 +697,7 @@ module.exports = function (driver, file) {
         //
         // Create new MBean Object from button-menu-dropdown-icon
         createMBeanFromMenuDropDown: async function(driver,dropDownMenuElem,mBeanName,
-                                                    extraField,itemList,fieldTwo,fieldThree)
+                                                    extraField,itemList,fieldTwo,fieldThree,buttonId)
         {
             //fieldThree=Item needs to search in the pop down list (eg, AdminServer)
             //itemList=oj-searchselect-filter-Target|input element
@@ -733,9 +733,8 @@ module.exports = function (driver, file) {
                     await element.sendKeys(fieldTwo);
                 }
             }
-
             await driver.sleep(3600);
-            await this.saveToShoppingCart(driver);
+            await this.saveToShoppingCart(driver,buttonId);
         },
 
 
@@ -1188,8 +1187,10 @@ module.exports = function (driver, file) {
             await element.sendKeys(searchItem);
             await driver.sleep(6400);
             await element.sendKeys(Key.DOWN);
+            console.log("Click Key.ENTER");
             await element.sendKeys(Key.ENTER);
-            await element.sendKeys(Key.TAB);
+            //await element.sendKeys(Key.TAB);
+            await driver.sleep(6400);
         },
 
         // Save modified elements to Shopping Cart

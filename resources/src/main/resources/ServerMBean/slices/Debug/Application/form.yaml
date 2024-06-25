@@ -1,4 +1,4 @@
-# Copyright (c) 2020, 2021, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2024, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 introductionHTML: >
   Use this page to manage the application-related server debug flags; that is, the flags
@@ -12,12 +12,25 @@ presentation:
   useCheckBoxesForBooleans: true
 
 properties:
+- name: ServerDebug.DebugAppClient
+- name: ServerDebug.DebugAppContainerTools
+- name: ServerDebug.DebugAppTiming
 - name: ServerDebug.ClassChangeNotifier
 - name: ServerDebug.ClassLoader
 - name: ServerDebug.ClassLoaderVerbose
 - name: ServerDebug.ClassloaderWebApp
 - name: ServerDebug.DebugAppAnnotations
+- name: ServerDebug.DebugAppAnnoLookup
+- name: ServerDebug.DebugAppAnnoQuery
+- name: ServerDebug.DebugAppAnnoQueryVerbose
+- name: ServerDebug.DebugAppAnnoScanData
+- name: ServerDebug.DebugAppAnnoScanVerbose
+- name: ServerDebug.DebugAppAnnoVerboseLookup
 - name: ServerDebug.DebugAppContainer
+- name: ServerDebug.DebugAppMetadataCache
+- name: ServerDebug.DebugBackgroundDeployment
+- name: ServerDebug.DebugClassLoadingArchiveChecker
+- name: ServerDebug.DebugClassLoadingConsistencyChecker
 - name: ServerDebug.DebugClassLoadingContextualTrace
 - name: ServerDebug.DebugClassLoadingVerbose
 - name: ServerDebug.DebugClassRedef
@@ -33,6 +46,11 @@ properties:
 - name: ServerDebug.DebugDeploymentServiceTransportHttp
 - name: ServerDebug.DebugDescriptor
 - name: ServerDebug.DebugLibraries
+- name: ServerDebug.DebugMailSessionDeployment
+- name: ServerDebug.DebugManagedBean
 - name: ServerDebug.DebugReadyApp
 - name: ServerDebug.DefaultStore
+- name: ServerDebug.DeploymentState
 - name: ServerDebug.RedefiningClassLoader
+- name: ServerDebug.DebugValidation
+- name: ServerDebug.DebugValidationClassLoading

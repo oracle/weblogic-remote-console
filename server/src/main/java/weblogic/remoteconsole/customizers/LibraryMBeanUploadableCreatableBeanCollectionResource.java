@@ -21,7 +21,7 @@ public class LibraryMBeanUploadableCreatableBeanCollectionResource
     protected Properties getDeploymentOptions() {
       Properties deploymentOptions = new Properties();
       deploymentOptions.setProperty("library", "true");
-      String stageMode = getStringProperty("NonNullStagingMode", false);
+      String stageMode = getStringProperty("StagingMode", false);
       if (stageMode != null && !stageMode.equals("default")) {
         deploymentOptions.setProperty("stageMode", stageMode);
       }

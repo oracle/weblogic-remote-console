@@ -1,4 +1,4 @@
-# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2024, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 actions: [
@@ -533,6 +533,16 @@ properties:
     value is 0 to disable the TTL.</p> '
   name: UnknownTenantEmptyMetadataTTL
   type: java.lang.Integer
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Specifies whether to get the value of the "userName" attribute
+    from the authentication response to create the Principal.           The actual
+    attribute name is obtained from getUserNameResourceAttribute(),         and can
+    be configured with setUserNameResourceAttribute(String).</p> '
+  name: UseRetrievedUserNameAsPrincipal
+  type: boolean
   writable: true
 - defaultValue:
     value:

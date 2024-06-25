@@ -1,7 +1,12 @@
 define({
   "wrc-header": {
     "text": {
-      "appName": "Console distante WebLogic"
+      "appName": "WebLogic Remote Console"
+    },
+    "region": {
+      "ariaLabel": {
+        "value": "En-tête d'application"
+      }
     },
     "icons": {
       "navtree": {
@@ -10,22 +15,22 @@ define({
         }
       },
       "theme": {
-        "tooltip": "Switch theme"
+        "tooltip": "Changer de thème"
       },
       "whatsNew": {
-        "tooltip": "What's New!"
+        "tooltip": "Nouveautés"
       },
       "howDoI": {
-        "tooltip": "Open \"How Do I ...?\" Tasks"
+        "tooltip": "Ouvrir les tâches de procédure"
       },
       "tips": {
-        "tooltip": "Toggle User Tips visibility"
+        "tooltip": "Activer/désactiver la visibilité des conseils d'utilisation"
       },
       "help": {
         "tooltip": "Ouvrir la documentation interne WebLogic Remote Console"
       },
       "profile": {
-        "tooltip": "Profile"
+        "tooltip": "Profil"
       }
     },
     "menus": {
@@ -34,11 +39,16 @@ define({
       },
       "theme": {
         "light": {
-          "value": "Light"
+          "value": "Clair"
         },
         "dark": {
-          "value": "Dark"
+          "value": "Sombre"
         }
+      }
+    },
+    "tooltips": {
+      "appName": {
+        "value": "Cliquer ici pour réinitialiser WebLogic Remote Console"
       }
     }
   },
@@ -65,7 +75,7 @@ define({
       "profile": {
         "popup": {
           "launcher": {
-            "tooltip": "Show Profiles List"
+            "tooltip": "Afficher la liste des profils"
           }
         },
         "dialog": {
@@ -73,27 +83,27 @@ define({
             "tooltip": "Gérer les profils"
           },
           "editor": {
-            "tooltip": "Profile Editor",
+            "tooltip": "Editeur de profil",
             "toolbar": {
               "save": {
                 "tooltip": "Enregistrer le profil"
               },
               "activate": {
-                "tooltip": "Active Profile"
+                "tooltip": "Profil actif"
               },
               "add": {
                 "tooltip": "Ajouter un profil"
               },
               "remove": {
-                "tooltip": "Delete Profile"
+                "tooltip": "Supprimer le profil"
               }
             }
           }
         },
         "image": {
-          "tooltip": "Profile",
+          "tooltip": "Profil",
           "capture": {
-            "tooltip": "Add or change image"
+            "tooltip": "Ajouter ou modifier l'image"
           }
         }
       }
@@ -119,7 +129,7 @@ define({
         "value": "Modifier l'image"
       },
       "clearImage": {
-        "value": "Clear Image"
+        "value": "Effacer l'image"
       },
       "profile": {
         "default": {
@@ -128,10 +138,10 @@ define({
         "toggler": {
           "editor": {
             "show": {
-              "value": "Show Profile Editor"
+              "value": "Afficher l'éditeur de profil"
             },
             "hide": {
-              "value": "Hide Profile Editor"
+              "value": "Masquer l'éditeur de profil"
             }
           }
         }
@@ -141,7 +151,7 @@ define({
       "profile": {
         "manager": {
           "open": {
-            "value": "Open Profile Manager"
+            "value": "Ouvrir le gestionnaire de profil"
           },
           "signout": {
             "value": "Déconnexion"
@@ -156,17 +166,17 @@ define({
             "value": "ID de profil"
           },
           "organization": {
-            "value": "Organization"
+            "value": "Organisation"
           },
           "name": {
             "value": "Nom"
           },
           "email": {
-            "value": "Email"
+            "value": "Adresse électronique"
           },
           "role": {
             "default": {
-              "value": "Use as Default Profile"
+              "value": "Utiliser en tant que profil par défaut"
             }
           },
           "settings": {
@@ -197,51 +207,51 @@ define({
           },
           "preferences": {
             "theme": {
-              "value": "Theme"
+              "value": "Thème"
             },
             "startupTaskChooserType": {
-              "value": "Startup Task Chooser Type"
+              "value": "Type de sélecteur de tâche de démarrage"
             },
-            "useMenusAsRootNodes": {
-              "value": "Use Tree Menus as the root level of Tree Navigators?"
+            "useTreeMenusAsRootNodes": {
+              "value": "Utiliser les menus arborescents en tant que niveau racine des navigateurs d'arborescence ?"
             },
             "onQuit": {
-              "value": "Allow unsaved changes to prevent exiting application?"
+              "value": "Ne pas quitter l'application en présence de modifications non enregistrées ?"
             },
             "onDelete": {
-              "value": "Confirm all deletions?"
+              "value": "Confirmer toutes les suppressions ?"
             },
             "onActionNotAllowed": {
-              "value": "Use \"Action Not Allowed\" popup to prevent data loss?"
+              "value": "Utiliser la fenêtre instantanée Action non autorisée pour éviter la perte de données ?"
             },
             "onUnsavedChangesDetected": {
-              "value": "Use \"Unsaved Changes Detected\" popup to prevent data loss?"
+              "value": "Utiliser la fenêtre instantanée Modifications non enregistrées détectées pour éviter la perte de données ?"
             },
             "onChangesNotDownloaded": {
-              "value": "Use \"Changes Not Download\" popup to prevent data loss?"
+              "value": "Utiliser la fenêtre instantanée Modifications non téléchargées pour éviter la perte de données ?"
             }
           },
           "properties": {
             "javaSystemProperties": {
-              "value": "Java System Properties"
+              "value": "Propriétés système Java"
             }
           }
         },
         "legalValues": {
           "themeOptions": {
             "light": {
-              "value": "Light"
+              "value": "Clair"
             },
             "dark": {
-              "value": "Dark"
+              "value": "Sombre"
             }
           },
           "taskChooserTypeOptions": {
             "useDialog": {
-              "value": "Use Dialog"
+              "value": "Utiliser une boîte de dialogue"
             },
             "useCards": {
-              "value": "Use Cards"
+              "value": "Utiliser des cartes"
             }
           },
           "trustStoreTypeOptions": {
@@ -255,14 +265,14 @@ define({
               "value": "Windows ROOT"
             },
             "keyChainStore": {
-              "value": "Key Chain Store"
+              "value": "Banque de porte-clés"
             }
           }
         },
         "messages": {
           "save": {
             "succeeded": {
-              "summary": "Profile \"{0}\" was saved successfully!"
+              "summary": "Le profil \"{0}\" a été enregistré."
             }
           }
         }
@@ -271,17 +281,22 @@ define({
   },
   "wrc-data-providers": {
     "icons": {
+      "hoverMenu": {
+        "ariaLabel": {
+          "value": "Actions de fournisseur "
+        }
+      },
       "info": {
-        "tooltip": "Obtenir des informations"
+        "tooltip": "Obtenir des informations sur ce fournisseur"
       },
       "edit": {
-        "tooltip": "Gérer"
+        "tooltip": "Gérer les paramètres pour ce fournisseur"
       },
       "deactivate": {
-        "tooltip": "Désactiver"
+        "tooltip": "Désactiver ce fournisseur"
       },
       "delete": {
-        "tooltip": "Enlever"
+        "tooltip": "Enlever ce fournisseur"
       }
     },
     "labels": {
@@ -367,6 +382,9 @@ define({
           }
         },
         "domain": {
+          "consoleExtensionVersion": {
+            "label": "Version d'extension de console :"
+          },
           "name": {
             "label": "Nom du domaine :"
           },
@@ -494,6 +512,9 @@ define({
         },
         "edit": {
           "value": "Modifiez les paramètres de connectivité du fournisseur de connexion."
+        },
+        "deactivate": {
+          "value": "Désactivez le fournisseur de connexion et arrêtez l'interrogation du statut de domaine."
         }
       },
       "models": {
@@ -603,25 +624,25 @@ define({
       "export": {
         "failed": {
           "summary": "Echec de l'export",
-          "detail": "Impossible d''exporter les fournisseurs en tant que projet ''{0}''."
+          "detail": "Impossible d'exporter les fournisseurs en tant que projet '{0}'."
         }
       },
       "import": {
         "failed": {
           "summary": "Echec de l'enregistrement",
-          "detail": "Impossible d''importer le fichier de projet ''{0}''."
+          "detail": "Impossible d'importer le fichier de projet '{0}'."
         }
       },
       "stage": {
         "failed": {
           "summary": "Echec de la création",
-          "detail": "Impossible de créer l''élément de fournisseur ''{0}''."
+          "detail": "Impossible de créer l'élément de fournisseur '{0}'."
         }
       },
       "use": {
         "failed": {
           "summary": "Echec de la connexion",
-          "detail": "Impossible d''utiliser l''élément de fournisseur ''{0}''."
+          "detail": "Impossible d'utiliser l'élément de fournisseur '{0}'."
         }
       },
       "upload": {
@@ -636,13 +657,13 @@ define({
       },
       "response": {
         "nameAlreadyExist": {
-          "detail": "Un fournisseur nommé ''{0}'' existe déjà dans ce projet."
+          "detail": "Un fournisseur nommé '{0}' existe déjà dans ce projet."
         },
         "modelsNotFound": {
-          "detail": "Impossible de trouver les modèles WDT configurés ''{0}''"
+          "detail": "Impossible de trouver les modèles WDT configurés '{0}'"
         },
         "propListNotFound": {
-          "detail": "Impossible de trouver les variables WDT ''{0}''"
+          "detail": "Impossible de trouver les variables WDT '{0}'"
         },
         "selectModels": {
           "detail": "Pour sélectionner le composite WDT, sélectionnez d'abord tous les modèles WDT utilisés par le composite WDT."
@@ -650,7 +671,7 @@ define({
       },
       "sso": {
         "secureContextRequired": {
-          "detail": "The URL must specify the HTTPS protocol or use localhost"
+          "detail": "L'URL doit comprendre le protocole HTTPS ou utiliser localhost"
         }
       },
       "correctiveAction": {
@@ -681,7 +702,7 @@ define({
         "label": "Utiliser un modèle dispersé"
       },
       "usesso": {
-        "label": "Use Web Authentication"
+        "label": "Utiliser l'authentification Web"
       },
       "insecure": {
         "label": "Etablir une connexion non sécurisée"
@@ -714,18 +735,36 @@ define({
     }
   },
   "wrc-navigation": {
-    "navstrip": {
-      "ariaLabel": {
-        "value": "Bandeau de navigation"
-      }
-    },
-    "navtree": {
-      "ariaLabel": {
-        "value": "Arborescence de navigation"
+    "ariaLabel": {
+      "navstrip": {
+        "value": "Menu des arborescences de fournisseur"
+      },
+      "navtree": {
+        "value": "Navigateur d'arborescence de fournisseur"
+      },
+      "panelResizer": {
+        "value": "Poignée de redimensionnement de navigateur d'arborescence de fournisseur. Utilisez les touches fléchées vers la gauche et vers la droite pour redimensionner le navigateur"
       }
     }
   },
   "wrc-content-area-header": {
+    "ariaLabel": {
+      "button": {
+        "home": {
+          "value": "Accueil. Revenir à la page contenant les cartes des arborescences du fournisseur"
+        }
+      },
+      "region": {
+        "title": {
+          "value": "En-tête de zone de contenu"
+        }
+      },
+      "popup": {
+        "provider": {
+          "value": "Actions de fournisseur"
+        }
+      }
+    },
     "title": {
       "home": "Accueil",
       "configuration": "Modifier l'arborescence",
@@ -742,6 +781,24 @@ define({
           "label": "Accueil"
         }
       }
+    },
+    "icons": {
+      "shoppingcart": {
+        "tooltip": "Cliquer ici pour visualiser les actions de panier"
+      }
+    },
+    "menu": {
+      "shoppingcart": {
+        "view": {
+          "label": "Visualiser les modifications..."
+        },
+        "discard": {
+          "label": "Annuler les modifications"
+        },
+        "commit": {
+          "label": "Valider les modifications"
+        }
+      }
     }
   },
   "wrc-ancillary-content": {
@@ -754,10 +811,10 @@ define({
           "label": "Vue d'ensemble"
         },
         "projectmanagement": {
-          "label": "Providers"
+          "label": "Fournisseurs"
         },
         "tips": {
-          "label": "User Tips"
+          "label": "Conseils d'utilisation"
         },
         "dashboards": {
           "label": "Tableaux de bord"
@@ -766,99 +823,106 @@ define({
     },
     "popups": {
       "tips": {
-        "title": "Filter Tips",
+        "title": "Conseils de filtrage",
         "checkboxes": {
-          "hideall": "Hide All Tips",
-          "productivity": "Show Productivity Tips",
-          "personalization": "Show Personalization Tips",
-          "whereis": "Show Where Is... Tips",
-          "accessibility": "Show Accessibility Tips",
-          "connectivity": "Show Connectivity Tips",
-          "security": "Show Security Tips",
-          "other": "Show Other Tips"
+          "hideall": "Masquer tous les conseils",
+          "productivity": "Afficher les conseils de productivité",
+          "personalization": "Afficher les conseils de personnalisation",
+          "whereis": "Afficher les conseils de localisation",
+          "accessibility": "Afficher les conseils d'accessibilité",
+          "connectivity": "Afficher les conseils de connectivité",
+          "security": "Afficher les conseils de sécurité",
+          "other": "Afficher les autres conseils"
         }
       }
     },
     "tips": {
       "labels": {
         "hideall": {
-          "value": "Hide All"
+          "value": "Tout masquer"
         },
         "productivity": {
-          "value": "Productivity"
+          "value": "Productivité"
         },
         "personalization": {
-          "value": "Personalization"
+          "value": "Personnalisation"
         },
         "whereis": {
-          "value": "Where Is ..."
+          "value": "Localisation"
         },
         "accessibility": {
-          "value": "Accessibility"
+          "value": "Accessibilité"
         },
         "connectivity": {
-          "value": "Connectivity"
+          "value": "Connectivité"
         },
         "security": {
           "value": "Sécurité"
         },
         "other": {
-          "value": "Other"
+          "value": "Autre"
         }
       },
       "cards": {
         "tip0": {
-          "title": "Think \"Search\" Before You Click!",
-          "descriptionHTML": "<p>Finding what you want in one of the provider's Trees, can involve a lot of clicking and scrolling. The <b><i>Search</i></b> field (located at the top of the app), lets you avoid having to do that!</p><p>Even better, clicking on an item in the generated search results, auto-expands the provider Tree to show you where the item is.</p>"
+          "title": "Pensez à la recherche avant de cliquer",
+          "descriptionHTML": "<p>Trouver ce que vous recherchez dans les arborescences de l'un des fournisseurs peut vous demander de nombreux clics et défilements. Le champ <b><i>Rechercher</i></b> (situé en haut de l'application) vous évite tous ces efforts.</p><p>Mieux encore : si vous cliquez sur un élément dans les résultats de recherche générés, l'arborescence du fournisseur est développée automatiquement pour afficher l'emplacement de l'élément.</p>"
         },
         "tip1": {
-          "title": "\"Dashboards\" Are a User's Best Friend",
-          "descriptionHTML": "<p>A <b><i>Dashboard</i></b> lets you define the criteria used to select MBean instances. They function kind of like a View in the database world, allowing you to see all the MBean instances with runtime values that currently meet the criteria.</p><p>Look for the <img src=\"js/jet-composites/wrc-frontend/1.0.0/images/dashboards-tabstrip-icon_24x24.png\" alt=\"New Dashboard Icon\" style=\"height: 24px; width: 24px; vertical-align: middle;\"/> button whenever you''re on a page of the \"Monitoring Tree\", then click it to define a new dashboard. Previously created ones, can be found under the root-level \"Dashboards\" node in the Monitoring Tree.</p>"
+          "title": "Le tableau de bord : le meilleur ami de l'utilisateur",
+          "descriptionHTML": "<p>Un <b><i>tableau de bord</i></b> permet de définir les critères utilisés pour sélectionner les instances de MBean. Il fonctionne un peu comme une vue dans l'univers des bases de données, qui vous montre toutes les instances de MBean avec des valeurs d'exécution qui répondent actuellement aux critères.</p><p>Recherchez le bouton <img src=\"js/jet-composites/wrc-frontend/1.0.0/images/dashboards-tabstrip-icon_24x24.png\" alt=\"New Dashboard Icon\" style=\"height: 24px; width: 24px; vertical-align: middle;\"/> dès que vous vous trouvez sur une page de l'arborescence de la surveillance, puis cliquez dessus pour définir un nouveau tableau de bord. Ceux qui ont déjà été créés sont disponibles sous le noeud Tableaux de bord de niveau racine dans l'arborescence de la surveillance.</p>"
         },
         "tip2": {
-          "title": "Choosing and Arranging Table Columns Using \"Customize Table\"",
-          "descriptionHTML": "<p>The \"Customize this table\" link is now the <i>Customize Table</i> button.</p>"
+          "title": "Sélection et organisation des colonnes de table à l'aide de l'option Personnaliser la table",
+          "descriptionHTML": "<p>Le lien Personnaliser cette table est devenu le bouton <i>Personnaliser la table</i>.</p>"
         },
         "tip3": {
-          "title": "Using the Keyboard With Tables and Actions",
+          "title": "Utilisation du clavier avec les tables et les actions",
           "descriptionHTML": "<p></p>"
         },
         "tip4": {
-          "title": "Where is the \"Customize this table\" Link?",
-          "descriptionHTML": "<p>The \"Customize this table\" link is now the <i>Customize Table</i> button.</p>"
+          "title": "Où se trouve le lien Personnaliser cette table ?",
+          "descriptionHTML": "<p>Le lien Personnaliser cette table est devenu le bouton <i>Personnaliser la table</i>.</p>"
         },
         "tip5": {
-          "title": "Where is the \"Change Center\" Portlet?",
-          "descriptionHTML": "<p>The \"Change Center\" porlet has been replaced with the <i>Shopping Cart Drawer</i>, which has launcher icon in the iconbar when the \"Configuration Tree\" is selected.</p>"
+          "title": "Où se trouve le portlet Centre des modifications ?",
+          "descriptionHTML": "<p>Le portlet Centre des modifications a été remplacé par le <i>tiroir Panier</i>, dont la barre d'icônes comporte une icône de lanceur lorsque l'arborescence de configuration est sélectionnée.</p>"
         },
         "tip6": {
-          "title": "Where is the \"How Do I\" Portlet?",
+          "title": "Où se trouve le portlet Procédure ?",
           "descriptionHTML": "<p></p>"
         },
         "tip7": {
-          "title": "Other Tip #1",
-          "descriptionHTML": "<p>A terse description for \"Other Tip #1\". A newline character is not an HTML element, so you don''t want to use them in this description.</p>"
+          "title": "Autre conseil 1",
+          "descriptionHTML": "<p>Brève description pour Autre conseil 1. Un caractère de retour à la ligne n'étant pas un élément HTML, n'en utilisez pas dans cette description.</p>"
         },
         "tip8": {
-          "title": "Trouble Creating an Admin Server Provider?",
-          "descriptionHTML": "<p>The <a href='#' tabindex='0' on-click data-url='@@docsURL@@reference/troubleshoot/'>Reference -> Troubleshooting</a> section in the WebLogic Remote Console documentation, covers how to resolve connectivity issues caused by environment and network settings.</p><p>If trying those don't lead to a resolution, please post a message to the <b>@weblogic-remote-console</b> slack channel. Screenshots often provide context that aids in issue diagnosis, so include them in the post when possible.</p>"
+          "title": "Un problème avec la création d'un fournisseur de serveur d'administration ?",
+          "descriptionHTML": "<p>La section <a href='#' tabindex='0' on-click data-url='@@docsURL@@reference/troubleshoot/'>Référence -> Dépannage</a> de la documentation de WebLogic Remote Console explique comment résoudre les problèmes de connectivité causés par les paramètres d'environnement et de réseau.</p><p>Si aucune de ces solutions ne mène à une résolution, publiez un message sur le canal Slack <b>@weblogic-remote-console</b>. Les captures d'écran fournissent souvent du contexte, ce qui contribue au diagnostic du problème. Incluez-en dans la publication si possible.</p>"
         },
         "tip9": {
-          "title": "Connectivity Tip #2",
-          "descriptionHTML": "<p>A terse description for \"Connectivity Tip #2\". A newline character is not an HTML element, so you don''t want to use them in this description.</p>"
+          "title": "Conseil de connectivité 2",
+          "descriptionHTML": "<p>Brève description pour Conseil de connectivité 2. Un caractère de retour à la ligne n'étant pas un élément HTML, n'en utilisez pas dans cette description.</p>"
         },
         "tip10": {
-          "title": "Security Tip #1",
-          "descriptionHTML": "<p>A terse description for \"Security Tip #1\". A newline character is not an HTML element, so you don''t want to use them in this description.</p>"
+          "title": "Conseil de sécurité 1",
+          "descriptionHTML": "<p>Brève description pour Conseil de sécurité 1. Un caractère de retour à la ligne n'étant pas un élément HTML, n'en utilisez pas dans cette description.</p>"
         },
         "tip11": {
-          "title": "Think \"Shortcut Keys\" Before You Press Tab!",
-          "descriptionHTML": "<p>\"Shortcut\" (or accelerator) keys allow you to move the focus directly to an area, instead of sighing while repeatedly pressing the <b>Tab</b> and <b>Shift+Tab</b> keys!</p><p>Here's 5 to try out:</p><p><ul><li><code><b>Ctrl+Alt+P</b></code>&nbsp;&nbsp;&nbsp;Opens the <i>Providers Drawer</i>.</li><li><code><b>Ctrl+Alt+N</b></code>&nbsp;&nbsp;&nbsp;Moves the focus to the <i>Provider Tree</i>.</li><li><code><b>Ctrl+Alt+T</b></code>&nbsp;&nbsp;&nbsp;Moves the focus to a table, more precisely the first column header.</li><li><code><b>Ctrl+Alt+|</b></code>&nbsp;&nbsp;&nbsp;Moves the focus to the gripper of the Tree width-resizer. Afterwards, use the <code><b>RightArrow</b></code> and <code><b>LeftArrow</b></code> keys to increase or decrease the width of the Tree.</li><li><code><b>Ctrl+Alt+;</b></code>&nbsp;&nbsp;&nbsp;Moves the focus to a breadcrumb that is a <i>cross-link</i> (if present), or the first clickable breadcrumb label.</li></ul><p>Check out the documentation to see a complete list of the shortcut keys!</p>"
+          "title": "Pensez aux raccourcis clavier avant d'appuyer sur la touche de tabulation",
+          "descriptionHTML": "<p>Les raccourcis clavier vous permettent de déplacer le focus directement sur une zone plutôt que de vous frustrer à appuyer encore et encore sur les touches <b>Tab</b> et <b>Maj+Tab</b>.</p><p>Voici cinq raccourcis à essayer :</p><p><ul><li><code><b>Ctrl+Alt+P</b></code>&nbsp;&nbsp;&nbsp;Ouvre le <i>tiroir Fournisseurs</i>.</li><li><code><b>Ctrl+Alt+N</b></code>&nbsp;&nbsp;&nbsp;Déplace le focus vers l'<i>arborescence du fournisseur</i>.</li><li><code><b>Ctrl+Alt+T</b></code>&nbsp;&nbsp;&nbsp;Déplace le focus vers une table, plus précisément sur l'en-tête de la première colonne.</li><li><code><b>Ctrl+Alt+|</b></code>&nbsp;&nbsp;&nbsp;Déplace le focus vers la poignée de redimensionnement de la largeur de l'arborescence. Ensuite, utilisez les touches <code><b>RightArrow</b></code> et <code><b>LeftArrow</b></code> pour augmenter ou réduire la largeur de l'arborescence.</li><li><code><b>Ctrl+Alt+;</b></code>&nbsp;&nbsp;&nbsp;Déplace le focus vers un chemin de navigation qui est un <i>lien croisé</i> (le cas échéant) ou vers le premier libellé de chemin de navigation sur lequel il est possible de cliquer.</li></ul><p>Pour obtenir la liste complète des raccourcis clavier, reportez-vous à la documentation.</p>"
         }
       }
     }
   },
   "wrc-perspective": {
+    "ariaLabel": {
+      "region": {
+        "breadcrumbs": {
+          "value": "Chemins de navigation"
+        }
+      }
+    },
     "icons": {
       "history": {
         "tooltip": "Historique"
@@ -885,11 +949,11 @@ define({
     "messages": {
       "lostConnection": {
         "summary": "Connexion perdue",
-        "detail": "La connexion au back-end de la console distante a été perdue. Assurez-vous qu'il est en cours d'exécution, ou redémarrez-le et réessayez le lien."
+        "detail": "Connection lost. Please refresh."
       },
       "cannotConnect": {
         "summary": "Echec de la tentative de connexion",
-        "detail": "Impossible de se connecter au domaine WebLogic {0}, vérifiez que WebLogic est en cours d''exécution."
+        "detail": "Impossible de se connecter au domaine WebLogic {0}, vérifiez que WebLogic est en cours d'exécution."
       }
     }
   },
@@ -900,12 +964,33 @@ define({
           "label": "Arborescences"
         },
         "startup-tasks": {
-          "label": "Startup Tasks"
+          "label": "Tâches de démarrage"
+        }
+      }
+    }
+  },
+  "wrc-landing": {
+    "ariaLabel": {
+      "cards": {
+        "panel": {
+          "value": "Page de destination"
+        }
+      },
+      "cardLinks": {
+        "panel": {
+          "value": "Liens de page de destination"
         }
       }
     }
   },
   "wrc-gallery": {
+    "ariaLabel": {
+      "cards": {
+        "panel": {
+          "value": "Arborescences de fournisseur"
+        }
+      }
+    },
     "cards": {
       "configuration": {
         "label": "Modifier l'arborescence",
@@ -938,34 +1023,41 @@ define({
     }
   },
   "wrc-startup-tasks": {
+    "ariaLabel": {
+      "cards": {
+        "panel": {
+          "value": "Tâches de démarrage"
+        }
+      }
+    },
     "cards": {
       "addAdminServer": {
         "label": "Ajouter un fournisseur de connexion au serveur d'administration",
-        "description": "This task creates a project resource that allows you to connect to an Admin Server"
+        "description": "Cette tâche crée une ressource de projet permettant de se connecter à un serveur d'administration"
       },
       "addWdtModel": {
         "label": "Ajouter un fournisseur de fichier de modèle WDT",
-        "description": "This task creates a project resource that allows you to manage a WDT Model file, existing on your local filesystem"
+        "description": "Cette tâche crée une ressource de projet permettant de gérer un fichier de modèle WDT existant sur le système de fichiers local"
       },
       "addWdtComposite": {
         "label": "Ajouter un fournisseur de fichier de modèle de composite WDT",
-        "description": "This task creates a project resource that allows you to manage WDT Model file fragments, existing on your local filesystem"
+        "description": "Cette tâche crée une ressource de projet permettant de gérer des fragments de fichier de modèle WDT existants sur le système de fichiers local"
       },
       "addPropertyList": {
         "label": "Ajouter un fournisseur de liste des propriétés",
-        "description": "This task creates a project resource that allows you to manage a .properties file stored on your local filesystem"
+        "description": "Cette tâche crée une ressource de projet permettant de gérer un fichier .properties stocké sur le système de fichiers local"
       },
       "createWdtModel": {
         "label": "Créer un fournisseur pour le nouveau fichier de modèle WDT",
-        "description": "This task creates a project resource that is a new WDT Model file, stored on your local filesystem"
+        "description": "Cette tâche crée une ressource de projet qui est un nouveau fichier de modèle WDT, stocké sur le système de fichiers local"
       },
       "createPropertyList": {
         "label": "Créer un fournisseur pour la nouvelle liste des propriétés",
-        "description": "This task creates a project resource that is a new .properties file, stored on your local filesystem"
+        "description": "Cette tâche crée une ressource de projet qui est un nouveau fichier .properties, stocké sur le système de fichiers local"
       },
       "importProject": {
         "label": "Importer un projet",
-        "description": "This task loads a previously exported project containing providers immediately ready for you to use or modify"
+        "description": "Cette tâche charge un projet exporté précédemment qui contient des fournisseurs prêts à être utilisés ou modifiés immédiatement"
       }
     }
   },
@@ -1030,34 +1122,18 @@ define({
       },
       "syncInterval": {
         "tooltip": "Définir l'intervalle de rechargement automatique"
-      },
-      "shoppingcart": {
-        "tooltip": "Cliquer ici afin de visualiser les actions pour le panier"
-      }
-    },
-    "menu": {
-      "shoppingcart": {
-        "view": {
-          "label": "Visualiser les modifications"
-        },
-        "discard": {
-          "label": "Annuler les modifications"
-        },
-        "commit": {
-          "label": "Valider les modifications"
-        }
       }
     },
     "instructions": {
       "selectItems": {
-        "value": "Sélectionnez les éléments sur lesquels effectuer l''opération ''{0}''."
+        "value": "Sélectionnez les éléments sur lesquels effectuer l'opération '{0}'."
       }
     },
     "messages": {
       "action": {
         "cannotPerform": {
           "summary": "Message",
-          "detail": "Impossible d''effectuer l''action ''{0}'' lorsque le rechargement automatique est en cours. Cliquez d''abord sur l''icône ''{1}'' pour l''arrêter."
+          "detail": "Impossible d'effectuer l'action '{0}' lorsque le rechargement automatique est en cours. Cliquez d'abord sur l'icône '{1}' pour l'arrêter."
         }
       }
     },
@@ -1083,19 +1159,50 @@ define({
     }
   },
   "wrc-table-customizer": {
-    "labels": {
-      "available": {
-        "value": "Colonnes disponibles"
+    "ariaLabel": {
+      "availableColumns": {
+        "title": {
+          "value": "Colonnes disponibles"
+        },
+        "list": {
+          "value": "Liste des colonnes disponibles"
+        },
+        "listItem": {
+          "value": "Elément de liste des colonnes disponibles"
+        }
       },
-      "selected": {
-        "value": "Colonnes sélectionnées"
-      }
-    },
-    "messages": {
-      "action": {
-        "needAtLeastOneColumn": {
-          "title": "Colonnes insuffisantes",
-          "detail": "Vous devez sélectionner au moins une colonne."
+      "selectedColumns": {
+        "title": {
+          "value": "Colonnes sélectionnées"
+        },
+        "list": {
+          "value": "Liste des colonnes sélectionnées"
+        },
+        "listItem": {
+          "value": "Elément de liste des colonnes sélectionnées"
+        }
+      },
+      "button": {
+        "addToRight": {
+          "value": "Déplacer les éléments sélectionnés de la liste des colonnes disponibles vers la liste des colonnes sélectionnées"
+        },
+        "addAllRight": {
+          "value": "Déplacer tous les éléments de la liste des colonnes disponibles vers la liste des colonnes sélectionnées"
+        },
+        "removeRight": {
+          "value": "Déplacer les éléments sélectionnés de la liste des colonnes sélectionnées vers la liste des colonnes disponibles"
+        },
+        "removeAll": {
+          "value": "Déplacer tous les éléments de la liste des colonnes sélectionnées vers la liste des colonnes disponibles"
+        },
+        "reset": {
+          "value": "Restaurez les colonnes de la liste des colonnes sélectionnées vers celles présentes lors de l'ouverture de l'outil de personnalisation de table."
+        },
+        "apply": {
+          "value": "Appliquer les personnalisations de colonne à la table"
+        },
+        "cancel": {
+          "value": "Annuler toutes les personnalisations de colonne"
         }
       }
     }
@@ -1152,22 +1259,6 @@ define({
       },
       "syncInterval": {
         "tooltip": "Définir l'intervalle de rechargement automatique"
-      },
-      "shoppingcart": {
-        "tooltip": "Cliquer ici afin de visualiser les actions pour le panier"
-      }
-    },
-    "menu": {
-      "shoppingcart": {
-        "view": {
-          "label": "Visualiser les modifications"
-        },
-        "discard": {
-          "label": "Annuler les modifications"
-        },
-        "commit": {
-          "label": "Valider les modifications"
-        }
       }
     }
   },
@@ -1179,7 +1270,7 @@ define({
     },
     "introduction": {
       "toggleHelp": {
-        "text": "Cliquez sur l''icône {0} pour basculer entre l''aide récapitulative et l''aide détaillée."
+        "text": "Cliquez sur l'icône {0} pour basculer entre l'aide récapitulative et l'aide détaillée."
       }
     },
     "messages": {
@@ -1234,7 +1325,7 @@ define({
     "pageState": {
       "error": {
         "summary": "Champs requis incomplets",
-        "detail": "Le champ {0} est requis mais aucune valeur n''a été fournie (ou une valeur non valide est fournie)."
+        "detail": "Le champ {0} est requis mais aucune valeur n'a été fournie (ou une valeur non valide est fournie)."
       }
     }
   },
@@ -1299,7 +1390,7 @@ define({
         "detail": "Certains champs requis ne contiennent aucune donnée."
       },
       "argumentValueHasWrongFormat": {
-        "summary": "Le champ ''{0}'' contient des données au format incorrect."
+        "summary": "Le champ '{0}' contient des données au format incorrect."
       },
       "conditionHasNoArgValues": {
         "summary": "La condition sélectionnée ne comporte aucune valeur d'argument à modifier."
@@ -1320,7 +1411,7 @@ define({
         "value": "Plage : -31 à 31"
       },
       "dateTime": {
-        "value": "Format : y-MM-dd HH:mm:ss [HH:mm:ss] (par exemple, 2006-04-25 00:00:00)"
+        "value": "Format : yyyy-MM-dd [HH:mm:ss [AM|PM]] (par exemple : 2022-02-14 09:00:00 AM)"
       },
       "time": {
         "value": "Format : HH:mm:ss (par exemple, 14:22:47)"
@@ -1402,6 +1493,16 @@ define({
     }
   },
   "wrc-common": {
+    "ariaLabel": {
+      "icons": {
+        "landing": {
+          "value": "Revenez à la page de destination de l'arborescence de fournisseur."
+        },
+        "reset": {
+          "value": "Réinitialiser les valeurs de page"
+        }
+      }
+    },
     "buttons": {
       "action": {
         "label": "Action"
@@ -1530,6 +1631,9 @@ define({
       },
       "recentPages": {
         "value": "Activer/Désactiver la visibilité de l'historique"
+      },
+      "pageInfo": {
+        "value": "Cliquer ici pour attacher et détacher un élément"
       }
     },
     "menu": {
@@ -1549,6 +1653,9 @@ define({
       },
       "error": {
         "value": "Erreur"
+      },
+      "alerts": {
+        "value": "Alertes"
       }
     },
     "placeholders": {
@@ -1563,13 +1670,13 @@ define({
     },
     "messages": {
       "incorrectFileContent": {
-        "detail": "''{0}'' contient des données JSON mais n''est pas une représentation JSON de {1}."
+        "detail": "'{0}' contient des données JSON mais n'est pas une représentation JSON de {1}."
       },
       "dataCopiedToClipboard": {
-        "summary": "Les données ont été copiées dans le presse-papiers."
+        "detail": "Les données ont été copiées dans le presse-papiers."
       },
       "tableCopiedToClipboard": {
-        "summary": "Table was successfully copied to the clipboard!"
+        "summary": "La table a été copiée dans le presse-papiers."
       },
       "emptyCellData": {
         "detail": "Aucune donnée n'a été copiée dans le presse-papiers car la cellule sélectionnée était vide."
@@ -1578,8 +1685,8 @@ define({
         "detail": "Aucune donnée n'a été copiée dans le presse-papiers car la ligne sélectionnée était vide."
       },
       "browserPermissionDenied": {
-        "summary": "Browser Permission Denied",
-        "detail": "You need to enable writing to the clipboard from JavaScript, in order to perform this operation. Also, the Clipboard API is only supported for pages served over HTTPS."
+        "summary": "Droit d'accès au navigateur refusé",
+        "detail": "Vous devez activer l'écriture dans le presse-papiers à partir de JavaScript pour effectuer cette opération. Par ailleurs, l'API Clipboard est prise en charge uniquement pour les pages diffusées sur HTTPS."
       }
     },
     "contextMenus": {
@@ -1591,33 +1698,43 @@ define({
           "label": "Copier la ligne dans le presse-papiers"
         },
         "tableAsText": {
-          "label": "Copy Table to Clipboard (Text)"
+          "label": "Copier la table dans le presse-papiers (texte)"
         },
         "tableAsJSON": {
-          "label": "Copy Table to Clipboard (JSON)"
+          "label": "Copier la table dans le presse-papiers (JSON)"
         },
         "tableAsYAML": {
-          "label": "Copy Table to Clipboard (YAML)"
+          "label": "Copier la table dans le presse-papiers (YAML)"
         }
+      }
+    }
+  },
+  "wrc-navtree-toolbar": {
+    "menu": {
+      "collapseAll": {
+        "value": "Tout réduire"
+      },
+      "useTreeMenusAsRootNodes": {
+        "value": "Utiliser les menus arborescents en tant que noeuds racine"
       }
     }
   },
   "wrc-wdt-form": {
     "messages": {
       "changesSaved": {
-        "summary": "Les modifications ont été enregistrées dans le fichier ''{0}''."
+        "summary": "Les modifications ont été enregistrées dans le fichier '{0}'."
       },
       "changesNotSaved": {
-        "summary": "Impossible d''enregistrer les modifications dans le fichier ''{0}''."
+        "summary": "Impossible d'enregistrer les modifications dans le fichier '{0}'."
       },
       "changesDownloaded": {
-        "summary": "Les modifications ont été téléchargées vers le fichier ''{0}''."
+        "summary": "Les modifications ont été téléchargées vers le fichier '{0}'."
       },
       "changesNotDownloaded": {
-        "summary": "Impossible de télécharger les modifications vers le fichier ''{0}''."
+        "summary": "Impossible de télécharger les modifications vers le fichier '{0}'."
       },
       "verifyPathEntered": {
-        "detail": ". La définition du champ {0} sur False entraîne l''acceptation de la valeur saisie, sans valider son existence en tant que répertoire ou fichier local."
+        "detail": ". La définition du champ {0} sur False entraîne l'acceptation de la valeur saisie, sans valider son existence en tant que répertoire ou fichier local."
       }
     },
     "wdtOptionsDialog": {
@@ -1660,12 +1777,12 @@ define({
           "value": "Voulez-vous enregistrer les modifications avant de quitter le système ?"
         },
         "needDownloading": {
-          "value": "Les modifications apportées à ''{0}'' n''ont pas été téléchargées vers le fichier.<br/><br/>Voulez-vous les télécharger avant de continuer ?"
+          "value": "Les modifications apportées à '{0}' n'ont pas été téléchargées vers le fichier.<br/><br/>Voulez-vous les télécharger avant de continuer ?"
         }
       },
       "uncommitedCreate": {
         "abandonForm": {
-          "value": "La nouvelle instance ''{0}'' n''a pas été ajoutée au modèle WDT.<br/><br/>Voulez-vous l''ajouter avant de continuer ?"
+          "value": "La nouvelle instance '{0}' n'a pas été ajoutée au modèle WDT.<br/><br/>Voulez-vous l'ajouter avant de continuer ?"
         }
       }
     }
@@ -1686,13 +1803,13 @@ define({
       "action": {
         "unableToPerform": {
           "summary": "Message",
-          "detail": "L''appel de back-end de console a généré une réponse ''{0}'' lors de la tentative d''exécution de l''action ''{1}''"
+          "detail": "L'appel de back-end de console a généré une réponse '{0}' lors de la tentative d'exécution de l'action '{1}'"
         },
         "actionNotPerformed": {
-          "detail": "Impossible d''effectuer l''action ''{0}'' sur au moins un des éléments sélectionnés"
+          "detail": "Impossible d'effectuer l'action '{0}' sur au moins un des éléments sélectionnés"
         },
         "actionSucceeded": {
-          "summary": "L''action ''{0}'' a été effectuée."
+          "summary": "L'action '{0}' a été effectuée."
         }
       }
     },
@@ -1706,7 +1823,7 @@ define({
     "dialogs": {
       "cannotBeUndone": {
         "title": "Confirmation de l'action",
-        "prompt": "L''action ''{0}'' ne peut pas être annulée.<br/><br/>Continuer ?"
+        "prompt": "L'action '{0}' ne peut pas être annulée.<br/><br/>Continuer ?"
       }
     }
   },
@@ -1760,7 +1877,7 @@ define({
   "wrc-pdj-crosslinks": {
     "messages": {
       "noNotFoundMessage": {
-        "detail": "''{0}'' n''est pas disponible."
+        "detail": "'{0}' n'est pas disponible."
       }
     }
   },
@@ -1859,6 +1976,16 @@ define({
       }
     }
   },
+  "wrc-confirm-dialogs": {
+    "adminServerShutdown": {
+      "title": {
+        "value": "Confirmation"
+      },
+      "prompt": {
+        "value": "L'arrêt de <b>{0}</b> entraînera la réinitialisation du fournisseur en cours. Voulez-vous continuer ?"
+      }
+    }
+  },
   "wrc-change-manager": {
     "messages": {
       "cannotGetLockState": {
@@ -1887,15 +2014,20 @@ define({
     "messages": {
       "connectionRefused": {
         "summary": "Problème de connexion",
-        "details": "Problème d'envoi et de réception des données du fournisseur. Assurez-vous que ce dernier est accessible et réessayez."
+        "details": "Problème d'envoi et de réception des données du fournisseur. Assurez-vous que ce dernier est accessible avant de continuer."
       },
       "pathNotFound": {
         "summary": "Chemin introuvable",
-        "details": "''{0}'' n''est pas un fichier ni un répertoire accessible sur le système de fichiers local."
+        "details": "'{0}' n'est pas un fichier ni un répertoire accessible sur le système de fichiers local."
       }
     }
   },
   "wrc-message-line": {
+    "ariaLabel": {
+      "region": {
+        "value": "Ligne de message"
+      }
+    },
     "menus": {
       "more": {
         "clear": {
@@ -1910,32 +2042,30 @@ define({
           }
         }
       }
+    },
+    "messages": {
+      "adminServerShutdown": {
+        "details": " Connexion impossible au serveur d'administration du domaine WebLogic."
+      },
+      "shutdownSequenceError": {
+        "details": "Arrêtez les serveurs gérés, puis arrêtez le serveur d'administration."
+      }
     }
   },
   "wrc-alerts": {
     "menus": {
       "alerts": {
         "error": {
-          "value": "You have {0} high-priority error {1}"
+          "value": "Vous avez {0} alerte(s) d'erreur à priorité élevée"
         },
         "warning": {
-          "value": "You have {0} high-priority warning {1}"
+          "value": "Vous avez {0} alerte(s) d'avertissement à priorité élevée"
         },
         "info": {
-          "value": "You have {0} high-priority information {1}"
+          "value": "Vous avez {0} alerte(s) d'information à priorité élevée"
         },
         "view": {
           "value": "Afficher les alertes"
-        }
-      }
-    },
-    "labels": {
-      "alerts": {
-        "singular": {
-          "value": "alert"
-        },
-        "plural": {
-          "value": "alerts"
         }
       }
     }

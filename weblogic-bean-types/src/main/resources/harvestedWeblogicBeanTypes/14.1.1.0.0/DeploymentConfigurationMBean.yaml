@@ -1,4 +1,4 @@
-# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2024, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 actions: [
@@ -103,7 +103,7 @@ properties:
     option in weblogic.Deployer running in a 9.0 or 9.1 installation. You can still
     use the -remote option from weblogic.Deployer in 9.2 or later releases.</p> '
   name: RemoteDeployerEJBEnabled
-  obsolete: 'true'
+  obsolete: ' '
   restartNeeded: true
   supported: false
   type: boolean

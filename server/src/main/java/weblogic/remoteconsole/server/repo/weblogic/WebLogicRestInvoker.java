@@ -1,4 +1,4 @@
-// Copyright (c) 2021, 2023, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2024, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.repo.weblogic;
@@ -188,6 +188,9 @@ public class WebLogicRestInvoker {
     }
     if (Status.BAD_REQUEST.getStatusCode() == status) {
       return response.setUserBadRequest();
+    }
+    if (Status.GATEWAY_TIMEOUT.getStatusCode() == status) {
+      return response.setTimeout();
     }
     LOGGER.warning("Unexpected WebLogic Rest Response status " + status);
     return response.setServiceNotAvailable();

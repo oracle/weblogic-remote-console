@@ -118,7 +118,4 @@ children:
   requiredCapabilities:
   - RealmsSecurityData
 
-# Remove this once WDT offline support is added:
 - name: HealthScore
-  requiredCapabilities:
-  - AdminServerConnection

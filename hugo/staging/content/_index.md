@@ -36,17 +36,19 @@ It's simple to install the WebLogic Remote Console and get up and running within
 
 ***
 ### What's new
-The [current release of the WebLogic Remote Console](https://github.com/oracle/weblogic-remote-console/releases) is 2.4.9. <!--This release was published in March 2024.-->
+The [current release of the WebLogic Remote Console](https://github.com/oracle/weblogic-remote-console/releases) is 2.4.10. <!--This release was published in MONTH 2024.-->
 
-**New features**
-
-* Simplified configuration for application deployment
+<!-- **New features** -->
 
 ***
 
 #### Previous Releases {id="prev_releases"}
-Documentation for prior releases of the WebLogic Remote Console:
+Documentation for previous releases of the WebLogic Remote Console:
+* [2.4.9](2.4.9/)
+* [2.4.8](2.4.8/)
 * [2.4.7](2.4.7/)
+
+{{%expand "Expand to see older releases"%}}
 * [2.4.6](2.4.6/)
 * [2.4.5](2.4.5/)
 * [2.4.4](2.4.4/)
@@ -58,6 +60,7 @@ Documentation for prior releases of the WebLogic Remote Console:
 * [2.1.0](2.1.0/)
 * [2.0.0](2.0.0/)
 * [1.1.0](1.1.0/)
+{{%/expand%}}
 
 #### Need more help? Have a suggestion? Come and say, "Hello!" {id="help"}
 

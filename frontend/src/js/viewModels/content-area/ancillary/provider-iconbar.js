@@ -72,6 +72,12 @@ define([
       if (nodeList !== null) {
         nodeList.forEach((node) => {
           node.setAttribute('tabindex', '0');
+          // Overwrite the "presentation" role that JET assigns to
+          // the <li> tag of a navigation-list item. The role
+          // needs to be "application", in order to tell JAWS
+          // to let the registered KeyUpFocuser control the
+          // keyboard.
+          node.setAttribute('role', 'application');
         });
       }
       return nodeList;

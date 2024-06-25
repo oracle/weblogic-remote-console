@@ -1,4 +1,4 @@
-// Copyright (c) 2021, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2024, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef.yaml;
@@ -64,6 +64,9 @@ class HelpTopicDefImpl implements HelpTopicDef {
       getPageDefImpl().getPageRepoDefImpl().getBeanRepoDefImpl().getMBeansVersion().getWebLogicVersion();
     if (HelpTopicDefSource.Type.edocs.equals(type)) {
       return version.getEdocsHelpTopicUrl(relativeHref);
+    }
+    if (HelpTopicDefSource.Type.CoherenceEdocs.equals(type)) {
+      return version.getCoherenceEdocsHelpTopicUrl(relativeHref);
     }
     if (HelpTopicDefSource.Type.generic.equals(type)) {
       return version.getGenericHelpTopicUrl(relativeHref);
