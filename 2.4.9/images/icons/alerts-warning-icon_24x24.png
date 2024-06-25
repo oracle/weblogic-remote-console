@@ -1,0 +1,361 @@
+
+
+
+
+<!DOCTYPE html>
+<html class="with-top-bar" lang="en">
+<head prefix="og: http://ogp.me/ns#">
+<meta charset="utf-8">
+<meta content="IE=edge" http-equiv="X-UA-Compatible">
+<meta content="width=device-width, initial-scale=1" name="viewport">
+<title>frontend/src/js/jet-composites/wrc-frontend/images/alerts-warning-icon_24x24.png · 6290a8c9e72603cadd4de1936e09c962ce328dc7 · weblogic / console-backend · GitLab</title>
+<script>
+//<![CDATA[
+window.gon={};gon.features={"highlightJsWorker":false,"explainCodeChat":false,"remoteDevelopmentFeatureFlag":true};gon.licensed_features={"fileLocks":true,"remoteDevelopment":true};
+//]]>
+</script>
+<script>
+//<![CDATA[
+window.uploads_path = "/weblogic/console-backend/uploads";
+
+
+
+//]]>
+</script>
+<script>
+//<![CDATA[
+var gl = window.gl || {};
+gl.startup_calls = {"/weblogic/console-backend/-/blob/6290a8c9e72603cadd4de1936e09c962ce328dc7/frontend/src/js/jet-composites/wrc-frontend/images/alerts-warning-icon_24x24.png?format=json\u0026viewer=rich":{}};
+gl.startup_graphql_calls = [{"query":"query getBlobInfo(\n  $projectPath: ID!\n  $filePath: String!\n  $ref: String!\n  $refType: RefType\n  $shouldFetchRawText: Boolean!\n) {\n  project(fullPath: $projectPath) {\n    __typename\n    id\n    repository {\n      __typename\n      empty\n      blobs(paths: [$filePath], ref: $ref, refType: $refType) {\n        __typename\n        nodes {\n          __typename\n          id\n          webPath\n          name\n          size\n          rawSize\n          rawTextBlob @include(if: $shouldFetchRawText)\n          fileType\n          language\n          path\n          blamePath\n          editBlobPath\n          gitpodBlobUrl\n          ideEditPath\n          forkAndEditPath\n          ideForkAndEditPath\n          codeNavigationPath\n          projectBlobPathRoot\n          forkAndViewPath\n          environmentFormattedExternalUrl\n          environmentExternalUrlForRouteMap\n          canModifyBlob\n          canCurrentUserPushToBranch\n          archived\n          storedExternally\n          externalStorage\n          externalStorageUrl\n          rawPath\n          replacePath\n          pipelineEditorPath\n          simpleViewer {\n            fileType\n            tooLarge\n            type\n            renderError\n          }\n          richViewer {\n            fileType\n            tooLarge\n            type\n            renderError\n          }\n        }\n      }\n    }\n  }\n}\n","variables":{"projectPath":"weblogic/console-backend","ref":"6290a8c9e72603cadd4de1936e09c962ce328dc7","refType":"","filePath":"frontend/src/js/jet-composites/wrc-frontend/images/alerts-warning-icon_24x24.png","shouldFetchRawText":false}}];
+
+if (gl.startup_calls && window.fetch) {
+  Object.keys(gl.startup_calls).forEach(apiCall => {
+   gl.startup_calls[apiCall] = {
+      fetchCall: fetch(apiCall, {
+        // Emulate XHR for Rails AJAX request checks
+        headers: {
+          'X-Requested-With': 'XMLHttpRequest'
+        },
+        // fetch won’t send cookies in older browsers, unless you set the credentials init option.
+        // We set to `same-origin` which is default value in modern browsers.
+        // See https://github.com/whatwg/fetch/pull/585 for more information.
+        credentials: 'same-origin'
+      })
+    };
+  });
+}
+if (gl.startup_graphql_calls && window.fetch) {
+  const headers = {"X-CSRF-Token":"Lq28QCDAXmsZDJOksoCJ8EpLSaj3jiooF-iP4dxXV6yP_V6Qe9CUoOgouLNIhLyPCp65X_wDuUG39G_6NqmLsg","x-gitlab-feature-category":"source_code_management"};
+  const url = `https://gitlab-odx.oracledx.com/api/graphql`
+
+  const opts = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      ...headers,
+    }
+  };
+
+  gl.startup_graphql_calls = gl.startup_graphql_calls.map(call => ({
+    ...call,
+    fetchCall: fetch(url, {
+      ...opts,
+      credentials: 'same-origin',
+      body: JSON.stringify(call)
+    })
+  }))
+}
+
+
+//]]>
+</script>
+
+<link rel="prefetch" href="/assets/webpack/monaco.a7e8a4cd.chunk.js">
+<link rel="stylesheet" href="/assets/themes/theme_indigo-9413d12b12f2ab808346b6fc5ad44cb10533887e4df7b486bcf3f200efff3617.css" />
+
+<link rel="stylesheet" href="/assets/application-7649badc780fc4e44c1b7063c6153b3c216a5f6f0d7907eed714fac2a39ede73.css" media="all" />
+<link rel="stylesheet" href="/assets/page_bundles/tree-f6d6069fc478c6f7631a961ef1c149fc1885bb5819d7e93642830f3f2bded7d7.css" media="all" /><link rel="stylesheet" href="/assets/page_bundles/projects-9a0698fac8c60282753871dd778e9cfd442b779599f8a45e6df5ed48649eede7.css" media="all" />
+<link rel="stylesheet" href="/assets/application_utilities-05e2012e2a742859447cb4d3ec92e80ea1e1bd54011a11e0a33c62e41f8bec72.css" media="all" />
+
+
+<link rel="stylesheet" href="/assets/fonts-115c4704cb8c77e2fdf3fd0243eebf164e2e9b54bbab7bf6a4c14868b865ddf8.css" media="all" />
+<link rel="stylesheet" href="/assets/highlight/themes/white-5d96a14c91e48ab1e99718ce1647378867a0495323d816f3a9704562a4e2ce7c.css" media="all" />
+
+
+<link rel="preload" href="/assets/application_utilities-05e2012e2a742859447cb4d3ec92e80ea1e1bd54011a11e0a33c62e41f8bec72.css" as="style" type="text/css">
+<link rel="preload" href="/assets/application-7649badc780fc4e44c1b7063c6153b3c216a5f6f0d7907eed714fac2a39ede73.css" as="style" type="text/css">
+<link rel="preload" href="/assets/highlight/themes/white-5d96a14c91e48ab1e99718ce1647378867a0495323d816f3a9704562a4e2ce7c.css" as="style" type="text/css">
+
+
+
+
+
+<script src="/assets/webpack/runtime.7387ab20.bundle.js" defer="defer"></script>
+<script src="/assets/webpack/main.608dc9b8.chunk.js" defer="defer"></script>
+<script src="/assets/webpack/commons-pages.search.show-super_sidebar.2f4bc23b.chunk.js" defer="defer"></script>
+<script src="/assets/webpack/super_sidebar.98356532.chunk.js" defer="defer"></script>
+<script src="/assets/webpack/shortcutsBundle.36c6f9b3.chunk.js" defer="defer"></script>
+<script src="/assets/webpack/commons-pages.groups.boards-pages.groups.details-pages.groups.epic_boards-pages.groups.show-pages.gr-f37b13cd.480d4e61.chunk.js" defer="defer"></script>
+<script src="/assets/webpack/commons-pages.admin.runners.show-pages.groups.achievements-pages.groups.analytics.dashboards-pages.g-9acac2be.fa452e74.chunk.js" defer="defer"></script>
+<script src="/assets/webpack/commons-pages.admin.subscriptions.show-pages.groups.security.policies.edit-pages.groups.security.pol-6bfecbfa.afa4ca53.chunk.js" defer="defer"></script>
+<script src="/assets/webpack/commons-pages.projects.blob.show-pages.projects.show-pages.projects.snippets.edit-pages.projects.sni-42df7d4c.a1a732ab.chunk.js" defer="defer"></script>
+<script src="/assets/webpack/98.48c0c185.chunk.js" defer="defer"></script>
+<script src="/assets/webpack/commons-pages.projects.blob.show-pages.projects.show-pages.projects.snippets.show-pages.projects.tre-c684fcf6.98710d1d.chunk.js" defer="defer"></script>
+<script src="/assets/webpack/118.e4d40ac2.chunk.js" defer="defer"></script>
+<script src="/assets/webpack/commons-pages.groups.show-pages.projects.blob.show-pages.projects.show-pages.projects.tree.show.37099439.chunk.js" defer="defer"></script>
+<script src="/assets/webpack/commons-pages.projects.blob.show-pages.projects.show-pages.projects.tree.show.e90e6604.chunk.js" defer="defer"></script>
+<script src="/assets/webpack/commons-pages.projects.blob.show-pages.projects.tree.show-treeList.97625829.chunk.js" defer="defer"></script>
+<script src="/assets/webpack/pages.projects.blob.show.0e2597e4.chunk.js" defer="defer"></script>
+<meta content="object" property="og:type">
+<meta content="GitLab" property="og:site_name">
+<meta content="frontend/src/js/jet-composites/wrc-frontend/images/alerts-warning-icon_24x24.png · 6290a8c9e72603cadd4de1936e09c962ce328dc7 · weblogic / console-backend · GitLab" property="og:title">
+<meta content="The WebLogic Remote Console" property="og:description">
+<meta content="https://gitlab-odx.oracledx.com/assets/twitter_card-570ddb06edf56a2312253c5872489847a0f385112ddbcd71ccfa1570febab5d2.jpg" property="og:image">
+<meta content="64" property="og:image:width">
+<meta content="64" property="og:image:height">
+<meta content="https://gitlab-odx.oracledx.com/weblogic/console-backend/-/blob/6290a8c9e72603cadd4de1936e09c962ce328dc7/frontend/src/js/jet-composites/wrc-frontend/images/alerts-warning-icon_24x24.png" property="og:url">
+<meta content="summary" property="twitter:card">
+<meta content="frontend/src/js/jet-composites/wrc-frontend/images/alerts-warning-icon_24x24.png · 6290a8c9e72603cadd4de1936e09c962ce328dc7 · weblogic / console-backend · GitLab" property="twitter:title">
+<meta content="The WebLogic Remote Console" property="twitter:description">
+<meta content="https://gitlab-odx.oracledx.com/assets/twitter_card-570ddb06edf56a2312253c5872489847a0f385112ddbcd71ccfa1570febab5d2.jpg" property="twitter:image">
+
+<meta name="csrf-param" content="authenticity_token" />
+<meta name="csrf-token" content="EU6G0RwBj2543ZNYbPBdwQ49gxasxdhZWDs6x7jbErewHmQBRxFFpYn5uE-W9Gi-Tuhz4adISzD4J9rcUiXOqQ" />
+<meta name="csp-nonce" />
+<meta name="action-cable-url" content="/-/cable" />
+<link href="/-/manifest.json" rel="manifest">
+<link rel="icon" type="image/png" href="/assets/favicon-72a2cad5025aa931d6ea56c3201d1f18e68a8cd39788c7c80d5b2b82aa5143ef.png" id="favicon" data-original-href="/assets/favicon-72a2cad5025aa931d6ea56c3201d1f18e68a8cd39788c7c80d5b2b82aa5143ef.png" />
+<link rel="apple-touch-icon" type="image/x-icon" href="/assets/apple-touch-icon-b049d4bc0dd9626f31db825d61880737befc7835982586d015bded10b4435460.png" />
+<link href="/search/opensearch.xml" rel="search" title="Search GitLab" type="application/opensearchdescription+xml">
+
+
+
+
+<meta content="The WebLogic Remote Console" name="description">
+<meta content="#222261" name="theme-color">
+</head>
+
+<body class="ui-indigo tab-width-8 gl-browser-firefox gl-platform-mac" data-find-file="/weblogic/console-backend/-/find_file/6290a8c9e72603cadd4de1936e09c962ce328dc7" data-group="weblogic" data-group-full-path="weblogic" data-namespace-id="930" data-page="projects:blob:show" data-page-type-id="6290a8c9e72603cadd4de1936e09c962ce328dc7/frontend/src/js/jet-composites/wrc-frontend/images/alerts-warning-icon_24x24.png" data-project="console-backend" data-project-id="3232">
+
+<script>
+//<![CDATA[
+gl = window.gl || {};
+gl.client = {"isFirefox":true,"isMac":true};
+
+
+//]]>
+</script>
+
+
+
+<div class="layout-page hide-when-top-nav-responsive-open page-with-super-sidebar">
+<aside class="js-super-sidebar super-sidebar super-sidebar-loading" data-command-palette="{&quot;project_files_url&quot;:&quot;/weblogic/console-backend/-/files/main?format=json&quot;,&quot;project_blob_url&quot;:&quot;/weblogic/console-backend/-/blob/main&quot;}" data-force-desktop-expanded-sidebar="" data-root-path="/" data-sidebar="{&quot;is_logged_in&quot;:true,&quot;context_switcher_links&quot;:[{&quot;title&quot;:&quot;Your work&quot;,&quot;link&quot;:&quot;/&quot;,&quot;icon&quot;:&quot;work&quot;},{&quot;title&quot;:&quot;Explore&quot;,&quot;link&quot;:&quot;/explore&quot;,&quot;icon&quot;:&quot;compass&quot;}],&quot;current_menu_items&quot;:[{&quot;id&quot;:&quot;project_overview&quot;,&quot;title&quot;:&quot;console-backend&quot;,&quot;icon&quot;:null,&quot;avatar&quot;:null,&quot;entity_id&quot;:3232,&quot;link&quot;:&quot;/weblogic/console-backend&quot;,&quot;pill_count&quot;:null,&quot;link_classes&quot;:&quot;shortcuts-project rspec-project-link&quot;,&quot;is_active&quot;:false},{&quot;title&quot;:&quot;Manage&quot;,&quot;icon&quot;:&quot;users&quot;,&quot;avatar&quot;:null,&quot;avatar_shape&quot;:&quot;rect&quot;,&quot;entity_id&quot;:null,&quot;link&quot;:&quot;/weblogic/console-backend/activity&quot;,&quot;is_active&quot;:false,&quot;pill_count&quot;:null,&quot;items&quot;:[{&quot;id&quot;:&quot;activity&quot;,&quot;title&quot;:&quot;Activity&quot;,&quot;icon&quot;:null,&quot;avatar&quot;:null,&quot;entity_id&quot;:null,&quot;link&quot;:&quot;/weblogic/console-backend/activity&quot;,&quot;pill_count&quot;:null,&quot;link_classes&quot;:&quot;shortcuts-project-activity&quot;,&quot;is_active&quot;:false},{&quot;id&quot;:&quot;members&quot;,&quot;title&quot;:&quot;Members&quot;,&quot;icon&quot;:null,&quot;avatar&quot;:null,&quot;entity_id&quot;:null,&quot;link&quot;:&quot;/weblogic/console-backend/-/project_members&quot;,&quot;pill_count&quot;:null,&quot;link_classes&quot;:null,&quot;is_active&quot;:false},{&quot;id&quot;:&quot;labels&quot;,&quot;title&quot;:&quot;Labels&quot;,&quot;icon&quot;:null,&quot;avatar&quot;:null,&quot;entity_id&quot;:null,&quot;link&quot;:&quot;/weblogic/console-backend/-/labels&quot;,&quot;pill_count&quot;:null,&quot;link_classes&quot;:null,&quot;is_active&quot;:false}],&quot;separated&quot;:false},{&quot;title&quot;:&quot;Plan&quot;,&quot;icon&quot;:&quot;planning&quot;,&quot;avatar&quot;:null,&quot;avatar_shape&quot;:&quot;rect&quot;,&quot;entity_id&quot;:null,&quot;link&quot;:&quot;/weblogic/console-backend/-/wikis/home&quot;,&quot;is_active&quot;:false,&quot;pill_count&quot;:null,&quot;items&quot;:[{&quot;id&quot;:&quot;project_wiki&quot;,&quot;title&quot;:&quot;Wiki&quot;,&quot;icon&quot;:null,&quot;avatar&quot;:null,&quot;entity_id&quot;:null,&quot;link&quot;:&quot;/weblogic/console-backend/-/wikis/home&quot;,&quot;pill_count&quot;:null,&quot;link_classes&quot;:&quot;shortcuts-wiki&quot;,&quot;is_active&quot;:false}],&quot;separated&quot;:false},{&quot;title&quot;:&quot;Code&quot;,&quot;icon&quot;:&quot;code&quot;,&quot;avatar&quot;:null,&quot;avatar_shape&quot;:&quot;rect&quot;,&quot;entity_id&quot;:null,&quot;link&quot;:&quot;/weblogic/console-backend/-/merge_requests&quot;,&quot;is_active&quot;:true,&quot;pill_count&quot;:null,&quot;items&quot;:[{&quot;id&quot;:&quot;project_merge_request_list&quot;,&quot;title&quot;:&quot;Merge requests&quot;,&quot;icon&quot;:null,&quot;avatar&quot;:null,&quot;entity_id&quot;:null,&quot;link&quot;:&quot;/weblogic/console-backend/-/merge_requests&quot;,&quot;pill_count&quot;:&quot;4&quot;,&quot;link_classes&quot;:&quot;shortcuts-merge_requests&quot;,&quot;is_active&quot;:false},{&quot;id&quot;:&quot;files&quot;,&quot;title&quot;:&quot;Repository&quot;,&quot;icon&quot;:null,&quot;avatar&quot;:null,&quot;entity_id&quot;:null,&quot;link&quot;:&quot;/weblogic/console-backend/-/tree/6290a8c9e72603cadd4de1936e09c962ce328dc7&quot;,&quot;pill_count&quot;:null,&quot;link_classes&quot;:&quot;shortcuts-tree&quot;,&quot;is_active&quot;:true},{&quot;id&quot;:&quot;branches&quot;,&quot;title&quot;:&quot;Branches&quot;,&quot;icon&quot;:null,&quot;avatar&quot;:null,&quot;entity_id&quot;:null,&quot;link&quot;:&quot;/weblogic/console-backend/-/branches&quot;,&quot;pill_count&quot;:null,&quot;link_classes&quot;:null,&quot;is_active&quot;:false},{&quot;id&quot;:&quot;commits&quot;,&quot;title&quot;:&quot;Commits&quot;,&quot;icon&quot;:null,&quot;avatar&quot;:null,&quot;entity_id&quot;:null,&quot;link&quot;:&quot;/weblogic/console-backend/-/commits/6290a8c9e72603cadd4de1936e09c962ce328dc7&quot;,&quot;pill_count&quot;:null,&quot;link_classes&quot;:&quot;shortcuts-commits&quot;,&quot;is_active&quot;:false},{&quot;id&quot;:&quot;tags&quot;,&quot;title&quot;:&quot;Tags&quot;,&quot;icon&quot;:null,&quot;avatar&quot;:null,&quot;entity_id&quot;:null,&quot;link&quot;:&quot;/weblogic/console-backend/-/tags&quot;,&quot;pill_count&quot;:null,&quot;link_classes&quot;:null,&quot;is_active&quot;:false},{&quot;id&quot;:&quot;graphs&quot;,&quot;title&quot;:&quot;Repository graph&quot;,&quot;icon&quot;:null,&quot;avatar&quot;:null,&quot;entity_id&quot;:null,&quot;link&quot;:&quot;/weblogic/console-backend/-/network/6290a8c9e72603cadd4de1936e09c962ce328dc7&quot;,&quot;pill_count&quot;:null,&quot;link_classes&quot;:&quot;shortcuts-network&quot;,&quot;is_active&quot;:false},{&quot;id&quot;:&quot;compare&quot;,&quot;title&quot;:&quot;Compare revisions&quot;,&quot;icon&quot;:null,&quot;avatar&quot;:null,&quot;entity_id&quot;:null,&quot;link&quot;:&quot;/weblogic/console-backend/-/compare?from=main\u0026to=6290a8c9e72603cadd4de1936e09c962ce328dc7&quot;,&quot;pill_count&quot;:null,&quot;link_classes&quot;:null,&quot;is_active&quot;:false},{&quot;id&quot;:&quot;project_snippets&quot;,&quot;title&quot;:&quot;Snippets&quot;,&quot;icon&quot;:null,&quot;avatar&quot;:null,&quot;entity_id&quot;:null,&quot;link&quot;:&quot;/weblogic/console-backend/-/snippets&quot;,&quot;pill_count&quot;:null,&quot;link_classes&quot;:&quot;shortcuts-snippets&quot;,&quot;is_active&quot;:false},{&quot;id&quot;:&quot;file_locks&quot;,&quot;title&quot;:&quot;Locked files&quot;,&quot;icon&quot;:null,&quot;avatar&quot;:null,&quot;entity_id&quot;:null,&quot;link&quot;:&quot;/weblogic/console-backend/path_locks&quot;,&quot;pill_count&quot;:null,&quot;link_classes&quot;:null,&quot;is_active&quot;:false}],&quot;separated&quot;:false},{&quot;title&quot;:&quot;Build&quot;,&quot;icon&quot;:&quot;rocket&quot;,&quot;avatar&quot;:null,&quot;avatar_shape&quot;:&quot;rect&quot;,&quot;entity_id&quot;:null,&quot;link&quot;:&quot;/weblogic/console-backend/-/pipelines&quot;,&quot;is_active&quot;:false,&quot;pill_count&quot;:null,&quot;items&quot;:[{&quot;id&quot;:&quot;pipelines&quot;,&quot;title&quot;:&quot;Pipelines&quot;,&quot;icon&quot;:null,&quot;avatar&quot;:null,&quot;entity_id&quot;:null,&quot;link&quot;:&quot;/weblogic/console-backend/-/pipelines&quot;,&quot;pill_count&quot;:null,&quot;link_classes&quot;:&quot;shortcuts-pipelines&quot;,&quot;is_active&quot;:false},{&quot;id&quot;:&quot;jobs&quot;,&quot;title&quot;:&quot;Jobs&quot;,&quot;icon&quot;:null,&quot;avatar&quot;:null,&quot;entity_id&quot;:null,&quot;link&quot;:&quot;/weblogic/console-backend/-/jobs&quot;,&quot;pill_count&quot;:null,&quot;link_classes&quot;:&quot;shortcuts-builds&quot;,&quot;is_active&quot;:false},{&quot;id&quot;:&quot;pipelines_editor&quot;,&quot;title&quot;:&quot;Pipeline editor&quot;,&quot;icon&quot;:null,&quot;avatar&quot;:null,&quot;entity_id&quot;:null,&quot;link&quot;:&quot;/weblogic/console-backend/-/ci/editor?branch_name=6290a8c9e72603cadd4de1936e09c962ce328dc7&quot;,&quot;pill_count&quot;:null,&quot;link_classes&quot;:null,&quot;is_active&quot;:false},{&quot;id&quot;:&quot;pipeline_schedules&quot;,&quot;title&quot;:&quot;Pipeline schedules&quot;,&quot;icon&quot;:null,&quot;avatar&quot;:null,&quot;entity_id&quot;:null,&quot;link&quot;:&quot;/weblogic/console-backend/-/pipeline_schedules&quot;,&quot;pill_count&quot;:null,&quot;link_classes&quot;:&quot;shortcuts-builds&quot;,&quot;is_active&quot;:false},{&quot;id&quot;:&quot;artifacts&quot;,&quot;title&quot;:&quot;Artifacts&quot;,&quot;icon&quot;:null,&quot;avatar&quot;:null,&quot;entity_id&quot;:null,&quot;link&quot;:&quot;/weblogic/console-backend/-/artifacts&quot;,&quot;pill_count&quot;:null,&quot;link_classes&quot;:&quot;shortcuts-builds&quot;,&quot;is_active&quot;:false}],&quot;separated&quot;:false},{&quot;title&quot;:&quot;Secure&quot;,&quot;icon&quot;:&quot;shield&quot;,&quot;avatar&quot;:null,&quot;avatar_shape&quot;:&quot;rect&quot;,&quot;entity_id&quot;:null,&quot;link&quot;:&quot;/weblogic/console-backend/-/audit_events&quot;,&quot;is_active&quot;:false,&quot;pill_count&quot;:null,&quot;items&quot;:[{&quot;id&quot;:&quot;audit_events&quot;,&quot;title&quot;:&quot;Audit events&quot;,&quot;icon&quot;:null,&quot;avatar&quot;:null,&quot;entity_id&quot;:null,&quot;link&quot;:&quot;/weblogic/console-backend/-/audit_events&quot;,&quot;pill_count&quot;:null,&quot;link_classes&quot;:null,&quot;is_active&quot;:false},{&quot;id&quot;:&quot;configuration&quot;,&quot;title&quot;:&quot;Security configuration&quot;,&quot;icon&quot;:null,&quot;avatar&quot;:null,&quot;entity_id&quot;:null,&quot;link&quot;:&quot;/weblogic/console-backend/-/security/configuration&quot;,&quot;pill_count&quot;:null,&quot;link_classes&quot;:null,&quot;is_active&quot;:false}],&quot;separated&quot;:false},{&quot;title&quot;:&quot;Deploy&quot;,&quot;icon&quot;:&quot;deployments&quot;,&quot;avatar&quot;:null,&quot;avatar_shape&quot;:&quot;rect&quot;,&quot;entity_id&quot;:null,&quot;link&quot;:&quot;/weblogic/console-backend/-/releases&quot;,&quot;is_active&quot;:false,&quot;pill_count&quot;:null,&quot;items&quot;:[{&quot;id&quot;:&quot;releases&quot;,&quot;title&quot;:&quot;Releases&quot;,&quot;icon&quot;:null,&quot;avatar&quot;:null,&quot;entity_id&quot;:null,&quot;link&quot;:&quot;/weblogic/console-backend/-/releases&quot;,&quot;pill_count&quot;:null,&quot;link_classes&quot;:&quot;shortcuts-deployments-releases&quot;,&quot;is_active&quot;:false},{&quot;id&quot;:&quot;feature_flags&quot;,&quot;title&quot;:&quot;Feature flags&quot;,&quot;icon&quot;:null,&quot;avatar&quot;:null,&quot;entity_id&quot;:null,&quot;link&quot;:&quot;/weblogic/console-backend/-/feature_flags&quot;,&quot;pill_count&quot;:null,&quot;link_classes&quot;:&quot;shortcuts-feature-flags&quot;,&quot;is_active&quot;:false},{&quot;id&quot;:&quot;packages_registry&quot;,&quot;title&quot;:&quot;Package Registry&quot;,&quot;icon&quot;:null,&quot;avatar&quot;:null,&quot;entity_id&quot;:null,&quot;link&quot;:&quot;/weblogic/console-backend/-/packages&quot;,&quot;pill_count&quot;:null,&quot;link_classes&quot;:&quot;shortcuts-container-registry&quot;,&quot;is_active&quot;:false}],&quot;separated&quot;:false},{&quot;title&quot;:&quot;Operate&quot;,&quot;icon&quot;:&quot;cloud-pod&quot;,&quot;avatar&quot;:null,&quot;avatar_shape&quot;:&quot;rect&quot;,&quot;entity_id&quot;:null,&quot;link&quot;:&quot;/weblogic/console-backend/-/environments&quot;,&quot;is_active&quot;:false,&quot;pill_count&quot;:null,&quot;items&quot;:[{&quot;id&quot;:&quot;environments&quot;,&quot;title&quot;:&quot;Environments&quot;,&quot;icon&quot;:null,&quot;avatar&quot;:null,&quot;entity_id&quot;:null,&quot;link&quot;:&quot;/weblogic/console-backend/-/environments&quot;,&quot;pill_count&quot;:null,&quot;link_classes&quot;:&quot;shortcuts-environments&quot;,&quot;is_active&quot;:false},{&quot;id&quot;:&quot;kubernetes&quot;,&quot;title&quot;:&quot;Kubernetes clusters&quot;,&quot;icon&quot;:null,&quot;avatar&quot;:null,&quot;entity_id&quot;:null,&quot;link&quot;:&quot;/weblogic/console-backend/-/clusters&quot;,&quot;pill_count&quot;:null,&quot;link_classes&quot;:&quot;shortcuts-kubernetes&quot;,&quot;is_active&quot;:false},{&quot;id&quot;:&quot;terraform_states&quot;,&quot;title&quot;:&quot;Terraform states&quot;,&quot;icon&quot;:null,&quot;avatar&quot;:null,&quot;entity_id&quot;:null,&quot;link&quot;:&quot;/weblogic/console-backend/-/terraform&quot;,&quot;pill_count&quot;:null,&quot;link_classes&quot;:null,&quot;is_active&quot;:false},{&quot;id&quot;:&quot;infrastructure_registry&quot;,&quot;title&quot;:&quot;Terraform modules&quot;,&quot;icon&quot;:null,&quot;avatar&quot;:null,&quot;entity_id&quot;:null,&quot;link&quot;:&quot;/weblogic/console-backend/-/infrastructure_registry&quot;,&quot;pill_count&quot;:null,&quot;link_classes&quot;:null,&quot;is_active&quot;:false}],&quot;separated&quot;:false},{&quot;title&quot;:&quot;Monitor&quot;,&quot;icon&quot;:&quot;monitor&quot;,&quot;avatar&quot;:null,&quot;avatar_shape&quot;:&quot;rect&quot;,&quot;entity_id&quot;:null,&quot;link&quot;:&quot;/weblogic/console-backend/-/error_tracking&quot;,&quot;is_active&quot;:false,&quot;pill_count&quot;:null,&quot;items&quot;:[{&quot;id&quot;:&quot;error_tracking&quot;,&quot;title&quot;:&quot;Error Tracking&quot;,&quot;icon&quot;:null,&quot;avatar&quot;:null,&quot;entity_id&quot;:null,&quot;link&quot;:&quot;/weblogic/console-backend/-/error_tracking&quot;,&quot;pill_count&quot;:null,&quot;link_classes&quot;:null,&quot;is_active&quot;:false},{&quot;id&quot;:&quot;alert_management&quot;,&quot;title&quot;:&quot;Alerts&quot;,&quot;icon&quot;:null,&quot;avatar&quot;:null,&quot;entity_id&quot;:null,&quot;link&quot;:&quot;/weblogic/console-backend/-/alert_management&quot;,&quot;pill_count&quot;:null,&quot;link_classes&quot;:null,&quot;is_active&quot;:false},{&quot;id&quot;:&quot;on_call_schedules&quot;,&quot;title&quot;:&quot;On-call Schedules&quot;,&quot;icon&quot;:null,&quot;avatar&quot;:null,&quot;entity_id&quot;:null,&quot;link&quot;:&quot;/weblogic/console-backend/-/oncall_schedules&quot;,&quot;pill_count&quot;:null,&quot;link_classes&quot;:null,&quot;is_active&quot;:false},{&quot;id&quot;:&quot;escalation_policies&quot;,&quot;title&quot;:&quot;Escalation Policies&quot;,&quot;icon&quot;:null,&quot;avatar&quot;:null,&quot;entity_id&quot;:null,&quot;link&quot;:&quot;/weblogic/console-backend/-/escalation_policies&quot;,&quot;pill_count&quot;:null,&quot;link_classes&quot;:null,&quot;is_active&quot;:false}],&quot;separated&quot;:false},{&quot;title&quot;:&quot;Analyze&quot;,&quot;icon&quot;:&quot;chart&quot;,&quot;avatar&quot;:null,&quot;avatar_shape&quot;:&quot;rect&quot;,&quot;entity_id&quot;:null,&quot;link&quot;:&quot;/weblogic/console-backend/-/value_stream_analytics&quot;,&quot;is_active&quot;:false,&quot;pill_count&quot;:null,&quot;items&quot;:[{&quot;id&quot;:&quot;cycle_analytics&quot;,&quot;title&quot;:&quot;Value stream analytics&quot;,&quot;icon&quot;:null,&quot;avatar&quot;:null,&quot;entity_id&quot;:null,&quot;link&quot;:&quot;/weblogic/console-backend/-/value_stream_analytics&quot;,&quot;pill_count&quot;:null,&quot;link_classes&quot;:&quot;shortcuts-project-cycle-analytics&quot;,&quot;is_active&quot;:false},{&quot;id&quot;:&quot;contributors&quot;,&quot;title&quot;:&quot;Contributor statistics&quot;,&quot;icon&quot;:null,&quot;avatar&quot;:null,&quot;entity_id&quot;:null,&quot;link&quot;:&quot;/weblogic/console-backend/-/graphs/6290a8c9e72603cadd4de1936e09c962ce328dc7&quot;,&quot;pill_count&quot;:null,&quot;link_classes&quot;:null,&quot;is_active&quot;:false},{&quot;id&quot;:&quot;ci_cd_analytics&quot;,&quot;title&quot;:&quot;CI/CD analytics&quot;,&quot;icon&quot;:null,&quot;avatar&quot;:null,&quot;entity_id&quot;:null,&quot;link&quot;:&quot;/weblogic/console-backend/-/pipelines/charts&quot;,&quot;pill_count&quot;:null,&quot;link_classes&quot;:null,&quot;is_active&quot;:false},{&quot;id&quot;:&quot;repository_analytics&quot;,&quot;title&quot;:&quot;Repository analytics&quot;,&quot;icon&quot;:null,&quot;avatar&quot;:null,&quot;entity_id&quot;:null,&quot;link&quot;:&quot;/weblogic/console-backend/-/graphs/6290a8c9e72603cadd4de1936e09c962ce328dc7/charts&quot;,&quot;pill_count&quot;:null,&quot;link_classes&quot;:&quot;shortcuts-repository-charts&quot;,&quot;is_active&quot;:false},{&quot;id&quot;:&quot;code_review&quot;,&quot;title&quot;:&quot;Code review analytics&quot;,&quot;icon&quot;:null,&quot;avatar&quot;:null,&quot;entity_id&quot;:null,&quot;link&quot;:&quot;/weblogic/console-backend/-/analytics/code_reviews&quot;,&quot;pill_count&quot;:null,&quot;link_classes&quot;:null,&quot;is_active&quot;:false},{&quot;id&quot;:&quot;merge_request_analytics&quot;,&quot;title&quot;:&quot;Merge request analytics&quot;,&quot;icon&quot;:null,&quot;avatar&quot;:null,&quot;entity_id&quot;:null,&quot;link&quot;:&quot;/weblogic/console-backend/-/analytics/merge_request_analytics&quot;,&quot;pill_count&quot;:null,&quot;link_classes&quot;:null,&quot;is_active&quot;:false},{&quot;id&quot;:&quot;model_experiments&quot;,&quot;title&quot;:&quot;Model experiments&quot;,&quot;icon&quot;:null,&quot;avatar&quot;:null,&quot;entity_id&quot;:null,&quot;link&quot;:&quot;/weblogic/console-backend/-/ml/experiments&quot;,&quot;pill_count&quot;:null,&quot;link_classes&quot;:null,&quot;is_active&quot;:false}],&quot;separated&quot;:false}],&quot;current_context_header&quot;:&quot;Project&quot;,&quot;support_path&quot;:&quot;https://about.gitlab.com/get-help/&quot;,&quot;display_whats_new&quot;:true,&quot;whats_new_most_recent_release_items_count&quot;:5,&quot;whats_new_version_digest&quot;:&quot;cb26f541db7d1bff43a7595b7243595665f023c448931a150b473aa8d6286e54&quot;,&quot;show_version_check&quot;:false,&quot;gitlab_version&quot;:{&quot;major&quot;:16,&quot;minor&quot;:5,&quot;patch&quot;:1,&quot;suffix_s&quot;:&quot;&quot;},&quot;gitlab_version_check&quot;:null,&quot;search&quot;:{&quot;search_path&quot;:&quot;/search&quot;,&quot;issues_path&quot;:&quot;/dashboard/issues&quot;,&quot;mr_path&quot;:&quot;/dashboard/merge_requests&quot;,&quot;autocomplete_path&quot;:&quot;/search/autocomplete&quot;,&quot;search_context&quot;:{&quot;group&quot;:{&quot;id&quot;:930,&quot;name&quot;:&quot;weblogic&quot;,&quot;full_name&quot;:&quot;weblogic&quot;},&quot;group_metadata&quot;:{&quot;issues_path&quot;:&quot;/groups/weblogic/-/issues&quot;,&quot;mr_path&quot;:&quot;/groups/weblogic/-/merge_requests&quot;},&quot;project&quot;:{&quot;id&quot;:3232,&quot;name&quot;:&quot;console-backend&quot;},&quot;project_metadata&quot;:{&quot;mr_path&quot;:&quot;/weblogic/console-backend/-/merge_requests&quot;},&quot;code_search&quot;:true,&quot;ref&quot;:&quot;6290a8c9e72603cadd4de1936e09c962ce328dc7&quot;,&quot;scope&quot;:null,&quot;for_snippets&quot;:null}},&quot;panel_type&quot;:&quot;project&quot;,&quot;shortcut_links&quot;:[{&quot;title&quot;:&quot;Milestones&quot;,&quot;href&quot;:&quot;/dashboard/milestones&quot;,&quot;css_class&quot;:&quot;dashboard-shortcuts-milestones&quot;},{&quot;title&quot;:&quot;Snippets&quot;,&quot;href&quot;:&quot;/dashboard/snippets&quot;,&quot;css_class&quot;:&quot;dashboard-shortcuts-snippets&quot;},{&quot;title&quot;:&quot;Activity&quot;,&quot;href&quot;:&quot;/dashboard/activity&quot;,&quot;css_class&quot;:&quot;dashboard-shortcuts-activity&quot;},{&quot;title&quot;:&quot;Groups&quot;,&quot;href&quot;:&quot;/dashboard/groups&quot;,&quot;css_class&quot;:&quot;dashboard-shortcuts-groups&quot;},{&quot;title&quot;:&quot;Projects&quot;,&quot;href&quot;:&quot;/dashboard/projects&quot;,&quot;css_class&quot;:&quot;dashboard-shortcuts-projects&quot;}],&quot;name&quot;:&quot;Mike Wooten&quot;,&quot;username&quot;:&quot;mike.wooten&quot;,&quot;avatar_url&quot;:&quot;/uploads/-/system/user/avatar/743/avatar.png&quot;,&quot;has_link_to_profile&quot;:true,&quot;link_to_profile&quot;:&quot;/mike.wooten&quot;,&quot;logo_url&quot;:null,&quot;status&quot;:{&quot;can_update&quot;:true,&quot;busy&quot;:null,&quot;customized&quot;:null,&quot;availability&quot;:&quot;&quot;,&quot;emoji&quot;:null,&quot;message_html&quot;:null,&quot;message&quot;:null,&quot;clear_after&quot;:null},&quot;settings&quot;:{&quot;has_settings&quot;:true,&quot;profile_path&quot;:&quot;/-/profile&quot;,&quot;profile_preferences_path&quot;:&quot;/-/profile/preferences&quot;},&quot;user_counts&quot;:{&quot;assigned_issues&quot;:6,&quot;assigned_merge_requests&quot;:0,&quot;review_requested_merge_requests&quot;:0,&quot;todos&quot;:50,&quot;last_update&quot;:1701923626499},&quot;can_sign_out&quot;:true,&quot;sign_out_link&quot;:&quot;/users/sign_out&quot;,&quot;issues_dashboard_path&quot;:&quot;/dashboard/issues?assignee_username=mike.wooten&quot;,&quot;todos_dashboard_path&quot;:&quot;/dashboard/todos&quot;,&quot;create_new_menu_groups&quot;:[{&quot;name&quot;:&quot;&quot;,&quot;items&quot;:[{&quot;text&quot;:&quot;New merge request&quot;,&quot;href&quot;:&quot;/weblogic/console-backend/-/merge_requests/new&quot;,&quot;component&quot;:null,&quot;extraAttrs&quot;:{&quot;data-track-label&quot;:&quot;new_mr&quot;,&quot;data-track-action&quot;:&quot;click_link&quot;,&quot;data-track-property&quot;:&quot;nav_create_menu&quot;,&quot;data-testid&quot;:&quot;create_menu_item&quot;,&quot;data-qa-create-menu-item&quot;:&quot;new_mr&quot;}},{&quot;text&quot;:&quot;New snippet&quot;,&quot;href&quot;:&quot;/weblogic/console-backend/-/snippets/new&quot;,&quot;component&quot;:null,&quot;extraAttrs&quot;:{&quot;data-track-label&quot;:&quot;new_snippet&quot;,&quot;data-track-action&quot;:&quot;click_link&quot;,&quot;data-track-property&quot;:&quot;nav_create_menu&quot;,&quot;data-testid&quot;:&quot;create_menu_item&quot;,&quot;data-qa-create-menu-item&quot;:&quot;new_snippet&quot;}}]}],&quot;merge_request_menu&quot;:[{&quot;name&quot;:&quot;Merge requests&quot;,&quot;items&quot;:[{&quot;text&quot;:&quot;Assigned&quot;,&quot;href&quot;:&quot;/dashboard/merge_requests?assignee_username=mike.wooten&quot;,&quot;count&quot;:0,&quot;userCount&quot;:&quot;assigned_merge_requests&quot;,&quot;extraAttrs&quot;:{&quot;data-track-action&quot;:&quot;click_link&quot;,&quot;data-track-label&quot;:&quot;merge_requests_assigned&quot;,&quot;data-track-property&quot;:&quot;nav_core_menu&quot;,&quot;class&quot;:&quot;dashboard-shortcuts-merge_requests&quot;}},{&quot;text&quot;:&quot;Review requests&quot;,&quot;href&quot;:&quot;/dashboard/merge_requests?reviewer_username=mike.wooten&quot;,&quot;count&quot;:0,&quot;userCount&quot;:&quot;review_requested_merge_requests&quot;,&quot;extraAttrs&quot;:{&quot;data-track-action&quot;:&quot;click_link&quot;,&quot;data-track-label&quot;:&quot;merge_requests_to_review&quot;,&quot;data-track-property&quot;:&quot;nav_core_menu&quot;,&quot;class&quot;:&quot;dashboard-shortcuts-review_requests&quot;}}]}],&quot;projects_path&quot;:&quot;/dashboard/projects&quot;,&quot;groups_path&quot;:&quot;/dashboard/groups&quot;,&quot;gitlab_com_but_not_canary&quot;:false,&quot;gitlab_com_and_canary&quot;:false,&quot;canary_toggle_com_url&quot;:&quot;https://next.gitlab.com&quot;,&quot;current_context&quot;:{&quot;namespace&quot;:&quot;projects&quot;,&quot;item&quot;:{&quot;id&quot;:3232,&quot;name&quot;:&quot;console-backend&quot;,&quot;namespace&quot;:&quot;weblogic / console-backend&quot;,&quot;webUrl&quot;:&quot;/weblogic/console-backend&quot;,&quot;avatarUrl&quot;:null}},&quot;pinned_items&quot;:[&quot;project_issue_list&quot;,&quot;project_merge_request_list&quot;],&quot;update_pins_url&quot;:&quot;/-/users/pins&quot;,&quot;is_impersonating&quot;:false,&quot;stop_impersonation_path&quot;:&quot;/admin/impersonation&quot;,&quot;track_visits_path&quot;:&quot;/-/track_namespace_visits&quot;,&quot;show_tanuki_bot&quot;:false,&quot;trial&quot;:{&quot;has_start_trial&quot;:false,&quot;url&quot;:&quot;/-/trials/new?glm_content=top-right-dropdown\u0026glm_source=gitlab.com&quot;}}" data-toggle-new-nav-endpoint="/-/profile/preferences"></aside>
+<div data-version-digest="cb26f541db7d1bff43a7595b7243595665f023c448931a150b473aa8d6286e54" id="whats-new-app"></div>
+
+<div class="content-wrapper">
+<div class="mobile-overlay"></div>
+
+<div class="alert-wrapper gl-force-block-formatting-context">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="top-bar-fixed container-fluid" data-testid="top-bar">
+<div class="top-bar-container gl-display-flex gl-align-items-center gl-gap-2">
+<button class="gl-button btn btn-icon btn-md btn-default btn-default-tertiary js-super-sidebar-toggle-expand super-sidebar-toggle gl-ml-n3" aria-controls="super-sidebar" aria-expanded="false" aria-label="Primary navigation sidebar" type="button"><svg class="s16 gl-icon gl-button-icon " data-testid="sidebar-icon"><use href="/assets/icons-3591e1b0dc5b9091969f4b703f7bdaffa0ca7b2c7953b0f3a7e7dc1e71c3e43d.svg#sidebar"></use></svg>
+
+</button>
+<nav aria-label="Breadcrumbs" class="breadcrumbs" data-testid="breadcrumb-links">
+<ul class="list-unstyled breadcrumbs-list js-breadcrumbs-list">
+<li><a class="group-path breadcrumb-item-text js-breadcrumb-item-text " href="/weblogic">weblogic</a><svg class="s8 breadcrumbs-list-angle" data-testid="chevron-lg-right-icon"><use href="/assets/icons-3591e1b0dc5b9091969f4b703f7bdaffa0ca7b2c7953b0f3a7e7dc1e71c3e43d.svg#chevron-lg-right"></use></svg></li> <li><a href="/weblogic/console-backend"><span class="breadcrumb-item-text js-breadcrumb-item-text">console-backend</span></a><svg class="s8 breadcrumbs-list-angle" data-testid="chevron-lg-right-icon"><use href="/assets/icons-3591e1b0dc5b9091969f4b703f7bdaffa0ca7b2c7953b0f3a7e7dc1e71c3e43d.svg#chevron-lg-right"></use></svg></li>
+
+<li data-testid="breadcrumb-current-link">
+<a href="/weblogic/console-backend/-/blob/6290a8c9e72603cadd4de1936e09c962ce328dc7/frontend/src/js/jet-composites/wrc-frontend/images/alerts-warning-icon_24x24.png">Repository</a>
+</li>
+</ul>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"weblogic","item":"https://gitlab-odx.oracledx.com/weblogic"},{"@type":"ListItem","position":2,"name":"console-backend","item":"https://gitlab-odx.oracledx.com/weblogic/console-backend"},{"@type":"ListItem","position":3,"name":"Repository","item":"https://gitlab-odx.oracledx.com/weblogic/console-backend/-/blob/6290a8c9e72603cadd4de1936e09c962ce328dc7/frontend/src/js/jet-composites/wrc-frontend/images/alerts-warning-icon_24x24.png"}]}
+
+</script>
+</nav>
+
+
+
+</div>
+</div>
+
+</div>
+<div class="container-fluid container-limited project-highlight-puc">
+<main class="content" id="content-body" itemscope itemtype="http://schema.org/SoftwareSourceCode">
+<div class="flash-container flash-container-page sticky" data-qa-selector="flash_container">
+<div id="js-global-alerts"></div>
+</div>
+
+
+
+
+<div class="js-signature-container" data-signatures-path="/weblogic/console-backend/-/commits/6290a8c9e72603cadd4de1936e09c962ce328dc7/signatures?limit=1"></div>
+
+<div class="tree-holder gl-pt-4" id="tree-holder">
+<div class="nav-block">
+<div class="tree-ref-container">
+<div class="tree-ref-holder gl-max-w-26">
+<div data-project-id="3232" data-project-root-path="/weblogic/console-backend" data-ref="6290a8c9e72603cadd4de1936e09c962ce328dc7" data-ref-type="" id="js-tree-ref-switcher"></div>
+</div>
+<ul class="breadcrumb repo-breadcrumb">
+<li class="breadcrumb-item">
+<a href="/weblogic/console-backend/-/tree/6290a8c9e72603cadd4de1936e09c962ce328dc7">console-backend
+</a></li>
+<li class="breadcrumb-item">
+<a href="/weblogic/console-backend/-/tree/6290a8c9e72603cadd4de1936e09c962ce328dc7/frontend/src/js/jet-composites/wrc-frontend">..</a>
+</li>
+<li class="breadcrumb-item">
+<a href="/weblogic/console-backend/-/tree/6290a8c9e72603cadd4de1936e09c962ce328dc7/frontend/src/js/jet-composites/wrc-frontend/images">images</a>
+</li>
+<li class="breadcrumb-item">
+<a href="/weblogic/console-backend/-/blob/6290a8c9e72603cadd4de1936e09c962ce328dc7/frontend/src/js/jet-composites/wrc-frontend/images/alerts-warning-icon_24x24.png"><strong>alerts-warning-icon_24x24.png</strong>
+</a></li>
+</ul>
+</div>
+<div class="tree-controls gl-children-ml-sm-3"><a class="gl-button btn btn-md btn-default shortcuts-find-file" rel="nofollow" href="/weblogic/console-backend/-/find_file/6290a8c9e72603cadd4de1936e09c962ce328dc7"><span class="gl-button-text">
+Find file
+
+</span>
+
+</a><a class="gl-button btn btn-md btn-default " href="/weblogic/console-backend/-/commits/6290a8c9e72603cadd4de1936e09c962ce328dc7/frontend/src/js/jet-composites/wrc-frontend/images/alerts-warning-icon_24x24.png"><span class="gl-button-text">
+History
+</span>
+
+</a><a class="gl-button btn btn-md btn-default js-data-file-blob-permalink-url" href="/weblogic/console-backend/-/blob/6290a8c9e72603cadd4de1936e09c962ce328dc7/frontend/src/js/jet-composites/wrc-frontend/images/alerts-warning-icon_24x24.png"><span class="gl-button-text">
+Permalink
+</span>
+
+</a></div>
+</div>
+
+<div class="info-well d-none d-sm-block">
+<div class="well-segment">
+<ul class="blob-commit-info">
+<li class="commit flex-row js-toggle-container" id="commit-6290a8c9">
+<div class="avatar-cell d-none d-sm-block">
+<a href="/mike.wooten"><img alt="Mike Wooten&#39;s avatar" src="/uploads/-/system/user/avatar/743/avatar.png?width=40" class="avatar s40 d-none d-sm-inline-block" title="Mike Wooten"></a>
+</div>
+<div class="commit-detail flex-list gl-display-flex gl-justify-content-space-between gl-align-items-center gl-flex-grow-1 gl-min-w-0">
+<div class="commit-content" data-qa-selector="commit_content">
+<a class="commit-row-message item-title js-onboarding-commit-item " href="/weblogic/console-backend/-/commit/6290a8c9e72603cadd4de1936e09c962ce328dc7">Spot check commit of lots of changes</a>
+<span class="commit-row-message d-inline d-sm-none">
+&middot;
+6290a8c9
+</span>
+<div class="committer">
+<a class="commit-author-link js-user-link" data-user-id="743" href="/mike.wooten">Mike Wooten</a> authored <time class="js-timeago" title="Oct 16, 2023 1:59am" datetime="2023-10-16T01:59:24Z" data-toggle="tooltip" data-placement="bottom" data-container="body">Oct 15, 2023</time>
+</div>
+
+</div>
+<div class="commit-actions flex-row">
+
+<div class="js-commit-pipeline-status" data-endpoint="/weblogic/console-backend/-/commit/6290a8c9e72603cadd4de1936e09c962ce328dc7/pipelines?ref=6290a8c9e72603cadd4de1936e09c962ce328dc7"></div>
+<div class="commit-sha-group btn-group d-none d-sm-flex">
+<div class="label label-monospace monospace">
+6290a8c9
+</div>
+<button class="gl-button btn btn-icon btn-md btn-default " title="Copy commit SHA" aria-label="Copy commit SHA" aria-live="polite" data-toggle="tooltip" data-placement="bottom" data-container="body" data-category="primary" data-size="medium" data-clipboard-text="6290a8c9e72603cadd4de1936e09c962ce328dc7" type="button"><svg class="s16 gl-icon gl-button-icon " data-testid="copy-to-clipboard-icon"><use href="/assets/icons-3591e1b0dc5b9091969f4b703f7bdaffa0ca7b2c7953b0f3a7e7dc1e71c3e43d.svg#copy-to-clipboard"></use></svg>
+
+</button>
+
+</div>
+</div>
+</div>
+</li>
+
+</ul>
+</div>
+<div data-blob-path="frontend/src/js/jet-composites/wrc-frontend/images/alerts-warning-icon_24x24.png" data-branch="6290a8c9e72603cadd4de1936e09c962ce328dc7" data-branch-rules-path="/weblogic/console-backend/-/settings/repository#js-branch-rules" data-project-path="weblogic/console-backend" id="js-code-owners"></div>
+
+</div>
+<div data-ahead-compare-path="/weblogic/console-backend/-/compare/master...6290a8c9e72603cadd4de1936e09c962ce328dc7?from_project_id=2334" data-behind-compare-path="/weblogic/console-backend-old/-/compare/6290a8c9e72603cadd4de1936e09c962ce328dc7...master?from_project_id=3232" data-can-sync-branch="false" data-create-mr-path="/weblogic/console-backend/-/merge_requests/new?merge_request%5Bsource_branch%5D=6290a8c9e72603cadd4de1936e09c962ce328dc7&amp;merge_request%5Btarget_branch%5D=master&amp;merge_request%5Btarget_project_id%5D=2334" data-project-path="weblogic/console-backend" data-selected-branch="6290a8c9e72603cadd4de1936e09c962ce328dc7" data-source-default-branch="master" data-source-name="weblogic / console-backend-old" data-source-path="/weblogic/console-backend-old" id="js-fork-info"></div>
+<div class="blob-content-holder js-per-page" data-blame-per-page="1000" id="blob-content-holder">
+<div data-blob-path="frontend/src/js/jet-composites/wrc-frontend/images/alerts-warning-icon_24x24.png" data-explain-code-available="false" data-new-workspace-path="/-/remote_development/workspaces/new" data-original-branch="6290a8c9e72603cadd4de1936e09c962ce328dc7" data-project-path="weblogic/console-backend" data-ref-type="" data-resource-id="gid://gitlab/Project/3232" data-target-branch="6290a8c9e72603cadd4de1936e09c962ce328dc7" data-user-id="gid://gitlab/User/743" id="js-view-blob-app">
+<div class="gl-spinner-container" role="status"><span aria-label="Loading" class="gl-spinner gl-spinner-md gl-spinner-dark gl-vertical-align-text-bottom!"></span></div>
+</div>
+</div>
+
+</div>
+
+<script>
+//<![CDATA[
+  window.gl = window.gl || {};
+  window.gl.webIDEPath = '/-/ide/project/weblogic/console-backend/edit/6290a8c9e72603cadd4de1936e09c962ce328dc7/-/frontend/src/js/jet-composites/wrc-frontend/images/alerts-warning-icon_24x24.png'
+
+
+//]]>
+</script>
+
+</main>
+</div>
+
+
+</div>
+</div>
+
+
+
+<script>
+//<![CDATA[
+if ('loading' in HTMLImageElement.prototype) {
+  document.querySelectorAll('img.lazy').forEach(img => {
+    img.loading = 'lazy';
+    let imgUrl = img.dataset.src;
+    // Only adding width + height for avatars for now
+    if (imgUrl.indexOf('/avatar/') > -1 && imgUrl.indexOf('?') === -1) {
+      const targetWidth = img.getAttribute('width') || img.width;
+      imgUrl += `?width=${targetWidth}`;
+    }
+    img.src = imgUrl;
+    img.removeAttribute('data-src');
+    img.classList.remove('lazy');
+    img.classList.add('js-lazy-loaded');
+    img.dataset.testid = 'js-lazy-loaded-content';
+  });
+}
+
+//]]>
+</script>
+<script>
+//<![CDATA[
+gl = window.gl || {};
+gl.experiments = {};
+
+
+//]]>
+</script>
+
+</body>
+</html>
+
