@@ -35,10 +35,7 @@ properties:
   requiredCapabilities:
   - AdminServerConnection
 
-# Remove this once WDT offline support is added:
 - name: UseVirtualThreads
-  requiredCapabilities:
-  - AdminServerConnection
 
 children:
 - name: CoherenceClusterWellKnownAddresses

@@ -1,4 +1,4 @@
-# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2024, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 actions: [
@@ -49,7 +49,7 @@ properties:
     }
   descriptionHTML: '<p>Returns the domain partition runtime MBean for the "current"
     partition</p> '
-  excludeFromRest: ${excludeFromRest}
+  excludeFromRest: ' '
   name: CurrentDomainPartitionRuntime
   relationship: reference
   supported: false
@@ -74,7 +74,7 @@ properties:
   defaultValue: {
     }
   descriptionHTML: '<p>Returns domain partition runtimes.</p> '
-  excludeFromRest: ${excludeFromRest}
+  excludeFromRest: ' '
   name: DomainPartitionRuntimes
   relationship: containment
   supported: false
@@ -151,7 +151,7 @@ properties:
   defaultValue: {
     }
   descriptionHTML: '<p>Returns life cycle runtimes for domain-level resource groups.</p> '
-  excludeFromRest: ${excludeFromRest}
+  excludeFromRest: ' '
   name: ResourceGroupLifeCycleRuntimes
   relationship: containment
   supported: false

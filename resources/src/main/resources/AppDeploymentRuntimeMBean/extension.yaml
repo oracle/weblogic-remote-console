@@ -125,18 +125,6 @@ actions:
     descriptionHTML: >
       <p>The path name, on the admin server's file system, of the deployment plan file to create.</p>
 
-- name: "updateExisting"
-  type: "weblogic.management.runtime.DeploymentProgressObjectMBean"
-  roles:
-    allowed:
-      - Deployer
-      - Operator
-  parameters:
-    - name: "PlanPath"
-      type: "java.lang.String"
-      descriptionHTML: >
-        <p>The file path to the deployment plan on the administration server's file system</p>
-
 - name: "update"
   type: "weblogic.management.runtime.DeploymentProgressObjectMBean"
   roles:
@@ -191,4 +179,7 @@ properties:
   relationship: containment
 - name: "State"
   type: weblogic.management.runtime.DeploymentStateRuntimeMBean
+  relationship: containment
+- name: "StateV2"
+  type: weblogic.management.runtime.DeploymentStateV2RuntimeMBean
   relationship: containment

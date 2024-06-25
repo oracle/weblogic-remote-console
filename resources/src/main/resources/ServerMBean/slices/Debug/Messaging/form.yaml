@@ -11,54 +11,41 @@ presentation:
   useCheckBoxesForBooleans: true
 
 properties:
-# deprecated - name: ServerDebug.DebugJMSAME
+- name: ServerDebug.DebugDLB
+- name: ServerDebug.DebugDLBFine
+- name: ServerDebug.DebugDLBFinest
 - name: ServerDebug.DebugJMSBackEnd
 - name: ServerDebug.DebugJMSBoot
 - name: ServerDebug.DebugJMSCDS
-- name: ServerDebug.DebugJMSCICHelper
+- name: ServerDebug.DebugJMSClient
+- name: ServerDebug.DebugJMSClientStackTrace
 - name: ServerDebug.DebugJMSCommon
 - name: ServerDebug.DebugJMSConfig
-# excluded - name: ServerDebug.DebugJMSCrossDomainSecurity
 - name: ServerDebug.DebugJMSDispatcher
 - name: ServerDebug.DebugJMSDispatcherLifecycle
 - name: ServerDebug.DebugJMSDispatcherProxy
 - name: ServerDebug.DebugJMSDispatcherRMI
-# excluded - name: ServerDebug.DebugJMSDispatcherUtilsVerbose
-# excluded - name: ServerDebug.DebugJMSDispatcherVerbose
+- name: ServerDebug.DebugJMSDispatcherWire
 - name: ServerDebug.DebugJMSDistTopic
-# excluded - name: ServerDebug.DebugJMSDotNetProxy
-# excluded - name: ServerDebug.DebugJMSDotNetT3Server
-# excluded - name: ServerDebug.DebugJMSDotNetTransport
-# excluded - name: ServerDebug.DebugJMSDurSub
-# deprecated - name: ServerDebug.DebugJMSDurableSubscribers
 - name: ServerDebug.DebugJMSFrontEnd
-# deprecated - name: ServerDebug.DebugJMSJDBCScavengeOnFlush
 - name: ServerDebug.DebugJMSInvocableVerbose
-# excluded - name: ServerDebug.DebugJMSJNDI
-# deprecated - name: ServerDebug.DebugJMSLocking
 - name: ServerDebug.DebugJMSMessagePath
 - name: ServerDebug.DebugJMSModule
-# excluded - name: ServerDebug.DebugJMSOBS
 - name: ServerDebug.DebugJMSPauseResume
 - name: ServerDebug.DebugJMSSAF
-# deprecated - name: ServerDebug.DebugJMSStore
 - name: ServerDebug.DebugJMST3Server
 - name: ServerDebug.DebugJMSWrappers
-# deprecated - name: ServerDebug.DebugJMSXA
-# excluded - name: ServerDebug.DebugMessagingBridgeDumpToConsole
-# excluded - name: ServerDebug.DebugMessagingBridgeDumpToLog
 - name: ServerDebug.DebugMessagingBridgeRuntime
 - name: ServerDebug.DebugMessagingBridgeRuntimeVerbose
 - name: ServerDebug.DebugMessagingBridgeStartup
 - name: ServerDebug.DebugMessagingKernel
 - name: ServerDebug.DebugMessagingKernelBoot
+- name: ServerDebug.DebugMessagingKernelVerbose
 - name: ServerDebug.DebugMessagingOwnableLock
 - name: ServerDebug.DebugPathSvc
 - name: ServerDebug.DebugPathSvcVerbose
 - name: ServerDebug.DebugSAFAdmin
-# deprecated - name: ServerDebug.DebugSAFLifeCycle
 - name: ServerDebug.DebugSAFManager
-# deprecated - name: ServerDebug.DebugSAFMessagePath
 - name: ServerDebug.DebugSAFReceivingAgent
 - name: ServerDebug.DebugSAFSendingAgent
 - name: ServerDebug.DebugSAFStore

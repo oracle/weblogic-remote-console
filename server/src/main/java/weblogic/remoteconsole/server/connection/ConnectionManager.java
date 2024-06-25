@@ -652,6 +652,32 @@ public class ConnectionManager {
           Json.createObjectBuilder()
             .add("type", "weblogic.management.configuration.AllowListMBean")
         )
+        .add(
+          "GarbageCollection",
+          Json.createObjectBuilder()
+            .add("type", "weblogic.management.runtime.JVMRuntimeMBean")
+            .add("action", "runGC")
+        )
+        .add(
+          "OIDCIdentityAsserter",
+          Json.createObjectBuilder()
+            .add("type", "weblogic.security.providers.authentication.OIDCIdentityAsserterMBean")
+        )
+        .add(
+          "OracleVirtualDirectoryAuthenticator",
+          Json.createObjectBuilder()
+            .add("type", "weblogic.security.providers.authentication.OracleVirtualDirectoryAuthenticatorMBean")
+        )
+        .add(
+          "IPlanetAuthenticator",
+          Json.createObjectBuilder()
+            .add("type", "weblogic.security.providers.authentication.IPlanetAuthenticatorMBean")
+        )
+        .add(
+          "NovellAuthenticator",
+          Json.createObjectBuilder()
+            .add("type", "weblogic.security.providers.authentication.NovellAuthenticatorMBean")
+        )
         .build();
   }
 

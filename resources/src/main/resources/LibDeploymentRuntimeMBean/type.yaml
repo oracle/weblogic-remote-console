@@ -6,6 +6,8 @@ actions:
 - name: "redeploy"
   label: "Redeploy"
   actionMethod: weblogic.remoteconsole.customizers.LibDeploymentRuntimeMBeanCustomizer.redeploy
+  successMessage: Redeployed and created task for library {0}
+  failureMessage: Failed to redeploy library {0}, check deployment task for more information
   disableMBeanJavadoc: true
   helpHTML: >
     <p>Use this page to redeploy this library.  Its archive must already be on the administration server's file system. 
@@ -20,6 +22,8 @@ actions:
 
 - name: uploadAndRedeploy
   label: "Upload and Redeploy"
+  successMessage: Uploaded, redeployed and created task for library {0}
+  failureMessage: Failed to upload and redeploy library {0}, check deployment task for more information
   disableMBeanJavadoc: true
   helpHTML: >
     <p>Upload and redeploy a new archive for this library.
@@ -39,3 +43,6 @@ children:
 - name: State
   requiredCapabilities:
   - DeploymentState
+- name: StateV2
+  requiredCapabilities:
+  - DeploymentStateV2

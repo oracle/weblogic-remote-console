@@ -16,7 +16,9 @@ introductionHTML: >
 
 displayedColumns:
 - name: "Name"
-- name: "State.IntendedState"
+- name: "State.IntendedState" # for old extensions
+- name: "State.CurrentState" # for old extensions
+- name: "StateV2.State"
 - name: "ApplicationName"
 - name: "ApplicationVersion"
 #- name: "Configuration.PlanPath"
@@ -44,33 +46,18 @@ actions:
   label: "Update/Redeploy"
   rows: "one"
   actions:
-    - name: "updatePlan"
-      label: "Update with New Deployment Plan"
-      rows: "one"
-      actions:
-        - name: "update"
-          label: "Deployment Plan on Server"
-          rows: "one"
-        - name: "uploadAndUpdate"
-          label: "Deployment Plan on Local Machine"
-          rows: "one"
-          requiredCapabilities:
-            - AppDeploymentRuntimeUploadAndUpdate
-    - name: "updateExisting"
-      label: "Update with Modified Existing Deployment Plan"
-      rows: "one"
-    - name: "redeployApp"
-      label: "Redeploy"
-      rows: "one"
-      actions:
-        - name: "redeploy"
-          label: "Deployment Source and Plan on Server"
-          rows: "one"
-        - name: "uploadAndRedeploy"
-          label: "Deployment Source and Plan on Local Machine"
-          rows: "one"
-          requiredCapabilities:
-            - AppDeploymentRuntimeUploadAndRedeploy
+  - name: "update"
+    label: "Update - Deployment Plan on Server"
+  - name: "uploadAndUpdate"
+    label: "Update - Deployment Plan on Local Machine"
+    requiredCapabilities:
+      - AppDeploymentRuntimeUploadAndUpdate
+  - name: "redeploy"
+    label: "Redeploy - Deployment Source and Plan on Server"
+  - name: "uploadAndRedeploy"
+    label: "Redeploy - Deployment Source and Plan on Local Machine"
+    requiredCapabilities:
+      - AppDeploymentRuntimeUploadAndRedeploy
 
 - name: "createPlan"
   rows: "one"

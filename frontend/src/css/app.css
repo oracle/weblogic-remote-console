@@ -20,6 +20,9 @@
    *        above custom CSS variables, at runtime.
    */
 
+  --body-min-width: 1440px;
+  --body-min-height: 790px;
+
   --content-area-header-min-height: 60px;
   --content-area-container-min-width: 55px;
 
@@ -160,6 +163,8 @@ html, body {
   height: 100vh;
 */
   overflow: hidden;
+  min-width: var(--body-min-width);
+  min-height: var(--body-min-height);
 }
 
 body {
@@ -890,7 +895,10 @@ a[id="appProfileDialogLauncher"]:focus-visible
 
 .branding-area-simple-search {
   background-color: var(--simple-search-backgroud-color);
-  min-width: var(--simple-search-min-width);
+}
+
+oj-input-search[id="cfe-simple-search"] div > input {
+  width: min-content;
 }
 
 .branding-area-simple-search > div.oj-text-field-container
@@ -927,8 +935,8 @@ a[id="appProfileDialogLauncher"]:focus-visible
   min-height: 100vh;
 }
 
-#navstrip-container,
-#navstrip-header {
+#navstrip-container
+{
   background-color: var(--navstrip-background-color);
 }
 
@@ -2155,7 +2163,8 @@ oj-dialog[id="tips-dialog"] > div.oj-dialog-container > div > div > div > div.oj
   font-weight: 600;
 }
 
-.landing-page-panel-subtree-card > p > span > p {
+.landing-page-panel-subtree-card > span
+{
   font-weight: 400;
 }
 

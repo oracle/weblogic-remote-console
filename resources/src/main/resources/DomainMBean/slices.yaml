@@ -23,6 +23,3 @@ slices:
 - name: Logging
 - name: ManagementServices
 - name: HealthScore
-  # Remove this once WDT offline support is added:
-  requiredCapabilities:
-  - AdminServerConnection

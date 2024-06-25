@@ -1,7 +1,12 @@
 define({
   "wrc-header": {
     "text": {
-      "appName": "WebLogicリモート・コンソール"
+      "appName": "WebLogic Remote Console"
+    },
+    "region": {
+      "ariaLabel": {
+        "value": "アプリケーション・ヘッダー"
+      }
     },
     "icons": {
       "navtree": {
@@ -10,22 +15,22 @@ define({
         }
       },
       "theme": {
-        "tooltip": "Switch theme"
+        "tooltip": "テーマの切替え"
       },
       "whatsNew": {
-        "tooltip": "What's New!"
+        "tooltip": "新機能!"
       },
       "howDoI": {
-        "tooltip": "Open \"How Do I ...?\" Tasks"
+        "tooltip": "「...の方法」タスクを開く"
       },
       "tips": {
-        "tooltip": "Toggle User Tips visibility"
+        "tooltip": "ユーザー・ヒントの可視性の切替え"
       },
       "help": {
-        "tooltip": "WebLogicリモート・コンソール内部ドキュメントを開く"
+        "tooltip": "WebLogic Remote Console内部ドキュメントを開く"
       },
       "profile": {
-        "tooltip": "Profile"
+        "tooltip": "プロファイル"
       }
     },
     "menus": {
@@ -34,11 +39,16 @@ define({
       },
       "theme": {
         "light": {
-          "value": "Light"
+          "value": "明るい"
         },
         "dark": {
-          "value": "Dark"
+          "value": "暗い"
         }
+      }
+    },
+    "tooltips": {
+      "appName": {
+        "value": "クリックしてWebLogic Remote Consoleをリセットします"
       }
     }
   },
@@ -65,7 +75,7 @@ define({
       "profile": {
         "popup": {
           "launcher": {
-            "tooltip": "Show Profiles List"
+            "tooltip": "プロファイル・リストの表示"
           }
         },
         "dialog": {
@@ -73,7 +83,7 @@ define({
             "tooltip": "プロファイルの管理"
           },
           "editor": {
-            "tooltip": "Profile Editor",
+            "tooltip": "プロファイル・エディタ",
             "toolbar": {
               "save": {
                 "tooltip": "プロファイルの保存"
@@ -91,9 +101,9 @@ define({
           }
         },
         "image": {
-          "tooltip": "Profile",
+          "tooltip": "プロファイル",
           "capture": {
-            "tooltip": "Add or change image"
+            "tooltip": "イメージの追加または変更"
           }
         }
       }
@@ -128,10 +138,10 @@ define({
         "toggler": {
           "editor": {
             "show": {
-              "value": "Show Profile Editor"
+              "value": "プロファイル・エディタの表示"
             },
             "hide": {
-              "value": "Hide Profile Editor"
+              "value": "プロファイル・エディタの非表示"
             }
           }
         }
@@ -141,7 +151,7 @@ define({
       "profile": {
         "manager": {
           "open": {
-            "value": "Open Profile Manager"
+            "value": "プロファイル・マネージャを開く"
           },
           "signout": {
             "value": "サインアウト"
@@ -156,17 +166,17 @@ define({
             "value": "プロファイルID"
           },
           "organization": {
-            "value": "Organization"
+            "value": "組織 "
           },
           "name": {
             "value": "名前"
           },
           "email": {
-            "value": "Email"
+            "value": "電子メール"
           },
           "role": {
             "default": {
-              "value": "Use as Default Profile"
+              "value": "デフォルト・プロファイルとして使用"
             }
           },
           "settings": {
@@ -197,51 +207,51 @@ define({
           },
           "preferences": {
             "theme": {
-              "value": "Theme"
+              "value": "テーマ"
             },
             "startupTaskChooserType": {
-              "value": "Startup Task Chooser Type"
+              "value": "タスク・チューザの起動タイプ"
             },
-            "useMenusAsRootNodes": {
-              "value": "Use Tree Menus as the root level of Tree Navigators?"
+            "useTreeMenusAsRootNodes": {
+              "value": "ツリー・メニューをツリー・ナビゲータのルート・レベルとして使用しますか?"
             },
             "onQuit": {
-              "value": "Allow unsaved changes to prevent exiting application?"
+              "value": "未保存の変更がアプリケーションの終了を阻止することを許可しますか?"
             },
             "onDelete": {
-              "value": "Confirm all deletions?"
+              "value": "すべての削除を確認しますか?"
             },
             "onActionNotAllowed": {
-              "value": "Use \"Action Not Allowed\" popup to prevent data loss?"
+              "value": "「アクションは許可されません」ポップアップを使用してデータ損失を防ぎますか?"
             },
             "onUnsavedChangesDetected": {
-              "value": "Use \"Unsaved Changes Detected\" popup to prevent data loss?"
+              "value": "「保存されていない変更が検出されました」ポップアップを使用してデータ損失を防ぎますか?"
             },
             "onChangesNotDownloaded": {
-              "value": "Use \"Changes Not Download\" popup to prevent data loss?"
+              "value": "「変更がダウンロードされません」ポップアップを使用してデータ損失を防ぎますか?"
             }
           },
           "properties": {
             "javaSystemProperties": {
-              "value": "Java System Properties"
+              "value": "Javaシステム・プロパティ"
             }
           }
         },
         "legalValues": {
           "themeOptions": {
             "light": {
-              "value": "Light"
+              "value": "明るい"
             },
             "dark": {
-              "value": "Dark"
+              "value": "暗い"
             }
           },
           "taskChooserTypeOptions": {
             "useDialog": {
-              "value": "Use Dialog"
+              "value": "ダイアログの使用"
             },
             "useCards": {
-              "value": "Use Cards"
+              "value": "カードの使用"
             }
           },
           "trustStoreTypeOptions": {
@@ -255,14 +265,14 @@ define({
               "value": "Windows ROOT"
             },
             "keyChainStore": {
-              "value": "Key Chain Store"
+              "value": "キー・チェーン・ストア"
             }
           }
         },
         "messages": {
           "save": {
             "succeeded": {
-              "summary": "Profile \"{0}\" was saved successfully!"
+              "summary": "プロファイル\"{0}\"は正常に保存されました!"
             }
           }
         }
@@ -271,17 +281,22 @@ define({
   },
   "wrc-data-providers": {
     "icons": {
+      "hoverMenu": {
+        "ariaLabel": {
+          "value": "プロバイダ・アクション "
+        }
+      },
       "info": {
-        "tooltip": "情報"
+        "tooltip": "このプロバイダの情報を取得します"
       },
       "edit": {
-        "tooltip": "管理"
+        "tooltip": "このプロバイダの設定を管理します"
       },
       "deactivate": {
-        "tooltip": "非アクティブ化"
+        "tooltip": "このプロバイダを非アクティブ化します"
       },
       "delete": {
-        "tooltip": "削除"
+        "tooltip": "このプロバイダを削除します"
       }
     },
     "labels": {
@@ -367,6 +382,9 @@ define({
           }
         },
         "domain": {
+          "consoleExtensionVersion": {
+            "label": "コンソール拡張バージョン:"
+          },
           "name": {
             "label": "ドメイン名:"
           },
@@ -494,6 +512,9 @@ define({
         },
         "edit": {
           "value": "接続プロバイダの接続設定を変更します。"
+        },
+        "deactivate": {
+          "value": "接続プロバイダを非アクティブ化し、ドメイン・ステータス・プーリングを停止します。"
         }
       },
       "models": {
@@ -603,25 +624,25 @@ define({
       "export": {
         "failed": {
           "summary": "エクスポート失敗",
-          "detail": "プロバイダを''{0}''プロジェクトとしてエクスポートできません。"
+          "detail": "プロバイダを'{0}'プロジェクトとしてエクスポートできません。"
         }
       },
       "import": {
         "failed": {
           "summary": "保存失敗",
-          "detail": "''{0}''プロジェクト・ファイルをインポートできません。"
+          "detail": "'{0}'プロジェクト・ファイルをインポートできません。"
         }
       },
       "stage": {
         "failed": {
           "summary": "作成失敗",
-          "detail": "''{0}''プロバイダ・アイテムを作成できません。"
+          "detail": "'{0}'プロバイダ・アイテムを作成できません。"
         }
       },
       "use": {
         "failed": {
           "summary": "接続失敗",
-          "detail": "''{0}''プロバイダ・アイテムを使用できません。"
+          "detail": "'{0}'プロバイダ・アイテムを使用できません。"
         }
       },
       "upload": {
@@ -636,13 +657,13 @@ define({
       },
       "response": {
         "nameAlreadyExist": {
-          "detail": "''{0}''という名前のプロバイダはすでにこのプロジェクトに含まれています。"
+          "detail": "'{0}'という名前のプロバイダはすでにこのプロジェクトに含まれています。"
         },
         "modelsNotFound": {
-          "detail": "構成済のWDTモデル''{0}''が見つかりません"
+          "detail": "構成済のWDTモデル'{0}'が見つかりません"
         },
         "propListNotFound": {
-          "detail": "WDT変数''{0}''が見つかりません"
+          "detail": "WDT変数'{0}'が見つかりません"
         },
         "selectModels": {
           "detail": "WDTコンポジットを選択するには、まず、WDTコンポジットで使用されたすべてのWDTモデルを選択します。"
@@ -650,7 +671,7 @@ define({
       },
       "sso": {
         "secureContextRequired": {
-          "detail": "The URL must specify the HTTPS protocol or use localhost"
+          "detail": "URLではHTTPSプロトコルを指定するかlocalhostを使用する必要があります"
         }
       },
       "correctiveAction": {
@@ -681,7 +702,7 @@ define({
         "label": "疎テンプレートの使用"
       },
       "usesso": {
-        "label": "Use Web Authentication"
+        "label": "Web認証の使用"
       },
       "insecure": {
         "label": "セキュアでない接続の確立"
@@ -714,18 +735,36 @@ define({
     }
   },
   "wrc-navigation": {
-    "navstrip": {
-      "ariaLabel": {
-        "value": "ナビゲーション・ストリップ"
-      }
-    },
-    "navtree": {
-      "ariaLabel": {
-        "value": "ナビゲーション・ツリー"
+    "ariaLabel": {
+      "navstrip": {
+        "value": "プロバイダ・ツリー・メニュー"
+      },
+      "navtree": {
+        "value": "プロバイダ・ツリー・ナビゲータ"
+      },
+      "panelResizer": {
+        "value": "プロバイダ・ツリー・ナビゲータ・リサイザ。左右の矢印キーを使用して、ナビゲータのサイズを変更します"
       }
     }
   },
   "wrc-content-area-header": {
+    "ariaLabel": {
+      "button": {
+        "home": {
+          "value": "ホーム。プロバイダのツリーのカードを含むページに戻ります"
+        }
+      },
+      "region": {
+        "title": {
+          "value": "コンテンツ領域ヘッダー"
+        }
+      },
+      "popup": {
+        "provider": {
+          "value": "プロバイダ・アクション"
+        }
+      }
+    },
     "title": {
       "home": "ホーム",
       "configuration": "ツリーの編集",
@@ -742,6 +781,24 @@ define({
           "label": "ホーム"
         }
       }
+    },
+    "icons": {
+      "shoppingcart": {
+        "tooltip": "クリックしてショッピング・カート・アクションを表示します"
+      }
+    },
+    "menu": {
+      "shoppingcart": {
+        "view": {
+          "label": "変更の表示..."
+        },
+        "discard": {
+          "label": "変更の破棄"
+        },
+        "commit": {
+          "label": "変更のコミット"
+        }
+      }
     }
   },
   "wrc-ancillary-content": {
@@ -754,7 +811,7 @@ define({
           "label": "即時"
         },
         "projectmanagement": {
-          "label": "Providers"
+          "label": "プロバイダ"
         },
         "tips": {
           "label": "ユーザー・ヒント"
@@ -766,16 +823,16 @@ define({
     },
     "popups": {
       "tips": {
-        "title": "Filter Tips",
+        "title": "フィルタ・ヒント",
         "checkboxes": {
-          "hideall": "Hide All Tips",
-          "productivity": "Show Productivity Tips",
-          "personalization": "Show Personalization Tips",
-          "whereis": "Show Where Is... Tips",
-          "accessibility": "Show Accessibility Tips",
-          "connectivity": "Show Connectivity Tips",
-          "security": "Show Security Tips",
-          "other": "Show Other Tips"
+          "hideall": "すべてのヒントの非表示",
+          "productivity": "生産性に関するヒントの表示",
+          "personalization": "パーソナライズに関するヒントの表示",
+          "whereis": "...の場所に関するヒントの表示",
+          "accessibility": "アクセシビリティに関するヒントの表示",
+          "connectivity": "接続性に関するヒントの表示",
+          "security": "セキュリティに関するヒントの表示",
+          "other": "その他のヒントの表示"
         }
       }
     },
@@ -785,80 +842,87 @@ define({
           "value": "すべて非表示"
         },
         "productivity": {
-          "value": "Productivity"
+          "value": "生産性"
         },
         "personalization": {
-          "value": "Personalization"
+          "value": "パーソナライズ"
         },
         "whereis": {
-          "value": "Where Is ..."
+          "value": "...の場所"
         },
         "accessibility": {
-          "value": "Accessibility"
+          "value": "アクセシビリティ"
         },
         "connectivity": {
-          "value": "Connectivity"
+          "value": "接続性"
         },
         "security": {
           "value": "セキュリティ"
         },
         "other": {
-          "value": "Other"
+          "value": "その他"
         }
       },
       "cards": {
         "tip0": {
-          "title": "Think \"Search\" Before You Click!",
-          "descriptionHTML": "<p>Finding what you want in one of the provider's Trees, can involve a lot of clicking and scrolling. The <b><i>Search</i></b> field (located at the top of the app), lets you avoid having to do that!</p><p>Even better, clicking on an item in the generated search results, auto-expands the provider Tree to show you where the item is.</p>"
+          "title": "クリックする前に「検索」について考えてください!",
+          "descriptionHTML": "<p>プロバイダのツリーの1つで必要なものを見つけるには、多くのクリックとスクロールが必要な場合があります。<b>「<i>検索</i>」</b>フィールド(アプリケーションの上部にあります)を使用すると、その必要性を回避できます。</p><p>さらに、生成された検索結果の項目をクリックすると、プロバイダ・ツリーが自動的に展開され、その項目がある場所が示されます。</p>"
         },
         "tip1": {
-          "title": "\"Dashboards\" Are a User's Best Friend",
-          "descriptionHTML": "<p>A <b><i>Dashboard</i></b> lets you define the criteria used to select MBean instances. They function kind of like a View in the database world, allowing you to see all the MBean instances with runtime values that currently meet the criteria.</p><p>Look for the <img src=\"js/jet-composites/wrc-frontend/1.0.0/images/dashboards-tabstrip-icon_24x24.png\" alt=\"New Dashboard Icon\" style=\"height: 24px; width: 24px; vertical-align: middle;\"/> button whenever you''re on a page of the \"Monitoring Tree\", then click it to define a new dashboard. Previously created ones, can be found under the root-level \"Dashboards\" node in the Monitoring Tree.</p>"
+          "title": "「ダッシュボード」はユーザーのベスト・フレンドです",
+          "descriptionHTML": "<p><b>「<i>ダッシュボード</i>」</b>では、MBeanインスタンスの選択に使用される条件を定義できます。それらはデータベースの世界のビューのように機能し、現在条件を満たすランタイム値を持つすべてのMBeanインスタンスを表示できます。</p><p>「モニタリング・ツリー」のページを表示しているときに<img src=\"js/jet-composites/wrc-frontend/1.0.0/images/dashboards-tabstrip-icon_24x24.png\" alt=\"New Dashboard Icon\" style=\"height: 24px; width: 24px; vertical-align: middle;\"/>ボタンを探し、それをクリックして新規ダッシュボードを定義します。以前に作成したものは、モニタリング・ツリーのルートレベルの「ダッシュボード」ノードにあります。</p>"
         },
         "tip2": {
-          "title": "Choosing and Arranging Table Columns Using \"Customize Table\"",
-          "descriptionHTML": "<p>The \"Customize this table\" link is now the <i>Customize Table</i> button.</p>"
+          "title": "「表のカスタマイズ」を使用した表の列の選択と配置",
+          "descriptionHTML": "<p>「この表のカスタマイズ」リンクは「<i>表のカスタマイズ</i>」ボタンになりました。</p>"
         },
         "tip3": {
-          "title": "Using the Keyboard With Tables and Actions",
+          "title": "表とアクションでキーボードを使用",
           "descriptionHTML": "<p></p>"
         },
         "tip4": {
-          "title": "Where is the \"Customize this table\" Link?",
-          "descriptionHTML": "<p>The \"Customize this table\" link is now the <i>Customize Table</i> button.</p>"
+          "title": "「この表のカスタマイズ」リンクはどこにありますか?",
+          "descriptionHTML": "<p>「この表のカスタマイズ」リンクは「<i>表のカスタマイズ</i>」ボタンになりました。</p>"
         },
         "tip5": {
-          "title": "Where is the \"Change Center\" Portlet?",
-          "descriptionHTML": "<p>The \"Change Center\" porlet has been replaced with the <i>Shopping Cart Drawer</i>, which has launcher icon in the iconbar when the \"Configuration Tree\" is selected.</p>"
+          "title": "「チェンジ・センター」ポートレットはどこにありますか?",
+          "descriptionHTML": "<p>「チェンジ・センター」ポートレットは、「構成ツリー」が選択されている場合にアイコンバーの起動プログラム・アイコンがある「<i>ショッピング・カート・ドロワー</i>」で置き換えられました。</p>"
         },
         "tip6": {
-          "title": "Where is the \"How Do I\" Portlet?",
+          "title": "「方法」ポートレットはどこにありますか?",
           "descriptionHTML": "<p></p>"
         },
         "tip7": {
-          "title": "Other Tip #1",
-          "descriptionHTML": "<p>A terse description for \"Other Tip #1\". A newline character is not an HTML element, so you don''t want to use them in this description.</p>"
+          "title": "その他のヒント#1",
+          "descriptionHTML": "<p>「その他のヒント#1」の簡潔な説明。改行文字はHTML要素ではないため、この説明ではそれらを使用しません。</p>"
         },
         "tip8": {
-          "title": "Trouble Creating an Admin Server Provider?",
-          "descriptionHTML": "<p>The <a href='#' tabindex='0' on-click data-url='@@docsURL@@reference/troubleshoot/'>Reference -> Troubleshooting</a> section in the WebLogic Remote Console documentation, covers how to resolve connectivity issues caused by environment and network settings.</p><p>If trying those don't lead to a resolution, please post a message to the <b>@weblogic-remote-console</b> slack channel. Screenshots often provide context that aids in issue diagnosis, so include them in the post when possible.</p>"
+          "title": "管理サーバー・プロバイダの作成に問題がありますか?",
+          "descriptionHTML": "<p>WebLogic Remote Consoleドキュメントの<a href='#' tabindex='0' on-click data-url='@@docsURL@@reference/troubleshoot/'>リファレンス -> トラブルシューティング</a>に関する項では、環境およびネットワークの設定が原因の接続性の問題を解決する方法を説明しています。</p><p>これらを試しても解決しない場合は、<b>@weblogic-remote-console</b> Slackチャネルにメッセージを投稿してください。スクリーンショットでは問題の診断に役立つコンテキストが提供されることが多いため、可能な場合にはそれらを投稿に含めてください。</p>"
         },
         "tip9": {
-          "title": "Connectivity Tip #2",
-          "descriptionHTML": "<p>A terse description for \"Connectivity Tip #2\". A newline character is not an HTML element, so you don''t want to use them in this description.</p>"
+          "title": "接続性に関するヒント#2",
+          "descriptionHTML": "<p>「接続性に関するヒント#2」の簡潔な説明。改行文字はHTML要素ではないため、この説明ではそれらを使用しません。</p>"
         },
         "tip10": {
-          "title": "Security Tip #1",
-          "descriptionHTML": "<p>A terse description for \"Security Tip #1\". A newline character is not an HTML element, so you don''t want to use them in this description.</p>"
+          "title": "セキュリティに関するヒント#1",
+          "descriptionHTML": "<p>「セキュリティに関するヒント#1」の簡潔な説明。改行文字はHTML要素ではないため、この説明ではそれらを使用しません。</p>"
         },
         "tip11": {
-          "title": "Think \"Shortcut Keys\" Before You Press Tab!",
-          "descriptionHTML": "<p>\"Shortcut\" (or accelerator) keys allow you to move the focus directly to an area, instead of sighing while repeatedly pressing the <b>Tab</b> and <b>Shift+Tab</b> keys!</p><p>Here's 5 to try out:</p><p><ul><li><code><b>Ctrl+Alt+P</b></code>&nbsp;&nbsp;&nbsp;Opens the <i>Providers Drawer</i>.</li><li><code><b>Ctrl+Alt+N</b></code>&nbsp;&nbsp;&nbsp;Moves the focus to the <i>Provider Tree</i>.</li><li><code><b>Ctrl+Alt+T</b></code>&nbsp;&nbsp;&nbsp;Moves the focus to a table, more precisely the first column header.</li><li><code><b>Ctrl+Alt+|</b></code>&nbsp;&nbsp;&nbsp;Moves the focus to the gripper of the Tree width-resizer. Afterwards, use the <code><b>RightArrow</b></code> and <code><b>LeftArrow</b></code> keys to increase or decrease the width of the Tree.</li><li><code><b>Ctrl+Alt+;</b></code>&nbsp;&nbsp;&nbsp;Moves the focus to a breadcrumb that is a <i>cross-link</i> (if present), or the first clickable breadcrumb label.</li></ul><p>Check out the documentation to see a complete list of the shortcut keys!</p>"
+          "title": "[Tab]を押す前に「ショートカット・キー」について考えてください!",
+          "descriptionHTML": "<p>「ショートカット」(またはアクセラレータ)キーを使用すると、<b>[Tab]</b>および<b>[Shift]+[Tab]</b>キーを何度も押すかわりにフォーカスを領域に直接移動できます!</p><p>試してみるべき5つの項目:</p><p><ul><li><code><b>[Ctrl]+[Alt]+[P]</b></code>&nbsp;&nbsp;&nbsp;<i>プロバイダ・ドロワー</i>を開きます。</li><li><code><b>[Ctrl]+[Alt]+[N]</b></code>&nbsp;&nbsp;&nbsp;<i>プロバイダ・ツリー</i>にフォーカスを移動します。</li><li><code><b>[Ctrl]+[Alt]+[T]</b></code>&nbsp;&nbsp;&nbsp;フォーカスを表に移動します。より正確には、最初の列ヘッダーに移動します。</li><li><code><b>[Ctrl]+[Alt]+[|]</b></code>&nbsp;&nbsp;&nbsp;フォーカスをツリー幅リサイザのグリッパに移動します。その後、<code><b>[→]</b></code>および<code><b>[←]</b></code>キーを使用してツリーの幅を増減します。</li><li><code><b>[Ctrl]+[Alt]+[;]</b></code>&nbsp;&nbsp;&nbsp;フォーカスを、<i>クロス・リンク</i>であるブレッドクラム(存在する場合)または最初のクリック可能なブレッドクラム・ラベルに移動します。</li></ul><p>ショートカット・キーの完全なリストを確認するには、ドキュメントを調べてください!</p>"
         }
       }
     }
   },
   "wrc-perspective": {
+    "ariaLabel": {
+      "region": {
+        "breadcrumbs": {
+          "value": "ブレッドクラム"
+        }
+      }
+    },
     "icons": {
       "history": {
         "tooltip": "履歴"
@@ -885,7 +949,7 @@ define({
     "messages": {
       "lostConnection": {
         "summary": "接続が失われました",
-        "detail": "リモート・コンソール・バックエンドへの接続が失われました。稼働していることを確認するか、再起動してリンクを再試行してください。"
+        "detail": "Connection lost. Please refresh."
       },
       "cannotConnect": {
         "summary": "接続の試行に失敗しました",
@@ -900,12 +964,33 @@ define({
           "label": "ツリー"
         },
         "startup-tasks": {
-          "label": "Startup Tasks"
+          "label": "起動タスク"
+        }
+      }
+    }
+  },
+  "wrc-landing": {
+    "ariaLabel": {
+      "cards": {
+        "panel": {
+          "value": "ランディング・ページ"
+        }
+      },
+      "cardLinks": {
+        "panel": {
+          "value": "ランディング・ページ・リンク"
         }
       }
     }
   },
   "wrc-gallery": {
+    "ariaLabel": {
+      "cards": {
+        "panel": {
+          "value": "プロバイダ・ツリー"
+        }
+      }
+    },
     "cards": {
       "configuration": {
         "label": "ツリーの編集",
@@ -938,34 +1023,41 @@ define({
     }
   },
   "wrc-startup-tasks": {
+    "ariaLabel": {
+      "cards": {
+        "panel": {
+          "value": "起動タスク"
+        }
+      }
+    },
     "cards": {
       "addAdminServer": {
         "label": "管理サーバー接続プロバイダの追加",
-        "description": "This task creates a project resource that allows you to connect to an Admin Server"
+        "description": "このタスクは、管理サーバーへの接続を可能にするプロジェクト・リソースを作成します"
       },
       "addWdtModel": {
         "label": "WDTモデル・ファイル・プロバイダの追加",
-        "description": "This task creates a project resource that allows you to manage a WDT Model file, existing on your local filesystem"
+        "description": "このタスクは、ローカル・ファイルシステムに存在するWDTモデル・ファイルの管理を可能にするプロジェクト・リソースを作成します"
       },
       "addWdtComposite": {
         "label": "WDTコンポジット・モデル・ファイル・プロバイダの追加",
-        "description": "This task creates a project resource that allows you to manage WDT Model file fragments, existing on your local filesystem"
+        "description": "このタスクは、ローカル・ファイルシステムに存在するWDTモデル・ファイル断片の管理を可能にするプロジェクト・リソースを作成します"
       },
       "addPropertyList": {
         "label": "プロパティ・リスト・プロバイダの追加",
-        "description": "This task creates a project resource that allows you to manage a .properties file stored on your local filesystem"
+        "description": "このタスクは、ローカル・ファイルシステムに格納されている.propertiesファイルの管理を可能にするプロジェクト・リソースを作成します"
       },
       "createWdtModel": {
         "label": "新規WDTモデル・ファイルのプロバイダの作成",
-        "description": "This task creates a project resource that is a new WDT Model file, stored on your local filesystem"
+        "description": "このタスクは、ローカル・ファイルシステムに格納される新規WDTモデル・ファイルであるプロジェクト・リソースを作成します"
       },
       "createPropertyList": {
         "label": "新規プロパティ・リストのプロバイダの作成",
-        "description": "This task creates a project resource that is a new .properties file, stored on your local filesystem"
+        "description": "このタスクは、ローカル・ファイルシステムに格納される新規.propertiesファイルであるプロジェクト・リソースを作成します"
       },
       "importProject": {
         "label": "プロジェクトのインポート",
-        "description": "This task loads a previously exported project containing providers immediately ready for you to use or modify"
+        "description": "このタスクは、すぐに使用または変更する準備ができているプロバイダを含む、以前にエクスポートされたプロジェクトをロードします"
       }
     }
   },
@@ -1030,34 +1122,18 @@ define({
       },
       "syncInterval": {
         "tooltip": "自動再ロードの間隔の設定"
-      },
-      "shoppingcart": {
-        "tooltip": "クリックしてカートに対するアクションを表示"
-      }
-    },
-    "menu": {
-      "shoppingcart": {
-        "view": {
-          "label": "変更の表示"
-        },
-        "discard": {
-          "label": "変更の破棄"
-        },
-        "commit": {
-          "label": "変更のコミット"
-        }
       }
     },
     "instructions": {
       "selectItems": {
-        "value": "''{0}''操作を実行するアイテムを選択します。"
+        "value": "'{0}'操作を実行するアイテムを選択します。"
       }
     },
     "messages": {
       "action": {
         "cannotPerform": {
           "summary": "メッセージ",
-          "detail": "自動再ロードの実行中は''{0}''アクションを実行できません。まず、''{1}''アイコンをクリックして停止してください。"
+          "detail": "自動再ロードの実行中は'{0}'アクションを実行できません。まず、'{1}'アイコンをクリックして停止してください。"
         }
       }
     },
@@ -1083,19 +1159,50 @@ define({
     }
   },
   "wrc-table-customizer": {
-    "labels": {
-      "available": {
-        "value": "使用可能な列"
+    "ariaLabel": {
+      "availableColumns": {
+        "title": {
+          "value": "使用可能な列"
+        },
+        "list": {
+          "value": "「使用可能な列」リスト"
+        },
+        "listItem": {
+          "value": "「使用可能な列」リスト項目"
+        }
       },
-      "selected": {
-        "value": "選択済の列"
-      }
-    },
-    "messages": {
-      "action": {
-        "needAtLeastOneColumn": {
-          "title": "不十分な列",
-          "detail": "少なくとも選択済の列が1つ必要です。"
+      "selectedColumns": {
+        "title": {
+          "value": "選択済の列"
+        },
+        "list": {
+          "value": "「選択済の列」リスト"
+        },
+        "listItem": {
+          "value": "「選択済の列」リスト項目"
+        }
+      },
+      "button": {
+        "addToRight": {
+          "value": "「使用可能な列」リストのチェック済項目を「選択済の列」リストに移動します"
+        },
+        "addAllRight": {
+          "value": "「使用可能な列」リストのすべての項目を「選択済の列」リストに移動します"
+        },
+        "removeRight": {
+          "value": "「選択済の列」リストのチェック済項目を「使用可能な列」リストに移動します"
+        },
+        "removeAll": {
+          "value": "「選択済の列」リストのすべての項目を「使用可能な列」リストに移動します"
+        },
+        "reset": {
+          "value": "「選択済の列」リストの列を、表カスタマイザがオープンに切り替わったときに存在していた列に戻します。"
+        },
+        "apply": {
+          "value": "列のカスタマイズを表に適用します"
+        },
+        "cancel": {
+          "value": "すべての列カスタマイズを取り消します"
         }
       }
     }
@@ -1152,22 +1259,6 @@ define({
       },
       "syncInterval": {
         "tooltip": "自動再ロードの間隔の設定"
-      },
-      "shoppingcart": {
-        "tooltip": "クリックしてカートに対するアクションを表示"
-      }
-    },
-    "menu": {
-      "shoppingcart": {
-        "view": {
-          "label": "変更の表示"
-        },
-        "discard": {
-          "label": "変更の破棄"
-        },
-        "commit": {
-          "label": "変更のコミット"
-        }
       }
     }
   },
@@ -1299,7 +1390,7 @@ define({
         "detail": "1つ以上の必須フィールドにデータが含まれていません。"
       },
       "argumentValueHasWrongFormat": {
-        "summary": "''{0}''フィールドに、書式設定が不適切なデータがあります。"
+        "summary": "'{0}'フィールドに、書式設定が不適切なデータがあります。"
       },
       "conditionHasNoArgValues": {
         "summary": "選択した条件には編集する引数値がありません。"
@@ -1320,7 +1411,7 @@ define({
         "value": "範囲: -31から31"
       },
       "dateTime": {
-        "value": "書式: y-MM-dd HH:mm:ss [HH:mm:ss] (例: 2006-04-25 00:00:00)"
+        "value": "書式: yyyy-MM-dd [HH:mm:ss [AM|PM]] (例: 2022-02-14 09:00:00 AM)"
       },
       "time": {
         "value": "書式: HH:mm:ss (例: 14:22:47)"
@@ -1402,6 +1493,16 @@ define({
     }
   },
   "wrc-common": {
+    "ariaLabel": {
+      "icons": {
+        "landing": {
+          "value": "プロバイダ・ツリーのランディング・ページに戻ります。"
+        },
+        "reset": {
+          "value": "ページ値をリセットします"
+        }
+      }
+    },
     "buttons": {
       "action": {
         "label": "アクション"
@@ -1530,6 +1631,9 @@ define({
       },
       "recentPages": {
         "value": "履歴の表示の切替え"
+      },
+      "pageInfo": {
+        "value": "クリックして固定および固定解除します"
       }
     },
     "menu": {
@@ -1549,6 +1653,9 @@ define({
       },
       "error": {
         "value": "エラー"
+      },
+      "alerts": {
+        "value": "アラート"
       }
     },
     "placeholders": {
@@ -1563,13 +1670,13 @@ define({
     },
     "messages": {
       "incorrectFileContent": {
-        "detail": "''{0}''にはJSONが含まれていますが、これは{1}のJSON表現ではありません。"
+        "detail": "'{0}'にはJSONが含まれていますが、これは{1}のJSON表現ではありません。"
       },
       "dataCopiedToClipboard": {
-        "summary": "データがクリップボードにコピーされました。"
+        "detail": "データがクリップボードにコピーされました。"
       },
       "tableCopiedToClipboard": {
-        "summary": "Table was successfully copied to the clipboard!"
+        "summary": "表がクリップボードに正常にコピーされました!"
       },
       "emptyCellData": {
         "detail": "選択したセルが空であったため、データはクリップボードにコピーされませんでした。"
@@ -1578,8 +1685,8 @@ define({
         "detail": "選択した行が空であったため、データはクリップボードにコピーされませんでした。"
       },
       "browserPermissionDenied": {
-        "summary": "Browser Permission Denied",
-        "detail": "You need to enable writing to the clipboard from JavaScript, in order to perform this operation. Also, the Clipboard API is only supported for pages served over HTTPS."
+        "summary": "ブラウザ権限が拒否されました",
+        "detail": "この操作を実行するには、JavaScriptからクリップボードへの書込みを有効にする必要があります。また、クリップボードAPIはHTTPSを介して提供されたページでのみサポートされます。"
       }
     },
     "contextMenus": {
@@ -1591,30 +1698,40 @@ define({
           "label": "行のクリップボードへのコピー"
         },
         "tableAsText": {
-          "label": "Copy Table to Clipboard (Text)"
+          "label": "表をクリップボードにコピー(Text)"
         },
         "tableAsJSON": {
-          "label": "Copy Table to Clipboard (JSON)"
+          "label": "表をクリップボードにコピー(JSON)"
         },
         "tableAsYAML": {
-          "label": "Copy Table to Clipboard (YAML)"
+          "label": "表をクリップボードにコピー(YAML)"
         }
+      }
+    }
+  },
+  "wrc-navtree-toolbar": {
+    "menu": {
+      "collapseAll": {
+        "value": "すべて縮小"
+      },
+      "useTreeMenusAsRootNodes": {
+        "value": "ツリー・メニューをルート・ノードとして使用"
       }
     }
   },
   "wrc-wdt-form": {
     "messages": {
       "changesSaved": {
-        "summary": "変更は''{0}''ファイルに正常に保存されました。"
+        "summary": "変更は'{0}'ファイルに正常に保存されました。"
       },
       "changesNotSaved": {
-        "summary": "変更を''{0}''ファイルに保存できません。"
+        "summary": "変更を'{0}'ファイルに保存できません。"
       },
       "changesDownloaded": {
-        "summary": "変更は''{0}''ファイルに正常にダウンロードされました。"
+        "summary": "変更は'{0}'ファイルに正常にダウンロードされました。"
       },
       "changesNotDownloaded": {
-        "summary": "変更を''{0}''ファイルにダウンロードできません。"
+        "summary": "変更を'{0}'ファイルにダウンロードできません。"
       },
       "verifyPathEntered": {
         "detail": "{0}フィールドをfalseに設定すると、ローカル・ファイルまたはディレクトリとして存在することを検証せずに、入力された値を受け入れます。"
@@ -1660,12 +1777,12 @@ define({
           "value": "終了する前に変更を保存しますか。"
         },
         "needDownloading": {
-          "value": "''{0}''に対する変更はファイルにダウンロードされていません。<br/><br/>続行する前にダウンロードしますか。"
+          "value": "'{0}'に対する変更はファイルにダウンロードされていません。<br/><br/>続行する前にダウンロードしますか。"
         }
       },
       "uncommitedCreate": {
         "abandonForm": {
-          "value": "新しい''{0}''インスタンスはWDTモデルに追加されていません。<br/><br/>続行する前に追加しますか。"
+          "value": "新しい'{0}'インスタンスはWDTモデルに追加されていません。<br/><br/>続行する前に追加しますか。"
         }
       }
     }
@@ -1686,13 +1803,13 @@ define({
       "action": {
         "unableToPerform": {
           "summary": "メッセージ",
-          "detail": "''{1}''アクションを実行しようとしたときに、コンソール・バックエンド呼出しが''{0}''レスポンスを生成しました"
+          "detail": "'{1}'アクションを実行しようとしたときに、コンソール・バックエンド呼出しが'{0}'レスポンスを生成しました"
         },
         "actionNotPerformed": {
-          "detail": "選択された1つ以上のアイテムで、''{0}''アクションを実行できません"
+          "detail": "選択された1つ以上のアイテムで、'{0}'アクションを実行できません"
         },
         "actionSucceeded": {
-          "summary": "''{0}''アクションは正常に実行されました。"
+          "summary": "'{0}'アクションは正常に実行されました。"
         }
       }
     },
@@ -1706,7 +1823,7 @@ define({
     "dialogs": {
       "cannotBeUndone": {
         "title": "アクションの確認",
-        "prompt": "''{0}''アクションは元に戻せません。<br/><br/>続行しますか。"
+        "prompt": "'{0}'アクションは元に戻せません。<br/><br/>続行しますか。"
       }
     }
   },
@@ -1760,7 +1877,7 @@ define({
   "wrc-pdj-crosslinks": {
     "messages": {
       "noNotFoundMessage": {
-        "detail": "''{0}''は使用できません。"
+        "detail": "'{0}'は使用できません。"
       }
     }
   },
@@ -1859,6 +1976,16 @@ define({
       }
     }
   },
+  "wrc-confirm-dialogs": {
+    "adminServerShutdown": {
+      "title": {
+        "value": "確認"
+      },
+      "prompt": {
+        "value": "<b>{0}</b>を停止すると、現在のプロバイダがリセットされます。続行しますか。"
+      }
+    }
+  },
   "wrc-change-manager": {
     "messages": {
       "cannotGetLockState": {
@@ -1887,15 +2014,20 @@ define({
     "messages": {
       "connectionRefused": {
         "summary": "接続の問題",
-        "details": "プロバイダからのデータの送受信に問題があります。アクセス可能であることを確認し、再試行してください。"
+        "details": "プロバイダからのデータの送受信に問題があります。続行する前に、アクセス可能であることを確認しください。"
       },
       "pathNotFound": {
         "summary": "パスが見つかりません",
-        "details": "''{0}''は、ローカル・ファイルシステムでアクセスできるファイルまたはディレクトリではありません。"
+        "details": "'{0}'は、ローカル・ファイルシステムでアクセスできるファイルまたはディレクトリではありません。"
       }
     }
   },
   "wrc-message-line": {
+    "ariaLabel": {
+      "region": {
+        "value": "メッセージ行"
+      }
+    },
     "menus": {
       "more": {
         "clear": {
@@ -1910,32 +2042,30 @@ define({
           }
         }
       }
+    },
+    "messages": {
+      "adminServerShutdown": {
+        "details": " WebLogicドメインの管理サーバーに接続できません。"
+      },
+      "shutdownSequenceError": {
+        "details": "管理対象サーバーを停止してから、管理サーバーを停止してください。"
+      }
     }
   },
   "wrc-alerts": {
     "menus": {
       "alerts": {
         "error": {
-          "value": "You have {0} high-priority error {1}"
+          "value": "{0}個の高優先度エラー・アラートがあります"
         },
         "warning": {
-          "value": "You have {0} high-priority warning {1}"
+          "value": "{0}個の高優先度警告アラートがあります"
         },
         "info": {
-          "value": "You have {0} high-priority information {1}"
+          "value": "{0}個の高優先度情報アラートがあります"
         },
         "view": {
           "value": "警告の表示"
-        }
-      }
-    },
-    "labels": {
-      "alerts": {
-        "singular": {
-          "value": "alert"
-        },
-        "plural": {
-          "value": "alerts"
         }
       }
     }

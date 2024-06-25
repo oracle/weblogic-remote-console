@@ -1,4 +1,4 @@
-# Copyright (c) 2020, 2021, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2024, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 introductionHTML: >
   Use this page to manage the management-related server debug flags; that is, the flags
@@ -11,9 +11,10 @@ presentation:
   useCheckBoxesForBooleans: true
 
 properties:
-# deprecated - name: ServerDebug.DebugBootstrapServlet
 - name: ServerDebug.DebugConfigurationEdit
 - name: ServerDebug.DebugConfigurationRuntime
+- name: ServerDebug.DebugFederatedConfig
+- name: ServerDebug.DebugFileChangeObserver
 - name: ServerDebug.DebugFileDistributionServlet
 - name: ServerDebug.DebugJ2EEManagement
 - name: ServerDebug.DebugJMX
@@ -23,6 +24,10 @@ properties:
 - name: ServerDebug.DebugJMXDomain
 - name: ServerDebug.DebugJMXEdit
 - name: ServerDebug.DebugJMXRuntime
+- name: ServerDebug.DebugMBeanLocalization
 - name: ServerDebug.DebugManagementServicesResource
+- name: ServerDebug.DebugMigrationInfo
+- name: ServerDebug.DebugOPatchUtils
 - name: ServerDebug.DebugPatchingRuntime
 - name: ServerDebug.DebugSituationalConfig
+- name: ServerDebug.DebugValidateWorkManager

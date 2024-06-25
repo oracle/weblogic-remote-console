@@ -1,4 +1,4 @@
-# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2024, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 actions: [
@@ -65,7 +65,7 @@ properties:
     partitions based on their relative values. This attribute is for use in the global
     domain only. Use the PartitionWorkManager MBean for specifying partition fair
     share values for partitions. '
-  excludeFromRest: ${excludeFromRest}
+  excludeFromRest: ' '
   name: PartitionFairShare
   supported: false
   type: int

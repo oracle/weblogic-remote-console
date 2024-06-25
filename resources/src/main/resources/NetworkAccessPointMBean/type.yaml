@@ -65,6 +65,21 @@ properties:
     property: Enabled
     values:
       - false
+  legalValues:
+   - value: "t3"
+   - value: "t3s"
+   - value: "admin"
+   - value: "cluster-broadcast"
+   - value: "cluster-broadcast-secure"
+   - value: "http"
+   - value: "https"
+   - value: "iiop"
+   - value: "iiops"
+   - value: "ldap"
+   - value: "ldaps"
+   - value: "snmp"
+
+
 
 - name: ListenAddress
   usedIf:

@@ -166,17 +166,17 @@ const WindowManagement = (() => {
           {
             label: `${I18NUtils.get('wrc-electron.menus.view.resetZoom.label')}`,
             role: 'resetZoom',
-            enabled: false
+            enabled: true
           },
           {
             label: `${I18NUtils.get('wrc-electron.menus.view.zoomIn.label')}`,
             role: 'zoomIn',
-            enabled: false
+            enabled: true
           },
           {
             label: `${I18NUtils.get('wrc-electron.menus.view.zoomOut.label')}`,
             role: 'zoomOut',
-            enabled: false
+            enabled: true
           },
           {
             type: 'separator'

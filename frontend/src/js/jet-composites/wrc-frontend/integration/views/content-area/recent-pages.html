@@ -27,7 +27,7 @@ Copyright (c) 2020, 2024, Oracle and/or its affiliates. The Universal Permissive
 
   <div id="beanpath-history-moremenu-container" class="oj-flex-item oj-helper-margin-start-auto">
     <a id="moreMenuLauncher" href="#" on-click="[[launchMoreMenu]]">
-      <img class="button-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.icons.separator.iconFile + '.png', alt: i18n.icons.separator.tooltip}"/>
+      <img class="button-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.icons.more.iconFile + '.png', alt: i18n.icons.more.tooltip}"/>
     </a>
     <oj-menu
       id="moreMenu"
@@ -38,7 +38,9 @@ Copyright (c) 2020, 2024, Oracle and/or its affiliates. The Universal Permissive
     >
       <oj-option id="clear" value="clear">
         <img id="[[i18n.menus.history.clear.id]]" class="option-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.menus.history.clear.iconFile + '.png', alt: i18n.menus.history.clear.label}"/>
-        <span class="button-label"><oj-bind-text value="[[i18n.menus.history.clear.value]]"></oj-bind-text></span>
+        <span class="button-label">
+          <oj-bind-text value="[[i18n.menus.history.clear.value]]"></oj-bind-text>
+        </span>
       </oj-option>
     </oj-menu>
   </div>

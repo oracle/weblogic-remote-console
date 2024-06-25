@@ -56,7 +56,7 @@ define({
   },
   "wrc-footer": {
     "text": {
-      "copyrightLegal": "[PX][Copyright Â© 2020, 2022, Oracle and/or its affiliates.<br/>Oracle is a registered trademark of Oracle Corporation and/or its affiliates. Other names may be trademarks of their respective owners.<br/> éëžéëžéëžéëžéëžéëžéëžéëžéëžéëžéëžéëžéëžéëžéëžéëžéëžéëž]",
+      "copyrightLegal": "[PX][Copyright Â© 2020, 2024, Oracle and/or its affiliates.<br/>Oracle is a registered trademark of Oracle Corporation and/or its affiliates. Other names may be trademarks of their respective owners.<br/> éëžéëžéëžéëžéëžéëžéëžéëžéëžéëžéëžéëžéëžéëžéëžéëžéëžéëž]",
       "builtWith": "[PX][Built with Oracle JET é]"
     }
   },
@@ -295,14 +295,14 @@ define({
     },
     "instructions": {
       "selectItems": {
-        "value": "[PX][Select items you want to perform ''{0}'' operation on. éëžéëžéëžé]"
+        "value": "[PX][Select items you want to perform '{0}' operation on. éëžéëžéëžé]"
       }
     },
     "messages": {
       "action": {
         "cannotPerform": {
           "summary": "[PX][Message é]",
-          "detail": "[PX][Cannot perform ''{0}'' action while auto-reload is running! Please click the ''{1}'' icon to stop it, first. éëžéëžéëžéëžéëžéëžéëžéëžéë]"
+          "detail": "[PX][Cannot perform '{0}' action while auto-reload is running! Please click the '{1}' icon to stop it, first. éëžéëžéëžéëžéëžéëžéëžéëžéë]"
         }
       }
     },
@@ -518,7 +518,7 @@ define({
       "action": {
         "unableToPerform": {
           "summary": "[PX][Message é]",
-          "detail": "[PX][Cannot perform ''{0}'' action while auto-reload is running! Please click the ''{1}'' icon to stop it, first. éëžéëžéëžéëžéëžéëžéëžéëžéë]"
+          "detail": "[PX][Cannot perform '{0}' action while auto-reload is running! Please click the '{1}' icon to stop it, first. éëžéëžéëžéëžéëžéëžéëžéëžéë]"
         }
       }
     },
@@ -565,7 +565,7 @@ define({
     "messages": {
       "noNotFoundMessage": {
         "summary": "[PX][Message é]",
-        "detail": "[PX][RDJ did not contain a ''notFoundMessage'' field for the ''{0}'' item. éëžéëžéëžéëžéë]"
+        "detail": "[PX][RDJ did not contain a 'notFoundMessage' field for the '{0}' item. éëžéëžéëžéëžéë]"
       }
     }
   },

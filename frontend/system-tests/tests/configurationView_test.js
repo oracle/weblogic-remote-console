@@ -83,8 +83,9 @@ describe.only('Test Suite: configurationView_test for functionality', function (
             console.log('Click jms-local-adp pop down menu menu');
             await driver.findElement(By.xpath("//*[@id='breadcrumbs-container']/ul/li[2]/oj-menu-button/button/div/span[2]")).click();
             await driver.sleep(1200);
-            console.log('Select Status - Monitoring Tree');
-            await driver.findElement(By.xpath("//span[text()='Status - Monitoring Tree']")).click();
+            console.log('Select Application Runtime Data - Monitoring Tree');
+            await driver.findElement(
+                By.xpath("//span[text()='Application Runtime Data - Monitoring Tree']")).click();
             await driver.sleep(2400);
             console.log("TEST PASS ");
         } catch (e) {

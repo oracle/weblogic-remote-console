@@ -263,7 +263,7 @@ properties:
       value: true
   descriptionHTML: '<p>The WebApp Container configuration for rejection of URIs with
     malicious path parameters.</p> <p/> <p>The WebApp Container configuration specifies
-    whether URIs with malicious path parameters will be rejected.</p> <p/> <p>By default
+    whether URIs with malicious path parameters will be rejected.</p> <p/> <p>By default,
     the WebApp Container will reject URIs with malicious path parameters.</p> '
   name: RejectMaliciousPathParameters
   type: boolean
@@ -317,15 +317,15 @@ properties:
   descriptionHTML: '<p>The HTTP Cookie configuration for the WebLogic HTTP SameSite
     Java EE Servlet Filter.</p> <p/> <p>The Cookie configuration specifies a String
     array of settings. Each setting specifies a match for the Cookie name using a
-    regular expression, a value for the SameSite attribute and optionally a secure
+    regular expression, a value for the SameSite attribute and optionally, a secure
     setting for the Cookie. The regular expression follows the Java <code>Pattern</code>
     syntax specification.</p> <p/> <p>For example: ["match=JSESSIONID; value=Strict",
-    "match=MYAPP.*; value=None; secure=true"]</p> <p/> <p>By default there are no
+    "match=MYAPP.*; value=None; secure=true"]</p> <p/> <p>By default, there are no
     cookie settings, thus the WebLogic HTTP SameSite filter will not be used. Once
-    settings are confgiured, any newly deployed applications will use the WebLogic
-    HTTP SameSite filter and any running applications must be re-started or re-deployed
-    for the filter to be applied.</p> <p/> <p>When the WebLogic HTTP SameSite filter
-    runs and the HTTP response has already been committed, then no update to the Cookies
+    settings are configured, any newly deployed applications will use the WebLogic
+    HTTP SameSite filter. Running applications must be re-started or re-deployed for
+    the filter to be applied.</p> <p/> <p>When the WebLogic HTTP SameSite filter runs
+    and the HTTP response has already been committed, then no update to the Cookies
     in the HTTP response can be performed.</p> '
   name: SameSiteFilterCookieSettings
   type: java.lang.String
@@ -337,7 +337,7 @@ properties:
     Java EE Servlet Filter.</p> <p/> <p>The Secure Channel configuration specifies
     if a secure channel is required when setting the SameSite Cookie attribute where
     the Secure attribute is also set to true for the specific Cookie.</p> <p/> <p>By
-    default the Secure attribute setting will be applied for any channel as the user
+    default, the Secure attribute setting will be applied for any channel as the user
     agent may reside in front of a proxy or load balancer when accessing resources.</p> '
   name: SameSiteFilterSecureChannelRequired
   type: boolean
@@ -352,10 +352,10 @@ properties:
     of these expressions with the HTTP User-Agent header value, then the Cookie settings
     will be applied for the HTTP request. The regular expression follows the Java
     <code>Pattern</code> syntax specification.</p> <p/> <p>For example: [".*Chrom(e|ium).*"]</p>
-    <p/> <p>By default there are no expressions, thus the SameSite Cookie settings
-    are applied for all requests.</p> <p/> <p>Please note that if the HTTP response
-    has been committed when the WebLogic HTTP SameSite filter runs, then no update
-    to the Cookies in the HTTP response can be performed.</p> '
+    <p/> <p>By default, there are no expressions, thus the SameSite Cookie settings
+    are applied for all requests.</p> <p/> <p>Note that if the HTTP response has been
+    committed when the WebLogic HTTP SameSite filter runs, then no update to the Cookies
+    in the HTTP response can be performed.</p> '
   name: SameSiteFilterUserAgentRegEx
   type: java.lang.String
   writable: true

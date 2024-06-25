@@ -3,6 +3,9 @@
 
 introductionHTML: >
   <p> Displays the bindings in this server's JNDI tree.</p>
+  <p> Note: messages in the "Error" column do not generally indicate a problem.
+  Some entries in the JNDI tree cannot be processed by the Administration Server
+  and these entries are provided for informational purposes.</p>
 
 getTableRowsMethod: weblogic.remoteconsole.customizers.ServerRuntimeMBeanCustomizer.getJNDISliceTableRows
 

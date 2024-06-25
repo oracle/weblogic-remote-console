@@ -179,6 +179,13 @@ properties:
   type: boolean
   writable: true
 - defaultValue:
+    secureModeValue:
+      value: false
+  descriptionHTML: '<p>Debug JVM to JVM requests and responses</p> '
+  name: DebugRJVMRequestResponse
+  type: boolean
+  writable: true
+- defaultValue:
     value:
       value: false
   descriptionHTML: '<p>Debug RSA security processing</p> '
@@ -211,6 +218,13 @@ properties:
       value: false
   descriptionHTML: '<p>Debug Work context (out of band data propagation)</p> '
   name: DebugWorkContext
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Default diagnostic messages for RJVM requests and responses</p> '
+  name: DefaultRJVMDiagMessages
   type: boolean
   writable: true
 - defaultValue:

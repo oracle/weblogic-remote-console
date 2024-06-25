@@ -1,4 +1,4 @@
-# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2024, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 actions: [
@@ -10,6 +10,14 @@ derivedTypes: [
 descriptionHTML: '<p> The local setting of an HTTP/2 connection on a web server. </p> '
 name: weblogic.management.configuration.Http2ConfigMBean
 properties:
+- defaultValue:
+    value:
+      value: 60
+  descriptionHTML: '<p>Gets the frame count limit reset interval</p> '
+  name: FrameCountLimitResetInterval
+  restartNeeded: true
+  type: int
+  writable: true
 - defaultValue:
     value:
       value: 4096
@@ -51,5 +59,12 @@ properties:
     including the length of the name and value in octets plus an overhead of 32 octets
     for each header field. </p> '
   name: MaxHeaderListSize
+  type: int
+  writable: true
+- defaultValue:
+    derivedDefault: true
+  descriptionHTML: '<p> Gets the maximum number of stream resets(RST_STREAM frames)
+    allowed per connection. </p> '
+  name: MaxStreamResets
   type: int
   writable: true

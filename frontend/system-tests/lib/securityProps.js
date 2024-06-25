@@ -20,7 +20,8 @@ module.exports = function (driver, file) {
         //
         createRealm: async function (driver,realmName)
         {
-            await admin.goToLandingPanelSubTreeCard(driver,"Edit Tree","SecurityChevron","Realms",0);
+            //await admin.goToLandingPanelSubTreeCard(driver,"Edit Tree","SecurityChevron","Realms",0);
+            await admin.goToNavTreeLevelTwoLink(driver,"configuration", "Security","Realms");
             await driver.sleep(2400);
             element = await driver.findElement(By.xpath("//oj-button[@id='[[i18n.buttons.new.id]]']/button/div/span/img"));
             await driver.sleep(4800);
@@ -38,11 +39,11 @@ module.exports = function (driver, file) {
             await admin.goToNavTreeLevelThreeLink(driver,"configuration","Security","Realms",realmName);
             await driver.sleep(3600);
             await admin.createMBeanFromMenuDropDown(driver,"Authentication Providers","testAuthenticatorProvider-1",
-            "searchselect","oj-searchselect-filter-Type|input","Type|input","Default Authenticator");
+            "searchselect","oj-searchselect-filter-Type|input","Type|input","Default Authenticator","finish");
             await admin.goToNavTreeLevelThreeLink(driver,"configuration","Security","Realms",realmName);
             await driver.sleep(3600);
             await admin.createMBeanFromMenuDropDown(driver,"Authentication Providers","testDefaultIdentityAsserter-1",
-            "searchselect","oj-searchselect-filter-Type|input","Type|input","Default Identity Asserter");
+            "searchselect","oj-searchselect-filter-Type|input","Type|input","Default Identity Asserter","finish");
 
             await admin.goToNavTreeLevelThreeLink(driver,"configuration","Security","Realms",realmName);
             await driver.sleep(3600);

@@ -4,30 +4,51 @@ actions:
 
 - name: "start"
   label: "Start servicing all requests"
+  successMessage: Started and created task for application {0}
+  failureMessage: Failed to start application {0}, check deployment task for more information
+  # poll once since this operation is synchronous and affects what's displayed on the page
+  polling:
+    reloadSeconds: 1
+    maxAttempts: 1
 
 - name: "startInAdminMode"
   label: "Start servicing only administration requests"
   actionMethod: weblogic.remoteconsole.customizers.AppDeploymentRuntimeMBeanCustomizer.startInAdminMode
+  successMessage: Created task to start application {0} for administration requests
+  failureMessage: Failed to start application {0}, check deployment task for more information
   mbeanOperation:
     operation: start_targets_deploymentOptions
   helpHTML: >
     <p>Start this application in admin mode on all running servers to which it is deployed.
     This is an asynchronous operation that returns immediately.
     The returned DeploymentProgressObjectMBean can be used to determine when the operation is completed.</p>
-  # don't specify polling since the current page only shows the intended state, not the current state
+  # poll multiple times since this operation is asynchronous and affects what's displayed on the page
+  polling:
+    reloadSeconds: 2
+    maxAttempts: 5
   definition:
     type: "weblogic.management.runtime.DeploymentProgressObjectMBean"
 
 - name: "stop"
   label: "Stop when work completes"
-  # don't specify polling since the current page only shows the intended state, not the current state
+  successMessage: Stopped and created task for application {0}
+  failureMessage: Failed to stop application {0}, check deployment task for more information
+  # poll once since this operation is synchronous and affects what's displayed on the page
+  polling:
+    reloadSeconds: 1
+    maxAttempts: 1
 
 - name: "forceStop"
   label: "Force stop now"
   actionMethod: weblogic.remoteconsole.customizers.AppDeploymentRuntimeMBeanCustomizer.forceStop
+  successMessage: Created task to stop application {0} immediately
+  failureMessage: Failed to stop application {0}, check deployment task for more information
   mbeanOperation:
     operation: stop_targets_deploymentOptions
-  # don't specify polling since the current page only shows the intended state, not the current state
+  # poll multiple times since this operation is asynchronous and affects what's displayed on the page
+  polling:
+    reloadSeconds: 1
+    maxAttempts: 5
   helpHTML: >
     <p>Forcibly stop this application on all running servers to which it is deployed.
     This is an asynchronous operation that returns immediately.
@@ -38,9 +59,14 @@ actions:
 - name: "stopToAdminMode"
   label: "Stop servicing non-administration requests"
   actionMethod: weblogic.remoteconsole.customizers.AppDeploymentRuntimeMBeanCustomizer.stopToAdminMode
+  successMessage: Created task to stop non-administration requests for application {0}
+  failureMessage: Failed to stop non-administration requests for application {0}, check deployment task for more information
   mbeanOperation:
     operation: stop_targets_deploymentOptions
-  # don't specify polling since the current page only shows the intended state, not the current state
+  # poll multiple times since this operation is asynchronous and affects what's displayed on the page
+  polling:
+    reloadSeconds: 2
+    maxAttempts: 5
   helpHTML: >
     <p>Gracefully stop this application to admin mode on all running servers to which it is deployed.
     This is an asynchronous operation that returns immediately.
@@ -50,10 +76,10 @@ actions:
 
 - name: "createPlan"
   label: "Create Plan"
+  successMessage: Created deployment plan and task to redeploy application {0}
+  failureMessage: Failed to create deployment plan for application {0}, check deployment task for more information
   disableMBeanJavadoc: true
-  polling:
-    reloadSeconds: 5
-    maxAttempts: 10
+  # Don't specify polling since what's displayed on the page doesn't change when update completes
   # temporary workaround for the CFE using the action's pageSummaryHTML as the
   # action input form's introductionHTML
   helpHTML: >
@@ -67,7 +93,8 @@ actions:
     customizePageMethod: weblogic.remoteconsole.customizers.AppDeploymentRuntimeMBeanCustomizer.customizeCreatePlanActionInputForm
     introductionHTML: >
       <p>The deployment plan file name must have a <code>.xml</code> file extension, and should be located
-      in its own directory to avoid it being inadvertently shared with other applications.</p>
+      in its own directory to avoid it being inadvertently shared with other applications.
+      The plan file location must be under domain home</p>
       <p><code>Plan.xml</code> is the highly recommended name for the file.</p>
       <p><i>The plan file will be overwritten if it already exists.  Other files located in its directory may be overwritten too.</i></p>
       <p>Note: if your new deployment plan isn't visible in the WebLogic Remote Console, go to the 'Edit' view
@@ -76,37 +103,12 @@ actions:
     - name: "PlanPath"
       required: true
 
-- name: "updateExisting"
-  label: "Update with Modified Existing Deployment Plan"
-  actionMethod: weblogic.remoteconsole.customizers.AppDeploymentRuntimeMBeanCustomizer.updateExisting
-  helpHTML: >
-    <p>Use this page, after you've changed one or more dynamic attributes in this application's deployment plan, 
-      to tell this application to start using them immediately (without stopping and restarting the application). <br/>
-      Use 'redeploy' instead if you:
-      <ul><li>changed non-dynamic attributes in the deployment plan</li>
-      <li>changed contents of the application's archive</li>
-      <li>changed the path name of the archive or deployment plan</li></ul>
-       This is an asynchronous operation.  Its status is available under 'Deployment Progress Objects'.</p>
-  inputForm:
-    customizePageMethod: weblogic.remoteconsole.customizers.AppDeploymentRuntimeMBeanCustomizer.customizeEditExistingActionInputForm
-    introductionHTML: >
-      <p>Use this page, after you've changed one or more dynamic attributes in this application's deployment plan, 
-        to tell this application to start using them immediately (without stopping and restarting the application). <br/>
-        Use 'redeploy' instead if you:
-        <ul><li>changed non-dynamic attributes in the deployment plan</li>
-        <li>changed contents of the application's archive</li>
-        <li>changed the path name of the archive or deployment plan</li></ul>
-         This is an asynchronous operation.  Its status is available under 'Deployment Progress Objects'.</p>
-    parameters:
-      - name: "PlanPath"
-        required: true
-
 - name: "update"
   label: "Update Deployment Plan"
+  successMessage: Created task to update deployment plan for application {0}
+  failureMessage: Failed to update deployment plan for application {0}, check deployment task for more information
   disableMBeanJavadoc: true
-  polling:
-    reloadSeconds: 5
-    maxAttempts: 10
+  # Don't specify polling since what's displayed on the page doesn't change when update completes
   actionMethod: weblogic.remoteconsole.customizers.AppDeploymentRuntimeMBeanCustomizer.updatePlanOnServer
   helpHTML: >
     <p>Allows for updating an application configuration using an changed
@@ -136,10 +138,10 @@ actions:
 - name: "redeploy"
   label: "Redeploy Application"
   actionMethod: weblogic.remoteconsole.customizers.AppDeploymentRuntimeMBeanCustomizer.redeploySourceOnServer
+  successMessage: Created task to redeploy application {0}
+  failureMessage: Failed to redeploy application {0}, check deployment task for more information
   disableMBeanJavadoc: true
-  polling:
-    reloadSeconds: 5
-    maxAttempts: 10
+  # Don't specify polling since what's displayed on the page doesn't change when redeploy completes
   helpHTML: >
     <p> Redeploy the application with new bits with new or modified deployment plan.  
     Both the application and deployment plan must be on the server machine.</p>
@@ -157,7 +159,10 @@ actions:
 
 - name: uploadAndRedeploy
   label: "Upload and Redeploy Application"
+  successMessage: Uploaded and created task to redeploy application {0}
+  failureMessage: Failed to upload and redeploy application {0}, check deployment task for more information
   disableMBeanJavadoc: true
+  # Don't specify polling since what's displayed on the page doesn't change when redeploy completes
   helpHTML: >
     <p>Use this page to redeploy the application with a new or modified deployment plan.</p>
     <p>The selected source and plan will be uploaded to the server machine, under the administration server's upload directory.</p>
@@ -180,6 +185,9 @@ actions:
 
 - name: uploadAndUpdate
   label: "Upload and Update the Deployment Plan."
+  successMessage: Uploaded and created task to update deployment plan for application {0}
+  failureMessage: Failed to upload and update deployment plan for application {0}, check deployment task for more information
+  # Don't specify polling since what's displayed on the page doesn't change when update completes
   disableMBeanJavadoc: true
   helpHTML: >
     <p>Use this page to update the deployment plan of the application.</p>
@@ -204,3 +212,6 @@ children:
 - name: State
   requiredCapabilities:
   - DeploymentState
+- name: StateV2
+  requiredCapabilities:
+  - DeploymentStateV2

@@ -1,4 +1,4 @@
-// Copyright (c) 2021, 2023, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2024, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.webapp;
@@ -95,6 +95,8 @@ public class CreateHelper {
       if (!r.isSuccess()) {
         response.copyUnsuccessfulResponse(r);
         return CreateResponseMapper.toResponse(ic, response);
+      } else {
+        response.copyMessages(r);
       }
     }
     response.setSuccess(newBeanPath);

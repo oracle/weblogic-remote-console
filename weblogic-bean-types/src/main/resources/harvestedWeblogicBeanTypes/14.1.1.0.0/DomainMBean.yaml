@@ -1,4 +1,4 @@
-# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2024, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 actions: [
@@ -538,7 +538,7 @@ properties:
   descriptionHTML: '<p>Specifies whether the Guardian Agent is deployed when starting
     servers in the current domain.</p> '
   name: GuardianEnabled
-  obsolete: 'true'
+  obsolete: ' '
   restartNeeded: true
   supported: false
   type: boolean
@@ -1100,9 +1100,9 @@ properties:
 - defaultValue: {
     }
   descriptionHTML: '<p>The URI prefix used for partition administrative virtual targets.</p> '
-  excludeFromRest: ${excludeFromRest}
+  excludeFromRest: ' '
   name: PartitionUriSpace
-  obsolete: 'true'
+  obsolete: ' '
   restartNeeded: true
   supported: false
   type: java.lang.String
@@ -1113,9 +1113,9 @@ properties:
   defaultValue: {
     }
   descriptionHTML: 'The partition work manager policy configurations. '
-  excludeFromRest: ${excludeFromRest}
+  excludeFromRest: ' '
   name: PartitionWorkManagers
-  obsolete: 'true'
+  obsolete: ' '
   relationship: containment
   supported: false
   type: weblogic.management.configuration.PartitionWorkManagerMBean
@@ -1126,9 +1126,9 @@ properties:
     }
   descriptionHTML: '<p> The partitions that have been configured to be part of this
     domain.</p> '
-  excludeFromRest: ${excludeFromRest}
+  excludeFromRest: ' '
   name: Partitions
-  obsolete: 'true'
+  obsolete: ' '
   relationship: containment
   supported: false
   type: weblogic.management.configuration.PartitionMBean
@@ -1178,9 +1178,9 @@ properties:
     }
   descriptionHTML: '<p>The resource group templates that have been configured in this
     domain.</p> '
-  excludeFromRest: ${excludeFromRest}
+  excludeFromRest: ' '
   name: ResourceGroupTemplates
-  obsolete: 'true'
+  obsolete: ' '
   relationship: containment
   supported: false
   type: weblogic.management.configuration.ResourceGroupTemplateMBean
@@ -1190,18 +1190,18 @@ properties:
   defaultValue: {
     }
   descriptionHTML: 'The resource groups at the domain level. '
-  excludeFromRest: ${excludeFromRest}
+  excludeFromRest: ' '
   name: ResourceGroups
-  obsolete: 'true'
+  obsolete: ' '
   relationship: containment
   supported: false
   type: weblogic.management.configuration.ResourceGroupMBean
 - defaultValue: {
     }
   descriptionHTML: 'Get the Resource Management Configuration for this domain '
-  excludeFromRest: ${excludeFromRest}
+  excludeFromRest: ' '
   name: ResourceManagement
-  obsolete: 'true'
+  obsolete: ' '
   relationship: containment
   supported: false
   type: weblogic.management.configuration.ResourceManagementMBean
@@ -1461,9 +1461,9 @@ properties:
   defaultValue: {
     }
   descriptionHTML: '<p>Defines virtual targets for a domain partition.</p> '
-  excludeFromRest: ${excludeFromRest}
+  excludeFromRest: ' '
   name: VirtualTargets
-  obsolete: 'true'
+  obsolete: ' '
   relationship: containment
   supported: false
   type: weblogic.management.configuration.VirtualTargetMBean

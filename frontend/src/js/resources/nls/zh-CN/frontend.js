@@ -1,7 +1,12 @@
 define({
   "wrc-header": {
     "text": {
-      "appName": "WebLogic 远程控制台"
+      "appName": "WebLogic Remote Console"
+    },
+    "region": {
+      "ariaLabel": {
+        "value": "应用程序标头"
+      }
     },
     "icons": {
       "navtree": {
@@ -10,22 +15,22 @@ define({
         }
       },
       "theme": {
-        "tooltip": "Switch theme"
+        "tooltip": "切换主题"
       },
       "whatsNew": {
-        "tooltip": "What's New!"
+        "tooltip": "新增功能！"
       },
       "howDoI": {
-        "tooltip": "Open \"How Do I ...?\" Tasks"
+        "tooltip": "打开“如何操作...？”任务"
       },
       "tips": {
-        "tooltip": "Toggle User Tips visibility"
+        "tooltip": "显示/隐藏用户提示"
       },
       "help": {
-        "tooltip": "打开 WebLogic 远程控制台内部文档"
+        "tooltip": "打开 WebLogic Remote Console 内部文档"
       },
       "profile": {
-        "tooltip": "Profile"
+        "tooltip": "概要文件"
       }
     },
     "menus": {
@@ -34,11 +39,16 @@ define({
       },
       "theme": {
         "light": {
-          "value": "Light"
+          "value": "浅色"
         },
         "dark": {
-          "value": "Dark"
+          "value": "深色"
         }
+      }
+    },
+    "tooltips": {
+      "appName": {
+        "value": "单击以重置 WebLogic Remote Console"
       }
     }
   },
@@ -65,35 +75,35 @@ define({
       "profile": {
         "popup": {
           "launcher": {
-            "tooltip": "Show Profiles List"
+            "tooltip": "显示概要文件列表"
           }
         },
         "dialog": {
           "launcher": {
-            "tooltip": "Manage Profiles"
+            "tooltip": "管理概要文件"
           },
           "editor": {
-            "tooltip": "Profile Editor",
+            "tooltip": "概要文件编辑器",
             "toolbar": {
               "save": {
-                "tooltip": "Save Profile"
+                "tooltip": "保存概要文件"
               },
               "activate": {
-                "tooltip": "Active Profile"
+                "tooltip": "活动概要文件"
               },
               "add": {
-                "tooltip": "Add Profile"
+                "tooltip": "添加概要文件"
               },
               "remove": {
-                "tooltip": "Delete Profile"
+                "tooltip": "删除概要文件"
               }
             }
           }
         },
         "image": {
-          "tooltip": "Profile",
+          "tooltip": "概要文件",
           "capture": {
-            "tooltip": "Add or change image"
+            "tooltip": "添加或更改图像"
           }
         }
       }
@@ -119,19 +129,19 @@ define({
         "value": "更改图像"
       },
       "clearImage": {
-        "value": "Clear Image"
+        "value": "清除图像"
       },
       "profile": {
         "default": {
-          "value": "Default Profile"
+          "value": "默认概要文件"
         },
         "toggler": {
           "editor": {
             "show": {
-              "value": "Show Profile Editor"
+              "value": "显示概要文件编辑器"
             },
             "hide": {
-              "value": "Hide Profile Editor"
+              "value": "隐藏概要文件编辑器"
             }
           }
         }
@@ -141,7 +151,7 @@ define({
       "profile": {
         "manager": {
           "open": {
-            "value": "Open Profile Manager"
+            "value": "打开概要文件管理器"
           },
           "signout": {
             "value": "注销"
@@ -153,20 +163,20 @@ define({
       "profile": {
         "fields": {
           "id": {
-            "value": "Profile ID"
+            "value": "概要文件 ID"
           },
           "organization": {
-            "value": "Organization"
+            "value": "组织"
           },
           "name": {
             "value": "名称"
           },
           "email": {
-            "value": "Email"
+            "value": "电子邮件"
           },
           "role": {
             "default": {
-              "value": "Use as Default Profile"
+              "value": "用作默认概要文件"
             }
           },
           "settings": {
@@ -197,51 +207,51 @@ define({
           },
           "preferences": {
             "theme": {
-              "value": "Theme"
+              "value": "主题"
             },
             "startupTaskChooserType": {
-              "value": "Startup Task Chooser Type"
+              "value": "启动任务选择器类型"
             },
-            "useMenusAsRootNodes": {
-              "value": "Use Tree Menus as the root level of Tree Navigators?"
+            "useTreeMenusAsRootNodes": {
+              "value": "使用树菜单作为树导航器的根级别？"
             },
             "onQuit": {
-              "value": "Allow unsaved changes to prevent exiting application?"
+              "value": "允许未保存的更改以防止退出应用程序？"
             },
             "onDelete": {
-              "value": "Confirm all deletions?"
+              "value": "确认所有删除项？"
             },
             "onActionNotAllowed": {
-              "value": "Use \"Action Not Allowed\" popup to prevent data loss?"
+              "value": "使用“不允许操作”弹出菜单以防止数据丢失？"
             },
             "onUnsavedChangesDetected": {
-              "value": "Use \"Unsaved Changes Detected\" popup to prevent data loss?"
+              "value": "使用“检测到未保存的更改”弹出菜单以防止数据丢失？"
             },
             "onChangesNotDownloaded": {
-              "value": "Use \"Changes Not Download\" popup to prevent data loss?"
+              "value": "使用“未下载更改”弹出菜单以防止数据丢失？"
             }
           },
           "properties": {
             "javaSystemProperties": {
-              "value": "Java System Properties"
+              "value": "Java 系统属性"
             }
           }
         },
         "legalValues": {
           "themeOptions": {
             "light": {
-              "value": "Light"
+              "value": "浅色"
             },
             "dark": {
-              "value": "Dark"
+              "value": "深色"
             }
           },
           "taskChooserTypeOptions": {
             "useDialog": {
-              "value": "Use Dialog"
+              "value": "使用对话框"
             },
             "useCards": {
-              "value": "Use Cards"
+              "value": "使用卡"
             }
           },
           "trustStoreTypeOptions": {
@@ -255,14 +265,14 @@ define({
               "value": "Windows ROOT"
             },
             "keyChainStore": {
-              "value": "Key Chain Store"
+              "value": "密钥链存储"
             }
           }
         },
         "messages": {
           "save": {
             "succeeded": {
-              "summary": "Profile \"{0}\" was saved successfully!"
+              "summary": "已成功保存概要文件 \"{0}\"！"
             }
           }
         }
@@ -271,17 +281,22 @@ define({
   },
   "wrc-data-providers": {
     "icons": {
+      "hoverMenu": {
+        "ariaLabel": {
+          "value": "提供程序操作"
+        }
+      },
       "info": {
-        "tooltip": "获取信息"
+        "tooltip": "获取有关此提供程序的信息"
       },
       "edit": {
-        "tooltip": "管理"
+        "tooltip": "管理此提供程序的设置"
       },
       "deactivate": {
-        "tooltip": "停用"
+        "tooltip": "停用此提供程序"
       },
       "delete": {
-        "tooltip": "删除"
+        "tooltip": "删除此提供程序"
       }
     },
     "labels": {
@@ -367,6 +382,9 @@ define({
           }
         },
         "domain": {
+          "consoleExtensionVersion": {
+            "label": "控制台扩展版本："
+          },
           "name": {
             "label": "域名:"
           },
@@ -494,6 +512,9 @@ define({
         },
         "edit": {
           "value": "修改连接提供程序的连接设置。"
+        },
+        "deactivate": {
+          "value": "停用连接提供程序并停止域状态轮询。"
         }
       },
       "models": {
@@ -603,25 +624,25 @@ define({
       "export": {
         "failed": {
           "summary": "导出未成功",
-          "detail": "无法将提供程序作为 ''{0}'' 项目导出。"
+          "detail": "无法将提供程序作为 '{0}' 项目导出。"
         }
       },
       "import": {
         "failed": {
           "summary": "保存未成功",
-          "detail": "无法导入 ''{0}'' 项目文件。"
+          "detail": "无法导入 '{0}' 项目文件。"
         }
       },
       "stage": {
         "failed": {
           "summary": "创建未成功",
-          "detail": "无法创建 ''{0}'' 提供程序项。"
+          "detail": "无法创建 '{0}' 提供程序项。"
         }
       },
       "use": {
         "failed": {
           "summary": "连接未成功",
-          "detail": "无法使用 ''{0}'' 提供程序项。"
+          "detail": "无法使用 '{0}' 提供程序项。"
         }
       },
       "upload": {
@@ -636,13 +657,13 @@ define({
       },
       "response": {
         "nameAlreadyExist": {
-          "detail": "此项目中已存在名为 ''{0}'' 的提供程序！"
+          "detail": "此项目中已存在名为 '{0}' 的提供程序！"
         },
         "modelsNotFound": {
-          "detail": "找不到所配置的 WDT 模型 ''{0}''"
+          "detail": "找不到所配置的 WDT 模型 '{0}'"
         },
         "propListNotFound": {
-          "detail": "找不到 WDT 变量 ''{0}''"
+          "detail": "找不到 WDT 变量 '{0}'"
         },
         "selectModels": {
           "detail": "要选择 WDT 组合，请首先选择 WDT 组合使用的所有 WDT 模型。"
@@ -650,7 +671,7 @@ define({
       },
       "sso": {
         "secureContextRequired": {
-          "detail": "The URL must specify the HTTPS protocol or use localhost"
+          "detail": "该 URL 必须指定 HTTPS 协议或者使用 localhost"
         }
       },
       "correctiveAction": {
@@ -681,7 +702,7 @@ define({
         "label": "使用稀疏模板"
       },
       "usesso": {
-        "label": "Use Web Authentication"
+        "label": "使用 Web 验证"
       },
       "insecure": {
         "label": "建立不安全的连接"
@@ -714,18 +735,36 @@ define({
     }
   },
   "wrc-navigation": {
-    "navstrip": {
-      "ariaLabel": {
-        "value": "导航条"
-      }
-    },
-    "navtree": {
-      "ariaLabel": {
-        "value": "导航树"
+    "ariaLabel": {
+      "navstrip": {
+        "value": "提供程序树菜单"
+      },
+      "navtree": {
+        "value": "提供程序树导航器"
+      },
+      "panelResizer": {
+        "value": "提供程序树导航器调整大小工具。使用向左箭头键和向右箭头键调整导航器大小"
       }
     }
   },
   "wrc-content-area-header": {
+    "ariaLabel": {
+      "button": {
+        "home": {
+          "value": "主页。返回到包含提供程序树的卡的页面"
+        }
+      },
+      "region": {
+        "title": {
+          "value": "内容区域标题"
+        }
+      },
+      "popup": {
+        "provider": {
+          "value": "提供程序操作"
+        }
+      }
+    },
     "title": {
       "home": "主页",
       "configuration": "编辑树",
@@ -742,6 +781,24 @@ define({
           "label": "主页"
         }
       }
+    },
+    "icons": {
+      "shoppingcart": {
+        "tooltip": "单击以查看购物车操作"
+      }
+    },
+    "menu": {
+      "shoppingcart": {
+        "view": {
+          "label": "查看更改..."
+        },
+        "discard": {
+          "label": "放弃更改"
+        },
+        "commit": {
+          "label": "提交更改"
+        }
+      }
     }
   },
   "wrc-ancillary-content": {
@@ -754,7 +811,7 @@ define({
           "label": "概览"
         },
         "projectmanagement": {
-          "label": "Providers"
+          "label": "提供程序"
         },
         "tips": {
           "label": "用户提示"
@@ -766,16 +823,16 @@ define({
     },
     "popups": {
       "tips": {
-        "title": "Filter Tips",
+        "title": "筛选器提示",
         "checkboxes": {
-          "hideall": "Hide All Tips",
-          "productivity": "Show Productivity Tips",
-          "personalization": "Show Personalization Tips",
-          "whereis": "Show Where Is... Tips",
-          "accessibility": "Show Accessibility Tips",
-          "connectivity": "Show Connectivity Tips",
-          "security": "Show Security Tips",
-          "other": "Show Other Tips"
+          "hideall": "隐藏所有提示",
+          "productivity": "显示工作效率提示",
+          "personalization": "显示个性化提示",
+          "whereis": "显示“...在哪里”提示",
+          "accessibility": "显示可访问性提示",
+          "connectivity": "显示连接提示",
+          "security": "显示安全提示",
+          "other": "显示其他提示"
         }
       }
     },
@@ -785,80 +842,87 @@ define({
           "value": "全部隐藏"
         },
         "productivity": {
-          "value": "Productivity"
+          "value": "工作效率"
         },
         "personalization": {
-          "value": "Personalization"
+          "value": "个性化"
         },
         "whereis": {
-          "value": "Where Is ..."
+          "value": "...在哪里"
         },
         "accessibility": {
-          "value": "Accessibility"
+          "value": "可访问性"
         },
         "connectivity": {
-          "value": "Connectivity"
+          "value": "连接"
         },
         "security": {
           "value": "安全"
         },
         "other": {
-          "value": "Other"
+          "value": "其他"
         }
       },
       "cards": {
         "tip0": {
-          "title": "Think \"Search\" Before You Click!",
-          "descriptionHTML": "<p>Finding what you want in one of the provider's Trees, can involve a lot of clicking and scrolling. The <b><i>Search</i></b> field (located at the top of the app), lets you avoid having to do that!</p><p>Even better, clicking on an item in the generated search results, auto-expands the provider Tree to show you where the item is.</p>"
+          "title": "在单击前考虑使用“搜索”！",
+          "descriptionHTML": "<p>在某个提供程序树中查找您所需的内容可能需要大量单击和滚动操作。使用<b><i>搜索</i></b>字段（位于应用程序顶部），可以避免这些操作！</p><p>此外，单击生成的搜索结果中的某个项时，将自动展开提供程序树以显示该项的位置。</p>"
         },
         "tip1": {
-          "title": "\"Dashboards\" Are a User's Best Friend",
-          "descriptionHTML": "<p>A <b><i>Dashboard</i></b> lets you define the criteria used to select MBean instances. They function kind of like a View in the database world, allowing you to see all the MBean instances with runtime values that currently meet the criteria.</p><p>Look for the <img src=\"js/jet-composites/wrc-frontend/1.0.0/images/dashboards-tabstrip-icon_24x24.png\" alt=\"New Dashboard Icon\" style=\"height: 24px; width: 24px; vertical-align: middle;\"/> button whenever you''re on a page of the \"Monitoring Tree\", then click it to define a new dashboard. Previously created ones, can be found under the root-level \"Dashboards\" node in the Monitoring Tree.</p>"
+          "title": "“仪表盘”是用户的最佳帮手",
+          "descriptionHTML": "<p>使用<b><i>仪表盘</i></b>，可以定义用于选择 MBean 实例的标准。仪表盘的功能有点像数据库中的视图，可用于查看当前运行时值符合标准的所有 MBean 实例。</p><p>在“监视树”页中，可以找到 <img src=\"js/jet-composites/wrc-frontend/1.0.0/images/dashboards-tabstrip-icon_24x24.png\" alt=\"新建仪表盘图标\" style=\"height: 24px; width: 24px; vertical-align: middle;\"/> 按钮，然后可以单击该按钮来定义新的仪表盘。以前创建的仪表盘可以在监视树的根级别“仪表盘”节点下找到。</p>"
         },
         "tip2": {
-          "title": "Choosing and Arranging Table Columns Using \"Customize Table\"",
-          "descriptionHTML": "<p>The \"Customize this table\" link is now the <i>Customize Table</i> button.</p>"
+          "title": "使用“定制表”选择和排列表列",
+          "descriptionHTML": "<p>“定制此表”链接现在变为<i>定制表</i>按钮。</p>"
         },
         "tip3": {
-          "title": "Using the Keyboard With Tables and Actions",
+          "title": "使用键盘处理表和操作",
           "descriptionHTML": "<p></p>"
         },
         "tip4": {
-          "title": "Where is the \"Customize this table\" Link?",
-          "descriptionHTML": "<p>The \"Customize this table\" link is now the <i>Customize Table</i> button.</p>"
+          "title": "“定制此表”链接在哪里？",
+          "descriptionHTML": "<p>“定制此表”链接现在变为<i>定制表</i>按钮。</p>"
         },
         "tip5": {
-          "title": "Where is the \"Change Center\" Portlet?",
-          "descriptionHTML": "<p>The \"Change Center\" porlet has been replaced with the <i>Shopping Cart Drawer</i>, which has launcher icon in the iconbar when the \"Configuration Tree\" is selected.</p>"
+          "title": "“更改中心”Portlet 在哪里？",
+          "descriptionHTML": "<p>“更改中心”Porlet 已被<i>购物车抽屉</i>取代，选择“配置树”时，该抽屉在图标栏中具有启动器图标。</p>"
         },
         "tip6": {
-          "title": "Where is the \"How Do I\" Portlet?",
+          "title": "“如何操作”Portlet 在哪里？",
           "descriptionHTML": "<p></p>"
         },
         "tip7": {
-          "title": "Other Tip #1",
-          "descriptionHTML": "<p>A terse description for \"Other Tip #1\". A newline character is not an HTML element, so you don''t want to use them in this description.</p>"
+          "title": "其他提示 1",
+          "descriptionHTML": "<p>“其他提示 1”的简要说明。换行符不是 HTML 元素，因此不需要在此说明中使用换行符。</p>"
         },
         "tip8": {
-          "title": "Trouble Creating an Admin Server Provider?",
-          "descriptionHTML": "<p>The <a href='#' tabindex='0' on-click data-url='@@docsURL@@reference/troubleshoot/'>Reference -> Troubleshooting</a> section in the WebLogic Remote Console documentation, covers how to resolve connectivity issues caused by environment and network settings.</p><p>If trying those don't lead to a resolution, please post a message to the <b>@weblogic-remote-console</b> slack channel. Screenshots often provide context that aids in issue diagnosis, so include them in the post when possible.</p>"
+          "title": "创建管理服务器提供程序时出现问题？",
+          "descriptionHTML": "<p>WebLogic Remote Console 文档中的<a href='#' tabindex='0' on-click data-url='@@docsURL@@reference/troubleshoot/'>参考 -> 故障排除</a>部分介绍了如何解决环境和网络设置引起的连接问题。</p><p>如果尝试这些方法都无法解决问题，请向 <b>@weblogic-remote-console</b> Slack 渠道发消息。通常，屏幕截图可提供有助于诊断问题的上下文，因此尽可能将其包含在消息中。</p>"
         },
         "tip9": {
-          "title": "Connectivity Tip #2",
-          "descriptionHTML": "<p>A terse description for \"Connectivity Tip #2\". A newline character is not an HTML element, so you don''t want to use them in this description.</p>"
+          "title": "连接提示 2",
+          "descriptionHTML": "<p>“连接提示 2”的简要说明。换行符不是 HTML 元素，因此不需要在此说明中使用换行符。</p>"
         },
         "tip10": {
-          "title": "Security Tip #1",
-          "descriptionHTML": "<p>A terse description for \"Security Tip #1\". A newline character is not an HTML element, so you don''t want to use them in this description.</p>"
+          "title": "安全提示 1",
+          "descriptionHTML": "<p>“安全提示 1”的简要说明。换行符不是 HTML 元素，因此不需要在此说明中使用换行符。</p>"
         },
         "tip11": {
-          "title": "Think \"Shortcut Keys\" Before You Press Tab!",
-          "descriptionHTML": "<p>\"Shortcut\" (or accelerator) keys allow you to move the focus directly to an area, instead of sighing while repeatedly pressing the <b>Tab</b> and <b>Shift+Tab</b> keys!</p><p>Here's 5 to try out:</p><p><ul><li><code><b>Ctrl+Alt+P</b></code>&nbsp;&nbsp;&nbsp;Opens the <i>Providers Drawer</i>.</li><li><code><b>Ctrl+Alt+N</b></code>&nbsp;&nbsp;&nbsp;Moves the focus to the <i>Provider Tree</i>.</li><li><code><b>Ctrl+Alt+T</b></code>&nbsp;&nbsp;&nbsp;Moves the focus to a table, more precisely the first column header.</li><li><code><b>Ctrl+Alt+|</b></code>&nbsp;&nbsp;&nbsp;Moves the focus to the gripper of the Tree width-resizer. Afterwards, use the <code><b>RightArrow</b></code> and <code><b>LeftArrow</b></code> keys to increase or decrease the width of the Tree.</li><li><code><b>Ctrl+Alt+;</b></code>&nbsp;&nbsp;&nbsp;Moves the focus to a breadcrumb that is a <i>cross-link</i> (if present), or the first clickable breadcrumb label.</li></ul><p>Check out the documentation to see a complete list of the shortcut keys!</p>"
+          "title": "在按 Tab 键前考虑使用“快捷键”！",
+          "descriptionHTML": "<p>通过“快捷键”（或加速键），您可以将焦点直接移动到某个区域，而不用沮丧地反复按 <b>Tab</b> 和 <b>Shift+Tab</b> 键！</p><p>以下 5 个快捷键可供尝试：</p><p><ul><li><code><b>Ctrl+Alt+P</b></code>&nbsp;&nbsp;&nbsp;打开<i>提供程序抽屉</i>。</li><li><code><b>Ctrl+Alt+N</b></code>&nbsp;&nbsp;&nbsp;将焦点移动到<i>提供程序树</i>。</li><li><code><b>Ctrl+Alt+T</b></code>&nbsp;&nbsp;&nbsp;将焦点移动到表，更确切地说是第一列标题。</li><li><code><b>Ctrl+Alt+|</b></code>&nbsp;&nbsp;&nbsp;将焦点移动到树宽度调整大小工具的固定夹上。然后，使用<code><b>向右箭头</b></code>和<code><b>向左箭头</b></code>键增大或减小树的宽度。</li><li><code><b>Ctrl+Alt+;</b></code>&nbsp;&nbsp;&nbsp;将焦点移动到作为<i>交叉链接</i>的面包屑（如果存在），或者移动到第一个可单击的面包屑标签。</li></ul><p>查看文档，以获取快捷键的完整列表！</p>"
         }
       }
     }
   },
   "wrc-perspective": {
+    "ariaLabel": {
+      "region": {
+        "breadcrumbs": {
+          "value": "面包屑"
+        }
+      }
+    },
     "icons": {
       "history": {
         "tooltip": "历史记录"
@@ -885,7 +949,7 @@ define({
     "messages": {
       "lostConnection": {
         "summary": "连接丢失",
-        "detail": "与远程控制台后端的连接丢失。确保它正在运行或重新启动它并重试链接。"
+        "detail": "Connection lost. Please refresh."
       },
       "cannotConnect": {
         "summary": "尝试连接失败",
@@ -900,12 +964,33 @@ define({
           "label": "树"
         },
         "startup-tasks": {
-          "label": "Startup Tasks"
+          "label": "启动任务"
+        }
+      }
+    }
+  },
+  "wrc-landing": {
+    "ariaLabel": {
+      "cards": {
+        "panel": {
+          "value": "登录页"
+        }
+      },
+      "cardLinks": {
+        "panel": {
+          "value": "登录页链接"
         }
       }
     }
   },
   "wrc-gallery": {
+    "ariaLabel": {
+      "cards": {
+        "panel": {
+          "value": "提供程序树"
+        }
+      }
+    },
     "cards": {
       "configuration": {
         "label": "编辑树",
@@ -938,34 +1023,41 @@ define({
     }
   },
   "wrc-startup-tasks": {
+    "ariaLabel": {
+      "cards": {
+        "panel": {
+          "value": "启动任务"
+        }
+      }
+    },
     "cards": {
       "addAdminServer": {
         "label": "添加管理服务器连接提供程序",
-        "description": "This task creates a project resource that allows you to connect to an Admin Server"
+        "description": "此任务会创建项目资源，该资源可用于连接到管理服务器"
       },
       "addWdtModel": {
         "label": "添加 WDT 模型文件提供程序",
-        "description": "This task creates a project resource that allows you to manage a WDT Model file, existing on your local filesystem"
+        "description": "此任务会创建项目资源，该资源可用于管理本地文件系统上现有的 WDT 模型文件"
       },
       "addWdtComposite": {
         "label": "添加 WDT 组合模型文件提供程序",
-        "description": "This task creates a project resource that allows you to manage WDT Model file fragments, existing on your local filesystem"
+        "description": "此任务会创建项目资源，该资源可用于管理本地文件系统上现有的 WDT 模型文件片段"
       },
       "addPropertyList": {
         "label": "添加属性列表提供程序",
-        "description": "This task creates a project resource that allows you to manage a .properties file stored on your local filesystem"
+        "description": "此任务会创建项目资源，该资源可用于管理存储在本地文件系统上的 .properties 文件"
       },
       "createWdtModel": {
         "label": "为新 WDT 模型文件创建提供程序",
-        "description": "This task creates a project resource that is a new WDT Model file, stored on your local filesystem"
+        "description": "此任务会创建项目资源，该资源是存储在本地文件系统中的新 WDT 模型文件"
       },
       "createPropertyList": {
         "label": "为新属性列表创建提供程序",
-        "description": "This task creates a project resource that is a new .properties file, stored on your local filesystem"
+        "description": "此任务会创建项目资源，该资源是存储在本地文件系统中的新 .properties 模型文件"
       },
       "importProject": {
         "label": "导入项目",
-        "description": "This task loads a previously exported project containing providers immediately ready for you to use or modify"
+        "description": "此任务会加载以前导出的项目，该项目包含可立即使用或修改的提供程序"
       }
     }
   },
@@ -1030,34 +1122,18 @@ define({
       },
       "syncInterval": {
         "tooltip": "设置自动重新加载间隔"
-      },
-      "shoppingcart": {
-        "tooltip": "单击以查看购物车的操作"
-      }
-    },
-    "menu": {
-      "shoppingcart": {
-        "view": {
-          "label": "查看更改"
-        },
-        "discard": {
-          "label": "放弃更改"
-        },
-        "commit": {
-          "label": "提交更改"
-        }
       }
     },
     "instructions": {
       "selectItems": {
-        "value": "选择要执行 ''{0}'' 操作的项目。"
+        "value": "选择要执行 '{0}' 操作的项目。"
       }
     },
     "messages": {
       "action": {
         "cannotPerform": {
           "summary": "消息",
-          "detail": "无法在运行自动重新加载时执行 ''{0}'' 操作！请首先单击 ''{1}'' 图标停止重新加载。"
+          "detail": "无法在运行自动重新加载时执行 '{0}' 操作！请首先单击 '{1}' 图标停止重新加载。"
         }
       }
     },
@@ -1083,19 +1159,50 @@ define({
     }
   },
   "wrc-table-customizer": {
-    "labels": {
-      "available": {
-        "value": "可用列"
+    "ariaLabel": {
+      "availableColumns": {
+        "title": {
+          "value": "可用列"
+        },
+        "list": {
+          "value": "“可用列”列表"
+        },
+        "listItem": {
+          "value": "“可用列”列表项"
+        }
       },
-      "selected": {
-        "value": "选定列"
-      }
-    },
-    "messages": {
-      "action": {
-        "needAtLeastOneColumn": {
-          "title": "列数不足",
-          "detail": "必须至少选择一列。"
+      "selectedColumns": {
+        "title": {
+          "value": "选定列"
+        },
+        "list": {
+          "value": "“选定列”列表"
+        },
+        "listItem": {
+          "value": "“选定列”列表项"
+        }
+      },
+      "button": {
+        "addToRight": {
+          "value": "将“可用列”列表中的选中项移至“选定列”列表"
+        },
+        "addAllRight": {
+          "value": "将“可用列”列表中的所有项移至“选定列”列表"
+        },
+        "removeRight": {
+          "value": "将“选定列”列表中的选中项移至“可用列”列表"
+        },
+        "removeAll": {
+          "value": "将“选定列”列表中的所有项移至“可用列”列表"
+        },
+        "reset": {
+          "value": "将“选定列”列表中的列还原为打开表定制器时显示的那些列。"
+        },
+        "apply": {
+          "value": "将列定制设置应用于表"
+        },
+        "cancel": {
+          "value": "取消所有列定制设置"
         }
       }
     }
@@ -1152,22 +1259,6 @@ define({
       },
       "syncInterval": {
         "tooltip": "设置自动重新加载间隔"
-      },
-      "shoppingcart": {
-        "tooltip": "单击以查看购物车的操作"
-      }
-    },
-    "menu": {
-      "shoppingcart": {
-        "view": {
-          "label": "查看更改"
-        },
-        "discard": {
-          "label": "放弃更改"
-        },
-        "commit": {
-          "label": "提交更改"
-        }
       }
     }
   },
@@ -1299,7 +1390,7 @@ define({
         "detail": "一个或多个必填字段不包含数据！"
       },
       "argumentValueHasWrongFormat": {
-        "summary": "''{0}'' 字段包含格式不正确的数据！"
+        "summary": "'{0}' 字段包含格式不正确的数据！"
       },
       "conditionHasNoArgValues": {
         "summary": "所选条件没有可编辑的参数值！"
@@ -1320,7 +1411,7 @@ define({
         "value": "范围: -31 到 31"
       },
       "dateTime": {
-        "value": "格式：y-MM-dd HH:mm:ss [HH:mm:ss]（例如 2006-04-25 00:00:00）"
+        "value": "格式：yyyy-MM-dd [HH:mm:ss [AM|PM]]（例如 2022-02-14 09:00:00 AM）"
       },
       "time": {
         "value": "格式：HH:mm:ss（例如 14:22:47）"
@@ -1402,6 +1493,16 @@ define({
     }
   },
   "wrc-common": {
+    "ariaLabel": {
+      "icons": {
+        "landing": {
+          "value": "返回到提供程序树的登录页。"
+        },
+        "reset": {
+          "value": "重置页面值"
+        }
+      }
+    },
     "buttons": {
       "action": {
         "label": "操作"
@@ -1530,6 +1631,9 @@ define({
       },
       "recentPages": {
         "value": "显示/隐藏历史记录"
+      },
+      "pageInfo": {
+        "value": "单击以固定和取消固定"
       }
     },
     "menu": {
@@ -1549,6 +1653,9 @@ define({
       },
       "error": {
         "value": "错误"
+      },
+      "alerts": {
+        "value": "预警"
       }
     },
     "placeholders": {
@@ -1563,13 +1670,13 @@ define({
     },
     "messages": {
       "incorrectFileContent": {
-        "detail": "''{0}'' 包含 JSON，但不是 {1} 的 JSON 表示形式！"
+        "detail": "'{0}' 包含 JSON，但不是 {1} 的 JSON 表示形式！"
       },
       "dataCopiedToClipboard": {
-        "summary": "数据已复制到剪贴板！"
+        "detail": "数据已复制到剪贴板！"
       },
       "tableCopiedToClipboard": {
-        "summary": "Table was successfully copied to the clipboard!"
+        "summary": "表已成功复制到剪贴板！"
       },
       "emptyCellData": {
         "detail": "数据未复制到剪贴板，因为所选单元格为空！"
@@ -1578,8 +1685,8 @@ define({
         "detail": "数据未复制到剪贴板，因为所选行为空！"
       },
       "browserPermissionDenied": {
-        "summary": "Browser Permission Denied",
-        "detail": "You need to enable writing to the clipboard from JavaScript, in order to perform this operation. Also, the Clipboard API is only supported for pages served over HTTPS."
+        "summary": "浏览器权限被拒绝",
+        "detail": "为了执行此操作，您需要启用从 JavaScript 向剪贴板写入。此外，只有通过 HTTPS 提供的页才支持剪贴板 API。"
       }
     },
     "contextMenus": {
@@ -1591,30 +1698,40 @@ define({
           "label": "将行复制到剪贴板"
         },
         "tableAsText": {
-          "label": "Copy Table to Clipboard (Text)"
+          "label": "将表复制到剪贴板（文本）"
         },
         "tableAsJSON": {
-          "label": "Copy Table to Clipboard (JSON)"
+          "label": "将表复制到剪贴板 (JSON)"
         },
         "tableAsYAML": {
-          "label": "Copy Table to Clipboard (YAML)"
+          "label": "将表复制到剪贴板 (YAML)"
         }
+      }
+    }
+  },
+  "wrc-navtree-toolbar": {
+    "menu": {
+      "collapseAll": {
+        "value": "全部折叠"
+      },
+      "useTreeMenusAsRootNodes": {
+        "value": "使用树菜单作为根节点"
       }
     }
   },
   "wrc-wdt-form": {
     "messages": {
       "changesSaved": {
-        "summary": "更改已成功保存到 ''{0}'' 文件！"
+        "summary": "更改已成功保存到 '{0}' 文件！"
       },
       "changesNotSaved": {
-        "summary": "无法将更改保存到 ''{0}'' 文件！"
+        "summary": "无法将更改保存到 '{0}' 文件！"
       },
       "changesDownloaded": {
-        "summary": "更改已成功下载到 ''{0}'' 文件！"
+        "summary": "更改已成功下载到 '{0}' 文件！"
       },
       "changesNotDownloaded": {
-        "summary": "无法将更改下载到 ''{0}'' 文件！"
+        "summary": "无法将更改下载到 '{0}' 文件！"
       },
       "verifyPathEntered": {
         "detail": ". 将 {0} 字段设置为 false 将接受输入的值，而不验证该值是否作为本地文件或目录存在。"
@@ -1660,12 +1777,12 @@ define({
           "value": "退出前是否要保存更改？"
         },
         "needDownloading": {
-          "value": "您对 ''{0}'' 所做更改尚未下载到文件。<br/><br/>先进行下载再继续？"
+          "value": "您对 '{0}' 所做更改尚未下载到文件。<br/><br/>先进行下载再继续？"
         }
       },
       "uncommitedCreate": {
         "abandonForm": {
-          "value": "您的新 ''{0}'' 实例尚未添加到 WDT 模型中。<br/><br/>先进行添加再继续？"
+          "value": "您的新 '{0}' 实例尚未添加到 WDT 模型中。<br/><br/>先进行添加再继续？"
         }
       }
     }
@@ -1686,13 +1803,13 @@ define({
       "action": {
         "unableToPerform": {
           "summary": "消息",
-          "detail": "当尝试执行 ''{1}'' 操作时，控制台后端调用生成了 ''{0}'' 响应"
+          "detail": "当尝试执行 '{1}' 操作时，控制台后端调用生成了 '{0}' 响应"
         },
         "actionNotPerformed": {
-          "detail": "无法对一个或多个选中的项目执行 ''{0}'' 操作"
+          "detail": "无法对一个或多个选中的项目执行 '{0}' 操作"
         },
         "actionSucceeded": {
-          "summary": "已成功执行 ''{0}'' 操作！"
+          "summary": "已成功执行 '{0}' 操作！"
         }
       }
     },
@@ -1706,7 +1823,7 @@ define({
     "dialogs": {
       "cannotBeUndone": {
         "title": "操作确认",
-        "prompt": "无法撤消 ''{0}'' 操作！<br/><br/>是否继续？"
+        "prompt": "无法撤消 '{0}' 操作！<br/><br/>是否继续？"
       }
     }
   },
@@ -1760,7 +1877,7 @@ define({
   "wrc-pdj-crosslinks": {
     "messages": {
       "noNotFoundMessage": {
-        "detail": "''{0}'' 不可用。"
+        "detail": "'{0}' 不可用。"
       }
     }
   },
@@ -1859,6 +1976,16 @@ define({
       }
     }
   },
+  "wrc-confirm-dialogs": {
+    "adminServerShutdown": {
+      "title": {
+        "value": "确认"
+      },
+      "prompt": {
+        "value": "关闭 <b>{0}</b> 将重置当前提供程序。是否继续？"
+      }
+    }
+  },
   "wrc-change-manager": {
     "messages": {
       "cannotGetLockState": {
@@ -1887,15 +2014,20 @@ define({
     "messages": {
       "connectionRefused": {
         "summary": "连接问题",
-        "details": "从提供程序发送和接收数据出现问题！请确保提供程序可访问，然后重试。"
+        "details": "从提供程序发送和接收数据时出现问题！请确保提供程序可访问，然后再继续操作。"
       },
       "pathNotFound": {
         "summary": "找不到路径",
-        "details": "''{0}'' 是在本地文件系统上不可访问的文件或目录。"
+        "details": "'{0}' 是在本地文件系统上不可访问的文件或目录。"
       }
     }
   },
   "wrc-message-line": {
+    "ariaLabel": {
+      "region": {
+        "value": "消息行"
+      }
+    },
     "menus": {
       "more": {
         "clear": {
@@ -1910,32 +2042,30 @@ define({
           }
         }
       }
+    },
+    "messages": {
+      "adminServerShutdown": {
+        "details": " 无法连接到 WebLogic 域的管理服务器。"
+      },
+      "shutdownSequenceError": {
+        "details": "关闭托管服务器，然后关闭管理服务器。"
+      }
     }
   },
   "wrc-alerts": {
     "menus": {
       "alerts": {
         "error": {
-          "value": "You have {0} high-priority error {1}"
+          "value": "存在 {0} 个高优先级错误预警"
         },
         "warning": {
-          "value": "You have {0} high-priority warning {1}"
+          "value": "存在 {0} 个高优先级警告预警"
         },
         "info": {
-          "value": "You have {0} high-priority information {1}"
+          "value": "存在 {0} 个高优先级信息预警"
         },
         "view": {
           "value": "查看预警"
-        }
-      }
-    },
-    "labels": {
-      "alerts": {
-        "singular": {
-          "value": "alert"
-        },
-        "plural": {
-          "value": "alerts"
         }
       }
     }

@@ -1,4 +1,4 @@
-# Copyright (c) 2020, 2021, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2024, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 introductionHTML: >
   Use this page to manage the transaction-related server debug flags; that is, the flags
@@ -12,9 +12,7 @@ presentation:
 
 properties:
 - name: ServerDebug.DebugJTA2PC
-# obsolete - name: ServerDebug.DebugJTA2PCDetail
 - name: ServerDebug.DebugJTA2PCStackTrace
-# deprecated - name: ServerDebug.DebugJTAAPI
 - name: ServerDebug.DebugJTACDI
 - name: ServerDebug.DebugJTAGateway
 - name: ServerDebug.DebugJTAGatewayStackTrace
@@ -26,10 +24,9 @@ properties:
 - name: ServerDebug.DebugJTANaming
 - name: ServerDebug.DebugJTANamingStackTrace
 - name: ServerDebug.DebugJTANonXA
+- name: ServerDebug.DebugJTAPeerSiteRecovery
 - name: ServerDebug.DebugJTAPropagate
-# deprecated - name: ServerDebug.DebugJTARMI
 - name: ServerDebug.DebugJTARecovery
-# deprecated - name: ServerDebug.DebugJTARecoveryStackTrace
 - name: ServerDebug.DebugJTAResourceHealth
 - name: ServerDebug.DebugJTATLOG
 - name: ServerDebug.DebugJTAXA

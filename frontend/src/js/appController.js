@@ -403,7 +403,7 @@ define([
           document.cookie = 'expires=Thu, 01 Jan 1970 00:00:00 UTC; Path=/api;';
           const div = document.getElementById('spa-resizer');
           if (div !== null) {
-            $('#spa-resizer').split({limit: 10, position: AppResizer.prototype.SPA_RESIZER_POSITION, accesskey: '\\', nudgeable: true, nudgeBy: 20, nudgeMinWidth: AppResizer.prototype.NAVTREE_MIN_WIDTH, nudgeMaxWidth: AppResizer.prototype.NAVTREE_MAX_WIDTH, focusRule: {key: 'Escape', selector: '#home'}});
+            $('#spa-resizer').split({limit: 10, position: AppResizer.prototype.SPA_RESIZER_POSITION, accesskey: '\\', ariaLabel: self.i18n.ariaLabel.panelResizer.value, nudgeable: true, nudgeBy: 20, nudgeMinWidth: AppResizer.prototype.NAVTREE_MIN_WIDTH, nudgeMaxWidth: AppResizer.prototype.NAVTREE_MAX_WIDTH, focusRule: {key: 'Escape', selector: '#home'}});
           }
         })
         .catch((err) => {

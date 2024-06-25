@@ -152,9 +152,15 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/apis/data-operations', 'wrc-fron
         }
       }
 
+      function correctJETControlOATBIssues() {
+        const ele = document.querySelector('#searchInputContainer_cfe-simple-search > div');
+        if (ele !== null) ele.removeAttribute('aria-expanded');
+      }
+
       Context.getPageContext().getBusyContext().whenReady()
         .then(() => {
           setSimpleSearchState(CoreUtils.isNotUndefinedNorNull(this.simpleSearchResourceData()));
+          correctJETControlOATBIssues();
         });
 
     }

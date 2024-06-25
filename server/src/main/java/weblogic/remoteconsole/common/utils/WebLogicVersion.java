@@ -1,4 +1,4 @@
-// Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+// Copyright (c) 2020, 2024, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.utils;
@@ -19,8 +19,11 @@ public class WebLogicVersion {
   // Used for constructing generic documentation urls.
   private String fmwVersion;
 
-  // The top level url of the website containing this release's public documentation
-  private String docsUrl;
+  // The top level url of the website containing this release's public weblogic documentation
+  private String webLogicDocsUrl;
+
+  // The top level url of the website containing this release's public coherence documentation
+  private String coherenceDocsUrl;
 
   // The directory, relative to docsUrl, of the url containing this release's public mbean javadoc
   private String mbeanJavadocDirectory;
@@ -29,13 +32,15 @@ public class WebLogicVersion {
     boolean latestVersion,
     String domainVersion,
     String fmwVersion,
-    String docsUrl,
+    String webLogicDocsUrl,
+    String coherenceDocsUrl,
     String mbeanJavadocDirectory
   ) {
     this.latestVersion = latestVersion;
     this.domainVersion = domainVersion;
     this.fmwVersion = fmwVersion;
-    this.docsUrl = docsUrl;
+    this.webLogicDocsUrl = webLogicDocsUrl;
+    this.coherenceDocsUrl = coherenceDocsUrl;
     this.mbeanJavadocDirectory = mbeanJavadocDirectory;
   }
 
@@ -51,8 +56,12 @@ public class WebLogicVersion {
     return this.fmwVersion;
   }
 
-  private String getDocsUrl() {
-    return this.docsUrl;
+  private String getWebLogicDocsUrl() {
+    return this.webLogicDocsUrl;
+  }
+
+  private String getCoherenceDocsUrl() {
+    return this.coherenceDocsUrl;
   }
 
   private String getMBeanJavadocDirectory() {
@@ -62,7 +71,7 @@ public class WebLogicVersion {
   // Get the url for the public mbean javadoc for an mbean interface
   // mbeanType is the leaf class name of the mbean type, e.g. ServerMBean or ServerRuntimeMBean
   public String getMBeanTypeJavadocUrl(String mbeanType) {
-    return getDocsUrl() + "/" + getMBeanJavadocDirectory() + "/" + mbeanType + ".html";
+    return getWebLogicDocsUrl() + "/" + getMBeanJavadocDirectory() + "/" + mbeanType + ".html";
   }
 
   // Get the url for the public mbean javadoc for an mbean attribute
@@ -77,7 +86,12 @@ public class WebLogicVersion {
 
   // Get the url for an edocs help topic
   public String getEdocsHelpTopicUrl(String relativeHelpTopicUrl) {
-    return getDocsUrl() + "/" + relativeHelpTopicUrl;
+    return getWebLogicDocsUrl() + "/" + relativeHelpTopicUrl;
+  }
+
+  // Get the url for a coherence edocs help topic
+  public String getCoherenceEdocsHelpTopicUrl(String relativeHelpTopicUrl) {
+    return getCoherenceDocsUrl() + "/" + relativeHelpTopicUrl;
   }
 
   // Get the url for a generic help topic, replacing @FMW_VERSION with this verion's fmw version

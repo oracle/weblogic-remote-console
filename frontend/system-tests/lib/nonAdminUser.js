@@ -181,9 +181,9 @@ module.exports = function (driver, file) {
                     console.log("Click App Deployments drop down menu");
                     await driver.findElement(By.xpath("//oj-menu-button/button/div/span[2]")).click();
                     await driver.sleep(1200);
-                    console.log("Select Application Runtime Data - Monitoring Tree");
+                    console.log("Select Application Runtime Data Dashboard - Monitoring Tree");
                     await driver.findElement(
-                        By.xpath("//span[contains(.,'Application Runtime Data - Monitoring Tree')]")).click();
+                        By.xpath("//span[contains(.,'Application Runtime Data Dashboard - Monitoring Tree')]")).click();
                     await driver.sleep(1200);
                     driver.findElements(By.xpath("//img[@alt='start']")).then((elements) => {
                         if (elements.length > 0) {

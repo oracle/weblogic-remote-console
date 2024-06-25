@@ -48,9 +48,9 @@ define([
 						id: 'recent-pages', iconFile: ko.observable('toggle-beanpath-history-on-blk_24x24'), disabled: ko.observable(false), visible: ko.observable(false),
 						label: oj.Translations.getTranslatedString('wrc-common.tooltips.recentPages.value')
 					},
-					'separator': {
+					'more': {
 						iconFile: 'more-vertical-blk-24x24',
-						tooltip: oj.Translations.getTranslatedString('wrc-perspective.icons.separator.tooltip')
+						tooltip: oj.Translations.getTranslatedString('wrc-common.tooltips.more.value')
 					}
 				},
 				menus: {

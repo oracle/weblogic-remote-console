@@ -39,7 +39,7 @@ define([
        * <p>This is a calculation based on the information in the options parameter, as well as height calculations that take into consideration that the container is in a Flexbox layout.</p>
        * @param {string} containerDOMSelector
        * @param {string} offsetHeightCSSVariable
-       * @param {{withHistoryVisible?: boolean, withHelpVisible?: boolean}} options
+       * @param {{containerType: string, withHistoryVisible?: boolean, withHelpVisible?: boolean}} options
        * @returns {Number}
        */
       getOffsetMaxHeight: function(containerDOMSelector, offsetHeightCSSVariable, options) {
@@ -74,6 +74,13 @@ define([
         // height of the fixed footer (70px), plus it's
         // margin-top (5px), plus it's margin-bottom (5px).
         let offsetValue = parseInt(ViewModelUtils.getCustomCssProperty(offsetHeightCSSVariable), 10);
+
+        if (options.containerType === 'table') {
+          offsetValue += 25;
+        }
+        else if (options.containerType === 'sliceTable') {
+          offsetValue += 10;
+        }
 
         if (wasHistoryVisible && !options.withHistoryVisible) {
           offsetValue -= (wasHelpVisible && options.withHelpVisible ? 40 : 30);

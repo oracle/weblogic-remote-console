@@ -120,17 +120,15 @@ properties:
 - defaultValue:
     value:
       value: false
-  deprecated: '14.1.2.0.0 Recommand to use JDK implementation of RFC 5746 '
+  deprecated: '14.1.2.0.0 We recommend you use the JDK RFC 5746: TLS Renegotiation
+    Extension instead '
   descriptionHTML: 'Indicate whether TLS client initiated secure renegotiation is
     accepted. '
   name: ClientInitSecureRenegotiationAccepted
   type: boolean
   writable: true
 - defaultValue:
-    secureModeValue:
-      value: true
-    value:
-      value: false
+    derivedDefault: true
   descriptionHTML: '<p>Indicates whether the server can be reached through the default
     SSL listen port.</p>  <p>If the administration port is enabled for the WebLogic
     Server domain, then administrative traffic travels over the administration port

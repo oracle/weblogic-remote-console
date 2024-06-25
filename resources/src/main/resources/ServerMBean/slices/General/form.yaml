@@ -32,10 +32,7 @@ advancedProperties:
 - name: "JDBCLLRTableName"
 - name: "DataSource.RmiJDBCSecurity"
 - name: "XMLRegistry"
-- name: "TransactionPrimaryChannelName"
-- name: "TransactionSecureChannelName"
-- name: "TransactionPublicChannelName"
-- name: "TransactionPublicSecureChannelName"
+- name: "XMLEntityCache"
 
 helpTopics:
 - label: "Using Security Assertion Markup Language (SAML) Tokens For Identity "

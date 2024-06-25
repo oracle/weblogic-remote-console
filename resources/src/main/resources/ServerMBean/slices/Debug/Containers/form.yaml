@@ -1,4 +1,4 @@
-# Copyright (c) 2020, 2021, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2024, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 introductionHTML: >
   Use this page to manage the container-related server debug flags; that is, the flags
@@ -12,6 +12,7 @@ presentation:
   useCheckBoxesForBooleans: true
 
 properties:
+- name: ServerDebug.DebugBatchConnector
 - name: ServerDebug.DebugConnectorService
 - name: ServerDebug.DebugEjbCaching
 - name: ServerDebug.DebugEjbCmpDeployment
@@ -21,15 +22,26 @@ properties:
 - name: ServerDebug.DebugEjbInvoke
 - name: ServerDebug.DebugEjbLocking
 - name: ServerDebug.DebugEjbMdbConnection
+- name: ServerDebug.DebugEjbMdbListener
 - name: ServerDebug.DebugEjbMetadata
 - name: ServerDebug.DebugEjbPooling
 - name: ServerDebug.DebugEjbSecurity
 - name: ServerDebug.DebugEjbSwapping
+- name: ServerDebug.DebugEjbSwappingVerbose
 - name: ServerDebug.DebugEjbTimers
 - name: ServerDebug.DebugHttp
 - name: ServerDebug.DebugHttpConcise
 - name: ServerDebug.DebugHttpLogging
 - name: ServerDebug.DebugHttpSessions
+- name: ServerDebug.DebugHttpSessionsConcise
+- name: ServerDebug.DebugHttp2SendWindowSize
+- name: ServerDebug.DebugPageFlowMonitoring
+- name: ServerDebug.DebugPubSubBayeux
+- name: ServerDebug.DebugPubSubChannel
+- name: ServerDebug.DebugPubSubClient
+- name: ServerDebug.DebugPubSubMBean
+- name: ServerDebug.DebugPubSubSecurity
+- name: ServerDebug.DebugPubSubServer
 - name: ServerDebug.DebugRA
 - name: ServerDebug.DebugRAClassloader
 - name: ServerDebug.DebugRAConnEvents
@@ -48,7 +60,14 @@ properties:
 - name: ServerDebug.DebugRestJersey1Integration
 - name: ServerDebug.DebugRestJersey2Integration
 - name: ServerDebug.DebugScaContainer
+- name: ServerDebug.DebugSpringMBeans
+- name: ServerDebug.DebugSpringStatistics
 - name: ServerDebug.DebugURLResolution
+- name: ServerDebug.DebugWANReplicationDetails
 - name: ServerDebug.DebugWebAppIdentityAssertion
 - name: ServerDebug.DebugWebAppModule
 - name: ServerDebug.DebugWebAppSecurity
+- name: ServerDebug.GlassFishWebAppParser 
+- name: ServerDebug.T3HttpUpgradeHandler
+- name: ServerDebug.WarExtraction
+- name: ServerDebug.WebRjvmSupport

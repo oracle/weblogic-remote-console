@@ -405,7 +405,7 @@ define([
             iconbar.addEventListeners(listItems);
             setListItemColor(listItems);
           }
-          $('#connections-models').trigger('focusin');
+//MLW          $('#connections-models').trigger('focusin');
         };
 
         setTimeout(onTimeout.bind(undefined, self.providerIconbar, connectionsModels()), 5);

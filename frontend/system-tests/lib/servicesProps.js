@@ -186,11 +186,11 @@ module.exports = function (driver, file) {
             await admin.goToNavTreeLevelThreeLink(driver, "configuration", "Services", "JMS Servers",
                 jmsServer);
             await driver.sleep(4800);
-            element = driver.findElement(By.xpath("//a[@id=\'moreIcon_PersistentStore\']/img"));
+            element = driver.findElement(By.xpath("//a[@id='moreIcon_PersistentStore']/img"));
             driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
             await driver.sleep(4800);
             await element.click();
-            element = driver.findElement(By.xpath("//span[contains(.,\'Create New JDBC Store...\')]"));
+            element = driver.findElement(By.xpath("//span[contains(.,'Create New JDBC Store...')]"));
             await element.click();
             await driver.sleep(4800);
             await driver.findElement(By.id("Name|input")).click();

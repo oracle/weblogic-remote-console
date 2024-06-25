@@ -47,12 +47,15 @@ describe.only('Test Suite: deploy_test , Redeploy and undeploy for Application a
         //Started: Active
         //Stopped: Prepare
     //
-    it('1. Test Category: GAT/Risk1\n \t Test Scenario: deploy sample.war (State:Prepared),' +
+    it('1. Test Category: GAT/Risk1\n \t Test Scenario: testDeployWarModule: deploy sample.war (State:Prepared),' +
         ' started (State:Active), stoped (State:Prepared) ', async function () {
-        file = "sampleWAR.png";
+        file = "testDeployWarModule.png";
         let sampleWarFile = "frontend/system-tests/lib/sample.war";
         let path = require('path');
         let deployWarFilePath = process.env.OLDPWD + path.sep + sampleWarFile;
+
+        console.log("-----Start to run testDeployWarModule test case....");
+        console.log("---------------------------------------------------");
         if (fs.existsSync(deployWarFilePath) ) {
            try {
                await admin.goToLandingPanelSubTreeCard(driver, "Edit Tree",
@@ -109,7 +112,7 @@ describe.only('Test Suite: deploy_test , Redeploy and undeploy for Application a
                driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
                console.log("Verify if sample after deploy Intended State = Prepared")
                if (await element.getText() == 'Prepared') {
-                   console.log("sample app afater deployed Intended State = Prepared");
+                   console.log("sample app after deployed Intended State = Prepared");
                }
                else {
                    console.log("sample app after deployed Intended State != Prepared");
@@ -117,19 +120,16 @@ describe.only('Test Suite: deploy_test , Redeploy and undeploy for Application a
                    console.log("TEST FAIL ");
                }
 
-               await driver.sleep(4800);
+               await driver.sleep(2400);
                console.log("Click Start button to select menu to start deploy sample app");
                await driver.findElement(By.xpath("//oj-button[@id='startActionsMenuLauncher']")).click();
-               await driver.sleep(4800);
+               await driver.sleep(3600);
                console.log("Select 'Servicing all requests' to start");
                await driver.findElement(By.xpath("//oj-option[@id='start']")).click();
                await driver.sleep(9800);
-               console.log("Click at Reload page icon.....");
-               element = driver.findElement(By.xpath("//*[@id='sync-icon']"));
-               if (element.isEnabled()) {
-                   await element.click();
-               }
-               await driver.sleep(4800);
+               console.log("Click to close 'Started and created task for application sample' dialog");
+               driver.findElement(By.xpath("//oj-button[@title='Close'] ")).click();
+               await driver.sleep(3600);
                console.log("Move the lower deployment window section to location (550,450) pixel");
                await driver.executeScript("window.scrollBy(550,450)");
                //Verify if sample Intended State is Active
@@ -146,19 +146,16 @@ describe.only('Test Suite: deploy_test , Redeploy and undeploy for Application a
                    console.log("Debug "+await element.getText());
                    console.log("TEST FAIL ");
                }
-               await driver.sleep(9800);
+               await driver.sleep(6800);
                console.log("Click Stop button to select menu to stop deploy sample app");
                await driver.findElement(By.xpath("//*[starts-with(@id,'stopActionsMenuLauncher')]")).click();
                await driver.sleep(4800);
                console.log("Select 'When work completes' to stop");
                await  driver.findElement(By.xpath("//*[text()='When work completes']")).click();
                await driver.sleep(9800);
-               console.log("Click at Reload page icon.....");
-               element = driver.findElement(By.xpath("//*[@id='sync-icon']"));
-               if (element.isEnabled()) {
-                   await element.click();
-               }
-               await driver.sleep(9800);
+               console.log("Click to close 'Stopped and created task for application sample' dialog");
+               driver.findElement(By.xpath("//oj-button[@title='Close'] ")).click();
+               await driver.sleep(4800);
                console.log("Move the lower deployment window section to location (550,450) pixel");
                await driver.executeScript("window.scrollBy(550,450)");
                //Verify if sample Intended State is Prepared
@@ -198,12 +195,15 @@ describe.only('Test Suite: deploy_test , Redeploy and undeploy for Application a
         //Started: Admin
         //Stopped: Prepare
     //
-    it('2. Test Category: GAT/Risk1\n \t Test Scenario: deploy sample.war (State:Prepared),' +
+    it('2. Test Category: GAT/Risk1\n \t Test Scenario: testWarModuleLifeCycle-1: deploy sample.war (State:Prepared),' +
         ' started (State:Active), stopped (State:Prepared) ', async function () {
-        file = "sampleWAR.png";
+        file = "testWarModuleLifeCycle-1.png";
         let sampleWarFile = "frontend/system-tests/lib/sample.war";
         let path = require('path');
         let deployWarFilePath = process.env.OLDPWD + path.sep + sampleWarFile;
+
+        console.log("-----Start to run testWarModuleLifeCycle-1 test case....");
+        console.log("---------------------------------------------------------");
         if (fs.existsSync(deployWarFilePath) ) {
            try {
                await admin.goToLandingPanelSubTreeCard(driver, "Edit Tree",
@@ -260,11 +260,8 @@ describe.only('Test Suite: deploy_test , Redeploy and undeploy for Application a
                console.log("Select 'Servicing only administration requests' to start");
                await driver.findElement(By.xpath("//*[@id='startInAdminMode']")).click();
                await driver.sleep(9800);
-               console.log("Click at Reload page icon.....");
-               element = driver.findElement(By.xpath("//*[@id='sync-icon']"));
-               if (element.isEnabled()) {
-                   await element.click();
-               }
+               console.log("Click to close 'Started and created task for application sample' dialog");
+               driver.findElement(By.xpath("//oj-button[@title='Close'] ")).click();
                await driver.sleep(4800);
                console.log("Move the lower deployment window section to location (550,450) pixel");
                await driver.executeScript("window.scrollBy(550,450)");
@@ -289,12 +286,10 @@ describe.only('Test Suite: deploy_test , Redeploy and undeploy for Application a
                console.log("Select 'Force stop now' to stop");
                await  driver.findElement(By.xpath("//*[text()='Force stop now']")).click();
                await driver.sleep(9800);
-               console.log("Click at Reload page icon.....");
-               element = driver.findElement(By.xpath("//*[@id='sync-icon']"));
-               if (element.isEnabled()) {
-                   await element.click();
-               }
-               await driver.sleep(9800);
+
+               console.log("Click to close 'Stopped and created task for application sample' dialog");
+               driver.findElement(By.xpath("//oj-button[@title='Close'] ")).click();
+               await driver.sleep(4800);
                console.log("Move the lower deployment window section to location (550,450) pixel");
                await driver.executeScript("window.scrollBy(550,450)");
                //Verify if sample Intended State is Prepared
@@ -334,12 +329,15 @@ describe.only('Test Suite: deploy_test , Redeploy and undeploy for Application a
         //Started: Admin
         //Stopped: Admin
     //
-    it('3. Test Category: GAT/Risk1\n \t Test Scenario: deploy sample.war (State:Prepared),' +
+    it('3. Test Category: GAT/Risk1\n \t Test Scenario: testWarModuleLifeCycle-2: deploy sample.war (State:Prepared),' +
         ' started (State:Active), stopped (State:Prepared) ', async function () {
-        file = "sampleWAR.png";
+        file = "testWarModuleLifeCycle-2.png";
         let sampleWarFile = "frontend/system-tests/lib/sample.war";
         let path = require('path');
         let deployWarFilePath = process.env.OLDPWD + path.sep + sampleWarFile;
+
+        console.log("-----Start to run testWarModuleLifeCycle-2 test case....");
+        console.log("--------------------------------------------------------");
         if (fs.existsSync(deployWarFilePath) ) {
            try {
                await admin.goToLandingPanelSubTreeCard(driver, "Edit Tree",
@@ -396,11 +394,8 @@ describe.only('Test Suite: deploy_test , Redeploy and undeploy for Application a
                console.log("Select 'Servicing only administration requests' to start");
                await driver.findElement(By.xpath("//*[@id='startInAdminMode']")).click();
                await driver.sleep(9800);
-               console.log("Click at Reload page icon.....");
-               element = driver.findElement(By.xpath("//*[@id='sync-icon']"));
-               if (element.isEnabled()) {
-                   await element.click();
-               }
+               console.log("Click to close 'Started and created task for application sample' dialog");
+               driver.findElement(By.xpath("//oj-button[@title='Close'] ")).click();
                await driver.sleep(4800);
                console.log("Move the lower deployment window section to location (550,450) pixel");
                await driver.executeScript("window.scrollBy(550,450)");
@@ -425,12 +420,9 @@ describe.only('Test Suite: deploy_test , Redeploy and undeploy for Application a
                console.log("Select 'Servicing non-administration requests' to stop");
                await  driver.findElement(By.xpath("//*[text()='Servicing non-administration requests']")).click();
                await driver.sleep(9800);
-               console.log("Click at Reload page icon.....");
-               element = driver.findElement(By.xpath("//*[@id='sync-icon']"));
-               if (element.isEnabled()) {
-                   await element.click();
-               }
-               await driver.sleep(9800);
+               console.log("Click to close 'Stopped and created task for application sample' dialog");
+               driver.findElement(By.xpath("//oj-button[@title='Close'] ")).click();
+               await driver.sleep(4800);
                console.log("Move the lower deployment window section to location (550,450) pixel");
                await driver.executeScript("window.scrollBy(550,450)");
                //Verify if sample Intended State is Admin
@@ -470,12 +462,15 @@ describe.only('Test Suite: deploy_test , Redeploy and undeploy for Application a
         //Started: Active
         //Stopped: Admin
     //
-    it('4. Test Category: GAT/Risk1\n \t Test Scenario: deploy sample.war (State:Prepared),' +
+    it('4. Test Category: GAT/Risk1\n \t Test Scenario: testWarModuleLifeCycle-3: deploy sample.war (State:Prepared),' +
         ' started (State:Active), stopped (State:Prepared) ', async function () {
-        file = "sampleWAR.png";
+        file = "testWarModuleLifeCycle-3.png";
         let sampleWarFile = "frontend/system-tests/lib/sample.war";
         let path = require('path');
         let deployWarFilePath = process.env.OLDPWD + path.sep + sampleWarFile;
+
+        console.log("-----Start to run testWarModuleLifeCycle-3 test case....");
+        console.log("--------------------------------------------------------");
         if (fs.existsSync(deployWarFilePath) ) {
            try {
                await admin.goToLandingPanelSubTreeCard(driver, "Edit Tree",
@@ -532,11 +527,8 @@ describe.only('Test Suite: deploy_test , Redeploy and undeploy for Application a
                console.log("Select 'Servicing all requests' to start");
                await  driver.findElement(By.xpath("//*[text()='Servicing all requests']")).click();
                await driver.sleep(9800);
-               console.log("Click at Reload page icon.....");
-               element = driver.findElement(By.xpath("//*[@id='sync-icon']"));
-               if (element.isEnabled()) {
-                   await element.click();
-               }
+               console.log("Click to close 'Started and created task for application sample' dialog");
+               driver.findElement(By.xpath("//oj-button[@title='Close'] ")).click();
                await driver.sleep(4800);
                console.log("Move the lower deployment window section to location (550,450) pixel");
                await driver.executeScript("window.scrollBy(550,450)");
@@ -561,12 +553,9 @@ describe.only('Test Suite: deploy_test , Redeploy and undeploy for Application a
                console.log("Select 'Servicing non-administration requests' to stop");
                await  driver.findElement(By.xpath("//*[text()='Servicing non-administration requests']")).click();
                await driver.sleep(9800);
-               console.log("Click at Reload page icon.....");
-               element = driver.findElement(By.xpath("//*[@id='sync-icon']"));
-               if (element.isEnabled()) {
-                   await element.click();
-               }
-               await driver.sleep(9800);
+               console.log("Click to close 'Stopped and created task for application sample' dialog");
+               driver.findElement(By.xpath("//oj-button[@title='Close'] ")).click();
+               await driver.sleep(6800);
                console.log("Move the lower deployment window section to location (550,450) pixel");
                await driver.executeScript("window.scrollBy(550,450)");
                //Verify if sample Intended State is Admin
@@ -601,13 +590,15 @@ describe.only('Test Suite: deploy_test , Redeploy and undeploy for Application a
     // Deploy lib.jar file to AdminServer (TestLibJar)
     // Validate deployment -> then delete TestLibJar
     //
-    it('5. Test Category: GAT/Risk1\n \t Test Scenario: deploy Library file: lib.jar',
+    it('5. Test Category: GAT/Risk1\n \t Test Scenario: testDeployLibJarModule: deploy Library file: lib.jar',
         async function () {
-            file = "TestLib.png";
+            file = "TtestDeployLibJarModulepng";
             let libJarFile = "frontend/system-tests/lib/lib.jar";
             let path = require('path');
             let deployLibJarFilePath = process.env.OLDPWD + path.sep + libJarFile;
 
+            console.log("-----Start to run testDeployLibJarModule test case....");
+            console.log("------------------------------------------------------");
             try {
                 await admin.goToLandingPanelSubTreeCard(driver, "Edit Tree",
                     "DeploymentsChevron","Libraries");
@@ -679,16 +670,18 @@ describe.only('Test Suite: deploy_test , Redeploy and undeploy for Application a
     // Deploy sample.war and samlePlan.xml files to AdminServer target with Upload option
     // Validate deployment sampleAppWarFileWithPlan from shopping cart and Deploy Application page
     // Deleting sample war module
-    it('6. Test Category: GAT/Risk1\n \t Test Scenario: deploy sample.war and samplePlan.xml files ' +
+    it('6. Test Category: GAT/Risk1\n \t Test Scenario: testDeployWarModuleWithPlan-1: deploy sample.war and samplePlan.xml files ' +
         'with Upload option',
     async function () {
-        file = "sampleAppWarFileWithPlan-3.png";
+        file = "testDeployWarModuleWithPlan-1.png";
         let sampleWarFile = "frontend/system-tests/lib/sample.war";
         let sampleWarPlanFile = "frontend/system-tests/lib/samplePlan.xml";
         let path = require('path');
         let deployWarFilePath = process.env.OLDPWD + path.sep + sampleWarFile;
         let deployWarPlanFilePath = process.env.OLDPWD + path.sep + sampleWarPlanFile;
 
+        console.log("-----Start to run testDeployWarModuleWithPlan-1 test case....");
+        console.log("-------------------------------------------------------------");
         if (fs.existsSync(deployWarFilePath) && fs.existsSync(deployWarPlanFilePath))  {
         try {
            await admin.goToLandingPanelSubTreeCard(driver, "Edit Tree",
@@ -768,15 +761,17 @@ describe.only('Test Suite: deploy_test , Redeploy and undeploy for Application a
     // Deploy sample.war and samplePlan.xml files to AdminServer target by direct path
     // Validate deployment sampleAppWarFileWithPlan from shopping cart and Deploy Application page
     // Deleting sample module
-    it.skip('7. Test Category: GAT/Risk1\n \t Test Scenario: deploy sample.war and samplePlan.xml files',
+    it.skip('7. Test Category: GAT/Risk1\n \t Test Scenario: testDeployWarModuleWithPlan-2: deploy sample.war and samplePlan.xml files',
     async function () {
-        file = "sampleAppWarFileWithPlan-4.png";
+        file = "testDeployWarModuleWithPlan-2.png";
         let sampleWarFile = "frontend/system-tests/lib/sample.war";
         let sampleWarPlanFile = "frontend/system-tests/lib/samplePlan.xml";
         let path = require('path');
         let deployWarFilePath = process.env.OLDPWD + path.sep + sampleWarFile;
         let deployWarPlanFilePath = process.env.OLDPWD + path.sep + sampleWarPlanFile;
 
+        console.log("-----Start to run testDeployWarModuleWithPlan-2 test case....");
+        console.log("-------------------------------------------------------------");
         if (fs.existsSync(deployWarFilePath) && fs.existsSync(deployWarPlanFilePath))  {
         try {
            await admin.goToLandingPanelSubTreeCard(driver, "Edit Tree",
@@ -851,13 +846,15 @@ describe.only('Test Suite: deploy_test , Redeploy and undeploy for Application a
        //Edit jms-local-adpPlan.xml plan with Plan Editor by adding 'test123' property to the file
        //Verify 'test123' was added to jms-local-adpPlan.xml file successfully
     //Test when run with docker domain has to use PlanFile without path specified.
-    it('8. Test Category: GAT/Risk1\n \t Test Scenario: create jms-xa-adp-file Plan xml file, validate ' +
+    it('8. Test Category: GAT/Risk1\n \t Test Scenario: testPlanAndPlanEditor-1: create jms-xa-adp-file Plan xml file, validate ' +
         'Plan Editor with WLDFHarvester_Enabled property',
     async function () {
-        file = "createPlan-jms-xa-adp-file.png";
+        file = "testPlanAndPlanEditor-1.png";
         let jms_xa_adpPlanFile = "jms-local-adpPlan.xml";
         let jms_xa_adpPlanFilePath = process.env.OLDPWD + path.sep + "frontend/system-tests/lib/"+jms_xa_adpPlanFile;
 
+        console.log("-----Start to run testPlanAndPlanEditor-1 test case....");
+        console.log("--------------------------------------------------------");
         try {
             await admin.goToNavTreeLevelThreeLink(driver, "monitoring", "Deployments",
                 "Application Management", "jms-local-adp");
@@ -871,13 +868,12 @@ describe.only('Test Suite: deploy_test , Redeploy and undeploy for Application a
             console.log("Click Done button at Create Plan dialog");
             await driver.findElement(By.xpath("//oj-button[@id='[[i18n.buttons.save.id]]']")).click();
             await driver.sleep(9600);
-            console.log("Click Sync Icon Image");
-            element = driver.findElement(By.xpath("//img[@id='sync-icon']"));
-            driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
+            console.log("Click to close 'Created deployment plan and task to redeploy application jms-local-adp' dialog");
+            driver.findElement(By.xpath("//oj-button[@title='Close'] ")).click();
+            await driver.sleep(2400);
+            await admin.goToNavTreeLevelThreeLink(driver, "monitoring", "Deployments",
+                "Application Management", "jms-local-adp");
             await driver.sleep(7200);
-            if (element.isEnabled()) {
-                await element.click();
-            }
             console.log("Click at Deployment Plan (Advanced) navTree node");
             element = driver.findElement(
                 By.xpath("//*[text()='Deployment Plan (Advanced)']"));
@@ -932,16 +928,18 @@ describe.only('Test Suite: deploy_test , Redeploy and undeploy for Application a
         //Validate WarEarPlan.xml created successful from viewing WarEarPlan editor
         // Deleting WarEar mode.
     //
-    it('9. Test Category: GAT/Risk1\n \t Test Scenario: deploy WarEar.ear then create WarEarPlan.xml files' +
+    it('9. Test Category: GAT/Risk1\n \t Test Scenario: testCreatePlanAndPlanEditor-2: deploy WarEar.ear then create WarEarPlan.xml files' +
         ' validate Deployment Plan',
     async function () {
-        file = "WarEarPlan.png";
+        file = "testCreatePlanAndPlanEditor-2.png";
         let deployWarEarFile = "WarEar.ear";
         let path = require('path');
         let deployWarEarFilePath = process.env.OLDPWD + path.sep + "frontend/system-tests/lib/"+deployWarEarFile;
         let WarEarPlanFile = "WarEarPlan.xml";
         let WarEarPlanFilePath = process.env.OLDPWD + path.sep + "frontend/system-tests/lib/"+WarEarPlanFile;
 
+        console.log("-----Start to run testCreatePlanAndPlanEditor-2 test case....");
+        console.log("-------------------------------------------------------------");
         if (fs.existsSync(deployWarEarFilePath))  {
         try {
            await admin.goToLandingPanelSubTreeCard(driver, "Edit Tree",
@@ -979,8 +977,9 @@ describe.only('Test Suite: deploy_test , Redeploy and undeploy for Application a
            await driver.findElement(
            By.xpath("//*[@id='breadcrumbs-container']/ul/li[2]/oj-menu-button/button/div/span[2]")).click();
            await driver.sleep(3600);
-           console.log("Click select 'Status - Monitoring Tree' menu");
-           await driver.findElement(By.xpath("//*[@id='Status - Monitoring Tree']")).click();
+           console.log("Click select 'Application Management - Monitoring Tree' menu");
+           await driver.findElement(
+               By.xpath("//*[@id='Application Management - Monitoring Tree']")).click();
            await driver.sleep(7200);
            console.log("Click 'Create Plan oj-button image");
            await driver.findElement(
@@ -993,9 +992,8 @@ describe.only('Test Suite: deploy_test , Redeploy and undeploy for Application a
            console.log("Click Done button at Create Plan dialog");
            await driver.findElement(By.xpath("//oj-button[@id='[[i18n.buttons.save.id]]']")).click();
            await driver.sleep(8400);
-           console.log("Click Sync Icon Image");
-           element = driver.findElement(By.xpath("//img[@id='sync-icon']"));
-           driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
+           await admin.goToNavTreeLevelThreeLink(driver, "monitoring", "Deployments",
+                "Application Management", "WarEar");
            await driver.sleep(7200);
            console.log("Click at Deployment Plan (Advanced) navTree node");
            element = driver.findElement(
@@ -1067,10 +1065,10 @@ describe.only('Test Suite: deploy_test , Redeploy and undeploy for Application a
       //'sample.war'  on the Redeploy Plan
     //
 
-    it('10. Test Category: GAT/Risk1\n \t Test Scenario: Redeployed with Deploy Source and Plan on Server (direct path) ' +
+    it('10. Test Category: GAT/Risk1\n \t Test Scenario: testUpdateRedeploy-1: Redeployed with Deploy Source and Plan on Server (direct path) ' +
         'deploy sample.war and samplePlan.xml files and then Redeploy with simple.war and simplePlan.xml files',
     async function () {
-        file = "sampleAppWarFileWithPlan-10.png";
+        file = "testUpdateRedeploy-1.png";
         let testLibDir = "frontend/system-tests/lib/";
         let adminServerSampleUploadDir = "/domain.run/servers/AdminServer/upload/sampleWarFileWithPlan/";
         let sampleWarFile = "sample.war";
@@ -1082,6 +1080,8 @@ describe.only('Test Suite: deploy_test , Redeploy and undeploy for Application a
         let redeploySampleUploadWarFilePath = adminServerSampleUploadDir + "app/" +sampleWarFile;
         let redeploySampleUploadWarPlanFilePath = adminServerSampleUploadDir + "plan/" +sampleWarPlanFile;
 
+        console.log("-----Start to run testUpdateRedeploy-1 test case....");
+        console.log("----------------------------------------------------");
         if (fs.existsSync(deploySampleWarFilePath) && fs.existsSync(deploySampleWarPlanFilePath))  {
         try {
            await admin.goToLandingPanelSubTreeCard(driver, "Edit Tree",
@@ -1129,13 +1129,15 @@ describe.only('Test Suite: deploy_test , Redeploy and undeploy for Application a
            driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
            await element.click();
            await driver.sleep(6400);
+
            console.log("Click Shopping Cart Icon");
-           await driver.findElement(By.xpath("//a[@id='shoppingCartMenuLauncher']")).click();
+           element = driver.findElement(By.xpath("//a[@id='shoppingCartMenuLauncher']"));
+           driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
+           await element.click();
            await driver.sleep(1200);
            console.log("Select 'Commit Changes' menu");
            await driver.findElement(By.xpath("//span[@id='commit-changes']")).click();
            await driver.sleep(8400);
-
            console.log("Click App Deployment from 'Table Header'");
            await driver.findElement(By.xpath("//a[text()='App Deployments']")).click();
            await driver.sleep(1200);
@@ -1158,10 +1160,6 @@ describe.only('Test Suite: deploy_test , Redeploy and undeploy for Application a
            console.log("Select 'updateRedeployActionsMenuLauncher' menu");
            await driver.findElement(
                By.xpath("//oj-button[@id='updateRedeployActionsMenuLauncher']")).click();
-           await driver.sleep(3600);
-           console.log("Select 'redeployApp' menu");
-           await driver.findElement(
-               By.xpath("//oj-option[@id='redeployApp']")).click();
            await driver.sleep(3600);
            console.log("Select 'ReDeploy Source and Plan on Server' menu");
            await driver.findElement(
@@ -1236,11 +1234,11 @@ describe.only('Test Suite: deploy_test , Redeploy and undeploy for Application a
       //Enter Source: simple.war and Plan: simplePlan.xml files
       //Go back to Deployment Plan tab of sampleWarFileWithPlan app to validate if 'test123' appeared on the Redeploy Plan
     //Test run with docker domain
-    it('11. Test Category: GAT/Risk1\n \t Test Scenario: Redeployed -> Deploy Source and Plan by Upload files from Local Machine ' +
+    it('11. Test Category: GAT/Risk1\n \t Test Scenario: testUpdateRedeploy-2: Deploy Source and Plan by Upload files from Local Machine ' +
         'with deploy sample.war and samplePlan.xml files and then Redeploy with simple.war and simplePlan.xml files ' +
         'with upload method (local redeploy)',
     async function () {
-        file = "sampleWarFileWithPlan-11.png";
+        file = "testUpdateRedeploy-2.png";
         let sampleWarFile = "frontend/system-tests/lib/sample.war";
         let simpleWarFile = "frontend/system-tests/lib/simple.war";
         let sampleWarPlanFile = "frontend/system-tests/lib/samplePlan.xml";
@@ -1251,9 +1249,10 @@ describe.only('Test Suite: deploy_test , Redeploy and undeploy for Application a
         let deploySampleWarPlanFilePath = process.env.OLDPWD + path.sep + sampleWarPlanFile;
         let deploySimpleWarPlanFilePath = process.env.OLDPWD + path.sep + simpleWarPlanFile;
 
+        console.log("-----Start to run testUpdateRedeploy-2 test case....");
+        console.log("----------------------------------------------------");
         if (fs.existsSync(deploySampleWarFilePath) && fs.existsSync(deploySampleWarPlanFilePath)
         && fs.existsSync(deploySimpleWarFilePath) && fs.existsSync(deploySimpleWarPlanFilePath) )  {
-
         try {
            await admin.goToLandingPanelSubTreeCard(driver, "Edit Tree",
                "DeploymentsChevron","App Deployments");
@@ -1301,14 +1300,15 @@ describe.only('Test Suite: deploy_test , Redeploy and undeploy for Application a
            await element.click();
            await driver.sleep(6400);
            console.log("Click Shopping Cart Icon");
-           await driver.findElement(By.xpath("//a[@id='shoppingCartMenuLauncher']")).click();
-           await driver.sleep(1200);
+           element = driver.findElement(By.xpath("//a[@id='shoppingCartMenuLauncher']"));
+           driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
+           await element.click();
            console.log("Select 'Commit Changes' menu");
            await driver.findElement(By.xpath("//span[@id='commit-changes']")).click();
            await driver.sleep(8400);
 
            console.log("Click App Deployment from 'Table Header'");
-           await driver.findElement(By.xpath("//a[text()='App Deployments']")).click();
+           await driver.findElement(By.xpath("//*[text()='App Deployments']")).click();
            await driver.sleep(1200);
            console.log("Click Application Management oj-button");
            await driver.findElement(
@@ -1329,10 +1329,6 @@ describe.only('Test Suite: deploy_test , Redeploy and undeploy for Application a
            console.log("Select 'updateRedeployActionsMenuLauncher' menu");
            await driver.findElement(
                By.xpath("//oj-button[@id='updateRedeployActionsMenuLauncher']")).click();
-           await driver.sleep(3600);
-           console.log("Select 'redeployApp' menu");
-           await driver.findElement(
-               By.xpath("//oj-option[@id='redeployApp']")).click();
            await driver.sleep(3600);
            console.log("Select 'Deploy Source and Plan on Server on Local Machine' menu");
            await driver.findElement(
@@ -1412,9 +1408,9 @@ describe.only('Test Suite: deploy_test , Redeploy and undeploy for Application a
     // Go back to Deployment Plan tab of sampleWarFileWithPlan app to validate
     // if 'sample.war' is the module-name
     //Test can run with docker domain
-    it('12. Test Category: GAT/Risk1\n \t Test Scenario: Update Deployment App with New Deployment Plan on Server',
+    it('12. Test Category: GAT/Risk1\n \t Test Scenario: testUpdateRedeploy-3: Update Deployment App with New Deployment Plan on Server',
     async function () {
-        file = "sampleWarFileWithPlan-9.png";
+        file = "testUpdateRedeploy-3.png";
         let sampleWarFile = "frontend/system-tests/lib/sample.war";
         let sampleWarPlanFile = "frontend/system-tests/lib/samplePlan.xml";
         let simpleWarPlanFile = "frontend/system-tests/lib/simplePlan.xml";
@@ -1425,6 +1421,8 @@ describe.only('Test Suite: deploy_test , Redeploy and undeploy for Application a
 
         let defaultPathPlan = "/domain.run/servers/AdminServer/upload/sampleWarFileWithPlan/plan/samplePlan.xml"
 
+        console.log("-----Start to run testUpdateRedeploy-3 test case....");
+        console.log("----------------------------------------------------");
         if (fs.existsSync(deploySampleWarFilePath) && fs.existsSync(deploySampleWarPlanFilePath) &&
             fs.existsSync(deploySimpleWarPlanFilePath) )  {
         try {
@@ -1474,14 +1472,15 @@ describe.only('Test Suite: deploy_test , Redeploy and undeploy for Application a
             await element.click();
             await driver.sleep(6400);
             console.log("Click Shopping Cart Icon");
-            await driver.findElement(By.xpath("//a[@id='shoppingCartMenuLauncher']")).click();
-            await driver.sleep(1200);
+            element = driver.findElement(By.xpath("//a[@id='shoppingCartMenuLauncher']"));
+            driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
+            await element.click();
             console.log("Select 'Commit Changes' menu");
             await driver.findElement(By.xpath("//span[@id='commit-changes']")).click();
             await driver.sleep(8400);
 
             console.log("Click App Deployment from 'Table Header'");
-            await driver.findElement(By.xpath("//a[text()='App Deployments']")).click();
+            await driver.findElement(By.xpath("//*[text()='App Deployments']")).click();
             await driver.sleep(1200);
             console.log("Click Application Management oj-button");
             await driver.findElement(
@@ -1504,11 +1503,7 @@ describe.only('Test Suite: deploy_test , Redeploy and undeploy for Application a
            await driver.findElement(
                By.xpath("//oj-button[@id='updateRedeployActionsMenuLauncher']")).click();
            await driver.sleep(3600);
-           console.log("Select 'Update with New Deployment Plan' menu");
-           await driver.findElement(
-               By.xpath("//oj-option[@id='updatePlan']")).click();
-           await driver.sleep(3600);
-           console.log("Select 'Deployment Plan on Server' menu");
+           console.log("Select 'Update Deployment Plan on Server' menu");
            await driver.findElement(
                By.xpath("//oj-option[@id='update']")).click();
            await driver.sleep(3600);
@@ -1568,10 +1563,10 @@ describe.only('Test Suite: deploy_test , Redeploy and undeploy for Application a
         //Select to upload local simplePlan.xml path
         //Go back to Deployment Plan tab of sampleWarFileWithPlan app to validate
         //if 'simple.war' is the current module-name
-    //Test cannot run with docker domain
-    it('13. Test Category: GAT/Risk1\n \t Test Scenario: Update New Deployment Plan on local machine',
+    //Test can run with docker domain
+    it('14. Test Category: GAT/Risk1\n \t Test Scenario: testUpdateRedeploy-4: Update New Deployment Plan on local machine',
         async function () {
-        file = "sampleWarFileWithPlan-10.png";
+        file = "testUpdateRedeploy-4.png";
         let sampleWarFile = "frontend/system-tests/lib/sample.war";
         let sampleWarPlanFile = "frontend/system-tests/lib/samplePlan.xml";
         let simpleWarPlanFile = "frontend/system-tests/lib/simplePlan.xml";
@@ -1580,6 +1575,8 @@ describe.only('Test Suite: deploy_test , Redeploy and undeploy for Application a
         let deploySampleWarPlanFilePath = process.env.OLDPWD + path.sep + sampleWarPlanFile;
         let deploySimpleWarPlanFilePath = process.env.OLDPWD + path.sep + simpleWarPlanFile;
 
+        console.log("-----Start to run testUpdateRedeploy-4 test case....");
+        console.log("----------------------------------------------------");
         if (fs.existsSync(deploySampleWarFilePath) && fs.existsSync(deploySampleWarPlanFilePath) &&
             fs.existsSync(deploySimpleWarPlanFilePath) )  {
             try {
@@ -1623,28 +1620,30 @@ describe.only('Test Suite: deploy_test , Redeploy and undeploy for Application a
                 console.log("Enter " +deploySampleWarPlanFilePath+ " to deploy");
                 await driver.findElement(By.xpath("//input[@id='file-chooser-form']")).sendKeys(deploySampleWarPlanFilePath);
                 await driver.sleep(9600);
+
                 console.log("Click Finish button");
                 element = driver.findElement(By.xpath("//oj-button[@id='[[i18n.buttons.finish.id]]']"));
                 driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
                 await element.click();
                 await driver.sleep(6400);
                 console.log("Click Shopping Cart Icon");
-                await driver.findElement(By.xpath("//a[@id='shoppingCartMenuLauncher']")).click();
-                await driver.sleep(1200);
+                element = driver.findElement(By.xpath("//a[@id='shoppingCartMenuLauncher']"));
+                driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
+                await element.click();
                 console.log("Select 'Commit Changes' menu");
                 await driver.findElement(By.xpath("//span[@id='commit-changes']")).click();
                 await driver.sleep(8400);
 
                 console.log("Click App Deployment from 'Table Header'");
-                await driver.findElement(By.xpath("//a[text()='App Deployments']")).click();
-                await driver.sleep(1200);
+                await driver.findElement(By.xpath("//*[text()='App Deployments']")).click();
+                await driver.sleep(4800);
                 console.log("Click Application Management oj-button");
                 await driver.findElement(
                     By.xpath("//*[@id='breadcrumbs-container']/ul/li/oj-menu-button/button/div/span[2]")).click();
-                await driver.sleep(3600);
+                await driver.sleep(6400);
                 console.log("Select 'Application Management - Monitoring Tree' ");
                 await driver.findElement(By.xpath("//oj-option[@id='Application Management - Monitoring Tree']")).click();
-                await driver.sleep(7200);
+                await driver.sleep(8400);
                 console.log("Move the lower deployment window section to location (550,450) pixel");
                 await driver.executeScript("window.scrollBy(550,450)");
                 console.log("Click to select sampleWarFileWithPlan at 7th row and 1st column in the deployed app table list");
@@ -1657,12 +1656,7 @@ describe.only('Test Suite: deploy_test , Redeploy and undeploy for Application a
                 await driver.findElement(
                     By.xpath("//oj-button[@id='updateRedeployActionsMenuLauncher']")).click();
                 await driver.sleep(3600);
-                console.log("Select 'Update with New Deployment Plan' menu");
-                await driver.findElement(
-                    By.xpath("//oj-option[@id='updatePlan']")).click();
-                await driver.sleep(3600);
-
-                console.log("Select 'Deployment Plan on Local Machine' menu");
+                console.log("Select 'Uppdate Deployment Plan on Local Machine' menu");
                 await driver.findElement(
                     By.xpath("//oj-option[@id='uploadAndUpdate']")).click();
                 await driver.sleep(3600);
@@ -1729,14 +1723,16 @@ describe.only('Test Suite: deploy_test , Redeploy and undeploy for Application a
     // From Edit Tree -> Deployments  -> Database Client Data Directories, select New button
     // Enter ASDS1 name, disable upload option then enter the full path to deploy
     // Deleting WarEar mode.
-    it('14. Test Category: GAT/Risk1\n \t Test Scenario: Deploy Database Client Data Directories (ASDS1-jdbc.xml) file ' +
+    it('15. Test Category: GAT/Risk1\n \t Test Scenario: testDeployDatabaseClient: Deploy Database Client Data Directories (ASDS1-jdbc.xml) file ' +
         ' to AdminServer',
     async function () {
-        file = "ASDS1-jdbc-xml.png";
+        file = "testDeployDatabaseClient.png";
         let deployDBClientFile = "frontend/system-tests/lib/ASDS1-jdbc.xml";
         let path = require('path');
         let deployDBClientFilePath = process.env.OLDPWD + path.sep + deployDBClientFile;
 
+        console.log("-----Start to run testDeployDatabaseClient test case....");
+        console.log("--------------------------------------------------------");
         if (fs.existsSync(deployDBClientFilePath))  {
         try {
            await admin.goToNavTreeLevelTwoLink(driver,"configuration","Deployments",

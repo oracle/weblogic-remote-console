@@ -154,12 +154,18 @@ define([
 
       displayResponseMessage: displayResponseMessage,
 
+      displayFailureResponseMessages: (messages) => {
+        if (CoreUtils.isNotUndefinedNorNull(messages) && messages.length > 0) {
+          MessageDisplaying.displayErrorMessagesHTML(messages, i18n.labels.unexpectedErrorResponse.value, 5000);
+        }
+      },
+
       getResponseBodyMessages: function (response, properties) {
         let bodyMessages = [], errorMessage;
         if (CoreUtils.isError(response)) {
           errorMessage = {
             severity: 'error',
-            summary: this.i18n.labels.unexpectedErrorResponse.value,
+            summary: i18n.labels.unexpectedErrorResponse.value,
             detail: response.stack
           };
           bodyMessages.push(errorMessage);
@@ -390,7 +396,7 @@ define([
             .catch(failure => {
               MessageDisplaying.displayMessage({
                 severity: 'error',
-                summary: this.i18n.labels.unexpectedErrorResponse.value,
+                summary: i18n.labels.unexpectedErrorResponse.value,
                 detail: failure.stack
               });
             });

@@ -16,6 +16,7 @@ properties:
   - name: "InstallDir"
   - name: "StagingMode"
   - name: "SourcePath"
+  - name: "AbsoluteSourcePath"
   - name: "DeploymentPrincipalName"
   - name: "CacheInAppDirectory"
 

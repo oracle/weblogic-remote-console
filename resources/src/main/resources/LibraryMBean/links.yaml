@@ -13,10 +13,13 @@ collectionLinks:
   resourceData: "DomainRuntime/Dashboards/Deployment Tasks"
 
 instanceLinks:
-- label: Runtime Data
+- label: Library Management
+  root: DomainRuntimeMonitoring
+  resourceData: DomainRuntime/DeploymentManager/LibDeploymentRuntimes/<Library>
+- label: Library Runtime Data
   root: DomainRuntimeMonitoring
   resourceData: DomainRuntime/AggregatedLibraryRuntimes/<Library>
   notFoundMessage: This library was not found on any of the currently running servers.
-- label: Status
+- label: Deployment Tasks Dashboard
   root: DomainRuntimeMonitoring
-  resourceData: DomainRuntime/DeploymentManager/LibDeploymentRuntimes/<Library>
+  resourceData: "DomainRuntime/Dashboards/Deployment Tasks"

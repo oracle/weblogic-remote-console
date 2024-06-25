@@ -1,0 +1,9 @@
+# Copyright (c) 2024, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+introductionHTML: >
+  <p>This page displays the state of this deployment on this server.</p>
+
+properties:
+- name: "Name"
+- name: "State"

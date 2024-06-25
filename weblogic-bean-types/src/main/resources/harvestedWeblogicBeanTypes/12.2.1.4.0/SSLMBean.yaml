@@ -1,4 +1,4 @@
-# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2024, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 actions: [
@@ -37,7 +37,7 @@ properties:
     class has an <code>authenticate()</code> method that WebLogic Server calls after
     validating the digital certificate presented by the client.</p> '
   name: CertAuthenticator
-  obsolete: 'true'
+  obsolete: ' '
   restartNeeded: true
   supported: false
   type: java.lang.String
@@ -49,7 +49,7 @@ properties:
     by tokens.</p> '
   exclude: true
   name: CertificateCacheSize
-  obsolete: 'true'
+  obsolete: ' '
   restartNeeded: true
   supported: false
   type: int
@@ -155,7 +155,7 @@ properties:
   descriptionHTML: '<p>Not used.</p> '
   exclude: true
   name: HandlerEnabled
-  obsolete: 'true'
+  obsolete: ' '
   restartNeeded: true
   supported: false
   type: boolean
@@ -233,7 +233,7 @@ properties:
     and may be used without providing a password.</p> </li> </ul> '
   exclude: true
   name: KeyEncrypted
-  obsolete: 'true'
+  obsolete: ' '
   restartNeeded: true
   supported: false
   type: boolean
@@ -453,7 +453,7 @@ properties:
     AIX platforms.</p> '
   exclude: true
   name: UseJava
-  obsolete: 'true'
+  obsolete: ' '
   restartNeeded: true
   supported: false
   type: boolean

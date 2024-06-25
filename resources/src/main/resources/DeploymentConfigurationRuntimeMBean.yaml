@@ -23,6 +23,10 @@ properties:
   type: java.lang.String
   descriptionHTML: >
     The fully resolved location of this application's deployment plan on the Administration Server.
+- name: DefaultPlanPath
+  type: java.lang.String
+  descriptionHTML: >
+    The default location for this application's deployment plan on the Administration Server.
 - name: AutoDeployedApp
   type: boolean
   descriptionHTML:  >

@@ -1,10 +1,12 @@
-# Copyright (c) 2023, Oracle and/or its affiliates.
+# Copyright (c) 2023, 2024, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 introductionHTML: >
-    <p>This page tests the connection pool in the data source by reserving and releasing a connection from it.</p> 
-    <p>If the pool configuration attribute TestConnectionsOnReserve is enabled, the acquired connection is
-    also tested as part of the reserve operation.</p>
-    <p>Reload this page to test the data source again.</p>
-
+  <p>Use this page to test database connections in this JDBC data source.</p>
+  <p>Reload this page to test the data source again.</p>
+  <p>Note: this page tests the existing connections to the database.
+  If you change the data source's configuration (e.g. password), the
+  existing connections will still use the old configuration.
+  The new configuration will not be tested until the data source needs to
+  make a new connection (e.g. if you shutdown then restart the data source).
 properties:
 - name: TestResults

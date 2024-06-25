@@ -76,6 +76,13 @@ public abstract class ResponseMapper<T> {
           .entity(getEntityBuilder().build())
           .build();
     }
+    if (getResponse().isTimeout()) {
+      return
+        javax.ws.rs.core.Response
+          .status(javax.ws.rs.core.Response.Status.GATEWAY_TIMEOUT)
+          .entity(getEntityBuilder().build())
+          .build();
+    }
     if (getResponse().isUserBadRequest()) {
       return
         javax.ws.rs.core.Response

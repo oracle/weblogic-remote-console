@@ -6,6 +6,7 @@ package weblogic.remoteconsole.server.utils;
 import java.io.InputStream;
 import java.net.ConnectException;
 import java.net.SocketException;
+import java.net.SocketTimeoutException;
 import java.util.Map;
 import java.util.logging.Logger;
 import javax.json.JsonObject;
@@ -21,6 +22,7 @@ import javax.ws.rs.core.Response;
 import org.glassfish.jersey.client.ClientProperties;
 import org.glassfish.jersey.media.multipart.FormDataMultiPart;
 // import org.glassfish.jersey.media.sse.EventSource;
+import weblogic.remoteconsole.common.repodef.LocalizedConstants;
 
 /**
  * WebLogicRestClient uses state from the WebLogicRestRequest to use
@@ -164,7 +166,6 @@ public class WebLogicRestClient {
     WebTarget webTarget = getWebTarget(request);
     MultivaluedMap<String, Object> headers = WebLogicRestClientHelper.createHeaders(request);
     Response response = null;
-
     try {
       response =
         webTarget.request()
@@ -247,12 +248,9 @@ public class WebLogicRestClient {
   }
 
   // Recursively look for an exception that we understand.
-  // If we understand the exception, make a good message
-  // for it.
+  // If we understand the exception, make a good message for it.
   // Otherwise, just give a generic "exception" message
-  public static Response handleProcessingException(
-    Throwable t
-  ) throws WebLogicRestClientException {
+  public static Response handleProcessingException(Throwable t) throws WebLogicRestClientException {
     Throwable cause = t.getCause();
     if (cause instanceof SSLException) {
       // Bad Request is kind of the wrong term for this, since it
@@ -267,6 +265,10 @@ public class WebLogicRestClient {
     if (cause instanceof ConnectException) {
       return ResponseHelper.createExceptionResponse(
         Response.Status.NOT_FOUND, cause, cause.getMessage());
+    }
+    if (cause instanceof SocketTimeoutException) {
+      String message = LocalizedConstants.WEBLOGIC_REST_REQUEST_TIMED_OUT.getEnglishText();
+      return ResponseHelper.createExceptionResponse(Response.Status.GATEWAY_TIMEOUT, null, message);
     }
     if (cause instanceof SocketException) {
       // Something seems to have gone wrong - shouldn't happen

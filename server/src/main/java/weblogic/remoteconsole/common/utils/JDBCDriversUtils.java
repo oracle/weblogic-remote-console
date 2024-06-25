@@ -1,4 +1,4 @@
-// Copyright (c) 2020, 2021, Oracle Corporation and/or its affiliates.
+// Copyright (c) 2020, 2024, Oracle Corporation and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.utils;
@@ -9,9 +9,9 @@ import java.util.List;
 import java.util.Map;
 
 import org.yaml.snakeyaml.Yaml;
-import weblogic.jdbc.utils.JDBCDriverAttribute;
-import weblogic.jdbc.utils.JDBCDriverInfoFactory;
-import weblogic.jdbc.utils.MetaJDBCDriverInfo;
+import weblogic.remoteconsole.jdbc.utils.JDBCDriverAttribute;
+import weblogic.remoteconsole.jdbc.utils.JDBCDriverInfoFactory;
+import weblogic.remoteconsole.jdbc.utils.MetaJDBCDriverInfo;
 
 public class JDBCDriversUtils {
   private static final String JDBC_DRIVERS_RESOURCE = "jdbcdrivers.yaml";
@@ -59,34 +59,35 @@ public class JDBCDriversUtils {
         String key = entry.getKey();
         Object value = entry.getValue();
         switch (key) {
-          case "@Database":
+          case "@_Database":
             driver.setDbmsVendor((String) value);
             break;
-          case "@Vendor":
+          case "@_Vendor":
             driver.setDriverVendor((String) value);
             break;
-          case "@Type":
+          case "@_Type":
             driver.setType((String) value);
             break;
-          case "@DatabaseVersion":
+          case "@_DatabaseVersion":
             driver.setDbmsVersion((String) value);
             break;
-          case "@ForXA":
+          case "@_ForXA":
             driver.setForXA(((String) value).equalsIgnoreCase("true"));
             break;
-          case "@ClassName":
+          case "@_ClassName":
             driver.setDriverClassName((String) value);
             break;
-          case "@URLHelperClassname":
-            driver.setURLHelperClassName((String) value);
+          case "@_URLHelperClassname":
+            driver.setURLHelperClassName(((String) value)
+              .replace("weblogic.jdbc.utils", "weblogic.remoteconsole.jdbc.utils"));
             break;
-          case "@TestSql":
+          case "@_TestSql":
             driver.setTestSQL((String) value);
             break;
-          case "@Description":
+          case "@_Description":
             driver.setDescription((String) value);
             break;
-          case "@Cert":
+          case "@_Cert":
             driver.setCert(((String) value).equalsIgnoreCase("true"));
             break;
           case "Attribute":
@@ -109,20 +110,23 @@ public class JDBCDriversUtils {
         String key = entry.getKey();
         String value = entry.getValue();
         switch (key) {
-          case "@Name":
+          case "@_Name":
             attribute.setName(value);
             driver.setDriverAttribute(value, attribute);
             break;
-          case "@Required":
+          case "@_Required":
             attribute.setIsRequired(value);
             break;
-          case "@InURL":
+          case "@_Encrypted":
+            attribute.setEncrypted(value);
+            break;
+          case "@_InURL":
             attribute.setInURL(value.equalsIgnoreCase("true"));
             break;
-          case "@Description":
+          case "@_Description":
             attribute.setDescription(value);
             break;
-          case "@DefaultValue":
+          case "@_DefaultValue":
             attribute.setDefaultValue(value);
             break;
 

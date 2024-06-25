@@ -5,7 +5,6 @@ package weblogic.remoteconsole.server.providers;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.InputStream;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -17,10 +16,12 @@ import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
 import javax.json.JsonString;
+import javax.json.JsonValue;
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ResourceContext;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import weblogic.remoteconsole.common.repodef.LocalizedConstants;
 import weblogic.remoteconsole.server.ConsoleBackendRuntime;
 import weblogic.remoteconsole.server.PersistenceManager;
 import weblogic.remoteconsole.server.repo.Frontend;
@@ -178,7 +179,7 @@ public class ProviderManager {
 
   private static JsonObject genDefaultProvider(InvocationContext ic) {
     JsonObjectBuilder provBuilder = Json.createObjectBuilder();
-    provBuilder.add("name", "This Server");
+    provBuilder.add("name", ic.getLocalizer().localizeString(LocalizedConstants.DEFAULT_HOSTED_PROVIDER_NAME));
     provBuilder.add("type", "adminserver");
     // We're gonna put a URL in here, but it is going to get overridden
     // when the user tries to connect
@@ -197,6 +198,12 @@ public class ProviderManager {
     builder.add("name", "WebLogic Remote Console Hosted");
     JsonArrayBuilder childrenBuilder = Json.createArrayBuilder();
     childrenBuilder.add(genDefaultProvider(ic));
+    JsonArray otherProviders = loadOtherProviders(ic);
+    if (otherProviders != null) {
+      for (JsonValue walk : otherProviders) {
+        childrenBuilder.add(walk);
+      }
+    }
     builder.add("dataProviders", childrenBuilder.build());
     builder.add("current", true);
     return builder.build();
@@ -216,7 +223,12 @@ public class ProviderManager {
     } else {
       provBuilder.add("name", provJSON.getString("name"));
     }
-    provBuilder.add("type", provJSON.getString("providerType"));
+    // Somehow the name got confused.  Use the one expected
+    if (AdminServerDataProviderImpl.TYPE_NAME.equals(provJSON.getString("providerType"))) {
+      provBuilder.add("type", "adminserver");
+    } else {
+      provBuilder.add("type", provJSON.getString("providerType"));
+    }
     if (provJSON.get("domainUrl") != null) {
       provBuilder.add("url", provJSON.getString("domainUrl"));
     }
@@ -244,6 +256,9 @@ public class ProviderManager {
     if (provJSON.get("sso") != null) {
       settingsBuilder.add("sso", provJSON.getBoolean("sso"));
     }
+    if (provJSON.get("local") != null) {
+      settingsBuilder.add("local", provJSON.getBoolean("local"));
+    }
     if (provJSON.get("insecure") != null) {
       settingsBuilder.add("insecure", provJSON.getBoolean("insecure"));
     }
@@ -257,21 +272,26 @@ public class ProviderManager {
     return provBuilder.build();
   }
 
-  public JsonObject getJSONAll(InvocationContext ic) {
-    JsonObjectBuilder builder = Json.createObjectBuilder();
-    builder.add("name", "WebLogic Remote Console Hosted");
-    builder.add("label", "WebLogic Remote Console Hosted");
+  private static boolean isProviderLocal(Provider prov) {
+    if (prov instanceof AdminServerDataProvider) {
+      return ((AdminServerDataProvider) prov).isLocal();
+    }
+    return false;
+  }
+
+  private JsonArray getJSONOtherConfiguredProviders(InvocationContext ic) {
     JsonArrayBuilder childrenBuilder = Json.createArrayBuilder();
-    if (providers.isEmpty()) {
-      childrenBuilder.add(genDefaultProvider(ic));
-    } else {
-      for (Provider prov : providers.values()) {
+    boolean foundOne = false;
+    for (Provider prov : providers.values()) {
+      if (!isProviderLocal(prov)) {
+        foundOne = true;
         childrenBuilder.add(convertToPersistenceFormat(prov, ic));
       }
     }
-    builder.add("dataProviders", childrenBuilder.build());
-    builder.add("current", true);
-    return builder.build();
+    if (!foundOne) {
+      return null;
+    }
+    return childrenBuilder.build();
   }
 
   public void save(InvocationContext ic) {
@@ -279,14 +299,27 @@ public class ProviderManager {
       return;
     }
     String path = PersistenceManager.getPersistenceFilePath(ic);
+
     if (path == null) {
       return;
     }
     String fullPath = path + "/user-projects.json";
+    JsonArray other = getJSONOtherConfiguredProviders(ic);
+    if (other == null) {
+      new File(fullPath).delete();
+      return;
+    }
+    JsonObjectBuilder builder = Json.createObjectBuilder();
+    builder.add("name", "WebLogic Remote Console Hosted");
+    builder.add("label", "WebLogic Remote Console Hosted");
+    builder.add("dataProviders", other);
+    builder.add("current", true);
     try {
       ObjectMapper mapper = new ObjectMapper();
       mapper.writerWithDefaultPrettyPrinter().writeValue(
-        new File(fullPath), mapper.readValue(getJSONAll(ic).toString(), Object.class));
+        new File(fullPath),
+        mapper.readValue(builder.build().toString(), Object.class)
+      );
     } catch (Throwable t) {
       LOGGER.severe(
         "Problem writing" + " " + fullPath + ": " + t.getMessage()
@@ -294,7 +327,7 @@ public class ProviderManager {
     }
   }
 
-  public static InputStream loader(InvocationContext ic) {
+  private static JsonArray loadOtherProviders(InvocationContext ic) {
     String path = PersistenceManager.getPersistenceFilePath(ic);
     if (path == null) {
       return null;
@@ -303,8 +336,9 @@ public class ProviderManager {
     if (!new File(fullPath).exists()) {
       return null;
     }
-    try {
-      return new FileInputStream(fullPath);
+    try (FileInputStream is = new FileInputStream(fullPath)) {
+      JsonObject in = Json.createReader(is).readObject();
+      return in.getJsonArray("dataProviders");
     } catch (Throwable t) {
       // FortifyIssueSuppression Log Forging
       // This path name comes from our own code only

@@ -3,6 +3,8 @@
 
 introductionHTML: >
   <p>Use this page to configure properties for this Coherence cluster.</p>
+  <p>To use a custom operational override file, specify <code>-Dcoherence.override=/path/to/custom/override.xml</code>
+  for all servers that are part of the Coherence cluster.  The page help includes a link to the corresponding Coherence documentation.</p>
 
 properties:
 - name: "Name"
@@ -27,3 +29,6 @@ helpTopics:
 - label: "Deploying Coherence Applications in WebLogic Server"
   href: "wlcoh/deploy-wls-coherence.html#WLCOH775"
   type: "edocs"
+- label: "Understanding Coherence Configuration"
+  href: "develop-applications/understanding-configuration.html"
+  type: "CoherenceEdocs"

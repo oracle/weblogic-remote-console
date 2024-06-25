@@ -1,4 +1,4 @@
-# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2024, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 actions: [
@@ -2274,7 +2274,7 @@ properties:
     }
   descriptionHTML: '<p>Gets debugPartitionJMX attribute of ServerDebugMBean</p> '
   exclude: true
-  excludeFromRest: No default REST mapping for OutputStream
+  excludeFromRest: ' '
   name: DebugPartitionJMX
   supported: false
   type: boolean
@@ -2283,7 +2283,7 @@ properties:
     }
   descriptionHTML: '<p>Gets debugPartitionLifecycle attribute of ServerDebugMBean</p> '
   exclude: true
-  excludeFromRest: No default REST mapping for OutputStream
+  excludeFromRest: ' '
   name: DebugPartitionLifecycle
   supported: false
   type: boolean
@@ -2292,7 +2292,7 @@ properties:
     }
   descriptionHTML: '<p>Gets debugPartitionPortability attribute of ServerDebugMBean</p> '
   exclude: true
-  excludeFromRest: No default REST mapping for OutputStream
+  excludeFromRest: ' '
   name: DebugPartitionPortability
   supported: false
   type: boolean
@@ -2300,7 +2300,7 @@ properties:
 - defaultValue: {
     }
   descriptionHTML: '<p>Debug PartitionResourceMetricsRuntimeMBean operations.</p> '
-  excludeFromRest: No default REST mapping for OutputStream
+  excludeFromRest: ' '
   name: DebugPartitionResourceMetricsRuntime
   supported: false
   type: boolean
@@ -3549,7 +3549,7 @@ properties:
     mode is set to <code>Or</code> mode, debug is emitted only for the requests that
     have any one of the bits in the WLDF dye vector set for the flags specified in
     the DebugMaskCriterias attribute. </p> '
-  excludeFromRest: No default REST mapping for OutputStream
+  excludeFromRest: ' '
   legalValues:
   - 'Off'
   - And
@@ -3675,7 +3675,7 @@ properties:
       value: false
   descriptionHTML: '<p>Enables or disables whether Partition Administrators can enable
     Debug Logging for their respective Partitions.</p> '
-  excludeFromRest: No default REST mapping for OutputStream
+  excludeFromRest: ' '
   name: PartitionDebugLoggingEnabled
   supported: false
   type: boolean
@@ -3684,7 +3684,7 @@ properties:
     }
   descriptionHTML: '<p>Gets partitionEvenInterceptor attribute of ServerDebugMBean</p> '
   exclude: true
-  excludeFromRest: No default REST mapping for OutputStream
+  excludeFromRest: ' '
   name: PartitionEvenInterceptor
   supported: false
   type: boolean
@@ -3693,7 +3693,7 @@ properties:
     }
   descriptionHTML: '<p>Gets portablePartitionHelper attribute of ServerDebugMBean</p> '
   exclude: true
-  excludeFromRest: No default REST mapping for OutputStream
+  excludeFromRest: ' '
   name: PortablePartitionHelper
   supported: false
   type: boolean

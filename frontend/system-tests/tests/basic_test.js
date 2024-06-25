@@ -37,10 +37,12 @@ describe.only('Test Suite: basic_test: Add WLS Domain Connection/WDT Model file 
     })
 
     //Test Add Domain Admin Server Connection
-    it('1. Test Category: GAT/Risk1\n \t Test Scenario: Create WLS Domain Connection, Vew Configuration Tree, ' +
+    it('1. Test Category: GAT/Risk1\n \t Test Scenario: testAsProviderBasicFunction: Create WLS Domain Connection, Vew Configuration Tree, ' +
         'Valid navTree Environment -> AdminServer ', async function () {
-        file = "domainConnectionTest.png";
+        file = "testAsProviderBasicFunction.png";
         try {
+            console.log("-----Start to run testAsProviderBasicFunction test case....");
+            console.log("-----------------------------------------------------------");
             await admin.goToHomePageUrl(driver,"","Cancel");
             await driver.sleep(4800);
             console.log("Click Configuration View Tree Image");
@@ -63,9 +65,11 @@ describe.only('Test Suite: basic_test: Add WLS Domain Connection/WDT Model file 
     })
 
     //Test Add WDT Model File Connection
-    it('2. Test Category: GAT/Risk1\n \t Test Scenario: Add WDT Model File Connection, Vew Configuration Tree, ' +
+    it('2. Test Category: GAT/Risk1\n \t Test Scenario: testWDTProviderBasicFunction: Add WDT Model File Connection, Vew Configuration Tree, ' +
         'Valid navTree Environment', async function () {
-        file = "WDTFileConnectionTest.png";
+        file = "testWDTProviderBasicFunction.png";
+        console.log("-----Start to run testWDTProviderBasicFunction test case....");
+        console.log("------------------------------------------------------------");
         try {
             let modelName = "baseDomain";
             const file = "frontend/system-tests/lib/baseDomain.yaml";
@@ -96,8 +100,10 @@ describe.only('Test Suite: basic_test: Add WLS Domain Connection/WDT Model file 
     //Test Case:
     // Create->modify(general tab)->delete TestCluster-1
     //
-    it('3. Test Category: GAT/Risk1\n \t Test Scenario: create->modify->delete the recently created TestCluster-1 ', async function() {
-       file = "TestCluster-1.png";
+    it('3. Test Category: GAT/Risk1\n \t Test Scenario: testCreateModifyDeleteCluster: create->modify->delete the recently created TestCluster-1 ', async function() {
+       file = "testCreateModifyDeleteCluster.png";
+       console.log("-----Start to run testCreateModifyDeleteCluster test case....");
+        console.log("------------------------------------------------------------");
        try {
             //Test: Table, Tab and Form
            await admin.createNewMBeanObject(driver,"TestCluster-1",2,"configuration","Environment","Clusters");

@@ -1,4 +1,4 @@
-// Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+// Copyright (c) 2020, 2024, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.utils;
@@ -336,7 +336,7 @@ public class StringUtils {
   }
 
   public static String getSimpleTypeName(String className) {
-    return removeSuffix(getLeafClassName(className), "MBean", "Bean");
+    return removeSuffix(getLeafClassName(className), "MBean", "DBean", "Bean");
   }
 
   public static String getLeafClassName(String className) {

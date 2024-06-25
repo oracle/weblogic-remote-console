@@ -5,8 +5,6 @@ actions:
   backend:
     - id: updateRedeployActions
       iconFile: action-redeploy-icon-blk_24x24
-    - id: updateExisting
-      iconFile: action-redeploy-icon-blk_24x24
     - id: update
       iconFile: action-redeploy-icon-blk_24x24
     - id: uploadAndUpdate
@@ -85,6 +83,8 @@ actions:
         value: first
     - id: createCollectionChild
       iconFile: action-create-icon-blk_24x24
+    - id: runGC
+      iconFile: delete-icon-blk_24x24
 
   frontend:
     - id: new
@@ -97,7 +97,7 @@ actions:
     - id: delete
       iconFile: action-clear-icon-blk_24x24
       label: 'Delete'
-      rows: 'one'
+      rows: 'multiple'
       helpLabel: 'Delete'
       helpSummaryHTML: 'Help summary will be provided in a later release.'
       detailedHelpHTML: '<p>Detailed help will be provided in a later release.</p>'

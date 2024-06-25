@@ -782,6 +782,38 @@ public class LocalizedConstants {
       + " the deployment is auto-deployed.</p>"
     );
 
+  public static final LocalizableString WEBLOGIC_REST_REQUEST_TIMED_OUT =
+    addConstant(
+      "weblogicRESTRequestTimedOut",
+      "<p>A request to the WebLogic administration server timed out."
+        + "  Increasing the WebLogic Remote Console's 'Administration Server Read Timeout' may help.</p>"
+    );
+
+  public static final LocalizableString TOO_MANY_USERS =
+    addConstant(
+        "tooManyUsers",
+        "<p>Note: There are more users than the WebLogic Remote Console supports. Only {0} are displayed.</p>"
+    );
+
+  public static final LocalizableString TOO_MANY_GROUPS =
+    addConstant(
+        "tooManyGroups",
+        "<p>Note: There are more groups than the WebLogic Remote Console supports. Only {0} are displayed.</p>"
+    );
+
+  public static final LocalizableString CLONED_SERVER_NOT_ALL_SETTINGS_COPIED =
+    addConstant(
+      "clonedServerNotAllSettingsCopied",
+      "Note: Sensitive settings for the Server such as the passwords and keys, have not been copied."
+    );
+
+  // Default provider name for hosted
+  public static final LocalizableString DEFAULT_HOSTED_PROVIDER_NAME =
+    addConstant(
+      "thisServer",
+      "This Server"
+    );
+
   // Returns all of the constants (used when the resource bundles are generated at build time)
   public static List<LocalizableString> getAllConstants() {
     return allConstants;

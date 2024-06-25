@@ -5,10 +5,10 @@ package weblogic.remoteconsole.customizers;
 
 import java.util.Map;
 
-import weblogic.jdbc.utils.JDBCDriverAttribute;
-import weblogic.jdbc.utils.JDBCDriverInfo;
-import weblogic.jdbc.utils.JDBCDriverInfoFactory;
 import weblogic.remoteconsole.common.utils.JDBCDriversUtils;
+import weblogic.remoteconsole.jdbc.utils.JDBCDriverAttribute;
+import weblogic.remoteconsole.jdbc.utils.JDBCDriverInfo;
+import weblogic.remoteconsole.jdbc.utils.JDBCDriverInfoFactory;
 
 /**
  * Custom code for processing the JDBCSystemResourceMBean that is shared between its customizers.

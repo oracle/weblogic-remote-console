@@ -501,7 +501,12 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'oj
         const properties = getSliceProperties(self.pdjData);
         const bodyMessages = ViewModelUtils.getResponseBodyMessages(response, properties);
         if (bodyMessages.length > 0) {
-          MessageDisplaying.displayMessages(bodyMessages);
+          if (!isMessagesSeverityInfo(bodyMessages))
+            MessageDisplaying.displayMessages(bodyMessages);
+          else
+            MessageDisplaying.displayMessagesAsHTML(bodyMessages,
+              oj.Translations.getTranslatedString('wrc-message-displaying.messages.responseMessages.summary'),
+              MessageDisplaying.getOverallSeverity(bodyMessages));
         }
 
         self.debugFlagsEnabled(PageDefinitionFields.resetDebugFlagsEnabled(self.debugFlagItems()));
@@ -513,10 +518,15 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'oj
         if (typeof response.failureType !== 'undefined' && response.body.messages.length === 0) {
           saveFailedNoMessages(dataAction, dataPayload, isEdit);
         }
-        else if (response.body.messages.length === 0) {
+        else if ((response.body.messages.length === 0) || (!isEdit && isMessagesSeverityInfo(bodyMessages))) {
           const identity = (!isEdit ? response.body.data?.resourceData?.resourceData : undefined);
           saveSuceededNoMessages(eventType, dataPayload, isEdit, identity);
         }
+      }
+
+      function isMessagesSeverityInfo(bodyMessages) {
+        const errorMsg = bodyMessages.find((msg) => msg.severity !== 'info');
+        return (errorMsg ? false : true);
       }
 
       function saveFailedNoMessages(dataAction, dataPayload, isEdit) {

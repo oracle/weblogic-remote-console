@@ -2,9 +2,12 @@
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 collectionLinks:
-- label: Libraries
+- label: Library Configurations
   root: DomainConfiguration
   resourceData: Domain/Libraries
+- label: Library Runtime Data
+  root: DomainRuntimeMonitoring
+  resourceData: DomainRuntime/AggregatedLibraryRuntimes
 - label: Deployment Tasks Dashboard
   root: DomainRuntimeMonitoring
   resourceData: "DomainRuntime/Dashboards/Deployment Tasks"
@@ -13,3 +16,10 @@ instanceLinks:
 - label: Library Configuration
   root: DomainConfiguration
   resourceData: Domain/Libraries/<LibDeploymentRuntime>
+- label: Library Runtime Data
+  root: DomainRuntimeMonitoring
+  resourceData: DomainRuntime/AggregatedLibraryRuntimes/<LibDeploymentRuntime>
+  notFoundMessage: This library was not found on any of the currently running servers.
+- label: Deployment Tasks Dashboard
+  root: DomainRuntimeMonitoring
+  resourceData: "DomainRuntime/Dashboards/Deployment Tasks"

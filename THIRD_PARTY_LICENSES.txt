@@ -433,6 +433,10 @@ rxjs
  2. Grant of Copyright License. Subject to the terms and conditions of
  Copyright (c) 2015-2018 Google, Inc., Netflix, Inc., Microsoft Corp. and contributors
 
+selenium-webdriver
+   2. Grant of Copyright License. Subject to the terms and conditions of
+   Copyright 2023 Software Freedom Conservancy (SFC)
+
 websocket-driver
 Copyright 2010-2020 James Coglan
 
@@ -2637,6 +2641,9 @@ Copyright (c) Isaac Z. Schlueter and Contributors
 once
 Copyright (c) Isaac Z. Schlueter and Contributors
 
+rimraf
+Copyright (c) Isaac Z. Schlueter and Contributors
+
 sax
 Copyright Mathias Bynens <https://mathiasbynens.be/>
 Copyright (c) Isaac Z. Schlueter and Contributors
@@ -2731,6 +2738,10 @@ Copyright (c) 2012 Raynos.
 
 brace-expansion
 Copyright (c) 2013 Julian Gruber <julian@juliangruber.com>
+
+braces
+Copyright (c) 2014-present, Jon Schlinkert.
+Copyright © 2019, [Jon Schlinkert](https://github.com/jonschlinkert).
 
 buffer-from
 Copyright (c) 2016, 2018 Linus Unnebäck
@@ -2877,6 +2888,10 @@ Copyright (c) 2014-2015 Douglas Christopher Wilson <doug@somethingdoug.com>
 faye-websocket
 Copyright (c) 2010-2015 James Coglan
 
+fill-range
+Copyright (c) 2014-present, Jon Schlinkert.
+Copyright © 2019, [Jon Schlinkert](https://github.com/jonschlinkert).
+
 finalhandler
 Copyright (c) 2014-2017 Douglas Christopher Wilson <doug@somethingdoug.com>
 
@@ -2922,6 +2937,9 @@ Copyright (c) 2015 Tim Caswell (https://github.com/creationix) and other
 iconv-lite
 Copyright (c) 2011 Alexander Shtuchkin
 
+immediate
+Copyright (c) 2012 Barnesandnoble.com, llc, Donavon West, Domenic Denicola, Brian Cavalier
+
 imurmurhash
 Copyright (c) 2013 Gary Court, Jens Taylor
 
@@ -2963,6 +2981,11 @@ json-parse-even-better-errors
 Copyright 2017 Kat Marchán
 Copyright npm, Inc.
 
+jszip
+  "Copyright" also means copyright-like laws that apply to other kinds of
+ Copyright (C) 2007 Free Software Foundation, Inc. <http://fsf.org/>
+Copyright (c) 2009-2016 Stuart Knightley, David Duponchel, Franz Buchinger, António Afonso
+
 knockout
 Copyright (c) 2010 Steven Sanderson, the Knockout.js team, and other contributors
 
@@ -2971,6 +2994,9 @@ No Copyright
 
 lazystream
 Copyright (c) 2013 J. Pommerening, contributors.
+
+lie
+#Copyright (c) 2014-2018 Calvin Metcalf, Jordan Harband
 
 lines-and-columns
 Copyright (c) 2015 Brian Donovan
@@ -3091,6 +3117,9 @@ Copyright (c) 2014 Douglas Christopher Wilson <doug@somethingdoug.com>
 open
 Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com)
 
+pako
+Copyright (C) 2014-2017 by Vitaly Puzrin and Andrei Tuputcyn
+
 parse-json
 Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com)
 
@@ -3200,6 +3229,9 @@ Copyright (c) 2011 LearnBoost
 Copyright (c) 2011 TJ Holowaychuk
 Copyright (c) 2014-2016 Douglas Christopher Wilson
 
+setimmediate
+Copyright (c) 2012 Barnesandnoble.com, llc, Donavon West, and Domenic Denicola
+
 side-channel
 Copyright (c) 2019 Jordan Harband
 
@@ -3248,6 +3280,9 @@ Copyright (c) 2012-2016 Mickael Daniel
 tinycolor2
 Copyright (c), Brian Grinstead, http://briangrinstead.com
 
+tmp
+Copyright (c) 2014 KARASZI István
+
 toidentifier
 Copyright (c) 2016 Douglas Christopher Wilson <doug@somethingdoug.com>
 
@@ -3288,6 +3323,11 @@ Copyright (c) 2014, Mike Adair, Richard Greenwood, Didier Richard, Stephen Irons
 
 write-json-file
 Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com)
+
+ws
+Copyright (c) 2011 Einar Otto Stangvik <einaros@gmail.com>
+Copyright (c) 2013 Arnout Kazemier and contributors
+Copyright (c) 2016 Luigi Pinca and contributors
 
 zip-stream
 Copyright (c) 2014 Chris Talkington, contributors.
@@ -3556,6 +3596,9 @@ OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 -- --------------------------------------------------------------------------------
 The following packages are licensed under The Universal Permissive License (UPL), Version 1.0
 
+@oracle/oraclejet-core-pack
+Copyright 2020, 2024, Oracle and/or its affiliates.
+
 @oracle/oraclejet-preact
 Copyright (c) 2013-2020 Scott Sauyet and Michael Hurley
 Copyright (c) 2018 Andrew Branch
@@ -3565,6 +3608,9 @@ Copyright (c) 2021 SEEK
 @oracle/oraclejet-tooling
 Copyright (c) 2023 Oracle and/or its affiliates and released  under the 
 Copyright (c) 2023 Oracle and/or its affiliates.
+
+@oracle/oraclejet-webdriver
+    Copyright (c) Oracle Corporation. All rights reserved.
 
 @oracle/oraclejet
    2. Grant of Copyright License. Subject to the terms and conditions of
@@ -3815,6 +3861,7 @@ io.helidon.microprofile.weld-weld-se-core
   (no copyright notices found)
 
 io.helidon.service-common-helidon-service-common-rest-cdi
+Copyright (c) 2020, 2021 Oracle and/or its affiliates.
 Copyright (c) 2021, 2023 Oracle and/or its affiliates.
 Copyright (c) 2017, 2023 Oracle and/or its affiliates.
 Copyright (c) 2017, 2022 Oracle and/or its affiliates.
@@ -6126,9 +6173,6 @@ Copyright (c) 2019 Sindre Sorhus <sindresorhus@gmail.com> (https://sindresorhus.
 boolean
 Copyright (c) 2014-2022 the native web.
 
-braces
-Copyright (c) 2014-2018, Jon Schlinkert.
-
 buffer-crc32
 Copyright (c) 2013 Brian J. Brennan
 
@@ -6155,9 +6199,6 @@ Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (https://sindresorhus.com)
 
 fd-slicer
 Copyright (c) 2014 Andrew Kelley
-
-fill-range
-Copyright (c) 2014-present, Jon Schlinkert.
 
 fs-extra
 Copyright (c) 2011-2017 JP Richardson
@@ -6397,6 +6438,10 @@ bare-path
    2. Grant of Copyright License. Subject to the terms and conditions of
    Copyright [yyyy] [name of copyright owner]
 
+bare-stream
+   2. Grant of Copyright License. Subject to the terms and conditions of
+   Copyright [yyyy] [name of copyright owner]
+
 chromedriver
    2. Grant of Copyright License. Subject to the terms and conditions of
    Copyright 2014 Giovanni Bassi and Elemar Jr.
@@ -6429,6 +6474,7 @@ log4js
 Copyright 2015 Gareth Jones (with contributions from many other people)
 
 puppeteer-core
+
    2. Grant of Copyright License. Subject to the terms and conditions of
    Copyright 2017 Google Inc.
 
@@ -6436,9 +6482,9 @@ puppeteer
    2. Grant of Copyright License. Subject to the terms and conditions of
    Copyright 2017 Google Inc.
 
-selenium-webdriver
+text-decoder
    2. Grant of Copyright License. Subject to the terms and conditions of
-   Copyright 2023 Software Freedom Conservancy (SFC)
+   Copyright [yyyy] [name of copyright owner]
 
 typescript
 Copyright (c) Microsoft Corporation. All rights reserved.
@@ -6699,9 +6745,6 @@ Copyright (c) 2014 Max Ogden and other contributors
 
 uri-js
 Copyright 2011 Gary Court. All rights reserved.
-
-webidl-conversions
-Copyright (c) 2014, Domenic Denicola
 
 @electron/osx-sign
 Copyright (c) 2015-2016 Zhuo Lu, Jason Hinkle, et al.
@@ -7331,26 +7374,14 @@ Copyright (c) 2017, crypto-browserify contributors
 picocolors
 Copyright (c) 2021 Alexey Raspopov, Kostiantyn Denysov, Anton Verinov
 
-rimraf
-Copyright (c) Isaac Z. Schlueter and Contributors
-
 sanitize-filename
 Copyright (C) 2004 Sam Hocevar \<sam@hocevar.net>
-
-string-width-cjs@npm:string-width
-Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com)
-
-strip-ansi-cjs@npm:strip-ansi
-Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com)
 
 tar
 Copyright (c) Isaac Z. Schlueter and Contributors
 
 which
 Copyright (c) Isaac Z. Schlueter and Contributors
-
-wrap-ansi-cjs@npm:wrap-ansi
-Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (https://sindresorhus.com)
 
 y18n
 Copyright (c) 2015, Contributors
@@ -7603,9 +7634,6 @@ Copyright (c) 2017 crypto-browserify contributors
 create-hmac
 Copyright (c) 2017 crypto-browserify contributors
 
-cross-fetch
-Copyright (c) 2017 Leonardo Quixadá
-
 cross-spawn
 Copyright (c) 2018 Made With MOXY Lda <hello@moxy.studio>
 
@@ -7828,9 +7856,6 @@ Copyright (c) 2011 Alexander Shtuchkin
 ignore
 Copyright (c) 2013 Kael Zhang <i@kael.me>, contributors
 
-immediate
-Copyright (c) 2012 Barnesandnoble.com, llc, Donavon West, Domenic Denicola, Brian Cavalier
-
 import-fresh
 Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (https://sindresorhus.com)
 
@@ -7902,11 +7927,6 @@ No Copyright
 json5
 Copyright (c) 2012-2018 Aseem Kishore, and [others].
 
-jszip
-  "Copyright" also means copyright-like laws that apply to other kinds of
- Copyright (C) 2007 Free Software Foundation, Inc. <http://fsf.org/>
-Copyright (c) 2009-2016 Stuart Knightley, David Duponchel, Franz Buchinger, António Afonso
-
 just-extend
 Copyright (c) 2016 angus croll
 
@@ -7945,9 +7965,6 @@ Copyright (c) 2017 Luke Childs
 
 levn
 Copyright (c) George Zahariev
-
-lie
-#Copyright (c) 2014-2018 Calvin Metcalf, Jordan Harband
 
 locate-path
 Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (https://sindresorhus.com)
@@ -8039,9 +8056,6 @@ Copyright (c) 2014 Nathan Rajlich &lt;nathan@tootallnate.net&gt;
 
 pac-resolver
 Copyright (c) 2013 Nathan Rajlich <nathan@tootallnate.net>
-
-pako
-Copyright (C) 2014-2017 by Vitaly Puzrin and Andrei Tuputcyn
 
 parent-module
 Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com)
@@ -8136,9 +8150,6 @@ Copyright (c) 2016 crypto-browserify
 run-parallel
 Copyright (c) Feross Aboukhadijeh
 
-setimmediate
-Copyright (c) 2012 Barnesandnoble.com, llc, Donavon West, and Domenic Denicola
-
 sha.js
 Copyright (c) 1998 - 2009, Paul Johnston & Contributors
 Copyright (c) 2013-2018 sha.js contributors
@@ -8226,14 +8237,8 @@ No Copyright
 tmp
 Copyright (c) 2014 KARASZI István
 
-tmp
-Copyright (c) 2014 KARASZI István
-
 to-fast-properties
 Copyright (c) 2014 Petka Antonov
-
-tr46
-Copyright (c) Sebastian Mayr
 
 traverse
 Copyright 2010 James Halliday (mail@substack.net)
@@ -8290,19 +8295,11 @@ web-streams-polyfill
 Copyright (c) 2016 Diwank Singh Tomer
 Copyright (c) 2020 Mattias Buelens
 
-whatwg-url
-Copyright (c) 2015–2016 Sebastian Mayr
-
 which-typed-array
 Copyright (c) 2015 Jordan Harband
 
 wrap-ansi
 Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (https://sindresorhus.com)
-
-ws
-Copyright (c) 2011 Einar Otto Stangvik <einaros@gmail.com>
-Copyright (c) 2013 Arnout Kazemier and contributors
-Copyright (c) 2016 Luigi Pinca and contributors
 
 xmlbuilder
 Copyright (c) 2013 Ozgur Ozcitak
@@ -8321,6 +8318,9 @@ Copyright 2010 James Halliday (mail@substack.net); Modified work Copyright 2014 
 
 yocto-queue
 Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (https://sindresorhus.com)
+
+zod
+Copyright (c) 2020 Colin McDonnell
 
 @aashutoshrathi/word-wrap
 Copyright (c) 2014-2016, Jon Schlinkert

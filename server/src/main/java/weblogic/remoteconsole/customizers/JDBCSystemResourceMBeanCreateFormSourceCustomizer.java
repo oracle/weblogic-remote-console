@@ -1,4 +1,4 @@
-// Copyright (c) 2020, 2022, Oracle and/or its affiliates.
+// Copyright (c) 2020, 2024, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.customizers;
@@ -7,8 +7,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import weblogic.jdbc.utils.JDBCDriverAttribute;
-import weblogic.jdbc.utils.JDBCDriverInfo;
 import weblogic.remoteconsole.common.repodef.PagePath;
 import weblogic.remoteconsole.common.repodef.schema.BeanPropertyDefCustomizerSource;
 import weblogic.remoteconsole.common.repodef.schema.FormSectionDefSource;
@@ -16,6 +14,8 @@ import weblogic.remoteconsole.common.repodef.schema.LegalValueDefCustomizerSourc
 import weblogic.remoteconsole.common.repodef.schema.PageDefSource;
 import weblogic.remoteconsole.common.repodef.weblogic.WebLogicRestEditPageRepoDef;
 import weblogic.remoteconsole.common.utils.StringUtils;
+import weblogic.remoteconsole.jdbc.utils.JDBCDriverAttribute;
+import weblogic.remoteconsole.jdbc.utils.JDBCDriverInfo;
 
 import static weblogic.remoteconsole.customizers.JDBCSystemResourceMBeanCustomizerUtils.DATASOURCE_TYPE_GENERIC;
 import static weblogic.remoteconsole.customizers.JDBCSystemResourceMBeanCustomizerUtils.DATASOURCE_TYPE_GRIDLINK;
@@ -438,13 +438,20 @@ class JDBCSystemResourceMBeanCreateFormSourceCustomizer extends BasePageDefSourc
           driverScopedName(datasourceType, driverInfo, name)
         ),
         getDriverConnectionPropertyLabel(name),
-        getDriverConnectionPropertyDescriptionHTML(name)
+        getDriverConnectionPropertyDescriptionHTML(driverAttribute)
       );
-    setDefaultValue(property, driverAttribute.getDefaultValue());
-    // FortifyIssueSuppression Password Management: Password in Comment
-    // Comment below does not reveal a secret
-    // If this is the dbms password property, then set it to encrypted to that it maps to a secret
-    if (PROPERTY_DBMS_PASSWORD.equals(name)) {
+    Object defaultValue = driverAttribute.getDefaultValue();
+    if (DATASOURCE_TYPE_UCP.equals(datasourceType) && "ConnectionFactoryClassName".equals(name)) {
+      defaultValue = driverInfo.getDriverClassName();
+    }
+    setDefaultValue(property, defaultValue);
+    // If the attribute name contains a '.', (e.g. javax.net.ssl.keyStoreType) then don't
+    // it into words and localize it:
+    if (name.contains(".")) {
+      property.setUseUnlocalizedNameAsLabel(true);
+    }
+    // The driver attribute determines whether this is an encrypted property.
+    if (driverAttribute.isEncrypted()) {
       property.getDefinition().setEncrypted(true);
     }
     // The driver attribute determines whether this is a required property.
@@ -473,11 +480,21 @@ class JDBCSystemResourceMBeanCreateFormSourceCustomizer extends BasePageDefSourc
     if (PROPERTY_SERVICE_NAME.equals(attributeName)) {
       return "Service Name";
     }
+    if (attributeName.contains(".")) {
+      // If the attribute name contains a '.', (e.g. javax.net.ssl.keyStoreType) then don't
+      // it into words and localize it:
+      return attributeName;
+    }
     // e.g. convert 'DataSource' to 'Data Source':
     return StringUtils.camelCaseToUpperCaseWords(attributeName);
   }
 
-  private String getDriverConnectionPropertyDescriptionHTML(String attributeName) {
+  private String getDriverConnectionPropertyDescriptionHTML(JDBCDriverAttribute driverAttribute) {
+    String description = driverAttribute.getDescription();
+    if (description != null && !"Unused".equals(description)) {
+      return description;
+    }
+    String attributeName = driverAttribute.getName();
     if (PROPERTY_DBMS_NAME.equals(attributeName)) {
       return "The name of the database to connect to.";
     }
@@ -496,22 +513,34 @@ class JDBCSystemResourceMBeanCreateFormSourceCustomizer extends BasePageDefSourc
     if (PROPERTY_SERVICE_NAME.equals(attributeName)) {
       return "The service name of the database to connect to.";
     }
-    return null; // Custom properties don't get descriptions.
+    return null;
   }
 
   // Return all the available database drivers for a generic database vendor
   private JDBCDriverInfo[] getDriverInfos(String vendorName) {
-    return getDriverInfoFactory().getDriverInfos(vendorName);
+    try {
+      return getDriverInfoFactory().getDriverInfos(vendorName);
+    } catch (Exception e) {
+      throw new RuntimeException(e); // will eventually get caught and turned into a 500
+    }
   }
 
   // Return all the available grid link database drivers
   private JDBCDriverInfo[] getGridLinkDriverInfos() {
-    return getDriverInfoFactory().getGridLinkDriverInfos();
+    try {
+      return getDriverInfoFactory().getGridLinkDriverInfos();
+    } catch (Exception e) {
+      throw new RuntimeException(e); // will eventually get caught and turned into a 500
+    }
   }
 
   // Return all the available UCP database drivers
   private JDBCDriverInfo[] getUCPDriverInfos() {
-    return getDriverInfoFactory().getUCPDriverInfos();
+    try {
+      return getDriverInfoFactory().getUCPDriverInfos();
+    } catch (Exception e) {
+      throw new RuntimeException(e); // will eventually get caught and turned into a 500
+    }
   }
 
   // Returns whether a driver attribute is a custom attribute (v.s. a well known attribute)

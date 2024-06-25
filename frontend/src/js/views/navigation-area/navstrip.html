@@ -3,39 +3,36 @@ Copyright (c) 2020, 2024, Oracle Corporation and/or its affiliates.
  The Universal Permissive License (UPL), Version 1.0
 -->
 <div id="navstrip-container" :aria-labelledby="navstrip" class="oj-flex oj-sm-flex-items-initial oj-sm-justify-content-center">
-  <div id="navstrip-header">
-    <div style="display: none;">
-      <img id="nodata-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.icons.nodata.iconFile + '.png', alt: i18n.icons.nodata.tooltip}"/>
-    </div>
+  <div style="display: none;">
+    <img id="nodata-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.icons.nodata.iconFile + '.png', alt: i18n.icons.nodata.tooltip}"/>
+  </div>
 
-    <div id="navstrip-builtins" class="cfe-droppable">
-      <oj-navigation-list
-        id="navstrip"
-        data="[[builtInsDataProvider]]"
-        drill-mode="none"
-        edge="start"
-        display="icons"
-        selection="{{builtInsSelectedItem}}"
-        on-oj-before-select="[[builtInsBeforeSelectEventHandler]]"
-        on-selection-changed="[[builtInsSelectedItemChanged]]"
-        on-keyup="[[onKeyUp]]"
-        accesskey="M"
-        :aria-label="[[i18n.ariaLabel.navstrip.value]]"
-      >
-        <template slot="itemTemplate" data-oj-as="item">
-          <div>
-            <li data-bind="attr: {id: item.data.type}">
-              <img class="navstrip-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + item.data.iconFile + '.png', alt: item.data.label, 'title': item.data.label}"/>
-            </li>
-          </div>
-        </template>
-        <template slot="noData">
-          <div id="nodata">
-            <canvas id="nodata-canvas" width="48" height="48" data-bind="attr: {title: i18n.icons.nodata.tooltip, alt: i18n.icons.nodata.tooltip}"></canvas>
-          </div>
-        </template>
-      </oj-navigation-list>
-    </div>
-
+  <div id="navstrip-builtins" class="cfe-droppable">
+    <oj-navigation-list
+      id="navstrip"
+      data="[[builtInsDataProvider]]"
+      drill-mode="none"
+      edge="start"
+      display="icons"
+      selection="{{builtInsSelectedItem}}"
+      on-oj-before-select="[[builtInsBeforeSelectEventHandler]]"
+      on-selection-changed="[[builtInsSelectedItemChanged]]"
+      on-keyup="[[onKeyUp]]"
+      accesskey="M"
+      :aria-label="[[i18n.ariaLabel.navstrip.value]]"
+    >
+      <template slot="itemTemplate" data-oj-as="item">
+        <div>
+          <li data-bind="attr: {id: item.data.type}">
+            <img class="navstrip-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + item.data.iconFile + '.png', alt: item.data.label, 'title': item.data.label}"/>
+          </li>
+        </div>
+      </template>
+      <template slot="noData">
+        <div id="nodata">
+          <canvas id="nodata-canvas" width="48" height="48" data-bind="attr: {title: i18n.icons.nodata.tooltip, alt: i18n.icons.nodata.tooltip}"></canvas>
+        </div>
+      </template>
+    </oj-navigation-list>
   </div>
 </div>

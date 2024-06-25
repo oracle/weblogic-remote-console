@@ -1,4 +1,4 @@
-# Copyright (c) 2021, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2021, 2024, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 properties:
 
@@ -7,3 +7,22 @@ properties:
 
 - name: MaxRetrySecondsBeforeTXException
   offlineName: MaxRetrySecondsBeforeTxException
+
+- name: Enabled
+  label: Transaction Log Store in JDBC
+
+- name: DataSource
+  usedIf:
+    property: Enabled
+    values:
+      - true
+  label: Data Source
+  optionsSources:
+    - Domain/JDBCSystemResources
+
+- name: PrefixName
+  usedIf:
+    property: Enabled
+    values:
+      - true
+  label: Transaction Log Prefix Name

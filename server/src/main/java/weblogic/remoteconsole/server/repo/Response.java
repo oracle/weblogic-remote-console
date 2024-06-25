@@ -1,4 +1,4 @@
-// Copyright (c) 2021, 2022, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2024, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.repo;
@@ -33,6 +33,9 @@ public class Response<T> {
     // incorrect connection config or because the server isn't
     // running right now:
     SERVICE_NOT_AVAILABLE,
+
+    // a call to the WLS REST api timed out:
+    TIMEOUT,
 
     // a problem in data that the user entered, e.g. the listen port is too big
     USER_BAD_REQUEST,
@@ -102,6 +105,15 @@ public class Response<T> {
 
   public Response<T> setServiceNotAvailable() {
     setStatus(Status.SERVICE_NOT_AVAILABLE);
+    return this;
+  }
+
+  public boolean isTimeout() {
+    return Status.TIMEOUT == getStatus();
+  }
+
+  public Response<T> setTimeout() {
+    setStatus(Status.TIMEOUT);
     return this;
   }
 

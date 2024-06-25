@@ -1,4 +1,4 @@
-# Copyright (c) 2020, 2023, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2020, 2024, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 contents:
 - label: Environment
@@ -23,9 +23,7 @@ contents:
   - child: MaxThreadsConstraintRuntimes
   - child: RequestClassRuntimes
   - child: WorkManagerRuntimes
-  - child: ConcurrentManagedObjectsRuntime.ManagedExecutorServiceRuntimes
-  - child: ConcurrentManagedObjectsRuntime.ManagedScheduledExecutorServiceRuntimes
-  - child: ConcurrentManagedObjectsRuntime.ManagedThreadFactoryRuntimes
+  - child: ConcurrentManagedObjectsRuntime
 - label: Deployments
   type: group
   contents:
@@ -83,7 +81,6 @@ contents:
   type: group
   contents:
   - child: WLDFRuntime.WLDFAccessRuntime.WLDFDataAccessRuntimes
-    label: Logs and Archives
   - child: SNMPAgentRuntime
   - child: WLDFRuntime.WLDFArchiveRuntimes
     label: Archive Runtimes

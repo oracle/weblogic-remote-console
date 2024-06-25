@@ -4,6 +4,7 @@
   "description": "An Oracle JavaScript Extension Toolkit(JET) web app",
   "dependencies": {
     "@oracle/oraclejet": "~15.1.0",
+    "@oracle/oraclejet-core-pack": "^15.1.0",
     "@oracle/oraclejet-tooling": "~15.1.0",
     "electron": "^25.8.1",
     "jquery": "^3.7.0",
@@ -46,7 +47,8 @@
     "yargs": "^16.0.3"
   },
   "overrides": {
-      "express": "4.19.2"
+      "express": "4.19.2",
+      "ws": "8.17.1"
   },
   "engines": {
     "node": ">=12.21.0"

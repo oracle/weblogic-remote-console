@@ -281,18 +281,12 @@ define({
       }
     },
     "wrc-data-providers": {
-      "ariaLabel": {
-        "connectionModels": {
-          "value": "Providers List"
-        },
-        "filePath": {
-          "value": "File Path"
-        },
-        "insecureCheckbox": {
-          "value": "Use Insecure Connection"
-        }
-      },
       "icons": {
+        "hoverMenu": {
+          "ariaLabel": {
+            "value": "Provider Actions "
+          }
+        },
         "info": {
           "tooltip": "Get info on this provider"
         },
@@ -743,21 +737,33 @@ define({
     },
     "wrc-navigation": {
       "ariaLabel": {
-        "navstrip": { "value": "Provider Trees Menu"},
-        "navtree": { "value": "Provider Tree Navigator"},
-        "panelResizer": { "value": "Provider Tree Navigator Resizer"}
+        "navstrip": {
+          "value": "Provider Trees Menu"
+        },
+        "navtree": {
+          "value": "Provider Tree Navigator"
+        },
+        "panelResizer": {
+          "value": "Provider Tree Navigator Resizer. Use left and right arrow keys to resize navigator"
+        }
       }
     },
     "wrc-content-area-header": {
       "ariaLabel": {
         "button": {
-          "home": { "value": "Home. Return to page containing the provider's trees"}
+          "home": {
+            "value": "Home. Return to the page containing cards for the provider's trees"
+          }
         },
         "region": {
-          "title": { "value": "Content Area Header"}
+          "title": {
+            "value": "Content Area Header"
+          }
         },
         "popup": {
-          "provider": { "value": "Provider Actions"}
+          "provider": {
+            "value": "Provider Actions"
+          }
         }
       },
       "title": {
@@ -784,9 +790,15 @@ define({
       },
       "menu": {
         "shoppingcart": {
-          "view": { "label": "View Changes..."},
-          "discard": { "label": "Discard Changes"},
-          "commit": { "label": "Commit Changes"}
+          "view": {
+            "label": "View Changes..."
+          },
+          "discard": {
+            "label": "Discard Changes"
+          },
+          "commit": {
+            "label": "Commit Changes"
+          }
         }
       }
     },
@@ -859,7 +871,7 @@ define({
           },
           "tip1": {
             "title": "\"Dashboards\" Are a User's Best Friend",
-            "descriptionHTML": "<p>A <b><i>Dashboard</i></b> lets you define the criteria used to select MBean instances. They function kind of like a View in the database world, allowing you to see all the MBean instances with runtime values that currently meet the criteria.</p><p>Look for the <img src=\"js/jet-composites/wrc-frontend/1.0.0/images/dashboards-tabstrip-icon_24x24.png\" alt=\"New Dashboard Icon\" style=\"height: 24px; width: 24px; vertical-align: middle;\"/> button whenever you''re on a page of the \"Monitoring Tree\", then click it to define a new dashboard. Previously created ones, can be found under the root-level \"Dashboards\" node in the Monitoring Tree.</p>"
+            "descriptionHTML": "<p>A <b><i>Dashboard</i></b> lets you define the criteria used to select MBean instances. They function kind of like a View in the database world, allowing you to see all the MBean instances with runtime values that currently meet the criteria.</p><p>Look for the <img src=\"js/jet-composites/wrc-frontend/1.0.0/images/dashboards-tabstrip-icon_24x24.png\" alt=\"New Dashboard Icon\" style=\"height: 24px; width: 24px; vertical-align: middle;\"/> button whenever you're on a page of the \"Monitoring Tree\", then click it to define a new dashboard. Previously created ones, can be found under the root-level \"Dashboards\" node in the Monitoring Tree.</p>"
           },
           "tip2": {
             "title": "Choosing and Arranging Table Columns Using \"Customize Table\"",
@@ -883,7 +895,7 @@ define({
           },
           "tip7": {
             "title": "Other Tip #1",
-            "descriptionHTML": "<p>A terse description for \"Other Tip #1\". A newline character is not an HTML element, so you don''t want to use them in this description.</p>"
+            "descriptionHTML": "<p>A terse description for \"Other Tip #1\". A newline character is not an HTML element, so you don't want to use them in this description.</p>"
           },
           "tip8": {
             "title": "Trouble Creating an Admin Server Provider?",
@@ -891,11 +903,11 @@ define({
           },
           "tip9": {
             "title": "Connectivity Tip #2",
-            "descriptionHTML": "<p>A terse description for \"Connectivity Tip #2\". A newline character is not an HTML element, so you don''t want to use them in this description.</p>"
+            "descriptionHTML": "<p>A terse description for \"Connectivity Tip #2\". A newline character is not an HTML element, so you don't want to use them in this description.</p>"
           },
           "tip10": {
             "title": "Security Tip #1",
-            "descriptionHTML": "<p>A terse description for \"Security Tip #1\". A newline character is not an HTML element, so you don''t want to use them in this description.</p>"
+            "descriptionHTML": "<p>A terse description for \"Security Tip #1\". A newline character is not an HTML element, so you don't want to use them in this description.</p>"
           },
           "tip11": {
             "title": "Think \"Shortcut Keys\" Before You Press Tab!",
@@ -938,7 +950,7 @@ define({
       "messages": {
         "lostConnection": {
           "summary": "Lost Connection",
-          "detail": "Connection to remote console backend was lost. Please ensure it and the CBE are running, or restart them and try the link again."
+          "detail": "Connection lost. Please refresh."
         },
         "cannotConnect": {
           "summary": "Connection Attempt Failed",
@@ -1150,23 +1162,49 @@ define({
     "wrc-table-customizer": {
       "ariaLabel": {
         "availableColumns": {
-          "title": { "value": "Available Columns"},
-          "list": { "value": "Available Columns List"},
-          "listItem": { "value": "Available Columns List Item"}
+          "title": {
+            "value": "Available Columns"
+          },
+          "list": {
+            "value": "Available Columns List"
+          },
+          "listItem": {
+            "value": "Available Columns List Item"
+          }
         },
         "selectedColumns": {
-          "title": { "value": "Selected Columns"},
-          "list": { "value": "Selected Columns List"},
-          "listItem": { "value": "Selected Columns List Item"}
+          "title": {
+            "value": "Selected Columns"
+          },
+          "list": {
+            "value": "Selected Columns List"
+          },
+          "listItem": {
+            "value": "Selected Columns List Item"
+          }
         },
         "button": {
-          "addToRight": {"value": "Move checked items in Available Columns list to Selected Columns list"},
-          "addAllRight": {"value": "Move all items in Available Columns list to Selected Columns list"},
-          "removeRight": {"value": "Move checked items in Selected Columns list to Available Columns list"},
-          "removeAll": {"value": "Move all items in Selected Columns list to Available Columns list"},
-          "reset": {"value": "Restore columns in Selected Columns list to those present when table customizer was toggled open."},
-          "apply": {"value": "Apply column customizations to table"},
-          "cancel": {"value": "Cancel all column customizations"}
+          "addToRight": {
+            "value": "Move checked items in Available Columns list to Selected Columns list"
+          },
+          "addAllRight": {
+            "value": "Move all items in Available Columns list to Selected Columns list"
+          },
+          "removeRight": {
+            "value": "Move checked items in Selected Columns list to Available Columns list"
+          },
+          "removeAll": {
+            "value": "Move all items in Selected Columns list to Available Columns list"
+          },
+          "reset": {
+            "value": "Restore columns in Selected Columns list to those present when table customizer was toggled open."
+          },
+          "apply": {
+            "value": "Apply column customizatios to table"
+          },
+          "cancel": {
+            "value": "Cancel all column customizations"
+          }
         }
       }
     },
@@ -1977,7 +2015,7 @@ define({
       "messages": {
         "connectionRefused": {
           "summary": "Connection Issue",
-          "details": "Having trouble sending and receiving data from provider! Please ensure it and the CBE are accessible, before continuing."
+          "details": "Having trouble sending and receiving data from provider! Please ensure it is accessible, before continuing."
         },
         "pathNotFound": {
           "summary": "Path Not Found",
