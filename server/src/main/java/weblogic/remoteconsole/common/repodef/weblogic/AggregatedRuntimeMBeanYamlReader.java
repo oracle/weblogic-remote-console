@@ -21,7 +21,6 @@ import weblogic.remoteconsole.common.repodef.schema.BeanActionDefSource;
 import weblogic.remoteconsole.common.repodef.schema.BeanPropertyDefCustomizerSource;
 import weblogic.remoteconsole.common.repodef.schema.BeanPropertyDefSource;
 import weblogic.remoteconsole.common.repodef.schema.BeanTypeDefCustomizerSource;
-import weblogic.remoteconsole.common.repodef.schema.BeanTypeDefExtensionSource;
 import weblogic.remoteconsole.common.repodef.schema.BeanTypeDefSource;
 import weblogic.remoteconsole.common.repodef.schema.CreateFormDefSource;
 import weblogic.remoteconsole.common.repodef.schema.LinksDefSource;
@@ -111,6 +110,7 @@ class AggregatedRuntimeMBeanYamlReader extends WebLogicBeanTypeYamlReader {
       source.setActions(new ArrayList<>());
     }
     source.setInstanceName(unaggTypeDef.getInstanceName());
+    source.setCreateResourceMethod("weblogic.remoteconsole.customizers.AggregatedMBeanCustomizer.createResource");
     aggregateProperties(unaggTypeDef, unaggPropertyCustomizers, source);
     aggregateActions(unaggTypeDef, unaggActionCustomizers, source);
     aggregateSubTypes(unaggTypeDef, source);
@@ -226,14 +226,6 @@ class AggregatedRuntimeMBeanYamlReader extends WebLogicBeanTypeYamlReader {
       }
     }
     {
-      BeanTypeDefExtensionSource source = getYamlReader().getBeanTypeDefExtensionSource(unaggTypeDef);
-      if (source != null) {
-        for (BeanActionDefSource actionSource : source.getActions()) {
-          rtn.add(actionSource.getName());
-        }
-      }
-    }
-    {
       for (BeanActionDefCustomizerSource actionSource :  unaggActionCustomizers) {
         rtn.add(actionSource.getName());
       }
@@ -254,9 +246,6 @@ class AggregatedRuntimeMBeanYamlReader extends WebLogicBeanTypeYamlReader {
       actionCustomizer = new BeanActionDefCustomizerSource();
       actionCustomizer.setName(unaggActionDef.getActionName());
     }
-    actionCustomizer.setActionMethod(
-       "weblogic.remoteconsole.customizers.AggregatedMBeanCustomizer.invokeAction"
-    );
     source.addAction(actionCustomizer);
   }
 
@@ -354,23 +343,6 @@ class AggregatedRuntimeMBeanYamlReader extends WebLogicBeanTypeYamlReader {
       baseSubType.setValue(baseTypeValue);
       source.getSubTypes().add(baseSubType);
     }
-  }
-
-  @Override
-  BeanTypeDefExtensionSource getBeanTypeDefExtensionSource(BeanTypeDef typeDef) {
-    // Return the aggregated versions of any aggregatable extended properties the unaggregated type supports
-    BeanTypeDef unaggTypeDef = NAME_HANDLER.getUnfabricatedTypeDef(typeDef);
-    BeanTypeDefExtensionSource source =
-      getYamlReader().getBeanTypeDefExtensionSource(unaggTypeDef);
-    if (source == null) {
-      return null;
-    }
-    source.setProperties(aggregatePropertyDefs(unaggTypeDef, source.getProperties()));
-    // allow the actions to flow through as-is
-    if (source.getProperties().isEmpty() && source.getActions().isEmpty()) {
-      return null;
-    }
-    return source;
   }
 
   @Override

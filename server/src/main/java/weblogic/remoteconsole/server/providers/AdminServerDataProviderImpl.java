@@ -10,6 +10,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.TreeSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.json.Json;
@@ -376,8 +377,7 @@ public class AdminServerDataProviderImpl implements AdminServerDataProvider {
         roots.clear();
         roots.put(viewRoot.getName(), viewRoot);
         roots.put(monitoringRoot.getName(), monitoringRoot);
-        Set<String> roles = mbeansVersion.getRoles();
-        if (roles.contains(WebLogicRoles.ADMIN) || roles.contains(WebLogicRoles.DEPLOYER)) {
+        if (mbeansVersion.isAccessAllowed(Set.of(WebLogicRoles.ADMIN, WebLogicRoles.DEPLOYER))) {
           // Admins and deployers are allowed to edit the configuration
           roots.put(editRoot.getName(), editRoot);
         } else {
@@ -386,7 +386,7 @@ public class AdminServerDataProviderImpl implements AdminServerDataProvider {
         // See if the domain has a version of the remote console rest extension installed that supports security data.
         if (connection.getCapabilities().contains("RealmsSecurityData")) {
           // Only admins are allowed to manage the security data.
-          if (roles.contains(WebLogicRoles.ADMIN)) {
+          if (mbeansVersion.isAccessAllowed(Set.of(WebLogicRoles.ADMIN))) {
             securityDataRoot.setPageRepo(new WebLogicRestSecurityDataPageRepo(mbeansVersion));
             roots.put(securityDataRoot.getName(), securityDataRoot);
           }
@@ -469,7 +469,7 @@ public class AdminServerDataProviderImpl implements AdminServerDataProvider {
       ret.add("domainVersion", connection.getWebLogicVersion().getDomainVersion());
       ret.add("domainName", connection.getDomainName());
       JsonArrayBuilder capabilities = Json.createArrayBuilder();
-      for (String capability : connection.getCapabilities()) {
+      for (String capability : new TreeSet<>(connection.getCapabilities())) {
         capabilities.add(capability);
       }
       ret.add("capabilities", capabilities);

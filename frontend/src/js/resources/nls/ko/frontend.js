@@ -401,7 +401,7 @@ define({
             "label": "사용자 이름:"
           },
           "sso": {
-            "label": "SSO:"
+            "label": "Web Authentication:"
           },
           "roles": {
             "label": "롤:"
@@ -980,6 +980,11 @@ define({
         "panel": {
           "value": "시작 페이지 링크"
         }
+      },
+      "screenreader": {
+        "value1": "You're on the {0} item. Press Enter to select.",
+        "value2": "You're on the {0} item. Pressing Enter will expand or collapse it. After expanding, use the down arrow to access related links.",
+        "value3": "{0}. Press Tab/Shift+Tab to move between related links and Escape to return to last visited top level item."
       }
     }
   },

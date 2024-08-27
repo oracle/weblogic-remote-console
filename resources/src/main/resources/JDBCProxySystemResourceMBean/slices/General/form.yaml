@@ -9,6 +9,11 @@ introductionHTML: >
   page enables you to define general configuration options for this JDBC
   data source.</p>
 
+actions:
+- name: testConfiguration
+  requiredCapabilities:
+  - TestDataSourceConfiguration
+
 properties:
 - name: "Name"
 - name: "JDBCResource.DatasourceType"
@@ -18,9 +23,9 @@ properties:
 - name: "JDBCResource.JDBCDataSourceParams.JNDINames"
 - name: "JDBCResource.JDBCDataSourceParams.ProxySwitchingProperties"
 - name: "JDBCResource.JDBCDataSourceParams.ProxySwitchingCallback"
-
   presentation:
     inlineFieldHelp: "e.g. jdbc/myDS"
+
 helpTopics:
 - label: "Overriding a Cache Configuration File "
   href: "clust/coherence.html#CLUST643"

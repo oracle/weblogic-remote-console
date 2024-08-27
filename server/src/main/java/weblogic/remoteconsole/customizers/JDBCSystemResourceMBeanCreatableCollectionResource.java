@@ -6,11 +6,7 @@ package weblogic.remoteconsole.customizers;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
-import javax.json.Json;
-import javax.json.JsonArray;
-import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
-import javax.json.JsonObjectBuilder;
 
 import weblogic.remoteconsole.common.repodef.LocalizedConstants;
 import weblogic.remoteconsole.common.utils.Path;
@@ -35,9 +31,6 @@ import weblogic.remoteconsole.server.repo.SecretValue;
 import weblogic.remoteconsole.server.repo.SettableValue;
 import weblogic.remoteconsole.server.repo.StringValue;
 import weblogic.remoteconsole.server.repo.Value;
-import weblogic.remoteconsole.server.repo.weblogic.WebLogicRestEditPageRepo;
-import weblogic.remoteconsole.server.repo.weblogic.WebLogicRestInvoker;
-import weblogic.remoteconsole.server.utils.WebLogicRestRequest;
 import weblogic.remoteconsole.server.webapp.CreatableBeanCollectionResource;
 import weblogic.remoteconsole.server.webapp.CreateHelper;
 import weblogic.remoteconsole.server.webapp.GetPageResponseMapper;
@@ -46,7 +39,6 @@ import static weblogic.remoteconsole.customizers.JDBCSystemResourceMBeanCustomiz
 import static weblogic.remoteconsole.customizers.JDBCSystemResourceMBeanCustomizerUtils.DATASOURCE_TYPE_GRIDLINK;
 import static weblogic.remoteconsole.customizers.JDBCSystemResourceMBeanCustomizerUtils.DATASOURCE_TYPE_MDS;
 import static weblogic.remoteconsole.customizers.JDBCSystemResourceMBeanCustomizerUtils.DATASOURCE_TYPE_UCP;
-import static weblogic.remoteconsole.customizers.JDBCSystemResourceMBeanCustomizerUtils.DEFAULT_TEST_CONFIGURATION;
 import static weblogic.remoteconsole.customizers.JDBCSystemResourceMBeanCustomizerUtils.PROPERTY_DATASOURCE_TYPE;
 import static weblogic.remoteconsole.customizers.JDBCSystemResourceMBeanCustomizerUtils.PROPERTY_DBMS_HOST;
 import static weblogic.remoteconsole.customizers.JDBCSystemResourceMBeanCustomizerUtils.PROPERTY_DBMS_NAME;
@@ -61,7 +53,6 @@ import static weblogic.remoteconsole.customizers.JDBCSystemResourceMBeanCustomiz
 import static weblogic.remoteconsole.customizers.JDBCSystemResourceMBeanCustomizerUtils.PROPERTY_GRIDLINK_ONS_NODE_LIST;
 import static weblogic.remoteconsole.customizers.JDBCSystemResourceMBeanCustomizerUtils.PROPERTY_GRIDLINK_ONS_WALLET_FILE;
 import static weblogic.remoteconsole.customizers.JDBCSystemResourceMBeanCustomizerUtils.PROPERTY_GRIDLINK_ONS_WALLET_PASSWORD;
-import static weblogic.remoteconsole.customizers.JDBCSystemResourceMBeanCustomizerUtils.PROPERTY_TEST_CONFIGURATION;
 import static weblogic.remoteconsole.customizers.JDBCSystemResourceMBeanCustomizerUtils.PROPERTY_UCP_DATABASE_DRIVER;
 import static weblogic.remoteconsole.customizers.JDBCSystemResourceMBeanCustomizerUtils.PROPERTY_URL;
 import static weblogic.remoteconsole.customizers.JDBCSystemResourceMBeanCustomizerUtils.driverNameToFormPropertyName;
@@ -138,10 +129,6 @@ public class JDBCSystemResourceMBeanCreatableCollectionResource extends Creatabl
       if (!response.isSuccess()) {
         return response;
       }
-      response = testConfiguration(converter);
-      if (!response.isSuccess()) {
-        return response;
-      }
       // Create the JDBCSystemResource mbean and set the properties on its mandatory singleton children.
       response = (new CreateFormCreator(ic, converter.getDataSourceValues())).create();
       if (!response.isSuccess()) {
@@ -158,108 +145,6 @@ public class JDBCSystemResourceMBeanCreatableCollectionResource extends Creatabl
     }
   }
 
-  private Response<Void> testConfiguration(FormPropertiesToBeansPropertyValuesConverter converter) {
-    Response<Void> response = new Response<>();
-    if (!(getInvocationContext().getPageRepo() instanceof WebLogicRestEditPageRepo)) {
-      // Only the edit tree on an admin server connection can test the configuration
-      // since we need to invoke a legacy REST operation to do it.
-      return response;
-    }
-    if (!converter.isTestConfiguration()) {
-      // The user doesn't want us to test the connection.
-      // Instead the user just wants us to create the data source regardless.
-      return response;
-    }
-    // The user wants us to test the connection and not create the data source if the test fails.
-    Value typeValue = converter.findRequiredDataSourceValue("DatasourceType");
-    if (DATASOURCE_TYPE_MDS.equals(typeValue.asString().getValue())) {
-      // Can't test an MDS data source because it just delegates to other data sources.
-      return response;
-    }
-    Value urlValue = converter.findRequiredDataSourceValue("Url");
-    Value driverValue = converter.findRequiredDataSourceValue("DriverName");
-    Value passwordValue = converter.findOptionalDataSourceValue("Password");
-    String url = urlValue.asString().getValue();
-    String driverName = driverValue.asString().getValue();
-    String password = (passwordValue != null) ? passwordValue.asSecret().getValue() : null;
-    Properties properties = converter.getDataSourceProperties();
-    return testConfiguration(url, driverName, password, properties);
-  }
-
-  private Response<Void> testConfiguration(
-    String url,
-    String driverName,
-    String password,
-    Properties properties
-  ) {
-    JsonObject requestBody = getTestConfigurationRequestBody(url, driverName, password, properties);
-    Response<Void> response = new Response<>();
-    Response<JsonObject> testResponse = invokeTestConfiguration(requestBody);
-    if (!testResponse.isSuccess()) {
-      return response.copyUnsuccessfulResponse(testResponse);
-    }
-    return getTestConfigurationResponse(testResponse.getResults());
-  }
-
-  private Response<JsonObject> invokeTestConfiguration(JsonObject requestBody) {
-    WebLogicRestRequest.Builder builder = WebLogicRestRequest.builder();
-    // Call the management/wls/datasources/test legacy REST api to test the datasource.
-    // Note: testing a datasource can take a while, especially if WLS is running in docker
-    // and the urls to the database incorrect.  Increase the read timeout to accomodate this.
-    builder
-      .root(WebLogicRestRequest.LEGACY_WEBLOGIC_REST_API_ROOT)
-      .readTimeout(60000);
-    return
-      WebLogicRestInvoker.post(
-        getInvocationContext(),
-        new Path("datasources.test"),
-        requestBody,
-        false, // don't use expanded values
-        false, // don't save changes
-        false, // not asynchronous
-        builder
-      );
-  }
-
-  private JsonObject getTestConfigurationRequestBody(
-    String url,
-    String driverName,
-    String password,
-    Properties properties
-  ) {
-    JsonObjectBuilder requestBodyBuilder = Json.createObjectBuilder();
-    requestBodyBuilder.add("url", url);
-    requestBodyBuilder.add("driverName", driverName);
-    if (password == null) {
-      requestBodyBuilder.addNull("password");
-    } else {
-      requestBodyBuilder.add("password", password);
-    }
-    JsonArrayBuilder propertiesBuilder = Json.createArrayBuilder();
-    for (String propertyName : properties.stringPropertyNames()) {
-      JsonObjectBuilder propertyBuilder = Json.createObjectBuilder();
-      propertyBuilder.add("name", propertyName);
-      propertyBuilder.add("value", properties.getProperty(propertyName));
-      propertiesBuilder.add(propertyBuilder);
-    }
-    requestBodyBuilder.add("properties", propertiesBuilder);
-    return requestBodyBuilder.build();
-  }
-
-  private Response<Void> getTestConfigurationResponse(JsonObject responseBody) {
-    Response<Void> response = new Response<>();
-    JsonObject item = responseBody.getJsonObject("item"); // should always be present
-    boolean ok = item.getBoolean("ok"); // should always be present
-    if (!ok) {
-      response.setUserBadRequest();
-      JsonArray cause = item.getJsonArray("cause"); // should always be present
-      for (int i = 0; i < cause.size(); i++) {
-        response.addFailureMessage(cause.getString(i));
-      }
-    }
-    return response;
-  }
-
   private class FormPropertiesToBeansPropertyValuesConverter {
     private static final String PROPERTY_NAME = "Name";
     private InvocationContext ic;
@@ -267,7 +152,6 @@ public class JDBCSystemResourceMBeanCreatableCollectionResource extends Creatabl
     private BeansPropertyValues dataSourceValues;
     private List<BeansPropertyValues> dataSourcePropertiesValues = new ArrayList<>();
     private Response<Void> response = new Response<>();
-    private boolean testConfiguration;
 
     private FormPropertiesToBeansPropertyValuesConverter(InvocationContext ic, List<FormProperty> formProperties) {
       this.ic = ic;
@@ -320,10 +204,6 @@ public class JDBCSystemResourceMBeanCreatableCollectionResource extends Creatabl
 
     private List<BeansPropertyValues> getDataSourcePropertiesValues() {
       return dataSourcePropertiesValues;
-    }
-
-    private boolean isTestConfiguration() {
-      return testConfiguration;
     }
 
     private Response<Void> convert() {
@@ -550,10 +430,6 @@ public class JDBCSystemResourceMBeanCreatableCollectionResource extends Creatabl
 
     // Add the connection related weblogic mbean properties for a database driver
     private void addConnectionProperties(String dataSourceType, JDBCDriverInfo driverInfo) {
-      populateTestConfiguration(dataSourceType, driverInfo);
-      if (!isOK()) {
-        return;
-      }
       // copy the connection related driver properties the client specified into the database driver
       populateDriverInfo(dataSourceType, driverInfo);
       if (!isOK()) {
@@ -662,16 +538,6 @@ public class JDBCSystemResourceMBeanCreatableCollectionResource extends Creatabl
         )
       );
       dataSourcePropertiesValues.add(propertyValues);
-    }
-
-    private void populateTestConfiguration(String dataSourceType, JDBCDriverInfo driverInfo) {
-      testConfiguration =
-        getOptionalBooleanProperty(
-          driverNameToFormPropertyName(
-            driverScopedName(dataSourceType, driverInfo, PROPERTY_TEST_CONFIGURATION)
-          ),
-          DEFAULT_TEST_CONFIGURATION
-        );
     }
 
     // Copy the connection related driver properties the client specified into the database driver

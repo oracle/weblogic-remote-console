@@ -46,6 +46,12 @@ slices:
   - name: Security
   - name: Transactions
   - name: All
+- name: Services
+  slices:
+  - name: JMS
+  - name: JTA
+  - name: DefaultStore
+  - name: XML
 - name: Advanced
   slices:
   - name: Deployment

@@ -1,4 +1,4 @@
-// Copyright (c) 2022, 2023, Oracle and/or its affiliates.
+// Copyright (c) 2022, 2024, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.customizers;
@@ -7,9 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
-import javax.json.Json;
 
-import weblogic.remoteconsole.common.repodef.PageActionDef;
 import weblogic.remoteconsole.common.repodef.PageDef;
 import weblogic.remoteconsole.common.repodef.PagePropertyDef;
 import weblogic.remoteconsole.common.repodef.SliceTableDef;
@@ -21,13 +19,12 @@ import weblogic.remoteconsole.server.repo.BeanReaderRepoSearchBuilder;
 import weblogic.remoteconsole.server.repo.BeanReaderRepoSearchResults;
 import weblogic.remoteconsole.server.repo.BeanSearchResults;
 import weblogic.remoteconsole.server.repo.BeanTreePath;
-import weblogic.remoteconsole.server.repo.FormProperty;
 import weblogic.remoteconsole.server.repo.InvocationContext;
 import weblogic.remoteconsole.server.repo.Response;
 import weblogic.remoteconsole.server.repo.TableCell;
 import weblogic.remoteconsole.server.repo.TableRow;
 import weblogic.remoteconsole.server.repo.Value;
-import weblogic.remoteconsole.server.webapp.InvokeActionHelper;
+import weblogic.remoteconsole.server.webapp.BaseResource;
 
 /** 
  * Custom code for processing slice tables that aggregate results across server runtime mbeans
@@ -39,39 +36,15 @@ public class AggregatedMBeanCustomizer {
   private AggregatedMBeanCustomizer() {
   }
 
-  public static Response<Value> invokeAction(
-    InvocationContext ic,
-    PageActionDef pageActionDef,
-    List<FormProperty> formProperties
-  ) {
-    Response<Value> response = new Response<>();
-
-    BeanTreePath aggBTP = ic.getBeanTreePath();
-    Path unaggPath = NAME_HANDLER.getUnaggregatedBeanTreePath(aggBTP).getPath();
-    
-    // fill in the server name, i.e. DomainRuntime.CombinedServerRuntimes.<ServerName>.Foo.Bar
-    unaggPath.getComponents().set(2, ic.getIdentifier());
-
-    // delegate the action to the unagg bean's collection
-    InvocationContext unaggIc = new InvocationContext(ic);
-    unaggIc.setIdentity(BeanTreePath.create(aggBTP.getBeanRepo(), unaggPath));
-    unaggIc.setIdentifier(null);
-    unaggIc.setPagePath(
-      unaggIc.getPageRepo().getPageRepoDef().newTablePagePath(
-        unaggIc.getBeanTreePath().getTypeDef()
-      )
-    );
-    InvokeActionHelper helper =
-      new InvokeActionHelper(
-        unaggIc,
-        pageActionDef.getActionName(),
-        Json.createObjectBuilder().build()
-      );
-    Response<Void> actionResponse = helper.invokeActionReturnResponse();
-    if (!actionResponse.isSuccess()) {
-      return response.copyUnsuccessfulResponse(actionResponse);
+  public static BaseResource createResource(InvocationContext ic) {
+    if (ic.getBeanTreePath().isCollectionChild()) {
+      // e.g. ApplicationRuntimes for App1 across servers
+      return new AggregatedMBeanCollectionChildBeanResource();
+    } else if (ic.getBeanTreePath().isMandatorySingleton()) {
+      // e.g. JTARuntime across servers
+      return new AggregatedMBeanMandatorySingletonBeanResource();
     }
-    return response.copyMessages(actionResponse).setSuccess(null);
+    return null;
   }
 
   public static Response<List<TableRow>> getSliceTableRows(

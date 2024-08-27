@@ -1,0 +1,11 @@
+# Copyright (c) 2024, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+introductionHTML: >
+  <p>This page summarizes the configuration of this custom resource.</p>
+properties:
+- name: "Name"
+- name: "ResourceClass"
+- name: "DescriptorBeanClass"
+- name: "DescriptorFileName"
+- name: "Targets"

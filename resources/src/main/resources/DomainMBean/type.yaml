@@ -87,6 +87,18 @@ properties:
   - value: enabled
     label: Enabled
 
+- name: ConsoleExtensionDirectory
+  requiredCapabilities:
+  - Before14.1.2.0.0
+
+- name: "ConsoleEnabled"
+  requiredCapabilities:
+  - Before14.1.2.0.0
+
+- name: "ConsoleContextPath"
+  requiredCapabilities:
+  - Before14.1.2.0.0
+
 children:
 
 - name: SNMPAgent
@@ -119,3 +131,14 @@ children:
   - RealmsSecurityData
 
 - name: HealthScore
+
+- name: CoherenceClusterSystemResources
+  label: Coherence Clusters
+
+- name: CustomResources
+  creatable: false
+  deletable: false
+
+- name: AdminConsole
+  requiredCapabilities:
+  - Before14.1.2.0.0

@@ -3,6 +3,7 @@
 
 package weblogic.remoteconsole.customizers;
 
+import java.util.List;
 import javax.ws.rs.core.MediaType;
 
 import weblogic.remoteconsole.common.repodef.LocalizedConstants;
@@ -28,16 +29,27 @@ public class NodeManagerRuntimeMBeanCustomizer {
   ) {
     Value value = null;
     if (reachable.getValue().asBoolean().getValue()) {
-      String machine = ic.getBeanTreePath().getLastSegment().getKey();
-      Path path = new Path("domainRuntime.downloads.NodeManagerLogs");
-      path.addComponent(machine);
-      String label = ic.getLocalizer().localizeString(LocalizedConstants.NODE_MANAGER_LOG_DOWNLOAD_LABEL);
-      String download = machine + "NodeManager.log";
-      value = new DownloadValue(label, path, MediaType.TEXT_PLAIN, download);
+      if (!supportsLogDownload(ic)) {
+        String label = ic.getLocalizer().localizeString(LocalizedConstants.NODE_MANAGER_LOG_DOWNLOAD_NOT_SUPPORTED);
+        value = new LabelValue(label);
+      } else {
+        String machine = ic.getBeanTreePath().getLastSegment().getKey();
+        Path path = new Path("domainRuntime.downloads.NodeManagerLogs");
+        path.addComponent(machine);
+        String label = ic.getLocalizer().localizeString(LocalizedConstants.NODE_MANAGER_LOG_DOWNLOAD_LABEL);
+        String download = machine + "NodeManager.log";
+        value = new DownloadValue(label, path, MediaType.TEXT_PLAIN, download);
+      }
     } else {
       String label = ic.getLocalizer().localizeString(LocalizedConstants.NODE_MANAGER_LOG_NOT_AVAILABLE_LABEL);
       value = new LabelValue(label);
     }
     return (new Response<SettableValue>()).setSuccess(new SettableValue(value));
+  }
+
+  private static boolean supportsLogDownload(InvocationContext ic) {
+    boolean support = ic.getPageRepo().getBeanRepo().getBeanRepoDef().supportsCapabilities(
+        List.of("NodeManagerLog"));
+    return support;
   }
 }

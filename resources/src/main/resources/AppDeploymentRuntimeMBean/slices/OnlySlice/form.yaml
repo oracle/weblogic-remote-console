@@ -16,3 +16,5 @@ properties:
 
 actions:
 - name: "createPlan"
+  requiredCapabilities:
+    - DeploymentConfiguration

@@ -29,30 +29,21 @@ properties:
 - name: WeblogicPluginEnabled
   label: WebLogic Plug-In Enabled
   helpSummaryHTML: >
-    <p>Specifies whether this server uses the proprietary WL-Proxy-Client-IP
-    header.</p>
-
+    <p>Specifies whether this server uses the proprietary <code>WL-Proxy-Client-IP</code> header.</p>
   helpDetailsHTML: >
-    <p>There are three values you can select in <b>WebLogic Plug-In
-    Enabled</b>:</p><ul><li>Select <b>Yes</b> to specify that this
-    server instance uses the proprietary WL-Proxy-Client-IP header,
-    which is recommended if the server instance will receive requests
-    from a proxy plug-in. If this server instance is a member of a
-    cluster that will received proxied requests, enable the WebLogic
-    plug-in at the cluster level. For servers that are members
-    of a cluster, the setting at the cluster level overrides the
-    server&#x2019;s setting. When the WebLogic plug-in is enabled
-    at the cluster level, a call to <code>getRemoteAddr</code> will
-    return the address of the browser client from the proprietary
-    WL-Proxy-Client-IP header instead of the Web server.</li><li>Select
-    <b>No</b> to disable the <code>weblogic-plugin-enabled</code>
-    parameter (<code>weblogic-plugin-enabled=false</code>) in the
-    <code>config.xml</code> file.</li><li>Select <b>Inherit</b> for this
-    server instance to inherit the value selected for <b>WebLogic Plug-in
-    Enabled</b> for the cluster.</li></ul><p><b>Note</b>: If you are
-    using Oracle HTTP Server, the WebLogic Proxy Plug-In, or Oracle Traffic
-    Director to distribute client requests to a Managed Server or a cluster,
-    Oracle recommends choosing <b>Yes</b>.</p>
+    <p>WebLogic supports configuring this property at the domain, cluster and server levels.
+    The server uses these predecence rules:</p>
+    <ol>
+      <li>If the server is a member of a cluster, use the cluster level value if it was explictily set.</li>
+      <li>Use the server level value if it was explictly set.</li>
+      <li>Use the domain level value.</li>
+    </ol>
+    <p>When enabled, the server will receive requests from a proxy plug-in or <code>HttpClusterServlet</code>.
+    A call to <code>getRemoteAddr</code> will return the address of the browser client from the
+    proprietary WL-Proxy-Client-IP header, instead of the Web server.</p>
+    <p><b>Note</b>: If you are using Oracle HTTP Server, the WebLogic Proxy Plug-In
+    or Oracle Traffic Director to distribute client requests to a Managed Server or
+    a cluster, Oracle recommends enabling this property.</p>
 
 - name: JavaCompilerPreClassPath
   label: Prepend to Classpath
@@ -187,7 +178,11 @@ properties:
     label: default
 
 - name: JMSConnectionFactoryUnmappedResRefMode
+  label: Connection Factory Unmapped Resource Reference Mode
   offlineName: JmsConnectionFactoryUnmappedResRefMode
+
+- name: JMSDefaultConnectionFactoriesEnabled
+  label: Enable Default Connection Factories
 
 - name: NumOfRetriesBeforeMSIMode
   offlineName: NumOfRetriesBeforeMsiMode

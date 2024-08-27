@@ -119,13 +119,7 @@ public abstract class BeanRepoDefImpl implements BeanRepoDef {
   }
 
   boolean isAccessAllowed(Set<String> rolesAllowed) {
-    // Return true if the user is in any of the roles in rolesAllowed, false otherwise
-    for (String roleAllowed : rolesAllowed) {
-      if (mbeansVersion.getRoles().contains(roleAllowed)) {
-        return true;
-      }
-    }
-    return false;
+    return mbeansVersion.isAccessAllowed(rolesAllowed);
   }
 
   @Override

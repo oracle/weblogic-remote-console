@@ -54,3 +54,20 @@ properties:
 children:
 - name: CoherenceClusterResource
   offlineName: CoherenceResource
+
+actions:
+- name: importCustomClusterConfigurationFile
+  label: Import Configuration
+  successMessage: Imported the custom Coherence cluster configuration file.
+  failureMessage: Failed to import the custom Coherence cluster configuration file.
+  helpHTML: >
+    <p>Allows you to specify a custom Coherence cluster configuration file.
+    The file must be present locally on the Administration Server.</p>
+  inputForm:
+    introductionHTML: >
+      <p>Allows you to specify a custom Coherence cluster configuration file.
+      The file must be present locally on the Administration Server.</p>
+    parameters:
+    - name: "file"
+      label: "Configuration File"
+      required: true

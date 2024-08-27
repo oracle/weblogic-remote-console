@@ -3,10 +3,10 @@
   "version": "1.0.0",
   "description": "An Oracle JavaScript Extension Toolkit(JET) web app",
   "dependencies": {
-    "@oracle/oraclejet": "~15.1.0",
-    "@oracle/oraclejet-core-pack": "^15.1.0",
-    "@oracle/oraclejet-tooling": "~15.1.0",
-    "electron": "^25.8.1",
+    "@oracle/oraclejet": "~16.1.0",
+    "@oracle/oraclejet-tooling": "~16.1.0",
+    "@oracle/oraclejet-core-pack": "~16.1.0",
+    "electron": "^31.0.0",
     "jquery": "^3.7.0",
     "jquery-ui": "^1.13.2",
     "js-yaml": "^4.1.0"
@@ -22,9 +22,12 @@
     "chromedriver": "^122.0.6",
     "dotenv": "^8.2.0",
     "eslint": "^8.41.0",
+    "extract-zip": "^1.7.0",
     "fixture": "^0.1.2",
+    "fs-extra": "^8.1.0",
     "geckodriver": "^4.0.0",
     "getenv": "^1.0.0",
+    "glob": "7.2.0",
     "karma": "^6.4.1",
     "karma-chai": "^0.1.0",
     "karma-chrome-launcher": "^3.1.0",
@@ -44,11 +47,11 @@
     "sinon": "^9.0.2",
     "ts-sinon": "^1.2.0",
     "typescript": "^3.6.4",
+    "underscore": "^1.10.2",
     "yargs": "^16.0.3"
   },
   "overrides": {
-      "express": "4.19.2",
-      "ws": "8.17.1"
+    "requirejs": "^2.0.0"
   },
   "engines": {
     "node": ">=12.21.0"

@@ -1,6 +1,17 @@
-# Copyright (c) 2020, 2021, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2020, 2024, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 introductionHTML: Create a new Realm
 properties:
 - name: Name
+- name: CreateDefaultProviders
+  helpHTML: >
+    Valid security realms must include a number of providers,
+    each of which is responsible for some aspect of the overall security framework.
+    You can use either the WebLogic Server supplied providers or your own custom providers.
+  definition:
+    type: boolean
+    writable: true
+    defaultValue:
+      value:
+        value: false

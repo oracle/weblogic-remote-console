@@ -1,0 +1,13 @@
+# Copyright (c) 2024, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+name: weblogic.management.security.authentication.ReadOnlyUserMBean
+baseTypes:
+- weblogic.management.WebLogicMBean
+properties:
+- name: Name
+  descriptionHTML: "<p>The login name of this user.</p>"
+  type: java.lang.String
+- name: Description
+  descriptionHTML: "<p>A short description of this user. For example, the user's full name.</p>"
+  type: java.lang.String

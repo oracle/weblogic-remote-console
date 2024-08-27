@@ -137,6 +137,13 @@ properties:
 - defaultValue:
     value:
       value: false
+  descriptionHTML: '<p>Debug Muxer processing. Less debug messages than debugMuxer</p> '
+  name: DebugMuxerConcise
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: false
   descriptionHTML: '<p>Debug Muxer connection processing</p> '
   name: DebugMuxerConnection
   type: boolean
@@ -221,9 +228,11 @@ properties:
   type: boolean
   writable: true
 - defaultValue:
+    secureModeValue:
+      value: true
     value:
       value: false
-  descriptionHTML: '<p>Default diagnostic messages for RJVM requests and responses</p> '
+  descriptionHTML: '<p>Default RJVM to JVM requests and responses</p> '
   name: DefaultRJVMDiagMessages
   type: boolean
   writable: true

@@ -1,4 +1,4 @@
-# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2024, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 actions: [
@@ -138,9 +138,9 @@ properties:
     value:
       value: true
   descriptionHTML: '<p>Returns whether a warning should be logged if usernames or
-    password configuration is insecure.</p>  <p>If the warning is enabled, then a
-    message will be logged if  wellknown administrator usernames are present or password
-    validation configuration is insecure.</p> '
+    password configuration is insecure.</p>  <p>If the warning is enabled and the
+    domain is in secured production mode, then a message will be logged if  well known
+    administrator usernames are present or password validation configuration is insecure.</p> '
   name: WarnOnUsernamePasswords
   type: boolean
   writable: true

@@ -9,7 +9,6 @@ import weblogic.remoteconsole.common.repodef.CreateFormPagePath;
 import weblogic.remoteconsole.common.repodef.SlicePagePath;
 import weblogic.remoteconsole.common.repodef.TablePagePath;
 import weblogic.remoteconsole.common.repodef.schema.BeanTypeDefCustomizerSource;
-import weblogic.remoteconsole.common.repodef.schema.BeanTypeDefExtensionSource;
 import weblogic.remoteconsole.common.repodef.schema.BeanTypeDefSource;
 import weblogic.remoteconsole.common.repodef.schema.CreateFormDefSource;
 import weblogic.remoteconsole.common.repodef.schema.LinksDefSource;
@@ -84,10 +83,6 @@ class WebLogicBeanTypeYamlReader {
 
   PseudoBeanTypeDefSource getPseudoBeanTypeDefSource(BeanRepoDef repoDef, String type) {
     return getYamlReader().getDefaultPseudoBeanTypeDefSource(repoDef, type);
-  }
-
-  BeanTypeDefExtensionSource getBeanTypeDefExtensionSource(BeanTypeDef typeDef) {
-    return getYamlReader().getDefaultBeanTypeDefExtensionSource(typeDef);
   }
 
   SliceFormDefSource getSliceFormDefSource(SlicePagePath pagePath, SlicesDefImpl slicesDefImpl) {

@@ -34,13 +34,13 @@ tips:
     visible: false
   - id: tip4
     category: whereis
-    visible: true
+    visible: false
   - id: tip5
-    category: whereis
+    category: productivity
     visible: true
   - id: tip6
-    category: whereis
-    visible: false
+    category: productivity
+    visible: true
   - id: tip7
     category: other
     visible: false

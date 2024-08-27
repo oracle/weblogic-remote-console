@@ -259,7 +259,7 @@ define([
         }
         self.i18n.buttons.dashboard.visible(isDashboard);
         resetIconsVisibleState(self.perspective.id === 'monitoring');
-        showResetPageIcon(['configuration'].includes(self.perspective.id));
+        showResetPageIcon(['configuration', 'security'].includes(self.perspective.id));
         const pdjData = viewParams.parentRouter?.data?.pdjData();
         this.i18n.buttons.customize.visible(PageDefinitionHelper.hasTable(pdjData));
       }.bind(this);

@@ -16,7 +16,6 @@ properties:
     property: Enabled
     values:
       - true
-  label: Data Source
   optionsSources:
     - Domain/JDBCSystemResources
 
@@ -26,3 +25,65 @@ properties:
     values:
       - true
   label: Transaction Log Prefix Name
+
+- name: ConnectionCachingPolicy
+  usedIf:
+    property: Enabled
+    values:
+      - true
+  legalValues:
+  - value: DEFAULT
+    label: Default
+  - value: MINIMAL
+    label: Minimal
+  - value: NONE
+    label: None
+
+- name: CreateTableDDLFile
+  label: Create Table From DDL File
+  usedIf:
+    property: Enabled
+    values:
+      - true
+
+- name: DeletesPerBatchMaximum
+  label: Maximum Deletes Per Batch
+  usedIf:
+    property: Enabled
+    values:
+      - true
+
+- name: InsertsPerBatchMaximum
+  label: Maximum Inserts Per Batch
+  usedIf:
+    property: Enabled
+    values:
+      - true
+
+- name: DeletesPerStatementMaximum
+  label: Maximum Deletes Per Statement
+  usedIf:
+    property: Enabled
+    values:
+      - true
+
+- name: MaxRetrySecondsBeforeTLOGFail
+  label: Maximum Retry Before Transaction Log Fail (seconds)
+  usedIf:
+    property: Enabled
+    values:
+      - true
+
+- name: MaxRetrySecondsBeforeTXException
+  label: Maximum Retry Before Transaction Exception Thrown (seconds)
+  usedIf:
+    property: Enabled
+    values:
+      - true
+
+- name: RetryIntervalSeconds
+  label: Retry Interval (seconds)
+  usedIf:
+    property: Enabled
+    values:
+      - true

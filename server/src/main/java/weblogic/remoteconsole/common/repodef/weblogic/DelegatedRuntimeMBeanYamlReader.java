@@ -21,7 +21,6 @@ import weblogic.remoteconsole.common.repodef.schema.BeanActionDefSource;
 import weblogic.remoteconsole.common.repodef.schema.BeanPropertyDefCustomizerSource;
 import weblogic.remoteconsole.common.repodef.schema.BeanPropertyDefSource;
 import weblogic.remoteconsole.common.repodef.schema.BeanTypeDefCustomizerSource;
-import weblogic.remoteconsole.common.repodef.schema.BeanTypeDefExtensionSource;
 import weblogic.remoteconsole.common.repodef.schema.BeanTypeDefSource;
 import weblogic.remoteconsole.common.repodef.schema.CreateFormDefSource;
 import weblogic.remoteconsole.common.repodef.schema.LinksDefSource;
@@ -277,14 +276,6 @@ abstract class DelegatedRuntimeMBeanYamlReader extends WebLogicBeanTypeYamlReade
       }
     }
     {
-      BeanTypeDefExtensionSource source = getYamlReader().getBeanTypeDefExtensionSource(undelTypeDef);
-      if (source != null) {
-        for (BeanActionDefSource actionSource : source.getActions()) {
-          rtn.add(actionSource.getName());
-        }
-      }
-    }
-    {
       for (BeanActionDefCustomizerSource actionSource :  undelActionCustomizers) {
         rtn.add(actionSource.getName());
       }
@@ -389,23 +380,6 @@ abstract class DelegatedRuntimeMBeanYamlReader extends WebLogicBeanTypeYamlReade
     if (!StringUtils.isEmpty(defaultSubType)) {
       source.setDefaultSubType(nameHandler.getFabricatedJavaType(defaultSubType));
     }
-  }
-
-  @Override
-  BeanTypeDefExtensionSource getBeanTypeDefExtensionSource(BeanTypeDef typeDef) {
-    // Return the delegated versions of any extended properties the undelegated type supports
-    BeanTypeDef undelTypeDef = nameHandler.getUnfabricatedTypeDef(typeDef);
-    BeanTypeDefExtensionSource source =
-      getYamlReader().getBeanTypeDefExtensionSource(undelTypeDef);
-    if (source == null) {
-      return null;
-    }
-    source.setProperties(delegatePropertyDefs(undelTypeDef, source.getProperties()));
-    source.setActions(delegateActionDefs(undelTypeDef, source.getActions()));
-    if (source.getProperties().isEmpty() && source.getActions().isEmpty()) {
-      return null;
-    }
-    return source;
   }
 
   @Override

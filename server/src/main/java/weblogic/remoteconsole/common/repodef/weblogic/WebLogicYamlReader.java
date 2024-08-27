@@ -5,7 +5,9 @@ package weblogic.remoteconsole.common.repodef.weblogic;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
+import weblogic.remoteconsole.common.YamlUtils;
 import weblogic.remoteconsole.common.repodef.BeanRepoDef;
 import weblogic.remoteconsole.common.repodef.BeanTypeDef;
 import weblogic.remoteconsole.common.repodef.CreateFormPagePath;
@@ -13,7 +15,6 @@ import weblogic.remoteconsole.common.repodef.PagePath;
 import weblogic.remoteconsole.common.repodef.SlicePagePath;
 import weblogic.remoteconsole.common.repodef.TablePagePath;
 import weblogic.remoteconsole.common.repodef.schema.BeanTypeDefCustomizerSource;
-import weblogic.remoteconsole.common.repodef.schema.BeanTypeDefExtensionSource;
 import weblogic.remoteconsole.common.repodef.schema.BeanTypeDefSource;
 import weblogic.remoteconsole.common.repodef.schema.CreateFormDefSource;
 import weblogic.remoteconsole.common.repodef.schema.LinksDefSource;
@@ -24,7 +25,9 @@ import weblogic.remoteconsole.common.repodef.schema.SliceTableDefSource;
 import weblogic.remoteconsole.common.repodef.schema.SlicesDefSource;
 import weblogic.remoteconsole.common.repodef.schema.TableDefSource;
 import weblogic.remoteconsole.common.repodef.yaml.SlicesDefImpl;
+import weblogic.remoteconsole.common.repodef.yaml.YamlDirectoryReader;
 import weblogic.remoteconsole.common.repodef.yaml.YamlReader;
+import weblogic.remoteconsole.common.utils.StringUtils;
 import weblogic.remoteconsole.common.utils.WebLogicMBeansVersion;
 
 /**
@@ -40,19 +43,52 @@ import weblogic.remoteconsole.common.utils.WebLogicMBeansVersion;
  * real mbean types even though they aren't in WebLogic.
  */
 class WebLogicYamlReader extends YamlReader {
-  private List<String> typesYamlDirectories = new ArrayList<>();
+  private List<YamlDirectoryReader> typeCustomizationYamlDirectoryReaders = new ArrayList<>();
+  private List<YamlDirectoryReader> typeYamlDirectoryReaders = new ArrayList<>();
+
+  private static final Logger LOGGER = Logger.getLogger(WebLogicYamlReader.class.getName());
 
   WebLogicYamlReader(WebLogicMBeansVersion mbeansVersion) {
-    // Search for hand coded yamls first (e.g. for fabricated types)
-    typesYamlDirectories.add("");
-    String gaDir = "harvestedWeblogicBeanTypes/" + mbeansVersion.getWebLogicVersion().getDomainVersion();
-    // Search the harvested yamls
-    typesYamlDirectories.add(gaDir);
+    // Search the builtin harvested yamls first
+    String harvestedDir = "harvestedWeblogicBeanTypes" + "/" + mbeansVersion.getWebLogicVersion().getDomainVersion();
+    typeYamlDirectoryReaders.add(new YamlClasspathDirectoryReader(harvestedDir));
+    // Then search the builtin hand coded yamls
+    YamlDirectoryReader builtinHandCodedYamlDirectoryReader = new YamlClasspathDirectoryReader("");
+    typeCustomizationYamlDirectoryReaders.add(builtinHandCodedYamlDirectoryReader);
+    typeYamlDirectoryReaders.add(builtinHandCodedYamlDirectoryReader);
+    // Finally search the hand coded extension yamls
+    List<YamlDirectoryReader> extensionDirectoryReaders = getExtensionDirectoryReaders();
+    typeCustomizationYamlDirectoryReaders.addAll(extensionDirectoryReaders);
+    typeYamlDirectoryReaders.addAll(extensionDirectoryReaders);
+  }
+
+  private List<YamlDirectoryReader> getExtensionDirectoryReaders() {
+    List<YamlDirectoryReader> readers = new ArrayList<>();
+    String extensionDirs = System.getProperty("console.extensionDirectories");
+    if (!StringUtils.isEmpty(extensionDirs)) {
+      for (String extensionDir : extensionDirs.split(",")) {
+        if ("true".equals(System.getenv("debugYaml"))) {
+          // FortifyIssueSuppression Log Forging
+          // extensionDir is configured by the end user and is not a forging risk.
+          LOGGER.info("Extension directory " + extensionDir);
+        }
+        // FortifyIssueSuppression Log Forging
+        // extensionDir is configured by the end user and is not a forging risk.
+        LOGGER.fine("Extension directory " + extensionDir);
+        readers.add(new YamlFileDirectoryReader(extensionDir));
+      }
+    }
+    return readers;
   }
 
   @Override
-  protected List<String> getTypesYamlDirectories() {
-    return typesYamlDirectories;
+  protected List<YamlDirectoryReader> getTypeYamlDirectoryReaders() {
+    return typeYamlDirectoryReaders;
+  }
+
+  @Override
+  protected List<YamlDirectoryReader> getTypeCustomizationYamlDirectoryReaders() {
+    return typeCustomizationYamlDirectoryReaders;
   }
 
   @Override
@@ -80,15 +116,6 @@ class WebLogicYamlReader extends YamlReader {
 
   BeanTypeDefCustomizerSource getDefaultBeanTypeDefCustomizerSource(BeanTypeDef typeDef) {
     return super.getBeanTypeDefCustomizerSource(typeDef);
-  }
-
-  @Override
-  public BeanTypeDefExtensionSource getBeanTypeDefExtensionSource(BeanTypeDef typeDef) {
-    return getTypeYamlReader(typeDef).getBeanTypeDefExtensionSource(typeDef);
-  }
-
-  BeanTypeDefExtensionSource getDefaultBeanTypeDefExtensionSource(BeanTypeDef typeDef) {
-    return super.getBeanTypeDefExtensionSource(typeDef);
   }
 
   @Override
@@ -164,5 +191,42 @@ class WebLogicYamlReader extends YamlReader {
 
   private WebLogicBeanTypeYamlReader getTypeYamlReader(String type) {
     return WebLogicBeanTypeYamlReader.getTypeYamlReader(this, type);
+  }
+
+  private abstract static class YamlDirectoryReaderImpl implements YamlDirectoryReader {
+    private String directory;
+
+    protected YamlDirectoryReaderImpl(String directory) {
+      this.directory = directory;
+    }
+
+    @Override
+    public <T> T readYaml(String relativeYamlPath, Class<T> type, boolean mustExist) {
+      return readYamlInternal(YamlReader.getYamlPath(directory, relativeYamlPath), type, mustExist);
+    }
+
+    protected abstract <T> T readYamlInternal(String yamlPath, Class<T> type, boolean mustExist);
+  }
+
+  private static class YamlClasspathDirectoryReader extends YamlDirectoryReaderImpl {
+    private YamlClasspathDirectoryReader(String directory) {
+      super(directory);
+    }
+
+    @Override
+    public <T> T readYamlInternal(String yamlPath, Class<T> type, boolean mustExist) {
+      return YamlUtils.readResource(yamlPath, type, mustExist);
+    }
+  }
+
+  private static class YamlFileDirectoryReader extends YamlDirectoryReaderImpl {
+    private YamlFileDirectoryReader(String directory) {
+      super(directory);
+    }
+
+    @Override
+    protected <T> T readYamlInternal(String yamlPath, Class<T> type, boolean mustExist) {
+      return YamlUtils.readFile(yamlPath, type, mustExist);
+    }
   }
 }

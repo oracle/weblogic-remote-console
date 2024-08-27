@@ -3,6 +3,7 @@
 
 package weblogic.remoteconsole.server.repo;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -108,7 +109,28 @@ public class PageDescription {
       builder.add("rowSelectionProperty", "none");
     }
     builder.add("navigationProperty", "identity");
+    PagePropertyDef defaultSortPropertyDef = getDefaultSortPropertyDef(tableDef);
+    if (defaultSortPropertyDef != null) {
+      builder.add("defaultSortProperty", defaultSortPropertyDef.getFormFieldName());
+    }
     return builder.build();
+  }
+
+  private PagePropertyDef getDefaultSortPropertyDef(TableDef tableDef) {
+    List<PagePropertyDef> allPropertyDefs = new ArrayList<>(tableDef.getDisplayedColumnDefs());
+    allPropertyDefs.addAll(tableDef.getHiddenColumnDefs());
+    // return the first key property def if there is one
+    for (PagePropertyDef propertyDef : allPropertyDefs) {
+      if (propertyDef.isKey()) {
+        return propertyDef;
+      }
+    }
+    // return the first property if there is one
+    if (!allPropertyDefs.isEmpty()) {
+      return allPropertyDefs.get(0);
+    }
+    // no columns!
+    return null;
   }
 
   private JsonObject sliceFormDefToJson(SliceFormDef sliceFormDef) {

@@ -364,6 +364,7 @@ properties:
 - defaultValue:
     value:
       value: false
+  deprecated: '14.1.2.0.0 '
   descriptionHTML: '<p>Specifies whether the domain should enter database passive
     mode.</p> '
   name: DBPassiveMode
@@ -372,6 +373,7 @@ properties:
 - defaultValue:
     value:
       value: 30
+  deprecated: '14.1.2.0.0 '
   descriptionHTML: '<p>Specifies the maximum amount of time, in seconds, that is allowed
     for in-progress work to complete before entering database passive mode.</p> '
   name: DBPassiveModeGracePeriodSeconds

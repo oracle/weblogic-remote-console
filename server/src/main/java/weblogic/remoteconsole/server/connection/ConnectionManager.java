@@ -503,6 +503,7 @@ public class ConnectionManager {
     }
 
     WebLogicVersion weblogicVersion = WebLogicVersions.getVersion(domainVersion);
+    capabilities.addAll(WebLogicVersions.getVersionCapabilities(weblogicVersion));
 
     // FortifyIssueSuppression Log Forging
     // domainVersion is from a trusted source - WebLogic - and is,

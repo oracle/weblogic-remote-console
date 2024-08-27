@@ -21,6 +21,7 @@ import weblogic.remoteconsole.common.repodef.SliceFormDef;
 import weblogic.remoteconsole.common.repodef.SlicesDef;
 import weblogic.remoteconsole.common.repodef.TableDef;
 import weblogic.remoteconsole.common.utils.Path;
+import weblogic.remoteconsole.common.utils.StringUtils;
 import weblogic.remoteconsole.server.repo.BeanReaderRepoSearchBuilder;
 import weblogic.remoteconsole.server.repo.BeanReaderRepoSearchResults;
 import weblogic.remoteconsole.server.repo.BeanSearchResults;
@@ -28,6 +29,8 @@ import weblogic.remoteconsole.server.repo.BeanTreePath;
 import weblogic.remoteconsole.server.repo.InvocationContext;
 import weblogic.remoteconsole.server.repo.Page;
 import weblogic.remoteconsole.server.repo.Response;
+import weblogic.remoteconsole.server.repo.SettableValue;
+import weblogic.remoteconsole.server.repo.StringValue;
 import weblogic.remoteconsole.server.repo.Value;
 import weblogic.remoteconsole.server.webapp.BaseResource;
 import weblogic.remoteconsole.server.webapp.EditableCollectionChildBeanResource;
@@ -206,5 +209,59 @@ public class DescriptorBeanCustomizer {
       throw new AssertionError("Could not find " + propertyDef + " in " + deploymentBTP);
     }
     return response.setSuccess(value.asString().getValue());
+  }
+
+  public static Response<SettableValue> getDescriptorBeanClass(InvocationContext ic) {
+    Response<SettableValue> response = new Response<>();
+    String dbc = null;
+    BeanTreePath crBTP = getCustomResourceBTP(ic);
+    if (crBTP != null) {
+      Response<String> getResponse = findDescriptorBeanClass(ic, crBTP);
+      if (!getResponse.isSuccess()) {
+        return response.copyUnsuccessfulResponse(getResponse);
+      }
+      dbc = getResponse.getResults();
+    }
+    if (StringUtils.isEmpty(dbc)) {
+      dbc = "UnknownDescriptorBeanClass";
+    }
+    SettableValue rtn = new SettableValue(new StringValue(dbc));
+    return response.setSuccess(rtn);
+  }
+
+  private static BeanTreePath getCustomResourceBTP(InvocationContext ic) {
+    // Domain/CustomResources/<resource> or Domain/CustomResources/<resource>/CustomResource
+    Path path = ic.getBeanTreePath().getPath();
+    List<String> components = path.getComponents();
+    if (components.size() >= 3 && "Domain".equals(components.get(0)) && "CustomResources".equals(components.get(1))) {
+      if (components.size() == 3 || (components.size() == 4 && "CustomResource".equals(components.get(3)))) {
+        return BeanTreePath.create(ic.getBeanTreePath().getBeanRepo(), path.subPath(0, 3));
+      }
+    }
+    return null;
+  }
+
+  private static Response<String> findDescriptorBeanClass(InvocationContext ic, BeanTreePath customResourceBTP) {
+    Response<String> response = new Response<>();
+    // Don't return whether properties are set.
+    BeanReaderRepoSearchBuilder builder =
+      ic.getPageRepo().getBeanRepo().asBeanReaderRepo().createSearchBuilder(ic, false);
+    BeanPropertyDef dbcPropertyDef = customResourceBTP.getTypeDef().getPropertyDef(new Path("DescriptorBeanClass"));
+    builder.addProperty(customResourceBTP, dbcPropertyDef);
+    Response<BeanReaderRepoSearchResults> searchResponse = builder.search();
+    if (!searchResponse.isSuccess()) {
+      return response.copyUnsuccessfulResponse(searchResponse);
+    }
+    BeanSearchResults customResourceResults = searchResponse.getResults().getBean(customResourceBTP);
+    if (customResourceResults == null) {
+      // the custom resource doesn't exist
+      return response.setNotFound();
+    }
+    String dbc = null;
+    Value dbcValue = customResourceResults.getValue(dbcPropertyDef);
+    if (dbcValue != null && dbcValue.isString()) {
+      dbc = dbcValue.asString().getValue();
+    }
+    return response.setSuccess(dbc);
   }
 }

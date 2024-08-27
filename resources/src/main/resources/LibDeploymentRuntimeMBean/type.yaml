@@ -6,7 +6,7 @@ actions:
 - name: "redeploy"
   label: "Redeploy"
   actionMethod: weblogic.remoteconsole.customizers.LibDeploymentRuntimeMBeanCustomizer.redeploy
-  successMessage: Redeployed and created task for library {0}
+  successMessage: Redeployed and created task for library {0}. Track progress under Monitoring Tree -> Deployment -> Deployment Tasks
   failureMessage: Failed to redeploy library {0}, check deployment task for more information
   disableMBeanJavadoc: true
   helpHTML: >
@@ -22,7 +22,7 @@ actions:
 
 - name: uploadAndRedeploy
   label: "Upload and Redeploy"
-  successMessage: Uploaded, redeployed and created task for library {0}
+  successMessage: Uploaded, redeployed and created task for library {0}. Track progress under Monitoring Tree -> Deployment -> Deployment Tasks
   failureMessage: Failed to upload and redeploy library {0}, check deployment task for more information
   disableMBeanJavadoc: true
   helpHTML: >

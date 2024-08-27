@@ -755,6 +755,11 @@ public class LocalizedConstants {
       "Download"
     );
 
+  public static final LocalizableString NODE_MANAGER_LOG_DOWNLOAD_NOT_SUPPORTED =
+      addConstant(
+          "nodeManagerLogDownloadNotSupported",
+          "Download Log not supported"
+      );
 
   public static final LocalizableString NODE_MANAGER_LOG_NOT_AVAILABLE_LABEL =
     addConstant(
@@ -812,6 +817,12 @@ public class LocalizedConstants {
     addConstant(
       "thisServer",
       "This Server"
+    );
+
+  public static final LocalizableString USER_GROUP_READER_STATUS_OK =
+    addConstant(
+      "userGroupReaderStatusOK",
+      "OK"
     );
 
   // Returns all of the constants (used when the resource bundles are generated at build time)

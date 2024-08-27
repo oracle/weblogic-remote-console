@@ -35,7 +35,6 @@ public class JDBCSystemResourceMBeanCustomizerUtils {
   public static final String PROPERTY_GLOBAL_TRANSACTIONS_PROTOTOL =
     "JDBCResource.JDBCDataSourceParams.GlobalTransactionsProtocol";
   public static final String PROPERTY_URL = "JDBCResource.JDBCDriverParams.Url";
-  public static final String PROPERTY_TEST_CONFIGURATION = "TestConfiguration";
 
   // UCP-specific constants
   public static final String PROPERTY_UCP_DATABASE_DRIVER = ucpScopedName(PROPERTY_DATABASE_DRIVER);
@@ -56,9 +55,6 @@ public class JDBCSystemResourceMBeanCustomizerUtils {
   // Just a variable name
   public static final String PROPERTY_GRIDLINK_ONS_WALLET_PASSWORD =
     "JDBCResource.JDBCOracleParams.OnsWalletPassword";
-
-  // By default, don't test the connection before creating the data source.
-  public static boolean DEFAULT_TEST_CONFIGURATION = false;
 
   // Info about the available JDBC drivers
   private static JDBCDriverInfoFactory DRIVER_INFO_FACTORY = JDBCDriversUtils.getJDBCDriverInfoFactory();

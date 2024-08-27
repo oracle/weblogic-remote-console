@@ -3,8 +3,12 @@
 
 introductionHTML: >
   <p>Use this page to configure properties for this Coherence cluster.</p>
-  <p>To use a custom operational override file, specify <code>-Dcoherence.override=/path/to/custom/override.xml</code>
-  for all servers that are part of the Coherence cluster.  The page help includes a link to the corresponding Coherence documentation.</p>
+
+# Removes importCustomClusterConfigurationFile when not in the edit tree:
+customizePageDefMethod: weblogic.remoteconsole.customizers.CoherenceClusterSystemResourceMBeanCustomizer.customizeSliceFormDef
+
+actions:
+- name: importCustomClusterConfigurationFile
 
 properties:
 - name: "Name"

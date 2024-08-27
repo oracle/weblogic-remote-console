@@ -70,4 +70,5 @@ contents:
   - child: Domain.WLDFSystemResources
   # - child: Domain.SNMPAgent            # not supported by WDT
   # - child: Domain.SNMPAgentDeployments # not supoported by WDT
+- child: Domain.CustomResources
 - child: Domain.RecentSearches

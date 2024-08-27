@@ -1,4 +1,4 @@
-# Copyright (c) 2020, 2023, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2020, 2024, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 properties:
@@ -6,22 +6,25 @@ properties:
   writable: never
 
 actions:
-
-- name: "downloadLogAsJson"
-  label: "Download logs as json"
-  # don't specify polling since are no columns in the table that are affected by this action
-  actionMethod: weblogic.remoteconsole.customizers.WLDFDataAccessRuntimeMBeanCustomizer.downloadLogAsJson
-  definition:
-    type: "void"
-    descriptionHTML: >
-      <p>Search this diagnostics log, returning the results as json.</p>
-
-- name: "downloadLogAsPlainText"
-  label: "Download logs as text"
-  # don't specify polling since are no columns in the table that are affected by this action
-  actionMethod: weblogic.remoteconsole.customizers.WLDFDataAccessRuntimeMBeanCustomizer.downloadLogAsPlainText
-  definition:
-    type: "void"
-    descriptionHTML: >
-      <p>Search this diagnostics log, returning the results in the same text format
-      as the corresponding server-side log files.</p>
+- name: "downloadLogs"
+  label: "Download"
+  disableMBeanJavadoc: true
+  actionMethod: weblogic.remoteconsole.customizers.WLDFDataAccessRuntimeMBeanCustomizer.downloadLogs
+  helpHTML: >
+    <p>Download log files to the specified directory. If the directory does not exist, it will be created. 
+    Log files are named automatically based on server name, log file type, and time stamp.</p>
+  # don't specify polling since there is no column in the table that are affected by this action
+  inputForm:
+    customizePageMethod: weblogic.remoteconsole.customizers.WLDFDataAccessRuntimeMBeanCustomizer.customizeDownloadLogsInputForm
+    introductionHTML: >
+      <p>Download log files to the specified directory. If the directory does not exist, it will be created. 
+      Log files are named automatically based on server name, log file type, and time stamp.</p>
+    parameters:
+      - name: "LogFileDirectory"
+        label: "Directory"
+        required: true
+      - name: "FileFormat"
+        legalValues:
+          - value: "JSON"
+          - value: "PlainText"
+        required: true

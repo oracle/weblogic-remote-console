@@ -2915,6 +2915,12 @@ properties:
   writable: true
 - defaultValue: {
     }
+  descriptionHTML: '<p>Gets debugSingletonServicesConcise attribute of ServerDebugMBean</p> '
+  name: DebugSingletonServicesConcise
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
   descriptionHTML: '<p>Debug management situational configuration processing</p> '
   name: DebugSituationalConfig
   type: boolean

@@ -305,7 +305,6 @@ describe.only('Test Suite: monitoring_test for Navtree Monitoring functionality'
             console.log("Click at Context 'java:global.medrec.medrec-facade-impl'");
             await element.click();
             await driver.sleep(2400);
-
             console.log("Click at Context 'java:global.mejb'");
             if (element.isEnabled()) {
                 await element.click();
@@ -330,7 +329,7 @@ describe.only('Test Suite: monitoring_test for Navtree Monitoring functionality'
     //
     it('10. Test Category: GAT/Risk1\n \t Test Scenario: Download Monitoring -> Environment -> Servers ' +
         '-> AdminServer -> Logs and Archives -> DomainLog.json file', async function () {
-        file = "DownloadAdminServerDomainLogJsonFile.json"
+        file = "DownloadAdminServerDomainLogJsonFile.png"
         try {
             await admin.goToNavTreeLevelFourLink(driver,"monitoring","Environment",
                 "Servers","AdminServer","Diagnostics");
@@ -343,12 +342,8 @@ describe.only('Test Suite: monitoring_test for Navtree Monitoring functionality'
             await driver.findElement(By.xpath("//oj-table/div//tbody/tr[2]/td[1]")).click();
             await driver.sleep(1200);
             console.log("Click to download DomainLog file");
-            await driver.findElement(By.xpath("//oj-button[@id='downloadMenuLauncher']")).click();
+            await driver.findElement(By.xpath("//oj-button[@id='downloadLogs']")).click();
             await driver.sleep(1200);
-            console.log("Select file type as Json");
-            await driver.findElement(By.xpath("//span[contains(.,'As json')]")).click();
-            await driver.sleep(1200);
-            console.log("Click to close file download location dialog");
             element = driver.findElement(By.css(".oj-fwk-icon-cross"));
             if (element.isEnabled()) {
                 await element.click();
@@ -380,24 +375,31 @@ describe.only('Test Suite: monitoring_test for Navtree Monitoring functionality'
     //
     it('11. Test Category: GAT/Risk1\n \t Test Scenario: Download DataSourceLog.txt file from Monitoring -> ' +
         'Logs and Archives -> DataSourceLog -> AdminServer page', async function () {
-        file = "DownloadDataSourceLogTxtFile.json"
+        file = "DownloadDataSourceLogTxtFile.png"
         try {
             await admin.goToNavTreeLevelThreeLink(driver,"monitoring","Diagnostics",
                 "Logs and Archives","DataSourceLog");
             await driver.sleep(2400);
-
             console.log("Click to select AdminServer DataAccessRuntime DataSourceLog file");
             await driver.findElement(By.xpath("//oj-table/div/table/tbody/tr/td[1]")).click();
-            //await driver.findElement(By.xpath("//oj-selector[@id='table_table_selector_0']")).click();
             await driver.sleep(1200);
             console.log("Click to download DomainLog file");
-            await driver.findElement(By.xpath("//oj-button[@id='downloadMenuLauncher']")).click();
+            //await driver.findElement(By.xpath("//oj-button[@id='downloadMenuLauncher']")).click();
+            await driver.findElement(By.xpath("//oj-button[@id='downloadLogs']")).click();
+            await driver.sleep(1200);
+            console.log("Click File Format menu");
+            await driver.findElement(By.xpath("//*[@id='FileFormat']/div[2]/span/a")).click();
             await driver.sleep(1200);
             console.log("Select file type as Text");
-            await driver.findElement(By.xpath("//span[contains(.,'As text')]")).click();
+            await driver.findElement(By.xpath("//*[text()='TEXT']")).click();
+            await driver.sleep(1200);
+            console.log("Click Done button");
+            await driver.findElement(By.xpath("//*[@id='[[i18n.buttons.save.id]]']")).click();
             await driver.sleep(1200);
             console.log("Click to close file download location dialog");
-            element = driver.findElement(By.css(".oj-fwk-icon-cross"));
+            element = driver.findElement(By.css(".oj-button-sm .oj-fwk-icon"));
+            driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
+            await driver.sleep(2400);
             if (element.isEnabled()) {
                 await element.click();
             }
@@ -405,12 +407,12 @@ describe.only('Test Suite: monitoring_test for Navtree Monitoring functionality'
             driver.findElements(
                 By.xpath("//oj-message[contains(.,'TypeError') and @class='oj-error oj-complete']")).then((elements) => {
                 if (elements.length > 0) {
-                    console.log("Fail to download and close 'DataSourceLog.txt' file");
+                    console.log("Fail to download and close 'AdminServer_DataSourceLog_Date.....txt' file");
                     console.log("Test FAIL");
                     throw new Error("TypeError dialog appears");
                     return false;
                 } else {
-                    console.log("Successfully download and close 'DataSourceLog.txt' file");
+                    console.log("Successfully download and close 'AdminServer_DataSourceLog_Date.....txt' file");
                     console.log("Test PASS");
                     return true;
                 }
@@ -428,7 +430,7 @@ describe.only('Test Suite: monitoring_test for Navtree Monitoring functionality'
     //
     it('12. Test Category: GAT/Risk1\n \t Test Scenario: Download Monitoring -> Environment -> Servers ' +
         '-> AdminServer -> Logs and Archives -> EventsDataArchive.txt file', async function () {
-        file = "DownloadEventsDataArchiveTxtFile.json"
+        file = "DownloadEventsDataArchiveTxtFile.png"
         try {
             await admin.goToNavTreeLevelFiveLink(driver,"monitoring","Environment",
                 "Servers","AdminServer","Diagnostics","Logs and Archives");
@@ -437,13 +439,20 @@ describe.only('Test Suite: monitoring_test for Navtree Monitoring functionality'
             await driver.findElement(By.xpath("//oj-table/div//tbody/tr[3]/td[1]")).click();
             await driver.sleep(1200);
             console.log("Click to download DomainLog file");
-            await driver.findElement(By.xpath("//oj-button[@id='downloadMenuLauncher']")).click();
+            await driver.findElement(By.xpath("//oj-button[@id='downloadLogs']")).click();
             await driver.sleep(1200);
-            console.log("Select file type as text");
-            await driver.findElement(By.xpath("//span[contains(.,'As text')]")).click();
+            console.log("Click File Format menu");
+            await driver.findElement(By.xpath("//*[@id='FileFormat']/div[2]/span/a")).click();
+            await driver.sleep(1200);
+            console.log("Select file type as Text");
+            await driver.findElement(By.xpath("//*[text()='TEXT']")).click();
+            console.log("Click Done button");
+            await driver.findElement(By.xpath("//*[@id='[[i18n.buttons.save.id]]']")).click();
             await driver.sleep(1200);
             console.log("Click to close file download location dialog");
-            element = driver.findElement(By.css(".oj-fwk-icon-cross"));
+            element = driver.findElement(By.css(".oj-button-sm .oj-fwk-icon"));
+            driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
+            await driver.sleep(2400);
             if (element.isEnabled()) {
                 await element.click();
             }

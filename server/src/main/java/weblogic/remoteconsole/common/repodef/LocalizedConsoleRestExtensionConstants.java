@@ -76,8 +76,8 @@ public class LocalizedConsoleRestExtensionConstants {
     );
 
     addConstant(
-        "applicationHasNoPlan",
-        "The application ''{0}'' does not have a deployment plan."
+      "applicationHasNoPlan",
+      "The application ''{0}'' does not have a deployment plan."
     );
 
     // {0} is the plan path
@@ -89,40 +89,49 @@ public class LocalizedConsoleRestExtensionConstants {
     // {0} is the plan path
     // {1} is domain home
     addConstant(
-        "planPathNotUnderDomainRoot",
-        "The plan path ''{0}'' must be under domain home:  ''{1}''"
+      "planPathNotUnderDomainRoot",
+      "The plan path ''{0}'' must be under domain home:  ''{1}''"
     );
 
     // {0} is the plan path
     addConstant(
-        "planPathIsADirectory",
-        "The plan path ''{0}'' is a directory.  Specify a file name ended with .xml "
+      "planPathIsADirectory",
+      "The plan path ''{0}'' is a directory.  Specify a file name ended with .xml "
     );
 
     // {0} is the plan path
     addConstant(
-        "planPathAlreadyExists",
-        "The plan path ''{0}'' already exists.  Overwriting an existing file is not allowed."
+      "planPathAlreadyExists",
+      "The plan path ''{0}'' already exists.  Overwriting an existing file is not allowed."
     );
 
     // {0} is the configured staging mode.
     addConstant(
-        "stageModeNotSupported",
-        "This deployment cannot be redeployed because its staging mode is ''{0}''.  Remove and add it instead."
+      "stageModeNotSupported",
+       "This deployment cannot be redeployed because its staging mode is ''{0}''.  Remove and add it instead."
     );
 
     addConstant(
-        "libraryRedeployNotSupported",
-        "The library ''{0}'' cannot be redeployed because its source is not under "
-            + "the administration server's upload directory.  Remove and add it instead."
+      "libraryRedeployNotSupported",
+      "The library ''{0}'' cannot be redeployed because its source is not under "
+        + "the administration server's upload directory.  Remove and add it instead."
     );
 
     // {0} is the bean name
     addConstant(
-        "descriptorBeanNotRemovable",
-        "''{0}'' cannot be removed because it is defined in the application''s deployment descriptors."
+      "descriptorBeanNotRemovable",
+      "''{0}'' cannot be removed because it is defined in the application''s deployment descriptors."
     );
 
+    addConstant(
+      "testDataSourceConfigurationSucceeded",
+      "Successfully connected to this data source's database from the WebLogic domain's Administration Server."
+    );
+
+    addConstant(
+      "testDataSourceConfigurationFailed",
+      "Could not connect to this data source's database from the WebLogic domain's Administration Server."
+    );
   }
 
   // Find the LocalizableString for a key.

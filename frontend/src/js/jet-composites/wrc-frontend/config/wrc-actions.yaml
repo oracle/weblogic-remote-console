@@ -29,7 +29,9 @@ actions:
       iconFile: action-stop-icon-blk_24x24
     - id: stopActions
       iconFile: action-stop-icon-blk_24x24
-    - id: download
+    - id: downloadLogs
+      iconFile: action-download-icon-blk_24x24
+    - id: downloadSingleLog
       iconFile: action-download-icon-blk_24x24
     - id: shrink
       iconFile: action-shrink-icon-blk_24x24
@@ -84,7 +86,11 @@ actions:
     - id: createCollectionChild
       iconFile: action-create-icon-blk_24x24
     - id: runGC
-      iconFile: delete-icon-blk_24x24
+      iconFile: broom-icon-blk_24x24
+    - id: testConfiguration
+      iconFile: action-test-configuration-icon-blk_24x24
+    - id: importCustomClusterConfigurationFile
+      iconFile: action-import-3d-icon-blk_24x24
 
   frontend:
     - id: new

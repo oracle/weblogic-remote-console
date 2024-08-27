@@ -3,7 +3,11 @@
 
 package weblogic.remoteconsole.server.repo.weblogic;
  
+import java.util.HashSet;
 import java.util.Set;
+
+import weblogic.remoteconsole.common.utils.WebLogicVersion;
+import weblogic.remoteconsole.common.utils.WebLogicVersions;
 
 /**
  * Supported WDT mbean capabilities that page yamls check for
@@ -18,9 +22,16 @@ public class WDTCapabilities {
   // Also, since we don't know whether the user intends to use this model
   // to create a JRF or normal WLS domain, assume not JRF (i.e.
   // don't include the 'JRFSecurityProviders' capability).
-  public static final Set<String> CAPABILITIES =
+  private static final Set<String> CAPABILITIES =
     Set.of(
       // "AllowList",
       "WDT"
     );
+
+  public static Set<String> getCapabilities(WebLogicVersion weblogicVersion) {
+    Set<String> capabilities = new HashSet<>();
+    capabilities.addAll(CAPABILITIES);
+    capabilities.addAll(WebLogicVersions.getVersionCapabilities(weblogicVersion));
+    return capabilities;
+  }
 }

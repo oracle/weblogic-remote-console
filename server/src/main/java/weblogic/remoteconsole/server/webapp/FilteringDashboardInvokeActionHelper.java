@@ -1,10 +1,12 @@
-// Copyright (c) 2023, Oracle and/or its affiliates.
+// Copyright (c) 2023, 2024, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.webapp;
 
+import java.util.List;
 import javax.json.JsonObject;
 
+import weblogic.remoteconsole.common.repodef.PagePath;
 import weblogic.remoteconsole.server.repo.BeanTreePath;
 import weblogic.remoteconsole.server.repo.Dashboard;
 import weblogic.remoteconsole.server.repo.InvocationContext;
@@ -45,10 +47,29 @@ public class FilteringDashboardInvokeActionHelper extends InvokeActionHelper {
   protected InvocationContext getTableRowIC(BeanTreePath rowBTP) {
     InvocationContext rowIC = super.getTableRowIC(rowBTP);
     rowIC.setPagePath(
-      getInvocationContext().getPageRepo().getPageRepoDef().newTablePagePath(
-        getInvocationContext().getBeanTreePath().getTypeDef()
+      rowIC.getPageRepo().getPageRepoDef().newTablePagePath(
+        rowIC.getBeanTreePath().getTypeDef()
       )
     );
     return rowIC;
+  }
+
+  @Override
+  protected Response<InvocationContext> getActionInputFormIC() {
+    // Return the invocation context for the first row's action input form
+    // TBD - what if the rows are heterogeneous?
+    Response<InvocationContext> response = new Response<>();
+    Response<List<BeanTreePath>> rbResponse =
+      TableActionRequestBodyMapper.fromRequestBody(getInvocationContext(), getRequestBody());
+    if (!rbResponse.isSuccess()) {
+      return response.copyUnsuccessfulResponse(rbResponse);
+    }
+    BeanTreePath firstRowBTP = rbResponse.getResults().get(0);
+    BeanTreePath collectionBTP = BeanTreePath.create(firstRowBTP.getBeanRepo(), firstRowBTP.getPath().getParent());
+    InvocationContext aifIC = getTableRowIC(collectionBTP);
+    aifIC.setPagePath(
+      PagePath.newActionInputFormPagePath(aifIC.getPagePath(), getAction())
+    );
+    return response.setSuccess(aifIC);
   }
 }

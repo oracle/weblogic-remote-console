@@ -11,16 +11,15 @@ const safari = require('selenium-webdriver/safari');
 const { Builder } = require('selenium-webdriver');
 const getenv = require('getenv');
 
-var ffOptions = new firefox.Options().headless();
+var ffOptions = new firefox.Options();
 ffOptions.addArguments('--no-sandbox');
-ffOptions.addArguments('--headless');
+ffOptions.addArguments('--headless=new');
 ffOptions.addArguments('--disable-gpu');
 
 
 var chOptions   = new chrome.Options();
-chOptions.headless();
 chOptions.addArguments('--no-sandbox');
-chOptions.addArguments('--headless');
+chOptions.addArguments('--headless=new');
 chOptions.addArguments('--window-size=1920x1080');
 chOptions.addArguments('--disable-dev-shm-usage');
 if (getenv("CHROME_BROWSER")) {

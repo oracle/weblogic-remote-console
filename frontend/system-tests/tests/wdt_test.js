@@ -405,11 +405,15 @@ describe.only('Test Suite: wdt_test: Import base_domain Project and create provi
                 await driver.sleep(1400);
                 console.log("Click OK button");
                 await driver.findElement(By.xpath("//span[starts-with(@id,'dlgOkBtn12')]")).click();
-
                 await driver.sleep(8400);
                 console.log("Click Provider Management Image link");
-                await driver.findElement(By.xpath("//a[@id='provider-management-iconbar-icon']/span/img")).click();
-                await driver.sleep(6400);
+                element = driver.findElement(By.xpath("//a[@id='provider-management-iconbar-icon']/span/img"));
+                driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
+                await driver.sleep(300);
+                if (element.isEnabled()) {
+                    await element.click();
+                    await driver.sleep(300);
+                }
                 await driver.findElement(By.xpath("//span[contains(.,'baseDomainModel')]")).click();
                 await driver.sleep(9600);
                 await admin.selectDropDownList(driver,"model-proplist-selection-field",
@@ -423,7 +427,6 @@ describe.only('Test Suite: wdt_test: Import base_domain Project and create provi
                 console.log("Click OK button");
                 await driver.findElement(By.xpath("//span[starts-with(@id,'dlgOkBtn12')]")).click();
                 await driver.sleep(4800);
-
                console.log("Click WDT Model Tree");
                await driver.findElement(By.xpath("//div[@id='modeling-gallery-panel-card']/img")).click();
                await driver.sleep(2400);
@@ -439,7 +442,6 @@ describe.only('Test Suite: wdt_test: Import base_domain Project and create provi
                await driver.sleep(4800);
                await element.click();
                await driver.sleep(4800);
-
                console.log("Click Domain Name WDT Setting option");
                await driver.findElement(By.xpath("//*[@id='wdtOptions_Name']/img")).click();
                await driver.sleep(2400);
@@ -461,10 +463,8 @@ describe.only('Test Suite: wdt_test: Import base_domain Project and create provi
                console.log("Click Production Mode Enable switch");
                await driver.findElement(By.xpath("//oj-switch[@id='ProductionModeEnabled']/div[1]/div/div")).click();
                await driver.sleep(2400);
-
                await admin.enableCheckBox(driver,"SecurityConfiguration_SecureMode_SecureModeEnabled",3);
                await driver.sleep(2400);
-
                console.log("Click Administration Port WDT Setting option");
                await driver.findElement(By.xpath("//*[@id='wdtOptions_AdministrationPort']/img")).click();
                await driver.sleep(2400);
@@ -487,47 +487,61 @@ describe.only('Test Suite: wdt_test: Import base_domain Project and create provi
                console.log("Click Internal Apps DeployOnDemand Enabled switch option");
                await driver.findElement(By.xpath("//oj-switch[@id='InternalAppsDeployOnDemandEnabled']/div[1]/div/div")).click();
                await driver.sleep(2400);
-               console.log("Click Console Enabled switch option");
-               await driver.findElement(By.xpath("//oj-switch[@id='ConsoleEnabled']/div[1]/div/div")).click();
+               console.log("Click Remote Console Helper Enabled switch option");
+               await driver.findElement(By.xpath("//*[@id='RemoteConsoleHelperEnabled']/div[1]/div/div")).click();
                await driver.sleep(2400);
-               console.log("Click Console ContextPath WDT Setting option");
-               await driver.findElement(By.xpath("//*[@id='wdtOptions_ConsoleContextPath']/img")).click();
-               await driver.sleep(2400);
-               console.log("Click Console ContextPath Model Radio button");
-               await driver.findElement(By.xpath("//oj-radioset[@id='radio_ConsoleContextPath']/div/span[2]/span/input")).click();
+               console.log("Click radio ConsoleContextPath WDT Setting option");
+               element = driver.findElement(By.xpath("//*[@id='RemoteConsoleHelper_ContextPath|input']"));
+               driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
+               await driver.sleep(4800);
+               await element.click();
+               await driver.sleep(4800);
+               console.log("Click RemoteConsoleHelper ProtectedCookieEnabled Radio button");
+               await driver.findElement(By.xpath("//*[@id='RemoteConsoleHelper_ProtectedCookieEnabled']")).click();
                await driver.sleep(2400);
                console.log("Enter Console Context Path Token Key");
-               await driver.findElement(By.xpath("//input[@id='text_ConsoleContextPath|input']")).click();
+               await driver.findElement(By.xpath("//*[@id='wdtOptions_RemoteConsoleHelper_ContextPath']/img")).click();
                await driver.sleep(600);
-               await driver.findElement(By.xpath("//input[@id='text_ConsoleContextPath|input']")).clear();
-               await driver.findElement(By.xpath("//*[@id='text_ConsoleContextPath|input']")).sendKeys("@@PROP:CONTEXT_PATH@@");
+               await driver.findElement(By.xpath("//*[@id='text_RemoteConsoleHelper_ContextPath|input']")).clear();
+               await driver.findElement(By.xpath("//*[@id='text_RemoteConsoleHelper_ContextPath|input']")).sendKeys("@@PROP:CONTEXT_PATH@@");
                await driver.sleep(2400);
                console.log("Click Ok button");
                await driver.findElement(By.xpath("//span[starts-with(@id,'dlgOkBtn22')]")).click();
                await driver.sleep(2400);
                console.log("Click AdminConsole Protected Cookie Enabled switch");
-               await driver.findElement(By.xpath("//oj-switch[@id='AdminConsole_ProtectedCookieEnabled']/div[1]/div/div")).click();
+               await driver.findElement(By.xpath("//*[@id='RemoteConsoleHelper_ProtectedCookieEnabled']/div[1]/div/div")).click();
                await driver.sleep(2400);
                console.log("Click wdtOptions Configuration AuditType Setting option");
-               await driver.findElement(By.xpath("//*[@id='wdtOptions_ConfigurationAuditType']/img")).click();
+               element = driver.findElement(By.xpath("//*[@id='oj-combobox-choice-ConfigurationAuditType']/span[2]/a"));
+               driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
+               await driver.sleep(2400);
+               await element.click();
                await driver.sleep(4800);
-               await admin.selectDropDownList(driver,"select_ConfigurationAuditType",
-                    "oj-searchselect-filter-select_ConfigurationAuditType|input","logaudit");
+               console.log("Select 'logaudit' type from 'Configuration Audit Type' down load box");
+               await driver.findElement(By.xpath("//*[@id='ConfigurationAuditType|input']")).sendKeys("logaudit");
+               await driver.sleep(2400);
+               await driver.findElement(By.xpath("//*[@id='ConfigurationAuditType|input']")).sendKeys(Key.ENTER);
                await driver.sleep(4800);
                console.log("Click Config Backup Enabled switch option");
-               await driver.findElement(By.xpath("//oj-switch[@id='ConfigBackupEnabled']/div[1]/div")).click();
+               element = driver.findElement(By.xpath("//*[@id='ConfigBackupEnabled']/div[1]/div"));
+               driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
+               await driver.sleep(2400);
+               await element.click();
                await driver.sleep(2400);
                console.log("Click JMX_Compatibility MBeanServer Enabled switch option");
                await driver.findElement(By.xpath("//oj-switch[@id='JMX_CompatibilityMBeanServerEnabled']/div[1]/div/div")).click();
                await driver.sleep(2400);
                console.log("Click LogFormat Compatibility Enabled switch option");
-               await driver.findElement(By.xpath("//oj-switch[@id='LogFormatCompatibilityEnabled']/div[1]/div/div")).click();
+               await driver.findElement(By.xpath("//*[@id='LogFormatCompatibilityEnabled']/div[1]/div/div")).click();
                await driver.sleep(2400);
                console.log("Click JMX_Platform MBeanServer Enabled switch option");
-               await driver.findElement(By.xpath("//oj-switch[@id='JMX_PlatformMBeanServerEnabled']/div[1]/div/div")).click();
+               await driver.findElement(By.xpath("//*[@id='JMX_PlatformMBeanServerEnabled']/div[1]/div/div")).click();
                await driver.sleep(2400);
                console.log("Click Diagnostic Context Compatibility Mode Enabled switch option");
-               await driver.findElement(By.xpath("//oj-switch[@id='DiagnosticContextCompatibilityModeEnabled']/div[1]/div/div")).click();
+               element = driver.findElement(By.xpath("//*[@id='DiagnosticContextCompatibilityModeEnabled']/div[1]/div/div"));
+               driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
+               await driver.sleep(4800);
+               await element.click();
                await driver.sleep(2400);
                console.log("Click Enable EECompliant Classloading For EmbeddedAdapters switch option");
                await driver.findElement(By.xpath("//oj-switch[@id='EnableEECompliantClassloadingForEmbeddedAdapters']/div[1]/div/div")).click();
@@ -542,7 +556,10 @@ describe.only('Test Suite: wdt_test: Import base_domain Project and create provi
                await driver.findElement(By.xpath("//input[@id='SiteName|input']")).sendKeys("localhost");
                await driver.sleep(600);
                console.log("Click wdtOptions JMX_Invocation Timeout Seconds switch option");
-               await driver.findElement(By.xpath("//a[@id='wdtOptions_JMX_InvocationTimeoutSeconds']/img")).click();
+               element = driver.findElement(By.xpath("//a[@id='wdtOptions_JMX_InvocationTimeoutSeconds']/img"));
+               driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
+               await driver.sleep(4800);
+               await element.click();
                await driver.sleep(600);
                console.log("Click Create Model Token Variable option");
                await driver.findElement(By.xpath("//oj-radioset[@id='radio_JMX_InvocationTimeoutSeconds']/div/span[4]/span/input")).click();
@@ -563,7 +580,10 @@ describe.only('Test Suite: wdt_test: Import base_domain Project and create provi
                 await driver.findElement(By.xpath("(//oj-input-text[@id='textarea_JMX_InvocationTimeoutSeconds']/div/div/input)[2]")).sendKeys("30");
                 await driver.sleep(1200);
                 console.log("Click OK button to save Invocation Timeout Variable");
-                await driver.findElement(By.xpath("//span[starts-with(@id,'dlgOkBtn22')]")).click();
+                element = driver.findElement(By.xpath("//span[starts-with(@id,'dlgOkBtn22')]"));
+                driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
+                await driver.sleep(4800);
+                await element.click();
                 console.log("Click Download (Save) File");
                 driver.findElement(By.xpath("//oj-button[@id='[[i18n.buttons.write.id]]']/button/div/span")).click();
                 await driver.sleep(4800);

@@ -30,12 +30,13 @@ describe.only('Test Suite: navtree1_test for Navtree Test-Suite', function () {
 
     //Test NavStrip Image Menu Links:
     //   Toggle Visibility, Configuration, Monitoring, Control
-    it.skip('1. Test Category: GAT/Risk1\n \t Test Scenario: NavStrip Menu Elements Test', async function () {
+    it('1. Test Category: GAT/Risk1\n \t Test Scenario: NavStrip Menu Elements Test', async function () {
         file = "navStrip.png";
         try {
             await admin.goToNavStripImageMenuLink(driver,"configuration");
+            await admin.goToNavStripImageMenuLink(driver,"view");
             await admin.goToNavStripImageMenuLink(driver,"monitoring");
-            //await admin.goToNavStripImageMenuLink(driver,"control");
+            await admin.goToNavStripImageMenuLink(driver,"security");
             console.log("TEST PASS ");
         }
         catch (e) {
@@ -84,7 +85,7 @@ describe.only('Test Suite: navtree1_test for Navtree Test-Suite', function () {
             await admin.goToNavTreeLevelTwoLink(driver,"configuration","Environment","Singleton Services");
             await admin.goToNavTreeLevelTwoLink(driver,"configuration","Environment","Startup Classes");
             await admin.goToNavTreeLevelTwoLink(driver,"configuration","Environment","Shutdown Classes");
-            await admin.goToNavTreeLevelTwoLink(driver,"configuration","Environment","Coherence Cluster System Resources");
+            await admin.goToNavTreeLevelTwoLink(driver,"configuration","Environment","Coherence Clusters");
             console.log("TEST PASS ");
         } catch (e) {
             await admin.takeScreenshot(driver, file);

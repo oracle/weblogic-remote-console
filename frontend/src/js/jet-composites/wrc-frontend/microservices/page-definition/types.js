@@ -84,13 +84,10 @@ define([
       getFullHelp: function(propertyName) {
         let helpDetailed = this.getHelpDetailed(propertyName);
 
-        if (helpDetailed == null) {
-          helpDetailed = '<p>No help description found.</p>';
-        }
-
         let result = helpDetailed;
         let externalHelp = this.getExternalHelp(propertyName);
         if (externalHelp != null) {
+          helpDetailed = helpDetailed ?? '';
           let link = externalHelp.label;
           if (typeof externalHelp.href !== 'undefined') {
             link = `<a href="#" on-click="[[handleHelpTopicLinkClicked]]" data-external-help-link="${externalHelp.href}">${externalHelp.label}</a>`;
@@ -656,7 +653,7 @@ define([
             }  else {
               if (this.pdjTypes[propertyName].legalValues !== undefined){
                 if (value === null || value === '') {
-                  result = CoreUtils.NULL_VALUE;
+                  result = displayValue;
                 }
               }
             }

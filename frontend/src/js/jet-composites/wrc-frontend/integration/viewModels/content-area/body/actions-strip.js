@@ -133,7 +133,8 @@ define([
           action: event.currentTarget.attributes['id'].value,
           label: event.currentTarget.innerText
         };
-        options['isDownloadAction'] = (['downloadLogAsJson', 'downloadLogAsPlainText'].includes(options.action));
+        options['isDownloadAction'] =
+          (['downloadLogs', 'downloadSingleLog'].includes(options.action));
         options['isDeleteAction'] = (options.action === 'delete');
 
         viewParams.signaling.ancillaryContentItemCleared.dispatch('actions-strip');

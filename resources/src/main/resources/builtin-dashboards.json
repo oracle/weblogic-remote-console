@@ -28,6 +28,34 @@
         "State"
       ]
     },
+    "JMS Destinations" : {
+      "type" : "FilteringDashboard",
+      "path" : "DomainRuntime.CombinedServerRuntimes.ServerRuntime.JMSRuntime.JMSServers.Destinations",
+      "description" : "This dashboard displays the per-server statistics of every JMS destination.",
+      "defaultColumns" : [
+        "BeanKeyResult_CombinedServerRuntimes",
+        "BeanKeyResult_JMSServers",
+        "BeanKeyResult_Destinations",
+        "DestinationType",
+        "BytesCurrentCount",
+        "BytesHighCount",
+        "BytesPendingCount",
+        "BytesReceivedCount",
+        "BytesThresholdTime",
+        "ConsumersCurrentCount",
+        "ConsumersHighCount",
+        "ConsumersTotalCount",
+        "ConsumptionPaused",
+        "ConsumptionPausedState",
+        "InsertionPaused",
+        "InsertionPausedState",
+        "MessagesCurrentCount",
+        "MessagesHighCount",
+        "MessagesPendingCount",
+        "MessagesReceivedCount",
+        "MessagesThresholdTime"
+      ]
+    },
     "Logs and Archives" : {
       "type" : "FilteringDashboard",
       "description" : "This dashboard contains all diagnostic (e.g. server and domain) logs",

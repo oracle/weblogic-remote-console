@@ -1,4 +1,4 @@
-// Copyright (c) 2021, 2023, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2024, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef.schema;
@@ -28,6 +28,7 @@ public class BeanTypeDefCustomizerSource {
   private BooleanValue ordered = new BooleanValue();
   private BooleanValue editable = new BooleanValue();
   private BooleanValue supportsFilteringDashboards = new BooleanValue(true);
+  private BooleanValue settable = new BooleanValue();
 
   // The list of properties on this type that have been customized.
   public List<BeanPropertyDefCustomizerSource> getProperties() {
@@ -211,7 +212,6 @@ public class BeanTypeDefCustomizerSource {
     ordered.setValue(value);
   }
 
-
   // Indicates that whether this type is editable is specified in type.yaml
   // (v.s. v.s. using the defaults for the bean repo)
   //
@@ -231,6 +231,27 @@ public class BeanTypeDefCustomizerSource {
 
   public void setEditable(boolean value) {
     editable.setValue(value);
+  }
+
+  // Indicates that whether this type is settable is specified in type.yaml
+  // (v.s. v.s. using the defaults for the bean repo)
+  //
+  // e.g. some descriptor beans aren't settable even though
+  // they extend DescriptorBean which extends SettableBean
+  public boolean isSettableSpecifiedInYaml() {
+    return settable.isSpecifiedInYaml();
+  }
+
+  // Whether the type is settable.
+  public boolean isSettable() {
+    if (!isSettableSpecifiedInYaml()) {
+      throw new AssertionError("isSettable called when isSettableSpecifiedInYaml is false");
+    }
+    return settable.getValue();
+  }
+
+  public void setSettable(boolean value) {
+    settable.setValue(value);
   }
 
   // Whether this type supports custom filtering dashboards.

@@ -23,9 +23,9 @@
       */
       // injector:mainReleasePaths
           {
-            'ojs': 'libs/oj/15.1.0/debug',
-            'ojL10n': 'libs/oj/15.1.0/ojL10n',
-            'ojtranslations': 'libs/oj/15.1.0/resources',
+            'ojs': 'libs/oj/16.1.4/debug',
+            'ojL10n': 'libs/oj/16.1.4/ojL10n',
+            'ojtranslations': 'libs/oj/16.1.4/resources',
             'knockout': 'libs/knockout/knockout-3.5.1.debug',
             'jquery': 'libs/jquery/jquery-3.6.4',
             'jqueryui-amd': 'libs/jquery/jqueryui-amd-1.13.2',
@@ -43,7 +43,7 @@
             'preact/jsx-runtime': 'libs/preact/jsx-runtime/dist/jsxRuntime.umd',
             'proj4': 'libs/proj4js/dist/proj4-src',
             'touchr': 'libs/touchr/touchr',
-            'chai': 'libs/chai/chai-4.3.7',
+            'chai': 'libs/chai/chai-4.3.10',
             'js-yaml' : 'libs/js-yaml/js-yaml.min'
           }
         // endinjector
@@ -94,7 +94,7 @@ require(['ojs/ojcore', 'ojs/ojbootstrap', 'knockout', 'appController', 'ojs/ojro
         // event before executing any code that might interact with Cordova APIs or plugins.
         if (document.body.classList.contains('oj-hybrid')) {
           document.addEventListener('deviceready', init);
-        } 
+        }
         else {
           init();
         }

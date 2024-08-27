@@ -18,7 +18,6 @@ import weblogic.remoteconsole.common.repodef.schema.BeanChildDefCustomizerSource
 import weblogic.remoteconsole.common.repodef.schema.BeanPropertyDefCustomizerSource;
 import weblogic.remoteconsole.common.repodef.schema.BeanPropertyDefSource;
 import weblogic.remoteconsole.common.repodef.schema.BeanTypeDefCustomizerSource;
-import weblogic.remoteconsole.common.repodef.schema.BeanTypeDefExtensionSource;
 import weblogic.remoteconsole.common.repodef.schema.BeanTypeDefSource;
 import weblogic.remoteconsole.common.repodef.schema.SubTypeDefSource;
 import weblogic.remoteconsole.common.utils.Path;
@@ -34,7 +33,6 @@ public class NormalBeanTypeDefImpl extends YamlBasedBeanTypeDefImpl {
   private static final Logger LOGGER = Logger.getLogger(NormalBeanTypeDefImpl.class.getName());
 
   private BeanTypeDefSource source;
-  private BeanTypeDefExtensionSource extensionSource;
   private BeanTypeDefCustomizerSource customizerSource;
   private BeanPropertyDefImpl keyPropertyDefImpl;
   private BeanPropertyDefImpl identityPropertyDefImpl;
@@ -49,7 +47,6 @@ public class NormalBeanTypeDefImpl extends YamlBasedBeanTypeDefImpl {
   public NormalBeanTypeDefImpl(BeanRepoDefImpl beanRepoDefImpl, BeanTypeDefSource source) {
     super(beanRepoDefImpl, source.getName());
     this.source = source;
-    this.extensionSource = getBeanRepoDefImpl().getYamlReader().getBeanTypeDefExtensionSource(this);
 
     initializeCustomizerSource();
     initializeInstanceName(getCustomizerSource().getInstanceName());
@@ -175,15 +172,21 @@ public class NormalBeanTypeDefImpl extends YamlBasedBeanTypeDefImpl {
       // The tree isn't editable.
       // Don't make settable available, even if the type extends SettableBean.
       settable = false;
-    } else if (!isType("SettableBean")) {
-      // The type doesn't support finding out if a property is set or unsetting a property.
-      settable = false;
     } else if (!getBeanRepoDefImpl().isAccessAllowed(WebLogicRoles.ADMIN_ROLES)) {
       // Not an administrator.  The WLS REST api uses SettableBean.isSet to see if a property
       // is set when reading a property. And isSet is only available to administrators.
       settable = false;
     } else {
-      settable = true;
+      if (getCustomizerSource().isSettableSpecifiedInYaml()) {
+        settable = getCustomizerSource().isSettable();
+      } else {
+        if (!isType("SettableBean")) {
+          // The type doesn't support finding out if a property is set or unsetting a property.
+          settable = false;
+        } else {
+          settable = true;
+        }
+      }
     }
   }
 
@@ -469,10 +472,6 @@ public class NormalBeanTypeDefImpl extends YamlBasedBeanTypeDefImpl {
     return getBeanRepoDefImpl().isEditable();
   }
 
-  private BeanTypeDefExtensionSource getExtensionSource() {
-    return extensionSource;
-  }
-
   private BeanTypeDefCustomizerSource getCustomizerSource() {
     return customizerSource;
   }
@@ -522,10 +521,6 @@ public class NormalBeanTypeDefImpl extends YamlBasedBeanTypeDefImpl {
     private void addLocalContainedDefsSources() {
       addLocalPropertyAndChildDefsSources(getSource().getProperties());
       addLocalActionDefsSources(getSource().getActions());
-      if (getExtensionSource() != null) {
-        addLocalPropertyAndChildDefsSources(getExtensionSource().getProperties());
-        addLocalActionDefsSources(getExtensionSource().getActions());
-      }
       addLocalActionDefsSources(getCustomActionSources());
     }
 
@@ -567,9 +562,6 @@ public class NormalBeanTypeDefImpl extends YamlBasedBeanTypeDefImpl {
       // Loop over the child beans defined on this type.
       // They will pull in their children too.
       addFoldableContainedDefsSources(getSource().getProperties());
-      if (getExtensionSource() != null) {
-        addFoldableContainedDefsSources(getExtensionSource().getProperties());
-      }
     }
 
     private void addFoldableContainedDefsSources(List<BeanPropertyDefSource> propertyDefSources) {

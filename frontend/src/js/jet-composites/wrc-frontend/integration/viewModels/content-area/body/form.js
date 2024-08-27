@@ -155,6 +155,14 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
       this.showInstructions = ko.observable(true);
 
       this.showHelp = ko.observable(false);
+
+      this.showHelp.subscribe((showHelp) => {
+        const form = document.getElementById('cfe-form');
+        if (form) {
+          form.style.display = showHelp ? 'none' : '';
+        }
+      });
+
       this.helpDataSource = ko.observableArray([]);
       this.helpDataProvider = new ArrayDataProvider(this.helpDataSource, {keyAttributes: 'Name'});
       this.helpFooterDom = ko.observable({});
@@ -595,7 +603,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
       };
 
       function handleActionInputButtonClicked(rdjData, actionInputFormConfig) {
-        ActionsInputDialog.handleActionInputButtonClicked(self, viewParams, rdjData, actionInputFormConfig, 'form', submitActionInputForm, getRowKey());
+        ActionsInputDialog.handleActionInputButtonClicked(self, viewParams, rdjData, actionInputFormConfig, 'form', submitActionInputForm, getInputFormRowKey());
       }
 
       function handleActionInputFormCompleted(reply, options) {
@@ -720,6 +728,15 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
         return rowKey;
       }
 
+      function getInputFormRowKey() {
+        let rowKey = '_identity';
+        const table = document.getElementById('table');
+        if (table !== null && CoreUtils.isNotUndefinedNorNull(table.attributes['input-form-data-row-key'])) {
+          rowKey = table.attributes['input-form-data-row-key'].value;
+        }
+        return rowKey;
+      }
+
       function submitActionInputForm(rdjData, submitResults, options) {
         function reloadCheckedRowsKeySet(checkedRows, rdjData) {
           function getKeyValue(row, rowKey) {
@@ -737,11 +754,11 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
           if (CoreUtils.isNotUndefinedNorNull(self.selectedRows().row.keys.keys)) {
             if (self.selectedRows().row.keys.keys.size > 0) {
               checkedRows.clear();
-              const rowKey = getRowKey();
-              for (const rowIndex of Array.from(self.selectedRows().row.keys.keys)) {
-                const row = rdjData.data[rowIndex];
-                if (CoreUtils.isNotUndefinedNorNull(row)) {
-                  const keyValue = getKeyValue(row, rowKey);
+              const rowKey = getInputFormRowKey();
+              for (const rowKeyValue of Array.from(self.selectedRows().row.keys.keys)) {
+                let identityRow = rdjData.data.find(row => CoreUtils.isNotUndefinedNorNull(row.identity) && row.identity.value.resourceData === rowKeyValue);
+                if (CoreUtils.isNotUndefinedNorNull(identityRow)) {
+                  const keyValue = getKeyValue(identityRow, rowKey);
                   if (CoreUtils.isNotUndefinedNorNull(keyValue)) {
                     checkedRows.add(keyValue);
                   }
@@ -762,23 +779,23 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
         reloadCheckedRowsKeySet(self.declarativeActions.checkedRows, self.rdjData);
 
         DeclarativeActionsManager.submitActionInputForm(submitResults, self.declarativeActions.checkedRows, rdjData.invoker, options)
-          .then(reply => {
-            self.formActionsStripModuleConfig
-              .then(moduleConfig => {
-                moduleConfig.viewModel.handleActionButtonClickedReply(reply, options);
-              });
-          })
-          .catch(failure => {
-            if (CoreUtils.isNotUndefinedNorNull(failure.messages)) {
-              MessageDisplaying.displayResponseMessages(failure.messages);
-            }
-            else {
-              ViewModelUtils.failureResponseDefaultHandling(failure);
-            }
-          })
-          .finally(() => {
-            ViewModelUtils.setPreloaderVisibility(false);
+        .then(reply => {
+          self.formActionsStripModuleConfig
+          .then(moduleConfig => {
+            moduleConfig.viewModel.handleActionButtonClickedReply(reply, options);
           });
+        })
+        .catch(failure => {
+          if (CoreUtils.isNotUndefinedNorNull(failure.messages)) {
+            MessageDisplaying.displayResponseMessages(failure.messages);
+          }
+          else {
+            ViewModelUtils.failureResponseDefaultHandling(failure);
+          }
+        })
+        .finally(() => {
+          ViewModelUtils.setPreloaderVisibility(false);
+        });
       }
 
       function refreshCheckedRowsKeySet() {
@@ -4809,6 +4826,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
 
         sliceTableFormLayout.setAttribute('data', '[[sliceTableDataProvider]]');
         sliceTableFormLayout.setAttribute('data-row-key', results.rowKey);
+        sliceTableFormLayout.setAttribute('input-form-data-row-key', results.inputFormRowKey);
         sliceTableFormLayout.setAttribute('id', 'table');
         sliceTableFormLayout.setAttribute('class', 'wlstable');
         sliceTableFormLayout.setAttribute('aria-labelledbyl', 'intro');
@@ -4938,6 +4956,19 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
           return rowKey;
         }
 
+        function getInputFormRowKey(rows) {
+          let inputFormRowKey = '_rowIndex';
+          if (Array.isArray(rows) && rows.length > 0) {
+            if (CoreUtils.isNotUndefinedNorNull(rows[0]._identifier)) {
+              inputFormRowKey = '_identifier';
+            } else
+            if (CoreUtils.isNotUndefinedNorNull(rows[0]._identity)) {
+              inputFormRowKey = '_identity';
+            }
+          }
+          return inputFormRowKey;
+        }
+
         function getSliceTableDataProvider(rows, sortColumnName, sortDirection) {
           if (self.tableSort.property === null) self.tableSort.property = sortColumnName;
           if (self.tableSort.direction === null) self.tableSort.direction = sortDirection;
@@ -4956,9 +4987,11 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
         );
 
         const rowKey = getRowKey(sliceTableRows);
+        const inputFormRowKey = getInputFormRowKey(sliceTableRows);
 
         const results = {
           rowKey: rowKey,
+          inputFormRowKey: inputFormRowKey,
           sliceTableRows: sliceTableRows,
           selectableRows: (rowKey === '_rowIndex' ? sliceTableRows : sliceTableRows.filter(row => CoreUtils.isNotUndefinedNorNull(row[rowKey])))
         };

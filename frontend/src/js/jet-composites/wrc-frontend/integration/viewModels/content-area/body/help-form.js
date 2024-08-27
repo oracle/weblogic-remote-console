@@ -141,12 +141,15 @@ define([
             const label = pdjTypes.getHelpLabel(name);
             // Determine the help description for the property
             const fullHelp = pdjTypes.getFullHelp(name);
-            const description = {view: HtmlUtils.stringToNodeArray(fullHelp), data: this};
+            const description = fullHelp ? { view: HtmlUtils.stringToNodeArray(fullHelp), data: this } : null;
             // Use Map to set value of "Name" and "Description"
             // columns, in a way that honors the language locale
-            const entries = new Map([[column1, label], [column2, description]]);
+            // skip properties for which there is no help
+            if (description) {
+              const entries = new Map([[column1, label], [column2, description]]);
 
-            helpData.push(Object.fromEntries(entries));
+              helpData.push(Object.fromEntries(entries));
+            }
           }
         }
 
@@ -160,12 +163,15 @@ define([
             const label = pdjTypes.getLabel(name);
             // Determine the help description for the property
             const fullHelp = pdjTypes.getFullHelp(name);
-            const description = {view: HtmlUtils.stringToNodeArray(fullHelp), data: this};
-            // Use Map to set value of "Name" and "Description"
+            const description = fullHelp ? { view: HtmlUtils.stringToNodeArray(fullHelp), data: this } : null;
+            // Use Map to set value of "Name" and "Description",
             // columns, in a way that honors the language locale
-            const entries = new Map([[column1, label], [column2, description]]);
+            // skip any property that lacks a descprtion
+            if (fullHelp) {
+              const entries = new Map([[column1, label], [column2, description]]);
 
-            helpData.push(Object.fromEntries(entries));
+              helpData.push(Object.fromEntries(entries));
+            }
           }
         }
 

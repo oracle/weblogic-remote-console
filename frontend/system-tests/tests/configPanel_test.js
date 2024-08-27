@@ -52,7 +52,7 @@ describe.only('Test Suite: configPanel_test for Configuration Landing Menu', fun
             await admin.goToLandingPanelSubTreeCard(driver,"Edit Tree","EnvironmentChevron","Singleton Services");
             await admin.goToLandingPanelSubTreeCard(driver,"Edit Tree","EnvironmentChevron","Startup Classes");
             await admin.goToLandingPanelSubTreeCard(driver,"Edit Tree","EnvironmentChevron","Shutdown Classes");
-            await admin.goToLandingPanelSubTreeCard(driver,"Edit Tree","EnvironmentChevron","Coherence Cluster System Resources");
+            await admin.goToLandingPanelSubTreeCard(driver,"Edit Tree","EnvironmentChevron","Coherence Clusters");
             console.log("TEST PASS ");
         } catch (e) {
             await admin.takeScreenshot(driver, file);
@@ -160,8 +160,8 @@ describe.only('Test Suite: configPanel_test for Configuration Landing Menu', fun
     it('6. Test Category: GAT/Risk3\n \t Test Scenario: Interoperability Configuration Elements Menu', async function () {
         file = "EditTreeInteroperabilityMenu.png";
         try {
-            await admin.goToLandingPanelSubTreeCard(driver, "Edit Tree","InteroperabilityChevron","WTC Servers",0);
-            await admin.goToLandingPanelSubTreeCard(driver, "Edit Tree","InteroperabilityChevron","Jolt Connection Pools",0);
+            await admin.goToLandingPanelSubTreeCard(driver, "Edit Tree","InteroperabilityChevron","WTC Servers",5);
+            await admin.goToLandingPanelSubTreeCard(driver, "Edit Tree","InteroperabilityChevron","Jolt Connection Pools",5);
             console.log("TEST PASS ");
         } catch (e) {
             await admin.takeScreenshot(driver, file);
@@ -175,13 +175,11 @@ describe.only('Test Suite: configPanel_test for Configuration Landing Menu', fun
     //     SNMP Log Filters, SNMP Proxies, SNMP Trap Destinations, Log Filters
     //
     //
-    it.skip('7. Test Category: GAT/Risk3\n \t Test Scenario: Diagnostic Configuration Elements Menu', async function () {
+    it('7. Test Category: GAT/Risk3\n \t Test Scenario: Diagnostic Configuration Elements Menu', async function () {
         //arrowIndex = 5 for right arrow
         file = "EditTreeDiagnosticMenu.png";
         try {
             await admin.goToLandingPanelSubTreeCard(driver, "Edit Tree","DiagnosticsChevron","WLDF System Resources",5);
-            await admin.goToLandingPanelSubTreeCard(driver, "Edit Tree","DiagnosticsChevron","SNMP Agent Deployments",5);
-            await admin.goToLandingPanelSubTreeCard(driver, "Edit Tree","DiagnosticsChevron","Domain SNMP Agent",5);
             console.log("TEST PASS ");
         } catch (e) {
             await admin.takeScreenshot(driver, file);

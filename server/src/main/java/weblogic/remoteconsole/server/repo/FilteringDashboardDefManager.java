@@ -644,14 +644,14 @@ public class FilteringDashboardDefManager {
     BeanTreePath btpTemplate
   ) {
     List<PageActionDef> rtn = new ArrayList<>();
-    // For now, just return copies of the type's table's actions that support multiple rows.
+    // For now, just return copies of the type's table's actions that support one or multiple rows.
     // We might want to consider actions on slices later.
     PageDef pageDef =
       getPageRepoDef(ic).getPageDef(getPageRepoDef(ic).newTablePagePath(btpTemplate.getTypeDef()));
     if (pageDef != null) {
       for (PageActionDef actionDef : pageDef.getActionDefs()) {
-        if ("multiple".equals(actionDef.getRows())) {
-          // TBD - should weed out actions that need input forms?
+        String rows = actionDef.getRows();
+        if ("multiple".equals(rows) || "one".equals(rows)) {
           rtn.add(actionDef);
         }
       }

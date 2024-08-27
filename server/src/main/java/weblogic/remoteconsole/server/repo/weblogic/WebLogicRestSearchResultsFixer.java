@@ -1,4 +1,4 @@
-// Copyright (c) 2021, 2023, Oracle Corporation and/or its affiliates.
+// Copyright (c) 2021, 2024, Oracle Corporation and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.repo.weblogic;
@@ -228,25 +228,31 @@ public class WebLogicRestSearchResultsFixer {
       this.unfixedBean = unfixedBean;
       this.fixedBeanBuilder = Json.createObjectBuilder(getUnfixedBean());
 
-      if (!unfixedBean.containsKey(PROP_TYPE)) {
-        // There's an intermittent NPE at 248 when viewing the servers table,
-        // probably related to when the admin server can't contact a managed
-        // server and sends back partial JSON it.
-        // This temporary debugging statement should help us figure out the root problem:
-        LOGGER.warning(
-          "Temporary debugging statement - missing type for"
-          + " beanTypeDef=" + beanTypeDef
-          + " isCollection=" + isCollection
-          + " propRestName=" + propRestName
-          + " unfixedBean=" + unfixedBean
-        );
-      }
-
       // Get this bean's name & type from the WLS REST response.
       // They should always be present since the corresponding
       // query should have said to include them.
-      String name = unfixedBean.getString(PROP_NAME);
-      String type = unfixedBean.getString(PROP_TYPE);
+      // However, some badly coded mbeans and REST apis don't return them,
+      // so, if they're missing, do our best to concoct values.
+      String name = null;
+      if (!unfixedBean.containsKey(PROP_NAME)) {
+        if (unfixedBean.containsKey("identity")) {
+          JsonArray identity = unfixedBean.getJsonArray("identity");
+          if (!identity.isEmpty()) {
+            name = identity.getString(identity.size() - 1);
+          }
+        }
+        if (name == null) {
+          name = StringUtils.getSimpleTypeName(beanTypeDef.getTypeName());
+        }
+      } else {
+        name = unfixedBean.getString(PROP_NAME);
+      }
+      String type = null;
+      if (!unfixedBean.containsKey(PROP_TYPE)) {
+        type = StringUtils.getSimpleTypeName(beanTypeDef.getTypeName());
+      } else {
+        type = unfixedBean.getString(PROP_TYPE);
+      }
 
       // this bean based on its type
       this.beanTypeDef = beanTypeDef;

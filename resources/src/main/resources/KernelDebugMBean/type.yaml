@@ -51,6 +51,9 @@ properties:
 - name: DebugMuxer
   useUnlocalizedNameAsLabel: true
 
+- name: DebugMuxerConcise
+  useUnlocalizedNameAsLabel: true
+
 - name: DebugMuxerConnection
   useUnlocalizedNameAsLabel: true
 
