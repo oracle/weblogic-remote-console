@@ -12,20 +12,20 @@
     <title>Frequently asked questions :: WebLogic Remote Console</title>
 
     
-    <link href="/weblogic-remote-console/css/nucleus.css?1719337042" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/fontawesome-all.min.css?1719337042" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/hybrid.css?1719337042" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/featherlight.min.css?1719337042" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/perfect-scrollbar.min.css?1719337042" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/auto-complete.css?1719337042" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/atom-one-dark-reasonable.css?1719337042" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/theme.css?1719337042" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/tabs.css?1719337042" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/hugo-theme.css?1719337042" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/nucleus.css?1724783132" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/fontawesome-all.min.css?1724783132" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/hybrid.css?1724783132" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/featherlight.min.css?1724783132" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/perfect-scrollbar.min.css?1724783132" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/auto-complete.css?1724783132" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/atom-one-dark-reasonable.css?1724783132" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/theme.css?1724783132" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/tabs.css?1724783132" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/hugo-theme.css?1724783132" rel="stylesheet">
     
     
 
-    <script src="/weblogic-remote-console/js/jquery-3.6.0.min.js?1719337042"></script>
+    <script src="/weblogic-remote-console/js/jquery-3.6.0.min.js?1724783132"></script>
 
     <style>
       :root #header + #content > #left > #rlblock_left{
@@ -59,14 +59,14 @@
     <span data-search-clear=""><i class="fas fa-times"></i></span>
 </div>
 
-<script type="text/javascript" src="/weblogic-remote-console/js/lunr.min.js?1719337042"></script>
-<script type="text/javascript" src="/weblogic-remote-console/js/auto-complete.js?1719337042"></script>
+<script type="text/javascript" src="/weblogic-remote-console/js/lunr.min.js?1724783132"></script>
+<script type="text/javascript" src="/weblogic-remote-console/js/auto-complete.js?1724783132"></script>
 <script type="text/javascript">
     
         var baseurl = "https:\/\/oracle.github.io\/weblogic-remote-console";
     
 </script>
-<script type="text/javascript" src="/weblogic-remote-console/js/search.js?1719337042"></script>
+<script type="text/javascript" src="/weblogic-remote-console/js/search.js?1724783132"></script>
 
     
   </div>
@@ -784,8 +784,11 @@
 
 
 <p>This section provides answers to frequently asked questions about the WebLogic Remote Console.</p>
+<h4 id="my-domain-is-behind-a-firewall-how-do-i-connect-to-the-weblogic-remote-console">My domain is behind a firewall. How do I connect to the WebLogic Remote Console?</h4>
+<p>For WebLogic Remote Console to connect to a domain&rsquo;s Administration Server, the management endpoint of the domain, <code>management/*</code>, must be publicly accessible. If your Administration Server is behind a firewall or load balancer, or otherwise externally unavailable, you will need to expose the endpoint manually.</p>
+<p><strong>TIP</strong>: If you needed to expose <code>console/*</code> to access the WebLogic Server <em>Administration</em> Console for your domain, simply follow the same procedure to expose <code>management/*</code> for the WebLogic Remote Console.</p>
 <h4 id="can-i-connect-the-weblogic-remote-console-to-domains-running-in-weblogic-on-oracle-cloud-infrastructure">Can I connect the WebLogic Remote Console to domains running in WebLogic on Oracle Cloud Infrastructure?</h4>
-<p>Yes, you can. First, make sure that the domain&rsquo;s administration server is publicly accessible so the WebLogic Remote Console can establish a connection to the administration server. Then, in the WebLogic Remote Console, enter your credentials and the publicly accessible URL for the WebLogic Administration Server.</p>
+<p>Yes, you can. First, make sure that the domain&rsquo;s Administration Server is publicly accessible so the WebLogic Remote Console can establish a connection to the administration server. Then, in the WebLogic Remote Console, enter your credentials and the publicly accessible URL for the WebLogic Administration Server.</p>
 <h4 id="can-i-connect-the-weblogic-remote-console-to-domains-running-on-other-cloud-providers-such-as-amazon-web-services-google-cloud-microsoft-azure-and-so-on">Can I connect the WebLogic Remote Console to domains running on other cloud providers such as Amazon Web Services, Google Cloud, Microsoft Azure and so on?</h4>
 <p>Yes, you can connect to other cloud providers. You&rsquo;ll need to make sure the domain&rsquo;s administration server is publicly accessible to allow a connection between the WebLogic Remote Console and the cloud provider. Then, in the WebLogic Remote Console, enter your credentials and the publicly accessible URL for the WebLogic Administration Server.</p>
 <p>Visit your cloud providers' documentation for more specific instructions on how to expose the <code>management/*</code> endpoint of the WebLogic Server.</p>
@@ -1268,19 +1271,19 @@
     <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
       <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
     </div>
-    <script src="/weblogic-remote-console/js/clipboard.min.js?1719337043"></script>
-    <script src="/weblogic-remote-console/js/perfect-scrollbar.min.js?1719337043"></script>
-    <script src="/weblogic-remote-console/js/perfect-scrollbar.jquery.min.js?1719337043"></script>
-    <script src="/weblogic-remote-console/js/jquery.sticky.js?1719337043"></script>
-    <script src="/weblogic-remote-console/js/featherlight.min.js?1719337043"></script>
-    <script src="/weblogic-remote-console/js/highlight.pack.js?1719337043"></script>
+    <script src="/weblogic-remote-console/js/clipboard.min.js?1724783132"></script>
+    <script src="/weblogic-remote-console/js/perfect-scrollbar.min.js?1724783132"></script>
+    <script src="/weblogic-remote-console/js/perfect-scrollbar.jquery.min.js?1724783132"></script>
+    <script src="/weblogic-remote-console/js/jquery.sticky.js?1724783132"></script>
+    <script src="/weblogic-remote-console/js/featherlight.min.js?1724783132"></script>
+    <script src="/weblogic-remote-console/js/highlight.pack.js?1724783132"></script>
     <script>hljs.initHighlightingOnLoad();</script>
-    <script src="/weblogic-remote-console/js/modernizr.custom-3.6.0.js?1719337043"></script>
-    <script src="/weblogic-remote-console/js/learn.js?1719337043"></script>
-    <script src="/weblogic-remote-console/js/hugo-learn.js?1719337043"></script>
+    <script src="/weblogic-remote-console/js/modernizr.custom-3.6.0.js?1724783132"></script>
+    <script src="/weblogic-remote-console/js/learn.js?1724783132"></script>
+    <script src="/weblogic-remote-console/js/hugo-learn.js?1724783132"></script>
     
         
-            <script src="/weblogic-remote-console/mermaid/mermaid.js?1719337043"></script>
+            <script src="/weblogic-remote-console/mermaid/mermaid.js?1724783132"></script>
         
         <script>
             mermaid.initialize({ startOnLoad: true });

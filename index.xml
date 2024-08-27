@@ -35,7 +35,7 @@ Basic layout The WebLogic Remote Console presents a simple user interface that v
       
       <guid>https://oracle.github.io/weblogic-remote-console/reference/faqs/</guid>
       <description>This section provides answers to frequently asked questions about the WebLogic Remote Console.
-Can I connect the WebLogic Remote Console to domains running in WebLogic on Oracle Cloud Infrastructure? Yes, you can. First, make sure that the domain&amp;rsquo;s administration server is publicly accessible so the WebLogic Remote Console can establish a connection to the administration server. Then, in the WebLogic Remote Console, enter your credentials and the publicly accessible URL for the WebLogic Administration Server.</description>
+My domain is behind a firewall. How do I connect to the WebLogic Remote Console? For WebLogic Remote Console to connect to a domain&amp;rsquo;s Administration Server, the management endpoint of the domain, management/*, must be publicly accessible. If your Administration Server is behind a firewall or load balancer, or otherwise externally unavailable, you will need to expose the endpoint manually.</description>
     </item>
     
     <item>
@@ -156,10 +156,9 @@ You must have the July 2021 Patch Set Update (PSU) for WebLogic Server applied t
       <pubDate>Wed, 01 Sep 2021 00:00:00 +0000</pubDate>
       
       <guid>https://oracle.github.io/weblogic-remote-console/userguide/upgrade/</guid>
-      <description>Upgrade to the latest WebLogic Remote Console and take advantage of the latest features in both the console and WebLogic Server.
-The WebLogic Remote Console extension is periodically updated. Check if there&amp;rsquo;s also a newer version of the extension available when you upgrade the WebLogic Remote Console.
-Delete and replace any previous versions of the extension. Keeping multiple versions of the extension installed can lead to unexpected behavior.
-   Open Help &amp;gt; Check for WebLogic Remote Console Updates.</description>
+      <description>Upgrade to the latest WebLogic Remote Console and extension and take advantage of the latest features in both the console and WebLogic Server.
+  Open Help &amp;gt; Check for WebLogic Remote Console Updates.
+  Select Download and install it to download the update immediately. The update runs in the background so you can continue working in the WebLogic Remote Console with no interruption. The next time the console is launched, the updates will apply.</description>
     </item>
     
     <item>

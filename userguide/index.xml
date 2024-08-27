@@ -46,10 +46,9 @@ Dashboards are only available for Administration Server providers (in the Monito
       <pubDate>Wed, 01 Sep 2021 00:00:00 +0000</pubDate>
       
       <guid>https://oracle.github.io/weblogic-remote-console/userguide/upgrade/</guid>
-      <description>Upgrade to the latest WebLogic Remote Console and take advantage of the latest features in both the console and WebLogic Server.
-The WebLogic Remote Console extension is periodically updated. Check if there&amp;rsquo;s also a newer version of the extension available when you upgrade the WebLogic Remote Console.
-Delete and replace any previous versions of the extension. Keeping multiple versions of the extension installed can lead to unexpected behavior.
-   Open Help &amp;gt; Check for WebLogic Remote Console Updates.</description>
+      <description>Upgrade to the latest WebLogic Remote Console and extension and take advantage of the latest features in both the console and WebLogic Server.
+  Open Help &amp;gt; Check for WebLogic Remote Console Updates.
+  Select Download and install it to download the update immediately. The update runs in the background so you can continue working in the WebLogic Remote Console with no interruption. The next time the console is launched, the updates will apply.</description>
     </item>
     
     <item>

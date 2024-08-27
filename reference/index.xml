@@ -14,7 +14,7 @@
       
       <guid>https://oracle.github.io/weblogic-remote-console/reference/faqs/</guid>
       <description>This section provides answers to frequently asked questions about the WebLogic Remote Console.
-Can I connect the WebLogic Remote Console to domains running in WebLogic on Oracle Cloud Infrastructure? Yes, you can. First, make sure that the domain&amp;rsquo;s administration server is publicly accessible so the WebLogic Remote Console can establish a connection to the administration server. Then, in the WebLogic Remote Console, enter your credentials and the publicly accessible URL for the WebLogic Administration Server.</description>
+My domain is behind a firewall. How do I connect to the WebLogic Remote Console? For WebLogic Remote Console to connect to a domain&amp;rsquo;s Administration Server, the management endpoint of the domain, management/*, must be publicly accessible. If your Administration Server is behind a firewall or load balancer, or otherwise externally unavailable, you will need to expose the endpoint manually.</description>
     </item>
     
     <item>
