@@ -1,4 +1,4 @@
-# Copyright (c) 2022, 2023, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2022, 2024, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 createResourceMethod: weblogic.remoteconsole.customizers.DashboardMBeanCustomizer.createResource
@@ -157,3 +157,7 @@ actions:
       "<p>Create a copy of this dashboard.</p>"
     parameters:
     - name: "Name"
+  polling:
+    # refresh once so that the copy shows up in the table & nav tree
+    reloadSeconds: 1
+    maxAttempts: 1

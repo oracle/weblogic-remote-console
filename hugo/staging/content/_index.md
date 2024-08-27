@@ -36,14 +36,24 @@ It's simple to install the WebLogic Remote Console and get up and running within
 
 ***
 ### What's new
-The [current release of the WebLogic Remote Console](https://github.com/oracle/weblogic-remote-console/releases) is 2.4.10. <!--This release was published in MONTH 2024.-->
+The [current release of the WebLogic Remote Console](https://github.com/oracle/weblogic-remote-console/releases) is 2.4.11. <!--This release was published in August 2024.-->
 
 <!-- **New features** -->
+
+
+{{% notice note %}}
+For simplicity, we have changed the versioning scheme of the WebLogic Remote Console extension to match that of WebLogic Remote Console. The WebLogic Remote Console extension is now `{{<console_rest_ext>}}`. 
+
+There are no releases between `console-rest-ext-9.0.war` (released with WebLogic Remote Console 2.4.10) and `console-rest-ext-2.4.11.war` (released with WebLogic Remote Console 2.4.11).
+
+For the best user experience, we recommend that whenever you update WebLogic Remote Console, that you also update the extension, to keep the two in sync.
+{{% /notice %}}
 
 ***
 
 #### Previous Releases {id="prev_releases"}
 Documentation for previous releases of the WebLogic Remote Console:
+* [2.4.10](2.4.10/)
 * [2.4.9](2.4.9/)
 * [2.4.8](2.4.8/)
 * [2.4.7](2.4.7/)

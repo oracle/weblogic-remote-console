@@ -95,6 +95,20 @@ properties:
   type: java.lang.String
 - defaultValue:
     value:
+      value: sub
+  descriptionHTML: '<p>Claim ID used to extract the user ID (GUID) from the token.</p> '
+  name: UserIDTokenClaim
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: upn
+  descriptionHTML: '<p>Claim ID used to extract the user name from the token.</p> '
+  name: UserNameTokenClaim
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
       value: '1.0'
   descriptionHTML: '<p>The version number of the WebLogic OpenID Connect Identity
     Assertion provider.</p> '

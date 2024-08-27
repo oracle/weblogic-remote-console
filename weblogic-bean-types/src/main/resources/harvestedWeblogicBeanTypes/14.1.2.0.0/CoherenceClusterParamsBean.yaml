@@ -23,11 +23,11 @@ properties:
   writable: true
 - defaultValue:
     derivedDefault: true
-  descriptionHTML: '<p>Specifies a clustering mode of either Unicast or Multicast.
-    If multicast is undesirable or unavailable in an environment, or when an environment
-    is not properly configured to support multicast, then setting up the Well Known
-    Addresses (WKA) feature is required. All cluster multicast communication is disabled
-    if WKA is enabled.</p> '
+  descriptionHTML: '<p>Specifies a clustering mode of either Unicast (default) or
+    Multicast. If multicast is undesirable or unavailable in an environment, or when
+    an environment is not properly configured to support multicast, then setting up
+    the Well Known Addresses (WKA) feature is required. All cluster multicast communication
+    is disabled if any of WKA, SSL, and/or secured production mode is/are enabled.</p> '
   legalValues:
   - multicast
   - unicast
@@ -75,13 +75,15 @@ properties:
   name: CoherenceServices
   relationship: containment
   type: weblogic.coherence.descriptor.wl.CoherenceServiceBean
-- defaultValue: {
-    }
-  descriptionHTML: '<p>Check to use WebLogic SSL configuration as global socket provider.</p> '
+- defaultValue:
+    derivedDefault: true
+  descriptionHTML: '<p>Specify the Global Socket Provider name. If not specified and
+    secured production mode is enabled, Coherence uses WebLogic SSL configuration
+    as Global Socket Provider. Otherwise, use the specified Global Socket Provider.</p> '
   name: GlobalSocketProvider
   redeployNeeded: true
   restartNeeded: true
-  type: boolean
+  type: java.lang.String
   writable: true
 - defaultValue:
     value:
@@ -113,14 +115,16 @@ properties:
   supported: false
   type: int
   writable: true
-- defaultValue: {
-    }
-  descriptionHTML: '<p>Check if secured production mode is enabled. When a Coherence
-    Secured Production Mode is not set, Coherence inherits the Secured Production
-    Mode from WebLogic.  If WebLogic secured production mode is enabled, then Coherence
-    will also run in secured production mode. If a Coherence Secured Production Mode
-    is specified (Yes or No), then Coherence will no longer inherit the mode from
-    WebLogic.</p> '
+- defaultValue:
+    secureModeValue:
+      value: true
+    value:
+      value: false
+  descriptionHTML: '<p>Specify whether secured production mode is enabled. When it
+    is not set, Coherence inherits the Secured Production Mode from WebLogic. Once
+    Coherence Secured Production Mode is specified (Yes or No), then Coherence will
+    no longer inherit the mode from WebLogic</p>  Default it to the corresponding
+    WebLogic value: '
   name: SecuredProduction
   redeployNeeded: true
   restartNeeded: true
@@ -153,16 +157,16 @@ properties:
   type: int
   writable: true
 - defaultValue:
-    value:
-      value: tmb
+    derivedDefault: true
   descriptionHTML: '<p>Specify the underlying transport protocol to use for cluster
-    communication.</p> <p>The transport type can be one of the following:</p> <ul>
-    <li>TMB: UDP + TMB (default)</li> <li>TCP: TCP + TMB</li> <li>UDP: UDP + datagram</li>
-    <li>SSL: SSL over TCP + TMBS</li> <li>SSLUDP: SSL over TCP + SSL over datagram</li>
-    <li>SDMB: UDP + SDMB</li> <li>IMB: UDP + IMB</li> </ul>  <p>Where: "TMB: UDP +
-    TMB" means for transport type TMB, cluster service communication uses UDP; reliable
-    point-to-point data service communication uses TMB. The default is TMB.</p>  <p>The
-    SDMB and IMB are only applicable to Exalogic environment.</p> '
+    communication. Default is SSL when secured production mode is enabled; TMB otherwise.</p>
+    <p>The transport type can be one of the following:</p> <ul> <li>TMB: UDP + TMB</li>
+    <li>TCP: TCP + TMB</li> <li>UDP: UDP + datagram</li> <li>SSL: SSL over TCP + TMBS</li>
+    <li>SSLUDP: SSL over TCP + SSL over datagram</li> <li>SDMB: UDP + SDMB</li> <li>IMB:
+    UDP + IMB</li> </ul>  <p>Where: "TMB: UDP + TMB" means for transport type TMB,
+    cluster service communication uses UDP; reliable point-to-point data service communication
+    uses TMB. The default is TMB.</p>  <p>The SDMB and IMB are only applicable to
+    Exalogic environment.</p> '
   legalValues:
   - tmb
   - tcp

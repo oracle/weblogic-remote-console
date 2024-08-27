@@ -1,0 +1,29 @@
+# Copyright (c) 2024, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+properties:
+- name: CacheDirectory
+  usedIf:
+    property: SynchronousWritePolicy
+    values:
+    - Direct-Write-With-Cache
+- name: MinWindowBufferSize
+  label: Minimum Window Buffer Size
+  usedIf:
+    property: SynchronousWritePolicy
+    values:
+    - Direct-Write-With-Cache
+    - Disabled
+- name: MaxWindowBufferSize
+  label: Maximum Window Buffer Size
+  usedIf:
+    property: SynchronousWritePolicy
+    values:
+    - Direct-Write-With-Cache
+    - Disabled
+- name: IoBufferSize
+  label: IO Buffer Size
+- name: MaxFileSize
+  label: Maximum File Size
+- name: FileLockingEnabled
+  label: Enable File Locking

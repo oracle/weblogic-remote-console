@@ -1,0 +1,24 @@
+# Copyright (c) 2024, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+name: weblogic.management.security.authentication.UserGroupReaderMBean
+baseTypes:
+- weblogic.management.security.AuthenticationProviderSecurityDataMBean
+
+# Note: need to provide type-specific collection names (e.g. ReadOnlyUsers v.s. Users)
+# since the RC gets confused if the same bean tree path patterr can yield different types
+# depending on the parent, e.g.
+# .../<DefaultAuthenticator>/Users is a DefaultAuthenticatorUserMBean
+# .../<SQLAuthenticator>/Users is a ReadOnlyUserMBean
+properties:
+- name: ReadOnlyUsers
+  relationship: containment
+  type: weblogic.management.security.authentication.ReadOnlyUserMBean
+  array: true
+- name: ReadOnlyGroups
+  relationship: containment
+  type: weblogic.management.security.authentication.ReadOnlyGroupMBean
+  array: true
+- name: Status
+  type: java.lang.String
+  descriptionHTML: The runtime status of this authentication provider.

@@ -429,7 +429,7 @@ define([
         }
 
         this.resetIconsVisibleState(self.perspective.id === 'monitoring');
-        showResetPageIcon(['configuration'].includes(self.perspective.id));
+        showResetPageIcon(['configuration', 'security'].includes(self.perspective.id));
         this.showTableCustomizerIcon(PageDefinitionHelper.hasSliceTable(pdjData));
       }.bind(this);
 

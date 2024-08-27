@@ -12,7 +12,6 @@ import weblogic.remoteconsole.common.repodef.schema.BeanPropertyDefCustomizerSou
 import weblogic.remoteconsole.common.repodef.schema.FormSectionDefSource;
 import weblogic.remoteconsole.common.repodef.schema.LegalValueDefCustomizerSource;
 import weblogic.remoteconsole.common.repodef.schema.PageDefSource;
-import weblogic.remoteconsole.common.repodef.weblogic.WebLogicRestEditPageRepoDef;
 import weblogic.remoteconsole.common.utils.StringUtils;
 import weblogic.remoteconsole.jdbc.utils.JDBCDriverAttribute;
 import weblogic.remoteconsole.jdbc.utils.JDBCDriverInfo;
@@ -20,7 +19,6 @@ import weblogic.remoteconsole.jdbc.utils.JDBCDriverInfo;
 import static weblogic.remoteconsole.customizers.JDBCSystemResourceMBeanCustomizerUtils.DATASOURCE_TYPE_GENERIC;
 import static weblogic.remoteconsole.customizers.JDBCSystemResourceMBeanCustomizerUtils.DATASOURCE_TYPE_GRIDLINK;
 import static weblogic.remoteconsole.customizers.JDBCSystemResourceMBeanCustomizerUtils.DATASOURCE_TYPE_UCP;
-import static weblogic.remoteconsole.customizers.JDBCSystemResourceMBeanCustomizerUtils.DEFAULT_TEST_CONFIGURATION;
 import static weblogic.remoteconsole.customizers.JDBCSystemResourceMBeanCustomizerUtils.PROPERTY_DATASOURCE_TYPE;
 import static weblogic.remoteconsole.customizers.JDBCSystemResourceMBeanCustomizerUtils.PROPERTY_DBMS_HOST;
 import static weblogic.remoteconsole.customizers.JDBCSystemResourceMBeanCustomizerUtils.PROPERTY_DBMS_NAME;
@@ -35,7 +33,6 @@ import static weblogic.remoteconsole.customizers.JDBCSystemResourceMBeanCustomiz
 import static weblogic.remoteconsole.customizers.JDBCSystemResourceMBeanCustomizerUtils.PROPERTY_GRIDLINK_ONS_NODE_LIST;
 import static weblogic.remoteconsole.customizers.JDBCSystemResourceMBeanCustomizerUtils.PROPERTY_GRIDLINK_ONS_WALLET_FILE;
 import static weblogic.remoteconsole.customizers.JDBCSystemResourceMBeanCustomizerUtils.PROPERTY_GRIDLINK_ONS_WALLET_PASSWORD;
-import static weblogic.remoteconsole.customizers.JDBCSystemResourceMBeanCustomizerUtils.PROPERTY_TEST_CONFIGURATION;
 import static weblogic.remoteconsole.customizers.JDBCSystemResourceMBeanCustomizerUtils.PROPERTY_UCP_DATABASE_DRIVER;
 import static weblogic.remoteconsole.customizers.JDBCSystemResourceMBeanCustomizerUtils.PROPERTY_URL;
 import static weblogic.remoteconsole.customizers.JDBCSystemResourceMBeanCustomizerUtils.driverName;
@@ -130,7 +127,6 @@ class JDBCSystemResourceMBeanCreateFormSourceCustomizer extends BasePageDefSourc
     for (JDBCDriverInfo driverInfo : driverInfos) {
       addDriverTransactionsSection(vendorSection, DATASOURCE_TYPE_GENERIC, driverPropertyName, driverInfo);
       addDriverConnectionPropertiesSection(vendorSection, DATASOURCE_TYPE_GENERIC, driverPropertyName, driverInfo);
-      addTestConfigurationSection(vendorSection, DATASOURCE_TYPE_GENERIC, driverPropertyName, driverInfo);
     }
   }
 
@@ -146,7 +142,6 @@ class JDBCSystemResourceMBeanCreateFormSourceCustomizer extends BasePageDefSourc
       addDriverTransactionsSection(section, DATASOURCE_TYPE_GRIDLINK, driverPropertyName, driverInfo);
       addGridLinkConnectionPropertiesSection(section, DATASOURCE_TYPE_GRIDLINK, driverPropertyName, driverInfo);
       addGridLinkONSSection(section, driverPropertyName, driverInfo);
-      addTestConfigurationSection(section, DATASOURCE_TYPE_GRIDLINK, PROPERTY_GRIDLINK_DATABASE_DRIVER, driverInfo);
     }
   }
 
@@ -238,7 +233,6 @@ class JDBCSystemResourceMBeanCreateFormSourceCustomizer extends BasePageDefSourc
         PROPERTY_UCP_DATABASE_DRIVER,
         driverInfo
       );
-      addTestConfigurationSection(section, DATASOURCE_TYPE_UCP, PROPERTY_UCP_DATABASE_DRIVER, driverInfo);
     }
   }
 
@@ -358,40 +352,6 @@ class JDBCSystemResourceMBeanCreateFormSourceCustomizer extends BasePageDefSourc
   ) {
     createWellKnownDriverConnectionProperties(section, datasourceType, driverInfo);
     createCustomDriverConnectionProperties(section, datasourceType, driverInfo);
-  }
-
-  // Add a section with a boolean 'TestConfiguration' property
-  // if the repo supports testing the datasource configuration
-  // before creating the datasource.
-  private void addTestConfigurationSection(
-    FormSectionDefSource parent,
-    String datasourceType,
-    String driverPropertyName,
-    JDBCDriverInfo driverInfo
-  ) {
-    if (!(getPagePath().getPagesPath().getPageRepoDef() instanceof WebLogicRestEditPageRepoDef)) {
-      // Only the edit tree on an admin server connection can test the configuration
-      // since we need to invoke a legacy REST operation to do it.
-      return;
-    }
-    // Add a section that usedIf's the driver
-    FormSectionDefSource section = addSectionToSection(parent);
-    section.setUsedIf(createUsedIf(driverPropertyName, driverName(driverInfo)));
-    // Add the TestConfiguration property to it.
-    BeanPropertyDefCustomizerSource property =
-      addNonMBeanBooleanPropertyToSection(
-        section,
-        driverNameToFormPropertyName(
-          driverScopedName(datasourceType, driverInfo, PROPERTY_TEST_CONFIGURATION)
-        ),
-        "Test Configuration",
-        "<p>Determines whether the configuration will be tested before the datasource is created.</p>"
-        + "<p>If enabled, the creation of the datasource will only be attempted if the test passes."
-        + " Note: the test will be performed on the WebLogic Administration Server"
-        + " (instead of the servers to which the datasource is targeted).</p>"
-      );
-    setDefaultValue(property, DEFAULT_TEST_CONFIGURATION);
-    property.setRequired(false);
   }
 
   // Add properties for all of the well known connection properties this driver supports (ordered).

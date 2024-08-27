@@ -161,8 +161,8 @@ html, body {
 /*
   min-width: 100vw;
   height: 100vh;
-*/
   overflow: hidden;
+*/
   min-width: var(--body-min-width);
   min-height: var(--body-min-height);
 }

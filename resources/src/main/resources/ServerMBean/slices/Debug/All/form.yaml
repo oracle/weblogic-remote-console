@@ -317,6 +317,7 @@ properties:
 - name: ServerDebug.DebugMessagingOwnableLock
 - name: ServerDebug.DebugMigrationInfo
 - name: ServerDebug.DebugMuxer
+- name: ServerDebug.DebugMuxerConcise
 - name: ServerDebug.DebugMuxerConnection
 - name: ServerDebug.DebugMuxerDetail
 - name: ServerDebug.DebugMuxerException
@@ -416,6 +417,7 @@ properties:
 - name: ServerDebug.DebugServerStartStatistics
 - name: ServerDebug.DebugServerStartupTimer
 - name: ServerDebug.DebugSingletonServices
+- name: ServerDebug.DebugSingletonServicesConcise
 - name: ServerDebug.DebugSituationalConfig
 - name: ServerDebug.DebugSpringMBeans
 - name: ServerDebug.DebugSpringStatistics

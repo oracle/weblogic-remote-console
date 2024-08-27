@@ -876,7 +876,7 @@ module.exports = function (driver, file) {
             }
             else {
                 console.log("Click Configuration->" + headerContainerName + " container landing image link.");
-                element = driver.findElement(By.xpath("//span[@id=\'" + headerContainerName + "\']"));
+                element = driver.findElement(By.xpath("//*[@id=\'" + headerContainerName + "\']"));
                 await driver.sleep(900);
                 if (element.isEnabled()) {
                     await element.click();
@@ -1065,12 +1065,13 @@ module.exports = function (driver, file) {
         //Click oj-conveyor-belt arrow-> (index=5 right arrow, index=3 left arrow, index=0 (default: no click)
         clickConveyorArrow: async function(driver,arrowIndex) {
             if (arrowIndex == 5) {
-                console.log("Click right oj-conveyor-belt arrow");
-                element = driver.findElement(By.xpath("//div["+arrowIndex+"]/div/span"));
+                console.log("Click right(5) oj-conveyor-belt arrow");
+                element = driver.findElement(
+                    By.xpath("//*[@id='landing-page-cards']/div/oj-conveyor-belt/div["+arrowIndex+"]/div"));
                 await element.click();
             }
             else if (arrowIndex == 3) {
-                console.log("Click left oj-conveyor-belt arrow")
+                console.log("Click left(3) oj-conveyor-belt arrow")
                 element = driver.findElement(By.xpath("//div["+arrowIndex+"]/div/span"));
                 await element.click();
             }

@@ -31,10 +31,10 @@ Copyright (c) 2020, 2024, Oracle and/or its affiliates. The Universal Permissive
                   </div>
                 </oj-bind-if>
 
-                <div class="landing-page-panel-footer oj-flex-item"role="heading" aria-level="1" :aria-label="[[group.data.label]]">
+                <div class="landing-page-panel-footer oj-flex-item"role="heading" aria-level="1" :aria-label="[[group.data.screenreader]]">
                   <span data-bind="text: group.data.label"></span>
                   <oj-bind-if test="[[typeof group.data.path === 'undefined']]">
-                    <span :id="[[group.data.name + 'Chevron']]" class="landing-page-panel-chevron oj-fwk-icon oj-fwk-icon-caret03-s" aria-controls="landing-page-panel-subtree" aria-expanded="false"></span>
+                    <span :id="[[group.data.name + 'Chevron']]" class="landing-page-panel-chevron oj-fwk-icon oj-fwk-icon-caret03-s" aria-controls="landing-page-panel-subtree"></span>
                   </oj-bind-if>
                 </div>
                 <oj-bind-if test="[[typeof group.data.path === 'undefined']]">
@@ -66,11 +66,11 @@ Copyright (c) 2020, 2024, Oracle and/or its affiliates. The Universal Permissive
               tabindex="-1"
               on-click="[[perspectiveGroupSubtreeItemClickHandler]]"
             >
-              <span :id="[[child.data.path]]" data-bind="text: [[child.data.label]]"></span>
+              <span :id="[[child.data.path]]" data-bind="text: [[child.data.label]]" :aria-label="[[child.data.screenreader]]"></span>
             </a>
           </oj-bind-if>
           <oj-bind-if test="[[child.data.path === '#']]">
-            <span :id="[[child.data.path]]" data-bind="text: [[child.data.label]]"></span>
+            <span :id="[[child.data.path]]" data-bind="text: [[child.data.label]]" :aria-label="[[child.data.screenreader]]"></span>
           </oj-bind-if>
           <oj-bind-dom config="[[child.data.descriptionHTML]]"></oj-bind-dom>
         </div>

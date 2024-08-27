@@ -1,4 +1,4 @@
-// Copyright (c) 2021, 2022, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2024, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.repo;
@@ -156,6 +156,9 @@ class CreateFormReader extends FormReader {
           .getBean(getSecureModeEnabledBeanPath())
           .getValue(getSecureModeEnabledDef())
       );
+    if (enabled == null) {
+      return null;
+    }
     return enabled.isBoolean() ? Boolean.valueOf(enabled.asBoolean().getValue()) : null;
   }
 
@@ -166,6 +169,9 @@ class CreateFormReader extends FormReader {
           .getBean(getProductionModeEnabledBeanPath())
           .getValue(getProductionModeEnabledDef())
       );
+    if (enabled == null) {
+      return null;
+    }
     return enabled.isBoolean() ? Boolean.valueOf(enabled.asBoolean().getValue()) : null;
   }
 

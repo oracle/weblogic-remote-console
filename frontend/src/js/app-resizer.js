@@ -153,6 +153,25 @@ define(['ojs/ojresponsiveutils', 'ojs/ojresponsiveknockoututils', 'wrc-frontend/
         let maxHeightVariable = ((resizerData['globalBody'].height - resizerData['right_panel'].height - getMessageLineHeight()) + ANCILLARY_CONTENT_ITEM_OFFSET_HEIGHT);
         document.documentElement.style.setProperty('--ancillary-content-item-calc-height', `${maxHeightVariable}px`);
 */
+      handleContainerZoomIn();
+    }
+
+    function handleContainerZoomIn() {
+/*
+//MLW
+      if (window.innerWidth < 1440) {
+        console.group( "%cResize Event", "color: red" );
+        console.log( "Window width:", window.innerWidth );
+        console.log( "Window height:", window.innerHeight );
+        console.log( "Pixel density:", window.devicePixelRatio );
+        // NOTE: Safari seems to report the devicePixelRatio as "1" (on my laptop)
+        // regardless of what the Zoom is doing. Chrome and Firefox, on the other
+        // hand, seem to show an increased pixel density as the Zoom increases.
+        console.groupEnd();
+      }
+ */
+      $('body').css({'max-width': window.innerWidth + 'px','max-height': window.innerHeight + 'px'});
+      $('body').css({'overflow':  (window.innerWidth < 1440 ? 'auto' : 'hidden')});
     }
 
     function getMessageLineHeight() {

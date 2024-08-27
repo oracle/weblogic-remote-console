@@ -81,15 +81,23 @@ class DomainRuntimeMBeanYamlReader extends WebLogicBeanTypeYamlReader {
     // For every aggregatable child under a server runtime mbean,
     // add a corresponding aggregated property under the domain runtime mbean
     BeanTypeDefSource serverRuntimeSource = getYamlReader().getBeanTypeDefSource(repoDef, SERVER_RUNTIME_MBEAN);
-    for (BeanPropertyDefSource property : serverRuntimeSource.getProperties()) {
-      String propertyType = property.getType();
+    BeanTypeDef serverRuntimeTypeDef = repoDef.getTypeDef(SERVER_RUNTIME_MBEAN);
+    aggregateChildren(source, serverRuntimeSource.getProperties());
+    return source;
+  }
+
+  private void aggregateChildren(
+    BeanTypeDefSource source,
+    List<BeanPropertyDefSource> propertyDefs
+  ) {
+    for (BeanPropertyDefSource propertyDef : propertyDefs) {
+      String propertyType = propertyDef.getType();
       if (AGGREGATED_NAME_HANDLER.isFabricatableType(propertyType)) {
-        property.setType(AGGREGATED_NAME_HANDLER.getFabricatedJavaType(propertyType));
-        property.setName(AGGREGATED_NAME_HANDLER.getFabricatedName(property.getName()));
-        source.getProperties().add(property);
+        propertyDef.setType(AGGREGATED_NAME_HANDLER.getFabricatedJavaType(propertyType));
+        propertyDef.setName(AGGREGATED_NAME_HANDLER.getFabricatedName(propertyDef.getName()));
+        source.getProperties().add(propertyDef);
       }
     }
-    return source;
   }
 
   @Override
@@ -115,11 +123,23 @@ class DomainRuntimeMBeanYamlReader extends WebLogicBeanTypeYamlReader {
     // they're displayed under different nodes in the nav tree.
     BeanTypeDefSource serverRuntimeSource =
       getYamlReader().getBeanTypeDefSource(typeDef.getBeanRepoDef(), SERVER_RUNTIME_MBEAN);
+    BeanTypeDef serverRuntimeTypeDef = typeDef.getBeanRepoDef().getTypeDef(SERVER_RUNTIME_MBEAN);
     BeanTypeDefCustomizerSource serverRuntimeCustomizerSource =
-      getYamlReader().getBeanTypeDefCustomizerSource(
-        typeDef.getBeanRepoDef().getTypeDef(SERVER_RUNTIME_MBEAN)
-      );
-    for (BeanPropertyDefSource propertyDef : serverRuntimeSource.getProperties()) {
+      getYamlReader().getBeanTypeDefCustomizerSource(serverRuntimeTypeDef);
+    aggregateProperties(
+      domainRuntimeCustomizerSource,
+      serverRuntimeCustomizerSource,
+      serverRuntimeSource.getProperties()
+    );
+    return domainRuntimeCustomizerSource;
+  }
+
+  private void aggregateProperties(
+    BeanTypeDefCustomizerSource domainRuntimeCustomizerSource,
+    BeanTypeDefCustomizerSource serverRuntimeCustomizerSource,
+    List<BeanPropertyDefSource> propertyDefs
+  ) {
+    for (BeanPropertyDefSource propertyDef : propertyDefs) {
       if (propertyDef.isChild() && AGGREGATED_NAME_HANDLER.isFabricatableJavaType(propertyDef.getType())) {
         String unaggName = propertyDef.getName();
         BeanChildDefCustomizerSource childCustomizer =
@@ -134,7 +154,6 @@ class DomainRuntimeMBeanYamlReader extends WebLogicBeanTypeYamlReader {
         domainRuntimeCustomizerSource.addChild(childCustomizer);
       }
     }
-    return domainRuntimeCustomizerSource;
   }
 
   private BeanChildDefCustomizerSource findOrCreateChildCustomizer(

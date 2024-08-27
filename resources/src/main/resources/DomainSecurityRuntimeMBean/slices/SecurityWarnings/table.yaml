@@ -1,9 +1,10 @@
-# Copyright (c) 2021, 2023, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2021, 2024, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 introductionHTML: >
   <p>Displays the potential security validation warnings for this domain.
   The list is similar to those displayed during server startup when secure mode validation is performed.</p>
+  <p>See <a href="https://oracle.github.io/weblogic-remote-console/administration-server/securing-domains/#GUID-965B4726-4622-454D-8049-C6B37A2EE867" rel="noopener noreferrer" target="_blank">Security Warnings</a></p>
   <p>The validation warnings are cached for each server in the domain.
   This cache is refreshed on a scheduled basis every 24 hours.</p>
 

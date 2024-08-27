@@ -2,42 +2,18 @@
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 introductionHTML: Create a new Authentication Provider
+
+presentation:
+  singleColumn: true
+
 sections:
 - properties:
   - name: Name
   - name: Type
-- properties:
-  - name: ControlFlag
-    required: true
-    definition:
-      type: java.lang.String
-      restartNeeded: true
-      writable: true
-      legalValues:
-      - REQUIRED
-      - REQUISITE
-      - SUFFICIENT
-      - OPTIONAL
-      defaultValue:
-        value:
-          value: OPTIONAL
-      descriptionHTML: >
-        <p>Returns how the login sequence uses the Authentication provider.</p>  <p>A
-        <code>REQUIRED</code> value specifies this LoginModule must succeed. Even if it
-        fails, authentication proceeds down the list of LoginModules for the configured
-        Authentication providers. This setting is the default.</p>  <p>A <code>REQUISITE</code>
-        value specifies this LoginModule must succeed. If other Authentication providers
-        are configured and this LoginModule succeeds, authentication proceeds down the
-        list of LoginModules. Otherwise, control is return to the application.</p>  <p>A
-        <code>SUFFICIENT</code> value specifies this LoginModule need not succeed. If
-        it does succeed, return control to the application. If it fails and other Authentication
-        providers are configured, authentication proceeds down the LoginModule list.</p>  <p>An
-        <code>OPTIONAL</code> value specifies this LoginModule need not succeed. Whether
-        it succeeds or fails, authentication proceeds down the LoginModule list.</p>
 # The ControlFlag property is only applicable to the types listed below.
 # This list must be kept in sync with the legalValues for Type listed in AuthenticationProviderMBean/type.yaml
 # When adding a new authentication provider, ensure it is added in both places..
-  usedIf:
+- usedIf:
     property: Type
     hide: true
     values:
@@ -59,3 +35,33 @@ sections:
     - weblogic.security.providers.saml.SAMLAuthenticator
     - weblogic.security.providers.authentication.SQLAuthenticator
     - weblogic.security.providers.authentication.VirtualUserAuthenticator
+  sections:
+  - properties:
+    - name: ControlFlag
+      required: true
+      definition:
+        type: java.lang.String
+        restartNeeded: true
+        writable: true
+        legalValues:
+        - REQUIRED
+        - REQUISITE
+        - SUFFICIENT
+        - OPTIONAL
+        defaultValue:
+          value:
+            value: OPTIONAL
+        descriptionHTML: >
+          <p>Returns how the login sequence uses the Authentication provider.</p>  <p>A
+          <code>REQUIRED</code> value specifies this LoginModule must succeed. Even if it
+          fails, authentication proceeds down the list of LoginModules for the configured
+          Authentication providers. This setting is the default.</p>  <p>A <code>REQUISITE</code>
+          value specifies this LoginModule must succeed. If other Authentication providers
+          are configured and this LoginModule succeeds, authentication proceeds down the
+          list of LoginModules. Otherwise, control is return to the application.</p>  <p>A
+          <code>SUFFICIENT</code> value specifies this LoginModule need not succeed. If
+          it does succeed, return control to the application. If it fails and other Authentication
+          providers are configured, authentication proceeds down the LoginModule list.</p>  <p>An
+          <code>OPTIONAL</code> value specifies this LoginModule need not succeed. Whether
+          it succeeds or fails, authentication proceeds down the LoginModule list.</p>
+

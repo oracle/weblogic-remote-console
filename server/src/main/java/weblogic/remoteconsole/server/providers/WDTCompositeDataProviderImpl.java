@@ -1,4 +1,4 @@
-// Copyright (c) 2021, 2023, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2024, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.providers;
@@ -17,6 +17,7 @@ import javax.json.JsonObjectBuilder;
 import weblogic.remoteconsole.common.repodef.LocalizableString;
 import weblogic.remoteconsole.common.repodef.LocalizedConstants;
 import weblogic.remoteconsole.common.utils.WebLogicMBeansVersions;
+import weblogic.remoteconsole.common.utils.WebLogicVersion;
 import weblogic.remoteconsole.common.utils.WebLogicVersions;
 import weblogic.remoteconsole.server.repo.InvocationContext;
 import weblogic.remoteconsole.server.repo.weblogic.WDTCapabilities;
@@ -162,11 +163,12 @@ public class WDTCompositeDataProviderImpl implements WDTCompositeDataProvider {
 
   // Set a new PageRepo for the tree using the current list of WDT models
   private void setPageRepo(InvocationContext ic) {
+    WebLogicVersion weblogicVersion = WebLogicVersions.getLatestVersion();
     viewRoot.setPageRepo(
       new WDTCompositePageRepo(
         WebLogicMBeansVersions.getVersion(
-          WebLogicVersions.getLatestVersion(),
-          WDTCapabilities.CAPABILITIES
+          weblogicVersion,
+          WDTCapabilities.getCapabilities(weblogicVersion)
         ),
         models,
         ic

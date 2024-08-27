@@ -587,6 +587,13 @@ properties:
 - defaultValue:
     value:
       value: false
+  descriptionHTML: '<p>Specifies whether the inbound SAML 2.0 Responses must be signed.</p> '
+  name: WantResponsesSigned
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: false
   descriptionHTML: '<p>Specifies whether TLS/SSL client authentication is required.</p>  <p>If
     enabled, callers to TLS/SSL bindings of the local site must specify client authentication
     (two-way SSL), and the identity specified must validate against the TLS certificate

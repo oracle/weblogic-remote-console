@@ -2343,6 +2343,8 @@ define([
         const lastActivatedDataProvider = DataProviderManager.getLastActivatedDataProvider();
 
         if (dataProvider.state === CoreTypes.Domain.ConnectState.DISCONNECTED.name) {
+          ViewModelUtils.setPreloaderVisibility(true);
+
           DataProviderManager.activateAdminServerConnection(dataProvider)
             .then(reply => {
               dataProvider.populateFromResponse(reply.body.data);
@@ -2364,6 +2366,9 @@ define([
             })
             .catch(response => {
               ViewModelUtils.failureResponseDefaultHandling(response);
+            })
+            .finally(() => {
+              ViewModelUtils.setPreloaderVisibility(false);
             });
         }
         else if (dataProvider.state === CoreTypes.Domain.ConnectState.CONNECTED.name) {

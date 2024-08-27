@@ -1,5 +1,5 @@
 #!/bin/bash
-# Copyright 2021, 2023, Oracle and/or its affiliates.
+# Copyright 2021, 2024, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at http://oss.oracle.com/licenses/upl.
 
 do_docker_pull() {
@@ -148,8 +148,7 @@ then
   esac
 fi
 
-# Legally, the thing we ship must be openjdk
-NEW_JAVA_BIN="$(run/get_java --openjdk)"
+NEW_JAVA_BIN="$(run/get_java)"
 if [ -n "$NEW_JAVA_BIN" ]
 then
   PATH="$NEW_JAVA_BIN$pathsep$PATH"

@@ -1,4 +1,4 @@
-# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2024, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 introductionHTML: >
   <p>This page displays monitoring information for all JMS destinations (queues and topics) that are deployed to this domain.</p>
@@ -25,7 +25,7 @@ actions:
 
 displayedColumns:
 - name: "Name"
-- name: "Type"
+- name: "DestinationType"
 - name: "BytesCurrentCount"
 - name: "BytesHighCount"
 - name: "BytesPendingCount"
@@ -36,7 +36,6 @@ displayedColumns:
 - name: "ConsumersTotalCount"
 - name: "ConsumptionPaused"
 - name: "ConsumptionPausedState"
-- name: "DestinationType"
 - name: "InsertionPaused"
 - name: "InsertionPausedState"
 - name: "MessagesCurrentCount"

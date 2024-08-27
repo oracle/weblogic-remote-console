@@ -29,7 +29,9 @@ import weblogic.remoteconsole.server.PersistenceManager;
 import weblogic.remoteconsole.server.repo.BeanTreePath;
 import weblogic.remoteconsole.server.repo.FormProperty;
 import weblogic.remoteconsole.server.repo.InvocationContext;
+import weblogic.remoteconsole.server.repo.Page;
 import weblogic.remoteconsole.server.repo.Response;
+import weblogic.remoteconsole.server.repo.StringValue;
 import weblogic.remoteconsole.server.repo.Value;
 import weblogic.remoteconsole.server.repo.weblogic.WebLogicRestBeanRepo;
 import weblogic.remoteconsole.server.utils.ResponseHelper;
@@ -45,81 +47,162 @@ import weblogic.remoteconsole.server.utils.WebLogicRestRequest;
 public class WLDFDataAccessRuntimeMBeanCustomizer {
 
   private static final Logger LOGGER = Logger.getLogger(WLDFDataAccessRuntimeMBeanCustomizer.class.getName());
-
   private static final int  RECORD_LIMIT = 400;
+  private static final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss");
 
   private WLDFDataAccessRuntimeMBeanCustomizer() {
   }
 
   /**
-   * Customize the WLDFDataAccessRuntimeMBean for downloading log files.
+   * Customize to return the default directory for downloading log file.
+   *
    */
-  public static Response<Value> downloadLogAsJson(
-    InvocationContext ic,
-    PageActionDef pageActionDef,
-    List<FormProperty> formProperties
-  ) {
-    return downloadLog(ic, MediaType.APPLICATION_JSON);
+  public static Response<Void> customizeDownloadLogsInputForm(InvocationContext ic, Page page) {
+    return getResponseForInputForm(ic, page, false);
   }
 
-  public static Response<Value> downloadLogAsPlainText(
-    InvocationContext ic,
-    PageActionDef pageActionDef,
-    List<FormProperty> formProperties
-  ) {
-    return downloadLog(ic, MediaType.TEXT_PLAIN);
+  private static Response<Void> getResponseForInputForm(InvocationContext ic, Page page, boolean includeFileName) {
+    Value logFileDirectoryValue = new StringValue(getDirectoryName(ic));
+    Value logFileNameValue = new StringValue(getFileNameToDownload(ic));
+    Response<Void> response = new Response<>();
+    List<FormProperty> oldProperties = page.asForm().getProperties();
+    List<FormProperty> newProperties = null;
+    if (includeFileName) {
+      newProperties = List.of(
+          createFormProperty("LogFileDirectory", oldProperties, logFileDirectoryValue),
+          createFormProperty("LogFileName", oldProperties, logFileNameValue)
+      );
+    } else {
+      newProperties = List.of(
+          createFormProperty("LogFileDirectory", oldProperties, logFileDirectoryValue)
+      );
+    }
+    oldProperties.clear();
+    oldProperties.addAll(newProperties);
+    response.setSuccess(null);
+    return response;
   }
 
-  private static Response<Value> downloadLog(InvocationContext ic, String outputFormat) {
+  private static String getFileNameToDownload(InvocationContext ic) {
+    String serverName = "";
+    String logFile = "";
+    if (ic.getIdentifiers() != null) {
+      logFile = ic.getBeanTreePath().getLastSegment().getKey();
+      serverName = ic.getIdentifiers().get(0);
+    } else
+      if (ic.getIdentities() != null) {
+        serverName = ic.getIdentities().get(0).getPath().getComponents().get(2);
+        logFile = ic.getIdentities().get(0).getPath().getLastComponent();
+      } else {
+        //for Table (unaggrated) multi downloads
+        serverName = ic.getBeanTreePath().getPath().getComponents().get(2);
+        logFile = ic.getBeanTreePath().getPath().getLastComponent();
+      }
+    // the logfile requested may have "/" or path separator char in it,
+    // eg. JMSMessageLog/AdminJMSServer, we will replace that with "_".
+    logFile = logFile.replaceAll(File.separator, "_");
+    Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+    return  serverName + "_" + logFile + "_" + simpleDateFormat.format(timestamp);
+  }
+
+  private static FormProperty createFormProperty(
+      String propName,
+      List<FormProperty> oldProperties,
+      Value propValue
+  ) {
+    return
+        new FormProperty(
+            findRequiredFormProperty(propName, oldProperties).getFieldDef(),
+            propValue
+        );
+  }
+
+  private static FormProperty findRequiredFormProperty(String propertyName, List<FormProperty> formProperties) {
+    FormProperty formProperty = findOptionalFormProperty(propertyName, formProperties);
+    if (formProperty == null) {
+      throw new AssertionError("Missing required form property: " + propertyName + " " + formProperties);
+    } else {
+      return formProperty;
+    }
+  }
+
+  private static FormProperty findOptionalFormProperty(String propertyName, List<FormProperty> formProperties) {
+    for (FormProperty formProperty : formProperties) {
+      if (propertyName.equals(formProperty.getName())) {
+        return formProperty;
+      }
+    }
+    return null;
+  }
+
+  /**
+   * Customize the WLDFDataAccessRuntimeMBean for downloading log files with specified location
+   * and format.
+   */
+  public static Response<Value> downloadLogs(
+      InvocationContext ic, PageActionDef pageActionDef, List<FormProperty> formProperties
+  ) {
+    //for downloading multiple logs, user doesn't specify filename. We need to general it.
+    String logFileName = getFileNameToDownload(ic);
+    return doDownload(ic, pageActionDef, formProperties, logFileName);
+  }
+
+  private static Response<Value> doDownload(
+      InvocationContext ic, PageActionDef pageActionDef, List<FormProperty> formProperties, String logFileName
+  ) {
     Response<Value> response = new Response<Value>();
-    String dirName = getDirectoryName(ic);
-    String fileName = getFileName(ic) + (outputFormat.endsWith("json") ? ".json" : ".txt");
+    final String fileFormat = getFormProperty(formProperties, "FileFormat");
+    final String extension = (fileFormat.equals("JSON")) ? ".json" : ".txt";
+    final String outputFormat = (fileFormat.equals("JSON")) ? MediaType.APPLICATION_JSON : MediaType.TEXT_PLAIN;
+    final String logFileDirectory = getFormProperty(formProperties, "LogFileDirectory");
+    if (logFileName == null) {
+      logFileName = getFormProperty(formProperties, "LogFileName");
+    }
+    final String fullFilePath = logFileDirectory + File.separatorChar + logFileName + extension;
+    File file = new File(fullFilePath);
     try {
-      File file = getOutputLogFile(dirName, fileName);
+      Files.createDirectories(Paths.get(logFileDirectory));
+    } catch (Exception ex) {
+      response.setServiceNotAvailable();
+      //ex.printStackTrace();
+      response.addMessage(new Message(Message.Severity.FAILURE,
+          ic.getLocalizer().localizeString(LocalizedConstants.DOWNLOADLOGFILE_ERROR)
+              + file.toString()));
+      return response;
+    }
+    String serverName = ic.getBeanTreePath().getPath().getComponents().get(2);
+    String logFile = ic.getBeanTreePath().getPath().getLastComponent();
+    BeanTreePath beanTreePath = BeanTreePath.create(
+        ic.getBeanTreePath().getBeanRepo(),
+        new Path("DomainRuntime.ServerRuntimes" + "." + serverName + "."
+            + "WLDFRuntime.WLDFAccessRuntime.WLDFDataAccessRuntimes" + "." + logFile)
+    );
+    try {
       new Thread(() -> {
-        customizerLogs(ic, file, outputFormat);
+        customizerLogs(ic, file, outputFormat, beanTreePath);
       }).start();
       // FortifyIssueSuppression Log Forging
       // file name is created based on persistence manager location
       response.addMessage(new Message(Message.Severity.SUCCESS, file.toString()));
     } catch (Exception ex) {
       response.setServiceNotAvailable();
-      ex.printStackTrace();
+      //ex.printStackTrace();
       response.addMessage(new Message(Message.Severity.FAILURE,
           ic.getLocalizer().localizeString(LocalizedConstants.DOWNLOADLOGFILE_ERROR)
-              + dirName +  " : " + fileName));
+              + file.toString()));
     }
     return response;
   }
 
-  private static BeanTreePath getRealBeanTreePath(InvocationContext ic) {
-    return
-        BeanTreePath.create(
-            ic.getBeanTreePath().getBeanRepo(),
-            new Path("DomainRuntime.ServerRuntimes" + "." + getServerName(ic) + "."
-                + "WLDFRuntime.WLDFAccessRuntime.WLDFDataAccessRuntimes" + "." + getLogFileName(ic))
-        );
-  }
 
-  private static String getServerName(InvocationContext ic) {
-    // The bean path the user invoked is DomainRuntime/CombinedServerRuntimes/serverName
-    // Extract the server name from it
-    return ic.getBeanTreePath().getSegments().get(1).getKey();
-  }
-
-  private static String getLogFileName(InvocationContext ic) {
-    // The bean path the user invoked is DomainRuntime/CombinedServerRuntimes/serverName
-    // Extract the logfile name from it
-    return ic.getBeanTreePath().getSegments().get(5).getKey();
-  }
-
-  private static final SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss");
-
-  private static String getFileName(InvocationContext ic) {
-    Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-    return getServerName(ic)
-        + "_" + getLogFileName(ic).replace("/", "_")
-        + "_" + sdf1.format(timestamp);
+  private static String getFormProperty(List<FormProperty> formProperties, String propName) {
+    for (FormProperty oneProp : formProperties) {
+      if (oneProp.getName().equals(propName)) {
+        String val = oneProp.getValue().asSettable().getValue().asString().getValue();
+        return val;
+      }
+    }
+    return "";
   }
 
   private static String getDirectoryName(InvocationContext ic) {
@@ -127,14 +210,6 @@ public class WLDFDataAccessRuntimeMBeanCustomizer {
     String dirName = (persistenceDirectoryPath == null)
         ? System.getProperty("java.io.tmpdir") : persistenceDirectoryPath + "/downloads";
     return dirName;
-  }
-
-  private static File getOutputLogFile(String dirName, String fileName) throws Exception {
-    // FortifyIssueSuppression Path Manipulation
-    // dirName is created based on persistence manager location
-    Files.createDirectories(Paths.get(dirName));
-    // FortifyIssueSuppression Path Manipulation
-    return new File(dirName, fileName);
   }
 
   private static Path getRestActionPath(InvocationContext ic, BeanTreePath beanPath, String actionName) {
@@ -155,17 +230,16 @@ public class WLDFDataAccessRuntimeMBeanCustomizer {
     return restActionPath;
   }
 
-
   private static Response<JsonObject> customizerLogs(
       InvocationContext ic,
       File file,
-      String outputFormat
+      String outputFormat,
+      BeanTreePath realPath
   ) {
     //start from record ID of 0. loop starting from the nextRecordId returned, until "nextRecordId" is not available.
     int fromId = 0;
     Response<JsonObject> response = new Response<>();
     javax.ws.rs.core.Response restResponse;
-    BeanTreePath realPath = getRealBeanTreePath(ic);
     JsonObject requestBody = Json.createObjectBuilder()
         .add("limit", Json.createValue(RECORD_LIMIT))
         .add("fromId", Json.createValue(fromId))

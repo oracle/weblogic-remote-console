@@ -1,4 +1,4 @@
-# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2024, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 actions: [
@@ -50,12 +50,20 @@ properties:
     was last updated. </p> '
   name: CustomClusterConfigurationFileLastUpdatedTimestamp
   type: long
-- defaultValue: {
-    }
-  descriptionHTML: '<p>The name of a custom Coherence operational configuration override
-    file. </p> '
+- defaultValue:
+    value:
+      value: null
+  descriptionHTML: '<p>The name of the extendal custom Coherence operational configuration
+    override file. </p> Note: Before setting the file name, user must make sure the
+    file exist and is located in the domain home under config/coherence/$CoherenceClusterName
+    directory. The file must also be readable. You may use the import operation to
+    import the file from a location on the admin server to the domain home; import
+    is only available for WLST online. '
   name: CustomClusterConfigurationFileName
+  redeployNeeded: true
+  restartNeeded: true
   type: java.lang.String
+  writable: true
 - defaultValue: {
     }
   descriptionHTML: 'A unique name that identifies this system resource in the WebLogic

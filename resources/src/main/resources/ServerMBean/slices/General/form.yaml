@@ -31,8 +31,9 @@ advancedProperties:
 - name: "StartupMode"
 - name: "JDBCLLRTableName"
 - name: "DataSource.RmiJDBCSecurity"
-- name: "XMLRegistry"
-- name: "XMLEntityCache"
+- name: "DefaultInternalServletsDisabled"
+- name: "LogRemoteExceptionsEnabled"
+- name: "LogCriticalRemoteExceptionsEnabled"
 
 helpTopics:
 - label: "Using Security Assertion Markup Language (SAML) Tokens For Identity "

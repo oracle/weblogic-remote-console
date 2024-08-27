@@ -1,0 +1,22 @@
+# Copyright (c) 2020, 2024, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+introductionHTML: >
+  <p>TBD</p>
+
+properties:
+- name: "TransactionPrimaryChannelName"
+- name: "TransactionSecureChannelName"
+- name: "TransactionPublicChannelName"
+- name: "TransactionPublicSecureChannelName"
+- name: "TransactionLogJDBCStore.Enabled"
+- name: "TransactionLogJDBCStore.DataSource"
+- name: "TransactionLogJDBCStore.PrefixName"
+advancedProperties:
+- name: TransactionLogJDBCStore.ConnectionCachingPolicy
+- name: TransactionLogJDBCStore.CreateTableDDLFile
+- name: TransactionLogJDBCStore.DeletesPerBatchMaximum
+- name: TransactionLogJDBCStore.InsertsPerBatchMaximum
+- name: TransactionLogJDBCStore.DeletesPerStatementMaximum
+- name: TransactionLogJDBCStore.MaxRetrySecondsBeforeTLOGFail
+- name: TransactionLogJDBCStore.MaxRetrySecondsBeforeTXException
+- name: TransactionLogJDBCStore.RetryIntervalSeconds

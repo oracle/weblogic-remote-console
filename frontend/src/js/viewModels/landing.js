@@ -339,10 +339,21 @@ define([
         pathModels.forEach((pathModel) => {
           pathModels.forEach((pathModel) => {
             if (pathModel.type === 'group') {
-              groups.push({name: pathModel.name, label: pathModel.label, type: pathModel.type});
+              groups.push({
+                name: pathModel.name,
+                label: pathModel.label,
+                type: pathModel.type,
+                screenreader: oj.Translations.getTranslatedString('wrc-landing.ariaLabel.screenreader.value2', pathModel.label)
+              });
             }
             else if (pathModel.type === 'collection') {
-              groups.push({name: pathModel.resourceData.label, label: pathModel.resourceData.label, path: pathModel.resourceData.resourceData, type: pathModel.type});
+              groups.push({
+                name: pathModel.resourceData.label,
+                label: pathModel.resourceData.label,
+                path: pathModel.resourceData.resourceData,
+                type: pathModel.type,
+                screenreader: oj.Translations.getTranslatedString('wrc-landing.ariaLabel.screenreader.value1', pathModel.resourceData.label)
+              });
             }
           });
         });
@@ -552,6 +563,7 @@ define([
                   type: item.type,
                   path: item.resourceData.resourceData,
                   label: item.label,
+                  screenreader: oj.Translations.getTranslatedString('wrc-landing.ariaLabel.screenreader.value3',  item.label),
                   descriptionHTML: {view: HtmlUtils.stringToNodeArray(`<span>${itemHTML}</span>`)}
                 };
               })

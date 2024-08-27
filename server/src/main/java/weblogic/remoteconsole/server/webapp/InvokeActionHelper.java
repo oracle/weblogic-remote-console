@@ -168,6 +168,7 @@ public class InvokeActionHelper {
   protected InvocationContext getTableRowIC(BeanTreePath rowBTP) {
     InvocationContext rowIC = new InvocationContext(getInvocationContext());
     rowIC.setIdentity(rowBTP);
+    rowIC.setIdentifier(null);
     return rowIC;
   }
 
@@ -181,11 +182,15 @@ public class InvokeActionHelper {
 
     List<Response<Void>> rowResponses = new ArrayList<>();
     for (String rowIdentifier : rbResponse.getResults()) {
-      InvocationContext rowIC = new InvocationContext(getInvocationContext());
-      rowIC.setIdentifier(rowIdentifier);
-      rowResponses.add(invokeBeanAction(rowIC));
+      rowResponses.add(invokeBeanAction(getSliceTableRowIC(rowIdentifier)));
     }
     return aggregateRowResponses(rowResponses);
+  }
+
+  protected InvocationContext getSliceTableRowIC(String rowIdentifier) {
+    InvocationContext rowIC = new InvocationContext(getInvocationContext());
+    rowIC.setIdentifier(rowIdentifier);
+    return rowIC;
   }
 
   private Response<Void> aggregateRowResponses(List<Response<Void>> rowResponses) {
@@ -236,14 +241,17 @@ public class InvokeActionHelper {
   }
 
   public javax.ws.rs.core.Response getActionInputForm() {
-    return
-      GetPageResponseMapper.toResponse(
-        getActionInputFormIC(),
-        getActionInputFormReturnResponse()
-      );
+    Response<InvocationContext> icResponse = getActionInputFormIC();
+    if (!icResponse.isSuccess()) {
+      Response<Void> response = new Response<>();
+      response.copyUnsuccessfulResponse(icResponse);
+      return VoidResponseMapper.toResponse(getInvocationContext(), response);
+    }
+    InvocationContext aifIC = icResponse.getResults();
+    return GetPageResponseMapper.toResponse(aifIC, getActionInputFormReturnResponse());
   }
 
-  public Response<Page> getActionInputFormReturnResponse() {
+  private Response<Page> getActionInputFormReturnResponse() {
     Response<Page> response = new Response<>();
     // Make sure the bean exists
     {
@@ -273,6 +281,9 @@ public class InvokeActionHelper {
     } else if (getInvocationContext().getBeanTreePath().isCollection()) {
       return getTableRowsActionInputForm();
     } else if (getPageActionDef().getPageDef().isSliceTableDef()) {
+      if (getPageActionDef().getPageDef().asSliceTableDef().isUseRowIdentities()) {
+        return getTableRowsActionInputForm();
+      }
       return getSliceTableRowsActionInputForm();
     } else {
       return getBeanActionInputForm();
@@ -314,16 +325,23 @@ public class InvokeActionHelper {
   }
 
   protected Response<Page> getActionInputFormFromIC() {
-    InvocationContext aifIC = getActionInputFormIC();
-    return aifIC.getPageRepo().asPageReaderRepo().getPage(aifIC);
+    Response<Page> response = new Response<>();
+    Response<InvocationContext> icResponse = getActionInputFormIC();
+    if (!icResponse.isSuccess()) {
+      return response.copyUnsuccessfulResponse(icResponse);
+    }
+    InvocationContext aifIC = icResponse.getResults();
+    response = aifIC.getPageRepo().asPageReaderRepo().getPage(aifIC);
+    return response;
   }
 
-  public InvocationContext getActionInputFormIC() {
+  protected Response<InvocationContext> getActionInputFormIC() {
+    Response<InvocationContext> response = new Response<>();
     InvocationContext inputFormIC = new InvocationContext(ic);
     inputFormIC.setPagePath(
       PagePath.newActionInputFormPagePath(ic.getPagePath(), action)
     );
-    return inputFormIC;
+    return response.setSuccess(inputFormIC);
   }
 
   private Response<PageActionDef> findPageActionDef() {

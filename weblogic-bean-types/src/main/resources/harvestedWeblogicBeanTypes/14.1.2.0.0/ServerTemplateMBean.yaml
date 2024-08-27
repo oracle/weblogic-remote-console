@@ -913,7 +913,9 @@ properties:
   descriptionHTML: '<p>Specifies whether this server can be reached through the default
     plain-text (non-SSL) listen port.</p>  <p>If you disable this listen port, you
     must enable the default SSL listen port.</p>  <p>You can define additional listen
-    ports for this server by configuring network channels.</p> '
+    ports for this server by configuring network channels.</p>  <p>If there is no
+    explicit setting for this attribute, it will inherit the value of the DomainMBean''s
+    ListenPortEnabled attribute.</p> '
   name: ListenPortEnabled
   type: boolean
   writable: true
@@ -1500,7 +1502,7 @@ properties:
 - defaultValue:
     value:
       value: 45
-  descriptionHTML: '<p>The interval (in seconds) at which to ping a tunneled client
+  descriptionHTML: '<p>The interval (in seconds) at which to check a tunneled client
     to see if it is still alive.</p>  <p>If you create network channels for this server,
     each channel can override this setting.</p> '
   name: TunnelingClientPingSecs

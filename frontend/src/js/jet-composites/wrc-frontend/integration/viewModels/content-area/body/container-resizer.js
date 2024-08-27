@@ -71,12 +71,16 @@ define([
         // state of help visibility.
         const wasHelpVisible = this.perspectiveMemory.helpVisibility.call(this.perspectiveMemory);
         // Set initial value of return variable to the
-        // height of the fixed footer (70px), plus it's
-        // margin-top (5px), plus it's margin-bottom (5px).
+        // height specified in offsetHeightCSSVariable
+        // argument.
         let offsetValue = parseInt(ViewModelUtils.getCustomCssProperty(offsetHeightCSSVariable), 10);
 
+        // Adjust offsetValue based on value assigned to
+        // the options.containerType JSON object. Be sure
+        // to use a separate condition, to allow for small
+        // layout sizing variances that may creep in.
         if (options.containerType === 'table') {
-          offsetValue += 25;
+          offsetValue += 10;
         }
         else if (options.containerType === 'sliceTable') {
           offsetValue += 10;

@@ -5,7 +5,9 @@ package weblogic.remoteconsole.common.utils;
 
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 import java.util.TreeMap;
 import java.util.logging.Logger;
 
@@ -124,6 +126,21 @@ public class WebLogicVersions {
   // Get the list of supported weblogic versions.
   public static Collection<WebLogicVersion> getSupportedVersions() {
     return versionStringToVersion.values();
+  }
+
+  public static Set<String> getVersionCapabilities(WebLogicVersion version) {
+    Set<String> capabilities = new HashSet<>();
+    long versionNumber = getVersionNumber(version.getDomainVersion());
+    for (WebLogicVersion supportedVersion : getSupportedVersions()) {
+      String supportedDomainVersion = supportedVersion.getDomainVersion();
+      long supportedVersionNumber = getVersionNumber(supportedDomainVersion);
+      if (versionNumber < supportedVersionNumber) {
+        capabilities.add("Before" + supportedDomainVersion);
+      } else {
+        capabilities.add(supportedDomainVersion + "OrAfter");
+      }
+    }
+    return capabilities;
   }
 
   // Looks up a version given its domain version.

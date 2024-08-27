@@ -1,4 +1,4 @@
-// Copyright (c) 2022, 2023, Oracle and/or its affiliates.
+// Copyright (c) 2022, 2024, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.repo.weblogic;
@@ -65,7 +65,7 @@ class AggregatedRuntimeMBeanWebLogicSearchHelper extends WebLogicBeanTypeSearchH
       JsonArray items = entry.getValue().getJsonArray("items");
       for (int i = 0; i < items.size(); i++) {
         JsonObject item = items.getJsonObject(i);
-        String beanName = item.getString("name");
+        String beanName = getName(item, aggregatedCollectionPath);
         Map<String,JsonObject> beanResults = unaggregatedCollectionResults.get(beanName);
         if (beanResults == null) {
           beanResults = new HashMap<>();
@@ -108,8 +108,8 @@ class AggregatedRuntimeMBeanWebLogicSearchHelper extends WebLogicBeanTypeSearchH
     bldr.add("identity", searchResults.getBuilder().getBeanRepo().toJson(aggregatedBeanPath));
     if (!unaggregatedBeanResults.isEmpty()) {
       JsonObject first = unaggregatedBeanResults.values().iterator().next();
-      bldr.add("name", first.get("name"));
-      bldr.add("type", first.get("type"));
+      bldr.add("name", getName(first, aggregatedBeanPath));
+      bldr.add("type", getType(first, aggregatedBeanPath));
       BeanPropertyDef discDef =
         aggregatedBeanPath.getTypeDef().getSubTypeDiscriminatorPropertyDef();
       if (discDef != null) {
@@ -128,7 +128,7 @@ class AggregatedRuntimeMBeanWebLogicSearchHelper extends WebLogicBeanTypeSearchH
       }
     } else {
       // There are no instances.  Set the type to the base type.
-      bldr.add("type", aggregatedBeanPath.getLastSegment().getChildDef().getChildTypeDef().getInstanceName());
+      bldr.add("type", getTypeName(aggregatedBeanPath));
     }
     return bldr.build();
   }
@@ -182,5 +182,39 @@ class AggregatedRuntimeMBeanWebLogicSearchHelper extends WebLogicBeanTypeSearchH
       path.addPath(aggregatedPath.subPath(2, aggregatedPath.length()));
     }
     return BeanTreePath.create(searchResults.getBuilder().getBeanRepo(), path);
+  }
+
+  // Get this bean's name from the WLS REST response.
+  // It should always be present since the corresponding
+  // query should have said to include it.
+  // However, some badly coded mbeans and REST apis don't return it,
+  // so, if it's missing, do our best to concoct a value.
+  private String getName(JsonObject item, BeanTreePath aggregatedBeanPath) {
+    if (item.containsKey("name")) {
+      return item.getString("name");
+    }
+    if (item.containsKey("identity")) {
+      JsonArray identity = item.getJsonArray("identity");
+      if (!identity.isEmpty()) {
+        return identity.getString(identity.size() - 1);
+      }
+    }
+    return getTypeName(aggregatedBeanPath);
+  }
+
+  // Get this bean's type from the WLS REST response.
+  // It should always be present since the corresponding
+  // query should have said to include it.
+  // However, some badly coded mbeans and REST apis don't return it,
+  // so, if it's missing, do our best to concoct a value.
+  private String getType(JsonObject item, BeanTreePath aggregatedBeanPath) {
+    if (item.containsKey("type")) {
+      return item.getString("type");
+    }
+    return getTypeName(aggregatedBeanPath);
+  }
+
+  private String getTypeName(BeanTreePath aggregatedBeanPath) {
+    return aggregatedBeanPath.getLastSegment().getChildDef().getChildTypeDef().getInstanceName();
   }
 }

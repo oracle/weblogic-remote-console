@@ -1128,16 +1128,9 @@ describe.only('Test Suite: deploy_test , Redeploy and undeploy for Application a
            element = driver.findElement(By.xpath("//oj-button[@id='[[i18n.buttons.finish.id]]']"));
            driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
            await element.click();
+           await driver.sleep(9600);
+           await admin.commitChanges(driver);
            await driver.sleep(6400);
-
-           console.log("Click Shopping Cart Icon");
-           element = driver.findElement(By.xpath("//a[@id='shoppingCartMenuLauncher']"));
-           driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
-           await element.click();
-           await driver.sleep(1200);
-           console.log("Select 'Commit Changes' menu");
-           await driver.findElement(By.xpath("//span[@id='commit-changes']")).click();
-           await driver.sleep(8400);
            console.log("Click App Deployment from 'Table Header'");
            await driver.findElement(By.xpath("//a[text()='App Deployments']")).click();
            await driver.sleep(1200);
@@ -1181,7 +1174,11 @@ describe.only('Test Suite: deploy_test , Redeploy and undeploy for Application a
            console.log("Click 'Done' button");
            await driver.findElement(
                By.xpath("//oj-button[@id='[[i18n.buttons.save.id]]']")).click();
-           await driver.sleep(3600);
+           await driver.sleep(8400);
+
+           console.log("Click Reload Interval Icon");
+           await driver.findElement(By.xpath("//img[@id='sync-icon']")).click();
+           await driver.sleep(9600);
            console.log("Click sampleWarFileWithPlan Node");
            element = driver.findElement(
                By.xpath("//span[text()='sampleWarFileWithPlan' and @class='oj-navigationlist-item-label']"));
@@ -1298,15 +1295,10 @@ describe.only('Test Suite: deploy_test , Redeploy and undeploy for Application a
            element = driver.findElement(By.xpath("//oj-button[@id='[[i18n.buttons.finish.id]]']"));
            driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
            await element.click();
-           await driver.sleep(6400);
-           console.log("Click Shopping Cart Icon");
-           element = driver.findElement(By.xpath("//a[@id='shoppingCartMenuLauncher']"));
-           driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
-           await element.click();
-           console.log("Select 'Commit Changes' menu");
-           await driver.findElement(By.xpath("//span[@id='commit-changes']")).click();
-           await driver.sleep(8400);
+           await driver.sleep(9600);
 
+           await admin.commitChanges(driver);
+           await driver.sleep(6400);
            console.log("Click App Deployment from 'Table Header'");
            await driver.findElement(By.xpath("//*[text()='App Deployments']")).click();
            await driver.sleep(1200);
@@ -1351,18 +1343,19 @@ describe.only('Test Suite: deploy_test , Redeploy and undeploy for Application a
            console.log("Enter " +deploySimpleWarPlanFilePath+ " to deploy");
            await driver.findElement(By.xpath("//div[@id='overlay-container']/input")).sendKeys(deploySimpleWarPlanFilePath);
            await driver.sleep(9600);
-           await driver.sleep(4800);
            console.log("Click 'Done' button");
            await driver.findElement(
                By.xpath("//oj-button[@id='[[i18n.buttons.save.id]]']")).click();
-           await driver.sleep(3600);
+           await driver.sleep(8400);
+           console.log("Click Reload Interval Icon");
+           await driver.findElement(By.xpath("//img[@id='sync-icon']")).click();
+           await driver.sleep(9600);
            console.log("Click sampleWarFileWithPlan Node");
            element = driver.findElement(
                By.xpath("//span[text()='sampleWarFileWithPlan' and @class='oj-navigationlist-item-label']"));
            driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
            await element.click();
            await driver.sleep(7200);
-
            console.log("Click at Deployment Plan (Advanced) navTree node");
            element = driver.findElement(
                By.xpath("//*[text()='Deployment Plan (Advanced)']"));
@@ -1471,14 +1464,8 @@ describe.only('Test Suite: deploy_test , Redeploy and undeploy for Application a
             driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
             await element.click();
             await driver.sleep(6400);
-            console.log("Click Shopping Cart Icon");
-            element = driver.findElement(By.xpath("//a[@id='shoppingCartMenuLauncher']"));
-            driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
-            await element.click();
-            console.log("Select 'Commit Changes' menu");
-            await driver.findElement(By.xpath("//span[@id='commit-changes']")).click();
-            await driver.sleep(8400);
-
+            await admin.commitChanges(driver);
+            await driver.sleep(6400);
             console.log("Click App Deployment from 'Table Header'");
             await driver.findElement(By.xpath("//*[text()='App Deployments']")).click();
             await driver.sleep(1200);
@@ -1510,8 +1497,12 @@ describe.only('Test Suite: deploy_test , Redeploy and undeploy for Application a
            console.log("Click Done button to accept "+defaultPathPlan);
            await driver.findElement(
                By.xpath("//*[@id='[[i18n.buttons.save.id]]']")).click();
-            console.log("Click sampleWarFileWithPlan Node");
-            element = driver.findElement(
+           await driver.sleep(3600);
+           console.log("Click Reload Interval Icon");
+           await driver.findElement(By.xpath("//img[@id='sync-icon']")).click();
+           await driver.sleep(9600);
+           console.log("Click sampleWarFileWithPlan Node");
+           element = driver.findElement(
                 By.xpath("//span[text()='sampleWarFileWithPlan' and @class='oj-navigationlist-item-label']"));
             driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
             await element.click();
@@ -1626,14 +1617,8 @@ describe.only('Test Suite: deploy_test , Redeploy and undeploy for Application a
                 driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
                 await element.click();
                 await driver.sleep(6400);
-                console.log("Click Shopping Cart Icon");
-                element = driver.findElement(By.xpath("//a[@id='shoppingCartMenuLauncher']"));
-                driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
-                await element.click();
-                console.log("Select 'Commit Changes' menu");
-                await driver.findElement(By.xpath("//span[@id='commit-changes']")).click();
-                await driver.sleep(8400);
-
+                await admin.commitChanges(driver);
+                await driver.sleep(6400);
                 console.log("Click App Deployment from 'Table Header'");
                 await driver.findElement(By.xpath("//*[text()='App Deployments']")).click();
                 await driver.sleep(4800);
@@ -1741,20 +1726,22 @@ describe.only('Test Suite: deploy_test , Redeploy and undeploy for Application a
            await driver.findElement(
                By.xpath("//oj-button[@id='[[i18n.buttons.new.id]]']/button/div/span/img")).click();
            await driver.sleep(2400);
-           console.log("Click disable upload option");
-           await driver.findElement(
-               By.xpath("//*[@id='Upload']/div[1]/div/div")).click();
-           await driver.sleep(1200)
            console.log("Enter Database Client Deployment Name = ASDS1-jdbc");
            await driver.findElement(By.id("Name|input")).clear();
            await driver.findElement(By.id("Name|input")).sendKeys("ASDS1-jdbc");
            await driver.sleep(1200);
            console.log("Enter Database Client " +deployDBClientFilePath+ " to deploy");
-           await driver.findElement(By.xpath("//input[@id='SourcePath|input']")).sendKeys(deployDBClientFilePath);;
-           driver.sleep(2400);
-           console.log("Click Create button");
-           await driver.findElement(By.xpath("//oj-button[@id='[[i18n.buttons.finish.id]]']/button/div/span[1]/img")).click();
-           driver.sleep(2400);
+           console.log("Click Choose File to deploy");
+           element = driver.findElement(By.xpath("//*[@title='Choose File']"));
+           driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
+           element.click();
+           await driver.sleep(9600);
+           console.log("Click select " +deployDBClientFilePath+ " to deploy");
+           await driver.findElement(By.xpath("//*[@id='file-chooser-form']")).sendKeys(deployDBClientFilePath);
+           await driver.sleep(9600);
+           console.log("Click Create/Finish button");
+           await driver.findElement(By.xpath("//*[@id='[[i18n.buttons.finish.id]]']/button/div/span[1]/img")).click();
+           await driver.sleep(8400);
            await admin.commitChanges(driver);
            await driver.sleep(8400);
            await admin.goToNavTreeLevelTwoLink(driver,"configuration","Deployments",
@@ -1767,7 +1754,7 @@ describe.only('Test Suite: deploy_test , Redeploy and undeploy for Application a
            if (element.isEnabled()) {
                await element.click();
            }
-           driver.sleep(2400);
+           driver.sleep(8400);
            await admin.commitChanges(driver);
            await driver.sleep(8400);
            console.log("TEST PASS ");

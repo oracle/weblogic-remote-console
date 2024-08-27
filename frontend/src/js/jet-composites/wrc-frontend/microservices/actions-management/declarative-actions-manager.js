@@ -160,14 +160,18 @@ define([
     function getActionDataPayloadRows(rdjData, checkedRows, rowKeyName) {
       let rows = {value: []};
       for (const rowKeyValue of Array.from(checkedRows)) {
+        const row = rdjData.data.find(row => CoreUtils.isNotUndefinedNorNull(row.identity) && row.identity.value.resourceData === rowKeyValue);
         if (rowKeyName === '_identity') {
-          const row = rdjData.data.find(row => CoreUtils.isNotUndefinedNorNull(row.identity) && row.identity.value.resourceData === rowKeyValue);
           if (CoreUtils.isNotUndefinedNorNull(row)) {
             rows.value.push(row.identity);
           }
         }
         else if (rowKeyName === '_identifier') {
-          rows.value.push({value: rowKeyValue});
+          if (CoreUtils.isNotUndefinedNorNull(row)) {
+            rows.value.push(row.identifier);
+          } else {
+            rows.value.push({value: rowKeyValue});
+          }
         }
       }
       return rows;
@@ -705,69 +709,6 @@ define([
 
     }
 
-    async function performDownloadAction(rdjData, declarativeActions, options) {
-      function createDownloadActionReply(replies) {
-        const reply = {messages: []};
-        for (const item of replies) {
-          reply.messages = [...reply.messages, ...item.messages];
-        }
-        reply['succeeded'] = (reply.messages.filter(message => message.severity === 'error').length === 0);
-        return reply;
-      }
-
-      if (declarativeActions.checkedRows.size > 0) {
-        const replies = [];
-        const endpoint = getActionEndpoint(rdjData.actions, options.action);
-        for (const rowKeyValue of Array.from(declarativeActions.checkedRows)) {
-          const actionDataPayload = {rows: {value: []}};
-          // Look for row in rdjData with rowKeyValue assigned to the identity
-          // column.
-          let identityRow = rdjData.data.find(row => CoreUtils.isNotUndefinedNorNull(row.identity) && row.identity.value.resourceData === rowKeyValue);
-          if (CoreUtils.isNotUndefinedNorNull(identityRow)) {
-            // Found one, so get value of rowSelectionProperty that
-            // came from the PDJ.
-            const rowKeyName = `_${declarativeActions.rowSelectionProperty}`;
-            if (rowKeyName === '_identifier' && CoreUtils.isNotUndefinedNorNull(identityRow.identifier)) {
-              // Create request payload for the POST using identifier
-              // of identityRow that was found
-              actionDataPayload.rows.value.push({value: identityRow.identifier.value});
-            }
-            else if (rowKeyName === '_identity') {
-              // Look for row in rdjData with rowKeyCalue assigned to
-              // the identity column.
-              identityRow = rdjData.data.find(row => CoreUtils.isNotUndefinedNorNull(row.identity) && row.identity.value.resourceData === rowKeyValue);
-              if (CoreUtils.isNotUndefinedNorNull(identityRow)) {
-                // Found one, so create request payload for the POST
-                // using identity of identityRow.
-                actionDataPayload.rows.value.push({value: identityRow.identity.value});
-              }
-            }
-          }
-
-          try {
-            const reply = await postActionData(options.label, endpoint, actionDataPayload);
-            replies.push({messages: reply.messages});
-          }
-          catch (failure) {
-            if (CoreUtils.isNotUndefinedNorNull(failure.messages)) {
-              replies.push({messages: failure.messages});
-            }
-            else {
-              replies.push({messages: [{
-                severity: 'error',
-                message: failure
-              }]});
-            }
-          }
-        }
-        const actionReply = createDownloadActionReply(replies);
-        return Promise.resolve(actionReply);
-      }
-      else {
-        return Promise.resolve({succeeded: true, messages: []});
-      }
-    }
-
     async function performDeleteAction(rdjData, declarativeActions, options) {
       if (declarativeActions.checkedRows.size > 0) {
         const actionDataPayload = {rows: {value: []}};
@@ -1272,10 +1213,7 @@ define([
       },
 
       performActionOnCheckedRows: (rdjData, declarativeActions, options) => {
-        if (options.isDownloadAction) {
-          return performDownloadAction(rdjData, declarativeActions, options);
-        }
-        else if (options.isDeleteAction) {
+        if (options.isDeleteAction) {
           return performDeleteAction(rdjData, declarativeActions, options);
         }
         else if (isExecutionOrderConstrainedAction(options.action)) {

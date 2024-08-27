@@ -1,4 +1,4 @@
-# Copyright (c) 2020, 2022, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2024, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 referenceable: true
 
@@ -20,30 +20,21 @@ properties:
 - name: WeblogicPluginEnabled
   label: WebLogic Plug-In Enabled
   helpSummaryHTML: >
-    <p>Specifies if this cluster will receive requests from a proxy plug-in
-    or <code>HttpClusterServlet</code>.</p>
-
+   <p>Specifies if this cluster will receive requests from a proxy plug-in or <code>HttpClusterServlet</code>.</p>
   helpDetailsHTML: >
-    <p>There are three values you can select in <b>WebLogic Plug-In
-    Enabled</b>:</p><ul><li>Select <b>Yes</b> if the cluster will receive
-    requests from a proxy plug-in or <code>HttpClusterServlet</code>. A
-    call to <code>getRemoteAddr</code> will return the address of
-    the browser client from the proprietary WL-Proxy-Client-IP
-    header, instead of the Web server.</li><li>Select <b>No</b>
-    to disable the <code>weblogic-plugin-enabled</code>
-    parameter (<code>weblogic-plugin-enabled=false</code>) in the
-    <code>config.xml</code> file.</li><li>Select <b>Inherit</b> for this
-    cluster to inherit the value selected for <b>WebLogic Plug-In Enabled</b>
-    for the domain.</li></ul><p><b>Note</b>: If you are using Oracle
-    HTTP Server, the WebLogic Proxy Plug-In, or Oracle Traffic Director
-    to distribute client requests to a Managed Server or a cluster,
-    Oracle recommends choosing <b>Yes</b>.</p><p>For non-clustered
-    servers that will receive proxied requests, this attribute may be
-    set at the server level, on the <b>Server &gt; Configuration &gt;
-    General</b> page.</p><p><code>WeblogicPluginEnabled</code>
-    is duplicated both in <code>ClusterMBean</code> and
-    <code>ServerMBean</code>. <code>ClusterMBean</code> overrides
-    <code>ServerMBean</code>.</p>
+    <p>WebLogic supports configuring this property at the domain, cluster and server levels.
+    Each server in the cluster uses these predecence rules:</p>
+    <ol>
+      <li>Use the cluster level value if it was explictily set.</li>
+      <li>Use the server level value if it was explictly set.</li>
+      <li>Use the domain level value.</li>
+    </ol>
+    <p>When enabled, the cluster's servers will receive requests from a proxy plug-in or <code>HttpClusterServlet</code>.
+    A call to <code>getRemoteAddr</code> will return the address of the browser client from the
+    proprietary WL-Proxy-Client-IP header, instead of the Web server.</p>
+    <p><b>Note</b>: If you are using Oracle HTTP Server, the WebLogic Proxy Plug-In
+    or Oracle Traffic Director to distribute client requests to a Managed Server or
+    a cluster, Oracle recommends enabling this property.</p>
 
 - name: ServiceAgeThresholdSeconds
   label: Service Age Threshold

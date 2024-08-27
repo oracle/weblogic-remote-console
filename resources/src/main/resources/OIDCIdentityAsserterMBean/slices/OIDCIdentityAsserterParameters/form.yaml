@@ -10,3 +10,5 @@ properties:
 - name: KeyCacheSize
 - name: KeyCacheTTL
 - name: ClockSkew
+- name: UserIDTokenClaim
+- name: UserNameTokenClaim

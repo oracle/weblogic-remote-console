@@ -61,23 +61,23 @@ module.exports = function (driver, file) {
             await admin.enableCheckBox(driver, idName = 'ExalogicOptimizationsEnabled');
             await admin.enableCheckBox(driver, idName = 'ClusterConstraintsEnabled');
             await admin.disableCheckBox(driver, idName = 'InternalAppsDeployOnDemandEnabled');
-            await admin.enableCheckBox(driver, idName = 'ConsoleEnabled');
-            await admin.setFieldValue(driver, idName = 'ConsoleContextPath|input', newValue=consoleContextPathTF);
-            await admin.setFieldValue(driver, idName = 'AdminConsole_CookieName|input', newValue=consoleCookieNameTF);
-            await admin.setFieldValue(driver, idName = 'AdminConsole_SessionTimeout|input', newValue=consoleSessionTimeoutTF);
-            await admin.disableCheckBox(driver, idName = 'AdminConsole_ProtectedCookieEnabled');
-            await admin.setFieldValue(driver, idName = 'AdminConsole_MinThreads|input', newValue = minThreadsConsoleTF);
-            await admin.setFieldValue(driver, idName = 'AdminConsole_SSOLogoutURL|input', newValue=consoleSSOLogoutUrlTF);
-            await admin.setFieldValue(driver, idName = 'ConsoleExtensionDirectory|input', newValue=consoleExtensionDirTF);
-            //await admin.enableCheckBox(driver, idName = 'WebserviceTestpage_Enabled');
+            await admin.enableCheckBox(driver, idName = 'RemoteConsoleHelperEnabled');
+            await admin.setFieldValue(driver, idName = 'RemoteConsoleHelper_ContextPath|input', newValue=consoleContextPathTF);
+
+            await admin.setFieldValue(driver, idName = 'RemoteConsoleHelper_CookieName|input', newValue=consoleCookieNameTF);
+            await admin.setFieldValue(driver, idName = 'RemoteConsoleHelper_SessionTimeout|input', newValue=consoleSessionTimeoutTF);
+            await admin.disableCheckBox(driver, idName = 'RemoteConsoleHelper_ProtectedCookieEnabled');
+            await admin.setFieldValue(driver, idName = 'SiteName|input', newValue = "us.oracle.com");
+            //await admin.setFieldValue(driver, idName = 'AdminConsole_SSOLogoutURL|input', newValue=consoleSSOLogoutUrlTF);
+            //await admin.setFieldValue(driver, idName = 'ConsoleExtensionDirectory|input', newValue=consoleExtensionDirTF);
+            await admin.enableCheckBox(driver, idName = 'WebserviceTestpage_Enabled');
             await admin.setFieldValue(driver, idName = 'AdministrationProtocol|input', newValue=adminProtocolTF);
             await admin.enableCheckBox(driver, idName = 'CdiContainer_ImplicitBeanDiscoveryEnabled');
-            //await admin.disableCheckBox(driver, idName = 'ConfigBackupEnabled');
+            await admin.disableCheckBox(driver, idName = 'ConfigBackupEnabled');
             //await admin.selectDropDownValue(driver,idName="oj-searchselect-filter-ConfigurationAuditType|input","Audit");
             await admin.disableCheckBox(driver, idName = 'JMX_CompatibilityMBeanServerEnabled');
             await admin.enableCheckBox(driver, idName = 'LogFormatCompatibilityEnabled');
             await admin.enableCheckBox(driver, idName = 'JMX_PlatformMBeanServerEnabled');
-            //await admin.disableCheckBox(driver, idName = 'PlatformMBeanServerUsed');
             await admin.enableCheckBox(driver, idName = 'DiagnosticContextCompatibilityModeEnabled');
             await admin.disableCheckBox(driver, idName = 'EnableEECompliantClassloadingForEmbeddedAdapters');
             await admin.setFieldValue(driver, idName = 'JMX_InvocationTimeoutSeconds|input', newValue=invocationTimeoutSecondsTF);
@@ -110,9 +110,9 @@ module.exports = function (driver, file) {
             console.log("Verify if InternalAppsDeployOnDemandEnabled is enabled");
             assert.equal(true, await driver.findElement(By.id("InternalAppsDeployOnDemandEnabled")).isEnabled());
             console.log("Verify if InternalAppsDeployOnDemandEnabled is NOT enabled");
-            assert.equal(false, await driver.findElement(By.id("ConsoleEnabled")).isSelected(),"ConsoleEnabled'");
+            assert.equal(false, await driver.findElement(By.id("RemoteConsoleHelperEnabled")).isSelected(),"ConsoleEnabled'");
             console.log("Verify if ProtectedCookieEnabled is enabled");
-            assert.equal(true, await driver.findElement(By.id("AdminConsole_ProtectedCookieEnabled")).isEnabled(),"'ProtectedCookieEnabled'");
+            assert.equal(true, await driver.findElement(By.id("RemoteConsoleHelper_ProtectedCookieEnabled")).isEnabled(),"'ProtectedCookieEnabled'");
             console.log("Verify if ConsoleContextPath = console");
             //assert.equal("console", await driver.findElement(By.id("ConsoleContextPath|input")).getAttribute('value'),"ConsoleContextPath|input");
         },

@@ -1,4 +1,4 @@
-// Copyright (c) 2021, 2023, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2024, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.providers;
@@ -19,6 +19,7 @@ import org.yaml.snakeyaml.Yaml;
 import weblogic.remoteconsole.common.repodef.LocalizableString;
 import weblogic.remoteconsole.common.repodef.LocalizedConstants;
 import weblogic.remoteconsole.common.utils.WebLogicMBeansVersions;
+import weblogic.remoteconsole.common.utils.WebLogicVersion;
 import weblogic.remoteconsole.common.utils.WebLogicVersions;
 import weblogic.remoteconsole.server.repo.BeanRepo;
 import weblogic.remoteconsole.server.repo.DownloadBeanRepo;
@@ -250,11 +251,12 @@ public class WDTModelDataProviderImpl implements WDTModelDataProvider {
         // Only provide error message when start fails...
         throw new FailedRequestException(getNoModelMessage(ic));
       }
+      WebLogicVersion weblogicVersion = WebLogicVersions.getLatestVersion();
       editRoot.setPageRepo(
         new WDTPageRepo(
           WebLogicMBeansVersions.getVersion(
-            WebLogicVersions.getLatestVersion(),
-            WDTCapabilities.CAPABILITIES
+            weblogicVersion,
+            WDTCapabilities.getCapabilities(weblogicVersion)
           ),
           model,
           ic

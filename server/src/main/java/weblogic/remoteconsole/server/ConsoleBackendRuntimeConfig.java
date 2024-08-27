@@ -62,6 +62,7 @@ public class ConsoleBackendRuntimeConfig {
   private static String documentationSite;
   private static String ssoDomainLoginUri;
   private static String proxy;
+  private static boolean restrictContentBasedOnRoles = true;
 
   static {
     // Put all of the keys in here even if null
@@ -75,6 +76,7 @@ public class ConsoleBackendRuntimeConfig {
     defaultProperties.put("ssoTimeoutSeconds", "300");
     defaultProperties.put("ssoDomainLoginUri", null);
     defaultProperties.put("proxy", null);
+    defaultProperties.put("restrictContentBasedOnRoles", "true");
   }
 
   private static void loadConfigFile() {
@@ -156,6 +158,7 @@ public class ConsoleBackendRuntimeConfig {
     documentationSite = propGet("documentationSite");
     ssoDomainLoginUri = propGet("ssoDomainLoginUri");
     proxy = propGet("proxy");
+    restrictContentBasedOnRoles = Boolean.parseBoolean(propGet("restrictContentBasedOnRoles"));
   }
 
   public static String getName() {
@@ -199,10 +202,14 @@ public class ConsoleBackendRuntimeConfig {
   }
 
   public static String getVersion() {
-    return "2.4.10";
+    return "2.4.11";
   }
 
   public static String getProxy() {
     return proxy;
+  }
+
+  public static boolean isRestrictContentBasedOnRoles() {
+    return restrictContentBasedOnRoles;
   }
 }

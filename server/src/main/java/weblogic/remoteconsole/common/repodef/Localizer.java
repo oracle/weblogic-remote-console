@@ -1,4 +1,4 @@
-// Copyright (c) 2021, 2022, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2024, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef;
@@ -73,7 +73,15 @@ public class Localizer {
     if (localizableString.isUnlocalized()) {
       return english;
     }
-    String translated = resourceBundle.getString(localizableString.getResourceBundleKey());
+    String key = localizableString.getResourceBundleKey();
+    if (!resourceBundle.containsKey(key)) {
+      // the key isn't in the resource bundle.
+      // e.g. console extension yamls aren't available
+      // when we build the remote console resource bundle.
+      // just use the english label for now.
+      return english;
+    }
+    String translated = resourceBundle.getString(key);
     return translated;
   }
 }

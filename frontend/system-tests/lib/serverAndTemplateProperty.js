@@ -84,13 +84,12 @@ module.exports = function (driver, file) {
             await admin.goToNavTreeLevelThreeLink(driver,"configuration","Environment",
                 "Servers",serverName);
             await driver.sleep(2400);
-            admin.clickConveyorArrow(driver,5);
+            //admin.clickConveyorArrow(driver,5);
             admin.goToTabName(driver,"Debug");
             await driver.sleep(900);
             admin.goToTabName(driver,debugGroup);
             await driver.sleep(900);
 
-            let debugAppPath = "//oj-checkboxset[@id=\'debugFlagsCheckboxset\']";
             let debugPropIndex = 0;
             if ( (debugProp1 == 'ClassChangeNotifier') || (debugProp1 == 'DebugConnectorService') ||
                 (debugProp1 == 'DebugAsyncQueue') || (debugProp1 == 'DebugBeanTreeHarvesterControl') ||
@@ -117,6 +116,10 @@ module.exports = function (driver, file) {
                 debugPropIndex = 5;
                 this.selectDebugProperty(driver,debugPropIndex,debugProp5);
             }
+            //console.log("WorkAround: Zoom out for 90%");
+            //driver.executeScript("document.body.style.zoom = '90%';");
+            await driver.sleep(1200);
+
             await admin.saveAndCommitChanges(driver);
         },
 
@@ -124,14 +127,15 @@ module.exports = function (driver, file) {
         // Check/uncheck a debug property
         //
         selectDebugProperty: async function (driver,debugPropIndex,debugProp) {
-            let debugAppPath = "//oj-checkboxset[@id=\'debugFlagsCheckboxset\']";
-            console.log("Click "+debugProp+ " property");
-            //element = driver.findElement(
-               //By.xpath(debugAppPath+"/div[2]/span["+debugPropIndex+"]/span/input"));
+            console.log("Select " +debugProp);
+            console.log("Select xPath " +
+                "//oj-checkboxset[@id='debugFlagsCheckboxset']/div/span["+debugPropIndex+"]/span/input");
             element = driver.findElement(
-                By.xpath(debugAppPath+"/div/span["+debugPropIndex+"]/span/input"));
+              By.xpath("//oj-checkboxset[@id='debugFlagsCheckboxset']/div/span["+debugPropIndex+"]/span/input"));
+            await driver.sleep(1200);
             driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
             await element.click();
+            await driver.sleep(1200);
         },
 
 

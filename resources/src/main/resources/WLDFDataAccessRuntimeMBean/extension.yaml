@@ -1,0 +1,18 @@
+# Copyright (c) 2024, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions:
+  - name: "downloadLogs"
+    type: "void"
+    parameters:
+      - name: "LogFileDirectory"
+        type: "java.lang.String"
+        descriptionHTML: >
+          <p>Directory where logfile should be downloaded to.</p>
+      - name: "FileFormat"
+        type: "java.lang.String"
+        legalValues:
+        - "JSON"
+        - "TEXT"
+        descriptionHTML: >
+          <p>The file format for downloading.</p>

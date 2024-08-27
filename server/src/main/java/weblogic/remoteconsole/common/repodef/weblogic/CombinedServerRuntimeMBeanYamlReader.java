@@ -1,4 +1,4 @@
-// Copyright (c) 2022, 2023, Oracle and/or its affiliates.
+// Copyright (c) 2022, 2024, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef.weblogic;
@@ -10,7 +10,6 @@ import weblogic.remoteconsole.common.repodef.PagePath;
 import weblogic.remoteconsole.common.repodef.PagesPath;
 import weblogic.remoteconsole.common.repodef.SlicePagePath;
 import weblogic.remoteconsole.common.repodef.schema.BeanPropertyDefCustomizerSource;
-import weblogic.remoteconsole.common.repodef.schema.BeanTypeDefExtensionSource;
 import weblogic.remoteconsole.common.repodef.schema.NavTreeDefSource;
 import weblogic.remoteconsole.common.repodef.schema.NavTreeNodeDefSource;
 import weblogic.remoteconsole.common.repodef.schema.SliceFormDefSource;
@@ -33,11 +32,6 @@ abstract class CombinedServerRuntimeMBeanYamlReader extends WebLogicBeanTypeYaml
   protected abstract String getDelegatedType();
 
   protected abstract String getDelegatedProperty();
-
-  @Override
-  BeanTypeDefExtensionSource getBeanTypeDefExtensionSource(BeanTypeDef typeDef) {
-    return getYamlReader().getBeanTypeDefExtensionSource(getDelegatedTypeDef(typeDef));
-  }
 
   @Override
   SliceFormDefSource getSliceFormDefSource(SlicePagePath pagePath, SlicesDefImpl slicesDefImpl) {

@@ -56,6 +56,7 @@ properties:
 - name: ServerDebug.DebugLocalRemoteJVM
 - name: ServerDebug.DebugMessaging
 - name: ServerDebug.DebugMuxer
+- name: ServerDebug.DebugMuxerConcise
 - name: ServerDebug.DebugMuxerConnection
 - name: ServerDebug.DebugMuxerDetail
 - name: ServerDebug.DebugMuxerException
@@ -75,6 +76,7 @@ properties:
 - name: ServerDebug.DebugScrubberStartService
 - name: ServerDebug.DebugSelfTuning
 - name: ServerDebug.DebugSingletonServices
+- name: ServerDebug.DebugSingletonServicesConcise
 - name: ServerDebug.DebugStubGeneration
 - name: ServerDebug.DebugTunnelingConnection
 - name: ServerDebug.DebugTunnelingConnectionTimeout

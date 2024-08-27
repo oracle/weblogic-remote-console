@@ -45,7 +45,7 @@ describe.only('Test Suite: navtree2_test for Navtree Test-Suite', function () {
             await admin.createNewMBeanObject(driver,"TestCluster-1",2,"configuration","Environment","Clusters");
             await admin.createNewMBeanObject(driver,"TestVirtualHost-1",2,"configuration","Environment","Virtual Hosts");
             await admin.createNewMBeanObject(driver,"TestSingleton-1",2,"configuration","Environment","Singleton Services");
-            await admin.createNewMBeanObject(driver,"TestCoherenceCluster-1",2,"configuration","Environment","Coherence Cluster System Resources");
+            await admin.createNewMBeanObject(driver,"TestCoherenceCluster-1",2,"configuration","Environment","Coherence Clusters");
 
             //Server sub-menu pages
             await admin.goToNavTreeLevelThreeLink(driver,"configuration","Environment","Servers","AdminServer");
@@ -64,12 +64,12 @@ describe.only('Test Suite: navtree2_test for Navtree Test-Suite', function () {
             //await admin.goToNavTreeLevelThreeLink(driver,"configuration","Environment","Machines","Machine-1");
             await admin.goToNavTreeLevelThreeLink(driver,"configuration","Environment","Virtual Hosts","TestVirtualHost-1");
             await admin.goToNavTreeLevelThreeLink(driver,"configuration","Environment","Singleton Services","TestSingleton-1");
-            //Coherence Cluster System Resources sub-menu Pages
-            await admin.goToNavTreeLevelFourLink(driver,"configuration","Environment","Coherence Cluster System Resources","TestCoherenceCluster-1","Coherence Address Providers");
-            await admin.goToNavTreeLevelFourLink(driver,"configuration","Environment","Coherence Cluster System Resources","TestCoherenceCluster-1","Coherence Caches");
-            await admin.goToNavTreeLevelFourLink(driver,"configuration","Environment","Coherence Cluster System Resources","TestCoherenceCluster-1","Coherence Cache Configs");
-            await admin.goToNavTreeLevelFourLink(driver,"configuration","Environment","Coherence Cluster System Resources","TestCoherenceCluster-1","Coherence Cluster Well Known Addresses");
-            await admin.goToNavTreeLevelFourLink(driver,"configuration","Environment","Coherence Cluster System Resources","TestCoherenceCluster-1","Coherence Services");
+            //Coherence Clusters System Resources sub-menu Pages
+            await admin.goToNavTreeLevelFourLink(driver,"configuration","Environment","Coherence Clusters","TestCoherenceCluster-1","Coherence Address Providers");
+            await admin.goToNavTreeLevelFourLink(driver,"configuration","Environment","Coherence Clusters","TestCoherenceCluster-1","Coherence Caches");
+            await admin.goToNavTreeLevelFourLink(driver,"configuration","Environment","Coherence Clusters","TestCoherenceCluster-1","Coherence Cache Configs");
+            await admin.goToNavTreeLevelFourLink(driver,"configuration","Environment","Coherence Clusters","TestCoherenceCluster-1","Coherence Cluster Well Known Addresses");
+            await admin.goToNavTreeLevelFourLink(driver,"configuration","Environment","Coherence Clusters","TestCoherenceCluster-1","Coherence Services");
 
             //Delete TestServer-1, TestServerTemplate-1, TestCluster-1, TestVituralHost-1, TestSingleton-1,
             // TestCoherenceCluster-1
@@ -98,9 +98,9 @@ describe.only('Test Suite: navtree2_test for Navtree Test-Suite', function () {
             await driver.sleep(2400);
             await admin.deleteMBeanFromLandingPage(driver,"Singleton Services","TestSingleton-1",2);
 
-            await admin.goToLandingPanelSubTreeCard(driver,"Edit Tree","EnvironmentChevron","Coherence Cluster System Resources",0);
+            await admin.goToLandingPanelSubTreeCard(driver,"Edit Tree","EnvironmentChevron","Coherence Clusters",0);
             await driver.sleep(2400);
-            await admin.deleteMBeanFromLandingPage(driver,"Coherence Cluster System Resources","TestCoherenceCluster-1",1);
+            await admin.deleteMBeanFromLandingPage(driver,"Coherence Clusters","TestCoherenceCluster-1",1);
 
             console.log("TEST PASS ");
         } catch (e) {

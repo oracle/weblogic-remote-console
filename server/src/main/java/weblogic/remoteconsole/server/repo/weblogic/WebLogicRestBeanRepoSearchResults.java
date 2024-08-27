@@ -1,4 +1,4 @@
-// Copyright (c) 2021, 2022, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2024, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.repo.weblogic;
@@ -146,7 +146,11 @@ class WebLogicRestBeanRepoSearchResults implements BeanReaderRepoSearchResults {
   private String getKey(BeanTreePathSegment segment, JsonObject beanResults, boolean haveExpandedValues) {
     String restKeyProp = getRestKeyPropertyName(segment);
     if (haveExpandedValues) {
-      return beanResults.getJsonObject(restKeyProp).getString("value");
+      if (beanResults.containsKey(restKeyProp)) {
+        return beanResults.getJsonObject(restKeyProp).getString("value");
+      } else {
+        return null;
+      }
     } else {
       return beanResults.getString(restKeyProp);
     }

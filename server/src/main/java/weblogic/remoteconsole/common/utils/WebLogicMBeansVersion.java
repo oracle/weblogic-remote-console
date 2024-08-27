@@ -1,4 +1,4 @@
-// Copyright (c) 2021, 2022, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2024, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.utils;
@@ -6,6 +6,8 @@ package weblogic.remoteconsole.common.utils;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
+
+import weblogic.remoteconsole.server.ConsoleBackendRuntimeConfig;
 
 /**
  * Contains overall information a version of the WebLogic MBeans.
@@ -41,6 +43,19 @@ public class WebLogicMBeansVersion {
 
   public Set<String> getRoles() {
     return roles;
+  }
+
+  public boolean isAccessAllowed(Set<String> rolesAllowed) {
+    if (!ConsoleBackendRuntimeConfig.isRestrictContentBasedOnRoles()) {
+      return true;
+    }
+    // Return true if the user is in any of the roles in rolesAllowed, false otherwise
+    for (String roleAllowed : rolesAllowed) {
+      if (getRoles().contains(roleAllowed)) {
+        return true;
+      }
+    }
+    return false;
   }
 
   public Set<String> getCapabilities() {

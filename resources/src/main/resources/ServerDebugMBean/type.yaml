@@ -1205,6 +1205,9 @@ properties:
 - name: DebugSingletonServices
   useUnlocalizedNameAsLabel: true
 
+- name: DebugSingletonServicesConcise
+  useUnlocalizedNameAsLabel: true
+
 - name: DebugSituationalConfig
   useUnlocalizedNameAsLabel: true
 

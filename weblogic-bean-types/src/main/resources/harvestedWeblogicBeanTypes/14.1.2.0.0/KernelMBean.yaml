@@ -329,6 +329,16 @@ properties:
       value: true
     value:
       value: false
+  descriptionHTML: '<p>Specifies whether the server message log includes only critical
+    exceptions that are raised in remote systems.  Non-critical exceptions, such as
+    javax.management.InstanceNotFoundException and javax.management.AttributeNotFoundException,
+    will not be included in the message log.</p> '
+  name: LogCriticalRemoteExceptionsEnabled
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: false
   descriptionHTML: '<p>Specifies whether the server message log includes exceptions
     that are raised in remote systems.</p> '
   name: LogRemoteExceptionsEnabled

@@ -47,6 +47,7 @@ const SettingsEditor = (() => {
       }
     }
     const otherList = [];
+    preferences.value('roles.restrictContentBasedOnRoles', true);
     for (var key in data) {
       if (key === 'proxy') {
         preferences.value('networking.proxy', data[key]);
@@ -65,6 +66,9 @@ const SettingsEditor = (() => {
       }
       else if (key === 'console.readTimeoutMillis') {
         preferences.value('networking.readTimeoutMillis', data[key]);
+      }
+      else if (key === 'console.restrictContentBasedOnRoles') {
+        preferences.value('roles.restrictContentBasedOnRoles', data[key]);
       }
       else if (key === 'console.disableHostnameVerification') {
         preferences.value('networking.disableHostnameVerification', data[key]);
@@ -92,6 +96,9 @@ const SettingsEditor = (() => {
     addValue(data, 'console.connectTimeoutMillis', preferences.value('networking.connectTimeoutMillis'));
     addValue(data, 'console.readTimeoutMillis', preferences.value('networking.readTimeoutMillis'));
     addValue(data, 'console.disableHostnameVerification', preferences.value('networking.disableHostnameVerification'));
+    if (preferences.value('roles.restrictContentBasedOnRoles') !== true) {
+      data['console.restrictContentBasedOnRoles'] = false;
+    }
     const otherList = preferences.preferences?.other?.list;
     for (var pair of otherList) {
       data[pair.substring(0, pair.indexOf('='))]= pair.substring(pair.indexOf('=') + 1);
@@ -232,6 +239,35 @@ const SettingsEditor = (() => {
                       type: 'button',
                       key: 'save',
                       buttonLabel: `${I18NUtils.get('wrc-electron.common.save')}`,
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            id: 'roles',
+            label: `${I18NUtils.get('wrc-electron.menus.settings.section.roles.label')}`,
+            icon: 'preferences',
+            form: {
+              groups: [
+                {
+                  'fields': [
+                    {
+                      label: `${I18NUtils.get('wrc-electron.menus.settings.restrict-content.label')}`,
+                      help: `${I18NUtils.get('wrc-electron.menus.settings.restrict-content.help')}`,
+                      key: 'restrictContentBasedOnRoles',
+                      type: 'radio',
+                      options: [
+                        {label: `${I18NUtils.get('wrc-electron.menus.preferences.yes')}`, value: true},
+                        {label: `${I18NUtils.get('wrc-electron.menus.preferences.no')}`, value: false}
+                      ]
+                    },
+                    {
+                      type: 'button',
+                      key: 'save',
+                      buttonLabel: `${I18NUtils.get('wrc-electron.common.save')}`,
+                      hideLabel: 'true'
                     }
                   ]
                 }

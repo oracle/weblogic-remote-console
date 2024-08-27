@@ -130,11 +130,12 @@ properties:
 - defaultValue:
     derivedDefault: true
   descriptionHTML: '<p>Indicates whether the server can be reached through the default
-    SSL listen port.</p>  <p>If the administration port is enabled for the WebLogic
-    Server domain, then administrative traffic travels over the administration port
-    and application traffic travels over the Listen Port and SSL Listen Port. If the
-    administration port is disabled, then all traffic travels over the Listen Port
-    and SSL Listen Port.</p> '
+    SSL listen port.</p>  <p>If there is no explicit setting for this attribute, it
+    will inherit the value of the DomainMBean''s SSLEnabled attribute.</p>  <p>If
+    the administration port is enabled for the WebLogic Server domain, then administrative
+    traffic travels over the administration port and application traffic travels over
+    the Listen Port and SSL Listen Port. If the administration port is disabled, then
+    all traffic travels over the Listen Port and SSL Listen Port.</p> '
   name: Enabled
   type: boolean
   writable: true
