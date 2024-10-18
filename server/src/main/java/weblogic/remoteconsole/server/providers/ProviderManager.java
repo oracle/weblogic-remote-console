@@ -195,7 +195,7 @@ public class ProviderManager {
 
   public static JsonObject genDefaultProject(InvocationContext ic) {
     JsonObjectBuilder builder = Json.createObjectBuilder();
-    builder.add("name", "WebLogic Remote Console Hosted");
+    builder.add("name", "Hosted WebLogic Remote Console");
     JsonArrayBuilder childrenBuilder = Json.createArrayBuilder();
     childrenBuilder.add(genDefaultProvider(ic));
     JsonArray otherProviders = loadOtherProviders(ic);
@@ -310,8 +310,8 @@ public class ProviderManager {
       return;
     }
     JsonObjectBuilder builder = Json.createObjectBuilder();
-    builder.add("name", "WebLogic Remote Console Hosted");
-    builder.add("label", "WebLogic Remote Console Hosted");
+    builder.add("name", "Hosted WebLogic Remote Console");
+    builder.add("label", "Hosted WebLogic Remote Console");
     builder.add("dataProviders", other);
     builder.add("current", true);
     try {

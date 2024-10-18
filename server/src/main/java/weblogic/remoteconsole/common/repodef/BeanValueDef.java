@@ -1,4 +1,4 @@
-// Copyright (c) 2021, 2023, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2024, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef;
@@ -132,4 +132,8 @@ public interface BeanValueDef {
   // (i.e. can contain newline characters and should be
   // displayed in a text area instead of a text box).
   public boolean isMultiLineString();
+
+  // Indicates that this value is a string that uses options
+  // to list the legal values in the PDJ
+  public boolean isDynamicEnum();
 }

@@ -240,24 +240,7 @@ public abstract class WebLogicRestBeanRepo extends WebLogicBeanRepo implements B
     restActionPath.addComponent(actionDef.getRemoteActionName());
   
     // Shortcut domainRuntime/serverRuntimes/<adminserver>/... to serverRuntime/...
-    List<String> components = restActionPath.getComponents();
-    if (components.size() >= 3) {
-      Path have = restActionPath.subPath(0, 3);
-      Path want = new Path();
-      want.addComponent("domainRuntime");
-      want.addComponent("serverRuntimes");
-      want.addComponent(ic.getConnection().getAdminServerName());
-      if (have.equals(want)) {
-        Path shortcut = new Path("serverRuntime");
-        if (components.size() > 3) {
-          List<String> restOfPath = components.subList(3, components.size());
-          shortcut.addComponents(restOfPath);
-        }
-        return shortcut;
-      }
-    }
-
-    return restActionPath;
+    return shortcutAdminServerRuntimePath(ic, restActionPath);
   }
 
   protected void convertRestMessagesToRepoMessages(Response<?> restResponse, Response<?> repoResponse) {
@@ -303,7 +286,14 @@ public abstract class WebLogicRestBeanRepo extends WebLogicBeanRepo implements B
     }
     if (value.isBeanTreePath()) {
       JsonArrayBuilder builder = Json.createArrayBuilder();
-      for (String component : getTreeRelativeRestPath(value.asBeanTreePath()).getComponents()) {
+      // When you POST to domainRuntime/serverRuntimes/<managedserver>/...
+      // and pass in a request body that has a reference to a runtime mbean,
+      // the reference needs to be relative to the managed server, i.e.
+      //   ref bean tree path                    - DomainRuntime/ServerRuntimes/<managedserver>/...
+      //   ref admin server tree relative path   - serverRuntimes/<managedserver>/...
+      //   ref managed server tree relative path - ...
+      Path path = getLocalTreeRelativeRestPath(value.asBeanTreePath());
+      for (String component : path.getComponents()) {
         builder.add(component);
       }
       if (arrayElement) {
@@ -338,6 +328,29 @@ public abstract class WebLogicRestBeanRepo extends WebLogicBeanRepo implements B
       return builder.build();
     }
     throw new AssertionError("Unsupported value : " + value);
+  }
+
+  // Shortcut domainRuntime/serverRuntimes/<adminserver>/... to serverRuntime/...
+  public static Path shortcutAdminServerRuntimePath(InvocationContext ic, Path path) {
+    List<String> components = path.getComponents();
+    if (
+      components.size() >= 3
+        && components.get(0).equals("domainRuntime")
+        && components.get(1).equals("serverRuntimes")
+        && components.get(2).equals(ic.getConnection().getAdminServerName())
+    ) {
+      return new Path("serverRuntime").childPath(path.subPath(3, path.length()));
+    }
+    return path;
+  }
+
+  private static Path getLocalTreeRelativeRestPath(BeanTreePath beanTreePath) {
+    Path path = getTreeRelativeRestPath(beanTreePath);
+    List<String> components = path.getComponents();
+    if (components.size() >= 2 && components.get(0).equals("serverRuntimes")) {
+      return path.subPath(2, path.length());
+    }
+    return path;
   }
 
   public static Path getTreeRelativeRestPath(BeanTreePath beanTreePath) {

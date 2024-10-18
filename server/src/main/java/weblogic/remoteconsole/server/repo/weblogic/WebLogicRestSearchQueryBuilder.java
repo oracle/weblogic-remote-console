@@ -1,4 +1,4 @@
-// Copyright (c) 2021, 2023, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2024, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.repo.weblogic;
@@ -269,6 +269,7 @@ public class WebLogicRestSearchQueryBuilder {
     changesBldr.add("fields", fieldsBldr);
     JsonObjectBuilder childrenBldr = Json.createObjectBuilder();
     childrenBldr.add("changes", changesBldr);
-    consoleChangeManagerBldr.add("children", childrenBldr);;
+    consoleChangeManagerBldr.add("children", childrenBldr);
+    setSettable(false); // in case some of the changes are for beans that don't suport SettableBean
   }
 }

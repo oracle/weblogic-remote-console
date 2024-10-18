@@ -1,0 +1,70 @@
+# Copyright (c) 2023, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+introductionHTML: >
+  <p>This page manages the current transactions running on this JMS server.</p>
+
+getTableRowsMethod: weblogic.remoteconsole.customizers.JMSServerRuntimeMBeanCustomizer.getTransactionsSliceTableRows
+
+actions:
+- name: "forceCommitSelectedTransactions"
+- name: "forceRollbackSelectedTransactions"
+
+displayedColumns:
+- name: "Name"
+  definition:
+    type: "java.lang.String"
+    descriptionHTML: >
+      The name of the transaction as defined by the application that started the transaction.
+- name: "Xid"
+  label: "Transaction ID"
+  definition:
+    type: "java.lang.String"
+    descriptionHTML: >
+      The transaction ID assigned by the transaction manager.
+- name: "Status"
+  definition:
+    type: "java.lang.String"
+    descriptionHTML: >
+      The current status of the transaction.
+- name: "RollbackReason"
+  definition:
+    type: "java.lang.String"
+    descriptionHTML: >
+      The message of the throwable that caused the transaction to rollback.
+- name: "SecondsActive"
+  definition:
+    type: int
+    descriptionHTML: >
+      The time, in seconds, for which the transaction has been active.
+- name: "Servers"
+  definition:
+    type: java.util.Properties
+    descriptionHTML: >
+      The participating servers and their status for the transaction.
+- name: "Resources"
+  label: "XA Resources"
+  definition:
+    type: java.util.Properties
+    descriptionHTML: >
+      The names of the participating resources and their status for the transaction.
+- name: "GlobalProperties"
+  definition:
+    type: java.util.Properties
+    descriptionHTML: >
+      The global properties associated with the transaction.
+- name: "LocalProperties"
+  definition:
+    type: java.util.Properties
+    descriptionHTML: >
+      The local properties associated with the transaction.
+- name: "CoordinatorURL"
+  definition:
+    type: "java.lang.String"
+    descriptionHTML: >
+      The URL of the coordinating server.
+
+helpTopics:
+- label: "Monitoring JMS Statistics and Managing Messages"
+  href: "jmsad/manage_msg.html"
+  type: "edocs"

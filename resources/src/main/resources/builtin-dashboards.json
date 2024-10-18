@@ -36,6 +36,7 @@
         "BeanKeyResult_CombinedServerRuntimes",
         "BeanKeyResult_JMSServers",
         "BeanKeyResult_Destinations",
+        "DestinationName",
         "DestinationType",
         "BytesCurrentCount",
         "BytesHighCount",

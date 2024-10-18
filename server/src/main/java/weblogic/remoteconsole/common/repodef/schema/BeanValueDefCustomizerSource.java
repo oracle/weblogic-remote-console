@@ -1,4 +1,4 @@
-// Copyright (c) 2021, 2023, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2024, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef.schema;
@@ -15,12 +15,14 @@ public class BeanValueDefCustomizerSource {
   private BooleanValue dateAsLong = new BooleanValue();
   private BooleanValue ordered = new BooleanValue();
   private BooleanValue multiLineString = new BooleanValue();
+  private BooleanValue dynamicEnum = new BooleanValue();
 
   protected void merge(BeanValueDefCustomizerSource from, Path fromContainedBeanPath) {
     referenceAsReferences.merge(from.referenceAsReferences, fromContainedBeanPath);
     dateAsLong.merge(from.dateAsLong, fromContainedBeanPath);
     ordered.merge(from.ordered, fromContainedBeanPath);
     multiLineString.merge(from.multiLineString, fromContainedBeanPath);
+    dynamicEnum.merge(from.dynamicEnum, fromContainedBeanPath);
   }
 
   // Indicates that even though the value is an array of references,
@@ -68,5 +70,14 @@ public class BeanValueDefCustomizerSource {
 
   public void setMultiLineString(boolean value) {
     multiLineString.setValue(value);
+  }
+
+  // Whether options are used to specify instance-based legal values
+  public boolean isDynamicEnum() {
+    return dynamicEnum.getValue();
+  }
+
+  public void setDynamicEnum(boolean val) {
+    dynamicEnum.setValue(val);
   }
 }

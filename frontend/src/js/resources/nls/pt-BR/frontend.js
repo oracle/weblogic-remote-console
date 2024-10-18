@@ -401,7 +401,7 @@ define({
             "label": "Nome do usuário:"
           },
           "sso": {
-            "label": "Web Authentication:"
+            "label": "Autenticação Web"
           },
           "roles": {
             "label": "Atribuições:"
@@ -865,16 +865,16 @@ define({
       },
       "cards": {
         "tip0": {
-          "title": "Pense em \"Pesquisar\" antes de Clicar!",
-          "descriptionHTML": "<p>Talvez sejam necessários muitos cliques e rolagens para localizar o que você deseja em uma das Árvores do provedor. O campo <b><i>Pesquisar</i></b> (localizado na parte superior do aplicativo) evita tudo isso! </p><p>E o melhor é que um clique num item dos resultados gerados pela pesquisa expande automaticamente a Árvore do provedor para mostrar onde está o item.</p>"
+          "title": "Pesquise em todos os MBeans do seu domínio!",
+          "descriptionHTML": "<p>Digite um termo de pesquisa no campo de pesquisa na parte superior da console para vasculhar a perspectiva atual em busca de correspondências. Vocêtambém pode verificar novamente as consultas anteriores no nó <b>Pesquisas Recentes</b>.</p>"
         },
         "tip1": {
-          "title": "Os \"Painéis de Controle\" São os Melhores Amigos do Usuário",
-          "descriptionHTML": "<p>Um <b><i>Painel de Controle</i></b> permite definir os critérios usados para selecionar instâncias de MBean. Eles funcionam como uma espécie de View no mundo dos bancos de dados, permitindo que você veja todas as instâncias de MBean com valores de runtime que no momento atendem aos critérios.</p><p>Procure o botão <img src=\"js/jet-composites/wrc-frontend/1.0.0/images/dashboards-tabstrip-icon_24x24.png\" alt=\"New Dashboard Icon\" style=\"height: 24px; width: 24px; vertical-align: middle;\"/> sempre que estiver em uma página da \"Árvore de Monitoramento\"; em seguida, clique nele para definir um novo painel de controle. É possível encontrar aqueles que foram criados anteriormente abaixo do nó \"Painéis de Controle\" do nível raiz na Árvore de Monitoramento.</p>"
+          "title": "Filtre e encontre rapidamente dados que são importantes para você!",
+          "descriptionHTML": "<p>Os painéis de controle permitem que você defina critérios personalizados, compare-os com seu domínio e gere relatórios abrangentes e precisos com base no seu domínio.</p><p>Para começar, abra qualquer nó na <b>Árvore de Monitoramento</b> e clique em <b>Novo Painel de Controle</b>. Como alternativa, abra o nó de nível superior <b>Painéis de Controle</b> para ver os painéis de controle incorporados.</p>"
         },
         "tip2": {
-          "title": "Escolhendo e Organizando Colunas da Tabela com a opção \"Personalizar Tabela\"",
-          "descriptionHTML": "<p>O link \"Personalizar esta tabela\" agora é o botão <i>Personalizar Tabela</i>.</p>"
+          "title": "Refinar o conteúdo da tabela",
+          "descriptionHTML": "<p>Simplifique as tabelas ocultando colunas irrelevantes para poder focar nos dados do seu interesse.</p><p>Acima de qualquer tabela, clique em <b>Personalizar Tabela</b> e marque ou desmarque as colunas conforme desejar.</p>"
         },
         "tip3": {
           "title": "Usando o Teclado com Tabelas e Ações",
@@ -885,20 +885,20 @@ define({
           "descriptionHTML": "<p>O link \"Personalizar esta tabela\" agora é o botão <i>Personalizar Tabela</i>.</p>"
         },
         "tip5": {
-          "title": "Onde está o Portlet \"Centro de Alterações\"?",
-          "descriptionHTML": "<p>O portlet \"Centro de Alterações\" foi substituído pela <i>Gaveta Carrinho de Compras</i>, que tem um ícone inicializador na barra de ícones quando a \"Árvore de Configuração\" é selecionada.</p>"
+          "title": "Verificar alterações pendentes",
+          "descriptionHTML": "<p>Abra o Carrinho de Compras para ver uma lista das alterações salvas no domínio, mas ainda não confirmadas.</p><p>Caso você não veja a opção <b>Exibir Alterações</b> no Carrinho de Compras, tente <a href='#' tabindex='0' on-click data-url='@@docsURL@@/set-console/#GUID-40440E0F-0310-4830-9B4B-00FC9ABBB591'>instalar a extensão do WebLogic Remote Console</a>."
         },
         "tip6": {
-          "title": "Onde está o Portlet \"Como Faço para\"?",
-          "descriptionHTML": "<p></p>"
+          "title": "Precisa de ajuda?",
+          "descriptionHTML": "<ul><li>Passe o mouse sobre o ponto de interrogação <b>?</b> ao lado de um campo para ver dicas de ferramentas.</li><li>Clique no <b>?</b> no nível da página para obter ajuda detalhada sobre cada atributo visível.</li><li>No menu <b>Ajuda</b>, clique em <b>Visitar Projeto GitHub do WebLogic Remote Console</b>.</li><li>Entre para o nosso canal do Slack: <a href='#' tabindex='0' on-click data-url='https://join.slack.com/t/oracle-weblogic/shared_invite/zt-1ni1gtjv6-PGC6CQ4uIte3KBdm_67~aQ'>#remote-console</a>.</li><li>Visite nossa documentação em <a href='#' tabindex='0' on-click data-url='@@docsURL@@/'></a>.</li></ul>"
         },
         "tip7": {
           "title": "Outra Dica N.º 1",
           "descriptionHTML": "<p>Uma descrição curta para \"Outra Dica N.º 1\". Um caractere de nova linha não é um elemento HTML; portanto, você não precisa usá-lo nesta descrição.</p>"
         },
         "tip8": {
-          "title": "Problemas ao Criar um Provedor de Servidor de Administração?",
-          "descriptionHTML": "<p>A seção <a href='#' tabindex='0' on-click data-url='@@docsURL@@reference/troubleshoot/'>Referência -> Diagnóstico e Solução de Problemas</a> na documentação do WebLogic Remote Console abrange como resolver problemas de conectividade causados por definições do ambiente e da rede.</p><p>Se essas informações não levarem a uma solução, poste uma mensagem no canal do slack <b>@weblogic-remote-console</b>. As capturas de tela muitas vezes fornecem contexto que ajuda no diagnóstico de problemas; portanto, inclua-as na postagem sempre que possível.</p>"
+          "title": "Algum problema na conexão com um servidor?",
+          "descriptionHTML": "<p>Em <b>Árvore de Monitoramento</b> > <b>Ambiente</b> > <b>Servidores</b>, selecione o servidor que não está respondendo e abra a guia <b>Diagnóstico e Solução de Problemas</b> para avaliar e diagnosticar o problema.</p><p>Se não for possível estabelecer conexão com o domínio de forma alguma, consulte <a href='#' tabindex='0' on-click data-url='@@docsURL@@/troubleshoot-weblogic-remote-console/#GUID-B3D14A11-0144-4B31-BFE3-E6AC59AEFCBE'>Não é possível estabelecer conexão com o Servidor de Administração</a> na documentação do WebLogic Remote Console para obter ajuda no diagnóstico e solução de problemas.</p>"
         },
         "tip9": {
           "title": "Dica de Conectividade N.º 2",
@@ -909,8 +909,8 @@ define({
           "descriptionHTML": "<p>Uma descrição curta para \"Dica de Segurança N.º 1\". Um caractere de nova linha não é um elemento HTML; portanto, você não precisa usá-lo nesta descrição.</p>"
         },
         "tip11": {
-          "title": "Pense em \"Teclas de Atalho\" antes de Pressionar Tab!",
-          "descriptionHTML": "<p>As teclas de \"Atalho\" (ou aceleradoras) permitem que você mova o foco diretamente para uma área, em vez de ter o trabalho de pressionar repetidamente as teclas <b>Tab</b> e <b>Shift+Tab</b>!</p><p>Experimente estes 5 atalhos:</p><p><ul><li><code><b>Ctrl+Alt+P</b></code>&nbsp;&nbsp;&nbsp;Abre a <i>Gaveta de Provedores</i>.</li><li><code><b>Ctrl+Alt+N</b></code>&nbsp;&nbsp;&nbsp;Move o foco para a <i>Árvore de Provedores</i>.</li><li><code><b>Ctrl+Alt+T</b></code>&nbsp;&nbsp;&nbsp;Move o foco para uma tabela, mais precisamente o primeiro cabeçalho de coluna.</li><li><code><b>Ctrl+Alt+|</b></code>&nbsp;&nbsp;&nbsp;Move o foco para a alça de redimensionamento do redimensionador de largura da Árvore. Depois, use as teclas <code><b>Seta para a Direita</b></code> e <code><b>Seta para a Esquerda</b></code> para aumentar ou reduzir a largura da Árvore.</li><li><code><b>Ctrl+Alt+;</b></code>&nbsp;&nbsp;&nbsp;Move o foco para uma trilha de navegação estrutural que é um <i>link cruzado</i> (se estiver presente), ou o primeiro label de trilha de navegação estrutural clicável.</li></ul><p>Verifique a documentação para ver uma lista completa das teclas de atalho!</p>"
+          "title": "Acelere seu workflow!",
+          "descriptionHTML": "<p>Use atalhos de teclado para ir diretamente para componentes específicos da interface do usuário.</p><p>5 Principais:</p><li><code><b>Alt+P</b></code> - Abre a gaveta <b>Provedores</b>.</li><li><code><b>Alt+C</b></code> - Move o foco para o <b>Carrinho de Compras</b>.</li><li><code><b>Alt+T</b></code> - Move o foco para o primeiro cabeçalho de coluna em uma tabela.</li><li><code><b>Alt+|</b></code> - Move o foco para o controlador de largura da Árvore de Navegação. Use as teclas de seta para alterar a largura da árvore.</li><li><code><b>Alt+;</b></code> - Move o foco para o primeiro label de trilha de navegação clicável.</li></ul><p>Para obter uma lista completa de atalhos de teclado, consulte a documentação.</p>"
         }
       }
     }
@@ -949,7 +949,7 @@ define({
     "messages": {
       "lostConnection": {
         "summary": "Conexão Perdida",
-        "detail": "Connection lost. Please refresh."
+        "detail": "Conexão perdida. Atualize."
       },
       "cannotConnect": {
         "summary": "Falha na Tentativa de Conexão",
@@ -982,9 +982,9 @@ define({
         }
       },
       "screenreader": {
-        "value1": "You're on the {0} item. Press Enter to select.",
-        "value2": "You're on the {0} item. Pressing Enter will expand or collapse it. After expanding, use the down arrow to access related links.",
-        "value3": "{0}. Press Tab/Shift+Tab to move between related links and Escape to return to last visited top level item."
+        "value1": "Você está no item {0}. Pressione Enter para selecionar.",
+        "value2": "Você está no item {0}. Pressionar Enter o expandirá ou contrairá. Após a expansão, use a seta para baixo para acessar links relacionados.",
+        "value3": "{0}. Pressione Tab/Shift+Tab para mover entre links relacionados e Escape para retornar ao item de nível superior visitado por último."
       }
     }
   },
@@ -1504,7 +1504,7 @@ define({
           "value": "Retorne à Página de Destino da árvore do provedor."
         },
         "reset": {
-          "value": "Redefinir valores de página"
+          "value": "Refresh page values"
         }
       }
     },
@@ -1812,6 +1812,9 @@ define({
         },
         "actionNotPerformed": {
           "detail": "Não é possível executar a ação '{0}' em um ou mais dos itens assinalados"
+        },
+        "actionNotPerformedNoRow": {
+          "detail": "Unable to perform '{0}' action"
         },
         "actionSucceeded": {
           "summary": "A ação '{0}' foi realizada com sucesso!"

@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2022, 2023, Oracle and/or its affiliates.
+ * Copyright (c) 2022, 2024, Oracle and/or its affiliates.
  * Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
  * @ignore
  */
@@ -12,6 +12,7 @@ const OSUtils = require('./os-utils');
 const I18NUtils = require('./i18n-utils');
 const ElectronPreferences = require('electron-preferences');
 const SettingsEditor = require('./settings-editor');
+const fs = require('fs');
 
 /**
  * See {@link https://stackabuse.com/javascripts-immediately-invoked-function-expressions/}
@@ -20,6 +21,8 @@ const SettingsEditor = require('./settings-editor');
 const UserPrefs = (() => {
   let preferences;
 
+  const dataStore = 'user-prefs.json';
+  
   function osBasedHelp() {
     if (OSUtils.isMacOS())
       return I18NUtils.get('wrc-electron.menus.preferences.section.credential-storage.confirmation.apple.help');
@@ -32,7 +35,7 @@ const UserPrefs = (() => {
   // along with useful JSDoc comments :-).
   return {
     getPath: (userDataPath) => { 
-      return `${userDataPath}/user-prefs.json`;
+      return `${userDataPath}/${dataStore}`;
     },
     get: (key) => {
       if (!preferences) {
@@ -46,6 +49,7 @@ const UserPrefs = (() => {
       SettingsEditor.destroy(preferences);
       // We need to create a fresh one to re-initialize various
       // objects for show()
+      this.previousContent = null;
       UserPrefs.init();
       preferences.show();
     },
@@ -152,10 +156,19 @@ const UserPrefs = (() => {
           }
         ]
       };
+  
       preferences = new ElectronPreferences(preferencesTemplate);
     },
     read: (userDataPath) => {
-      UserPrefs.init();
+      // Ensure that there are file content changes instead of relying on file metadata (e.g. fstat)
+      // Workaround for https://github.com/paulmillr/chokidar/issues/1345
+      const data = fs.readFileSync(UserPrefs.getPath(userDataPath), { encoding: 'utf8', flag: 'r' });
+
+      if (data != this.previousContent) {        
+        UserPrefs.init();
+
+        this.previousContent = data;
+      }
     }
   };
 

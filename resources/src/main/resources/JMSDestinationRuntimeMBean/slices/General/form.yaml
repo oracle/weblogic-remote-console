@@ -5,6 +5,7 @@ introductionHTML: >
 
 properties:
 - name: "Name"
+- name: "DestinationName"
 - name: "DestinationType"
 - name: "BytesCurrentCount"
 - name: "BytesHighCount"
@@ -27,3 +28,6 @@ properties:
 - name: "ProductionPausedState"
 - name: "State"
 - name: "SubscriptionMessagesLimit"
+
+advancedProperties:
+- name: "DestinationID"

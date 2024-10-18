@@ -8,17 +8,6 @@ actions:
   actionMethod: weblogic.remoteconsole.customizers.LibDeploymentRuntimeMBeanCustomizer.redeploy
   successMessage: Redeployed and created task for library {0}. Track progress under Monitoring Tree -> Deployment -> Deployment Tasks
   failureMessage: Failed to redeploy library {0}, check deployment task for more information
-  disableMBeanJavadoc: true
-  helpHTML: >
-    <p>Use this page to redeploy this library.  Its archive must already be on the administration server's file system. 
-    To change its source path, remove and add the library.</p>
-  inputForm:
-    customizePageMethod: weblogic.remoteconsole.customizers.LibDeploymentRuntimeMBeanCustomizer.customizeRedeployActionInputForm
-    introductionHTML: >
-      <p>Use this page to redeploy this library.  Its archive must already be on the administration server's file system. 
-          To change its source path, remove and add the library.</p>
-    parameters:
-      - name: "SourcePath"
 
 - name: uploadAndRedeploy
   label: "Upload and Redeploy"

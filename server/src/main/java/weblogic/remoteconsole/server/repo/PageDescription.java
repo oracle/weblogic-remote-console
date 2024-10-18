@@ -566,6 +566,9 @@ public class PageDescription {
       if (valueDef.isMultiLineString()) {
         return "multiLineString";
       }
+      if (writable && valueDef.isDynamicEnum()) {
+        return "string-dynamic-enum";
+      }
       return null; // don't write out out since it's the default type
     }
     if (valueDef.isInt()) {

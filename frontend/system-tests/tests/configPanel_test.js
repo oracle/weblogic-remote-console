@@ -114,7 +114,7 @@ describe.only('Test Suite: configPanel_test for Configuration Landing Menu', fun
             await admin.goToLandingPanelSubTreeCard(driver, "Edit Tree","ServicesChevron","Data Sources");
             await admin.goToLandingPanelSubTreeCard(driver, "Edit Tree","ServicesChevron","JMS Servers");
             await admin.goToLandingPanelSubTreeCard(driver, "Edit Tree","ServicesChevron","SAF Agents");
-            await admin.goToLandingPanelSubTreeCard(driver, "Edit Tree","ServicesChevron","JMS System Resources");
+            await admin.goToLandingPanelSubTreeCard(driver, "Edit Tree","ServicesChevron","JMS Modules");
             await admin.goToLandingPanelSubTreeCard(driver, "Edit Tree","ServicesChevron","Path Services");
             await admin.goToLandingPanelSubTreeCard(driver, "Edit Tree","ServicesChevron","Messaging Bridges");
             await admin.goToLandingPanelSubTreeCard(driver, "Edit Tree","ServicesChevron","JMS Bridge Destinations");

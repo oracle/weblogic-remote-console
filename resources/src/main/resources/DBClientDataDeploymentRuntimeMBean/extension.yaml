@@ -1,0 +1,40 @@
+# Copyright (c) 2024, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+actions:
+
+- name: "redeploy_dbclient_data_directory_deploymentOptions"
+  remoteName: "redeploy"
+  type: "weblogic.management.runtime.DeploymentProgressObjectMBean"
+  roles:
+    allowed:
+      - Deployer
+  descriptionHTML: >
+    <p>Redeploy the database client data directory in the background.  This is an asynchronous operation that
+    returns immediately.  The returned DeploymentProgressObjectMBean can be used to determine 
+    when the operation is completed.</p>
+  parameters:
+  - name: "applicationPath"
+    type: "java.lang.String"
+  - name: "deploymentOptions"
+    type: "java.util.Properties"
+
+- name: "redeploy"
+  type: "weblogic.management.runtime.DeploymentProgressObjectMBean"
+  roles:
+    allowed:
+      - Deployer
+      - Operator
+  parameters:
+    - name: "SourcePath"
+      type: "java.lang.String"
+      descriptionHTML: >
+        <p>The file path to the database client data directory on the administration server's file system.</p>
+
+
+- name: uploadAndRedeploy
+  type: "void"
+  parameters:
+  - name: Source
+    type: java.io.InputStream
+    descriptionHTML: >
+      <p>Select the deployable unit to upload to the Administration Server.</p>

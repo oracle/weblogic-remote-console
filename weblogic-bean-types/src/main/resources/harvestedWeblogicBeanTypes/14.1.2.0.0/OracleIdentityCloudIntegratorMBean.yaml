@@ -38,6 +38,13 @@ properties:
   writable: true
 - defaultValue:
     value:
+      value: faId
+  descriptionHTML: '<p>Used to get the alternate user ID from the token.</p> '
+  name: AltIDTokenClaim
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
       value: true
   descriptionHTML: '<p>The Oracle Identity Cloud Integrator provider defines this
     setting as always enabled.</p> '
@@ -272,6 +279,14 @@ properties:
     Service.</p> '
   name: Port
   type: java.lang.Integer
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p> Specifies whether to use the alternate user id instead of
+    user id to populate as the guid in the user principal.         </p> '
+  name: PreferAltID
+  type: boolean
   writable: true
 - defaultValue:
     value:

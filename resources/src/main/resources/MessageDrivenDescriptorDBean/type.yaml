@@ -3,6 +3,8 @@
 
 createResourceMethod: weblogic.remoteconsole.customizers.DescriptorBeanCustomizer.createResource
 
+supportsFilteringDashboards: false
+
 subTypeDiscriminatorProperty: Type
 subTypes:
 - type: weblogic.management.descriptor.ProviderMessageDrivenDescriptorDBean

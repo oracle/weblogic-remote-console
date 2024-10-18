@@ -866,16 +866,16 @@ define({
         },
         "cards": {
           "tip0": {
-            "title": "Think \"Search\" Before You Click!",
-            "descriptionHTML": "<p>Finding what you want in one of the provider's Trees, can involve a lot of clicking and scrolling. The <b><i>Search</i></b> field (located at the top of the app), lets you avoid having to do that!</p><p>Even better, clicking on an item in the generated search results, auto-expands the provider Tree to show you where the item is.</p>"
+            "title": "Search across all MBeans in your domain!",
+            "descriptionHTML": "<p>Enter a search term in the search field at the top of the console to comb through the current perspective for matches. You can also revisit previous queries in the <b>Recent Searches</b> node.</p>"
           },
           "tip1": {
-            "title": "\"Dashboards\" Are a User's Best Friend",
-            "descriptionHTML": "<p>A <b><i>Dashboard</i></b> lets you define the criteria used to select MBean instances. They function kind of like a View in the database world, allowing you to see all the MBean instances with runtime values that currently meet the criteria.</p><p>Look for the <img src=\"js/jet-composites/wrc-frontend/1.0.0/images/dashboards-tabstrip-icon_24x24.png\" alt=\"New Dashboard Icon\" style=\"height: 24px; width: 24px; vertical-align: middle;\"/> button whenever you're on a page of the \"Monitoring Tree\", then click it to define a new dashboard. Previously created ones, can be found under the root-level \"Dashboards\" node in the Monitoring Tree.</p>"
+            "title": "Quickly filter and find data that's important to you!",
+            "descriptionHTML": "<p>Dashboards let you define custom criteria, match it against your domain, and generate comprehensive and precise reports based on your domain.</p><p>To get started, open any node in the <b>Monitoring Tree</b>, and click <b>New Dashboard</b>. Or open the <b>Dashboards</b> top-level node to see the built-in dashboards.</p>"
           },
           "tip2": {
-            "title": "Choosing and Arranging Table Columns Using \"Customize Table\"",
-            "descriptionHTML": "<p>The \"Customize this table\" link is now the <i>Customize Table</i> button.</p>"
+            "title": "Refine table contents",
+            "descriptionHTML": "<p>Simplify tables by hiding irrelevant columns so you can focus on the data that matters to you.</p><p>Above any table, click <b>Customize Table</b> and select or deselect columns as desired.</p>"
           },
           "tip3": {
             "title": "Using the Keyboard With Tables and Actions",
@@ -886,20 +886,20 @@ define({
             "descriptionHTML": "<p>The \"Customize this table\" link is now the <i>Customize Table</i> button.</p>"
           },
           "tip5": {
-            "title": "Where is the \"Change Center\" Portlet?",
-            "descriptionHTML": "<p>The \"Change Center\" porlet has been replaced with the <i>Shopping Cart Drawer</i>, which has launcher icon in the iconbar when the \"Configuration Tree\" is selected.</p>"
+            "title": "Review pending changes",
+            "descriptionHTML": "<p>Open the Shopping Cart to see a list of the changes that are saved to the domain but not yet committed.</p><p>If you can't see <b>View Changes</b> in the Shopping Cart, try <a href='#' tabindex='0' on-click data-url='@@docsURL@@/set-console/#GUID-40440E0F-0310-4830-9B4B-00FC9ABBB591'>installing the WebLogic Remote Console extension</a>."
           },
           "tip6": {
-            "title": "Where is the \"How Do I\" Portlet?",
-            "descriptionHTML": "<p></p>"
+            "title": "Need help?",
+            "descriptionHTML": "<ul><li>Hover over the <b>?</b> beside a field for tooltips.</li><li>Click the page-level <b>?</b> for detailed help on every visible attribute.</li><li>On the <b>Help</b> menu, click <b>Visit WebLogic Remote Console GitHub Project</b>.</li><li>Join our Slack channel: <a href='#' tabindex='0' on-click data-url='https://join.slack.com/t/oracle-weblogic/shared_invite/zt-1ni1gtjv6-PGC6CQ4uIte3KBdm_67~aQ'>#remote-console</a>.</li><li>Visit our documentation at <a href='#' tabindex='0' on-click data-url='@@docsURL@@/'></a>.</li></ul>"
           },
           "tip7": {
             "title": "Other Tip #1",
             "descriptionHTML": "<p>A terse description for \"Other Tip #1\". A newline character is not an HTML element, so you don't want to use them in this description.</p>"
           },
           "tip8": {
-            "title": "Trouble Creating an Admin Server Provider?",
-            "descriptionHTML": "<p>The <a href='#' tabindex='0' on-click data-url='@@docsURL@@reference/troubleshoot/'>Reference -> Troubleshooting</a> section in the WebLogic Remote Console documentation, covers how to resolve connectivity issues caused by environment and network settings.</p><p>If trying those don't lead to a resolution, please post a message to the <b>@weblogic-remote-console</b> slack channel. Screenshots often provide context that aids in issue diagnosis, so include them in the post when possible.</p>"
+            "title": "Trouble connecting to a server?",
+            "descriptionHTML": "<p>Under <b>Monitoring Tree</b> > <b>Environment</b> > <b>Servers</b>, select the unresponsive server and open its <b>Troubleshooting</b> tab to try and diagnose the issue.</p><p>If you can't connect to the domain at all, refer to <a href='#' tabindex='0' on-click data-url='@@docsURL@@/troubleshoot-weblogic-remote-console/#GUID-B3D14A11-0144-4B31-BFE3-E6AC59AEFCBE'>Cannot connect to the Administration Server</a> in the WebLogic Remote Console documentation for troubleshooting help.</p>"
           },
           "tip9": {
             "title": "Connectivity Tip #2",
@@ -910,8 +910,8 @@ define({
             "descriptionHTML": "<p>A terse description for \"Security Tip #1\". A newline character is not an HTML element, so you don't want to use them in this description.</p>"
           },
           "tip11": {
-            "title": "Think \"Shortcut Keys\" Before You Press Tab!",
-            "descriptionHTML": "<p>\"Shortcut\" (or accelerator) keys allow you to move the focus directly to an area, instead of sighing while repeatedly pressing the <b>Tab</b> and <b>Shift+Tab</b> keys!</p><p>Here's 5 to try out:</p><p><ul><li><code><b>Ctrl+Alt+P</b></code>&nbsp;&nbsp;&nbsp;Opens the <i>Providers Drawer</i>.</li><li><code><b>Ctrl+Alt+N</b></code>&nbsp;&nbsp;&nbsp;Moves the focus to the <i>Provider Tree</i>.</li><li><code><b>Ctrl+Alt+T</b></code>&nbsp;&nbsp;&nbsp;Moves the focus to a table, more precisely the first column header.</li><li><code><b>Ctrl+Alt+|</b></code>&nbsp;&nbsp;&nbsp;Moves the focus to the gripper of the Tree width-resizer. Afterwards, use the <code><b>RightArrow</b></code> and <code><b>LeftArrow</b></code> keys to increase or decrease the width of the Tree.</li><li><code><b>Ctrl+Alt+;</b></code>&nbsp;&nbsp;&nbsp;Moves the focus to a breadcrumb that is a <i>cross-link</i> (if present), or the first clickable breadcrumb label.</li></ul><p>Check out the documentation to see a complete list of the shortcut keys!</p>"
+            "title": "Accelerate your workflow!",
+            "descriptionHTML": "<p>Use keyboard shortcuts to jump directly to specific UI components.</p><p>Top 5:</p><li><code><b>Alt+P</b></code> - Opens the <b>Providers</b> drawer.</li><li><code><b>Alt+C</b></code> - Moves the focus to the <b>Shopping Cart</b>.</li><li><code><b>Alt+T</b></code> - Moves the focus to the first column header in a table.</li><li><code><b>Alt+|</b></code> - Moves the focus to the Navigation Tree width-resizer. Use arrow keys to change the width of the tree.</li><li><code><b>Alt+;</b></code> - Moves the focus to the first clickable breadcrumb label.</li></ul><p>For a full list of keyboard shortcuts, refer to the documentation.</p>"
           }
         }
       }
@@ -1813,6 +1813,9 @@ define({
           },
           "actionNotPerformed": {
             "detail": "Unable to perform '{0}' action on one or more of the checked items"
+          },
+          "actionNotPerformedNoRow": {
+            "detail": "Unable to perform '{0}' action"
           },
           "actionSucceeded": {
             "summary": "The '{0}' action was successfully performed!"

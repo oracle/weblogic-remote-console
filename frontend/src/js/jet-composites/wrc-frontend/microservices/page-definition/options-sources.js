@@ -359,7 +359,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'wrc-frontend/co
        * @returns {Promise<T | {rules} | never>}
        */
       createOverlayFormDialogModuleConfig: (viewParams, optionsSourceConfig, updateShoppingCartCallback, refreshFormCallback, saveContentCallback) => {
-        const uri = `${optionsSourceConfig.path}?dataAction=new`;
+        const uri = `${optionsSourceConfig.path}?view=createForm`;
         return DataOperations.mbean.new(uri)
           .then(reply => {
             let childRouter = viewParams.parentRouter.getChildRouter('form');

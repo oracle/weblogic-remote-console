@@ -25,6 +25,7 @@ actions:
 
 displayedColumns:
 - name: "Name"
+- name: "DestinationName"
 - name: "DestinationType"
 - name: "BytesCurrentCount"
 - name: "BytesHighCount"

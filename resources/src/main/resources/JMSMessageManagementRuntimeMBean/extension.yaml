@@ -1,0 +1,58 @@
+# Copyright (c) 2023, 2024, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions:
+- name: exportMessages
+  type: weblogic.management.runtime.JMSMessageManagementTaskRuntimeMBean
+  descriptionHTML: "Exports the messages matching the selector to the specified file in XML representation"
+  parameters:
+  - name: selector
+    type: java.lang.String
+    descriptionHTML: "A JMS message selector."
+  - name: file
+    type: java.lang.String
+    descriptionHTML: "The absolute path of the file to which the matching messages will be written."
+  - name: timeout
+    type: int
+    descriptionHTML: >
+      The maximum amount of time in seconds to perform the export operation.
+      A value of 0 indicates no timeout applies.
+
+- name: importMessages
+  type: void weblogic.management.runtime.JMSMessageManagementTaskRuntimeMBean
+  descriptionHTML: "<p>Imports the messages from the specified file into the destination.</p>"
+  parameters:
+  - name: file
+    type: java.lang.String
+    descriptionHTML: "The absolute path of the file from which to import messages."
+  - name: applyOverrides
+    type: boolean
+    descriptionHTML: "When set to true will apply destination overrides to the imported message"
+
+- name: moveMessages
+  type: weblogic.management.runtime.JMSMessageManagementTaskRuntimeMBean
+  descriptionHTML: >
+    <p>Moves the set of messages that match the specified selector to
+    the target destination. The move operation is guaranteed to be
+    atomic for the selected messages.  Message header state, such as expiration time,
+    time-to-deliver, JMSXUserID, delivery mode, unit-of-order, priority and
+    destination are preserved.</p>
+  parameters:
+  - name: selector
+    type: java.lang.String
+    descriptionHTML: "A JMS message selector that identifies the messages to move."
+  - name: destinationID
+    type: java.lang.String
+    descriptionHTML: "The identifier of the target JMS destination."
+  - name: timeout
+    type: int
+    descriptionHTML: "The timeout value for the move operation transaction."
+
+- name: deleteMessages
+  type: int # v.s. Integer
+  descriptionHTML: >
+    <p>Deletes the set of messages from the destination that are qualified by the specified JMS message selector.</p>
+  parameters:
+  - name: selector
+    type: java.lang.String
+    descriptionHTML: "A JMS message selector to identify which messages to delete."

@@ -53,6 +53,8 @@ actions:
       iconFile: action-export-3d-icon-blk_24x24
     - id: importMessages
       iconFile: action-import-3d-icon-blk_24x24
+    - id: moveActions
+      iconFile: action-move-3d-icon-blk_24x24
     - id: edit
       iconFile: action-edit-icon-blk_24x24
     - id: createPlan

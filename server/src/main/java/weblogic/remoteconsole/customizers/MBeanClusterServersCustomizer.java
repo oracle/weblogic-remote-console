@@ -1,4 +1,4 @@
-// Copyright (c) 2020, 2021, Oracle and/or its affiliates.
+// Copyright (c) 2020, 2024, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.customizers;
@@ -13,13 +13,14 @@ import weblogic.remoteconsole.server.repo.Response;
 import weblogic.remoteconsole.server.repo.Value;
 
 /** 
- * Custom code for processing the SingletonServiceMBean
+ * Custom code for mbeans that reference a cluster
+ * and are restricted to using that cluster's servers.
  */
-public class SingletonServiceMBeanCustomizer {
+public class MBeanClusterServersCustomizer {
   private static final String IDENTITY = "identity";
   private static final String CLUSTER = "Cluster";
 
-  private SingletonServiceMBeanCustomizer() {
+  private MBeanClusterServersCustomizer() {
   }
 
   // Return the servers that are a member of this singleton service's cluster.

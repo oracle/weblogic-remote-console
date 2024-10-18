@@ -1,4 +1,4 @@
-// Copyright (c) 2022, 2023, Oracle and/or its affiliates.
+// Copyright (c) 2022, 2024, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef;
@@ -51,6 +51,7 @@ public class CustomPagePropertyDef implements PagePropertyDef {
     setPageLevelProperty(toClone.isPageLevelField());
     setDontReturnIfHiddenColumn(toClone.isDontReturnIfHiddenColumn());
     setMultiLineString(toClone.isMultiLineString());
+    setDynamicEnum(toClone.isDynamicEnum());
   }
 
   @Override
@@ -345,6 +346,20 @@ public class CustomPagePropertyDef implements PagePropertyDef {
 
   public CustomPagePropertyDef multiLineString(boolean val) {
     setMultiLineString(val);
+    return this;
+  }
+
+  @Override
+  public boolean isDynamicEnum() {
+    return beanPropertyDef.isDynamicEnum();
+  }
+
+  public void setDynamicEnum(boolean val) {
+    beanPropertyDef.setDynamicEnum(val);
+  }
+
+  public CustomPagePropertyDef dynamicEnum(boolean val) {
+    setDynamicEnum(val);
     return this;
   }
 

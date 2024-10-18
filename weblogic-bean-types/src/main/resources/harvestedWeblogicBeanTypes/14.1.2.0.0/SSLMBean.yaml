@@ -244,8 +244,7 @@ properties:
   type: boolean
   writable: true
 - defaultValue:
-    value:
-      value: 7002
+    derivedDefault: true
   descriptionHTML: '<p>The TCP/IP port at which this server listens for SSL connection
     requests.</p> '
   name: ListenPort

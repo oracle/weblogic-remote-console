@@ -180,7 +180,11 @@ properties:
     For information about how to configure ODL logging for JDK platform loggers, see
     <a href="http://www.oracle.com/pls/topic/lookup?ctx=fmw14120&amp;id=ASADM215"
     rel="noopener noreferrer" target="_blank">Managing Log Files and Diagnostics Data</a>
-    in <i>Administering Oracle Fusion Middleware</i>.</li> </ul> '
+    in <i>Administering Oracle Fusion Middleware</i>.</li> <li>As of release 14.1.2.0,
+    one may also scope these logger criteria to a particular application context.  By
+    specifyng app-name:logger-name, instead of simply logger-name, one is saying that
+    log messages should only appear for logger-name when operating in the context
+    of app-name (as in, operating on a thread with the context of app-name)</li> </ul> '
   name: PlatformLoggerLevels
   type: java.util.Properties
   writable: true

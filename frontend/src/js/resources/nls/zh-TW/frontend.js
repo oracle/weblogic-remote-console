@@ -401,7 +401,7 @@ define({
             "label": "使用者名稱："
           },
           "sso": {
-            "label": "Web Authentication:"
+            "label": "Web 認證："
           },
           "roles": {
             "label": "角色："
@@ -865,16 +865,16 @@ define({
       },
       "cards": {
         "tip0": {
-          "title": "使用「搜尋」快速找出所需的項目！",
-          "descriptionHTML": "<p>在其中一個提供者的樹狀結構中尋找所需的項目，可能需要不斷地點選及捲動。<b><i>搜尋</i></b>欄位 (位於應用程式的頂端) 可幫您省去這些麻煩！</p><p>甚至更方便的是，只要按一下搜尋結果中的某個項目，就會自動展開提供者樹狀結構，並顯示該項目所在的位置。</p>"
+          "title": "搜尋您網域中的所有 MBean！",
+          "descriptionHTML": "<p>在主控台頂端的搜尋欄位中輸入搜尋詞彙，即可仔細搜尋目前觀點的相符項目。您也可以從<b>最近的搜尋</b>節點重新存取先前的查詢。</p>"
         },
         "tip1": {
-          "title": "「儀表板」是使用者的最佳夥伴",
-          "descriptionHTML": "<p>您可以在<b><i>儀表板</i></b>定義用於選取 MBean 執行處理的條件。它的功能類似於資料庫中的視觀表，可讓您查看目前符合條件的所有 MBean 執行處理與執行時期值。</p><p>在「監督樹狀結構」的頁面上尋找 <img src=\"js/jet-composites/wrc-frontend/1.0.0/images/dashboards-tabstrip-icon_24x24.png\" alt=\"新建儀表板圖示\" style=\"height: 24px; width: 24px; vertical-align: middle;\"/> 按鈕並按一下，即可定義新的儀表板。先前建立的儀表板都會在監督樹狀結構中的根層級「儀表板」節點底下。</p>"
+          "title": "快速篩選並找出重要的資料！",
+          "descriptionHTML": "<p>您可以在儀表板中定義自訂條件，將其與您的網域進行比對，並且根據您的網域產生全面且精確的報表。</p><p>若要開始進行，請從<b>監督樹狀結構</b>中開啟任何節點，然後按一下<b>新建儀表板</b>。或者，開啟<b>儀表板</b>最上層節點以查看內建儀表板。</p>"
         },
         "tip2": {
-          "title": "使用「自訂表格」選擇及排列表格資料欄",
-          "descriptionHTML": "<p>「自訂此表格」連結現在是<i>自訂表格</i>按鈕。</p>"
+          "title": "精簡表格內容",
+          "descriptionHTML": "<p>將不相關的資料欄隱藏起來以簡化表格，讓您專注於重要的資料。</p><p>請按一下任何表格上方的<b>自訂表格</b>，然後視需要選取或取消選取資料欄。</p>"
         },
         "tip3": {
           "title": "使用鍵盤操控表格及執行動作",
@@ -885,20 +885,20 @@ define({
           "descriptionHTML": "<p>「自訂此表格」連結現在是<i>自訂表格</i>按鈕。</p>"
         },
         "tip5": {
-          "title": "「變更中心」Portlet 在何處？",
-          "descriptionHTML": "<p>「變更中心」Porlet 已被<i>購物車側邊功能表</i>取代，當您選取「組態樹狀結構」後，會在圖示列中顯示其啟動圖示。</p>"
+          "title": "複查擱置變更",
+          "descriptionHTML": "<p>開啟「購物車」以查看已儲存至網域但尚未確認的變更清單。</p><p>如果在購物車中未見到<b>檢視變更</b>，請嘗試<a href='#' tabindex='0' on-click data-url='@@docsURL@@/set-console/#GUID-40440E0F-0310-4830-9B4B-00FC9ABBB591'>安裝 WebLogic Remote Console 擴充</a>。"
         },
         "tip6": {
-          "title": "「操作指示」Portlet 在何處？",
-          "descriptionHTML": "<p></p>"
+          "title": "需要協助嗎?",
+          "descriptionHTML": "<ul><li>請將游標停駐於欄位旁邊的 <b>?</b> 以顯示工具提示。</li><li>按一下頁面層級的 <b>?</b> 即可顯示每個可見屬性的詳細說明。</li><li>按一下<b>說明</b>功能表中的<b>前往 WebLogic Remote Console GitHub 專案</b>。</li><li>加入我們的 Slack 頻道：<a href='#' tabindex='0' on-click data-url='https://join.slack.com/t/oracle-weblogic/shared_invite/zt-1ni1gtjv6-PGC6CQ4uIte3KBdm_67~aQ'>#remote-console</a>。</li><li>瀏覽我們的文件，網址為 <a href='#' tabindex='0' on-click data-url='@@docsURL@@/'></a>。</li></ul>"
         },
         "tip7": {
           "title": "其他提示 #1",
           "descriptionHTML": "<p>「其他提示 #1」的精簡描述。換行字元並不是 HTML 元素，請勿在此描述中使用。</p>"
         },
         "tip8": {
-          "title": "無法建立管理伺服器提供者？",
-          "descriptionHTML": "<p>WebLogic Remote Console 文件中的<a href='#' tabindex='0' on-click data-url='@@docsURL@@reference/troubleshoot/'>參考資料 -> 疑難排解</a>小節涵蓋了如何解決因環境和網路設定值所導致的連線問題。</p><p>如果嘗試後仍無法解決問題，請至 <b>@weblogic-remote-console</b> Slack 頻道張貼訊息。此外，螢幕截圖通常也有利於提供可協助診斷問題的相關資訊，因此請盡可能在貼文中提供。</p>"
+          "title": "無法連線至伺服器嗎？",
+          "descriptionHTML": "<p>請從 <b>監督樹狀結構</b> > <b>環境</b> > <b>伺服器</b>底下，選取沒有回應的伺服器並開啟其<b>疑難排解</b>頁籤，以嘗試並診斷問題。</p><p>如果完全無法連線至網域，請參閱 WebLogic Remote Console 文件中的<a href='#' tabindex='0' on-click data-url='@@docsURL@@/troubleshoot-weblogic-remote-console/#GUID-B3D14A11-0144-4B31-BFE3-E6AC59AEFCBE'>無法連線至管理伺服器</a>，以取得疑難排解說明。</p>"
         },
         "tip9": {
           "title": "連線提示 #2",
@@ -909,8 +909,8 @@ define({
           "descriptionHTML": "<p>「安全提示 #1」的精簡描述。換行字元並不是 HTML 元素，請勿在此描述中使用。</p>"
         },
         "tip11": {
-          "title": "按下 Tab 前可考慮使用「快速鍵」！",
-          "descriptionHTML": "<p>您可以利用快速鍵 (或快捷鍵) 直接將焦點移至某個區域，無須繁瑣的重複按 <b>Tab</b> 和 <b>Shift+Tab</b> 鍵！</p><p>請嘗試使用以下的 5 個快速鍵：</p><p><ul><li><code><b>Ctrl+Alt+P</b></code>&nbsp;&nbsp;&nbsp;開啟<i>提供者側邊功能表</i>。</li><li><code><b>Ctrl+Alt+N</b></code>&nbsp;&nbsp;&nbsp;將焦點移至<i>提供者樹狀結構</i>。</li><li><code><b>Ctrl+Alt+T</b></code>&nbsp;&nbsp;&nbsp;將焦點移至表格的第一個資料欄標頭。</li><li><code><b>Ctrl+Alt+|</b></code>&nbsp;&nbsp;&nbsp;將焦點移至樹狀結構寬度大小調整工具的移駐夾。接著，使用 <code><b>RightArrow</b></code> 和 <code><b>LeftArrow</b></code> 鍵增加或縮減樹狀結構的寬度。</li><li><code><b>Ctrl+Alt+;</b></code>&nbsp;&nbsp;&nbsp;將焦點移至<i>交叉連結</i>導覽路徑 (若有的話)，或第一個可點選的導覽路徑標籤。</li></ul><p>請參閱文件以瞭解完整的快速鍵清單！</p>"
+          "title": "加快您的工作流程！",
+          "descriptionHTML": "<p>您可使用鍵盤快速鍵直接跳至特定 UI 元件。</p><p>前 5 名常用快速鍵：</p><li><code><b>Alt+P</b></code> - 開啟<b>提供者</b>側邊功能表。</li><li><code><b>Alt+C</b></code> - 將焦點移至<b>購物車</b>。</li><li><code><b>Alt+T</b></code> - 將焦點移至表格的第一個資料欄標頭。</li><li><code><b>Alt+|</b></code> - 將焦點移至導覽樹狀結構寬度大小調整工具。使用方向鍵變更樹狀結構的寬度。</li><li><code><b>Alt+;</b></code> - 將焦點移至第一個可點選的導覽路徑標籤。</li></ul><p>如需完整的鍵盤快速鍵清單，請參閱文件。</p>"
         }
       }
     }
@@ -949,7 +949,7 @@ define({
     "messages": {
       "lostConnection": {
         "summary": "連線中斷",
-        "detail": "Connection lost. Please refresh."
+        "detail": "連線中斷。請重新整理。"
       },
       "cannotConnect": {
         "summary": "連線嘗試失敗",
@@ -982,9 +982,9 @@ define({
         }
       },
       "screenreader": {
-        "value1": "You're on the {0} item. Press Enter to select.",
-        "value2": "You're on the {0} item. Pressing Enter will expand or collapse it. After expanding, use the down arrow to access related links.",
-        "value3": "{0}. Press Tab/Shift+Tab to move between related links and Escape to return to last visited top level item."
+        "value1": "您目前在 {0} 項目。請按 Enter 鍵選取。",
+        "value2": "您目前在 {0} 項目。按 Enter 鍵即可展開或隱藏。展開之後，可使用向下鍵存取相關連結。",
+        "value3": "{0}。按 Tab/Shift+Tab 即可在相關連結之間移動，按 Esc 鍵則會返回上次存取的最上層項目。"
       }
     }
   },
@@ -1504,7 +1504,7 @@ define({
           "value": "返回提供者樹狀結構的登陸頁面。"
         },
         "reset": {
-          "value": "重設頁面值"
+          "value": "Refresh page values"
         }
       }
     },
@@ -1812,6 +1812,9 @@ define({
         },
         "actionNotPerformed": {
           "detail": "無法在一或多個勾選的項目上執行 '{0}' 動作"
+        },
+        "actionNotPerformedNoRow": {
+          "detail": "Unable to perform '{0}' action"
         },
         "actionSucceeded": {
           "summary": "'{0}' 動作已順利執行！"

@@ -1,4 +1,4 @@
-# Copyright (c) 2023, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2023, 2024, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 actions:
@@ -66,8 +66,8 @@ actions:
     parameters:
     - name: "selector"
       multiLineString: true
-    - name: "targetDestination"
-      optionsMethod: "weblogic.remoteconsole.customizers.JMSMessageManagementRuntimeMBeanCustomizer.getAllDestinations"
+    - name: "destinationID"
+      dynamicEnum: true
     - name: "timeout"
 
 - name: "moveSelectedMessages"
@@ -82,10 +82,11 @@ actions:
       <p>The move operation is guaranteed to be atomic for the selected messages.
       Message header state, such as expiration time, time-to-deliver, JMSXUserID,
       delivery mode, unit-of-order and priority are preserved.</>
+    customizePageMethod: weblogic.remoteconsole.customizers.JMSMessageManagementRuntimeMBeanCustomizer.customizeMoveMessagesActionInputForm
     parameters:
-    - name: "targetDestination"
-      optionsMethod: "weblogic.remoteconsole.customizers.JMSMessageManagementRuntimeMBeanCustomizer.getAllDestinations"
+    - name: "destinationID"
       required: true
+      dynamicEnum: true
     - name: "timeout"
   definition:
     type: weblogic.management.runtime.JMSMessageManagementTaskRuntimeMBean
@@ -95,9 +96,9 @@ actions:
       Message header state, such as expiration time, time-to-deliver, JMSXUserID,
       delivery mode, unit-of-order, priority and destination are preserved.</p>
     parameters:
-    - name: targetDestination
-      type: weblogic.management.runtime.JMSDestinationRuntimeMBean
-      descriptionHTML: "A JMS destination that the messages will be moved to."
+    - name: destinationID
+      type: java.lang.String
+      descriptionHTML: "The identifier of the target JMS destination."
     - name: timeout
       type: int
       descriptionHTML: "The timeout value for the move operation transaction."

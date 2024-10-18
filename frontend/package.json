@@ -4,9 +4,9 @@
   "description": "An Oracle JavaScript Extension Toolkit(JET) web app",
   "dependencies": {
     "@oracle/oraclejet": "~16.1.0",
-    "@oracle/oraclejet-tooling": "~16.1.0",
     "@oracle/oraclejet-core-pack": "~16.1.0",
-    "electron": "^31.0.0",
+    "@oracle/oraclejet-tooling": "~16.1.0",
+    "electron": "^32.0.0",
     "jquery": "^3.7.0",
     "jquery-ui": "^1.13.2",
     "js-yaml": "^4.1.0"
@@ -19,7 +19,7 @@
     "@types/node": "^12.11.7",
     "@types/sinon": "^9.0.0",
     "chai": "^4.3.7",
-    "chromedriver": "^122.0.6",
+    "chromedriver": "^128.0.1",
     "dotenv": "^8.2.0",
     "eslint": "^8.41.0",
     "extract-zip": "^1.7.0",
@@ -42,7 +42,7 @@
     "karma-typescript": "^5.5.3",
     "mocha": "^10.2.0",
     "prettier": "2.5.1",
-    "puppeteer": "^22.4.1",
+    "puppeteer": "^22.15.0",
     "selenium-webdriver": "^4.8.2",
     "sinon": "^9.0.2",
     "ts-sinon": "^1.2.0",
@@ -51,7 +51,13 @@
     "yargs": "^16.0.3"
   },
   "overrides": {
-    "requirejs": "^2.0.0"
+    "requirejs": "^2.0.0",
+    "cookie": "^0.7.0",
+    "send": "^0.19.0",
+    "express": "^5.0.0",
+    "serve-static": "^1.16.0",
+    "body-parser": "^1.20.3",
+    "path-to-regexp": "^8.0.0"
   },
   "engines": {
     "node": ">=12.21.0"

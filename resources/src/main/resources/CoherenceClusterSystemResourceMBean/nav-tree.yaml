@@ -1,4 +1,4 @@
-# Copyright (c) 2020, 2021, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2020, 2024, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 contents:
 - child: CoherenceClusterResource.CoherenceAddressProviders.CoherenceAddressProviders
@@ -6,3 +6,4 @@ contents:
 - child: CoherenceCacheConfigs
 - child: CoherenceClusterResource.CoherenceClusterParams.CoherenceClusterWellKnownAddresses.CoherenceClusterWellKnownAddresses
 - child: CoherenceClusterResource.CoherenceClusterParams.CoherenceServices
+- child: CoherenceClusterResource.CoherenceClusterParams.CoherenceIdentityAsserter

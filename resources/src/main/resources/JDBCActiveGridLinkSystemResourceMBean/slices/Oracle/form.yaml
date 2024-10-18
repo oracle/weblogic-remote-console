@@ -1,0 +1,22 @@
+# Copyright (c) 2020, 2024, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+introductionHTML: >
+  <p>This page enables you to configure parameters used by Oracle drivers
+  and databases. Additional configuration may be required to use Oracle
+  parameters in your application environment.</p>
+
+properties:
+- name: "JDBCResource.JDBCOracleParams.ConnectionInitializationCallback"
+- name: "JDBCResource.JDBCOracleParams.OracleProxySession"
+- name: "JDBCResource.JDBCOracleParams.UseDatabaseCredentials"
+- name: "JDBCResource.JDBCOracleParams.ReplayInitiationTimeout"
+- name: "JDBCResource.JDBCOracleParams.RebalanceOnUpEvent"
+- name: "JDBCResource.JDBCOracleParams.AffinityPolicy"
+helpTopics:
+- label: "Tuning Data Source Connection Pools "
+  href: "jdbca/ds_tuning.html"
+  type: "edocs"
+- label: "Advanced Configurations for Oracle Drivers and Databases"
+  href: "jdbca/ds_oracledriver.html#JDBCA478"
+  type: "edocs"

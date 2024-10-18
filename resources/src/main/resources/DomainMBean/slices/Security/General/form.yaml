@@ -31,6 +31,7 @@ advancedProperties:
 - name: "SecurityConfiguration.EnforceValidBasicAuthCredentials"
 - name: "SecurityConfiguration.CrossDomainSecurityCacheEnabled"
 - name: "SecurityConfiguration.CrossDomainSecurityCacheTTL"
+- name: "SecurityConfiguration.JASPIC.Enabled"
 
 helpTopics:
 - label: "Administering Security for Oracle WebLogic Server"

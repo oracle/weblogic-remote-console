@@ -44,6 +44,7 @@ define(['wrc-frontend/microservices/perspective/perspective-manager'],
         path: null,
         resourceDataFragment: null,
         slices: [],
+        scrollTops: [],
         syncInterval: null,
         nthChildren: [],
         switches: {
@@ -208,6 +209,28 @@ define(['wrc-frontend/microservices/perspective/perspective-manager'],
        */
       contentSlice: function () {
         return this.contentPage.slices;
+      },
+      setContentPageScrollTops: function (scrollTops) {
+        this.contentPage.scrollTops = scrollTops;
+      },
+      getContentPageScrollTop: function (sliceId) {
+        let scrollTop = 0;
+        const index = this.contentPage.scrollTops.findIndex(item => item.sliceId === sliceId);
+        if (index !== -1) {
+          scrollTop = this.contentPage.scrollTops[index].scrollTop;
+        }
+        return scrollTop;
+      },
+      setContentPageScrollTop: function (sliceId, scrollTop) {
+        const index = this.contentPage.scrollTops.findIndex(item => item.sliceId === sliceId);
+        if (index !== -1) {
+          this.contentPage.scrollTops[index].scrollTop = scrollTop;
+        }
+      },
+      resetContentPageScrollTops: function () {
+        for (let index in this.contentPage.scrollTops) {
+          this.contentPage.scrollTops[index].scrollTop = 0;
+        }
       },
       /**
        *

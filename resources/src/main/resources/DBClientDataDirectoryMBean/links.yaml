@@ -1,0 +1,18 @@
+# Copyright (c) 2024, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+collectionLinks:
+- label: Database Client Data Management
+  root: DomainRuntimeMonitoring
+  resourceData: DomainRuntime/DeploymentManager/DBClientDataDeploymentRuntimes
+- label: Deployment Tasks Dashboard
+  root: DomainRuntimeMonitoring
+  resourceData: "DomainRuntime/Dashboards/Deployment Tasks"
+
+instanceLinks:
+- label: Database Client Data Management
+  root: DomainRuntimeMonitoring
+  resourceData: DomainRuntime/DeploymentManager/DBClientDataDeploymentRuntimes/<DBClientDataDirectory>
+- label: Deployment Tasks Dashboard
+  root: DomainRuntimeMonitoring
+  resourceData: "DomainRuntime/Dashboards/Deployment Tasks"

@@ -27,6 +27,7 @@ properties:
   writable: true
 - defaultValue:
     derivedDefault: true
+  deprecated: '14.1.2.0.0 '
   descriptionHTML: '<p>Returns the protocol to be used for administrative connections
     when none is specified.</p> '
   legalValues:

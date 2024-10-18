@@ -73,6 +73,12 @@ public class LocalizedConstants {
       "The domain is experiencing REST communication issues between servers."
     );
 
+  public static final LocalizableString SUGGEST_RESTART_SERVER_MESSAGE =
+    addConstant(
+        "suggestRestartServerMessage",
+        "A restart of the administration server may resolve communication errors."
+    );
+
   public static final LocalizableString WEBLOGIC_REST_DELEGATION_NOT_WORKING_LINK =
     addConstant(
       "weblogicRestDelegationNotWorkingLink",
@@ -790,8 +796,8 @@ public class LocalizedConstants {
   public static final LocalizableString WEBLOGIC_REST_REQUEST_TIMED_OUT =
     addConstant(
       "weblogicRESTRequestTimedOut",
-      "<p>A request to the WebLogic administration server timed out."
-        + "  Increasing the WebLogic Remote Console's 'Administration Server Read Timeout' may help.</p>"
+      "A request to the WebLogic administration server timed out."
+        + "  Increasing the WebLogic Remote Console's 'Administration Server Read Timeout' may help."
     );
 
   public static final LocalizableString TOO_MANY_USERS =

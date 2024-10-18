@@ -1,4 +1,4 @@
-// Copyright (c) 2022, 2023, Oracle and/or its affiliates.
+// Copyright (c) 2022, 2024, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef;
@@ -457,6 +457,20 @@ public class CustomBeanPropertyDef implements BeanPropertyDef {
 
   public CustomBeanPropertyDef multiLineString(boolean val) {
     setMultiLineString(val);
+    return this;
+  }
+
+  @Override
+  public boolean isDynamicEnum() {
+    return valueDef.isDynamicEnum();
+  }
+
+  public void setDynamicEnum(boolean val) {
+    valueDef.setDynamicEnum(val);
+  }
+
+  public CustomBeanPropertyDef dynamicEnum(boolean val) {
+    setDynamicEnum(val);
     return this;
   }
 }

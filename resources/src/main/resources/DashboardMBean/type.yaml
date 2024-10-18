@@ -153,8 +153,7 @@ actions:
   label: "Copy"
   actionMethod: weblogic.remoteconsole.customizers.DashboardMBeanCustomizer.copy
   inputForm:
-    introductionHTML: >
-      "<p>Create a copy of this dashboard.</p>"
+    introductionHTML: "<p>Create a copy of this dashboard.</p>"
     parameters:
     - name: "Name"
   polling:

@@ -53,9 +53,9 @@ properties:
 - defaultValue:
     value:
       value: null
-  descriptionHTML: '<p>The name of the extendal custom Coherence operational configuration
-    override file. </p> Note: Before setting the file name, user must make sure the
-    file exist and is located in the domain home under config/coherence/$CoherenceClusterName
+  descriptionHTML: '<p>The name of the external custom Coherence operational configuration
+    override file. </p> Note: Before setting the file name, the user must make sure
+    the file exist and is located in the domain home under the config/coherence/$CoherenceClusterName
     directory. The file must also be readable. You may use the import operation to
     import the file from a location on the admin server to the domain home; import
     is only available for WLST online. '

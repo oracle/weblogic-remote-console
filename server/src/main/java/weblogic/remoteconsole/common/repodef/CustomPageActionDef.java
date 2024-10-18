@@ -449,6 +449,20 @@ public class CustomPageActionDef implements PageActionDef {
   }
 
   @Override
+  public boolean isDynamicEnum() {
+    return beanActionDef.isDynamicEnum();
+  }
+
+  public void setDynamicEnum(boolean val) {
+    beanActionDef.setDynamicEnum(val);
+  }
+
+  public CustomPageActionDef dynamicEnum(boolean val) {
+    setDynamicEnum(val);
+    return this;
+  }
+
+  @Override
   public String getImpact() {
     return beanActionDef.getImpact();
   }

@@ -1,4 +1,4 @@
-# Copyright (c) 2020, 2022, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2024, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 properties:
 
@@ -13,7 +13,7 @@ properties:
   label: User-Preferred Server
   optionsSources:
   - Domain/Servers
-  optionsMethod: weblogic.remoteconsole.customizers.SingletonServiceMBeanCustomizer.getServersOfSameCluster
+  optionsMethod: weblogic.remoteconsole.customizers.MBeanClusterServersCustomizer.getServersOfSameCluster
   helpHTML: >
     <p>The server member in the cluster that you prefer the migratable
     target to be active on. Only Configured servers may be specified as a
@@ -23,7 +23,7 @@ properties:
   label: Constrained Candidate Servers
   optionsSources:
   - Domain/Servers
-  optionsMethod: weblogic.remoteconsole.customizers.SingletonServiceMBeanCustomizer.getServersOfSameCluster
+  optionsMethod: weblogic.remoteconsole.customizers.MBeanClusterServersCustomizer.getServersOfSameCluster
   helpSummaryHTML: >
     <p>Servers in the cluster to use as a backup for services on this Singleton Service.
     Only configured servers are may be selected as part of these constraints.

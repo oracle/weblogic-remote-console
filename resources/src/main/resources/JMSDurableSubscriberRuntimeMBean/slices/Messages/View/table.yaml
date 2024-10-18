@@ -1,0 +1,128 @@
+# Copyright (c) 2023, 2024, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+introductionHTML: >
+  <p>This page manages this durable subscriber's messages.</p>
+
+customizePageMethod: weblogic.remoteconsole.customizers.JMSMessageManagementRuntimeMBeanCustomizer.customizeMessagesViewPage
+
+actions:
+- name: "deleteActions"
+  label: "Delete"
+  actions:
+  - name: "deleteSelectedMessages"
+    label: "Selected Messages"
+  - name: "deleteMessages"
+    label: "Messages"
+    rows: none
+- name: "exportActions"
+  label: "Export"
+  actions:
+  - name: "exportSelectedMessages"
+    label: "Selected Messages"
+  - name: "exportMessages"
+    label: "Messages"
+    rows: none
+- name: "importMessages"
+  label: "Import"
+  rows: none
+- name: "moveActions"
+  label: "Move"
+  actions:
+  - name: "moveSelectedMessages"
+    label: "Selected Messages"
+  - name: "moveMessages"
+    label: "Messages"
+    rows: none
+
+displayedColumns:
+- name: "JMSMessageID" # TBD WLS console called it 'ID'
+  definition:
+    type: "java.lang.String"
+    descriptionHTML: >
+      A unique identifier for the message.
+- name: "JMSCorrelationID" # TBD WLS console called it 'CorrID'
+  definition:
+    type: "java.lang.String"
+    descriptionHTML: >
+      A correlation ID is a user-defined identifier for the message,
+      often used to correlate messages about the same subject.
+- name: "JMSTimestamp" # TBD WLS console called it 'Time Stamp'
+  dateAsLong: true
+  definition:
+    type: long
+    descriptionHTML: >
+      The time a message arrives on the destination.
+      WebLogic JMS writes the time stamp in the message when it accepts the message for delivery,
+      not when the application sends the message.
+- name: "State" # TBD WLS console called it 'State String'
+  definition:
+    # TBD can we get a list of legal values? The underying int state is a bitmask and
+    #  the string form  converts the bitmask into a list of space separated words.
+    # WLS console wording:
+    #   which could be one of DELAYED, EXPIRED, ORDERED, PAUSED, RECEIVE, REDELIVERY_COUNT_EXCEEDED, SEND, TRANSACTION, or VISIBLE.
+    type: "java.lang.String"
+    descriptionHTML: >
+      The current state of a message.
+- name: "JMSDeliveryMode"
+  definition:
+    type: "java.lang.String"
+    legalValues:
+    - persistent
+    - nonpersistent
+    descriptionHTML: >
+      Indicates whether a message is persistent or nonpersistent.
+- name: "MessageSize"
+  definition:
+    type: long
+    descriptionHTML: >
+      The size of the message in bytes.
+
+hiddenColumns:
+- name: "JMSType" # TBD WLS console called it 'Type'
+  definition:
+    # This is a customer defined string so just display it as is.
+    type: "java.lang.String"
+    descriptionHTML: >
+      The JMS message type, such as
+      BytesMessage, TextMessage, StreamMessage, ObjectMessage, MapMessage, or XMLMessage.
+- name: "JMSPriority" # TBD WLS console called it 'Priority'
+  definition:
+    type: int
+    descriptionHTML: >
+      An indicator of the level of importance or urgency of a message,
+      with 0 as the lowest priority and 9 as the highest.
+      Usually, 0-4 are gradients of normal priority and 5-9 are gradients of expedited priority.
+      Priority is set to 4 by default.
+- name: "Xid" # TBD WLS console called it 'Xid String'
+  definition:
+    type: "java.lang.String"
+    descriptionHTML: >
+      The Xid for the transaction if a message is participating in a global transaction at the time of the query.
+- name: "JMSExpiration"
+  dateAsLong: true
+  definition:
+    type: long
+    descriptionHTML: >
+      The expiration, or time-to-live value, for a message.
+- name: "JMSRedelivered"
+  definition:
+    type: boolean
+    descriptionHTML: >
+      TBD v.s. The time when a message was redelivered because no acknowledgement was received.
+- name: "JMSRedeliveryLimit"
+  definition:
+    type: java.lang.String
+    descriptionHTML: >
+      The maximum number of redelivery attempts a message can have before it is moved to an error destination.
+- name: "JMSDeliveryTime"
+  dateAsLong: true
+  definition:
+    type: long
+    descriptionHTML: >
+      The earliest absolute time at which a message can be delivered to a consumer.
+- name: "SequenceNumber"
+  definition:
+    type: long
+    descriptionHTML: >
+      An ordering sequence number that indicates the message's relative position in the destination.

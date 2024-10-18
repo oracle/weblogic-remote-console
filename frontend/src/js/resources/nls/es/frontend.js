@@ -401,7 +401,7 @@ define({
             "label": "Nombre de usuario:"
           },
           "sso": {
-            "label": "Web Authentication:"
+            "label": "Autenticación web:"
           },
           "roles": {
             "label": "Roles:"
@@ -865,16 +865,16 @@ define({
       },
       "cards": {
         "tip0": {
-          "title": "Plantéese usar la opción \"Buscar\" antes de hacer clic.",
-          "descriptionHTML": "<p>Para encontrar lo que desea en uno de los árboles de proveedores puede que tenga que hacer muchas veces clic y desplazarse mucho. El campo <b><i>Buscar</i></b> (situado en la parte superior de la aplicación) puede evitar que tenga que hacer todo esto.</p><p>Mejor aún, al hacer clic en un elemento de los resultados de búsqueda que se hayan generado, el árbol de proveedores se ampliará automáticamente para que pueda ver dónde está el elemento.</p>"
+          "title": "Busque entre todos los beans gestionados de su dominio.",
+          "descriptionHTML": "<p>Introduzca un término de búsqueda en el campo de búsqueda de la parte superior de la consola para cribar las coincidencias de la perspectiva actual. También puede volver a visitar las consultas anteriores en el nodo <b>Búsquedas recientes</b>.</p>"
         },
         "tip1": {
-          "title": "Los \"paneles de control\" son el mejor aliado del usuario",
-          "descriptionHTML": "<p>En un <b><i>panel de control</i></b> se pueden definir los criterios usados para seleccionar instancias de MBean. Funcionan de manera similar a las vistas de las bases de datos, para que pueda ver todas las instancias de MBean con valores de tiempo de ejecución que cumplan actualmente los criterios.</p><p>Busque el botón <img src=\"js/jet-composites/wrc-frontend/1.0.0/images/dashboards-tabstrip-icon_24x24.png\" alt=\"New Dashboard Icon\" style=\"height: 24px; width: 24px; vertical-align: middle;\"/> cuando esté en una página del \"árbol de supervisión\" y, a continuación, haga clic en él para definir un nuevo panel de control. Los que se hayan creado previamente se pueden encontrar bajo el nodo \"Paneles de control\" de nivel raíz en el árbol de supervisión.</p>"
+          "title": "Filtre rápidamente y encuentre datos importantes para usted.",
+          "descriptionHTML": "<p>Los paneles de control permiten definir criterios personalizados, compararlos con su dominio y generar informes completos y precisos basados en el dominio.</p><p>Para empezar, abra cualquier nodo en el <b>árbol de supervisión</b> y haga clic en <b>Nuevo panel del control</b>. O abra el nodo de nivel superior <b>Paneles de control</b> para consultar los paneles de control incorporados.</p>"
         },
         "tip2": {
-          "title": "Selección y organización de columnas de tablas con \"Personalizar tabla\"",
-          "descriptionHTML": "<p>El enlace \"Personalizar esta tabla\" ahora se ha convertido en el botón <i>Personalizar tabla</i>.</p>"
+          "title": "Acotar contenidos de tabla",
+          "descriptionHTML": "<p>Simplifique las tablas ocultando las columnas irrelevantes para que pueda centrarse en los datos que son realmente importantes para usted.</p><p>Haga clic en <b>Personalizar tabla</b> sobre cualquier tabla y seleccione o anule la selección de columnas como desee.</p>"
         },
         "tip3": {
           "title": "Uso del teclado con tablas y acciones",
@@ -885,20 +885,20 @@ define({
           "descriptionHTML": "<p>El enlace \"Personalizar esta tabla\" ahora se ha convertido en el botón <i>Personalizar tabla</i>.</p>"
         },
         "tip5": {
-          "title": "Ubicación del portlet \"Centro de cambios\"",
-          "descriptionHTML": "<p>El portlet \"Centro de cambios\" se ha sustituido por el <i>cajón Carrito de la compra</i>, que incluye el icono de iniciador en la barra de iconos cuando se selecciona \"Árbol de configuración\".</p>"
+          "title": "Revisar cambios pendientes",
+          "descriptionHTML": "<p>Abra el carrito de la compra para ver la lista de cambios que se han guardado en el dominio, pero que no se han aprobado aún.</p><p>Si no puede ver <b>Ver cambios</b> en el carrito de la compra, pruebe a <a href='#' tabindex='0' on-click data-url='@@docsURL@@/set-console/#GUID-40440E0F-0310-4830-9B4B-00FC9ABBB591'>instalar la extensión de WebLogic Remote Console</a>."
         },
         "tip6": {
-          "title": "Ubicación del portlet \"¿Cómo?\"",
-          "descriptionHTML": "<p></p>"
+          "title": "¿Necesita Ayuda?",
+          "descriptionHTML": "<ul><li>Mueva el cursor sobre <b>?</b>, junto a un campo para ver las pistas.</li><li>haga clic en <b>?</b> de la página para obtener ayuda acerca de todos los atributos visibles.</li><li>En el menú <b>Ayuda</b>, haga clic en<b>Visitar el proyecto de GitHub de WebLogic Remote Console</b>.</li><li>Únase a nuestro canal de Slack: <a href='#' tabindex='0' on-click data-url='https://join.slack.com/t/oracle-weblogic/shared_invite/zt-1ni1gtjv6-PGC6CQ4uIte3KBdm_67~aQ'>#remote-console</a>.</li><li>Consulte nuestra documentación en <a href='#' tabindex='0' on-click data-url='@@docsURL@@/'></a>.</li></ul>"
         },
         "tip7": {
           "title": "Otro consejo n.º 1",
           "descriptionHTML": "<p>Breve descripción de \"Otro consejo n.º 1\". Un carácter de nueva línea no es un elemento HTML, por lo que no debería utilizarlos en esta descripción.</p>"
         },
         "tip8": {
-          "title": "¿Tiene problemas al crear un proveedor del servidor de administración?",
-          "descriptionHTML": "<p>En la sección <a href='#' tabindex='0' on-click data-url='@@docsURL@@reference/troubleshoot/'>Referencia -> Solución de problemas</a> de la documentación de WebLogic Remote Console se explica cómo resolver los problemas de conectividad provocados por la configuración del entrono o de la red.</p><p>Si no consigue resolverlos con los procedimientos descritos, envíe un mensaje al canal de Slack <b>@weblogic-remote-console</b>. En las capturas de pantalla se suele proporcionar contexto que facilita el diagnóstico del problema, por lo que se recomienda incluirlas en el mensaje cuando sea posible.</p>"
+          "title": "¿Problemas para conectar con el servidor?",
+          "descriptionHTML": "<p>En <b>Árbol de supervisión</b> > <b>Entorno</b> > <b>Servidores</b>, seleccione el servidor que no responde y abra la pestaña de <b>Solución de problemas</b> para probar y diagnosticar el problema.</p><p>Si no puede conectar con el dominio de ninguna forma, consulte la documentación de ayuda sobre <a href='#' tabindex='0' on-click data-url='@@docsURL@@/troubleshoot-weblogic-remote-console/#GUID-B3D14A11-0144-4B31-BFE3-E6AC59AEFCBE'>la imposibilidad de conectar con el servidor de administración</a> de WebLogic Remote Console para solucionar problemas.</p>"
         },
         "tip9": {
           "title": "Consejo de conectividad n.º 2",
@@ -909,8 +909,8 @@ define({
           "descriptionHTML": "<p>Breve descripción de \"Consejo de seguridad n.º 1\". Un carácter de nueva línea no es un elemento HTML, por lo que no debería utilizarlos en esta descripción.</p>"
         },
         "tip11": {
-          "title": "Plantéese usar las \"teclas de método abreviado\" antes de pulsar la tecla tabulador.",
-          "descriptionHTML": "<p>Las teclas \"de método abreviado\" (o aceleradores) permiten mover el enfoque directamente a un área, en lugar de estar resoplando mientras pulsamos una y otra vez las teclas <b>Tabulador</b> y <b>Mayús+Tabulador</b>.</p><p>A continuación se muestran 5 que puede utilizar:</p><p><ul><li><code><b>Ctrl+Alt+P</b></code>&nbsp;&nbsp;&nbsp;Abre el <i>cajón Proveedores</i>.</li><li><code><b>Ctrl+Alt+N</b></code>&nbsp;&nbsp;&nbsp;Mueve el enfoque al <i>árbol de proveedores</i>.</li><li><code><b>Ctrl+Alt+T</b></code>&nbsp;&nbsp;&nbsp;Mueve el enfoque a una tabla, más concretamente, a la cabecera de la primera columna.</li><li><code><b>Ctrl+Alt+|</b></code>&nbsp;&nbsp;&nbsp;Mueve el enfoque al agarre del sistema de cambio de ancho del árbol. Tras esto, use las teclas <code><b>RightArrow</b></code> y <code><b>LeftArrow</b></code> para aumentar o reducir el ancho del árbol.</li><li><code><b>Ctrl+Alt+;</b></code>&nbsp;&nbsp;&nbsp;Mueve el enfoque a una ruta que sea un <i>enlace cruzado</i> (si está presente) o a la primera etiqueta de ruta en la que se pueda hacer clic.</li></ul><p>Consulte la documentación para comprobar una lista completa de las teclas de método abreviado.</p>"
+          "title": "Acelere su flujo de trabajo",
+          "descriptionHTML": "<p>Utilice métodos abreviados de teclado para acceder directamente a componentes de UI específicos.</p><p>5 principales:</p><li><code><b>Alt+P</b></code>: abre el componente de <b>Proveedores</b>.</li><li><code><b>Alt+C</b></code>: traslada el enfoque al <b>carrito de la compra</b>.</li><li><code><b>Alt+T</b></code>: traslada el enfoque a la primera cabecera de columna de la tabla.</li><li><code><b>Alt+|</b></code>: traslada el enfoque al cambiador de ancho del árbol de navegación. Utilice las teclas de flechas para cambiar el ancho del árbol.</li><li><code><b>Alt+;</b></code>: traslada el enfoque a la primera etiqueta de ruta en la que se pueda hacer clic.</li></ul><p>Para consultar la lista de métodos abreviados de teclado, consulte la documentación.</p>"
         }
       }
     }
@@ -949,7 +949,7 @@ define({
     "messages": {
       "lostConnection": {
         "summary": "Conexión perdida",
-        "detail": "Connection lost. Please refresh."
+        "detail": "Se ha perdido la conexión. Refresque la página."
       },
       "cannotConnect": {
         "summary": "Fallo al intentar la conexión",
@@ -982,9 +982,9 @@ define({
         }
       },
       "screenreader": {
-        "value1": "You're on the {0} item. Press Enter to select.",
-        "value2": "You're on the {0} item. Pressing Enter will expand or collapse it. After expanding, use the down arrow to access related links.",
-        "value3": "{0}. Press Tab/Shift+Tab to move between related links and Escape to return to last visited top level item."
+        "value1": "Está en el elemento {0}. Pulse Intro para seleccionar",
+        "value2": "Está en el elemento {0}. Al pulsar Intro se ampliará y reducirá. Después de la ampliación, utilice la flecha hacia abajo para acceder a los enlaces relacionados.",
+        "value3": "{0}. Pulse la tecla de tabulador o Mayús+tabulador para desplazarse entre enlaces relacionados y la tecla Esc para volver al último elemento de nivel superior que haya visitado."
       }
     }
   },
@@ -1504,7 +1504,7 @@ define({
           "value": "Volver a la página de llegada del árbol de proveedor"
         },
         "reset": {
-          "value": "Restablecer valores de página"
+          "value": "Refresh page values"
         }
       }
     },
@@ -1812,6 +1812,9 @@ define({
         },
         "actionNotPerformed": {
           "detail": "No se ha podido realizar la acción '{0}' en uno o varios de los elementos marcados"
+        },
+        "actionNotPerformedNoRow": {
+          "detail": "Unable to perform '{0}' action"
         },
         "actionSucceeded": {
           "summary": "La acción '{0}' se ha realizado correctamente."

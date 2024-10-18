@@ -401,7 +401,7 @@ define({
             "label": "사용자 이름:"
           },
           "sso": {
-            "label": "Web Authentication:"
+            "label": "웹 인증:"
           },
           "roles": {
             "label": "롤:"
@@ -865,16 +865,16 @@ define({
       },
       "cards": {
         "tip0": {
-          "title": "누르기 전에 \"검색\" 생각하기!",
-          "descriptionHTML": "<p>제공자의 트리 중 하나에서 원하는 항목을 찾으려면 여러 번의 클릭과 스크롤이 필요할 수 있습니다. <b><i>검색</i></b> 필드(앱 상단에 있음)를 사용하면 그럴 필요가 없습니다!</p><p>더욱이 생성된 검색 결과의 항목을 누르면 제공자 트리가 자동 확장되어 항목의 위치가 표시됩니다.</p>"
+          "title": "도메인의 모든 MBean을 검색하세요!",
+          "descriptionHTML": "<p>콘솔 상단의 검색 필드에 검색어를 입력하여 현재 관점에서 일치 항목을 찾습니다. <b>최근 검색</b> 노드에서 이전 질의를 재방문할 수도 있습니다.</p>"
         },
         "tip1": {
-          "title": "\"대시보드\"는 사용자의 가장 좋은 친구",
-          "descriptionHTML": "<p><b><i>대시보드</i></b>에서 MBean 인스턴스 선택에 사용되는 기준을 정의할 수 있습니다. 이것은 데이터베이스 환경에서 일종의 뷰처럼 작동하므로 현재 기준을 충족하는 모든 MBean 인스턴스를 런타임 값으로 볼 수 있습니다.</p><p>\"모니터링 트리\" 페이지에 있을 때마다 <img src=\"js/jet-composites/wrc-frontend/1.0.0/images/dashboards-tabstrip-icon_24x24.png\" alt=\"새 대시보드 아이콘\" style=\"height: 24px; width: 24px; vertical-align: middle;\"/> 단추를 찾아서 누르고 새 대시보드를 정의합니다. 이전에 생성된 항목은 모니터링 트리의 루트 레벨 \"대시보드\" 노드에서 찾을 수 있습니다.</p>"
+          "title": "중요한 데이터를 빠르게 필터링하고 찾으세요!",
+          "descriptionHTML": "<p>대시보드에서 사용자정의 기준을 정의하고, 도메인과 일치시키고, 도메인에 기반한 포괄적이고 정밀한 보고서를 생성할 수 있습니다.</p><p>시작하려면 <b>모니터링 트리</b>에서 노드를 열고 <b>새 대시보드</b>를 누릅니다. 또는 <b>대시보드</b> 최상위 레벨 노드를 열어 내장 대시보드를 확인합니다.</p>"
         },
         "tip2": {
-          "title": "\"테이블 사용자정의\"를 사용하여 테이블 열 선택 및 배열",
-          "descriptionHTML": "<p>\"이 테이블 사용자정의\" 링크는 이제 <i>테이블 사용자정의</i> 단추입니다.</p>"
+          "title": "테이블 콘텐츠 정제",
+          "descriptionHTML": "<p>관련 없는 열을 숨겨 테이블을 간소화하면 중요한 데이터에 집중할 수 있습니다.</p><p>테이블 위의 <b>테이블 사용자정의</b>를 누르고 원하는 대로 열을 선택하거나 선택 해제합니다.</p>"
         },
         "tip3": {
           "title": "테이블 및 작업과 함께 키보드 사용",
@@ -885,20 +885,20 @@ define({
           "descriptionHTML": "<p>\"이 테이블 사용자정의\" 링크는 이제 <i>테이블 사용자정의</i> 단추입니다.</p>"
         },
         "tip5": {
-          "title": "\"변경 센터\" 포틀릿은 어디에 있나요?",
-          "descriptionHTML": "<p>\"변경 센터\" 포틀릿은 <i>쇼핑 카트 서랍</i>으로 대체되었습니다. 이는 \"구성 트리\"를 선택할 때 아이콘 모음에 실행기 아이콘으로 표시됩니다.</p>"
+          "title": "보류 중인 변경사항 검토",
+          "descriptionHTML": "<p>쇼핑 카트를 열어 도메인에 저장되었지만 아직 커밋되지 않은 변경사항 목록을 확인합니다.</p><p>쇼핑 카트에 <b>변경사항 보기</b>가 표시되지 않으면 <a href='#' tabindex='0' on-click data-url='@@docsURL@@/set-console/#GUID-40440E0F-0310-4830-9B4B-00FC9ABBB591'>WebLogic Remote Console 확장을 설치</a>해 보십시오."
         },
         "tip6": {
-          "title": "\"방법\" 포틀릿은 어디에 있나요?",
-          "descriptionHTML": "<p></p>"
+          "title": "도움이 필요합니까?",
+          "descriptionHTML": "<ul><li>도구설명을 보려면 필드 옆에 있는 <b>?</b> 위로 커서를 가져갑니다.</li><li>모든 보이는 속성에 대한 자세한 도움말을 보려면 페이지 레벨 <b>?</b>를 누릅니다.</li><li><b>도움말</b> 메뉴에서 <b>WebLogic Remote Console GitHub 프로젝트 방문</b>을 누릅니다.</li><li>Slack 채널에 참여합니다. <a href='#' tabindex='0' on-click data-url='https://join.slack.com/t/oracle-weblogic/shared_invite/zt-1ni1gtjv6-PGC6CQ4uIte3KBdm_67~aQ'>#remote-console</a>.</li><li><a href='#' tabindex='0' on-click data-url='@@docsURL@@/'></a>에서 설명서를 방문합니다.</li></ul>"
         },
         "tip7": {
           "title": "기타 팁 #1",
           "descriptionHTML": "<p>\"기타 팁 #1\"에 대한 간략한 설명입니다. 줄바꿈 문자는 HTML 요소가 아니므로 이 설명에 사용하지 마십시오.</p>"
         },
         "tip8": {
-          "title": "관리 서버 제공자 생성에 문제가 있나요?",
-          "descriptionHTML": "<p>WebLogic Remote Console 설명서의 <a href='#' tabindex='0' on-click data-url='@@docsURL@@reference/troubleshoot/'>참조 -> 문제 해결</a> 섹션에서는 환경 및 네트워크 설정에 의해 발생한 접속성 문제를 해결하는 방법을 다룹니다.</p><p>여기서도 해결하지 못하면 <b>@weblogic-remote-console</b> Slack 채널에 메시지를 게시하십시오. 스크린샷은 문제 진단에 도움이 되는 컨텍스트를 제공하므로 가능한 게시물에 포함하십시오.</p>"
+          "title": "서버 접속에 문제가 있나요?",
+          "descriptionHTML": "<p><b>모니터링 트리</b> > <b>환경</b> > <b>서버</b>에서 응답하지 않는 서버를 선택하고 <b>문제 해결</b> 탭을 열어 문제를 진단해 봅니다.</p><p>도메인에 전혀 접속할 수 없는 경우 문제 해결 도움말을 보려면 WebLogic Remote Console 설명서에서 <a href='#' tabindex='0' on-click data-url='@@docsURL@@/troubleshoot-weblogic-remote-console/#GUID-B3D14A11-0144-4B31-BFE3-E6AC59AEFCBE'>관리 서버에 접속할 수 없음</a>을 참조하십시오.</p>"
         },
         "tip9": {
           "title": "접속성 팁 #2",
@@ -909,8 +909,8 @@ define({
           "descriptionHTML": "<p>\"보안 팁 #1\"에 대한 간략한 설명입니다. 줄바꿈 문자는 HTML 요소가 아니므로 이 설명에 사용하지 마십시오.</p>"
         },
         "tip11": {
-          "title": "Tab을 누르기 전에 \"단축키\" 생각하기!",
-          "descriptionHTML": "<p>\"단축키\"(또는 액셀러레이터) 키를 사용하면 <b>Tab</b> 및 <b>Shift+Tab</b> 키를 반복적으로 누르지 않고도 영역으로 직접 포커스를 이동할 수 있습니다!</p><p>다음 5가지를 시도해 보십시오.</p><p><ul><li><code><b>Ctrl+Alt+P</b></code>&nbsp;&nbsp;&nbsp;<i>제공자 서랍</i>을 엽니다.</li><li><code><b>Ctrl+Alt+N</b></code>&nbsp;&nbsp;&nbsp;<i>제공자 트리</i>로 포커스를 이동합니다.</li><li><code><b>Ctrl+Alt+T</b></code>&nbsp;&nbsp;&nbsp;테이블로 포커스를 이동하되, 더 정교하게 첫번째 열 머리글로 이동합니다.</li><li><code><b>Ctrl+Alt+|</b></code>&nbsp;&nbsp;&nbsp;트리 너비-크기 조정기의 그리퍼로 포커스를 이동합니다. 그 후에 <code><b>RightArrow</b></code> 및 <code><b>LeftArrow</b></code> 키를 사용하여 트리 너비를 늘리거나 줄입니다.</li><li><code><b>Ctrl+Alt+;</b></code>&nbsp;&nbsp;&nbsp;<i>교차 링크</i>인 연결 고리로 포커스를 이동하거나(있는 경우), 첫번째 누르기 가능 연결 고리 레이블로 이동합니다.</li></ul><p>전체 단축키 목록을 보려면 설명서를 참조하십시오!</p>"
+          "title": "워크플로우를 가속화하세요!",
+          "descriptionHTML": "<p>키보드 단축키를 사용하여 특정 UI 구성요소로 바로 점프합니다.</p><p>상위 5개:</p><li><code><b>Alt+P</b></code> - <b>제공자</b> 서랍을 엽니다.</li><li><code><b>Alt+C</b></code> - <b>쇼핑 카트</b>로 포커스를 이동합니다.</li><li><code><b>Alt+T</b></code> - 테이블의 첫번째 열 머리글로 포커스를 이동합니다.</li><li><code><b>Alt+|</b></code> - 탐색 트리 너비-크기 조정기로 포커스를 이동합니다. 화살표 키를 사용하여 트리 너비를 변경합니다.</li><li><code><b>Alt+;</b></code> - 첫번째 누르기 가능한 이동 경로 레이블로 포커스를 이동합니다.</li></ul><p>전체 키보드 단축키 목록은 설명서를 참조하십시오.</p>"
         }
       }
     }
@@ -949,7 +949,7 @@ define({
     "messages": {
       "lostConnection": {
         "summary": "접속 끊김",
-        "detail": "Connection lost. Please refresh."
+        "detail": "접속이 끊겼습니다. 새로고침하십시오."
       },
       "cannotConnect": {
         "summary": "접속 시도 실패",
@@ -982,9 +982,9 @@ define({
         }
       },
       "screenreader": {
-        "value1": "You're on the {0} item. Press Enter to select.",
-        "value2": "You're on the {0} item. Pressing Enter will expand or collapse it. After expanding, use the down arrow to access related links.",
-        "value3": "{0}. Press Tab/Shift+Tab to move between related links and Escape to return to last visited top level item."
+        "value1": "{0} 항목 위에 있습니다. Enter를 눌러 선택합니다.",
+        "value2": "{0} 항목 위에 있습니다. Enter를 누르면 확장되거나 축소됩니다. 확장한 후 아래쪽 화살표를 사용하여 관련 링크에 액세스합니다.",
+        "value3": "{0}. Tab/Shift+Tab을 눌러 관련 링크 사이를 이동하고 Esc를 눌러 마지막 방문한 최상위 항목으로 돌아갑니다."
       }
     }
   },
@@ -1504,7 +1504,7 @@ define({
           "value": "제공자 트리의 시작 페이지로 돌아갑니다."
         },
         "reset": {
-          "value": "페이지 값 재설정"
+          "value": "Refresh page values"
         }
       }
     },
@@ -1812,6 +1812,9 @@ define({
         },
         "actionNotPerformed": {
           "detail": "선택된 항목 중 하나 이상에 대해 '{0}' 작업을 수행할 수 없습니다"
+        },
+        "actionNotPerformedNoRow": {
+          "detail": "Unable to perform '{0}' action"
         },
         "actionSucceeded": {
           "summary": "'{0}' 작업이 성공적으로 수행되었습니다!"

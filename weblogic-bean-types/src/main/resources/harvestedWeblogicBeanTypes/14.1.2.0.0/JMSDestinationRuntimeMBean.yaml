@@ -1,4 +1,4 @@
-# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2024, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 actions: [
@@ -67,6 +67,11 @@ properties:
     }
   descriptionHTML: '<p>The current consumption pause state of the destination.</p> '
   name: ConsumptionPausedState
+  type: java.lang.String
+- defaultValue: {
+    }
+  descriptionHTML: 'Returns the destination ID. '
+  name: DestinationID
   type: java.lang.String
 - defaultValue: {
     }

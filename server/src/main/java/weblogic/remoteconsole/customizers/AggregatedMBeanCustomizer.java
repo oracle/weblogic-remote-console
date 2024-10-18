@@ -13,13 +13,12 @@ import weblogic.remoteconsole.common.repodef.PagePropertyDef;
 import weblogic.remoteconsole.common.repodef.SliceTableDef;
 import weblogic.remoteconsole.common.repodef.weblogic.AggregatedRuntimeMBeanNameHandler;
 import weblogic.remoteconsole.common.utils.Path;
-import weblogic.remoteconsole.common.utils.StringUtils;
-import weblogic.remoteconsole.server.repo.ArrayValue;
 import weblogic.remoteconsole.server.repo.BeanReaderRepoSearchBuilder;
 import weblogic.remoteconsole.server.repo.BeanReaderRepoSearchResults;
 import weblogic.remoteconsole.server.repo.BeanSearchResults;
 import weblogic.remoteconsole.server.repo.BeanTreePath;
 import weblogic.remoteconsole.server.repo.InvocationContext;
+import weblogic.remoteconsole.server.repo.PageReaderHelper;
 import weblogic.remoteconsole.server.repo.Response;
 import weblogic.remoteconsole.server.repo.TableCell;
 import weblogic.remoteconsole.server.repo.TableRow;
@@ -56,74 +55,82 @@ public class AggregatedMBeanCustomizer {
       return response.setNotFound();
     }
 
-    // The path to the server runtimes collection
-    BeanTreePath serverRuntimes =
-      BeanTreePath.create(ic.getBeanTreePath().getBeanRepo(), new Path("DomainRuntime.ServerRuntimes"));
-
     // e.g. DomainRuntime.ServerRuntimes.*.Foo.Bar
-    Path unaggPath = NAME_HANDLER.getUnfabricatedBeanTreePath(ic.getBeanTreePath()).getPath();
-    
-    // The path from a server runtime mbean to the unaggregated mbean
-    // i.e. Domain.ServerRuntimes.*.Foo.Bar -> Foo.Bar
-    Path serverRelativePath = unaggPath.subPath(3, unaggPath.length());
+    Path unfabPath = NAME_HANDLER.getUnfabricatedBeanTreePath(ic.getBeanTreePath()).getPath();
+
+    // The path from a server runtime mbean to the unfabricated mbean
+    // i.e. DomainRuntime.ServerRuntimes.*.Foo.Bar -> Foo.Bar
+    Path serverRelativePath = unfabPath.subPath(3, unfabPath.length());
   
     Response<PageDef> pageDefResponse = ic.getPageRepo().asPageReaderRepo().getPageDef(ic);
     if (!pageDefResponse.isSuccess()) {
-      return response.copyUnsuccessfulResponse(pageDefResponse);      
+      return response.copyUnsuccessfulResponse(pageDefResponse);
     }
     SliceTableDef sliceTableDef = pageDefResponse.getResults().asSliceTableDef();
     Response<BeanReaderRepoSearchResults> searchResponse =
-      findPerServerInstances(ic, sliceTableDef, serverRuntimes, serverRelativePath);
+      findPerServerInstances(ic, sliceTableDef, serverRelativePath);
     if (!searchResponse.isSuccess()) {
       return response.copyUnsuccessfulResponse(searchResponse);
     }
-    return
-      response.setSuccess(
-        createRows(sliceTableDef, serverRuntimes, serverRelativePath, searchResponse.getResults())
-      );
+    return createRows(ic, sliceTableDef, serverRelativePath, searchResponse.getResults());
   }
 
   private static Response<BeanReaderRepoSearchResults> findPerServerInstances(
     InvocationContext ic,
     SliceTableDef sliceTableDef,
-    BeanTreePath serverRuntimes,
     Path serverRelativePath
   ) {
+    BeanTreePath combinedServerRuntimesBTP = getCombinedServerRuntimesBTP(ic);
     // The path to all per-server instances of the bean
-    BeanTreePath allInstances = serverRuntimes.childPath(serverRelativePath);
+    // i.e. DomainRuntime.CombinedServerRuntimes.*.ServerRuntime.Foo.Bar
+    BeanTreePath allInstances =
+      combinedServerRuntimesBTP
+        .childPath(new Path("ServerRuntime"))
+        .childPath(serverRelativePath);
     // Create a cross-server-runtime search request based on the columns
     BeanReaderRepoSearchBuilder builder =
       ic.getPageRepo().getBeanRepo().asBeanReaderRepo().createSearchBuilder(ic, false);
+    // Force the query to get something from the server lifecycle runtime
+    // otherwise we don't be able to get any search results later:
+    builder.addProperty(combinedServerRuntimesBTP, combinedServerRuntimesBTP.getTypeDef().getIdentityPropertyDef());
     for (PagePropertyDef propertyDef : sliceTableDef.getAllPropertyDefs()) {
       builder.addProperty(allInstances, propertyDef);
+      getPageReaderHelper(ic).addParamsToSearch(builder, allInstances, propertyDef.getGetValueCustomizerDef());
     }
     // Do the search
     return builder.search();
   }
 
-  private static List<TableRow> createRows(
+  private static Response<List<TableRow>> createRows(
+    InvocationContext ic,
     SliceTableDef sliceTableDef,
-    BeanTreePath serverRuntimes,
     Path serverRelativePath,
     BeanReaderRepoSearchResults searchResults
   ) {
+    Response<List<TableRow>> response = new Response<>();
+
     // Sort the rows by the server name
     Map<String,TableRow> sortedRows = new TreeMap<>();
 
     // make a row for each server runtime that has the bean
-    for (BeanSearchResults serverResults : searchResults.getCollection(serverRuntimes)) {
-      // The path to this server runtime mbean
-      BeanTreePath server =
-        serverResults.getValue(serverRuntimes.getTypeDef().getIdentityPropertyDef()).asBeanTreePath();
+    for (BeanSearchResults combinedServerResults : searchResults.getCollection(getCombinedServerRuntimesBTP(ic))) {
+      BeanTreePath combinedServerRuntimeBTP = combinedServerResults.getBeanTreePath();
+      BeanTreePath rowBTP = 
+        combinedServerRuntimeBTP
+          .childPath(new Path("ServerRuntime"))
+          .childPath(serverRelativePath);
       // The results for the bean on this server
-      BeanSearchResults rowResults =
-        searchResults.getBean(server.childPath(serverRelativePath));
+      BeanSearchResults rowResults = searchResults.getBean(rowBTP);
       if (rowResults == null) {
         // This bean isn't present on this server.  Don't make a row for it.
       } else {
         // Make a row for this bean (sorted by server name)
-        TableRow row = createRow(sliceTableDef, server, rowResults);
-        String serverName = server.getLastSegment().getKey();
+        Response<TableRow> r = createRow(ic, sliceTableDef, combinedServerRuntimeBTP, rowResults);
+        if (!r.isSuccess()) {
+          return response.copyUnsuccessfulResponse(r);
+        }
+        TableRow row = r.getResults();
+        String serverName = combinedServerRuntimeBTP.getLastSegment().getKey();
         sortedRows.put(serverName, row);
       }
     }
@@ -132,100 +139,65 @@ public class AggregatedMBeanCustomizer {
     for (TableRow row : sortedRows.values()) {
       rows.add(row);
     }
-    return rows;
+    return response.setSuccess(rows);
   }
 
-  private static TableRow createRow(SliceTableDef sliceTableDef, BeanTreePath server, BeanSearchResults rowResults) {
+  private static Response<TableRow> createRow(
+    InvocationContext ic,
+    SliceTableDef sliceTableDef,
+    BeanTreePath combinedServerRuntimeBTP,
+    BeanSearchResults rowResults
+  ) {
+    Response<TableRow> response = new Response<>();
     TableRow row = new TableRow();
+    String serverName = combinedServerRuntimeBTP.getLastSegment().getKey();
     // Add a cell for each property that exists in this instance on this server
     for (PagePropertyDef propertyDef : sliceTableDef.getAllPropertyDefs()) {
       boolean isServer = "Server".equals(propertyDef.getPropertyName());
       // The value of the Server property is the server runtime's identity.
       // The value of any other property is the one from the search results.
-      Value value = isServer ? server : rowResults.getValue(propertyDef);
+      Value value = null;
+      if (isServer) {
+        value = combinedServerRuntimeBTP;
+      } else {
+        Response<Value> r =
+          getPageReaderHelper(ic).getPropertyValue(
+            propertyDef,
+            rowResults.getBeanTreePath(),
+            rowResults,
+            rowResults.getSearchResults(),
+            false
+          );
+        if (!r.isSuccess()) {
+          return response.copyUnsuccessfulResponse(r);
+        }
+        value = r.getResults();
+      }
       if (value != null) {
         row.getCells().add(
           new TableCell(
             propertyDef.getFormFieldName(),
-            getCellValue(propertyDef, value)
+            value
           )
         );
         if (isServer && !sliceTableDef.getActionDefs().isEmpty()) {
           // This slice table has actions and this is the server property.
           // Add an "identifier" property too that's set to the server's name.
-          row.setIdentifier(server.getLastSegment().getKey());
+          row.setIdentifier(serverName);
         }
       } else {
         // This bean doesn't have a value for this property (e.g. heterogeneous types)
       }
     }
-    row.getCells().add(new TableCell("identity", fixReference(rowResults.getBeanTreePath())));
-    return row;
+    row.getCells().add(new TableCell("identity", rowResults.getBeanTreePath()));
+    return response.setSuccess(row);
   }
 
-  private static Value getCellValue(PagePropertyDef propertyDef, Value value) {
-    if (propertyDef.isReference()) {
-      if (propertyDef.isArray()) {
-        ArrayValue unfixedReferences = value.asArray();
-        List<Value> fixedReferences = new ArrayList<>();
-        for (Value unfixedReference : unfixedReferences.getValues()) {
-          fixedReferences.add(fixReference(unfixedReference));
-        }
-        return new ArrayValue(fixedReferences);
-      } else {
-        return fixReference(value);
-      }
-    } else {
-      return value;
-    }
+  private static BeanTreePath getCombinedServerRuntimesBTP(InvocationContext ic) {
+    return BeanTreePath.create(ic.getBeanTreePath().getBeanRepo(), new Path("DomainRuntime.CombinedServerRuntimes"));
   }
 
-  private static Value fixReference(Value unfixedReference) {
-    if (unfixedReference.isBeanTreePath()) {
-      BeanTreePath btp = unfixedReference.asBeanTreePath();
-      Path path = btp.getPath();
-      if (path.length() > 1) {
-        if ("DomainRuntime".equals(path.getFirstComponent())) {
-          String child = path.getComponents().get(1);
-          if ("ServerRuntimes".equals(child) || "ServerLifeCycleRuntimes".equals(child)) {
-            return BeanTreePath.create(btp.getBeanRepo(), fixCombinedServerRuntimeReference(path));
-          }
-        }
-      }
-    }
-    return unfixedReference;
-  }
-
-  private static Path fixCombinedServerRuntimeReference(Path unfixedPath) {
-    // e.g. convert from
-    //   DomainRuntime/ServerRuntimes/Server1/...
-    // to
-    //   DomainRuntime/CombinedServerRuntimes/Server1/ServerRuntime/...
-
-    Path fixedPath = new Path();
-    // DomainRuntime :
-    fixedPath.addComponent(unfixedPath.getFirstComponent());
-    // DomainRuntime/CombinedServerRuntimes :
-    fixedPath.addComponent("CombinedServerRuntimes");
-    if (unfixedPath.length() > 2) {
-      // We have a server name.  Add it.
-      // DomainRuntime/CombinedServerRuntimes/Server1 :
-      fixedPath.addComponent(unfixedPath.getComponents().get(2));
-    }
-    if (unfixedPath.length() > 3) {
-      // We have stuff after the server name.
-      // Add the singular name of the uncombined collection and the rest of the stuff
-      // after the server name.
-  
-      // ServerRuntimes or ServerLifeCycleRuntimes :
-      String uncombinedCollection = unfixedPath.getComponents().get(1);
-
-      // DomainRuntime/CombinedServerRuntimes/Server1/ServerRuntime :
-      fixedPath.addComponent(StringUtils.getSingular(uncombinedCollection));
-
-      // DomainRuntime/CombinedServerRuntimes/Server1/ServerRuntime/... :
-      fixedPath.addPath(unfixedPath.subPath(3, unfixedPath.length()));
-    }
-    return fixedPath;
+  private static PageReaderHelper getPageReaderHelper(InvocationContext ic) {
+    return new PageReaderHelper(ic);
   }
 }

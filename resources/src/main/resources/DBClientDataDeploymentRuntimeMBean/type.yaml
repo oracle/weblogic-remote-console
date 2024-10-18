@@ -1,0 +1,45 @@
+# Copyright (c) 2024, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions:
+
+- name: "redeploy"
+  label: "Redeploy Database Client Data Directory"
+  actionMethod: weblogic.remoteconsole.customizers.DBClientDataDeploymentRuntimeMBeanCustomizer.redeploySourceOnServer
+  successMessage: Created task to redeploy Database Client Data Directory {0}. Track progress under Monitoring Tree -> Deployment -> Deployment Tasks
+  failureMessage: Failed to redeploy Database Client Data Directory {0}, check deployment task for more information
+  disableMBeanJavadoc: true
+  # Don't specify polling since what's displayed on the page doesn't change when redeploy completes
+  helpHTML: >
+    <p> Use this page to redeploy database client data directory.  
+    The source information has to be at least two levels down under the domain config directory. </p>
+  inputForm:
+    customizePageMethod: weblogic.remoteconsole.customizers.DBClientDataDeploymentRuntimeMBeanCustomizer.customizeRedeployActionInputForm
+    introductionHTML: >
+      <p> Use this page to redeploy database client data directory.  
+      The source information has to be at least two levels down under the domain config directory. </p>
+    parameters:
+      - name: "SourcePath"
+        required: true
+
+- name: uploadAndRedeploy
+  label: "Upload and Redeploy Database Client Data Directory"
+  successMessage: Uploaded and created task to redeploy database client data directory {0}. Track progress under Monitoring Tree -> Deployment -> Deployment Tasks
+  failureMessage: Failed to upload and redeploy database client data directory {0}, check deployment task for more information
+  disableMBeanJavadoc: true
+  # Don't specify polling since what's displayed on the page doesn't change when redeploy completes
+  helpHTML: >
+    <p>Use this page to redeploy the database client data directory</p>
+    <p>The selected source will be uploaded to the server machine, under the administration server's config/dbclientdata directory.</p>
+    <p>If the original source is not under administration server's config/dbclientdata directory, a new directory will be 
+    created and the files will be upload there. The original source, which is outside the config/dbclientdata directory, will not be deleted.</p>
+  inputForm:
+    introductionHTML: >
+      <p>Use this page to redeploy the database client data directory</p>
+      <p>The selected source will be uploaded to the server machine, under the administration server's config/dbclientdata directory.</p>
+      <p>If the original source is not under administration server's config/dbclientdata directory, a new directory will be 
+      created and the files will be upload there. The original source, which is outside the config/dbclientdata directory, will not be deleted.</p>
+    parameters:
+    - name: Source
+      required: true
+      onlineName: source

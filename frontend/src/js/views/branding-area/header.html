@@ -12,7 +12,8 @@ Copyright (c) 2020, 2024, Oracle and/or its affiliates.
     <div id="branding-area-title-container">
       <oj-module config="[[appMenuModuleConfig]]"></oj-module>
 
-      <a href="#" id="app-reset-link" on-click="[[brandingAreaAppRestClickListener]]" :aria-label="[[`${appName} ${i18n.app.version.value}`]]">
+      <a href="#" id="app-reset-link" on-click="[[brandingAreaResetAppClickListener]]"
+         :aria-label="[[`${appName} ${i18n.app.version.value}`]]">
         <span :class="[[appInfoTitleClass]]" :title="[[i18n.app.tooltip.value]]">
           <span aria-hidden="true" data-bind="text: `${appName} ${i18n.app.version.value}`"></span>
         </span>

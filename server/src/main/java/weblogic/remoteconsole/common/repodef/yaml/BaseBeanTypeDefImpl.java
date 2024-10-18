@@ -1,4 +1,4 @@
-// Copyright (c) 2021, 2023, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2024, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef.yaml;
@@ -34,6 +34,7 @@ public abstract class BaseBeanTypeDefImpl implements BeanTypeDef {
   private List<BeanChildDef> childDefs;
   private List<BeanActionDefImpl> actionDefImpls;
   private List<BeanActionDef> actionDefs;
+  private boolean initializedSubTypeDefs = false;
   private List<BaseBeanTypeDefImpl> subTypeDefImpls;
   private List<BeanTypeDef> subTypeDefs;
 
@@ -378,32 +379,39 @@ public abstract class BaseBeanTypeDefImpl implements BeanTypeDef {
   abstract BeanPropertyDefImpl getSubTypeDiscriminatorPropertyDefImpl();
 
   private List<BaseBeanTypeDefImpl> getSubTypeDefImpls() {
-    if (subTypeDefImpls == null) {
-      initializeSubTypeDefs();
-    }
+    initializeSubTypeDefs();
     return subTypeDefImpls;
   }
 
   @Override
   public List<BeanTypeDef> getSubTypeDefs() {
-    if (subTypeDefImpls == null) {
-      initializeSubTypeDefs();
-    }
+    initializeSubTypeDefs();
     return subTypeDefs;
   }
 
-  private synchronized void initializeSubTypeDefs() {
-    subTypeDefImpls = new ArrayList<>();
-    subTypeDefs = new ArrayList<>();
-    for (String disc : getSubTypeDiscriminatorLegalValues()) {
-      BaseBeanTypeDefImpl subTypeDefImpl = getSubTypeDefImpl(disc);
-      subTypeDefImpls.add(subTypeDefImpl);
-      subTypeDefs.add(subTypeDefImpl);
+  private void initializeSubTypeDefs() {
+    if (initializedSubTypeDefs) {
+      return;
     }
-    BaseBeanTypeDefImpl dflt = getDefaultSubTypeDefImpl();
-    if (dflt != null) {
-      subTypeDefImpls.add(dflt);
-      subTypeDefs.add(dflt);
+    synchronized (this) {
+      if (initializedSubTypeDefs) {
+        return;
+      }
+      List<BaseBeanTypeDefImpl> newSubTypeDefImpls = new ArrayList<>();
+      List<BeanTypeDef> newSubTypeDefs = new ArrayList<>();
+      for (String disc : getSubTypeDiscriminatorLegalValues()) {
+        BaseBeanTypeDefImpl subTypeDefImpl = getSubTypeDefImpl(disc);
+        newSubTypeDefImpls.add(subTypeDefImpl);
+        newSubTypeDefs.add(subTypeDefImpl);
+      }
+      BaseBeanTypeDefImpl dflt = getDefaultSubTypeDefImpl();
+      if (dflt != null) {
+        newSubTypeDefImpls.add(dflt);
+        newSubTypeDefs.add(dflt);
+      }
+      subTypeDefImpls = newSubTypeDefImpls;
+      subTypeDefs = newSubTypeDefs;
+      initializedSubTypeDefs = true;
     }
   }
 

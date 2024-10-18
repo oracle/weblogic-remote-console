@@ -1,4 +1,4 @@
-# Copyright (c) 2022, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2022, 2024, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 introductionHTML: >
@@ -8,7 +8,11 @@ introductionHTML: >
   in this cluster.</p>
 
 properties:
-  - name: "ConstrainedCandidateServers"
+- name: "UserPreferredServer"
+  # See type.yaml for an explanation of why optionsMethod is
+  # specified here instead of in type.yaml
+  optionsMethod: weblogic.remoteconsole.customizers.MBeanClusterServersCustomizer.getServersOfSameCluster
+- name: "ConstrainedCandidateServers"
 
 helpTopics:
   - label: "Service Migration"

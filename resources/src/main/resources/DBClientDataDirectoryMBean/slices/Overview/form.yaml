@@ -1,0 +1,24 @@
+# Copyright (c) 2024, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+introductionHTML: >
+  <p>Use this page to view and edit general configuration information
+  about this database client data directory.
+  Use the <b>Deployment Order</b> field
+  to change the order that the database client data directory is deployed
+  at server startup, relative to other deployments.</p>
+
+properties:
+  - name: "Name"
+  - name: "DeploymentOrder"
+  - name: "InstallDir"
+  - name: "SourcePath"
+  - name: "AbsoluteSourcePath"
+
+helpTopics:
+- label: "Creating Shared Java EE Libraries and Optional Packages"
+  href: "wlprg/libraries.html"
+  type: "edocs"
+- label: "Developing Applications for Oracle WebLogic Server"
+  href: "wlprg/index.html"
+  type: "edocs"

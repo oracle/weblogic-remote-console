@@ -1,4 +1,4 @@
-# Copyright (c) 2023, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2023, 2024, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 createResourceMethod: weblogic.remoteconsole.customizers.JMSMessageManagementRuntimeMBeanCustomizer.createResource
@@ -44,3 +44,5 @@ properties:
     label: "Consumption Pausing"
   - value: "Consumption-Paused"
     label: "Consumption Paused"
+- name: DestinationName
+  getMethod: weblogic.remoteconsole.customizers.JMSDestinationRuntimeMBeanCustomizer.getDestinationName
