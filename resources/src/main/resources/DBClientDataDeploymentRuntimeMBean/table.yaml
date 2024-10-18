@@ -1,0 +1,24 @@
+# Copyright (c) 2024, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+displayedColumns:
+- name: "Name"
+- name: "DBClientDataName"
+
+actions:
+- name: "redeploy"
+  rows: one
+  label: "Redeploy"
+- name: "uploadAndRedeploy"
+  rows: one
+  label: "Upload And Redeploy"
+  requiredCapabilities:
+    - DBClientDataDeploymentRuntimeUploadAndReDeploy
+
+helpTopics:
+- label: "Developing Applications for Oracle WebLogic Server"
+  href: "wlprg/index.html"
+  type: "edocs"
+- label: "Deploying Applications to Oracle WebLogic Server"
+  href: "depgd/index.html"
+  type: "edocs"

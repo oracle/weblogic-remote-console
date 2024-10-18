@@ -29,6 +29,22 @@ properties:
   label: User-Preferred Server
   optionsSources:
   - Domain/Servers
+  # We can't specify optionsMethod here since UserPreferredServer is also on the
+  # create form, and the optionsMethod needs to be able to get to the MigratableTarget's
+  # cluster, but can't because the migratable target doesn't exist yet.
+  # We can't just remove UserPreferredServer from the create form and
+  # have the user specify it later because there's an mbean check that
+  # won't let us save (v.s. commit) the configuration unless the new
+  # migratable target has specified a UserPreferredServer.
+  # Also, it would require a lot of custom code to turn this into
+  # a multi-step wizard where first the user selects the cluster
+  # then selects one of the cluster's servers.
+  # Instead, don't specify optionsMethod here so that the create form
+  # works and specify it in form.yaml since it works there.
+  # This means that we'll present a restricted list of servers
+  # once the mbean exists, but we'll let the user select any server
+  # during create.
+  # optionsMethod: weblogic.remoteconsole.customizers.MBeanClusterServersCustomizer.getServersOfSameCluster
   helpHTML: >
     <p>The server member in the cluster that you prefer the migratable
     target to be active on. Only Configured servers may be specified as a
@@ -38,6 +54,7 @@ properties:
   label: Constrained Candidate Servers
   optionsSources:
   - Domain/Servers
+  optionsMethod: weblogic.remoteconsole.customizers.MBeanClusterServersCustomizer.getServersOfSameCluster
   helpSummaryHTML: >
     <p>Configured server members in the cluster to use as a backup for services on this migratable target.
     If no servers are selected,
@@ -50,7 +67,3 @@ properties:
 
 - name: AllCandidateServers
   offlineName: AllCandidateServers
-
-- name: HostingServer
-  label: Current Hosting Server
-

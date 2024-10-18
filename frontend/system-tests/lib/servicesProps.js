@@ -125,11 +125,11 @@ module.exports = function (driver, file) {
         },
 
         //
-        // Modify JMS System Resources Target tab - Assign a target
+        // Modify JMS Modules Target tab - Assign a target
         //
-        modifyJMSSysResTargetsTab: async function (driver, jmsSysResName, tabName, targetName) {
-            await admin.goToNavTreeLevelThreeLink(driver, "configuration", "Services", "JMS System Resources",
-                jmsSysResName, tabName);
+        modifyJMSModulesTargetsTab: async function (driver, jmsModuleName, tabName, targetName) {
+            await admin.goToNavTreeLevelThreeLink(driver, "configuration", "Services", "JMS Modules",
+                jmsModuleName, tabName);
             await driver.sleep(6400);
             await admin.goToTabName(driver, tabName);
             await driver.sleep(6400);

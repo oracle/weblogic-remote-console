@@ -2,7 +2,7 @@
   "name": "weblogic-remote-console",
   "productName": "WebLogic Remote Console",
   "homepage": "https://github.com/oracle/weblogic-remote-console",
-  "version": "2.4.11",
+  "version": "2.4.12",
   "main": "app/main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -28,12 +28,12 @@
     "electron-log": "^5.0.0",
     "electron-preferences": "^2.8.2",
     "electron-prompt": "^1.6.2",
-    "electron-updater": "^6.3.0-alpha.6",
+    "electron-updater": "^6.3.4",
     "fs-extra": "^11.0.0",
     "properties-reader": "^2.2.0"
   },
   "devDependencies": {
-    "electron": "^31.0.0",
+    "electron": "^32.0.0",
     "electron-builder": "^24.13.0",
     "eslint": "^9.0.0"
   }

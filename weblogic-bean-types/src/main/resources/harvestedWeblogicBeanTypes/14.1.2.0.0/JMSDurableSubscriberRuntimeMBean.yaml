@@ -1,4 +1,4 @@
-# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2024, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 actions: [
@@ -50,6 +50,11 @@ properties:
   name: CurrentConsumerInfo
   supported: false
   type: javax.management.openmbean.CompositeData
+- defaultValue: {
+    }
+  descriptionHTML: 'Returns the destination ID. '
+  name: DestinationID
+  type: java.lang.String
 - defaultValue: {
     }
   descriptionHTML: '<p> Specifies information about the durable subscriber''s internal

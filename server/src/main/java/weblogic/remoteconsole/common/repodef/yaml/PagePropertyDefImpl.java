@@ -524,6 +524,11 @@ class PagePropertyDefImpl implements PagePropertyDef {
   }
 
   @Override
+  public boolean isDynamicEnum() {
+    return beanPropertyDefImpl.isDynamicEnum();
+  }
+
+  @Override
   public boolean isKey() {
     return beanPropertyDefImpl.isKey();
   }

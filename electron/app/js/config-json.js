@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2022, 2023, Oracle and/or its affiliates.
+ * Copyright (c) 2022, 2024, Oracle and/or its affiliates.
  * Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
  * @ignore
  */
@@ -50,8 +50,13 @@ const AppConfig = (() => {
     read: () => {
       if (fs.existsSync(AppConfig.getPath())) {
         try {
-          const settings = JSON.parse(fs.readFileSync(AppConfig.getPath()).toString());
-          AppConfig.set(settings);
+          const content = fs.readFileSync(AppConfig.getPath()).toString();
+
+          if (content !== this.previousContent) {
+            this.previousContent = content;
+            const settings = JSON.parse(content);
+            AppConfig.set(settings);
+          }
         }
         catch(err) {
           log('error', err);

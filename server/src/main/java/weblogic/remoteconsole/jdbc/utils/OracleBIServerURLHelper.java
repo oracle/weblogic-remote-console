@@ -74,17 +74,7 @@ public class OracleBIServerURLHelper extends JDBCURLHelper {
               continue;  // default
             }
           }
-          if (att.getName().equals("LogLevel")) {
-            if (!att.getValue().equals("SEVERE")
-              && !att.getValue().equals("WARNING")
-              && !att.getValue().equals("INFO")
-              && !att.getValue().equals("CONFIG")
-              && !att.getValue().equals("FINE")
-              && !att.getValue().equals("FINER")
-              && !att.getValue().equals("FINEST")) {
-              throw new JDBCDriverInfoException("loglevel");
-            }
-          } else if (att.getName().equals("PrimaryCcsPort")) {
+          if (att.getName().equals("PrimaryCcsPort")) {
             try {
               Integer.parseInt(att.getValue());
             } catch (NumberFormatException e) {

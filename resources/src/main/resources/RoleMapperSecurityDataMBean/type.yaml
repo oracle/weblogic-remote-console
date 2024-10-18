@@ -1,4 +1,4 @@
-# Copyright (c) 2022, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2022, 2024, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 subTypeDiscriminatorProperty: Type
 subTypes:
@@ -8,3 +8,7 @@ subTypes:
   value: weblogic.security.providers.authorization.DefaultRoleMapper
 
 disableMBeanJavadoc: true
+
+children:
+- name: JMSSystemResources
+  label: JMS Modules

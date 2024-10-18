@@ -577,6 +577,9 @@ define([
             }
           }
         }
+      },
+      resetApp: () => {
+        window.location.href = '/';
       }
 
     }

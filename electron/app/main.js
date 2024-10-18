@@ -47,6 +47,10 @@ const AppWindow = require('./js/window-management');
 const instDir = path.dirname(app.getPath('exe'));
 const { homepage, productName, version, copyright } = require(`${instDir}/package.json`);
 
+if (OSUtils.isMacOS()) {
+  app.disableHardwareAcceleration();
+}
+
 let feedURL;
 
 // The documentation says to not use setFeedURL(), though it seems to work.

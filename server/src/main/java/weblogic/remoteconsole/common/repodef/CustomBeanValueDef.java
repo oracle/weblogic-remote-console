@@ -1,4 +1,4 @@
-// Copyright (c) 2022, 2023, Oracle and/or its affiliates.
+// Copyright (c) 2022, 2024, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef;
@@ -16,6 +16,7 @@ class CustomBeanValueDef {
   private boolean referenceAsReferences;
   private boolean dateAsLong;
   private boolean multiLineString;
+  private boolean dynamicEnum;
 
   public CustomBeanValueDef() {
   }
@@ -28,6 +29,7 @@ class CustomBeanValueDef {
     setReferenceAsReferences(toClone.isReferenceAsReferences());
     setDateAsLong(toClone.isDateAsLong());
     setMultiLineString(toClone.isMultiLineString());
+    setDynamicEnum(toClone.isDynamicEnum());
   }
 
   BeanValueDef.ValueKind getValueKind() {
@@ -84,5 +86,13 @@ class CustomBeanValueDef {
 
   void setMultiLineString(boolean val) {
     multiLineString = val;
+  }
+
+  boolean isDynamicEnum() {
+    return dynamicEnum;
+  }
+
+  void setDynamicEnum(boolean val) {
+    dynamicEnum = val;
   }
 }

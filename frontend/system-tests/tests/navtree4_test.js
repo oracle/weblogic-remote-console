@@ -62,7 +62,7 @@ describe.only('Test Suite: navtree4_test for Navtree Test-Suite', function () {
             //Create AdminJMSServer,MySAFAgent-1,MyAdminJmsModule-1,PathService-1,MyMessagingBridge-1,FileStore-123,
             await admin.createNewMBeanObject(driver,"TestAdminJMSServer-1",2,"configuration","Services","JMS Servers");
             await admin.createNewMBeanObject(driver,"TestMySAFAgent-1",2,"configuration","Services","SAF Agents");
-            await admin.createNewMBeanObject(driver,"TestMyAdminJmsModule-1",2,"configuration","Services","JMS System Resources");
+            await admin.createNewMBeanObject(driver,"TestMyAdminJmsModule-1",2,"configuration","Services","JMS Modules");
             await admin.createNewMBeanObject(driver,"TestPathService-1",2,"configuration","Services","Path Services");
             await admin.createNewMBeanObject(driver,"TestMyMessagingBridge-1",2,"configuration","Services","Messaging Bridges");
             await admin.createNewMBeanObject(driver,"TestFileStore-123",2,"configuration","Services","File Stores");
@@ -81,7 +81,7 @@ describe.only('Test Suite: navtree4_test for Navtree Test-Suite', function () {
             //Test cases to travel element links
             await admin.goToNavTreeLevelThreeLink(driver,"configuration","Services","JMS Servers","TestAdminJMSServer-1");
             await admin.goToNavTreeLevelThreeLink(driver,"configuration","Services","SAF Agents","TestMySAFAgent-1");
-            await admin.goToNavTreeLevelThreeLink(driver,"configuration","Services","JMS System Resources","TestMyAdminJmsModule-1");
+            await admin.goToNavTreeLevelThreeLink(driver,"configuration","Services","JMS Modules","TestMyAdminJmsModule-1");
             await admin.goToNavTreeLevelThreeLink(driver,"configuration","Services","Path Services","TestPathService-1");
             await admin.goToNavTreeLevelThreeLink(driver,"configuration","Services","Messaging Bridges","TestMyMessagingBridge-1");
             await admin.goToNavTreeLevelThreeLink(driver,"configuration","Services",
@@ -99,8 +99,8 @@ describe.only('Test Suite: navtree4_test for Navtree Test-Suite', function () {
                 "Services","JMS Servers","","","",4);
             await admin.deleteMBeanObject(driver,"TestMySAFAgent-1","SAFAgents",2,"configuration",
                 "Services","SAF Agents","","","",2);
-            await admin.deleteMBeanObject(driver,"TestMyAdminJmsModule-1","JMSSystemResources",2,"configuration",
-                "Services","JMS System Resources","","","",3);
+            await admin.deleteMBeanObject(driver,"TestMyAdminJmsModule-1","JMSModules",2,"configuration",
+                "Services","JMS Modules","","","",3);
             await admin.deleteMBeanObject(driver,"TestPathService-1","PathServices",2,"configuration",
                 "Services","Path Services","","","",2);
             await admin.deleteMBeanObject(driver,"TestMyMessagingBridge-1","MessagingBridges",2,"configuration",

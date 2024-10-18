@@ -68,6 +68,15 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'ojs/ojlogger'],
       return _popupMessageSentSignal;
     }
 
+    function hasHTMLTags(message) {
+      let rtnval = false;
+      if (message && typeof message === 'string') {
+        const regex = /<(.|\n)*?>/gm;
+        rtnval = regex.test(message);
+      }
+      return rtnval;
+    }
+
     return {
       setPopupMessageSentSignal: function(signal) {
         _popupMessageSentSignal = signal;
@@ -96,7 +105,15 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'ojs/ojlogger'],
         if (typeof message !== 'undefined') {
           if (typeof message.severity === 'undefined') message['severity'] = 'confirmation';
           getPopupMessageSentSignal().dispatch(null);
-          if (autoCloseInterval && ['confirmation', 'info'].includes(message.severity) ) {
+          if (hasHTMLTags(message.detail)) {
+            const messagesAsHTML = {
+              html: { view: HtmlUtils.stringToNodeArray(message.detail) },
+              severity: message.severity,
+              summary: message.summary
+            };
+            getPopupMessageSentSignal().dispatch(messagesAsHTML, autoCloseInterval, 'userDismissed');
+          }
+          else if (autoCloseInterval && ['confirmation', 'info'].includes(message.severity) ) {
             getPopupMessageSentSignal().dispatch(message, autoCloseInterval || 1500);
           }
           else {

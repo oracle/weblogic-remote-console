@@ -44,6 +44,7 @@ properties:
   writable: true
 - defaultValue:
     derivedDefault: true
+  deprecated: '14.1.2.0.0 '
   descriptionHTML: '<p>Indicates whether or not administration port is enabled for
     the server. This field is derived from the DomainMBean and has no setter here
     All the server (7.0 and later) in s single domain should either have an administration
@@ -897,8 +898,7 @@ properties:
   type: int
   writable: true
 - defaultValue:
-    value:
-      value: 7001
+    derivedDefault: true
   descriptionHTML: '<p>The default TCP port that this server uses to listen for regular
     (non-SSL) incoming connections.</p>  <p>Administrators must have the right privileges
     before binding to a port or else this operation will not be successful and it

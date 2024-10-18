@@ -160,7 +160,16 @@ class AggregatedRuntimeMBeanWebLogicSearchHelper extends WebLogicBeanTypeSearchH
     if (serverRuntimes != null) {
       JsonArray items = serverRuntimes.getJsonArray("items");
       for (int i = 0; i < items.size(); i++) {
-        rtn.add(items.getJsonObject(i).getString("name"));
+        JsonObject item = items.getJsonObject(i);
+        String keyProp = "name";
+        if (item.containsKey(keyProp)) {
+          rtn.add(item.getString(keyProp));
+        } else {
+          // The bean results from WebLogic are broken (didn't include the name).
+          // We've seen this for the WLDFDataAccessRuntimeMBean for a JMS Server
+          // whose name includes the ')' character.
+          // Ignore the bean.
+        }
       }
     }
     return rtn;

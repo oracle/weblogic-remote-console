@@ -1,4 +1,4 @@
-// Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+// Copyright (c) 2020, 2024, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.customizers;
@@ -6,7 +6,13 @@ package weblogic.remoteconsole.customizers;
 import java.util.List;
 import java.util.Map;
 
+import weblogic.remoteconsole.common.repodef.BeanPropertyDef;
+import weblogic.remoteconsole.common.utils.Path;
 import weblogic.remoteconsole.server.repo.BeanEditorRepo;
+import weblogic.remoteconsole.server.repo.BeanReaderRepoSearchBuilder;
+import weblogic.remoteconsole.server.repo.BeanReaderRepoSearchResults;
+import weblogic.remoteconsole.server.repo.BeanRepo;
+import weblogic.remoteconsole.server.repo.BeanSearchResults;
 import weblogic.remoteconsole.server.repo.BeanTreePath;
 import weblogic.remoteconsole.server.repo.InvocationContext;
 import weblogic.remoteconsole.server.repo.Response;
@@ -36,7 +42,7 @@ public class ServerMBeanCustomizer {
   }
 
   // If an automatically created migratable target was created for a server,
-  // it needs to be remove before the server can be removed.
+  // it needs to be removed before the server can be removed.
   // This customizer handles this - i.e. deletes the migratable target
   // then deletes the server.
   public static Response<Void> deleteServer(
@@ -89,5 +95,25 @@ public class ServerMBeanCustomizer {
     ) SettableValue hostnameVerifier
   ) {
     return HostnameVerifierCustomizer.getCustomHostnameVerifier(hostnameVerifier);
+  }
+
+  public static Response<SettableValue> getDomainAdministrationPortEnabled(InvocationContext ic)  {
+    Response<SettableValue> response = new Response<>();
+    BeanRepo beanRepo = ic.getBeanTreePath().getBeanRepo();
+    BeanReaderRepoSearchBuilder builder =
+        beanRepo.asBeanReaderRepo().createSearchBuilder(ic, false);
+    BeanPropertyDef adminPortEnabledPropertyDef =
+        beanRepo.getBeanRepoDef().getTypeDef("DomainMBean").getPropertyDef(new Path("AdministrationPortEnabled"));
+    BeanTreePath domainBTP =
+        BeanTreePath.create(beanRepo, new Path("Domain"));
+    builder.addProperty(domainBTP, adminPortEnabledPropertyDef);
+    Response<BeanReaderRepoSearchResults> searchResponse = builder.search();
+    if (!searchResponse.isSuccess()) {
+      return response.copyUnsuccessfulResponse(searchResponse);
+    }
+    BeanSearchResults searchResults = searchResponse.getResults().getBean(domainBTP);
+    Value administrationPortEnabledV = searchResults.getValue(adminPortEnabledPropertyDef);
+    SettableValue result = new SettableValue(administrationPortEnabledV);
+    return response.setSuccess(result);
   }
 }

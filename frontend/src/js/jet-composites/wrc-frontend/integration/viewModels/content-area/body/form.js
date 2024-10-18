@@ -2063,15 +2063,6 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
                   dataPayload[key] = {value: value};
                 }
                 else {
-/*
-//MLW-1
-                  // The field was updated then set back to the server value
-                  // thus clear the property from being marked as dirty...
-                  self.dirtyFields.delete(key);
-                  if (CoreUtils.isNotUndefinedNorNull(keepSaveToOrig)) {
-                    dataPayload[key] = {value: value};
-                  }
-*/
                   if (CoreUtils.isNotUndefinedNorNull(self.pageRedoHistory[key]) &&
                     self.pageRedoHistory[key].value !== value
                   ) {
@@ -3418,9 +3409,49 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
         if (isEdit) {
           self.formTabStripModuleConfig
             .then((moduleConfig) => {
+              const isUseCheckBoxesForBooleans = PageDefinitionFormLayouts.hasFormLayoutType(self.pdjData, 'useCheckBoxesForBooleans');
               const currentSlice = moduleConfig.viewModel.getCurrentSlice();
               if (currentSlice === '') {
                 moduleConfig.viewModel.updateSlice(currentSlice, 1);
+              }
+              else if (isUseCheckBoxesForBooleans) {
+                // Get div containing 'data-slice-id' attribute
+                const div = document.querySelector('[data-pdj-content-type="sliceForm"]');
+                // Get sliceName for current slice
+                const sliceName = currentSlice.selection();
+                if (currentSlice.level === 0) {
+                  // This means the "Debug" slice was clicked
+                  const index = self.pdjData.sliceForm.slices.findIndex(item => item.name === sliceName);
+                  if (index !== -1) {
+                    // Create scrollTops array of JS objects
+                    const scrollTops = self.pdjData.sliceForm.slices[index].slices.map(item => {
+                      return {sliceId: `${sliceName}.${item.name}`, scrollTop: 0};
+                    });
+                    // Save scrollTops array of JS objects
+                    self.perspectiveMemory.setContentPageScrollTops.call(self.perspectiveMemory, scrollTops);
+                  }
+                  if (div !== null) {
+                    // Update 'data-slice-id' attribute using moduleConfig.viewModel.sliceName
+                    div.setAttribute('data-slice-id', moduleConfig.viewModel.sliceName);
+                  }
+                }
+                else if (currentSlice.level > 0) {
+                  // This means a decendent slice of the "Debug" slice was clicked
+                  let sliceId = null;
+
+                  if (div !== null) {
+                    // Get value of 'data-slice-id' attribute
+                    sliceId = div.getAttribute('data-slice-id');
+                    if (sliceId !== null) {
+                      // Save scrollTop from DOM for sliceId
+                      self.perspectiveMemory.setContentPageScrollTop.call(self.perspectiveMemory, sliceId, div.scrollTop);
+                      // Set div.scrollTop from perspectiveMemory
+                      div.scrollTop = self.perspectiveMemory.getContentPageScrollTop.call(self.perspectiveMemory, moduleConfig.viewModel.sliceName);
+                    }
+                    // Update 'data-slice-id' attribute using moduleConfig.viewModel.sliceName
+                    div.setAttribute('data-slice-id', moduleConfig.viewModel.sliceName);
+                  }
+                }
               }
               else if (isPolicyExpressionSliceLayout()) {
                 // This means the user clicked the "Policy" or
@@ -3503,6 +3534,36 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
           }
         }
 
+        function setDebugFlagsCheckboxsetIcons(pdjData) {
+          const getDebugFlagsCheckboxsetEntries = (pdjData) => {
+            const entries = [];
+            const pdjTypes = new PageDataTypes(pdjData.sliceForm.properties, viewParams.perspective.id);
+            pdjData.sliceForm.properties.forEach((property) => {
+              const entry = {
+                value: property.name,
+                readOnly: (pdjTypes.isReadOnly(property.name) || Runtime.isReadOnly()),
+                restartRequired: (viewParams.perspective.id !== 'modeling') && (pdjTypes.isRestartNeeded(property.name)),
+                icons: {
+                  restart: {iconFile: self.i18n.icons.restart.iconFile, tooltip: self.i18n.icons.restart.tooltip}
+                }
+              };
+              if (!entry.restartRequired) {
+                entry.icons.restart.iconFile = 'action-empty-icon-blk_24x24';
+                entry.icons.restart.tooltip = '';
+              }
+              entries.push(entry);
+            });
+
+            return entries;
+          };
+
+          const isUseCheckBoxesForBooleans = PageDefinitionFormLayouts.hasFormLayoutType(pdjData, 'useCheckBoxesForBooleans');
+          if (isUseCheckBoxesForBooleans) {
+            const entries = getDebugFlagsCheckboxsetEntries(pdjData);
+            PageDefinitionFields.addDebugFlagsCheckboxsetIcons(entries);
+          }
+        }
+
         function setTableCursor(pdjData) {
           const isSliceTable = self.isSliceTable(pdjData);
           let navigationProperty = 'none';
@@ -3552,6 +3613,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
 
               setDashboardCriteriaValueLabelWidth();
               setTableCursor(pdjData);
+              setDebugFlagsCheckboxsetIcons(pdjData);
 
               setFormContainerMaxHeight(self.perspectiveMemory.beanPathHistory.visibility);
 
@@ -3629,11 +3691,6 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
         const results = PageDefinitionCommon.setFocusFormElement(true);
 
         if (results.formElement) {
-/*
-//MLW
-             PageDefinitionCommon.setFormLayoutColumnCountCSSVariable(results.formElement, viewParams.signaling.formInputMinWidthChanged);
-             ContentAreaContainerAccessibility.setFormAccessKey(results.formElement, 'F');
- */
           results.formElement.addEventListener('blur', onBlurFormLayout, true);
         }
 
@@ -3650,7 +3707,6 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
         }
 
         PageDefinitionCommon.setPasswordOnInputHandler('.cfe-form-input-password', self.onInputPassword);
-//MLW           PageDefinitionCommon.setTextAreaResizeCSSValue(['textarea', '.oj-text-field-container']);
       }
 
       function requiredFieldsComplete(name, newValue) {
@@ -4283,9 +4339,6 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
           if (isEditing()) {
             if (Runtime.getRole() === CoreTypes.Console.RuntimeRole.TOOL.name && isWdtForm()) {
               onBlurFormLayout({target: {id: name, type: 'blur', cancelable: false, cancelBubble: true}});
-            }
-            else if (ViewModelUtils.isElectronApiAvailable()) {
-//MLW-1              notifyUnsavedChanges(self.isDirty());
             }
           }
         };

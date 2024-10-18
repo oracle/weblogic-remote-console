@@ -12,7 +12,6 @@ introductionHTML: >
 displayedColumns:
 - name: "Name"
 - name: "Cluster"
-- name: "HostingServer"
 - name: "UserPreferredServer"
 - name: "MigrationPolicy"
 hiddenColumns:

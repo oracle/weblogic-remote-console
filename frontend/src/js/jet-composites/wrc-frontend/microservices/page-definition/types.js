@@ -291,7 +291,7 @@ define([
 
       /** Check if the property is a string */
       isStringType: function(propertyName) {
-        return (this.getType(propertyName) === 'string');
+        return (this.getType(propertyName) === 'string' || this.getType(propertyName) === 'string-dynamic-enum');
       },
 
       /** Check if the property is a Java throwable */
@@ -347,7 +347,7 @@ define([
 
       /** Check if the property is a dynamic enum */
       isDynamicEnumType: function(propertyName) {
-        return (this.getType(propertyName) === 'reference-dynamic-enum');
+        return (this.getType(propertyName) === 'reference-dynamic-enum' || this.getType(propertyName) === 'string-dynamic-enum');
       },
 
       /** Check if the property is a uploadedFile */

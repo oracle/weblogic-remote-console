@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2022, 2023, Oracle and/or its affiliates.
+ * Copyright (c) 2022, 2024, Oracle and/or its affiliates.
  * Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
  * @ignore
  */
@@ -107,30 +107,36 @@ const AutoPrefs = (() => {
         const filepath = AutoPrefs.getPath(userDataPath);
         if (fs.existsSync(filepath)) {
           try {
-            const props = JSON.parse(fs.readFileSync(filepath));
-            // Update all the other _fields with values from the
-            // file just read.
-            AutoPrefs.set(props);
-            // See if auto-prefs.json contained a projects field
-            if (typeof props.projects !== 'undefined') {
-              // It did, so use it to do a UserProjects.putAll()
-              UserProjects.putAll(props.projects);
-              // Use UserProjects.write() to write out the
-              // in-memory projects.
-              UserProjects.write(userDataPath);
+            const fileContents = fs.readFileSync(filepath);
+
+            if (fileContents !== this.previousContents) {
+              const props = JSON.parse(fileContents);
+              // Update all the other _fields with values from the
+              // file just read.
+              AutoPrefs.set(props);
+              // See if auto-prefs.json contained a projects field
+              if (typeof props.projects !== 'undefined') {
+                // It did, so use it to do a UserProjects.putAll()
+                UserProjects.putAll(props.projects);
+                // Use UserProjects.write() to write out the
+                // in-memory projects.
+                UserProjects.write(userDataPath);
+              }
+              // See if auto-prefs.json contained a preferences field
+              if (typeof props.preferences !== 'undefined') {
+                // It did, so use it to do a UserPrefs.putAll()
+                UserPrefs.putAll(props.preferences);
+                // Use UserPrefs.write() to write out the
+                // in-memory preferences.
+                UserPrefs.write(userDataPath);
+              }
+              // The auto-prefs.json field could have contained a
+              // projects or preferences field, which will not be
+              // in the _fields. Write out the updated _fields.
+              AutoPrefs.write(userDataPath);
+
+              this.previousContents = fileContents;
             }
-            // See if auto-prefs.json contained a preferences field
-            if (typeof props.preferences !== 'undefined') {
-              // It did, so use it to do a UserPrefs.putAll()
-              UserPrefs.putAll(props.preferences);
-              // Use UserPrefs.write() to write out the
-              // in-memory preferences.
-              UserPrefs.write(userDataPath);
-            }
-            // The auto-prefs.json field could have contained a
-            // projects or preferences field, which will not be
-            // in the _fields. Write out the updated _fields.
-            AutoPrefs.write(userDataPath);
           }
           catch(err) {
             log('error', err);

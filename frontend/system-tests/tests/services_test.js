@@ -71,20 +71,20 @@ describe.only('Test Suite: services_test for JMS, JTA, JDBC, Datasource, Messagi
     })
 
     //Test Case:
-    // Create->assign(Target tab) to testJMSSystemRes-1, validate the operation then delete testJMSSystemRes-1
+    // Create->assign(Target tab) to testJMSModules-1, validate the operation then delete testJMSModules-1
     //
-    it('2. Test Category: GAT/Risk1\n \t Test Scenario: testJMSSystemRes-1: Create->assign(All Target) to testJMSSystemRes-1, ' +
-        'validate the operation then delete testJMSSystemRes-1 ', async function() {
+    it('2. Test Category: GAT/Risk1\n \t Test Scenario: testJMSModules-1: Create->assign(All Target) to testJMSModules-1, ' +
+        'validate the operation then delete testJMSModules-1', async function() {
         file = "testJMSSystemRes-1.png";
-        console.log("-----Start to run testJMSSystemRes-1 test case....");
+        console.log("-----Start to run testJMSModules-1 modify target test case....");
         console.log("--------------------------------------------------");
         try {
-            await admin.createNewMBeanObject(driver,"testJMSSysRes-1",2,"configuration","Services","JMS System Resources");
+            await admin.createNewMBeanObject(driver,"testJMSModules-1",2,"configuration","Services","JMS Modules");
             await driver.sleep(1200);
-            await services.modifyJMSSysResTargetsTab(driver,"testJMSSysRes-1","Targets","All");
+            await services.modifyJMSModulesTargetsTab(driver,"testJMSModules-1","Targets","All");
             await driver.sleep(1200);
-            await admin.deleteMBeanObject(driver,"testJMSSysRes-1","JMSSystemResources",2,"configuration",
-                "Services","JMS System Resources","","","",3);
+            await admin.deleteMBeanObject(driver,"testJMSModules-1","JMSModules",2,"configuration",
+                "Services","JMS Modules","","","",3);
             await driver.sleep(1200);
             console.log("TEST PASS ");
         } catch (e) {

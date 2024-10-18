@@ -15,8 +15,6 @@ introductionHTML: >
 properties:
 - name: "Name"
 - name: "Cluster"
-- name: "HostingServer"
-- name: "UserPreferredServer"
 - name: "MigrationPolicy"
 - name: "PreScript"
 - name: "PostScript"

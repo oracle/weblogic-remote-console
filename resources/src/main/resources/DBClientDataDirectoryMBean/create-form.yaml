@@ -1,0 +1,41 @@
+# Copyright (c) 2024, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+introductionHTML: Create a new database client data directory
+sections:
+- properties:
+  - name: Name
+  - name: Upload
+    required: true
+    definition:
+      name: Upload
+      type: boolean
+      writable: true
+      defaultValue:
+        value:
+          value: true
+      descriptionHTML: >
+        Do you want to upload the database client data directory to the Administration Server
+        then deploy it or do you want to deploy a database client data directory that is already
+        on the Administration Server's file system?
+- usedIf:
+    property: Upload
+    values:
+    - true
+  properties:
+  - name: Source
+    required: true
+    onlineName: sourcePath
+    mbeanAttribute:
+      attribute: SourcePath
+    definition:
+      name: Source
+      type: java.io.InputStream
+      writable: true
+      descriptionHTML: >
+        Select the database client data directory to upload to the Administration Server and deploy.
+- usedIf:
+    property: Upload
+    values:
+    - false
+  properties:
+  - name: SourcePath

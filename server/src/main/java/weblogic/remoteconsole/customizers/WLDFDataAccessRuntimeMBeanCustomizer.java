@@ -100,7 +100,7 @@ public class WLDFDataAccessRuntimeMBeanCustomizer {
       }
     // the logfile requested may have "/" or path separator char in it,
     // eg. JMSMessageLog/AdminJMSServer, we will replace that with "_".
-    logFile = logFile.replaceAll(File.separator, "_");
+    logFile = logFile.replace(File.separator, "_");
     Timestamp timestamp = new Timestamp(System.currentTimeMillis());
     return  serverName + "_" + logFile + "_" + simpleDateFormat.format(timestamp);
   }
@@ -220,14 +220,7 @@ public class WLDFDataAccessRuntimeMBeanCustomizer {
     restActionPath.addPath(WebLogicRestBeanRepo.getTreeRelativeRestPath(beanPath));
     // Add the name of the action:
     restActionPath.addComponent(actionName);
-    // Shortcut domainRuntime/serverRuntimes/<adminserver>/... to serverRuntime/...
-    List<String> components = restActionPath.getComponents();
-    if (ic.getConnection().getAdminServerName().equals(components.get(2))) {
-      Path shortcut = new Path("serverRuntime");
-      shortcut.addComponents(components.subList(3, components.size()));
-      return shortcut;
-    }
-    return restActionPath;
+    return WebLogicRestBeanRepo.shortcutAdminServerRuntimePath(ic, restActionPath);
   }
 
   private static Response<JsonObject> customizerLogs(

@@ -12,6 +12,20 @@ properties:
 - name: "ListenPort"
 - name: "SSL.Enabled"
 - name: "SSL.ListenPort"
+- name: DomainAdministrationPortEnabled
+  label: "Administration Port Enabled"
+  getMethod: weblogic.remoteconsole.customizers.ServerMBeanCustomizer.getDomainAdministrationPortEnabled
+  helpSummaryHTML: >
+    <p>Specifies whether the domain-wide administration port is enabled for this WebLogic Server domain.
+        This can only be modified in the domain general page. </p>
+  mbeanAttribute:
+    type: DomainMBean
+    attribute: AdministrationPortEnabled
+- name: "AdministrationPort"
+  usedIf:
+    property: DomainAdministrationPortEnabled
+    values:
+      - true
 - name: "ClientCertProxyEnabled"
 - name: "JavaCompiler"
 - name: "ServerDiagnosticConfig.WLDFDiagnosticVolume"
@@ -26,7 +40,6 @@ advancedProperties:
 - name: "ExtraRmicOptions"
 - name: "ExtraEjbcOptions"
 - name: "ExternalDNSName"
-- name: "AdministrationPort"
 - name: "StartupMode"
 - name: "JDBCLLRTableName"
 - name: "DataSource.RmiJDBCSecurity"

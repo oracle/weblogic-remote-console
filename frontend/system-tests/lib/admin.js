@@ -408,7 +408,6 @@ module.exports = function (driver, file) {
             await this.goToNavStripImageMenuLink(driver,navImageMenuLink,nonSSL);
             await driver.sleep(8400);
             console.log("Click "+navImageMenuLink+"->"+levelOneLink+" NavTree link.");
-            //element = driver.findElement(By.xpath("//span[contains(.,\'"+levelOneLink+"\')]"));
             element = driver.findElement(
                 By.xpath("//*[text()=\'"+levelOneLink+"\' and @class='oj-navigationlist-item-label']"));
             driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
@@ -425,9 +424,9 @@ module.exports = function (driver, file) {
                 await driver.findElement(By.xpath("//li/a/span[2]")).click();
             }
             else {
-                //element = driver.findElement(By.xpath("//span[contains(.,\'" + levelTwoLink + "\')]"));
                 element = driver.findElement(
                     By.xpath("//span[text()=\'"+levelTwoLink+"\' and @class='oj-navigationlist-item-label']"));
+                driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
                 if (element.isEnabled()) {
                     await element.click();
                 }
@@ -438,9 +437,9 @@ module.exports = function (driver, file) {
             await this.goToNavTreeLevelTwoLink(driver,navImageMenuLink,levelOneLink,levelTwoLink,nonSSL);
             await driver.sleep(8400);
             console.log("Click "+navImageMenuLink+"->"+levelOneLink+"->"+levelTwoLink+"->"+levelThreeLink+" NavTree link.");
-            //element = driver.findElement(By.xpath("//span[contains(.,\'"+levelThreeLink+"\')]"));
             element = driver.findElement(
                 By.xpath("//span[text()=\'"+levelThreeLink+"\' and @class='oj-navigationlist-item-label']"));
+            driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
             if (element.isEnabled()) {
                 await element.click();
             }
@@ -454,6 +453,7 @@ module.exports = function (driver, file) {
             console.log("Click "+navImageMenuLink+"->"+levelOneLink+"->"+levelTwoLink+"->"
                 +levelThreeLink+"->"+levelFourLink+" NavTree link.");
             element = driver.findElement(By.xpath("//span[contains(.,\'"+levelFourLink+"\')]"));
+            driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
             if (element.isEnabled()) {
                 await element.click();
             }
@@ -467,6 +467,7 @@ module.exports = function (driver, file) {
             console.log("Click "+navImageMenuLink+"->"+levelOneLink+"->"+levelTwoLink+"->"
                 +levelThreeLink+"->"+levelFourLink+"->"+levelFiveLink+" NavTree link.");
             element = driver.findElement(By.xpath("//span[contains(.,\'"+levelFiveLink+"\')]"));
+            driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
             if (element.isEnabled()) {
                 await element.click();
             }
@@ -481,6 +482,7 @@ module.exports = function (driver, file) {
             console.log("Click "+navImageMenuLink+"->"+levelOneLink+"->"+levelTwoLink+"->"
                 +levelThreeLink+"->"+levelFourLink+"->"+levelFiveLink+"->"+levelSixLink+" NavTree link.");
             element = driver.findElement(By.xpath("//span[contains(.,\'"+levelSixLink+"\')]"));
+            driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
             if (element.isEnabled()) {
                 await element.click();
             }
@@ -495,6 +497,7 @@ module.exports = function (driver, file) {
                 +levelFourLink+"->"+levelFiveLink+"->"+levelSixLink+"->"+levelSevenLink+" NavTree link.");
             await driver.sleep(8400);
             element = driver.findElement(By.xpath("//span[contains(.,\'"+levelSevenLink+"\')]"));
+            driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
             if (element.isEnabled()) {
                 await element.click();
             }
@@ -510,6 +513,7 @@ module.exports = function (driver, file) {
             console.log("Click "+navImageMenuLink+"->"+levelOneLink+"->"+levelTwoLink+"->"+levelThreeLink+"->"
                 +levelFourLink+"->"+levelFiveLink+"->"+levelSixLink+"->"+levelSevenLink+"->"+levelEightLink+" NavTree link.");
             element = driver.findElement(By.xpath("//span[contains(.,\'"+levelEightLink+"\')]"));
+            driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
             if (element.isEnabled())
                 await element.click();
         },
@@ -525,6 +529,7 @@ module.exports = function (driver, file) {
                 +levelFourLink+"->"+levelFiveLink+"->"+levelSixLink+"->"+levelSevenLink+"->"
                 +levelEightLink+"->"+levelNineLink+" NavTree link.");
             element = driver.findElement(By.xpath("//span[contains(.,\'"+levelNineLink+"\')]"));
+            driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
             if (element.isEnabled()) {
                 await element.click();
             }

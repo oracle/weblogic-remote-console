@@ -401,7 +401,7 @@ define({
             "label": "用户名："
           },
           "sso": {
-            "label": "Web Authentication:"
+            "label": "Web 验证："
           },
           "roles": {
             "label": "角色："
@@ -865,16 +865,16 @@ define({
       },
       "cards": {
         "tip0": {
-          "title": "在单击前考虑使用“搜索”！",
-          "descriptionHTML": "<p>在某个提供程序树中查找您所需的内容可能需要大量单击和滚动操作。使用<b><i>搜索</i></b>字段（位于应用程序顶部），可以避免这些操作！</p><p>此外，单击生成的搜索结果中的某个项时，将自动展开提供程序树以显示该项的位置。</p>"
+          "title": "搜索域中的所有 MBean！",
+          "descriptionHTML": "<p>在控制台顶部的搜索字段中输入搜索词，以梳理当前透视图中的匹配项。您还可以在<b>最近搜索</b>节点中重新访问以前的查询。</p>"
         },
         "tip1": {
-          "title": "“仪表盘”是用户的最佳帮手",
-          "descriptionHTML": "<p>使用<b><i>仪表盘</i></b>，可以定义用于选择 MBean 实例的标准。仪表盘的功能有点像数据库中的视图，可用于查看当前运行时值符合标准的所有 MBean 实例。</p><p>在“监视树”页中，可以找到 <img src=\"js/jet-composites/wrc-frontend/1.0.0/images/dashboards-tabstrip-icon_24x24.png\" alt=\"新建仪表盘图标\" style=\"height: 24px; width: 24px; vertical-align: middle;\"/> 按钮，然后可以单击该按钮来定义新的仪表盘。以前创建的仪表盘可以在监视树的根级别“仪表盘”节点下找到。</p>"
+          "title": "快速筛选并找到对您重要的数据！",
+          "descriptionHTML": "<p>通过仪表盘，可以定义定制标准，将其与您的域进行匹配，并根据域生成全面且准确的报告。</p><p>要开始使用，请打开<b>监视树</b>中的任何节点，然后单击<b>新建仪表盘</b>。或者，打开<b>仪表盘</b>顶级节点查看内置仪表盘。</p>"
         },
         "tip2": {
-          "title": "使用“定制表”选择和排列表列",
-          "descriptionHTML": "<p>“定制此表”链接现在变为<i>定制表</i>按钮。</p>"
+          "title": "细化表内容",
+          "descriptionHTML": "<p>通过隐藏不相关的列来简化表，以便可以专注于对您重要的数据。</p><p>在任何表上方，单击<b>定制表</b>，然后根据需要选择或取消选择列。</p>"
         },
         "tip3": {
           "title": "使用键盘处理表和操作",
@@ -885,20 +885,20 @@ define({
           "descriptionHTML": "<p>“定制此表”链接现在变为<i>定制表</i>按钮。</p>"
         },
         "tip5": {
-          "title": "“更改中心”Portlet 在哪里？",
-          "descriptionHTML": "<p>“更改中心”Porlet 已被<i>购物车抽屉</i>取代，选择“配置树”时，该抽屉在图标栏中具有启动器图标。</p>"
+          "title": "复查暂挂更改",
+          "descriptionHTML": "<p>打开购物车，查看已保存到域但尚未提交的更改列表。</p><p>如果您在购物车中看不到<b>查看更改</b>，请尝试<a href='#' tabindex='0' on-click data-url='@@docsURL@@/set-console/#GUID-40440E0F-0310-4830-9B4B-00FC9ABBB591'>安装 WebLogic Remote Console 扩展</a>。"
         },
         "tip6": {
-          "title": "“如何操作”Portlet 在哪里？",
-          "descriptionHTML": "<p></p>"
+          "title": "需要帮助?",
+          "descriptionHTML": "<ul><li>将光标悬停在工具提示字段旁边的 <b>?</b> 上。</li><li>单击页级别的 <b>?</b> 获取每个可见属性的详细帮助信息。</li><li>在<b>帮助</b>菜单上，单击<b>访问 WebLogic Remote Console GitHub 项目</b>。</li><li>加入我们的 Slack 渠道：<a href='#' tabindex='0' on-click data-url='https://join.slack.com/t/oracle-weblogic/shared_invite/zt-1ni1gtjv6-PGC6CQ4uIte3KBdm_67~aQ'>#remote-console</a>。</li><li>访问我们的文档，网址为 <a href='#' tabindex='0' on-click data-url='@@docsURL@@/'></a>。</li></ul>"
         },
         "tip7": {
           "title": "其他提示 1",
           "descriptionHTML": "<p>“其他提示 1”的简要说明。换行符不是 HTML 元素，因此不需要在此说明中使用换行符。</p>"
         },
         "tip8": {
-          "title": "创建管理服务器提供程序时出现问题？",
-          "descriptionHTML": "<p>WebLogic Remote Console 文档中的<a href='#' tabindex='0' on-click data-url='@@docsURL@@reference/troubleshoot/'>参考 -> 故障排除</a>部分介绍了如何解决环境和网络设置引起的连接问题。</p><p>如果尝试这些方法都无法解决问题，请向 <b>@weblogic-remote-console</b> Slack 渠道发消息。通常，屏幕截图可提供有助于诊断问题的上下文，因此尽可能将其包含在消息中。</p>"
+          "title": "连接到服务器时出现问题？",
+          "descriptionHTML": "<p>在<b>监视树</b> > <b>环境</b> > <b>服务器</b>下，选择无响应的服务器并打开其<b>故障排除</b>选项卡，尝试诊断问题。</p><p>如果您根本无法连接到域，请参阅 WebLogic Remote Console 文档中的<a href='#' tabindex='0' on-click data-url='@@docsURL@@/troubleshoot-weblogic-remote-console/#GUID-B3D14A11-0144-4B31-BFE3-E6AC59AEFCBE'>无法连接到管理服务器</a>以获取故障排除帮助。</p>"
         },
         "tip9": {
           "title": "连接提示 2",
@@ -909,8 +909,8 @@ define({
           "descriptionHTML": "<p>“安全提示 1”的简要说明。换行符不是 HTML 元素，因此不需要在此说明中使用换行符。</p>"
         },
         "tip11": {
-          "title": "在按 Tab 键前考虑使用“快捷键”！",
-          "descriptionHTML": "<p>通过“快捷键”（或加速键），您可以将焦点直接移动到某个区域，而不用沮丧地反复按 <b>Tab</b> 和 <b>Shift+Tab</b> 键！</p><p>以下 5 个快捷键可供尝试：</p><p><ul><li><code><b>Ctrl+Alt+P</b></code>&nbsp;&nbsp;&nbsp;打开<i>提供程序抽屉</i>。</li><li><code><b>Ctrl+Alt+N</b></code>&nbsp;&nbsp;&nbsp;将焦点移动到<i>提供程序树</i>。</li><li><code><b>Ctrl+Alt+T</b></code>&nbsp;&nbsp;&nbsp;将焦点移动到表，更确切地说是第一列标题。</li><li><code><b>Ctrl+Alt+|</b></code>&nbsp;&nbsp;&nbsp;将焦点移动到树宽度调整大小工具的固定夹上。然后，使用<code><b>向右箭头</b></code>和<code><b>向左箭头</b></code>键增大或减小树的宽度。</li><li><code><b>Ctrl+Alt+;</b></code>&nbsp;&nbsp;&nbsp;将焦点移动到作为<i>交叉链接</i>的面包屑（如果存在），或者移动到第一个可单击的面包屑标签。</li></ul><p>查看文档，以获取快捷键的完整列表！</p>"
+          "title": "加快您的工作流！",
+          "descriptionHTML": "<p>使用键盘快捷方式直接跳转到特定的 UI 组件。</p><p>前 5 个：</p><li><code><b>Alt+P</b></code> - 打开<b>提供程序</b>抽屉。</li><li><code><b>Alt+C</b></code> - 将焦点移动到<b>购物车</b>。</li><li><code><b>Alt+T</b></code> - 将焦点移动到表中的第一列标题。</li><li><code><b>Alt+|</b></code> - 将焦点移动到导航树宽度调整大小工具。使用方向键更改树的宽度。</li><li><code><b>Alt+;</b></code> - 将焦点移动到第一个可单击的面包屑标签。</li></ul><p>有关键盘快捷方式的完整列表，请参阅文档。</p>"
         }
       }
     }
@@ -949,7 +949,7 @@ define({
     "messages": {
       "lostConnection": {
         "summary": "连接丢失",
-        "detail": "Connection lost. Please refresh."
+        "detail": "连接丢失。请刷新。"
       },
       "cannotConnect": {
         "summary": "尝试连接失败",
@@ -982,9 +982,9 @@ define({
         }
       },
       "screenreader": {
-        "value1": "You're on the {0} item. Press Enter to select.",
-        "value2": "You're on the {0} item. Pressing Enter will expand or collapse it. After expanding, use the down arrow to access related links.",
-        "value3": "{0}. Press Tab/Shift+Tab to move between related links and Escape to return to last visited top level item."
+        "value1": "您正在处理 {0} 项目。按 Enter 键进行选择。",
+        "value2": "您正在处理 {0} 项目。按 Enter 键将展开或折叠该项目。展开后，使用向下箭头键访问相关链接。",
+        "value3": "{0}。按 Tab/Shift+Tab 键在相关链接之间移动，按 Esc 键返回上次访问的顶层项目。"
       }
     }
   },
@@ -1504,7 +1504,7 @@ define({
           "value": "返回到提供程序树的登录页。"
         },
         "reset": {
-          "value": "重置页面值"
+          "value": "Refresh page values"
         }
       }
     },
@@ -1812,6 +1812,9 @@ define({
         },
         "actionNotPerformed": {
           "detail": "无法对一个或多个选中的项目执行 '{0}' 操作"
+        },
+        "actionNotPerformedNoRow": {
+          "detail": "Unable to perform '{0}' action"
         },
         "actionSucceeded": {
           "summary": "已成功执行 '{0}' 操作！"

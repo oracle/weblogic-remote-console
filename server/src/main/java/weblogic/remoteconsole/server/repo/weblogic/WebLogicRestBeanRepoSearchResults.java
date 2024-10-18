@@ -145,14 +145,18 @@ class WebLogicRestBeanRepoSearchResults implements BeanReaderRepoSearchResults {
 
   private String getKey(BeanTreePathSegment segment, JsonObject beanResults, boolean haveExpandedValues) {
     String restKeyProp = getRestKeyPropertyName(segment);
-    if (haveExpandedValues) {
-      if (beanResults.containsKey(restKeyProp)) {
+    if (beanResults.containsKey(restKeyProp)) {
+      if (haveExpandedValues) {
         return beanResults.getJsonObject(restKeyProp).getString("value");
       } else {
-        return null;
+        return beanResults.getString(restKeyProp);
       }
     } else {
-      return beanResults.getString(restKeyProp);
+      // The bean results from WebLogic are broken (e.g. didn't include the name).
+      // We've seen this for the WLDFDataAccessRuntimeMBean for a JMS Server
+      // whose name includes the ')' character.
+      // Ignore the bean.
+      return null;
     }
   }
 

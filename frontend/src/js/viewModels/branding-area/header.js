@@ -201,11 +201,11 @@ define([
         self.signalBindings = [];
       }.bind(this);
 
-      this.brandingAreaAppRestClickListener = () => {
+      this.brandingAreaResetAppClickListener = () => {
         ViewModelUtils.abandonUnsavedChanges('exit', self.canExitCallback)
           .then(reply => {
             if (reply) {
-              window.location.href = '/';
+              ViewModelUtils.resetApp();
             }
           });
       }

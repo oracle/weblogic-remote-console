@@ -687,6 +687,8 @@ define([
         switch(switching.action) {
           case 'create':
           case 'select':
+            ViewModelUtils.resetApp();
+            break;
           case 'navigate':
             if (switching.to.name !== self.project.name) {
               let project = ConsoleProjectManager.getByName(switching.from.name);

@@ -930,12 +930,11 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'oj
               const dataProviderName = `${PageDefinitionCommon.FIELD_SELECTDATA}${replacer}`;
               const options = {
                 'name': name,
-                'className': 'cfe-lg-width-hint',
                 'isEdit': (typeof self.pdjData.sliceForm !== 'undefined'),
                 'isSingleColumn': isSingleColumn,
                 'isReadOnly': isReadOnly
               };
-
+              options['className'] = (!isSingleColumn ? 'cfe-md-width-hint':'cfe-lg-width-hint');
               const singleSelect = PageDefinitionFields.createSingleSelect(pdjTypes, value, dataValues, options );
               self[dataProviderName] = singleSelect.dataProvider;
               field = singleSelect.field;

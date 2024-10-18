@@ -221,6 +221,26 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'wrc-frontend/core/
         return container;
       },
 
+      addDebugFlagsCheckboxsetIcons: function (entries) {
+        function createImageElement(params) {
+          const image = document.createElement('img');
+          image.classList.add('dynamic-debug-flag-icon');
+          image.setAttribute('src', 'js/jet-composites/wrc-frontend/1.0.0/images/' + params.icons.restart.iconFile + '.png');
+          image.setAttribute('title', params.icons.restart.tooltip);
+          return image;
+        }
+
+        if (entries.length > 0) {
+          for (const entry of entries) {
+            const node = document.querySelector(`#debugFlagsCheckboxset > div.oj-checkboxset-wrapper.oj-form-control-container > span > span > input[value="${entry.value}"]`);
+            if (node !== null) {
+              const image = createImageElement(entry);
+              node.parentNode.parentNode.prepend(image);
+            }
+          }
+        }
+      },
+
       /** Update the field for the specified property to apply hightlighting and context menu */
       addFieldContextMenu: function (name, params) {
         if (params.valueSet) {

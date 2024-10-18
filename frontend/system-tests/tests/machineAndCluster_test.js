@@ -151,24 +151,24 @@ describe.only('Test Suite: machineAndCluster_test for Machine and Cluster functi
     // Click Shopping Cart to Discard Changes
     //
     it('5. Test Category: GAT/Risk3\n \t Test Scenario: ' +
-        'test addToChosen (single-select) button at Migration Tagets-> Candidates tab', async function() {
+        'test addToChosen (single-select) button at Migration Tagets-> Migration tab', async function() {
         file = "addoChosenButtonAtClusterMigration.png";
         try {
             await admin.goToNavTreeLevelThreeLink(driver,"configuration",
                 "Environment", "Migratable Targets","ManagedServer1 (migratable)");
             await driver.sleep(3600);
-            console.log("Click Candidates tab ");
-            element = driver.findElement(By.xpath("//span[contains(.,'Candidates')]"));
-            driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
-            await element.click();
-            await driver.sleep(1200);
-            console.log("Click select to add AdminServer to candidates list");
-            element = driver.findElement(By.xpath("//oj-option[text()='AdminServer']"));
+            console.log("Click Migration tab ");
+            element = driver.findElement(By.xpath("//span[contains(.,'Migration')]"));
             driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
             await element.click();
             await driver.sleep(1200);
             console.log("Click select to add ManagedServer1 to candidates list");
-            await driver.findElement(By.xpath("//oj-option[text()='ManagedServer1']")).click();
+            element = driver.findElement(By.xpath("//oj-option[text()='ManagedServer1']"));
+            driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
+            await element.click();
+            await driver.sleep(1200);
+            console.log("Click select to add ManagedServer2 to candidates list");
+            await driver.findElement(By.xpath("//oj-option[text()='ManagedServer2']")).click();
             await driver.sleep(2400);
             console.log("Click addToChosen button ");
             element = driver.findElement(By.xpath("//oj-button[@id='addToChosen']"));

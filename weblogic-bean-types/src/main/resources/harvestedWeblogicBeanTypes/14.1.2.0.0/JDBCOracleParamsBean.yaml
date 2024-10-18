@@ -27,9 +27,19 @@ properties:
 - defaultValue:
     value:
       value: Session
-  descriptionHTML: '<p>Specifies the affinity policy for the datasource.</p> Options
-    include: <ul> <li>Transaction: Transaction affinity</li> <li>Session: Web-session
-    affinity</li> <li>Data: Data affinity</li> </ul> The default value is Session. '
+  descriptionHTML: '<p> The affinity policy determines how JDBC connections to specific
+    Oracle RAC instances are selected and returned to the application. When an initial
+    connection is returned to the application, an affinity context is created that
+    identifies the RAC instance. The affinity context is stored in the application
+    context (global transaction or http session), propagates with the context, and
+    is used during subsequent connection requests to return a connection to the same
+    instance. </p> Options include: <ul> <li>Transaction: Transaction affinity where
+    the affinity context is associated with the JTA global transaction context.</li>
+    <li>Session: Web-session affinity where the affinity context is stored in the
+    http session.  The affinity policy automatically changes to Transaction if a global
+    transaction is started in the web session.</li> <li>Data: Currently not supported.</li>
+    <li>None: No affinity.</li> </ul> <p> The affinity policy only applies to Active
+    GridLink data sources. </p> '
   legalValues:
   - Transaction
   - Session

@@ -194,7 +194,6 @@ properties:
 - name: ServerDebug.DebugIIOPNaming
 - name: ServerDebug.DebugIIOPOTS
 - name: ServerDebug.DebugIIOPReplacer
-- name: ServerDebug.DebugIIOPReplacer
 - name: ServerDebug.DebugIIOPSecurity
 - name: ServerDebug.DebugIIOPStartup
 - name: ServerDebug.DebugIIOPTransport

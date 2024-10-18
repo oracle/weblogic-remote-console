@@ -401,7 +401,7 @@ define({
             "label": "Nome utente:"
           },
           "sso": {
-            "label": "Web Authentication:"
+            "label": "Autenticazione Web:"
           },
           "roles": {
             "label": "Ruoli:"
@@ -865,16 +865,16 @@ define({
       },
       "cards": {
         "tip0": {
-          "title": "Possibilità di utilizzare il campo \"Cerca\" anziché fare clic",
-          "descriptionHTML": "<p>Trovare gli elementi desiderati in una delle strutture del provider può comportare l'esecuzione di una grande quantità di clic e di operazioni di scorrimento. Per evitare ciò, è disponibile il campo <b><i>Cerca</i></b> (posizionato nella parte superiore dell'app).</p><p>Meglio ancora, se si fa clic su un elemento nei risultati di ricerca generati, la struttura del provider si espande automaticamente per mostrare la posizione dell'elemento.</p>"
+          "title": "Eseguire una ricerca in tutti gli MBean del dominio",
+          "descriptionHTML": "<p>Immettere un termine di ricerca nell'apposito campo nella parte superiore della console per esaminare in dettaglio le corrispondenze trovate. È possibile inoltre esaminare di nuovo le query precedenti nel nodo <b>Ricerche recenti</b>.</p>"
         },
         "tip1": {
-          "title": "Vantaggi derivanti dall'uso dei \"dashboard\"",
-          "descriptionHTML": "<p>Un <b><i>dashboard</i></b> consente di definire i criteri utilizzati per selezionare le istanze di MBean. Funziona in modo simile a un vista in un ambiente di database e consente di visualizzare tutte le istanze di MBean con i valori di runtime che attualmente soddisfano i criteri.</p><p>Cercare il pulsante <img src=\"js/jet-composites/wrc-frontend/1.0.0/images/dashboards-tabstrip-icon_24x24.png\" alt=\"New Dashboard Icon\" style=\"height: 24px; width: 24px; vertical-align: middle;\"/> ogni volta che è visualizzata una pagina della \"Struttura di monitoraggio\", quindi fare clic su tale pulsante per definire un nuovo dashboard. I dashboard creati in precedenza sono disponibili nel nodo \"Dashboard\" a livello radice nella Struttura di monitoraggio.</p>"
+          "title": "Filtrare e trovare rapidamente i dati importanti",
+          "descriptionHTML": "<p>I dashboard consentono di definire criteri personalizzati, associarli al dominio in uso e generare report completi e accurati in base al dominio.</p><p>Per iniziare, aprire un nodo qualsiasi nella <b>Struttura di monitoraggio</b> e fare clic su <b>Nuovo dashboard</b>. In alternativa, aprire il nodo di livello superiore <b>Dashboard</b> per visualizzare i dashboard built-in.</p>"
         },
         "tip2": {
-          "title": "Scelta e disposizione delle colonne della tabella utilizzando \"Personalizza tabella\"",
-          "descriptionHTML": "<p>Il collegamento \"Personalizza questa tabella\" è ora il pulsante <i>Personalizza tabella</i>.</p>"
+          "title": "Ridefinire i contenuti delle tabelle",
+          "descriptionHTML": "<p>È possibile semplificare le tabelle nascondendo le colonne irrilevanti in modo da poter focalizzare l'attenzione sui dati ai quali si è interessati.</p><p>Sopra una tabella qualsiasi, fare clic su <b>Personalizza tabella</b> e selezionare o deselezionare le colonne in base alle esigenze.</p>"
         },
         "tip3": {
           "title": "Uso della tastiera con le tabelle e le azioni",
@@ -885,20 +885,20 @@ define({
           "descriptionHTML": "<p>Il collegamento \"Personalizza questa tabella\" è ora il pulsante <i>Personalizza tabella</i>.</p>"
         },
         "tip5": {
-          "title": "Dove si trova il portlet \"Centro modifiche\"?",
-          "descriptionHTML": "<p>Il portlet \"Centro modifiche\" è stato sostituito con il <i>cassetto di navigazione Carrello</i>, che presenta l'icona launcher nella barra delle icone quando è selezionata la \"Struttura di configurazione\".</p>"
+          "title": "Esaminare le modifiche in sospeso",
+          "descriptionHTML": "<p>Aprire il carrello per visualizzare una lista delle modifiche salvate nel dominio, ma non ancora sottoposte a commit.</p><p>Se l'opzione <b>Visualizza modifiche</b> non è visibile nel carrello, provare a <a href='#' tabindex='0' on-click data-url='@@docsURL@@/set-console/#GUID-40440E0F-0310-4830-9B4B-00FC9ABBB591'>installare l'estensione di WebLogic Remote Console</a>."
         },
         "tip6": {
-          "title": "Dove si trova il portlet \"Come\"?",
-          "descriptionHTML": "<p></p>"
+          "title": "Assistenza",
+          "descriptionHTML": "<ul><li>Passare il puntatore del mouse su <b>?</b> accanto a un campo per visualizzare le descrizioni comandi.</li><li>Fare clic su <b>?</b> a livello di pagina per visualizzare la Guida dettagliata su tutti gli attributi visibili.</li><li>Nel menu <b>Guida</b> fare clic su <b>Visita progetto GitHub di WebLogic Remote Console</b>.</li><li>Per entrare a far parte del canale Slack di Oracle, visitare la pagina: <a href='#' tabindex='0' on-click data-url='https://join.slack.com/t/oracle-weblogic/shared_invite/zt-1ni1gtjv6-PGC6CQ4uIte3KBdm_67~aQ'>#remote-console</a>.</li><li>Consultare la documentazione alla pagina <a href='#' tabindex='0' on-click data-url='@@docsURL@@/'></a>.</li></ul>"
         },
         "tip7": {
           "title": "Altro suggerimento n. 1",
           "descriptionHTML": "<p>Una descrizione concisa per \"Altro suggerimento n. 1\". Un carattere di nuova riga non è un elemento HTML, pertanto non è consigliabile utilizzarlo in questa descrizione.</p>"
         },
         "tip8": {
-          "title": "Problemi durante la creazione di un provider del server di amministrazione?",
-          "descriptionHTML": "<p>La sezione <a href='#' tabindex='0' on-click data-url='@@docsURL@@reference/troubleshoot/'>Riferimento -> Risoluzione dei problemi</a> nella documentazione di WebLogic Remote Console descrive come risolvere i problemi di connettività causati dalle impostazioni dell'ambiente e della rete.</p><p>Se queste informazioni non consentono di risolvere i problemi, inviare un messaggio al canale Slack <b>@weblogic-remote-console</b>. Gli screenshot spesso forniscono contesto utile per la diagnosi del problema, quindi includerli nel messaggio inviato, se possibile.</p>"
+          "title": "In caso di problemi di connessione a un server",
+          "descriptionHTML": "<p>In <b>Struttura di monitoraggio</b> > <b>Ambiente</b> > <b>Server</b>, selezionare un server che non risponde e aprire la scheda <b>Risoluzione dei problemi</b> per provare a diagnosticare il problema.</p><p>Se non è possibile connettersi al dominio, vedere <a href='#' tabindex='0' on-click data-url='@@docsURL@@/troubleshoot-weblogic-remote-console/#GUID-B3D14A11-0144-4B31-BFE3-E6AC59AEFCBE'>Impossibile connettersi al server di amministrazione</a> nella documentazione di WebLogic Remote Console per informazioni sulla risoluzione dei problemi.</p>"
         },
         "tip9": {
           "title": "Suggerimento sulla connettività n. 2",
@@ -909,8 +909,8 @@ define({
           "descriptionHTML": "<p>Una descrizione concisa per \"Suggerimento sulla sicurezza n. 1\". Un carattere di nuova riga non è un elemento HTML, pertanto non è consigliabile utilizzarlo in questa descrizione.</p>"
         },
         "tip11": {
-          "title": "Possibilità di utilizzare i \"tasti di scelta rapida\" anziché premere il tasto di tabulazione",
-          "descriptionHTML": "<p>I tasti di \"scelta rapida\" consentono di spostare l'elemento attivo direttamente in un'area, anziché dover premere ripetutamente i tasti <b>Tabulazione</b> e <b>Maiusc+Tabulazione</b>.</p><p>Di seguito sono riportati 5 tasti di scelta rapida da provare:</p><p><ul><li><code><b>Ctrl+Alt+P</b></code>&nbsp;&nbsp;&nbsp;Apre il <i>cassetto di navigazione Provider</i>.</li><li><code><b>Ctrl+Alt+N</b></code>&nbsp;&nbsp;&nbsp;Sposta l'elemento attivo nella <i>struttura Provider</i>.</li><li><code><b>Ctrl+Alt+T</b></code>&nbsp;&nbsp;&nbsp;Sposta l'elemento attivo in una tabella, più precisamente nella prima intestazione di colonna.</li><li><code><b>Ctrl+Alt+|</b></code>&nbsp;&nbsp;&nbsp;Sposta l'elemento attivo nel gripper dell'elemento di ridimensionamento della larghezza della struttura. Successivamente, utilizzare i tasti <code><b>Freccia destra</b></code> e <code><b>Freccia sinistra</b></code> per aumentare o diminuire la larghezza della struttura.</li><li><code><b>Ctrl+Alt+;</b></code>&nbsp;&nbsp;&nbsp;Sposta l'elemento attivo in un indicatore di percorso che è un <i>collegamento incrociato</i> (se presente) o la prima etichetta dell'indicatore di percorso selezionabile tramite clic.</li></ul><p>Per visualizzare una lista completa dei tasti di scelta rapida, consultare la documentazione.</p>"
+          "title": "Accelerare il workflow",
+          "descriptionHTML": "<p>Utilizzare i collegamenti da tastiera per spostarsi direttamente sui componenti specifici dell'interfaccia utente.</p><p>Primi 5:</p><li><code><b>Alt+P</b></code>: apre il cassetto di navigazione <b>Provider</b>.</li><li><code><b>Alt+C</b></code>: sposta l'elemento attivo sul <b>Carrello</b>.</li><li><code><b>Alt+T</b></code>: sposta l'elemento attivo sulla prima intestazione di colonna di una tabella.</li><li><code><b>Alt+|</b></code>: sposta l'elemento attivo sull'elemento di ridimensionamento della larghezza dell'albero di navigazione. Utilizzare i tasti freccia per modificare la larghezza della struttura.</li><li><code><b>Alt+;</b></code>: sposta l'elemento attivo sulla prima etichetta dell'indicatore di percorso selezionabile tramite clic.</li></ul><p>Per visualizzare una lista completa dei collegamenti da tastiera, consultare la documentazione.</p>"
         }
       }
     }
@@ -949,7 +949,7 @@ define({
     "messages": {
       "lostConnection": {
         "summary": "Connessione interrotta",
-        "detail": "Connection lost. Please refresh."
+        "detail": "Connessione persa. Eseguire l'aggiornamento."
       },
       "cannotConnect": {
         "summary": "Tentativo di connessione non riuscito",
@@ -982,9 +982,9 @@ define({
         }
       },
       "screenreader": {
-        "value1": "You're on the {0} item. Press Enter to select.",
-        "value2": "You're on the {0} item. Pressing Enter will expand or collapse it. After expanding, use the down arrow to access related links.",
-        "value3": "{0}. Press Tab/Shift+Tab to move between related links and Escape to return to last visited top level item."
+        "value1": "L'elemento {0} è attivo. Premere Invio per selezionare.",
+        "value2": "L'elemento {0} è attivo. Premere Invio per espanderlo o comprimerlo. Una volta eseguita l'espansione, utilizzare la freccia rivolta verso il basso per accedere ai collegamenti correlati.",
+        "value3": "{0}. Premere Tab/Maiusc+Tab per spostarsi tra i collegamenti correlati e il tasto Esc per tornare all'ultimo elemento di livello superiore visitato."
       }
     }
   },
@@ -1504,7 +1504,7 @@ define({
           "value": "Torna alla pagina di arrivo della struttura ad albero del provider."
         },
         "reset": {
-          "value": "Reimposta valori pagina"
+          "value": "Refresh page values"
         }
       }
     },
@@ -1812,6 +1812,9 @@ define({
         },
         "actionNotPerformed": {
           "detail": "Impossibile eseguire l'azione '{0}' su uno o più elementi selezionati"
+        },
+        "actionNotPerformedNoRow": {
+          "detail": "Unable to perform '{0}' action"
         },
         "actionSucceeded": {
           "summary": "L'esecuzione dell'azione '{0}' è riuscita."

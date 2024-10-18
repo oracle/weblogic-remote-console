@@ -678,6 +678,11 @@ public class AdminServerDataProviderImpl implements AdminServerDataProvider {
           LocalizedConstants.WEBLOGIC_REST_DELEGATION_NOT_WORKING_DETAILS_LABEL,
           entityAsJson
         );
+        detailsMessage = "<ul><li>"
+            + detailsMessage
+            + "</li><li>"
+            + ic.getLocalizer().localizeString(LocalizedConstants.SUGGEST_RESTART_SERVER_MESSAGE)
+            + "</li></ul>";
         return;
       } catch (Exception exc) {
         LOGGER.log(Level.FINEST, "testWebLogicRestDelegation failed: " + exc.toString(), exc);

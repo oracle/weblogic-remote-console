@@ -401,7 +401,7 @@ define({
             "label": "Benutzername:"
           },
           "sso": {
-            "label": "Web Authentication:"
+            "label": "Webauthentifizierung:"
           },
           "roles": {
             "label": "Rollen:"
@@ -865,16 +865,16 @@ define({
       },
       "cards": {
         "tip0": {
-          "title": "Erst suchen, dann klicken.",
-          "descriptionHTML": "<p>Die Suche nach dem gewünschten Element in einem der Bäume des Providers kann viel Klicken und Scrollen mit sich bringen. Über das Feld <b><i>Suchen</i></b> (oben in der Anwendung) können Sie genau das vermeiden.</p><p>Klicken Sie einfach auf ein Element in den generierten Suchergebnissen. Daraufhin wird automatisch der Providerbaum eingeblendet, der die Position des Elements anzeigt.</p>"
+          "title": "Suchen Sie über alle MBeans in Ihrer Domain hinweg.",
+          "descriptionHTML": "<p>Geben Sie in das Suchfeld oben in der Konsole einen Suchbegriff ein, um die aktuelle Perspektive nach Übereinstimmungen zu durchsuchen. Im Knoten <b>Letzte Suchvorgänge</b> können Sie auch zu vorangegangenen Abfragen zurückkehren.</p>"
         },
         "tip1": {
-          "title": "Dashboards erleichtern Ihnen die Arbeit",
-          "descriptionHTML": "<p>Mit einem <b><i>Dashboard</i></b> können Sie die Kriterien für die Auswahl von MBean-Instanzen definieren. Sie funktionieren ähnlich wie eine View in Datenbanken und zeigen alle MBean-Instanzen mit Laufzeitwerten an, die den Kriterien derzeit entsprechen.</p><p>Suchen Sie auf einer beliebigen Seite im \"Monitoringbaum\" nach der Schaltfläche <img src=\"js/jet-composites/wrc-frontend/1.0.0/images/dashboards-tabstrip-icon_24x24.png\" alt=\"New Dashboard Icon\" style=\"height: 24px; width: 24px; vertical-align: middle;\"/>, und klicken Sie darauf, um ein neues Dashboard zu definieren. Zuvor erstellte Dashboards finden Sie unter dem Knoten \"Dashboards\" der Root-Ebene im Monitoringbaum.</p>"
+          "title": "Filtern und finden Sie schnell die Daten, die Ihnen wichtig sind.",
+          "descriptionHTML": "<p>Mit Dashboards können Sie benutzerdefinierte Kriterien definieren, mit Ihrer Domain abgleichen und umfassende und genaue Berichte generieren, die auf Ihrer Domain basieren.</p><p>Öffnen Sie dazu zunächst einen Knoten im <b>Monitoringbaum</b>, und klicken Sie auf <b>Neues Dashboard</b>. Oder öffnen Sie auf der höchsten Ebene den Knoten <b>Dashboards</b> , um die integrierten Dashboards zu sehen.</p>"
         },
         "tip2": {
-          "title": "Tabellenspalten mit \"Tabelle anpassen\" auswählen und anordnen",
-          "descriptionHTML": "<p>Der Link \"Diese Tabelle anpassen\" wurde zur Schaltfläche <i>Tabelle anpassen</i> umgestaltet.</p>"
+          "title": "Tabelleninhalte verfeinern",
+          "descriptionHTML": "<p>Vereinfachen Sie Tabellen, indem sie nicht relevante Spalten ausblenden. So können Sie sich auf die Ihnen wichtigen Daten konzentrieren.</p><p>Klicken Sie über einer beliebigen Tabelle auf <b>Tabelle anpassen</b>, und wählen Sie nach Bedarf Spalten aus oder heben deren Auswahl auf.</p>"
         },
         "tip3": {
           "title": "Tastatur mit Tabellen und Aktionen verwenden",
@@ -885,20 +885,20 @@ define({
           "descriptionHTML": "<p>Der Link \"Diese Tabelle anpassen\" wurde zur Schaltfläche <i>Tabelle anpassen</i> umgestaltet.</p>"
         },
         "tip5": {
-          "title": "Wo ist das \"Change Center\"-Portlet?",
-          "descriptionHTML": "<p>Das \"Change Center\"-Portlet wurde durch den <i>Warenkorb-Drawer</i> ersetzt. Dieser weist ein Launcher-Symbol in der Symbolleiste auf, wenn der \"Konfigurationsbaum\" ausgewählt ist.</p>"
+          "title": "Ausstehende Änderungen prüfen",
+          "descriptionHTML": "<p>Öffnen Sie den Warenkorb, um eine Liste der Änderungen zu sehen, die in der Domain gespeichert, aber noch nicht festgeschrieben wurden.</p><p>Wenn Sie <b>Änderungen anzeigen</b> im Warenkorb nicht finden, versuchen Sie eine <a href='#' tabindex='0' on-click data-url='@@docsURL@@/set-console/#GUID-40440E0F-0310-4830-9B4B-00FC9ABBB591'>Installation der WebLogic Remote Console-Erweiterung</a>."
         },
         "tip6": {
-          "title": "Wo ist das Portlet \"Wie kann man\"?",
-          "descriptionHTML": "<p></p>"
+          "title": "Benötigen Sie Hilfe?",
+          "descriptionHTML": "<ul><li>Bewegen Sie den Cursor über das <b>?</b> neben einem Feld, um QuickInfos aufzurufen.</li><li>Klicken Sie auf Seitenebene auf das <b>?</b>, um detaillierte Hilfe für jedes sichtbare Attribut aufzurufen.</li><li>Klicken Sie im Menü <b>Hilfe</b> auf <b>WebLogic Remote Console GitHub-Projekt besuchen</b>.</li><li>Treten Sie unserem Slack-Kanal bei: <a href='#' tabindex='0' on-click data-url='https://join.slack.com/t/oracle-weblogic/shared_invite/zt-1ni1gtjv6-PGC6CQ4uIte3KBdm_67~aQ'>#remote-console</a>.</li><li>Zeigen Sie unsere Dokumentation an auf <a href='#' tabindex='0' on-click data-url='@@docsURL@@/'></a>.</li></ul>"
         },
         "tip7": {
           "title": "Sonstiger Tipp 1",
           "descriptionHTML": "<p>Eine kurze Beschreibung für \"Sonstiger Tipp 1\". Ein Zeilenvorschubzeichen ist kein HTML-Element und sollte daher in dieser Beschreibung nicht verwendet werden.</p>"
         },
         "tip8": {
-          "title": "Probleme beim Erstellen eines Admin-Serverproviders?",
-          "descriptionHTML": "<p>Im Abschnitt <a href='#' tabindex='0' on-click data-url='@@docsURL@@reference/troubleshoot/'>Referenz -> Fehlerbehebung</a> in der WebLogic Remote Console-Dokumentation wird erläutert, wie Sie Konnektivitätsprobleme aufgrund von Umgebungs- und Netzwerkeinstellungen beheben.</p><p>Wenn die dort genannten Lösungswege nicht funktionieren, posten Sie eine Nachricht im Slack-Kanal <b>@weblogic-remote-console</b>. Nehmen Sie nach Möglichkeit Screenshots in den Post auf, um die Problemdiagnose durch zusätzlichen Kontext zu erleichtern.</p>"
+          "title": "Probleme bei Verbindung zu einem Server?",
+          "descriptionHTML": "<p>Wählen Sie unter <b>Monitoringbaum</b> > <b>Umgebung</b> > <b>Server</b> den Server aus, der nicht reagiert, und öffnen Sie seine Registerkarte <b>Fehlerbehebung</b>, um eine Diagnose des Problems zu versuchen.</p><p>Wenn Sie gar keine Verbindung zu der Domain herstellen können, finden Sie Hilfe zur Fehlerbehebung unter <a href='#' tabindex='0' on-click data-url='@@docsURL@@/troubleshoot-weblogic-remote-console/#GUID-B3D14A11-0144-4B31-BFE3-E6AC59AEFCBE'>Verbindung zum Administrationsserver nicht möglich</a> in der Dokumentation zu WebLogic Remote Console.</p>"
         },
         "tip9": {
           "title": "Konnektivitätstipp 2",
@@ -909,8 +909,8 @@ define({
           "descriptionHTML": "<p>Eine kurze Beschreibung für \"Sicherheitstipp 1\". Ein Zeilenvorschubzeichen ist kein HTML-Element und sollte daher in dieser Beschreibung nicht verwendet werden.</p>"
         },
         "tip11": {
-          "title": "Verwenden Sie Tastenkombinationen vor der Tabulatortaste.",
-          "descriptionHTML": "<p>Mit Tastenkombinationen (oder Schnelltasten) können Sie den Fokus direkt auf einen bestimmten Bereich legen, anstatt immer wieder die <b>Tabulatortaste</b> und <b>Umschalt+Tabulatortaste</b> zu drücken.</p><p>Probieren Sie diese 5 Tastenkombinationen aus:</p><p><ul><li><code><b>Strg+Alt+P</b></code>&nbsp;&nbsp;&nbsp;Öffnet den <i>Provider-Drawer</i>.</li><li><code><b>Strg+Alt+N</b></code>&nbsp;&nbsp;&nbsp;Legt den Fokus auf den <i>Providerbaum</i>.</li><li><code><b>Strg+Alt+T</b></code>&nbsp;&nbsp;&nbsp;Legt den Fokus auf die erste Spaltenüberschrift einer Tabelle.</li><li><code><b>Strg+Alt+|</b></code>&nbsp;&nbsp;&nbsp;Legt den Fokus auf den Ziehpunkt zum Ändern der Baumbreite. Verwenden Sie anschließend die <code><b>Nach-rechts-Taste</b></code> bzw. die <code><b>Nach-links-Taste</b></code>, um die Breite des Baumes zu erhöhen oder zu verringern.</li><li><code><b>Strg+Alt+;</b></code>&nbsp;&nbsp;&nbsp;Legt den Fokus auf einen Navigationspfad, der ein <i>Crosslink</i> ist (falls vorhanden), oder auf das erste klickbare Navigationspfadlabel.</li></ul><p>Eine vollständige Liste der Tastenkombinationen finden Sie in der Dokumentation.</p>"
+          "title": "Beschleunigen Sie Ihren Workflow.",
+          "descriptionHTML": "<p>Verwenden Sie Tastenkombinationen, um direkt zu bestimmten UI-Komponenten zu gelangen.</p><p>Wichtigste 5:</p><li><code><b>Alt+P</b></code>: Öffnet das Menü <b>Provider</b>.</li><li><code><b>Alt+C</b></code>: Verschiebt den Fokus auf den <b>Warenkorb</b>.</li><li><code><b>Alt+T</b></code>: Verschiebt den Fokus auf den ersten Spaltenheader in einer Tabelle.</li><li><code><b>Alt+|</b></code>: Verschiebt den Fokus auf das Bedienelement zum Verändern der Baumbreite. Mit den Pfeiltasten können Sie die Breite des Baums ändern.</li><li><code><b>Alt+;</b></code>: Verschiebt den Fokus auf das erste klickbare Navigationspfadlabel.</li></ul><p>Eine umfassende Liste der Tastenkombinationen finden Sie in der Dokumentation.</p>"
         }
       }
     }
@@ -949,7 +949,7 @@ define({
     "messages": {
       "lostConnection": {
         "summary": "Verbindung unterbrochen",
-        "detail": "Connection lost. Please refresh."
+        "detail": "Verbindung unterbrochen. Bitte aktualisieren."
       },
       "cannotConnect": {
         "summary": "Verbindungsversuch nicht erfolgreich",
@@ -982,9 +982,9 @@ define({
         }
       },
       "screenreader": {
-        "value1": "You're on the {0} item. Press Enter to select.",
-        "value2": "You're on the {0} item. Pressing Enter will expand or collapse it. After expanding, use the down arrow to access related links.",
-        "value3": "{0}. Press Tab/Shift+Tab to move between related links and Escape to return to last visited top level item."
+        "value1": "Sie zeigen auf das {0}-Element. Drücken Sie zum Auswählen die Eingabetaste.",
+        "value2": "Sie zeigen auf das {0}-Element. Mit der Eingabetaste wird es ein- oder ausgeblendet. Nach dem Einblenden können Sie mit dem Pfeil nach unten auf die zugehörigen Links zugreifen.",
+        "value3": "{0}. Drücken Sie Tab/Umschalt+Tab, um die zugehörigen Links anzusteuern, und Escape, um zum zuletzt besuchten Element der höchsten Ebene zurückzukehren."
       }
     }
   },
@@ -1504,7 +1504,7 @@ define({
           "value": "Kehren Sie zur Landingpage des Providerbaums zurück."
         },
         "reset": {
-          "value": "Seitenwerte zurücksetzen"
+          "value": "Refresh page values"
         }
       }
     },
@@ -1812,6 +1812,9 @@ define({
         },
         "actionNotPerformed": {
           "detail": "Aktion \"{0}\" kann für mindestens eins der aktivierten Elemente nicht ausgeführt werden"
+        },
+        "actionNotPerformedNoRow": {
+          "detail": "Unable to perform '{0}' action"
         },
         "actionSucceeded": {
           "summary": "Die Aktion \"{0}\" wurde erfolgreich ausgeführt."

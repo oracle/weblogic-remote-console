@@ -1,0 +1,10 @@
+# Copyright (c) 20204, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+properties:
+
+# SourcePath needs to be specified when creating a deployment
+- name: SourcePath
+  required: true
+  writable: createOnly
+
+createResourceMethod: weblogic.remoteconsole.customizers.DBClientDataDirectoryMBeanCustomizer.createResource

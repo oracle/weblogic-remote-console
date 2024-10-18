@@ -5,3 +5,4 @@ introductionHTML: >
 
 actions:
 - name: "publishSingleSignOnServices"
+  rows: "none"

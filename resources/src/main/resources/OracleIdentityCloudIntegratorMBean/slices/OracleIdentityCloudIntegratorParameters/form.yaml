@@ -9,6 +9,7 @@ properties:
 - name: BasePath
 - name: SSLEnabled
 - name: Tenant
+- name: TenantNames
 - name: ClientId
 - name: ClientSecret
 - name: ClientTenant
@@ -39,6 +40,8 @@ properties:
 - name: SignaturePreferX509Certificate
 - name: UserNameTokenClaim
 - name: UserIDTokenClaim
+- name: AltIDTokenClaim
+- name: PreferAltID
 - name: GroupsTokenClaim
 - name: AppRolesTokenClaim
 - name: ClientNameTokenClaim
@@ -58,3 +61,6 @@ properties:
 - name: TokenSecureTransportRequired
 - name: TenantDataReloadEnabled
 - name: TenantDataReloadInterval
+- name: KnownTenantPrefixList
+- name: KnownTenantEmptyMetadataTTL
+- name: UnknownTenantEmptyMetadataTTL

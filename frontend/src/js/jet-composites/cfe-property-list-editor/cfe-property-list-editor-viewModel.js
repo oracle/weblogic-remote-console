@@ -314,6 +314,7 @@ function (
             }
           };
           context.element.dispatchEvent(new CustomEvent('propertyDeleted', params));
+          self.propertyListSnapshot[rowIndex]['action'] = 'deleted';
           sendBlurEvent();
         }
       }

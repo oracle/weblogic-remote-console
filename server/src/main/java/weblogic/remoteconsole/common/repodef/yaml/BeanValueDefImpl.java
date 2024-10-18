@@ -1,4 +1,4 @@
-// Copyright (c) 2021, 2023, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2024, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef.yaml;
@@ -116,6 +116,19 @@ class BeanValueDefImpl implements BeanValueDef {
         return true;
       } else {
         throw configurationError("specified multiLineString on a property that is not a string");
+      }
+    }
+    return false;
+  }
+
+  @Override
+  public boolean isDynamicEnum() {
+    if (customizerSource.isDynamicEnum()) {
+      ValueKind kind = javaTypeToValueKind.get(getJavaType());
+      if ((ValueKind.STRING == kind) && !isArray()) {
+        return true;
+      } else {
+        throw configurationError("specified dynamicEnum on a property that is not a string");
       }
     }
     return false;

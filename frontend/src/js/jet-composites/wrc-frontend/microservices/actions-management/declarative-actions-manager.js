@@ -60,6 +60,9 @@ define([
           },
           'actionNotPerformed': {
             detail: oj.Translations.getTranslatedString('wrc-pdj-actions.messages.action.actionNotPerformed.detail', '{0}')
+          },
+          'actionNotPerformedNoRow': {
+            detail: oj.Translations.getTranslatedString('wrc-pdj-actions.messages.action.actionNotPerformedNoRow.detail', '{0}')
           }
         }
       },
@@ -673,6 +676,11 @@ define([
                 severity: 'error',
                 message: i18n.messages.action.actionNotPerformed.detail.replace('{0}', actionLabel)
               });
+            } else {
+              response.body.messages.unshift({
+                severity: 'error',
+                message: i18n.messages.action.actionNotPerformedNoRow.detail.replace('{0}', actionLabel)
+              });
             }
             reply['messages'] = response.body.messages;
           }
@@ -1238,6 +1246,9 @@ define([
             submitResults,
             checkedRows
           );
+          if (checkedRows === null || checkedRows.size === 0) {
+            return postActionData(options.label, endpoint, dataPayload, false);
+          }
           return postActionData(options.label, endpoint, dataPayload);
         }
       }

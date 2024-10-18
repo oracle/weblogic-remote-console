@@ -401,7 +401,7 @@ define({
             "label": "ユーザー名:"
           },
           "sso": {
-            "label": "Web Authentication:"
+            "label": "Web認証:"
           },
           "roles": {
             "label": "ロール:"
@@ -865,16 +865,16 @@ define({
       },
       "cards": {
         "tip0": {
-          "title": "クリックする前に「検索」について考えてください!",
-          "descriptionHTML": "<p>プロバイダのツリーの1つで必要なものを見つけるには、多くのクリックとスクロールが必要な場合があります。<b>「<i>検索</i>」</b>フィールド(アプリケーションの上部にあります)を使用すると、その必要性を回避できます。</p><p>さらに、生成された検索結果の項目をクリックすると、プロバイダ・ツリーが自動的に展開され、その項目がある場所が示されます。</p>"
+          "title": "ドメイン内のすべてのMBeanを検索します。",
+          "descriptionHTML": "<p>コンソールの一番上にある検索フィールドに検索語句を入力して、現在の視点で一致を詳細に検索します。<b>「最近の検索」</b>ノードで前の問合せに戻ることもできます。</p>"
         },
         "tip1": {
-          "title": "「ダッシュボード」はユーザーのベスト・フレンドです",
-          "descriptionHTML": "<p><b>「<i>ダッシュボード</i>」</b>では、MBeanインスタンスの選択に使用される条件を定義できます。それらはデータベースの世界のビューのように機能し、現在条件を満たすランタイム値を持つすべてのMBeanインスタンスを表示できます。</p><p>「モニタリング・ツリー」のページを表示しているときに<img src=\"js/jet-composites/wrc-frontend/1.0.0/images/dashboards-tabstrip-icon_24x24.png\" alt=\"New Dashboard Icon\" style=\"height: 24px; width: 24px; vertical-align: middle;\"/>ボタンを探し、それをクリックして新規ダッシュボードを定義します。以前に作成したものは、モニタリング・ツリーのルートレベルの「ダッシュボード」ノードにあります。</p>"
+          "title": "重要なデータを迅速にフィルタして検索します。",
+          "descriptionHTML": "<p>ダッシュボードでは、カスタム基準を定義し、それをドメインと照合して、ドメインに基づく包括的で正確なレポートを生成できます。</p><p>開始するには、<b>「モニタリング・ツリー」</b>で任意のノードを開き、<b>「新規ダッシュボード」</b>をクリックします。または、<b>「ダッシュボード」</b>最上位レベル・ノードを開き、組込みのダッシュボードを表示します。</p>"
         },
         "tip2": {
-          "title": "「表のカスタマイズ」を使用した表の列の選択と配置",
-          "descriptionHTML": "<p>「この表のカスタマイズ」リンクは「<i>表のカスタマイズ</i>」ボタンになりました。</p>"
+          "title": "表の内容を絞り込みます",
+          "descriptionHTML": "<p>重要なデータにフォーカスできるように、無関係な列を非表示にして表を簡略化します。</p><p>表の上で<b>「表のカスタマイズ」</b>をクリックし、必要に応じて列を選択または選択解除します。</p>"
         },
         "tip3": {
           "title": "表とアクションでキーボードを使用",
@@ -885,20 +885,20 @@ define({
           "descriptionHTML": "<p>「この表のカスタマイズ」リンクは「<i>表のカスタマイズ</i>」ボタンになりました。</p>"
         },
         "tip5": {
-          "title": "「チェンジ・センター」ポートレットはどこにありますか?",
-          "descriptionHTML": "<p>「チェンジ・センター」ポートレットは、「構成ツリー」が選択されている場合にアイコンバーの起動プログラム・アイコンがある「<i>ショッピング・カート・ドロワー</i>」で置き換えられました。</p>"
+          "title": "保留中の変更を確認します",
+          "descriptionHTML": "<p>ショッピング・カートを開き、ドメインに保存されているがまだコミットされていない変更のリストを表示します。</p><p>ショッピング・カートに<b>「変更の表示」</b>が表示されない場合、<a href='#' tabindex='0' on-click data-url='@@docsURL@@/set-console/#GUID-40440E0F-0310-4830-9B4B-00FC9ABBB591'>WebLogic Remote Console拡張機能のインストール</a>を試してください。"
         },
         "tip6": {
-          "title": "「方法」ポートレットはどこにありますか?",
-          "descriptionHTML": "<p></p>"
+          "title": "サポートが必要ですか。",
+          "descriptionHTML": "<ul><li>ツールチップを表示するには、フィールドの横にある<b>「?」</b>の上にカーソルを置きます。</li><li>すべての可視属性に関する詳細なヘルプは、ページレベルの<b>「?」</b>をクリックします。</li><li><b>「ヘルプ」</b>メニューで、<b>「WebLogic Remote Console GitHubプロジェクトにアクセス」</b>をクリックします。</li><li>Slackチャネルに参加: <a href='#' tabindex='0' on-click data-url='https://join.slack.com/t/oracle-weblogic/shared_invite/zt-1ni1gtjv6-PGC6CQ4uIte3KBdm_67~aQ'>#remote-console</a>。</li><li>ドキュメントを参照: <a href='#' tabindex='0' on-click data-url='@@docsURL@@/'></a>。</li></ul>"
         },
         "tip7": {
           "title": "その他のヒント#1",
           "descriptionHTML": "<p>「その他のヒント#1」の簡潔な説明。改行文字はHTML要素ではないため、この説明ではそれらを使用しません。</p>"
         },
         "tip8": {
-          "title": "管理サーバー・プロバイダの作成に問題がありますか?",
-          "descriptionHTML": "<p>WebLogic Remote Consoleドキュメントの<a href='#' tabindex='0' on-click data-url='@@docsURL@@reference/troubleshoot/'>リファレンス -> トラブルシューティング</a>に関する項では、環境およびネットワークの設定が原因の接続性の問題を解決する方法を説明しています。</p><p>これらを試しても解決しない場合は、<b>@weblogic-remote-console</b> Slackチャネルにメッセージを投稿してください。スクリーンショットでは問題の診断に役立つコンテキストが提供されることが多いため、可能な場合にはそれらを投稿に含めてください。</p>"
+          "title": "サーバーへの接続に問題がありますか。",
+          "descriptionHTML": "<p><b>「モニタリング・ツリー」</b>→<b>「環境」</b>→<b>「サーバー」</b>で、応答のないサーバーを選択し、その<b>「トラブルシューティング」</b>タブを開いて問題を試行および診断します。</p><p>ドメインにまったく接続できない場合は、WebLogic Remote Consoleドキュメントの<a href='#' tabindex='0' on-click data-url='@@docsURL@@/troubleshoot-weblogic-remote-console/#GUID-B3D14A11-0144-4B31-BFE3-E6AC59AEFCBE'>「管理サーバーに接続できない」</a>でトラブルシューティング・ヘルプを参照してください。</p>"
         },
         "tip9": {
           "title": "接続性に関するヒント#2",
@@ -909,8 +909,8 @@ define({
           "descriptionHTML": "<p>「セキュリティに関するヒント#1」の簡潔な説明。改行文字はHTML要素ではないため、この説明ではそれらを使用しません。</p>"
         },
         "tip11": {
-          "title": "[Tab]を押す前に「ショートカット・キー」について考えてください!",
-          "descriptionHTML": "<p>「ショートカット」(またはアクセラレータ)キーを使用すると、<b>[Tab]</b>および<b>[Shift]+[Tab]</b>キーを何度も押すかわりにフォーカスを領域に直接移動できます!</p><p>試してみるべき5つの項目:</p><p><ul><li><code><b>[Ctrl]+[Alt]+[P]</b></code>&nbsp;&nbsp;&nbsp;<i>プロバイダ・ドロワー</i>を開きます。</li><li><code><b>[Ctrl]+[Alt]+[N]</b></code>&nbsp;&nbsp;&nbsp;<i>プロバイダ・ツリー</i>にフォーカスを移動します。</li><li><code><b>[Ctrl]+[Alt]+[T]</b></code>&nbsp;&nbsp;&nbsp;フォーカスを表に移動します。より正確には、最初の列ヘッダーに移動します。</li><li><code><b>[Ctrl]+[Alt]+[|]</b></code>&nbsp;&nbsp;&nbsp;フォーカスをツリー幅リサイザのグリッパに移動します。その後、<code><b>[→]</b></code>および<code><b>[←]</b></code>キーを使用してツリーの幅を増減します。</li><li><code><b>[Ctrl]+[Alt]+[;]</b></code>&nbsp;&nbsp;&nbsp;フォーカスを、<i>クロス・リンク</i>であるブレッドクラム(存在する場合)または最初のクリック可能なブレッドクラム・ラベルに移動します。</li></ul><p>ショートカット・キーの完全なリストを確認するには、ドキュメントを調べてください!</p>"
+          "title": "ワークフローを高速化します。",
+          "descriptionHTML": "<p>キーボード・ショートカットを使用して、特定のUIコンポーネントに直接ジャンプします。</p><p>上位5:</p><li><code><b>[Alt]+[P]</b></code> - <b>プロバイダ</b>・ドロワーを開きます。</li><li><code><b>[Alt]+[C]</b></code> - フォーカスを<b>ショッピング・カート</b>に移動します。</li><li><code><b>[Alt]+[T]</b></code> - フォーカスを表の最初の列ヘッダーに移動します。</li><li><code><b>[Alt]+[|]</b></code> - フォーカスをナビゲーション・ツリーの幅リサイザに移動します。矢印キーを使用してツリーの幅を変更します。</li><li><code><b>[Alt]+[;]</b></code> - フォーカスを最初のクリック可能なブレッドクラム・ラベルに移動します。</li></ul><p>キーボード・ショートカットの完全なリストは、ドキュメントを参照してください。</p>"
         }
       }
     }
@@ -949,7 +949,7 @@ define({
     "messages": {
       "lostConnection": {
         "summary": "接続が失われました",
-        "detail": "Connection lost. Please refresh."
+        "detail": "接続が失われました。リフレッシュしてください。"
       },
       "cannotConnect": {
         "summary": "接続の試行に失敗しました",
@@ -982,9 +982,9 @@ define({
         }
       },
       "screenreader": {
-        "value1": "You're on the {0} item. Press Enter to select.",
-        "value2": "You're on the {0} item. Pressing Enter will expand or collapse it. After expanding, use the down arrow to access related links.",
-        "value3": "{0}. Press Tab/Shift+Tab to move between related links and Escape to return to last visited top level item."
+        "value1": "{0}の項目にいます。[Enter]を押して選択します。",
+        "value2": "{0}の項目にいます。[Enter]を押すと展開または縮小します。展開後、下矢印を使用して関連リンクにアクセスします。",
+        "value3": "{0}。[Tab]/[Shift]+[Tab]を押すと、関連リンク間を移動します。[Esc]を押すと、最後にアクセスした最上位レベルの項目に戻ります。"
       }
     }
   },
@@ -1504,7 +1504,7 @@ define({
           "value": "プロバイダ・ツリーのランディング・ページに戻ります。"
         },
         "reset": {
-          "value": "ページ値をリセットします"
+          "value": "Refresh page values"
         }
       }
     },
@@ -1812,6 +1812,9 @@ define({
         },
         "actionNotPerformed": {
           "detail": "選択された1つ以上のアイテムで、'{0}'アクションを実行できません"
+        },
+        "actionNotPerformedNoRow": {
+          "detail": "Unable to perform '{0}' action"
         },
         "actionSucceeded": {
           "summary": "'{0}'アクションは正常に実行されました。"

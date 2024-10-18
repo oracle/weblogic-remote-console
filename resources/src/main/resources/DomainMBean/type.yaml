@@ -120,6 +120,9 @@ children:
 - name: JDBCSystemResources
   label: Data Sources
 
+- name: JMSSystemResources
+  label: JMS Modules
+
 - name: Libraries
   creatable: true
   asyncCreate: true

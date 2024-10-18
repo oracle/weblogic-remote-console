@@ -401,7 +401,7 @@ define({
             "label": "Nom utilisateur :"
           },
           "sso": {
-            "label": "Web Authentication:"
+            "label": "Authentification Web :"
           },
           "roles": {
             "label": "Rôles :"
@@ -865,16 +865,16 @@ define({
       },
       "cards": {
         "tip0": {
-          "title": "Pensez à la recherche avant de cliquer",
-          "descriptionHTML": "<p>Trouver ce que vous recherchez dans les arborescences de l'un des fournisseurs peut vous demander de nombreux clics et défilements. Le champ <b><i>Rechercher</i></b> (situé en haut de l'application) vous évite tous ces efforts.</p><p>Mieux encore : si vous cliquez sur un élément dans les résultats de recherche générés, l'arborescence du fournisseur est développée automatiquement pour afficher l'emplacement de l'élément.</p>"
+          "title": "Effectuez une recherche dans tous les MBeans de votre domaine !",
+          "descriptionHTML": "<p>Saisissez un terme dans le champ de recherche en haut de la console pour rechercher des correspondances dans la perspective en cours. Vous pouvez également consulter les requêtes précédentes dans le noeud <b>Recherches récentes</b>.</p>"
         },
         "tip1": {
-          "title": "Le tableau de bord : le meilleur ami de l'utilisateur",
-          "descriptionHTML": "<p>Un <b><i>tableau de bord</i></b> permet de définir les critères utilisés pour sélectionner les instances de MBean. Il fonctionne un peu comme une vue dans l'univers des bases de données, qui vous montre toutes les instances de MBean avec des valeurs d'exécution qui répondent actuellement aux critères.</p><p>Recherchez le bouton <img src=\"js/jet-composites/wrc-frontend/1.0.0/images/dashboards-tabstrip-icon_24x24.png\" alt=\"New Dashboard Icon\" style=\"height: 24px; width: 24px; vertical-align: middle;\"/> dès que vous vous trouvez sur une page de l'arborescence de la surveillance, puis cliquez dessus pour définir un nouveau tableau de bord. Ceux qui ont déjà été créés sont disponibles sous le noeud Tableaux de bord de niveau racine dans l'arborescence de la surveillance.</p>"
+          "title": "Filtrez et trouvez rapidement les données qui vous importent !",
+          "descriptionHTML": "<p>Les tableaux de bord vous permettent de définir des critères personnalisés, de les appliquer à votre domaine et de générer des rapports complets et précis fondés sur votre domaine.</p><p>Pour commencer, ouvrez un noeud dans l'<b>arborescence de la surveillance</b>, puis cliquez sur <b>Nouveau tableau de bord</b>. Sinon, ouvrez le noeud de niveau supérieur <b>Tableaux de bord</b> pour voir les tableaux de bord intégrés.</p>"
         },
         "tip2": {
-          "title": "Sélection et organisation des colonnes de table à l'aide de l'option Personnaliser la table",
-          "descriptionHTML": "<p>Le lien Personnaliser cette table est devenu le bouton <i>Personnaliser la table</i>.</p>"
+          "title": "Affinage du contenu de la table",
+          "descriptionHTML": "<p>Simplifiez les tables en masquant les colonnes non pertinentes afin de vous concentrer sur les données qui vous importent.</p><p>Au-dessus d'une table, cliquez sur <b>Personnaliser la table</b>, puis sélectionnez ou désélectionnez les colonnes comme souhaité.</p>"
         },
         "tip3": {
           "title": "Utilisation du clavier avec les tables et les actions",
@@ -885,20 +885,20 @@ define({
           "descriptionHTML": "<p>Le lien Personnaliser cette table est devenu le bouton <i>Personnaliser la table</i>.</p>"
         },
         "tip5": {
-          "title": "Où se trouve le portlet Centre des modifications ?",
-          "descriptionHTML": "<p>Le portlet Centre des modifications a été remplacé par le <i>tiroir Panier</i>, dont la barre d'icônes comporte une icône de lanceur lorsque l'arborescence de configuration est sélectionnée.</p>"
+          "title": "Vérification des modifications en attente",
+          "descriptionHTML": "<p>Ouvrez le panier pour voir la liste des modifications enregistrées dans le domaine mais pas encore validées.</p><p>Si vous ne pouvez pas voir l'option <b>Visualiser les modifications</b> dans le panier, essayez d'<a href='#' tabindex='0' on-click data-url='@@docsURL@@/set-console/#GUID-40440E0F-0310-4830-9B4B-00FC9ABBB591'>installer l'extension WebLogic Remote Console</a>."
         },
         "tip6": {
-          "title": "Où se trouve le portlet Procédure ?",
-          "descriptionHTML": "<p></p>"
+          "title": "Besoin d'aide ?",
+          "descriptionHTML": "<ul><li>Placez le curseur de la souris sur <b>?</b> en regard d'un champ pour afficher une info-bulle.</li><li>Cliquez sur <b>?</b> au niveau d'une page pour afficher l'aide détaillée sur chaque attribut visible.</li><li>Dans le menu <b>Aide</b>, cliquez sur <b>Accéder au projet GitHub WebLogic Remote Console</b>.</li><li>Rejoignez notre canal Slack : <a href='#' tabindex='0' on-click data-url='https://join.slack.com/t/oracle-weblogic/shared_invite/zt-1ni1gtjv6-PGC6CQ4uIte3KBdm_67~aQ'>#remote-console</a>.</li><li>Consultez notre documentation à l'adresse <a href='#' tabindex='0' on-click data-url='@@docsURL@@/'></a>.</li></ul>"
         },
         "tip7": {
           "title": "Autre conseil 1",
           "descriptionHTML": "<p>Brève description pour Autre conseil 1. Un caractère de retour à la ligne n'étant pas un élément HTML, n'en utilisez pas dans cette description.</p>"
         },
         "tip8": {
-          "title": "Un problème avec la création d'un fournisseur de serveur d'administration ?",
-          "descriptionHTML": "<p>La section <a href='#' tabindex='0' on-click data-url='@@docsURL@@reference/troubleshoot/'>Référence -> Dépannage</a> de la documentation de WebLogic Remote Console explique comment résoudre les problèmes de connectivité causés par les paramètres d'environnement et de réseau.</p><p>Si aucune de ces solutions ne mène à une résolution, publiez un message sur le canal Slack <b>@weblogic-remote-console</b>. Les captures d'écran fournissent souvent du contexte, ce qui contribue au diagnostic du problème. Incluez-en dans la publication si possible.</p>"
+          "title": "Des problèmes de connexion à un serveur ?",
+          "descriptionHTML": "<p>Sous <b>Arborescence de la surveillance</b> > <b>Environnement</b> > <b>Serveurs</b>, sélectionnez le serveur qui ne répond pas et ouvrez son onglet <b>Dépannage</b> pour reproduire et diagnostiquer le problème.</p><p>Si vous ne parvenez pas à vous connecter au domaine, reportez-vous à <a href='#' tabindex='0' on-click data-url='@@docsURL@@/troubleshoot-weblogic-remote-console/#GUID-B3D14A11-0144-4B31-BFE3-E6AC59AEFCBE'>Connexion impossible au serveur d'administration</a> dans la documentation WebLogic Remote Console pour obtenir de l'aide sur le dépannage.</p>"
         },
         "tip9": {
           "title": "Conseil de connectivité 2",
@@ -909,8 +909,8 @@ define({
           "descriptionHTML": "<p>Brève description pour Conseil de sécurité 1. Un caractère de retour à la ligne n'étant pas un élément HTML, n'en utilisez pas dans cette description.</p>"
         },
         "tip11": {
-          "title": "Pensez aux raccourcis clavier avant d'appuyer sur la touche de tabulation",
-          "descriptionHTML": "<p>Les raccourcis clavier vous permettent de déplacer le focus directement sur une zone plutôt que de vous frustrer à appuyer encore et encore sur les touches <b>Tab</b> et <b>Maj+Tab</b>.</p><p>Voici cinq raccourcis à essayer :</p><p><ul><li><code><b>Ctrl+Alt+P</b></code>&nbsp;&nbsp;&nbsp;Ouvre le <i>tiroir Fournisseurs</i>.</li><li><code><b>Ctrl+Alt+N</b></code>&nbsp;&nbsp;&nbsp;Déplace le focus vers l'<i>arborescence du fournisseur</i>.</li><li><code><b>Ctrl+Alt+T</b></code>&nbsp;&nbsp;&nbsp;Déplace le focus vers une table, plus précisément sur l'en-tête de la première colonne.</li><li><code><b>Ctrl+Alt+|</b></code>&nbsp;&nbsp;&nbsp;Déplace le focus vers la poignée de redimensionnement de la largeur de l'arborescence. Ensuite, utilisez les touches <code><b>RightArrow</b></code> et <code><b>LeftArrow</b></code> pour augmenter ou réduire la largeur de l'arborescence.</li><li><code><b>Ctrl+Alt+;</b></code>&nbsp;&nbsp;&nbsp;Déplace le focus vers un chemin de navigation qui est un <i>lien croisé</i> (le cas échéant) ou vers le premier libellé de chemin de navigation sur lequel il est possible de cliquer.</li></ul><p>Pour obtenir la liste complète des raccourcis clavier, reportez-vous à la documentation.</p>"
+          "title": "Accélérez votre workflow !",
+          "descriptionHTML": "<p>Utilisez les raccourcis clavier afin d'accéder directement à des composants d'interface utilisateur spécifiques.</p><p>5 principaux raccourcis :</p><li><code><b>Alt+P</b></code> - Permet d'ouvrir le tiroir <b>Fournisseurs</b>.</li><li><code><b>Alt+C</b></code> - Permet de déplacer le focus sur le <b>panier</b>.</li><li><code><b>Alt+T</b></code> - Permet de déplacer le focus sur le premier en-tête de colonne d'une table.</li><li><code><b>Alt+|</b></code> - Permet de déplacer le focus sur la poignée de redimensionnement de la largeur de l'arborescence de navigation. Utilisez les touches fléchées pour modifier la largeur de l'arborescence.</li><li><code><b>Alt+;</b></code> - Permet de déplacer le focus sur le premier libellé de chemin de navigation sur lequel il est possible de cliquer.</li></ul><p>Pour obtenir la liste complète des raccourcis clavier, reportez-vous à la documentation.</p>"
         }
       }
     }
@@ -949,7 +949,7 @@ define({
     "messages": {
       "lostConnection": {
         "summary": "Connexion perdue",
-        "detail": "Connection lost. Please refresh."
+        "detail": "Connexion perdue. Procédez à l'actualisation."
       },
       "cannotConnect": {
         "summary": "Echec de la tentative de connexion",
@@ -982,9 +982,9 @@ define({
         }
       },
       "screenreader": {
-        "value1": "You're on the {0} item. Press Enter to select.",
-        "value2": "You're on the {0} item. Pressing Enter will expand or collapse it. After expanding, use the down arrow to access related links.",
-        "value3": "{0}. Press Tab/Shift+Tab to move between related links and Escape to return to last visited top level item."
+        "value1": "Vous êtes sur l'élément {0}. Appuyez sur Entrée pour le sélectionner.",
+        "value2": "Vous êtes sur l'élément {0}. Appuyez sur Entrée pour le développer ou le réduire. Après l'avoir développé, utilisez la flèche vers le bas pour accéder aux liens associés.",
+        "value3": "{0}. Appuyez sur Tab/Maj + Tab pour vous déplacer entre les liens associés et sur Echap pour revenir au dernier élément de niveau supérieur utilisé."
       }
     }
   },
@@ -1504,7 +1504,7 @@ define({
           "value": "Revenez à la page de destination de l'arborescence de fournisseur."
         },
         "reset": {
-          "value": "Réinitialiser les valeurs de page"
+          "value": "Refresh page values"
         }
       }
     },
@@ -1812,6 +1812,9 @@ define({
         },
         "actionNotPerformed": {
           "detail": "Impossible d'effectuer l'action '{0}' sur au moins un des éléments sélectionnés"
+        },
+        "actionNotPerformedNoRow": {
+          "detail": "Unable to perform '{0}' action"
         },
         "actionSucceeded": {
           "summary": "L'action '{0}' a été effectuée."

@@ -230,7 +230,10 @@ define([
        */
       hasFormLayoutType: function (pdjData, key) {
         let rtnval = false;
-        if (
+        if (CoreUtils.isNotUndefinedNorNull(pdjData.actionInputForm)) {
+          if(key === 'singleColumn') rtnval = true;
+        }
+        else if (
           CoreUtils.isNotUndefinedNorNull(pdjData.sliceForm) &&
           CoreUtils.isNotUndefinedNorNull(pdjData.sliceForm.presentation)
         ) {
