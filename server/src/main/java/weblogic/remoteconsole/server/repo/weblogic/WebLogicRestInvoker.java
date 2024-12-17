@@ -40,9 +40,7 @@ public class WebLogicRestInvoker {
     Path path,
     boolean expandedValues
   ) {
-    WebLogicRestRequest.Builder builder = WebLogicRestRequest.builder();
-    builder.root(WebLogicRestRequest.CURRENT_WEBLOGIC_REST_API_ROOT);
-    return get(ic, path, expandedValues, builder);
+    return get(ic, path, expandedValues, builder());
   }
 
   public static Response<JsonObject> get(
@@ -80,9 +78,7 @@ public class WebLogicRestInvoker {
     boolean saveChanges,
     boolean asynchronous
   ) {
-    WebLogicRestRequest.Builder builder = WebLogicRestRequest.builder();
-    builder.root(WebLogicRestRequest.CURRENT_WEBLOGIC_REST_API_ROOT);
-    return post(ic, path, requestBody, expandedValues, saveChanges, asynchronous, builder);
+    return post(ic, path, requestBody, expandedValues, saveChanges, asynchronous, builder());
   }
 
   public static Response<JsonObject> post(
@@ -165,6 +161,10 @@ public class WebLogicRestInvoker {
       LOGGER.log(Level.WARNING, "Unexpected WebLogic Rest exception", e);
       return (new Response<JsonObject>()).setServiceNotAvailable();
     }
+  }
+
+  public static WebLogicRestRequest.Builder builder() {
+    return WebLogicRestRequest.builder().root(WebLogicRestRequest.CURRENT_WEBLOGIC_REST_API_ROOT);
   }
 
   private static Response<JsonObject> restResponseToResponse(

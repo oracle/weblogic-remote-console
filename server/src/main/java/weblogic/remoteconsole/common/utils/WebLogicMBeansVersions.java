@@ -1,9 +1,10 @@
-// Copyright (c) 2021, 2023, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2024, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.utils;
 
 import java.lang.ref.WeakReference;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
@@ -30,15 +31,26 @@ public class WebLogicMBeansVersions {
     Set<String> roles,
     Set<String> capabilities
   ) {
-    String key = computeKey(weblogicVersion, roles, capabilities);
+    return getVersion(weblogicVersion, roles, capabilities, null);
+  }
+
+  public static WebLogicMBeansVersion getVersion(
+    WebLogicVersion weblogicVersion,
+    Set<String> roles,
+    Set<String> capabilities,
+    List<RemoteConsoleExtension> extensions
+  ) {
+    String key = computeKey(weblogicVersion, roles, capabilities, extensions);
     WeakReference<WebLogicMBeansVersion> ret =
       versionsMap.computeIfAbsent(
         key,
-        k -> new WeakReference<WebLogicMBeansVersion>(new WebLogicMBeansVersion(weblogicVersion, roles, capabilities))
+        k -> new WeakReference<WebLogicMBeansVersion>(
+          new WebLogicMBeansVersion(weblogicVersion, roles, capabilities, extensions)
+        )
       );
     if (ret.get() == null) {
       ret = new WeakReference<WebLogicMBeansVersion>(
-        new WebLogicMBeansVersion(weblogicVersion, roles, capabilities));
+        new WebLogicMBeansVersion(weblogicVersion, roles, capabilities, extensions));
       versionsMap.put(key, ret);
     }
     return ret.get();
@@ -47,7 +59,8 @@ public class WebLogicMBeansVersions {
   private static String computeKey(
     WebLogicVersion weblogicVersion,
     Set<String> roles,
-    Set<String> capabilities
+    Set<String> capabilities,
+    List<RemoteConsoleExtension> extensions
   ) {
     StringBuilder sb = new StringBuilder();
     sb.append(weblogicVersion.getDomainVersion());
@@ -65,6 +78,15 @@ public class WebLogicMBeansVersions {
     for (String capability : new TreeSet<String>(capabilities)) { // sort the capabilities
       sb.append("_capability_").append(capability);
     }
+    if (extensions != null) {
+      for (RemoteConsoleExtension extension : extensions) { // already ordered
+        sb.append("_extension_").append(getExtensionKey(extension));
+      }
+    }
     return sb.toString();
+  }
+
+  private static String getExtensionKey(RemoteConsoleExtension extension) {
+    return extension.getName() + "_" + extension.getVersion();
   }
 }

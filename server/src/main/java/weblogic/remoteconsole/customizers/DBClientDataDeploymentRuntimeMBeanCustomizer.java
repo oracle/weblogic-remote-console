@@ -38,12 +38,11 @@ public class DBClientDataDeploymentRuntimeMBeanCustomizer {
    * Redeploy the DBClientDataDirectory for the case where the source is on the server.
    * User may have changed location of the source.
    */
-  public static Response<Value> redeploySourceOnServer(
+  public static Value redeploySourceOnServer(
       InvocationContext ic,
       PageActionDef pageActionDef,
       List<FormProperty> formProperties
   ) {
-    Response<Value> response = new Response<>();
     // Don't return whether properties are set.
     BeanReaderRepoSearchBuilder builder =
         ic.getPageRepo().getBeanRepo().asBeanReaderRepo().createSearchBuilder(ic, false);
@@ -56,17 +55,14 @@ public class DBClientDataDeploymentRuntimeMBeanCustomizer {
     BeanPropertyDef planPropertyDef =
         appBeanPath.getTypeDef().getPropertyDef(new Path("AbsoluteSourcePath"));
     builder.addProperty(appBeanPath, planPropertyDef);
-    Response<BeanReaderRepoSearchResults> searchResponse = builder.search();
-    if (!searchResponse.isSuccess()) {
-      return response.copyUnsuccessfulResponse(searchResponse);
-    }
-    BeanSearchResults appResults = searchResponse.getResults().getBean(appBeanPath);
+    BeanReaderRepoSearchResults searchResults = builder.search().getResults();
+    BeanSearchResults appResults = searchResults.getBean(appBeanPath);
     if (appResults == null) {
       // the DBClientDataDirectory doesn't exist
-      return response.setNotFound();
+      throw Response.notFoundException();
     }
     //Handle the source path
-    FormProperty sourcePathProperty = findRequiredFormProperty("SourcePath", formProperties);
+    FormProperty sourcePathProperty = CustomizerUtils.findRequiredFormProperty("SourcePath", formProperties);
     Value sourcePathValue = sourcePathProperty.getValue().asSettable().getValue();
     Properties deploymentOptions = new Properties();
     // Now invoke the low level redeploy action:
@@ -79,38 +75,7 @@ public class DBClientDataDeploymentRuntimeMBeanCustomizer {
         );
   }
 
-
-  private static FormProperty createFormProperty(
-      String propName,
-      List<FormProperty> oldProperties,
-      Value propValue
-  ) {
-    return
-        new FormProperty(
-            findRequiredFormProperty(propName, oldProperties).getFieldDef(),
-            propValue
-        );
-  }
-
-  private static FormProperty findRequiredFormProperty(String propertyName, List<FormProperty> formProperties) {
-    FormProperty formProperty = findOptionalFormProperty(propertyName, formProperties);
-    if (formProperty == null) {
-      throw new AssertionError("Missing required form property: " + propertyName + " " + formProperties);
-    } else {
-      return formProperty;
-    }
-  }
-
-  private static FormProperty findOptionalFormProperty(String propertyName, List<FormProperty> formProperties) {
-    for (FormProperty formProperty : formProperties) {
-      if (propertyName.equals(formProperty.getName())) {
-        return formProperty;
-      }
-    }
-    return null;
-  }
-
-  private static Response<Value> customizeAction(
+  private static Value customizeAction(
       InvocationContext ic,
       String action,
       Properties deploymentOptions,
@@ -127,11 +92,10 @@ public class DBClientDataDeploymentRuntimeMBeanCustomizer {
           ic.getLocalizer().localizeString(LocalizedConstants.REFER_TO_DEPLOYMENT_TASKS_DASHBOARD)
       );
     }
-    return response;
+    return response.getResults();
   }
 
-  public static Response<Void> customizeRedeployActionInputForm(InvocationContext ic, Page page) {
-    Response<Void> response = new Response<>();
+  public static void customizeRedeployActionInputForm(InvocationContext ic, Page page) {
     BeanTreePath appRtBTP = (ic.getIdentities() == null) ? ic.getBeanTreePath() : ic.getIdentities().get(0);
     String dbClientDataDirectoryName = appRtBTP.getLastSegment().getKey();
     Path appCfgPath = new Path("Domain.DBClientDataDirectories").childPath(dbClientDataDirectoryName);
@@ -142,23 +106,18 @@ public class DBClientDataDeploymentRuntimeMBeanCustomizer {
     BeanReaderRepoSearchBuilder builder =
         ic.getPageRepo().getBeanRepo().asBeanReaderRepo().createSearchBuilder(appCfgIc, false);
     builder.addProperty(appCfgBTP, sourcePathPropertyDef);
-    Response<BeanReaderRepoSearchResults> searchResponse = builder.search();
-    if (!searchResponse.isSuccess()) {
-      return response.copyUnsuccessfulResponse(searchResponse);
-    }
-    BeanSearchResults beanResults = searchResponse.getResults().getBean(appCfgBTP);
+    BeanReaderRepoSearchResults searchResults = builder.search().getResults();
+    BeanSearchResults beanResults = searchResults.getBean(appCfgBTP);
     if (beanResults == null) {
-      return response.setNotFound();
+      throw Response.notFoundException();
     }
     Value sourcePathValue = beanResults.getValue(sourcePathPropertyDef);
     List<FormProperty> oldProperties = page.asForm().getProperties();
     List<FormProperty> newProperties =
-        List.of(
-            createFormProperty("SourcePath", oldProperties, sourcePathValue)
-        );
+      List.of(
+          CustomizerUtils.createFormProperty("SourcePath", oldProperties, sourcePathValue)
+      );
     oldProperties.clear();
     oldProperties.addAll(newProperties);
-    response.setSuccess(null);
-    return response;
   }
 }

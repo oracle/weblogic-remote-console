@@ -1,4 +1,4 @@
-// Copyright (c) 2023, Oracle Corporation and/or its affiliates.
+// Copyright (c) 2023, 2024, Oracle Corporation and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.customizers;
@@ -9,10 +9,8 @@ import weblogic.remoteconsole.common.repodef.LocalizedConstants;
 import weblogic.remoteconsole.common.utils.Path;
 import weblogic.remoteconsole.server.repo.BeanActionArg;
 import weblogic.remoteconsole.server.repo.InvocationContext;
-import weblogic.remoteconsole.server.repo.Response;
 import weblogic.remoteconsole.server.repo.SettableValue;
 import weblogic.remoteconsole.server.repo.StringValue;
-import weblogic.remoteconsole.server.repo.Value;
 
 /**
  * Custom code for processing the JDBCDataSourceRuntimeMBean
@@ -21,21 +19,14 @@ public class JDBCDataSourceRuntimeMBeanCustomizer {
   private JDBCDataSourceRuntimeMBeanCustomizer() {
   }
 
-  public static Response<SettableValue> getTestResults(
-    InvocationContext ic
-  ) {
-    Response<SettableValue> response = new Response<>();
+  public static SettableValue getTestResults(InvocationContext ic) {
     List<BeanActionArg> args = List.of();
-    Response<Value> testResponse =
+    String testPoolResult =
       ic.getBeanTreePath().getBeanRepo().asBeanReaderRepo().invokeAction(
         ic,
         ic.getBeanTreePath().getTypeDef().getActionDef(new Path("testPool"), true),
         args
-      );
-    if (!testResponse.isSuccess()) {
-      return response.copyUnsuccessfulResponse(testResponse);
-    }
-    String testPoolResult = testResponse.getResults().asString().getValue();
+      ).getResults().asString().getValue();
     // e.g.
     //   0 DomainRuntime/
     //   1 CombinedServerRuntimes/
@@ -64,6 +55,6 @@ public class JDBCDataSourceRuntimeMBeanCustomizer {
           testPoolResult
         );
     }
-    return response.setSuccess(new SettableValue(new StringValue(displayedResult), false));
+    return new SettableValue(new StringValue(displayedResult), false);
   }
 }

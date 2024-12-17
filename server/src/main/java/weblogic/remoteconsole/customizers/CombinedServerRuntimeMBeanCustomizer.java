@@ -42,47 +42,47 @@ public class CombinedServerRuntimeMBeanCustomizer {
     }
   }
 
-  public static Response<Value> start(
+  public static Value start(
     InvocationContext ic,
     PageActionDef pageActionDef,
     List<FormProperty> formProperties
   ) {
-    return delegateToServerLifeCycleRuntimeAction(ic, "start");
+    return delegateToServerLifeCycleRuntimeAction(ic, "start").getResults();
   }
 
-  public static Response<Value> resume(
+  public static Value resume(
     InvocationContext ic,
     PageActionDef pageActionDef,
     List<FormProperty> formProperties
   ) {
-    return delegateToServerLifeCycleRuntimeAction(ic, "resume");
+    return delegateToServerLifeCycleRuntimeAction(ic, "resume").getResults();
   }
 
-  public static Response<Value> suspend(
+  public static Value suspend(
     InvocationContext ic,
     PageActionDef pageActionDef,
     List<FormProperty> formProperties
   ) {
-    return delegateToServerLifeCycleRuntimeAction(ic, "suspend");
+    return delegateToServerLifeCycleRuntimeAction(ic, "suspend").getResults();
   }
 
-  public static Response<Value> forceSuspend(
+  public static Value forceSuspend(
     InvocationContext ic,
     PageActionDef pageActionDef,
     List<FormProperty> formProperties
   ) {
-    return delegateToServerLifeCycleRuntimeAction(ic, "forceSuspend");
+    return delegateToServerLifeCycleRuntimeAction(ic, "forceSuspend").getResults();
   }
 
-  public static Response<Value> restartSSL(
+  public static Value restartSSL(
     InvocationContext ic,
     PageActionDef pageActionDef,
     List<FormProperty> formProperties
   ) {
-    return delegateToServerRuntimeAction(ic, "restartSSLChannels");
+    return delegateToServerRuntimeAction(ic, "restartSSLChannels").getResults();
   }
 
-  public static Response<Value> publishSingleSignOnServices(
+  public static Value publishSingleSignOnServices(
     InvocationContext ic,
     PageActionDef pageActionDef,
     List<FormProperty> formProperties
@@ -93,40 +93,33 @@ public class CombinedServerRuntimeMBeanCustomizer {
       "SingleSignOnServicesRuntime",
       "publish",
       formProperties
-    );
+    ).getResults();
   }
 
-  public static Response<Value> forceShutdown(
+  public static Value forceShutdown(
     InvocationContext ic,
     PageActionDef pageActionDef,
     List<FormProperty> formProperties
   ) {
-    Response<Value> response = new Response<>();
-    Response<BeanReaderRepoSearchResults> searchResponse = getShutdownProperties(ic, true);
-    if (!searchResponse.isSuccess()) {
-      return response.copyUnsuccessfulResponse(searchResponse);
-    }
-    boolean adminServer = isAdminServer(ic, searchResponse.getResults());
-    response = delegateToServerLifeCycleRuntimeAction(ic, "forceShutdown");
-    return getShutdownResponse(response, adminServer);
+    boolean adminServer = isAdminServer(ic, getShutdownProperties(ic, true));
+    return
+      getShutdownResponse(
+        delegateToServerLifeCycleRuntimeAction(ic, "forceShutdown"),
+        adminServer
+      );
   }
 
-  public static Response<Value> shutdown(
+  public static Value shutdown(
     InvocationContext ic,
     PageActionDef pageActionDef,
     List<FormProperty> formProperties
   ) {
     // Get the configured timeout and whether to ignore sessions from the corresponding server mbean,
     // then invoke shutdown on the server lifecycle runtime mbean passing in those values.
-    Response<Value> response = new Response<>();
-    Response<BeanReaderRepoSearchResults> searchResponse = getShutdownProperties(ic, false);
-    if (!searchResponse.isSuccess()) {
-      return response.copyUnsuccessfulResponse(searchResponse);
-    }
-    BeanReaderRepoSearchResults searchResults = searchResponse.getResults();
+    BeanReaderRepoSearchResults searchResults = getShutdownProperties(ic, false);
     BeanSearchResults serverResults = searchResults.getBean(getServerBeanPath(ic));
     if (serverResults == null) {
-      return response.setNotFound();
+      throw Response.notFoundException();
     }
     boolean adminServer = isAdminServer(ic, searchResults);
     BeanTreePath realPath = getRealBeanTreePath(ic, "DomainRuntime.ServerLifeCycleRuntimes", "");
@@ -142,11 +135,14 @@ public class CombinedServerRuntimeMBeanCustomizer {
         getRequiredPropertyValue(serverResults, getIgnoreSessionsDuringShutdownPropertyDef(ic))
       )
     );
-    response = ic.getPageRepo().getBeanRepo().asBeanReaderRepo().invokeAction(ic, realPath, actionDef, args);
-    return getShutdownResponse(response, adminServer);
+    return
+      getShutdownResponse(
+        ic.getPageRepo().getBeanRepo().asBeanReaderRepo().invokeAction(ic, realPath, actionDef, args),
+        adminServer
+      );
   }
 
-  private static Response<Value> getShutdownResponse(Response<Value> invokeResponse, boolean adminServer) {
+  private static Value getShutdownResponse(Response<Value> invokeResponse, boolean adminServer) {
     if (adminServer) {
       // The basic flow is:
       // a) the CBE makes a REST API call to the admin server to shutdown the admin server
@@ -172,16 +168,15 @@ public class CombinedServerRuntimeMBeanCustomizer {
           + " messages: " + invokeResponse.getMessages()
         );
       }
-      return new Response<Value>().setSuccess(null);
+      return null;
     }
-    return invokeResponse;
+    return invokeResponse.getResults();
   }
 
-  private static Response<BeanReaderRepoSearchResults> getShutdownProperties(
+  private static BeanReaderRepoSearchResults getShutdownProperties(
     InvocationContext ic,
     boolean isForceShutdown
   ) {
-    Response<BeanSearchResults> response = new Response<>();
     // Don't return whether properties are set.
     BeanReaderRepoSearchBuilder builder =
       ic.getPageRepo().getBeanRepo().asBeanReaderRepo().createSearchBuilder(ic, false);
@@ -190,7 +185,7 @@ public class CombinedServerRuntimeMBeanCustomizer {
       builder.addProperty(getServerBeanPath(ic), getGracefulShutdownTimeoutPropertyDef(ic));
       builder.addProperty(getServerBeanPath(ic), getIgnoreSessionsDuringShutdownPropertyDef(ic));
     }
-    return builder.search();
+    return builder.search().getResults();
   }
 
   private static boolean isAdminServer(InvocationContext ic, BeanReaderRepoSearchResults searchResults) {

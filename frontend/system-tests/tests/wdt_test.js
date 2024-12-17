@@ -512,7 +512,7 @@ describe.only('Test Suite: wdt_test: Import base_domain Project and create provi
                await driver.findElement(By.xpath("//*[@id='RemoteConsoleHelper_ProtectedCookieEnabled']/div[1]/div/div")).click();
                await driver.sleep(2400);
                console.log("Click wdtOptions Configuration AuditType Setting option");
-               element = driver.findElement(By.xpath("//*[@id='oj-combobox-choice-ConfigurationAuditType']/span[2]/a"));
+               element = driver.findElement(By.xpath("//*[@id='oj-combobox-choice-ConfigurationAuditType']/span[2]"));
                driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
                await driver.sleep(2400);
                await element.click();
@@ -614,7 +614,7 @@ describe.only('Test Suite: wdt_test: Import base_domain Project and create provi
                 await driver.findElement(By.xpath("//span[contains(.,'baseDomainPropList')]")).click();
                 await driver.sleep(4800);
                 console.log("Click Choose File...");
-                await driver.findElement(By.xpath("//*[@id='model-form-layout']/div/div[4]/div/div[2]/div/a")).click();
+                await driver.findElement(By.xpath("//*[@id='model-form-layout']/div/div[2]/div/div[2]/div/a")).click();
                 await driver.sleep(4800);
                 await driver.findElement(By.xpath("//img[@title='Choose File']")).click();
                 await driver.sleep(1400);
@@ -721,7 +721,7 @@ describe.only('Test Suite: wdt_test: Import base_domain Project and create provi
                 await driver.findElement(By.xpath("//span[contains(.,'baseDomainPropList')]")).click();
                 await driver.sleep(4800);
                 console.log("Click Choose File...");
-                await driver.findElement(By.xpath("//*[@id='model-form-layout']/div/div[4]/div/div[2]/div/a")).click();
+                await driver.findElement(By.xpath("//*[@id='model-form-layout']/div/div[2]/div/div[2]/div/a")).click();
                 await driver.sleep(4800);
                 await driver.findElement(By.xpath("//img[@title='Choose File']")).click();
                 await driver.sleep(1400);
@@ -813,7 +813,7 @@ describe.only('Test Suite: wdt_test: Import base_domain Project and create provi
                 await driver.findElement(By.xpath("//span[contains(.,'baseDomainPropList')]")).click();
                 await driver.sleep(4800);
                 console.log("Click Choose File...");
-                await driver.findElement(By.xpath("//*[@id='model-form-layout']/div/div[4]/div/div[2]/div/a")).click();
+                await driver.findElement(By.xpath("//*[@id='model-form-layout']/div/div[2]/div/div[2]/div/a")).click();
                 await driver.sleep(4800);
                 await driver.findElement(By.xpath("//img[@title='Choose File']")).click();
                 await driver.sleep(1400);
@@ -945,7 +945,7 @@ describe.only('Test Suite: wdt_test: Import base_domain Project and create provi
                 await driver.findElement(By.xpath("//span[contains(.,'baseDomainPropList')]")).click();
                 await driver.sleep(4800);
                 console.log("Click Choose File...");
-                await driver.findElement(By.xpath("//*[@id='model-form-layout']/div/div[4]/div/div[2]/div/a")).click();
+                await driver.findElement(By.xpath("//*[@id='model-form-layout']/div/div[2]/div/div[2]/div/a")).click();
                 await driver.sleep(4800);
                 await driver.findElement(By.xpath("//img[@title='Choose File']")).click();
                 await driver.sleep(1400);

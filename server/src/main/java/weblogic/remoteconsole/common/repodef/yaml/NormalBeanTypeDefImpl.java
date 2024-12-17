@@ -227,8 +227,8 @@ public class NormalBeanTypeDefImpl extends YamlBasedBeanTypeDefImpl {
   }
 
   @Override
-  public boolean isSupportsFilteringDashboards() {
-    return getCustomizerSource().isSupportsFilteringDashboards();
+  public boolean isAllowSearch() {
+    return getCustomizerSource().isAllowSearch();
   }
 
   @Override

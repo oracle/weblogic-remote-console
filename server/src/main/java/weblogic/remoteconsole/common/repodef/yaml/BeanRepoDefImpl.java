@@ -25,6 +25,8 @@ public abstract class BeanRepoDefImpl implements BeanRepoDef {
 
   private static final Logger LOGGER = Logger.getLogger(BeanRepoDefImpl.class.getName());
 
+  private static boolean REPORT_MISSING = Boolean.parseBoolean(System.getenv("ReportMissing"));
+
   protected BeanRepoDefImpl(WebLogicMBeansVersion mbeansVersion) {
     this.mbeansVersion = mbeansVersion;
   }
@@ -67,19 +69,17 @@ public abstract class BeanRepoDefImpl implements BeanRepoDef {
   }
 
   BaseBeanTypeDefImpl getTypeDefImpl(String typeName) {
+    String usageId = "type " + typeName;
     Optional<BaseBeanTypeDefImpl> opt = getTypeNameToTypeDefImplMap().get(typeName);
     if (opt == null) {
       opt = Optional.ofNullable(createTypeDefImpl(typeName));
       getTypeNameToTypeDefImplMap().put(typeName, opt);
     }
     if (opt.isPresent()) {
+      UsageTracker.used(usageId);
       return opt.get();
     }
-    LOGGER.finest(
-      "Missing type"
-      + " " + getMBeansVersion().getWebLogicVersion()
-      + " " + typeName
-    );
+    UsageTracker.notFound(usageId);
     return null;
   }
 

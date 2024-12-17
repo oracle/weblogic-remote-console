@@ -1,4 +1,4 @@
-// Copyright (c) 2021, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2024, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef.schema;
@@ -6,7 +6,7 @@ package weblogic.remoteconsole.common.repodef.schema;
 /**
  * This POJO mirrors the yaml file format for the default value of a bean property.
  */
-public class DefaultValueDefSource {
+public class DefaultValueDefSource extends YamlSource {
   private Value<ValueDefSource> secureModeValue = new Value<>(null);
   private Value<ValueDefSource> productionModeValue = new Value<>(null);
   private Value<ValueDefSource> value = new Value<>(null);
@@ -67,5 +67,13 @@ public class DefaultValueDefSource {
 
   public void setDerivedDefault(boolean val) {
     derivedDefault.setValue(val);
+  }
+
+  @Override
+  protected void validateExtension() {
+    super.validateExtension();
+    validateExtensionChild(getSecureModeValue(), "secureModeValue");
+    validateExtensionChild(getProductionModeValue(), "productionModeValue");
+    validateExtensionChild(getValue(), "value");
   }
 }

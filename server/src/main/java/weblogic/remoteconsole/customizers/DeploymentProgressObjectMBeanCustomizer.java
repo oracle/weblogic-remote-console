@@ -1,4 +1,4 @@
-// Copyright (c) 2023, Oracle Corporation and/or its affiliates.
+// Copyright (c) 2023, 2024, Oracle Corporation and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.customizers;
@@ -15,7 +15,6 @@ import weblogic.remoteconsole.server.repo.BeanActionArg;
 import weblogic.remoteconsole.server.repo.BeanTreePath;
 import weblogic.remoteconsole.server.repo.FormProperty;
 import weblogic.remoteconsole.server.repo.InvocationContext;
-import weblogic.remoteconsole.server.repo.Response;
 import weblogic.remoteconsole.server.repo.SettableValue;
 import weblogic.remoteconsole.server.repo.Value;
 
@@ -29,10 +28,9 @@ public class DeploymentProgressObjectMBeanCustomizer {
 
   // The mbean returns a lot of repeated messages.
   // Weed out the repeats.
-  public static Response<SettableValue> getDeploymentMessages(
+  public static SettableValue getDeploymentMessages(
     @Source(property = "DeploymentMessages") SettableValue messages
   ) {
-    Response<SettableValue> response = new Response<>();
     ArrayList<Value> uniqueMessages = new ArrayList<>(); 
     HashSet<String> seenMessages = new HashSet<>();
     for (Value value : messages.getValue().asArray().getValues()) {
@@ -42,11 +40,10 @@ public class DeploymentProgressObjectMBeanCustomizer {
         uniqueMessages.add(value);
       }
     }
-    response.setSuccess(new SettableValue(new ArrayValue(uniqueMessages), false));
-    return response;
+    return new SettableValue(new ArrayValue(uniqueMessages), false);
   }
 
-  public static Response<Value> purgeCompletedDeploymentProgressObjects(
+  public static Value purgeCompletedDeploymentProgressObjects(
       InvocationContext ic,
       PageActionDef pageActionDef,
       List<FormProperty> formProperties
@@ -57,7 +54,7 @@ public class DeploymentProgressObjectMBeanCustomizer {
     BeanActionDef actionDef =
         dmBTP.getTypeDef().getActionDef(new Path("purgeCompletedDeploymentProgressObjects"));
     List<BeanActionArg> args = new ArrayList<>();
-    return  dmIC.getPageRepo().getBeanRepo().asBeanReaderRepo().invokeAction(dmIC, actionDef, args);
+    return  dmIC.getPageRepo().getBeanRepo().asBeanReaderRepo().invokeAction(dmIC, actionDef, args).getResults();
   }
 
 }

@@ -1,4 +1,4 @@
-// Copyright (c) 2021, 2023, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2024, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.repo;
@@ -8,7 +8,6 @@ import java.lang.reflect.Type;
 import java.util.List;
 import java.util.logging.Logger;
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import weblogic.remoteconsole.common.repodef.PageActionDef;
 import weblogic.remoteconsole.common.repodef.PageDef;
 import weblogic.remoteconsole.common.repodef.PageRepoDef;
@@ -22,7 +21,7 @@ import weblogic.remoteconsole.common.utils.StringUtils;
 public abstract class PageReaderRepo extends PageRepo {
   private static final Logger LOGGER = Logger.getLogger(PageReaderRepo.class.getName());
 
-  private static final Type CUSTOMIZE_PAGE_RETURN_TYPE = (new TypeReference<Response<Void>>() {}).getType();
+  private static final Type CUSTOMIZE_PAGE_RETURN_TYPE = Void.TYPE;
 
   protected PageReaderRepo(PageRepoDef pageRepoDef, BeanRepo beanRepo) {
     super(pageRepoDef, beanRepo);
@@ -62,6 +61,7 @@ public abstract class PageReaderRepo extends PageRepo {
     }
   }
 
+  @SuppressWarnings("unchecked")
   private Response<Page> customizePage(InvocationContext ic, Response<Page> pageResponse) {
     if (!pageResponse.isSuccess()) {
       // Something went wrong getting the standard contents of the page.
@@ -83,17 +83,14 @@ public abstract class PageReaderRepo extends PageRepo {
       InvocationContext.class,
       Page.class
     );
-    List<Object> args = List.of(ic, page);
-    Object responseAsObject = CustomizerInvocationUtils.invokeMethod(method, args);
-    @SuppressWarnings("unchecked")
-    Response<Void> customizerResponse = (Response<Void>)responseAsObject;
-    if (!customizerResponse.isSuccess()) {
-      // The customizer had a problem.  Return it.
-      return pageResponse.copyUnsuccessfulResponse(customizerResponse);
+    try {
+      CustomizerInvocationUtils.invokeMethod(method, List.of(ic, page));
+      // Since pageResponse is already successful and already refers to the page that
+      // the customizer successfully modified, just return it (v.s. making a new response).
+      return pageResponse;
+    } catch (ResponseException re) {
+      return pageResponse.copyUnsuccessfulResponse(re.getResponse());
     }
-    // Since pageResponse is already successful and already refers to the page that
-    // the customizer successfully modified, just return it (v.s. making a new response).
-    return pageResponse;
   }
 
   // Returns the slice page path for the bean and slice referenced by the invocation context.

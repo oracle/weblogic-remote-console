@@ -1,4 +1,4 @@
-// Copyright (c) 2021, 2023, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2024, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef;
@@ -182,5 +182,10 @@ public interface BeanTypeDef {
   public boolean isOrdered();
 
   // Whether dashboards can be created that return beans of this type
-  public boolean isSupportsFilteringDashboards();
+  public default boolean isSupportsFilteringDashboards() {
+    return isAllowSearch();
+  }
+
+  // Whether beans of this type will be searched
+  public boolean isAllowSearch();
 }

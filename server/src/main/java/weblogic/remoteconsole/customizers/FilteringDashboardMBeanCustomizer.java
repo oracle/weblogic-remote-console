@@ -1,4 +1,4 @@
-// Copyright (c) 2022, 2023, Oracle and/or its affiliates.
+// Copyright (c) 2022, 2024, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.customizers;
@@ -14,7 +14,6 @@ import weblogic.remoteconsole.common.repodef.PagePropertyDef;
 import weblogic.remoteconsole.common.utils.Path;
 import weblogic.remoteconsole.common.utils.StringUtils;
 import weblogic.remoteconsole.server.repo.BeanTreePath;
-import weblogic.remoteconsole.server.repo.Dashboard;
 import weblogic.remoteconsole.server.repo.DashboardManager;
 import weblogic.remoteconsole.server.repo.FilteringDashboard;
 import weblogic.remoteconsole.server.repo.FilteringDashboardDefManager;
@@ -26,7 +25,6 @@ import weblogic.remoteconsole.server.repo.Form;
 import weblogic.remoteconsole.server.repo.FormProperty;
 import weblogic.remoteconsole.server.repo.InvocationContext;
 import weblogic.remoteconsole.server.repo.Page;
-import weblogic.remoteconsole.server.repo.Response;
 import weblogic.remoteconsole.server.repo.SearchBeanPropertyResults;
 import weblogic.remoteconsole.server.repo.SearchBeanResults;
 import weblogic.remoteconsole.server.repo.StringValue;
@@ -42,24 +40,19 @@ public class FilteringDashboardMBeanCustomizer {
   }
 
   // Customizes the PDJ for configuring the filters for an existing custom filtering dashboard.
-  public static Response<PageDef> customizeFiltersSliceDef(InvocationContext ic, PageDef uncustomizedPageDef) {
-    return FilteringDashboardDefManager.customizeFiltersSliceDef(ic, uncustomizedPageDef);
+  public static PageDef customizeFiltersSliceDef(InvocationContext ic, PageDef uncustomizedPageDef) {
+    return FilteringDashboardDefManager.customizeFiltersSliceDef(ic, uncustomizedPageDef).getResults();
   }
 
   // Customize the PDJ for viewing the results (i.e. filtered beans) of an existing filtering dashboard.
-  public static Response<PageDef> customizeViewSliceDef(InvocationContext ic, PageDef uncustomizedPageDef) {
-    return FilteringDashboardDefManager.customizeViewSliceDef(ic, uncustomizedPageDef);
+  public static PageDef customizeViewSliceDef(InvocationContext ic, PageDef uncustomizedPageDef) {
+    return FilteringDashboardDefManager.customizeViewSliceDef(ic, uncustomizedPageDef).getResults();
   }
 
   // Customizes the RDJ for configuring the filters for an existing custom filtering dashboard.
-  public static Response<Void> customizeFiltersSlice(InvocationContext ic, Page page) {
-    Response<Void> response = new Response<>();
+  public static void customizeFiltersSlice(InvocationContext ic, Page page) {
     // Get the dashboard (if it exists)
-    Response<Dashboard> getResponse = getDashboardManager(ic).getDashboard(ic);
-    if (!getResponse.isSuccess()) {
-      return response.copyUnsuccessfulResponse(getResponse);
-    }
-    FilteringDashboard dashboard = getResponse.getResults().asFilteringDashboard();
+    FilteringDashboard dashboard = getDashboardManager(ic).getDashboard(ic).getResults().asFilteringDashboard();
     BeanTreePath btpTemplate = dashboard.getConfig().getDashboardDef().getBeanTreePathTemplate();
     // Customize the page's intro to include the type.
     page.setLocalizedIntroductionHTML(
@@ -131,21 +124,17 @@ public class FilteringDashboardMBeanCustomizer {
         )
       );
     }
-    return response.setSuccess(null);
   }
 
   // Customizes the RDJ for returning the filtered beans for an existing filtering dashboard.
-  public static Response<Void> customizeViewSlice(InvocationContext ic, Page page) {
-    Response<Void> response = new Response<>();
+  public static void customizeViewSlice(InvocationContext ic, Page page) {
     // Get the dashboard name from the request then get the corresonding dashboard's current results
     // (i.e. the currently existing beans that pass the dashboard's filters).
     String dashboardName = ic.getBeanTreePath().getLastSegment().getKey();
-    Response<FilteringDashboard> resultsResponse =
-      getDashboardManager(ic).getFilteringDashboardSearchResults(ic, page.getPageDef(), dashboardName);
-    if (!resultsResponse.isSuccess()) {
-      return response.copyUnsuccessfulResponse(resultsResponse);
-    }
-    FilteringDashboard dashboard = resultsResponse.getResults();
+    FilteringDashboard dashboard =
+      getDashboardManager(ic)
+        .getFilteringDashboardSearchResults(ic, page.getPageDef(), dashboardName)
+        .getResults();
     BeanTreePath btpTemplate = dashboard.getConfig().getDashboardDef().getBeanTreePathTemplate();
     // Customize the page's intro to include the type and results date.
     page.setLocalizedIntroductionHTML(
@@ -213,7 +202,6 @@ public class FilteringDashboardMBeanCustomizer {
     }
     // Add the sorted rows to the RDJ
     page.asTable().getRows().addAll(sorter.values());
-    return response.setSuccess(null);
   }
 
   private static String getDashboardDescription(

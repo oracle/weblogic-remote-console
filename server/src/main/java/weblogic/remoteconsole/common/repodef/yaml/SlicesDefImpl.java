@@ -1,4 +1,4 @@
-// Copyright (c) 2021, 2023, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2024, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef.yaml;
@@ -34,9 +34,13 @@ public class SlicesDefImpl implements SlicesDef {
     this.typeDefImpl = typeDefImpl;
     for (SliceDefSource sliceDefSource : getSource().getSlices()) {
       if (getBeanRepoDefImpl().supportsCapabilities(sliceDefSource.getRequiredCapabilities())) {
+        String usageId = "slice " + typeDefImpl.getTypeName() + " " + sliceDefSource.getName();
         SliceDefImpl sliceDefImpl = SliceDefImpl.createSliceDefImpl(this, sliceDefSource, null);
         if (sliceDefImpl != null) {
+          UsageTracker.used(usageId);
           getContentDefImpls().add(sliceDefImpl);
+        } else {
+          UsageTracker.notFound(usageId);
         }
       }
     }

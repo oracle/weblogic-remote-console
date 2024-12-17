@@ -3,6 +3,7 @@
 
 editable: true
 disableMBeanJavadoc: true
+allowSearch: false
 instanceName: Service Provider Partner
 
 subTypeDiscriminatorProperty: Type

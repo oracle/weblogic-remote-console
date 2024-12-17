@@ -3,7 +3,7 @@
 
 editable: true
 disableMBeanJavadoc: true
-supportsFilteringDashboards: false
+allowSearch: false
 
 properties:
 - name: ProviderUrl

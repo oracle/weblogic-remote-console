@@ -12,7 +12,7 @@ import weblogic.remoteconsole.common.utils.StringUtils;
  * This POJO mirrors the yaml source file format for customizing information about type,
  * e.g. ServerLifeCycleRuntimeMBean/type.yaml.
  */
-public class BeanTypeDefCustomizerSource {
+public class BeanTypeDefCustomizerSource extends YamlSource {
   private ListValue<BeanPropertyDefCustomizerSource> properties = new ListValue<>();
   private ListValue<BeanChildDefCustomizerSource> children = new ListValue<>();
   private ListValue<BeanActionDefCustomizerSource> actions = new ListValue<>();
@@ -27,7 +27,7 @@ public class BeanTypeDefCustomizerSource {
   private BooleanValue referenceable = new BooleanValue();
   private BooleanValue ordered = new BooleanValue();
   private BooleanValue editable = new BooleanValue();
-  private BooleanValue supportsFilteringDashboards = new BooleanValue(true);
+  private BooleanValue allowSearch = new BooleanValue(true);
   private BooleanValue settable = new BooleanValue();
 
   // The list of properties on this type that have been customized.
@@ -254,14 +254,25 @@ public class BeanTypeDefCustomizerSource {
     settable.setValue(value);
   }
 
-  // Whether this type supports custom filtering dashboards.
-  // e.g. we won't want to support creating custom filtering dashboards
-  // for simple searches.
-  public boolean isSupportsFilteringDashboards() {
-    return supportsFilteringDashboards.getValue();
+  // Whether to search this type.
+  // e.g. we won't want to support searching descriptor beans or security data because it's so expensive
+  public boolean isAllowSearch() {
+    return allowSearch.getValue();
   }
 
-  public void setSupportsFilteringDashboards(boolean value) {
-    supportsFilteringDashboards.setValue(value);
+  public void setAllowSearch(boolean value) {
+    allowSearch.setValue(value);
+  }
+
+  @Override
+  protected void validateExtension() {
+    super.validateExtension();
+    validateExtensionChildren(getProperties(), "properties");
+    validateExtensionChildren(getChildren(), "children");
+    validateExtensionChildren(getActions(), "actions");
+    validateExtensionChildren(getSubTypes(), "subTypes");
+    validateExtensionStringPropertyNotSpecified(getDeleteMethod(), "deleteMethod");
+    validateExtensionStringPropertyNotSpecified(getCreateResourceMethod(), "createResourceMethod");
+    validateExtensionStringPropertyNotSpecified(getGetCollectionMethod(), "getCollectionMethod");
   }
 }

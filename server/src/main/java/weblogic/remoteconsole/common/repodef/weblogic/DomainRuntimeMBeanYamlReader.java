@@ -16,22 +16,13 @@ import weblogic.remoteconsole.common.utils.StringUtils;
 /**
  * Creates the yaml that describes the pages and types a DomainRuntimeMBean.
  * 
- * It starts off with the harvested and hand-coded yaml for DomainRuntimeMBean and:
- * 
- * 1) Adds 'Dashboards' and 'RecentSearches' children that hold collections of
- *    fabricated beans for dashboards and recent simple search results.
- *
- * 2) Adds a CombinedServerRuntimes child that holds a collection of
- *    fabricated beans that pull together the ServerLifeCycleRuntime and
- *    ServerRuntime mbeans.
- * 
- * 3) Adds a corresponding aggregated child for every child of
- *    the ServerRuntimeMBean (e.g. AggregatedLibraryRuntimes,
- *    AggregatedApplicationRuntimes).  That is, it adds the
- *    fabricated child beans that aggregate the per-server child
- *    mbeans so that the user can get a domain-wide view of the mbeans
- *    (e.g. see an application across the servers it's currently
- *    running on)
+ * It starts off with the harvested and hand-coded yaml for DomainRuntimeMBean
+ * and adds a corresponding aggregated child for every child of
+ * the ServerRuntimeMBean (e.g. AggregatedLibraryRuntimes,
+ * AggregatedApplicationRuntimes).  That is, it adds the
+ * fabricated child beans that aggregate the per-server child
+ * mbeans so that the user can get a domain-wide view of the mbeans
+ * (e.g. see an application across the servers it's currently unning on)
  */
 class DomainRuntimeMBeanYamlReader extends WebLogicBeanTypeYamlReader {
 
@@ -48,36 +39,6 @@ class DomainRuntimeMBeanYamlReader extends WebLogicBeanTypeYamlReader {
   @Override
   BeanTypeDefSource getBeanTypeDefSource(BeanRepoDef repoDef, String type) {
     BeanTypeDefSource source = super.getBeanTypeDefSource(repoDef, type);
-    // Add the fabricated collection of beans for recent simple search results
-    {
-      BeanPropertyDefSource property = new BeanPropertyDefSource();
-      property.setName("RecentSearches");
-      property.setType("weblogic.management.SimpleSearchMBean");
-      property.setArray(true);
-      property.setRelationship("containment");
-      property.setDescriptionHTML("<p>Recent search results.</p>");
-      source.getProperties().add(property);
-    }
-    // Add the fabricated collection of beans for dashboards
-    {
-      BeanPropertyDefSource property = new BeanPropertyDefSource();
-      property.setName(DASHBOARDS);
-      property.setType("weblogic.management.DashboardMBean");
-      property.setArray(true);
-      property.setRelationship("containment");
-      property.setDescriptionHTML("<p>Dashboards.</p>");
-      source.getProperties().add(property);
-    }
-    // Add the fabricated collection of beans that merge ServerLifeCycleRuntimeMBean and ServerRuntimeMBean
-    {
-      BeanPropertyDefSource property = new BeanPropertyDefSource();
-      property.setName("CombinedServerRuntimes");
-      property.setType("weblogic.management.runtime.CombinedServerRuntimeMBean");
-      property.setArray(true);
-      property.setRelationship("containment");
-      property.setDescriptionHTML("<p>All the configured and/or running servers in the domain.</p>");
-      source.getProperties().add(property);
-    }
     // For every aggregatable child under a server runtime mbean,
     // add a corresponding aggregated property under the domain runtime mbean
     BeanTypeDefSource serverRuntimeSource = getYamlReader().getBeanTypeDefSource(repoDef, SERVER_RUNTIME_MBEAN);

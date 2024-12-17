@@ -3,9 +3,11 @@
 
 package weblogic.remoteconsole.server.connection;
 
+import java.util.List;
 import java.util.Set;
 import javax.ws.rs.client.Client;
 
+import weblogic.remoteconsole.common.utils.RemoteConsoleExtension;
 import weblogic.remoteconsole.common.utils.WebLogicVersion;
 
 /** The Connection interface holding connection information */
@@ -37,6 +39,11 @@ public interface Connection {
    * (returns an empty set if the extension is not installed)
    */
   public Set<String> getCapabilities();
+
+  /**
+   * Obtain the domain's Remote Console extensions
+   */
+  public List<RemoteConsoleExtension> getExtensions();
 
   /** Obtain the Connection Username */
   public String getUsername();

@@ -12,6 +12,7 @@ import java.util.logging.Logger;
 import javax.json.JsonObject;
 import javax.net.ssl.SSLException;
 import javax.ws.rs.ProcessingException;
+import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
@@ -151,6 +152,37 @@ public class WebLogicRestClient {
       // LOGGER.log(Level.WARNING, "Unexpected WebLogic Rest exception", e);
       return Response.status(Response.Status.SERVICE_UNAVAILABLE).build();
     }
+  }
+
+  public static InputStream getAsInputStream(WebLogicRestRequest request, String acceptType) {
+    Response response = null;
+    boolean succeeded = false;
+    WebApplicationException we = null;
+    try {
+      WebTarget webTarget = getWebTarget(request);
+      MultivaluedMap<String, Object> headers = WebLogicRestClientHelper.createHeaders(request);
+      response = webTarget.request().headers(headers).accept(acceptType).get();
+      if (WebLogicRestClientHelper.isErrorResponse("GET", response.getStatus())) {
+        we = new WebApplicationException(WebLogicRestClientHelper.getWebLogicRestErrorMessages(response));
+      } else {
+        succeeded = true;
+        return response.readEntity(InputStream.class);
+      }
+    } catch (ProcessingException pe) {
+      try {
+        we = new WebApplicationException(handleProcessingException(pe));
+      } catch (Exception ce) {
+        we = new WebApplicationException(ResponseHelper.createExceptionResponse(ce));
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
+      we = new WebApplicationException(ResponseHelper.createExceptionResponse(e));
+    } finally {
+      if (!succeeded && response != null) {
+        response.close();
+      }
+    }
+    throw we;
   }
 
   /**

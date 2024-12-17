@@ -1,4 +1,4 @@
-# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2024, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 actions: [
@@ -205,6 +205,13 @@ properties:
 - defaultValue:
     secureModeValue:
       value: false
+  descriptionHTML: '<p>Debug JVM to JVM requests and responses</p> '
+  name: DebugRJVMRequestResponse
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
     value:
       value: false
   descriptionHTML: '<p>Debug RSA security processing</p> '
@@ -245,6 +252,15 @@ properties:
   descriptionHTML: '<p>Debug Work context (out of band data propagation)</p> '
   name: DebugWorkContext
   restartNeeded: true
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: true
+    value:
+      value: true
+  descriptionHTML: '<p>Default RJVM to JVM requests and responses</p> '
+  name: DefaultRJVMDiagMessages
   type: boolean
   writable: true
 - defaultValue:

@@ -1,4 +1,4 @@
-// Copyright (c) 2022, Oracle and/or its affiliates.
+// Copyright (c) 2022, 2024, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.customizers;
@@ -13,7 +13,6 @@ import weblogic.remoteconsole.server.repo.ArrayValue;
 import weblogic.remoteconsole.server.repo.BeanReaderRepoSearchBuilder;
 import weblogic.remoteconsole.server.repo.BeanReaderRepoSearchResults;
 import weblogic.remoteconsole.server.repo.InvocationContext;
-import weblogic.remoteconsole.server.repo.Response;
 import weblogic.remoteconsole.server.repo.SearchBeanFilter;
 import weblogic.remoteconsole.server.repo.SearchBeanFinder;
 import weblogic.remoteconsole.server.repo.SearchBeanPropertyResults;
@@ -34,16 +33,11 @@ public class ReferenceableBeanCustomizer {
   private ReferenceableBeanCustomizer() {
   }
 
-  public static Response<List<TableRow>> getReferencedBySliceTableRows(
+  public static List<TableRow> getReferencedBySliceTableRows(
     InvocationContext ic,
     BeanReaderRepoSearchResults searchResults
   ) {
-    Response<List<TableRow>> response = new Response<>();
-    Response<List<SearchBeanResults>> findResponse = findReferrers(ic);
-    if (!findResponse.isSuccess()) {
-      return response.copyUnsuccessfulResponse(findResponse);
-    }
-    return response.setSuccess(formatReferrers(ic, findResponse.getResults()));
+    return formatReferrers(ic, findReferrers(ic));
   }
   
   private static List<TableRow> formatReferrers(InvocationContext ic, List<SearchBeanResults> referrers) {
@@ -76,8 +70,7 @@ public class ReferenceableBeanCustomizer {
     return new ArrayValue(properties);
   }
 
-  private static Response<List<SearchBeanResults>> findReferrers(InvocationContext ic) {
-    Response<List<SearchBeanResults>> response = new Response<>();
+  private static List<SearchBeanResults> findReferrers(InvocationContext ic) {
     SearchValueFilter valueFilter = new SearchValueFilter();
     valueFilter.setEquals(ic.getBeanTreePath());
     SearchBeanFilter beanFilter = new SearchBeanFilter();
@@ -91,11 +84,6 @@ public class ReferenceableBeanCustomizer {
     BeanReaderRepoSearchBuilder builder =
       ic.getPageRepo().getBeanRepo().asBeanReaderRepo().createSearchBuilder(ic, includeIsSet);
     finder.addToSearchBuilder(builder);
-    Response<BeanReaderRepoSearchResults> searchResponse = builder.search();
-    if (!searchResponse.isSuccess()) {
-      return response.copyUnsuccessfulResponse(searchResponse);
-    }
-    List<SearchBeanResults> searchResults = finder.getResults(searchResponse.getResults());
-    return response.setSuccess(searchResults);
+    return finder.getResults(builder.search().getResults());
   }
 }

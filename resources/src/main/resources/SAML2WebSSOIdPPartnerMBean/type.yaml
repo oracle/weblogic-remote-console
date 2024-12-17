@@ -3,6 +3,7 @@
 
 editable: true
 disableMBeanJavadoc: true
+allowSearch: false
 instanceName: Web Single Sign-on Identity Provider Partner
 
 properties:

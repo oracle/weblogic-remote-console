@@ -13,10 +13,8 @@ import weblogic.remoteconsole.server.repo.BeanActionArg;
 import weblogic.remoteconsole.server.repo.BeanTreePath;
 import weblogic.remoteconsole.server.repo.BooleanValue;
 import weblogic.remoteconsole.server.repo.InvocationContext;
-import weblogic.remoteconsole.server.repo.Response;
 import weblogic.remoteconsole.server.repo.SettableValue;
 import weblogic.remoteconsole.server.repo.StringValue;
-import weblogic.remoteconsole.server.repo.Value;
 
 /*
  * Custom code for processing ComponentRuntimeMBean
@@ -28,24 +26,18 @@ public class ComponentRuntimeMBeanCustomizer {
   private ComponentRuntimeMBeanCustomizer() {
   }
 
-  public static Response<SettableValue> getContextRootURL(
+  public static SettableValue getContextRootURL(
     InvocationContext ic,
     @Source(property = "ContextRoot") SettableValue contextRootAsSettable
   ) {
-    Response<SettableValue> response = new Response<>();
     if (contextRootAsSettable == null) {
-      return response.setSuccess(null);
+      return null;
     }
     String server = ic.getBeanTreePath().getSegments().get(1).getKey();
     String contextRoot = contextRootAsSettable.getValue().asString().getValue();
-    Response<String> getResponse = getServerHttpURL(ic, server);
-    if (!getResponse.isSuccess()) {
-      return response.copyUnsuccessfulResponse(getResponse);
-    }
-    String serverHttpURL = getResponse.getResults();
+    String serverHttpURL = getServerHttpURL(ic, server);
     String contextRootURL = getServerChildHttpURL(serverHttpURL, contextRoot);
-    SettableValue rtn = new SettableValue(new StringValue(contextRootURL));
-    return response.setSuccess(rtn);
+    return new SettableValue(new StringValue(contextRootURL));
   }
 
   private static String getServerChildHttpURL(String serverHttpURL, String childURI) {
@@ -75,28 +67,20 @@ public class ComponentRuntimeMBeanCustomizer {
   }
 
   @SuppressWarnings("unchecked")
-  private static Response<String> getServerHttpURL(InvocationContext ic, String serverName) {
-    Response<String> response = new Response<>();
+  private static String getServerHttpURL(InvocationContext ic, String serverName) {
     if (!ic.getCache().containsKey(SERVERNAME_TO_SERVERHTTPURL)) {
-
       ic.getCache().put(SERVERNAME_TO_SERVERHTTPURL, new ConcurrentHashMap<String,String>());
     }
     Map<String,String> serverNameToServerHttpURL =
       (Map<String,String>)ic.getCache().get(SERVERNAME_TO_SERVERHTTPURL);
     if (!serverNameToServerHttpURL.containsKey(serverName)) {
-      Response<String> computeResponse = computeServerHttpURL(ic, serverName);
-      if (!computeResponse.isSuccess()) {
-        return response.copyUnsuccessfulResponse(computeResponse);
-      }
-      String serverHttpURL = computeResponse.getResults();
+      String serverHttpURL = computeServerHttpURL(ic, serverName);
       serverNameToServerHttpURL.put(serverName, serverHttpURL);
     }
-    String serverHttpURL = serverNameToServerHttpURL.get(serverName);
-    return response.setSuccess(serverHttpURL);
+    return serverNameToServerHttpURL.get(serverName);
   }
 
-  private static Response<String> computeServerHttpURL(InvocationContext ic, String serverName) {
-    Response<String> response = new Response<>();
+  private static String computeServerHttpURL(InvocationContext ic, String serverName) {
     BeanTreePath domainRtBTP =
       BeanTreePath.create(ic.getBeanTreePath().getBeanRepo(), new Path("DomainRuntime"));
     InvocationContext domainRtIC = new InvocationContext(ic, domainRtBTP);
@@ -107,16 +91,12 @@ public class ComponentRuntimeMBeanCustomizer {
         new BeanActionArg(actionDef.getParamDef("serverName"), new StringValue(serverName)),
         new BeanActionArg(actionDef.getParamDef("admin"), new BooleanValue(false))
       );
-    Response<Value> getResponse =
+    return
       domainRtIC.getPageRepo().getBeanRepo().asBeanReaderRepo().invokeAction(
         domainRtIC,
         actionDef,
         args
-      );
-    if (!getResponse.isSuccess()) {
-      return response.copyUnsuccessfulResponse(getResponse);
-    }
-    String serverHttpURL = getResponse.getResults().asString().getValue();
-    return response.setSuccess(serverHttpURL);
+      )
+      .getResults().asString().getValue();
   }
 }

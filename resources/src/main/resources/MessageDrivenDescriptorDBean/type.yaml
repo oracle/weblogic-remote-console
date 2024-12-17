@@ -3,7 +3,7 @@
 
 createResourceMethod: weblogic.remoteconsole.customizers.DescriptorBeanCustomizer.createResource
 
-supportsFilteringDashboards: false
+allowSearch: false
 
 subTypeDiscriminatorProperty: Type
 subTypes:

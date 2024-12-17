@@ -1,4 +1,4 @@
-// Copyright (c) 2021, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2024, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef.schema;
@@ -22,7 +22,7 @@ import java.util.List;
  * Most of the other properties are type-specific (e.g. 'label' should
  * only be specified when 'type' is 'group').
  */
-public class NavTreeNodeDefSource {
+public class NavTreeNodeDefSource extends YamlSource {
 
   public enum Type {
     child,
@@ -104,5 +104,11 @@ public class NavTreeNodeDefSource {
 
   public void setRoles(RolesDefSource value) {
     roles.setValue(value);
+  }
+
+  @Override
+  protected void validateExtension() {
+    super.validateExtension();
+    validateExtensionChildren(getContents(), "contents");
   }
 }

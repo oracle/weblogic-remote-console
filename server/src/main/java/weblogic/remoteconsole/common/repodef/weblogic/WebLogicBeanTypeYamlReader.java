@@ -38,14 +38,8 @@ class WebLogicBeanTypeYamlReader {
   private WebLogicYamlReader yamlReader;
 
   public static WebLogicBeanTypeYamlReader getTypeYamlReader(WebLogicYamlReader yamlReader, String type) {
-    if ("DomainMBean".equals(type)) {
-      return new DomainMBeanYamlReader(yamlReader);
-    }
     if ("DomainRuntimeMBean".equals(type)) {
       return new DomainRuntimeMBeanYamlReader(yamlReader);
-    }
-    if ("ClusterMBean".equals(type)) {
-      return new ClusterMBeanYamlReader(yamlReader);
     }
     if ("RunningServerRuntimeMBean".equals(type)) {
       return new RunningServerRuntimeMBeanYamlReader(yamlReader);

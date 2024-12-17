@@ -3,13 +3,16 @@
 
 package weblogic.remoteconsole.common.repodef.yaml;
 
+import weblogic.remoteconsole.common.repodef.schema.YamlSource;
+
 /**
  * Interface for reading yaml files from a directory.
  */
 public interface YamlDirectoryReader {
-  public <T> T readYaml(String relativeYamlPath, Class<T> type, boolean mustExist);
 
-  public default <T> T readYaml(String relativeYamlPath, Class<T> type) {
+  <T extends YamlSource> T readYaml(String relativeYamlPath, Class<T> type, boolean mustExist);
+
+  public default <T extends YamlSource> T readYaml(String relativeYamlPath, Class<T> type) {
     return readYaml(relativeYamlPath, type, false);
   }
 }

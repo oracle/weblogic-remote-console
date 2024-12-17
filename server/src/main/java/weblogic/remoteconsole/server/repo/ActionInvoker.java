@@ -27,7 +27,10 @@ class ActionInvoker extends PageReader {
   private PageActionDef pageActionDef;
   private List<FormProperty> formProperties;
 
-  private static final Type CUSTOMIZER_RETURN_TYPE =
+  private static final Type CUSTOMIZER_RESULTS_RETURN_TYPE =
+    (new TypeReference<Value>() {}).getType();
+
+  private static final Type CUSTOMIZER_RESPONSE_RETURN_TYPE =
     (new TypeReference<Response<Value>>() {}).getType();
 
   private static final Type FORM_PROPERTIES_TYPE =
@@ -136,26 +139,39 @@ class ActionInvoker extends PageReader {
       );
   }
 
+  @SuppressWarnings("unchecked")
   private Response<Value> customInvokeAction() {
     Method method = CustomizerInvocationUtils.getMethod(pageActionDef.getActionMethod());
+    // Most actions just return a value but some actions (e.g. downloading a log) need to return a value plus messages.
+    // Support this by allowing the customizer to return to either be a Value or a Response<Value>
+    boolean returnsResponse = CustomizerInvocationUtils.isReturnType(method, CUSTOMIZER_RESPONSE_RETURN_TYPE);
     CustomizerInvocationUtils.checkSignature(
       method,
-      CUSTOMIZER_RETURN_TYPE,
+      (returnsResponse) ? CUSTOMIZER_RESPONSE_RETURN_TYPE : CUSTOMIZER_RESULTS_RETURN_TYPE,
       InvocationContext.class,
       PageActionDef.class,
       FORM_PROPERTIES_TYPE
     );
-    Object responseAsObject =
-      CustomizerInvocationUtils.invokeMethod(
-        method,
-        List.of(
-          getInvocationContext(),
-          pageActionDef,
-          formProperties
-        )
-      );
-    @SuppressWarnings("unchecked")
-    Response<Value> customizerResponse = (Response<Value>)responseAsObject;
-    return customizerResponse;
+    Response<Value> response = new Response<>();
+    try {
+      Object rtn =
+        CustomizerInvocationUtils.invokeMethod(
+          method,
+          List.of(
+            getInvocationContext(),
+            pageActionDef,
+            formProperties
+          )
+        );
+      if (returnsResponse) {
+        response = (Response<Value>)rtn;
+      } else {
+        Value results = (Value)rtn;
+        response.setSuccess(results);
+      }
+      return response;
+    } catch (ResponseException re) {
+      return response.copyUnsuccessfulResponse(re.getResponse());
+    }
   }
 }

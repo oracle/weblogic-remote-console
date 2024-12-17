@@ -1,4 +1,4 @@
-// Copyright (c) 2021, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2024, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef.schema;
@@ -9,7 +9,7 @@ import java.util.List;
  * This POJO mirrors the yaml file format for adding exta properties and actions
  * to a type, e.g. JVMRuntimeMBean/extension.yaml
  */
-public class BeanTypeDefExtensionSource {
+public class BeanTypeDefExtensionSource extends YamlSource {
   private ListValue<BeanPropertyDefSource> properties = new ListValue<>();
   private ListValue<BeanActionDefSource> actions = new ListValue<>();
 
@@ -29,5 +29,12 @@ public class BeanTypeDefExtensionSource {
 
   public void setActions(List<BeanActionDefSource> value) {
     actions.setValue(value);
+  }
+
+  @Override
+  protected void validateExtension() {
+    super.validateExtension();
+    validateExtensionChildren(getProperties(), "properties");
+    validateExtensionChildren(getActions(), "actions");
   }
 }

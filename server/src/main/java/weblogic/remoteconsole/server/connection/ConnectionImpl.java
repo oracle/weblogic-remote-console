@@ -3,9 +3,12 @@
 
 package weblogic.remoteconsole.server.connection;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 import javax.ws.rs.client.Client;
 
+import weblogic.remoteconsole.common.utils.RemoteConsoleExtension;
 import weblogic.remoteconsole.common.utils.WebLogicVersion;
 
 /** The implementation of Connection interface holding connection information */
@@ -18,6 +21,8 @@ public class ConnectionImpl implements Connection {
   private WebLogicVersion weblogicVersion;
   private String consoleExtensionVersion;
   private Set<String> capabilities;
+  private List<RemoteConsoleExtensionImpl> extensionImpls;
+  private List<RemoteConsoleExtension> extensions;
   private String username;
   private long connectTimeout;
   private long readTimeout;
@@ -32,6 +37,7 @@ public class ConnectionImpl implements Connection {
     WebLogicVersion weblogicVersion,
     String consoleExtensionVersion,
     Set<String> capabilities,
+    List<RemoteConsoleExtensionImpl> extensionImpls,
     String username,
     Client client,
     long connectTimeout,
@@ -44,10 +50,18 @@ public class ConnectionImpl implements Connection {
     this.weblogicVersion = weblogicVersion;
     this.consoleExtensionVersion = consoleExtensionVersion;
     this.capabilities = capabilities;
+    this.extensionImpls = extensionImpls;
     this.username = username;
     this.client = client;
     this.connectTimeout = connectTimeout;
     this.readTimeout = readTimeout;
+    if (extensionImpls != null) {
+      extensions = new ArrayList<>();
+      for (RemoteConsoleExtensionImpl extensionImpl : extensionImpls) {
+        extensionImpl.setConnection(this);
+        extensions.add(extensionImpl);
+      }
+    }
   }
 
   @Override
@@ -83,6 +97,11 @@ public class ConnectionImpl implements Connection {
   @Override
   public Set<String> getCapabilities() {
     return capabilities;
+  }
+
+  @Override
+  public List<RemoteConsoleExtension> getExtensions() {
+    return extensions;
   }
 
   @Override

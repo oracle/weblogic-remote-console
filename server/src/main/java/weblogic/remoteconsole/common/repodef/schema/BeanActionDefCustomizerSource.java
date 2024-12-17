@@ -259,4 +259,15 @@ public class BeanActionDefCustomizerSource extends BeanValueDefCustomizerSource 
   public String toString() {
     return getName();
   }
+
+  @Override
+  protected void validateExtension() {
+    super.validateExtension();
+    validateExtensionChild(getDefinition(), "definition");
+    validateExtensionChild(getMbeanOperation(), "mbeanOperation");
+    validateExtensionChild(getInputForm(), "inputForm");
+    validateExtensionChild(getPolling(), "polling");
+    validateExtensionChildren(getParameters(), "parameters");
+    validateExtensionStringPropertyNotSpecified(getActionMethod(), "actionMethod");
+  }
 }

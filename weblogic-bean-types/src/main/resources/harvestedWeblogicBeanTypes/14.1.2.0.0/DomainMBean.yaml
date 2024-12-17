@@ -58,6 +58,7 @@ properties:
   descriptionHTML: '<p>The common secure administration port for this WebLogic Server
     domain. (Requires you to enable the administration port.)</p> '
   name: AdministrationPort
+  restartNeeded: true
   type: int
   writable: true
 - defaultValue:
@@ -80,6 +81,7 @@ properties:
     a secure protocol and the administration port: <code>-Dweblogic.management.server=https://<i>admin_server:administration_port</i></code></p>
     </li> </ul> '
   name: AdministrationPortEnabled
+  restartNeeded: true
   type: boolean
   writable: true
 - defaultValue:

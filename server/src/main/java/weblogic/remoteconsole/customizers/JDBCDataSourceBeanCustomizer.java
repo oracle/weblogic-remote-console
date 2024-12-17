@@ -1,4 +1,4 @@
-// Copyright (c) 2020, 2022, Oracle Corporation and/or its affiliates.
+// Copyright (c) 2020, 2024, Oracle Corporation and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.customizers;
@@ -8,7 +8,6 @@ import java.util.Map;
 import java.util.Set;
 
 import weblogic.remoteconsole.common.utils.StringUtils;
-import weblogic.remoteconsole.server.repo.Response;
 import weblogic.remoteconsole.server.repo.SettableValue;
 import weblogic.remoteconsole.server.repo.StringValue;
 import weblogic.remoteconsole.server.repo.Value;
@@ -23,7 +22,7 @@ public class JDBCDataSourceBeanCustomizer {
   private JDBCDataSourceBeanCustomizer() {
   }
 
-  public static Response<SettableValue> getDatasourceType(
+  public static SettableValue getDatasourceType(
     @Source(
       property = "DatasourceType"
     ) SettableValue datasourceType,
@@ -65,8 +64,7 @@ public class JDBCDataSourceBeanCustomizer {
     if (type == null) {
       type = "GENERIC";
     }
-    SettableValue result = new SettableValue(new StringValue(type), state);
-    return new Response<SettableValue>().setSuccess(result);
+    return new SettableValue(new StringValue(type), state);
   }
 
   private static String getTypeFromDriverProperties(List<Map<String,SettableValue>> driverProperties) {

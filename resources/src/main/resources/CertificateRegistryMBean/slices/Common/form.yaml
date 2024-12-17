@@ -1,0 +1,23 @@
+# Copyright (c) 2024, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+introductionHTML: >
+    <p>This page displays basic information about this certificate registry.</p>
+    <p>The administrator registers trusted end certificates in the certificate
+    registry. The certificate registry only trusts those registered end certificates.</p>
+
+properties:
+- name: Name
+- name: Description
+- name: Version
+
+helpTopics:
+- label: "Understanding Security for Oracle WebLogic Server"
+  href: "scovr/index.html"
+  type: "edocs"
+- label: "Configuring WebLogic Security Providers"
+  href: "secmg/providers.html"
+  type: "edocs"
+- label: "Developing Security Providers for WebLogic Server"
+  href: "devsp/index.html"
+  type: "edocs"

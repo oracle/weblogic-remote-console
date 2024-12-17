@@ -10,12 +10,10 @@ import weblogic.remoteconsole.common.repodef.BeanPropertyDef;
 import weblogic.remoteconsole.common.utils.Path;
 import weblogic.remoteconsole.server.repo.BeanEditorRepo;
 import weblogic.remoteconsole.server.repo.BeanReaderRepoSearchBuilder;
-import weblogic.remoteconsole.server.repo.BeanReaderRepoSearchResults;
 import weblogic.remoteconsole.server.repo.BeanRepo;
 import weblogic.remoteconsole.server.repo.BeanSearchResults;
 import weblogic.remoteconsole.server.repo.BeanTreePath;
 import weblogic.remoteconsole.server.repo.InvocationContext;
-import weblogic.remoteconsole.server.repo.Response;
 import weblogic.remoteconsole.server.repo.SettableValue;
 import weblogic.remoteconsole.server.repo.Value;
 import weblogic.remoteconsole.server.webapp.BaseResource;
@@ -45,7 +43,7 @@ public class ServerMBeanCustomizer {
   // it needs to be removed before the server can be removed.
   // This customizer handles this - i.e. deletes the migratable target
   // then deletes the server.
-  public static Response<Void> deleteServer(
+  public static void deleteServer(
     InvocationContext ic,
     @Source(
       collection = "/Domain/MigratableTargets",
@@ -66,22 +64,15 @@ public class ServerMBeanCustomizer {
     for (Map<String,Value> migratableTarget : migratableTargets) {
       String name = migratableTarget.get(IDENTITY).asBeanTreePath().getLastSegment().getKey();
       if (migratableTargetName.equals(name)) {
-        Response<Void> response =
-          beanEditorRepo.deleteBean(
-            ic,
-            migratableTarget.get(IDENTITY).asBeanTreePath()
-          );
-        if (!response.isSuccess()) {
-          return response;
-        }
+        beanEditorRepo.deleteBean(ic, migratableTarget.get(IDENTITY).asBeanTreePath()).getResults();
       }
     }
 
     // Now we can delete the server.
-    return beanEditorRepo.deleteBean(ic, ic.getBeanTreePath());
+    beanEditorRepo.deleteBean(ic, ic.getBeanTreePath()).getResults();
   }
 
-  public static Response<SettableValue> getHostnameVerifierType(
+  public static SettableValue getHostnameVerifierType(
     @Source(
       property = "SSL.HostnameVerifier"
     ) SettableValue hostnameVerifier
@@ -89,7 +80,7 @@ public class ServerMBeanCustomizer {
     return HostnameVerifierCustomizer.getHostnameVerifierType(hostnameVerifier);
   }
 
-  public static Response<SettableValue> getCustomHostnameVerifier(
+  public static SettableValue getCustomHostnameVerifier(
     @Source(
       property = "SSL.HostnameVerifier"
     ) SettableValue hostnameVerifier
@@ -97,23 +88,15 @@ public class ServerMBeanCustomizer {
     return HostnameVerifierCustomizer.getCustomHostnameVerifier(hostnameVerifier);
   }
 
-  public static Response<SettableValue> getDomainAdministrationPortEnabled(InvocationContext ic)  {
-    Response<SettableValue> response = new Response<>();
+  public static SettableValue getDomainAdministrationPortEnabled(InvocationContext ic)  {
     BeanRepo beanRepo = ic.getBeanTreePath().getBeanRepo();
-    BeanReaderRepoSearchBuilder builder =
-        beanRepo.asBeanReaderRepo().createSearchBuilder(ic, false);
+    BeanReaderRepoSearchBuilder builder = beanRepo.asBeanReaderRepo().createSearchBuilder(ic, false);
     BeanPropertyDef adminPortEnabledPropertyDef =
-        beanRepo.getBeanRepoDef().getTypeDef("DomainMBean").getPropertyDef(new Path("AdministrationPortEnabled"));
-    BeanTreePath domainBTP =
-        BeanTreePath.create(beanRepo, new Path("Domain"));
+      beanRepo.getBeanRepoDef().getTypeDef("DomainMBean").getPropertyDef(new Path("AdministrationPortEnabled"));
+    BeanTreePath domainBTP = BeanTreePath.create(beanRepo, new Path("Domain"));
     builder.addProperty(domainBTP, adminPortEnabledPropertyDef);
-    Response<BeanReaderRepoSearchResults> searchResponse = builder.search();
-    if (!searchResponse.isSuccess()) {
-      return response.copyUnsuccessfulResponse(searchResponse);
-    }
-    BeanSearchResults searchResults = searchResponse.getResults().getBean(domainBTP);
+    BeanSearchResults searchResults = builder.search().getResults().getBean(domainBTP);
     Value administrationPortEnabledV = searchResults.getValue(adminPortEnabledPropertyDef);
-    SettableValue result = new SettableValue(administrationPortEnabledV);
-    return response.setSuccess(result);
+    return new SettableValue(administrationPortEnabledV);
   }
 }

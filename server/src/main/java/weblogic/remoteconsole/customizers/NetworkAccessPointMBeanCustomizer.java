@@ -1,11 +1,10 @@
-// Copyright (c) 2023, Oracle and/or its affiliates.
+// Copyright (c) 2023, 2024, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.customizers;
 
 import weblogic.remoteconsole.server.repo.BeanTreePath;
 import weblogic.remoteconsole.server.repo.InvocationContext;
-import weblogic.remoteconsole.server.repo.Response;
 import weblogic.remoteconsole.server.repo.SettableValue;
 import weblogic.remoteconsole.server.webapp.BaseResource;
 
@@ -27,7 +26,7 @@ public class NetworkAccessPointMBeanCustomizer {
     }
   }
 
-  public static Response<SettableValue> getHostnameVerifierType(
+  public static SettableValue getHostnameVerifierType(
     @Source(
       property = "HostnameVerifier"
     ) SettableValue hostnameVerifier
@@ -35,7 +34,7 @@ public class NetworkAccessPointMBeanCustomizer {
     return HostnameVerifierCustomizer.getHostnameVerifierType(hostnameVerifier);
   }
 
-  public static Response<SettableValue> getCustomHostnameVerifier(
+  public static SettableValue getCustomHostnameVerifier(
     @Source(
       property = "HostnameVerifier"
     ) SettableValue hostnameVerifier

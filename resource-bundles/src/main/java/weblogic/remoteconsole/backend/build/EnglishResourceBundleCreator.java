@@ -35,6 +35,7 @@ import weblogic.remoteconsole.common.repodef.SliceTableDef;
 import weblogic.remoteconsole.common.repodef.TableDef;
 import weblogic.remoteconsole.common.repodef.weblogic.WebLogicLocalizationUtils;
 import weblogic.remoteconsole.common.repodef.weblogic.WebLogicPageDefWalker;
+import weblogic.remoteconsole.common.repodef.yaml.UsageTracker;
 import weblogic.remoteconsole.common.utils.WebLogicMBeansVersion;
 import weblogic.remoteconsole.common.utils.WebLogicMBeansVersions;
 import weblogic.remoteconsole.common.utils.WebLogicVersion;
@@ -82,6 +83,7 @@ public class EnglishResourceBundleCreator extends WebLogicPageDefWalker {
     try {
       LOGGER.info("EnglishResourceBundleCreator.main");
       String bundleDir = args[0];
+      UsageTracker.trackUsage();
       for (WebLogicVersion weblogicVersion : WebLogicVersions.getSupportedVersions()) {
         WebLogicMBeansVersion mbeansVersion =
           WebLogicMBeansVersions.getVersion(
@@ -90,6 +92,7 @@ public class EnglishResourceBundleCreator extends WebLogicPageDefWalker {
           );
         (new EnglishResourceBundleCreator(mbeansVersion, bundleDir)).create();
       }
+      UsageTracker.reportMissing();
     } catch (Throwable t) {
       t.printStackTrace();
       // FortifyIssueSuppression J2EE Bad Practices: JVM Termination

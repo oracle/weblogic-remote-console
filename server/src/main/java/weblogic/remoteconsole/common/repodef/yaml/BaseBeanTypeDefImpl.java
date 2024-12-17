@@ -92,18 +92,15 @@ public abstract class BaseBeanTypeDefImpl implements BeanTypeDef {
   }
 
   BeanPropertyDefImpl getPropertyDefImpl(Path propertyPath, boolean searchSubTypes) {
+    String usageId = "property " + getTypeName() + " " + propertyPath;
     BeanPropertyDefImpl propertyDefImpl = findPropertyDefImpl(propertyPath, searchSubTypes);
     if (propertyDefImpl != null) {
       if (getBeanRepoDefImpl().isAccessAllowed(propertyDefImpl.getGetRoles())) {
+        UsageTracker.used(usageId);
         return propertyDefImpl;
       }
     }
-    LOGGER.finest(
-      "Missing property"
-      + " " + getBeanRepoDefImpl().getMBeansVersion().getWebLogicVersion()
-      + " " + getTypeName()
-      + " " + propertyPath
-    );
+    UsageTracker.notFound(usageId);
     return null;
   }
 
@@ -184,18 +181,15 @@ public abstract class BaseBeanTypeDefImpl implements BeanTypeDef {
   }
 
   BaseBeanChildDefImpl getChildDefImpl(Path childPath, boolean searchSubTypes) {
+    String usageId = "child " + getTypeName() + " " + childPath;
     BaseBeanChildDefImpl childDefImpl = findChildDefImpl(childPath, searchSubTypes);
     if (childDefImpl != null) {
       if (getBeanRepoDefImpl().isAccessAllowed(childDefImpl.getGetRoles())) {
+        UsageTracker.used(usageId);
         return childDefImpl;
       }
     }
-    LOGGER.finest(
-      "Missing child"
-      + " " + getBeanRepoDefImpl().getMBeansVersion().getWebLogicVersion()
-      + " " + getTypeName()
-      + " " + childPath
-    );
+    UsageTracker.notFound(usageId);
     return null;
   }
 
@@ -276,18 +270,15 @@ public abstract class BaseBeanTypeDefImpl implements BeanTypeDef {
   }
 
   BeanActionDefImpl getActionDefImpl(Path actionPath, boolean searchSubTypes) {
+    String usageId = "action " + getTypeName() + " " + actionPath;
     BeanActionDefImpl actionDefImpl = findActionDefImpl(actionPath, searchSubTypes);
     if (actionDefImpl != null) {
       if (getBeanRepoDefImpl().isAccessAllowed(actionDefImpl.getInvokeRoles())) {
+        UsageTracker.used(usageId);
         return actionDefImpl;
       }
     }
-    LOGGER.finest(
-      "Missing action"
-      + " " + getBeanRepoDefImpl().getMBeansVersion().getWebLogicVersion()
-      + " " + getTypeName()
-      + " " + actionPath
-    );
+    UsageTracker.notFound(usageId);
     return null;
   }
 

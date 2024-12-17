@@ -1,4 +1,4 @@
-// Copyright (c) 2023, Oracle and/or its affiliates.
+// Copyright (c) 2023, 2024, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef.schema;
@@ -28,5 +28,11 @@ public class ActionInputFormDefSource extends PageDefSource {
 
   public void addParameter(BeanActionParamDefCustomizerSource value) {
     parameters.add(value);
+  }
+
+  @Override
+  protected void validateExtension() {
+    super.validateExtension();
+    validateExtensionChildren(getParameters(), "parameters");
   }
 }

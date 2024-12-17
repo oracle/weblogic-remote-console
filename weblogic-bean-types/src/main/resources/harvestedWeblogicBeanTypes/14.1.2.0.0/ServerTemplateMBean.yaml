@@ -40,6 +40,7 @@ properties:
     at the domain level. To override the domain-level administration port for the
     current server instance, set this server''s administration port.</p> '
   name: AdministrationPort
+  restartNeeded: true
   type: int
   writable: true
 - defaultValue:
@@ -52,6 +53,7 @@ properties:
     properly for it to be active.</p> '
   exclude: true
   name: AdministrationPortEnabled
+  restartNeeded: true
   supported: false
   type: boolean
   writable: true

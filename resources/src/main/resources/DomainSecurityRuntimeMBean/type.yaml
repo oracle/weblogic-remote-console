@@ -1,4 +1,4 @@
-# Copyright (c) 2021, 2023, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2021, 2024, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 createResourceMethod: weblogic.remoteconsole.customizers.DomainSecurityRuntimeMBeanCustomizer.createResource
@@ -11,3 +11,4 @@ actions:
     # typically it takes a while for to refresh the warnings for every server
     reloadSeconds: 10
     maxAttempts: 20
+  failureMessage: Failed to refresh the cache of security validation warnings.

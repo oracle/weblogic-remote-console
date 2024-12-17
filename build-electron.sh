@@ -3,6 +3,10 @@
 # Licensed under the Universal Permissive License v 1.0 as shown at http://oss.oracle.com/licenses/upl.
 
 do_docker_pull() {
+  if [ -z "$JENKINS_URL" ]
+  then
+    return 0
+  fi
   for i in 1 2 3
   do
     if docker pull $1
@@ -40,15 +44,11 @@ then
   export ELECTRON_GET_USE_PROXY=true GLOBAL_AGENT_HTTPS_PROXY=$https_proxy GLOBAL_AGENT_NO_PROXY="$no_proxy" GLOBAL_AGENT_HTTP_PROXY="$http_proxy"
 fi
 umask 000
-cp -rp /build.in/. /build
 cd /build
 export ALREADY_IN_DOCKER=true
 mkdir -p /root/.npm
 chmod -R 777 /root
 ./build-electron.sh $*
-chmod -R a+rw electron/dist
-rm -rf /build.in/electron/dist
-cp -rp electron/dist /build.in/electron
 !
   ELECTRON_BUILDER_IMAGE=${ELECTRON_BUILDER_IMAGE:-electronuserland/builder:18}
   if [ -n "$CONSOLE_DOCKER_MOUNT_DIRS" ]
@@ -68,22 +68,25 @@ cp -rp electron/dist /build.in/electron
   fi
   do_docker_pull $ELECTRON_BUILDER_IMAGE
   chmod a+x $tmp/script
-  docker run \
+  build_copy="$PWD/tmp/copy"
+  rm -rf "$build_copy"
+  mkdir -p "$build_copy"
+  find build-tools run runnable electron frontend *.sh | egrep -v '^tmp|/download-bin|/node_modules/' | cpio -pdulm "$build_copy"
+  docker run -it \
     --rm \
     --network=host \
+    -w /build \
     "${EXTRA[@]}" \
     --name electron-build.$$ \
-    --mount type=bind,source="$PWD",destination=/build.in \
+    --mount type=bind,source="$build_copy",destination=/build \
     --mount type=bind,source="$tmp/script",destination=/tmp/script,ro \
     --entrypoint=/tmp/script \
-    $ELECTRON_BUILDER_IMAGE
+    $ELECTRON_BUILDER_IMAGE &&
+      rm -rf electron/dist &&
+      mv "$build_copy"/electron/dist electron/dist
 }
 
-# If we're running inside docker, copy the output out at the end
-copyout() {
-  chmod -R a+rw /build/electron/dist
-  cp -rp /build/electron/dist /build.in/electron
-}
+#     --entrypoint=/bin/bash \
 
 # Main
 if [ ! -f runnable/console.jar ]
@@ -126,10 +129,8 @@ then
 else
   tmp="/tmp/${0##*/}.$$"
 fi
-if [ "$PWD" = /build ]
+if [ "$PWD" != /build ]
 then
-  trap copyout EXIT
-else
   trap "rm -rf $tmp" EXIT
 fi
 
@@ -198,18 +199,25 @@ buildtype=$1
 # For example, if one wants to build a special version for the Memphis office,
 # you can create electron/custom/memphis and invoke "build-electron.sh memphis".
 cp -p package.json "$extra"
+rm -f electron-builder-custom.json
+cp electron-builder.json electron-builder-custom.json
+cp electron-builder-custom.json "$extra"
+
+trap 'rm -f "$PWD/electron-builder-custom.json"' 0
+
+if [ -x "custom/pre-$os" ]
+then
+  "custom/pre-$os" electron-builder-custom.json "$extra"
+fi
+
 if [ -f "custom/$buildtype" -a -x "custom/$buildtype" ]
 then
-  rm -f electron-builder-custom.json
   command="custom/$buildtype"
   shift
-  "$command" "$extra"
-  if [ -f electron-builder-custom.json ]
-  then
-    trap 'rm -f "$PWD/electron-builder-custom.json"' 0
-    set -- "$@" -c electron-builder-custom.json
-  fi
+  "$command" electron-builder-custom.json "$extra"
 fi
+
+set -- "$@" -c electron-builder-custom.json
 
 ./gen-messages "$extra"/resources/nls ../frontend/src/resources/nls/frontend*.properties
 

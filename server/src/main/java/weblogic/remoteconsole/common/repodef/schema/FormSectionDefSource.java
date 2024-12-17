@@ -1,4 +1,4 @@
-// Copyright (c) 2021, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2024, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef.schema;
@@ -9,7 +9,7 @@ import java.util.List;
  * This POJO mirrors the yaml source file format for configuring information about
  * a section on a slice form page or create form page.
  */
-public class FormSectionDefSource {
+public class FormSectionDefSource extends YamlSource {
   private ListValue<BeanPropertyDefCustomizerSource> properties = new ListValue<>();
   private ListValue<FormSectionDefSource> sections = new ListValue<>();
   private StringValue name = new StringValue();
@@ -83,5 +83,13 @@ public class FormSectionDefSource {
 
   public void setUsedIf(UsedIfDefSource value) {
     usedIf.setValue(value);
+  }
+
+  @Override
+  protected void validateExtension() {
+    super.validateExtension();
+    validateExtensionChildren(getProperties(), "properties");
+    validateExtensionChildren(getSections(), "sections");
+    validateExtensionChild(getUsedIf(), "usedIf");
   }
 }

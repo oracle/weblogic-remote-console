@@ -1,4 +1,4 @@
-// Copyright (c) 2021, 2023, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2024, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef.schema;
@@ -11,7 +11,7 @@ import weblogic.remoteconsole.common.utils.Path;
  * This POJO mirrors the yaml source file format for configuring information
  * about a feature (e.g. a property) is enabled.
  */
-public class UsedIfDefSource {
+public class UsedIfDefSource extends YamlSource {
   private StringValue property = new StringValue();
   private ScalarValues values = new ScalarValues();
   private BooleanValue hide = new BooleanValue();

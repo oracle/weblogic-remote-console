@@ -1,4 +1,4 @@
-// Copyright (c) 2022, 2023, Oracle and/or its affiliates.
+// Copyright (c) 2022, 2024, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.customizers;
@@ -39,19 +39,14 @@ public class SimpleSearchMBeanCustomizer {
   private SimpleSearchMBeanCustomizer() {
   }
 
-  public static Response<Void> customizePage(InvocationContext ic, Page page) {
-    Response<Void> response = new Response<>();
+  public static void customizePage(InvocationContext ic, Page page) {
     String searchName = getRecentSearchName(ic);
     if (searchName == null) {
-      return response.setNotFound();
+      throw Response.notFoundException();
     }
-    Response<SimpleSearch> resultsResponse =
-      getSimpleSearchManager(ic).getSearchResults(ic, searchName);
-    if (!resultsResponse.isSuccess()) {
-      return response.copyUnsuccessfulResponse(resultsResponse);
-    }
+    SimpleSearch search =
+      getSimpleSearchManager(ic).getSearchResults(ic, searchName).getResults();
     Map<Path,TableRow> sorter = new TreeMap<>();
-    SimpleSearch search = resultsResponse.getResults();
     for (SearchBeanResults beanResults : search.getResults()) {
       TableRow row = new TableRow();
       String name =  SearchResponseMapper.getBeanName(ic, beanResults);
@@ -71,10 +66,9 @@ public class SimpleSearchMBeanCustomizer {
         ic.getLocalizer().formatDate(search.getResultsDate())
       )
     );
-    return response.setSuccess(null);
   }
 
-  public static Response<List<BeanSearchResults>> getCollection(
+  public static List<BeanSearchResults> getCollection(
     InvocationContext ic,
     BeanTreePath collectionPath,
     BeanReaderRepoSearchResults searchResults,
@@ -115,17 +109,17 @@ public class SimpleSearchMBeanCustomizer {
       }
       collectionResults.add(beanResults);
     }
-    return new Response<List<BeanSearchResults>>().setSuccess(collectionResults);
+    return collectionResults;
   }
 
   // Clear the search history
-  public static Response<Value> clearSearches(
+  public static Value clearSearches(
     InvocationContext ic,
     PageActionDef pageActionDef,
     List<FormProperty> formProperties
   ) {
     getSimpleSearchManager(ic).clearSearches(ic);
-    return new Response<Value>().setSuccess(null);
+    return null;
   }
 
   private static String getRecentSearchName(InvocationContext ic) {

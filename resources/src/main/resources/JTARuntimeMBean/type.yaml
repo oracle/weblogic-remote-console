@@ -7,6 +7,8 @@ properties:
 actions:
 - name: forceCommitSelectedTransactions
   label: "Force Commit"
+  successMessage: Created a task to force commit the selected transactions
+  failureMessage: Failed to force commit the selected transactions
   actionMethod: weblogic.remoteconsole.customizers.JTARuntimeMBeanCustomizer.forceCommitSelectedTransactions
   mbeanOperation:
     operation: forceCommit
@@ -25,6 +27,8 @@ actions:
         when false applies only to the local server participant.
 - name: forceRollbackSelectedTransactions
   label: "Force Rollback"
+  successMessage: Created a task to force rollback the selected transactions
+  failureMessage: Failed to force rollback the selected transactions
   actionMethod: weblogic.remoteconsole.customizers.JTARuntimeMBeanCustomizer.forceRollbackSelectedTransactions
   mbeanOperation:
     operation: forceRollback

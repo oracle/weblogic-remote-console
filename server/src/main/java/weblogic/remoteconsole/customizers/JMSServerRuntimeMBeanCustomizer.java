@@ -1,4 +1,4 @@
-// Copyright (c) 2023, Oracle and/or its affiliates.
+// Copyright (c) 2023, 2024, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.customizers;
@@ -14,7 +14,6 @@ import weblogic.remoteconsole.common.utils.Path;
 import weblogic.remoteconsole.server.repo.BeanReaderRepoSearchResults;
 import weblogic.remoteconsole.server.repo.FormProperty;
 import weblogic.remoteconsole.server.repo.InvocationContext;
-import weblogic.remoteconsole.server.repo.Response;
 import weblogic.remoteconsole.server.repo.TableRow;
 import weblogic.remoteconsole.server.repo.Value;
 import weblogic.remoteconsole.server.repo.weblogic.WebLogicRestInvoker;
@@ -27,37 +26,36 @@ public class JMSServerRuntimeMBeanCustomizer {
   private JMSServerRuntimeMBeanCustomizer() {
   }
 
-  public static Response<Value> forceCommitSelectedTransactions(
+  public static Value forceCommitSelectedTransactions(
     InvocationContext ic,
     PageActionDef pageActionDef,
     List<FormProperty> formProperties
   ) {
-    return SliceTableActionUtils.invokeRowAction(ic, pageActionDef, formProperties, "forceCommit", "xid");
+    return
+      SliceTableActionUtils
+        .invokeRowAction(ic, pageActionDef, formProperties, "forceCommit", "xid")
+        .getResults();
   }
 
-  public static Response<Value> forceRollbackSelectedTransactions(
+  public static Value forceRollbackSelectedTransactions(
     InvocationContext ic,
     PageActionDef pageActionDef,
     List<FormProperty> formProperties
   ) {
-    return SliceTableActionUtils.invokeRowAction(ic, pageActionDef, formProperties, "forceRollback", "xid");
+    return
+      SliceTableActionUtils
+        .invokeRowAction(ic, pageActionDef, formProperties, "forceRollback", "xid")
+        .getResults();
   }
 
-  public static Response<List<TableRow>> getTransactionsSliceTableRows(
+  public static List<TableRow> getTransactionsSliceTableRows(
     InvocationContext ic,
     BeanReaderRepoSearchResults searchResults
   ) {
-    Response<List<TableRow>> response = new Response<>();
-    Response<JsonArray> getResponse = getCurrentTransactions(ic);
-    if (!getResponse.isSuccess()) {
-      return response.copyUnsuccessfulResponse(getResponse);
-    }
-    return response.setSuccess(JTATransactionVBeanUtils.processTransactions(ic, getResponse.getResults()));
+    return JTATransactionVBeanUtils.processTransactions(ic, getCurrentTransactions(ic));
   }
 
-  private static Response<JsonArray> getCurrentTransactions(InvocationContext ic) {
-    Response<JsonArray> response = new Response<>();
-
+  private static JsonArray getCurrentTransactions(InvocationContext ic) {
     // DomainRuntime.CombinedServerRuntimes.<svr>.ServerRuntime.JMSRuntime.JMSServers.<jmssvr>
     Path cbePath = ic.getBeanTreePath().getPath();
 
@@ -71,7 +69,7 @@ public class JMSServerRuntimeMBeanCustomizer {
 
     JsonObjectBuilder args = Json.createObjectBuilder();
 
-    Response<JsonObject> transactionsResponse =
+    JsonObject results =
       WebLogicRestInvoker.post(
         ic,
         wlsPath,
@@ -79,12 +77,8 @@ public class JMSServerRuntimeMBeanCustomizer {
         false, // expanded values
         false, // save changes
         false // asynchronous
-       );
-    if (!transactionsResponse.isSuccess()) {
-      return response.copyUnsuccessfulResponse(transactionsResponse);
-    }
-    JsonObject results = transactionsResponse.getResults();
+       ).getResults();
     JsonArray transactions = results.isNull("return") ? null : results.getJsonArray("return");
-    return response.setSuccess(transactions);
+    return transactions;
   }
 }

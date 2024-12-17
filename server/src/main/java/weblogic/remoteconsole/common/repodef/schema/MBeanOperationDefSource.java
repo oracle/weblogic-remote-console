@@ -1,4 +1,4 @@
-// Copyright (c) 2023, Oracle and/or its affiliates.
+// Copyright (c) 2023, 2024, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef.schema;
@@ -6,7 +6,7 @@ package weblogic.remoteconsole.common.repodef.schema;
 /**
  * This POJO mirrors the yaml source file format for specifying which mbean operation an action is related to
  */
-public class MBeanOperationDefSource {
+public class MBeanOperationDefSource extends YamlSource {
   private StringValue type = new StringValue();
   private StringValue operation = new StringValue();
 

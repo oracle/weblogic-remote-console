@@ -26,7 +26,6 @@ import weblogic.remoteconsole.server.repo.Page;
 import weblogic.remoteconsole.server.repo.PropertiesValue;
 import weblogic.remoteconsole.server.repo.Response;
 import weblogic.remoteconsole.server.repo.Value;
-import weblogic.remoteconsole.server.webapp.BaseResource;
 
 /**
  * Custom code for processing the AppDeploymentRuntimeMBean
@@ -39,7 +38,7 @@ public class AppDeploymentRuntimeMBeanCustomizer {
   /**
    * Customize the AppDeploymentRuntimeMBean's startInAdminMode action
    */
-  public static Response<Value> startInAdminMode(
+  public static Value startInAdminMode(
     InvocationContext ic,
     PageActionDef pageActionDef,
     List<FormProperty> formProperties
@@ -52,7 +51,7 @@ public class AppDeploymentRuntimeMBeanCustomizer {
   /**
    * Customize the AppDeploymentRuntimeMBean's forceStop action
    */
-  public static Response<Value> forceStop(
+  public static Value forceStop(
     InvocationContext ic,
     PageActionDef pageActionDef,
     List<FormProperty> formProperties
@@ -65,7 +64,7 @@ public class AppDeploymentRuntimeMBeanCustomizer {
   /**
    * Customize the AppDeploymentRuntimeMBean's stopToAdminMode action
    */
-  public static Response<Value> stopToAdminMode(
+  public static Value stopToAdminMode(
     InvocationContext ic,
     PageActionDef pageActionDef,
     List<FormProperty> formProperties
@@ -80,13 +79,12 @@ public class AppDeploymentRuntimeMBeanCustomizer {
    * Redeploy the application for the case where both the source and deployment plan is on the server.
    * User may have changed location of the application or the deployment plan.
    */
-  public static Response<Value> redeploySourceOnServer(
+  public static Value redeploySourceOnServer(
       InvocationContext ic,
       PageActionDef pageActionDef,
       List<FormProperty> formProperties
   ) {
     // Get the old plan path from the domainConfig tree first:
-    Response<Value> response = new Response<>();
     // Don't return whether properties are set.
     BeanReaderRepoSearchBuilder builder =
         ic.getPageRepo().getBeanRepo().asBeanReaderRepo().createSearchBuilder(ic, false);
@@ -100,19 +98,16 @@ public class AppDeploymentRuntimeMBeanCustomizer {
     BeanPropertyDef planPropertyDef =
         appBeanPath.getTypeDef().getPropertyDef(new Path("AbsolutePlanPath"));
     builder.addProperty(appBeanPath, planPropertyDef);
-    Response<BeanReaderRepoSearchResults> searchResponse = builder.search();
-    if (!searchResponse.isSuccess()) {
-      return response.copyUnsuccessfulResponse(searchResponse);
-    }
-    BeanSearchResults appResults = searchResponse.getResults().getBean(appBeanPath);
+    BeanReaderRepoSearchResults searchResults = builder.search().getResults();
+    BeanSearchResults appResults = searchResults.getBean(appBeanPath);
     if (appResults == null) {
       // the app doesn't exist
-      return response.setNotFound();
+      throw Response.notFoundException();
     }
     //Handle the source path
-    FormProperty sourcePathProperty = findRequiredFormProperty("SourcePath", formProperties);
+    FormProperty sourcePathProperty = CustomizerUtils.findRequiredFormProperty("SourcePath", formProperties);
     Value sourcePathValue = sourcePathProperty.getValue().asSettable().getValue();
-    FormProperty planPathProperty = findRequiredFormProperty("PlanPath", formProperties);
+    FormProperty planPathProperty = CustomizerUtils.findRequiredFormProperty("PlanPath", formProperties);
     Value planPathValue = planPathProperty.getValue().asSettable().getValue();
     // Now invoke the low level update action:
     return
@@ -127,13 +122,12 @@ public class AppDeploymentRuntimeMBeanCustomizer {
   /**
    * Customize the AppDeploymentRuntimeMBean's update action, the Deployment Plan Path may be changed.
    */
-  public static Response<Value> updatePlanOnServer(
+  public static Value updatePlanOnServer(
       InvocationContext ic,
       PageActionDef pageActionDef,
       List<FormProperty> formProperties
   ) {
     // Get the old plan path from the domainConfig tree first:
-    Response<Value> response = new Response<>();
     // Don't return whether properties are set.
     BeanReaderRepoSearchBuilder builder =
         ic.getPageRepo().getBeanRepo().asBeanReaderRepo().createSearchBuilder(ic, false);
@@ -147,14 +141,11 @@ public class AppDeploymentRuntimeMBeanCustomizer {
     BeanPropertyDef planPropertyDef =
         appBeanPath.getTypeDef().getPropertyDef(new Path("AbsolutePlanPath"));
     builder.addProperty(appBeanPath, planPropertyDef);
-    Response<BeanReaderRepoSearchResults> searchResponse = builder.search();
-    if (!searchResponse.isSuccess()) {
-      return response.copyUnsuccessfulResponse(searchResponse);
-    }
-    BeanSearchResults appResults = searchResponse.getResults().getBean(appBeanPath);
+    BeanReaderRepoSearchResults searchResults = builder.search().getResults();
+    BeanSearchResults appResults = searchResults.getBean(appBeanPath);
     if (appResults == null) {
       // the app doesn't exist
-      return response.setNotFound();
+      throw Response.notFoundException();
     }
     Value planPath = formProperties.get(0).getValue().asSettable().getValue();
     // Now invoke the low level update action:
@@ -167,19 +158,9 @@ public class AppDeploymentRuntimeMBeanCustomizer {
         );
   }
 
-  public static Response<Value> updatePlanOnLocal(
-      InvocationContext ic,
-      PageActionDef pageActionDef,
-      List<FormProperty> formProperties
-  ) {
-    BaseResource br = new AppDeploymentMBeanUploadableCreatableBeanCollectionResource();
-    return null;
-  }
-
   // Validate that the app doesn't already have a plan
   // and return the default plan path
-  public static Response<Void> customizeCreatePlanActionInputForm(InvocationContext ic, Page page) {
-    Response<Void> response = new Response<>();
+  public static void customizeCreatePlanActionInputForm(InvocationContext ic, Page page) {
     BeanTreePath appRtBTP = (ic.getIdentities() == null) ? ic.getBeanTreePath() : ic.getIdentities().get(0);
     String appName = appRtBTP.getLastSegment().getKey(); // MyApp
     Path appCfgPath = new Path("Domain.AppDeployments").childPath(appName); // Domain/AppDeployments/MyApp
@@ -191,58 +172,48 @@ public class AppDeploymentRuntimeMBeanCustomizer {
     BeanReaderRepoSearchBuilder builder =
         ic.getPageRepo().getBeanRepo().asBeanReaderRepo().createSearchBuilder(appCfgIc, false);
     builder.addProperty(appCfgBTP, planPathPropertyDef);
-    Response<BeanReaderRepoSearchResults> searchResponse = builder.search();
-    if (!searchResponse.isSuccess()) {
-      return response.copyUnsuccessfulResponse(searchResponse);
-    }
-    BeanSearchResults beanResults = searchResponse.getResults().getBean(appCfgBTP);
+    BeanReaderRepoSearchResults searchResults = builder.search().getResults();
+    BeanSearchResults beanResults = searchResults.getBean(appCfgBTP);
     if (beanResults == null) {
-      return response.setNotFound();
+      throw Response.notFoundException();
     }
     Value planPath = beanResults.getValue(planPathPropertyDef);
     if (planPath.asString().getValue() != null) {
-      response.setUserBadRequest();
-      response.addFailureMessage(
-        ic.getLocalizer().localizeString(
-          LocalizedConstants.APPLICATION_HAS_PLAN,
-          appName, // the application's name
-          planPath.asString().getValue()
-        )
-      );
+      throw
+        Response
+          .userBadRequestException()
+          .addFailureMessage(
+            ic.getLocalizer().localizeString(
+              LocalizedConstants.APPLICATION_HAS_PLAN,
+              appName, // the application's name
+              planPath.asString().getValue()
+            )
+          );
     } else {
       BeanReaderRepoSearchBuilder builder2 =
           ic.getPageRepo().getBeanRepo().asBeanReaderRepo().createSearchBuilder(ic, false);
       BeanPropertyDef defaultPlanPathPropertyDef =
           appRtBTP.getTypeDef().getPropertyDef(new Path("Configuration.DefaultPlanPath"));
       builder2.addProperty(appRtBTP, defaultPlanPathPropertyDef);
-      Response<BeanReaderRepoSearchResults> searchResponseRT = builder2.search();
-      if (!searchResponseRT.isSuccess()) {
-        return response.copyUnsuccessfulResponse(searchResponseRT);
-      }
-      BeanSearchResults beanResultsRT = searchResponseRT.getResults().getBean(appRtBTP);
+      BeanReaderRepoSearchResults searchResultsRT = builder2.search().getResults();
+      BeanSearchResults beanResultsRT = searchResultsRT.getBean(appRtBTP);
       if (beanResultsRT == null) {
-        response.setSuccess(null);
-        return response;
+        return;
       }
       Value defaultPlanPathValue = beanResultsRT.getValue(defaultPlanPathPropertyDef);
-      if (defaultPlanPathValue == null) {
-        response.setSuccess(null);
-      } else {
+      if (defaultPlanPathValue != null) {
         List<FormProperty> oldProperties = page.asForm().getProperties();
         List<FormProperty> newProperties =
-            List.of(
-                createFormProperty("PlanPath", oldProperties, defaultPlanPathValue)
-            );
+          List.of(
+            CustomizerUtils.createFormProperty("PlanPath", oldProperties, defaultPlanPathValue)
+          );
         oldProperties.clear();
         oldProperties.addAll(newProperties);
-        response.setSuccess(null);
       }
     }
-    return response;
   }
 
-  public static Response<Void> customizeRedeployActionInputForm(InvocationContext ic, Page page) {
-    Response<Void> response = new Response<>();
+  public static void customizeRedeployActionInputForm(InvocationContext ic, Page page) {
     BeanTreePath appRtBTP = (ic.getIdentities() == null) ? ic.getBeanTreePath() : ic.getIdentities().get(0);
     String appName = appRtBTP.getLastSegment().getKey(); // MyApp
     Path appCfgPath = new Path("Domain.AppDeployments").childPath(appName); // Domain/AppDeployments/MyApp
@@ -255,35 +226,26 @@ public class AppDeploymentRuntimeMBeanCustomizer {
         ic.getPageRepo().getBeanRepo().asBeanReaderRepo().createSearchBuilder(appCfgIc, false);
     builder.addProperty(appCfgBTP, planPathPropertyDef);
     builder.addProperty(appCfgBTP, sourcePathPropertyDef);
-    Response<BeanReaderRepoSearchResults> searchResponse = builder.search();
-    if (!searchResponse.isSuccess()) {
-      return response.copyUnsuccessfulResponse(searchResponse);
-    }
-    BeanSearchResults beanResults = searchResponse.getResults().getBean(appCfgBTP);
-    if (beanResults == null) {
-      return response.setNotFound();
-    }
+    BeanReaderRepoSearchResults searchResults = builder.search().getResults();
+    BeanSearchResults beanResults = searchResults.getBean(appCfgBTP);
     Value planPathValue = beanResults.getValue(planPathPropertyDef);
     Value sourcePathValue = beanResults.getValue(sourcePathPropertyDef);
     List<FormProperty> oldProperties = page.asForm().getProperties();
     List<FormProperty> newProperties =
-        List.of(
-            createFormProperty("PlanPath", oldProperties, planPathValue),
-            createFormProperty("SourcePath", oldProperties, sourcePathValue)
-        );
+      List.of(
+        CustomizerUtils.createFormProperty("PlanPath", oldProperties, planPathValue),
+        CustomizerUtils.createFormProperty("SourcePath", oldProperties, sourcePathValue)
+      );
     oldProperties.clear();
     oldProperties.addAll(newProperties);
-    response.setSuccess(null);
-    return response;
   }
 
 
-  public static Response<Void> customizeUpdatePlanActionInputForm(InvocationContext ic, Page page) {
-    return commonPlanActionInputForm(ic, page, false);
+  public static void customizeUpdatePlanActionInputForm(InvocationContext ic, Page page) {
+    commonPlanActionInputForm(ic, page, false);
   }
 
-  public static Response<Void> commonPlanActionInputForm(InvocationContext ic, Page page, boolean needToExist) {
-    Response<Void> response = new Response<>();
+  private static void commonPlanActionInputForm(InvocationContext ic, Page page, boolean needToExist) {
     // ic.getIdentities() is null when called from a form, and an array of 1 when called from a table:
     BeanTreePath appRtBTP = (ic.getIdentities() == null) ? ic.getBeanTreePath() : ic.getIdentities().get(0);
     String appName = appRtBTP.getLastSegment().getKey(); // MyApp
@@ -296,69 +258,34 @@ public class AppDeploymentRuntimeMBeanCustomizer {
     BeanReaderRepoSearchBuilder builder =
         ic.getPageRepo().getBeanRepo().asBeanReaderRepo().createSearchBuilder(appCfgIc, false);
     builder.addProperty(appCfgBTP, planPathPropertyDef);
-    Response<BeanReaderRepoSearchResults> searchResponse = builder.search();
-    if (!searchResponse.isSuccess()) {
-      return response.copyUnsuccessfulResponse(searchResponse);
-    }
-    BeanSearchResults beanResults = searchResponse.getResults().getBean(appCfgBTP);
+    BeanReaderRepoSearchResults searchResults = builder.search().getResults();
+    BeanSearchResults beanResults = searchResults.getBean(appCfgBTP);
     if (beanResults == null) {
-      return response.setNotFound();
+      throw Response.notFoundException();
     }
     Value planPath = beanResults.getValue(planPathPropertyDef);
     if (needToExist && planPath.asString().getValue() == null) {
-      response.setUserBadRequest();
-      response.addFailureMessage(
-          ic.getLocalizer().localizeString(
+      throw
+        Response
+          .userBadRequestException()
+          .addFailureMessage(
+            ic.getLocalizer().localizeString(
               LocalizedConstants.APPLICATION_HAS_NO_PLAN,
               appName
-          )
-      );
+            )
+          );
     } else {
       List<FormProperty> oldProperties = page.asForm().getProperties();
       List<FormProperty> newProperties =
-          List.of(
-              createFormProperty("PlanPath", oldProperties, planPath)
-          );
+        List.of(
+          CustomizerUtils.createFormProperty("PlanPath", oldProperties, planPath)
+        );
       oldProperties.clear();
       oldProperties.addAll(newProperties);
-      response.setSuccess(null);
-    }
-    return response;
-  }
-
-
-  private static FormProperty createFormProperty(
-      String propName,
-      List<FormProperty> oldProperties,
-      Value propValue
-  ) {
-    return
-        new FormProperty(
-            findRequiredFormProperty(propName, oldProperties).getFieldDef(),
-            propValue
-        );
-  }
-
-  private static FormProperty findRequiredFormProperty(String propertyName, List<FormProperty> formProperties) {
-    FormProperty formProperty = findOptionalFormProperty(propertyName, formProperties);
-    if (formProperty == null) {
-      throw new AssertionError("Missing required form property: " + propertyName + " " + formProperties);
-    } else {
-      return formProperty;
     }
   }
 
-
-  private static FormProperty findOptionalFormProperty(String propertyName, List<FormProperty> formProperties) {
-    for (FormProperty formProperty : formProperties) {
-      if (propertyName.equals(formProperty.getName())) {
-        return formProperty;
-      }
-    }
-    return null;
-  }
-
-  private static Response<Value> customizeAction(
+  private static Value customizeAction(
     InvocationContext ic,
     String action,
     Properties deploymentOptions
@@ -366,7 +293,7 @@ public class AppDeploymentRuntimeMBeanCustomizer {
     return customizeAction(ic, action, deploymentOptions, Map.of());
   }
 
-  private static Response<Value> customizeAction(
+  private static Value customizeAction(
     InvocationContext ic,
     String action,
     Properties deploymentOptions,
@@ -388,6 +315,6 @@ public class AppDeploymentRuntimeMBeanCustomizer {
           ic.getLocalizer().localizeString(LocalizedConstants.REFER_TO_DEPLOYMENT_TASKS_DASHBOARD)
       );
     }
-    return response;
+    return response.getResults();
   }
 }

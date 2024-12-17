@@ -1,4 +1,4 @@
-// Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+// Copyright (c) 2020, 2024, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.customizers;
@@ -31,13 +31,12 @@ public class ClusterMBeanCustomizer {
   private ClusterMBeanCustomizer() {
   }
 
-  public static Response<List<TableRow>> getServersSliceTableRows(
+  public static List<TableRow> getServersSliceTableRows(
     InvocationContext ic,
-    BeanReaderRepoSearchResults searchResults
+    BeanReaderRepoSearchResults overallSearchResults
   ) {
-    Response<List<TableRow>> response = new Response<>();
-    if (searchResults.getBean(ic.getBeanTreePath()) == null) {
-      return response.setNotFound();
+    if (overallSearchResults.getBean(ic.getBeanTreePath()) == null) {
+      throw Response.notFoundException();
     }
     // Get each server's identity and cluster reference
     List<TableRow> rows = new ArrayList<>();
@@ -51,13 +50,10 @@ public class ClusterMBeanCustomizer {
       ic.getPageRepo().getBeanRepo().asBeanReaderRepo().createSearchBuilder(ic, false);
     builder.addProperty(serversBeanPath, identityPropertyDef);
     builder.addProperty(serversBeanPath, clusterPropertyDef);
-    Response<BeanReaderRepoSearchResults> searchResponse = builder.search();
-    if (!searchResponse.isSuccess()) {
-      return response.copyUnsuccessfulResponse(searchResponse);
-    }
+    BeanReaderRepoSearchResults searchResults = builder.search().getResults();
 
     // Add a row for every server in this cluster
-    for (BeanSearchResults serverResults : searchResponse.getResults().getCollection(serversBeanPath)) {
+    for (BeanSearchResults serverResults : searchResults.getCollection(serversBeanPath)) {
       BeanTreePath serverIdentity = serverResults.getValue(identityPropertyDef).asBeanTreePath();
       Value clusterValue = serverResults.getValue(clusterPropertyDef);
       if (clusterValue.isBeanTreePath()) {
@@ -71,13 +67,12 @@ public class ClusterMBeanCustomizer {
       }
     }
 
-    response.setSuccess(rows);
-    return response;
+    return rows;
   }
 
   // Before a cluster can be deleted, migratable targets or singleton services
   // that use it need to be deleted.  This customizer handles this.
-  public static Response<Void> deleteCluster(
+  public static void deleteCluster(
     InvocationContext ic,
     @Source(
       collection = "/Domain/SingletonServices",
@@ -90,27 +85,15 @@ public class ClusterMBeanCustomizer {
   ) {
     BeanEditorRepo beanEditorRepo =
       ic.getPageRepo().getBeanRepo().asBeanEditorRepo();
-    {
-      // Remove any singleton services that use this cluster
-      Response<Void> response =
-        removeItemsReferencedByThisCluster(ic, beanEditorRepo, singletonServices);
-      if (!response.isSuccess()) {
-        return response;
-      }
-    }
-    {
-      // Remove any migratable targets that use this cluster
-      Response<Void> response =
-        removeItemsReferencedByThisCluster(ic, beanEditorRepo, migratableTargets);
-      if (!response.isSuccess()) {
-        return response;
-      }
-    }
+    // Remove any singleton services that use this cluster
+    removeItemsReferencedByThisCluster(ic, beanEditorRepo, singletonServices);
+    // Remove any migratable targets that use this cluster
+    removeItemsReferencedByThisCluster(ic, beanEditorRepo, migratableTargets);
     // Now we can delete the cluster.
-    return beanEditorRepo.deleteBean(ic, ic.getBeanTreePath());
+    beanEditorRepo.deleteBean(ic, ic.getBeanTreePath()).getResults();
   }
 
-  private static Response<Void> removeItemsReferencedByThisCluster(
+  private static void removeItemsReferencedByThisCluster(
     InvocationContext ic,
     BeanEditorRepo beanEditorRepo,
     List<Map<String,Value>> collection
@@ -125,14 +108,9 @@ public class ClusterMBeanCustomizer {
       String clusterKeyHave = getClusterKeyFromClusterReference(cluster);
       if (clusterKeyWant.equals(clusterKeyHave)) {
         // This item uses this cluster. Delete it.
-        Response<Void> response =
-          beanEditorRepo.deleteBean(ic, item.get(IDENTITY).asBeanTreePath());
-        if (!response.isSuccess()) {
-          return response;
-        }
+        beanEditorRepo.deleteBean(ic, item.get(IDENTITY).asBeanTreePath()).getResults();
       }
     }
-    return new Response<Void>();
   }
 
   private static String getClusterKeyFromClusterReference(Value cluster) {

@@ -63,13 +63,8 @@ public class DescriptorBeanCustomizer {
     return null;
   }
 
-  public static Response<Void> customizePage(InvocationContext ic, Page page) {
-    Response<Void> response = new Response<>();
-    Response<String> typeResponse = getDeploymentType(ic);
-    if (!typeResponse.isSuccess()) {
-      return response.copyUnsuccessfulResponse(typeResponse);
-    }
-    String deploymentType = typeResponse.getResults();
+  public static void customizePage(InvocationContext ic, Page page) {
+    String deploymentType = getDeploymentType(ic);
     boolean topLevelDeployment = isTopLevelDeployment(ic);
     String queryParams =
       "&" + DEPLOYMENT_TYPE + "=" + deploymentType
@@ -90,7 +85,6 @@ public class DescriptorBeanCustomizer {
         + ic.getLocalizer().localizeString(append)
       );
     }
-    return response.setSuccess(null);
   }
 
   private static boolean isTopLevelDeployment(InvocationContext ic) {
@@ -99,26 +93,25 @@ public class DescriptorBeanCustomizer {
     return path.length() == 6 && "Deployment".equals(path.getComponents().get(5));
   }
 
-  public static Response<PageDef> customizePageDef(InvocationContext ic, PageDef uncustomizedPageDef) {
-    Response<PageDef> response = new Response<>();
+  public static PageDef customizePageDef(InvocationContext ic, PageDef uncustomizedPageDef) {
     String deploymentType = ic.getUriInfo().getQueryParameters().getFirst(DEPLOYMENT_TYPE);
     boolean topLevelDeployment = Boolean.valueOf(ic.getUriInfo().getQueryParameters().getFirst(TOP_LEVEL_DEPLOYMENT));
     if (isReadOnlyDeployment(deploymentType)) {
       if (uncustomizedPageDef.isTableDef()) {
         TableDef uncustomizedTableDef = uncustomizedPageDef.asTableDef();
         CustomTableDef customizedTableDef = createReadOnlyTableDef(uncustomizedTableDef);
-        return response.setSuccess(customizedTableDef);
+        return customizedTableDef;
       } else if (uncustomizedPageDef.isSliceFormDef()) {
         SliceFormDef uncustomizedSliceFormDef = uncustomizedPageDef.asSliceFormDef();
         CustomSliceFormDef customizedSliceFormDef = createReadOnlySliceFormDef(uncustomizedSliceFormDef);
         if (AUTO_DEPLOYED.equals(deploymentType) && topLevelDeployment) {
           customizeAutoDeployedTopLevelDeploymentAutoSlices(customizedSliceFormDef, uncustomizedSliceFormDef);
         }
-        return response.setSuccess(customizedSliceFormDef);
+        return customizedSliceFormDef;
       }
       // Don't need to handle slice tables since deployments don't have any
     }
-    return response.setSuccess(uncustomizedPageDef);
+    return uncustomizedPageDef;
   }
 
   private static CustomTableDef createReadOnlyTableDef(TableDef uncustomizedTableDef) {
@@ -182,8 +175,7 @@ public class DescriptorBeanCustomizer {
     return AUTO_DEPLOYED.equals(deploymentType) || DEPLOYED_WITHOUT_PLAN.equals(deploymentType);
   }
 
-  private static Response<String> getDeploymentType(InvocationContext ic) {
-    Response<String> response = new Response<>();
+  private static String getDeploymentType(InvocationContext ic) {
     BeanTreePath thisBTP = ic.getBeanTreePath();
     // DomainRuntime/DeploymentManager/AppDeploymentRuntimes/<app>/Configuration/Deployment/... :
     Path thisPath = thisBTP.getPath();
@@ -196,37 +188,28 @@ public class DescriptorBeanCustomizer {
     BeanReaderRepoSearchBuilder builder =
       ic.getPageRepo().getBeanRepo().asBeanReaderRepo().createSearchBuilder(deploymentIC, false);
     builder.addProperty(deploymentBTP, propertyDef);
-    Response<BeanReaderRepoSearchResults> searchResponse = builder.search();
-    if (!searchResponse.isSuccess()) {
-      return response.copyUnsuccessfulResponse(searchResponse);
-    }
-    BeanSearchResults beanResults = searchResponse.getResults().getBean(deploymentBTP);
+    BeanReaderRepoSearchResults searchResults = builder.search().getResults();
+    BeanSearchResults beanResults = searchResults.getBean(deploymentBTP);
     if (beanResults == null) {
-      return response.setNotFound();
+      throw Response.notFoundException();
     }
     Value value = beanResults.getValue(propertyDef);
     if (value == null) {
       throw new AssertionError("Could not find " + propertyDef + " in " + deploymentBTP);
     }
-    return response.setSuccess(value.asString().getValue());
+    return value.asString().getValue();
   }
 
-  public static Response<SettableValue> getDescriptorBeanClass(InvocationContext ic) {
-    Response<SettableValue> response = new Response<>();
+  public static SettableValue getDescriptorBeanClass(InvocationContext ic) {
     String dbc = null;
     BeanTreePath crBTP = getCustomResourceBTP(ic);
     if (crBTP != null) {
-      Response<String> getResponse = findDescriptorBeanClass(ic, crBTP);
-      if (!getResponse.isSuccess()) {
-        return response.copyUnsuccessfulResponse(getResponse);
-      }
-      dbc = getResponse.getResults();
+      dbc = findDescriptorBeanClass(ic, crBTP);
     }
     if (StringUtils.isEmpty(dbc)) {
       dbc = "UnknownDescriptorBeanClass";
     }
-    SettableValue rtn = new SettableValue(new StringValue(dbc));
-    return response.setSuccess(rtn);
+    return new SettableValue(new StringValue(dbc));
   }
 
   private static BeanTreePath getCustomResourceBTP(InvocationContext ic) {
@@ -241,27 +224,22 @@ public class DescriptorBeanCustomizer {
     return null;
   }
 
-  private static Response<String> findDescriptorBeanClass(InvocationContext ic, BeanTreePath customResourceBTP) {
-    Response<String> response = new Response<>();
+  private static String findDescriptorBeanClass(InvocationContext ic, BeanTreePath customResourceBTP) {
     // Don't return whether properties are set.
     BeanReaderRepoSearchBuilder builder =
       ic.getPageRepo().getBeanRepo().asBeanReaderRepo().createSearchBuilder(ic, false);
     BeanPropertyDef dbcPropertyDef = customResourceBTP.getTypeDef().getPropertyDef(new Path("DescriptorBeanClass"));
     builder.addProperty(customResourceBTP, dbcPropertyDef);
-    Response<BeanReaderRepoSearchResults> searchResponse = builder.search();
-    if (!searchResponse.isSuccess()) {
-      return response.copyUnsuccessfulResponse(searchResponse);
-    }
-    BeanSearchResults customResourceResults = searchResponse.getResults().getBean(customResourceBTP);
+    BeanSearchResults customResourceResults = builder.search().getResults().getBean(customResourceBTP);
     if (customResourceResults == null) {
       // the custom resource doesn't exist
-      return response.setNotFound();
+      throw Response.notFoundException();
     }
     String dbc = null;
     Value dbcValue = customResourceResults.getValue(dbcPropertyDef);
     if (dbcValue != null && dbcValue.isString()) {
       dbc = dbcValue.asString().getValue();
     }
-    return response.setSuccess(dbc);
+    return dbc;
   }
 }

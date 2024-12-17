@@ -1,16 +1,16 @@
-# Copyright (c) 2020, 2023, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2020, 2024, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 properties:
 - name: "Name"
 - name: "Type"
 - name: "Active"
-- name: "DestinationRuntime.BytesCurrentCount"
-- name: "DestinationRuntime.BytesPendingCount"
+- name: "BytesCurrentCount"
+- name: "BytesPendingCount"
 - name: "ClientID"
 - name: "ClientIDPolicy"
 - name: "LastMessagesReceivedTime"
-- name: "DestinationRuntime.MessagesCurrentCount"
-- name: "DestinationRuntime.MessagesPendingCount"
+- name: "MessagesCurrentCount"
+- name: "MessagesPendingCount"
 - name: "NoLocal"
 - name: "Selector"
 - name: "SubscribersCurrentCount"

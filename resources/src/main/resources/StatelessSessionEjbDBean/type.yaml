@@ -3,4 +3,4 @@
 
 editable: true
 disableMBeanJavadoc: true
-supportsFilteringDashboards: false
+allowSearch: false

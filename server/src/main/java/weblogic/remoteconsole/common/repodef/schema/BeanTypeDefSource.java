@@ -1,4 +1,4 @@
-// Copyright (c) 2021, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2024, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef.schema;
@@ -11,7 +11,7 @@ import java.util.List;
  * It parallels the information available in a WebLogic bean info,
  * which is a superset of what's available from a normal java bean info.
  */
-public class BeanTypeDefSource {
+public class BeanTypeDefSource extends YamlSource {
   private StringValue name = new StringValue();
   private StringValue descriptionHTML = new StringValue();
   private ListValue<String> baseTypes = new ListValue<>();
@@ -97,5 +97,13 @@ public class BeanTypeDefSource {
 
   public void setRoles(RolesDefSource value) {
     roles.setValue(value);
+  }
+
+  @Override
+  protected void validateExtension() {
+    super.validateExtension();
+    validateExtensionChildren(getProperties(), "properties");
+    validateExtensionChildren(getActions(), "actions");
+    validateExtensionChild(getRoles(), "roles");
   }
 }

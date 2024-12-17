@@ -4,7 +4,7 @@
 createResourceMethod: weblogic.remoteconsole.customizers.DashboardMBeanCustomizer.createResource
 getCollectionMethod: weblogic.remoteconsole.customizers.DashboardMBeanCustomizer.getCollection
 disableMBeanJavadoc: true
-supportsFilteringDashboards: false
+allowSearch: false
 subTypeDiscriminatorProperty: Type
 subTypes:
 - type: weblogic.management.CustomFilteringDashboardMBean

@@ -68,10 +68,9 @@ public class JMSMessageManagementRuntimeMBeanCustomizer {
   }
 
   // Customizes the PDJ for configuring a destination's message filters
-  public static Response<PageDef> customizeMessagesFilterSliceDef(InvocationContext ic, PageDef uncustomizedPageDef) {
+  public static PageDef customizeMessagesFilterSliceDef(InvocationContext ic, PageDef uncustomizedPageDef) {
     // Force all the properties to be writable (otherwise, since we're in the monitoring tree,
     // they're considered read-only regardless of what the PDY says)
-    Response<PageDef> response = new Response<>();
     SliceFormDef uncustomizedSliceFormDef = uncustomizedPageDef.asSliceFormDef();
     List<PagePropertyDef> customizedPropertyDefs = new ArrayList<>();
     for (PagePropertyDef uncustomizedPropertyDef : uncustomizedSliceFormDef.getPropertyDefs()) {
@@ -85,17 +84,12 @@ public class JMSMessageManagementRuntimeMBeanCustomizer {
         );
       }
     }
-    return
-      response.setSuccess(
-        new CustomSliceFormDef(uncustomizedSliceFormDef)
-          .propertyDefs(customizedPropertyDefs)
-      );
+    return new CustomSliceFormDef(uncustomizedSliceFormDef).propertyDefs(customizedPropertyDefs);
   }
 
   // Customizes the RDJ for configuring a destination's message filters.
-  public static Response<Void> customizeMessagesFilterSlice(InvocationContext ic, Page page) {
+  public static void customizeMessagesFilterSlice(InvocationContext ic, Page page) {
     synchronized (CONFIGURATION_LOCK) {
-      Response<Void> response = new Response<>();
       Form form = page.asForm();
       form.setExists(true);
       // Make it easy to find these properties by name:
@@ -104,39 +98,32 @@ public class JMSMessageManagementRuntimeMBeanCustomizer {
         nameToPropertyDef.put(propertyDef.getFormFieldName(), propertyDef);
       }
       getMessageFilters(ic, false).customizeMessageFiltersSlice(nameToPropertyDef, form);
-      return response.setSuccess(null);
     }
   }
 
   // Customizes the exportMessages action input form RDJ
-  public static Response<Void> customizeExportMessagesActionInputForm(InvocationContext ic, Page page) {
-    return initializeActionInputFormSelector(ic, page);
+  public static void customizeExportMessagesActionInputForm(InvocationContext ic, Page page) {
+    initializeActionInputFormSelector(ic, page);
   }
 
   // Customizes the deleteMessages action input form RDJ
-  public static Response<Void> customizeDeleteMessagesActionInputForm(InvocationContext ic, Page page) {
-    return initializeActionInputFormSelector(ic, page);
+  public static void customizeDeleteMessagesActionInputForm(InvocationContext ic, Page page) {
+    initializeActionInputFormSelector(ic, page);
   }
 
   // Customizes the moveMessages action input form RDJ
-  public static Response<Void> customizeMoveMessagesActionInputForm(InvocationContext ic, Page page) {
-    Response<Void> response = new Response<>();
+  public static void customizeMoveMessagesActionInputForm(InvocationContext ic, Page page) {
     for (FormProperty property : page.asForm().getProperties()) {
       if ("destinationID".equals(property.getName())) {
-        Response<List<Option>> r = getAllDestinations(ic);
-        if (!r.isSuccess()) {
-          return response.copyUnsuccessfulResponse(r);
-        }
-        property.setOptions(r.getResults());
+        property.setOptions(getAllDestinations(ic));
       }
     }
-    return initializeActionInputFormSelector(ic, page);
+    initializeActionInputFormSelector(ic, page);
   }
 
   // Returns all of the JMS destination runtimes in this JMS destination's JMS server
   // on this server (used for moving messages)
-  private static Response<List<Option>> getAllDestinations(InvocationContext ic) {
-    Response<List<Option>> response = new Response<>();
+  private static List<Option> getAllDestinations(InvocationContext ic) {
     List<Option> destinations = new ArrayList<>();
     // ic's btp =
     // 0 DomainRuntime
@@ -144,7 +131,7 @@ public class JMSMessageManagementRuntimeMBeanCustomizer {
     // 2 ServerRuntime
     // 3 JMSRuntime
     // 4 JMSServers:<JMSServerName>
-    // 5 Destinations:<DestinationName
+    // 5 Destinations:<DestinationName>
     String serverName = ic.getBeanTreePath().getSegments().get(1).getKey();
     String thisJMSServerName = ic.getBeanTreePath().getSegments().get(4).getKey();
     String thisDestName = ic.getBeanTreePath().getSegments().get(5).getKey();
@@ -168,12 +155,8 @@ public class JMSMessageManagementRuntimeMBeanCustomizer {
     searchBuilder.addProperty(destsBTP, destsBTP.getTypeDef().getIdentityPropertyDef());
     searchBuilder.addProperty(destsBTP, destTypePropDef);
     searchBuilder.addProperty(destsBTP, destIDPropDef);
-    Response<BeanReaderRepoSearchResults> r = searchBuilder.search();
-    if (!r.isSuccess()) {
-      return response.copyUnsuccessfulResponse(r);
-    }
+    BeanReaderRepoSearchResults searchResults = searchBuilder.search().getResults();
     Map<String,Option> jmsServerAndDestToOption = new TreeMap<>();
-    BeanReaderRepoSearchResults searchResults = r.getResults();
     for (BeanSearchResults jmsServerResults : searchResults.getCollection(jmsServersBTP)) {
       BeanTreePath jmsServerBTP = jmsServerResults.getBeanTreePath();
       String jmsServerName = jmsServerBTP.getLastSegment().getKey();
@@ -196,10 +179,10 @@ public class JMSMessageManagementRuntimeMBeanCustomizer {
         }
       }
     }
-    return response.setSuccess(new ArrayList<>(jmsServerAndDestToOption.values()));
+    return new ArrayList<>(jmsServerAndDestToOption.values());
   }
 
-  private static Response<Void> initializeActionInputFormSelector(InvocationContext ic, Page page) {
+  private static void initializeActionInputFormSelector(InvocationContext ic, Page page) {
     synchronized (CONFIGURATION_LOCK) {
       List<FormProperty> properties = page.asForm().getProperties();
       List<FormProperty> newProperties = new ArrayList<>();
@@ -218,7 +201,6 @@ public class JMSMessageManagementRuntimeMBeanCustomizer {
       }
       properties.clear();
       properties.addAll(newProperties);
-      return new Response<Void>().setSuccess(null);
     }
   }
 
@@ -234,14 +216,9 @@ public class JMSMessageManagementRuntimeMBeanCustomizer {
     }
   }
 
-  public static Response<Void> customizeMessagesViewPage(InvocationContext ic, Page page) {
+  public static void customizeMessagesViewPage(InvocationContext ic, Page page) {
     synchronized (CONFIGURATION_LOCK) {
-      Response<Void> response = new Response<>();
-      Response<JsonObject> messagesResponse = getMessages(ic);
-      if (!messagesResponse.isSuccess()) {
-        return response.copyUnsuccessfulResponse(messagesResponse);
-      }
-      JsonObject messages = messagesResponse.getResults();
+      JsonObject messages = getMessages(ic);
       List<TableRow> rows = processMessages(messages.getJsonArray("jmsMessages"));
       page.asTable().getRows().addAll(rows);
       page.setLocalizedIntroductionHTML(
@@ -253,7 +230,6 @@ public class JMSMessageManagementRuntimeMBeanCustomizer {
           messages.getJsonNumber("totalFilteredCount").longValueExact()
         )
       );
-      return response.setSuccess(null);
     }
   }
 
@@ -324,9 +300,7 @@ public class JMSMessageManagementRuntimeMBeanCustomizer {
     }
   }
 
-  private static Response<JsonObject> getMessages(InvocationContext ic) {
-    Response<JsonObject> response = new Response<>();
-
+  private static JsonObject getMessages(InvocationContext ic) {
     // Either
     //   DomainRuntime.CombinedServerRuntimes.<svr>.ServerRuntime.JMSRuntime.JMSServers.<jmssvr>\
     //    .Destinations.<dest>
@@ -368,7 +342,7 @@ public class JMSMessageManagementRuntimeMBeanCustomizer {
     args.add("sortOn", sortOnArg);
     args.add("ascending", ascendingArg);
 
-    Response<JsonObject> messagesResponse =
+    JsonObject invokeResponse =
       WebLogicRestInvoker.post(
         ic,
         wlsPath,
@@ -376,11 +350,8 @@ public class JMSMessageManagementRuntimeMBeanCustomizer {
         false, // expanded values
         false, // save changes
         false // asynchronous
-       );
-    if (!messagesResponse.isSuccess()) {
-      return response.copyUnsuccessfulResponse(messagesResponse);
-    }
-    return response.setSuccess(messagesResponse.getResults().getJsonObject("return"));
+       ).getResults();
+    return invokeResponse.getJsonObject("return");
   }
 
   private static List<TableRow> processMessages(JsonArray messages) {
@@ -395,17 +366,17 @@ public class JMSMessageManagementRuntimeMBeanCustomizer {
     JsonObject metaData = message.getJsonObject("metaData");
     JsonObject header = message.getJsonObject("header");
     TableRow row = new TableRow();
-    row.setIdentifier(getStringField(header, "jmsMessageID"));
+    row.setIdentifier(CustomizerUtils.getStringField(header, "jmsMessageID"));
     row.getCells().add(
       new TableCell(
         "JMSMessageID",
-        new StringValue(getStringField(header, "jmsMessageID"))
+        new StringValue(CustomizerUtils.getStringField(header, "jmsMessageID"))
       )
     );
     row.getCells().add(
       new TableCell(
         "JMSCorrelationID",
-        new StringValue(getStringField(header, "jmsCorrelationID"))
+        new StringValue(CustomizerUtils.getStringField(header, "jmsCorrelationID"))
       )
     );
     row.getCells().add(
@@ -417,13 +388,13 @@ public class JMSMessageManagementRuntimeMBeanCustomizer {
     row.getCells().add(
       new TableCell(
         "State",
-        new StringValue(getStringField(metaData, "state"))
+        new StringValue(CustomizerUtils.getStringField(metaData, "state"))
       )
     );
     row.getCells().add(
       new TableCell(
         "JMSDeliveryMode",
-        new StringValue(getStringField(header, "jmsDeliveryMode"))
+        new StringValue(CustomizerUtils.getStringField(header, "jmsDeliveryMode"))
       )
     );
     row.getCells().add(
@@ -435,7 +406,7 @@ public class JMSMessageManagementRuntimeMBeanCustomizer {
     row.getCells().add(
       new TableCell(
         "JMSType",
-        new StringValue(getStringField(header, "jmsType"))
+        new StringValue(CustomizerUtils.getStringField(header, "jmsType"))
       )
     );
     row.getCells().add(
@@ -447,7 +418,7 @@ public class JMSMessageManagementRuntimeMBeanCustomizer {
     row.getCells().add(
       new TableCell(
         "Xid",
-        new StringValue(getStringField(metaData, "xid"))
+        new StringValue(CustomizerUtils.getStringField(metaData, "xid"))
       )
     );
     row.getCells().add(
@@ -500,17 +471,10 @@ public class JMSMessageManagementRuntimeMBeanCustomizer {
     JsonArray props = header.getJsonArray("properties");
     for (int i = 0; props != null && i < props.size(); i++) {
       JsonObject prop = props.getJsonObject(i);
-      String name = getStringField(prop, "name");
+      String name = CustomizerUtils.getStringField(prop, "name");
       if (property.equals(name)) {
-        return getStringField(prop, "value");
+        return CustomizerUtils.getStringField(prop, "value");
       }
-    }
-    return null;
-  }
-
-  private static String getStringField(JsonObject jo, String field) {
-    if (jo.containsKey(field) && !jo.isNull(field)) {
-      return jo.getString(field);
     }
     return null;
   }

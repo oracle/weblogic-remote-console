@@ -1,11 +1,30 @@
 # Copyright (c) 2020, 2024, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
 properties:
 - array: true
   descriptionHTML: '<p>The <code>ServerRuntimeMBean</code> for all running servers in the domain.</p> '
   name: ServerRuntimes
   relationship: containment
   type: weblogic.management.runtime.ServerRuntimeMBean
+
+- array: true
+  descriptionHTML: <p>Recent search results.</p>
+  name: RecentSearches
+  relationship: containment
+  type: weblogic.management.SimpleSearchMBean
+
+- array: true
+  descriptionHTML: <p>Dashboards.</p>
+  name: Dashboards
+  relationship: containment
+  type: weblogic.management.DashboardMBean
+
+- array: true
+  descriptionHTML: <p>All the configured and/or running servers in the domain.</p>
+  name: CombinedServerRuntimes
+  relationship: containment
+  type: weblogic.management.runtime.CombinedServerRuntimeMBean
 
 actions:
 - name: "getServerHttpURL"

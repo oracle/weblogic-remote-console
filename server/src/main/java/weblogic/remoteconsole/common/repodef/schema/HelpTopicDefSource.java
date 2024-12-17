@@ -7,7 +7,7 @@ package weblogic.remoteconsole.common.repodef.schema;
  * This POJO mirrors the yaml source file format for configuring information
  * about a link to a WebLogic help topic external to the remote console.
  */
-public class HelpTopicDefSource {
+public class HelpTopicDefSource extends YamlSource {
 
   public enum Type {
     edocs,

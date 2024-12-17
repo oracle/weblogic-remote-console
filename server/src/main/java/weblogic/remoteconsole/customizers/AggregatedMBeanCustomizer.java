@@ -46,13 +46,12 @@ public class AggregatedMBeanCustomizer {
     return null;
   }
 
-  public static Response<List<TableRow>> getSliceTableRows(
+  public static List<TableRow> getSliceTableRows(
     InvocationContext ic,
-    BeanReaderRepoSearchResults searchResults
+    BeanReaderRepoSearchResults overallSearchResults
   ) {
-    Response<List<TableRow>> response = new Response<>();
-    if (searchResults.getBean(ic.getBeanTreePath()) == null) {
-      return response.setNotFound();
+    if (overallSearchResults.getBean(ic.getBeanTreePath()) == null) {
+      throw Response.notFoundException();
     }
 
     // e.g. DomainRuntime.ServerRuntimes.*.Foo.Bar
@@ -62,20 +61,14 @@ public class AggregatedMBeanCustomizer {
     // i.e. DomainRuntime.ServerRuntimes.*.Foo.Bar -> Foo.Bar
     Path serverRelativePath = unfabPath.subPath(3, unfabPath.length());
   
-    Response<PageDef> pageDefResponse = ic.getPageRepo().asPageReaderRepo().getPageDef(ic);
-    if (!pageDefResponse.isSuccess()) {
-      return response.copyUnsuccessfulResponse(pageDefResponse);
-    }
-    SliceTableDef sliceTableDef = pageDefResponse.getResults().asSliceTableDef();
-    Response<BeanReaderRepoSearchResults> searchResponse =
+    PageDef pageDef = ic.getPageRepo().asPageReaderRepo().getPageDef(ic).getResults();
+    SliceTableDef sliceTableDef = pageDef.asSliceTableDef();
+    BeanReaderRepoSearchResults searchResults =
       findPerServerInstances(ic, sliceTableDef, serverRelativePath);
-    if (!searchResponse.isSuccess()) {
-      return response.copyUnsuccessfulResponse(searchResponse);
-    }
-    return createRows(ic, sliceTableDef, serverRelativePath, searchResponse.getResults());
+    return createRows(ic, sliceTableDef, serverRelativePath, searchResults);
   }
 
-  private static Response<BeanReaderRepoSearchResults> findPerServerInstances(
+  private static BeanReaderRepoSearchResults findPerServerInstances(
     InvocationContext ic,
     SliceTableDef sliceTableDef,
     Path serverRelativePath
@@ -98,17 +91,15 @@ public class AggregatedMBeanCustomizer {
       getPageReaderHelper(ic).addParamsToSearch(builder, allInstances, propertyDef.getGetValueCustomizerDef());
     }
     // Do the search
-    return builder.search();
+    return builder.search().getResults();
   }
 
-  private static Response<List<TableRow>> createRows(
+  private static List<TableRow> createRows(
     InvocationContext ic,
     SliceTableDef sliceTableDef,
     Path serverRelativePath,
     BeanReaderRepoSearchResults searchResults
   ) {
-    Response<List<TableRow>> response = new Response<>();
-
     // Sort the rows by the server name
     Map<String,TableRow> sortedRows = new TreeMap<>();
 
@@ -125,11 +116,7 @@ public class AggregatedMBeanCustomizer {
         // This bean isn't present on this server.  Don't make a row for it.
       } else {
         // Make a row for this bean (sorted by server name)
-        Response<TableRow> r = createRow(ic, sliceTableDef, combinedServerRuntimeBTP, rowResults);
-        if (!r.isSuccess()) {
-          return response.copyUnsuccessfulResponse(r);
-        }
-        TableRow row = r.getResults();
+        TableRow row = createRow(ic, sliceTableDef, combinedServerRuntimeBTP, rowResults);
         String serverName = combinedServerRuntimeBTP.getLastSegment().getKey();
         sortedRows.put(serverName, row);
       }
@@ -139,16 +126,15 @@ public class AggregatedMBeanCustomizer {
     for (TableRow row : sortedRows.values()) {
       rows.add(row);
     }
-    return response.setSuccess(rows);
+    return rows;
   }
 
-  private static Response<TableRow> createRow(
+  private static TableRow createRow(
     InvocationContext ic,
     SliceTableDef sliceTableDef,
     BeanTreePath combinedServerRuntimeBTP,
     BeanSearchResults rowResults
   ) {
-    Response<TableRow> response = new Response<>();
     TableRow row = new TableRow();
     String serverName = combinedServerRuntimeBTP.getLastSegment().getKey();
     // Add a cell for each property that exists in this instance on this server
@@ -160,18 +146,14 @@ public class AggregatedMBeanCustomizer {
       if (isServer) {
         value = combinedServerRuntimeBTP;
       } else {
-        Response<Value> r =
+        value =
           getPageReaderHelper(ic).getPropertyValue(
             propertyDef,
             rowResults.getBeanTreePath(),
             rowResults,
             rowResults.getSearchResults(),
             false
-          );
-        if (!r.isSuccess()) {
-          return response.copyUnsuccessfulResponse(r);
-        }
-        value = r.getResults();
+          ).getResults();
       }
       if (value != null) {
         row.getCells().add(
@@ -190,7 +172,7 @@ public class AggregatedMBeanCustomizer {
       }
     }
     row.getCells().add(new TableCell("identity", rowResults.getBeanTreePath()));
-    return response.setSuccess(row);
+    return row;
   }
 
   private static BeanTreePath getCombinedServerRuntimesBTP(InvocationContext ic) {

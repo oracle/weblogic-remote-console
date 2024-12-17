@@ -664,14 +664,15 @@ public class LocalizedConstants {
   public static final LocalizableString ADMIN_SERVER_HELP_SSO_SUMMARY =
     addConstant(
       "adminServerHelpSSOSummary",
-      "Use an alternative authentication method"
+      "Use an alternative authentication method, requires WebLogic 14.1.2.0.0 or greater"
     );
 
   public static final LocalizableString ADMIN_SERVER_HELP_SSO_DETAIL =
     addConstant(
       "adminServerHelpSSODetail",
       "Sends users to the browser to complete the login process with an "
-      + "alternative authentication method such as Single Sign On."
+      + "alternative authentication method such as Single Sign On. "
+      + "Supported with WebLogic Server 14.1.2.0.0 or greater."
     );
 
   public static final LocalizableString WDT_PROVIDER_HELP_FILE_SUMMARY =

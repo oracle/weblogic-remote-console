@@ -34,6 +34,7 @@ import weblogic.remoteconsole.common.repodef.schema.SliceTableDefSource;
 import weblogic.remoteconsole.common.repodef.schema.SlicesDefSource;
 import weblogic.remoteconsole.common.repodef.schema.SubTypeDefSource;
 import weblogic.remoteconsole.common.repodef.schema.TableDefSource;
+import weblogic.remoteconsole.common.repodef.schema.YamlSource;
 import weblogic.remoteconsole.common.utils.StringUtils;
 
 /**
@@ -293,15 +294,15 @@ public abstract class YamlReader {
     );
   }
 
-  private <T> T getFirstTypeCustomizationSource(String yamlPath, Class<T> type) {
+  private <T extends YamlSource> T getFirstTypeCustomizationSource(String yamlPath, Class<T> type) {
     return getFirstSource(getTypeCustomizationYamlDirectoryReaders(), yamlPath, type);
   }
 
-  private <T> List<T> getTypeCustomizationSources(String yamlPath, Class<T> type) {
+  private <T extends YamlSource> List<T> getTypeCustomizationSources(String yamlPath, Class<T> type) {
     return getSources(getTypeCustomizationYamlDirectoryReaders(), yamlPath, type);
   }
 
-  private <T> T getFirstSource(List<YamlDirectoryReader> readers, String yamlPath, Class<T> type) {
+  private <T extends YamlSource> T getFirstSource(List<YamlDirectoryReader> readers, String yamlPath, Class<T> type) {
     for (YamlDirectoryReader reader : readers) {
       T source = reader.readYaml(yamlPath, type);
       if (source != null) {
@@ -311,7 +312,7 @@ public abstract class YamlReader {
     return null;
   }
 
-  private <T> List<T> getSources(List<YamlDirectoryReader> readers, String yamlPath, Class<T> type) {
+  private <T extends YamlSource> List<T> getSources(List<YamlDirectoryReader> readers, String yamlPath, Class<T> type) {
     List<T> sources = new ArrayList<>();
     for (YamlDirectoryReader reader : readers) {
       T source = reader.readYaml(yamlPath, type);

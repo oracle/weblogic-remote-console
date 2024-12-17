@@ -49,11 +49,11 @@ Typically, that meant replacing rulesets targeting `div.notices p` with ones tha
 
 
 ### Icon styling
-Added styling to vertically align icons that are inline with text.
+Added styling to vertically align images that are inline (or inline-block) with text.
 
 ```
-img[src*="/icons/"] {
-    vertical-align: middle;
+img[src*="/images/"] {
+    vertical-align: text-bottom;
 }
 ```
 
@@ -91,3 +91,25 @@ div.expand-content {
     margin-top: 0.5rem;
 }
 ```
+
+## Fix inadvertent code blocks
+
+CommonMark automatically processes any content that is indented 4 times as code and treats it accordingly when converting from Markdown to HTML, which can get annoying.
+
+This change uses the [InnerDeindent](https://gohugo.io/methods/shortcode/innerdeindent/) Hugo method to fix the issue when it happens to notices that contain multiple block elements *and* the notice is itself inside another block element. 
+
+Updates the notices shortcode to use `InnerDeindent` instead of `Inner` at`\themes\hugo-theme-learn\layouts\shortcodes\notice.html`
+
+```
+{{ $_hugo_config := `{ "version": 1 }` }}
+<div class="notices {{ .Get 0 }}" {{ if len .Params | eq 2 }} id="{{ .Get 1 }}" {{ end }}>{{ .Inner }}</div>
+```
+
+becomes
+
+```
+{{ $_hugo_config := `{ "version": 1 }` }}
+<div class="notices {{ .Get 0 }}" {{ if len .Params | eq 2 }} id="{{ .Get 1 }}" {{ end }}>{{ $opts := dict "display" "block" }}{{ .InnerDeindent | .Page.RenderString $opts }}</div>
+```
+
+

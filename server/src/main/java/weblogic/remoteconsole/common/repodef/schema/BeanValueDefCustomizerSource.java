@@ -10,7 +10,7 @@ import weblogic.remoteconsole.common.utils.Path;
  * about a value on a feature of a type (i.e. a property value, an action parameter
  * value or an action return value).
  */
-public class BeanValueDefCustomizerSource {
+public class BeanValueDefCustomizerSource extends YamlSource {
   private BooleanValue referenceAsReferences = new BooleanValue();
   private BooleanValue dateAsLong = new BooleanValue();
   private BooleanValue ordered = new BooleanValue();

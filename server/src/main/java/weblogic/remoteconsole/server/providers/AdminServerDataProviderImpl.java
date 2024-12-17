@@ -22,6 +22,7 @@ import javax.ws.rs.core.Response;
 
 import weblogic.remoteconsole.common.repodef.LocalizableString;
 import weblogic.remoteconsole.common.repodef.LocalizedConstants;
+//import weblogic.remoteconsole.common.utils.RemoteConsoleExtension;
 import weblogic.remoteconsole.common.utils.StringUtils;
 import weblogic.remoteconsole.common.utils.WebLogicMBeansVersion;
 import weblogic.remoteconsole.common.utils.WebLogicRoles;
@@ -473,6 +474,17 @@ public class AdminServerDataProviderImpl implements AdminServerDataProvider {
         capabilities.add(capability);
       }
       ret.add("capabilities", capabilities);
+      /* Uncomment if/when we want to display the extensions in the CFE:
+      JsonArrayBuilder extensions = Json.createArrayBuilder();
+      for (RemoteConsoleExtension extension : connection.getExtensions()) {
+        extensions.add(
+          Json.createObjectBuilder()
+            .add("name", extension.getName())
+            .add("version", extension.getVersion())
+        );
+      }
+      ret.add("extensions", extensions);
+      */
       if (connectionWarning != null) {
         ret.add("connectionWarning", connectionWarning);
       }

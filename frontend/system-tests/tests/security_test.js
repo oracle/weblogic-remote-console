@@ -151,13 +151,15 @@ describe.only('Test Suite: security_test for Realms, Certificate Authority Overr
         try {
             await admin.goToNavTreeLevelSixLink(driver,"security","Realms","myrealm",
                 "Authorizers","XACMLAuthorizer","Servers","ManagedServer1");
+            await driver.sleep(9400);
             console.log("Click Add Policy Condition");
-            element = driver.findElement(By.xpath("//a[@id='addConditionLauncher']/span"));
+            element = driver.findElement(By.xpath("//*[@id='addConditionLauncher']/span"));
             driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
             await driver.sleep(1200);
             if (element.isEnabled()) {
                 await element.click();
             }
+            await driver.sleep(1200);
             console.log("Click Predicate Policy List");
             await driver.findElement(By.xpath("//oj-input-text[@id='oj-searchselect-filter-predicate']/div/span/a")).click();
             await driver.sleep(800);
@@ -204,10 +206,11 @@ describe.only('Test Suite: security_test for Realms, Certificate Authority Overr
                 try {
                     await admin.goToNavTreeLevelSevenLink(driver,"security","Realms","myrealm", "Authorizers",
                         "XACMLAuthorizer","Servers","ManagedServer2","lock");
-                    await driver.sleep(8400);
+                    await driver.sleep(9400);
                     console.log("Click Add Policy Condition");
-                    element = driver.findElement(By.xpath("//*[@id='addConditionLauncher']/img"));
+                    element = driver.findElement(By.xpath("//*[@id='addConditionLauncher']/span"));
                     driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
+                    await driver.sleep(1200);
                     if (element.isEnabled()) {
                         await element.click();
                     }
@@ -346,13 +349,15 @@ describe.only('Test Suite: security_test for Realms, Certificate Authority Overr
         try {
             await admin.goToNavTreeLevelSixLink(driver,"security","Realms","myrealm",
                 "Authorizers","XACMLAuthorizer","Servers","ManagedServer3");
+            await driver.sleep(9400);
             console.log("Click Add Policy Condition");
-            element = driver.findElement(By.xpath("//a[@id='addConditionLauncher']/span"));
+            element = driver.findElement(By.xpath("//*[@id='addConditionLauncher']/span"));
             driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
             await driver.sleep(1200);
             if (element.isEnabled()) {
                 await element.click();
             }
+            await driver.sleep(1200);
             console.log("Click Predicate Policy List");
             await driver.findElement(By.xpath("//oj-input-text[@id='oj-searchselect-filter-predicate']/div/span/a")).click();
             await driver.sleep(800);
@@ -443,13 +448,15 @@ describe.only('Test Suite: security_test for Realms, Certificate Authority Overr
         try {
             await admin.goToNavTreeLevelSixLink(driver,"security","Realms","myrealm",
                 "Authorizers","XACMLAuthorizer","Servers","ManagedServer1");
+            await driver.sleep(9400);
             console.log("Click Add Policy Condition");
-            element = driver.findElement(By.xpath("//a[@id='addConditionLauncher']/span"));
+            element = driver.findElement(By.xpath("//*[@id='addConditionLauncher']/span"));
             driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
             await driver.sleep(1200);
             if (element.isEnabled()) {
                 await element.click();
             }
+            await driver.sleep(1200);
             console.log("Click Predicate Policy List");
             await driver.findElement(By.xpath("//oj-input-text[@id='oj-searchselect-filter-predicate']/div/span/a")).click();
             await driver.sleep(800);
@@ -503,13 +510,15 @@ describe.only('Test Suite: security_test for Realms, Certificate Authority Overr
         try {
             await admin.goToNavTreeLevelSixLink(driver,"security","Realms","myrealm",
                 "Authorizers","XACMLAuthorizer","Servers","ManagedServer2");
+            await driver.sleep(9400);
             console.log("Click Add Policy Condition");
-            element = driver.findElement(By.xpath("//a[@id='addConditionLauncher']/span"));
+            element = driver.findElement(By.xpath("//*[@id='addConditionLauncher']/span"));
             driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
             await driver.sleep(1200);
             if (element.isEnabled()) {
                 await element.click();
             }
+            await driver.sleep(1200);
             console.log("Click Predicate Policy List");
             await driver.findElement(By.xpath("//oj-input-text[@id='oj-searchselect-filter-predicate']/div/span/a")).click();
             await driver.sleep(800);
@@ -575,13 +584,15 @@ describe.only('Test Suite: security_test for Realms, Certificate Authority Overr
         try {
             await admin.goToNavTreeLevelSixLink(driver,"security","Realms","myrealm",
                 "Authorizers","XACMLAuthorizer","Servers","ManagedServer1");
+            await driver.sleep(9400);
             console.log("Click Add Policy Condition");
-            element = driver.findElement(By.xpath("//a[@id='addConditionLauncher']/span"));
+            element = driver.findElement(By.xpath("//*[@id='addConditionLauncher']/span"));
             driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
             await driver.sleep(1200);
             if (element.isEnabled()) {
                 await element.click();
             }
+            await driver.sleep(1200);
             console.log("Click Predicate Policy List");
             await driver.findElement(By.xpath("//oj-input-text[@id='oj-searchselect-filter-predicate']/div/span/a")).click();
             await driver.sleep(800);
@@ -635,13 +646,15 @@ describe.only('Test Suite: security_test for Realms, Certificate Authority Overr
         try {
             await admin.goToNavTreeLevelSixLink(driver,"security","Realms","myrealm",
                 "Authorizers","XACMLAuthorizer","Servers","ManagedServer2");
+            await driver.sleep(9400);
             console.log("Click Add Policy Condition");
-            element = driver.findElement(By.xpath("//a[@id='addConditionLauncher']/span"));
+            element = driver.findElement(By.xpath("//*[@id='addConditionLauncher']/span"));
             driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
             await driver.sleep(1200);
             if (element.isEnabled()) {
                 await element.click();
             }
+            await driver.sleep(1200);
             console.log("Click Predicate Policy List");
             await driver.findElement(By.xpath("//oj-input-text[@id='oj-searchselect-filter-predicate']/div/span/a")).click();
             await driver.sleep(800);

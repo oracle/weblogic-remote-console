@@ -1,4 +1,4 @@
-// Copyright (c) 2021, 2023, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2024, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef.schema;
@@ -274,5 +274,13 @@ public class BeanPropertyDefSource extends BeanValueDefSource {
 
   public void setSetRoles(RolesDefSource value) {
     setRoles.setValue(value);
+  }
+
+  @Override
+  protected void validateExtension() {
+    super.validateExtension();
+    validateExtensionChild(getDefaultValue(), "defaultValue");
+    validateExtensionChild(getGetRoles(), "getRoles");
+    validateExtensionChild(getSetRoles(), "setRoles");
   }
 }

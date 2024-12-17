@@ -1,4 +1,4 @@
-// Copyright (c) 2021, 2023, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2024, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef.schema;
@@ -9,7 +9,7 @@ import java.util.List;
  * This POJO mirrors the yaml source file format for configuring information about
  * an action from a weblogic bean's page, e.g. ServerLifeCycleRuntimeMBean/table.yaml
  */
-public class PageActionDefSource {
+public class PageActionDefSource extends YamlSource {
 
   public enum Rows {
     none,
@@ -74,5 +74,11 @@ public class PageActionDefSource {
   
   public void setRequiredCapabilities(List<String> val) {
     requiredCapabilities.setValue(val);
+  }
+
+  @Override
+  protected void validateExtension() {
+    super.validateExtension();
+    validateExtensionChildren(getActions(), "actions");
   }
 }

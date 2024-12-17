@@ -14,7 +14,6 @@ import weblogic.remoteconsole.server.repo.BeanActionArg;
 import weblogic.remoteconsole.server.repo.FormProperty;
 import weblogic.remoteconsole.server.repo.InvocationContext;
 import weblogic.remoteconsole.server.repo.PropertiesValue;
-import weblogic.remoteconsole.server.repo.Response;
 import weblogic.remoteconsole.server.repo.Value;
 
 /**
@@ -29,7 +28,7 @@ public class LibDeploymentRuntimeMBeanCustomizer {
    * Customize the LibDeploymentRuntimeMBean's redeploy method
    */
 
-  public static Response<Value> redeploy(
+  public static Value redeploy(
     InvocationContext ic,
     PageActionDef pageActionDef,
     List<FormProperty> formProperties
@@ -44,6 +43,6 @@ public class LibDeploymentRuntimeMBeanCustomizer {
         new BeanActionArg(actionDef.getParamDef("targets"), targetsValue),
         new BeanActionArg(actionDef.getParamDef("deploymentOptions"), deploymentOptionsValue)
       );
-    return ic.getPageRepo().getBeanRepo().asBeanReaderRepo().invokeAction(ic, actionDef, args);
+    return ic.getPageRepo().getBeanRepo().asBeanReaderRepo().invokeAction(ic, actionDef, args).getResults();
   }
 }
