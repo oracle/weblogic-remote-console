@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="generator" content="Hugo 0.82.0" />
+    <meta name="generator" content="Hugo 0.123.7">
     <meta name="description" content="Tips on how to configure your WebLogic Remote Console for your environment">
 
 
@@ -12,20 +12,20 @@
     <title>Tune the Remote Console Environment :: WebLogic Remote Console</title>
 
     
-    <link href="/weblogic-remote-console/1.1.0/css/nucleus.css?1724783132" rel="stylesheet">
-    <link href="/weblogic-remote-console/1.1.0/css/fontawesome-all.min.css?1724783132" rel="stylesheet">
-    <link href="/weblogic-remote-console/1.1.0/css/hybrid.css?1724783132" rel="stylesheet">
-    <link href="/weblogic-remote-console/1.1.0/css/featherlight.min.css?1724783132" rel="stylesheet">
-    <link href="/weblogic-remote-console/1.1.0/css/perfect-scrollbar.min.css?1724783132" rel="stylesheet">
-    <link href="/weblogic-remote-console/1.1.0/css/auto-complete.css?1724783132" rel="stylesheet">
-    <link href="/weblogic-remote-console/1.1.0/css/atom-one-dark-reasonable.css?1724783132" rel="stylesheet">
-    <link href="/weblogic-remote-console/1.1.0/css/theme.css?1724783132" rel="stylesheet">
-    <link href="/weblogic-remote-console/1.1.0/css/tabs.css?1724783132" rel="stylesheet">
-    <link href="/weblogic-remote-console/1.1.0/css/hugo-theme.css?1724783132" rel="stylesheet">
+    <link href="/weblogic-remote-console/1.1.0/css/nucleus.css?1734470358" rel="stylesheet">
+    <link href="/weblogic-remote-console/1.1.0/css/fontawesome-all.min.css?1734470358" rel="stylesheet">
+    <link href="/weblogic-remote-console/1.1.0/css/hybrid.css?1734470358" rel="stylesheet">
+    <link href="/weblogic-remote-console/1.1.0/css/featherlight.min.css?1734470358" rel="stylesheet">
+    <link href="/weblogic-remote-console/1.1.0/css/perfect-scrollbar.min.css?1734470358" rel="stylesheet">
+    <link href="/weblogic-remote-console/1.1.0/css/auto-complete.css?1734470358" rel="stylesheet">
+    <link href="/weblogic-remote-console/1.1.0/css/atom-one-dark-reasonable.css?1734470358" rel="stylesheet">
+    <link href="/weblogic-remote-console/1.1.0/css/theme.css?1734470358" rel="stylesheet">
+    <link href="/weblogic-remote-console/1.1.0/css/tabs.css?1734470358" rel="stylesheet">
+    <link href="/weblogic-remote-console/1.1.0/css/hugo-theme.css?1734470358" rel="stylesheet">
     
     
 
-    <script src="/weblogic-remote-console/1.1.0/js/jquery-3.6.0.min.js?1724783132"></script>
+    <script src="/weblogic-remote-console/1.1.0/js/jquery-3.6.0.min.js?1734470358"></script>
 
     <style>
       :root #header + #content > #left > #rlblock_left{
@@ -46,8 +46,8 @@
 
   <div id="header-wrapper">
     <div id="header">
-      <a id="logo" href="https://oracle.github.io/weblogic-remote-console/1.1.0">
-  <img src="https://oracle.github.io/weblogic-remote-console/1.1.0/images/logo.png" height="60"><br/>
+      <a id="logo" href="https://oracle.github.io/weblogic-remote-console/1.1.0/">
+  <img src="https://oracle.github.io/weblogic-remote-console/1.1.0//images/logo.png" height="60"><br/>
   WebLogic Remote Console
 </a>
 
@@ -59,14 +59,14 @@
     <span data-search-clear=""><i class="fas fa-times"></i></span>
 </div>
 
-<script type="text/javascript" src="/weblogic-remote-console/1.1.0/js/lunr.min.js?1724783132"></script>
-<script type="text/javascript" src="/weblogic-remote-console/1.1.0/js/auto-complete.js?1724783132"></script>
+<script type="text/javascript" src="/weblogic-remote-console/1.1.0/js/lunr.min.js?1734470358"></script>
+<script type="text/javascript" src="/weblogic-remote-console/1.1.0/js/auto-complete.js?1734470358"></script>
 <script type="text/javascript">
     
-        var baseurl = "https:\/\/oracle.github.io\/weblogic-remote-console\/1.1.0";
+        var baseurl = "https:\/\/oracle.github.io\/weblogic-remote-console\/1.1.0\/";
     
 </script>
-<script type="text/javascript" src="/weblogic-remote-console/1.1.0/js/search.js?1724783132"></script>
+<script type="text/javascript" src="/weblogic-remote-console/1.1.0/js/search.js?1734470358"></script>
 
     
   </div>
@@ -392,9 +392,9 @@
 </ul>
 <p>For example, to set the Remote Console to listen on a host other than <code>localhost</code> (IP address <code>127.0.0.1</code>):</p>
 <p>At the command line:</p>
-<pre><code>java -Dserver.host=0.0.0.0 -jar &lt;console_home&gt;/console.jar
+<pre tabindex="0"><code>java -Dserver.host=0.0.0.0 -jar &lt;console_home&gt;/console.jar
 </code></pre><p>In the <code>config.json</code> file:</p>
-<pre><code>{&quot;server.host&quot;: &quot;0.0.0.0&quot;}
+<pre tabindex="0"><code>{&#34;server.host&#34;: &#34;0.0.0.0&#34;}
 </code></pre><h2 id="timeout">Change the Network Timeout Settings for the Server</h2>
 <p>To change the defaults for the connection and read timeout settings used with a WebLogic domain from the Remote Console, change the following Java system properties:</p>
 <ul>
@@ -402,12 +402,12 @@
 <li>Set <code>console.connectTimeoutMillis=&lt;millis&gt;</code> for the timeout when waiting to connect, <em>Default:</em> <code>10 seconds</code></li>
 </ul>
 <p>For example:</p>
-<pre><code>java -Dconsole.readTimeoutMillis=60000 -Dconsole.connectTimeoutMillis=30000 -jar &lt;console_home&gt;/console.jar
+<pre tabindex="0"><code>java -Dconsole.readTimeoutMillis=60000 -Dconsole.connectTimeoutMillis=30000 -jar &lt;console_home&gt;/console.jar
 </code></pre><p>In this example, &lt;console_home&gt; represents the directory where you unzipped the installer, and will result in the console waiting <code>60 seconds</code> before giving up on a response from the WebLogic domain.</p>
 <p>or in <code>config.json</code>, add:</p>
-<pre><code>{
-    &quot;console.readTimeoutMillis&quot;: &quot;60000&quot;,
-    &quot;console.connectTimeoutMillis&quot;: &quot;30000&quot;
+<pre tabindex="0"><code>{
+    &#34;console.readTimeoutMillis&#34;: &#34;60000&#34;,
+    &#34;console.connectTimeoutMillis&#34;: &#34;30000&#34;
 }
 </code></pre><p>When changing network timeout settings, the primary impact will be the response time for Console threads, while the browser will show no data when a timeout occurs.  Examples of where timeouts may happen include requests where WebLogic experiences longer initialization or execution times such as for runtime monitoring actions of servers.</p>
 <h2 id="samesite">Set the SameSite Cookie attribute if Required for Web Browser Support</h2>
@@ -418,9 +418,9 @@
 <li>Set <code>console.valueSameSiteCookie=&quot;&lt;value&gt;&quot;</code> to specify the value of the <code>SameSite</code> attribute, <em>Default:</em> <code>Lax</code></li>
 </ul>
 <p>For example:</p>
-<pre><code>java -Dconsole.enableSameSiteCookieValue=true -jar &lt;console_home&gt;/console.jar
+<pre tabindex="0"><code>java -Dconsole.enableSameSiteCookieValue=true -jar &lt;console_home&gt;/console.jar
 </code></pre><p>or</p>
-<pre><code>{&quot;console.enableSameSiteCookieValue&quot;: &quot;true&quot;}
+<pre tabindex="0"><code>{&#34;console.enableSameSiteCookieValue&#34;: &#34;true&#34;}
 </code></pre><p>results in the HTTP session Cookie including the <code>SameSite</code> attribute with a value of <code>Lax</code>.</p>
 
 
@@ -612,19 +612,19 @@
     <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
       <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
     </div>
-    <script src="/weblogic-remote-console/1.1.0/js/clipboard.min.js?1724783132"></script>
-    <script src="/weblogic-remote-console/1.1.0/js/perfect-scrollbar.min.js?1724783132"></script>
-    <script src="/weblogic-remote-console/1.1.0/js/perfect-scrollbar.jquery.min.js?1724783132"></script>
-    <script src="/weblogic-remote-console/1.1.0/js/jquery.sticky.js?1724783132"></script>
-    <script src="/weblogic-remote-console/1.1.0/js/featherlight.min.js?1724783132"></script>
-    <script src="/weblogic-remote-console/1.1.0/js/highlight.pack.js?1724783132"></script>
+    <script src="/weblogic-remote-console/1.1.0/js/clipboard.min.js?1734470358"></script>
+    <script src="/weblogic-remote-console/1.1.0/js/perfect-scrollbar.min.js?1734470358"></script>
+    <script src="/weblogic-remote-console/1.1.0/js/perfect-scrollbar.jquery.min.js?1734470358"></script>
+    <script src="/weblogic-remote-console/1.1.0/js/jquery.sticky.js?1734470358"></script>
+    <script src="/weblogic-remote-console/1.1.0/js/featherlight.min.js?1734470358"></script>
+    <script src="/weblogic-remote-console/1.1.0/js/highlight.pack.js?1734470358"></script>
     <script>hljs.initHighlightingOnLoad();</script>
-    <script src="/weblogic-remote-console/1.1.0/js/modernizr.custom-3.6.0.js?1724783132"></script>
-    <script src="/weblogic-remote-console/1.1.0/js/learn.js?1724783132"></script>
-    <script src="/weblogic-remote-console/1.1.0/js/hugo-learn.js?1724783132"></script>
+    <script src="/weblogic-remote-console/1.1.0/js/modernizr.custom-3.6.0.js?1734470358"></script>
+    <script src="/weblogic-remote-console/1.1.0/js/learn.js?1734470358"></script>
+    <script src="/weblogic-remote-console/1.1.0/js/hugo-learn.js?1734470358"></script>
     
         
-            <script src="/weblogic-remote-console/1.1.0/mermaid/mermaid.js?1724783132"></script>
+            <script src="/weblogic-remote-console/1.1.0/mermaid/mermaid.js?1734470358"></script>
         
         <script>
             mermaid.initialize({ startOnLoad: true });

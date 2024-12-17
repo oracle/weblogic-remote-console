@@ -6,38 +6,28 @@
     <description>Recent content in Reference on WebLogic Remote Console</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 01 Sep 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://oracle.github.io/weblogic-remote-console/2.0.0/reference/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 01 Sep 2021 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://oracle.github.io/weblogic-remote-console/2.0.0/reference/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Frequently asked questions</title>
       <link>https://oracle.github.io/weblogic-remote-console/2.0.0/reference/faqs/</link>
       <pubDate>Wed, 01 Sep 2021 00:00:00 +0000</pubDate>
-      
       <guid>https://oracle.github.io/weblogic-remote-console/2.0.0/reference/faqs/</guid>
-      <description>This section provides answers to frequently asked questions about the WebLogic Remote Console.
-Can I connect the WebLogic Remote Console to domains running in WebLogic on Oracle Cloud Infrastructure? Yes, you can. First, make sure that the domain&amp;rsquo;s administration server is publicly accessible so the WebLogic Remote Console can establish a connection to the administration server. Then, in the WebLogic Remote Console, enter your credentials and the publicly accessible URL for the WebLogic Administration Server.</description>
+      <description>This section provides answers to frequently asked questions about the WebLogic Remote Console.&#xA;Can I connect the WebLogic Remote Console to domains running in WebLogic on Oracle Cloud Infrastructure? Yes, you can. First, make sure that the domain&amp;rsquo;s administration server is publicly accessible so the WebLogic Remote Console can establish a connection to the administration server. Then, in the WebLogic Remote Console, enter your credentials and the publicly accessible URL for the WebLogic Administration Server.</description>
     </item>
-    
     <item>
       <title>Known issues</title>
       <link>https://oracle.github.io/weblogic-remote-console/2.0.0/reference/known_issues/</link>
       <pubDate>Wed, 01 Sep 2021 00:00:00 +0000</pubDate>
-      
       <guid>https://oracle.github.io/weblogic-remote-console/2.0.0/reference/known_issues/</guid>
-      <description>This page lists the known issues and workarounds, if available, as well as the limitations of the console in this release.
-Limitations The following features are not available in this release of the Remote Console:
- Manage the security data from WebLogic Server security providers that is external to the WebLogic configuration, such as users, groups, roles, policies, credential maps, and so on. Record WLST scripts while you configure WebLogic Server using the Remote Console.</description>
+      <description>This page lists the known issues and workarounds, if available, as well as the limitations of the console in this release.&#xA;Limitations The following features are not available in this release of the Remote Console:&#xA;Manage the security data from WebLogic Server security providers that is external to the WebLogic configuration, such as users, groups, roles, policies, credential maps, and so on. Record WLST scripts while you configure WebLogic Server using the Remote Console.</description>
     </item>
-    
     <item>
       <title>Troubleshoot issues</title>
       <link>https://oracle.github.io/weblogic-remote-console/2.0.0/reference/troubleshoot/</link>
       <pubDate>Wed, 01 Sep 2021 00:00:00 +0000</pubDate>
-      
       <guid>https://oracle.github.io/weblogic-remote-console/2.0.0/reference/troubleshoot/</guid>
-      <description>This page provides guidelines to help troubleshoot console issues.
-Check log files for errors The WebLogic Remote Console provides log files for both front and back end processes. For instructions on how to access these log files, see Check Log Files.
-Diagnose invalid WebLogic configuration issues Administration Server The WebLogic Remote Console catches most validation errors when you click Save, or when you commit the change using the shopping cart. If an error message displays, you need to identify and correct the problem that caused the error before you can activate the changes.</description>
+      <description>This page provides guidelines to help troubleshoot console issues.&#xA;Check log files for errors The WebLogic Remote Console provides log files for both front and back end processes. For instructions on how to access these log files, see Check Log Files.&#xA;Diagnose invalid WebLogic configuration issues Administration Server The WebLogic Remote Console catches most validation errors when you click Save, or when you commit the change using the shopping cart. If an error message displays, you need to identify and correct the problem that caused the error before you can activate the changes.</description>
     </item>
-    
   </channel>
 </rss>

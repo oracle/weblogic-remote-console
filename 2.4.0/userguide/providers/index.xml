@@ -6,51 +6,35 @@
     <description>Recent content in Provider types on WebLogic Remote Console</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 01 Sep 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://oracle.github.io/weblogic-remote-console/2.4.0/userguide/providers/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 22 Feb 2022 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://oracle.github.io/weblogic-remote-console/2.4.0/userguide/providers/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Administration Servers</title>
       <link>https://oracle.github.io/weblogic-remote-console/2.4.0/userguide/providers/administration-server/</link>
       <pubDate>Wed, 01 Sep 2021 00:00:00 +0000</pubDate>
-      
       <guid>https://oracle.github.io/weblogic-remote-console/2.4.0/userguide/providers/administration-server/</guid>
-      <description>The WebLogic Remote Console can connect directly to a WebLogic Administration Server to view and edit its domain, much like the WebLogic Server Administration Console, though there are some differences.
-You can save the connection details for multiple WebLogic Administration Servers, making it easy to switch between domains with a click.
-Connect to a WebLogic Administration Server  Start the WebLogic Administration Server. Expand the Kiosk and beside the project name, click ⋮.</description>
+      <description>The WebLogic Remote Console can connect directly to a WebLogic Administration Server to view and edit its domain, much like the WebLogic Server Administration Console, though there are some differences.&#xA;You can save the connection details for multiple WebLogic Administration Servers, making it easy to switch between domains with a click.&#xA;Connect to a WebLogic Administration Server Start the WebLogic Administration Server. Expand the Kiosk and beside the project name, click ⋮.</description>
     </item>
-    
     <item>
       <title>Property lists</title>
       <link>https://oracle.github.io/weblogic-remote-console/2.4.0/userguide/providers/property-list/</link>
       <pubDate>Tue, 22 Feb 2022 00:00:00 +0000</pubDate>
-      
       <guid>https://oracle.github.io/weblogic-remote-console/2.4.0/userguide/providers/property-list/</guid>
-      <description>Property lists are an editable set of key-value pairs.
-You can add property lists to WDT model files as WDT variables, which streamline the configuration of WDT model files. Once connected to a WDT model file, you can insert a property into the WDT model file as a WDT model token and edit token values from within the property list.
-We recommend that you use the desktop application over the browser application when working with property list files.</description>
+      <description>Property lists are an editable set of key-value pairs.&#xA;You can add property lists to WDT model files as WDT variables, which streamline the configuration of WDT model files. Once connected to a WDT model file, you can insert a property into the WDT model file as a WDT model token and edit token values from within the property list.&#xA;We recommend that you use the desktop application over the browser application when working with property list files.</description>
     </item>
-    
     <item>
       <title>WDT model files</title>
       <link>https://oracle.github.io/weblogic-remote-console/2.4.0/userguide/providers/wdt-model/</link>
       <pubDate>Wed, 01 Sep 2021 00:00:00 +0000</pubDate>
-      
       <guid>https://oracle.github.io/weblogic-remote-console/2.4.0/userguide/providers/wdt-model/</guid>
-      <description>WDT metadata models are descriptions of a WebLogic Server domain configuration, generally written in YAML but occasionally JSON. These models are not connected to a live domain and you edit them &amp;lsquo;offline&amp;rsquo; before using the WebLogic Deploy Tooling (WDT) to build or modify live domains from the models.
-See the WebLogic Deploy Tooling documentation for more information.
-We recommend that you use the desktop application over the browser application when working with WDT model files.</description>
+      <description>WDT metadata models are descriptions of a WebLogic Server domain configuration, generally written in YAML but occasionally JSON. These models are not connected to a live domain and you edit them &amp;lsquo;offline&amp;rsquo; before using the WebLogic Deploy Tooling (WDT) to build or modify live domains from the models.&#xA;See the WebLogic Deploy Tooling documentation for more information.&#xA;We recommend that you use the desktop application over the browser application when working with WDT model files.</description>
     </item>
-    
     <item>
       <title>WDT composite models</title>
       <link>https://oracle.github.io/weblogic-remote-console/2.4.0/userguide/providers/wdt-composite/</link>
       <pubDate>Wed, 01 Sep 2021 00:00:00 +0000</pubDate>
-      
       <guid>https://oracle.github.io/weblogic-remote-console/2.4.0/userguide/providers/wdt-composite/</guid>
-      <description>WDT composite models are read-only representations of multiple, merged WDT model files.
-Create a WDT composite model   Create or upload two or more WDT model files to the WebLogic Remote Console.
-  Expand the Kiosk and beside the project name, click ⋮. Select Add WDT Composite Model File Provider.
-  Enter a name for the WDT Composite Model. This is the name that will appear in the Project list of providers so you can identify which provider you’re working on.</description>
+      <description>WDT composite models are read-only representations of multiple, merged WDT model files.&#xA;Create a WDT composite model Create or upload two or more WDT model files to the WebLogic Remote Console.&#xA;Expand the Kiosk and beside the project name, click ⋮. Select Add WDT Composite Model File Provider.&#xA;Enter a name for the WDT Composite Model. This is the name that will appear in the Project list of providers so you can identify which provider you’re working on.</description>
     </item>
-    
   </channel>
 </rss>

@@ -1,0 +1,1390 @@
+<!DOCTYPE html>
+<html lang="en" class="js csstransforms3d">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="Hugo 0.123.7">
+    <meta name="description" content="">
+
+
+    <link rel="icon" href="/weblogic-remote-console/images/logo.png" type="image/png">
+
+    <title>Monitoring Domains :: WebLogic Remote Console</title>
+
+    
+    <link href="/weblogic-remote-console/css/nucleus.css?1734470358" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/fontawesome-all.min.css?1734470358" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/hybrid.css?1734470358" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/featherlight.min.css?1734470358" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/perfect-scrollbar.min.css?1734470358" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/auto-complete.css?1734470358" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/atom-one-dark-reasonable.css?1734470358" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/theme.css?1734470358" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/tabs.css?1734470358" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/hugo-theme.css?1734470358" rel="stylesheet">
+    
+    
+
+    <script src="/weblogic-remote-console/js/jquery-3.6.0.min.js?1734470358"></script>
+
+    <style>
+      :root #header + #content > #left > #rlblock_left{
+          display:none !important;
+      }
+      
+        :not(pre) > code + span.copy-to-clipboard {
+            display: none;
+        }
+      
+    </style>
+    
+  </head>
+  <body class="" data-url="/weblogic-remote-console/administration-server/monitoring-domains/">
+    <nav id="sidebar" class="">
+
+
+
+  <div id="header-wrapper">
+    <div id="header">
+      <a id="logo" href="https://oracle.github.io/weblogic-remote-console/">
+  <img src="https://oracle.github.io/weblogic-remote-console//images/logo.png" height="60"><br/>
+  WebLogic Remote Console
+</a>
+
+    </div>
+    
+        <div class="searchbox">
+    <label for="search-by"><i class="fas fa-search"></i></label>
+    <input data-search-input id="search-by" type="search" placeholder="Search...">
+    <span data-search-clear=""><i class="fas fa-times"></i></span>
+</div>
+
+<script type="text/javascript" src="/weblogic-remote-console/js/lunr.min.js?1734470358"></script>
+<script type="text/javascript" src="/weblogic-remote-console/js/auto-complete.js?1734470358"></script>
+<script type="text/javascript">
+    
+        var baseurl = "https:\/\/oracle.github.io\/weblogic-remote-console\/";
+    
+</script>
+<script type="text/javascript" src="/weblogic-remote-console/js/search.js?1734470358"></script>
+
+    
+  </div>
+
+    <div class="highlightable">
+    <ul class="topics">
+      
+        
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/weblogic-remote-console/set-console/" title="Get Started" class="dd-item
+        
+        
+        
+        ">
+      <a href="/weblogic-remote-console/set-console/">
+          Get Started
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/weblogic-remote-console/set-console/get-know-console/" title="Get to Know the Console" class="dd-item
+        
+        
+        
+        ">
+      <a href="/weblogic-remote-console/set-console/get-know-console/">
+          Get to Know the Console
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/weblogic-remote-console/set-console/contribute-wrc-repository/" title="Contribute to WebLogic Remote Console" class="dd-item
+        
+        
+        
+        ">
+      <a href="/weblogic-remote-console/set-console/contribute-wrc-repository/">
+          Contribute to WebLogic Remote Console
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/weblogic-remote-console/set-console/support-information/" title="Support Information" class="dd-item
+        
+        
+        
+        ">
+      <a href="/weblogic-remote-console/set-console/support-information/">
+          Support Information
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/weblogic-remote-console/administration-server/" title="Administration Server" class="dd-item
+        parent
+        
+        
+        ">
+      <a href="/weblogic-remote-console/administration-server/">
+          Administration Server
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/weblogic-remote-console/administration-server/domain-configuration/" title="Domain Configuration" class="dd-item
+        
+        
+        
+        ">
+      <a href="/weblogic-remote-console/administration-server/domain-configuration/">
+          Domain Configuration
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/weblogic-remote-console/administration-server/securing-domains/" title="Securing Domains" class="dd-item
+        
+        
+        
+        ">
+      <a href="/weblogic-remote-console/administration-server/securing-domains/">
+          Securing Domains
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/weblogic-remote-console/administration-server/deploying-applications/" title="Deploying Applications" class="dd-item
+        
+        
+        
+        ">
+      <a href="/weblogic-remote-console/administration-server/deploying-applications/">
+          Deploying Applications
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/weblogic-remote-console/administration-server/monitoring-domains/" title="Monitoring Domains" class="dd-item
+        
+        active
+        
+        ">
+      <a href="/weblogic-remote-console/administration-server/monitoring-domains/">
+          Monitoring Domains
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/weblogic-remote-console/administration-server/configuring-services/" title="Configuring Services" class="dd-item
+        
+        
+        
+        ">
+      <a href="/weblogic-remote-console/administration-server/configuring-services/">
+          Configuring Services
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/weblogic-remote-console/administration-server/configuring-coherence/" title="Configuring Coherence" class="dd-item
+        
+        
+        
+        ">
+      <a href="/weblogic-remote-console/administration-server/configuring-coherence/">
+          Configuring Coherence
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/weblogic-remote-console/administration-server/scheduling-work/" title="Scheduling Work" class="dd-item
+        
+        
+        
+        ">
+      <a href="/weblogic-remote-console/administration-server/scheduling-work/">
+          Scheduling Work
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/weblogic-remote-console/weblogic-deploy-tooling/" title="WebLogic Deploy Tooling" class="dd-item
+        
+        
+        
+        ">
+      <a href="/weblogic-remote-console/weblogic-deploy-tooling/">
+          WebLogic Deploy Tooling
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/weblogic-remote-console/weblogic-deploy-tooling/wdt-model-files/" title="WDT Model Files" class="dd-item
+        
+        
+        
+        ">
+      <a href="/weblogic-remote-console/weblogic-deploy-tooling/wdt-model-files/">
+          WDT Model Files
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/weblogic-remote-console/weblogic-deploy-tooling/wdt-composites/" title="WDT Composite Models" class="dd-item
+        
+        
+        
+        ">
+      <a href="/weblogic-remote-console/weblogic-deploy-tooling/wdt-composites/">
+          WDT Composite Models
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/weblogic-remote-console/weblogic-deploy-tooling/property-lists/" title="Property Lists" class="dd-item
+        
+        
+        
+        ">
+      <a href="/weblogic-remote-console/weblogic-deploy-tooling/property-lists/">
+          Property Lists
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/weblogic-remote-console/troubleshoot-weblogic-remote-console/" title="Troubleshoot Issues with WebLogic Remote Console" class="dd-item
+        
+        
+        
+        ">
+      <a href="/weblogic-remote-console/troubleshoot-weblogic-remote-console/">
+          Troubleshoot Issues with WebLogic Remote Console
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+          
+        
+      
+    </ul>
+
+    
+    
+
+    
+    <section id="footer">
+      <p>Created with <i class="fas fa-heart"></i> from <a href="https://www.oracle.com">Oracle</a></p>
+<p>&nbsp</p>
+<p><a href="https://github.com/oracle/weblogic-remote-console"><i class="fab fa-github"></i> GitHub repo</a></p>
+<p><a href="https://join.slack.com/t/oracle-weblogic/shared_invite/zt-1ni1gtjv6-PGC6CQ4uIte3KBdm_67~aQ"><i class="fab fa-slack"></i> Public Slack #remote-console</a></p>
+
+    </section>
+  </div>
+</nav>
+
+
+
+
+        <section id="body">
+        <div id="overlay"></div>
+        <div class="padding highlightable">
+              
+              <div>
+                <div id="top-bar">
+                
+                
+                <div id="breadcrumbs" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+                    <span id="sidebar-toggle-span">
+                        <a href="#" id="sidebar-toggle" data-sidebar-toggle="">
+                          <i class="fas fa-bars"></i>
+                        </a>
+                    </span>
+                  
+                  <span id="toc-menu"><i class="fas fa-list-alt"></i></span>
+                  
+                  <span class="links">
+                 
+                 
+                    
+          
+          
+            
+            
+          
+          
+            
+            
+          
+          
+            <a href='/weblogic-remote-console/'>About WebLogic Remote Console</a> > <a href='/weblogic-remote-console/administration-server/'>Administration Server</a> > Monitoring Domains
+          
+        
+          
+        
+          
+        
+                 
+                  </span>
+                </div>
+                
+                    <div class="progress">
+    <div class="wrapper">
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#GUID-883264DD-C3C8-48B6-81A4-F26ABA0EFEAA">Monitor Servers</a>
+      <ul>
+        <li><a href="#GUID-FCF0B63C-18B9-415D-A86B-390C8CB4B2A5">View Node Manager Status and Logs</a></li>
+        <li><a href="#GUID-7ECFBDD7-C3A3-44CF-B3D6-D9FC396E2ECB">Configure Health Monitoring</a></li>
+      </ul>
+    </li>
+    <li><a href="#GUID-1C12C76D-2820-4AD8-9556-46AC52C617AD">Dashboards</a>
+      <ul>
+        <li><a href="#GUID-2E5979B0-99ED-400B-A626-A525AA0FC3D8">Dashboard Filters</a></li>
+        <li><a href="#GUID-8B5A1529-2C09-40D7-B11D-D1B2C9E9248A">Built-In Dashboards</a></li>
+        <li><a href="#GUID-2248703B-6D0E-4376-ACAC-4613230C6CCD">Create a Dashboard</a></li>
+      </ul>
+    </li>
+    <li><a href="#GUID-280EB231-F28A-4FF2-A8B2-08DEBDD9CD4B">Log Messages</a>
+      <ul>
+        <li><a href="#GUID-7DE040D7-9BF2-420A-9810-F1CA993A32CA">View Logs</a></li>
+        <li><a href="#GUID-B5244A71-B792-42E1-ACFF-B0DDC9A53E67">Configure Logs</a></li>
+        <li><a href="#GUID-E271C76A-441E-4A5D-8795-1CB2F944B861">Define Debug Settings</a></li>
+        <li><a href="#GUID-EB50E0B0-91AB-416A-A61F-79D414282DEE">Filter Log Messages</a></li>
+        <li><a href="#GUID-0D37D991-A698-4D2C-8163-DC3B1A0BBC65">Create a Log Filter</a></li>
+        <li><a href="#GUID-212C2424-746F-4150-8664-F6F9A0B0A4EF">Rotate Log Files</a></li>
+      </ul>
+    </li>
+    <li><a href="#GUID-BB85D9BB-5E36-4067-AA9F-E01EBFF027CD">Enable Configuration Auditing</a></li>
+    <li><a href="#GUID-E83F152C-96B8-46CD-9A14-818C468BAF7D">Display Thread Stacks</a></li>
+    <li><a href="#GUID-F414237C-43D2-43CF-8A72-B999D19A1D2E">Tuning Performance</a></li>
+  </ul>
+</nav>
+    </div>
+</div>
+
+                
+              </div>
+            </div>
+            
+        <div id="head-tags">
+        
+        </div>
+        
+        <div id="body-inner">
+          
+            <h1>
+              
+              Monitoring Domains
+            </h1>
+          
+
+        
+
+
+
+	<p>Use WebLogic Remote Console to monitor WebLogic Server and its related resources and services.</p>
+<p>For general information on monitoring, diagnostic, and tuning tools in WebLogic Server, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=INTRO-GUID-F6276D78-0B63-4520-8CF8-E57AB49196E4">Monitoring, Diagnosing, and Troubleshooting</a> in <strong>Understanding Oracle WebLogic Server</strong>.</p>
+<h2 id="GUID-883264DD-C3C8-48B6-81A4-F26ABA0EFEAA">Monitor Servers</h2>
+<p>Review the servers in your domain to ensure they are functioning as expected.</p>
+<ol>
+<li>
+<p>In the <strong>Monitoring Tree</strong>, go to <strong>Environment</strong>, then <strong>Servers</strong>.</p>
+<p>Use the <strong>Servers</strong> table to monitor and compare properties across the different server instances in your domain.</p>
+<p>Use the <strong>Customize Table</strong> feature to rearrange the table columns to suit your needs.</p>
+</li>
+<li>
+<p>To see more information about a server, click on its row in the table.</p>
+<p>Each server has its own child node under the <strong>Servers</strong> node. A top-level <em>myServer</em> node provides general runtime information regarding the selected server. Expand the <em>myServer</em> node to see more specific information for other areas such as scheduling or deployments.</p>
+</li>
+</ol>
+<h3 id="GUID-FCF0B63C-18B9-415D-A86B-390C8CB4B2A5">View Node Manager Status and Logs</h3>
+<p>You can check the current status of Node Manager and use Node Manager logs to help troubleshoot problems in starting or stopping individual Managed Servers.</p>
+<p>For more information, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=NODEM-GUID-A3AACA8B-4AFC-4082-9855-118A6DDDC67F">Log Files</a> in <strong>Administering Node Manager for Oracle WebLogic Server</strong>.</p>
+
+<div class="notices note" ><p>Node Manager must be running to view its logs.</p>
+</div>
+<ol>
+<li>
+<p>In the <strong>Monitoring Tree</strong>, go to <strong>Environment</strong>, then <strong>Node Manager Logs</strong>.</p>
+</li>
+<li>
+<p>Click the name of the machine whose Node Manager logs you want to view.</p>
+</li>
+<li>
+<p>Click <strong>Download</strong>.</p>
+</li>
+</ol>
+<p>When using Hosted WebLogic Remote Console, your browser controls the location where the log files are downloaded. If you want to change the default download location, update your browser settings accordingly.</p>
+<h3 id="GUID-7ECFBDD7-C3A3-44CF-B3D6-D9FC396E2ECB">Configure Health Monitoring</h3>
+<p>A server can monitor key aspects of its subsystems and report when a subsystem is not functioning properly.</p>
+<p>If the server is running under a Node Manager, the Node Manager can automatically restart a server with an unhealthy subsystem. Node Manager can only perform automatic monitoring and shutdown for servers that it starts.</p>
+<ol>
+<li>
+<p>In the <strong>Edit Tree</strong>, go to <strong>Environment</strong>, then <strong>Servers</strong>, then <em>myServer</em>.</p>
+</li>
+<li>
+<p>On the <strong>Health</strong> tab, modify the options as necessary.</p>
+</li>
+<li>
+<p>Click <strong>Save</strong>.</p>
+</li>
+</ol>
+<h2 id="GUID-1C12C76D-2820-4AD8-9556-46AC52C617AD">Dashboards</h2>
+<p>Use dashboards to quickly assess and filter data about your domain. You can specify criteria for WebLogic Remote Console to match against MBeans in your domain and then review the results.</p>
+<p>Dashboards are highly customizable. Start from any node in the <strong>Monitoring</strong> perspective and you can use its properties to develop precise criteria that go far beyond simple true/false statements. Dashboards let you find obscure, cross-functional data that might otherwise require comparison across multiple nodes.</p>
+<p>Dashboards are only available on the <strong>Monitoring Tree</strong> perspective.</p>
+
+<div class="notices note" ><p><strong>Tip:</strong></p>
+<p>You can expand the <strong>Dashboards</strong> node at the bottom of the Navigation tree to see any saved or built-in dashboards.</p>
+</div>
+<h3 id="GUID-2E5979B0-99ED-400B-A626-A525AA0FC3D8">Dashboard Filters</h3>
+<p>In dashboards, filters are the criteria that you use to curate your results. Generally, filters are based on the properties of a node.</p>
+<p>WebLogic Remote Console restricts which filters are available based on your current node so you can focus on the criteria that is relevant to your goals. As such, the filters that are available on the Environments: Servers node are different than those available under Deployments: Application Runtime Data.</p>
+<p>Each filter consists of a <strong>name</strong> (or <strong>property</strong>) from the domain, a <strong>value</strong>, and an <strong>operator</strong> that determines how the name and value interact with each other. A basic dashboard filter is simply <code>name=value</code>. The following example dashboard filter returns any servers that require a restart to apply configuration changes:</p>
+<pre tabindex="0"><code>ServerRuntime.RestartRequired == true
+</code></pre><p>Values come in three formats:</p>
+<ul>
+<li>Text</li>
+<li>Numeric</li>
+<li>Boolean (expressed as option toggles). Set the option to <code>On</code> for True, <code>Off</code> for False.</li>
+</ul>
+<p>Use operators to determine how a value should be assessed. Only the operators that are applicable to a name or property appear as options - you won&rsquo;t see <code>greater than</code> for text values. By default, all filters are set to <code>Any</code> to provide the broadest possible search parameters.</p>
+<p>Dashboards consist of one or more filters and filters are <em>cumulative</em> - beans must match ALL of the defined filters to be returned as a result. Therefore, when you build a dashboard, only edit the filters that are relevant to your query and leave the rest of the filters unchanged.</p>
+<h3 id="GUID-8B5A1529-2C09-40D7-B11D-D1B2C9E9248A">Built-In Dashboards</h3>
+<p>WebLogic Remote Console provides a set of pre-defined dashboards to monitor common domain statistics.</p>
+<p>On the <strong>Monitoring Tree</strong>, expand the <strong>Dashboards</strong> node to see both custom and built-in dashboards.</p>
+<p>You cannot edit or delete built-in dashboards. However, you can use a built-in dashboards as a starting point for another dashboard. Select a built-in dashboard and click <strong>Copy</strong>, then enter a new name for your custom dashboard. Edit it as you would a custom dashboard.</p>
+<h3 id="GUID-2248703B-6D0E-4376-ACAC-4613230C6CCD">Create a Dashboard</h3>
+<p>You can create your own custom dashboards to monitor the state of your domain.</p>
+<ol>
+<li>
+<p>In the <strong>Monitoring Tree</strong>, go to the node in the Navigation Tree that most closely matches the type of content that you want to track. For example, if you want to learn about servers, open the <strong>Environment: Servers</strong> node.</p>
+</li>
+<li>
+<p>Click <strong>New Dashboard</strong>.</p>
+</li>
+<li>
+<p>Enter a name for your new dashboard and then begin configuring the filters that will determine the results of the dashboard. For guidance on how to build filters, see <a href="#GUID-2E5979B0-99ED-400B-A626-A525AA0FC3D8">Dashboard Filters</a>.</p>
+</li>
+<li>
+<p>Click <strong>Create</strong> to generate the dashboard.</p>
+</li>
+<li>
+<p>Click <strong>Customize Table</strong> to control which columns appear in the dashboard.</p>
+</li>
+</ol>
+<p>All of your dashboards are available in the <strong>Dashboards</strong> node of the Monitoring Tree.</p>
+<p>Dashboards are not automatically refreshed with new data. You must refresh or rerun the dashboard page to see any changes to MBeans. Click <strong>Reload</strong> to update the results. You can also click <strong>Auto Reload Interval</strong> to set the dashboard to regularly reload and update the results.</p>
+<h2 id="GUID-280EB231-F28A-4FF2-A8B2-08DEBDD9CD4B">Log Messages</h2>
+<p>WebLogic Server logging services provide facilities for writing, viewing, filtering, and listening for log messages. These log messages are generated by WebLogic Server instances, subsystems, and Java EE applications that run on Oracle WebLogic Server or in client JVMs.</p>
+<p>Use WebLogic Remote Console to configure WebLogic Server Logging services. For general information on WebLogic Server logging services, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=WLLOG-GUID-7E52F7E6-55A1-4E0D-A3F6-CBC110ABD975">Understanding WebLogic Logging Services</a> in <strong>Configuring Log Files and Filtering Log Messages for Oracle WebLogic Server</strong>.</p>
+<h3 id="GUID-7DE040D7-9BF2-420A-9810-F1CA993A32CA">View Logs</h3>
+<p>Each subsystem within WebLogic Server generates log messages to communicate its status. To keep a record of the messages that its subsystems generate, WebLogic Server writes the messages to log files.</p>
+<p>The contents of log files are generated according to the logging settings that are currently defined for a server. To manage what information is sent to a log file, see <a href="#GUID-B5244A71-B792-42E1-ACFF-B0DDC9A53E67">Configure Logs</a>.</p>
+<p>For more information on WebLogic logging services, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=WLLOG-GUID-7E52F7E6-55A1-4E0D-A3F6-CBC110ABD975">Understanding WebLogic Logging Services</a> in <strong>Configuring Log Files and Filtering Log Messages for Oracle WebLogic Server</strong>.</p>
+<ol>
+<li>
+<p>In the <strong>Monitoring Tree</strong>, go to <strong>Diagnostics</strong>, then <strong>Logs and Archives</strong>.</p>
+</li>
+<li>
+<p>Each row is a type of diagnostic data. Click on the row that you&rsquo;re interested in to view its logs.</p>
+</li>
+<li>
+<p>Select a log file and then click <strong>Download Logs</strong>.</p>
+<p>Logs are segregated by server instance.</p>
+</li>
+</ol>
+<h3 id="GUID-B5244A71-B792-42E1-ACFF-B0DDC9A53E67">Configure Logs</h3>
+<p>WebLogic Server generates log files to track and communicate the status of its various subsystems. To ensure these log files remain valuable and usable, you can configure their settings.</p>
+<p>Each WebLogic Server instance writes all messages from its subsystems and applications to a server log file that is located on the local host computer. In addition to writing messages to the server log file, each server instance forwards a subset of its messages to a domain-wide log file. By default, servers forward only messages of severity level <code>Notice</code> or higher. See <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=WLLOG-GUID-FB3DEC02-7238-48AF-8DEE-2363BB241DCC">Server Log Files and Domain Log Files</a> in <strong>Configuring Log Files and Filtering Log Messages for Oracle WebLogic Server</strong>.</p>
+<p>The server log records information about events such as the startup and shutdown of servers, the deployment of new applications, or the failure of one or more subsystems. The messages include information about the time and date of the event as well as the ID of the user who initiated the event. You can view and sort these server log messages to detect problems, track down the source of a fault, and track system performance.</p>
+<p>You can also create client applications that listen for these messages and respond automatically. For example, you can create an application that listens for messages indicating a failed subsystem and sends email to a system administrator.</p>
+<p>For more information on WebLogic logging services, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=WLLOG-GUID-7E52F7E6-55A1-4E0D-A3F6-CBC110ABD975">Understanding WebLogic Logging Services</a> in <strong>Configuring Log Files and Filtering Log Messages for Oracle WebLogic Server</strong>.</p>
+<ol>
+<li>
+<p>In the <strong>Edit Tree</strong>, go to <strong>Environment</strong>, then <strong>Servers</strong>, then <em>myServer</em>.</p>
+</li>
+<li>
+<p>Click the <strong>Logging</strong> tab.</p>
+</li>
+<li>
+<p>Modify the logging settings to suit your needs.</p>
+</li>
+<li>
+<p>Click <strong>Save</strong>.</p>
+</li>
+<li>
+<p>Repeat on the rest of the servers.</p>
+</li>
+<li>
+<p>Go to <strong>Environment</strong>, then <strong>Domain</strong>.</p>
+</li>
+<li>
+<p>Click the <strong>Logging</strong> tab.</p>
+</li>
+<li>
+<p>Modify the settings for the domain-level log to suit your needs.</p>
+</li>
+<li>
+<p>Click <strong>Save</strong>.</p>
+</li>
+</ol>
+<h3 id="GUID-E271C76A-441E-4A5D-8795-1CB2F944B861">Define Debug Settings</h3>
+<p>Specify debugging settings for WebLogic Server.</p>
+<ol>
+<li>
+<p>In the <strong>Edit Tree</strong>, go to <strong>Environment</strong>, then <strong>Servers</strong>, then <em>myServer</em>.</p>
+</li>
+<li>
+<p>Click the <strong>Debug</strong> tab.</p>
+<p>The Debug tab is split into several subtabs that group related debug flags together. Use the <strong>All</strong> tab to see all available debug flags.</p>
+</li>
+<li>
+<p>Enable the debug flags that you want to generate logging messages.</p>
+</li>
+<li>
+<p>Click <strong>Save</strong>.</p>
+</li>
+</ol>
+<p>If you haven&rsquo;t already, you should configure general logging settings for this server. See <a href="#GUID-B5244A71-B792-42E1-ACFF-B0DDC9A53E67">Configure Logs</a>.</p>
+<p>If you create applications to run on WebLogic Server, you can configure your applications to generate messages of severity <code>DEBUG</code>. These messages are never forwarded to the domain log and are intended to contain detailed information about the operation of an application or the server.</p>
+<h3 id="GUID-EB50E0B0-91AB-416A-A61F-79D414282DEE">Filter Log Messages</h3>
+<p>WebLogic Server can generate a significant amount of data in its log messages. You can filter log messages so only certain messages are published.</p>
+<p>For example, you can filter out messages of a certain severity level, or from a particular subsystem, or according to some other specified criteria. Only the log messages that satisfy the filter criteria get published. You can also create separate filters for the messages that each server instance writes to its server log file, standard out, memory buffer, or broadcasts to the domain-wide message log.</p>
+<p>WebLogic Server offers multiple methods for filtering log messages and you can use these methods simultaneously. Choose the methods that work for your environment. For more information, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=WLLOG-GUID-601DAF57-58CC-4E13-B509-129884A8E6C3">Filtering WebLogic Server Log Messages</a> in <strong>Configuring Log Files and Filtering Log Messages for Oracle WebLogic Server</strong>.</p>
+<ol>
+<li>
+<p>In the <strong>Edit Tree</strong>, go to <strong>Environment</strong>, then <em>myServer</em>.</p>
+</li>
+<li>
+<p>Click on the <strong>Logging</strong> tab.</p>
+</li>
+<li>
+<p>Click <strong>Show Advanced Fields</strong>.</p>
+</li>
+<li>
+<p>If you want to change the default severity level for all loggers or packages in the logger tree, then choose a new level from the <strong>Minimum severity to log</strong> drop-down list.</p>
+<p>The default level is <code>Info</code>. For information on message severity, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=WLLOG-GUID-A7D779DC-43FE-40D1-ABBF-4D781FC72381">Message Severity</a> in <strong>Configuring Log Files and Filtering Log Messages for Oracle WebLogic Server</strong>.</p>
+</li>
+<li>
+<p>If you want to redirect the standard out of the JVM in which the WebLogic Server instance runs to the four log message destinations (log file, standard out, domain log, and message buffer), then turn on <strong>Redirect stdout logging enabled</strong>. For more information, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=WLLOG-GUID-E11405DE-BAED-456F-9D5E-E155B2D24BA3">Redirecting JVM Output</a> in <strong>Configuring Log Files and Filtering Log Messages for Oracle WebLogic Server</strong>.</p>
+</li>
+<li>
+<p>If you want to override the setting for the root Logger (as specified by the <strong>Minimum severity to log list</strong> option) or its closest parent node in the logger tree, then do as follows:</p>
+<ol>
+<li>
+<p>Click the <strong>Severity Properties</strong> tab.</p>
+</li>
+<li>
+<p>In the <strong>Logger Severity Properties</strong> table, click <strong>+</strong> to add a new key-value row, then double-click the row cells to update the key and value.</p>
+</li>
+</ol>
+<p>You can also use Logger severity properties to specify severity levels for packages (if using the Commons Logging API) or for individual WebLogic Server subsystem Loggers (if using the Message Catalog Logger).</p>
+<p>All loggers inherit the severity level of their nearest parent node in the logger hierarchy. You can specify a severity level for a given logger that is different than its nearest parent node using key-value pairs, where the key is the logger name and the value is the severity level (Info, Critical, Warning, and so on).</p>
+<p>See <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=WLLOG-GUID-4D87246E-F63B-4AA0-B471-E5326673C841">Specifying Severity Level for Loggers</a> in <strong>Configuring Log Files and Filtering Log Messages for Oracle WebLogic Server</strong>.</p>
+</li>
+<li>
+<p>If you want to control which log messages are published, you can create log filters which use custom logic to evaluate log message content and then accept or reject it for publication based on its criteria. You can apply log filters to these log message destinations: log file, standard out, and domain log broadcaster.</p>
+<ol>
+<li>
+<p><a href="#GUID-0D37D991-A698-4D2C-8163-DC3B1A0BBC65">Create a Log Filter</a>.</p>
+</li>
+<li>
+<p>To apply a log filter to the log file message destination, choose your preferred severity level from the <strong>Log File Severity Level</strong> drop-down list, then choose a log filter from the <strong>Log File Filter</strong> drop-down list.</p>
+</li>
+<li>
+<p>To apply a log filter to the standard out message destination, choose your preferred severity level from the <strong>Stdout Severity Level</strong> drop-down list, then choose a log filter from the <strong>Stdout Filter</strong> drop-down list.</p>
+</li>
+<li>
+<p>To apply a log filter to the domain log broadcaster message destination, choose your preferred severity level from the <strong>Domain Log Broadcast Severity Level</strong> drop-down list, then choose a log filter from the <strong>Domain Log Broadcast Filter</strong> drop-down list.</p>
+<p>You can specify the size of the message buffer which stores messages that will be forwarded to the domain log. A higher value causes more messages to be stored in the buffer before the contents are forwarded to the domain log. For performance reasons, it is recommended that this value be set to 10 or higher in production mode.</p>
+</li>
+</ol>
+<p>You cannot forward <code>DEBUG</code> messages to the domain log.</p>
+</li>
+<li>
+<p>Click <strong>Save</strong>.</p>
+</li>
+</ol>
+<h3 id="GUID-0D37D991-A698-4D2C-8163-DC3B1A0BBC65">Create a Log Filter</h3>
+<p>Log filters provide control over the log messages that get published. A filter uses custom logic to evaluate the log message content, which you use to accept or reject a log message</p>
+<p>For example, to filter out messages of a certain severity level, from a particular subsystem, or according to specified criteria. Only the log messages that satisfy the filter criteria get published. You can create separate filters for the messages that each server instance writes to its server log file, standard out, memory buffer, or broadcasts to the domain-wide message log.</p>
+<ol>
+<li>
+<p>In the <strong>Edit Tree</strong>, go to <strong>Environment</strong>, then <strong>Log Filters</strong>.</p>
+</li>
+<li>
+<p>Click <strong>New</strong>.</p>
+</li>
+<li>
+<p>Enter a name for the log filter and click <strong>Create</strong>.</p>
+</li>
+<li>
+<p>Enter an expression in the <strong>Filter Expression</strong> field.</p>
+<p>A filter expression defines simple filtering rules to limit the volume of log messages written to a particular log destination. For information on building filter expressions, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=WLDFC-GUID-594EA6D9-EB3A-4C51-BF09-F5A8F483D1A0">WLDF Query Language</a> in <strong>Configuring and Using the Diagnostics Framework for Oracle WebLogic Server</strong>.</p>
+</li>
+<li>
+<p>Click <strong>Save</strong>.</p>
+</li>
+</ol>
+<p>Update your logging settings to apply this log filter. See <a href="#GUID-EB50E0B0-91AB-416A-A61F-79D414282DEE">Filter Log Messages</a>.</p>
+<h3 id="GUID-212C2424-746F-4150-8664-F6F9A0B0A4EF">Rotate Log Files</h3>
+<p>Set a rotation schedule for the log files generated by WebLogic Server.</p>
+<p>For more information, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=WLLOG-GUID-FCA331B8-F60C-4E52-A91B-FABACCC9EFBE">Rotating Log Files</a> in <strong>Configuring Log Files and Filtering Log Messages for Oracle WebLogic Server</strong>.</p>
+
+<div class="notices note" ><p>WebLogic Server sets a threshold size limit of 2,097,152 kilobytes before it forces a hard rotation to prevent excessive log file growth.</p>
+</div>
+<ol>
+<li>
+<p>In the <strong>Edit Tree</strong>, go to <strong>Environment</strong>, then <strong>Servers</strong>, then <em>myServer</em>.</p>
+</li>
+<li>
+<p>On the <strong>Logging</strong> tab, from the <strong>Rotation Type</strong> drop-down list, select the criteria that triggers the server to move log messages to a separate file. Depending on your choice, configure the appropriate settings.</p>
+<ul>
+<li><strong>By Size</strong> - rotates log messages when log file size reaches the specified size.</li>
+<li><strong>By Time</strong> - rotates log messages after a specified time interval passes.</li>
+<li><strong>None</strong> - log messages are not automatically rotated. You must manually erase the contents of the file when the size becomes too large.</li>
+</ul>
+</li>
+<li>
+<p>If you chose <strong>By Size</strong> as the Rotation Type.</p>
+<ol>
+<li>In the <strong>Rotation file size</strong> field, enter the file size that triggers the server to move log messages to a separate file. After the log file reaches the specified size, the next time the server checks the file size it renames the current log file by appending a 5-digit integer; for example, <code>SERVER_NAME.log00007</code>. After the server renames the file, subsequent messages accumulate in a new file named <code>SERVER_NAME.log</code>.</li>
+</ol>
+</li>
+<li>
+<p>If you chose <strong>By Time</strong> as the Rotation Type.</p>
+<ol>
+<li>
+<p>In the <strong>Begin rotation time</strong> field, enter the start time</p>
+<p>Use the following format: <code>hh:mm</code>, where <code>hh</code> is the hour in a 24-hour format and <code>mm</code> is the minute. At the time that you specify, the server rotates the current log file. If the time that you specify is already past, the server rotates the log file at the next scheduled interval, as specified in <strong>Rotation Interval</strong>.</p>
+</li>
+<li>
+<p>In the <strong>Rotation Interval</strong> field, enter the interval, in hours, at which the server saves old messages to another file.</p>
+</li>
+</ol>
+</li>
+<li>
+<p>If you want to limit the number of log files that the server creates to store old log messages, enable the <strong>Limit Number of Retained Log Files</strong> option. Then, in the <strong>Files to Retain</strong> field, enter the maximum number of files. If the server receives additional log messages after reaching the capacity of the last log file, it overwrites the oldest log file.</p>
+</li>
+<li>
+<p>In the <strong>Log file rotation directory</strong> field, enter the directory location where the rotated log files will be stored.</p>
+<p>Enter an absolute pathname or a pathname that is relative to the server&rsquo;s root directory. By default, the rotated files are stored in the same directory where the log file is stored.</p>
+</li>
+<li>
+<p>If you want to add a time or date stamp to the file name when the log file is rotated, then in the <strong>Log file name</strong> field, add <code>java.text.SimpleDateFormat</code> variables to the file name and surround each variable with percentage (%) characters.</p>
+<p>For example, if you enter the following value in the Log file name field: <code>myserver_%yyyy%<em>%MM%</em>%dd%<em>%hh%</em>%mm%.log</code>, the server&rsquo;s log file will be named <code>myserver_<em>yyyy_MM_dd_hh_mm</em>.log</code>.</p>
+<p>When the server instance rotates the log file, the rotated file name contains the date stamp. For example, if the server instance rotates its local log file on 4 March 2020 at 10:15 AM, the log file that contains the old log messages will be named <code>myserver_2020_03_04_10_15.log<em>nnnnn</em></code>. (The current, in-use server log file retains the name <code>myserver_<em>yyyy_MM_dd_hh_mm</em>.log</code>.)</p>
+<p>If you do not include a time and date stamp, the rotated log files are numbered in order of creation <code><em>SERVER_NAME</em>.log<em>nnnnn</em></code>, where <code><em>SERVER_NAME</em></code> is the name configured for the log file. For example: <code>myserver.log00007</code>.</p>
+</li>
+<li>
+<p>Click <strong>Save</strong>.</p>
+</li>
+</ol>
+<h2 id="GUID-BB85D9BB-5E36-4067-AA9F-E01EBFF027CD">Enable Configuration Auditing</h2>
+<p>You can configure the Administration Server to emit audit messages that enable auditing of configuration changes in a domain.</p>
+<p>This provides a record of changes to the configuration of any resource within a domain or invokes management operations on any resource within a domain. Configuration audit records can be saved to a log file, sent to an Auditing provider in the security realm, or both.</p>
+<p>If you plan to audit configuration changes, then you must configure the WebLogic Auditing Provider first. See <a href="../securing-domains#GUID-553E0BEB-BD7E-44EF-AD4D-782F1A01C3B8">Configure an Auditing Provider</a>.</p>
+<ol>
+<li>
+<p>In the <strong>Edit Tree</strong>, go to <strong>Environment</strong>, then <strong>Domain</strong>.</p>
+</li>
+<li>
+<p>Click <strong>Show Advanced Fields</strong>.</p>
+</li>
+<li>
+<p>From the <strong>Configuration Audit Type</strong> drop-down list, select the method to use for auditing configuration change events.</p>
+<ul>
+<li><strong>None</strong>: No audit configuration change events are written.</li>
+<li><strong>Log</strong>:Configuration events will be written to the server log.</li>
+<li><strong>Audit</strong>: Configuration events will be directed to the Security Framework and handled by the Auditing provider.</li>
+<li><strong>LogAudit</strong>: Configuration events will written to the server log as well as directed to the Security Framework and handled by the Auditing provider.</li>
+</ul>
+</li>
+<li>
+<p>Click <strong>Save</strong>.</p>
+</li>
+</ol>
+<h2 id="GUID-E83F152C-96B8-46CD-9A14-818C468BAF7D">Display Thread Stacks</h2>
+<p>You can display the current stack for an active thread.</p>
+<ol>
+<li>
+<p>In the <strong>Monitoring Tree</strong>, go to <strong>Environment</strong>, then <strong>JVM Runtime</strong>.</p>
+</li>
+<li>
+<p>Click the <strong>Thread Stack Dump</strong> tab to see an overview of the thread stack dumps for each server in the domain.</p>
+</li>
+<li>
+<p>To see the thread stack dump for a single server, click the server instance in the table. This sends you to the <strong>JVM Runtime</strong> node for the selected server. Click the <strong>Thread Stack Dump</strong> tab.</p>
+</li>
+</ol>
+<h2 id="GUID-F414237C-43D2-43CF-8A72-B999D19A1D2E">Tuning Performance</h2>
+<p>To ensure that your WebLogic Server environment is performing optimally, you should regularly monitor its behavior and then adjust its settings accordingly.</p>
+<p>For guidance on the performance tuning options that are available in WebLogic Server, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=PERFM-GUID-56A43014-010F-4BA5-9A77-AB188E208BB7"><strong>Tuning Performance of Oracle WebLogic Server</strong></a>.</p>
+<ol>
+<li>
+<p>In the <strong>Edit Tree</strong>, go to <strong>Environment</strong>, then <strong>Servers</strong>, then <em>myServer</em>.</p>
+</li>
+<li>
+<p>On the <strong>Advanced</strong> tab, select the <strong>Tuning</strong> subtab.</p>
+</li>
+<li>
+<p>Modify the available options as recommended based on the needs of your environment.</p>
+</li>
+<li>
+<p>Click <strong>Save</strong>.</p>
+</li>
+<li>
+<p>Repeat as needed for the rest of the servers in your domain.</p>
+</li>
+</ol>
+
+
+
+
+
+<footer class=" footline" >
+	
+</footer>
+
+        
+        </div>
+        
+
+      </div>
+
+    <div id="navigation">
+        
+        
+
+        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+
+        
+
+
+	 
+	 
+		
+			<a class="nav nav-prev" href="/weblogic-remote-console/administration-server/deploying-applications/" title="Deploying Applications"> <i class="fa fa-chevron-left"></i></a>
+		
+		
+			<a class="nav nav-next" href="/weblogic-remote-console/administration-server/configuring-services/" title="Configuring Services" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+		
+	
+    </div>
+
+    </section>
+
+    <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
+      <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
+    </div>
+    <script src="/weblogic-remote-console/js/clipboard.min.js?1734470358"></script>
+    <script src="/weblogic-remote-console/js/perfect-scrollbar.min.js?1734470358"></script>
+    <script src="/weblogic-remote-console/js/perfect-scrollbar.jquery.min.js?1734470358"></script>
+    <script src="/weblogic-remote-console/js/jquery.sticky.js?1734470358"></script>
+    <script src="/weblogic-remote-console/js/featherlight.min.js?1734470358"></script>
+    <script src="/weblogic-remote-console/js/highlight.pack.js?1734470358"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script src="/weblogic-remote-console/js/modernizr.custom-3.6.0.js?1734470358"></script>
+    <script src="/weblogic-remote-console/js/learn.js?1734470358"></script>
+    <script src="/weblogic-remote-console/js/hugo-learn.js?1734470358"></script>
+    
+        
+            <script src="/weblogic-remote-console/mermaid/mermaid.js?1734470358"></script>
+        
+        <script>
+            mermaid.initialize({ startOnLoad: true });
+        </script>
+    
+    
+
+  </body>
+</html>

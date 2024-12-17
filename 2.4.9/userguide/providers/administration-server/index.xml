@@ -5,17 +5,14 @@
     <link>https://oracle.github.io/weblogic-remote-console/2.4.9/userguide/providers/administration-server/</link>
     <description>Recent content in Administration Servers on WebLogic Remote Console</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language><atom:link href="https://oracle.github.io/weblogic-remote-console/2.4.9/userguide/providers/administration-server/index.xml" rel="self" type="application/rss+xml" />
+    <language>en-us</language>
+    <atom:link href="https://oracle.github.io/weblogic-remote-console/2.4.9/userguide/providers/administration-server/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Editing security data</title>
       <link>https://oracle.github.io/weblogic-remote-console/2.4.9/userguide/providers/administration-server/security-data/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
       <guid>https://oracle.github.io/weblogic-remote-console/2.4.9/userguide/providers/administration-server/security-data/</guid>
-      <description>You can manage security data and supported security providers for your domain in the Security Data tree perspective.
-You must be logged in as a user with the Admin role and have the WebLogic Remote Console extension installed to access this perspective. See Install the WebLogic Remote Console for instructions.
- Any changes you make within the Security Data perspective are immediate - you don&amp;rsquo;t need to commit or restart the server to apply your changes.</description>
+      <description>You can manage security data and supported security providers for your domain in the Security Data tree perspective.&#xA;You must be logged in as a user with the Admin role and have the WebLogic Remote Console extension installed to access this perspective. See Install the WebLogic Remote Console for instructions.&#xA;Any changes you make within the Security Data perspective are immediate - you don&amp;rsquo;t need to commit or restart the server to apply your changes.</description>
     </item>
-    
   </channel>
 </rss>

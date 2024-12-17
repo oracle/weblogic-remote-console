@@ -6,73 +6,49 @@
     <description>Recent content in User guide on WebLogic Remote Console</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 01 Sep 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://oracle.github.io/weblogic-remote-console/2.4.5/userguide/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 26 Jul 2022 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://oracle.github.io/weblogic-remote-console/2.4.5/userguide/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Projects</title>
       <link>https://oracle.github.io/weblogic-remote-console/2.4.5/userguide/projects/</link>
       <pubDate>Wed, 01 Sep 2021 00:00:00 +0000</pubDate>
-      
       <guid>https://oracle.github.io/weblogic-remote-console/2.4.5/userguide/projects/</guid>
-      <description>A project is a group of providers connections to WebLogic Administration Servers, WebLogic Deploy Tooling (WDT) models, WDT composite models, or property lists.
-Create a project   Open File &amp;gt; New Project.
-  Enter a name for the project and click OK. The new project will appear in the Kiosk. Next, you&amp;rsquo;ll add a provider to the project.
-  Expand the Kiosk and beside the project name, click ⋮.</description>
+      <description>A project is a group of providers connections to WebLogic Administration Servers, WebLogic Deploy Tooling (WDT) models, WDT composite models, or property lists.&#xA;Create a project Open File &amp;gt; New Project.&#xA;Enter a name for the project and click OK. The new project will appear in the Kiosk. Next, you&amp;rsquo;ll add a provider to the project.&#xA;Expand the Kiosk and beside the project name, click ⋮. Select one of the following options to add provider:</description>
     </item>
-    
     <item>
       <title>Generate dashboards</title>
       <link>https://oracle.github.io/weblogic-remote-console/2.4.5/userguide/dashboards/</link>
       <pubDate>Tue, 26 Jul 2022 00:00:00 +0000</pubDate>
-      
       <guid>https://oracle.github.io/weblogic-remote-console/2.4.5/userguide/dashboards/</guid>
-      <description>Dashboards let you quickly assess the state of your WebLogic Server domain. With dashboards, you can assemble a set of criteria (or &amp;lsquo;filters&amp;rsquo;) and WebLogic Remote Console will match them against any bean in your domain and return the results. Because you control the filters of the dashboard, you control what you see and can determine the importance of the results, updating the dashboard as needed.
-Dashboards are only available for Administration Server providers (in the Monitoring Tree perspective).</description>
+      <description>Dashboards let you quickly assess the state of your WebLogic Server domain. With dashboards, you can assemble a set of criteria (or &amp;lsquo;filters&amp;rsquo;) and WebLogic Remote Console will match them against any bean in your domain and return the results. Because you control the filters of the dashboard, you control what you see and can determine the importance of the results, updating the dashboard as needed.&#xA;Dashboards are only available for Administration Server providers (in the Monitoring Tree perspective).</description>
     </item>
-    
     <item>
       <title>Customize connection settings</title>
       <link>https://oracle.github.io/weblogic-remote-console/2.4.5/userguide/advanced-settings/</link>
       <pubDate>Wed, 01 Sep 2021 00:00:00 +0000</pubDate>
-      
       <guid>https://oracle.github.io/weblogic-remote-console/2.4.5/userguide/advanced-settings/</guid>
-      <description>You can customize the default connection settings of the WebLogic Remote Console by modifying its Java system properties.
- Edit Java system properties Java system properties  Some possible customizations:
- Connect to a WebLogic domain using SSL/TLS  Specify a listen address for the WebLogic Remote Console host Configure a proxy server Change the network timeout settings for the server  Disable host name verification in the connections to the WebLogic domain  Set the SameSite cookie attribute if required for web browser support  Connect to a WebLogic domain running on Kubernetes Specify an alternative location for the JDK Establish an insecure connection to an Administration Server  Edit Java system properties You can create a file that modifies the WebLogic Remote Console according to your preferences.</description>
+      <description>You can customize the default connection settings of the WebLogic Remote Console by modifying its Java system properties.&#xA;Edit Java system properties Java system properties Some possible customizations:&#xA;Connect to a WebLogic domain using SSL/TLS Specify a listen address for the WebLogic Remote Console host Configure a proxy server Change the network timeout settings for the server Disable host name verification in the connections to the WebLogic domain Set the SameSite cookie attribute if required for web browser support Connect to a WebLogic domain running on Kubernetes Specify an alternative location for the JDK Establish an insecure connection to an Administration Server Edit Java system properties You can create a file that modifies the WebLogic Remote Console according to your preferences.</description>
     </item>
-    
     <item>
       <title>Upgrade the WebLogic Remote Console</title>
       <link>https://oracle.github.io/weblogic-remote-console/2.4.5/userguide/upgrade/</link>
       <pubDate>Wed, 01 Sep 2021 00:00:00 +0000</pubDate>
-      
       <guid>https://oracle.github.io/weblogic-remote-console/2.4.5/userguide/upgrade/</guid>
-      <description>Upgrade to the latest WebLogic Remote Console and take advantage of the latest features in both the console and WebLogic Server.
-The WebLogic Remote Console extension is periodically updated. Check if there&amp;rsquo;s also a newer version of the extension available when you upgrade the WebLogic Remote Console.
-Delete and replace any previous versions of the extension. Keeping multiple versions of the extension installed can lead to unexpected behavior.
- If you use config.</description>
+      <description>Upgrade to the latest WebLogic Remote Console and take advantage of the latest features in both the console and WebLogic Server.&#xA;The WebLogic Remote Console extension is periodically updated. Check if there&amp;rsquo;s also a newer version of the extension available when you upgrade the WebLogic Remote Console.&#xA;Delete and replace any previous versions of the extension. Keeping multiple versions of the extension installed can lead to unexpected behavior.&#xA;If you use config.</description>
     </item>
-    
     <item>
       <title>Check log files</title>
       <link>https://oracle.github.io/weblogic-remote-console/2.4.5/userguide/logging/</link>
       <pubDate>Wed, 01 Sep 2021 00:00:00 +0000</pubDate>
-      
       <guid>https://oracle.github.io/weblogic-remote-console/2.4.5/userguide/logging/</guid>
-      <description>You can inspect log files to ensure that the WebLogic Remote Console is functioning correctly.
-Front end To view the log file for issues related to the front end of the WebLogic Remote Console:
-Desktop application Open View &amp;gt; Toggle Developer Tools and select the Console tab.
-Browser application In the browser tab with WebLogic Remote Console, open the Developer Tools and select the Console tab.
-Back end To view the log file for issues related to the back end of the WebLogic Remote Console:</description>
+      <description>You can inspect log files to ensure that the WebLogic Remote Console is functioning correctly.&#xA;Front end To view the log file for issues related to the front end of the WebLogic Remote Console:&#xA;Desktop application Open View &amp;gt; Toggle Developer Tools and select the Console tab.&#xA;Browser application In the browser tab with WebLogic Remote Console, open the Developer Tools and select the Console tab.&#xA;Back end To view the log file for issues related to the back end of the WebLogic Remote Console:</description>
     </item>
-    
     <item>
       <title>Understand access discrepancies</title>
       <link>https://oracle.github.io/weblogic-remote-console/2.4.5/userguide/role-access/</link>
       <pubDate>Wed, 01 Sep 2021 00:00:00 +0000</pubDate>
-      
       <guid>https://oracle.github.io/weblogic-remote-console/2.4.5/userguide/role-access/</guid>
       <description>The WebLogic Remote Console restricts what non-administrator users can see or do. Users with the roles Deployer, Monitor, or Operator are only shown the areas and features necessary for their role. These restrictions range from broad (hiding the entire Edit Tree perspective from users in the Monitor role) to narrow (hiding Create buttons on some pages). For full access to all the functionality of the WebLogic Remote Console, log in as an administrator.</description>
     </item>
-    
   </channel>
 </rss>

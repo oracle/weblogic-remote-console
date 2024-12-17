@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="generator" content="Hugo 0.82.0" />
+    <meta name="generator" content="Hugo 0.123.7">
     <meta name="description" content="Overview of the console&#39;s user interface and behavior">
 
 
@@ -12,20 +12,20 @@
     <title>Console Design and Usage Notes :: WebLogic Remote Console</title>
 
     
-    <link href="/weblogic-remote-console/1.1.0/css/nucleus.css?1724783132" rel="stylesheet">
-    <link href="/weblogic-remote-console/1.1.0/css/fontawesome-all.min.css?1724783132" rel="stylesheet">
-    <link href="/weblogic-remote-console/1.1.0/css/hybrid.css?1724783132" rel="stylesheet">
-    <link href="/weblogic-remote-console/1.1.0/css/featherlight.min.css?1724783132" rel="stylesheet">
-    <link href="/weblogic-remote-console/1.1.0/css/perfect-scrollbar.min.css?1724783132" rel="stylesheet">
-    <link href="/weblogic-remote-console/1.1.0/css/auto-complete.css?1724783132" rel="stylesheet">
-    <link href="/weblogic-remote-console/1.1.0/css/atom-one-dark-reasonable.css?1724783132" rel="stylesheet">
-    <link href="/weblogic-remote-console/1.1.0/css/theme.css?1724783132" rel="stylesheet">
-    <link href="/weblogic-remote-console/1.1.0/css/tabs.css?1724783132" rel="stylesheet">
-    <link href="/weblogic-remote-console/1.1.0/css/hugo-theme.css?1724783132" rel="stylesheet">
+    <link href="/weblogic-remote-console/1.1.0/css/nucleus.css?1734470358" rel="stylesheet">
+    <link href="/weblogic-remote-console/1.1.0/css/fontawesome-all.min.css?1734470358" rel="stylesheet">
+    <link href="/weblogic-remote-console/1.1.0/css/hybrid.css?1734470358" rel="stylesheet">
+    <link href="/weblogic-remote-console/1.1.0/css/featherlight.min.css?1734470358" rel="stylesheet">
+    <link href="/weblogic-remote-console/1.1.0/css/perfect-scrollbar.min.css?1734470358" rel="stylesheet">
+    <link href="/weblogic-remote-console/1.1.0/css/auto-complete.css?1734470358" rel="stylesheet">
+    <link href="/weblogic-remote-console/1.1.0/css/atom-one-dark-reasonable.css?1734470358" rel="stylesheet">
+    <link href="/weblogic-remote-console/1.1.0/css/theme.css?1734470358" rel="stylesheet">
+    <link href="/weblogic-remote-console/1.1.0/css/tabs.css?1734470358" rel="stylesheet">
+    <link href="/weblogic-remote-console/1.1.0/css/hugo-theme.css?1734470358" rel="stylesheet">
     
     
 
-    <script src="/weblogic-remote-console/1.1.0/js/jquery-3.6.0.min.js?1724783132"></script>
+    <script src="/weblogic-remote-console/1.1.0/js/jquery-3.6.0.min.js?1734470358"></script>
 
     <style>
       :root #header + #content > #left > #rlblock_left{
@@ -46,8 +46,8 @@
 
   <div id="header-wrapper">
     <div id="header">
-      <a id="logo" href="https://oracle.github.io/weblogic-remote-console/1.1.0">
-  <img src="https://oracle.github.io/weblogic-remote-console/1.1.0/images/logo.png" height="60"><br/>
+      <a id="logo" href="https://oracle.github.io/weblogic-remote-console/1.1.0/">
+  <img src="https://oracle.github.io/weblogic-remote-console/1.1.0//images/logo.png" height="60"><br/>
   WebLogic Remote Console
 </a>
 
@@ -59,14 +59,14 @@
     <span data-search-clear=""><i class="fas fa-times"></i></span>
 </div>
 
-<script type="text/javascript" src="/weblogic-remote-console/1.1.0/js/lunr.min.js?1724783132"></script>
-<script type="text/javascript" src="/weblogic-remote-console/1.1.0/js/auto-complete.js?1724783132"></script>
+<script type="text/javascript" src="/weblogic-remote-console/1.1.0/js/lunr.min.js?1734470358"></script>
+<script type="text/javascript" src="/weblogic-remote-console/1.1.0/js/auto-complete.js?1734470358"></script>
 <script type="text/javascript">
     
-        var baseurl = "https:\/\/oracle.github.io\/weblogic-remote-console\/1.1.0";
+        var baseurl = "https:\/\/oracle.github.io\/weblogic-remote-console\/1.1.0\/";
     
 </script>
-<script type="text/javascript" src="/weblogic-remote-console/1.1.0/js/search.js?1724783132"></script>
+<script type="text/javascript" src="/weblogic-remote-console/1.1.0/js/search.js?1734470358"></script>
 
     
   </div>
@@ -374,13 +374,13 @@
 <h2 id="separation">Separation of Configuration and Runtime Data</h2>
 <p>Unlike the WebLogic Server Administration Console, which has pages that combine the configuration and runtime data, the Remote Console has separate pages for each. For example, in the Remote Console:</p>
 <ul>
-<li>The Servers table under Environment in the Configuration perspective shows all the configured servers (in the &lsquo;edit&rsquo; tree), but does not show whether each server is running.</li>
+<li>The Servers table under Environment in the Configuration perspective shows all the configured servers (in the &rsquo;edit&rsquo; tree), but does not show whether each server is running.</li>
 <li>The Server States table in the Monitoring perspective lists all the servers, both configured and dynamic, (in the Administration Server&rsquo;s &lsquo;server config&rsquo; tree) and the status of each server. This page also provides control operations to change the state of the servers.</li>
 <li>The Running Servers table in the Monitoring perspective lists the servers (in the Administration Server&rsquo;s &lsquo;server config&rsquo; tree) that are currently running.</li>
 </ul>
 <p>You can navigate easily between the two perspectives using the drop-down list in the breadcrumbs and the icons in the NavStrip on the left.</p>
 
-<div class="notices note" ><p>Because the Configuration perspective shows the &lsquo;edit&rsquo; tree (that is, the changes you&rsquo;re currently making and haven&rsquo;t activated yet), and the Monitoring perspective shows the Administration Server&rsquo;s &lsquo;server config&rsquo; tree (that is, the configuration from the last time the Administration Server was booted plus any activated dynamic changes), unactivated changes that you made in the Configuration perspective won&rsquo;t show up in the Monitoring perspective.  For example, if you add a server and have not activated the change yet, it does not show up in the Monitoring &lsquo;Running Servers&rsquo; and &lsquo;Server States&rsquo; tables.  Also, if you make any nondynamic changes, and activate them, they won&rsquo;t show up in the Monitoring pages until you reboot the appropriate servers.</p>
+<div class="notices note" ><p>Because the Configuration perspective shows the &rsquo;edit&rsquo; tree (that is, the changes you&rsquo;re currently making and haven&rsquo;t activated yet), and the Monitoring perspective shows the Administration Server&rsquo;s &lsquo;server config&rsquo; tree (that is, the configuration from the last time the Administration Server was booted plus any activated dynamic changes), unactivated changes that you made in the Configuration perspective won&rsquo;t show up in the Monitoring perspective.  For example, if you add a server and have not activated the change yet, it does not show up in the Monitoring &lsquo;Running Servers&rsquo; and &lsquo;Server States&rsquo; tables.  Also, if you make any nondynamic changes, and activate them, they won&rsquo;t show up in the Monitoring pages until you reboot the appropriate servers.</p>
 </div>
 
 <h2 id="new_ui">User Interface Description</h2>
@@ -399,11 +399,11 @@
 <li>
 <p>Configuration - For creating, modifying and removing data associated with configuration MBeans in a WebLogic domain. Note that WebLogic has three different versions of the configuration per-domain:</p>
 <ul>
-<li>The &lsquo;edit&rsquo; tree -  the pending configuration that hasn&rsquo;t been activated yet.</li>
+<li>The &rsquo;edit&rsquo; tree -  the pending configuration that hasn&rsquo;t been activated yet.</li>
 <li>The &lsquo;domain config&rsquo; tree - the most recently activated configuration (that is, the domain&rsquo;s &lsquo;config&rsquo; directory).</li>
 <li>The &lsquo;server config&rsquo; tree - the configuration that a server is currently using that may need to be rebooted to catch up to the domain config tree.</li>
 </ul>
-<p>Currently, the Remote Console only displays the &lsquo;edit&rsquo; tree.</p>
+<p>Currently, the Remote Console only displays the &rsquo;edit&rsquo; tree.</p>
 </li>
 <li>
 <p>Monitoring - For viewing runtime MBeans in a WebLogic domain.</p>
@@ -699,19 +699,19 @@ In the WebLogic Server Administration Console, the Change Center provides a way 
     <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
       <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
     </div>
-    <script src="/weblogic-remote-console/1.1.0/js/clipboard.min.js?1724783132"></script>
-    <script src="/weblogic-remote-console/1.1.0/js/perfect-scrollbar.min.js?1724783132"></script>
-    <script src="/weblogic-remote-console/1.1.0/js/perfect-scrollbar.jquery.min.js?1724783132"></script>
-    <script src="/weblogic-remote-console/1.1.0/js/jquery.sticky.js?1724783132"></script>
-    <script src="/weblogic-remote-console/1.1.0/js/featherlight.min.js?1724783132"></script>
-    <script src="/weblogic-remote-console/1.1.0/js/highlight.pack.js?1724783132"></script>
+    <script src="/weblogic-remote-console/1.1.0/js/clipboard.min.js?1734470358"></script>
+    <script src="/weblogic-remote-console/1.1.0/js/perfect-scrollbar.min.js?1734470358"></script>
+    <script src="/weblogic-remote-console/1.1.0/js/perfect-scrollbar.jquery.min.js?1734470358"></script>
+    <script src="/weblogic-remote-console/1.1.0/js/jquery.sticky.js?1734470358"></script>
+    <script src="/weblogic-remote-console/1.1.0/js/featherlight.min.js?1734470358"></script>
+    <script src="/weblogic-remote-console/1.1.0/js/highlight.pack.js?1734470358"></script>
     <script>hljs.initHighlightingOnLoad();</script>
-    <script src="/weblogic-remote-console/1.1.0/js/modernizr.custom-3.6.0.js?1724783132"></script>
-    <script src="/weblogic-remote-console/1.1.0/js/learn.js?1724783132"></script>
-    <script src="/weblogic-remote-console/1.1.0/js/hugo-learn.js?1724783132"></script>
+    <script src="/weblogic-remote-console/1.1.0/js/modernizr.custom-3.6.0.js?1734470358"></script>
+    <script src="/weblogic-remote-console/1.1.0/js/learn.js?1734470358"></script>
+    <script src="/weblogic-remote-console/1.1.0/js/hugo-learn.js?1734470358"></script>
     
         
-            <script src="/weblogic-remote-console/1.1.0/mermaid/mermaid.js?1724783132"></script>
+            <script src="/weblogic-remote-console/1.1.0/mermaid/mermaid.js?1734470358"></script>
         
         <script>
             mermaid.initialize({ startOnLoad: true });

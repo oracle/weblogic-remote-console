@@ -5,6 +5,7 @@
     <link>https://oracle.github.io/weblogic-remote-console/1.1.0/categories/</link>
     <description>Recent content in Categories on WebLogic Remote Console</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language><atom:link href="https://oracle.github.io/weblogic-remote-console/1.1.0/categories/index.xml" rel="self" type="application/rss+xml" />
+    <language>en-us</language>
+    <atom:link href="https://oracle.github.io/weblogic-remote-console/1.1.0/categories/index.xml" rel="self" type="application/rss+xml" />
   </channel>
 </rss>

@@ -1160,8 +1160,8 @@ pre .copy-to-clipboard:hover {
 option {
     color: initial;
 }
-img[src*="/icons/"] {
-    vertical-align: middle;
+img[src*="/images/"] {
+    vertical-align: text-bottom;
 }
 div.expand-label {
     background-color: #f7f7f7;
