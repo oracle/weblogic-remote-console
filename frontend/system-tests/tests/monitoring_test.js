@@ -388,10 +388,10 @@ describe.only('Test Suite: monitoring_test for Navtree Monitoring functionality'
             await driver.findElement(By.xpath("//oj-button[@id='downloadLogs']")).click();
             await driver.sleep(1200);
             console.log("Click File Format menu");
-            await driver.findElement(By.xpath("//*[@id='FileFormat']/div[2]/span/a")).click();
+            await driver.findElement(By.xpath("//*[@id='FileFormat']/div[2]")).click();
             await driver.sleep(1200);
             console.log("Select file type as Text");
-            await driver.findElement(By.xpath("//*[text()='TEXT']")).click();
+            await driver.findElement(By.xpath("//*[text()='PlainText']")).click();
             await driver.sleep(1200);
             console.log("Click Done button");
             await driver.findElement(By.xpath("//*[@id='[[i18n.buttons.save.id]]']")).click();
@@ -442,10 +442,10 @@ describe.only('Test Suite: monitoring_test for Navtree Monitoring functionality'
             await driver.findElement(By.xpath("//oj-button[@id='downloadLogs']")).click();
             await driver.sleep(1200);
             console.log("Click File Format menu");
-            await driver.findElement(By.xpath("//*[@id='FileFormat']/div[2]/span/a")).click();
+            await driver.findElement(By.xpath("//*[@id='FileFormat']/div[2]")).click();
             await driver.sleep(1200);
             console.log("Select file type as Text");
-            await driver.findElement(By.xpath("//*[text()='TEXT']")).click();
+            await driver.findElement(By.xpath("//*[text()='PlainText']")).click();
             console.log("Click Done button");
             await driver.findElement(By.xpath("//*[@id='[[i18n.buttons.save.id]]']")).click();
             await driver.sleep(1200);

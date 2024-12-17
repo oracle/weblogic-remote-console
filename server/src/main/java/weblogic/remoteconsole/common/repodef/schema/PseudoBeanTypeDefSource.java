@@ -1,4 +1,4 @@
-// Copyright (c) 2021, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2024, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef.schema;
@@ -22,7 +22,7 @@ import java.util.List;
  *
  * Currently the remote console only uses this to handle JDBC system resources.
  */
-public class PseudoBeanTypeDefSource {
+public class PseudoBeanTypeDefSource extends YamlSource {
   private StringValue name = new StringValue();
   private StringValue baseType = new StringValue();
   private ListValue<String> include = new ListValue<>();

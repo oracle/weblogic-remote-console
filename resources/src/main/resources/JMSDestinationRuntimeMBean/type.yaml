@@ -46,3 +46,43 @@ properties:
     label: "Consumption Paused"
 - name: DestinationName
   getMethod: weblogic.remoteconsole.customizers.JMSDestinationRuntimeMBeanCustomizer.getDestinationName
+
+actions:
+# for JMS Server Destination Messages Table
+- name: "exportSelectedMessages"
+  successMessage: Created a task to export the selected messages
+  failureMessage: Failed to export the selected messages, check tasks for more information
+- name: "exportMessages"
+  successMessage: Created a task to export the messages that match the selector
+  failureMessage: Failed to export the messages, check tasks for more information
+
+- name: "importMessages"
+  successMessage: Created a task to import the messages
+  failureMessage: Failed to import the messages, check tasks for more information
+
+- name: "moveSelectedMessages"
+  successMessage: Created a task to move the selected messages
+  failureMessage: Failed to move the selected messages, check tasks for more information
+- name: "moveMessages"
+  successMessage: Created a task to move the messages that match the selector
+  failureMessage: Failed to move the messages, check tasks for more information
+
+# for JMS Server Destinations Table
+- name: "pauseProduction"
+  successMessage: New message production on the destination {0} has been paused
+  failureMessage: Failed to pause new message production on the destination {0}
+- name: "pauseConsumption"
+  successMessage: Consumption operation on the destination {0} has been paused
+  failureMessage: Failed to pause consumption operation on the destination {0}
+- name: "pauseInsertion"
+  successMessage: Insertion operation on the destination {0} has been paused
+  failureMessage: Failed to pause insertion operation on the destination {0}
+- name: "resumeProduction"
+  successMessage: New message production on the destination {0} has been resumed
+  failureMessage: Failed to resume new message production on the destination {0}
+- name: "resumeConsumption"
+  successMessage: Consumption operation on the destination {0} has been resumed
+  failureMessage: Failed to resume consumption operation on the destination {0}
+- name: "resumeInsertion"
+  successMessage: Insertion operation on the destination {0} has been resumed
+  failureMessage: Failed to resume insertion operation on the destination {0}

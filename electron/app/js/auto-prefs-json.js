@@ -109,7 +109,7 @@ const AutoPrefs = (() => {
           try {
             const fileContents = fs.readFileSync(filepath);
 
-            if (fileContents !== this.previousContents) {
+            if (fileContents !== this.previousContents && fileContents?.length > 0) {
               const props = JSON.parse(fileContents);
               // Update all the other _fields with values from the
               // file just read.

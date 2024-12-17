@@ -1,4 +1,4 @@
-# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2024, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 actions: [
@@ -710,10 +710,7 @@ properties:
   type: int
   writable: true
 - defaultValue:
-    secureModeValue:
-      value: true
-    value:
-      value: false
+    derivedDefault: true
   descriptionHTML: '<p>Servers in a cluster replicate session data. If a replication
     channel is defined then the session data will be sent using the replication channel
     protocol and secured replication settings will be ignored. If no replication channel
@@ -721,7 +718,9 @@ properties:
     replication will be sent over SSL using the default secured channel. However,
     this added security for replication traffic comes with a significant cluster performance
     degradation. It should only be enabled if security is of greater concern than
-    performance degradation.</p> '
+    performance degradation.</p> <p>The default value for this attribute is true if
+    all cluster members have SSL enabled, and either secure mode is enabled or no
+    plaintext replication channel is available. Otherwise, the default is false.</p> '
   name: SecureReplicationEnabled
   redeployNeeded: true
   restartNeeded: true

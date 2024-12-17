@@ -278,18 +278,20 @@ class PagePropertyDefImpl implements PagePropertyDef {
         }
       }
       for (PagePropertyLegalValueDefImpl customizerVal : customizerVals) {
+        String usageId =
+          "property legal value"
+            + " " + getTypeDef().getTypeName()
+            + " " + getPropertyPath()
+            + " " + customizerVal.getValueAsString();
         if (findPagePropertyLegalValueDefImpl(customizerVal, sourceVals) == null) {
           // The bean doesn't support this legal value
           // That's OK - just omit it.
           // For example, a newer version of WLS added the legal value
           // and we're using yamls from an older version of WLS that doesn't
           // have it.
-          LOGGER.finest(
-            "Missing legal value"
-            + " " + getPageDefImpl().getPageRepoDefImpl().getBeanRepoDefImpl().getMBeansVersion().getWebLogicVersion()
-            + " " + this
-            + " " + customizerVal.getValueAsString()
-          );
+          UsageTracker.notFound(usageId);
+        } else {
+          UsageTracker.used(usageId);
         }
       }
     }

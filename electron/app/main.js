@@ -215,7 +215,17 @@ function processCmdLineOptions() {
 function start_cbe() {
   var instDir = path.dirname(app.getPath('exe'));
   let filename = AppConfig.getPath();
+
+  const cbeTempDir = `${app.getPath('userData')}/cbe_tmp`;
+
+  if (fs.existsSync(cbeTempDir)) {
+    fs.rmSync(cbeTempDir, { recursive: true, force: true });
+  }
+    
+  fs.mkdirSync(cbeTempDir);
+
   let spawnArgs = [
+    `-Djava.io.tmpdir=${cbeTempDir}`,
     `-Dserver.port=${cbePort}`,
     '-jar',
     `${instDir}/backend/console.jar`,
@@ -587,8 +597,16 @@ ipcMain.handle('credentials-requesting', (event, arg) => {
     };
     return reply;
   }
-  reply.succeeded = true;
-  reply['secret'] = safeStorage.decryptString(Buffer.from(provider.passwordEncrypted, 'base64'));
+  try {
+    reply['secret'] = safeStorage.decryptString(Buffer.from(provider.passwordEncrypted, 'base64'));
+    reply.succeeded = true;
+  } catch(err) {
+    logger.log('error', 'Error decrypting password, pretending it does not exist');
+    reply['failure'] = {
+      failureType: 'NO_STORED_PASSWORD',
+      failureReason: 'There is no password stored for this provider'
+    };
+  }
   return reply;
 });
 

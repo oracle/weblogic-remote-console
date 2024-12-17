@@ -13,6 +13,6 @@ actions:
         type: "java.lang.String"
         legalValues:
         - "JSON"
-        - "TEXT"
+        - "PlainText"
         descriptionHTML: >
           <p>The file format for downloading.</p>

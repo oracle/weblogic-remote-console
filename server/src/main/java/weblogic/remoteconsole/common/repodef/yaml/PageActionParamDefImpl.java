@@ -1,4 +1,4 @@
-// Copyright (c) 2021, 2023, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2024, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef.yaml;
@@ -209,19 +209,21 @@ class PageActionParamDefImpl extends BeanActionParamDefImpl implements PageActio
         }
       }
       for (PageActionParamLegalValueDefImpl customizerVal : customizerVals) {
+        String usageId =
+          "action param legal value"
+            + " " + getActionDef().getTypeDef().getTypeName()
+            + " " + getActionDef().getActionPath()
+            + " " + getParamName()
+            + " " + customizerVal.getValueAsString();
         if (findPageActionParamLegalValueDefImpl(customizerVal, sourceVals) == null) {
           // The bean doesn't support this legal value
           // That's OK - just omit it.
           // For example, a newer version of WLS added the legal value
           // and we're using yamls from an older version of WLS that doesn't
           // have it.
-          LOGGER.finest(
-            "Missing legal value"
-            + " "
-            + getInputFormDefImpl().getPageRepoDefImpl().getBeanRepoDefImpl().getMBeansVersion().getWebLogicVersion()
-            + " " + this
-            + " " + customizerVal.getValueAsString()
-          );
+          UsageTracker.used(usageId);
+        } else {
+          UsageTracker.notFound(usageId);
         }
       }
     }

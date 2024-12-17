@@ -90,9 +90,11 @@ const SettingsEditor = (() => {
     const path = ConfigJSON.getPath();
     let data = {};
     addValue(data, 'proxy', preferences.value('networking.proxy'));
-    addValue(data, 'javax.net.ssl.trustStoreType', preferences.value('networking.trustStoreType'));
-    addValue(data, 'javax.net.ssl.trustStore', preferences.value('networking.trustStore'));
-    addValue(data, 'javax.net.ssl.trustStorePassword', preferences.value('networking.trustStorePassword'));
+    if (!dontNeedStore) {
+      addValue(data, 'javax.net.ssl.trustStoreType', preferences.value('networking.trustStoreType'));
+      addValue(data, 'javax.net.ssl.trustStore', preferences.value('networking.trustStore'));
+      addValue(data, 'javax.net.ssl.trustStoreKey', preferences.value('networking.trustStoreKey'));
+    }
     addValue(data, 'console.connectTimeoutMillis', preferences.value('networking.connectTimeoutMillis'));
     addValue(data, 'console.readTimeoutMillis', preferences.value('networking.readTimeoutMillis'));
     addValue(data, 'console.disableHostnameVerification', preferences.value('networking.disableHostnameVerification'));
@@ -210,7 +212,7 @@ const SettingsEditor = (() => {
                     {
                       label: `${I18NUtils.get('wrc-electron.menus.settings.trust-store.key.label')}`,
                       key: 'trustStoreKey',
-                      type: 'secret',
+                      type: 'text',
                       hideFunction: dontNeedStore
                     },
                     {

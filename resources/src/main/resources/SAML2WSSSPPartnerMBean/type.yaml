@@ -3,4 +3,5 @@
 
 editable: true
 disableMBeanJavadoc: true
+allowSearch: false
 instanceName: Web Service Service Provider Partner

@@ -1,4 +1,4 @@
-// Copyright (c) 2023, Oracle and/or its affiliates.
+// Copyright (c) 2023, 2024, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef.schema;
@@ -7,7 +7,7 @@ package weblogic.remoteconsole.common.repodef.schema;
  * This POJO mirrors the yaml source file format for configuring polling
  * information about an action
  */
-public class BeanActionPollingDefSource {
+public class BeanActionPollingDefSource extends YamlSource {
 
   private IntValue reloadSeconds = new IntValue();
   private IntValue maxAttempts = new IntValue();

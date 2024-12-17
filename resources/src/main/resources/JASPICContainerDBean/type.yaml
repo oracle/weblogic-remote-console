@@ -5,7 +5,7 @@ createResourceMethod: weblogic.remoteconsole.customizers.DescriptorBeanCustomize
 
 editable: true
 disableMBeanJavadoc: true
-supportsFilteringDashboards: false
+allowSearch: false
 
 properties:
 - name: AuthConfigProviderName

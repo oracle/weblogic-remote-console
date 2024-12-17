@@ -1,4 +1,4 @@
-// Copyright (c) 2021, 2023, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2024, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef.yaml;
@@ -45,7 +45,7 @@ class SliceDefImpl implements SliceDef {
       SlicePagePath pagePath =
         pageRepo.newSlicePagePath(slicesDefImpl.getTypeDef(), newSliceDefImpl.getSlice());
 
-      // see whether a yalm file for this slice exists
+      // see whether a yaml file for this slice exists
       YamlReader reader = pageRepo.getYamlReader();
       if (reader.getSliceFormDefSource(pagePath, slicesDefImpl) == null
             && reader.getSliceTableDefSource(pagePath, slicesDefImpl) == null) {

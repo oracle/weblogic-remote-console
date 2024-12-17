@@ -913,6 +913,13 @@ properties:
 - defaultValue:
     secureModeValue:
       value: false
+  descriptionHTML: '<p>Debug EJB MDB Listener processing</p> '
+  name: DebugEjbMdbListener
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
   descriptionHTML: '<p>Debug EJB metadata processing</p> '
   name: DebugEjbMetadata
   type: boolean
@@ -1337,6 +1344,20 @@ properties:
       value: false
   descriptionHTML: '<p>Debug JMS CDS processing</p> '
   name: DebugJMSCDS
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Debug for JMS Client message send and receive</p> '
+  name: DebugJMSClient
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Detailed debug for JMS Client send and receive</p> '
+  name: DebugJMSClientStackTrace
   type: boolean
   writable: true
 - defaultValue:
@@ -2225,6 +2246,14 @@ properties:
   descriptionHTML: '<p>Debugging for the messaging kernel as the server is being rebooted.
     This provides detailed information on every persistent message that is recovered.</p> '
   name: DebugMessagingKernelBoot
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Verbose debugging for the messaging kernel. The messaging kernel
+    is low- level messaging code that is used by the JMS and store and forward subsystems.</p> '
+  name: DebugMessagingKernelVerbose
   type: boolean
   writable: true
 - defaultValue:

@@ -1,4 +1,4 @@
-// Copyright (c) 2022, Oracle Corporation and/or its affiliates.
+// Copyright (c) 2022, 2024, Oracle Corporation and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.repo;
@@ -105,6 +105,9 @@ public class SearchBeanFinder extends PageReader {
     }
 
     private boolean matchesDesiredBeanType(BeanTreePath beanTreePath) {
+      if (!beanTreePath.getTypeDef().isAllowSearch()) {
+        return false; // skip the bean
+      }
       boolean matchedAFilter = false;
       for (SearchBeanFilterHandler handler : filterHandlers) {
         if (handler.beanTypePassesFilter(beanTreePath)) {

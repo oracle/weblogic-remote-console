@@ -46,6 +46,7 @@ properties:
 - name: AppRolesTokenClaim
 - name: ClientNameTokenClaim
 - name: ClientIDTokenClaim
+- name: AltClientIDTokenClaim
 - name: ClientTenantTokenClaim
 - name: ResourceTenantTokenClaim
 - name: TenantTokenClaim

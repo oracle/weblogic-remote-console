@@ -1,4 +1,4 @@
-// Copyright (c) 2021, 2023, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2024, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef.schema;
@@ -7,7 +7,7 @@ package weblogic.remoteconsole.common.repodef.schema;
  * This POJO mirrors the yaml source file format for configuring presentation
  * information about a field
  */
-public class BeanFieldPresentationDefSource {
+public class BeanFieldPresentationDefSource extends YamlSource {
 
   public enum Width {
     xs,

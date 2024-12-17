@@ -1,14 +1,32 @@
-# Copyright (c) 2020, 2023, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2020, 2024, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 createResourceMethod: weblogic.remoteconsole.customizers.JMSMessageManagementRuntimeMBeanCustomizer.createResource
 
 properties:
-- name: DestinationRuntime.BytesCurrentCount
+- name: BytesCurrentCount
   label: Subscriber Bytes Current Count
-- name: DestinationRuntime.BytesPendingCount
+- name: BytesPendingCount
   label: Subscriber Bytes Pending Count
-- name: DestinationRuntime.MessagesCurrentCount
+- name: MessagesCurrentCount
   label: Subscriber Messages Current Count
-- name: DestinationRuntime.MessagesPendingCount
+- name: MessagesPendingCount
   label: Subscriber Messages Pending Count
+
+actions:
+- name: "exportSelectedMessages"
+  successMessage: Created a task to export the selected messages
+  failureMessage: Failed to export the selected messages, check tasks for more information
+- name: "exportMessages"
+  successMessage: Created a task to export the messages that match the selector
+  failureMessage: Failed to export the messages, check tasks for more information
+- name: "importMessages"
+  successMessage: Created a task to import the messages
+  failureMessage: Failed to import the messages, check tasks for more information
+
+- name: "moveSelectedMessages"
+  successMessage: Created a task to move the selected messages
+  failureMessage: Failed to move the selected messages, check tasks for more information
+- name: "moveMessages"
+  successMessage: Created a task to move the messages that match the selector
+  failureMessage: Failed to move the messages, check tasks for more information

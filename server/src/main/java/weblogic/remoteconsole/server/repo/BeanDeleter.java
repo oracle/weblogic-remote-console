@@ -1,4 +1,4 @@
-// Copyright (c) 2021, 2022, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2024, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.repo;
@@ -67,9 +67,12 @@ class BeanDeleter extends PageManager {
       Response<Void> errorResponse = new Response<>();
       return errorResponse.copyUnsuccessfulResponse(argsResponse);
     }
-    Object rtn = CustomizerInvocationUtils.invokeMethod(customizerDef.getMethod(), argsResponse.getResults());
-    @SuppressWarnings("unchecked")
-    Response<Void> customizerResponse = (Response<Void>)rtn;
-    return customizerResponse;
+    Response<Void> customizerResponse = new Response<>();
+    try {
+      Object rtn = CustomizerInvocationUtils.invokeMethod(customizerDef.getMethod(), argsResponse.getResults());
+      return customizerResponse.setSuccess(null);
+    } catch (ResponseException e) {
+      return customizerResponse.copyUnsuccessfulResponse(e.getResponse());
+    }
   }
 }

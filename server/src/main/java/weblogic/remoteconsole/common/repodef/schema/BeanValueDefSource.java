@@ -1,4 +1,4 @@
-// Copyright (c) 2021, 2023, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2024, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef.schema;
@@ -11,7 +11,7 @@ import java.util.List;
  * action's return value, action param, action param's value)
  * e.g. ServerLifeCycleRuntimeMBean.yaml
  */
-public class BeanValueDefSource {
+public class BeanValueDefSource extends YamlSource {
   private StringValue type = new StringValue();
   private BooleanValue array = new BooleanValue();
   private ListValue<Object> legalValues = new ListValue<>();

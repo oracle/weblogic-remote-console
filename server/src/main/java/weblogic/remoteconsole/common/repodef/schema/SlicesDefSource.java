@@ -1,4 +1,4 @@
-// Copyright (c) 2021, Oracle Corporation and/or its affiliates.
+// Copyright (c) 2021, 2024, Oracle Corporation and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef.schema;
@@ -9,7 +9,7 @@ import java.util.List;
  * This POJO mirrors the yaml source file format for configuring information about
  * slices that a type supports, e.g. ServerMBean/slices.yaml
  */
-public class SlicesDefSource {
+public class SlicesDefSource extends YamlSource {
   private ListValue<SliceDefSource> slices = new ListValue<>();
   private ListValue<String> alternateSliceSources = new ListValue<>();
 
@@ -42,5 +42,11 @@ public class SlicesDefSource {
 
   public void addAlternateSliceSource(String value) {
     alternateSliceSources.add(value);
+  }
+
+  @Override
+  protected void validateExtension() {
+    super.validateExtension();
+    validateExtensionChildren(getSlices(), "slices");
   }
 }

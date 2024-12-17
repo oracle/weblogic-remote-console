@@ -1,4 +1,4 @@
-# Copyright (c) 2023, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2023, 2024 Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 properties:
@@ -31,9 +31,11 @@ actions:
 - name: forceCommitSelectedTransactions
   label: "Force Commit"
   actionMethod: weblogic.remoteconsole.customizers.JMSServerRuntimeMBeanCustomizer.forceCommitSelectedTransactions
+  successMessage: Created a task to force commit the transaction
+  failureMessage: Failed to force commit the transaction
   mbeanOperation:
     operation: forceCommit
-  inputForm: # empty form to force the user to confirm commiting the transaction
+  inputForm: # empty form to force the user to confirm committing the transaction
     introductionHTML: >
       Force the work associated with the selected transaction branches to be committed.
   definition:
@@ -43,6 +45,8 @@ actions:
 - name: forceRollbackSelectedTransactions
   label: "Force Rollback"
   actionMethod: weblogic.remoteconsole.customizers.JMSServerRuntimeMBeanCustomizer.forceRollbackSelectedTransactions
+  successMessage: Created a task to force rollback the transactions
+  failureMessage: Failed to force rollback the transactions
   mbeanOperation:
     operation: forceRollback
   inputForm: # empty form to force the user to confirm rolling back the transaction
@@ -53,4 +57,21 @@ actions:
     descriptionHTML: >
      <p>Causes the work associated with the selected transaction branches to be rolled back.</p>
 
-
+- name: "pauseProduction"
+  successMessage: New message production on the destination {0} has been paused
+  failureMessage: Failed to pause new message production on the destination {0}
+- name: "pauseConsumption"
+  successMessage: Consumption operation on the destination {0} has been paused
+  failureMessage: Failed to pause consumption operation on the destination {0}
+- name: "pauseInsertion"
+  successMessage: Insertion operation on the destination {0} has been paused
+  failureMessage: Failed to pause insertion operation on the destination {0}
+- name: "resumeProduction"
+  successMessage: New message production on the destination {0} has been resumed
+  failureMessage: Failed to resume new message production on the destination {0}
+- name: "resumeConsumption"
+  successMessage: Consumption operation on the destination {0} has been resumed
+  failureMessage: Failed to resume consumption operation on the destination {0}
+- name: "resumeInsertion"
+  successMessage: Insertion operation on the destination {0} has been resumed
+  failureMessage: Failed to resume insertion operation on the destination {0}

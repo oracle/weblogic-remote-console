@@ -1,4 +1,4 @@
-// Copyright (c) 2021, 2023, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2024, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.repo.weblogic;
@@ -12,6 +12,7 @@ import weblogic.remoteconsole.common.repodef.BeanChildDef;
 import weblogic.remoteconsole.common.repodef.BeanPropertyDef;
 import weblogic.remoteconsole.common.repodef.BeanTypeDef;
 import weblogic.remoteconsole.common.utils.Path;
+import weblogic.remoteconsole.server.ConsoleBackendRuntimeConfig;
 import weblogic.remoteconsole.server.repo.BeanReaderRepoSearchBuilder;
 import weblogic.remoteconsole.server.repo.BeanReaderRepoSearchResults;
 import weblogic.remoteconsole.server.repo.BeanTreePath;
@@ -159,8 +160,44 @@ public class WebLogicRestBeanRepoSearchBuilder implements BeanReaderRepoSearchBu
         query,
         returnExpandedValues,
         false, // saveChanges
-        false // asynchronous
+        false, // asynchronous
+        WebLogicRestInvoker.builder().queryParam("requestMaxWaitMillis", getWlsToWlsReadTimeoutMillis())
       );
+  }
+
+  // By default, when the CBE makes a search request to the admin server that needs to fanout to
+  // the managed servers, the admin server will wait up to 3 minutes for each managed server to respond.
+  // Then it will return the results of all the managed servers that responded fast enough.
+  // In the meantime, by default, the CBE waits for up to 20 seconds for the search request to finish.
+  // So, if there are any slow/stuck servers, the CBE will timeout and not display any search results.
+  //
+  // The WLS REST api lets the caller specify a 'requestMaxWaitMillis' query param that
+  // configures how long the admin server waits for each managed server to respond.
+  // By setting it to a value that's a bit less than how long the CBE waits for the search
+  // request to finish, it's much more likely that the WLS REST api will give up waiting
+  // for slow/stuck servers and return the data from the healthy servers before the CBE
+  // times out waiting for the search to complete.
+  private long getWlsToWlsReadTimeoutMillis() {
+    // TBD - should there be a separate WRC configuration parameter for this timeout
+    // v.s. computing it based on the CBE -> WLS read timeout?
+    //
+    // Long term, the CBE will do the fanout to the managed servers (by making a
+    // separate REST request to the admin server for each managed server) so
+    // the appropriate timeout is a little less than the CBE -> WLS read timeout.
+    // This means there will be no need for the customer to configure it.
+    //
+    // Currently the CBE makes one REST request to the admin server asking for
+    // all the managed servers' data. If there are more managed servers than
+    // the WLS REST work manager can handle simultaneously, the appropriate
+    // timeout might need to be smaller, and it might make sense for the customer
+    // to configure it separately.
+    //
+    // For now, we'll just compute it.  The customer can always increase the
+    // CBE -> WLS timeout to indirectly control it.
+    long cbeToWlsReadTimeoutMillis = ConsoleBackendRuntimeConfig.getReadTimeout(); // defaults to 20 seconds
+    long desiredTimeoutMillis = cbeToWlsReadTimeoutMillis - 3000; // three seconds less than the CBE -> WLS timeout
+    long minTimeoutMillis = 3000; // never let the WLS -> WLS timeout be less than 3 seconds
+    return Math.max(desiredTimeoutMillis, minTimeoutMillis);
   }
 
   private WebLogicRestSearchQueryBuilder getWebLogicRestSearchQueryBuilder(BeanTreePath beanTreePath) {

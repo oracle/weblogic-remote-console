@@ -36,10 +36,10 @@ class PageReader extends PageManager {
   private static final Logger LOGGER = Logger.getLogger(PageReader.class.getName());
 
   private static final Type GET_COLLECTION_CUSTOMIZER_RETURN_TYPE =
-    (new TypeReference<Response<List<BeanSearchResults>>>() {}).getType();
+    (new TypeReference<List<BeanSearchResults>>() {}).getType();
 
   private static final Type CUSTOMIZE_PAGE_DEF_RETURN_TYPE =
-    (new TypeReference<Response<PageDef>>() {}).getType();
+    (new TypeReference<PageDef>() {}).getType();
 
   private static final Type PROPERTY_DEF_LIST_TYPE =
     (new TypeReference<List<BeanPropertyDef>>() {}).getType();
@@ -79,6 +79,7 @@ class PageReader extends PageManager {
     BeanTreePath beanTreePath,
     List<BeanPropertyDef> propertyDefs
   ) {
+    Response<List<BeanSearchResults>> response = new Response<>();
     String getCollectionMethod = beanTreePath.getTypeDef().getGetCollectionMethod();
     if (StringUtils.notEmpty(getCollectionMethod)) {
       Method method = CustomizerInvocationUtils.getMethod(getCollectionMethod);
@@ -90,13 +91,17 @@ class PageReader extends PageManager {
         BeanReaderRepoSearchResults.class,
         PROPERTY_DEF_LIST_TYPE
       );
-      List<Object> args = List.of(getInvocationContext(), beanTreePath, searchResults, propertyDefs);
-      Object rtn = CustomizerInvocationUtils.invokeMethod(method, args);
-      @SuppressWarnings("unchecked")
-      Response<List<BeanSearchResults>> customizerResponse = (Response<List<BeanSearchResults>>)rtn;
-      return customizerResponse;
+      try {
+        List<Object> args = List.of(getInvocationContext(), beanTreePath, searchResults, propertyDefs);
+        Object rtn = CustomizerInvocationUtils.invokeMethod(method, args);
+        @SuppressWarnings("unchecked")
+        List<BeanSearchResults> results = (List<BeanSearchResults>)rtn;
+        return response.setSuccess(results);
+      } catch (ResponseException e) {
+        return response.copyUnsuccessfulResponse(e.getResponse());
+      }
     } else {
-      return new Response<List<BeanSearchResults>>().setSuccess(searchResults.getCollection(beanTreePath));
+      return response.setSuccess(searchResults.getCollection(beanTreePath));
     }
   }
 
@@ -251,11 +256,15 @@ class PageReader extends PageManager {
       InvocationContext.class,
       PageDef.class
     );
-    List<Object> args = List.of(getInvocationContext(), uncustomizedPageDef);
-    Object responseAsObject = CustomizerInvocationUtils.invokeMethod(method, args);
-    @SuppressWarnings("unchecked")
-    Response<PageDef> customizerResponse = (Response<PageDef>)responseAsObject;
-    return customizerResponse;
+    try {
+      List<Object> args = List.of(getInvocationContext(), uncustomizedPageDef);
+      Object rtn = CustomizerInvocationUtils.invokeMethod(method, args);
+      @SuppressWarnings("unchecked")
+      PageDef results = (PageDef)rtn;
+      return pageDefResponse.setSuccess(results);
+    } catch (ResponseException e) {
+      return pageDefResponse.copyUnsuccessfulResponse(e.getResponse());
+    }
   }
 
   protected Response<PageDef> getUncustomizedPageDef(PagePath pagePath) {

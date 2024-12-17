@@ -13,7 +13,6 @@ import weblogic.remoteconsole.common.utils.StringUtils;
 import weblogic.remoteconsole.server.repo.BooleanValue;
 import weblogic.remoteconsole.server.repo.InvocationContext;
 import weblogic.remoteconsole.server.repo.Option;
-import weblogic.remoteconsole.server.repo.Response;
 import weblogic.remoteconsole.server.repo.SettableValue;
 import weblogic.remoteconsole.server.repo.Value;
 import weblogic.remoteconsole.server.webapp.BaseResource;
@@ -51,7 +50,7 @@ public class JDBCSystemResourceMBeanCustomizer {
   }
 
   // Get the list of XA data sources that an XA MDS datasource can use.
-  public static Response<List<Option>> getXADataSourceOptions(
+  public static List<Option> getXADataSourceOptions(
     InvocationContext ic,
     @Source(
       collection = JDBC_SYSTEM_RESOURCES,
@@ -62,7 +61,7 @@ public class JDBCSystemResourceMBeanCustomizer {
   }
 
   // Get the list of non-XA data sources that a non-XA MDS datasource can use.
-  public static Response<List<Option>> getNonXADataSourceOptions(
+  public static List<Option> getNonXADataSourceOptions(
     InvocationContext ic,
     @Source(
       collection = JDBC_SYSTEM_RESOURCES,
@@ -72,7 +71,7 @@ public class JDBCSystemResourceMBeanCustomizer {
     return getDataSourceOptions(ic, dataSources, false);
   }
 
-  private static Response<List<Option>> getDataSourceOptions(
+  private static List<Option> getDataSourceOptions(
     InvocationContext ic,
     List<Map<String,Value>> dataSources,
     boolean wantXA
@@ -107,18 +106,16 @@ public class JDBCSystemResourceMBeanCustomizer {
         options.add(new Option(ic, dataSource.get(IDENTITY)));
       }
     }
-    return (new Response<List<Option>>()).setSuccess(options);
+    return options;
   }
 
-  public static Response<SettableValue> getIsXADriver(
+  public static SettableValue getIsXADriver(
     @Source(
       property = "JDBCResource.JDBCDriverParams.DriverName"
     ) SettableValue driverNameValue
   ) {
     String driverName = driverNameValue.getValue().asString().getValue();
     boolean isXADriver = JDBCSystemResourceMBeanCustomizerUtils.isXADriver(driverName);
-    Response<SettableValue> response = new Response<>();
-    return response.setSuccess(new SettableValue(new BooleanValue(isXADriver)));
+    return new SettableValue(new BooleanValue(isXADriver));
   }
-
 }

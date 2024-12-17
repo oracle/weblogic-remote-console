@@ -12,7 +12,6 @@ import weblogic.remoteconsole.common.repodef.PageDef;
 import weblogic.remoteconsole.common.repodef.TableDef;
 import weblogic.remoteconsole.common.repodef.weblogic.WebLogicRestEditPageRepoDef;
 import weblogic.remoteconsole.server.repo.InvocationContext;
-import weblogic.remoteconsole.server.repo.Response;
 import weblogic.remoteconsole.server.repo.SettableValue;
 import weblogic.remoteconsole.server.repo.StringValue;
 
@@ -188,16 +187,13 @@ public class ProviderMBeanCustomizer {
     );
   }
 
-  public static Response<SettableValue> getType(
+  public static SettableValue getType(
     @Source(property = "Type") SettableValue type,
     @Source(property = "ProviderClassName") SettableValue providerClassName
   ) {
-    Response<SettableValue> response = new Response<>();
-
     if (type != null) {
       // WLS provided the provider type.  Use it.
-      response.setSuccess(type);
-      return response;
+      return type;
     }
 
     if (providerClassName == null) {
@@ -212,20 +208,18 @@ public class ProviderMBeanCustomizer {
     if (value == null) {
       value = pcn; // Just use the provider class name.  It should get mapped to a default sub type later.
     }
-    response.setSuccess(new SettableValue(new StringValue(value), false));
-    return response;
+    return new SettableValue(new StringValue(value), false);
   }
 
   // Remove the moveDown and moveUp actions from the providers table if
   // we're not in the edit tree
-  public static Response<PageDef> customizeTableDef(InvocationContext ic, PageDef uncustomizedPageDef) {
-    Response<PageDef> response = new Response<>();
+  public static PageDef customizeTableDef(InvocationContext ic, PageDef uncustomizedPageDef) {
     if (ic.getPagePath().getPagesPath().getPageRepoDef() instanceof WebLogicRestEditPageRepoDef) {
-      return response.setSuccess(uncustomizedPageDef);
+      return uncustomizedPageDef;
     } else {
       // remove the actions (e.g. moveDown and moveUp) since only the edit tree supports them
       TableDef uncustomizedTableDef = uncustomizedPageDef.asTableDef();
-      return response.setSuccess(new CustomTableDef(uncustomizedTableDef).actionDefs(List.of()));
+      return new CustomTableDef(uncustomizedTableDef).actionDefs(List.of());
     }
   }
 

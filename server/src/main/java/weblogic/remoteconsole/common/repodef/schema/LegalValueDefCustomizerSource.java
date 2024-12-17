@@ -1,4 +1,4 @@
-// Copyright (c) 2021, 2023, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2024, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef.schema;
@@ -9,7 +9,7 @@ import java.util.List;
  * This POJO mirrors the yaml source file format for customizing information about
  * a legal value of a property.
  */
-public class LegalValueDefCustomizerSource {
+public class LegalValueDefCustomizerSource extends YamlSource {
   private ScalarValue value = new ScalarValue();
   private StringValue label = new StringValue();
   private BooleanValue omit = new BooleanValue();

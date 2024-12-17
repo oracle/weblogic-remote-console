@@ -4,7 +4,6 @@
 package weblogic.remoteconsole.customizers;
 
 import weblogic.remoteconsole.common.utils.StringUtils;
-import weblogic.remoteconsole.server.repo.Response;
 import weblogic.remoteconsole.server.repo.SettableValue;
 import weblogic.remoteconsole.server.repo.StringValue;
 
@@ -16,7 +15,7 @@ public class JMSDestinationRuntimeMBeanCustomizer {
   private JMSDestinationRuntimeMBeanCustomizer() {
   }
 
-  public static Response<SettableValue> getDestinationName(
+  public static SettableValue getDestinationName(
     @Source(property = "Name") SettableValue nameVal
   ) {
     // Uniform distributed queue and topic names look like JMSModule!JMSServerOrSubDeployment@QueueOrTopic
@@ -29,6 +28,6 @@ public class JMSDestinationRuntimeMBeanCustomizer {
     if (idx != -1) {
       name = name.substring(idx + 1, name.length());
     }
-    return new Response<SettableValue>().setSuccess(new SettableValue(new StringValue(name)));
+    return new SettableValue(new StringValue(name));
   }
 }

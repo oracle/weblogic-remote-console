@@ -72,14 +72,14 @@ public class PageReaderHelper {
     if (!argsResponse.isSuccess()) {
       return response.copyUnsuccessfulResponse(argsResponse);
     }
-    Object rtn = CustomizerInvocationUtils.invokeMethod(customizerDef.getMethod(), argsResponse.getResults());
-    @SuppressWarnings("unchecked")
-    Response<SettableValue> customizerResponse = (Response<SettableValue>)rtn;
-    if (!customizerResponse.isSuccess()) {
-      return response.copyUnsuccessfulResponse(customizerResponse);
+    try {
+      Object rtn = CustomizerInvocationUtils.invokeMethod(customizerDef.getMethod(), argsResponse.getResults());
+      @SuppressWarnings("unchecked")
+      SettableValue settableValue = (SettableValue)rtn;
+      return response.setSuccess(getValue(settableValue, includeIsSet));
+    } catch (ResponseException e) {
+      return response.copyUnsuccessfulResponse(e.getResponse());
     }
-    SettableValue settableValue = customizerResponse.getResults();
-    return response.setSuccess(getValue(settableValue, includeIsSet));
   }
 
   public Response<List<Object>> getArguments(

@@ -22,10 +22,18 @@
     "node_modules"
   ],
   "rpm": {
+    "desktop": {
+      "Name": "WebLogic Remote Console"
+    },
     "fpm": [
       "--rpm-rpmbuild-define",
       "_build_id_links none"
     ]
+  },
+  "deb": {
+    "desktop": {
+      "Name": "WebLogic Remote Console"
+    }
   },
   "mac": {
     "category": "Utility",

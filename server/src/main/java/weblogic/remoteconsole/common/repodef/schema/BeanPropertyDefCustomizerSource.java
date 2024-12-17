@@ -167,4 +167,12 @@ public class BeanPropertyDefCustomizerSource extends BeanFieldDefCustomizerSourc
   public void setRequiredCapabilities(List<String> val) {
     requiredCapabilities.setValue(val);
   }
+
+  @Override
+  protected void validateExtension() {
+    super.validateExtension();
+    validateExtensionChild(getUsedIf(), "usedIf");
+    validateExtensionChild(getMbeanAttribute(), "mbeanAttribute");
+    validateExtensionChild(getDefinition(), "definition");
+  }
 }

@@ -3,9 +3,13 @@
 
 package weblogic.remoteconsole.common.repodef.weblogic;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.jar.JarFile;
 import java.util.logging.Logger;
+import java.util.zip.ZipEntry;
 
 import weblogic.remoteconsole.common.YamlUtils;
 import weblogic.remoteconsole.common.repodef.BeanRepoDef;
@@ -24,9 +28,11 @@ import weblogic.remoteconsole.common.repodef.schema.SliceFormDefSource;
 import weblogic.remoteconsole.common.repodef.schema.SliceTableDefSource;
 import weblogic.remoteconsole.common.repodef.schema.SlicesDefSource;
 import weblogic.remoteconsole.common.repodef.schema.TableDefSource;
+import weblogic.remoteconsole.common.repodef.schema.YamlSource;
 import weblogic.remoteconsole.common.repodef.yaml.SlicesDefImpl;
 import weblogic.remoteconsole.common.repodef.yaml.YamlDirectoryReader;
 import weblogic.remoteconsole.common.repodef.yaml.YamlReader;
+import weblogic.remoteconsole.common.utils.RemoteConsoleExtension;
 import weblogic.remoteconsole.common.utils.StringUtils;
 import weblogic.remoteconsole.common.utils.WebLogicMBeansVersion;
 
@@ -51,15 +57,27 @@ class WebLogicYamlReader extends YamlReader {
   WebLogicYamlReader(WebLogicMBeansVersion mbeansVersion) {
     // Search the builtin harvested yamls first
     String harvestedDir = "harvestedWeblogicBeanTypes" + "/" + mbeansVersion.getWebLogicVersion().getDomainVersion();
-    typeYamlDirectoryReaders.add(new YamlClasspathDirectoryReader(harvestedDir));
+    typeYamlDirectoryReaders.add(new YamlClasspathDirectoryReader(harvestedDir, false));
     // Then search the builtin hand coded yamls
-    YamlDirectoryReader builtinHandCodedYamlDirectoryReader = new YamlClasspathDirectoryReader("");
+    YamlDirectoryReader builtinHandCodedYamlDirectoryReader = new YamlClasspathDirectoryReader("", false);
     typeCustomizationYamlDirectoryReaders.add(builtinHandCodedYamlDirectoryReader);
     typeYamlDirectoryReaders.add(builtinHandCodedYamlDirectoryReader);
-    // Finally search the hand coded extension yamls
+    // Then search the hand coded extension yamls that were added to the WRC
     List<YamlDirectoryReader> extensionDirectoryReaders = getExtensionDirectoryReaders();
     typeCustomizationYamlDirectoryReaders.addAll(extensionDirectoryReaders);
     typeYamlDirectoryReaders.addAll(extensionDirectoryReaders);
+    // Finally search the hand coded extension names from the domain:
+    List<RemoteConsoleExtension> extensions = mbeansVersion.getExtensions();
+    if (extensions != null) {
+      for (RemoteConsoleExtension extension : extensions) {
+        JarFile jarFile = extension.getJarFile();
+        if (jarFile != null) {
+          YamlDirectoryReader reader = new YamlJarFileDirectoryReader(jarFile, true);
+          typeCustomizationYamlDirectoryReaders.add(reader);
+          typeYamlDirectoryReaders.add(reader);
+        }
+      }
+    }
   }
 
   private List<YamlDirectoryReader> getExtensionDirectoryReaders() {
@@ -75,7 +93,7 @@ class WebLogicYamlReader extends YamlReader {
         // FortifyIssueSuppression Log Forging
         // extensionDir is configured by the end user and is not a forging risk.
         LOGGER.fine("Extension directory " + extensionDir);
-        readers.add(new YamlFileDirectoryReader(extensionDir));
+        readers.add(new YamlFileDirectoryReader(extensionDir, true));
       }
     }
     return readers;
@@ -195,38 +213,71 @@ class WebLogicYamlReader extends YamlReader {
 
   private abstract static class YamlDirectoryReaderImpl implements YamlDirectoryReader {
     private String directory;
-
-    protected YamlDirectoryReaderImpl(String directory) {
+    private boolean extension;
+  
+    protected YamlDirectoryReaderImpl(String directory, boolean extension) {
       this.directory = directory;
+      this.extension = extension;
     }
 
     @Override
-    public <T> T readYaml(String relativeYamlPath, Class<T> type, boolean mustExist) {
-      return readYamlInternal(YamlReader.getYamlPath(directory, relativeYamlPath), type, mustExist);
+    public <T extends YamlSource> T readYaml(String relativeYamlPath, Class<T> type, boolean mustExist) {
+      T rtn = readYamlInternal(YamlReader.getYamlPath(directory, relativeYamlPath), type, mustExist);
+      if (rtn != null && extension) {
+        rtn.validateExtension(relativeYamlPath);
+      }
+      return rtn;
     }
 
-    protected abstract <T> T readYamlInternal(String yamlPath, Class<T> type, boolean mustExist);
+    protected abstract <T extends YamlSource> T readYamlInternal(String yamlPath, Class<T> type, boolean mustExist);
   }
 
   private static class YamlClasspathDirectoryReader extends YamlDirectoryReaderImpl {
-    private YamlClasspathDirectoryReader(String directory) {
-      super(directory);
+    private YamlClasspathDirectoryReader(String directory, boolean extension) {
+      super(directory, extension);
     }
 
     @Override
-    public <T> T readYamlInternal(String yamlPath, Class<T> type, boolean mustExist) {
+    public <T extends YamlSource> T readYamlInternal(String yamlPath, Class<T> type, boolean mustExist) {
       return YamlUtils.readResource(yamlPath, type, mustExist);
     }
   }
 
   private static class YamlFileDirectoryReader extends YamlDirectoryReaderImpl {
-    private YamlFileDirectoryReader(String directory) {
-      super(directory);
+    private YamlFileDirectoryReader(String directory, boolean extension) {
+      super(directory, extension);
     }
 
     @Override
-    protected <T> T readYamlInternal(String yamlPath, Class<T> type, boolean mustExist) {
+    protected <T extends YamlSource> T readYamlInternal(String yamlPath, Class<T> type, boolean mustExist) {
       return YamlUtils.readFile(yamlPath, type, mustExist);
+    }
+  }
+
+  private static class YamlJarFileDirectoryReader implements YamlDirectoryReader {
+    private JarFile jarFile;
+    boolean extension;
+  
+    private YamlJarFileDirectoryReader(JarFile jarFile, boolean extension) {
+      this.jarFile = jarFile;
+      this.extension = true;
+    }
+
+    @Override
+    public <T extends YamlSource> T readYaml(String relativeYamlPath, Class<T> type, boolean mustExist) {
+      ZipEntry entry = jarFile.getEntry(relativeYamlPath);
+      if (entry != null) {
+        try (InputStream is = jarFile.getInputStream(entry)) {
+          T rtn = YamlUtils.read(is, relativeYamlPath, type, mustExist);
+          if (rtn != null && extension) {
+            rtn.validateExtension(relativeYamlPath);
+          }
+          return rtn;
+        } catch (IOException e) {
+          // TBD log the problem?
+        }
+      }
+      return null;
     }
   }
 }

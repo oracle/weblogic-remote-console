@@ -3,6 +3,7 @@
 // Test cases is written based on use cases from wiki page below
 //     https://confluence.oraclecorp.com/confluence/pages/viewpage.action?pageId=4763969598
 // Test scenario will be named as UC-001A, UC-002A, ....
+// Example: for wait(until) syntax at test case #6
 //
 'use strict'
 
@@ -206,9 +207,9 @@ describe.only('Test Suite: ucdAsProvider_test: (Unsaved Changes Detected Dialog)
             //Go to AdminServer
             await admin.goToNavTreeLevelThreeLink(driver,"configuration","Environment","Servers",
                 "AdminServer");
-            await driver.sleep(600);
+            await driver.sleep(7200);
             console.log("Click to enable AdminServer Client Cert Proxy option");
-            element = driver.findElement(By.xpath("//oj-switch[@id='ClientCertProxyEnabled']/div/div"));
+            element = driver.findElement(By.xpath("//*[@id='ClientCertProxyEnabled']/div/div"));
             driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
             await element.click();
             await driver.sleep(600);
@@ -324,7 +325,7 @@ describe.only('Test Suite: ucdAsProvider_test: (Unsaved Changes Detected Dialog)
             await driver.sleep(7200);
             console.log("Click to expand choices in History Tool");
             element = await driver.findElement(
-                By.xpath("//*[@id='oj-combobox-choice-beanpath-history-entries']/span[2]/a"));
+                By.xpath("//*[@id='oj-combobox-choice-beanpath-history-entries']/span[2]"));
             await driver.wait(until.elementIsVisible(element),500);
             await element.click();
             await driver.sleep(7200);

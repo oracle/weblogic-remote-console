@@ -13,7 +13,6 @@ import weblogic.remoteconsole.server.repo.BeanPropertyValues;
 import weblogic.remoteconsole.server.repo.BeanTreePath;
 import weblogic.remoteconsole.server.repo.FormProperty;
 import weblogic.remoteconsole.server.repo.InvocationContext;
-import weblogic.remoteconsole.server.repo.Response;
 import weblogic.remoteconsole.server.repo.Value;
 import weblogic.remoteconsole.server.webapp.BaseResource;
 import weblogic.remoteconsole.server.webapp.CreatableBeanCollectionResource;
@@ -43,12 +42,11 @@ public class CreatableDescriptorBeanCustomizer {
   }
 
   // Create a new child in this collection
-  public static Response<Value> createCollectionChild(
+  public static Value createCollectionChild(
     InvocationContext ic,
     PageActionDef pageActionDef,
     List<FormProperty> formProperties
   ) {
-    Response<Value> response = new Response<>();
     BeanPropertyValues propertyValues = new BeanPropertyValues(ic.getBeanTreePath());
     for (FormProperty formProperty : formProperties) {
       // The property names on the action input form must match the property names on the descriptor bean:
@@ -58,11 +56,7 @@ public class CreatableDescriptorBeanCustomizer {
         new BeanPropertyValue(propertyDef, formProperty.getValue().asSettable())
       );
     }
-    Response<Void> createResponse =
-      ic.getPageRepo().getBeanRepo().asBeanEditorRepo().createBean(ic, propertyValues);
-    if (!createResponse.isSuccess()) {
-      return response.copyUnsuccessfulResponse(createResponse);
-    }
-    return response.setSuccess(null);
+    ic.getPageRepo().getBeanRepo().asBeanEditorRepo().createBean(ic, propertyValues).getResults();
+    return null;
   }
 }

@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * This POJO mirrors the yaml source file format for extending nav-tree.yaml
  */
-public class NavTreeDefExtensionSource {
+public class NavTreeDefExtensionSource extends YamlSource {
   private ListValue<NavTreeNodeDefSource> contents = new ListValue<>();
 
   // The top level nav tree nodes for this type.
@@ -18,5 +18,11 @@ public class NavTreeDefExtensionSource {
 
   public void setContents(List<NavTreeNodeDefSource> value) {
     contents.setValue(value);
+  }
+
+  @Override
+  protected void validateExtension() {
+    super.validateExtension();
+    validateExtensionChildren(getContents(), "contents");
   }
 }

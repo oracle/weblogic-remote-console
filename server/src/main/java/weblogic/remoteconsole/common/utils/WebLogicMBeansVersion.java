@@ -3,6 +3,7 @@
 
 package weblogic.remoteconsole.common.utils;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -28,6 +29,9 @@ public class WebLogicMBeansVersion {
 
   // The set of console extension capabilities this version supports
   private Set<String> capabilities;
+
+  // The remote console extensions this version supports
+  private List<RemoteConsoleExtension> extensions;
 
   // e.g. WDT doesn't talk to a running server, therefore no
   // remote console REST extension capabilities are available:
@@ -62,14 +66,20 @@ public class WebLogicMBeansVersion {
     return capabilities;
   }
 
+  public List<RemoteConsoleExtension> getExtensions() {
+    return extensions;
+  }
+
   WebLogicMBeansVersion(
     WebLogicVersion weblogicVersion,
     Set<String> roles,
-    Set<String> capabilities
+    Set<String> capabilities,
+    List<RemoteConsoleExtension> extensions
   ) {
     this.weblogicVersion = weblogicVersion;
     this.roles = roles;
     this.capabilities = capabilities;
+    this.extensions = extensions;
   }
 
   private <T> T putCache(Class<T> clazz, T value) {

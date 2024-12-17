@@ -45,7 +45,7 @@ module.exports = function (driver, file) {
             let oracleDriver = "GENERIC_*Oracle\'s Driver (Thin XA) for Application Continuity; Versions";
             await admin.goToLandingPanelSubTreeCard(driver, "Edit Tree", "ServicesChevron", "Data Sources");
             await driver.sleep(6400);
-            element = await driver.findElement(By.xpath("//oj-button[@id=\'[[i18n.buttons.new.id]]\']/button/div/span/img"));
+            element = await driver.findElement(By.xpath("//oj-button[@id='[[i18n.buttons.new.id]]']/button/div/span/img"));
             await driver.sleep(900);
             console.log("Click Data Sources New button");
             if (element.isEnabled()) {
@@ -62,7 +62,7 @@ module.exports = function (driver, file) {
 
             await driver.sleep(4800);
             console.log("Select Targets = " + targetName);
-            element = driver.findElement(By.xpath("//oj-button[@id=\'addAllToChosen\']/button/div"));
+            element = driver.findElement(By.xpath("//oj-button[@id='addAllToChosen']/button/div"));
             driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
             await element.click();
             await driver.sleep(300);
@@ -72,38 +72,37 @@ module.exports = function (driver, file) {
             await driver.sleep(2000);
             console.log("Select Database type = " + databaseType);
             console.log("Select Database driver = " + oracleDriver);
-            console.log("Enter database name = " + databaseName);
 
-            element = driver.findElement(By.xpath("//div[9]/div/div[2]/div/oj-input-text/div/div/input"));
+            console.log("Enter database name = " + databaseName);
+            element = driver.findElement(By.xpath("//div[7]/div/div[2]/div/oj-input-text/div/div/input"));
             driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
             await element.clear();
             await element.sendKeys(databaseName);
             await driver.sleep(300);
 
             console.log("Enter database machine name = " + hostName);
-            element = driver.findElement(By.xpath("//div[10]/div/div[2]/div/oj-input-text/div/div/input"));
+            element = driver.findElement(By.xpath("//div[8]/div/div[2]/div/oj-input-text/div/div/input"));
             driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
             await element.clear();
             await element.sendKeys(hostName);
             await driver.sleep(300);
 
             console.log("Enter database machine port = " + port);
-            element = driver.findElement(By.xpath("//div[11]/div/div[2]/div/oj-input-text/div/div/input"));
+            element = driver.findElement(By.xpath("//div[9]/div/div[2]/div/oj-input-text/div/div/input"));
             driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
             await element.clear();
             await element.sendKeys(port);
             await driver.sleep(300);
 
             console.log("Enter database username = " + databaseUsername);
-            element = driver.findElement(By.xpath("//div[12]/div/div[2]/div/oj-input-text/div/div/input"));
-            //element = driver.findElement(By.id(oracleDriver + ":Any_DbmsUsername|input"));
+            element = driver.findElement(By.xpath("//div[10]/div/div[2]/div/oj-input-text/div/div/input"));
             driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
             await element.clear();
             await element.sendKeys(databaseUsername);
             await driver.sleep(300);
 
             console.log("Enter database user password = " + password);
-            element = driver.findElement(By.xpath("//div[13]/div/div[2]/div/oj-input-password/div/div/input"));
+            element = driver.findElement(By.xpath("//div[11]/div/div[2]/div/oj-input-password/div/div/input"));
             driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
             await element.clear();
             await element.sendKeys(password);

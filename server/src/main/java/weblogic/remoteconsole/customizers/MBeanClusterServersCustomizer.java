@@ -9,7 +9,6 @@ import java.util.Map;
 
 import weblogic.remoteconsole.server.repo.InvocationContext;
 import weblogic.remoteconsole.server.repo.Option;
-import weblogic.remoteconsole.server.repo.Response;
 import weblogic.remoteconsole.server.repo.Value;
 
 /** 
@@ -24,7 +23,7 @@ public class MBeanClusterServersCustomizer {
   }
 
   // Return the servers that are a member of this singleton service's cluster.
-  public static Response<List<Option>> getServersOfSameCluster(
+  public static List<Option> getServersOfSameCluster(
     InvocationContext invocationContext,
     @Source(
       collection = "/Domain/Servers",
@@ -37,7 +36,7 @@ public class MBeanClusterServersCustomizer {
     return extractServersOfSameCluster(invocationContext, servers, clusterWant);
   }
 
-  private static Response<List<Option>> extractServersOfSameCluster(
+  private static List<Option> extractServersOfSameCluster(
     InvocationContext invocationContext,
     List<Map<String,Value>> servers,
     Value clusterWant
@@ -50,7 +49,7 @@ public class MBeanClusterServersCustomizer {
         options.add(new Option(invocationContext, serverIdentity));
       }
     }
-    return (new Response<List<Option>>()).setSuccess(options);
+    return options;
   }
 
   private static boolean clusterMatches(Value clusterHave, Value clusterWant) {

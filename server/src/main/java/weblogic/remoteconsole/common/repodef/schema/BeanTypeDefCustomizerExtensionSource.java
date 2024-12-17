@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * This POJO mirrors the yaml source file format for extending type.yaml
  */
-public class BeanTypeDefCustomizerExtensionSource {
+public class BeanTypeDefCustomizerExtensionSource extends YamlSource {
   private ListValue<BeanPropertyDefCustomizerSource> properties = new ListValue<>();
   private ListValue<BeanChildDefCustomizerSource> children = new ListValue<>();
   private ListValue<SubTypeDefSource> subTypes = new ListValue<>();
@@ -53,5 +53,13 @@ public class BeanTypeDefCustomizerExtensionSource {
 
   public void addSubTypes(SubTypeDefSource value) {
     subTypes.add(value);
+  }
+
+  @Override
+  protected void validateExtension() {
+    super.validateExtension();
+    validateExtensionChildren(getChildren(), "children");
+    validateExtensionChildren(getProperties(), "properties");
+    validateExtensionChildren(getSubTypes(), "subTypes");
   }
 }

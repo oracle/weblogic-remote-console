@@ -8,6 +8,7 @@ import java.net.InetSocketAddress;
 import java.net.Proxy;
 import java.nio.charset.StandardCharsets;
 import java.security.cert.X509Certificate;
+import java.util.ArrayList;
 import java.util.Base64;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -68,6 +69,7 @@ public class ConnectionManager {
   private static final String CONSOLE_BACKEND = "consoleBackend";
   private static final String CONSOLE_EXTENSION_VERSION = "version";
   private static final String CONSOLE_EXTENSION_CAPABILITIES = "capabilities";
+  private static final String CONSOLE_EXTENSION_EXTENSIONS = "extensions";
   private static final String CONSOLE_EXTENSION_V1 = "1";
 
   // Placeholder when username is not known from authorization
@@ -171,6 +173,7 @@ public class ConnectionManager {
     WebLogicVersion weblogicVersion,
     String consoleExtensionVersion,
     Set<String> capabilities,
+    List<RemoteConsoleExtensionImpl> extensionImpls,
     String username,
     Client client
   ) {
@@ -189,6 +192,7 @@ public class ConnectionManager {
         weblogicVersion,
         consoleExtensionVersion,
         capabilities,
+        extensionImpls,
         username,
         client,
         getConnectTimeout(),
@@ -324,7 +328,8 @@ public class ConnectionManager {
         WebLogicMBeansVersions.getVersion(
           connection.getWebLogicVersion(),
           roles,
-          connection.getCapabilities()
+          connection.getCapabilities(),
+          connection.getExtensions()
         );
     }
     return null;
@@ -462,6 +467,7 @@ public class ConnectionManager {
     }
     String consoleExtensionVersion = getConsoleExtensionVersion(domainConfigEntity);
     Set<String> capabilities = getCapabilities(domainUrl, client, domainConfigEntity);
+    List<RemoteConsoleExtensionImpl> extensionImpls = getExtensionImpls(domainConfigEntity);
     if (consoleExtensionVersion != null) {
       LOGGER.info(
         "The domain has version '" + consoleExtensionVersion + "' of the WebLogic Remote Console Extension installed."
@@ -529,6 +535,7 @@ public class ConnectionManager {
           weblogicVersion,
           consoleExtensionVersion,
           capabilities,
+          extensionImpls,
           username,
           client
         )
@@ -714,6 +721,24 @@ public class ConnectionManager {
     return Set.of();
   }
 
+  private List<RemoteConsoleExtensionImpl> getExtensionImpls(JsonObject entity) {
+    List<RemoteConsoleExtensionImpl> rtn = new ArrayList<>();
+    JsonObject cbe = getConsoleBackend(entity);
+    if (cbe != null) {
+      JsonArray extensions = cbe.getJsonArray(CONSOLE_EXTENSION_EXTENSIONS);
+      for (int i = 0; extensions != null && i < extensions.size(); i++) {
+        JsonObject extension = extensions.getJsonObject(i);
+        rtn.add(
+          new RemoteConsoleExtensionImpl(
+            extension.getString("name"),
+            extension.getString("version")
+          )
+        );
+      }
+    }
+    return rtn;
+  }
+
   /**
    * Make a connection to the WebLogic Domain URL and return a response
    *
@@ -843,6 +868,7 @@ public class ConnectionManager {
     BeanQueryBuilder consoleBackendBuilder = builder.getChild(CONSOLE_BACKEND);
     consoleBackendBuilder.addField(CONSOLE_EXTENSION_VERSION);
     consoleBackendBuilder.addField(CONSOLE_EXTENSION_CAPABILITIES);
+    consoleBackendBuilder.addField(CONSOLE_EXTENSION_EXTENSIONS);
     JsonObject query = builder.toJson().build();
     return query;
   }

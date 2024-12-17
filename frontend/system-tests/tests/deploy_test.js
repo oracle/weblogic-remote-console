@@ -702,10 +702,8 @@ describe.only('Test Suite: deploy_test , Redeploy and undeploy for Application a
            driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
            element.click();
            await driver.sleep(1200);
-
            console.log("Click Choose File image");
-           element = driver.findElement(
-               By.xpath("//oj-form-layout[@id='wlsform']/div/div[6]/div/div[2]/div/a[1]/img"));
+           element = await driver.findElement(By.xpath("//img[@title='Choose File']"));
            driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
            element.click();
            await driver.sleep(1200);
@@ -713,8 +711,8 @@ describe.only('Test Suite: deploy_test , Redeploy and undeploy for Application a
            await driver.findElement(By.xpath("//input[@id='file-chooser-form']")).sendKeys(deployWarFilePath);
            driver.sleep(9600);
            console.log("Click Choose Plan Image");
-           element = driver.findElement(
-                By.xpath("//oj-form-layout[@id='wlsform']/div/div[7]/div/div[2]/div/a[1]/img"));
+           element = await driver.findElement(
+               By.xpath("//oj-form-layout[@id='wlsform']/div/div[5]/div/div[2]/div/a/img"));
            driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
            element.click();
            await driver.sleep(7200);
@@ -936,7 +934,6 @@ describe.only('Test Suite: deploy_test , Redeploy and undeploy for Application a
         let path = require('path');
         let deployWarEarFilePath = process.env.OLDPWD + path.sep + "frontend/system-tests/lib/"+deployWarEarFile;
         let WarEarPlanFile = "WarEarPlan.xml";
-        let WarEarPlanFilePath = process.env.OLDPWD + path.sep + "frontend/system-tests/lib/"+WarEarPlanFile;
 
         console.log("-----Start to run testCreatePlanAndPlanEditor-2 test case....");
         console.log("-------------------------------------------------------------");
@@ -998,7 +995,7 @@ describe.only('Test Suite: deploy_test , Redeploy and undeploy for Application a
            console.log("Click at Deployment Plan (Advanced) navTree node");
            element = driver.findElement(
                 By.xpath("//*[text()='Deployment Plan (Advanced)']"));
-           await driver.wait(until.elementIsVisible(element),888);
+           await driver.wait(until.elementIsVisible(element),8880);
            await element.click();
            await driver.sleep(3600);
            console.log("Click Deployment Plan tab");
@@ -1086,7 +1083,6 @@ describe.only('Test Suite: deploy_test , Redeploy and undeploy for Application a
         try {
            await admin.goToLandingPanelSubTreeCard(driver, "Edit Tree",
                "DeploymentsChevron","App Deployments");
-           //Deploy sampleWarFileWithPlan
            console.log("Click New button");
            await driver.findElement(
                By.xpath("//oj-button[@id='[[i18n.buttons.new.id]]']/button/div/span/img")).click();
@@ -1106,8 +1102,7 @@ describe.only('Test Suite: deploy_test , Redeploy and undeploy for Application a
            await driver.sleep(1200);
            console.log("Enter " +sampleWarFile+ " to deploy");
            console.log("Click Choose File image");
-           element = driver.findElement(
-               By.xpath("//oj-form-layout[@id='wlsform']/div/div[6]/div/div[2]/div/a[1]/img"));
+           element = driver.findElement(By.xpath("//*[@title='Choose File']"));
            driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
            element.click();
            await driver.sleep(1200);
@@ -1116,8 +1111,8 @@ describe.only('Test Suite: deploy_test , Redeploy and undeploy for Application a
                By.xpath("//input[@id='file-chooser-form']")).sendKeys(deploySampleWarFilePath);
            driver.sleep(9600);
            console.log("Click Choose Plan Image");
-           element = driver.findElement(
-               By.xpath("//oj-form-layout[@id='wlsform']/div/div[7]/div/div[2]/div/a[1]/img"));
+           element = await driver.findElement(
+                By.xpath("//oj-form-layout[@id='wlsform']/div/div[5]/div/div[2]/div/a/img"));
            driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
            element.click();
            await driver.sleep(7200);
@@ -1188,7 +1183,7 @@ describe.only('Test Suite: deploy_test , Redeploy and undeploy for Application a
            console.log("Click at Deployment Plan (Advanced) navTree node");
            element = driver.findElement(
                By.xpath("//*[text()='Deployment Plan (Advanced)']"));
-           await driver.wait(until.elementIsVisible(element),888);
+           await driver.wait(until.elementIsVisible(element),8880);
            await element.click();
            await driver.sleep(7200);
            console.log("Click Deployment Plan Tab");
@@ -1253,7 +1248,6 @@ describe.only('Test Suite: deploy_test , Redeploy and undeploy for Application a
         try {
            await admin.goToLandingPanelSubTreeCard(driver, "Edit Tree",
                "DeploymentsChevron","App Deployments");
-           //Deploy sampleWarFileWithPlan
            console.log("Click New button");
            await driver.findElement(
                By.xpath("//oj-button[@id='[[i18n.buttons.new.id]]']/button/div/span/img")).click();
@@ -1273,9 +1267,7 @@ describe.only('Test Suite: deploy_test , Redeploy and undeploy for Application a
            await driver.sleep(1200);
            console.log("Enter " +sampleWarFile+ " to deploy");
            console.log("Click Choose File image");
-           element = driver.findElement(
-               By.xpath("//oj-form-layout[@id='wlsform']/div/div[6]/div/div[2]/div/a[1]/img"));
-           driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
+           element = driver.findElement(By.xpath("//*[@title='Choose File']"));
            element.click();
            await driver.sleep(1200);
            console.log("Enter " +deploySampleWarFilePath+ " to deploy");
@@ -1284,7 +1276,7 @@ describe.only('Test Suite: deploy_test , Redeploy and undeploy for Application a
            driver.sleep(9600);
            console.log("Click Choose Plan Image");
            element = driver.findElement(
-               By.xpath("//oj-form-layout[@id='wlsform']/div/div[7]/div/div[2]/div/a[1]/img"));
+               By.xpath("//oj-form-layout[@id='wlsform']/div/div[5]/div/div[2]/div/a[1]/img"));
            driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
            element.click();
            await driver.sleep(7200);
@@ -1359,7 +1351,7 @@ describe.only('Test Suite: deploy_test , Redeploy and undeploy for Application a
            console.log("Click at Deployment Plan (Advanced) navTree node");
            element = driver.findElement(
                By.xpath("//*[text()='Deployment Plan (Advanced)']"));
-           await driver.wait(until.elementIsVisible(element),888);
+           await driver.wait(until.elementIsVisible(element),8880);
            await element.click();
            await driver.sleep(7200);
            console.log("Click Deployment Plan Tab");
@@ -1421,7 +1413,6 @@ describe.only('Test Suite: deploy_test , Redeploy and undeploy for Application a
         try {
             await admin.goToLandingPanelSubTreeCard(driver, "Edit Tree",
                 "DeploymentsChevron","App Deployments");
-            //Deploy sampleWarFileWithPlan
             console.log("Click New button");
             await driver.findElement(
                 By.xpath("//oj-button[@id='[[i18n.buttons.new.id]]']/button/div/span/img")).click();
@@ -1441,8 +1432,7 @@ describe.only('Test Suite: deploy_test , Redeploy and undeploy for Application a
             await driver.sleep(1200);
             console.log("Enter " +sampleWarFile+ " to deploy");
             console.log("Click Choose File image");
-            element = driver.findElement(
-                By.xpath("//oj-form-layout[@id='wlsform']/div/div[6]/div/div[2]/div/a[1]/img"));
+            element = driver.findElement(By.xpath("//*[@title='Choose File']"));
             driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
             element.click();
             await driver.sleep(1200);
@@ -1452,7 +1442,7 @@ describe.only('Test Suite: deploy_test , Redeploy and undeploy for Application a
             driver.sleep(9600);
             console.log("Click Choose Plan Image");
             element = driver.findElement(
-                By.xpath("//oj-form-layout[@id='wlsform']/div/div[7]/div/div[2]/div/a[1]/img"));
+                By.xpath("//oj-form-layout[@id='wlsform']/div/div[5]/div/div[2]/div/a[1]/img"));
             driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
             element.click();
             await driver.sleep(7200);
@@ -1511,7 +1501,7 @@ describe.only('Test Suite: deploy_test , Redeploy and undeploy for Application a
             console.log("Click at Deployment Plan (Advanced) navTree node");
             element = driver.findElement(
                 By.xpath("//*[text()='Deployment Plan (Advanced)']"));
-            await driver.wait(until.elementIsVisible(element),888);
+            await driver.wait(until.elementIsVisible(element),8880);
             await element.click();
             await driver.sleep(7200);
             console.log("Click Deployment Plan Tab");
@@ -1573,7 +1563,6 @@ describe.only('Test Suite: deploy_test , Redeploy and undeploy for Application a
             try {
                 await admin.goToLandingPanelSubTreeCard(driver, "Edit Tree",
                     "DeploymentsChevron","App Deployments");
-                //Deploy sampleWarFileWithPlan
                 console.log("Click New button");
                 await driver.findElement(
                     By.xpath("//oj-button[@id='[[i18n.buttons.new.id]]']/button/div/span/img")).click();
@@ -1593,8 +1582,7 @@ describe.only('Test Suite: deploy_test , Redeploy and undeploy for Application a
                 await driver.sleep(1200);
                 console.log("Enter " +sampleWarFile+ " to deploy");
                 console.log("Click Choose File image");
-                element = driver.findElement(
-                    By.xpath("//oj-form-layout[@id='wlsform']/div/div[6]/div/div[2]/div/a[1]/img"));
+                element = driver.findElement(By.xpath("//*[@title='Choose File']"));
                 driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
                 element.click();
                 await driver.sleep(1200);
@@ -1604,7 +1592,7 @@ describe.only('Test Suite: deploy_test , Redeploy and undeploy for Application a
                 driver.sleep(9600);
                 console.log("Click Choose Plan Image");
                 element = driver.findElement(
-                    By.xpath("//oj-form-layout[@id='wlsform']/div/div[7]/div/div[2]/div/a[1]/img"));
+                    By.xpath("//oj-form-layout[@id='wlsform']/div/div[5]/div/div[2]/div/a[1]/img"));
                 driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
                 element.click();
                 await driver.sleep(7200);
@@ -1668,7 +1656,7 @@ describe.only('Test Suite: deploy_test , Redeploy and undeploy for Application a
                 console.log("Click at Deployment Plan (Advanced) navTree node");
                 element = driver.findElement(
                     By.xpath("//*[text()='Deployment Plan (Advanced)']"));
-                await driver.wait(until.elementIsVisible(element),888);
+                await driver.wait(until.elementIsVisible(element),8880);
                 await element.click();
                 await driver.sleep(7200);
                 console.log("Click Deployment Plan Tab");

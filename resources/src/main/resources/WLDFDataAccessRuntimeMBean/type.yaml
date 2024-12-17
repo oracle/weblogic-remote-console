@@ -24,7 +24,4 @@ actions:
         label: "Directory"
         required: true
       - name: "FileFormat"
-        legalValues:
-          - value: "JSON"
-          - value: "PlainText"
         required: true

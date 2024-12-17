@@ -17,7 +17,6 @@ introductionHTML: >
 displayedColumns:
 - name: "Name"
 - name: "State.IntendedState" # for old extensions
-- name: "State.CurrentState" # for old extensions
 - name: "StateV2.State"
 - name: "ApplicationName"
 - name: "ApplicationVersion"

@@ -1,4 +1,4 @@
-// Copyright (c) 2021, 2023, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2024, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef.schema;
@@ -10,7 +10,7 @@ import java.util.List;
  * an instantiable derived (sub) type of a type.
  * e.g. AuthenticationProviderMBean/type.yaml.
  */
-public class SubTypeDefSource {
+public class SubTypeDefSource extends YamlSource {
   private StringValue value = new StringValue();
   private StringValue type = new StringValue();
   private ListValue<String> requiredCapabilities = new ListValue<>();

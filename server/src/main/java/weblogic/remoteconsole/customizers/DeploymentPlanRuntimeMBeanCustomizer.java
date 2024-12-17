@@ -53,7 +53,7 @@ public class DeploymentPlanRuntimeMBeanCustomizer {
   // Write out new xml for a deployment plan
   public static Response<Void> updateDeploymentPlanXml(InvocationContext ic,  List<FormProperty> formProperties) {
     Response<Void> response = new Response<>();
-    FormProperty planProperty = findOptionalFormProperty("DeploymentPlan", formProperties);
+    FormProperty planProperty = CustomizerUtils.findOptionalFormProperty("DeploymentPlan", formProperties);
     if (planProperty == null) {
       // The CFE thinks that the user hasn't changed the xml so didn't send it.  Don't write it out.
       return response.setSuccess(null);
@@ -87,12 +87,11 @@ public class DeploymentPlanRuntimeMBeanCustomizer {
   }
 
   // The 'edit' action changes the value of a variable assignment
-  public static Response<Value> edit(
+  public static Value edit(
     InvocationContext ic,
     PageActionDef pageActionDef,
     List<FormProperty> formProperties
   ) {
-    Response<Value> response = new Response<>();
     // Use the WLS REST api directly to set the value / operation
     // since the domain runtime bean repo is read-only.
     // The bean tree path is
@@ -107,7 +106,7 @@ public class DeploymentPlanRuntimeMBeanCustomizer {
     wlsRestPath.addComponent(varAssignmentName);
     JsonObjectBuilder bldr = Json.createObjectBuilder();
     // Handle the value
-    FormProperty valueProperty = findRequiredFormProperty(PROP_VALUE, formProperties);
+    FormProperty valueProperty = CustomizerUtils.findRequiredFormProperty(PROP_VALUE, formProperties);
     if (valueProperty != null) {
       String value = valueProperty.getValue().asSettable().getValue().asString().getValue();
       // TBD - need a way to let the user indicate whether to
@@ -120,7 +119,7 @@ public class DeploymentPlanRuntimeMBeanCustomizer {
       }
     }
     // Handle the operation
-    FormProperty operationProperty = findRequiredFormProperty(PROP_OPERATION, formProperties);
+    FormProperty operationProperty = CustomizerUtils.findRequiredFormProperty(PROP_OPERATION, formProperties);
     if (operationProperty != null) {
       bldr.add(
         "operation",
@@ -129,23 +128,19 @@ public class DeploymentPlanRuntimeMBeanCustomizer {
         )
       );
     }
-    Response<JsonObject> postResponse =
-      WebLogicRestInvoker.post(
-        ic,
-        wlsRestPath,
-        bldr.build(),
-        false, // expanded values
-        false, // save changes
-        false // asynchronous
-        );
-    if (!postResponse.isSuccess()) {
-      return response.copyUnsuccessfulResponse(postResponse);
-    }
-    return response.setSuccess(null);
+    WebLogicRestInvoker.post(
+      ic,
+      wlsRestPath,
+      bldr.build(),
+      false, // expanded values
+      false, // save changes
+      false // asynchronous
+    ).getResults();
+    return null;
   }
 
   // Put the current value of the assignment into the edit action's input form
-  public static Response<Void> customizeEditActionInputForm(InvocationContext ic, Page page) {
+  public static void customizeEditActionInputForm(InvocationContext ic, Page page) {
     /*
     System.out.println(
       "DEBUG DeploymentPlanRuntimeMBeanCustomizer.customizeEditActionInputForm"
@@ -155,7 +150,6 @@ public class DeploymentPlanRuntimeMBeanCustomizer {
       + " ids=" + ic.getIdentifiers()
     );
     */
-    Response<Void> response = new Response<>();
     // Because rows is one, the CFE will always invoke this with exactly one identifier:
     String variableName = ic.getIdentifiers().get(0);
     BeanTreePath beanPath =
@@ -180,19 +174,16 @@ public class DeploymentPlanRuntimeMBeanCustomizer {
     builder.addProperty(beanPath, assignmentNamePropertyDef);
     builder.addProperty(beanPath, valuePropertyDef);
     builder.addProperty(beanPath, operationPropertyDef);
-    Response<BeanReaderRepoSearchResults> searchResponse = builder.search();
-    if (!searchResponse.isSuccess()) {
-      return response.copyUnsuccessfulResponse(searchResponse);
-    }
-    BeanSearchResults beanResults = searchResponse.getResults().getBean(beanPath);
+    BeanReaderRepoSearchResults searchResults = builder.search().getResults();
+    BeanSearchResults beanResults = searchResults.getBean(beanPath);
     if (beanResults == null) {
-      return response.setNotFound();
+      throw Response.notFoundException();
     }
     List<FormProperty> oldProperties = page.asForm().getProperties();
     List<FormProperty> newProperties =
       List.of(
-        createFormProperty(valuePropertyDef, oldProperties, beanResults),
-        createFormProperty(operationPropertyDef, oldProperties, beanResults)
+        CustomizerUtils.createFormProperty(valuePropertyDef, oldProperties, beanResults),
+        CustomizerUtils.createFormProperty(operationPropertyDef, oldProperties, beanResults)
       );
     oldProperties.clear();
     oldProperties.addAll(newProperties);
@@ -207,27 +198,13 @@ public class DeploymentPlanRuntimeMBeanCustomizer {
         beanResults.getValue(assignmentNamePropertyDef).asString().getValue()
       );
     page.setLocalizedIntroductionHTML(standardIntro + extraIntro);
-    return response.setSuccess(null);
-  }
-
-  private static FormProperty createFormProperty(
-    BeanPropertyDef propertyDef,
-    List<FormProperty> oldProperties,
-    BeanSearchResults beanResults
-  ) {
-    return
-      new FormProperty(
-        findRequiredFormProperty(propertyDef.getFormFieldName(), oldProperties).getFieldDef(),
-        beanResults.getValue(propertyDef)
-      );
   }
 
   // Get the contents of the 'Variable Assignments' slice table
-  public static Response<List<TableRow>> getVariableAssignmentsSliceTableRows(
+  public static List<TableRow> getVariableAssignmentsSliceTableRows(
     InvocationContext ic,
-    BeanReaderRepoSearchResults searchResults
+    BeanReaderRepoSearchResults overallSearchResults
   ) {
-    Response<List<TableRow>> response = new Response<>();
     BeanTreePath beanPath =
       ic.getBeanTreePath().childPath(new Path("VariableAssignments"));
     BeanTypeDef typeDef = beanPath.getTypeDef();
@@ -251,14 +228,11 @@ public class DeploymentPlanRuntimeMBeanCustomizer {
     builder.addProperty(beanPath, operationPropertyDef);
     builder.addProperty(beanPath, descriptionPropertyDef);
     builder.addProperty(beanPath, valuePropertyDef);
-    Response<BeanReaderRepoSearchResults> searchResponse = builder.search();
-    if (!searchResponse.isSuccess()) {
-      return response.copyUnsuccessfulResponse(searchResponse);
-    }
-    List<BeanSearchResults> beansResults = searchResponse.getResults().getCollection(beanPath);
+    BeanReaderRepoSearchResults searchResults = builder.search().getResults();
+    List<BeanSearchResults> beansResults = searchResults.getCollection(beanPath);
     if (beansResults == null) {
       // this app currently doesn't have a plan
-      return response.setNotFound();
+      throw Response.notFoundException();
     }
     List<TableRow> rows = new ArrayList<>();
     // Add a row for every variable assignment in this deployment plan.
@@ -277,7 +251,7 @@ public class DeploymentPlanRuntimeMBeanCustomizer {
       }
       rows.add(row);
     }
-    return response.setSuccess(rows);
+    return rows;
   }
 
   private static TableCell createTableCell(BeanPropertyDef propertyDef, BeanSearchResults beanResults) {
@@ -286,23 +260,5 @@ public class DeploymentPlanRuntimeMBeanCustomizer {
         propertyDef.getFormFieldName(),
         beanResults.getValue(propertyDef)
       );
-  }
-
-  private static FormProperty findRequiredFormProperty(String propertyName, List<FormProperty> formProperties) {
-    FormProperty formProperty = findOptionalFormProperty(propertyName, formProperties);
-    if (formProperty == null) {
-      throw new AssertionError("Missing required form property: " + propertyName + " " + formProperties);
-    } else {
-      return formProperty;
-    }
-  }
-
-  private static FormProperty findOptionalFormProperty(String propertyName, List<FormProperty> formProperties) {
-    for (FormProperty formProperty : formProperties) {
-      if (propertyName.equals(formProperty.getName())) {
-        return formProperty;
-      }
-    }
-    return null;
   }
 }

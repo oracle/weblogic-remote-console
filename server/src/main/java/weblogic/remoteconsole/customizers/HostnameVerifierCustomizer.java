@@ -1,4 +1,4 @@
-// Copyright (c) 2023, Oracle and/or its affiliates.
+// Copyright (c) 2023, 2024, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.customizers;
@@ -30,16 +30,15 @@ public class HostnameVerifierCustomizer {
   private HostnameVerifierCustomizer() {
   }
 
-  public static Response<SettableValue> getHostnameVerifierType(
+  public static SettableValue getHostnameVerifierType(
     SettableValue hostnameVerifier
   ) {
     boolean isSet = hostnameVerifier.isSet();
     String type = computeHostnameVerifierType(hostnameVerifier);
-    Response<SettableValue> response = new Response<>();
-    return response.setSuccess(new SettableValue(new StringValue(type), isSet));
+    return new SettableValue(new StringValue(type), isSet);
   }
 
-  public static Response<SettableValue> getCustomHostnameVerifier(
+  public static SettableValue getCustomHostnameVerifier(
     SettableValue hostnameVerifier
   ) {
     boolean isSet = false;
@@ -48,8 +47,7 @@ public class HostnameVerifierCustomizer {
       isSet = true;
       hnv = hostnameVerifier.getValue().asString().getValue();
     }
-    Response<SettableValue> response = new Response<>();
-    return response.setSuccess(new SettableValue(new StringValue(hnv), isSet));
+    return new SettableValue(new StringValue(hnv), isSet);
   }
 
   private static String computeHostnameVerifierType(SettableValue hostnameVerifier) {

@@ -12,7 +12,7 @@ import weblogic.remoteconsole.common.utils.Path;
  * child of a type (i.e. singleton contained bean or collection of contained beans
  * e.g. ServerTemplateMBean/type.yaml
  */
-public class BeanChildDefCustomizerSource {
+public class BeanChildDefCustomizerSource extends YamlSource {
   private StringValue name = new StringValue();
   private StringValue onlineName = new StringValue();
   private StringValue offlineName = new StringValue();

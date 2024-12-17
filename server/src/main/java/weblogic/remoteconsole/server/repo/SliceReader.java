@@ -25,7 +25,7 @@ import weblogic.remoteconsole.common.utils.StringUtils;
 class SliceReader extends FormReader {
 
   private static final Type GET_TABLE_ROWS_CUSTOMIZER_RETURN_TYPE =
-    (new TypeReference<Response<List<TableRow>>>() {}).getType();
+    (new TypeReference<List<TableRow>>() {}).getType();
 
   SliceReader(InvocationContext invocationContext) {
     super(invocationContext);
@@ -136,10 +136,15 @@ class SliceReader extends FormReader {
     InvocationContext actualIc = new InvocationContext(getInvocationContext());
     actualIc.setPagePath(sliceTableDef.getPagePath());
     List<Object> args = List.of(actualIc, searchResults);
-    Object responseAsObject = CustomizerInvocationUtils.invokeMethod(method, args);
-    @SuppressWarnings("unchecked")
-    Response<List<TableRow>> customizerResponse = (Response<List<TableRow>>)responseAsObject;
-    return customizerResponse;
+    Response<List<TableRow>> response = new Response<>();
+    try {
+      Object responseAsObject = CustomizerInvocationUtils.invokeMethod(method, args);
+      @SuppressWarnings("unchecked")
+      List<TableRow> rows = (List<TableRow>)responseAsObject;
+      return response.setSuccess(rows);
+    } catch (ResponseException e) {
+      return response.copyUnsuccessfulResponse(e.getResponse());
+    }
   }
 
   private Response<Page> getSliceForm(SliceFormDef sliceFormDef) {

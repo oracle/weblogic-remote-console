@@ -57,30 +57,27 @@ public class WLDFDataAccessRuntimeMBeanCustomizer {
    * Customize to return the default directory for downloading log file.
    *
    */
-  public static Response<Void> customizeDownloadLogsInputForm(InvocationContext ic, Page page) {
-    return getResponseForInputForm(ic, page, false);
+  public static void customizeDownloadLogsInputForm(InvocationContext ic, Page page) {
+    getResponseForInputForm(ic, page, false);
   }
 
-  private static Response<Void> getResponseForInputForm(InvocationContext ic, Page page, boolean includeFileName) {
+  private static void getResponseForInputForm(InvocationContext ic, Page page, boolean includeFileName) {
     Value logFileDirectoryValue = new StringValue(getDirectoryName(ic));
     Value logFileNameValue = new StringValue(getFileNameToDownload(ic));
-    Response<Void> response = new Response<>();
     List<FormProperty> oldProperties = page.asForm().getProperties();
     List<FormProperty> newProperties = null;
     if (includeFileName) {
       newProperties = List.of(
-          createFormProperty("LogFileDirectory", oldProperties, logFileDirectoryValue),
-          createFormProperty("LogFileName", oldProperties, logFileNameValue)
+        CustomizerUtils.createFormProperty("LogFileDirectory", oldProperties, logFileDirectoryValue),
+        CustomizerUtils.createFormProperty("LogFileName", oldProperties, logFileNameValue)
       );
     } else {
       newProperties = List.of(
-          createFormProperty("LogFileDirectory", oldProperties, logFileDirectoryValue)
+        CustomizerUtils.createFormProperty("LogFileDirectory", oldProperties, logFileDirectoryValue)
       );
     }
     oldProperties.clear();
     oldProperties.addAll(newProperties);
-    response.setSuccess(null);
-    return response;
   }
 
   private static String getFileNameToDownload(InvocationContext ic) {
@@ -103,36 +100,6 @@ public class WLDFDataAccessRuntimeMBeanCustomizer {
     logFile = logFile.replace(File.separator, "_");
     Timestamp timestamp = new Timestamp(System.currentTimeMillis());
     return  serverName + "_" + logFile + "_" + simpleDateFormat.format(timestamp);
-  }
-
-  private static FormProperty createFormProperty(
-      String propName,
-      List<FormProperty> oldProperties,
-      Value propValue
-  ) {
-    return
-        new FormProperty(
-            findRequiredFormProperty(propName, oldProperties).getFieldDef(),
-            propValue
-        );
-  }
-
-  private static FormProperty findRequiredFormProperty(String propertyName, List<FormProperty> formProperties) {
-    FormProperty formProperty = findOptionalFormProperty(propertyName, formProperties);
-    if (formProperty == null) {
-      throw new AssertionError("Missing required form property: " + propertyName + " " + formProperties);
-    } else {
-      return formProperty;
-    }
-  }
-
-  private static FormProperty findOptionalFormProperty(String propertyName, List<FormProperty> formProperties) {
-    for (FormProperty formProperty : formProperties) {
-      if (propertyName.equals(formProperty.getName())) {
-        return formProperty;
-      }
-    }
-    return null;
   }
 
   /**
@@ -194,13 +161,10 @@ public class WLDFDataAccessRuntimeMBeanCustomizer {
     return response;
   }
 
-
   private static String getFormProperty(List<FormProperty> formProperties, String propName) {
-    for (FormProperty oneProp : formProperties) {
-      if (oneProp.getName().equals(propName)) {
-        String val = oneProp.getValue().asSettable().getValue().asString().getValue();
-        return val;
-      }
+    FormProperty formProperty = CustomizerUtils.findOptionalFormProperty(propName, formProperties);
+    if (formProperty != null) {
+      return formProperty.getValue().asSettable().getValue().asString().getValue();
     }
     return "";
   }

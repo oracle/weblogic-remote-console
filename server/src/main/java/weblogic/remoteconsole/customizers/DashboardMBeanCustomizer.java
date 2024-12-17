@@ -1,4 +1,4 @@
-// Copyright (c) 2022, 2023, Oracle and/or its affiliates.
+// Copyright (c) 2022, 2024, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.customizers;
@@ -44,16 +44,16 @@ public class DashboardMBeanCustomizer {
   }
 
   // Determines a dashboard's type
-  public static Response<SettableValue> getType(InvocationContext ic) {
-    Response<SettableValue> response = new Response<>();
-    Response<Dashboard> dashboardResponse =
-      ic.getPageRepo().asPageReaderRepo().getDashboardManager(ic).getDashboard(ic);
-    if (!dashboardResponse.isSuccess()) {
-      return response.copyUnsuccessfulResponse(dashboardResponse);
-    }
-    String type = dashboardResponse.getResults().getType();
-    response.setSuccess(new SettableValue(new StringValue(type), false));
-    return response;
+  public static SettableValue getType(InvocationContext ic) {
+    String type =
+      ic
+        .getPageRepo()
+        .asPageReaderRepo()
+        .getDashboardManager(ic)
+        .getDashboard(ic)
+        .getResults()
+        .getType();
+    return new SettableValue(new StringValue(type), false);
   }
 
   // Creates the JAXRS resource for either the dashboards collection or a dashboard.
@@ -75,13 +75,12 @@ public class DashboardMBeanCustomizer {
   }
 
   // Customizes the PDJ for creating a custom filtering dashboard.
-  public static Response<PageDef> customizeCreateFormDef(InvocationContext ic, PageDef uncustomizedPageDef) {
-    return FilteringDashboardDefManager.customizeCreateFormDef(ic, uncustomizedPageDef);
+  public static PageDef customizeCreateFormDef(InvocationContext ic, PageDef uncustomizedPageDef) {
+    return FilteringDashboardDefManager.customizeCreateFormDef(ic, uncustomizedPageDef).getResults();
   }
 
   // Customizes the RDJ for creating a custom filtering dashboard.
-  public static Response<Void> customizeCreateForm(InvocationContext ic, Page page) {
-    Response<Void> response = new Response<>();
+  public static void customizeCreateForm(InvocationContext ic, Page page) {
     // Add a link to the corresponding PDJ.
     // The current request includes a 'path' query parameter that indicates
     // the bean to create a custom filtering dashboard for.
@@ -97,11 +96,10 @@ public class DashboardMBeanCustomizer {
       )
     );
     FilteringDashboardDefManager.customizeCreateForm(ic, page);
-    return response.setSuccess(null);
   }
 
   // Return the list of dashboards (so that it can be added to the dashboards table RDJ).
-  public static Response<List<BeanSearchResults>> getCollection(
+  public static List<BeanSearchResults> getCollection(
     InvocationContext ic,
     BeanTreePath collectionPath,
     BeanReaderRepoSearchResults searchResults,
@@ -155,37 +153,31 @@ public class DashboardMBeanCustomizer {
       }
       collectionResults.put(dashboardName, beanResults);
     }
-    return new Response<List<BeanSearchResults>>().setSuccess(new ArrayList<>(collectionResults.values()));
+    return new ArrayList<>(collectionResults.values());
   }
 
   // Create a copy of a dashboard
-  public static Response<Value> copy(
+  public static Value copy(
     InvocationContext ic,
     PageActionDef pageActionDef,
     List<FormProperty> formProperties
   ) {
-    Response<Value> response = new Response<>();
-    Response<Dashboard> getResponse =
-      ic.getPageRepo().asPageReaderRepo().getDashboardManager(ic).getDashboard(ic);
-    if (!getResponse.isSuccess()) {
-      return response.copyUnsuccessfulResponse(getResponse);
-    }
+    Dashboard dashboard = 
+      ic.getPageRepo().asPageReaderRepo().getDashboardManager(ic).getDashboard(ic).getResults();
     String name = FormProperty.getStringPropertyValue("Name", formProperties, null);
     if (StringUtils.isEmpty(name)) {
-      response.addFailureMessage(
-        ic.getLocalizer().localizeString(
-          LocalizedConstants.REQUIRED_PROPERTY_NOT_SPECIFIED,
-          "Name"
-        )
-      );
-      return response.setUserBadRequest();
+      throw
+        Response
+        .userBadRequestException()
+        .addFailureMessage(
+          ic.getLocalizer().localizeString(
+            LocalizedConstants.REQUIRED_PROPERTY_NOT_SPECIFIED,
+            "Name"
+          )
+        );
     }
-    Response<String> copyResponse =
-      getResponse.getResults().copy(ic, name);
-    if (!copyResponse.isSuccess()) {
-      return response.copyUnsuccessfulResponse(copyResponse);
-    }
-    return response.setSuccess(null); // TBD return a reference to the copy?
+    dashboard.copy(ic, name).getResults();
+    return null; // TBD return a reference to the copy?
   }
 
   private static String getCustomFilteringDashboardTypeLabel(InvocationContext ic, BeanTreePath btpTemplate) {

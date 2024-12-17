@@ -1,4 +1,4 @@
-// Copyright (c) 2023, Oracle and/or its affiliates.
+// Copyright (c) 2023, 2024, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.customizers;
@@ -22,7 +22,6 @@ import weblogic.remoteconsole.server.repo.BeanReaderRepoSearchResults;
 import weblogic.remoteconsole.server.repo.BeanSearchResults;
 import weblogic.remoteconsole.server.repo.BeanTreePath;
 import weblogic.remoteconsole.server.repo.InvocationContext;
-import weblogic.remoteconsole.server.repo.Response;
 import weblogic.remoteconsole.server.repo.StringValue;
 import weblogic.remoteconsole.server.repo.TableCell;
 import weblogic.remoteconsole.server.repo.TableRow;
@@ -43,26 +42,15 @@ public class DomainSecurityRuntimeMBeanCustomizer {
     return new DomainSecurityRuntimeMBeanResource();
   }
 
-  public static Response<List<TableRow>> getSecurityWarningsSliceTableRows(
+  public static List<TableRow> getSecurityWarningsSliceTableRows(
     InvocationContext ic,
     BeanReaderRepoSearchResults searchResults
   ) {
-    Response<List<TableRow>> response = new Response<>();
-    Response<JsonArray> warningsResponse = getSecurityWarnings(ic);
-    if (!warningsResponse.isSuccess()) {
-      return response.copyUnsuccessfulResponse(warningsResponse);
-    }
-    Response<Map<String,String>> serversResponse = getServerClusterMap(ic);
-    if (!serversResponse.isSuccess()) {
-      return response.copyUnsuccessfulResponse(serversResponse);
-    }
-    response.setSuccess(processWarnings(warningsResponse.getResults(), serversResponse.getResults()));
-    return response;
+    return processWarnings(getSecurityWarnings(ic), getServerClusterMap(ic));
   }
 
-  private static Response<JsonArray> getSecurityWarnings(InvocationContext ic) {
-    Response<JsonArray> response = new Response<>();
-    Response<JsonObject> searchResponse =
+  private static JsonArray getSecurityWarnings(InvocationContext ic) {
+    JsonObject searchResults =
       WebLogicRestInvoker.post(
         ic,
         new Path("domainRuntime.search"),
@@ -70,19 +58,14 @@ public class DomainSecurityRuntimeMBeanCustomizer {
         false, // expanded values
         false, // save changes
         false // asynchronous
-       );
-    if (!searchResponse.isSuccess()) {
-      return response.copyUnsuccessfulResponse(searchResponse);
-    }
-    JsonObject searchResults = searchResponse.getResults();
+       ).getResults();
     JsonObject domainSecurityRuntime = searchResults.getJsonObject("domainSecurityRuntime");
     if (domainSecurityRuntime != null) {
-      response.setSuccess(domainSecurityRuntime.getJsonArray("securityValidationWarnings"));
+      return domainSecurityRuntime.getJsonArray("securityValidationWarnings");
     } else {
       // The domain doesn't support security warnings. Send back an empty list.
-      response.setSuccess(Json.createArrayBuilder().build());
+      return Json.createArrayBuilder().build();
     }
-    return response;
   }
 
   private static JsonObject getSecurityWarningsQuery() {
@@ -98,8 +81,7 @@ public class DomainSecurityRuntimeMBeanCustomizer {
     return domainRuntime.build();
   }
 
-  private static Response<Map<String,String>> getServerClusterMap(InvocationContext ic) {
-    Response<Map<String,String>> response = new Response<>();
+  private static Map<String,String> getServerClusterMap(InvocationContext ic) {
     // Get each server's identity and cluster reference
     BeanTreePath serversBeanPath =
       BeanTreePath.create(ic.getBeanTreePath().getBeanRepo(), new Path("Domain.Servers"));
@@ -111,13 +93,10 @@ public class DomainSecurityRuntimeMBeanCustomizer {
       ic.getPageRepo().getBeanRepo().asBeanReaderRepo().createSearchBuilder(ic, includeIsSet);
     builder.addProperty(serversBeanPath, identityPropertyDef);
     builder.addProperty(serversBeanPath, clusterPropertyDef);
-    Response<BeanReaderRepoSearchResults> searchResponse = builder.search();
-    if (!searchResponse.isSuccess()) {
-      return response.copyUnsuccessfulResponse(searchResponse);
-    }
+    BeanReaderRepoSearchResults searchResults = builder.search().getResults();
     // Create a mapping from server name to cluster name
     Map<String,String> serverClusterMap = new HashMap<>();
-    for (BeanSearchResults serverResults : searchResponse.getResults().getCollection(serversBeanPath)) {
+    for (BeanSearchResults serverResults : searchResults.getCollection(serversBeanPath)) {
       BeanTreePath identity = serverResults.getValue(identityPropertyDef).asBeanTreePath();
       Value cluster = serverResults.getValue(clusterPropertyDef);
       String serverName = identity.asBeanTreePath().getLastSegment().getKey();
@@ -126,8 +105,7 @@ public class DomainSecurityRuntimeMBeanCustomizer {
         serverClusterMap.put(serverName, clusterName);
       }
     }
-    response.setSuccess(serverClusterMap);
-    return response;
+    return serverClusterMap;
   }
 
   private static List<TableRow> processWarnings(JsonArray warnings, Map<String,String> serverClusterMap) {

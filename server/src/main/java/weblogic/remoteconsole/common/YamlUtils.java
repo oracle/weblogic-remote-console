@@ -56,7 +56,7 @@ public class YamlUtils {
     return read(is, yamlPath, type, mustExist);
   }
 
-  private static <T> T read(InputStream is, String yamlPath, Class<T> type, boolean mustExist) {
+  public static <T> T read(InputStream is, String yamlPath, Class<T> type, boolean mustExist) {
     if ("true".equals(System.getenv("debugYaml")) && is != null) {
       // FortifyIssueSuppression Log Forging
       // yamlPath contains well known values and is not a forging risk.

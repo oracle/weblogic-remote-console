@@ -94,6 +94,10 @@ public class Response<T> {
     return Status.NOT_FOUND == getStatus();
   }
 
+  public static ResponseException notFoundException() {
+    return (new Response()).setNotFound().asResponseException();
+  }
+
   public Response<T> setNotFound() {
     setStatus(Status.NOT_FOUND);
     return this;
@@ -101,6 +105,10 @@ public class Response<T> {
 
   public boolean isServiceNotAvailable() {
     return Status.SERVICE_NOT_AVAILABLE == getStatus();
+  }
+
+  public static ResponseException serviceNotAvailable() {
+    return (new Response()).setServiceNotAvailable().asResponseException();
   }
 
   public Response<T> setServiceNotAvailable() {
@@ -121,6 +129,10 @@ public class Response<T> {
     return Status.USER_BAD_REQUEST == getStatus();
   }
 
+  public static ResponseException userBadRequestException() {
+    return (new Response()).setUserBadRequest().asResponseException();
+  }
+
   public Response<T> setUserBadRequest() {
     setStatus(Status.USER_BAD_REQUEST);
     return this;
@@ -128,6 +140,10 @@ public class Response<T> {
 
   public boolean isFrontEndBadRequest() {
     return Status.FRONT_END_BAD_REQUEST == getStatus();
+  }
+
+  public static ResponseException frontEndBadRequestException() {
+    return (new Response()).setFrontEndBadRequest().asResponseException();
   }
 
   public Response<T> setFrontEndBadRequest() {
@@ -148,6 +164,7 @@ public class Response<T> {
     if (other.isSuccess()) {
       throw new AssertionError("Other response is successful");
     }
+    results = null;
     copyStatus(other);
     if (!retainEarlierMessages) {
       getMessages().clear();
@@ -166,6 +183,13 @@ public class Response<T> {
   private T results;
 
   public T getResults() {
+    if (!isSuccess()) {
+      throw asResponseException();
+    }
     return this.results;
+  }
+
+  public ResponseException asResponseException() {
+    return new ResponseException(this);
   }
 }

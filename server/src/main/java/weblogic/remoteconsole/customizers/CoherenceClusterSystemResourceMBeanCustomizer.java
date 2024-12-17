@@ -10,7 +10,6 @@ import weblogic.remoteconsole.common.repodef.PageDef;
 import weblogic.remoteconsole.common.repodef.SliceFormDef;
 import weblogic.remoteconsole.common.repodef.weblogic.WebLogicRestEditPageRepoDef;
 import weblogic.remoteconsole.server.repo.InvocationContext;
-import weblogic.remoteconsole.server.repo.Response;
 
 /*
  * Custom code for processing the CoherenceClusterSystemResourceMBean.
@@ -18,15 +17,14 @@ import weblogic.remoteconsole.server.repo.Response;
 public class CoherenceClusterSystemResourceMBeanCustomizer {
 
   // Remove the importCustomClusterConfigurationFile action from the page's actions if we're not in the edit tree
-  public static Response<PageDef> customizeSliceFormDef(InvocationContext ic, PageDef uncustomizedPageDef) {
-    Response<PageDef> response = new Response<>();
+  public static PageDef customizeSliceFormDef(InvocationContext ic, PageDef uncustomizedPageDef) {
     if (ic.getPagePath().getPagesPath().getPageRepoDef() instanceof WebLogicRestEditPageRepoDef) {
-      return response.setSuccess(uncustomizedPageDef);
+      return uncustomizedPageDef;
     } else {
       // Currently the form only has an 'importCustomClusterConfigurationFile' action.
       // Since we're not in the edit tree, just return an empty list of actions.
       SliceFormDef uncustomizedSliceFormDef = uncustomizedPageDef.asSliceFormDef();
-      return response.setSuccess(new CustomSliceFormDef(uncustomizedSliceFormDef).actionDefs(List.of()));
+      return new CustomSliceFormDef(uncustomizedSliceFormDef).actionDefs(List.of());
     }
   }
 

@@ -256,4 +256,13 @@ public class BeanFieldDefCustomizerSource extends BeanValueDefCustomizerSource {
   public String toString() {
     return getName();
   }
+
+  @Override
+  protected void validateExtension() {
+    super.validateExtension();
+    validateExtensionChild(getPresentation(), "presentation");
+    validateExtensionChildren(getLegalValues(), "legalValues");
+    validateExtensionStringPropertyNotSpecified(getGetMethod(), "getMethod");
+    validateExtensionStringPropertyNotSpecified(getOptionsMethod(), "optionsMethod");
+  }
 }

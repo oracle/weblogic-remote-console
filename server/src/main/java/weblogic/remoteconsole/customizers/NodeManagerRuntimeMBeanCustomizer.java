@@ -11,7 +11,6 @@ import weblogic.remoteconsole.common.utils.Path;
 import weblogic.remoteconsole.server.repo.DownloadValue;
 import weblogic.remoteconsole.server.repo.InvocationContext;
 import weblogic.remoteconsole.server.repo.LabelValue;
-import weblogic.remoteconsole.server.repo.Response;
 import weblogic.remoteconsole.server.repo.SettableValue;
 import weblogic.remoteconsole.server.repo.Value;
 
@@ -23,7 +22,7 @@ public class NodeManagerRuntimeMBeanCustomizer {
   private NodeManagerRuntimeMBeanCustomizer() {
   }
 
-  public static Response<SettableValue> getDownloadLogLink(
+  public static SettableValue getDownloadLogLink(
     InvocationContext ic,
     @Source(property = "Reachable") SettableValue reachable
   ) {
@@ -44,7 +43,7 @@ public class NodeManagerRuntimeMBeanCustomizer {
       String label = ic.getLocalizer().localizeString(LocalizedConstants.NODE_MANAGER_LOG_NOT_AVAILABLE_LABEL);
       value = new LabelValue(label);
     }
-    return (new Response<SettableValue>()).setSuccess(new SettableValue(value));
+    return new SettableValue(value);
   }
 
   private static boolean supportsLogDownload(InvocationContext ic) {

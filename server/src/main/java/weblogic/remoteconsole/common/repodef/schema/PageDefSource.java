@@ -1,4 +1,4 @@
-// Copyright (c) 2021, 2023, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2024, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef.schema;
@@ -11,7 +11,7 @@ import weblogic.remoteconsole.common.utils.StringUtils;
 /**
  * This POJO mirrors the yaml source file format for configuring information about any page.
  */
-public class PageDefSource {
+public class PageDefSource extends YamlSource {
   private StringValue introductionHTML = new StringValue();
   private ListValue<HelpTopicDefSource> helpTopics = new ListValue<>();
   private StringValue customizePageDefSourceMethod = new StringValue();
@@ -164,5 +164,15 @@ public class PageDefSource {
   // Throws a ClassCastException if this page isn't a TableDefSource.
   public TableDefSource asTableDefSource() {
     return (TableDefSource)this;
+  }
+
+  @Override
+  protected void validateExtension() {
+    super.validateExtension();
+    validateExtensionChildren(getHelpTopics(), "helpTopics");
+    validateExtensionChildren(getActions(), "actions");
+    validateExtensionStringPropertyNotSpecified(getCustomizePageDefSourceMethod(), "customizePageDefSourceMethod");
+    validateExtensionStringPropertyNotSpecified(getCustomizePageDefMethod(), "customizePageDefMethod");
+    validateExtensionStringPropertyNotSpecified(getCustomizePageMethod(), "customizePageMethod");
   }
 }

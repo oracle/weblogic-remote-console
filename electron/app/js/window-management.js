@@ -799,14 +799,21 @@ const WindowManagement = (() => {
       if (_window) _window.loadURL(cbeUrl);
     },
     destroy: () => {
-      // Set module-scoped window variable to null, so
-      // the check in the 'close' event handler, won't
-      // do an event.preventDefault().
-      _window = null;
-      // Calling app.quit() will generate another 'close'
-      // event, but the app will exit because the module-scoped
-      // window variable has been set to null.
-      app.quit();
+      try {
+        if (_window)
+          _window.close();
+        // Set module-scoped window variable to null, so
+        // the check in the 'close' event handler, won't
+        // do an event.preventDefault().
+        _window = null;
+      } catch(err) {
+        // Do nothing
+      } finally {
+        // Calling app.quit() will generate another 'close'
+        // event, but the app will exit because the module-scoped
+        // window variable has been set to null.
+        app.quit();
+      }
     },
     /**
      * Enable or disable submenu items of an application menu item
