@@ -23,10 +23,10 @@ const SettingsEditor = (() => {
   let beforeEditingPreferences;
   const scratchPath = `${app.getPath('userData')}/scratch-settings.json`;
 
-  let dontNeedStore = (preferences) => {
+  const dontNeedStoreFile = (preferences) => {
     if (!preferences.networking.trustStoreType)
       return true;
-    if (!preferences.networking.trustStoreType === '')
+    if (preferences.networking.trustStoreType === '')
       return true;
     if (/^Windows-[A-Z]+$/.test(preferences.networking.trustStoreType))
       return true;
@@ -34,6 +34,13 @@ const SettingsEditor = (() => {
       return true;
     return false;
   };
+
+  function trustStoreTypeRequiresStore() {
+    // This looks a little weird, but this is how the "hide function" is
+    // invoked in electron-preferences and this is a quick way of sharing
+    // the code.
+    return !dontNeedStoreFile(preferences._preferences);
+  }
 
   function load() {
     const path = ConfigJSON.getPath();
@@ -58,8 +65,8 @@ const SettingsEditor = (() => {
       else if (key === 'javax.net.ssl.trustStore') {
         preferences.value('networking.trustStore', data[key]);
       }
-      else if (key === 'javax.net.ssl.trustStoreKey') {
-        preferences.value('networking.trustStoreKey', data[key]);
+      else if (key === 'javax.net.ssl.trustStorePassword') {
+        preferences.value('networking.trustStorePassword', data[key]);
       }
       else if (key === 'console.connectTimeoutMillis') {
         preferences.value('networking.connectTimeoutMillis', data[key]);
@@ -90,10 +97,10 @@ const SettingsEditor = (() => {
     const path = ConfigJSON.getPath();
     let data = {};
     addValue(data, 'proxy', preferences.value('networking.proxy'));
-    if (!dontNeedStore) {
-      addValue(data, 'javax.net.ssl.trustStoreType', preferences.value('networking.trustStoreType'));
+    addValue(data, 'javax.net.ssl.trustStoreType', preferences.value('networking.trustStoreType'));
+    if (trustStoreTypeRequiresStore()) {
       addValue(data, 'javax.net.ssl.trustStore', preferences.value('networking.trustStore'));
-      addValue(data, 'javax.net.ssl.trustStoreKey', preferences.value('networking.trustStoreKey'));
+      addValue(data, 'javax.net.ssl.trustStorePassword', preferences.value('networking.trustStorePassword'));
     }
     addValue(data, 'console.connectTimeoutMillis', preferences.value('networking.connectTimeoutMillis'));
     addValue(data, 'console.readTimeoutMillis', preferences.value('networking.readTimeoutMillis'));
@@ -207,13 +214,13 @@ const SettingsEditor = (() => {
                       key: 'trustStore',
                       buttonLabel: `${I18NUtils.get('wrc-electron.menus.settings.trust-store.path.button.label')}`,
                       type: 'file',
-                      hideFunction: dontNeedStore
+                      hideFunction: dontNeedStoreFile
                     },
                     {
                       label: `${I18NUtils.get('wrc-electron.menus.settings.trust-store.key.label')}`,
-                      key: 'trustStoreKey',
+                      key: 'trustStorePassword',
                       type: 'text',
-                      hideFunction: dontNeedStore
+                      hideFunction: dontNeedStoreFile
                     },
                     {
                       label: `${I18NUtils.get('wrc-electron.menus.settings.connect-timeout.label')}`,
