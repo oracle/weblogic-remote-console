@@ -1,0 +1,1207 @@
+<!DOCTYPE html>
+<html lang="en" class="js csstransforms3d">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="Hugo 0.123.7">
+    <meta name="description" content="">
+
+
+    <link rel="icon" href="/weblogic-remote-console/2.4.13/images/logo.png" type="image/png">
+
+    <title>WDT Model Files :: WebLogic Remote Console</title>
+
+    
+    <link href="/weblogic-remote-console/2.4.13/css/nucleus.css?1736784199" rel="stylesheet">
+    <link href="/weblogic-remote-console/2.4.13/css/fontawesome-all.min.css?1736784199" rel="stylesheet">
+    <link href="/weblogic-remote-console/2.4.13/css/hybrid.css?1736784199" rel="stylesheet">
+    <link href="/weblogic-remote-console/2.4.13/css/featherlight.min.css?1736784199" rel="stylesheet">
+    <link href="/weblogic-remote-console/2.4.13/css/perfect-scrollbar.min.css?1736784199" rel="stylesheet">
+    <link href="/weblogic-remote-console/2.4.13/css/auto-complete.css?1736784199" rel="stylesheet">
+    <link href="/weblogic-remote-console/2.4.13/css/atom-one-dark-reasonable.css?1736784199" rel="stylesheet">
+    <link href="/weblogic-remote-console/2.4.13/css/theme.css?1736784199" rel="stylesheet">
+    <link href="/weblogic-remote-console/2.4.13/css/tabs.css?1736784199" rel="stylesheet">
+    <link href="/weblogic-remote-console/2.4.13/css/hugo-theme.css?1736784199" rel="stylesheet">
+    
+    
+
+    <script src="/weblogic-remote-console/2.4.13/js/jquery-3.6.0.min.js?1736784199"></script>
+
+    <style>
+      :root #header + #content > #left > #rlblock_left{
+          display:none !important;
+      }
+      
+        :not(pre) > code + span.copy-to-clipboard {
+            display: none;
+        }
+      
+    </style>
+    
+  </head>
+  <body class="" data-url="/weblogic-remote-console/2.4.13/weblogic-deploy-tooling/wdt-model-files/">
+    <nav id="sidebar" class="">
+
+
+
+  <div id="header-wrapper">
+    <div id="header">
+      <a id="logo" href="https://oracle.github.io/weblogic-remote-console/2.4.13/">
+  <img src="https://oracle.github.io/weblogic-remote-console/2.4.13//images/logo.png" height="60"><br/>
+  WebLogic Remote Console
+</a>
+
+    </div>
+    
+        <div class="searchbox">
+    <label for="search-by"><i class="fas fa-search"></i></label>
+    <input data-search-input id="search-by" type="search" placeholder="Search...">
+    <span data-search-clear=""><i class="fas fa-times"></i></span>
+</div>
+
+<script type="text/javascript" src="/weblogic-remote-console/2.4.13/js/lunr.min.js?1736784199"></script>
+<script type="text/javascript" src="/weblogic-remote-console/2.4.13/js/auto-complete.js?1736784199"></script>
+<script type="text/javascript">
+    
+        var baseurl = "https:\/\/oracle.github.io\/weblogic-remote-console\/2.4.13\/";
+    
+</script>
+<script type="text/javascript" src="/weblogic-remote-console/2.4.13/js/search.js?1736784199"></script>
+
+    
+  </div>
+
+    <div class="highlightable">
+    <ul class="topics">
+      
+        
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/weblogic-remote-console/2.4.13/set-console/" title="Get Started" class="dd-item
+        
+        
+        
+        ">
+      <a href="/weblogic-remote-console/2.4.13/set-console/">
+          Get Started
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/weblogic-remote-console/2.4.13/set-console/get-know-console/" title="Get to Know the Console" class="dd-item
+        
+        
+        
+        ">
+      <a href="/weblogic-remote-console/2.4.13/set-console/get-know-console/">
+          Get to Know the Console
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/weblogic-remote-console/2.4.13/set-console/contribute-wrc-repository/" title="Contribute to WebLogic Remote Console" class="dd-item
+        
+        
+        
+        ">
+      <a href="/weblogic-remote-console/2.4.13/set-console/contribute-wrc-repository/">
+          Contribute to WebLogic Remote Console
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/weblogic-remote-console/2.4.13/set-console/support-information/" title="Support Information" class="dd-item
+        
+        
+        
+        ">
+      <a href="/weblogic-remote-console/2.4.13/set-console/support-information/">
+          Support Information
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/weblogic-remote-console/2.4.13/administration-server/" title="Administration Server" class="dd-item
+        
+        
+        
+        ">
+      <a href="/weblogic-remote-console/2.4.13/administration-server/">
+          Administration Server
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/weblogic-remote-console/2.4.13/administration-server/domain-configuration/" title="Domain Configuration" class="dd-item
+        
+        
+        
+        ">
+      <a href="/weblogic-remote-console/2.4.13/administration-server/domain-configuration/">
+          Domain Configuration
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/weblogic-remote-console/2.4.13/administration-server/securing-domains/" title="Securing Domains" class="dd-item
+        
+        
+        
+        ">
+      <a href="/weblogic-remote-console/2.4.13/administration-server/securing-domains/">
+          Securing Domains
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/weblogic-remote-console/2.4.13/administration-server/deploying-applications/" title="Deploying Applications" class="dd-item
+        
+        
+        
+        ">
+      <a href="/weblogic-remote-console/2.4.13/administration-server/deploying-applications/">
+          Deploying Applications
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/weblogic-remote-console/2.4.13/administration-server/monitoring-domains/" title="Monitoring Domains" class="dd-item
+        
+        
+        
+        ">
+      <a href="/weblogic-remote-console/2.4.13/administration-server/monitoring-domains/">
+          Monitoring Domains
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/weblogic-remote-console/2.4.13/administration-server/configuring-services/" title="Configuring Services" class="dd-item
+        
+        
+        
+        ">
+      <a href="/weblogic-remote-console/2.4.13/administration-server/configuring-services/">
+          Configuring Services
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/weblogic-remote-console/2.4.13/administration-server/configuring-coherence/" title="Configuring Coherence" class="dd-item
+        
+        
+        
+        ">
+      <a href="/weblogic-remote-console/2.4.13/administration-server/configuring-coherence/">
+          Configuring Coherence
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/weblogic-remote-console/2.4.13/administration-server/scheduling-work/" title="Scheduling Work" class="dd-item
+        
+        
+        
+        ">
+      <a href="/weblogic-remote-console/2.4.13/administration-server/scheduling-work/">
+          Scheduling Work
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/weblogic-remote-console/2.4.13/weblogic-deploy-tooling/" title="WebLogic Deploy Tooling" class="dd-item
+        parent
+        
+        
+        ">
+      <a href="/weblogic-remote-console/2.4.13/weblogic-deploy-tooling/">
+          WebLogic Deploy Tooling
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/weblogic-remote-console/2.4.13/weblogic-deploy-tooling/wdt-model-files/" title="WDT Model Files" class="dd-item
+        
+        active
+        
+        ">
+      <a href="/weblogic-remote-console/2.4.13/weblogic-deploy-tooling/wdt-model-files/">
+          WDT Model Files
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/weblogic-remote-console/2.4.13/weblogic-deploy-tooling/wdt-composites/" title="WDT Composite Models" class="dd-item
+        
+        
+        
+        ">
+      <a href="/weblogic-remote-console/2.4.13/weblogic-deploy-tooling/wdt-composites/">
+          WDT Composite Models
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/weblogic-remote-console/2.4.13/weblogic-deploy-tooling/property-lists/" title="Property Lists" class="dd-item
+        
+        
+        
+        ">
+      <a href="/weblogic-remote-console/2.4.13/weblogic-deploy-tooling/property-lists/">
+          Property Lists
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/weblogic-remote-console/2.4.13/troubleshoot-weblogic-remote-console/" title="Troubleshoot Issues with WebLogic Remote Console" class="dd-item
+        
+        
+        
+        ">
+      <a href="/weblogic-remote-console/2.4.13/troubleshoot-weblogic-remote-console/">
+          Troubleshoot Issues with WebLogic Remote Console
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+          
+        
+      
+    </ul>
+
+    
+    
+
+    
+    <section id="footer">
+      <p>Created with <i class="fas fa-heart"></i> from <a href="https://www.oracle.com">Oracle</a></p>
+<p>&nbsp</p>
+<table border="1" bgcolor="white"><tbody><tr><td align="center"><p style="color: red">
+    You are viewing the archived documentation for version 2.4.13.
+    To view the documentation for the current release, please
+    <a href="https://oracle.github.io/weblogic-remote-console/">click here</a>
+</p></td></tr></tbody></table>
+<p>&nbsp</p>
+<p><a href="https://github.com/oracle/weblogic-remote-console"><i class="fab fa-github"></i> GitHub repo</a></p>
+<p><a href="https://join.slack.com/t/oracle-weblogic/shared_invite/zt-1ni1gtjv6-PGC6CQ4uIte3KBdm_67~aQ"><i class="fab fa-slack"></i> Public Slack #remote-console</a></p>
+
+    </section>
+  </div>
+</nav>
+
+
+
+
+        <section id="body">
+        <div id="overlay"></div>
+        <div class="padding highlightable">
+              
+              <div>
+                <div id="top-bar">
+                
+                
+                <div id="breadcrumbs" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+                    <span id="sidebar-toggle-span">
+                        <a href="#" id="sidebar-toggle" data-sidebar-toggle="">
+                          <i class="fas fa-bars"></i>
+                        </a>
+                    </span>
+                  
+                  <span id="toc-menu"><i class="fas fa-list-alt"></i></span>
+                  
+                  <span class="links">
+                 
+                 
+                    
+          
+          
+            
+            
+          
+          
+            
+            
+          
+          
+            <a href='/weblogic-remote-console/2.4.13/'>About WebLogic Remote Console</a> > <a href='/weblogic-remote-console/2.4.13/weblogic-deploy-tooling/'>WebLogic Deploy Tooling</a> > WDT Model Files
+          
+        
+          
+        
+          
+        
+                 
+                  </span>
+                </div>
+                
+                    <div class="progress">
+    <div class="wrapper">
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#GUID-1416166A-7D57-4D8C-AB68-4D82914E59FB">WDT Model</a></li>
+    <li><a href="#GUID-0C7510AB-67B2-4EF5-8DAB-5A09DC2BD2E8">WDT Model Tokens</a>
+      <ul>
+        <li><a href="#standalone-wdt-model-tokens">Standalone WDT Model Tokens</a></li>
+        <li><a href="#wdt-variables">WDT Variables</a></li>
+      </ul>
+    </li>
+    <li><a href="#GUID-1ECF1B50-BE85-413F-8417-34A8E0CC8FB0">Create a WDT Model File</a></li>
+    <li><a href="#GUID-EC821453-1C8A-49DD-A2AB-B5BF58B0B00E">Upload a WDT Model File</a></li>
+    <li><a href="#GUID-B0B9CBA4-29E4-417D-8094-5BA8B4522ED7">Edit a WDT Model File</a></li>
+    <li><a href="#GUID-4A5C092D-A16B-4F7F-A5CC-38DCF2293FBE">Build a WebLogic Server Domain</a></li>
+  </ul>
+</nav>
+    </div>
+</div>
+
+                
+              </div>
+            </div>
+            
+        <div id="head-tags">
+        
+        </div>
+        
+        <div id="body-inner">
+          
+            <h1>
+              
+              WDT Model Files
+            </h1>
+          
+
+        
+
+
+
+	<p>WDT metadata model files are descriptions of a WebLogic Server domain configuration. These models are not connected to a running WebLogic Server domain; you make edits to a model file and then use WebLogic Deploy Tooling (WDT) to build or modify live domains.</p>
+<p>WDT model files are simplistic representations of a domain. They are generally written in <code>YAML</code> but WebLogic Remote Console also accepts models in <code>JSON</code> format. For brevity, a WDT model file only describes departures from the default configuration.</p>
+
+<div class="notices note" ><p>WebLogic Remote Console does not validate the data that you insert into WDT model files. It will accept changes or values that are invalid and that will present problems when the model file is used to build or update a domain.</p>
+</div>
+<h2 id="GUID-1416166A-7D57-4D8C-AB68-4D82914E59FB">WDT Model</h2>
+<pre tabindex="0"><code>topology:
+    Server:
+        AdminServer:
+        ManagedServer1:
+            Cluster: Cluster2
+        ManagedServer2:
+            Cluster: Cluster2
+        ManagedServer3:
+    ServerTemplate:
+        ServerTemplate1:
+    Cluster:
+        Cluster1:
+            DynamicServers:
+                ServerTemplate: ServerTemplate1
+                DynamicClusterSize: 3
+        Cluster2:
+resources:
+    JDBCSystemResource:
+        DataSource1:
+            JdbcResource:
+                JDBCDriverParams:
+                    DriverName: oracle.jdbc.replay.OracleXADataSourceImpl
+                    URL: &#39;jdbc:oracle:thin:@//dbhost:1521/Database1&#39;
+                JDBCDataSourceParams:
+                    JNDIName: [
+                        jdbc/myDS
+                    ]
+                    GlobalTransactionsProtocol: TwoPhaseCommit
+                DatasourceType: GENERIC
+            Target: [
+                Cluster2
+            ]
+            
+appDeployments:
+    Application:
+        Application1:
+            Target: [
+                Cluster1
+            ]
+            SourcePath: /apps/benefits/benefits.war
+            StagingMode: default
+</code></pre><h2 id="GUID-0C7510AB-67B2-4EF5-8DAB-5A09DC2BD2E8">WDT Model Tokens</h2>
+<p>Use a WDT model token to increase the flexibility of a WDT model file by replacing a fixed value with a dynamic one.</p>
+<p>With WDT model tokens, you can create WDT model files that adapt based on the applicable WDT tokens. Rather than creating multiple WDT model files whose only difference is a few fixed values, you can create a single file and update the tokens as needed.</p>
+<p>WebLogic Remote Console supports multiple types of WDT model tokens. All tokens follow this format: <code>@@TYPE:KEY@@</code> where <code>TYPE</code> is the model token type and <code>KEY</code> is the variable value. For more information on the different types of WDT model tokens and their syntax, see Model Tokens in <a href="https://oracle.github.io/weblogic-deploy-tooling/"><em>WebLogic Deploy Tooling</em></a>.</p>
+<p>WebLogic Remote Console allows you to insert WDT model tokens in two ways:</p>
+<ul>
+<li>Standalone WDT model tokens</li>
+<li>WDT variables</li>
+</ul>
+<h3 id="standalone-wdt-model-tokens">Standalone WDT Model Tokens</h3>
+<p>Standalone WDT model token are tokens that replaced when the WDT model file is passed through WebLogic Deploy Tooling or through another external process. WebLogic Remote Console knows nothing about the value of the token and cannot update it.</p>
+<h3 id="wdt-variables">WDT Variables</h3>
+<p>WDT variables allow you to manage WDT model tokens and their values from within WebLogic Remote Console. First, you create a property list with a set of tokens and their values, then you assign a property list to a WDT model file. After they are linked, any properties that you create in the property list become available to insert into the associated WDT model file. By centralizing model tokens in a property lists, you can easily update their values and review available tokens.</p>
+<p>For more information, see <a href="../property-lists#GUID-62721515-29E5-4DC4-BBD8-E2D1C8A7529D">Property Lists</a>.</p>
+<p>Each WDT model file can only pull from one property list, but you can use the same property list for multiple WDT model files.</p>
+
+<div class="notices note" ><p>You can use both standalone WDT model tokens and WDT variables in the same WDT model file. This can be useful if you want to synchronize certain values and leave other values as slightly more static or to be changed by a later process.</p>
+</div>
+<h2 id="GUID-1ECF1B50-BE85-413F-8417-34A8E0CC8FB0">Create a WDT Model File</h2>
+<p>To create a WDT model file for use with the WebLogic Deploy Tooling:</p>
+<ol>
+<li>
+<p>Open the Providers drawer and beside the project name, click <strong>More ︙</strong>. Select <strong>Create Provider for New WDT Model File</strong>.</p>
+</li>
+<li>
+<p>Enter a name for the WDT model file provider.</p>
+</li>
+<li>
+<p>In the <strong>WDT Model Filename</strong> field, enter a name for the WDT model file. Include <code>.yaml</code> or <code>.json</code> at the end of the file name.</p>
+</li>
+<li>
+<p>Click <strong>Pick Directory</strong> and browse to the directory where you want to save the new WDT model file.</p>
+</li>
+<li>
+<p>Enable <strong>Use Sparse Template</strong> to create a WDT model file which does not contain any references to an Administration Server.</p>
+</li>
+<li>
+<p>If you want to use WDT variables with this WDT model file, then from the <strong>WDT Variables</strong> dropdown list, choose a property list provider. If you don&rsquo;t have a property list provider yet, you can add one later.</p>
+</li>
+<li>
+<p>Click <strong>OK</strong> to create the WDT model file.</p>
+</li>
+</ol>
+<h2 id="GUID-EC821453-1C8A-49DD-A2AB-B5BF58B0B00E">Upload a WDT Model File</h2>
+<p>If you created a WDT model file elsewhere, you can upload it to WebLogic Remote Console and continue to edit it.</p>
+<ol>
+<li>
+<p>Open the Providers drawer and beside the project name, click <strong>More ︙</strong>. Select <strong>Add WDT Model File Provider</strong>.</p>
+</li>
+<li>
+<p>Enter a name for the WDT model file provider.</p>
+</li>
+<li>
+<p>Click <strong>Upload File</strong> and browse to the directory where you saved the WDT model file.</p>
+<p>The WDT model file must be in <code>YAML</code> or <code>JSON</code> format.</p>
+</li>
+<li>
+<p>If you want to use WDT variables with this WDT model file, then from the <strong>WDT Variables</strong> drop-down list, choose a property list provider. If you don&rsquo;t have a property list provider yet, you can edit this provider&rsquo;s settings later to add one.</p>
+</li>
+<li>
+<p>Click <strong>OK</strong> to upload the WDT model file.</p>
+</li>
+</ol>
+<h2 id="GUID-B0B9CBA4-29E4-417D-8094-5BA8B4522ED7">Edit a WDT Model File</h2>
+<p>To make changes to a WDT model file:</p>
+
+<div class="notices note" ><p>For guidance on where to find specific domain configuration options and how to apply them, review the tasks under <a href="../../administration-server#GUID-BC6883D0-1917-4130-B79B-02727F1242D6">Administration Server</a>. The WDT Model Tree perspective is very similar to the Edit Tree perspective in an Administration Server provider.</p>
+</div>
+<ol>
+<li>
+<p>Open the WDT model file that you want to edit.</p>
+</li>
+<li>
+<p>Click <strong>WDT Model Tree</strong> and go to the node where you want to make your changes.</p>
+</li>
+<li>
+<p>Beside the domain configuration that you want to modify, click <strong>WDT Settings</strong> to open the WDT settings dialog box.</p>
+</li>
+<li>
+<p>Set a new value for the field, using one of the following options:</p>
+</li>
+</ol>
+<table id="GUID-B0B9CBA4-29E4-417D-8094-5BA8B4522ED7__TABLE_YMB_PZN_SDC">
+                              <span>Describes the various ways to set values for a field.</span>
+                              <thead>
+                                 <tr>
+                                    <th id="d28420e377">Option</th>
+                                    <th id="d28420e379">Description</th>
+                                 </tr>
+                              </thead>
+                              <tbody>
+                                 <tr>
+                                    <td>Default (unset)</td>
+                                    <td>Restore field to its default value.</td>
+                                 </tr>
+                                 <tr>
+                                    <td>Select Value</td>
+                                    <td>Select a reference to a component that exists in the current WDT model file.</td>
+                                 </tr>
+                                 <tr>
+                                    <td>Enter Value</td>
+                                    <td>Enter a fixed value.</td>
+                                 </tr>
+                                 <tr>
+                                    <td>Enter Model Token</td>
+                                    <td>Enter a WDT model token.</td>
+                                 </tr>
+                                 <tr>
+                                    <td>Enter Unresolved Reference</td>
+                                    <td>Enter a reference to a component that does not exist in the current WDT model file but will exist at a later point.</td>
+                                 </tr>
+                                 <tr>
+                                    <td>Select Model Token Variable</td>
+                                    <td>Select a WDT model token variable from the list of available options. The WDT model file must be connected with a property list to see this option.</td>
+                                 </tr>
+                                 <tr>
+                                    <td>Create Model Token Variable</td>
+                                    <td>Enter a Variable Name and Variable Value to create a new WDT model token variable. New model token variables are added to the connected property list. The WDT model file must be connected with a property list to see this option.</td>
+                                 </tr>
+                              </tbody>
+                           </table>
+<ol start="5">
+<li>Click <strong>Save Now</strong> to update the <code>YAML</code> file with your changes.</li>
+</ol>
+<p>If you want to restore fields to their default value, right-click on a field and click <strong>Restore to default</strong>.</p>
+<h2 id="GUID-4A5C092D-A16B-4F7F-A5CC-38DCF2293FBE">Build a WebLogic Server Domain</h2>
+<p>When you&rsquo;re satisfied with the properties of your WDT model file, you can transform it into a live WebLogic Server domain with WebLogic Deploy Tooling (WDT).</p>
+<ol>
+<li>
+<p>Save the WDT model file in WebLogic Remote Console. Make a note of the location of the <code>YAML</code> file on your computer.</p>
+</li>
+<li>
+<p>Download the latest version of WDT from its GitHub repository, <a href="https://github.com/oracle/weblogic-deploy-tooling">https://github.com/oracle/weblogic-deploy-tooling</a>.</p>
+</li>
+<li>
+<p>Follow the instructions in the <a href="https://oracle.github.io/weblogic-deploy-tooling/">WDT Documentation</a> for creating a domain from a WDT model file.</p>
+</li>
+</ol>
+
+
+
+
+
+<footer class=" footline" >
+	
+</footer>
+
+        
+        </div>
+        
+
+      </div>
+
+    <div id="navigation">
+        
+        
+
+        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+
+        
+
+
+	 
+	 
+		
+			<a class="nav nav-prev" href="/weblogic-remote-console/2.4.13/weblogic-deploy-tooling/" title="WebLogic Deploy Tooling"> <i class="fa fa-chevron-left"></i></a>
+		
+		
+			<a class="nav nav-next" href="/weblogic-remote-console/2.4.13/weblogic-deploy-tooling/wdt-composites/" title="WDT Composite Models" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+		
+	
+    </div>
+
+    </section>
+
+    <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
+      <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
+    </div>
+    <script src="/weblogic-remote-console/2.4.13/js/clipboard.min.js?1736784199"></script>
+    <script src="/weblogic-remote-console/2.4.13/js/perfect-scrollbar.min.js?1736784199"></script>
+    <script src="/weblogic-remote-console/2.4.13/js/perfect-scrollbar.jquery.min.js?1736784199"></script>
+    <script src="/weblogic-remote-console/2.4.13/js/jquery.sticky.js?1736784199"></script>
+    <script src="/weblogic-remote-console/2.4.13/js/featherlight.min.js?1736784199"></script>
+    <script src="/weblogic-remote-console/2.4.13/js/highlight.pack.js?1736784199"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script src="/weblogic-remote-console/2.4.13/js/modernizr.custom-3.6.0.js?1736784199"></script>
+    <script src="/weblogic-remote-console/2.4.13/js/learn.js?1736784199"></script>
+    <script src="/weblogic-remote-console/2.4.13/js/hugo-learn.js?1736784199"></script>
+    
+        
+            <script src="/weblogic-remote-console/2.4.13/mermaid/mermaid.js?1736784199"></script>
+        
+        <script>
+            mermaid.initialize({ startOnLoad: true });
+        </script>
+    
+    
+
+  </body>
+</html>
