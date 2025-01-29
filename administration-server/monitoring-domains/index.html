@@ -12,20 +12,20 @@
     <title>Monitoring Domains :: WebLogic Remote Console</title>
 
     
-    <link href="/weblogic-remote-console/css/nucleus.css?1736784195" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/fontawesome-all.min.css?1736784195" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/hybrid.css?1736784195" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/featherlight.min.css?1736784195" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/perfect-scrollbar.min.css?1736784195" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/auto-complete.css?1736784195" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/atom-one-dark-reasonable.css?1736784195" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/theme.css?1736784195" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/tabs.css?1736784195" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/hugo-theme.css?1736784195" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/nucleus.css?1738041632" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/fontawesome-all.min.css?1738041632" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/hybrid.css?1738041632" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/featherlight.min.css?1738041632" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/perfect-scrollbar.min.css?1738041632" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/auto-complete.css?1738041632" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/atom-one-dark-reasonable.css?1738041632" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/theme.css?1738041632" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/tabs.css?1738041632" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/hugo-theme.css?1738041632" rel="stylesheet">
     
     
 
-    <script src="/weblogic-remote-console/js/jquery-3.6.0.min.js?1736784195"></script>
+    <script src="/weblogic-remote-console/js/jquery-3.6.0.min.js?1738041632"></script>
 
     <style>
       :root #header + #content > #left > #rlblock_left{
@@ -59,14 +59,14 @@
     <span data-search-clear=""><i class="fas fa-times"></i></span>
 </div>
 
-<script type="text/javascript" src="/weblogic-remote-console/js/lunr.min.js?1736784195"></script>
-<script type="text/javascript" src="/weblogic-remote-console/js/auto-complete.js?1736784195"></script>
+<script type="text/javascript" src="/weblogic-remote-console/js/lunr.min.js?1738041632"></script>
+<script type="text/javascript" src="/weblogic-remote-console/js/auto-complete.js?1738041632"></script>
 <script type="text/javascript">
     
         var baseurl = "https:\/\/oracle.github.io\/weblogic-remote-console\/";
     
 </script>
-<script type="text/javascript" src="/weblogic-remote-console/js/search.js?1736784195"></script>
+<script type="text/javascript" src="/weblogic-remote-console/js/search.js?1738041632"></script>
 
     
   </div>
@@ -925,6 +925,7 @@
 <ul>
 <li><strong>By Size</strong> - rotates log messages when log file size reaches the specified size.</li>
 <li><strong>By Time</strong> - rotates log messages after a specified time interval passes.</li>
+<li><strong>By Size or Time</strong> - rotates log messages if the file size reaches the specified size or if the specified time interval passes, whichever occurs first.</li>
 <li><strong>None</strong> - log messages are not automatically rotated. You must manually erase the contents of the file when the size becomes too large.</li>
 </ul>
 </li>
@@ -945,6 +946,9 @@
 <p>In the <strong>Rotation Interval</strong> field, enter the interval, in hours, at which the server saves old messages to another file.</p>
 </li>
 </ol>
+</li>
+<li>
+<p>If you chose <strong>By Size or Time</strong> as the Rotation Type, then configure the <strong>By Size</strong> and <strong>By Time</strong> options as described in steps <a href="#STEP_Z2F_JLF_B2C">3</a> and <a href="#STEP_TQJ_JLF_B2C">4</a>.</p>
 </li>
 <li>
 <p>If you want to limit the number of log files that the server creates to store old log messages, enable the <strong>Limit Number of Retained Log Files</strong> option. Then, in the <strong>Files to Retain</strong> field, enter the maximum number of files. If the server receives additional log messages after reaching the capacity of the last log file, it overwrites the oldest log file.</p>
@@ -1366,19 +1370,19 @@
     <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
       <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
     </div>
-    <script src="/weblogic-remote-console/js/clipboard.min.js?1736784195"></script>
-    <script src="/weblogic-remote-console/js/perfect-scrollbar.min.js?1736784195"></script>
-    <script src="/weblogic-remote-console/js/perfect-scrollbar.jquery.min.js?1736784195"></script>
-    <script src="/weblogic-remote-console/js/jquery.sticky.js?1736784195"></script>
-    <script src="/weblogic-remote-console/js/featherlight.min.js?1736784195"></script>
-    <script src="/weblogic-remote-console/js/highlight.pack.js?1736784195"></script>
+    <script src="/weblogic-remote-console/js/clipboard.min.js?1738041632"></script>
+    <script src="/weblogic-remote-console/js/perfect-scrollbar.min.js?1738041632"></script>
+    <script src="/weblogic-remote-console/js/perfect-scrollbar.jquery.min.js?1738041632"></script>
+    <script src="/weblogic-remote-console/js/jquery.sticky.js?1738041632"></script>
+    <script src="/weblogic-remote-console/js/featherlight.min.js?1738041632"></script>
+    <script src="/weblogic-remote-console/js/highlight.pack.js?1738041632"></script>
     <script>hljs.initHighlightingOnLoad();</script>
-    <script src="/weblogic-remote-console/js/modernizr.custom-3.6.0.js?1736784195"></script>
-    <script src="/weblogic-remote-console/js/learn.js?1736784195"></script>
-    <script src="/weblogic-remote-console/js/hugo-learn.js?1736784195"></script>
+    <script src="/weblogic-remote-console/js/modernizr.custom-3.6.0.js?1738041632"></script>
+    <script src="/weblogic-remote-console/js/learn.js?1738041632"></script>
+    <script src="/weblogic-remote-console/js/hugo-learn.js?1738041632"></script>
     
         
-            <script src="/weblogic-remote-console/mermaid/mermaid.js?1736784195"></script>
+            <script src="/weblogic-remote-console/mermaid/mermaid.js?1738041632"></script>
         
         <script>
             mermaid.initialize({ startOnLoad: true });

@@ -1,0 +1,1248 @@
+<!DOCTYPE html>
+<html lang="en" class="js csstransforms3d">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="Hugo 0.123.7">
+    <meta name="description" content="">
+
+
+    <link rel="icon" href="/weblogic-remote-console/2.4.14/images/logo.png" type="image/png">
+
+    <title>Get to Know the Console :: WebLogic Remote Console</title>
+
+    
+    <link href="/weblogic-remote-console/2.4.14/css/nucleus.css?1738041635" rel="stylesheet">
+    <link href="/weblogic-remote-console/2.4.14/css/fontawesome-all.min.css?1738041635" rel="stylesheet">
+    <link href="/weblogic-remote-console/2.4.14/css/hybrid.css?1738041635" rel="stylesheet">
+    <link href="/weblogic-remote-console/2.4.14/css/featherlight.min.css?1738041635" rel="stylesheet">
+    <link href="/weblogic-remote-console/2.4.14/css/perfect-scrollbar.min.css?1738041635" rel="stylesheet">
+    <link href="/weblogic-remote-console/2.4.14/css/auto-complete.css?1738041635" rel="stylesheet">
+    <link href="/weblogic-remote-console/2.4.14/css/atom-one-dark-reasonable.css?1738041635" rel="stylesheet">
+    <link href="/weblogic-remote-console/2.4.14/css/theme.css?1738041635" rel="stylesheet">
+    <link href="/weblogic-remote-console/2.4.14/css/tabs.css?1738041635" rel="stylesheet">
+    <link href="/weblogic-remote-console/2.4.14/css/hugo-theme.css?1738041635" rel="stylesheet">
+    
+    
+
+    <script src="/weblogic-remote-console/2.4.14/js/jquery-3.6.0.min.js?1738041635"></script>
+
+    <style>
+      :root #header + #content > #left > #rlblock_left{
+          display:none !important;
+      }
+      
+        :not(pre) > code + span.copy-to-clipboard {
+            display: none;
+        }
+      
+    </style>
+    
+  </head>
+  <body class="" data-url="/weblogic-remote-console/2.4.14/set-console/get-know-console/">
+    <nav id="sidebar" class="">
+
+
+
+  <div id="header-wrapper">
+    <div id="header">
+      <a id="logo" href="https://oracle.github.io/weblogic-remote-console/2.4.14/">
+  <img src="https://oracle.github.io/weblogic-remote-console/2.4.14//images/logo.png" height="60"><br/>
+  WebLogic Remote Console
+</a>
+
+    </div>
+    
+        <div class="searchbox">
+    <label for="search-by"><i class="fas fa-search"></i></label>
+    <input data-search-input id="search-by" type="search" placeholder="Search...">
+    <span data-search-clear=""><i class="fas fa-times"></i></span>
+</div>
+
+<script type="text/javascript" src="/weblogic-remote-console/2.4.14/js/lunr.min.js?1738041635"></script>
+<script type="text/javascript" src="/weblogic-remote-console/2.4.14/js/auto-complete.js?1738041635"></script>
+<script type="text/javascript">
+    
+        var baseurl = "https:\/\/oracle.github.io\/weblogic-remote-console\/2.4.14\/";
+    
+</script>
+<script type="text/javascript" src="/weblogic-remote-console/2.4.14/js/search.js?1738041635"></script>
+
+    
+  </div>
+
+    <div class="highlightable">
+    <ul class="topics">
+      
+        
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/weblogic-remote-console/2.4.14/set-console/" title="Get Started" class="dd-item
+        parent
+        
+        
+        ">
+      <a href="/weblogic-remote-console/2.4.14/set-console/">
+          Get Started
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/weblogic-remote-console/2.4.14/set-console/get-know-console/" title="Get to Know the Console" class="dd-item
+        
+        active
+        
+        ">
+      <a href="/weblogic-remote-console/2.4.14/set-console/get-know-console/">
+          Get to Know the Console
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/weblogic-remote-console/2.4.14/set-console/contribute-wrc-repository/" title="Contribute to WebLogic Remote Console" class="dd-item
+        
+        
+        
+        ">
+      <a href="/weblogic-remote-console/2.4.14/set-console/contribute-wrc-repository/">
+          Contribute to WebLogic Remote Console
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/weblogic-remote-console/2.4.14/set-console/support-information/" title="Support Information" class="dd-item
+        
+        
+        
+        ">
+      <a href="/weblogic-remote-console/2.4.14/set-console/support-information/">
+          Support Information
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/weblogic-remote-console/2.4.14/administration-server/" title="Administration Server" class="dd-item
+        
+        
+        
+        ">
+      <a href="/weblogic-remote-console/2.4.14/administration-server/">
+          Administration Server
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/weblogic-remote-console/2.4.14/administration-server/domain-configuration/" title="Domain Configuration" class="dd-item
+        
+        
+        
+        ">
+      <a href="/weblogic-remote-console/2.4.14/administration-server/domain-configuration/">
+          Domain Configuration
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/weblogic-remote-console/2.4.14/administration-server/securing-domains/" title="Securing Domains" class="dd-item
+        
+        
+        
+        ">
+      <a href="/weblogic-remote-console/2.4.14/administration-server/securing-domains/">
+          Securing Domains
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/weblogic-remote-console/2.4.14/administration-server/deploying-applications/" title="Deploying Applications" class="dd-item
+        
+        
+        
+        ">
+      <a href="/weblogic-remote-console/2.4.14/administration-server/deploying-applications/">
+          Deploying Applications
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/weblogic-remote-console/2.4.14/administration-server/monitoring-domains/" title="Monitoring Domains" class="dd-item
+        
+        
+        
+        ">
+      <a href="/weblogic-remote-console/2.4.14/administration-server/monitoring-domains/">
+          Monitoring Domains
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/weblogic-remote-console/2.4.14/administration-server/configuring-services/" title="Configuring Services" class="dd-item
+        
+        
+        
+        ">
+      <a href="/weblogic-remote-console/2.4.14/administration-server/configuring-services/">
+          Configuring Services
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/weblogic-remote-console/2.4.14/administration-server/configuring-coherence/" title="Configuring Coherence" class="dd-item
+        
+        
+        
+        ">
+      <a href="/weblogic-remote-console/2.4.14/administration-server/configuring-coherence/">
+          Configuring Coherence
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/weblogic-remote-console/2.4.14/administration-server/scheduling-work/" title="Scheduling Work" class="dd-item
+        
+        
+        
+        ">
+      <a href="/weblogic-remote-console/2.4.14/administration-server/scheduling-work/">
+          Scheduling Work
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/weblogic-remote-console/2.4.14/weblogic-deploy-tooling/" title="WebLogic Deploy Tooling" class="dd-item
+        
+        
+        
+        ">
+      <a href="/weblogic-remote-console/2.4.14/weblogic-deploy-tooling/">
+          WebLogic Deploy Tooling
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/weblogic-remote-console/2.4.14/weblogic-deploy-tooling/wdt-model-files/" title="WDT Model Files" class="dd-item
+        
+        
+        
+        ">
+      <a href="/weblogic-remote-console/2.4.14/weblogic-deploy-tooling/wdt-model-files/">
+          WDT Model Files
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/weblogic-remote-console/2.4.14/weblogic-deploy-tooling/wdt-composites/" title="WDT Composite Models" class="dd-item
+        
+        
+        
+        ">
+      <a href="/weblogic-remote-console/2.4.14/weblogic-deploy-tooling/wdt-composites/">
+          WDT Composite Models
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/weblogic-remote-console/2.4.14/weblogic-deploy-tooling/property-lists/" title="Property Lists" class="dd-item
+        
+        
+        
+        ">
+      <a href="/weblogic-remote-console/2.4.14/weblogic-deploy-tooling/property-lists/">
+          Property Lists
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/weblogic-remote-console/2.4.14/troubleshoot-weblogic-remote-console/" title="Troubleshoot Issues with WebLogic Remote Console" class="dd-item
+        
+        
+        
+        ">
+      <a href="/weblogic-remote-console/2.4.14/troubleshoot-weblogic-remote-console/">
+          Troubleshoot Issues with WebLogic Remote Console
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+          
+        
+      
+    </ul>
+
+    
+    
+
+    
+    <section id="footer">
+      <p>Created with <i class="fas fa-heart"></i> from <a href="https://www.oracle.com">Oracle</a></p>
+<p>&nbsp</p>
+<table border="1" bgcolor="white"><tbody><tr><td align="center"><p style="color: red">
+    You are viewing the archived documentation for version 2.4.14.
+    To view the documentation for the current release, please
+    <a href="https://oracle.github.io/weblogic-remote-console/">click here</a>
+</p></td></tr></tbody></table>
+<p>&nbsp</p>
+<p><a href="https://github.com/oracle/weblogic-remote-console"><i class="fab fa-github"></i> GitHub repo</a></p>
+<p><a href="https://join.slack.com/t/oracle-weblogic/shared_invite/zt-1ni1gtjv6-PGC6CQ4uIte3KBdm_67~aQ"><i class="fab fa-slack"></i> Public Slack #remote-console</a></p>
+
+    </section>
+  </div>
+</nav>
+
+
+
+
+        <section id="body">
+        <div id="overlay"></div>
+        <div class="padding highlightable">
+              
+              <div>
+                <div id="top-bar">
+                
+                
+                <div id="breadcrumbs" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+                    <span id="sidebar-toggle-span">
+                        <a href="#" id="sidebar-toggle" data-sidebar-toggle="">
+                          <i class="fas fa-bars"></i>
+                        </a>
+                    </span>
+                  
+                  <span id="toc-menu"><i class="fas fa-list-alt"></i></span>
+                  
+                  <span class="links">
+                 
+                 
+                    
+          
+          
+            
+            
+          
+          
+            
+            
+          
+          
+            <a href='/weblogic-remote-console/2.4.14/'>About WebLogic Remote Console</a> > <a href='/weblogic-remote-console/2.4.14/set-console/'>Get Started</a> > Get to Know the Console
+          
+        
+          
+        
+          
+        
+                 
+                  </span>
+                </div>
+                
+                    <div class="progress">
+    <div class="wrapper">
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#key-elements-of-the-interface">Key Elements of the Interface</a></li>
+    <li><a href="#tool-bar">Tool Bar</a></li>
+    <li><a href="#explore-your-domain">Explore your Domain</a></li>
+    <li><a href="#change-indicators">Change Indicators</a></li>
+    <li><a href="#GUID-709F9244-296B-443C-827F-AC8B26513FAC">Change Console Preferences</a></li>
+    <li><a href="#GUID-FF37D291-F8C5-4EFB-8A18-DADF035348C9">Customize a Table</a></li>
+    <li><a href="#GUID-A6323CCF-02F4-4E77-BDF2-A2DB1623A598">Projects</a>
+      <ul>
+        <li><a href="#GUID-744E69CA-2A29-42E4-BD29-9F43516DF1F9">Create a Project</a></li>
+        <li><a href="#GUID-AD97818F-0740-4E24-8673-9FFF4E32596E">Export a Project</a></li>
+        <li><a href="#GUID-F0A7A1C6-87F1-458B-9D31-5FF65E20023D">Import a Project</a></li>
+      </ul>
+    </li>
+    <li><a href="#GUID-5C611ED8-29EF-4B21-B181-557C7D192C96">Enable Keyboard Navigation on macOS</a></li>
+  </ul>
+</nav>
+    </div>
+</div>
+
+                
+              </div>
+            </div>
+            
+        <div id="head-tags">
+        
+        </div>
+        
+        <div id="body-inner">
+          
+            <h1>
+              
+              Get to Know the Console
+            </h1>
+          
+
+        
+
+
+
+	<p>WebLogic Remote Console is your portal to managing WebLogic Server domains from a unified interface, whether they are running domains or model templates.</p>
+<p>When you launch WebLogic Remote Console for the first time, it opens a <strong>Startup Tasks</strong> dialog box with options to connect to a new provider, such as an Administration Server or WDT model file. WebLogic Remote Console remembers your connection details so on subsequent visits, it will open on your last project, letting you continue where you left off.</p>
+<p>The structure of WebLogic Remote Console remains similar across provider types, with variances as appropriate for the provider type.</p>
+<h2 id="key-elements-of-the-interface">Key Elements of the Interface</h2>
+<p>Open the <img src="../../project-management-blk_24x24.png" alt="Providers drawer"> <strong>Providers</strong> drawer to see and manage your saved provider connections.</p>
+<p>Browse the <strong>Navigation Tree</strong> to see the structure of the provider as a node tree. In providers based on domains, such as Administration Servers or WDT model files, the node tree builds upon the MBean structure that defines a WebLogic Server domain. Beside the Navigation Tree is the <strong>NavStrip</strong>. On providers with multiple perspectives, you can also use the icons in the NavStrip to move between perspectives.</p>
+<p>Click <img src="../../navigation-icon-toggle-blk_24x24.png" alt="Toggle Navigation Tree visibility"> above the NavStrip to hide the Navigation Tree when you want a bigger editing area. Click it again to bring the Navigation Tree back.</p>
+<p>The <strong>Content Pane</strong> is the main editing area for managing your domains or property lists. As you move through the nodes of the Navigation Tree, the Content Pane updates to match your new position.</p>
+<h2 id="tool-bar">Tool Bar</h2>
+<p>The Tool Bar, near the top of WebLogic Remote Console, groups together quick actions that you can use to navigate or manipulate the interface.</p>
+<p>Tool bar icons only appear on pages where they are applicable. For example, the Shopping Cart, used to indicate pending changes, only appears in Administration Server providers.</p>
+<table id="GUID-6DDEDC3B-00F5-4075-8849-66D3707C2C16__TABLE_GQ3_FQF_NZB">
+                     <caption>
+                        <span>
+                           <span>Table 1. </span>Tool Bar. </span>
+                        <span>Tool bar icons that may appear along the top of the Content Pane.</span>
+                     </caption>
+                     <thead>
+                        <tr>
+                           <th id="d6914e105">Tool Bar Icon</th>
+                           <th id="d6914e107">Description</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <tr>
+                           <td>
+                              <img id="GUID-6DDEDC3B-00F5-4075-8849-66D3707C2C16__IMAGE_NGZ_4MY_MDC"
+                                   src="/weblogic-remote-console/images/home-icon-blk_24x24.png"/> Home</td>
+                           <td>Sends you to the Home Page of the provider.</td>
+                        </tr>
+                        <tr>
+                           <td>
+                              <img id="GUID-6DDEDC3B-00F5-4075-8849-66D3707C2C16__IMAGE_U5V_TDZ_MDC"
+                                   src="/weblogic-remote-console/images/landing-page-icon-blk_24x24.png"/> Landing Page</td>
+                           <td>Sends you to the Landing Page of the current perspective.</td>
+                        </tr>
+                        <tr>
+                           <td>
+                              <img id="GUID-6DDEDC3B-00F5-4075-8849-66D3707C2C16__IMAGE_J45_P2Z_MDC"
+                                   src="/weblogic-remote-console/images/beanpath-history-icon-blk_24x24.png"/> Visibility of History</td>
+                           <td>Triggers a record of the pages you visit. When active, a drop-down list appears where you can see, and return to, your previous pages. History is limited to the current perspective. <p>Click <span>More ︙</span>, then <span>Clear History Entries</span> to delete your navigation history.</p>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td>
+                              <img id="GUID-6DDEDC3B-00F5-4075-8849-66D3707C2C16__IMAGE_SJV_VDZ_MDC"
+                                   src="/weblogic-remote-console/images/toggle-help-icon-blk_16x16.png"/> Help</td>
+                           <td>Shows reference information about the attributes present on the current page.</td>
+                        </tr>
+                        <tr>
+                           <td>
+                              <img id="GUID-6DDEDC3B-00F5-4075-8849-66D3707C2C16__IMAGE_NWY_ZDZ_MDC"
+                                   src="/weblogic-remote-console/images/sync-icon-blk_24x24.png"/> Reload</td>
+                           <td>Refreshes any forms or tables on the current page with the latest available data.<p>When <span>Auto Reload Interval</span> is enabled, this icon will bounce continuously.</p>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td>
+                              <img id="GUID-6DDEDC3B-00F5-4075-8849-66D3707C2C16__IMAGE_R5R_B2Z_MDC"
+                                   src="/weblogic-remote-console/images/sync-interval-icon-blk_24x24.png"/> Auto Reload Interval</td>
+                           <td>Sets a time interval (in seconds) for how often <span id="GUID-6DDEDC3B-00F5-4075-8849-66D3707C2C16__WRC">WebLogic Remote Console</span> should reload a page to refresh its information. If you select another tab or move to another page, automatic reload stops.<p>To stop auto reload, click the bouncing <span>Reload</span> icon or click <span>Auto Reload Interval</span> and set the interval to <code>0</code>.</p>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td>
+                              <img id="GUID-6DDEDC3B-00F5-4075-8849-66D3707C2C16__IMAGE_GFR_D2Z_MDC"
+                                   src="/weblogic-remote-console/images/shopping-cart-icon_24x24.png"/> Shopping Cart </td>
+                           <td>Indicates if there are pending changes ready to be committed to a WebLogic Server domain.<p>When the <span>Shopping Cart</span> is full, you can click it to see the pending changes and then commit or discard them.</p>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td>
+                              <img id="GUID-6DDEDC3B-00F5-4075-8849-66D3707C2C16__IMAGE_ZNL_M2Z_MDC"
+                                   src="/weblogic-remote-console/images/action-reset-icon-blk_24x24.png"/> Refresh Page Values</td>
+                           <td>Updates the Content Pane with the latest values. </td>
+                        </tr>
+                     </tbody>
+                  </table>
+<h2 id="explore-your-domain">Explore your Domain</h2>
+<p>WebLogic Server domains can be complex structures, so WebLogic Remote Console provides multiple methods to locate your objective.</p>
+<p><strong>Navigation Tree</strong>: Expand the nodes of the Navigation Tree to browse its children and gain a high level understanding of the hierarchical relationship of a WebLogic Server domain.</p>
+<p><strong>Breadcrumbs</strong>: The Content Pane provides a breadcrumb menu to orient you as you descend further into a node branch. You can also click on a node&rsquo;s page title in the Breadcrumb menu to find links to related nodes that take you directly to the related content.</p>
+<p><strong>Search</strong>: Use the search bar to find any MBeans in the domain that match your query. Searches are restricted to within the current provider and perspective. Previous search queries can be found as the last node in the Navigation Tree, nested under the <strong>Recent Searches</strong> node.</p>
+<p><strong>Dashboards</strong>: If you find yourself regularly reviewing specific data within your domain, you may want to make use of Dashboards, which let you curate complex search filters and compare disparate information about your domain. For more information, see <a href="../../administration-server/monitoring-domains#GUID-1C12C76D-2820-4AD8-9556-46AC52C617AD">Dashboards</a>.</p>
+<h2 id="change-indicators">Change Indicators</h2>
+<p>When you modify an MBean attribute, WebLogic Remote Console adds a black outline to the attribute&rsquo;s field to indicate that it is no longer set to the default value.</p>
+<p>To return an MBean attribute to its default setting, right-click inside the attribute&rsquo;s field and click <strong>Restore to default</strong>. Save and commit the change.</p>
+
+<div class="notices note" ><p>The domain configuration file, <code>config.xml</code>, only describes MBean attributes if they are set to non-default values. After you use Restore to default, the (now unnecessary) attribute will be removed from the file.</p>
+</div>
+<h2 id="GUID-709F9244-296B-443C-827F-AC8B26513FAC">Change Console Preferences</h2>
+<p>You can customize Desktop WebLogic Remote Console to suit your needs.</p>
+<ol>
+<li>
+<p>Go to <strong>File</strong>, then <strong>Preferences</strong>. (On macOS, go to <strong>WebLogic Remote Console</strong>, then <strong>Application Preferences</strong> ).</p>
+</li>
+<li>
+<p>Choose a section tab and make your changes as needed.</p>
+</li>
+<li>
+<p>Close the <strong>Preferences</strong> dialog box to apply your changes.</p>
+</li>
+</ol>
+<h2 id="GUID-FF37D291-F8C5-4EFB-8A18-DADF035348C9">Customize a Table</h2>
+<p>You can choose which columns are visible in a table, hiding irrelevant data so you can focus on the important details.</p>
+<ol>
+<li>
+<p>Find a table that you want to customize. For example, in the <strong>Edit Tree</strong>, go to <strong>Environment</strong>, then <strong>Servers</strong>.</p>
+</li>
+<li>
+<p>Click <strong>Customize Table</strong> to display the list of Available Columns.</p>
+<p>The available column options differ by table as not all columns (that is, properties) are applicable to all tables.</p>
+</li>
+<li>
+<p>Use the arrows to move your wanted columns from <strong>Available Columns</strong> to <strong>Selected Columns</strong>. Move any unwanted columns back to <strong>Available Columns</strong>. Move the columns to <strong>Selected Columns</strong> in the order that you want them to appear in the table. There must be at least one column under <strong>Selected Columns</strong>.</p>
+</li>
+<li>
+<p>Click <strong>Apply</strong> to save your changes.</p>
+</li>
+</ol>
+<p>Changes to table columns will persist indefinitely and apply to that specific table across all applicable providers. If you change the table columns for Server Templates in wdt-model_1, then those changes will also affect the Server Templates table in wdt-model_2 and admin-server_1 (Edit Tree).</p>
+<p>To return a table to its default set of columns, open <strong>Customize Table</strong> and click <strong>Reset</strong>.</p>
+<h2 id="GUID-A6323CCF-02F4-4E77-BDF2-A2DB1623A598">Projects</h2>
+<p>Use projects to organize providers in a way that makes sense for your workflow.</p>
+<p>You can add as many providers to a project as you want. You can even add the same provider to multiple projects.</p>
+<p>For simplicity, we recommend that if you use property lists with your WDT model files, then you should keep the property list provider in the same project as the WDT model file.</p>
+<h3 id="GUID-744E69CA-2A29-42E4-BD29-9F43516DF1F9">Create a Project</h3>
+<p>To arrange providers into a collection:</p>
+<ol>
+<li>
+<p>Open <strong>File</strong>, then <strong>New Project</strong>.</p>
+</li>
+<li>
+<p>Enter a name for the new project.</p>
+</li>
+<li>
+<p>Open the <strong>Providers</strong> drawer and beside the project&rsquo;s name, click <strong>More ︙</strong>. Select one of the following options to add a provider:</p>
+<ul>
+<li>Add Admin Server Connection Provider</li>
+<li>Add WDT Model File Provider</li>
+<li>Add WDT Composite Model File Provider</li>
+<li>Add Property List Provider</li>
+<li>Create Provider for New WDT Model File</li>
+<li>Create Provider for New Property List
+For more information on the different provider types, see <a href="..#GUID-82C1C605-D42E-45EA-AC16-5BA3D5853C96">Provider Types</a></li>
+</ul>
+</li>
+<li>
+<p>Fill in any required information.</p>
+</li>
+<li>
+<p>Click <strong>OK</strong> to add the provider to your project.</p>
+</li>
+<li>
+<p>Add more providers to the project.</p>
+</li>
+</ol>
+<p>You can add or remove providers from the project at any point. To switch to another project, open <strong>File</strong>, then <strong>Switch to project</strong> and choose the project that you want to switch to.</p>
+<p>Deleting a project will not affect the providers within the project.</p>
+<h3 id="GUID-AD97818F-0740-4E24-8673-9FFF4E32596E">Export a Project</h3>
+<p>If you use WebLogic Remote Console on multiple computers, exporting a project is a convenient way to share a project across multiple computers.</p>
+
+<div class="notices note" ><p>If the project contains a WDT model file, make sure the location of the WDT model file is accessible to all the computers where this project will be imported to.</p>
+</div>
+<ol>
+<li>
+<p>In the Providers drawer, click <strong>More ︙</strong> and select <strong>Export Providers as Project</strong>.</p>
+</li>
+<li>
+<p>Enter a name for the exported project. When imported into another WebLogic Remote Console, this will be the name of the project.</p>
+</li>
+<li>
+<p>Enter a name for the file of the exported project.</p>
+</li>
+<li>
+<p>Click <strong>OK</strong> and choose a file location to save the exported project file.</p>
+</li>
+</ol>
+<p>WebLogic Remote Console creates a JSON file with the project details that you can import into other instances of WebLogic Remote Console.</p>
+<h3 id="GUID-F0A7A1C6-87F1-458B-9D31-5FF65E20023D">Import a Project</h3>
+<p>You can import the project details of an existing project to rapidly ramp up productivity in a new installation of WebLogic Remote Console.</p>
+<ol>
+<li>
+<p>Export a project and save the file to the computer where you want to import it. See <a href="#GUID-AD97818F-0740-4E24-8673-9FFF4E32596E">Export a Project</a>.</p>
+</li>
+<li>
+<p>On the computer where you want to import the file, start WebLogic Remote Console.</p>
+</li>
+<li>
+<p>In the Providers drawer, click <strong>More ︙</strong> and select <strong>Import Project</strong>.</p>
+</li>
+<li>
+<p>Click <strong>Upload File</strong> and browse to the exported project file.</p>
+</li>
+<li>
+<p>Click <strong>Import</strong>.</p>
+</li>
+</ol>
+<p>The imported project automatically becomes the current project loaded in WebLogic Remote Console.</p>
+<h2 id="GUID-5C611ED8-29EF-4B21-B181-557C7D192C96">Enable Keyboard Navigation on macOS</h2>
+<p>On devices running macOS, you must specifically enable keyboard navigation before you can use the Tab key (or Shift + Tab keys) to navigate between the controls in WebLogic Remote Console.</p>
+<ol>
+<li>
+<p>On your device running macOS, open the Apple main menu and select <strong>System Settings</strong>.</p>
+</li>
+<li>
+<p>Click the <strong>Keyboard</strong> item in the sidebar.</p>
+</li>
+<li>
+<p>Turn on the <strong>Keyboard Navigation</strong> option.</p>
+</li>
+<li>
+<p>If you plan to use the Safari browser with Hosted WebLogic Remote Console, then do the following:</p>
+<ol>
+<li>
+<p>Open the Safari browser and open its main menu.</p>
+</li>
+<li>
+<p>Select <strong>Settings</strong>.</p>
+</li>
+<li>
+<p>On the <strong>Advanced</strong> tab, turn on the <strong>Press Tab to highlight each item on a webpage</strong> option.</p>
+</li>
+</ol>
+</li>
+</ol>
+
+
+
+
+
+<footer class=" footline" >
+	
+</footer>
+
+        
+        </div>
+        
+
+      </div>
+
+    <div id="navigation">
+        
+        
+
+        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+
+        
+
+
+	 
+	 
+		
+			<a class="nav nav-prev" href="/weblogic-remote-console/2.4.14/set-console/" title="Get Started"> <i class="fa fa-chevron-left"></i></a>
+		
+		
+			<a class="nav nav-next" href="/weblogic-remote-console/2.4.14/set-console/contribute-wrc-repository/" title="Contribute to WebLogic Remote Console" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+		
+	
+    </div>
+
+    </section>
+
+    <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
+      <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
+    </div>
+    <script src="/weblogic-remote-console/2.4.14/js/clipboard.min.js?1738041635"></script>
+    <script src="/weblogic-remote-console/2.4.14/js/perfect-scrollbar.min.js?1738041635"></script>
+    <script src="/weblogic-remote-console/2.4.14/js/perfect-scrollbar.jquery.min.js?1738041635"></script>
+    <script src="/weblogic-remote-console/2.4.14/js/jquery.sticky.js?1738041635"></script>
+    <script src="/weblogic-remote-console/2.4.14/js/featherlight.min.js?1738041635"></script>
+    <script src="/weblogic-remote-console/2.4.14/js/highlight.pack.js?1738041635"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script src="/weblogic-remote-console/2.4.14/js/modernizr.custom-3.6.0.js?1738041635"></script>
+    <script src="/weblogic-remote-console/2.4.14/js/learn.js?1738041635"></script>
+    <script src="/weblogic-remote-console/2.4.14/js/hugo-learn.js?1738041635"></script>
+    
+        
+            <script src="/weblogic-remote-console/2.4.14/mermaid/mermaid.js?1738041635"></script>
+        
+        <script>
+            mermaid.initialize({ startOnLoad: true });
+        </script>
+    
+    
+
+  </body>
+</html>

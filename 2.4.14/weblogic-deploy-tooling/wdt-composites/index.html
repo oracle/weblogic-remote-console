@@ -1,0 +1,1039 @@
+<!DOCTYPE html>
+<html lang="en" class="js csstransforms3d">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="Hugo 0.123.7">
+    <meta name="description" content="">
+
+
+    <link rel="icon" href="/weblogic-remote-console/2.4.14/images/logo.png" type="image/png">
+
+    <title>WDT Composite Models :: WebLogic Remote Console</title>
+
+    
+    <link href="/weblogic-remote-console/2.4.14/css/nucleus.css?1738041635" rel="stylesheet">
+    <link href="/weblogic-remote-console/2.4.14/css/fontawesome-all.min.css?1738041635" rel="stylesheet">
+    <link href="/weblogic-remote-console/2.4.14/css/hybrid.css?1738041635" rel="stylesheet">
+    <link href="/weblogic-remote-console/2.4.14/css/featherlight.min.css?1738041635" rel="stylesheet">
+    <link href="/weblogic-remote-console/2.4.14/css/perfect-scrollbar.min.css?1738041635" rel="stylesheet">
+    <link href="/weblogic-remote-console/2.4.14/css/auto-complete.css?1738041635" rel="stylesheet">
+    <link href="/weblogic-remote-console/2.4.14/css/atom-one-dark-reasonable.css?1738041635" rel="stylesheet">
+    <link href="/weblogic-remote-console/2.4.14/css/theme.css?1738041635" rel="stylesheet">
+    <link href="/weblogic-remote-console/2.4.14/css/tabs.css?1738041635" rel="stylesheet">
+    <link href="/weblogic-remote-console/2.4.14/css/hugo-theme.css?1738041635" rel="stylesheet">
+    
+    
+
+    <script src="/weblogic-remote-console/2.4.14/js/jquery-3.6.0.min.js?1738041635"></script>
+
+    <style>
+      :root #header + #content > #left > #rlblock_left{
+          display:none !important;
+      }
+      
+        :not(pre) > code + span.copy-to-clipboard {
+            display: none;
+        }
+      
+    </style>
+    
+  </head>
+  <body class="" data-url="/weblogic-remote-console/2.4.14/weblogic-deploy-tooling/wdt-composites/">
+    <nav id="sidebar" class="">
+
+
+
+  <div id="header-wrapper">
+    <div id="header">
+      <a id="logo" href="https://oracle.github.io/weblogic-remote-console/2.4.14/">
+  <img src="https://oracle.github.io/weblogic-remote-console/2.4.14//images/logo.png" height="60"><br/>
+  WebLogic Remote Console
+</a>
+
+    </div>
+    
+        <div class="searchbox">
+    <label for="search-by"><i class="fas fa-search"></i></label>
+    <input data-search-input id="search-by" type="search" placeholder="Search...">
+    <span data-search-clear=""><i class="fas fa-times"></i></span>
+</div>
+
+<script type="text/javascript" src="/weblogic-remote-console/2.4.14/js/lunr.min.js?1738041635"></script>
+<script type="text/javascript" src="/weblogic-remote-console/2.4.14/js/auto-complete.js?1738041635"></script>
+<script type="text/javascript">
+    
+        var baseurl = "https:\/\/oracle.github.io\/weblogic-remote-console\/2.4.14\/";
+    
+</script>
+<script type="text/javascript" src="/weblogic-remote-console/2.4.14/js/search.js?1738041635"></script>
+
+    
+  </div>
+
+    <div class="highlightable">
+    <ul class="topics">
+      
+        
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/weblogic-remote-console/2.4.14/set-console/" title="Get Started" class="dd-item
+        
+        
+        
+        ">
+      <a href="/weblogic-remote-console/2.4.14/set-console/">
+          Get Started
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/weblogic-remote-console/2.4.14/set-console/get-know-console/" title="Get to Know the Console" class="dd-item
+        
+        
+        
+        ">
+      <a href="/weblogic-remote-console/2.4.14/set-console/get-know-console/">
+          Get to Know the Console
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/weblogic-remote-console/2.4.14/set-console/contribute-wrc-repository/" title="Contribute to WebLogic Remote Console" class="dd-item
+        
+        
+        
+        ">
+      <a href="/weblogic-remote-console/2.4.14/set-console/contribute-wrc-repository/">
+          Contribute to WebLogic Remote Console
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/weblogic-remote-console/2.4.14/set-console/support-information/" title="Support Information" class="dd-item
+        
+        
+        
+        ">
+      <a href="/weblogic-remote-console/2.4.14/set-console/support-information/">
+          Support Information
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/weblogic-remote-console/2.4.14/administration-server/" title="Administration Server" class="dd-item
+        
+        
+        
+        ">
+      <a href="/weblogic-remote-console/2.4.14/administration-server/">
+          Administration Server
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/weblogic-remote-console/2.4.14/administration-server/domain-configuration/" title="Domain Configuration" class="dd-item
+        
+        
+        
+        ">
+      <a href="/weblogic-remote-console/2.4.14/administration-server/domain-configuration/">
+          Domain Configuration
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/weblogic-remote-console/2.4.14/administration-server/securing-domains/" title="Securing Domains" class="dd-item
+        
+        
+        
+        ">
+      <a href="/weblogic-remote-console/2.4.14/administration-server/securing-domains/">
+          Securing Domains
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/weblogic-remote-console/2.4.14/administration-server/deploying-applications/" title="Deploying Applications" class="dd-item
+        
+        
+        
+        ">
+      <a href="/weblogic-remote-console/2.4.14/administration-server/deploying-applications/">
+          Deploying Applications
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/weblogic-remote-console/2.4.14/administration-server/monitoring-domains/" title="Monitoring Domains" class="dd-item
+        
+        
+        
+        ">
+      <a href="/weblogic-remote-console/2.4.14/administration-server/monitoring-domains/">
+          Monitoring Domains
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/weblogic-remote-console/2.4.14/administration-server/configuring-services/" title="Configuring Services" class="dd-item
+        
+        
+        
+        ">
+      <a href="/weblogic-remote-console/2.4.14/administration-server/configuring-services/">
+          Configuring Services
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/weblogic-remote-console/2.4.14/administration-server/configuring-coherence/" title="Configuring Coherence" class="dd-item
+        
+        
+        
+        ">
+      <a href="/weblogic-remote-console/2.4.14/administration-server/configuring-coherence/">
+          Configuring Coherence
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/weblogic-remote-console/2.4.14/administration-server/scheduling-work/" title="Scheduling Work" class="dd-item
+        
+        
+        
+        ">
+      <a href="/weblogic-remote-console/2.4.14/administration-server/scheduling-work/">
+          Scheduling Work
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/weblogic-remote-console/2.4.14/weblogic-deploy-tooling/" title="WebLogic Deploy Tooling" class="dd-item
+        parent
+        
+        
+        ">
+      <a href="/weblogic-remote-console/2.4.14/weblogic-deploy-tooling/">
+          WebLogic Deploy Tooling
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/weblogic-remote-console/2.4.14/weblogic-deploy-tooling/wdt-model-files/" title="WDT Model Files" class="dd-item
+        
+        
+        
+        ">
+      <a href="/weblogic-remote-console/2.4.14/weblogic-deploy-tooling/wdt-model-files/">
+          WDT Model Files
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/weblogic-remote-console/2.4.14/weblogic-deploy-tooling/wdt-composites/" title="WDT Composite Models" class="dd-item
+        
+        active
+        
+        ">
+      <a href="/weblogic-remote-console/2.4.14/weblogic-deploy-tooling/wdt-composites/">
+          WDT Composite Models
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/weblogic-remote-console/2.4.14/weblogic-deploy-tooling/property-lists/" title="Property Lists" class="dd-item
+        
+        
+        
+        ">
+      <a href="/weblogic-remote-console/2.4.14/weblogic-deploy-tooling/property-lists/">
+          Property Lists
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/weblogic-remote-console/2.4.14/troubleshoot-weblogic-remote-console/" title="Troubleshoot Issues with WebLogic Remote Console" class="dd-item
+        
+        
+        
+        ">
+      <a href="/weblogic-remote-console/2.4.14/troubleshoot-weblogic-remote-console/">
+          Troubleshoot Issues with WebLogic Remote Console
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+          
+        
+      
+    </ul>
+
+    
+    
+
+    
+    <section id="footer">
+      <p>Created with <i class="fas fa-heart"></i> from <a href="https://www.oracle.com">Oracle</a></p>
+<p>&nbsp</p>
+<table border="1" bgcolor="white"><tbody><tr><td align="center"><p style="color: red">
+    You are viewing the archived documentation for version 2.4.14.
+    To view the documentation for the current release, please
+    <a href="https://oracle.github.io/weblogic-remote-console/">click here</a>
+</p></td></tr></tbody></table>
+<p>&nbsp</p>
+<p><a href="https://github.com/oracle/weblogic-remote-console"><i class="fab fa-github"></i> GitHub repo</a></p>
+<p><a href="https://join.slack.com/t/oracle-weblogic/shared_invite/zt-1ni1gtjv6-PGC6CQ4uIte3KBdm_67~aQ"><i class="fab fa-slack"></i> Public Slack #remote-console</a></p>
+
+    </section>
+  </div>
+</nav>
+
+
+
+
+        <section id="body">
+        <div id="overlay"></div>
+        <div class="padding highlightable">
+              
+              <div>
+                <div id="top-bar">
+                
+                
+                <div id="breadcrumbs" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+                    <span id="sidebar-toggle-span">
+                        <a href="#" id="sidebar-toggle" data-sidebar-toggle="">
+                          <i class="fas fa-bars"></i>
+                        </a>
+                    </span>
+                  
+                  <span id="toc-menu"><i class="fas fa-list-alt"></i></span>
+                  
+                  <span class="links">
+                 
+                 
+                    
+          
+          
+            
+            
+          
+          
+            
+            
+          
+          
+            <a href='/weblogic-remote-console/2.4.14/'>About WebLogic Remote Console</a> > <a href='/weblogic-remote-console/2.4.14/weblogic-deploy-tooling/'>WebLogic Deploy Tooling</a> > WDT Composite Models
+          
+        
+          
+        
+          
+        
+                 
+                  </span>
+                </div>
+                
+                    <div class="progress">
+    <div class="wrapper">
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#GUID-099438C8-E18F-49E5-8963-DD229B77910A">Create a WDT Composite Model</a></li>
+  </ul>
+</nav>
+    </div>
+</div>
+
+                
+              </div>
+            </div>
+            
+        <div id="head-tags">
+        
+        </div>
+        
+        <div id="body-inner">
+          
+            <h1>
+              
+              WDT Composite Models
+            </h1>
+          
+
+        
+
+
+
+	<p>WDT composite models are multiple WDT model files that have been merged together. WDT composite models are read-only files that are useful for comparison.</p>
+
+<div class="notices note" ><p>If there are conflicting properties between WDT model files, then the last WDT model file added overrides the properties of the previous file.</p>
+</div>
+<h2 id="GUID-099438C8-E18F-49E5-8963-DD229B77910A">Create a WDT Composite Model</h2>
+<p>Combine two or more WDT model files.</p>
+<p>There must be at least two WDT model file providers in the active project.</p>
+<ol>
+<li>
+<p>Open the Providers drawer and beside the project name, click <strong>More ︙</strong>. Select <strong>Add WDT Composite Model File Provider</strong>.</p>
+</li>
+<li>
+<p>Enter a name for the WDT Composite Model.</p>
+</li>
+<li>
+<p>Click inside the <strong>WDT Models</strong> field and select the WDT model files that you want to appear in the WDT Composite Model in the order that you want them to appear. Only WDT model files in the current project will appear in the drop-down list.</p>
+<p>Choose the order that the WDT model files are added to the composite carefully. Each subsequent WDT model file overrides the properties of the previous file. If there are any conflicting properties, the properties of the last WDT model file added to the composite takes precedence.</p>
+</li>
+<li>
+<p>Click <strong>OK</strong> to create the WDT composite model.</p>
+</li>
+</ol>
+<p>The selected WDT model files are merged and you can view the combined set in the <strong>WDT Composite Model Tree</strong>.</p>
+<p>You can add or remove WDT model files from a WDT composite model as needed. Removing a WDT model file from a WDT composite model (or deleting the WDT composite model entirely) does not affect the constituent WDT model files.</p>
+
+
+
+
+
+<footer class=" footline" >
+	
+</footer>
+
+        
+        </div>
+        
+
+      </div>
+
+    <div id="navigation">
+        
+        
+
+        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+
+        
+
+
+	 
+	 
+		
+			<a class="nav nav-prev" href="/weblogic-remote-console/2.4.14/weblogic-deploy-tooling/wdt-model-files/" title="WDT Model Files"> <i class="fa fa-chevron-left"></i></a>
+		
+		
+			<a class="nav nav-next" href="/weblogic-remote-console/2.4.14/weblogic-deploy-tooling/property-lists/" title="Property Lists" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+		
+	
+    </div>
+
+    </section>
+
+    <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
+      <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
+    </div>
+    <script src="/weblogic-remote-console/2.4.14/js/clipboard.min.js?1738041635"></script>
+    <script src="/weblogic-remote-console/2.4.14/js/perfect-scrollbar.min.js?1738041635"></script>
+    <script src="/weblogic-remote-console/2.4.14/js/perfect-scrollbar.jquery.min.js?1738041635"></script>
+    <script src="/weblogic-remote-console/2.4.14/js/jquery.sticky.js?1738041635"></script>
+    <script src="/weblogic-remote-console/2.4.14/js/featherlight.min.js?1738041635"></script>
+    <script src="/weblogic-remote-console/2.4.14/js/highlight.pack.js?1738041635"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script src="/weblogic-remote-console/2.4.14/js/modernizr.custom-3.6.0.js?1738041635"></script>
+    <script src="/weblogic-remote-console/2.4.14/js/learn.js?1738041635"></script>
+    <script src="/weblogic-remote-console/2.4.14/js/hugo-learn.js?1738041635"></script>
+    
+        
+            <script src="/weblogic-remote-console/2.4.14/mermaid/mermaid.js?1738041635"></script>
+        
+        <script>
+            mermaid.initialize({ startOnLoad: true });
+        </script>
+    
+    
+
+  </body>
+</html>

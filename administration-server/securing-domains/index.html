@@ -12,20 +12,20 @@
     <title>Securing Domains :: WebLogic Remote Console</title>
 
     
-    <link href="/weblogic-remote-console/css/nucleus.css?1736784195" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/fontawesome-all.min.css?1736784195" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/hybrid.css?1736784195" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/featherlight.min.css?1736784195" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/perfect-scrollbar.min.css?1736784195" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/auto-complete.css?1736784195" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/atom-one-dark-reasonable.css?1736784195" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/theme.css?1736784195" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/tabs.css?1736784195" rel="stylesheet">
-    <link href="/weblogic-remote-console/css/hugo-theme.css?1736784195" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/nucleus.css?1738041632" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/fontawesome-all.min.css?1738041632" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/hybrid.css?1738041632" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/featherlight.min.css?1738041632" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/perfect-scrollbar.min.css?1738041632" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/auto-complete.css?1738041632" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/atom-one-dark-reasonable.css?1738041632" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/theme.css?1738041632" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/tabs.css?1738041632" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/hugo-theme.css?1738041632" rel="stylesheet">
     
     
 
-    <script src="/weblogic-remote-console/js/jquery-3.6.0.min.js?1736784195"></script>
+    <script src="/weblogic-remote-console/js/jquery-3.6.0.min.js?1738041632"></script>
 
     <style>
       :root #header + #content > #left > #rlblock_left{
@@ -59,14 +59,14 @@
     <span data-search-clear=""><i class="fas fa-times"></i></span>
 </div>
 
-<script type="text/javascript" src="/weblogic-remote-console/js/lunr.min.js?1736784195"></script>
-<script type="text/javascript" src="/weblogic-remote-console/js/auto-complete.js?1736784195"></script>
+<script type="text/javascript" src="/weblogic-remote-console/js/lunr.min.js?1738041632"></script>
+<script type="text/javascript" src="/weblogic-remote-console/js/auto-complete.js?1738041632"></script>
 <script type="text/javascript">
     
         var baseurl = "https:\/\/oracle.github.io\/weblogic-remote-console\/";
     
 </script>
-<script type="text/javascript" src="/weblogic-remote-console/js/search.js?1736784195"></script>
+<script type="text/javascript" src="/weblogic-remote-console/js/search.js?1738041632"></script>
 
     
   </div>
@@ -1207,16 +1207,19 @@ You do not need to identify data sources.</li>
 <p>In the <strong>Name</strong> field, enter a name for the new provider.</p>
 </li>
 <li>
+<p>From the <strong>Type</strong> drop-down list, select the type of Certificate Lookup and Validation (CLV) provider.</p>
+</li>
+<li>
 <p>Click <strong>Create</strong>.</p>
 </li>
 <li>
-<p>If you want to make this Certification Path provider the current builder of certificate chains for this realm, perform the following steps:</p>
+<p>If you want to make this CLV provider the current builder of certificate chains for this realm, perform the following steps:</p>
 <ol>
 <li>
 <p>In the <strong>Edit Tree</strong>, go to <strong>Security</strong>, then <strong>Realms</strong>, then <em>myRealm</em>.</p>
 </li>
 <li>
-<p>On the <strong>Cert Path Builder</strong> tab, select the Certification Path provider from the <strong>Cert Path Builder</strong> drop-down list.</p>
+<p>On the <strong>Cert Path Builder</strong> tab, select the CLV provider from the <strong>Cert Path Builder</strong> drop-down list.</p>
 </li>
 <li>
 <p>Click <strong>Save</strong>.</p>
@@ -1393,7 +1396,7 @@ You do not need to identify data sources.</li>
 </li>
 </ol>
 <h3 id="GUID-16E007EA-6BA2-49D9-9005-FF40C304792B">View Users and Groups</h3>
-<p>If you added an authentication provider other than the default authentication provider (WebLogic Authentication Provider) to your security realm, you can view its users and groups but you cannot edit them in WebLogic Remote Console.</p>
+<p>After you configure an authentication provider, you can view its users and groups in WebLogic Remote Console, if the provider supports the required WebLogic Server APIs. WebLogic Remote Console displays up to 1000 users or groups at a time. You cannot view group membership.</p>
 <ol>
 <li>
 <p>In the <strong>Security Data Tree</strong>, go to <strong>Realms</strong>, <em>myRealm</em>, then <strong>Authentication Providers</strong>.</p>
@@ -1405,7 +1408,7 @@ You do not need to identify data sources.</li>
 <p>Expand the <strong>Users</strong> or <strong>Groups</strong> nodes to view the users and groups.</p>
 </li>
 </ol>
-<p>To edit these users and groups, you&rsquo;ll need to use an external tool specific to the provider.</p>
+<p>For the default authentication provider (WebLogic Authentication Provider) <em>only</em>, you can also add, modify, or delete users and groups.</p>
 <h2 id="GUID-6FDCFBD8-33DE-4962-9A17-F25BB3028D1E">Security Policies and Roles</h2>
 <p>Use security policies to manage who can access a resource in a WebLogic Server domain.</p>
 <p>A resource is an entity (such as a Web Service or a server instance) or an action (such as a method in a Web Service or the act of shutting down a server instance). For a list of resource types, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=ROLES-GUID-A2DC979A-E464-4CDA-8B24-D9213709A7E3">Resource Types You Can Secure with Policies</a> in <strong>Securing Resources Using Roles and Policies for Oracle WebLogic Server</strong>.</p>
@@ -1499,8 +1502,8 @@ You do not need to identify data sources.</li>
                            <span>The actions available to configure a security policy.</span>
                            <thead>
                               <tr>
-                                 <th id="d34709e3218">Action</th>
-                                 <th id="d34709e3220">Description</th>
+                                 <th id="d34891e2971">Action</th>
+                                 <th id="d34891e2973">Description</th>
                               </tr>
                            </thead>
                            <tbody>
@@ -2835,19 +2838,19 @@ weblogic.oif.serialGlobalFilter=\
     <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
       <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
     </div>
-    <script src="/weblogic-remote-console/js/clipboard.min.js?1736784195"></script>
-    <script src="/weblogic-remote-console/js/perfect-scrollbar.min.js?1736784195"></script>
-    <script src="/weblogic-remote-console/js/perfect-scrollbar.jquery.min.js?1736784195"></script>
-    <script src="/weblogic-remote-console/js/jquery.sticky.js?1736784195"></script>
-    <script src="/weblogic-remote-console/js/featherlight.min.js?1736784195"></script>
-    <script src="/weblogic-remote-console/js/highlight.pack.js?1736784195"></script>
+    <script src="/weblogic-remote-console/js/clipboard.min.js?1738041632"></script>
+    <script src="/weblogic-remote-console/js/perfect-scrollbar.min.js?1738041632"></script>
+    <script src="/weblogic-remote-console/js/perfect-scrollbar.jquery.min.js?1738041632"></script>
+    <script src="/weblogic-remote-console/js/jquery.sticky.js?1738041632"></script>
+    <script src="/weblogic-remote-console/js/featherlight.min.js?1738041632"></script>
+    <script src="/weblogic-remote-console/js/highlight.pack.js?1738041632"></script>
     <script>hljs.initHighlightingOnLoad();</script>
-    <script src="/weblogic-remote-console/js/modernizr.custom-3.6.0.js?1736784195"></script>
-    <script src="/weblogic-remote-console/js/learn.js?1736784195"></script>
-    <script src="/weblogic-remote-console/js/hugo-learn.js?1736784195"></script>
+    <script src="/weblogic-remote-console/js/modernizr.custom-3.6.0.js?1738041632"></script>
+    <script src="/weblogic-remote-console/js/learn.js?1738041632"></script>
+    <script src="/weblogic-remote-console/js/hugo-learn.js?1738041632"></script>
     
         
-            <script src="/weblogic-remote-console/mermaid/mermaid.js?1736784195"></script>
+            <script src="/weblogic-remote-console/mermaid/mermaid.js?1738041632"></script>
         
         <script>
             mermaid.initialize({ startOnLoad: true });

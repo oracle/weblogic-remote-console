@@ -1,0 +1,1276 @@
+<!DOCTYPE html>
+<html lang="en" class="js csstransforms3d">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="Hugo 0.123.7">
+    <meta name="description" content="">
+
+
+    <link rel="icon" href="/weblogic-remote-console/2.4.14/images/logo.png" type="image/png">
+
+    <title>Scheduling Work :: WebLogic Remote Console</title>
+
+    
+    <link href="/weblogic-remote-console/2.4.14/css/nucleus.css?1738041635" rel="stylesheet">
+    <link href="/weblogic-remote-console/2.4.14/css/fontawesome-all.min.css?1738041635" rel="stylesheet">
+    <link href="/weblogic-remote-console/2.4.14/css/hybrid.css?1738041635" rel="stylesheet">
+    <link href="/weblogic-remote-console/2.4.14/css/featherlight.min.css?1738041635" rel="stylesheet">
+    <link href="/weblogic-remote-console/2.4.14/css/perfect-scrollbar.min.css?1738041635" rel="stylesheet">
+    <link href="/weblogic-remote-console/2.4.14/css/auto-complete.css?1738041635" rel="stylesheet">
+    <link href="/weblogic-remote-console/2.4.14/css/atom-one-dark-reasonable.css?1738041635" rel="stylesheet">
+    <link href="/weblogic-remote-console/2.4.14/css/theme.css?1738041635" rel="stylesheet">
+    <link href="/weblogic-remote-console/2.4.14/css/tabs.css?1738041635" rel="stylesheet">
+    <link href="/weblogic-remote-console/2.4.14/css/hugo-theme.css?1738041635" rel="stylesheet">
+    
+    
+
+    <script src="/weblogic-remote-console/2.4.14/js/jquery-3.6.0.min.js?1738041635"></script>
+
+    <style>
+      :root #header + #content > #left > #rlblock_left{
+          display:none !important;
+      }
+      
+        :not(pre) > code + span.copy-to-clipboard {
+            display: none;
+        }
+      
+    </style>
+    
+  </head>
+  <body class="" data-url="/weblogic-remote-console/2.4.14/administration-server/scheduling-work/">
+    <nav id="sidebar" class="">
+
+
+
+  <div id="header-wrapper">
+    <div id="header">
+      <a id="logo" href="https://oracle.github.io/weblogic-remote-console/2.4.14/">
+  <img src="https://oracle.github.io/weblogic-remote-console/2.4.14//images/logo.png" height="60"><br/>
+  WebLogic Remote Console
+</a>
+
+    </div>
+    
+        <div class="searchbox">
+    <label for="search-by"><i class="fas fa-search"></i></label>
+    <input data-search-input id="search-by" type="search" placeholder="Search...">
+    <span data-search-clear=""><i class="fas fa-times"></i></span>
+</div>
+
+<script type="text/javascript" src="/weblogic-remote-console/2.4.14/js/lunr.min.js?1738041635"></script>
+<script type="text/javascript" src="/weblogic-remote-console/2.4.14/js/auto-complete.js?1738041635"></script>
+<script type="text/javascript">
+    
+        var baseurl = "https:\/\/oracle.github.io\/weblogic-remote-console\/2.4.14\/";
+    
+</script>
+<script type="text/javascript" src="/weblogic-remote-console/2.4.14/js/search.js?1738041635"></script>
+
+    
+  </div>
+
+    <div class="highlightable">
+    <ul class="topics">
+      
+        
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/weblogic-remote-console/2.4.14/set-console/" title="Get Started" class="dd-item
+        
+        
+        
+        ">
+      <a href="/weblogic-remote-console/2.4.14/set-console/">
+          Get Started
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/weblogic-remote-console/2.4.14/set-console/get-know-console/" title="Get to Know the Console" class="dd-item
+        
+        
+        
+        ">
+      <a href="/weblogic-remote-console/2.4.14/set-console/get-know-console/">
+          Get to Know the Console
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/weblogic-remote-console/2.4.14/set-console/contribute-wrc-repository/" title="Contribute to WebLogic Remote Console" class="dd-item
+        
+        
+        
+        ">
+      <a href="/weblogic-remote-console/2.4.14/set-console/contribute-wrc-repository/">
+          Contribute to WebLogic Remote Console
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/weblogic-remote-console/2.4.14/set-console/support-information/" title="Support Information" class="dd-item
+        
+        
+        
+        ">
+      <a href="/weblogic-remote-console/2.4.14/set-console/support-information/">
+          Support Information
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/weblogic-remote-console/2.4.14/administration-server/" title="Administration Server" class="dd-item
+        parent
+        
+        
+        ">
+      <a href="/weblogic-remote-console/2.4.14/administration-server/">
+          Administration Server
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/weblogic-remote-console/2.4.14/administration-server/domain-configuration/" title="Domain Configuration" class="dd-item
+        
+        
+        
+        ">
+      <a href="/weblogic-remote-console/2.4.14/administration-server/domain-configuration/">
+          Domain Configuration
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/weblogic-remote-console/2.4.14/administration-server/securing-domains/" title="Securing Domains" class="dd-item
+        
+        
+        
+        ">
+      <a href="/weblogic-remote-console/2.4.14/administration-server/securing-domains/">
+          Securing Domains
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/weblogic-remote-console/2.4.14/administration-server/deploying-applications/" title="Deploying Applications" class="dd-item
+        
+        
+        
+        ">
+      <a href="/weblogic-remote-console/2.4.14/administration-server/deploying-applications/">
+          Deploying Applications
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/weblogic-remote-console/2.4.14/administration-server/monitoring-domains/" title="Monitoring Domains" class="dd-item
+        
+        
+        
+        ">
+      <a href="/weblogic-remote-console/2.4.14/administration-server/monitoring-domains/">
+          Monitoring Domains
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/weblogic-remote-console/2.4.14/administration-server/configuring-services/" title="Configuring Services" class="dd-item
+        
+        
+        
+        ">
+      <a href="/weblogic-remote-console/2.4.14/administration-server/configuring-services/">
+          Configuring Services
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/weblogic-remote-console/2.4.14/administration-server/configuring-coherence/" title="Configuring Coherence" class="dd-item
+        
+        
+        
+        ">
+      <a href="/weblogic-remote-console/2.4.14/administration-server/configuring-coherence/">
+          Configuring Coherence
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/weblogic-remote-console/2.4.14/administration-server/scheduling-work/" title="Scheduling Work" class="dd-item
+        
+        active
+        
+        ">
+      <a href="/weblogic-remote-console/2.4.14/administration-server/scheduling-work/">
+          Scheduling Work
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/weblogic-remote-console/2.4.14/weblogic-deploy-tooling/" title="WebLogic Deploy Tooling" class="dd-item
+        
+        
+        
+        ">
+      <a href="/weblogic-remote-console/2.4.14/weblogic-deploy-tooling/">
+          WebLogic Deploy Tooling
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/weblogic-remote-console/2.4.14/weblogic-deploy-tooling/wdt-model-files/" title="WDT Model Files" class="dd-item
+        
+        
+        
+        ">
+      <a href="/weblogic-remote-console/2.4.14/weblogic-deploy-tooling/wdt-model-files/">
+          WDT Model Files
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/weblogic-remote-console/2.4.14/weblogic-deploy-tooling/wdt-composites/" title="WDT Composite Models" class="dd-item
+        
+        
+        
+        ">
+      <a href="/weblogic-remote-console/2.4.14/weblogic-deploy-tooling/wdt-composites/">
+          WDT Composite Models
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/weblogic-remote-console/2.4.14/weblogic-deploy-tooling/property-lists/" title="Property Lists" class="dd-item
+        
+        
+        
+        ">
+      <a href="/weblogic-remote-console/2.4.14/weblogic-deploy-tooling/property-lists/">
+          Property Lists
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/weblogic-remote-console/2.4.14/troubleshoot-weblogic-remote-console/" title="Troubleshoot Issues with WebLogic Remote Console" class="dd-item
+        
+        
+        
+        ">
+      <a href="/weblogic-remote-console/2.4.14/troubleshoot-weblogic-remote-console/">
+          Troubleshoot Issues with WebLogic Remote Console
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+          
+        
+      
+    </ul>
+
+    
+    
+
+    
+    <section id="footer">
+      <p>Created with <i class="fas fa-heart"></i> from <a href="https://www.oracle.com">Oracle</a></p>
+<p>&nbsp</p>
+<table border="1" bgcolor="white"><tbody><tr><td align="center"><p style="color: red">
+    You are viewing the archived documentation for version 2.4.14.
+    To view the documentation for the current release, please
+    <a href="https://oracle.github.io/weblogic-remote-console/">click here</a>
+</p></td></tr></tbody></table>
+<p>&nbsp</p>
+<p><a href="https://github.com/oracle/weblogic-remote-console"><i class="fab fa-github"></i> GitHub repo</a></p>
+<p><a href="https://join.slack.com/t/oracle-weblogic/shared_invite/zt-1ni1gtjv6-PGC6CQ4uIte3KBdm_67~aQ"><i class="fab fa-slack"></i> Public Slack #remote-console</a></p>
+
+    </section>
+  </div>
+</nav>
+
+
+
+
+        <section id="body">
+        <div id="overlay"></div>
+        <div class="padding highlightable">
+              
+              <div>
+                <div id="top-bar">
+                
+                
+                <div id="breadcrumbs" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+                    <span id="sidebar-toggle-span">
+                        <a href="#" id="sidebar-toggle" data-sidebar-toggle="">
+                          <i class="fas fa-bars"></i>
+                        </a>
+                    </span>
+                  
+                  <span id="toc-menu"><i class="fas fa-list-alt"></i></span>
+                  
+                  <span class="links">
+                 
+                 
+                    
+          
+          
+            
+            
+          
+          
+            
+            
+          
+          
+            <a href='/weblogic-remote-console/2.4.14/'>About WebLogic Remote Console</a> > <a href='/weblogic-remote-console/2.4.14/administration-server/'>Administration Server</a> > Scheduling Work
+          
+        
+          
+        
+          
+        
+                 
+                  </span>
+                </div>
+                
+                    <div class="progress">
+    <div class="wrapper">
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#GUID-FC4F63E2-4793-4311-8A98-4F9C9D2697BE">Create a Global Work Manager</a></li>
+    <li><a href="#GUID-DB4D6BD0-3948-4E6A-ACDC-D9D663C49F03">Create Request Classes</a></li>
+    <li><a href="#GUID-BAE0F946-EEA6-449C-8893-D83BBCD23179">Create Constraints</a></li>
+    <li><a href="#GUID-77305107-4C5F-46CC-83E5-EC0EE3CC238F">Assign a Request Class or Constraints to a Work Manager</a></li>
+    <li><a href="#GUID-46144962-EBE3-428D-AE95-89A3B7505A70">Create a Work Manager Shutdown Trigger</a></li>
+    <li><a href="#GUID-F4073670-85D5-4246-A195-966A6C331C02">Concurrent Managed Object Templates</a>
+      <ul>
+        <li><a href="#GUID-FF036380-DF70-429B-95EA-A9C962637804">Create a Global Managed Executor Service Template</a></li>
+        <li><a href="#GUID-8BF9B3FC-6EF0-4097-89A7-E3453CD7BAB1">Create a Global Managed Scheduled Executor Service Template</a></li>
+        <li><a href="#GUID-0FF74BB7-79AE-4DD4-BCD1-9E211140CAC4">Create a Global Managed Thread Factory Template</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+    </div>
+</div>
+
+                
+              </div>
+            </div>
+            
+        <div id="head-tags">
+        
+        </div>
+        
+        <div id="body-inner">
+          
+            <h1>
+              
+              Scheduling Work
+            </h1>
+          
+
+        
+
+
+
+	<p>You can use Work Managers to prioritize work based on rules that you define and by monitoring actual run time performance statistics to then optimize the performance of your applications.</p>
+<p>Work Managers can be applied globally to a WebLogic Server domain.</p>
+<p>A Work Manager defines a set of request classes and thread constraints that manage work performed by WebLogic Server.</p>
+<p>A request class defines a fair share thread entitlement, a response time goal, or a context policy for a particular class of application request.</p>
+<p>Thread constraints define the maximum number of threads to allocate for requests, the minimum number of threads to use for resolving deadlocks, and the total number of requests that can be queued or running before WebLogic Server begins rejecting requests.</p>
+<p>See <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=CNFGD-GUID-0670CD7C-AC96-46D4-AA43-1F99F21F1CC3">Using Work Managers to Optimize Scheduled Work</a> in <strong>Administering Server Environments for Oracle WebLogic Server</strong>.</p>
+<h2 id="GUID-FC4F63E2-4793-4311-8A98-4F9C9D2697BE">Create a Global Work Manager</h2>
+<p>You can create global Work Managers that are used to prioritize thread execution.</p>
+<ol>
+<li>
+<p>In the <strong>Edit Tree</strong>, go to <strong>Scheduling</strong>, then <strong>Work Managers</strong>.</p>
+</li>
+<li>
+<p>Click <strong>New</strong>.</p>
+</li>
+<li>
+<p>Enter a name for the new Work Manager and click <strong>Create</strong>.</p>
+</li>
+<li>
+<p>Update the default values as appropriate.</p>
+</li>
+<li>
+<p>On the <strong>Targets</strong> tab, select the servers or clusters on which you plan to deploy applications that reference the Work Manager and move them under <strong>Chosen</strong>. Move unwanted servers or clusters under <strong>Available</strong>.</p>
+</li>
+<li>
+<p>Click <strong>Save</strong>.</p>
+</li>
+</ol>
+<p>Next, you must create at least one request class or constraint. The global Work Manager uses request classes and constraints to determine how to prioritize work. See <a href="#GUID-DB4D6BD0-3948-4E6A-ACDC-D9D663C49F03">Create Request Classes</a> and <a href="#GUID-BAE0F946-EEA6-449C-8893-D83BBCD23179">Create Constraints</a>.</p>
+<h2 id="GUID-DB4D6BD0-3948-4E6A-ACDC-D9D663C49F03">Create Request Classes</h2>
+<p>Request classes express a scheduling guideline that WebLogic Server uses to allocate threads to requests.</p>
+<ol>
+<li>
+<p>In the <strong>Edit Tree</strong>, go to <strong>Scheduling</strong>, then choose one of the request class types:</p>
+<ul>
+<li><strong>Context Request Classes</strong></li>
+<li><strong>Fair Share Request Classes</strong></li>
+<li><strong>Response Time Request Classes</strong>
+For information on the different request class types, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=CNFGD-GUID-9C8BC85F-C61D-4DFA-A46E-9558ADF91735">Request Classes</a> in <strong>Administering Server Environments for Oracle WebLogic Server</strong>.</li>
+</ul>
+</li>
+<li>
+<p>Click <strong>New</strong>.</p>
+</li>
+<li>
+<p>Enter a name for the new request class and, for Response Time request classes, update the <strong>Response Time Goal</strong> value.</p>
+</li>
+<li>
+<p>Click <strong>Create</strong>.</p>
+</li>
+<li>
+<p>On the <strong>Targets</strong> tab, select the servers or clusters on which you plan to deploy applications that reference this request class and move them under <strong>Chosen</strong>.</p>
+<p>The servers or clusters that you select must share at least one target with the applicable Work Manager.</p>
+</li>
+<li>
+<p>Click <strong>Save</strong>.</p>
+</li>
+</ol>
+<p>Next, you must assign this request class to a Work Manager to use it. See <a href="#GUID-77305107-4C5F-46CC-83E5-EC0EE3CC238F">Assign a Request Class or Constraints to a Work Manager</a>.</p>
+<h2 id="GUID-BAE0F946-EEA6-449C-8893-D83BBCD23179">Create Constraints</h2>
+<p>A constraint defines the minimum and maximum numbers of threads allocated to execute requests and the total number of requests that can be queued or executing before WebLogic Server begins rejecting requests.</p>
+<ol>
+<li>
+<p>In the <strong>Edit Tree</strong>, go to <strong>Scheduling</strong>, then choose one of the constraint types:</p>
+<ul>
+<li><strong>Capacities</strong></li>
+<li><strong>Max Threads Constraints</strong></li>
+<li><strong>Min Threads Constraints</strong>
+For information on the different request class types, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=CNFGD-GUID-DBFDE1EF-481A-41B9-985F-444EBCD96FF5">Constraints</a> in <strong>Administering Server Environments for Oracle WebLogic Server</strong>.</li>
+</ul>
+</li>
+<li>
+<p>Click <strong>New</strong>.</p>
+</li>
+<li>
+<p>Enter a name for the new constraint and click <strong>Create</strong>.</p>
+</li>
+<li>
+<p>Update the default values for the constraint as necessary. Click <strong>Save</strong> when you are done with your changes.</p>
+</li>
+<li>
+<p>On the <strong>Targets</strong> tab, select the servers or clusters on which you plan to deploy applications that reference this constraint and move them under <strong>Chosen</strong>.</p>
+<p>The servers or clusters that you select must share at least one target with the applicable Work Manager.</p>
+</li>
+<li>
+<p>Click <strong>Save</strong>.</p>
+</li>
+<li>
+<p>Repeat to add another type of constraint, if necessary.</p>
+<p>Each Work Manager can contain only one constraint of each type.</p>
+</li>
+</ol>
+<p>Next, you must assign this constraint to a Work Manager to use it. See <a href="#GUID-77305107-4C5F-46CC-83E5-EC0EE3CC238F">Assign a Request Class or Constraints to a Work Manager</a>.</p>
+<h2 id="GUID-77305107-4C5F-46CC-83E5-EC0EE3CC238F">Assign a Request Class or Constraints to a Work Manager</h2>
+<p>Before you can use the settings defined in a request class or constraint, you must assign it to a Work Manager.</p>
+
+<div class="notices note" ><ul>
+<li>
+<p><strong>Request Classes</strong>: Each Work Manager can contain only <em>one</em> request class, but you can share request classes among multiple Work Managers.</p>
+</li>
+<li>
+<p><strong>Constraints</strong>: Each Work Manager can contain only one constraint of each <em>type</em>, but you can share constraints among multiple Work Managers.</p>
+</li>
+</ul>
+</div>
+<ol>
+<li>
+<p>If you haven&rsquo;t done so already, create a global Work Manager. See <a href="#GUID-FC4F63E2-4793-4311-8A98-4F9C9D2697BE">Create a Global Work Manager</a>.</p>
+</li>
+<li>
+<p>In the <strong>Edit Tree</strong>, go to <strong>Scheduling</strong>, then <strong>Work Managers</strong> and select the Work Manager where you want to assign the request class or constraints.</p>
+</li>
+<li>
+<p>Use the applicable drop-down lists to choose a request class or constraints to assign to this Work Manager.</p>
+</li>
+<li>
+<p>Click <strong>Save</strong>.</p>
+</li>
+</ol>
+<h2 id="GUID-46144962-EBE3-428D-AE95-89A3B7505A70">Create a Work Manager Shutdown Trigger</h2>
+<p>You can define how a Work Manager should handle stuck threads.</p>
+<p>For more information, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=CNFGD-GUID-63A11D05-8128-40EE-8E52-854BDE516BEE">Stuck Thread Handling</a> in <strong>Administering Server Environments for Oracle WebLogic Server</strong>.</p>
+<ol>
+<li>
+<p>If you haven&rsquo;t done so already, create a global Work Manager. See <a href="#GUID-FC4F63E2-4793-4311-8A98-4F9C9D2697BE">Create a Global Work Manager</a>.</p>
+</li>
+<li>
+<p>In the <strong>Edit Tree</strong>, go to <strong>Scheduling</strong>, then <strong>Work Managers</strong>, then <em>myWorkManager</em>, then <strong>Work Manager Shutdown Trigger</strong>.</p>
+</li>
+<li>
+<p>Click <strong>Create</strong>.</p>
+</li>
+<li>
+<p>Update the default values as needed.</p>
+</li>
+<li>
+<p>Click <strong>Save</strong>.</p>
+</li>
+</ol>
+<h2 id="GUID-F4073670-85D5-4246-A195-966A6C331C02">Concurrent Managed Object Templates</h2>
+<p>WebLogic Server provides concurrency capabilities to Jakarta EE applications by using Concurrent Managed Object (CMO) templates to make threads container-managed. You can configure CMO templates and then make them available for use by application components, such as servlets and EJBs.</p>
+<p>You can define three types of CMO templates:</p>
+<ul>
+<li>Managed Executor Service Template - Used by applications to execute submitted tasks asynchronously. See <a href="#GUID-FF036380-DF70-429B-95EA-A9C962637804">Create a Global Managed Executor Service Template</a>.</li>
+<li>Managed Scheduled Executor Service Template - Used by applications to execute submitted tasks asynchronously at specific times. See <a href="#GUID-8BF9B3FC-6EF0-4097-89A7-E3453CD7BAB1">Create a Global Managed Scheduled Executor Service Template</a>.</li>
+<li>Managed Thread Factory Template - Used by applications to create managed threads. See <a href="#GUID-0FF74BB7-79AE-4DD4-BCD1-9E211140CAC4">Create a Global Managed Thread Factory Template</a>.</li>
+</ul>
+<p>For more information, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=CNFGD-GUID-9BD68EFA-5614-43F8-BB69-870F55605951">Configuring Concurrent Managed Objects</a> in <strong>Administering Server Environments for Oracle WebLogic Server</strong>.</p>
+<h3 id="GUID-FF036380-DF70-429B-95EA-A9C962637804">Create a Global Managed Executor Service Template</h3>
+<p>You can create managed executor service (MES) templates that are used by applications to execute submitted tasks asynchronously.</p>
+<ol>
+<li>
+<p>In the <strong>Edit Tree</strong>, go to <strong>Scheduling</strong>, then <strong>Managed Executor Service Templates</strong>.</p>
+</li>
+<li>
+<p>Click <strong>New</strong>.</p>
+</li>
+<li>
+<p>Enter a name for the new MES template.</p>
+</li>
+<li>
+<p>Click <strong>Create</strong>.</p>
+</li>
+<li>
+<p>If you want to use a non-default Work Manager with this MES template, in the <strong>Dispatch Policy</strong> field, enter the name of the custom Work Manager.</p>
+</li>
+<li>
+<p>If you want to specify the priority of the long running daemon thread, update the value in the <strong>Long Running Threads Priority</strong> field.</p>
+</li>
+<li>
+<p>If you want to define the maximum number of concurrent long-running tasks submitted to this MES template in the domain, update the value in the <strong>Max Concurrent Long Running Requests</strong> field.</p>
+</li>
+<li>
+<p>Click <strong>Save</strong>.</p>
+</li>
+<li>
+<p>On the <strong>Targets</strong> tab, select the servers or clusters where this MES template will be accessible and move them under <strong>Chosen</strong>. Move unwanted servers or clusters under <strong>Available</strong>.</p>
+<p>Only applications that have been deployed to the selected servers and clusters can use this MES template.</p>
+</li>
+<li>
+<p>Click <strong>Save</strong>.</p>
+</li>
+</ol>
+<h3 id="GUID-8BF9B3FC-6EF0-4097-89A7-E3453CD7BAB1">Create a Global Managed Scheduled Executor Service Template</h3>
+<p>You can create managed scheduled executor service (MSES) templates that are used by applications to execute submitted tasks asynchronously at specific times.</p>
+<ol>
+<li>
+<p>In the <strong>Edit Tree</strong>, go to <strong>Scheduling</strong>, then <strong>Managed Scheduled Executor Service Templates</strong>.</p>
+</li>
+<li>
+<p>Click <strong>New</strong>.</p>
+</li>
+<li>
+<p>Enter a name for the new MSES template.</p>
+</li>
+<li>
+<p>Click <strong>Create</strong>.</p>
+</li>
+<li>
+<p>If you want to use a non-default Work Manager with this MSES template, in the <strong>Dispatch Policy</strong> field, enter the name of the custom Work Manager.</p>
+</li>
+<li>
+<p>If you want to specify the priority of the long running daemon thread, update the value in the <strong>Long Running Threads Priority</strong> field.</p>
+</li>
+<li>
+<p>If you want to define the maximum number of concurrent long-running tasks submitted to this MSES template in the domain, update the value in the <strong>Max Concurrent Long Running Requests</strong> field.</p>
+</li>
+<li>
+<p>Click <strong>Save</strong>.</p>
+</li>
+<li>
+<p>On the <strong>Targets</strong> tab, select the servers or clusters where this MSES template will be accessible and move them under <strong>Chosen</strong>. Move unwanted servers or clusters under <strong>Available</strong>.</p>
+<p>Only applications that have been deployed to the selected servers and clusters can use this MSES template.</p>
+</li>
+<li>
+<p>Click <strong>Save</strong>.</p>
+</li>
+</ol>
+<h3 id="GUID-0FF74BB7-79AE-4DD4-BCD1-9E211140CAC4">Create a Global Managed Thread Factory Template</h3>
+<p>You can create managed thread factory (MTF) templates that are used by applications to create managed threads.</p>
+<ol>
+<li>
+<p>In the <strong>Edit Tree</strong>, go to <strong>Scheduling</strong>, then <strong>Managed Thread Factory Templates</strong>.</p>
+</li>
+<li>
+<p>Click <strong>New</strong>.</p>
+</li>
+<li>
+<p>Enter a name for the new MTF template.</p>
+</li>
+<li>
+<p>Click <strong>Create</strong>.</p>
+</li>
+<li>
+<p>If you want to specify the priority assigned to the thread, update the value in the <strong>Priority</strong> field. The greater the number, the higher the priority.</p>
+</li>
+<li>
+<p>If you want to define the maximum number of threads that are created by the MTF and are still executing the <code>run()</code> method of the tasks, update the value in the <strong>Max Concurrent New Threads</strong> field.</p>
+</li>
+<li>
+<p>Click <strong>Save</strong>.</p>
+</li>
+<li>
+<p>On the <strong>Targets</strong> tab, select the servers or clusters where this MTF template will be accessible and move them under <strong>Chosen</strong>. Move unwanted servers or clusters under <strong>Available</strong>.</p>
+<p>Only applications that have been deployed to the selected servers and clusters can use this MTF template.</p>
+</li>
+<li>
+<p>Click <strong>Save</strong>.</p>
+</li>
+</ol>
+
+
+
+
+
+<footer class=" footline" >
+	
+</footer>
+
+        
+        </div>
+        
+
+      </div>
+
+    <div id="navigation">
+        
+        
+
+        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+
+        
+
+
+	 
+	 
+		
+			<a class="nav nav-prev" href="/weblogic-remote-console/2.4.14/administration-server/configuring-coherence/" title="Configuring Coherence"> <i class="fa fa-chevron-left"></i></a>
+		
+		
+			<a class="nav nav-next" href="/weblogic-remote-console/2.4.14/weblogic-deploy-tooling/" title="WebLogic Deploy Tooling" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+		
+	
+    </div>
+
+    </section>
+
+    <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
+      <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
+    </div>
+    <script src="/weblogic-remote-console/2.4.14/js/clipboard.min.js?1738041635"></script>
+    <script src="/weblogic-remote-console/2.4.14/js/perfect-scrollbar.min.js?1738041635"></script>
+    <script src="/weblogic-remote-console/2.4.14/js/perfect-scrollbar.jquery.min.js?1738041635"></script>
+    <script src="/weblogic-remote-console/2.4.14/js/jquery.sticky.js?1738041635"></script>
+    <script src="/weblogic-remote-console/2.4.14/js/featherlight.min.js?1738041635"></script>
+    <script src="/weblogic-remote-console/2.4.14/js/highlight.pack.js?1738041635"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script src="/weblogic-remote-console/2.4.14/js/modernizr.custom-3.6.0.js?1738041635"></script>
+    <script src="/weblogic-remote-console/2.4.14/js/learn.js?1738041635"></script>
+    <script src="/weblogic-remote-console/2.4.14/js/hugo-learn.js?1738041635"></script>
+    
+        
+            <script src="/weblogic-remote-console/2.4.14/mermaid/mermaid.js?1738041635"></script>
+        
+        <script>
+            mermaid.initialize({ startOnLoad: true });
+        </script>
+    
+    
+
+  </body>
+</html>
