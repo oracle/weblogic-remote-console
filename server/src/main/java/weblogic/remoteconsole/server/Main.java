@@ -1,4 +1,4 @@
-// Copyright (c) 2020, 2023, Oracle Corporation and/or its affiliates.
+// Copyright (c) 2020, 2025, Oracle Corporation and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server;
@@ -19,6 +19,7 @@ import weblogic.remoteconsole.server.webapp.WebAppUtils;
 
 public final class Main {
   private static final String LOGGING_FILE = "logging.properties";
+  private static PropertyFileHandler propertyFileHandler;
 
   public static final String WLS_CONSOLE_BACKEND = "WebLogic Console Backend";
 
@@ -36,6 +37,20 @@ public final class Main {
           // FortifyIssueSuppression J2EE Bad Practices: JVM Termination
           // This isn't Java EE
           System.exit(0);
+        }
+        if (line.equals("START")) {
+          propertyFileHandler.clearProperties();
+          continue;
+        }
+        if (line.equals("END")) {
+          propertyFileHandler.initCBEProperties();
+          continue;
+        }
+        if (line.contains("=")) {
+          propertyFileHandler.setProperty(
+            line.substring(0, line.indexOf('=')),
+            line.substring(line.indexOf('=') + 1)
+          );
         }
       } catch (IOException eof) {
         // FortifyIssueSuppression J2EE Bad Practices: JVM Termination
@@ -85,7 +100,7 @@ public final class Main {
         if (args.length == i) {
           usage();
         }
-        new PropertyFileHandler(args[i]);
+        propertyFileHandler = new PropertyFileHandler(args[i]);
         configInitialized = true;
       } else if (args[i].equals("--persistenceDirectory")) {
         i++;
@@ -96,7 +111,12 @@ public final class Main {
       }
     }
     if (!configInitialized) {
-      ConsoleBackendRuntimeConfig.init(null);
+      if (stdin) {
+        propertyFileHandler = new PropertyFileHandler();
+      } else {
+        ConsoleBackendRuntimeConfig.init(null);
+      }
+      configInitialized = true;
     }
     configureLogging();
 

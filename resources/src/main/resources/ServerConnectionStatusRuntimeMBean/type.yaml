@@ -1,14 +1,20 @@
-# Copyright (c) 2024, Oracle and/or its affiliates.
+# Copyright (c) 2024, 2025, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 properties:
 - name: Status
-  # MOREAUT_TBD - add more status codes
+  # Add more status codes?
   legalValues:
   - value: 401
     label: "401 Not Authorized"
   - value: 404
     label: "404 Not Found"
+  - value: 502
+    label: "502 Bad Gateway"
+  - value: 503
+    label: "503 Service Unavailable"
+  - value: 504
+    label: "504 Gateway Timeout"
 - name: ResponseBody
   multiLineString: true
   presentation:

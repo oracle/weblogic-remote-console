@@ -266,7 +266,8 @@ describe.only('Test Suite: utilities_test for Additions/Modification/Deletion/Vi
             await driver.sleep(1200);
 
             console.log("Click Multicast Address");
-            await driver.findElement(By.xpath("//oj-selector[@id='unselected_checkboxsetMulticastAddress']")).click();
+            element = driver.findElement(By.xpath("//oj-selector[@id='unselected_checkboxsetMulticastAddress']"));
+            driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
             await driver.sleep(600);
             console.log("Click Add To Right Arrow");
             await driver.findElement(By.xpath("//oj-button[@id='addToRight']")).click();
@@ -279,23 +280,24 @@ describe.only('Test Suite: utilities_test for Additions/Modification/Deletion/Vi
             console.log("Click Multicast Address");
             await driver.findElement(By.xpath("//oj-selector[@id='unselected_checkboxsetMulticastAddress']")).click();
             await driver.sleep(600);
+            await element.click();
             console.log("Click Multicast Port");
             await driver.findElement(By.xpath("//oj-selector[@id='unselected_checkboxsetMulticastPort']")).click();
             await driver.sleep(600);
             console.log("Click Service Age Threshold");
             await driver.findElement(By.xpath("//oj-selector[@id='unselected_checkboxsetServiceAgeThresholdSeconds']")).click();
             await driver.sleep(600);
-            console.log("Click Left Arrow");
-            await driver.findElement(By.xpath("//oj-button[@id='removeRight']")).click();
+            console.log("Click Right Arrow");
+            await driver.findElement(By.xpath("//oj-button[@id='addToRight']")).click();
             await driver.sleep(600);
             console.log("Click Apply Button");
-            element = driver.findElement(By.xpath("//oj-button[2]/button/div/span/span"));
+            element = driver.findElement(By.xpath("//*[@id='apply']"));
             driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
             await driver.sleep(600);
             await element.click();
             await driver.sleep(600);
             console.log("Click Reset Button");
-            await driver.findElement(By.xpath("//oj-button[1]/button/div/span/span")).click();
+            element = driver.findElement(By.xpath("//*[@id='reset']")).click();
             console.log("Click Middle Container");
             await driver.findElement(By.xpath("//div[@id='middle-container']")).click();
             await driver.sleep(600);

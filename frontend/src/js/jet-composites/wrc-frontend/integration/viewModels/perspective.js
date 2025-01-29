@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2021, 2024, Oracle and/or its affiliates.
+ * Copyright (c) 2021, 2025, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
@@ -16,11 +16,13 @@ define([
   'ojs/ojmodule-element-utils',
   'ojs/ojhtmlutils',
   'wrc-frontend/common/controller',
+  'wrc-frontend/common/page-definition-helper',
   'wrc-frontend/apis/data-operations',
   'wrc-frontend/apis/message-displaying',
   'wrc-frontend/microservices/provider-management/data-provider-manager',
   'wrc-frontend/microservices/perspective/perspective-manager',
   'wrc-frontend/microservices/breadcrumb/breadcrumbs-manager',
+  'wrc-frontend/microservices/pages-history/pages-history-manager',
   'wrc-frontend/microservices/page-definition/crosslinks',
   'wrc-frontend/microservices/page-definition/utils',
   'wrc-frontend/integration/viewModels/utils',
@@ -46,11 +48,13 @@ define([
     ModuleElementUtils,
     HtmlUtils,
     Controller,
+    PageDefinitionHelper,
     DataOperations,
     MessageDisplaying,
     DataProviderManager,
     PerspectiveManager,
     BreadcrumbsManager,
+    PagesHistoryManager,
     PageDefinitionCrossLinks,
     PageDefinitionUtils,
     ViewModelUtils,
@@ -266,15 +270,17 @@ define([
       }.bind(this);
 
       this.recentPagesModuleConfig = ModuleElementUtils.createConfig({
-        viewPath: `${Controller.getModulePathPrefix()}views/content-area/recent-pages.html`,
-        viewModelPath: `${Controller.getModulePathPrefix()}viewModels/content-area/recent-pages`,
+        viewPath: `${Controller.getModulePathPrefix()}views/content-area/pages-history.html`,
+        viewModelPath: `${Controller.getModulePathPrefix()}viewModels/content-area/pages-history`,
         params: {
           parentRouter: viewParams.parentRouter,
-          signaling: viewParams.signaling
+          signaling: viewParams.signaling,
+          beanTree: viewParams.beanTree
         }
       });
 
       function cancelCreateAction(rawPath) {
+        adjustPagesHistoryData('cancel');
         renderPage(rawPath);
       }
 
@@ -282,6 +288,7 @@ define([
         // clear treenav selection
         viewParams.signaling.navtreeSelectionCleared.dispatch();
         viewParams.identity = path;
+        PagesHistoryManager.setPagesHistoryCurrentAction('route');
         ViewModelUtils.goToRouterPath( self.router, `/${viewParams.beanTree.type}/${encodeURIComponent(path)}`, self.canExitCallback);
       }
 
@@ -291,10 +298,6 @@ define([
           const anchor = document.querySelector(selector)
           if (anchor !== null) anchor.focus();
         }
-      }.bind(this);
-
-      this.breadcrumbsNavigatorClick = function (event) {
-        console.log(`[PERSPECTIVE] breadcrumbsNavigatorClick - id=${event.currentTarget.id}`);
       }.bind(this);
 
       this.breadcrumbClick = function (event) {
@@ -308,6 +311,7 @@ define([
         viewParams.signaling.navtreeSelectionCleared.dispatch();
 
         if (viewParams.perspective.id === perspectiveId) {
+          adjustPagesHistoryData('route');
           ViewModelUtils.goToRouterPath(self.router, `/${perspectiveId}/${encodeURIComponent(path)}`, self.canExitCallback);
         }
         else {
@@ -318,6 +322,10 @@ define([
                 if (reply) {
                   ViewModelUtils.setPreloaderVisibility(true);
                   DataOperations.mbean.test(path)
+                    .then(reply => {
+                      adjustPagesHistoryData('route');
+                      return reply;
+                    })
                     .then(reply => {
                       viewParams.signaling.perspectiveSelected.dispatch(perspective);
                       viewParams.parentRouter.go(`/${perspectiveId}/${encodeURIComponent(path)}`);
@@ -372,27 +380,28 @@ define([
         ViewModelUtils.goToRouterPath(viewParams.parentRouter, `/landing/${viewParams.beanTree.type}`, self.canExitCallback);
       }
 
-      async function addBeanPath(reply) {
-        return self.breadcrumbsManager.createBreadcrumbs(reply)
-          .then((breadcrumbLabels) => {
-            if (breadcrumbLabels.length === 0) {
-              // This happens when the "Finish" button is clicked,
-              // on the create form for a JDBC wizard. The "Finished"
-              // button is bound to the same code path as the "Save"
-              // button, so clicking it adds the new JDBC Data Source
-              // MBean to the edit session, and re-renders the page.
-              // But this time a regular form is used, not the create
-              // form associated with the wizard. The navtree manager
-              // doesn't have the path model yet, so we need to use
-              // rdjData.data.identity to obtain the breadcrumb labels.
-              const breadcrumbs = PageDefinitionUtils.breadcrumbsFromIdentity(reply.body.data.get('rdjData').data.identity);
-              breadcrumbLabels = self.breadcrumbsManager.getBreadcrumbLabels(breadcrumbs);
-            }
-            // Send signal saying bean path was added
-            viewParams.signaling.beanPathAdded.dispatch(reply.body.data.name, breadcrumbLabels, viewParams.beanTree);
+      function adjustPagesHistoryData(action) {
+        PagesHistoryManager.setPagesHistoryCurrentAction(action);
+      }
 
-            return reply;
-          });
+      function getBeanPathURI(pdjData, rawPath) {
+        if (rawPath.startsWith(Runtime.getBackendUrl())) {
+          rawPath = rawPath.replace(Runtime.getBackendUrl(), '');
+        }
+
+        const url = new URL(`${Runtime.getBackendUrl()}${rawPath}`);
+
+        let uri = url.pathname;
+
+        if (!url.searchParams.has('slice')) {
+          const slice = PageDefinitionHelper.getDefaultSliceValue(pdjData);
+          if (CoreUtils.isNotUndefinedNorNull(slice)) {
+            url.searchParams.set('slice', slice);
+            uri = `${url.pathname}${url.search}`;
+          }
+        }
+
+        return uri;
       }
 
       function renderPage(rawPath, slice) {
@@ -413,7 +422,36 @@ define([
 
         DataOperations.mbean.get(uri)
           .then(reply => {
-            return addBeanPath(reply);
+            return self.breadcrumbsManager.createBreadcrumbs(reply)
+              .then((breadcrumbLabels) => {
+                if (breadcrumbLabels.length === 0) {
+                  // This happens when the "Finish" button is clicked,
+                  // on the create form for a JDBC wizard. The "Finished"
+                  // button is bound to the same code path as the "Save"
+                  // button, so clicking it adds the new JDBC Data Source
+                  // MBean to the edit session, and re-renders the page.
+                  // But this time a regular form is used, not the create
+                  // form associated with the wizard. The navtree manager
+                  // doesn't have the path model yet, so we need to use
+                  // rdjData.data.identity to obtain the breadcrumb labels.
+                  const breadcrumbs = PageDefinitionUtils.breadcrumbsFromIdentity(reply.body.data.get('rdjData').data.identity);
+                  breadcrumbLabels = self.breadcrumbsManager.getBreadcrumbLabels(breadcrumbs);
+                }
+
+                const uri = getBeanPathURI(reply.body.data.get('pdjData'), reply.body.data.name);
+
+                const currentAction = PagesHistoryManager.getPagesHistoryCurrentAction();
+                if (!['navigate.back', 'navigate.next', 'navigate.to', 'cancel'].includes(currentAction)) {
+                  PagesHistoryManager.setPagesHistoryCurrentAction('route');
+                }
+
+                if (currentAction === 'route') {
+                  // Send signal saying bean path was added
+                  viewParams.signaling.beanPathAdded.dispatch(uri, breadcrumbLabels, viewParams.beanTree);
+                }
+
+                return reply;
+              });
           })
           .then(reply => {
             let changeManager = reply.body.data.get('rdjData').changeManager;
@@ -447,15 +485,7 @@ define([
           })
           .catch(response => {
             if (response.failureType === CoreTypes.FailureType.NOT_FOUND) {
-              // When a bean is not found, the CFE should redirect
-              // to that bean's parent's page recursively, until it
-              // gets to a bean that still exists.
-              const newPathParam = pathParam.split('/').slice(0, -1).join('/');
-              const newRawPath = encodeURIComponent(newPathParam);
-
-              if (newRawPath !== '') {
-                renderPage(newRawPath);
-              }
+              viewParams.signaling.beanPathDeleted.dispatch(pathParam);
             }
             else if (response.failureType === CoreTypes.FailureType.CONNECTION_REFUSED) {
               ViewModelUtils.failureResponseDefaultHandling(response);

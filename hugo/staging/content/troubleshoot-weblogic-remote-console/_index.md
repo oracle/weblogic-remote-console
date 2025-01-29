@@ -1,6 +1,6 @@
 ---
 author: Oracle Corporation
-publisherinformation: December 2024
+publisherinformation: January 2025
 weight: 250
 title: Troubleshoot Issues with WebLogic Remote Console
 ---
@@ -50,8 +50,8 @@ If you experience any issues with WebLogic Remote Console, then you can check it
     The location of <code>out.log</code> varies depending on your platform:
 
     -   Linux: <code>$HOME/.config/weblogic-remote-console/out.log</code>
-    -   macOS: <code>/Users/*user*/Library/Application Support/weblogic-remote-console/out.log</code>
-    -   Windows: <code>C:\Users\\*user*\AppDataRoaming\weblogic-remote-console\out.log</code>
+    -   macOS: <code>/Users/<user>/Library/Application Support/weblogic-remote-console/out.log</code>
+    -   Windows: <code>C:\Users\\*user*\AppData\Roaming\weblogic-remote-console\out.log</code>
     Log file entries from previous sessions are saved to a new file in the same directory, marked by date: <code>out-yyyy-mm-dd.log</code>.
 
 
@@ -209,6 +209,6 @@ If <code>auto-prefs.json</code> does become corrupted, you can reset it, but all
 2.  Delete <code>auto-prefs.json</code>. The location of <code>auto-prefs.json</code> varies depending on your platform:
     -   Linux: <code>*$HOME*/.config/weblogic-remote-console/auto-prefs.json</code>
     -   macOS: <code>/Users/*user*/Library/Application Support/weblogic-remote-console/auto-prefs.json</code>
-    -   Windows: <code>C:Users\\*user*\AppDataRoaming\weblogic-remote-console\auto-prefs.json</code>
+    -   Windows: <code>C:\Users\\*user*\AppData\Roaming\weblogic-remote-console\auto-prefs.json</code>
 3.  Restart WebLogic Remote Console.
 

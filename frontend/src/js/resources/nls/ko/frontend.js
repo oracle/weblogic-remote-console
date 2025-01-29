@@ -54,7 +54,7 @@ define({
   },
   "wrc-footer": {
     "text": {
-      "copyrightLegal": "Copyright (c) 2020, 2024, Oracle and/or its affiliates.<br/>Oracle (r)과 Java, MySQL 및 NetSuite는 Oracle Corporation 및/또는 그 자회사의 등록상표입니다. 기타 명칭들은 각 소속 회사의 상표일 수 있습니다.<br/>",
+      "copyrightLegal": "Copyright (c) 2020, 2025, Oracle and/or its affiliates.<br/>Oracle (r)과 Java, MySQL 및 NetSuite는 Oracle Corporation 및/또는 그 자회사의 등록상표입니다. 기타 명칭들은 각 소속 회사의 상표일 수 있습니다.<br/>",
       "builtWith": "Oracle JET로 구축됨"
     }
   },
@@ -1497,6 +1497,28 @@ define({
       }
     }
   },
+  "wrc-recently-visited": {
+    "labels": {
+      "tree": {
+        "value": "트리"
+      },
+      "page": {
+        "value": "페이지"
+      },
+      "tab": {
+        "value": "탭"
+      },
+      "ariaLabel": {
+        "value": "페이지 내역"
+      }
+    },
+    "messages": {
+      "pageNoLongerExists": {
+        "summary": "페이지가 더 이상 존재하지 않음",
+        "detail": "{1}은(는) 다른 사용자에 의해 삭제되었거나 더 이상 존재하지 않으므로 {0} 페이지로 재지정되었습니다. "
+      }
+    }
+  },
   "wrc-common": {
     "ariaLabel": {
       "icons": {
@@ -1504,7 +1526,7 @@ define({
           "value": "제공자 트리의 시작 페이지로 돌아갑니다."
         },
         "reset": {
-          "value": "Refresh page values"
+          "value": "페이지 값 새로고침"
         }
       }
     },
@@ -1571,6 +1593,9 @@ define({
       },
       "close": {
         "label": "닫기"
+      },
+      "clear": {
+        "label": "지우기"
       }
     },
     "tooltips": {
@@ -1637,6 +1662,20 @@ define({
       "recentPages": {
         "value": "내역 표시 토글"
       },
+      "pagesHistory": {
+        "back": {
+          "value": "이전 페이지"
+        },
+        "next": {
+          "value": "다음 페이지"
+        },
+        "launch": {
+          "value": "페이지 내역 표시"
+        },
+        "star": {
+          "value": "페이지에 책갈피 추가"
+        }
+      },
       "pageInfo": {
         "value": "눌러서 고정 및 고정 해제"
       }
@@ -1661,6 +1700,9 @@ define({
       },
       "alerts": {
         "value": "경보"
+      },
+      "pagesHistory": {
+        "value": "이 창에서는 이전에 방문한 페이지를 보거나 선택할 수 있습니다."
       }
     },
     "placeholders": {
@@ -1814,7 +1856,7 @@ define({
           "detail": "선택된 항목 중 하나 이상에 대해 '{0}' 작업을 수행할 수 없습니다"
         },
         "actionNotPerformedNoRow": {
-          "detail": "Unable to perform '{0}' action"
+          "detail": "'{0}' 작업을 수행할 수 없습니다."
         },
         "actionSucceeded": {
           "summary": "'{0}' 작업이 성공적으로 수행되었습니다!"

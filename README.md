@@ -33,5 +33,5 @@ See the following list of [Known Issues](https://oracle.github.io/weblogic-remot
 
 ## Need more help? Have a suggestion? Come and say, "Hello!"
 
-We have a **Slack channel** where you can get in touch with us to ask questions about using WebLogic Remote Console or give us feedback or suggestions about what features and improvements you'd like to see.  We would love to hear from you. To join our channel, [click here to get an invitation](https://join.slack.com/t/oracle-weblogic/shared_invite/zt-1lnz4kpci-WdY2gWfeJc5jS_a_1Z06MA).
+We have a **Slack channel** where you can get in touch with us to ask questions about using WebLogic Remote Console or give us feedback or suggestions about what features and improvements you'd like to see.  We would love to hear from you. To join our channel, [click here to get an invitation](https://join.slack.com/t/oracle-weblogic/shared_invite/zt-1ni1gtjv6-PGC6CQ4uIte3KBdm_67~aQ).
 The invitation email includes details on how to access our Slack workspace. After you are logged in, join us over at `#remote-console` and say, "Hello!"

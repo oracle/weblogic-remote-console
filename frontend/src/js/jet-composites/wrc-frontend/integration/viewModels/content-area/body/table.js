@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2020, 2024, Oracle and/or its affiliates.
+ * Copyright (c) 2020, 2025, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
@@ -30,6 +30,7 @@ define([
   './set-sync-interval-dialog',
   './actions-input-dialog',
   'wrc-frontend/microservices/customize/table-manager',
+  'wrc-frontend/microservices/pages-history/pages-history-manager',
   'wrc-frontend/microservices/actions-management/declarative-actions-manager',
   'wrc-frontend/common/page-definition-helper',
   'wrc-frontend/integration/viewModels/utils',
@@ -47,7 +48,7 @@ define([
   'ojs/ojmodule',
   'cfe-multi-select/loader'
 ],
-  function (oj, ko, Router, ModuleElementUtils, ArrayDataProvider, HtmlUtils, ojkeyset_1, Controller, DataOperations, MessageDisplaying, PerspectiveMemoryManager, PageDataTypes, ContentAreaContainerResizer, ContentAreaContainerAccessibility, TableTemplates, TableSorter, HelpForm, WdtForm, UnsavedChangesDialog, SetSyncIntervalDialog, ActionsInputDialog, TableCustomizerManager, DeclarativeActionsManager, PageDefinitionHelper, ViewModelUtils, CoreUtils, CoreTypes, Runtime, Context, Logger) {
+  function (oj, ko, Router, ModuleElementUtils, ArrayDataProvider, HtmlUtils, ojkeyset_1, Controller, DataOperations, MessageDisplaying, PerspectiveMemoryManager, PageDataTypes, ContentAreaContainerResizer, ContentAreaContainerAccessibility, TableTemplates, TableSorter, HelpForm, WdtForm, UnsavedChangesDialog, SetSyncIntervalDialog, ActionsInputDialog, TableCustomizerManager, PagesHistoryManager, DeclarativeActionsManager, PageDefinitionHelper, ViewModelUtils, CoreUtils, CoreTypes, Runtime, Context, Logger) {
     function TableViewModel(viewParams) {
       // Declare reference to instance of the ViewModel
       // that JET creates/manages the lifecycle of. This
@@ -394,7 +395,12 @@ define([
       }
 
       function isHistoryVisible() {
-        return (!Runtime.getProperty('features.iconbarIcons.relocated') || Runtime.getRole() === CoreTypes.Console.RuntimeRole.TOOL.name);
+        if (Runtime.getRole() === CoreTypes.Console.RuntimeRole.TOOL.name) {
+          return false;
+        }
+        else {
+          return (!Runtime.getProperty('features.iconbarIcons.relocated'));
+        }
       }
 
       function getDeclarativeActions() {
@@ -583,6 +589,7 @@ define([
             if (img !== null) {
               img.setAttribute('data-action-polling', JSON.stringify(actionPolling));
             }
+            PagesHistoryManager.setPagesHistoryCurrentAction('bypass');
             moduleConfig.viewModel.cancelAutoSync();
             moduleConfig.viewModel.syncClick({
               target: {
@@ -677,6 +684,10 @@ define([
         for (const identity of Array.from(self.declarativeActions.checkedRows)) {
           self.checkedRowsKeySet().keys.keys.add(identity);
         }
+      }
+
+      function adjustPagesHistoryData(action) {
+        PagesHistoryManager.setPagesHistoryCurrentAction(action);
       }
 
       function createDashboard(event) {
@@ -920,6 +931,7 @@ define([
               // so this selectedListener event will always get call
               // when you click anywhere in the row :-)
               if (event.target.getAttribute('data-default-template') === 'cellTemplate') {
+                adjustPagesHistoryData('route');
                 Router.rootInstance.go(`/${this.perspective.id}/${encodeURIComponent(keyValue)}`)
                   .then(hasChanged => {
                     if (hasChanged) viewParams.signaling.formSliceSelected.dispatch({ path: keyValue });

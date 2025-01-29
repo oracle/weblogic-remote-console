@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2021, 2024, Oracle and/or its affiliates.
+ * Copyright (c) 2021, 2025, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
@@ -65,7 +65,9 @@ define([
       beanTreeSelected: new signals.Signal(),
       beanTreeChanged: new signals.Signal(),
       beanPathAdded: new signals.Signal(),
+      beanPathDeleted: new signals.Signal(),
       beanPathHistoryToggled: new signals.Signal(),
+      pagesHistoryChanged: new signals.Signal(),
       selectedBeanPathChanged: new signals.Signal(),
       unsavedChangesDetected: new signals.Signal(),
       changesAutoDownloaded: new signals.Signal(),

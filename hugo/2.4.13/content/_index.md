@@ -21,7 +21,7 @@ Use WebLogic Remote Console to:
 -   Configure security parameters, including managing users, groups, and roles
 -   Configure WebLogic Server services, such as database connectivity (JDBC), and messaging (JMS)
 
-The current release of WRC is {{<console_version>}}. See what improvements were added at https://github.com/oracle/weblogic-remote-console/releases.
+The current release of WebLogic Remote Console is {{<console_version>}}. See what improvements were added at https://github.com/oracle/weblogic-remote-console/releases.
 
 {{%expand "Click to expand to view documentation for older releases"%}}
 * [2.4.12](2.4.12/)

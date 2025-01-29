@@ -1,4 +1,4 @@
-// Copyright (c) 2021, 2024, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2025, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.webapp;
@@ -27,6 +27,7 @@ import weblogic.remoteconsole.server.repo.ModelTokens;
 import weblogic.remoteconsole.server.repo.Option;
 import weblogic.remoteconsole.server.repo.OptionsSource;
 import weblogic.remoteconsole.server.repo.Page;
+import weblogic.remoteconsole.server.repo.PageDescription;
 import weblogic.remoteconsole.server.repo.Response;
 import weblogic.remoteconsole.server.repo.StringValue;
 import weblogic.remoteconsole.server.repo.Table;
@@ -59,7 +60,19 @@ public class GetPageResponseMapper extends ResponseMapper<Page> {
   }
 
   private void addPageDescription() {
-    getEntityBuilder().add("pageDescription", getPage().getBackendRelativePDJURI());
+    if (getPage().getPageDef().isInstanceBasedPDJ()) {
+      // Th PDJ depends on the instance.
+      // Put it in the RDJ (since the RDJ is instance-based too)
+      getEntityBuilder().add(
+        "inlinePageDescription",
+        PageDescription.getPageDescription(getPage().getPageDef(), getInvocationContext())
+      );
+    } else {
+      // The PDJ is not instance-based - i.e. is always the same.
+      // Put a link to it in the RDJ.  In theory, this would allow
+      // the CFE to cache it.
+      getEntityBuilder().add("pageDescription", getPage().getBackendRelativePDJURI());
+    }
   }
 
   private void addForm() {

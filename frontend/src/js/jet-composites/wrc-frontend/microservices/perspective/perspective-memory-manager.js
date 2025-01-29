@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2020, 2024, Oracle and/or its affiliates.
+ * Copyright (c) 2020, 2025, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
@@ -101,11 +101,16 @@ function(
         }
       },
 
-      setProviderPerspectiveBeanPathHistory: (providerId, perspectiveId, beanPathHistory) => {
-        if (typeof perspectiveMemories[providerId] !== 'undefined' &&
-          typeof perspectiveMemories[providerId][perspectiveId] !== 'undefined'
-        ) {
-          perspectiveMemories[providerId][perspectiveId].beanPathHistory.items = beanPathHistory.filter(item => item.perspective.id === perspectiveId);
+      removeProviderPerspectiveBeanPaths: (providerId, beanPathEntries) => {
+        if (typeof perspectiveMemories[providerId] !== 'undefined') {
+          beanPathEntries.forEach((entry) => {
+            if (typeof perspectiveMemories[providerId][entry.perspective.id] !== 'undefined') {
+              const index = perspectiveMemories[providerId][entry.perspective.id].beanPathHistory.items.findIndex(item => item.value === entry.value);
+              if (index !== -1) {
+                perspectiveMemories[providerId][entry.perspective.id].beanPathHistory.items.splice(index, 1);
+              }
+            }
+          });
         }
       },
 
@@ -152,52 +157,6 @@ function(
         if (typeof perspectiveMemories[options.provider.id] !== 'undefined') {
           for (const perspectiveId of Object.keys(perspectiveMemories[options.provider.id])) {
             perspectiveMemories[options.provider.id][perspectiveId].beanPathHistory.items = [];
-          }
-        }
-      },
-      getProviderPerspectivesNavigatorPosition: (providerId) => {
-        let position = 0;
-        if (typeof perspectiveMemories[providerId] !== 'undefined') {
-          position = perspectiveMemories[providerId].navigator.position;
-        }
-        return position;
-      },
-      setProviderPerspectivesNavigatorPosition: (providerId, position) => {
-        if (typeof perspectiveMemories[providerId] !== 'undefined') {
-          const perspectiveIds = Object.keys(perspectiveMemories[providerId]);
-          for (const perspectiveId of perspectiveIds) {
-            perspectiveMemories[providerId][perspectiveId].breadcrumbs.navigator.position = position;
-          }
-        }
-      },
-      getProviderPerspectivesNavigatorIconStates: (providerId) => {
-        let iconStates = {previous: 'disabled', next: 'disabled'};
-        if (typeof perspectiveMemories[providerId] !== 'undefined') {
-          iconStates = perspectiveMemories[providerId].navigator.icons;
-        }
-        return iconStates;
-      },
-      setProviderPerspectivesNavigatorIconState: (providerId, iconId, state) => {
-        if (typeof perspectiveMemories[providerId] !== 'undefined') {
-          const perspectiveIds = Object.keys(perspectiveMemories[providerId]);
-          for (const perspectiveId of perspectiveIds) {
-            perspectiveMemories[providerId][perspectiveId].breadcrumbs.navigator.icons[iconId].state = state;
-          }
-        }
-      },
-      getProviderPerspectivesNavigatorVisibility: (providerId) => {
-        let visible = false;
-        if (typeof perspectiveMemories[providerId] !== 'undefined') {
-          const filtered = Object.values(perspectiveMemories[providerId]).filter(perspectiveMemory => perspectiveMemory.breadcrumbs.navigator.visibility);
-          visible = (filtered.length > 0);
-        }
-        return visible;
-      },
-      setProviderPerspectivesNavigatorVisibility: (providerId, visible) => {
-        if (typeof perspectiveMemories[providerId] !== 'undefined') {
-          const perspectiveIds = Object.keys(perspectiveMemories[providerId]);
-          for (const perspectiveId of perspectiveIds) {
-            perspectiveMemories[providerId][perspectiveId].breadcrumbs.navigator.visibility = visible;
           }
         }
       }

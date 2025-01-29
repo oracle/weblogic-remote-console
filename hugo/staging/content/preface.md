@@ -1,6 +1,6 @@
 ---
 author: Oracle Corporation
-publisherinformation: December 2024
+publisherinformation: January 2025
 weight: 1
 title: Preface
 ---
@@ -45,10 +45,10 @@ The following text conventions are used in this document:
                      <span>This table summarizes text conventions used in this document.</span>
                      <thead>
                         <tr>
-                           <th id="d46235e268">
+                           <th id="d46442e226">
                               <p>Convention</p>
                            </th>
-                           <th id="d46235e271">
+                           <th id="d46442e229">
                               <p>Meaning</p>
                            </th>
                         </tr>

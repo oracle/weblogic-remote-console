@@ -54,7 +54,7 @@ define({
   },
   "wrc-footer": {
     "text": {
-      "copyrightLegal": "Copyright (c) 2020, 2024, Oracle y/o sus filiales.<br/> Oracle (r), Java, MySQL y NetSuite son marcas comerciales registradas de Oracle y/o sus filiales. Todos los demás nombres pueden ser marcas comerciales de sus respectivos propietarios.<br/>",
+      "copyrightLegal": "Copyright (c) 2020, 2025, Oracle y/o sus filiales.<br/> Oracle (r), Java, MySQL y NetSuite son marcas comerciales registradas de Oracle y/o sus filiales. Todos los demás nombres pueden ser marcas comerciales de sus respectivos propietarios.<br/>",
       "builtWith": "Creado con Oracle JET"
     }
   },
@@ -1497,6 +1497,28 @@ define({
       }
     }
   },
+  "wrc-recently-visited": {
+    "labels": {
+      "tree": {
+        "value": "Árbol"
+      },
+      "page": {
+        "value": "Página"
+      },
+      "tab": {
+        "value": "Separador"
+      },
+      "ariaLabel": {
+        "value": "Historial de páginas"
+      }
+    },
+    "messages": {
+      "pageNoLongerExists": {
+        "summary": "La página ya no existe",
+        "detail": "Se le ha redirigido a la página {0} porque otro usuario ha suprimido {1} o ya no existe. "
+      }
+    }
+  },
   "wrc-common": {
     "ariaLabel": {
       "icons": {
@@ -1504,7 +1526,7 @@ define({
           "value": "Volver a la página de llegada del árbol de proveedor"
         },
         "reset": {
-          "value": "Refresh page values"
+          "value": "Refrescar valores de página"
         }
       }
     },
@@ -1571,6 +1593,9 @@ define({
       },
       "close": {
         "label": "Cerrar"
+      },
+      "clear": {
+        "label": "Borrar"
       }
     },
     "tooltips": {
@@ -1637,6 +1662,20 @@ define({
       "recentPages": {
         "value": "Conmutar visibilidad del historial"
       },
+      "pagesHistory": {
+        "back": {
+          "value": "Página anterior"
+        },
+        "next": {
+          "value": "Página siguiente"
+        },
+        "launch": {
+          "value": "Mostrar historial de páginas"
+        },
+        "star": {
+          "value": "Página de marcador"
+        }
+      },
       "pageInfo": {
         "value": "Hacer clic para anclar y desanclar"
       }
@@ -1661,6 +1700,9 @@ define({
       },
       "alerts": {
         "value": "Alertas"
+      },
+      "pagesHistory": {
+        "value": "Esta ventana le permite ver o seleccionar una página que haya visitado previamente."
       }
     },
     "placeholders": {
@@ -1814,7 +1856,7 @@ define({
           "detail": "No se ha podido realizar la acción '{0}' en uno o varios de los elementos marcados"
         },
         "actionNotPerformedNoRow": {
-          "detail": "Unable to perform '{0}' action"
+          "detail": "No se puede realizar la acción de '{0}'"
         },
         "actionSucceeded": {
           "summary": "La acción '{0}' se ha realizado correctamente."

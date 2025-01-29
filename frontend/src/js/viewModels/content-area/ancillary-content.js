@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2020, 2024, Oracle and/or its affiliates.
+ * Copyright (c) 2020, 2025, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
@@ -171,7 +171,7 @@ define([
 
         self.signalBindings.push(binding);
 
-        binding = viewParams.signaling.navtreeSelectionChanged.add((source, node, beanTree) => {
+        binding = viewParams.signaling.navtreeSelectionChanged.add((node, beanTree) => {
           closeAncillaryContentItem();
         });
 

@@ -54,7 +54,7 @@ define({
   },
   "wrc-footer": {
     "text": {
-      "copyrightLegal": "Copyright © 2020-2024, Oracle e/o relative consociate. <br/>Oracle®, Java e MySQL e NetSuite sono marchi registrati di Oracle e/o delle relative consociate. Altri nomi possono essere marchi dei rispettivi proprietari.<br/>",
+      "copyrightLegal": "Copyright © 2020-2025, Oracle e/o relative consociate. <br/>Oracle®, Java e MySQL e NetSuite sono marchi registrati di Oracle e/o delle relative consociate. Altri nomi possono essere marchi dei rispettivi proprietari.<br/>",
       "builtWith": "Creato con Oracle JET"
     }
   },
@@ -1497,6 +1497,28 @@ define({
       }
     }
   },
+  "wrc-recently-visited": {
+    "labels": {
+      "tree": {
+        "value": "Albero"
+      },
+      "page": {
+        "value": "Pagina"
+      },
+      "tab": {
+        "value": "Scheda"
+      },
+      "ariaLabel": {
+        "value": "Cronologia pagine"
+      }
+    },
+    "messages": {
+      "pageNoLongerExists": {
+        "summary": "La pagina non esiste più",
+        "detail": "Si è stati reindirizzati alla pagina {0} perché {1} è stato eliminato da un altro utente o non esiste più. "
+      }
+    }
+  },
   "wrc-common": {
     "ariaLabel": {
       "icons": {
@@ -1504,7 +1526,7 @@ define({
           "value": "Torna alla pagina di arrivo della struttura ad albero del provider."
         },
         "reset": {
-          "value": "Refresh page values"
+          "value": "Aggiorna valori pagina"
         }
       }
     },
@@ -1571,6 +1593,9 @@ define({
       },
       "close": {
         "label": "Chiudi"
+      },
+      "clear": {
+        "label": "Cancella"
       }
     },
     "tooltips": {
@@ -1637,6 +1662,20 @@ define({
       "recentPages": {
         "value": "Attiva/disattiva visibilità della cronologia"
       },
+      "pagesHistory": {
+        "back": {
+          "value": "Pagina precedente"
+        },
+        "next": {
+          "value": "Pagina successiva"
+        },
+        "launch": {
+          "value": "Mostra cronologia pagine"
+        },
+        "star": {
+          "value": "Pagina segnalibro"
+        }
+      },
       "pageInfo": {
         "value": "Fare clic per bloccare e sbloccare"
       }
@@ -1661,6 +1700,9 @@ define({
       },
       "alerts": {
         "value": "Avvisi"
+      },
+      "pagesHistory": {
+        "value": "Questa finestra consente di visualizzare o selezionare una pagina visitata in precedenza."
       }
     },
     "placeholders": {
@@ -1814,7 +1856,7 @@ define({
           "detail": "Impossibile eseguire l'azione '{0}' su uno o più elementi selezionati"
         },
         "actionNotPerformedNoRow": {
-          "detail": "Unable to perform '{0}' action"
+          "detail": "Impossibile eseguire l'azione '{0}'"
         },
         "actionSucceeded": {
           "summary": "L'esecuzione dell'azione '{0}' è riuscita."

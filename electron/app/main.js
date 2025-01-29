@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2021, 2024, Oracle and/or its affiliates.
+ * Copyright (c) 2021, 2025, Oracle and/or its affiliates.
  * Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
  * @ignore
  */
@@ -32,8 +32,9 @@ const UserPrefs = require('./js/user-prefs-json');
 // persisted in the auto-prefs.json file
 const AutoPrefs = require('./js/auto-prefs-json');
 // Declare variable for IIFE class used to manage data
-// persisted in the config.json file
+// persisted in the config.json file as well as its editor
 const AppConfig = require('./js/config-json');
+const SettingsEditor = require('./js/settings-editor');
 // Declare variable for IIFE class used to manage projects
 const ProjectManagement = require('./js/project-management');
 // Declare variable for IIFE class used to read and write projects
@@ -86,6 +87,7 @@ let showPort = false;
 let useTokenNotCookie = false;
 let quiet = false;
 let lines = [];
+let cbe;
 
 (() => {
   function updateUserDataPath() {
@@ -127,6 +129,30 @@ let lines = [];
     checkPpidMillis: checkPpidMillis
   };
   AppConfig.initialize(options);
+
+  // This seems complicated, but really isn't.
+  // There are three ways that the language may be set (in precedence order):
+  // 1. The command line option --lang=<lang>
+  // 2. The value of "language.language" in user-prefs.json
+  // 3. On Linux, the environment variable LANGUAGE
+  // To implement this, it would be simple enough to set the --lang option if #2
+  // or #3 applies. However, there is a bug in electron where --lang doesn't
+  // work on Linux.  The solution is to make sure LANGUAGE is set on Linux to
+  // the right value, as well as setting the command-line option in every
+  // platform.
+  const file = userDataPath + "/user-prefs.json";
+  if (!app.commandLine.hasSwitch('lang') && fs.existsSync(file)) {
+    const userPrefsEarly = require(file);
+    if ((userPrefsEarly?.language?.language !== undefined) &&
+        userPrefsEarly.language.language !== 'System' &&
+        userPrefsEarly.language.language !== ''
+      ) {
+        app.commandLine.appendSwitch('lang', userPrefsEarly.language.language);
+    }
+  }
+  if (app.commandLine.hasSwitch('lang')) {
+    process.env['LANGUAGE'] = app.commandLine.getSwitchValue('lang');
+  }
 
   ProjectManagement.readProjects(userDataPath);
   ProjectManagement.selectCurrentProject();
@@ -212,6 +238,22 @@ function processCmdLineOptions() {
   quiet = app.commandLine.hasSwitch('quiet');
 }
 
+function sendConfig(data) {
+  if (!cbe)
+    return;
+  let buffer = 'START\n';
+  for (const key in data) {
+    buffer += key + '=' + data[key] + '\n';
+  }
+  buffer += 'END\n';
+  try {
+    cbe.stdin.write(buffer);
+  } catch (err) {
+    // If the writes fail, we're about to die anyway
+    return;
+  }
+}
+
 function start_cbe() {
   var instDir = path.dirname(app.getPath('exe'));
   let filename = AppConfig.getPath();
@@ -232,14 +274,12 @@ function start_cbe() {
     '--persistenceDirectory',
     `${app.getPath('userData')}`,
     '--showPort',
-    '--stdin',
-    '--properties',
-    filename,
+    '--stdin'
   ];
   if (useTokenNotCookie) {
     spawnArgs.push('--useTokenNotCookie');
   }
-  const cbe = spawn(AppConfig.get('javaPath'), spawnArgs);
+  cbe = spawn(AppConfig.get('javaPath'), spawnArgs);
 
   let readlineStderr = readline.createInterface({
     input: cbe.stderr,
@@ -280,6 +320,7 @@ function start_cbe() {
     }
     logger.log('debug', line);
   });
+  SettingsEditor.setConfigSender(sendConfig);
 }
 
 // This is only used on Mac
@@ -328,6 +369,13 @@ app.whenReady()
       if (supportsUpgradeCheck && OSUtils.isLinuxOS && !process.env.APPIMAGE)
         process.env.APPIMAGE = `/${Math.random()}/${Math.random()}`;
 
+      const file = app.getPath('userData') + "/user-prefs.json";
+      const userPrefsEarly = fs.existsSync(file) ? require(file) : null;
+      const upgradeCheckAtStart =
+        (userPrefsEarly?.startup?.checkForUpdates === undefined)
+        ? true
+        : userPrefsEarly.startup.checkForUpdates;
+
       const params = {
         version: version,
         productName: productName,
@@ -335,6 +383,7 @@ app.whenReady()
         homepage: homepage,
         feedURL: feedURL,
         supportsUpgradeCheck: supportsUpgradeCheck,
+        upgradeCheckAtStart: upgradeCheckAtStart,
         supportsAutoUpgrades: supportsAutoUpgrades
       };
 

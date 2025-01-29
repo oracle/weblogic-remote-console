@@ -1,6 +1,6 @@
 ---
 author: Oracle Corporation
-publisherinformation: December 2024
+publisherinformation: January 2025
 weight: 8
 title: Get Started
 ---
@@ -28,7 +28,7 @@ WebLogic Remote Console is compatible with WebLogic Server 12.2.1.4.0 and later.
 
 
 
-Hosted WebLogic Remote Console is only supported on Administration Servers running WebLogic Server 14.1.2.0.0 or later, and is subject to the same system requirements as its associated WebLogic Server release. To see the applicable certification matrix for your release of WebLogic Server, refer to [Oracle Fusion Middleware Supported System Configurations](unilink:fmwcert).
+Hosted WebLogic Remote Console is only supported on Administration Servers running WebLogic Server 14.1.2.0.0 or later, and is subject to the same system requirements as its associated WebLogic Server release. To see the applicable certification matrix for your release of WebLogic Server, refer to [Oracle Fusion Middleware Supported System Configurations](https://www.oracle.com/middleware/technologies/fusion-certification.html).
 
 {{< /notice >}}
 
@@ -45,8 +45,8 @@ Desktop WebLogic Remote Console is supported on the following platforms.
                         </caption>
                         <thead>
                            <tr>
-                              <th id="d32620e134">Platform</th>
-                              <th id="d32620e136">Minimum Requirement</th>
+                              <th id="d32802e120">Platform</th>
+                              <th id="d32802e122">Minimum Requirement</th>
                            </tr>
                         </thead>
                         <tbody>
@@ -159,9 +159,9 @@ Before you can start Hosted WebLogic Remote Console, you must have deployed it. 
 
     
 
-    If your Administration Server is behind a firewall or load balancer, or otherwise externally unavailable, you must manually expose the <code>rconsole/\*</code> endpoint to make it accessible, similar to exposing <code>console/\*</code> for the WebLogic Server Administration Console.
+    If your Administration Server is behind a firewall or load balancer, or otherwise externally unavailable, you must manually expose the <code>rconsole/\*</code> endpoint to make it accessible, similar to exposing <code>console/*</code> for the WebLogic Server Administration Console.
 
-    This is in addition to exposing the <code>management/\*</code> endpoint which is required for general domain configuration.
+    This is in addition to exposing the <code>management/*</code> endpoint which is required for general domain configuration.
 
     {{< /notice >}}
 
@@ -197,11 +197,11 @@ For an overview of the functionality provided by the WebLogic Remote Console ext
 
 1.  Under <code>*DOMAIN_HOME*</code>, create a folder and name it <code>management-services-ext</code>.
 
-2.  Download the latest WebLogic Remote Console extension, <code>console-rest-ext-2.4.13.war</code>, from the [WebLogic Remote Console GitHub Repository](https://github.com/oracle/weblogic-remote-console).
+2.  Download the latest WebLogic Remote Console extension, <code>console-rest-ext-2.4.15.war</code>, from the [WebLogic Remote Console GitHub Repository](https://github.com/oracle/weblogic-remote-console).
 
 3.  Save the extension under <code>management-services-ext</code>.
 
-    You do not need to deploy <code>console-rest-ext-2.4.13.war</code> as an application in your domain.
+    You do not need to deploy <code>console-rest-ext-2.4.15.war</code> as an application in your domain.
 
 4.  Restart the Administration Server.
 
@@ -269,8 +269,8 @@ Use WebLogic Remote Console to connect to the following provider types, each of 
                      </span>
                      <thead>
                         <tr>
-                           <th id="d32620e897">Provider</th>
-                           <th id="d32620e899">Description</th>
+                           <th id="d32802e841">Provider</th>
+                           <th id="d32802e843">Description</th>
                         </tr>
                      </thead>
                      <tbody>
@@ -341,7 +341,7 @@ If a newer version of Desktop WebLogic Remote Console is available, an alert wil
 
 2.  Update the WebLogic Remote Console *extension*.
 
-    For the best experience, you should keep the versions of WebLogic Remote Console and its extension in sync with each other. That is, when you are running WebLogic Remote Console 2.4.13, you should have <code>console-rest-ext-2.4.13.war</code> installed.
+    For the best experience, you should keep the versions of WebLogic Remote Console and its extension in sync with each other. That is, when you are running WebLogic Remote Console 2.4.15, you should have <code>console-rest-ext-2.4.15.war</code> installed.
 
     {{< notice note >}}
 

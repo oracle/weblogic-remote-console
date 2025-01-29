@@ -1,6 +1,6 @@
 ---
 author: Oracle Corporation
-publisherinformation: December 2024
+publisherinformation: January 2025
 weight: 33
 title: Domain Configuration
 ---
@@ -120,7 +120,7 @@ The general process for setting up web authentication is as follows:
     -   [Configuring the WebLogic Authentication Provider](https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=SECMG-GUID-F61EF14D-7461-4F29-80D9-A171DEE3E882)
     -   [Configuring LDAP Authentication Providers](https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=SECMG-GUID-C1478BFB-A1FF-46F0-8931-627A00B7945A)
     -   [Configuring RDBMS Authentication Providers](https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=SECMG-GUID-8E2F4AEB-A54E-48E9-BB6B-7B6AF7C4FDC5)
-3.  Ensure that both the login and management endpoints (<code>console/*</code> and <code>management/*</code>, respectively) of your Administration Server are accessible by WebLogic Remote Console. If your Administration Server's endpoints are behind a firewall, load balancer, or otherwise externally unavailable, you will need to expose those endpoints manually.
+3.  Ensure that both the login and management endpoints (<code>console/\*</code> and <code>management/*</code>, respectively) of your Administration Server are accessible by WebLogic Remote Console. If your Administration Server's endpoints are behind a firewall, load balancer, or otherwise externally unavailable, you will need to expose those endpoints manually.
 
     {{< notice note >}}
 
@@ -302,8 +302,8 @@ To delete a property, select the row and click **-**.
                            <span>Lists some examples of supported Java system properties</span>
                            <thead>
                               <tr>
-                                 <th id="d18173e1183">Usage</th>
-                                 <th id="d18173e1185">Syntax</th>
+                                 <th id="d18258e1120">Usage</th>
+                                 <th id="d18258e1122">Syntax</th>
                               </tr>
                            </thead>
                            <tbody>
@@ -386,7 +386,7 @@ Avoid using making changes using multiple tools simultaneously. When one session
 
 When you are satisfied with your changes, you must commit them for the changes to apply to the domain. Open the Shopping Cart and then click **Commit Changes**.
 
-Some configuration changes apply to the domain immediately - these are called dynamic changes. Other configuration changes require a server restart to take effect and are called non-dynamic changes. A server restart required icon ![Restart required](../../restart-required-blk_24x24.png) appears beside any attribute that is non-dynamic.
+Some configuration changes apply to the domain immediately - these are called dynamic changes. Other configuration changes require a server restart to take effect and are called non-dynamic changes. A server restart required icon ![Restart required](/weblogic-remote-console/images/restart-required-blk_24x24.png) appears beside any attribute that is non-dynamic.
 
 {{< notice note >}}
 
@@ -471,10 +471,10 @@ The majority of domain configuration is performed within the **Edit Tree** persp
                         </caption>
                         <thead>
                            <tr>
-                              <th id="d18173e1567">Task</th>
-                              <th id="d18173e1569">Edit Tree</th>
-                              <th id="d18173e1571">Monitoring Tree</th>
-                              <th id="d18173e1573">Security Data Tree</th>
+                              <th id="d18258e1483">Task</th>
+                              <th id="d18258e1485">Edit Tree</th>
+                              <th id="d18258e1487">Monitoring Tree</th>
+                              <th id="d18258e1489">Security Data Tree</th>
                            </tr>
                         </thead>
                         <tbody>
@@ -560,7 +560,9 @@ The majority of domain configuration is performed within the **Edit Tree** persp
 
 To prevent unauthorized changes to your WebLogic Server domains, WebLogic Remote Console limits its functionality based on a user's role.
 
-If you log in as a user with more limited permissions, you can be blocked from accessing certain areas or performing certain tasks within WebLogic Remote Console. Administrators always have full access to WebLogic Remote Console.
+If you log in as a user whose role has limited permissions, WebLogic Remote Console automatically adjusts its user interface to conceal the areas to which you do not have access. Users with the administrator role have full access to WebLogic Remote Console.
+
+If you want to see the full user interface of WebLogic Remote Console, regardless of your current role, then open **File** then **Settings**. (On macOS, go to WebLogic Remote Console, then **Settings**.) Under the **Role Checking** section, set **Restrict Content Based On Role** to **No** and click **Save**. A user with limited permissions can now *see* everything but they are still blocked from performing any actions beyond the scope of their role.
 
 {{< notice note >}}
 
@@ -585,8 +587,8 @@ For more information, see [Users, Groups, And Security Roles](https://docs.oracl
                      </caption>
                      <thead>
                         <tr>
-                           <th id="d18173e1738">Role</th>
-                           <th id="d18173e1740">Limitations</th>
+                           <th id="d18258e1680">Role</th>
+                           <th id="d18258e1682">Limitations</th>
                         </tr>
                      </thead>
                      <tbody>
@@ -1341,8 +1343,8 @@ If you *upgrade* from WebLogic Server 14.1.1.0.0 and earlier, the behavior of yo
                               <span>Describes how to change the domain mode.</span>
                               <thead>
                                  <tr>
-                                    <th id="d18173e4640">Target domain mode</th>
-                                    <th id="d18173e4642">Perform these steps</th>
+                                    <th id="d18258e4379">Target domain mode</th>
+                                    <th id="d18258e4381">Perform these steps</th>
                                  </tr>
                               </thead>
                               <tbody>

@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2020, 2024, Oracle and/or its affiliates.
+ * Copyright (c) 2020, 2025, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
@@ -17,6 +17,7 @@ define([
   'wrc-frontend/common/keyup-focuser',
   'wrc-frontend/microservices/perspective/perspective-memory-manager',
   'wrc-frontend/microservices/perspective/perspective-manager',
+  'wrc-frontend/microservices/pages-history/pages-history-manager',
   'wrc-frontend/common/controller',
   'wrc-frontend/apis/data-operations',
   'wrc-frontend/microservices/provider-management/data-provider-manager',
@@ -40,6 +41,7 @@ define([
     KeyUpFocuser,
     PerspectiveMemoryManager,
     PerspectiveManager,
+    PagesHistoryManager,
     Controller,
     DataOperations,
     DataProviderManager,
@@ -149,11 +151,12 @@ define([
       }.bind(this);
 
       this.recentPagesModuleConfig = ModuleElementUtils.createConfig({
-        viewPath: `${Controller.getModulePathPrefix()}views/content-area/recent-pages.html`,
-        viewModelPath: `${Controller.getModulePathPrefix()}viewModels/content-area/recent-pages`,
+        viewPath: `${Controller.getModulePathPrefix()}views/content-area/pages-history.html`,
+        viewModelPath: `${Controller.getModulePathPrefix()}viewModels/content-area/pages-history`,
         params: {
           parentRouter: viewParams.parentRouter,
-          signaling: viewParams.signaling
+          signaling: viewParams.signaling,
+          beanTree: viewParams.beanTree
         }
       });
 
@@ -612,6 +615,10 @@ define([
 
         Logger.log(`[LANDING] data-path=${resourceData}, perspective-group=${self.perspectiveGroup().name}`);
 
+        // Set pages history action to 'route', so resourceData will
+        // get added to the pages history items when router.go
+        // eventually loads the page associated with the subtree item
+        PagesHistoryManager.setPagesHistoryCurrentAction('route');
         // expand the navtree nodes
         viewParams.parentRouter.go(`/${self.perspective.id}/${encodeURIComponent(resourceData)}`);
       };

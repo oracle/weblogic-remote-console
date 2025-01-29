@@ -381,7 +381,8 @@ describe.only('Test Suite: monitoring_test for Navtree Monitoring functionality'
                 "Logs and Archives","DataSourceLog");
             await driver.sleep(2400);
             console.log("Click to select AdminServer DataAccessRuntime DataSourceLog file");
-            await driver.findElement(By.xpath("//oj-table/div/table/tbody/tr/td[1]")).click();
+            //await driver.findElement(By.xpath("//oj-table/div/table/tbody/tr/td[1]")).click();
+            await driver.findElement(By.xpath("//*[starts-with(@id,'table_table_selector_')]")).click();
             await driver.sleep(1200);
             console.log("Click to download DomainLog file");
             //await driver.findElement(By.xpath("//oj-button[@id='downloadMenuLauncher']")).click();

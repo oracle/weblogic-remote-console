@@ -54,7 +54,7 @@ define({
   },
   "wrc-footer": {
     "text": {
-      "copyrightLegal": "Copyright (c) 2020, 2024, Oracle et/ou ses affiliés.<br/>Oracle (r), Java, MySQL et NetSuite sont des marques déposées d'Oracle Corporation et/ou de ses affiliés. Tout autre nom mentionné peut être une marque appartenant à un autre propriétaire qu'Oracle.<br/>",
+      "copyrightLegal": "Copyright (c) 2020, 2025, Oracle et/ou ses affiliés.<br/>Oracle (r), Java, MySQL et NetSuite sont des marques déposées d'Oracle Corporation et/ou de ses affiliés. Tout autre nom mentionné peut être une marque appartenant à un autre propriétaire qu'Oracle.<br/>",
       "builtWith": "Conçu avec Oracle JET"
     }
   },
@@ -1497,6 +1497,28 @@ define({
       }
     }
   },
+  "wrc-recently-visited": {
+    "labels": {
+      "tree": {
+        "value": "Arborescence"
+      },
+      "page": {
+        "value": "Page"
+      },
+      "tab": {
+        "value": "Onglet"
+      },
+      "ariaLabel": {
+        "value": "Historique des pages"
+      }
+    },
+    "messages": {
+      "pageNoLongerExists": {
+        "summary": "La page n'existe plus",
+        "detail": "Vous avez été redirigé vers la page {0} car la page {1} a été supprimée par un autre utilisateur ou n'existe plus. "
+      }
+    }
+  },
   "wrc-common": {
     "ariaLabel": {
       "icons": {
@@ -1504,7 +1526,7 @@ define({
           "value": "Revenez à la page de destination de l'arborescence de fournisseur."
         },
         "reset": {
-          "value": "Refresh page values"
+          "value": "Actualiser les valeurs de page"
         }
       }
     },
@@ -1571,6 +1593,9 @@ define({
       },
       "close": {
         "label": "Fermer"
+      },
+      "clear": {
+        "label": "Effacer"
       }
     },
     "tooltips": {
@@ -1637,6 +1662,20 @@ define({
       "recentPages": {
         "value": "Activer/Désactiver la visibilité de l'historique"
       },
+      "pagesHistory": {
+        "back": {
+          "value": "Page précédente"
+        },
+        "next": {
+          "value": "Page suivante"
+        },
+        "launch": {
+          "value": "Afficher l'historique des pages"
+        },
+        "star": {
+          "value": "Placer un signet sur la page"
+        }
+      },
       "pageInfo": {
         "value": "Cliquer ici pour attacher et détacher un élément"
       }
@@ -1661,6 +1700,9 @@ define({
       },
       "alerts": {
         "value": "Alertes"
+      },
+      "pagesHistory": {
+        "value": "Cette fenêtre vous permet d'afficher ou de sélectionner une page précédemment consultée."
       }
     },
     "placeholders": {
@@ -1814,7 +1856,7 @@ define({
           "detail": "Impossible d'effectuer l'action '{0}' sur au moins un des éléments sélectionnés"
         },
         "actionNotPerformedNoRow": {
-          "detail": "Unable to perform '{0}' action"
+          "detail": "Impossible d'exécuter l'action '{0}'"
         },
         "actionSucceeded": {
           "summary": "L'action '{0}' a été effectuée."

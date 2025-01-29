@@ -54,7 +54,7 @@ define({
   },
   "wrc-footer": {
     "text": {
-      "copyrightLegal": "Copyright (c) 2020, 2024, Oracle und/oder verbundene Unternehmen.<br/>Oracle (r), Java, MySQL und NetSuite sind eingetragene Marken der Oracle Corporation und/oder ihrer verbundenen Unternehmen. Andere Namen und Bezeichnungen können Marken ihrer jeweiligen Inhaber sein.<br/>",
+      "copyrightLegal": "Copyright (c) 2020, 2025, Oracle und/oder verbundene Unternehmen.<br/>Oracle (r), Java, MySQL und NetSuite sind eingetragene Marken der Oracle Corporation und/oder ihrer verbundenen Unternehmen. Andere Namen und Bezeichnungen können Marken ihrer jeweiligen Inhaber sein.<br/>",
       "builtWith": "Mit Oracle JET erstellt"
     }
   },
@@ -1497,6 +1497,28 @@ define({
       }
     }
   },
+  "wrc-recently-visited": {
+    "labels": {
+      "tree": {
+        "value": "Baum"
+      },
+      "page": {
+        "value": "Seite"
+      },
+      "tab": {
+        "value": "Registerkarte"
+      },
+      "ariaLabel": {
+        "value": "Seitenhistorie"
+      }
+    },
+    "messages": {
+      "pageNoLongerExists": {
+        "summary": "Seite nicht mehr vorhanden",
+        "detail": "Sie wurden zur {0}-Seite umgeleitet, weil {1} von einem anderen Benutzer gelöscht wurde oder nicht mehr vorhanden ist. "
+      }
+    }
+  },
   "wrc-common": {
     "ariaLabel": {
       "icons": {
@@ -1504,7 +1526,7 @@ define({
           "value": "Kehren Sie zur Landingpage des Providerbaums zurück."
         },
         "reset": {
-          "value": "Refresh page values"
+          "value": "Seitenwerte aktualisieren"
         }
       }
     },
@@ -1571,6 +1593,9 @@ define({
       },
       "close": {
         "label": "Schließen"
+      },
+      "clear": {
+        "label": "Löschen"
       }
     },
     "tooltips": {
@@ -1637,6 +1662,20 @@ define({
       "recentPages": {
         "value": "Sichtbarkeit der Historie umschalten"
       },
+      "pagesHistory": {
+        "back": {
+          "value": "Vorherige Seite"
+        },
+        "next": {
+          "value": "Nächste Seite"
+        },
+        "launch": {
+          "value": "Seitenhistorie anzeigen"
+        },
+        "star": {
+          "value": "Lesezeichen für Seite setzen"
+        }
+      },
       "pageInfo": {
         "value": "Hier klicken, um zu pinnen und Pinnen aufzuheben"
       }
@@ -1661,6 +1700,9 @@ define({
       },
       "alerts": {
         "value": "Alerts"
+      },
+      "pagesHistory": {
+        "value": "In diesem Fenster können Sie eine zuvor besuchte Seite anzeigen oder auswählen."
       }
     },
     "placeholders": {
@@ -1814,7 +1856,7 @@ define({
           "detail": "Aktion \"{0}\" kann für mindestens eins der aktivierten Elemente nicht ausgeführt werden"
         },
         "actionNotPerformedNoRow": {
-          "detail": "Unable to perform '{0}' action"
+          "detail": "Aktion \"{0}\" kann nicht ausgeführt werden"
         },
         "actionSucceeded": {
           "summary": "Die Aktion \"{0}\" wurde erfolgreich ausgeführt."

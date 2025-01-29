@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2023,2024, Oracle and/or its affiliates.
+ * Copyright (c) 2023,2025, Oracle and/or its affiliates.
  * Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
  * @ignore
  */
@@ -21,6 +21,7 @@ const SettingsEditor = (() => {
   const { app, ipcMain, dialog } = require('electron');
   let preferences;
   let beforeEditingPreferences;
+  let configSender;
   const scratchPath = `${app.getPath('userData')}/scratch-settings.json`;
 
   const dontNeedStoreFile = (preferences) => {
@@ -65,8 +66,8 @@ const SettingsEditor = (() => {
       else if (key === 'javax.net.ssl.trustStore') {
         preferences.value('networking.trustStore', data[key]);
       }
-      else if (key === 'javax.net.ssl.trustStorePassword') {
-        preferences.value('networking.trustStorePassword', data[key]);
+      else if (key === 'javax.net.ssl.trustStorePasswordEncrypted') {
+        preferences.value('networking.trustStorePasswordEncrypted', data[key]);
       }
       else if (key === 'console.connectTimeoutMillis') {
         preferences.value('networking.connectTimeoutMillis', data[key]);
@@ -93,6 +94,16 @@ const SettingsEditor = (() => {
     }
   }
 
+  function decryptData(data) {
+    for (const key in data) {
+      if (key.endsWith('Encrypted')) {
+        const value = data[key];
+        delete data[key];
+        data[key.replace('Encrypted', '')] = preferences.decrypt(value);
+      }
+    }
+  }
+
   function save() {
     const path = ConfigJSON.getPath();
     let data = {};
@@ -100,7 +111,7 @@ const SettingsEditor = (() => {
     addValue(data, 'javax.net.ssl.trustStoreType', preferences.value('networking.trustStoreType'));
     if (trustStoreTypeRequiresStore()) {
       addValue(data, 'javax.net.ssl.trustStore', preferences.value('networking.trustStore'));
-      addValue(data, 'javax.net.ssl.trustStorePassword', preferences.value('networking.trustStorePassword'));
+      addValue(data, 'javax.net.ssl.trustStorePasswordEncrypted', preferences.value('networking.trustStorePasswordEncrypted'));
     }
     addValue(data, 'console.connectTimeoutMillis', preferences.value('networking.connectTimeoutMillis'));
     addValue(data, 'console.readTimeoutMillis', preferences.value('networking.readTimeoutMillis'));
@@ -113,6 +124,9 @@ const SettingsEditor = (() => {
       data[pair.substring(0, pair.indexOf('='))]= pair.substring(pair.indexOf('=') + 1);
     }
     fs.writeFileSync(path, JSON.stringify(data, null, 4));
+    decryptData(data);
+    if (configSender)
+      configSender(data);
   }
 
   function valid(showMessage) {
@@ -162,6 +176,23 @@ const SettingsEditor = (() => {
       ipcMain.removeAllListeners('resetToDefaults');
       ipcMain.removeAllListeners('encrypt');
       ipcMain.removeAllListeners('decrypt');
+    },
+    setConfigSender: (configSenderParam) => {
+      // This is just a dummy for startup.  It will be destroyed when we
+      // create one for real in show()
+      preferences = new ElectronPreferences({ dataStore: `${scratchPath}`});
+      configSender = configSenderParam;
+      const path = ConfigJSON.getPath();
+      if (fs.existsSync(path)) {
+        try {
+          const data = JSON.parse(fs.readFileSync(path).toString());
+          decryptData(data);
+          configSender(data);
+        }
+        catch (err) {
+          console.error(err);
+        }
+      }
     },
     show: (parentWindow) => {
       SettingsEditor.destroy(preferences);
@@ -217,9 +248,9 @@ const SettingsEditor = (() => {
                       hideFunction: dontNeedStoreFile
                     },
                     {
-                      label: `${I18NUtils.get('wrc-electron.menus.settings.trust-store.key.label')}`,
-                      key: 'trustStorePassword',
-                      type: 'text',
+                      label: `${I18NUtils.get('wrc-electron.menus.settings.trust-store.password.label')}`,
+                      key: 'trustStorePasswordEncrypted',
+                      type: 'secret',
                       hideFunction: dontNeedStoreFile
                     },
                     {

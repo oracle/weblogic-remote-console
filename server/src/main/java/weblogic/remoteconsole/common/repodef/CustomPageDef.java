@@ -1,4 +1,4 @@
-// Copyright (c) 2022, 2023, Oracle and/or its affiliates.
+// Copyright (c) 2022, 2025, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef;
@@ -21,6 +21,7 @@ class CustomPageDef {
   private List<PageActionDef> actionDefs = new ArrayList<>();
   private String customizePageMethod;
   private String customizePageDefMethod;
+  private boolean instanceBasedPDJ;
 
   public CustomPageDef() {
   }
@@ -33,6 +34,7 @@ class CustomPageDef {
     getActionDefs().addAll(ListUtils.nonNull(toClone.getActionDefs()));
     setCustomizePageMethod(toClone.getCustomizePageMethod());
     setCustomizePageDefMethod(toClone.getCustomizePageDefMethod());
+    setInstanceBasedPDJ(toClone.isInstanceBasedPDJ());
   }
 
   PagePath getPagePath() {
@@ -89,5 +91,13 @@ class CustomPageDef {
 
   void setCustomizePageDefMethod(String val) {
     customizePageDefMethod = val;
+  }
+
+  boolean isInstanceBasedPDJ() {
+    return instanceBasedPDJ;
+  }
+
+  void setInstanceBasedPDJ(boolean val) {
+    instanceBasedPDJ = val;
   }
 }

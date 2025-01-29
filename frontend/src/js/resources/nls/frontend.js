@@ -55,7 +55,7 @@ define({
     },
     "wrc-footer": {
       "text": {
-        "copyrightLegal": "Copyright (c) 2020, 2024, Oracle and/or its affiliates.<br/>Oracle (r), Java, MySQL, and NetSuite are registered trademarks of Oracle and/or its affiliates. Other names may be trademarks of their respective owners.<br/>",
+        "copyrightLegal": "Copyright (c) 2020, 2025, Oracle and/or its affiliates.<br/>Oracle (r), Java, MySQL, and NetSuite are registered trademarks of Oracle and/or its affiliates. Other names may be trademarks of their respective owners.<br/>",
         "builtWith": "Built with Oracle JET"
       }
     },
@@ -1498,6 +1498,28 @@ define({
         }
       }
     },
+    "wrc-recently-visited": {
+      "labels": {
+        "tree": {
+          "value": "Tree"
+        },
+        "page": {
+          "value": "Page"
+        },
+        "tab": {
+          "value": "Tab"
+        },
+        "ariaLabel": {
+          "value": "Pages History"
+        }
+      },
+      "messages": {
+        "pageNoLongerExists": {
+          "summary": "Page No Longer Exists",
+          "detail": "You have been redirected to the {0} page because {1} was deleted by another user, or no longer exists. "
+        }
+      }
+    },
     "wrc-common": {
       "ariaLabel": {
         "icons": {
@@ -1572,6 +1594,9 @@ define({
         },
         "close": {
           "label": "Close"
+        },
+        "clear": {
+          "label": "Clear"
         }
       },
       "tooltips": {
@@ -1638,6 +1663,20 @@ define({
         "recentPages": {
           "value": "Toggle visibility of history"
         },
+        "pagesHistory": {
+          "back": {
+            "value": "Previous Page"
+          },
+          "next": {
+            "value": "Next Page"
+          },
+          "launch": {
+            "value": "Show Pages History"
+          },
+          "star": {
+            "value": "Bookmark Page"
+          }
+        },
         "pageInfo": {
           "value": "Click to pin and unpin"
         }
@@ -1662,6 +1701,9 @@ define({
         },
         "alerts": {
           "value": "Alerts"
+        },
+        "pagesHistory": {
+          "value": "This window allows you to view or select a previously visited page."
         }
       },
       "placeholders": {

@@ -54,7 +54,7 @@ define({
   },
   "wrc-footer": {
     "text": {
-      "copyrightLegal": "Copyright (c) 2020, 2024, Oracle and/or its affiliates.<br/>Oracle (r)、Java、MySQLおよびNetSuiteはオラクルおよびその関連会社の登録商標です。その他の社名、商品名等は各社の商標または登録商標である場合があります。<br/>",
+      "copyrightLegal": "Copyright (c) 2020, 2025, Oracle and/or its affiliates.<br/>Oracle (r)、Java、MySQLおよびNetSuiteはオラクルおよびその関連会社の登録商標です。その他の社名、商品名等は各社の商標または登録商標である場合があります。<br/>",
       "builtWith": "Oracle JETで構築"
     }
   },
@@ -1497,6 +1497,28 @@ define({
       }
     }
   },
+  "wrc-recently-visited": {
+    "labels": {
+      "tree": {
+        "value": "ツリー"
+      },
+      "page": {
+        "value": "ページ"
+      },
+      "tab": {
+        "value": "タブ"
+      },
+      "ariaLabel": {
+        "value": "ページ履歴"
+      }
+    },
+    "messages": {
+      "pageNoLongerExists": {
+        "summary": "ページはすでに存在しません",
+        "detail": "{1}が別のユーザーによって削除されたか、すでに存在しないため、{0}ページにリダイレクトされました。"
+      }
+    }
+  },
   "wrc-common": {
     "ariaLabel": {
       "icons": {
@@ -1504,7 +1526,7 @@ define({
           "value": "プロバイダ・ツリーのランディング・ページに戻ります。"
         },
         "reset": {
-          "value": "Refresh page values"
+          "value": "ページ値のリフレッシュ"
         }
       }
     },
@@ -1571,6 +1593,9 @@ define({
       },
       "close": {
         "label": "閉じる"
+      },
+      "clear": {
+        "label": "クリア"
       }
     },
     "tooltips": {
@@ -1637,6 +1662,20 @@ define({
       "recentPages": {
         "value": "履歴の表示の切替え"
       },
+      "pagesHistory": {
+        "back": {
+          "value": "前のページ"
+        },
+        "next": {
+          "value": "次のページ"
+        },
+        "launch": {
+          "value": "ページ履歴の表示"
+        },
+        "star": {
+          "value": "ブックマーク・ページ"
+        }
+      },
       "pageInfo": {
         "value": "クリックして固定および固定解除します"
       }
@@ -1661,6 +1700,9 @@ define({
       },
       "alerts": {
         "value": "アラート"
+      },
+      "pagesHistory": {
+        "value": "このウィンドウで、前にアクセスしたページを表示または選択できます。"
       }
     },
     "placeholders": {
@@ -1814,7 +1856,7 @@ define({
           "detail": "選択された1つ以上のアイテムで、'{0}'アクションを実行できません"
         },
         "actionNotPerformedNoRow": {
-          "detail": "Unable to perform '{0}' action"
+          "detail": "'{0}'アクションを実行できません"
         },
         "actionSucceeded": {
           "summary": "'{0}'アクションは正常に実行されました。"
