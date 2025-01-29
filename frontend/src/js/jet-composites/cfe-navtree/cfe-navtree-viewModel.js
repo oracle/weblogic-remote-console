@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2020, 2024 Oracle and/or its affiliates.
+ * Copyright (c) 2020, 2025, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
@@ -14,6 +14,7 @@ define([
   'ojs/ojknockout-keyset',
   'cfe-navtree/navtree-toolbar',
   'wrc-frontend/common/controller',
+  'wrc-frontend/microservices/pages-history/pages-history-manager',
   'wrc-frontend/microservices/navtree/navtree-manager',
   'wrc-frontend/microservices/perspective/perspective-manager',
   'wrc-frontend/microservices/perspective/perspective-memory-manager',
@@ -34,6 +35,7 @@ define([
   keySet,
   NavtreeToolbar,
   Controller,
+  PagesHistoryManager,
   NavtreeManager,
   PerspectiveManager,
   PerspectiveMemoryManager,
@@ -502,10 +504,29 @@ define([
               self.perspectiveMemory.contentPage.resourceDataFragment =
                 resourceData.substring(index + 1);
             }
-            const path = encodeURIComponent(resourceData);
-            ViewModelUtils.goToRouterPath(router, `/${self.beanTree.type}/${path}`, self.canExitCallback);
-            signaling.navtreeSelectionChanged.dispatch('navtree', node, self.beanTree);
+
+            // The value of the updatedFrom JS object will be "internal" if
+            // the user clicked a node in the navtree. Otherwise, it will be
+            // "external". We only want to change the pages history action to
+            // "route" when updatedFrom equals "internal".
+
+            if (event.detail.updatedFrom === 'internal') {
+              PagesHistoryManager.setPagesHistoryCurrentAction('route');
+
+              // Declare variable passed to goToRouterPath using URI
+              // encoding of resourceData
+              const path = encodeURIComponent(resourceData);
+
+              // Call goToRouterPath to load page associated with path
+              ViewModelUtils.goToRouterPath(router, `/${self.beanTree.type}/${path}`, self.canExitCallback);
+            }
+
+            // Need to set tocus to the selected node, otherwise JET won't work
+            // properly using just the keyboard.
             setFocusSelectedNode(event);
+
+            // Send signal that the navtree selection changed.
+            signaling.navtreeSelectionChanged.dispatch(node, self.beanTree);
           }
         }
       }

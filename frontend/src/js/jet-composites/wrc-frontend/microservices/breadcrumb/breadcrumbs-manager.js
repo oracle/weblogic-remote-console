@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2020, 2024, Oracle and/or its affiliates.
+ * Copyright (c) 2020, 2025, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
@@ -30,46 +30,6 @@ define([
       this.perspectiveMemory = PerspectiveMemoryManager.getPerspectiveMemory(beanTree.type);
       this.navtreeManager = new NavtreeManager(beanTree);
       this.breadcrumbs = breadcrumbsObservableArray;
-      this.navigatorVisible = (options?.navigator?.visibility ? options.navigator.visibility: false);
-    }
-
-    function createBreadcrumbNavigator() {
-      const imageData = [
-        {
-          id: 'beanpath-history-previous',
-          iconFile: 'beanpath-history-previous-gry_24x24',
-          tooltip: 'Back',
-          className: 'beanpath-history-navigator-icon',
-          onClick: 'historyNavigatorClick'
-        },
-        {
-          id: 'beanpath-history-next',
-          iconFile: 'beanpath-history-next-blk_24x24',
-          tooltip: 'Next',
-          className: 'beanpath-history-navigator-icon',
-          onClick: 'historyNavigatorClick'
-        }
-      ];
-      const li = document.createElement('li');
-      for (const data of imageData) {
-        const image = document.createElement('img');
-        image.setAttribute('src', 'js/jet-composites/wrc-frontend/1.0.0/images/' + data.iconFile + '.png');
-        image.setAttribute('title', data.tooltip);
-
-        const anchor = document.createElement('a');
-        anchor.setAttribute('id', data.id);
-        anchor.setAttribute('href', '#');
-        anchor.setAttribute('tabindex', '-1');
-        anchor.setAttribute('on-click', `[[${data.onClick}]]`);
-
-        const span = document.createElement('span');
-        span.className = data.className;
-
-        span.append(image);
-        anchor.append(span);
-        li.append(anchor);
-      }
-      return li;
     }
 
     function createBreadcrumbMenu(button, linksData) {
@@ -145,11 +105,6 @@ define([
         div.setAttribute('aria-label', oj.Translations.getTranslatedString('wrc-perspective.ariaLabel.region.breadcrumbs.value'));
         div.setAttribute('on-click', '[[accessKeyClick]]');
         const ul = document.createElement('ul');
-        if (this.navigatorVisible) {
-          // Create bean path history navigator
-          const navigator = createBreadcrumbNavigator();
-          ul.append(navigator);
-        }
         this.breadcrumbs().forEach((item, index) => {
           item.name = 'breadcrumb';
           crumb = document.createElement('li');

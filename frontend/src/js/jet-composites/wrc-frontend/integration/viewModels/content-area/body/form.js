@@ -1,14 +1,14 @@
 /**
  * @license
- * Copyright (c) 2020, 2024, Oracle and/or its affiliates.
+ * Copyright (c) 2020, 2025, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
 
 'use strict';
 
-define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 'ojs/ojarraydataprovider', 'ojs/ojhtmlutils', 'ojs/ojknockout-keyset', 'ojs/ojkeyset', 'wrc-frontend/common/dialog-fields', 'wrc-frontend/common/controller', 'wrc-frontend/apis/data-operations', 'wrc-frontend/apis/message-displaying', 'wrc-frontend/microservices/change-management/change-manager', 'wrc-frontend/microservices/navtree/navtree-manager', 'wrc-frontend/microservices/perspective/perspective-memory-manager', 'wrc-frontend/microservices/page-definition/common', 'wrc-frontend/microservices/page-definition/types', 'wrc-frontend/microservices/page-definition/fields', 'wrc-frontend/microservices/page-definition/options-sources', 'wrc-frontend/microservices/page-definition/actions-input', 'wrc-frontend/microservices/page-definition/form-layouts', 'wrc-frontend/microservices/page-definition/unset', 'wrc-frontend/microservices/page-definition/usedifs', 'wrc-frontend/microservices/page-definition/utils', './container-resizer', './container-accessibility', './table-templates', './table-sorter', './policy-form', './create-form', './help-form', './wdt-form', './unsaved-changes-dialog', './set-sync-interval-dialog', './actions-input-dialog', 'wrc-frontend/microservices/customize/table-manager', 'wrc-frontend/microservices/actions-management/declarative-actions-manager', 'wrc-frontend/common/page-definition-helper', 'wrc-frontend/microservices/policy-management/policy-manager', 'wrc-frontend/integration/viewModels/utils', 'wrc-frontend/core/utils', 'wrc-frontend/core/types', 'wrc-frontend/core/runtime', 'ojs/ojcontext', 'ojs/ojlogger', 'ojs/ojknockout', 'ojs/ojtable', 'ojs/ojbinddom', 'ojs/ojinputtext', 'ojs/ojlabel', 'ojs/ojswitch', 'ojs/ojselectcombobox', 'ojs/ojformlayout', 'ojs/ojasyncvalidator-regexp', 'ojs/ojconveyorbelt', 'ojs/ojmessages', 'ojs/ojmodule-element', 'ojs/ojmodule', 'cfe-multi-select/loader', 'cfe-property-list-editor/loader', 'cfe-policy-editor/loader', 'ojs/ojselectsingle', 'ojs/ojresponsiveutils', 'ojs/ojresponsiveknockoututils', 'ojs/ojcheckboxset', 'ojs/ojradioset'],
-  function (oj, ko, Router, ModuleElementUtils, ArrayDataProvider, HtmlUtils, keySet, ojkeyset_1, DialogFields, Controller, DataOperations, MessageDisplaying, ChangeManager, NavtreeManager, PerspectiveMemoryManager, PageDefinitionCommon, PageDataTypes, PageDefinitionFields, PageDefinitionOptionsSources, PageDefinitionActionsInput, PageDefinitionFormLayouts, PageDefinitionUnset, PageDefinitionUsedIfs, PageDefinitionUtils, ContentAreaContainerResizer, ContentAreaContainerAccessibility, TableTemplates, TableSorter, PolicyForm, CreateForm, HelpForm, WdtForm, UnsavedChangesDialog, SetSyncIntervalDialog, ActionsInputDialog, TableCustomizerManager, DeclarativeActionsManager, PageDefinitionHelper, PolicyManager, ViewModelUtils, CoreUtils, CoreTypes, Runtime, Context, Logger) {
+define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 'ojs/ojarraydataprovider', 'ojs/ojhtmlutils', 'ojs/ojknockout-keyset', 'ojs/ojkeyset', 'wrc-frontend/common/dialog-fields', 'wrc-frontend/common/controller', 'wrc-frontend/apis/data-operations', 'wrc-frontend/apis/message-displaying', 'wrc-frontend/microservices/change-management/change-manager', 'wrc-frontend/microservices/navtree/navtree-manager', 'wrc-frontend/microservices/perspective/perspective-memory-manager', 'wrc-frontend/microservices/page-definition/common', 'wrc-frontend/microservices/page-definition/types', 'wrc-frontend/microservices/page-definition/fields', 'wrc-frontend/microservices/page-definition/options-sources', 'wrc-frontend/microservices/page-definition/actions-input', 'wrc-frontend/microservices/page-definition/form-layouts', 'wrc-frontend/microservices/page-definition/unset', 'wrc-frontend/microservices/page-definition/usedifs', 'wrc-frontend/microservices/page-definition/utils', './container-resizer', './container-accessibility', './table-templates', './table-sorter', './policy-form', './create-form', './help-form', './wdt-form', './unsaved-changes-dialog', './set-sync-interval-dialog', './actions-input-dialog', 'wrc-frontend/microservices/customize/table-manager', 'wrc-frontend/microservices/pages-history/pages-history-manager', 'wrc-frontend/microservices/actions-management/declarative-actions-manager', 'wrc-frontend/common/page-definition-helper', 'wrc-frontend/microservices/policy-management/policy-manager', 'wrc-frontend/integration/viewModels/utils', 'wrc-frontend/core/utils', 'wrc-frontend/core/types', 'wrc-frontend/core/runtime', 'ojs/ojcontext', 'ojs/ojlogger', 'ojs/ojknockout', 'ojs/ojtable', 'ojs/ojbinddom', 'ojs/ojinputtext', 'ojs/ojlabel', 'ojs/ojswitch', 'ojs/ojselectcombobox', 'ojs/ojformlayout', 'ojs/ojasyncvalidator-regexp', 'ojs/ojconveyorbelt', 'ojs/ojmessages', 'ojs/ojmodule-element', 'ojs/ojmodule', 'cfe-multi-select/loader', 'cfe-property-list-editor/loader', 'cfe-policy-editor/loader', 'ojs/ojselectsingle', 'ojs/ojresponsiveutils', 'ojs/ojresponsiveknockoututils', 'ojs/ojcheckboxset', 'ojs/ojradioset'],
+  function (oj, ko, Router, ModuleElementUtils, ArrayDataProvider, HtmlUtils, keySet, ojkeyset_1, DialogFields, Controller, DataOperations, MessageDisplaying, ChangeManager, NavtreeManager, PerspectiveMemoryManager, PageDefinitionCommon, PageDataTypes, PageDefinitionFields, PageDefinitionOptionsSources, PageDefinitionActionsInput, PageDefinitionFormLayouts, PageDefinitionUnset, PageDefinitionUsedIfs, PageDefinitionUtils, ContentAreaContainerResizer, ContentAreaContainerAccessibility, TableTemplates, TableSorter, PolicyForm, CreateForm, HelpForm, WdtForm, UnsavedChangesDialog, SetSyncIntervalDialog, ActionsInputDialog, TableCustomizerManager, PagesHistoryManager, DeclarativeActionsManager, PageDefinitionHelper, PolicyManager, ViewModelUtils, CoreUtils, CoreTypes, Runtime, Context, Logger) {
     function FormViewModel(viewParams) {
 
       const self = this;
@@ -235,6 +235,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
           parentRouter: viewParams.parentRouter,
           signaling: viewParams.signaling,
           perspective: viewParams.perspective,
+          onPagesHistorySliceItemSelected: selectPagesHistorySliceIItem,
           onCanExit: exitForm,
           onAutoSave: autoSaveForm
         }
@@ -647,6 +648,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
             if (img !== null) {
               img.setAttribute('data-action-polling', JSON.stringify(actionPolling));
             }
+            PagesHistoryManager.setPagesHistoryCurrentAction('bypass');
             moduleConfig.viewModel.cancelAutoSync();
             moduleConfig.viewModel.syncClick({
               target: {
@@ -827,6 +829,20 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
               moduleConfig.viewModel.actionButtons.buttons
             );
           });
+      }
+
+      function adjustPagesHistoryData(action) {
+        PagesHistoryManager.setPagesHistoryCurrentAction(action);
+      }
+
+      function selectPagesHistorySliceIItem(pathParam, breadcrumbLabels, perspective, sliceItem) {
+        self.formToolbarModuleConfig
+          .then((moduleConfig) => {
+            adjustPagesHistoryData('route');
+            PagesHistoryManager.addPagesHistoryItem(pathParam, breadcrumbLabels, perspective, sliceItem);
+            moduleConfig.viewModel.refreshPagesHistoryIcons();
+          });
+
       }
 
       function createDashboard(event) {
@@ -1596,7 +1612,12 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
       }
 
       function isHistoryVisible() {
-        return (!Runtime.getProperty('features.iconbarIcons.relocated') || Runtime.getRole() === CoreTypes.Console.RuntimeRole.TOOL.name);
+        if (Runtime.getRole() === CoreTypes.Console.RuntimeRole.TOOL.name) {
+          return false;
+        }
+        else {
+          return (!Runtime.getProperty('features.iconbarIcons.relocated'));
+        }
       }
 
       function isWdtForm() {
@@ -2493,6 +2514,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
           const path = encodeURIComponent(`${resourceUrl.pathname}${resourceUrl.search}`);
           editPage = `/${viewParams.perspective.id}/${path}`;
         }
+        adjustPagesHistoryData('route');
         viewParams.parentRouter.go(editPage)
           .then((hasChanged) => {
             if (isCreateForm) {
@@ -3066,6 +3088,8 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
           const path = encodeURIComponent(identity);
           const editPage = '/' + viewParams.perspective.id + '/' + path;
 
+          adjustPagesHistoryData('route');
+
           Router.rootInstance.go(editPage)
             .then((hasChanged) => {
               self.formToolbarModuleConfig
@@ -3245,7 +3269,14 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
 
       function reloadRdjData(isEdit = true) {
         //temp fix for incorrect self.sliceName
-        const pageDefinition = (CoreUtils.isNotUndefinedNorNull(viewParams.parentRouter.data.rdjData) ? viewParams.parentRouter.data.rdjData().pageDescription : undefined);
+     
+        let pageDefinition;
+
+        if (CoreUtils.isNotUndefinedNorNull(viewParams.parentRouter.data.rdjData?.pageDescription))
+          pageDefinition = viewParams.parentRouter.data.rdjData().pageDescription;
+        else
+          pageDefinition = viewParams.parentRouter.data.rdjData().self.resourceData;
+
         let sliceName = (CoreUtils.isNotUndefinedNorNull(pageDefinition) ? pageDefinition.substring(pageDefinition.indexOf('=') + 1) : '');
         // Ensure the reload does not attempt to use
         // the create form as the slice.
@@ -3306,7 +3337,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
                   // next line will trigger that subscription. If
                   // you look at that subscription. you will see that
                   // it calls renderPage.bind(this, undefined). That
-                  // passes undefined as the value of resetPageHistory.
+                  // passes undefined as the value of resetPagesHistory.
                   viewParams.parentRouter.data.rdjData(rdjData);
                 });
             }
@@ -3332,14 +3363,14 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
       /**
        * <p><b>WARNING: This renderPage() function is called in multiple ways!</b>
        * <ol>
-       *   <li>A call is made to it from the this.connected() callback function. The call isn't inside aa if statement, or function, or a signal.add handler. It's just "out in the open", sprinkled in with other code that's "out in the open"! The value true is assigned to the resetPageHistory parameter.</li>
-       *   <li>A call is made to it from the this.connected() callback function, but this time it's inside a signal.add handler. The value true is assigned to the resetPageHistory parameter.</li>
-       *   <li>A call is made to it from the this.showAdvancedFieldsValueChanged event handler, triggered when the "Show Advanced Fields" check is checked or unchecked. Nothing is passed as a parameter, so resetPageHistory is "undefined" in this function.</li>
-       *   <li>A call is made to it from inside an if block, of the private renderPageData() function. Nothing is passed as a parameter, so resetPageHistory is "undefined" in this function.</li>
+       *   <li>A call is made to it from the this.connected() callback function. The call isn't inside aa if statement, or function, or a signal.add handler. It's just "out in the open", sprinkled in with other code that's "out in the open"! The value true is assigned to the resetPagesHistory parameter.</li>
+       *   <li>A call is made to it from the this.connected() callback function, but this time it's inside a signal.add handler. The value true is assigned to the resetPagesHistory parameter.</li>
+       *   <li>A call is made to it from the this.showAdvancedFieldsValueChanged event handler, triggered when the "Show Advanced Fields" check is checked or unchecked. Nothing is passed as a parameter, so resetPagesHistory is "undefined" in this function.</li>
+       *   <li>A call is made to it from inside an if block, of the private renderPageData() function. Nothing is passed as a parameter, so resetPagesHistory is "undefined" in this function.</li>
        * </ol>
-       * @param {undefined|true} resetPageHistory
+       * @param {undefined|true} resetPagesHistory
        */
-      function renderPage(resetPageHistory) {
+      function renderPage(resetPagesHistory) {
         function updateTableSortSettings(pdjData) {
           self.tableSort.property = null;
           self.tableSort.direction = null;
@@ -3381,7 +3412,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
         // the changes. If user is using the 'Reload' icon' on the
         // table/form icon toolbar to reload the page, then this
         // flag will not be set.
-        if (CoreUtils.isNotUndefinedNorNull(resetPageHistory) && !self.loadRdjDoNotClearDirty) {
+        if (CoreUtils.isNotUndefinedNorNull(resetPagesHistory) && !self.loadRdjDoNotClearDirty) {
           resetPageRedoHistory();
         }
 
@@ -4178,6 +4209,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
                   const rowIndex = event.currentTarget.currentRow.rowIndex;
                   const rowKeyValue = event.currentTarget.data.data[rowIndex][rowKeyName];
                   if (CoreUtils.isNotUndefinedNorNull(rowKeyValue)) {
+                    adjustPagesHistoryData('route');
                     Router.rootInstance.go(`/${viewParams.perspective.id}/${encodeURIComponent(rowKeyValue)}`);
                   }
                 }

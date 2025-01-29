@@ -1,6 +1,6 @@
 ---
 author: Oracle Corporation
-publisherinformation: December 2024
+publisherinformation: January 2025
 weight: 171
 title: Configuring Services
 ---
@@ -240,8 +240,8 @@ After you create a JDBC data source, you can perform administrative tasks on ins
                            </caption>
                            <thead>
                               <tr>
-                                 <th id="d9905e876">Operation</th>
-                                 <th id="d9905e878">Description</th>
+                                 <th id="d9990e820">Operation</th>
+                                 <th id="d9990e822">Description</th>
                               </tr>
                            </thead>
                            <tbody>
@@ -1055,9 +1055,9 @@ In the reference implementation of JavaMail, applications must instantiate <code
                               </caption>
                               <thead>
                                  <tr>
-                                    <th id="d9905e3946">Property</th>
-                                    <th id="d9905e3948">Description</th>
-                                    <th id="d9905e3950">Default</th>
+                                    <th id="d9990e3715">Property</th>
+                                    <th id="d9990e3717">Description</th>
+                                    <th id="d9990e3719">Default</th>
                                  </tr>
                               </thead>
                               <tbody>

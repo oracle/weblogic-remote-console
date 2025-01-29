@@ -1,4 +1,4 @@
-// Copyright (c) 2022, 2024, Oracle and/or its affiliates.
+// Copyright (c) 2022, 2025, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef;
@@ -229,6 +229,20 @@ public class CustomSliceTableDef implements SliceTableDef {
 
   public CustomSliceTableDef customizePageMethod(String val) {
     setCustomizePageMethod(val);
+    return this;
+  }
+
+  @Override
+  public boolean isInstanceBasedPDJ() {
+    return pageDef.isInstanceBasedPDJ();
+  }
+
+  public void setInstanceBasedPDJ(boolean val) {
+    pageDef.setInstanceBasedPDJ(val);
+  }
+
+  public CustomSliceTableDef instanceBasedPDJ(boolean val) {
+    setInstanceBasedPDJ(val);
     return this;
   }
 }

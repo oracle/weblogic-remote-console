@@ -1,8 +1,8 @@
-# Copyright 2022, 2024, Oracle and/or its affiliates.
+# Copyright 2022, 2025, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at http://oss.oracle.com/licenses/upl.
 
 name: WebLogic Remote Console
-version: '2.4.14'
+version: '2.4.15'
 kind: remote
 console-backend:
   name: Oracle WebLogic Console Backend Microprofile Server
@@ -129,6 +129,8 @@ preferences:
     theme: light
   navtree:
     useTreeMenusAsRootNodes: false
+  pagesHistory:
+    maxQueueSize: 64
   providerManagement:
     location: kiosk
     newModel:
@@ -173,6 +175,8 @@ features:
     disabled: true
   iconbarIcons:
     relocated: true
+  pagesHistory:
+    disabled: false
 settings:
   logging:
     logFailureResponses: true

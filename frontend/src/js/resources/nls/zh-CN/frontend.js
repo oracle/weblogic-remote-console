@@ -54,7 +54,7 @@ define({
   },
   "wrc-footer": {
     "text": {
-      "copyrightLegal": "版权所有 (c) 2020，2024，Oracle 和/或其关联公司。<br/>Oracle (r)、Java、MySQL 和 NetSuite 是 Oracle 和/或其关联公司的注册商标。其他名称可能是各自所有者的商标。<br/>",
+      "copyrightLegal": "版权所有 (c) 2020，2025，Oracle 和/或其关联公司。<br/>Oracle (r)、Java、MySQL 和 NetSuite 是 Oracle 和/或其关联公司的注册商标。其他名称可能是各自所有者的商标。<br/>",
       "builtWith": "使用 Oracle JET 构建"
     }
   },
@@ -1497,6 +1497,28 @@ define({
       }
     }
   },
+  "wrc-recently-visited": {
+    "labels": {
+      "tree": {
+        "value": "树"
+      },
+      "page": {
+        "value": "页"
+      },
+      "tab": {
+        "value": "选项卡"
+      },
+      "ariaLabel": {
+        "value": "页历史记录"
+      }
+    },
+    "messages": {
+      "pageNoLongerExists": {
+        "summary": "页不再存在",
+        "detail": "您已重定向到 {0} 页，因为 {1} 已被其他用户删除，或不再存在。"
+      }
+    }
+  },
   "wrc-common": {
     "ariaLabel": {
       "icons": {
@@ -1504,7 +1526,7 @@ define({
           "value": "返回到提供程序树的登录页。"
         },
         "reset": {
-          "value": "Refresh page values"
+          "value": "刷新页面值"
         }
       }
     },
@@ -1571,6 +1593,9 @@ define({
       },
       "close": {
         "label": "关闭"
+      },
+      "clear": {
+        "label": "清除"
       }
     },
     "tooltips": {
@@ -1637,6 +1662,20 @@ define({
       "recentPages": {
         "value": "显示/隐藏历史记录"
       },
+      "pagesHistory": {
+        "back": {
+          "value": "上一页"
+        },
+        "next": {
+          "value": "下一页"
+        },
+        "launch": {
+          "value": "显示页历史记录"
+        },
+        "star": {
+          "value": "书签页"
+        }
+      },
       "pageInfo": {
         "value": "单击以固定和取消固定"
       }
@@ -1661,6 +1700,9 @@ define({
       },
       "alerts": {
         "value": "预警"
+      },
+      "pagesHistory": {
+        "value": "此窗口可用于查看或选择之前访问过的页。"
       }
     },
     "placeholders": {
@@ -1814,7 +1856,7 @@ define({
           "detail": "无法对一个或多个选中的项目执行 '{0}' 操作"
         },
         "actionNotPerformedNoRow": {
-          "detail": "Unable to perform '{0}' action"
+          "detail": "无法执行 '{0}' 操作"
         },
         "actionSucceeded": {
           "summary": "已成功执行 '{0}' 操作！"

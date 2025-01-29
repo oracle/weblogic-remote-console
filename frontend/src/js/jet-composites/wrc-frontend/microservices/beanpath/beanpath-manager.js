@@ -1,13 +1,29 @@
 /**
  * @license
- * Copyright (c) 2020, 2024, Oracle and/or its affiliates.
+ * Copyright (c) 2020, 2025, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
 'use strict';
 
-define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'wrc-frontend/microservices/perspective/perspective-memory-manager', 'wrc-frontend/microservices/page-definition/utils', 'wrc-frontend/core/utils', 'ojs/ojlogger'],
-  function ( oj, ko, ArrayDataProvider, PerspectiveMemoryManager, PageDefinitionUtils, CoreUtils, Logger) {
+define([
+  'ojs/ojcore',
+  'knockout',
+  'ojs/ojarraydataprovider',
+  'wrc-frontend/microservices/perspective/perspective-memory-manager',
+  'wrc-frontend/microservices/page-definition/utils',
+  'wrc-frontend/core/utils',
+  'ojs/ojlogger'
+],
+  function (
+    oj,
+    ko,
+    ArrayDataProvider,
+    PerspectiveMemoryManager,
+    PageDefinitionUtils,
+    CoreUtils,
+    Logger
+  ) {
 
     function BeanPathManager(beanTree, countObservable){
       this.beanTree = beanTree;
@@ -66,18 +82,19 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'wrc-frontend/micro
       this.beanPathHistoryCount(count);
     }
 
-    //public:
+  //public:
     BeanPathManager.prototype = {
       /**
        * @param {string} pathParam
        * @param {[string]} breadcrumbLabels
+       * @param {number} positionSequence
        */
-      addBeanPath: function (pathParam, breadcrumbLabels) {
+      addBeanPath: function (pathParam, breadcrumbLabels, positionSequence) {
         if (CoreUtils.isUndefinedOrNull(pathParam) || pathParam.startsWith('undefined')) pathParam = '';
 
         const actualPathParam = trimPathParam(pathParam);
         const breadcrumbsPath = (breadcrumbLabels.length > 0 ? breadcrumbLabels.join('/') : actualPathParam);
-        const breadcrumbsLabel = decodeURIComponent(breadcrumbsPath.replace(/\//g, ' | '));
+        const breadcrumbsLabel = PageDefinitionUtils.getBreadcrumbsLabel(pathParam, breadcrumbLabels);
 
         let result = ko.utils.arrayFirst(this.beanPathHistory(), (beanpath) => {
           return beanpath['label'] === breadcrumbsLabel;
@@ -92,18 +109,22 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'wrc-frontend/micro
           if (CoreUtils.isUndefinedOrNull(historyOption)) {
             // Add path to beanPathHistory
             const newEntry = {
+              position: positionSequence,
               value: actualPathParam,
               label: `${breadcrumbsLabel}`,
               perspective: {id: this.perspectiveMemory.perspective.id}
             };
+
             this.beanPathHistory.valueWillMutate();
             this.beanPathHistory.push(newEntry);
             this.beanPathHistory.valueHasMutated();
+
             PerspectiveMemoryManager.addProviderPerspectiveBeanPathHistory(
               this.beanTree.provider.id,
               this.perspectiveMemory.perspective.id,
               this.beanPathHistory()
             );
+
             getBeanPathHistoryOptions(this.beanPathHistory);
           }
         }
@@ -111,23 +132,37 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'wrc-frontend/micro
       },
 
       /**
-       * @param {string} pathParam
+       * @param {[{position: number, value: string, breadcrumbLabels: [string], perspective: {id: string}, tab?: string}]} removedEntries
        */
-      removeBeanPath: function (pathParam) {
-        if (CoreUtils.isUndefinedOrNull(pathParam) || pathParam.startsWith('undefined')) pathParam = '';
-
-        pathParam = trimPathParam(pathParam);
-
-        const filteredBeanPaths = this.beanPathHistory().filter(beanpath => beanpath.value !== pathParam);
-
-        this.beanPathHistory(filteredBeanPaths);
-        updateBeanPathHistoryCount.call(this, this.beanPathHistory().length);
-
-        PerspectiveMemoryManager.setProviderPerspectiveBeanPathHistory(
+      removeHistoryEntries: function (removedEntries) {
+        // Remove entries from perspective memory manager
+        PerspectiveMemoryManager.removeProviderPerspectiveBeanPaths(
           this.beanTree.provider.id,
-          this.perspectiveMemory.perspective.id,
-          this.beanPathHistory()
+          removedEntries
         );
+
+        // Get entries left after the removal
+        const historyEntries = PerspectiveMemoryManager.getProviderPerspectivesBeanPathHistory(this.beanTree.provider.id);
+        // Declare array that will be used to update the
+        // bean path history observable array
+        let mergedEntries = [];
+
+        // Loop through all the entries left after the removal
+        for (let [key, value] of Object.entries(historyEntries)) {
+          // Use spread operator to build up array that will
+          // be used to update the bean path historu obseervable
+          // array
+          mergedEntries = [...mergedEntries, ...value];
+        }
+
+        // Update bean path history observable array using
+        // the merged entries.
+        this.beanPathHistory.valueWillMutate();
+        this.beanPathHistory(mergedEntries);
+        this.beanPathHistory.valueHasMutated();
+
+        // Update the bean path history count
+        updateBeanPathHistoryCount.call(this, this.beanPathHistory().length);
       },
 
       findHistoryEntry: function(value) {
@@ -150,6 +185,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'wrc-frontend/micro
           };
 
           PerspectiveMemoryManager.clearProviderPerspectivesBeanPathHistory(options);
+
           self.beanPathHistory.valueWillMutate();
           self.beanPathHistory.removeAll();
           self.beanPathHistory.valueHasMutated();
@@ -184,6 +220,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'wrc-frontend/micro
             };
             for (const item of value) {
               historyOption.children.push({
+                position: item.position,
                 label: item.label,
                 value: item.value,
                 perspective: {id: key}
@@ -196,18 +233,6 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojarraydataprovider', 'wrc-frontend/micro
         return historyOptions;
       },
 
-      getNavigatorPosition: function () {
-        return PerspectiveMemoryManager.getProviderPerspectivesNavigatorPosition(this.beanTree.provider.id);
-      },
-  
-      getNavigatorVisibility: function () {
-        return PerspectiveMemoryManager.getProviderPerspectivesNavigatorVisibility(this.beanTree.provider.id);
-      },
-  
-      setHistoryNavigatorVisibility: function (visible) {
-        this.perspectiveMemory.setBreadcrumbsVisibility(visible);
-      },
-  
       getHistoryVisibility: function () {
         return PerspectiveMemoryManager.getProviderPerspectivesHistoryVisibility(this.beanTree.provider.id);
       },

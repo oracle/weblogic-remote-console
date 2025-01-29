@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2020, 2024, Oracle and/or its affiliates.
+ * Copyright (c) 2020, 2025, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
@@ -21,15 +21,7 @@ define(['wrc-frontend/microservices/perspective/perspective-manager'],
       };
       this.breadcrumbs = {
         items: [],
-        visibility: false,
-        navigator: {
-          visibility: false,
-          position: 0,
-          icons: {
-            previous: {state: 'disabled'},
-            next: {state: 'disabled'}
-          }
-        }
+        visibility: false
       };
       this.help = {
         visibility: false

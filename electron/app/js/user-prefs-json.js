@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2022, 2024, Oracle and/or its affiliates.
+ * Copyright (c) 2022, 2025, Oracle and/or its affiliates.
  * Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
  * @ignore
  */
@@ -57,7 +57,8 @@ const UserPrefs = (() => {
       const preferencesTemplate = {
         defaults: {
           credentials: { storage: true },
-          unsaved: { appExit: true, unload: true }
+          unsaved: { appExit: true, unload: true },
+          startup: { checkForUpdates: true }
         },
         dataStore: `${app.getPath('userData')}/user-prefs.json`,
         browserWindowOverrides: {
@@ -153,10 +154,61 @@ const UserPrefs = (() => {
                 }
               ]
             }
+          },
+          {
+            id: 'language',
+            label: `${I18NUtils.get('wrc-electron.menus.preferences.section.language.label')}`,
+            form: {
+              groups: [
+                {
+                  fields: [
+                    {
+                      label: `${I18NUtils.get('wrc-electron.menus.preferences.language.field.label')}`,
+                      help: `${I18NUtils.get('wrc-electron.menus.preferences.language.field.help')}`,
+                      key: 'language',
+                      type: 'radio',
+                      options: [
+                        {label: `${I18NUtils.get('wrc-electron.menus.preferences.language.system.label')}`, value: 'System'},
+                        {label: `${I18NUtils.get('wrc-electron.menus.preferences.language.en.label')}`, value: 'en'},
+                        {label: `${I18NUtils.get('wrc-electron.menus.preferences.language.de.label')}`, value: 'de'},
+                        {label: `${I18NUtils.get('wrc-electron.menus.preferences.language.es.label')}`, value: 'es'},
+                        {label: `${I18NUtils.get('wrc-electron.menus.preferences.language.fr.label')}`, value: 'fr'},
+                        {label: `${I18NUtils.get('wrc-electron.menus.preferences.language.it.label')}`, value: 'it'},
+                        {label: `${I18NUtils.get('wrc-electron.menus.preferences.language.ja.label')}`, value: 'ja'},
+                        {label: `${I18NUtils.get('wrc-electron.menus.preferences.language.ko.label')}`, value: 'ko'},
+                        {label: `${I18NUtils.get('wrc-electron.menus.preferences.language.pt.label')}`, value: 'pt-BR'},
+                        {label: `${I18NUtils.get('wrc-electron.menus.preferences.language.zh-CN.label')}`, value: 'zh-CN'},
+                        {label: `${I18NUtils.get('wrc-electron.menus.preferences.language.zh-TW.label')}`, value: 'zh-TW'}
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            id: 'startup',
+            label: `${I18NUtils.get('wrc-electron.menus.preferences.section.startup.label')}`,
+            form: {
+              groups: [
+                {
+                  fields: [
+                    {
+                      label: `${I18NUtils.get('wrc-electron.menus.preferences.check-for-update.field.label')}`,
+                      key: 'checkForUpdates',
+                      type: 'radio',
+                      options: [
+                        {label: `${I18NUtils.get('wrc-electron.menus.preferences.yes')}`, value: true},
+                        {label: `${I18NUtils.get('wrc-electron.menus.preferences.no')}`, value: false}
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
           }
         ]
       };
-  
       preferences = new ElectronPreferences(preferencesTemplate);
     },
     read: (userDataPath) => {

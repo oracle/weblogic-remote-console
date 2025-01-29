@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2023, 2024, Oracle and/or its affiliates.
+ * Copyright (c) 2023, 2025, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
@@ -415,6 +415,26 @@ define([
       return hiddenColumns;
     }
 
+    function getBreadcrumbLabels(rdjData) {
+      let breadcrumbLabels = [];
+      if (CoreUtils.isNotUndefinedNorNull(rdjData)) {
+        breadcrumbLabels = rdjData.breadCrumbs.map(({label}) => label);
+        breadcrumbLabels.push(rdjData.self.label);
+      }
+      return breadcrumbLabels;
+    }
+
+    function getDefaultSliceValue(pdjData) {
+      let sliceValue;
+      if (hasSliceTable(pdjData) && pdjData.sliceTable.slices) {
+        sliceValue = pdjData.sliceTable.slices[0].name;
+      }
+      else if (hasSliceForm(pdjData) && pdjData.sliceForm.slices) {
+        sliceValue = pdjData.sliceForm.slices[0].name;
+      }
+      return sliceValue;
+    }
+
   //public:
     return {
       hasParentRouter: hasParentRouter,
@@ -428,6 +448,8 @@ define([
       hasSliceFormProperties: hasSliceFormProperties,
       getSliceTableDisplayedColumns: getSliceTableDisplayedColumns,
       getSliceTableHiddenColumns: getSliceTableHiddenColumns,
+      getBreadcrumbLabels: getBreadcrumbLabels,
+      getDefaultSliceValue: getDefaultSliceValue,
       hasHelpTopics: hasHelpTopics,
       isPDJReadOnly: isPDJReadOnly,
       isReadOnlySlice: isReadOnlySlice,

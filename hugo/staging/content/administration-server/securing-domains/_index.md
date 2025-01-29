@@ -1,6 +1,6 @@
 ---
 author: Oracle Corporation
-publisherinformation: December 2024
+publisherinformation: January 2025
 weight: 78
 title: Securing Domains
 ---
@@ -525,13 +525,15 @@ For more information on certificate validation on WebLogic Server, see [Configur
 
 3.  In the **Name** field, enter a name for the new provider.
 
-4.  Click **Create**.
+4.  From the **Type** drop-down list, select the type of Certificate Lookup and Validation (CLV) provider.
 
-5.  If you want to make this Certification Path provider the current builder of certificate chains for this realm, perform the following steps:
+5.  Click **Create**.
+
+6.  If you want to make this CLV provider the current builder of certificate chains for this realm, perform the following steps:
 
     1.  In the **Edit Tree**, go to **Security**, then **Realms**, then *myRealm*.
 
-    2.  On the **Cert Path Builder** tab, select the Certification Path provider from the **Cert Path Builder** drop-down list.
+    2.  On the **Cert Path Builder** tab, select the CLV provider from the **Cert Path Builder** drop-down list.
 
     3.  Click **Save**.
 
@@ -708,7 +710,7 @@ You can unlock user accounts that became locked because of excessive failed logi
 
 ### View Users and Groups {#GUID-16E007EA-6BA2-49D9-9005-FF40C304792B}
 
-If you added an authentication provider other than the default authentication provider (WebLogic Authentication Provider) to your security realm, you can view its users and groups but you cannot edit them in WebLogic Remote Console.
+After you configure an authentication provider, you can view its users and groups in WebLogic Remote Console, if the provider supports the required WebLogic Server APIs. WebLogic Remote Console displays up to 1000 users or groups at a time. You cannot view group membership.
 
 1.  In the **Security Data Tree**, go to **Realms**, *myRealm*, then **Authentication Providers**.
 
@@ -717,7 +719,7 @@ If you added an authentication provider other than the default authentication pr
 3.  Expand the **Users** or **Groups** nodes to view the users and groups.
 
 
-To edit these users and groups, you'll need to use an external tool specific to the provider.
+For the default authentication provider (WebLogic Authentication Provider) *only*, you can also add, modify, or delete users and groups.
 
 ## Security Policies and Roles {#GUID-6FDCFBD8-33DE-4962-9A17-F25BB3028D1E}
 
@@ -854,8 +856,8 @@ Use the actions on the Policy page to edit a policy.
                            <span>The actions available to configure a security policy.</span>
                            <thead>
                               <tr>
-                                 <th id="d34709e3218">Action</th>
-                                 <th id="d34709e3220">Description</th>
+                                 <th id="d34891e2971">Action</th>
+                                 <th id="d34891e2973">Description</th>
                               </tr>
                            </thead>
                            <tbody>

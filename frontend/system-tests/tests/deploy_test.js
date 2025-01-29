@@ -1736,7 +1736,7 @@ describe.only('Test Suite: deploy_test , Redeploy and undeploy for Application a
                "Database Client Data Directories");
            driver.sleep(2400);
            console.log("Delete Database Client - ASDS1-jdbc");
-           element = driver.findElement(By.xpath("//tbody/tr[1]/td[1]"));
+           element = driver.findElement(By.xpath("//*[starts-with(@id, 'table:-')]"));
            driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
            await driver.sleep(2400);
            if (element.isEnabled()) {

@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2021, 2024, Oracle and/or its affiliates.
+ * Copyright (c) 2021, 2025, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
@@ -614,17 +614,41 @@ define([
               aggregatedData.add('rawPath', uri);
               aggregatedData.add('rdjUrl', reply.rdjUrl);
               aggregatedData.add('rdjData', reply.rdjData);
-              aggregatedData.add('pdjUrl', Runtime.getBackendUrl()+reply.rdjData.pageDescription);
+              
+              const inlinePageDescription = reply.rdjData.inlinePageDescription;
+
+              aggregatedData.add('rdjReply', reply);
+
+              if (inlinePageDescription) {
+                aggregatedData.add('pdjData', inlinePageDescription);
+                aggregatedData.add('pageTitle', `${Runtime.getName()} - ${inlinePageDescription.helpPageTitle}`);
+                aggregatedData.add('pdjUrl', rdjUrl);
+              } else {
+                if (aggregatedData.has('pdjData'))
+                  aggregatedData.remove('pdjData');
+                aggregatedData.add('pdjUrl', `${Runtime.getBackendUrl()}${reply.rdjData.pageDescription}`);
+              }
+              
               return aggregatedData;
             })
             .then(aggregatedData => {
-              return getData.call(this, {url: aggregatedData.get('pdjUrl')})
-                .then((reply) => {
-                  aggregatedData.add('pdjData', reply.body.data);
-                  reply.body['data'] = aggregatedData;
-                  reply.body['data'].add('pageTitle', `${Runtime.getName()} - ${reply.body.data.get('pdjData').helpPageTitle}`);
-                  resolve(reply);
-                });
+              // if there is already pdjData in the aggregatedData, it means it was present
+              // in the rdj as an inlinePageDescription.. so just return the reply from the
+              // rdj request...
+              if (aggregatedData.has('pdjData')) {
+                const reply = aggregatedData.get('rdjReply');
+                reply.body = { data : aggregatedData };
+
+                resolve(reply);
+              } else {
+                return getData.call(this, { url: aggregatedData.get('pdjUrl') })
+                  .then((reply) => {
+                    aggregatedData.add('pdjData', reply.body.data);
+                    reply.body['data'] = aggregatedData;
+                    reply.body['data'].add('pageTitle', `${Runtime.getName()} - ${reply.body.data.get('pdjData').helpPageTitle}`);
+                    resolve(reply);
+                  });
+              }
             })
             .catch(response =>{
               if (response.failureType === CoreTypes.FailureType.UNEXPECTED) {
@@ -1301,31 +1325,55 @@ define([
         return deleteData.call(this, {url: `${url}/AdminServerConnection/${dataProviderId}`});
       },
 
-      getSliceData: function(uri) {
+      getSliceData: function (uri) {
         return new Promise((resolve, reject) => {
           const rdjUrl = `${Runtime.getBackendUrl()}${uri}`;
-          getData.call(this, {url: rdjUrl})
+          getData.call(this, { url: rdjUrl })
             .then(reply => {
-              return {rdjUrl: rdjUrl, rdjData: reply.body.data};
+              return { rdjUrl: rdjUrl, rdjData: reply.body.data };
             })
             .then(reply => {
               const aggregatedData = new CbeDataStorage(uri);
               aggregatedData.add('rawPath', uri);
               aggregatedData.add('rdjUrl', reply.rdjUrl);
               aggregatedData.add('rdjData', reply.rdjData);
-              aggregatedData.add('pdjUrl', `${Runtime.getBackendUrl()}${reply.rdjData.pageDescription}`);
+              const inlinePageDescription = reply.rdjData.inlinePageDescription;
+
+              aggregatedData.add('rdjReply', reply);
+
+              if (inlinePageDescription) {
+                aggregatedData.add('pdjData', inlinePageDescription);
+                aggregatedData.add('pageTitle', `${Runtime.getName()} - ${inlinePageDescription.helpPageTitle}`);
+                aggregatedData.add('pdjUrl', rdjUrl);
+              } else {
+                if (aggregatedData.has('pdjData'))
+                  aggregatedData.remove('pdjData');
+                aggregatedData.add('pdjUrl', `${Runtime.getBackendUrl()}${reply.rdjData.pageDescription}`);
+              }
+
               return aggregatedData;
             })
             .then(aggregatedData => {
-              return getData.call(this, {url: aggregatedData.get('pdjUrl')})
-                .then((reply) => {
-                  aggregatedData.add('pdjData', reply.body.data);
-                  reply.body['data'] = aggregatedData;
-                  reply.body['data'].add('pageTitle', `${Runtime.getName()} - ${reply.body.data.get('pdjData').helpPageTitle}`);
-                  resolve(reply);
-                });
+              // if there is already pdjData in the aggregatedData, it means it was present
+              // in the rdj as an inlinePageDescription.. so just return the reply from the
+              // rdj request...
+              if (aggregatedData.has('pdjData')) {
+                const reply = aggregatedData.get('rdjReply');
+                reply.body = { data : aggregatedData };
+
+                resolve(reply);
+              } else {
+
+                return getData.call(this, { url: aggregatedData.get('pdjUrl') })
+                  .then((reply) => {
+                    aggregatedData.add('pdjData', reply.body.data);
+                    reply.body['data'] = aggregatedData;
+                    reply.body['data'].add('pageTitle', `${Runtime.getName()} - ${reply.body.data.get('pdjData').helpPageTitle}`);
+                    resolve(reply);
+                  });
+              }
             })
-            .catch(response =>{
+            .catch(response => {
               if (response.failureType === CoreTypes.FailureType.UNEXPECTED) {
                 response['failureReason'] = response.failureReason.stack;
               }

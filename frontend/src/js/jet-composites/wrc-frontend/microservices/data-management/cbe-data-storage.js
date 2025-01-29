@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2021, 2022, Oracle and/or its affiliates.
+ * Copyright (c) 2021, 2025, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
@@ -57,6 +57,10 @@ define(['wrc-frontend/core/data-storage', 'wrc-frontend/core/cfe-errors', 'wrc-f
         throw new CfeErrors.InvalidItemKeyError(`No storage item has "${key}" as the key.`);
       }
       return _items[key];
+    };
+
+    CbeDataStorage.prototype.has = function (key) {
+      return !(typeof _items[key] === 'undefined');
     };
 
     /**

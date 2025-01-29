@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2020, 2024, Oracle and/or its affiliates.
+ * Copyright (c) 2020, 2025, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
@@ -29,6 +29,7 @@ define(['./parsers/yaml', 'text!wrc-frontend/config/console-frontend-jet.yaml', 
 		properties['preferences.general.theme'] = 'light';
 		properties['preferences.navtree.useTreeMenusAsRootNodes'] = false;
 		properties['preferences.startup.task.chooser'] = 'use-dialog';
+		properties['preferences.pagesHistory.maxQueueSize'] = 64;
 		properties['features.appMenu.disabled'] = true;
 		properties['features.appProfiles.disabled'] = true;
 		properties['features.appAlerts.disabled'] = true;
@@ -67,6 +68,7 @@ define(['./parsers/yaml', 'text!wrc-frontend/config/console-frontend-jet.yaml', 
 				properties['features.whatsNew.disabled'] = config['features']['whatsNew']['disabled'];
 				properties['features.pageInfo.disabled'] = config['features']['pageInfo']['disabled'];
 				properties['features.howDoI.disabled'] = config['features']['howDoI']['disabled'];
+				properties['features.pagesHistory.disabled'] = config['features']['pagesHistory']['disabled'];
 				properties['features.iconbarIcons.relocated'] = config['features']['iconbarIcons']['relocated'];
 				properties['preferences.providerManagement.location'] = config['preferences']['providerManagement']['location'];
 				properties['preferences.providerManagement.newModel.domain.fileContents'] = config['preferences']['providerManagement']['newModel']['domain']['fileContents'];
@@ -77,6 +79,7 @@ define(['./parsers/yaml', 'text!wrc-frontend/config/console-frontend-jet.yaml', 
 				properties['preferences.startup.project'] = config['preferences']['startup']['project'];
 				properties['preferences.navtree.useTreeMenusAsRootNodes'] = config['preferences']['navtree']['useTreeMenusAsRootNodes'];
 				properties['preferences.general.theme'] = config['preferences']['general']['theme'];
+				properties['preferences.pagesHistory.maxQueueSize'] = config['preferences']['pagesHistory']['maxQueueSize'];
 			})
 			.catch(err => {
 				Logger.error(err);
@@ -87,8 +90,8 @@ define(['./parsers/yaml', 'text!wrc-frontend/config/console-frontend-jet.yaml', 
 		}
 		
 		function getUniqueId() {
-                  return properties['unique-id']
-                }
+			return properties['unique-id']
+		}
 
 		/**
 		 * return backend URL
@@ -134,6 +137,7 @@ define(['./parsers/yaml', 'text!wrc-frontend/config/console-frontend-jet.yaml', 
 				CFE_STARTUP_PROJECT: {name: 'preferences.startup.project'},
 				CFE_STARTUP_TASK: {name: 'preferences.startup.task.default'},
 				CFE_STARTUP_TASK_CHOOSER: {name: 'preferences.startup.task.chooser'},
+				CFE_PAGES_HISTORY_MAX_QUEUE_SIZE: {name: 'preferences.pagesHistory.maxQueueSize'},
 				CFE_ACTIONS: {name: 'settings.actions'},
 				CFE_POLLING: {name: 'settings.polling'},
 				CBE_PROVIDER_ID: {name: 'console-backend.providerId'},
@@ -202,15 +206,19 @@ define(['./parsers/yaml', 'text!wrc-frontend/config/console-frontend-jet.yaml', 
 			getSettingsActions: () => {
 				return properties['settings.actions'];
 			},
-			
-			getActionPollings: () => {
-				return properties['settings.polling'];
+
+			getPagesHistoryMaxQueueSize: () => {
+				return ~~properties['preferences.pagesHistory.maxQueueSize'];
 			},
 			
 			getPollingMillis: function () {
 				return parseInt(this.getProperty(this.PropertyName.CBE_POLLING_MILLIS));
 			},
-			
+
+			getActionPollings: () => {
+				return properties['settings.polling'];
+			},
+
 			getRetryAttempts: function () {
 				return parseInt(this.getProperty(this.PropertyName.CBE_RETRY_ATTEMPTS));
 			},

@@ -1,6 +1,6 @@
 ---
 author: Oracle Corporation
-publisherinformation: December 2024
+publisherinformation: January 2025
 weight: 240
 title: WDT Model Files
 ---
@@ -161,8 +161,8 @@ For guidance on where to find specific domain configuration options and how to a
                               <span>Describes the various ways to set values for a field.</span>
                               <thead>
                                  <tr>
-                                    <th id="d28420e377">Option</th>
-                                    <th id="d28420e379">Description</th>
+                                    <th id="d28557e342">Option</th>
+                                    <th id="d28557e344">Description</th>
                                  </tr>
                               </thead>
                               <tbody>

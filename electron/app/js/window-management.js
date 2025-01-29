@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2022, 2024, Oracle and/or its affiliates.
+ * Copyright (c) 2022, 2025, Oracle and/or its affiliates.
  * Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
  * @ignore
  */
@@ -62,13 +62,12 @@ const WindowManagement = (() => {
       }
     });
   }
-  
+
   /**
    *
    * @private
    */
   function generateAppMenu() {
-    
     let appMenuTemplate = [
       {
         // Provide an id field, so we can use Array.find() to
@@ -772,7 +771,7 @@ const WindowManagement = (() => {
       if (params.feedURL)
         downloadURL = params.feedURL;
       
-      if (_params.supportsUpgradeCheck) {
+      if (_params.supportsUpgradeCheck && _params.upgradeCheckAtStart) {
         AutoUpdateUtils.checkForUpdates()
           .then(result => {
             newVersion = (result !== null ? result.versionInfo.version : null);
@@ -785,7 +784,7 @@ const WindowManagement = (() => {
       
       _window = createBrowserWindow(title, AutoPrefs.get('width'), AutoPrefs.get('height'));
       _window.webContents.session.clearCache();
-      
+
       _window.on('resize', () => {
         AutoPrefs.set({width: _window.getSize()[0], height: _window.getSize()[1]});
         AutoPrefs.write();

@@ -1,6 +1,6 @@
 ---
 author: Oracle Corporation
-publisherinformation: December 2024
+publisherinformation: January 2025
 weight: 26
 title: Contribute to WebLogic Remote Console
 ---

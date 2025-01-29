@@ -1,14 +1,37 @@
 /**
  * @license
- * Copyright (c) 2020, 2024, Oracle and/or its affiliates.
+ * Copyright (c) 2020, 2025, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
 
 'use strict';
 
-define(['knockout',  'ojs/ojarraydataprovider', 'wrc-frontend/apis/data-operations', 'wrc-frontend/common/page-definition-helper', 'wrc-frontend/integration/viewModels/utils', 'wrc-frontend/core/runtime', 'wrc-frontend/microservices/page-definition/utils', 'wrc-frontend/core/types', 'wrc-frontend/core/utils', 'ojs/ojlogger', 'ojs/ojknockout'],
-  function (ko, ArrayDataProvider, DataOperations, PageDefinitionHelper, ViewModelUtils, Runtime, PageDefinitionUtils, CoreTypes, CoreUtils, Logger) {
+define([
+  'knockout',
+  'ojs/ojarraydataprovider',
+  'wrc-frontend/apis/data-operations',
+  'wrc-frontend/common/page-definition-helper',
+  'wrc-frontend/integration/viewModels/utils',
+  'wrc-frontend/core/runtime',
+  'wrc-frontend/microservices/page-definition/utils',
+  'wrc-frontend/core/types',
+  'wrc-frontend/core/utils',
+  'ojs/ojlogger',
+  'ojs/ojknockout'
+],
+  function (
+    ko,
+    ArrayDataProvider,
+    DataOperations,
+    PageDefinitionHelper,
+    ViewModelUtils,
+    Runtime,
+    PageDefinitionUtils,
+    CoreTypes,
+    CoreUtils,
+    Logger
+  ) {
     function FormTabStrip(viewParams) {
       const self = this;
 
@@ -97,18 +120,19 @@ define(['knockout',  'ojs/ojarraydataprovider', 'wrc-frontend/apis/data-operatio
            * @private
            */
           function getRDJUri(rdjUrl, sliceParamValue) {
-            // Remove scheme://host:port from rdjUrl, if present
-            let uri = rdjUrl.replace(Runtime.getBackendUrl(), '');
-            // Get query string parameters.
-            const urlParams = PageDefinitionUtils.getURLParams(uri);
+            // Create URL object from rdjURL, using the backend
+            // URL as the base
+            const url = new URL(rdjUrl, Runtime.getBackendUrl());
+            // Initialize return variable to pathname of URL
+            let uri = url.pathname;
             // Check for query string parameter named "slice".
-            if (urlParams.has('slice')) {
+            if (url.searchParams.has('slice')) {
               // Found one, so see if sliceParamValue has a value.
               if (sliceParamValue !== '') {
                 // It does, so replace it with sliceParamValue
-                urlParams.set('slice', sliceParamValue);
+                url.searchParams.set('slice', sliceParamValue);
                 // Build value assigned to return variable
-                uri = decodeURIComponent(urlParams.toString());
+                uri = decodeURIComponent(`${url.pathname}${url.search}`);
               }
             }
             else if (sliceParamValue !== '') {
@@ -116,9 +140,14 @@ define(['knockout',  'ojs/ojarraydataprovider', 'wrc-frontend/apis/data-operatio
               // and sliceParamValue is not an empty string, so
               // add a "slice" parameter using the value assigned
               // to sliceParamValue as the value.
-              uri = `${uri}?slice=${sliceParamValue}`;
+              uri = `${url.pathname}?slice=${sliceParamValue}`;
             }
             return uri;
+          }
+
+          function selectPagesHistorySliceItem(rdjData, perspective, sliceItem) {
+            const breadcrumbLabels = PageDefinitionHelper.getBreadcrumbLabels(rdjData);
+            viewParams.onPagesHistorySliceItemSelected(rdjData.self.resourceData, breadcrumbLabels, perspective, sliceItem);
           }
 
           if (newSliceName === '') {
@@ -138,7 +167,7 @@ define(['knockout',  'ojs/ojarraydataprovider', 'wrc-frontend/apis/data-operatio
             if (sliceParam.indexOf('.') !== -1) {
               // There's a dot, so check if the value assigned to
               // the newSliceName.selection observable matches the
-              // end of sliceParam. Id so, then use sliceParam for
+              // end of sliceParam. If so, then use sliceParam for
               // the value of the "slice" query string parameter.
               // Otherwise, use the value that is assigned to the
               // newSliceName.selection observable.
@@ -155,23 +184,35 @@ define(['knockout',  'ojs/ojarraydataprovider', 'wrc-frontend/apis/data-operatio
             // sliceParamValue as the value.
             const uri = getRDJUri(viewParams.parentRouter.data.rdjUrl(), sliceParamValue);
 
-            // Turn on the "busy" preloader
-            ViewModelUtils.setPreloaderVisibility(true);
+            if (CoreUtils.isNotUndefinedNorNull(uri)) {
+              // Turn on the "busy" preloader
+              ViewModelUtils.setPreloaderVisibility(true);
 
-            // Get the RDJ/PDJ for the slice
-            return DataOperations.tabstrip.getSlice(uri)
-              .then(reply => {
-                // Return a JS object with the RDJ/PDJ values
-                // from the reply.
-                return {
-                  rdj: reply.body.data.get('rdjData'),
-                  pdj: reply.body.data.get('pdjData')
-                };
-              })
-              .finally(() => {
-                // Tuen off the "busy" preloader
-                ViewModelUtils.setPreloaderVisibility(false);
-              });
+              // Get the RDJ/PDJ for the slice
+              return DataOperations.tabstrip.getSlice(uri)
+                .then(reply => {
+                  const rdjData = reply.body.data.get('rdjData');
+                  const sliceItem = {level: newSliceName.level, name: PageDefinitionUtils.getSliceFromUrl(rdjData.self.resourceData)};
+                  selectPagesHistorySliceItem(rdjData, {id: viewParams.perspective.id}, sliceItem);
+                  // Return a JS object with the RDJ/PDJ values
+                  // from the reply.
+                  return {
+                    rdj: rdjData,
+                    pdj: reply.body.data.get('pdjData')
+                  };
+                })
+                .catch(response => {
+                  if (response.failureType === CoreTypes.FailureType.NOT_FOUND) {
+                    // Send signal indicating that bean path needs
+                    // to be deleted.
+                    viewParams.signaling.beanPathDeleted.dispatch(uri);
+                  }
+                })
+                .finally(() => {
+                  // Tuen off the "busy" preloader
+                  ViewModelUtils.setPreloaderVisibility(false);
+                });
+            }
           }
         }
 
@@ -181,12 +222,10 @@ define(['knockout',  'ojs/ojarraydataprovider', 'wrc-frontend/apis/data-operatio
         
         getData()
           .then(reply => {
-            // The presence of reply.pdj is guaranteed, so you don't
-            // need to use optional chaining here.
-            if (reply.pdj.sliceForm || reply.pdj.sliceTable) {
+            if (reply && (reply.pdj.sliceForm || reply.pdj.sliceTable)) {
               // Set sliceName module-scoped variable to value assigned
               // to the "view" query string parameter.
-              self.sliceName = PageDefinitionUtils.getSliceFromUrl(reply.rdj.pageDescription);
+              self.sliceName = PageDefinitionUtils.getSliceFromUrl(reply.rdj.self.resourceData);
 
               // Update the JS objects that represent the tabs
               // used in the multi-level tabstrip.
@@ -206,12 +245,12 @@ define(['knockout',  'ojs/ojarraydataprovider', 'wrc-frontend/apis/data-operatio
             if (response.failureType === CoreTypes.FailureType.CONNECTION_REFUSED) {
               ViewModelUtils.failureResponseDefaultHandling(response);
             }
-            else {
+            else if (response.failureType !== CoreTypes.FailureType.NOT_FOUND) {
               ViewModelUtils.failureResponseDefaultHandling(response);
             }
           });
       };
-  
+
       /**
        * Routine that demystifies the binding of the tabDataProviders
        * observable array, to the `selection` property of oj-tab-bar.

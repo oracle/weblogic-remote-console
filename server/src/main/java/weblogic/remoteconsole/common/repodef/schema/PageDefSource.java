@@ -1,4 +1,4 @@
-// Copyright (c) 2021, 2024, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2025, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef.schema;
@@ -18,6 +18,7 @@ public class PageDefSource extends YamlSource {
   private StringValue customizePageDefMethod = new StringValue();
   private StringValue customizePageMethod = new StringValue();
   private ListValue<PageActionDefSource> actions = new ListValue<>();
+  private BooleanValue instanceBasedPDJ = new BooleanValue();
 
   // The page's english introduction text.
   public String getIntroductionHTML() {
@@ -89,6 +90,24 @@ public class PageDefSource extends YamlSource {
     if (StringUtils.isEmpty(value) || CustomizerInvocationUtils.methodExists(value)) {
       customizePageDefMethod.setValue(value);
     }
+  }
+
+  // Whether this page's PDJ varies depending on the
+  // identity and/or identifier in the invocation context
+  // (v.s. is always the same)
+  //
+  // Normally PDJs are constant.  For example, the
+  // ServerMBean General PDJ is always the same, regardless of the server.
+  // But sometimes a PDJ changes depending on the instance.
+  // For example, the legal values security provider types
+  // when creating a security provider depends on the types
+  // that the realm instance supports.
+  public boolean isInstanceBasedPDJ() {
+    return instanceBasedPDJ.getValue();
+  }
+
+  public void setInstanceBasedPDJ(boolean value) {
+    instanceBasedPDJ.setValue(value);
   }
 
   // Specifies a custom static method to call to customize the data for this page.

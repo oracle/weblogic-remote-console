@@ -1,13 +1,13 @@
 /**
  * @license
- * Copyright (c) 2022, 2024, Oracle and/or its affiliates.
+ * Copyright (c) 2022, 2025, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
 'use strict';
 
-define(['ojs/ojcore', 'knockout', 'wrc-frontend/apis/data-operations', 'wrc-frontend/apis/message-displaying', 'wrc-frontend/integration/viewModels/utils', 'wrc-frontend/core/runtime', 'wrc-frontend/core/types', 'wrc-frontend/core/utils', 'ojs/ojcontext', 'ojs/ojknockout', 'ojs/ojmodule-element', 'ojs/ojmodule', 'ojs/ojinputsearch'],
-  function(oj, ko, DataOperations, MessageDisplaying, ViewModelUtils, Runtime, CoreTypes, CoreUtils, Context) {
+define(['ojs/ojcore', 'knockout', 'wrc-frontend/microservices/pages-history/pages-history-manager', 'wrc-frontend/apis/data-operations', 'wrc-frontend/apis/message-displaying', 'wrc-frontend/integration/viewModels/utils', 'wrc-frontend/core/runtime', 'wrc-frontend/core/types', 'wrc-frontend/core/utils', 'ojs/ojcontext', 'ojs/ojknockout', 'ojs/ojmodule-element', 'ojs/ojmodule', 'ojs/ojinputsearch'],
+  function(oj, ko, PagesHistoryManager, DataOperations, MessageDisplaying, ViewModelUtils, Runtime, CoreTypes, CoreUtils, Context) {
     function SimpleSearchTemplate(viewParams){
       const self = this;
 
@@ -107,6 +107,7 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/apis/data-operations', 'wrc-fron
                     // Route to the search results
                     if (CoreUtils.isNotUndefinedNorNull(reply.body.data.resourceData)) {
                       const encodedResouceData = encodeURIComponent(reply.body.data.resourceData.resourceData);
+                      adjustPagesHistoryData('route');
                       viewParams.parentRouter.go(`/${searchPerspective}/${encodedResouceData}`);
                     }
                   })
@@ -155,6 +156,10 @@ define(['ojs/ojcore', 'knockout', 'wrc-frontend/apis/data-operations', 'wrc-fron
       function correctJETControlOATBIssues() {
         const ele = document.querySelector('#searchInputContainer_cfe-simple-search > div');
         if (ele !== null) ele.removeAttribute('aria-expanded');
+      }
+
+      function adjustPagesHistoryData(action) {
+        PagesHistoryManager.setPagesHistoryCurrentAction(action);
       }
 
       Context.getPageContext().getBusyContext().whenReady()

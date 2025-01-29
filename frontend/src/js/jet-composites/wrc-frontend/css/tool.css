@@ -1,4 +1,4 @@
-/*! Copyright (c) 2020, 2024, Oracle and/or its affiliates. All rights reserved. */
+/*! Copyright (c) 2020, 2025, Oracle and/or its affiliates. All rights reserved. */
 
 :root {
   /*
@@ -126,6 +126,10 @@
   --wdtOptionsDialog-width: 750px;
   --wdtOptionsDialog-min-height: 245px;
 
+  --recentlyVisitedDialog-width: 1120px;
+  --recentlyVisitedDialog-min-height: 660px;
+  --recentlyVisitedTable-max-height: 490px;
+
   --syncIntervalDialog-width: 330px;
   --confirmDialog-width: 375px;
   --confirmDialog-min-height: 140px;
@@ -182,6 +186,10 @@ hr {
 
 #form-toolbar-buttons > div[id='form-toolbar-save-button'],
 #overlay-form-toolbar-buttons > div[id='overlay-form-toolbar-save-button'],
+#form-toolbar-icons > div > div[id='pages-history-back-toolbar-icon'],
+#form-toolbar-icons > div > div[id='pages-history-next-toolbar-icon'],
+#form-toolbar-icons > div > div[id='pages-history-launch-toolbar-icon'],
+#form-toolbar-icons > div > div[id='pages-history-star-toolbar-icon'],
 #form-toolbar-icons > div > div[id='landing-page-toolbar-icon'],
 #form-toolbar-icons > div > div.toolbar-separator-vertical,
 #form-toolbar-icons > div > div[id='toggle-history-toolbar-icon'],
@@ -190,6 +198,10 @@ hr {
 #form-toolbar-icons > div > div[id='sync-toolbar-icon'],
 #form-toolbar-icons > div > div[id='sync-interval-toolbar-icon'],
 #form-toolbar-icons > div > div[id='shoppingcart-toolbar-icon'],
+#table-toolbar-icons > div > div[id='pages-history-back-toolbar-icon'],
+#table-toolbar-icons > div > div[id='pages-history-next-toolbar-icon'],
+#table-toolbar-icons > div > div[id='pages-history-launch-toolbar-icon'],
+#table-toolbar-icons > div > div[id='pages-history-star-toolbar-icon'],
 #table-toolbar-icons > div > div[id='landing-page-toolbar-icon'],
 #table-toolbar-icons > div > div[id='toggle-history-toolbar-icon'],
 #table-toolbar-icons > div > div[id='page-help-toolbar-icon'],
@@ -921,6 +933,7 @@ div.cfe-form-tabstrip a.oj-tabbar-focused-element.oj-tabbar-item-content.oj-tabb
 /*
 //MLW-1  max-width: calc(100vw - var(--content-area-body-toolbars-calc-max-width));
 */
+  min-width: var(--form-container-fixed-min-width);
   padding-left: .325rem;
 }
 
@@ -1179,11 +1192,24 @@ oj-dialog[id="confirmDialog"] {
   background-color: var(--dialog-body-background-color);
 }
 
-oj-dialog[id="actionsDialog"] {
-  width: var(--actionDialog-width);
-  min-height: var(--actionDialog-min-height);
+oj-dialog[id="recentlyVisitedPagesDialog"]
+{
+  width: var(--recentlyVisitedDialog-width);
+  height: var(--recentlyVisitedDialog-min-height);
   background-color: var(--dialog-body-background-color);
   border: 1px none #f8f6f5;
+}
+
+oj-dialog[id="actionsDialog"]
+{
+  width: var(--actionDialog-width);
+  background-color: var(--dialog-body-background-color);
+  border: 1px none #f8f6f5;
+}
+
+oj-dialog[id="actionsDialog"]
+{
+  min-height: var(--actionDialog-min-height);
 }
 
 oj-dialog[id="syncIntervalDialog"] {
@@ -1197,6 +1223,7 @@ oj-dialog[id="wdtOptionsDialog"] {
   background-color: var(--dialog-body-background-color);
 }
 
+oj-dialog[id="recentlyVisitedPagesDialog"] div.oj-dialog-header h1.oj-dialog-title,
 oj-dialog[id="actionsDialog"] div.oj-dialog-header h1.oj-dialog-title,
 oj-dialog[id="syncIntervalDialog"] div.oj-dialog-header h1.oj-dialog-title,
 oj-dialog[id="confirmDialog"] div.oj-dialog-header h1.oj-dialog-title,
@@ -1216,6 +1243,7 @@ oj-dialog[id="wdtOptionsDialog"] div.oj-dialog-header h1.oj-dialog-title
   padding: 0;
 }
 
+oj-dialog[id="recentlyVisitedPagesDialog"] div.oj-dialog-header,
 oj-dialog[id="actionsDialog"] div.oj-dialog-header,
 oj-dialog[id="syncIntervalDialog"] div.oj-dialog-header,
 oj-dialog[id="confirmDialog"] div.oj-dialog-header,
@@ -1235,6 +1263,14 @@ oj-dialog[id="wdtOptionsDialog"] div.oj-dialog-header
   color: rgb(22, 21, 19);
   font-weight: 900;
   min-height: 2.25rem;
+}
+
+oj-dialog[id="recentlyVisitedPagesDialog"] div.oj-dialog-body
+{
+  box-sizing: border-box;
+  padding: 0 0.9375rem;
+  text-align: start;
+  font-size: 1em;       /* 12pt; */
 }
 
 oj-dialog[id="actionsDialog"] div.oj-dialog-body,
@@ -1268,6 +1304,7 @@ oj-dialog[id="syncIntervalDialog"] div.oj-dialog-content
   background-color: white;
 }
 
+oj-dialog[id="recentlyVisitedPagesDialog"] div.oj-dialog-footer,
 oj-dialog[id="actionsDialog"] div.oj-dialog-footer,
 oj-dialog[id="syncIntervalDialog"] div.oj-dialog-footer,
 oj-dialog[id="confirmDialog"] div.oj-dialog-footer,
@@ -1597,6 +1634,27 @@ table[id="help-table"] > tfoot div ul {
 .cfe-help-table-footer > ul > li > a:focus-visible
 {
   text-decoration: underline;
+}
+
+oj-table[id="pages-history-table"]
+{
+  width: 100%;
+}
+
+oj-table[id="pages-history-table"] .oj-table-scroller
+{
+  max-height: var(--recentlyVisitedTable-max-height);
+}
+
+oj-table[id="pages-history-table"] .oj-table-scroller > table > thead > tr  th
+{
+  position: sticky;
+  top: 0;
+}
+
+oj-table[id="pages-history-table"] .oj-table-scroller > table
+{
+  border-collapse: collapse;
 }
 
 #overlay-form-linked-resource {

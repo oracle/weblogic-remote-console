@@ -1,0 +1,33 @@
+# analytics
+googleAnalytics = "UA-129126578-2"
+
+baseURL = "/"
+languageCode = "en-us"
+title = "WebLogic Remote Console"
+
+# Change the default theme to be used when building the site with Hugo
+theme = "hugo-theme-learn"
+
+publishDir = "docs"
+
+[module]
+[[module.mounts]]
+  source = 'static'
+  target = 'static'
+
+# For search functionality
+[outputs]
+  home = [ "HTML", "RSS", "JSON"]
+
+[params]
+  # disable the copy to clipboard links
+  disableInlineCopyToClipBoard = true
+
+  # console rest extension version
+  console_rest_ext = "console-rest-ext-2.4.14.war"
+  # wrc version
+  console_version = "2.4.14"
+
+
+[markup.goldmark.renderer]
+unsafe= true

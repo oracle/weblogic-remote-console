@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+ * Copyright (c) 2020, 2025, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
@@ -21,9 +21,44 @@ define(['wrc-frontend/core/utils'],
   
     function getSliceFromUrl(pdjUrl) {
       const urlParams = getURLParams(pdjUrl);
-      return urlParams.get('view');
+      return urlParams.get('slice');
     }
-  
+
+    function trimPathParam(pathParam) {
+      pathParam = removeTrailingSlashes(pathParam);
+
+      if (pathParam.startsWith('//')) {
+        pathParam = pathParam.substring(2);
+      }
+      return pathParam;
+    }
+
+    function getPathParamsTab(pathParam = '') {
+      let itemTab = '';
+      const match = pathParam.match(/\?slice=(.+)/);
+      if (match) itemTab = match[1];
+      return itemTab;
+    }
+
+    function getPathParamsMBeanName(pathParams = '') {
+      let mbeanName = '';
+      const pathSegments = pathParams.split('/').filter(e => e);
+      if (pathSegments.length > 0) {
+        mbeanName = pathSegments.at(-1);
+        const index = mbeanName.indexOf('?');
+        if (index !== -1) {
+          mbeanName = mbeanName.substring(0, index);
+        }
+      }
+      return mbeanName;
+    }
+
+    function getBreadcrumbsLabel(pathParam, breadcrumbLabels) {
+      const actualPathParam = trimPathParam(pathParam);
+      const breadcrumbsPath = (breadcrumbLabels.length > 0 ? breadcrumbLabels.join('/') : actualPathParam);
+      return decodeURIComponent(breadcrumbsPath.replace(/\//g, ' | '));
+    }
+
     function pathSegmentsFromIdentity(id) {
       let pathSegments = [];
 
@@ -472,6 +507,9 @@ define(['wrc-frontend/core/utils'],
 
     return {
       getSliceFromUrl: getSliceFromUrl,
+      getPathParamsTab: getPathParamsTab,
+      getPathParamsMBeanName: getPathParamsMBeanName,
+      getBreadcrumbsLabel: getBreadcrumbsLabel,
       parseQueryString: parseQueryString,
       getURLParams: getURLParams,
       getFirstHTMLParagraph: getFirstHTMLParagraph,

@@ -1,5 +1,5 @@
 <!--
- Copyright (c) 2020, 2024, Oracle and/or its affiliates.
+ Copyright (c) 2020, 2025, Oracle and/or its affiliates.
  The Universal Permissive License (UPL), Version 1.0
 -->
 <div id="form-toolbar-container" class="oj-flex">
@@ -143,6 +143,69 @@
 
   <div id="form-toolbar-icons" class="oj-flex-item">
     <div class="oj-flex oj-sm-flex-items-initial oj-sm-justify-content-flex-end cfe-flex-items-pad">
+
+      <oj-bind-if test="[[i18n.icons.pagesHistory.visible()]]">
+        <div id="pages-history-back-toolbar-icon" class="oj-flex-item cfe-content-area-body-iconbar-icon"
+             on-keyup="[[registerFormIconbarIconsKeyUpFocuser('.cfe-content-area-body-iconbar-icon')]]"
+             data-key-focuser-id=".cfe-content-area-body-iconbar-icon"
+        >
+          <a
+            href="#"
+            on-click="[[pagesHistoryIconClick]]"
+          >
+            <img id="pages-history-back-icon" aria-hidden="true"
+                 data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.icons.pagesHistory.back.iconFile() + '.png', alt: i18n.icons.pagesHistory.back.tooltip, 'title': i18n.icons.pagesHistory.back.tooltip}"/>
+          </a>
+        </div>
+
+        <div id="pages-history-next-toolbar-icon" class="oj-flex-item cfe-content-area-body-iconbar-icon"
+             on-keyup="[[registerFormIconbarIconsKeyUpFocuser('.cfe-content-area-body-iconbar-icon')]]"
+             data-key-focuser-id=".cfe-content-area-body-iconbar-icon"
+        >
+          <a
+            href="#"
+            on-click="[[pagesHistoryIconClick]]"
+          >
+            <img id="pages-history-next-icon" aria-hidden="true"
+                 data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.icons.pagesHistory.next.iconFile() + '.png', alt: i18n.icons.pagesHistory.next.tooltip, 'title': i18n.icons.pagesHistory.next.tooltip}"/>
+          </a>
+        </div>
+
+        <div id="pages-history-launch-toolbar-icon" class="oj-flex-item cfe-content-area-body-iconbar-icon"
+             on-keyup="[[registerFormIconbarIconsKeyUpFocuser('.cfe-content-area-body-iconbar-icon')]]"
+             data-key-focuser-id=".cfe-content-area-body-iconbar-icon"
+        >
+          <a
+            href="#"
+            on-click="[[pagesHistoryIconClick]]"
+            accesskey="."
+          >
+            <img id="pages-history-launch-icon" aria-hidden="true"
+                 data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.icons.pagesHistory.launch.iconFile() + '.png', alt: i18n.icons.pagesHistory.launch.tooltip, 'title': i18n.icons.pagesHistory.launch.tooltip}"/>
+          </a>
+        </div>
+
+        <oj-bind-if test="[[i18n.icons.pagesHistory.star.visible()]]">
+          <div id="pages-history-star-toolbar-icon" class="oj-flex-item cfe-content-area-body-iconbar-icon"
+               on-keyup="[[registerFormIconbarIconsKeyUpFocuser('.cfe-content-area-body-iconbar-icon')]]"
+               data-key-focuser-id=".cfe-content-area-body-iconbar-icon"
+          >
+            <a
+              href="#"
+              on-click="[[pagesHistoryIconClick]]"
+            >
+              <img id="pages-history-star-icon" aria-hidden="true"
+                   data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.icons.pagesHistory.star.iconFile() + '.png', alt: i18n.icons.pagesHistory.star.tooltip, 'title': i18n.icons.pagesHistory.star.tooltip}"/>
+            </a>
+          </div>
+        </oj-bind-if>
+
+        <div class="toolbar-separator-vertical" tabindex="-1">
+          <!-- TODO: Replace with span that has icon class once cfe-iconfonts  is ready -->
+          <img
+            data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.icons.separator.iconFile + '.png', alt: i18n.icons.separator.tooltip}"/>
+        </div>
+      </oj-bind-if>
 
       <oj-bind-if test="[[i18n.icons.landing.visible()]]">
         <div id="landing-page-toolbar-icon" class="oj-flex-item cfe-content-area-body-iconbar-icon"

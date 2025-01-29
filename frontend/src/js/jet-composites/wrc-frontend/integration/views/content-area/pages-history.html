@@ -4,7 +4,7 @@ Copyright (c) 2020, 2024, Oracle and/or its affiliates. The Universal Permissive
 -->
 <div id="beanpath-history-container" class="oj-flex oj-sm-flex-items-initial oj-sm-flex-wrap-nowrap">
   <div class="oj-flex-item">
-    <img id="recent-pages-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.icons.history.iconFile + '.png', 'title': i18n.icons.history.tooltip, alt: i18n.icons.history.tooltip}"/>
+    <img id="pages-history-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.icons.history.iconFile + '.png', 'title': i18n.icons.history.tooltip, alt: i18n.icons.history.tooltip}"/>
   </div>
 
   <a class="cfe-hidden-accesskey-link" href="#"
@@ -46,3 +46,49 @@ Copyright (c) 2020, 2024, Oracle and/or its affiliates. The Universal Permissive
   </div>
 
 </div>
+
+<oj-dialog
+  id="recentlyVisitedPagesDialog"
+  dialog-title="[[i18n.dialog.title]]"
+  modality="modal"
+  cancel-behavior="escape"
+  on-oj-focus="[[onOjFocus]]"
+  role="dialog"
+  aria-labelledby="recently-visited-dialog-instructions"
+>
+  <div slot="body">
+    <div id="recently-visited-dialog-instructions" class="cfe-dialog-prompt">
+      <span data-bind="text: [[i18n.dialog.instructions()]]"></span>
+    </div>
+
+    <oj-form-layout id="recently-visited-form-layout" aria-labelledby="recently-visited-dialog-instructions" class="oj-formlayout-full-width">
+      <oj-table
+        id="pages-history-table"
+        class="oj-table-data-cell-no-padding"
+        aria-label="Recently Visited Pages Table"
+        data="[[pagesHistoryDataProvider]]"
+        scroll-policy='loadMoreOnScroll'
+        scroll-policy-options='{"fetchSize": 10000}'
+        columns='[[columnData]]'
+        display="grid"
+        horizontal-grid-visible="enabled"
+        vertical-grid-visible="enabled"
+        selection-mode='{"row": "single"}'
+        selected.row='{{selectedRows}}'
+        on-selected-changed='[[onSelectedChanged]]'
+      >
+        <template slot="noData"></template>
+      </oj-table>
+    </oj-form-layout>
+  </div>
+
+  <div slot="footer">
+    <oj-button id="dlgOkBtn24" disabled="[[i18n.buttons.clear.disabled()]]">
+      <span class="button-label" data-bind="text: [[i18n.buttons.clear.label()]]"></span>
+    </oj-button>
+    <oj-button id="dlgCancelBtn24">
+      <span class="button-label" data-bind="text: [[i18n.buttons.close.label]]"></span>
+    </oj-button>
+  </div>
+
+</oj-dialog>

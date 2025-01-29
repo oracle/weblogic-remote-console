@@ -1,6 +1,6 @@
 ---
 author: Oracle Corporation
-publisherinformation: December 2024
+publisherinformation: January 2025
 weight: 29
 title: Support Information
 ---
@@ -53,7 +53,7 @@ If you use the Hosted WebLogic Remote Console, you will also need to expose <cod
 
 **Tip:**
 
-If you needed to expose <code>console/\*</code> to access the WebLogic Server Administration Console for your domain, simply follow the same procedure to expose <code>management/\*</code> for WebLogic Remote Console.
+If you needed to expose <code>console/\*</code> to access the WebLogic Server Administration Console for your domain, simply follow the same procedure to expose <code>management/*</code> for WebLogic Remote Console.
 
 {{< /notice >}}
 
@@ -74,7 +74,7 @@ Yes. For details on how to set up access to WebLogic Server domains running on K
 
 ### Which versions of WebLogic Server can I use with WebLogic Remote Console? {}
 
-WebLogic Remote Console is compatible with WebLogic Server 12.2.1.3 or later.
+WebLogic Remote Console is compatible with WebLogic Server 12.2.1.4 or later.
 
 ### Can I use both WebLogic Remote Console and WebLogic Server Administration Console to manage WebLogic Server Administration Servers? {}
 

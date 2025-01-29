@@ -1,6 +1,9 @@
-The current release of WRC is {{<console_version>}}. See what improvements were added at https://github.com/oracle/weblogic-remote-console/releases.
+The current release of WebLogic Remote Console is {{<console_version>}}. See what improvements were added at https://github.com/oracle/weblogic-remote-console/releases.
 
 {{%expand "Click to expand to view documentation for older releases"%}}
+* [2.4.14](2.4.14/)
+* [2.4.13](2.4.13/)
+* [2.4.12](2.4.12/)
 * [2.4.11](2.4.11/)
 * [2.4.10](2.4.10/)
 * [2.4.9](2.4.9/)

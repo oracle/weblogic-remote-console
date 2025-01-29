@@ -1,6 +1,6 @@
 ---
 author: Oracle Corporation
-publisherinformation: December 2024
+publisherinformation: January 2025
 weight: 153
 title: Monitoring Domains
 ---
@@ -291,6 +291,7 @@ WebLogic Server sets a threshold size limit of 2,097,152 kilobytes before it for
 
     -   **By Size** - rotates log messages when log file size reaches the specified size.
     -   **By Time** - rotates log messages after a specified time interval passes.
+    -   **By Size or Time** - rotates log messages if the file size reaches the specified size or if the specified time interval passes, whichever occurs first.
     -   **None** - log messages are not automatically rotated. You must manually erase the contents of the file when the size becomes too large.
 3.  If you chose **By Size** as the Rotation Type.
 
@@ -304,13 +305,15 @@ WebLogic Server sets a threshold size limit of 2,097,152 kilobytes before it for
 
     2.  In the **Rotation Interval** field, enter the interval, in hours, at which the server saves old messages to another file.
 
-5.  If you want to limit the number of log files that the server creates to store old log messages, enable the **Limit Number of Retained Log Files** option. Then, in the **Files to Retain** field, enter the maximum number of files. If the server receives additional log messages after reaching the capacity of the last log file, it overwrites the oldest log file.
+5.  If you chose **By Size or Time** as the Rotation Type, then configure the **By Size** and **By Time** options as described in steps [3](#STEP_Z2F_JLF_B2C) and [4](#STEP_TQJ_JLF_B2C).
 
-6.  In the **Log file rotation directory** field, enter the directory location where the rotated log files will be stored.
+6.  If you want to limit the number of log files that the server creates to store old log messages, enable the **Limit Number of Retained Log Files** option. Then, in the **Files to Retain** field, enter the maximum number of files. If the server receives additional log messages after reaching the capacity of the last log file, it overwrites the oldest log file.
+
+7.  In the **Log file rotation directory** field, enter the directory location where the rotated log files will be stored.
 
     Enter an absolute pathname or a pathname that is relative to the server's root directory. By default, the rotated files are stored in the same directory where the log file is stored.
 
-7.  If you want to add a time or date stamp to the file name when the log file is rotated, then in the **Log file name** field, add <code>java.text.SimpleDateFormat</code> variables to the file name and surround each variable with percentage (%) characters.
+8.  If you want to add a time or date stamp to the file name when the log file is rotated, then in the **Log file name** field, add <code>java.text.SimpleDateFormat</code> variables to the file name and surround each variable with percentage (%) characters.
 
     For example, if you enter the following value in the Log file name field: <code>myserver_%yyyy%_%MM%_%dd%_%hh%_%mm%.log</code>, the server's log file will be named <code>myserver_*yyyy_MM_dd_hh_mm*.log</code>.
 
@@ -318,7 +321,7 @@ WebLogic Server sets a threshold size limit of 2,097,152 kilobytes before it for
 
     If you do not include a time and date stamp, the rotated log files are numbered in order of creation <code>*SERVER_NAME*.log*nnnnn*</code>, where <code>*SERVER_NAME*</code> is the name configured for the log file. For example: <code>myserver.log00007</code>.
 
-8.  Click **Save**.
+9.  Click **Save**.
 
 
 ## Enable Configuration Auditing {#GUID-BB85D9BB-5E36-4067-AA9F-E01EBFF027CD}

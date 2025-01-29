@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2020, 2024, Oracle and/or its affiliates.
+ * Copyright (c) 2020, 2025, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
@@ -8,25 +8,27 @@
 'use strict';
 
 define([
-  'ojs/ojcore',
-  'knockout',
-  'wrc-frontend/common/keyup-focuser',
-  'wrc-frontend/microservices/perspective/perspective-memory-manager',
-  'wrc-frontend/microservices/change-management/change-manager',
-  'wrc-frontend/common/page-definition-helper',
-  'wrc-frontend/integration/viewModels/utils',
-  'wrc-frontend/core/runtime',
-  'wrc-frontend/core/types',
-  'wrc-frontend/core/utils',
-  'ojs/ojlogger',
-  'ojs/ojknockout',
-  'ojs/ojcheckboxset'
-],
+    'ojs/ojcore',
+    'knockout',
+    'wrc-frontend/common/keyup-focuser',
+    'wrc-frontend/microservices/perspective/perspective-memory-manager',
+    'wrc-frontend/microservices/pages-history/pages-history-manager',
+    'wrc-frontend/microservices/change-management/change-manager',
+    'wrc-frontend/common/page-definition-helper',
+    'wrc-frontend/integration/viewModels/utils',
+    'wrc-frontend/core/runtime',
+    'wrc-frontend/core/types',
+    'wrc-frontend/core/utils',
+    'ojs/ojlogger',
+    'ojs/ojknockout',
+    'ojs/ojcheckboxset'
+  ],
   function (
     oj,
     ko,
     KeyUpFocuser,
     PerspectiveMemoryManager,
+    PagesHistoryManager,
     ChangeManager,
     PageDefinitionHelper,
     ViewModelUtils,
@@ -90,6 +92,25 @@ define([
           },
           'create': { id: 'create', iconFile: 'add-icon-blk_24x24',
             tooltip: oj.Translations.getTranslatedString('wrc-form-toolbar.icons.create.tooltip')
+          },
+          'pagesHistory': {
+            'visible': ko.observable(!Runtime.getProperty('features.pagesHistory.disabled')),
+            'back': {
+              iconFile: ko.observable('pages-history-back-gry_24x24'), disabled: true,
+              tooltip: oj.Translations.getTranslatedString('wrc-common.tooltips.pagesHistory.back.value')
+            },
+            'next': {
+              iconFile: ko.observable('pages-history-next-gry_24x24'), disabled: true,
+              tooltip: oj.Translations.getTranslatedString('wrc-common.tooltips.pagesHistory.next.value')
+            },
+            'launch': {
+              iconFile: ko.observable('pages-history-icon-gry_24x24'), disabled: true,
+              tooltip: oj.Translations.getTranslatedString('wrc-common.tooltips.pagesHistory.launch.value')
+            },
+            'star': {
+              iconFile: ko.observable('pages-history-star-gry_24x24'), disabled: true, visible: ko.observable(false),
+              tooltip: oj.Translations.getTranslatedString('wrc-common.tooltips.pagesHistory.star.value')
+            }
           },
           'landing': { iconFile: 'landing-page-icon-blk_24x24', visible: ko.observable(Runtime.getRole() === CoreTypes.Console.RuntimeRole.APP.name),
             tooltip: oj.Translations.getTranslatedString('wrc-form-toolbar.icons.landing.tooltip')
@@ -193,6 +214,12 @@ define([
 
         self.signalBindings.push(binding);
 
+        binding = viewParams.signaling.pagesHistoryChanged.add((changeType) => {
+          self.refreshPagesHistoryIcons();
+        });
+
+        self.signalBindings.push(binding);
+
         binding = viewParams.signaling.nonwritableChanged.add((newRO) => {
           self.sliceReadOnly(newRO);
           if (Runtime.getRole() === CoreTypes.Console.RuntimeRole.APP.name &&
@@ -219,6 +246,7 @@ define([
         ChangeManager.getLockState()
           .then((data) => {
             self.renderToolbarButtons(renderToolbarButtonsEventType);
+            self.refreshPagesHistoryIcons();
           })
           .catch(response => {
             ViewModelUtils.failureResponseDefaultHandling(response);
@@ -244,7 +272,7 @@ define([
 
       this.registerFormIconbarIconsKeyUpFocuser = (id) => {
         let result = KeyUpFocuser.getKeyUpCallback(id);
-    
+
         if (!result.alreadyRegistered) {
           result = KeyUpFocuser.register(
             id,
@@ -254,7 +282,7 @@ define([
             {}
           );
         }
-    
+
         return result.keyUpCallback;
       };
 
@@ -276,7 +304,7 @@ define([
 
         const firstElementChild = event.target.firstElementChild.firstElementChild;
         const iconId = firstElementChild.getAttribute('id');
-    
+
         switch (iconId) {
           case 'landing-page-icon':
             self.landingPageClick(event);
@@ -308,6 +336,19 @@ define([
         buttons.forEach((button) => {
           self.i18n.buttons[button.id].disabled(button.disabled);
         });
+      };
+
+      this.refreshPagesHistoryIcons = function () {
+        const data = PagesHistoryManager.getPagesHistoryData();
+
+        self.i18n.icons.pagesHistory.back.iconFile(data.canBack ? 'pages-history-back-blk_24x24' : 'pages-history-back-gry_24x24');
+        self.i18n.icons.pagesHistory.back.disabled = !data.canBack;
+        self.i18n.icons.pagesHistory.next.iconFile(data.canNext ? 'pages-history-next-blk_24x24' : 'pages-history-next-gry_24x24');
+        self.i18n.icons.pagesHistory.next.disabled = !data.canNext;
+        self.i18n.icons.pagesHistory.launch.iconFile(data.canLaunch ? 'pages-history-icon-blk_24x24' : 'pages-history-icon-gry_24x24');
+        self.i18n.icons.pagesHistory.launch.disabled = !data.canLaunch;
+        self.i18n.icons.pagesHistory.star.iconFile(data.canBookmark ? 'pages-history-star-blk_24x24' : 'pages-history-star-gry_24x24');
+        self.i18n.icons.pagesHistory.star.disabled = !data.canBookmark;
       };
 
       function simulateSyncIconClickEvent(node) {
@@ -490,6 +531,11 @@ define([
         self.showBeanPathHistory(withHistoryVisible);
       };
 
+      this.pagesHistoryIconClick = function (event) {
+        const pagesHistoryViewModel = ko.dataFor(document.getElementById('beanpath-history-container'));
+        pagesHistoryViewModel.pagesHistoryIconClicked(event);
+      };
+
       this.landingPageClick = function (event) {
         viewParams.onLandingPageSelected();
       };
@@ -527,6 +573,7 @@ define([
             self.autoSyncEnabled(!autoSyncEnabled);
             if (autoSyncEnabled) syncInterval = 0;
           }
+          PagesHistoryManager.setPagesHistoryCurrentAction('bypass');
           setAutoSyncIcon();
           viewParams.onSyncClicked(syncInterval);
         }

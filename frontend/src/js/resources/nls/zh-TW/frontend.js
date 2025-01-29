@@ -54,7 +54,7 @@ define({
   },
   "wrc-footer": {
     "text": {
-      "copyrightLegal": "著作權所有 (c) 2020，2024，Oracle 和 (或) 其關係企業。<br/>Oracle (r)、Java、MySQL 和 NetSuite 是 Oracle 和 (或) 其關係企業的註冊商標。其他名稱為各商標持有人所擁有之商標。<br/>",
+      "copyrightLegal": "著作權所有 (c) 2020，2025，Oracle 和 (或) 其關係企業。<br/>Oracle (r)、Java、MySQL 和 NetSuite 是 Oracle 和 (或) 其關係企業的註冊商標。其他名稱為各商標持有人所擁有之商標。<br/>",
       "builtWith": "使用 Oracle JET 建置"
     }
   },
@@ -1497,6 +1497,28 @@ define({
       }
     }
   },
+  "wrc-recently-visited": {
+    "labels": {
+      "tree": {
+        "value": "樹狀結構"
+      },
+      "page": {
+        "value": "頁面"
+      },
+      "tab": {
+        "value": "頁籤"
+      },
+      "ariaLabel": {
+        "value": "頁面歷史記錄"
+      }
+    },
+    "messages": {
+      "pageNoLongerExists": {
+        "summary": "頁面已不存在",
+        "detail": "{1} 被其他使用者刪除或不存在，因此已將您重新導向至 {0} 頁面。"
+      }
+    }
+  },
   "wrc-common": {
     "ariaLabel": {
       "icons": {
@@ -1504,7 +1526,7 @@ define({
           "value": "返回提供者樹狀結構的登陸頁面。"
         },
         "reset": {
-          "value": "Refresh page values"
+          "value": "重新整理頁面值"
         }
       }
     },
@@ -1571,6 +1593,9 @@ define({
       },
       "close": {
         "label": "關閉"
+      },
+      "clear": {
+        "label": "清除"
       }
     },
     "tooltips": {
@@ -1637,6 +1662,20 @@ define({
       "recentPages": {
         "value": "切換歷史記錄可見性"
       },
+      "pagesHistory": {
+        "back": {
+          "value": "上一頁"
+        },
+        "next": {
+          "value": "下一頁"
+        },
+        "launch": {
+          "value": "顯示頁面歷史記錄"
+        },
+        "star": {
+          "value": "書籤頁面"
+        }
+      },
       "pageInfo": {
         "value": "按一下以固定或取消固定"
       }
@@ -1661,6 +1700,9 @@ define({
       },
       "alerts": {
         "value": "警示"
+      },
+      "pagesHistory": {
+        "value": "此視窗可讓您檢視或選取先前瀏覽過的頁面。"
       }
     },
     "placeholders": {
@@ -1814,7 +1856,7 @@ define({
           "detail": "無法在一或多個勾選的項目上執行 '{0}' 動作"
         },
         "actionNotPerformedNoRow": {
-          "detail": "Unable to perform '{0}' action"
+          "detail": "無法執行 '{0}' 動作"
         },
         "actionSucceeded": {
           "summary": "'{0}' 動作已順利執行！"

@@ -1,4 +1,4 @@
-// Copyright (c) 2021, 2023, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2025, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef;
@@ -46,6 +46,17 @@ public interface PageDef {
   // have been computed.
   public String getCustomizePageDefMethod();
 
+  // Whether this page's PDJ varies depending on the
+  // identity and/or identifier in the invocation context
+  // (v.s. is always the same)
+  //
+  // Normally PDJs are constant.  For example, the
+  // ServerMBean General PDJ is always the same, regardless of the server.
+  // But sometimes a PDJ changes depending on the instance.
+  // For example, the legal values security provider types
+  // when creating a security provider depends on the types
+  // that the realm instance supports.
+  public boolean isInstanceBasedPDJ();
 
   // Returns whether this is a form.
   public default boolean isFormDef() {
