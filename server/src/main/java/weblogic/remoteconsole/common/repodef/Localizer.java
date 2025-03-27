@@ -1,4 +1,4 @@
-// Copyright (c) 2021, 2024, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2025, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef;
@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-import weblogic.remoteconsole.common.utils.StringUtils;
+import weblogic.console.utils.StringUtils;
 import weblogic.remoteconsole.common.utils.SupportedLocales;
 
 /**

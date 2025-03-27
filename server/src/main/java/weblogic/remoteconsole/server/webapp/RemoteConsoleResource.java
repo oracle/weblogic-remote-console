@@ -1,4 +1,4 @@
-// Copyright (c) 2021, 2024, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2025, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.webapp;
@@ -31,6 +31,7 @@ import weblogic.remoteconsole.server.repo.InvocationContext;
 public class RemoteConsoleResource extends BaseResource {
   public static final String PROVIDER_MANAGEMENT_PATH = "providers";
   public static final String ABOUT_PATH = "about";
+  public static final String LOGOUT_PATH = "logout";
   public static final String SSO_TOKEN_PATH = "token";
   public static final String DOMAIN_STATUS_PATH = "domainStatus";
 
@@ -45,6 +46,11 @@ public class RemoteConsoleResource extends BaseResource {
     return new TempDownloadResource();
   }
   */
+
+  @Path(LOGOUT_PATH)
+  public LogoutResource getLogoutResource() {
+    return new LogoutResource();
+  }
 
   @Path(ABOUT_PATH)
   public AboutResource getAboutResourceNew() {

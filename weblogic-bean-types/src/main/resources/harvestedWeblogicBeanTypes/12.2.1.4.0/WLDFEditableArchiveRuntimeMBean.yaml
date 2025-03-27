@@ -1,14 +1,9 @@
-# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2025, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
-actions: [
-  ]
 baseTypes:
 - weblogic.management.runtime.WLDFArchiveRuntimeMBean
 - weblogic.diagnostics.accessor.runtime.EditableArchiveRuntimeMBean
-derivedTypes:
-- weblogic.management.runtime.WLDFWlstoreArchiveRuntimeMBean
-- weblogic.management.runtime.WLDFDbstoreArchiveRuntimeMBean
 descriptionHTML: '<p>Use this interface to collect statistical information about the
   editable archives maintained by WLDF, such as JDBC based and weblogic.store based
   WLDF archives</p> '

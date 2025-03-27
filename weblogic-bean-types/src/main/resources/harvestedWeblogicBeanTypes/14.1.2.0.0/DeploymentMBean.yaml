@@ -1,44 +1,8 @@
-# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2025, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
-actions: [
-  ]
 baseTypes:
 - weblogic.management.configuration.ConfigurationMBean
-derivedTypes:
-- weblogic.management.configuration.WTCServerMBean
-- weblogic.management.configuration.RMCFactoryMBean
-- weblogic.management.configuration.DataSourceMBean
-- weblogic.management.configuration.MinThreadsConstraintMBean
-- weblogic.management.configuration.JoltConnectionPoolMBean
-- weblogic.management.configuration.DynamicDeploymentMBean
-- weblogic.management.configuration.WebDeploymentMBean
-- weblogic.management.configuration.OsgiFrameworkMBean
-- weblogic.management.configuration.FairShareRequestClassMBean
-- weblogic.management.configuration.CapacityMBean
-- weblogic.management.configuration.ContextCaseMBean
-- weblogic.management.configuration.ContextRequestClassMBean
-- weblogic.management.configuration.HTTPProxyMBean
-- weblogic.management.configuration.ConversationServiceMBean
-- weblogic.management.configuration.FileT3MBean
-- weblogic.management.configuration.ResponseTimeRequestClassMBean
-- weblogic.management.configuration.CacheMBean
-- weblogic.management.configuration.ForeignJNDIProviderMBean
-- weblogic.management.configuration.WorkManagerMBean
-- weblogic.management.configuration.ComponentMBean
-- weblogic.management.configuration.NetworkChannelMBean
-- weblogic.management.configuration.ClassDeploymentMBean
-- weblogic.management.configuration.SAFAgentMBean
-- weblogic.management.configuration.PathServiceMBean
-- weblogic.management.configuration.WebServerMBean
-- weblogic.management.configuration.VirtualDestinationMBean
-- weblogic.management.configuration.SNMPAgentDeploymentMBean
-- weblogic.management.configuration.VirtualTargetMBean
-- weblogic.management.configuration.JMSServerMBean
-- weblogic.management.configuration.MigratableRMIServiceMBean
-- weblogic.management.configuration.BaseExecutorServiceMBean
-- weblogic.management.configuration.BaseThreadFactoryMBean
-- weblogic.management.configuration.MaxThreadsConstraintMBean
 descriptionHTML: 'A Deployment is any MBean that may be deployed on one or more targets,
   such as a Component, a Web Server personality, a JMS Front-end or back-end or a
   JDBC connection pool.  A deployment has targets, which specify which servers the

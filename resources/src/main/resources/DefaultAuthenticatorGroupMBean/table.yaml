@@ -1,6 +1,7 @@
-# Copyright (c) 2022, 2024, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2022, 2025, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
+getTableRowsMethod: weblogic.remoteconsole.customizers.UserGroupMBeanCustomizer.getGroups
 customizePageMethod: weblogic.remoteconsole.customizers.UserGroupMBeanCustomizer.customizeGroupsTable
 
 introductionHTML: >
@@ -10,6 +11,12 @@ introductionHTML: >
   Groups can be used to define security policies for WebLogic resources.</p>
   <p>You do not have to use the default groups provided by WebLogic Server.
   Oracle recommends creating groups that more closely reflect your own business structure and practices.</p>
+
+actions:
+- name: filter
+  rows: none
+  requiredCapabilities:
+  - UserGroupFiltering
 
 displayedColumns:
 - name: "Name"

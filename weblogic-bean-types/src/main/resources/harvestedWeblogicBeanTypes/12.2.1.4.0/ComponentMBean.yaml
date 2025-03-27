@@ -1,15 +1,8 @@
-# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2025, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
-actions: [
-  ]
 baseTypes:
 - weblogic.management.configuration.DeploymentMBean
-derivedTypes:
-- weblogic.management.configuration.WebAppComponentMBean
-- weblogic.management.configuration.EJBComponentMBean
-- weblogic.management.configuration.JDBCPoolComponentMBean
-- weblogic.management.configuration.ConnectorComponentMBean
 descriptionHTML: 'A component is a specific type of deployment that is part of a J2EE
   application (see ApplicationMBean). Typically it is a JAR, WAR, or RAR file that
   contains application code.  Deploying an application is primarily the sum of its

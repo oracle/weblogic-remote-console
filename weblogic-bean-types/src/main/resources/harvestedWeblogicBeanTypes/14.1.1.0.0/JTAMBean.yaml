@@ -1,12 +1,8 @@
-# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2025, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
-actions: [
-  ]
 baseTypes:
 - weblogic.management.configuration.ConfigurationMBean
-derivedTypes:
-- weblogic.management.configuration.JTAClusterMBean
 descriptionHTML: '<p>This interface provides access to the JTA configuration attributes.  The
   methods defined herein are applicable for JTA configuration at the domain level.</p> '
 name: weblogic.management.configuration.JTAMBean

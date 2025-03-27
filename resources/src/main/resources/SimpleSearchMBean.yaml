@@ -1,10 +1,8 @@
-# Copyright (c) 2022, Oracle and/or its affiliates.
+# Copyright (c) 2022, 2025, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 baseTypes:
 - weblogic.management.WebLogicMBean
-derivedTypes: [
-  ]
 descriptionHTML: '<p>Returns the beans whose name in the navigation tree matches
   the search criteria that the user entered (white space insensitive and case insensitive)</p>'
 name: weblogic.management.SimpleSearchMBean

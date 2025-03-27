@@ -1,12 +1,8 @@
-# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2025, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
-actions: [
-  ]
 baseTypes:
 - weblogic.j2ee.descriptor.wl.DestinationBean
-derivedTypes:
-- weblogic.j2ee.descriptor.wl.UniformDistributedQueueBean
 descriptionHTML: '<p>Queues are used for asynchronous peer communications.  A message
   delivered to a queue will be distributed to one consumer.  Several aspects of a
   queues behavior can be configured with a queue bean.</p> '

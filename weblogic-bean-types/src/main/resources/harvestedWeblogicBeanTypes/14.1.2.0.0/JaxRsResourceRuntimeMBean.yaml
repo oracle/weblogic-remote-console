@@ -1,13 +1,9 @@
-# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2025, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
-actions: [
-  ]
 baseTypes:
 - weblogic.management.runtime.JaxRsUriRuntimeMBean
 - weblogic.management.runtime.JaxRsMonitoringInfoRuntimeMBean
-derivedTypes: [
-  ]
 descriptionHTML: 'The runtime MBean of a JAX-RS resource. EJB(Stateless and Singleton),
   POJO are the two component types that are supported. <p/> Each JAX-RS resource has
   a scope associated with that. Any object that is managed by a container (such as

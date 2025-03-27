@@ -1,34 +1,10 @@
-# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2025, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
-actions: [
-  ]
-baseTypes: [
-  ]
-derivedTypes: [
-  ]
 descriptionHTML: 'An XML connection-propertiesType(@http://www.bea.com/ns/weblogic/90).
   This is a complex type. '
 name: weblogic.j2ee.descriptor.wl.ConnectionPropertiesBean
 properties:
-- defaultValue: {
-    }
-  descriptionHTML: 'Gets the "user-name" element '
-  name: UserName
-  restartNeeded: true
-  type: java.lang.String
-  writable: true
-- array: true
-  defaultValue: {
-    }
-  descriptionHTML: 'The encrypted password that will be used in conjunction with the
-    user name specified in the "Username" parameter. Gets the "password-encrypted"
-    element '
-  encrypted: true
-  name: PasswordEncrypted
-  restartNeeded: true
-  type: byte
-  writable: true
 - array: true
   creators:
   - weblogic.j2ee.descriptor.wl.ConnectionParamsBean
@@ -47,6 +23,26 @@ properties:
   writable: true
 - defaultValue: {
     }
+  descriptionHTML: 'The password that will be used in conjunction with the user name
+    specified in the "Username" parameter. Gets the "password" element '
+  encrypted: true
+  name: Password
+  nullable: true
+  type: java.lang.String
+  writable: true
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: 'The encrypted password that will be used in conjunction with the
+    user name specified in the "Username" parameter. Gets the "password-encrypted"
+    element '
+  encrypted: true
+  name: PasswordEncrypted
+  restartNeeded: true
+  type: byte
+  writable: true
+- defaultValue: {
+    }
   descriptionHTML: 'Gets the "url" element '
   name: Url
   restartNeeded: true
@@ -54,10 +50,8 @@ properties:
   writable: true
 - defaultValue: {
     }
-  descriptionHTML: 'The password that will be used in conjunction with the user name
-    specified in the "Username" parameter. Gets the "password" element '
-  encrypted: true
-  name: Password
-  nullable: true
+  descriptionHTML: 'Gets the "user-name" element '
+  name: UserName
+  restartNeeded: true
   type: java.lang.String
   writable: true

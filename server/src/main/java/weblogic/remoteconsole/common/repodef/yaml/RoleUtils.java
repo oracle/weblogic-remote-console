@@ -1,4 +1,4 @@
-// Copyright (c) 2021, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2025, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef.yaml;
@@ -7,11 +7,11 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import weblogic.remoteconsole.common.repodef.schema.BeanActionDefSource;
-import weblogic.remoteconsole.common.repodef.schema.BeanPropertyDefSource;
-import weblogic.remoteconsole.common.repodef.schema.BeanTypeDefSource;
+import weblogic.console.schema.beaninfo.BeanActionDefSource;
+import weblogic.console.schema.beaninfo.BeanPropertyDefSource;
+import weblogic.console.schema.beaninfo.BeanTypeDefSource;
+import weblogic.console.schema.beaninfo.RolesDefSource;
 import weblogic.remoteconsole.common.repodef.schema.NavTreeNodeDefSource;
-import weblogic.remoteconsole.common.repodef.schema.RolesDefSource;
 import weblogic.remoteconsole.common.utils.WebLogicRoles;
 
 /**

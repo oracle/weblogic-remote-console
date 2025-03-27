@@ -1,4 +1,4 @@
-// Copyright (c) 2021, 2024, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2025, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef;
@@ -801,16 +801,40 @@ public class LocalizedConstants {
         + "  Increasing the WebLogic Remote Console's 'Administration Server Read Timeout' may help."
     );
 
-  public static final LocalizableString TOO_MANY_USERS =
+  public static final LocalizableString LEGACY_TOO_MANY_USERS =
     addConstant(
-        "tooManyUsers",
+        "legacyTooManyUsers",
         "<p>Note: There are more users than the WebLogic Remote Console supports. Only {0} are displayed.</p>"
     );
 
+  public static final LocalizableString LEGACY_TOO_MANY_GROUPS =
+    addConstant(
+        "legacyTooManyGroups",
+        "<p>Note: There are more groups than the WebLogic Remote Console supports. Only {0} are displayed.</p>"
+    );
+
+  public static final LocalizableString TOO_MANY_USERS =
+    addConstant(
+      "tooManyUsers",
+      "<p>Some users are not displayed because there are too many matches. Please filter this table.</p>"
+     );
+
   public static final LocalizableString TOO_MANY_GROUPS =
     addConstant(
-        "tooManyGroups",
-        "<p>Note: There are more groups than the WebLogic Remote Console supports. Only {0} are displayed.</p>"
+      "tooManyGroups",
+      "<p>Some groups are not displayed because there are too many matches. Please filter this table.</p>"
+    );
+
+  public static final LocalizableString USERS_FILTER =
+    addConstant(
+      "userFilter",
+      "<p>Only users whose name matches the filter ''{0}'' are displayed.</p>"
+    );
+
+  public static final LocalizableString GROUPS_FILTER =
+    addConstant(
+      "groupFilter",
+      "<p>Only groups whose name matches the filter ''{0}'' are displayed.</p>"
     );
 
   public static final LocalizableString CLONED_SERVER_NOT_ALL_SETTINGS_COPIED =
@@ -830,6 +854,12 @@ public class LocalizedConstants {
     addConstant(
       "userGroupReaderStatusOK",
       "OK"
+    );
+
+  public static final LocalizableString SECURITY_PROVIDER_DATA_NOT_AVAILABLE =
+    addConstant(
+      "securityProviderDataNotAvailable",
+      "<p>No data is available because:</p><p>{0}</p>"
     );
 
   // Returns all of the constants (used when the resource bundles are generated at build time)

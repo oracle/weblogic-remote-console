@@ -1,12 +1,8 @@
-# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2025, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
-actions: [
-  ]
 baseTypes:
 - weblogic.management.runtime.RuntimeMBean
-derivedTypes: [
-  ]
 descriptionHTML: '<p>Encapsulates runtime information about WS-RM functionality. If
   this MBean is parented by a WseePortRuntimeMBean instance, this MBean represents
   WS-RM resources contained in a particular Web Service or web service client. If

@@ -1,12 +1,8 @@
-# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2025, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
-actions: [
-  ]
 baseTypes:
 - weblogic.diagnostics.descriptor.WLDFBean
-derivedTypes: [
-  ]
 descriptionHTML: '<p>Configures and controls the WebLogic Diagnostic Framework (WLDF)
   policy and action component; creates and deletes policy definitions; and defines
   the rules that apply to specific policies.</p>  <p>Note: As of WebLogic Server 12.2.1,

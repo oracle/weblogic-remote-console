@@ -1,12 +1,8 @@
-# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2025, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
-actions: [
-  ]
 baseTypes:
 - weblogic.management.configuration.DeploymentMBean
-derivedTypes: [
-  ]
 descriptionHTML: '<p>This MBean defines the minimum number of concurrent threads that
   should allocated to this constraint provided there are enough pending requests.</p>  <p>
   Multiple WorkManagers can share a common MinThreadsConstraint. MinThreadsConstraint

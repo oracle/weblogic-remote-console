@@ -1,14 +1,8 @@
-# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2025, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
-actions: [
-  ]
 baseTypes:
 - weblogic.management.configuration.ConfigurationMBean
-derivedTypes:
-- weblogic.management.configuration.WebserviceSecurityTokenMBean
-- weblogic.management.configuration.WebserviceTokenHandlerMBean
-- weblogic.management.configuration.WebserviceCredentialProviderMBean
 descriptionHTML: '<p>Encapsulates information about a Web Service security configuration.</p>  <p>This
   information includes the list of tokens, credential providers, token handlers, and
   the timestamp.  After you have created a Web Service security configuration, you

@@ -1,23 +1,9 @@
-# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2025, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
-actions: [
-  ]
-baseTypes: [
-  ]
-derivedTypes: [
-  ]
 descriptionHTML: ' '
 name: weblogic.j2ee.descriptor.wl.XmlBean
 properties:
-- creators:
-  - weblogic.j2ee.descriptor.wl.ParserFactoryBean
-  defaultValue: {
-    }
-  descriptionHTML: ' '
-  name: ParserFactory
-  relationship: containment
-  type: weblogic.j2ee.descriptor.wl.ParserFactoryBean
 - array: true
   creators:
   - weblogic.j2ee.descriptor.wl.EntityMappingBean
@@ -28,3 +14,11 @@ properties:
   relationship: containment
   supported: false
   type: weblogic.j2ee.descriptor.wl.EntityMappingBean
+- creators:
+  - weblogic.j2ee.descriptor.wl.ParserFactoryBean
+  defaultValue: {
+    }
+  descriptionHTML: ' '
+  name: ParserFactory
+  relationship: containment
+  type: weblogic.j2ee.descriptor.wl.ParserFactoryBean

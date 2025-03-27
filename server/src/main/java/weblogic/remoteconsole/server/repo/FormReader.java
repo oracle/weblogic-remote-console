@@ -1,4 +1,4 @@
-// Copyright (c) 2021, 2024, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2025, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.repo;
@@ -6,11 +6,11 @@ package weblogic.remoteconsole.server.repo;
 import java.util.ArrayList;
 import java.util.List;
 
+import weblogic.console.utils.Path;
 import weblogic.remoteconsole.common.repodef.BeanPropertyCustomizerDef;
 import weblogic.remoteconsole.common.repodef.BeanPropertyDef;
 import weblogic.remoteconsole.common.repodef.PagePropertyDef;
 import weblogic.remoteconsole.common.utils.CustomizerInvocationUtils;
-import weblogic.remoteconsole.common.utils.Path;
 
 /**
  * This is the base class for reading a form and contains code

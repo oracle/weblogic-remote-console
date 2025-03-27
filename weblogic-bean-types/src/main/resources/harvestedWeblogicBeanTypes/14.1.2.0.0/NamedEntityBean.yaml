@@ -1,21 +1,8 @@
-# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2025, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
-actions: [
-  ]
 baseTypes:
 - weblogic.descriptor.SettableBean
-derivedTypes:
-- weblogic.j2ee.descriptor.wl.DestinationKeyBean
-- weblogic.j2ee.descriptor.wl.ForeignJNDIObjectBean
-- weblogic.j2ee.descriptor.wl.QuotaBean
-- weblogic.j2ee.descriptor.wl.DistributedDestinationBean
-- weblogic.j2ee.descriptor.wl.TemplateBean
-- weblogic.j2ee.descriptor.wl.SAFDestinationBean
-- weblogic.j2ee.descriptor.wl.SAFErrorHandlingBean
-- weblogic.j2ee.descriptor.wl.SAFRemoteContextBean
-- weblogic.j2ee.descriptor.wl.TargetableBean
-- weblogic.j2ee.descriptor.wl.DistributedDestinationMemberBean
 descriptionHTML: 'All JMS beans that use a name as a primary key are NamedEntityBeans.  All
   of the named entity beans in a module must have a unique name. '
 name: weblogic.j2ee.descriptor.wl.NamedEntityBean

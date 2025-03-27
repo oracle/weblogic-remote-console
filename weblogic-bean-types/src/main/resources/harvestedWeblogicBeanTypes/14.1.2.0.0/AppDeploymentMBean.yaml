@@ -1,13 +1,8 @@
-# Copyright (c) 2020, 2024, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2025, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
-actions: [
-  ]
 baseTypes:
 - weblogic.management.configuration.BasicDeploymentMBean
-derivedTypes:
-- weblogic.management.configuration.LibraryMBean
-- weblogic.management.configuration.DBClientDataDirectoryMBean
 descriptionHTML: 'This MBean is used to configure all physical package types which
   can be deployed on a WebLogic domain, for instance, EAR files and standalone Java
   EE and non-Java EE modules. '

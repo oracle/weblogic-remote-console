@@ -1,0 +1,26 @@
+# Copyright (c) 2025, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+name: weblogic.security.providers.authentication.ReflectingUserGroupAuthenticatorMBean
+baseTypes:
+- weblogic.management.security.AuthenticationProviderSecurityDataMBean
+properties:
+- name: ReflectingUsers
+  relationship: containment
+  type: weblogic.security.providers.authentication.ReflectingUserMBean
+  array: true
+- name: ReflectingGroups
+  relationship: containment
+  type: weblogic.security.providers.authentication.ReflectingGroupMBean
+  array: true
+- name: Status
+  type: java.lang.String
+  descriptionHTML: The runtime status of this authentication provider.
+- name: GroupEditor
+  type: boolean
+- name: MemberGroupLister
+  type: boolean
+- name: PasswordEditor
+  type: boolean
+- name: UserEditor
+  type: boolean

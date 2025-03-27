@@ -1,14 +1,8 @@
-# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2025, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
-actions: [
-  ]
 baseTypes:
 - com.bea.security.saml2.providers.SAML2PartnerRegistryMBean
-derivedTypes:
-- com.bea.security.saml2.providers.SAML2CredentialMapperMBean
 descriptionHTML: '<p>The SAML2SPPartnerRegistry is used manage a registry of          SAML
   2.0 SP partners.</p> '
 name: com.bea.security.saml2.providers.SAML2SPPartnerRegistryMBean
-properties: [
-  ]

@@ -1,24 +1,8 @@
-# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2025, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
-actions: [
-  ]
 baseTypes:
 - weblogic.descriptor.SettableBean
-derivedTypes:
-- weblogic.security.providers.utils.CertRegManagerMBean
-- weblogic.management.security.pk.CertPathProviderMBean
-- weblogic.management.security.authorization.AdjudicatorMBean
-- weblogic.management.security.authorization.AuthorizerMBean
-- weblogic.management.security.credentials.CredentialMapperMBean
-- weblogic.management.security.authorization.RoleMapperMBean
-- weblogic.management.security.authentication.AuthenticationProviderMBean
-- weblogic.management.security.authentication.PasswordValidatorMBean
-- weblogic.management.security.audit.AuditorMBean
-- weblogic.security.providers.pk.GroupCertRegManagerMBean
-- com.bea.security.saml2.providers.SAML2PartnerRegistryMBean
-- weblogic.management.security.ApplicationVersionerMBean
-- weblogic.security.providers.saml.registry.SAMLPartnerRegistryMBean
 descriptionHTML: 'The base MBean for all security providers. <p> It includes attributes
   common to all security providers. Every security provider must implement an MBean
   that extends this MBean.</p> <p> If the security provider supports management methods,

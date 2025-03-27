@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2021, 2024, Oracle and/or its affiliates.
+ * Copyright (c) 2021, 2025, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
@@ -791,6 +791,19 @@ define(['js-yaml', 'wrc-frontend/microservices/common/id-generator', './data-pro
           resolve(reply);
         });
       },
+
+      getCapabilities: function () {
+        return new Promise((resolve, reject) => {
+          DataOperations.about.get().then(reply => {
+            resolve(reply?.body?.data?.about?.capabilities);
+          });
+        });
+      },
+
+      logout: function () {
+          return DataOperations.logout.exec();
+      },
+
       /**
        * @returns {DataProvider|undefined}
        */

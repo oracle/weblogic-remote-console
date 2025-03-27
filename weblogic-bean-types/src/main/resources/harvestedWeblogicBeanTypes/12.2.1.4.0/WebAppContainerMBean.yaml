@@ -1,12 +1,8 @@
-# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2025, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
-actions: [
-  ]
 baseTypes:
 - weblogic.management.configuration.ConfigurationMBean
-derivedTypes: [
-  ]
 descriptionHTML: '<p>This MBean is used to specify domain-wide defaults for the WebApp
   container. In general, these properties can be overridden at the cluster level (in
   ClusterMBean, if the same property is present there), the server level (in ServerMBean,

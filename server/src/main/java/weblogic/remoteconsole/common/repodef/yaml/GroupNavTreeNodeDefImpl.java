@@ -1,4 +1,4 @@
-// Copyright (c) 2021, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2025, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef.yaml;
@@ -6,11 +6,11 @@ package weblogic.remoteconsole.common.repodef.yaml;
 import java.util.Collections;
 import java.util.List;
 
+import weblogic.console.utils.StringUtils;
 import weblogic.remoteconsole.common.repodef.GroupNavTreeNodeDef;
 import weblogic.remoteconsole.common.repodef.LocalizableString;
 import weblogic.remoteconsole.common.repodef.NavTreeNodeDef;
 import weblogic.remoteconsole.common.repodef.schema.NavTreeNodeDefSource;
-import weblogic.remoteconsole.common.utils.StringUtils;
 
 /**
  * yaml-based implementation of the GroupNavTreeNodeDef interface.

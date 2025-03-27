@@ -1,4 +1,4 @@
-// Copyright (c) 2021, 2023, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2025, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.webapp;
@@ -15,8 +15,8 @@ import javax.ws.rs.core.PathSegment;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
+import weblogic.console.utils.StringUtils;
 import weblogic.remoteconsole.common.utils.CustomizerInvocationUtils;
-import weblogic.remoteconsole.common.utils.StringUtils;
 import weblogic.remoteconsole.server.providers.Root;
 import weblogic.remoteconsole.server.repo.BeanRepo;
 import weblogic.remoteconsole.server.repo.BeanTreePath;

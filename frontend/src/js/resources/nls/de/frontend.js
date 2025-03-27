@@ -8,6 +8,11 @@ define({
         "value": "Anwendungsheader"
       }
     },
+    "buttons": {
+      "logout": {
+        "label": "Logout"
+      }
+    },
     "icons": {
       "navtree": {
         "toggler": {
@@ -1160,6 +1165,9 @@ define({
       },
       "reloadHidden": {
         "value": "Tabelle neu laden, um die aktuellen {0} Werte anzuzeigen"
+      },
+      "noData": {
+        "value": "Keine Daten gefunden."
       }
     }
   },

@@ -1,0 +1,80 @@
+# Copyright (c) 2020, 2025, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+baseTypes:
+- weblogic.management.runtime.EJBRuntimeMBean
+descriptionHTML: 'This interface contains accessor methods for all EJB runtime information
+  collected for a Message Driven Bean. '
+name: weblogic.management.runtime.MessageDrivenEJBRuntimeMBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Provides the connection status for the Message Driven Bean.
+    ConnectionStatus can be Connected or Reconnecting.</p> '
+  name: ConnectionStatus
+  type: java.lang.String
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Provides a count of the Message Driven Bean destination</p> '
+  name: Destination
+  type: java.lang.String
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The health state of this MDB.</p> '
+  name: HealthState
+  type: weblogic.health.HealthState
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Provides information about whether the Message Driven Bean
+    is currently connected to the JMS destination it is mapped to.</p>  <p>Returns
+    whether the Message Driven Bean is currently connected to the JMS destination
+    it is mapped to.</p> '
+  name: JMSConnectionAlive
+  type: boolean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Provides a count of the Message Driven Bean jmsClientID</p> '
+  name: JmsClientID
+  type: java.lang.String
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Provides the last exception this MDB encountered</p> '
+  name: LastException
+  type: java.lang.Throwable
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Provides the last exception as String this MDB encountered</p> '
+  name: LastExceptionAsString
+  type: java.lang.String
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Provides the Message Driven Bean status.  MDBStatus is used
+    after the MDB is connected to the destination. MDBStatus can be Running or Suspended.</p> '
+  name: MDBStatus
+  type: java.lang.String
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Provides runtime information about the free pool for this EJB.</p> '
+  name: PoolRuntime
+  relationship: containment
+  type: weblogic.management.runtime.EJBPoolRuntimeMBean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Provides a count of the total number of messages processed
+    by this Message Driven Bean.</p> '
+  name: ProcessedMessageCount
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Provides a count of the total number of times this MDB is suspended
+    by the user or the EJB container.</p> '
+  name: SuspendCount
+  type: int
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Provides runtime information about any EJB Timers created,
+    for this EJB. If the bean class for this EJB does not implement jakarta.ejb.TimedObject,
+    null will be returned.</p> '
+  name: TimerRuntime
+  relationship: containment
+  type: weblogic.management.runtime.EJBTimerRuntimeMBean

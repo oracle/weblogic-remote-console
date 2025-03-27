@@ -1,12 +1,8 @@
-# Copyright (c) 2020, 2024, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2025, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
-actions: [
-  ]
 baseTypes:
 - weblogic.management.configuration.CommonLogMBean
-derivedTypes: [
-  ]
 descriptionHTML: '<p>Configures the threshold severity level and filter settings for
   logging output.</p> <p>Redirects the JVM stdout and stderr output to the registered
   log destinations.</p> <p>The server logging is based on Java Logging APIs and no

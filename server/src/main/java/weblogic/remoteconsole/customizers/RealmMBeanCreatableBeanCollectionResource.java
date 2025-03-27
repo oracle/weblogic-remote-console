@@ -1,4 +1,4 @@
-// Copyright (c) 2024, Oracle Corporation and/or its affiliates.
+// Copyright (c) 2024, 2025, Oracle Corporation and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.customizers;
@@ -8,8 +8,8 @@ import java.util.List;
 import java.util.Map;
 import javax.json.JsonObject;
 
+import weblogic.console.utils.Path;
 import weblogic.remoteconsole.common.repodef.BeanTypeDef;
-import weblogic.remoteconsole.common.utils.Path;
 import weblogic.remoteconsole.server.repo.BeanEditorRepo;
 import weblogic.remoteconsole.server.repo.BeanPropertyValue;
 import weblogic.remoteconsole.server.repo.BeanPropertyValues;

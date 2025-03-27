@@ -1,13 +1,9 @@
-# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2025, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
-actions: [
-  ]
 baseTypes:
-- weblogic.diagnostics.debug.DebugScopeBean
 - weblogic.management.configuration.ConfigurationMBean
-derivedTypes: [
-  ]
+- weblogic.diagnostics.debug.DebugScopeBean
 descriptionHTML: 'This interface captures whether the enabled state of a debug scope.
   The name of a debug scope is the fully qualified scope name for example weblogic.security.SSL '
 name: weblogic.management.configuration.DebugScopeMBean

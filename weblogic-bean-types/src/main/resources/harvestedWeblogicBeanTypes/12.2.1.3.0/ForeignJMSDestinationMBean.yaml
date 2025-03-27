@@ -1,12 +1,8 @@
-# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2025, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
-actions: [
-  ]
 baseTypes:
 - weblogic.management.configuration.ForeignJNDIObjectMBean
-derivedTypes: [
-  ]
 descriptionHTML: 'This class represents a JMS destination that may be found on a remote
   server. The destination can represent a queue or a topic. When the destination is
   looked up on the local server, a look-up will be performed automatically on the

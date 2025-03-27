@@ -1,13 +1,8 @@
-# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2025, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
-actions: [
-  ]
 baseTypes:
 - weblogic.management.runtime.ComponentRuntimeMBean
-derivedTypes:
-- weblogic.management.runtime.EJBComponentRuntimeMBean
-- weblogic.management.runtime.WebAppComponentRuntimeMBean
 descriptionHTML: 'Component concurrent managed object runtime information. '
 name: weblogic.management.runtime.ComponentConcurrentRuntimeMBean
 properties:

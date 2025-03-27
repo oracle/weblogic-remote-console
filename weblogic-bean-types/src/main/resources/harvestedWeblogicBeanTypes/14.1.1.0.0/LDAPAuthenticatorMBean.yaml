@@ -1,25 +1,15 @@
-# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2025, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
-actions: [
-  ]
 baseTypes:
 - weblogic.security.providers.authentication.LoginExceptionPropagatorMBean
-- weblogic.management.security.authentication.UserReaderMBean
-- weblogic.management.security.authentication.IdentityDomainAuthenticatorMBean
-- weblogic.management.security.authentication.MemberGroupListerMBean
 - weblogic.management.utils.LDAPServerMBean
-- weblogic.management.security.authentication.UserPasswordEditorMBean
+- weblogic.management.security.authentication.UserReaderMBean
 - weblogic.management.security.authentication.GroupMemberListerMBean
+- weblogic.management.security.authentication.MemberGroupListerMBean
+- weblogic.management.security.authentication.UserPasswordEditorMBean
 - weblogic.management.security.authentication.GroupMembershipHierarchyCacheMBean
-derivedTypes:
-- weblogic.security.providers.authentication.ActiveDirectoryAuthenticatorMBean
-- weblogic.security.providers.authentication.OracleUnifiedDirectoryAuthenticatorMBean
-- weblogic.security.providers.authentication.OracleVirtualDirectoryAuthenticatorMBean
-- weblogic.security.providers.authentication.IPlanetAuthenticatorMBean
-- weblogic.security.providers.authentication.NovellAuthenticatorMBean
-- weblogic.security.providers.authentication.OracleInternetDirectoryAuthenticatorMBean
-- weblogic.security.providers.authentication.OpenLDAPAuthenticatorMBean
+- weblogic.management.security.authentication.IdentityDomainAuthenticatorMBean
 descriptionHTML: '<p>This MBean contains attributes for the LDAP servers supported
   by the       LDAP Authentication providers. Subinterfaces of this MBean override       default
   values specific to an LDAP server.</p> '

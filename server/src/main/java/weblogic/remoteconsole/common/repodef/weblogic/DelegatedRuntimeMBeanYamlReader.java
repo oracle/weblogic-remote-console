@@ -1,4 +1,4 @@
-// Copyright (c) 2022, 2024, Oracle and/or its affiliates.
+// Copyright (c) 2022, 2025, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef.weblogic;
@@ -8,6 +8,11 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import weblogic.console.schema.beaninfo.BeanActionDefSource;
+import weblogic.console.schema.beaninfo.BeanPropertyDefSource;
+import weblogic.console.schema.beaninfo.BeanTypeDefSource;
+import weblogic.console.utils.Path;
+import weblogic.console.utils.StringUtils;
 import weblogic.remoteconsole.common.repodef.BeanActionDef;
 import weblogic.remoteconsole.common.repodef.BeanChildDef;
 import weblogic.remoteconsole.common.repodef.BeanPropertyDef;
@@ -17,11 +22,8 @@ import weblogic.remoteconsole.common.repodef.CreateFormPagePath;
 import weblogic.remoteconsole.common.repodef.SlicePagePath;
 import weblogic.remoteconsole.common.repodef.TablePagePath;
 import weblogic.remoteconsole.common.repodef.schema.BeanActionDefCustomizerSource;
-import weblogic.remoteconsole.common.repodef.schema.BeanActionDefSource;
 import weblogic.remoteconsole.common.repodef.schema.BeanPropertyDefCustomizerSource;
-import weblogic.remoteconsole.common.repodef.schema.BeanPropertyDefSource;
 import weblogic.remoteconsole.common.repodef.schema.BeanTypeDefCustomizerSource;
-import weblogic.remoteconsole.common.repodef.schema.BeanTypeDefSource;
 import weblogic.remoteconsole.common.repodef.schema.CreateFormDefSource;
 import weblogic.remoteconsole.common.repodef.schema.LinksDefSource;
 import weblogic.remoteconsole.common.repodef.schema.MBeanAttributeDefSource;
@@ -34,8 +36,6 @@ import weblogic.remoteconsole.common.repodef.schema.SlicesDefSource;
 import weblogic.remoteconsole.common.repodef.schema.SubTypeDefSource;
 import weblogic.remoteconsole.common.repodef.schema.TableDefSource;
 import weblogic.remoteconsole.common.repodef.yaml.SlicesDefImpl;
-import weblogic.remoteconsole.common.utils.Path;
-import weblogic.remoteconsole.common.utils.StringUtils;
 
 /**
  * Base implementation for dynamically creating the yaml that describes

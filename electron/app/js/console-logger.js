@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2022, 2023, Oracle and/or its affiliates.
+ * Copyright (c) 2022, 2025, Oracle and/or its affiliates.
  * Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
  */
 
@@ -20,10 +20,12 @@ const LoggingLevels = [
 let _logFilename;
 let _loggingLevel;
 let _isHeadlessMode;
+let _isStdoutErrorEpipe;
 
 (function () {
   _loggingLevel = 'info';
   _isHeadlessMode = false;
+  _isStdoutErrorEpipe = false;
   const _error = console.error;
   const _warning = console.warning;
   const _debug = console.debug;
@@ -31,27 +33,39 @@ let _isHeadlessMode;
 
   console.error = function (line) {
     fs.appendFileSync(_logFilename, line + os.EOL);
-    if (!_isHeadlessMode) _error.apply(console, arguments);
+    if (_useConsoleLogging()) _error.apply(console, arguments);
   };
 
   console.warning = function (line) {
     fs.appendFileSync(_logFilename, line + os.EOL);
-    if (!_isHeadlessMode) _warning.apply(console, arguments);
+    if (_useConsoleLogging()) _warning.apply(console, arguments);
   };
 
   console.debug = function (line) {
     fs.appendFileSync(_logFilename, line + os.EOL);
-    if (!_isHeadlessMode) _debug.apply(console, arguments);
+    if (_useConsoleLogging()) _debug.apply(console, arguments);
   };
 
   console.trace = function (line) {
     fs.appendFileSync(_logFilename, line + os.EOL);
-    if (!_isHeadlessMode) _trace.apply(console, arguments);
+    if (_useConsoleLogging()) _trace.apply(console, arguments);
   };
+
+  // Handle error on stdout and also prevent a dialog box when using console logging functions...
+  process.stdout.on('error', function (error) {
+    if (error.code == 'EPIPE') _isStdoutErrorEpipe = true;
+    const caller = _getCaller((new Error('StackLog')));
+    const line = `${getLogEntryDateTime()} ${getLogEntryLevel('error')} ${caller} ${error}`;
+    fs.appendFileSync(_logFilename, line + os.EOL);
+  });
 })();
 
+function _useConsoleLogging() {
+  return (!_isHeadlessMode && !_isStdoutErrorEpipe);
+}
+
 function initializeLog(options) {
-  _logFilename = _rotateLogfile(options.appPaths.userData, options.baseFilename);
+  _logFilename = _getLogFileName(options.appPaths.userData, options.baseFilename);
   if (options.loggingLevel) _loggingLevel = options.loggingLevel;
   if (options.isHeadlessMode) _isHeadlessMode = options.isHeadlessMode;
 }
@@ -82,27 +96,28 @@ function getLogEntryLevel(level = 'info') {
   return levelSwitch(level);
 }
 
+function _getCaller(stacklog) {
+  let caller = '';
+  const stackParts = stacklog.stack.split('\n');
+  if (stackParts.length > 2) {
+    const matched = stackParts[2].match(/([^/]+\.js)/);
+    caller = (matched ? matched[0] : stackParts[2]);
+  }
+  return caller;
+}
+
 /**
  *
  * @param {string} [level='info']
  * @param {string} message
  */
-function log(level = 'info', message) {
+function log(level = 'info', message, infoUseTimeStamp = true) {
   function isLoggableLevel(level) {
     return (LoggingLevels.indexOf(level) <= LoggingLevels.indexOf(_loggingLevel));
   }
 
-  function getCaller(stacklog) {
-    let caller = '';
-    const stackParts = stacklog.stack.split('\n');
-    if (stackParts.length > 2) {
-      caller = stackParts[2].match(/([^/]+\.js)/)[0];
-    }
-    return caller;
-  }
-
   if (isLoggableLevel(level)) {
-    const caller = getCaller((new Error('StackLog')));
+    const caller = _getCaller((new Error('StackLog')));
     switch (level) {
       case 'error':
         ((line) => {
@@ -125,10 +140,14 @@ function log(level = 'info', message) {
         })(`${getLogEntryDateTime()} ${getLogEntryLevel(level)} ${caller} ${message}`);
         break;
       default:
-        if (!_isHeadlessMode) {
-          ((line) => { console.log(line); })(message);
+        let msg = message;
+        if (infoUseTimeStamp) {
+          msg = `${getLogEntryDateTime()} ${getLogEntryLevel('info')} ${caller} ${message}`;
         }
-        ((line) => { fs.appendFileSync(_logFilename, line + os.EOL); })(message);
+        if (_useConsoleLogging()) {
+          ((line) => { console.log(line); })(msg);
+        }
+        ((line) => { fs.appendFileSync(_logFilename, line + os.EOL); })(msg);
     }
   }
 }
@@ -160,6 +179,17 @@ function setOptions(options) {
   }
 }
 
+function rotateLog(options) {
+  _logFilename = _rotateLogfile(options.appPaths.userData, options.baseFilename);
+  if (options.loggingLevel) _loggingLevel = options.loggingLevel;
+  if (options.isHeadlessMode) _isHeadlessMode = options.isHeadlessMode;
+}
+
+function _getLogFileName(userDataPath, baseFilename) {
+  const filename = `${baseFilename}.log`;
+  return `${userDataPath}/${filename}`;
+}
+
 function _rotateLogfile(userDataPath, baseFilename) {
   function appendLogEntries(file, rotateFilename) {
     const w = fs.createWriteStream(rotateFilename, {flags: 'a'});
@@ -174,8 +204,7 @@ function _rotateLogfile(userDataPath, baseFilename) {
     });
   }
 
-  const filename = `${baseFilename}.log`;
-  const file = `${userDataPath}/${filename}`;
+  const file = _getLogFileName(userDataPath, baseFilename);
 
   const logDate = (new Date()).toISOString().slice(0, 10);
   const rotateFilename = `${userDataPath}/${baseFilename}-${logDate}.log`;
@@ -196,5 +225,6 @@ module.exports = {
   getLogLevels,
   setLoggingLevel,
   getLoggingLevel,
-  setOptions
+  setOptions,
+  rotateLog
 };

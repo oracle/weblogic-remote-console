@@ -1,12 +1,8 @@
-# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2025, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
-actions: [
-  ]
 baseTypes:
 - weblogic.management.runtime.WseeBaseOperationRuntimeMBean
-derivedTypes: [
-  ]
 descriptionHTML: '<p>Describes the state of a particular Web Service operation, such
   as deployment state and runtime statistics about the execution of the operation.</p>
   <p>This MBean can describe the operation on a web service client or service. Request

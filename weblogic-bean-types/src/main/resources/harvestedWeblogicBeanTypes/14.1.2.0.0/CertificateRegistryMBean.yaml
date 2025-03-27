@@ -1,15 +1,11 @@
-# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2025, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
-actions: [
-  ]
 baseTypes:
-- weblogic.security.providers.utils.CertRegManagerMBean
-- weblogic.management.security.pk.CertPathValidatorMBean
 - weblogic.management.security.pk.CertPathBuilderMBean
+- weblogic.management.security.pk.CertPathValidatorMBean
 - weblogic.security.providers.pk.GroupCertRegManagerMBean
-derivedTypes: [
-  ]
+- weblogic.security.providers.utils.CertRegManagerMBean
 descriptionHTML: '<p>The CertificateRegistryMBean is used to configure and manage
   the Certificate registry.</p><p> It is both a builder and a validator. It supports
   building from the end certificate, the end certificate''s subject dn, the end certificate''s

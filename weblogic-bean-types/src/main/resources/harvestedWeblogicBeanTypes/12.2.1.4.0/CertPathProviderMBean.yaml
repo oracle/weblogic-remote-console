@@ -1,18 +1,11 @@
-# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2025, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
-actions: [
-  ]
 baseTypes:
 - weblogic.management.security.ProviderMBean
-derivedTypes:
-- weblogic.management.security.pk.CertPathValidatorMBean
-- weblogic.management.security.pk.CertPathBuilderMBean
 descriptionHTML: 'The base MBean for all MBean implementations that manage certification
   path providers. If your certification path provider provides CertPathBuilder services,
   then your MBean must extend <code>weblogic.management.security.pk.CertPathBuilder</code>.
   If your certification path provider provides CertPathValidator services, then your
   MBean must extend <code>weblogic.management.security.pk.CertPathValidator</code>. '
 name: weblogic.management.security.pk.CertPathProviderMBean
-properties: [
-  ]

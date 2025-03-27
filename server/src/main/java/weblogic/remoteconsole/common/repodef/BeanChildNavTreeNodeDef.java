@@ -1,11 +1,11 @@
-// Copyright (c) 2021, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2025, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef;
 
 import java.util.List;
 
-import weblogic.remoteconsole.common.utils.Path;
+import weblogic.console.utils.Path;
 
 /**
  * This interface describes a child bean navigation node underneath
@@ -41,4 +41,8 @@ public interface BeanChildNavTreeNodeDef extends NavTreeNodeDef {
     }
     return path;
   }
+
+  // Whether this node cannot be expanded even if it normally would be expandable.
+  // For example, an AuthenticationProvider's Users child collection should not be expandable.
+  public boolean isForceNotExpandable();
 }

@@ -8,6 +8,11 @@ define({
         "value": "アプリケーション・ヘッダー"
       }
     },
+    "buttons": {
+      "logout": {
+        "label": "Logout"
+      }
+    },
     "icons": {
       "navtree": {
         "toggler": {
@@ -1160,6 +1165,9 @@ define({
       },
       "reloadHidden": {
         "value": "表を再ロードして現在の{0}値を表示します"
+      },
+      "noData": {
+        "value": "データが見つかりません。"
       }
     }
   },

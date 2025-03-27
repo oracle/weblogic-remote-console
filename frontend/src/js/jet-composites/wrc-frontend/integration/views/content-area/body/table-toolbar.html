@@ -215,6 +215,13 @@
         </div>
       </oj-bind-if>
 
+      <!-- 
+       autoPolling requires this image in the DOM to store attributes, this is true
+       even when the button is supressed (which it will be for perspectives other than monitoring)
+       -->
+      <oj-bind-if test="[[showAutoSyncIcons()===false]]">
+        <img style="display:none" id="sync-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + [[autoSyncEnabled() ? 'bouncing-icon-blk_24x38' : 'sync-off-icon-blk_24x38' ]] + '.png', alt: i18n.icons.sync.tooltip}" data-interval="0"/>
+      </oj-bind-if>
     </div>
   </div>
 </div>

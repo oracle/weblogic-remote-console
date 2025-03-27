@@ -1,24 +1,9 @@
-# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2025, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
-actions: [
-  ]
-baseTypes: [
-  ]
-derivedTypes: [
-  ]
 descriptionHTML: ' '
 name: weblogic.j2ee.descriptor.wl.SecurityBean
 properties:
-- array: true
-  creators:
-  - weblogic.j2ee.descriptor.wl.ApplicationSecurityRoleAssignmentBean
-  defaultValue: {
-    }
-  descriptionHTML: ' '
-  name: SecurityRoleAssignments
-  relationship: containment
-  type: weblogic.j2ee.descriptor.wl.ApplicationSecurityRoleAssignmentBean
 - defaultValue: {
     }
   deprecated: '12.2.1.0.0 since realms are determined by the deployment target '
@@ -28,3 +13,12 @@ properties:
   supported: false
   type: java.lang.String
   writable: true
+- array: true
+  creators:
+  - weblogic.j2ee.descriptor.wl.ApplicationSecurityRoleAssignmentBean
+  defaultValue: {
+    }
+  descriptionHTML: ' '
+  name: SecurityRoleAssignments
+  relationship: containment
+  type: weblogic.j2ee.descriptor.wl.ApplicationSecurityRoleAssignmentBean

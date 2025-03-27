@@ -16,6 +16,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.json.Json;
 import javax.json.JsonObject;
@@ -24,13 +25,12 @@ import javax.json.JsonReader;
 import static java.nio.file.StandardWatchEventKinds.ENTRY_CREATE;
 import static java.nio.file.StandardWatchEventKinds.ENTRY_DELETE;
 import static java.nio.file.StandardWatchEventKinds.ENTRY_MODIFY;
-import static java.util.logging.Level.FINEST;
-import static java.util.logging.Level.WARNING;
 
 public final class PropertyFileHandler implements Runnable {
   private File propertyFile;
   private Set<String> setSystemPropertyKeys = new HashSet<String>();
   private Map<String, String> cbeProperties = new HashMap<>();
+  private Set<Logger> configuredLoggers = new HashSet<>();
 
   // This is the case where the "property file" is actually
   // just the standard input.
@@ -50,7 +50,9 @@ public final class PropertyFileHandler implements Runnable {
   }
 
   public void setProperty(String key, String value) {
-    if (ConsoleBackendRuntimeConfig.isCBEProperty(key)) {
+    if (key.equals("weblogic.remote-console-logging")) {
+      initializeLoggers(value);
+    } else if (ConsoleBackendRuntimeConfig.isCBEProperty(key)) {
       cbeProperties.put(key, value);
     } else {
       setSystemPropertyKeys.add(key);
@@ -60,15 +62,40 @@ public final class PropertyFileHandler implements Runnable {
     }
   }
 
+  private void initializeLoggers(String loggingRules) {
+    for (String rule : loggingRules.split(";")) {
+      String loggerName = rule.substring(0, rule.indexOf('='));
+      String levelString = rule.substring(rule.indexOf('=') + 1);
+      try {
+        Level level = Level.parse(levelString);
+        Logger logger = Logger.getLogger(loggerName);
+        logger.setLevel(level);
+        configuredLoggers.add(logger);
+      } catch (Exception e) {
+        Logger thisLogger = Logger.getLogger(PropertyFileHandler.class.getName());
+        thisLogger.warning(
+          "Bad logger level specified in weblogic.remote-console-logging - " + levelString);
+      }
+    }
+  }
+
   public void clearProperties() {
     cbeProperties.clear();
     for (String key : setSystemPropertyKeys) {
       System.getProperties().remove(key);
     }
+    resetLoggers();
   }
 
   public void initCBEProperties() {
     ConsoleBackendRuntimeConfig.init(cbeProperties);
+  }
+
+  private void resetLoggers() {
+    for (Logger logger : configuredLoggers) {
+      logger.setLevel(null);
+    }
+    configuredLoggers.clear();
   }
 
   private void readPropertyFile() throws IOException {
@@ -93,7 +120,7 @@ public final class PropertyFileHandler implements Runnable {
     }
     // FortifyIssueSuppression Log Forging
     // This source comes from a trusted configuration file
-    Logger.getLogger(PropertyFileHandler.class.getName()).log(FINEST,
+    Logger.getLogger(PropertyFileHandler.class.getName()).log(Level.FINEST,
       "System properties are now: " + java.util.Arrays.asList(System.getProperties()));
   }
 
@@ -106,14 +133,14 @@ public final class PropertyFileHandler implements Runnable {
       Path path = Paths.get(propertyFile.getParent());
       // FortifyIssueSuppression Log Forging
       // The path is our own location
-      Logger.getLogger(PropertyFileHandler.class.getName()).log(FINEST,
+      Logger.getLogger(PropertyFileHandler.class.getName()).log(Level.FINEST,
         "Setting up watch on: " + path);
       path.register(watchService, ENTRY_MODIFY, ENTRY_CREATE, ENTRY_DELETE);
       while (true) {
         WatchKey key = watchService.take();
         for (WatchEvent<?> event : key.pollEvents()) {
           if (event.context().toString().equals(propertyFile.getName())) {
-            Logger.getLogger(PropertyFileHandler.class.getName()).log(FINEST,
+            Logger.getLogger(PropertyFileHandler.class.getName()).log(Level.FINEST,
               "File changed: " + event.context().toString());
             int i = 0;
             try {
@@ -131,7 +158,7 @@ public final class PropertyFileHandler implements Runnable {
         key.reset();
       }
     } catch (Exception e) {
-      Logger.getLogger(PropertyFileHandler.class.getName()).log(WARNING, "Error reading config file", e);
+      Logger.getLogger(PropertyFileHandler.class.getName()).log(Level.WARNING, "Error reading config file", e);
     }
   }
 }

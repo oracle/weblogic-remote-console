@@ -43,6 +43,17 @@ const SettingsEditor = (() => {
     return !dontNeedStoreFile(preferences._preferences);
   }
 
+  const dontNeedKeystoreFile = (preferences) => {
+    return ((!preferences.networking.keyStoreType) || (preferences.networking.keyStoreType === '')) ? true : false;
+  };
+
+  function keyStoreTypeRequiresStore() {
+    // This looks a little weird, but this is how the "hide function" is
+    // invoked in electron-preferences and this is a quick way of sharing
+    // the code.
+    return !dontNeedKeystoreFile(preferences._preferences);
+  }
+
   function load() {
     const path = ConfigJSON.getPath();
     let data = {};
@@ -69,6 +80,15 @@ const SettingsEditor = (() => {
       else if (key === 'javax.net.ssl.trustStorePasswordEncrypted') {
         preferences.value('networking.trustStorePasswordEncrypted', data[key]);
       }
+      else if (key === 'javax.net.ssl.keyStoreType') {
+        preferences.value('networking.keyStoreType', data[key]);
+      }
+      else if (key === 'javax.net.ssl.keyStore') {
+        preferences.value('networking.keyStore', data[key]);
+      }
+      else if (key === 'javax.net.ssl.keyStorePasswordEncrypted') {
+        preferences.value('networking.keyStorePasswordEncrypted', data[key]);
+      }
       else if (key === 'console.connectTimeoutMillis') {
         preferences.value('networking.connectTimeoutMillis', data[key]);
       }
@@ -80,6 +100,13 @@ const SettingsEditor = (() => {
       }
       else if (key === 'console.disableHostnameVerification') {
         preferences.value('networking.disableHostnameVerification', data[key]);
+      }
+      else if (key === 'weblogic.remote-console-logging') {
+        const list = [];
+        for (var rule of data[key].split(';')) {
+          list.push(rule);
+        }
+        preferences.value('logging.logginglist', list);
       }
       else
         otherList.push(`${key}=${data[key]}`);
@@ -113,6 +140,11 @@ const SettingsEditor = (() => {
       addValue(data, 'javax.net.ssl.trustStore', preferences.value('networking.trustStore'));
       addValue(data, 'javax.net.ssl.trustStorePasswordEncrypted', preferences.value('networking.trustStorePasswordEncrypted'));
     }
+    addValue(data, 'javax.net.ssl.keyStoreType', preferences.value('networking.keyStoreType'));
+    if (keyStoreTypeRequiresStore()) {
+      addValue(data, 'javax.net.ssl.keyStore', preferences.value('networking.keyStore'));
+      addValue(data, 'javax.net.ssl.keyStorePasswordEncrypted', preferences.value('networking.keyStorePasswordEncrypted'));
+    }
     addValue(data, 'console.connectTimeoutMillis', preferences.value('networking.connectTimeoutMillis'));
     addValue(data, 'console.readTimeoutMillis', preferences.value('networking.readTimeoutMillis'));
     addValue(data, 'console.disableHostnameVerification', preferences.value('networking.disableHostnameVerification'));
@@ -123,6 +155,16 @@ const SettingsEditor = (() => {
     for (var pair of otherList) {
       data[pair.substring(0, pair.indexOf('='))]= pair.substring(pair.indexOf('=') + 1);
     }
+    const loggingList = preferences.preferences?.logging.logginglist;
+    if (loggingList) {
+      for (var entry of loggingList) {
+        if (data['weblogic.remote-console-logging'])
+          data['weblogic.remote-console-logging'] += ';';
+        else
+          data['weblogic.remote-console-logging'] = '';
+        data['weblogic.remote-console-logging'] += entry;
+      }
+    }
     fs.writeFileSync(path, JSON.stringify(data, null, 4));
     decryptData(data);
     if (configSender)
@@ -130,6 +172,24 @@ const SettingsEditor = (() => {
   }
 
   function valid(showMessage) {
+    const loggingList = preferences.preferences?.logging.logginglist;
+    if (loggingList) {
+      for (var entry of loggingList) {
+        const level = entry.substring(entry.indexOf('=') + 1);
+        const levels = [ "SEVERE", "WARNING", "INFO",
+          "CONFIG", "FINE", "FINER", "FINEST", "ALL", "OFF" ];
+        if (!levels.includes(level)) {
+          if (showMessage) {
+            dialog.showMessageBoxSync(preferences.prefsWindow, {
+              title: `${I18NUtils.get('wrc-electron.menus.settings.logging.error.title')}`,
+              buttons: [`${I18NUtils.get('wrc-electron.common.dismiss')}`],
+              message: `${I18NUtils.get('wrc-electron.menus.settings.logging.error.details')}`
+            });
+          }
+          return false;
+        }
+      }
+    }
     if (!preferences.value('networking.proxy'))
       return true;
     const string =
@@ -254,6 +314,35 @@ const SettingsEditor = (() => {
                       hideFunction: dontNeedStoreFile
                     },
                     {
+                      label: `${I18NUtils.get('wrc-electron.menus.settings.disable-host-name-verification.label')}`,
+                      help: `${I18NUtils.get('wrc-electron.menus.settings.disable-host-name-verification.help')}`,
+                      key: 'disableHostnameVerification',
+                      type: 'radio',
+                      options: [
+                        {label: `${I18NUtils.get('wrc-electron.menus.preferences.no')}`, value: false},
+                        {label: `${I18NUtils.get('wrc-electron.menus.preferences.yes')}`, value: true}
+                      ]
+                    },
+                    {
+                      label: `${I18NUtils.get('wrc-electron.menus.settings.key-store.type.label')}`,
+                      key: 'keyStoreType',
+                      help: `${I18NUtils.get('wrc-electron.menus.settings.key-store.type.help')}`,
+                      type: 'text'
+                    },
+                    {
+                      label: `${I18NUtils.get('wrc-electron.menus.settings.key-store.path.label')}`,
+                      key: 'keyStore',
+                      buttonLabel: `${I18NUtils.get('wrc-electron.menus.settings.key-store.path.button.label')}`,
+                      type: 'file',
+                      hideFunction: dontNeedKeystoreFile
+                    },
+                    {
+                      label: `${I18NUtils.get('wrc-electron.menus.settings.key-store.password.label')}`,
+                      key: 'keyStorePasswordEncrypted',
+                      type: 'secret',
+                      hideFunction: dontNeedKeystoreFile
+                    },
+                    {
                       label: `${I18NUtils.get('wrc-electron.menus.settings.connect-timeout.label')}`,
                       help: `${I18NUtils.get('wrc-electron.menus.settings.connect-timeout.help')}`,
                       key: 'connectTimeoutMillis',
@@ -264,16 +353,6 @@ const SettingsEditor = (() => {
                       help: `${I18NUtils.get('wrc-electron.menus.settings.read-timeout.help')}`,
                       key: 'readTimeoutMillis',
                       type: 'text'
-                    },
-                    {
-                      label: `${I18NUtils.get('wrc-electron.menus.settings.disable-host-name-verification.label')}`,
-                      help: `${I18NUtils.get('wrc-electron.menus.settings.disable-host-name-verification.help')}`,
-                      key: 'disableHostnameVerification',
-                      type: 'radio',
-                      options: [
-                        {label: `${I18NUtils.get('wrc-electron.menus.preferences.no')}`, value: false},
-                        {label: `${I18NUtils.get('wrc-electron.menus.preferences.yes')}`, value: true}
-                      ]
                     },
                     {
                       type: 'button',
@@ -343,8 +422,31 @@ const SettingsEditor = (() => {
                 }
               ]
             }
-          }
-        ]
+          },
+          {
+              id: 'logging',
+              label: `${I18NUtils.get('wrc-electron.menus.settings.section.logging.label')}`,
+              icon: 'preferences',
+              form: {
+                groups: [
+                  {
+                    'fields': [
+                      {
+                        label: `${I18NUtils.get('wrc-electron.menus.settings.logging-list')}`,
+                        help: `${I18NUtils.get('wrc-electron.menus.settings.logging-list.help')}`,
+                        key: 'logginglist',
+                        type: 'list'
+                      },
+                      {
+                        type: 'button',
+                        key: 'save',
+                        buttonLabel: `${I18NUtils.get('wrc-electron.common.save')}`,
+                      }
+                    ]
+                  }
+                ]
+              }
+          }]
       };
       preferences = new ElectronPreferences(preferencesTemplate);
       preferences.on('save', () => {

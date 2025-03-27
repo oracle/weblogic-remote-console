@@ -1,12 +1,6 @@
-# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2025, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
-actions: [
-  ]
-baseTypes: [
-  ]
-derivedTypes: [
-  ]
 descriptionHTML: 'Temporary location while the bean generation is sorted out in build.
   This will be relocated to weblogic.j2ee.descriptor.wl Copyright (c) 2014,2015, by
   Oracle Inc. All Rights Reserved. '

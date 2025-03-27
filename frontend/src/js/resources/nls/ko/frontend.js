@@ -8,6 +8,11 @@ define({
         "value": "애플리케이션 헤더"
       }
     },
+    "buttons": {
+      "logout": {
+        "label": "Logout"
+      }
+    },
     "icons": {
       "navtree": {
         "toggler": {
@@ -1160,6 +1165,9 @@ define({
       },
       "reloadHidden": {
         "value": "현재 {0} 값을 보려면 테이블을 다시 로드합니다."
+      },
+      "noData": {
+        "value": "데이터를 찾을 수 없음."
       }
     }
   },

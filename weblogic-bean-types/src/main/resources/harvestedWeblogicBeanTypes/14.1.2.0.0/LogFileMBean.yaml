@@ -1,16 +1,8 @@
-# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2025, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
-actions: [
-  ]
 baseTypes:
 - weblogic.management.configuration.ConfigurationMBean
-derivedTypes:
-- weblogic.management.configuration.CommonLogMBean
-- weblogic.management.configuration.DataSourceLogFileMBean
-- weblogic.management.configuration.JMSSAFMessageLogFileMBean
-- weblogic.management.configuration.JMSMessageLogFileMBean
-- weblogic.management.configuration.WebServerLogMBean
 descriptionHTML: 'Configures the location, file-rotation criteria, and number of files
   that a WebLogic Server uses to store log messages. The methods in this class configure
   both server and domain log files. '

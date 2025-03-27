@@ -1,4 +1,4 @@
-// Copyright (c) 2021, 2022, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2025, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.providers;
@@ -9,7 +9,7 @@ import javax.json.JsonObjectBuilder;
 
 import weblogic.remoteconsole.common.repodef.LocalizableString;
 import weblogic.remoteconsole.common.repodef.LocalizedConstants;
-import weblogic.remoteconsole.common.utils.StringUtils;
+import weblogic.remoteconsole.common.utils.UrlUtils;
 import weblogic.remoteconsole.server.repo.InvocationContext;
 import weblogic.remoteconsole.server.repo.PageRepo;
 import weblogic.remoteconsole.server.webapp.UriUtils;
@@ -85,7 +85,7 @@ public class Root {
     JsonObjectBuilder ret = Json.createObjectBuilder();
     ret.add("name", name);
     ret.add("label", ic.getLocalizer().localizeString(label));
-    String encodedProviderName = StringUtils.urlEncode(provider.getName());
+    String encodedProviderName = UrlUtils.urlEncode(provider.getName());
     for (String topLevelResource : topLevelResources) {
       ret.add(
         topLevelResource,

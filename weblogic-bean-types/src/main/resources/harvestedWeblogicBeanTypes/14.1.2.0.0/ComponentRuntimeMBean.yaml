@@ -1,21 +1,8 @@
-# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2025, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
-actions: [
-  ]
 baseTypes:
 - weblogic.management.runtime.RuntimeMBean
-derivedTypes:
-- weblogic.management.runtime.JDBCReplayStatisticsRuntimeMBean
-- weblogic.management.runtime.InterceptionComponentRuntimeMBean
-- weblogic.management.runtime.JDBCMultiDataSourceRuntimeMBean
-- weblogic.management.runtime.SCAPojoComponentRuntimeMBean
-- weblogic.management.runtime.SCASpringComponentRuntimeMBean
-- weblogic.management.runtime.JMSComponentRuntimeMBean
-- weblogic.management.runtime.AppClientComponentRuntimeMBean
-- weblogic.management.runtime.ComponentConcurrentRuntimeMBean
-- weblogic.management.runtime.JDBCDataSourceRuntimeMBean
-- weblogic.management.runtime.ConnectorComponentRuntimeMBean
 descriptionHTML: '<p>Base class for all runtime mbeans that provide status of running
   modules.</p> '
 name: weblogic.management.runtime.ComponentRuntimeMBean

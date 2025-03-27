@@ -1,13 +1,8 @@
-# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2025, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
-actions: [
-  ]
 baseTypes:
 - weblogic.j2ee.descriptor.wl.NamedEntityBean
-derivedTypes:
-- weblogic.j2ee.descriptor.wl.ForeignDestinationBean
-- weblogic.j2ee.descriptor.wl.ForeignConnectionFactoryBean
 descriptionHTML: 'This bean represents a foreign entity (one not part of the local
   JNDI naming context) advertised through JNDI. This entity will have a name associated
   with it in its home domain, and a possibly different name in the local domain. '

@@ -12,6 +12,7 @@
     "app/js/i18n-utils.js",
     "app/js/ipcRendererPreload.js",
     "app/js/os-utils.js",
+    "app/js/token-utils.js",
     "app/js/settings-editor.js",
     "app/js/project-management.js",
     "app/js/user-prefs-json.js",
@@ -78,5 +79,11 @@
   "extraFiles": {
     "from": "extraFiles/.",
     "to": "."
+  },
+  "protocols": {
+    "name": "WebLogic Remote Console",
+    "schemes": [
+      "wrc"
+    ]
   }
 }

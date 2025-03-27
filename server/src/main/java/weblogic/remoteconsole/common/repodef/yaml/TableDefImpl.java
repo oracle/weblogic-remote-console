@@ -1,4 +1,4 @@
-// Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+// Copyright (c) 2020, 2025, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef.yaml;
@@ -6,11 +6,11 @@ package weblogic.remoteconsole.common.repodef.yaml;
 import java.util.Collections;
 import java.util.List;
 
+import weblogic.console.utils.StringUtils;
 import weblogic.remoteconsole.common.repodef.PagePath;
 import weblogic.remoteconsole.common.repodef.PagePropertyDef;
 import weblogic.remoteconsole.common.repodef.TableDef;
 import weblogic.remoteconsole.common.repodef.schema.TableDefSource;
-import weblogic.remoteconsole.common.utils.StringUtils;
 
 /**
  * yaml-based implemetation of the TableDef interface
@@ -20,6 +20,7 @@ public class TableDefImpl extends PageDefImpl implements TableDef {
   private List<PagePropertyDef> displayedColumnDefs;
   private List<PagePropertyDefImpl> hiddenColumnDefImpls;
   private List<PagePropertyDef> hiddenColumnDefs;
+  private String getTableRowsMethod;
 
   public TableDefImpl(PageRepoDefImpl pageRepoDefImpl, PagePath pagePath, TableDefSource source) {
     super(pageRepoDefImpl, pagePath, source, "table");
@@ -30,6 +31,7 @@ public class TableDefImpl extends PageDefImpl implements TableDef {
     this.hiddenColumnDefImpls = createPropertyDefImpls(source.getHiddenColumns(), searchSubTypes);
     this.displayedColumnDefs = Collections.unmodifiableList(getDisplayedColumnDefImpls());
     this.hiddenColumnDefs = Collections.unmodifiableList(getHiddenColumnDefImpls());
+    this.getTableRowsMethod = source.getGetTableRowsMethod();
     finishPropertyBasedInitialization();
   }
 
@@ -54,6 +56,11 @@ public class TableDefImpl extends PageDefImpl implements TableDef {
   @Override
   public List<PagePropertyDef> getHiddenColumnDefs() {
     return hiddenColumnDefs;
+  }
+
+  @Override
+  public String getGetTableRowsMethod() {
+    return getTableRowsMethod;
   }
 
   @Override

@@ -1,19 +1,15 @@
-# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2025, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
-actions: [
-  ]
 baseTypes:
-- weblogic.management.security.ImportMBean
-- weblogic.management.security.authorization.PolicyConsumerMBean
-- weblogic.management.security.authorization.PolicyListerMBean
-- weblogic.management.security.authorization.PolicyAuxiliaryMBean
-- weblogic.management.security.ExportMBean
 - weblogic.management.security.authorization.DeployableAuthorizerMBean
+- weblogic.management.security.authorization.PolicyAuxiliaryMBean
+- weblogic.management.security.authorization.PolicyListerMBean
 - weblogic.management.security.authorization.PredicateEditorMBean
+- weblogic.management.security.authorization.PolicyConsumerMBean
 - weblogic.management.security.ApplicationVersionerMBean
-derivedTypes: [
-  ]
+- weblogic.management.security.ImportMBean
+- weblogic.management.security.ExportMBean
 descriptionHTML: '<p>This MBean represents configuration attributes for the WebLogic       Authorization
   provider.</p> '
 name: weblogic.security.providers.authorization.DefaultAuthorizerMBean

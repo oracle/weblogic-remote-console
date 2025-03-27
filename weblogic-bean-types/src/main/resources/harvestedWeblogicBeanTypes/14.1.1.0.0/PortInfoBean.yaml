@@ -1,12 +1,6 @@
-# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2025, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
-actions: [
-  ]
-baseTypes: [
-  ]
-derivedTypes: [
-  ]
 descriptionHTML: ' '
 name: weblogic.j2ee.descriptor.wl.PortInfoBean
 properties:
@@ -16,18 +10,27 @@ properties:
   defaultValue: {
     }
   descriptionHTML: ' '
-  name: StubProperties
+  name: CallProperties
   relationship: containment
   type: weblogic.j2ee.descriptor.wl.PropertyNamevalueBean
 - array: true
   creators:
-  - weblogic.j2ee.descriptor.wl.PropertyNamevalueBean
+  - weblogic.j2ee.descriptor.wl.OperationInfoBean
   defaultValue: {
     }
   descriptionHTML: ' '
-  name: CallProperties
+  name: Operations
   relationship: containment
-  type: weblogic.j2ee.descriptor.wl.PropertyNamevalueBean
+  type: weblogic.j2ee.descriptor.wl.OperationInfoBean
+- array: true
+  creators:
+  - weblogic.j2ee.descriptor.wl.OwsmPolicyBean
+  defaultValue: {
+    }
+  descriptionHTML: ' '
+  name: OwsmPolicy
+  relationship: containment
+  type: weblogic.j2ee.descriptor.wl.OwsmPolicyBean
 - defaultValue: {
     }
   descriptionHTML: ' '
@@ -38,13 +41,13 @@ properties:
   writable: true
 - array: true
   creators:
-  - weblogic.j2ee.descriptor.wl.OwsmPolicyBean
+  - weblogic.j2ee.descriptor.wl.PropertyNamevalueBean
   defaultValue: {
     }
   descriptionHTML: ' '
-  name: OwsmPolicy
+  name: StubProperties
   relationship: containment
-  type: weblogic.j2ee.descriptor.wl.OwsmPolicyBean
+  type: weblogic.j2ee.descriptor.wl.PropertyNamevalueBean
 - creators:
   - weblogic.j2ee.descriptor.wl.WSATConfigBean
   defaultValue: {
@@ -53,12 +56,3 @@ properties:
   name: WSATConfig
   relationship: containment
   type: weblogic.j2ee.descriptor.wl.WSATConfigBean
-- array: true
-  creators:
-  - weblogic.j2ee.descriptor.wl.OperationInfoBean
-  defaultValue: {
-    }
-  descriptionHTML: ' '
-  name: Operations
-  relationship: containment
-  type: weblogic.j2ee.descriptor.wl.OperationInfoBean

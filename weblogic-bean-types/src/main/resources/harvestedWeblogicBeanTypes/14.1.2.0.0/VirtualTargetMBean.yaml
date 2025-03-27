@@ -1,13 +1,9 @@
-# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2025, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
-actions: [
-  ]
 baseTypes:
-- weblogic.management.configuration.TargetMBean
 - weblogic.management.configuration.DeploymentMBean
-derivedTypes:
-- weblogic.management.configuration.AdminVirtualTargetMBean
+- weblogic.management.configuration.TargetMBean
 descriptionHTML: 'This bean represents a target for a resource group in a partition.
   It defines access point to resources, i.e. hostname, port, partition uri path. Moreover,
   it provide configurations for each protocol, for example, http, t3, ssl, iiop etc. '

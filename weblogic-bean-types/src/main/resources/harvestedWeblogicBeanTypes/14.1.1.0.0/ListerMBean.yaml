@@ -1,15 +1,8 @@
-# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2025, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
-actions: [
-  ]
 baseTypes:
 - weblogic.descriptor.SettableBean
-derivedTypes:
-- weblogic.management.security.credentials.PKICredentialMapReaderMBean
-- weblogic.management.security.credentials.UserPasswordCredentialMapReaderMBean
-- weblogic.management.utils.PropertiesListerMBean
-- weblogic.management.utils.NameListerMBean
 descriptionHTML: '<p>The ListerMBean interface provides a general mechanism for returning
   lists.</p>  <p>Derived MBeans extend this interface to add methods that access the
   data of the current object in the list. This is different from the iterator model
@@ -21,5 +14,3 @@ descriptionHTML: '<p>The ListerMBean interface provides a general mechanism for 
   {<br> Foo currentVal = fooLister.getCurrentFoo(cursor);<br> fooLister.advance(cursor);<br>
   }<br> } finally { <br> fooLister.close(cursor); </code></p> '
 name: weblogic.management.utils.ListerMBean
-properties: [
-  ]

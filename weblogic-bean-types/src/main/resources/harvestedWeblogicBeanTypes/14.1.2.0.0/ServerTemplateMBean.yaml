@@ -1,14 +1,10 @@
-# Copyright (c) 2020, 2024, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2025, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
-actions: [
-  ]
 baseTypes:
-- weblogic.management.configuration.ConfigurationPropertiesMBean
 - weblogic.management.configuration.KernelMBean
 - weblogic.management.configuration.TargetMBean
-derivedTypes:
-- weblogic.management.configuration.ServerMBean
+- weblogic.management.configuration.ConfigurationPropertiesMBean
 descriptionHTML: '<p>This class represents a WebLogic Server. A WebLogic Server is
   a Java process that is a container for Java EE applications.</p> '
 name: weblogic.management.configuration.ServerTemplateMBean

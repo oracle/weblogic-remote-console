@@ -1,5 +1,35 @@
-# Copyright (c) 2022, 2024, Oracle and/or its affiliates.
+# Copyright (c) 2022, 2025, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions:
+- name: filter
+  label: Filter
+  actionMethod: weblogic.remoteconsole.customizers.UserGroupMBeanCustomizer.setTableFilter
+  inputForm:
+    customizePageMethod: weblogic.remoteconsole.customizers.UserGroupMBeanCustomizer.customizeFilterActionInputForm
+    introductionHTML: >
+      <p>Use this page to select which users should be displayed.</p>
+    parameters:
+    - name: NameFilter
+  # Repaint the table once after changing the filter:
+  polling:
+    reloadSeconds: 1
+    maxAttempts: 1
+  definition:
+    type: void
+    parameters:
+    - name: NameFilter
+      type: java.lang.String
+      descriptionHTML: >
+          <p>
+            Selects the users based on their name.  Some examples:
+            <ul>
+              <li>* - any name</li>
+              <li>web* - names that start with 'web' (case-insensitive)</li>
+              <li>*web* - names that contain 'web' (case-insensitive)</li>
+              <li>web - names that  equal 'web' (case-insensitive)</li>
+            </ul>
+          </p>
 
 properties:
 - name: Groups

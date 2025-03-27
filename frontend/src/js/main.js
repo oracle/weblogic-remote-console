@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2020, 2024, Oracle and/or its affiliates.
+ * Copyright (c) 2020, 2025, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
@@ -23,9 +23,9 @@
       */
       // injector:mainReleasePaths
           {
-            'ojs': 'libs/oj/17.1.0/debug',
-            'ojL10n': 'libs/oj/17.1.0/ojL10n',
-            'ojtranslations': 'libs/oj/17.1.0/resources',
+            'ojs': 'libs/oj/17.1.1/debug',
+            'ojL10n': 'libs/oj/17.1.1/ojL10n',
+            'ojtranslations': 'libs/oj/17.1.1/resources',
             'knockout': 'libs/knockout/knockout-3.5.1.debug',
             'jquery': 'libs/jquery/jquery-3.6.4',
             'jqueryui-amd': 'libs/jquery/jqueryui-amd-1.13.2',
@@ -72,14 +72,17 @@
  * The console-project-manager.js module is preloaded to trigger the reading of the "wrc-projects"
  * localStorage object.
  */
-require(['ojs/ojcore', 'ojs/ojbootstrap', 'knockout', 'appController', 'ojs/ojrouter', 'wrc-frontend/core/runtime', 'wrc-frontend/microservices/project-management/console-project-manager',
+require(['ojs/ojcore', 'ojs/ojbootstrap', 'ojs/ojconfig', 'ojs/ojcspexpressionevaluator', 'knockout', 'appController', 'ojs/ojrouter', 'wrc-frontend/core/runtime', 'wrc-frontend/microservices/project-management/console-project-manager',
     'ojs/ojknockout', 'ojs/ojnavigationlist'],
-  function (oj, Bootstrap, ko, app, Router, Runtime) {
+  function (oj, Bootstrap, Config, CspExpressionEvaluator, ko, app, Router, Runtime) {
     // this callback gets executed when all required modules are loaded
     Bootstrap.whenDocumentReady().then(
       function() {
 
         function init() {
+          // Set the HTTP Content-Security-Policy expression evaluator
+          Config.setExpressionEvaluator(new CspExpressionEvaluator());
+
           Router.sync()
           .then(() => {
             app.loadModule();

@@ -1,13 +1,8 @@
-# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2025, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
-actions: [
-  ]
 baseTypes:
 - weblogic.management.configuration.TargetInfoMBean
-derivedTypes:
-- weblogic.management.configuration.AppDeploymentMBean
-- weblogic.management.configuration.SystemResourceMBean
 descriptionHTML: '<p>This bean represents a file or archive that is deployed to a
   set of targets in the domain.</p> '
 name: weblogic.management.configuration.BasicDeploymentMBean

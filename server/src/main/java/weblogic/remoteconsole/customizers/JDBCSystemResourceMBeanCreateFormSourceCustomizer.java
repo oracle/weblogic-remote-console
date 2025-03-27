@@ -1,4 +1,4 @@
-// Copyright (c) 2020, 2024, Oracle and/or its affiliates.
+// Copyright (c) 2020, 2025, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.customizers;
@@ -7,12 +7,12 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import weblogic.console.utils.StringUtils;
 import weblogic.remoteconsole.common.repodef.PagePath;
 import weblogic.remoteconsole.common.repodef.schema.BeanPropertyDefCustomizerSource;
 import weblogic.remoteconsole.common.repodef.schema.FormSectionDefSource;
 import weblogic.remoteconsole.common.repodef.schema.LegalValueDefCustomizerSource;
 import weblogic.remoteconsole.common.repodef.schema.PageDefSource;
-import weblogic.remoteconsole.common.utils.StringUtils;
 import weblogic.remoteconsole.jdbc.utils.JDBCDriverAttribute;
 import weblogic.remoteconsole.jdbc.utils.JDBCDriverInfo;
 

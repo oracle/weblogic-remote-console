@@ -1,11 +1,11 @@
-// Copyright (c) 2021, 2023, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2025, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.webapp;
 
+import weblogic.console.utils.Path;
 import weblogic.remoteconsole.common.repodef.PagePath;
-import weblogic.remoteconsole.common.utils.Path;
-import weblogic.remoteconsole.common.utils.StringUtils;
+import weblogic.remoteconsole.common.utils.UrlUtils;
 import weblogic.remoteconsole.server.repo.InvocationContext;
 
 /**
@@ -27,13 +27,13 @@ public class UriUtils {
   }
 
   public static String getBackendRelativeUri(InvocationContext ic, Path connectionRelativePath) {
-    return "/" + getBackendRelativePath(ic, connectionRelativePath).getRelativeUri();
+    return "/" + UrlUtils.pathToRelativeUri(getBackendRelativePath(ic, connectionRelativePath));
   }
 
   private static Path getBackendRelativePath(InvocationContext ic, Path connectionRelativePath) {
     Path path = new Path();
     path.addComponent(API_URI);
-    path.addComponent(StringUtils.urlEncode(ic.getProvider().getName()));
+    path.addComponent(UrlUtils.urlEncode(ic.getProvider().getName()));
     path.addPath(connectionRelativePath);
     return path;
   }

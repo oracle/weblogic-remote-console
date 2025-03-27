@@ -1,0 +1,78 @@
+# Copyright (c) 2020, 2025, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+baseTypes:
+- weblogic.diagnostics.descriptor.WLDFBean
+descriptionHTML: '<p> Defines a timer schedule for use with WLDF policies and actions
+  and Harvester. </p>  <p> Each field uses syntax as defined by the EJB Timer <a href="https://jakarta.ee/specifications/platform/9/apidocs/jakarta/ejb/scheduleexpression">ScheduleExpression</a>
+  class. </p> '
+name: weblogic.diagnostics.descriptor.WLDFScheduleBean
+properties:
+- defaultValue:
+    value:
+      value: '*'
+  descriptionHTML: '<p>Indicates the day of the month for the schedule.</p>  <p>Defaults
+    to "*" (every day).</p> '
+  name: DayOfMonth
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: '*'
+  descriptionHTML: '<p>Indicates the day of the week for the schedule.</p>  <p>Defaults
+    to "*" (every day).</p> '
+  name: DayOfWeek
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: '*'
+  descriptionHTML: '<p>Indicates the hour(s) of the day for the schedule.</p>  <p>Defaults
+    to "*" (every hour).</p> '
+  name: Hour
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: '*/5'
+  descriptionHTML: '<p>Indicates the minutes of the hour for the schedule.</p>  <p>Defaults
+    to every five minutes of the hour.</p> '
+  name: Minute
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: '*'
+  descriptionHTML: '<p>Indicates the month for the schedule.</p>  <p>Defaults to "*"
+    (every month).</p> '
+  name: Month
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: '0'
+  descriptionHTML: '<p>Indicates the second(s) of the minute for the schedule.</p>  <p>Defaults
+    to "0" (at the "0" second of each minute).</p> '
+  name: Second
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: null
+  descriptionHTML: '<p>Indicates the time zone for the schedule.</p>  <p>Defaults
+    to the default time zone for the local VM.</p> '
+  name: Timezone
+  nullable: true
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: '*'
+  descriptionHTML: '<p>Indicates the year for the schedule.</p>  <p>Defaults to "*"
+    (every year).</p> '
+  name: Year
+  type: java.lang.String
+  writable: true
+roles:
+  allowed:
+  - Deployer

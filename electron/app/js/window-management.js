@@ -772,7 +772,7 @@ const WindowManagement = (() => {
         downloadURL = params.feedURL;
       
       if (_params.supportsUpgradeCheck && _params.upgradeCheckAtStart) {
-        AutoUpdateUtils.checkForUpdates()
+        AutoUpdateUtils.checkForUpdatesAtStart()
           .then(result => {
             newVersion = (result !== null ? result.versionInfo.version : null);
             if (newVersion !== _params.version) {
@@ -923,6 +923,10 @@ const WindowManagement = (() => {
       // open url in a browser and prevent default
       shell.openExternal(url);
       return { action: 'deny' };
+    },
+    hideDockIconMacOS: () => {
+      // Ensure the doc icon is hidden for MacOS
+      if (OSUtils.isMacOS()) app.dock.hide();
     }
   };
   

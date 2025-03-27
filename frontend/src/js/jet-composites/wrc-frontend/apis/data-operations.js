@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2021, 2024, Oracle and/or its affiliates.
+ * Copyright (c) 2021, 2025, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
@@ -914,7 +914,38 @@ define([
         }
       },
 
+      logout: {
+        exec: function () {
+          return CbeDataManager.doLogout()
+          .catch(response => {
+            // Just set response.body.data to an empty
+            // array, and convert to a Promise resolve.
+            // Leave everything else in tact, so caller
+            // has everything they need to treat it as
+            // an error condition.
+            response['body'] = { data: {} };
+            return Promise.resolve(response);
+          }); 
+        }
+      },
+      about: {
+
+        get: function () { 
+          return CbeDataManager.about()
+            .catch(response => {
+              // Just set response.body.data to an empty
+              // array, and convert to a Promise resolve.
+              // Leave everything else in tact, so caller
+              // has everything they need to treat it as
+              // an error condition.
+              response['body'] = { data: {} };
+              return Promise.resolve(response);
+            });
+        },
+      },
+
       providers: {
+        
         /**
          *
          * @returns {Promise<{body: {data: *, messages: [*]}} |{failureType: string, failureReason: *}>}

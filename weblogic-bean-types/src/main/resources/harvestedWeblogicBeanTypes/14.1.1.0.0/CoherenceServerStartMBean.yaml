@@ -1,12 +1,8 @@
-# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2025, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
-actions: [
-  ]
 baseTypes:
 - weblogic.management.configuration.ManagedExternalServerStartMBean
-derivedTypes: [
-  ]
 descriptionHTML: '<p>This bean is used to configure the attributes necessary to start
   up a server on a remote machine.</p>  <p>The following describes how NodeManager
   applies each property when starting the Coherence server.</p>  <p>#getJavaVendor</p>
@@ -30,5 +26,3 @@ descriptionHTML: '<p>This bean is used to configure the attributes necessary to 
   command line to start the server, the NodeManager will pass the arguments as options.
   </p> '
 name: weblogic.management.configuration.CoherenceServerStartMBean
-properties: [
-  ]

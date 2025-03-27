@@ -1,15 +1,8 @@
-# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2025, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
-actions: [
-  ]
 baseTypes:
 - weblogic.management.configuration.DeploymentMBean
-derivedTypes:
-- weblogic.management.configuration.ManagedExecutorServiceMBean
-- weblogic.management.configuration.ManagedScheduledExecutorServiceTemplateMBean
-- weblogic.management.configuration.ManagedScheduledExecutorServiceMBean
-- weblogic.management.configuration.ManagedExecutorServiceTemplateMBean
 descriptionHTML: 'Configuration MBean representing common parameters of partition
   level ManagedExecutorService, partition level ManagedScheduledExecutorService, ManagedExecutorService
   template and ManagedScheduledExecutorService template. '

@@ -1,9 +1,16 @@
-// Copyright (c) 2021, 2024, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2025, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef.schema;
 
 import java.util.List;
+
+import weblogic.console.schema.BooleanValue;
+import weblogic.console.schema.ListValue;
+import weblogic.console.schema.StringValue;
+import weblogic.console.schema.Value;
+import weblogic.console.schema.YamlSource;
+import weblogic.console.schema.beaninfo.RolesDefSource;
 
 /**
  * This POJO mirrors the yaml source file format for configuring information
@@ -32,6 +39,7 @@ public class NavTreeNodeDefSource extends YamlSource {
   private Value<Type> type = new Value<>(Type.child);
   private StringValue child = new StringValue();
   private StringValue label = new StringValue();
+  private BooleanValue forceNotExpandable = new BooleanValue();
   private ListValue<NavTreeNodeDefSource> contents = new ListValue<>();
   private Value<RolesDefSource> roles = new Value<>(null);
 
@@ -70,6 +78,17 @@ public class NavTreeNodeDefSource extends YamlSource {
 
   public void setLabel(String value) {
     label.setValue(value);
+  }
+
+  // Whether this node cannot be expanded even if it normally would be expandable.
+  // For example, an AuthenticationProvider's Users child collection should not be expandable.
+  // Must only be specified if 'type' is 'child'
+  public boolean isForceNotExpandable() {
+    return forceNotExpandable.getValue();
+  }
+
+  public void setForceNotExpandable(boolean value) {
+    forceNotExpandable.setValue(value);
   }
 
   // The nav tree nodes directly under this node.

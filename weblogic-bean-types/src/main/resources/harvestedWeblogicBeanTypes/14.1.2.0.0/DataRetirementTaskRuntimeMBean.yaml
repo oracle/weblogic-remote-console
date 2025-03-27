@@ -1,12 +1,8 @@
-# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2025, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
-actions: [
-  ]
 baseTypes:
 - weblogic.management.runtime.TaskRuntimeMBean
-derivedTypes:
-- weblogic.management.runtime.WLDFDataRetirementTaskRuntimeMBean
 descriptionHTML: '<p>Exposes monitoring information about a potentially long-running
   request for the data retirement task. Remote clients, as well as clients running
   within a server, can access this information.</p> '

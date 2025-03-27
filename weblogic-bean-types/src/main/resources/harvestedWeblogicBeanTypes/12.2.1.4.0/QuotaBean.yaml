@@ -1,12 +1,8 @@
-# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2025, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
-actions: [
-  ]
 baseTypes:
 - weblogic.j2ee.descriptor.wl.NamedEntityBean
-derivedTypes: [
-  ]
 descriptionHTML: '<p>Quota beans control the allotment of system resources available
   to destinations. For example, the number of bytes a destination is allowed to store
   can be configured with a QuotaBean.</p> '

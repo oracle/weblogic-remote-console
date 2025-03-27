@@ -1,13 +1,8 @@
-# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2025, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
-actions: [
-  ]
 baseTypes:
 - weblogic.j2ee.descriptor.wl.DestinationBean
-derivedTypes:
-- weblogic.j2ee.descriptor.wl.UniformDistributedTopicBean
-- weblogic.j2ee.descriptor.wl.UniformDistributedQueueBean
 descriptionHTML: '<p>A uniform distributed destination is a distributed destination
   whose members are configured as part of its configuration; since members share the
   same configuration, they are uniform.  There is one member on each JMS Server that
@@ -16,5 +11,3 @@ descriptionHTML: '<p>A uniform distributed destination is a distributed destinat
   be created on each JMS server in the cluster.  Members are created and destroyed
   as the targeting is changed.</p> '
 name: weblogic.j2ee.descriptor.wl.UniformDistributedDestinationBean
-properties: [
-  ]

@@ -1,7 +1,10 @@
-// Copyright (c) 2022, 2024, Oracle and/or its affiliates.
+// Copyright (c) 2022, 2025, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef.schema;
+
+import weblogic.console.schema.StringValue;
+import weblogic.console.schema.YamlSource;
 
 /**
  * This POJO mirrors the yaml source file format for specifying which mbean attribute a property is related to

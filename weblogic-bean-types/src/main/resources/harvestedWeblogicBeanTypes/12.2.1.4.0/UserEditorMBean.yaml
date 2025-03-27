@@ -1,15 +1,10 @@
-# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2025, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
-actions: [
-  ]
 baseTypes:
 - weblogic.management.security.authentication.UserReaderMBean
-- weblogic.management.security.authentication.UserRemoverMBean
 - weblogic.management.security.authentication.UserPasswordEditorMBean
-derivedTypes:
-- weblogic.security.providers.authentication.DefaultAuthenticatorMBean
-- weblogic.security.providers.authentication.SQLAuthenticatorMBean
+- weblogic.management.security.authentication.UserRemoverMBean
 descriptionHTML: '<p>Provides a set of methods for creating, editing, and removing
   users. An Authentication provider MBean can optionally implement this MBean. The
   WebLogic Server Administration Console detects when an Authentication provider implements
@@ -40,5 +35,3 @@ descriptionHTML: '<p>Provides a set of methods for creating, editing, and removi
   .....<br> AuthenticationSecurityHelper.getInstance(providerMBean).validatePassword(userName,password);<br>
   .....</code></p> </li> </ol> '
 name: weblogic.management.security.authentication.UserEditorMBean
-properties: [
-  ]

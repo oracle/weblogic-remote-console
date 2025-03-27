@@ -1,12 +1,8 @@
-# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2025, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
-actions: [
-  ]
 baseTypes:
 - weblogic.j2ee.descriptor.wl.NamedEntityBean
-derivedTypes: [
-  ]
 descriptionHTML: 'Template beans contain default values for destination attributes.
   If a destination defines a template and does not explicitly set the value of an
   attribute, then that attribute will take its value from the defined template. '

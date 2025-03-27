@@ -8,6 +8,11 @@ define({
         "value": "Intestazione applicazione"
       }
     },
+    "buttons": {
+      "logout": {
+        "label": "Logout"
+      }
+    },
     "icons": {
       "navtree": {
         "toggler": {
@@ -1160,6 +1165,9 @@ define({
       },
       "reloadHidden": {
         "value": "Ricaricare la tabella per visualizzare i {0} valori correnti"
+      },
+      "noData": {
+        "value": "Nessun dato trovato."
       }
     }
   },

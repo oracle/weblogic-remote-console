@@ -1,12 +1,8 @@
-# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2025, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
-actions: [
-  ]
 baseTypes:
 - weblogic.management.configuration.CommonLogMBean
-derivedTypes: [
-  ]
 descriptionHTML: '<p>Configures the threshold severity level and filter settings for
   logging output.</p> <p>Specifies whether the server logging is based on a Log4j
   implementation or the default Java Logging APIs.</p> <p>Redirects the JVM stdout
@@ -180,7 +176,11 @@ properties:
     For information about how to configure ODL logging for JDK platform loggers, see
     <a href="http://www.oracle.com/pls/topic/lookup?ctx=fmw122140&amp;id=ASADM215"
     rel="noopener noreferrer" target="_blank">Managing Log Files and Diagnostics Data</a>
-    in <i>Administering Oracle Fusion Middleware</i>.</li> </ul> '
+    in <i>Administering Oracle Fusion Middleware</i>.</li> <li>As of release 14.1.2.0,
+    one may also scope these logger criteria to a particular application context.  By
+    specifyng app-name:logger-name, instead of simply logger-name, one is saying that
+    log messages should only appear for logger-name when operating in the context
+    of app-name (as in, operating on a thread with the context of app-name)</li> </ul> '
   name: PlatformLoggerLevels
   type: java.util.Properties
   writable: true

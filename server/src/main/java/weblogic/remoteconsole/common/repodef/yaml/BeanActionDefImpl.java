@@ -1,4 +1,4 @@
-// Copyright (c) 2021, 2023, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2025, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef.yaml;
@@ -8,17 +8,17 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
+import weblogic.console.schema.beaninfo.BeanActionDefSource;
+import weblogic.console.schema.beaninfo.BeanActionParamDefSource;
+import weblogic.console.schema.beaninfo.BeanTypeDefSource;
+import weblogic.console.utils.Path;
+import weblogic.console.utils.StringUtils;
 import weblogic.remoteconsole.common.repodef.BeanActionDef;
 import weblogic.remoteconsole.common.repodef.BeanActionParamDef;
 import weblogic.remoteconsole.common.repodef.BeanRepoDef;
 import weblogic.remoteconsole.common.repodef.BeanTypeDef;
 import weblogic.remoteconsole.common.repodef.schema.BeanActionDefCustomizerSource;
-import weblogic.remoteconsole.common.repodef.schema.BeanActionDefSource;
 import weblogic.remoteconsole.common.repodef.schema.BeanActionParamDefCustomizerSource;
-import weblogic.remoteconsole.common.repodef.schema.BeanActionParamDefSource;
-import weblogic.remoteconsole.common.repodef.schema.BeanTypeDefSource;
-import weblogic.remoteconsole.common.utils.Path;
-import weblogic.remoteconsole.common.utils.StringUtils;
 
 /**
  * yaml-based implemetation of the BeanActionDef interface

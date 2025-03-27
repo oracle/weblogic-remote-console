@@ -1,4 +1,4 @@
-/*! Copyright (c) 2020, 2024, Oracle and/or its affiliates. All rights reserved. */
+/*! Copyright (c) 2020, 2025, Oracle and/or its affiliates. All rights reserved. */
 @import url('../js/jet-composites/wrc-frontend/1.0.0/css/tool.css');
 
 :root {
@@ -199,11 +199,26 @@ footer {
   margin: 0 0.188rem 0 0.313rem;
 }
 
-div#message-line-container {
+div#header-control-buttons > a > span
+{
+  color: var(--content-area-header-title-color);
+}
+
+div#message-line-container
+{
   font-size: .92em;          /* 11pt;*/
   margin: 0;
   padding: 0.313rem 0.313rem; /* 5px 5px; */
   width: 100%;
+  overflow-wrap: break-word;
+}
+
+div#header-control-buttons
+{
+  font-size: .92em;          /* 11pt;*/
+  margin: 0.188rem 1.25rem 0 4rem;
+  height: var(--branding-area-header-iconbar-height);
+  padding: 0.313rem 0.313rem; /* 5px 5px; */
   overflow-wrap: break-word;
 }
 
@@ -216,8 +231,7 @@ div#message-line-container {
 }
 
 .cfe-message-line-details-button > a,
-.cfe-message-line-link-button > a
-{
+.cfe-message-line-link-button > a {
   border: 1px solid var(--message-line-link-border-color);
   border-radius: .625rem;
   margin-right: 0.313rem;
@@ -225,11 +239,28 @@ div#message-line-container {
   text-align: center;
 }
 
+.cfe-logout-button > a {
+  border: 1px solid var(--message-line-link-border-color);
+  border-radius: .625rem;
+  margin-right: 0.313;
+  padding: 0 .625rem .188rem .625rem;
+  text-align: center;
+}
+
+.cfe-logout-button > a:hover,
+.cfe-logout-button > a:focus-visible {
+  text-decoration: none;
+  outline: 0px solid var(--accessibility-focus-visible-border-color);
+  outline-offset: 0px;
+  border-radius: .625rem;
+}
+
 .cfe-message-line-details-button:hover,
 .cfe-message-line-details-button > a:focus-visible,
 .cfe-message-line-link-button:hover,
-.cfe-message-line-link-button > a:focus-visible
-{
+.cfe-message-line-link-button > a:focus-visible,
+.cfe-logout-button:hover,
+.cfe-logout-button > a:focus-visible {
   outline: 2px solid var(--accessibility-focus-visible-border-color);
   outline-offset: -2px;
   border-radius: .625rem;
@@ -273,11 +304,16 @@ div[data-severity="error"] {
 div#message-line-container div a:hover,
 div#message-line-container div a:active,
 div#message-line-container div a:focus
+div#header-control-buttons div a:hover,
+div#header-control-buttons div a:active,
+div#header-control-buttons div a:focus
+
 {
   text-decoration: none;
 }
 
 div#message-line-container div a span
+div#header-control-buttons div a span
 {
   font-size: 0.92em;
   font-weight: 500;

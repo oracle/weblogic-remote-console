@@ -1,20 +1,8 @@
-# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2025, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
-actions: [
-  ]
 baseTypes:
 - weblogic.management.configuration.ConfigurationMBean
-derivedTypes:
-- weblogic.management.configuration.ClusterMBean
-- weblogic.management.configuration.MigratableTargetMBean
-- weblogic.management.configuration.ServerTemplateMBean
-- weblogic.management.configuration.VirtualTargetMBean
-- weblogic.management.configuration.SAFAgentMBean
-- weblogic.management.configuration.VirtualHostMBean
-- weblogic.management.configuration.JMSServerMBean
 descriptionHTML: 'A tagging interface that designates a class as a target for deployment
   of a AppDeploymentMBean. '
 name: weblogic.management.configuration.TargetMBean
-properties: [
-  ]

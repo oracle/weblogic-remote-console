@@ -1,4 +1,4 @@
-# Copyright (c) 2020, 2024, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2025, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 introductionHTML: >
   Use this page to manage all the server debug flags.
@@ -165,7 +165,6 @@ properties:
 - name: ServerDebug.DebugElasticActions
 - name: ServerDebug.DebugElasticServices
 - name: ServerDebug.DebugEmbeddedLDAP
-- name: ServerDebug.DebugEmbeddedLDAPLogLevel
 - name: ServerDebug.DebugEmbeddedLDAPLogToConsole
 - name: ServerDebug.DebugEmbeddedLDAPWriteOverrideProps
 - name: ServerDebug.DebugExpressionBeanLocalizer

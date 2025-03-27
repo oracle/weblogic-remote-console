@@ -1,4 +1,4 @@
-// Copyright (c) 2022, 2024, Oracle and/or its affiliates.
+// Copyright (c) 2022, 2025, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.customizers;
@@ -8,11 +8,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
+import weblogic.console.utils.Path;
+import weblogic.console.utils.StringUtils;
 import weblogic.remoteconsole.common.repodef.LocalizedConstants;
 import weblogic.remoteconsole.common.repodef.PageDef;
 import weblogic.remoteconsole.common.repodef.PagePropertyDef;
-import weblogic.remoteconsole.common.utils.Path;
-import weblogic.remoteconsole.common.utils.StringUtils;
+import weblogic.remoteconsole.common.utils.UrlUtils;
 import weblogic.remoteconsole.server.repo.BeanTreePath;
 import weblogic.remoteconsole.server.repo.DashboardManager;
 import weblogic.remoteconsole.server.repo.FilteringDashboard;
@@ -149,7 +150,7 @@ public class FilteringDashboardMBeanCustomizer {
     page.setBackendRelativePDJURI(
       page.getBackendRelativePDJURI()
       //+ "&" + FilteringDashboardDefManager.computePathQueryParam(btpTemplate)
-      + "&" + StringUtils.computeQueryParam("dashboard", dashboard.getName())
+      + "&" + UrlUtils.computeQueryParam("dashboard", dashboard.getName())
     );
     // Sort the returned beans by the names in their bean tree paths, in reverse order.
     // For example, if the matching beans are:

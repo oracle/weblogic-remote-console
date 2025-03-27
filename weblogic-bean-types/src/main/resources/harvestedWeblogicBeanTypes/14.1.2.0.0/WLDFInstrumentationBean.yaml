@@ -1,12 +1,8 @@
-# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2025, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
-actions: [
-  ]
 baseTypes:
 - weblogic.diagnostics.descriptor.WLDFBean
-derivedTypes: [
-  ]
 descriptionHTML: '<p>Use this interface to configure server-scope and application-scope
   instrumentation for diagnostic monitors that will execute diagnostic code at selected
   locations in server or application code.</p> '

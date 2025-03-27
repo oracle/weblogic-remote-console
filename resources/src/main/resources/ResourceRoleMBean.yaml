@@ -1,22 +1,9 @@
-# Copyright (c) 2022, 2023, Oracle and/or its affiliates.
+# Copyright (c) 2022, 2025, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 name: weblogic.management.security.authorization.ResourceRoleMBean
 baseTypes:
 - weblogic.management.WebLogicMBean
-derivedTypes:
-- weblogic.management.security.authorization.AppDeploymentRoleMBean
-- weblogic.management.security.authorization.CoherenceCacheRoleMBean
-- weblogic.management.security.authorization.CoherenceServiceRoleMBean
-- weblogic.management.security.authorization.DomainRoleMBean
-- weblogic.management.security.authorization.GlobalRoleMBean
-- weblogic.management.security.authorization.JDBCSystemResourceRoleMBean
-- weblogic.management.security.authorization.JMSSystemResourceRoleMBean
-- weblogic.management.security.authorization.QueueRoleBean
-- weblogic.management.security.authorization.ServerRoleBean
-- weblogic.management.security.authorization.TopicRoleBean
-- weblogic.management.security.authorization.UniformDistributedQueueRoleBean
-- weblogic.management.security.authorization.UniformDistributedTopicRoleBean
 properties:
 - name: Name
   descriptionHTML: "<p>The name of this role.</p>"

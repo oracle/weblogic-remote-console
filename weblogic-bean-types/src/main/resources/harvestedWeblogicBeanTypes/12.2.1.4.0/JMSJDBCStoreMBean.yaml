@@ -1,18 +1,12 @@
-# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2025, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
-actions: [
-  ]
 baseTypes:
 - weblogic.management.configuration.JMSStoreMBean
 - weblogic.management.configuration.GenericJDBCStoreMBean
-derivedTypes: [
-  ]
 descriptionHTML: 'This class represents a JMS JDBC store for storing persistent messages
   and durable subscribers in a JDBC-accessible database. '
 name: weblogic.management.configuration.JMSJDBCStoreMBean
-properties: [
-  ]
 roles:
   allowed:
   - Deployer

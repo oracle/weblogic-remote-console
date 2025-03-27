@@ -1,21 +1,8 @@
-# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2025, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
-actions: [
-  ]
 baseTypes:
 - weblogic.management.security.ProviderMBean
-derivedTypes:
-- weblogic.security.providers.xacml.authorization.XACMLAuthorizerMBean
-- weblogic.security.providers.saml.SAMLCredentialMapperV2MBean
-- weblogic.security.providers.xacml.authorization.XACMLRoleMapperMBean
-- weblogic.security.providers.authorization.DefaultRoleMapperMBean
-- weblogic.security.providers.authorization.DefaultAuthorizerMBean
-- weblogic.security.providers.credentials.DefaultCredentialMapperMBean
-- weblogic.security.providers.credentials.PKICredentialMapperMBean
-- com.bea.security.saml2.providers.SAML2CredentialMapperMBean
 descriptionHTML: 'The SSPI MBean that security providers extend to indicate that the
   provider supports versionable applications. '
 name: weblogic.management.security.ApplicationVersionerMBean
-properties: [
-  ]

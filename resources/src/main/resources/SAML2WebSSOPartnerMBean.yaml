@@ -1,14 +1,10 @@
-# Copyright (c) 2023, Oracle and/or its affiliates.
+# Copyright (c) 2023, 2025, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 name: weblogic.security.providers.saml2.SAML2WebSSOPartnerMBean
 baseTypes:
 - weblogic.security.providers.saml2.SAML2BindingClientPartnerMBean
 - weblogic.security.providers.saml2.SAML2MetadataPartnerMBean
-derivedTypes:
-- weblogic.security.providers.saml2.SAML2WebSSOIdPPartner
-- weblogic.security.providers.saml2.SAML2WebSSOSPPartner
-
 properties:
 - name: ArtifactBindingPostForm
   type: java.lang.String

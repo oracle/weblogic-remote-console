@@ -1,14 +1,10 @@
-# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2025, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
-actions: [
-  ]
 baseTypes:
-- weblogic.management.security.authentication.UserReaderMBean
 - weblogic.security.providers.authentication.DBMSAuthenticatorMBean
+- weblogic.management.security.authentication.UserReaderMBean
 - weblogic.management.security.authentication.GroupReaderMBean
-derivedTypes:
-- weblogic.security.providers.authentication.SQLAuthenticatorMBean
 descriptionHTML: '<p>This MBean contains configuration information for the Read-Only
   SQL       Authentication provider.</p> '
 name: weblogic.security.providers.authentication.ReadOnlySQLAuthenticatorMBean

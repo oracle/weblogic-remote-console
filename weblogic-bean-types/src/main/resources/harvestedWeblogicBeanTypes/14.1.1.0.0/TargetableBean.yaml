@@ -1,15 +1,8 @@
-# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2025, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
-actions: [
-  ]
 baseTypes:
 - weblogic.j2ee.descriptor.wl.NamedEntityBean
-derivedTypes:
-- weblogic.j2ee.descriptor.wl.JMSConnectionFactoryBean
-- weblogic.j2ee.descriptor.wl.SAFImportedDestinationsBean
-- weblogic.j2ee.descriptor.wl.ForeignServerBean
-- weblogic.j2ee.descriptor.wl.DestinationBean
 descriptionHTML: 'All JMS beans that can be targeted extend the targetable bean.  It
   represents an entity that may be targeted at one or more entities in the domain. '
 name: weblogic.j2ee.descriptor.wl.TargetableBean

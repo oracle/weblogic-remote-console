@@ -1,13 +1,6 @@
-# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2025, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
-actions: [
-  ]
-baseTypes: [
-  ]
-derivedTypes:
-- weblogic.management.runtime.RuntimeMBean
-- weblogic.management.configuration.ConfigurationMBean
 descriptionHTML: '<p>The super interface for all WebLogic Server MBeans.</p>  <p>You
   can use WebLogic Server MBeans to configure, monitor, and manage WebLogic Server
   resources through JMX.</p>  <p>This MBean, and therefore all WebLogic Server MBeans,
@@ -50,11 +43,6 @@ properties:
   type: weblogic.management.WebLogicObjectName
 - defaultValue: {
     }
-  descriptionHTML: '<p>Returns the type of the MBean.</p> '
-  name: Type
-  type: java.lang.String
-- defaultValue: {
-    }
   deprecated: ' '
   descriptionHTML: '<p>Returns false if the the MBean represented by this object has
     been unregistered.</p> '
@@ -62,3 +50,8 @@ properties:
   obsolete: 9.0.0.0
   supported: false
   type: boolean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Returns the type of the MBean.</p> '
+  name: Type
+  type: java.lang.String

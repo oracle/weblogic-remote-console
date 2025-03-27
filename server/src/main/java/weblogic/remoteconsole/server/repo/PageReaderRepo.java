@@ -1,4 +1,4 @@
-// Copyright (c) 2021, 2024, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2025, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.repo;
@@ -8,12 +8,12 @@ import java.lang.reflect.Type;
 import java.util.List;
 import java.util.logging.Logger;
 
+import weblogic.console.utils.StringUtils;
 import weblogic.remoteconsole.common.repodef.PageActionDef;
 import weblogic.remoteconsole.common.repodef.PageDef;
 import weblogic.remoteconsole.common.repodef.PageRepoDef;
 import weblogic.remoteconsole.common.repodef.SlicePagePath;
 import weblogic.remoteconsole.common.utils.CustomizerInvocationUtils;
-import weblogic.remoteconsole.common.utils.StringUtils;
 
 /**
  * This class manages reading a bean tree's pages (invoking actions too)

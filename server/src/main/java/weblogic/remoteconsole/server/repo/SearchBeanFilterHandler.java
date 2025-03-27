@@ -1,4 +1,4 @@
-// Copyright (c) 2022, Oracle Corporation and/or its affiliates.
+// Copyright (c) 2022, 2025, Oracle Corporation and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.repo;
@@ -8,9 +8,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import weblogic.console.utils.StringUtils;
 import weblogic.remoteconsole.common.repodef.BeanChildDef;
 import weblogic.remoteconsole.common.repodef.PagePropertyDef;
-import weblogic.remoteconsole.common.utils.StringUtils;
 import weblogic.remoteconsole.server.repo.SearchBeanFilter.IncludeInResults;
 
 /**

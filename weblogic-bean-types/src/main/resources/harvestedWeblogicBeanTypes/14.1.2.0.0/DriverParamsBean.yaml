@@ -1,30 +1,9 @@
-# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2025, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
-actions: [
-  ]
-baseTypes: [
-  ]
-derivedTypes: [
-  ]
 descriptionHTML: ' '
 name: weblogic.j2ee.descriptor.wl.DriverParamsBean
 properties:
-- creators:
-  - weblogic.j2ee.descriptor.wl.StatementBean
-  defaultValue: {
-    }
-  descriptionHTML: ' '
-  name: Statement
-  relationship: containment
-  type: weblogic.j2ee.descriptor.wl.StatementBean
-- defaultValue: {
-    }
-  descriptionHTML: ' '
-  name: RowPrefetchEnabled
-  restartNeeded: true
-  type: boolean
-  writable: true
 - creators:
   - weblogic.j2ee.descriptor.wl.PreparedStatementBean
   defaultValue: {
@@ -36,15 +15,30 @@ properties:
 - defaultValue: {
     }
   descriptionHTML: ' '
-  name: StreamChunkSize
+  name: RowPrefetchEnabled
   restartNeeded: true
-  type: int
+  type: boolean
   writable: true
 - defaultValue:
     value:
       value: 48
   descriptionHTML: ' '
   name: RowPrefetchSize
+  restartNeeded: true
+  type: int
+  writable: true
+- creators:
+  - weblogic.j2ee.descriptor.wl.StatementBean
+  defaultValue: {
+    }
+  descriptionHTML: ' '
+  name: Statement
+  relationship: containment
+  type: weblogic.j2ee.descriptor.wl.StatementBean
+- defaultValue: {
+    }
+  descriptionHTML: ' '
+  name: StreamChunkSize
   restartNeeded: true
   type: int
   writable: true

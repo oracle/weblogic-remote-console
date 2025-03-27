@@ -1,4 +1,4 @@
-// Copyright (c) 2021, 2024, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2025, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef.yaml;
@@ -8,6 +8,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import weblogic.console.schema.YamlSource;
+import weblogic.console.schema.beaninfo.BeanActionDefSource;
+import weblogic.console.schema.beaninfo.BeanPropertyDefSource;
+import weblogic.console.schema.beaninfo.BeanTypeDefSource;
+import weblogic.console.utils.StringUtils;
 import weblogic.remoteconsole.common.repodef.BeanRepoDef;
 import weblogic.remoteconsole.common.repodef.BeanTypeDef;
 import weblogic.remoteconsole.common.repodef.CreateFormPagePath;
@@ -15,14 +20,11 @@ import weblogic.remoteconsole.common.repodef.PagePath;
 import weblogic.remoteconsole.common.repodef.PagesPath;
 import weblogic.remoteconsole.common.repodef.SlicePagePath;
 import weblogic.remoteconsole.common.repodef.TablePagePath;
-import weblogic.remoteconsole.common.repodef.schema.BeanActionDefSource;
 import weblogic.remoteconsole.common.repodef.schema.BeanChildDefCustomizerSource;
 import weblogic.remoteconsole.common.repodef.schema.BeanPropertyDefCustomizerSource;
-import weblogic.remoteconsole.common.repodef.schema.BeanPropertyDefSource;
 import weblogic.remoteconsole.common.repodef.schema.BeanTypeDefCustomizerExtensionSource;
 import weblogic.remoteconsole.common.repodef.schema.BeanTypeDefCustomizerSource;
 import weblogic.remoteconsole.common.repodef.schema.BeanTypeDefExtensionSource;
-import weblogic.remoteconsole.common.repodef.schema.BeanTypeDefSource;
 import weblogic.remoteconsole.common.repodef.schema.CreateFormDefSource;
 import weblogic.remoteconsole.common.repodef.schema.LinksDefSource;
 import weblogic.remoteconsole.common.repodef.schema.NavTreeDefExtensionSource;
@@ -34,8 +36,6 @@ import weblogic.remoteconsole.common.repodef.schema.SliceTableDefSource;
 import weblogic.remoteconsole.common.repodef.schema.SlicesDefSource;
 import weblogic.remoteconsole.common.repodef.schema.SubTypeDefSource;
 import weblogic.remoteconsole.common.repodef.schema.TableDefSource;
-import weblogic.remoteconsole.common.repodef.schema.YamlSource;
-import weblogic.remoteconsole.common.utils.StringUtils;
 
 /**
  * Utilities to help read yaml files for yaml-based page and bean repo defs.

@@ -1,23 +1,19 @@
-# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2025, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
-actions: [
-  ]
 baseTypes:
-- weblogic.management.security.authentication.GroupEditorMBean
 - weblogic.security.providers.authentication.LoginExceptionPropagatorMBean
-- weblogic.management.security.ImportMBean
-- weblogic.management.security.authentication.IdentityDomainAuthenticatorMBean
 - weblogic.management.security.authentication.UserEditorMBean
-- weblogic.management.security.authentication.GroupUserListerMBean
-- weblogic.management.security.authentication.MemberGroupListerMBean
-- weblogic.management.security.ExportMBean
+- weblogic.management.security.authentication.GroupEditorMBean
 - weblogic.management.security.authentication.GroupMemberListerMBean
-- weblogic.management.security.authentication.UserAttributeEditorMBean
+- weblogic.management.security.authentication.MemberGroupListerMBean
+- weblogic.management.security.authentication.GroupUserListerMBean
+- weblogic.management.security.ImportMBean
+- weblogic.management.security.ExportMBean
 - weblogic.management.security.authentication.GroupMembershipHierarchyCacheMBean
+- weblogic.management.security.authentication.UserAttributeEditorMBean
+- weblogic.management.security.authentication.IdentityDomainAuthenticatorMBean
 - weblogic.management.security.authentication.MultiIdentityDomainAuthenticatorMBean
-derivedTypes: [
-  ]
 descriptionHTML: '<p>The MBean that represents configuration attributes for the WebLogic       Authentication
   provider. The WebLogic Authentication provider has       methods to edit, list,
   and manage users, groups, and group membership.       User and group information

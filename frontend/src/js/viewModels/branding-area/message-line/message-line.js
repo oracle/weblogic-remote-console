@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2023, 2024, Oracle and/or its affiliates.
+ * Copyright (c) 2023, 2025, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
@@ -161,7 +161,7 @@ define([
           return Math.floor(Math.random() * (max - min + 1)) + min;
         }
 /*
-        href: 'https://oracle.github.io/weblogic-remote-console/reference/troubleshoot/'
+        href: 'https://oracle.github.io/weblogic-remote-console/troubleshoot-weblogic-remote-console/'
               resourceData: `/api/${Runtime.getDataProviderId()}/domainRuntime/data/DomainRuntime/DomainSecurityRuntime?slice=SecurityWarnings`
 */
         const messageLines = [

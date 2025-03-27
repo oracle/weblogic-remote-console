@@ -49,6 +49,7 @@ frontend/electron-test/newWDTModelTokenFile.yml
 client.log.*
 bin/*
 weblogic-bean-info-harvester/build-*
+sample-security-providers/buildout
 run/work
 fortify-output/**
 owasp-output/**

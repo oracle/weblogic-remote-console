@@ -1,4 +1,4 @@
-// Copyright (c) 2021, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2025, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.webapp;
@@ -9,7 +9,7 @@ import javax.json.JsonValue;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 
-import weblogic.remoteconsole.common.utils.StringUtils;
+import weblogic.console.utils.StringUtils;
 
 /**
  * If thrown on the request code path, this exception will send back the
