@@ -1,12 +1,8 @@
-# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2025, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
-actions: [
-  ]
 baseTypes:
 - weblogic.management.runtime.ComponentRuntimeMBean
-derivedTypes: [
-  ]
 descriptionHTML: '<p>Generates notifications about the deployment state of resource
   adapters. (Each resource adapter is represented by an instance of weblogic.management.configuration.ConnectorComponentMBean.)</p>  <p>In
   2-phase deployment, if a resource adapter''s state is <code>PREPARED</code> then

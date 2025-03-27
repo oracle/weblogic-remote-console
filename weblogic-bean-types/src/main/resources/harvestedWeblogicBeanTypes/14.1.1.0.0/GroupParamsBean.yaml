@@ -1,12 +1,8 @@
-# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2025, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
-actions: [
-  ]
 baseTypes:
 - weblogic.descriptor.SettableBean
-derivedTypes: [
-  ]
 descriptionHTML: 'The group params bean represents items that may be templated based
   on the sub-deployment of the host DestinationBean.  While many attributes of a Destination
   can be templated regardless of where the Destination is targeted, others cannot.  Those

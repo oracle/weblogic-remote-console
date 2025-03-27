@@ -1,12 +1,8 @@
-# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2025, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
-actions: [
-  ]
 baseTypes:
 - weblogic.management.runtime.RuntimeMBean
-derivedTypes: [
-  ]
 descriptionHTML: 'This interface provides functionality to activate/deactivate dynamic
   debug patches without requiring server restart. It is assummed that the WLDF instrumentation
   agent is enabled. This is an internal interface. '

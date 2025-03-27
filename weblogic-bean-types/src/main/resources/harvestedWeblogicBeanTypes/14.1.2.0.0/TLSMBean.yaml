@@ -1,12 +1,8 @@
-# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2025, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
-actions: [
-  ]
 baseTypes:
 - weblogic.management.configuration.ConfigurationMBean
-derivedTypes: [
-  ]
 descriptionHTML: '<p>A <code>TLSMBean</code> contains SSL/TLS connection parameters
   and may be organized in a user-defined inheritance hierarchy and referenced by name.</p>  TODO:
   since 7.0.0.0 TODO: delegateBean TODO: validator TLSValidator.validateTLS '

@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+ * Copyright (c) 2020, 2025, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
@@ -11,7 +11,7 @@
  * Module used to manage CBE's connection to a WebLogic REST API endpoint.
  * @module
  */
-define(['wrc-frontend/core/runtime', 'wrc-frontend/apis/data-operations', 'wrc-frontend/apis/message-displaying', 'wrc-frontend/core/cbe-types', 'wrc-frontend/core/types', 'wrc-frontend/core/cfe-errors', 'wrc-frontend/core/utils', 'ojs/ojlogger' ],
+define(['wrc-frontend/core/runtime', 'wrc-frontend/apis/data-operations', 'wrc-frontend/apis/message-displaying', 'wrc-frontend/core/cbe-types', 'wrc-frontend/core/types', 'wrc-frontend/core/cfe-errors', 'wrc-frontend/core/utils', 'ojs/ojlogger'],
   function(Runtime, DataOperations, MessageDisplaying, CbeTypes, CoreTypes, CoreErrors, CoreUtils, Logger){
     const i18n = {
       messages: {

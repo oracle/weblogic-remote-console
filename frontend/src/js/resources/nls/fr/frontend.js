@@ -8,6 +8,11 @@ define({
         "value": "En-tête d'application"
       }
     },
+    "buttons": {
+      "logout": {
+        "label": "Logout"
+      }
+    },
     "icons": {
       "navtree": {
         "toggler": {
@@ -1160,6 +1165,9 @@ define({
       },
       "reloadHidden": {
         "value": "Recharger la table pour voir les valeurs {0} en cours"
+      },
+      "noData": {
+        "value": "Données introuvables."
       }
     }
   },

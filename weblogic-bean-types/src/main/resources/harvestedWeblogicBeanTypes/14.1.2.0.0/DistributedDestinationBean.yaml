@@ -1,13 +1,8 @@
-# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2025, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
-actions: [
-  ]
 baseTypes:
 - weblogic.j2ee.descriptor.wl.NamedEntityBean
-derivedTypes:
-- weblogic.j2ee.descriptor.wl.DistributedQueueBean
-- weblogic.j2ee.descriptor.wl.DistributedTopicBean
 descriptionHTML: 'This bean contains all the attributes of distributed destinations
   that are common between distributed queues and distributed topics. '
 name: weblogic.j2ee.descriptor.wl.DistributedDestinationBean

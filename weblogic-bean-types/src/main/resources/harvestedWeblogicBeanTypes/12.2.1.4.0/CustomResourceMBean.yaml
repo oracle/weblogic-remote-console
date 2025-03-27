@@ -1,24 +1,13 @@
-# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2025, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
-actions: [
-  ]
 baseTypes:
 - weblogic.management.configuration.SystemResourceMBean
-derivedTypes: [
-  ]
 descriptionHTML: '<p>A CustomResource is an untyped SystemResource for which creator
   of the bean defines the name of the class that will be used when the resource is
   deployed on the managed server.</p> '
 name: weblogic.management.configuration.CustomResourceMBean
 properties:
-- defaultValue: {
-    }
-  descriptionHTML: ' '
-  name: CustomResource
-  relationship: containment
-  transient: true
-  type: weblogic.descriptor.DescriptorBean
 - defaultValue: {
     }
   descriptionHTML: '<p>Returns the interface of the bean that is returned by the #getResource

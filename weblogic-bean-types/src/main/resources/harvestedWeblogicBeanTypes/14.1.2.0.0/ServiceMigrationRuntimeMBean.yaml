@@ -1,12 +1,8 @@
-# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2025, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
-actions: [
-  ]
 baseTypes:
 - weblogic.management.runtime.RuntimeMBean
-derivedTypes: [
-  ]
 descriptionHTML: 'ServiceMigrationRuntimeMBean provides runtime monitoring information
   about the past migrations performed by this server as the cluster master. If this
   server was never the cluster master then no information would be available. This

@@ -18,6 +18,7 @@ public class CustomTableDef implements TableDef {
   private List<PagePropertyDef> displayedColumnDefs = new ArrayList<>();
   private List<PagePropertyDef> hiddenColumnDefs = new ArrayList<>();
   private List<PagePropertyDef> allPropertyDefs = new ArrayList<>();
+  private String getTableRowsMethod;
 
   public CustomTableDef() {
   }
@@ -26,6 +27,7 @@ public class CustomTableDef implements TableDef {
     pageDef = new CustomPageDef(toClone);
     getDisplayedColumnDefs().addAll(ListUtils.nonNull(toClone.getDisplayedColumnDefs()));
     getHiddenColumnDefs().addAll(ListUtils.nonNull(toClone.getHiddenColumnDefs()));
+    setGetTableRowsMethod(toClone.getGetTableRowsMethod());
     computeAllPropertyDefs();
   }
 
@@ -68,6 +70,20 @@ public class CustomTableDef implements TableDef {
     allPropertyDefs.clear();
     allPropertyDefs.addAll(getDisplayedColumnDefs());
     allPropertyDefs.addAll(getHiddenColumnDefs());
+  }
+
+  @Override
+  public String getGetTableRowsMethod() {
+    return getTableRowsMethod;
+  }
+
+  public void setGetTableRowsMethod(String val) {
+    getTableRowsMethod = val;
+  }
+
+  public CustomTableDef getTableRowsMethod(String val) {
+    setGetTableRowsMethod(val);
+    return this;
   }
 
   @Override

@@ -1,0 +1,220 @@
+# Copyright (c) 2020, 2025, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+baseTypes:
+- weblogic.management.configuration.PersistentStoreMBean
+descriptionHTML: '<p>Defines an instance of a Replicated Store.</p>  <p>A WebLogic
+  Replicated Store is a high performance storage option for Exalogic hosted Weblogic
+  Messaging Services and is an alternative to WebLogic Server''s File and JDBC persistent
+  storage options. Replicated stores depend on Exalogic replicated memory that is
+  managed by a separately administered Daemon Cluster that must be started before
+  a WebLogic Replicated Store can boot.</p>  <p> See <a href="http://www.oracle.com/pls/topic/lookup?ctx=fmw15110&amp;id=WLEXA221"
+  rel="noopener noreferrer" target="_blank">Using the WebLogic Replicated Store</a>
+  in Administering WebLogic Server for Oracle Exalogic Elastic Cloud.</p>  <p>This
+  feature should be used only in Oracle Exalogic Elastic Cloud environments.</p>  <p>DEPRECATION
+  NOTICE: With WebLogic Server 12.2.1.3 and with the Exalogic X6 initial release,
+  the WebLogic Replicated Store for JMS messages is deprecated. It will be removed
+  in a future release. Oracle recommends that you use either a custom file store or
+  a JDBC store for JMS message storage. See &quot;Administering the WebLogic Persistent
+  Store&quot; in the documentation for more information about these options.</p> '
+name: weblogic.management.configuration.ReplicatedStoreMBean
+properties:
+- defaultValue:
+    value:
+      value: null
+  descriptionHTML: '<p>IP address of a local Daemon. This field is not commonly set
+    - use a ''local index'' instead. </p> '
+  exclude: true
+  name: Address
+  nullable: true
+  restartNeeded: true
+  supported: false
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: -1
+  descriptionHTML: '<p>The smallest addressable block, in bytes, as a power of 2.</p>
+    <p>Shutdown your entire Daemon cluster prior to changing this setting.</p> '
+  exclude: true
+  name: BlockSize
+  restartNeeded: true
+  supported: false
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: -1
+  descriptionHTML: '<p>Busy wait microseconds.  See setBusyWaitMicroSeconds for more
+    information. </p> '
+  exclude: true
+  name: BusyWaitMicroSeconds
+  restartNeeded: true
+  supported: false
+  type: long
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Specifies the path of the Replicated Store Global Directory.</p>
+    <p>This must be the same directory that is used to store the Daemon Cluster <code>rs_daemons.cfg</code>
+    configuration file and requires a specially tuned NFS mount. Oracle recommends
+    using an absolute directory path on a shared NFS mount.</p> '
+  name: Directory
+  nullable: true
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: -1
+  descriptionHTML: '<p>The I/O buffer size, in bytes, automatically rounded down to
+    the nearest power of 2.</p> <ul> <li>Controls the amount of WebLogic Server JVM
+    off-heap (native) memory that is allocated for a replicated store.</li>  <li>For
+    the best runtime performance, Oracle recommends setting <code>IOBufferSize</code>
+    so that it is larger than the largest write (multiple concurrent store requests
+    may be combined into a single write).</li>  <li>For the best boot recovery time
+    performance of large stores, Oracle recommends setting <code>IOBufferSize</code>
+    to at least 2 megabytes.</li>  </ul> '
+  name: IoBufferSize
+  restartNeeded: true
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: 0
+  descriptionHTML: '<p>Specifies a local Daemon to attach to when a Daemon Cluster
+    has multiple Daemons configured to run on the current node.</p>  <p>The local
+    Daemon is chosen using the formula: ((localindex) modulo (number-of-local-daemons)).
+    When 0, it always resolves to the first available Daemon entry in the <code>rs_daemons.cfg
+    </code> file that has an address on the current node. The default value is 0.</p>  This
+    setting is not applicable to production environments. To ensure high availability,
+    a Daemon Cluster in a production environment should have multiple nodes with one
+    Daemon on each node. '
+  name: LocalIndex
+  restartNeeded: true
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: 1
+  descriptionHTML: '<p>Maximum number of replicas per Region. Must be equal to or
+    greater than MinReplicaCount. Setting this to a different value than the default
+    is not supported.</p> '
+  exclude: true
+  name: MaxReplicaCount
+  restartNeeded: true
+  supported: false
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: 1
+  descriptionHTML: '<p>The maximum message size for a JMS destination that is backed
+    by a replicated store, specified as a percentage of the store region size. New
+    messages that exceed this size throw a <code>ResourceAllocationException</code>.
+    The total size of all concurrently written replicated store messages must be less
+    than the Region size or failures can result. See related settings for the "JMS
+    Server or Destination Maximum Message Size".</p> '
+  exclude: true
+  name: MaximumMessageSizePercent
+  restartNeeded: true
+  supported: false
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: 0
+  descriptionHTML: '<p>Minimum number of replicas per Region. Must be equal to or
+    lesser than MaxReplicaCount. Setting this to a different value than the default
+    is not supported.</p> '
+  exclude: true
+  name: MinReplicaCount
+  restartNeeded: true
+  supported: false
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: 0
+  descriptionHTML: '<p>Port of a local Daemon. This field is not commonly set - use
+    a ''local index'' instead.</p> '
+  exclude: true
+  name: Port
+  restartNeeded: true
+  supported: false
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: 134217728
+  descriptionHTML: '<p>The region size, in bytes.</p> <p>Data is stored in one or
+    more uniquely named Regions within a Daemon Cluster where each region is created
+    with this size. Oracle recommends that regions sizes should be tuned to be a small
+    fraction of the available local Daemon memory.</p> '
+  name: RegionSize
+  restartNeeded: true
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: -1
+  descriptionHTML: '<p>Sleep wait milli seconds.  See setSleepWaitMilliSeconds for
+    more information. </p> '
+  exclude: true
+  name: SleepWaitMilliSeconds
+  restartNeeded: true
+  supported: false
+  type: long
+  writable: true
+- defaultValue:
+    value:
+      value: 10
+  descriptionHTML: '<p>Replicated store daemon space usage logging delta. The default
+    is 10 percent, which means the store will log every 10% of space usage change.</p> '
+  exclude: true
+  name: SpaceLoggingDeltaPercent
+  restartNeeded: true
+  supported: false
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: 70
+  descriptionHTML: '<p>The percentage of the Daemon Shared Memory Limit when a replicated
+    store will start logging Daemon shared memory usage.</p> '
+  exclude: true
+  name: SpaceLoggingStartPercent
+  restartNeeded: true
+  supported: false
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: 90
+  descriptionHTML: '<p>Controls when a Replicated Store reaches its memory error condition
+    as a percentage of the Daemon Shared Memory Limit. When this threshold is reached,
+    the WebLogic server instance starts rejecting new stores that attempt to open
+    on, or migrate to, the underlying daemon.</p> <p>The Space Overload Red threshold
+    should be set higher than the Overload Yellow threshold.</p> '
+  exclude: true
+  name: SpaceOverloadRedPercent
+  restartNeeded: true
+  supported: false
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: 80
+  descriptionHTML: '<p>Controls when a Replicated Store reaches its memory overload
+    condition. If the memory used by all Replicated Stores on a Daemon exceeds this
+    percentage of the Daemon Shared Memory Limit, and also the data stored in the
+    store exceeds this percentage of the total region memory allocated for the particular
+    store, then a JMS server will reject new messages with a ResourceAllocationException.</p>
+    <p>The space usage overload threshold should be set lower than the Space Overload
+    Red percent.</p> '
+  exclude: true
+  name: SpaceOverloadYellowPercent
+  restartNeeded: true
+  supported: false
+  type: int
+  writable: true

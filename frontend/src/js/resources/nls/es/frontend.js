@@ -8,6 +8,11 @@ define({
         "value": "Cabecera de aplicación"
       }
     },
+    "buttons": {
+      "logout": {
+        "label": "Logout"
+      }
+    },
     "icons": {
       "navtree": {
         "toggler": {
@@ -1160,6 +1165,9 @@ define({
       },
       "reloadHidden": {
         "value": "Recargue la tabla para ver los valores {0} actuales"
+      },
+      "noData": {
+        "value": "No se ha encontrado ningún dato."
       }
     }
   },

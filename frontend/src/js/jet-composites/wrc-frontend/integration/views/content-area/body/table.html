@@ -1,5 +1,5 @@
 <!--
- Copyright (c) 2020, 2024, Oracle and/or its affiliates.
+ Copyright (c) 2020, 2025, Oracle and/or its affiliates.
 The Universal Permissive License (UPL), Version 1.0
 -->
 <oj-module config="[[overlayFormDialogModuleConfig]]"></oj-module>
@@ -79,7 +79,9 @@ The Universal Permissive License (UPL), Version 1.0
           <span data-bind="text: cell.data.label"></span>
         </oj-bind-if>
       </template>
-      <template slot="noData"></template>
+      <template slot="noData">
+        <div data-bind="text: i18n.labels.noData.value"></div>
+      </template>
       <oj-menu
         slot="contextMenu"
         on-oj-menu-action="[[onContextMenuAction]]"

@@ -1,12 +1,8 @@
-# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2025, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
-actions: [
-  ]
 baseTypes:
 - weblogic.management.configuration.WebAppComponentMBean
-derivedTypes: [
-  ]
 descriptionHTML: '<p>Provides the interface used to configure a Web service that is
   deployed on a WebLogic Server instance.</p>  <p>A Web service is a special kind
   of Java EE Web Application that contains an additional deployment descriptor, web-services.xml,
@@ -17,8 +13,6 @@ descriptionHTML: '<p>Provides the interface used to configure a Web service that
   interface can configure Web services that are deployed as WAR files or exploded
   directories.</p> '
 name: weblogic.management.configuration.WebServiceComponentMBean
-properties: [
-  ]
 roles:
   allowed:
   - Deployer

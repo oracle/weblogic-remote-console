@@ -1735,13 +1735,17 @@ describe.only('Test Suite: deploy_test , Redeploy and undeploy for Application a
            await admin.goToNavTreeLevelTwoLink(driver,"configuration","Deployments",
                "Database Client Data Directories");
            driver.sleep(2400);
-           console.log("Delete Database Client - ASDS1-jdbc");
-           element = driver.findElement(By.xpath("//*[starts-with(@id, 'table:-')]"));
+           console.log("Delete 'ASDS1-jdbc' element from Database Client Data Directories List.");
+           //Select table at div[2], 1st row and column of the table
+           element = driver.findElement(By.xpath("//div[2]/oj-table/div[1]/table/tbody/tr/td[1]"));
            driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
            await driver.sleep(2400);
            if (element.isEnabled()) {
                await element.click();
            }
+           await driver.sleep(1200);
+           console.log("Click 'delete' button");
+           await driver.findElement(By.xpath("//*[@id='delete']")).click();
            driver.sleep(8400);
            await admin.commitChanges(driver);
            await driver.sleep(8400);

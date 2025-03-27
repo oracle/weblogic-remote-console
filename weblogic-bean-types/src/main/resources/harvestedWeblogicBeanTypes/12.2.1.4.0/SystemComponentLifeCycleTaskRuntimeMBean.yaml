@@ -1,20 +1,14 @@
-# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2025, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
-actions: [
-  ]
 baseTypes:
 - weblogic.management.runtime.ServerLifeCycleTaskRuntimeMBean
-derivedTypes: [
-  ]
 descriptionHTML: '<p>Exposes monitoring information about a system component''s life
   cycle.</p>  <p>An operation (task) to change a system component''s state will fork
   a separate thread to perform the actual work and immediately return an instance
   of this MBean to the caller. The caller can then use this MBean to track the task''s
   progress as desired.</p> '
 name: weblogic.management.runtime.SystemComponentLifeCycleTaskRuntimeMBean
-properties: [
-  ]
 roles:
   allowed:
   - Operator

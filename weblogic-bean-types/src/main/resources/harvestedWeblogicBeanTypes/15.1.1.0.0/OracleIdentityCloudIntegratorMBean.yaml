@@ -1,0 +1,612 @@
+# Copyright (c) 2020, 2025, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+baseTypes:
+- weblogic.management.security.authentication.AuthenticatorMBean
+- weblogic.management.security.authentication.IdentityAsserterMBean
+- weblogic.management.security.authentication.AnyIdentityDomainAuthenticatorMBean
+descriptionHTML: '<p>This MBean specifies configuration attributes for the Oracle
+  Identity Cloud Integrator provider.               This provider supports simple
+  authentication with the Oracle Identity Cloud Service and perimeter authentication
+  (identity assertion) using Oracle Identity Cloud Service tokens.</p> '
+name: weblogic.security.providers.authentication.OracleIdentityCloudIntegratorMBean
+properties:
+- defaultValue:
+    value:
+      value: 300
+  descriptionHTML: '<p>The number of seconds before an access token times out that
+    a new access token is requested.            Adjusting the timeout window impacts
+    how long access tokens are cached for reuse before            an updated access
+    token is requested from the authorization server.</p> '
+  name: AccessTokenTimeoutWindow
+  type: java.lang.Integer
+  writable: true
+- array: true
+  defaultValue:
+    value:
+      value:
+      - idcs_user_assertion
+      - Idcs_user_assertion
+  descriptionHTML: '<p>The token types that are currently active.</p> '
+  name: ActiveTypes
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: client_faId
+  descriptionHTML: '<p>Used to get the alternate client ID from the token.</p> '
+  name: AltClientIDTokenClaim
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: user_faId
+  descriptionHTML: '<p>Used to get the alternate user ID from the token.</p> '
+  name: AltIDTokenClaim
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: true
+  descriptionHTML: '<p>The Oracle Identity Cloud Integrator provider defines this
+    setting as always enabled.</p> '
+  name: AnyIdentityDomainEnabled
+  type: boolean
+- defaultValue:
+    value:
+      value: X-RESOURCE-SERVICE-INSTANCE-IDENTITY-APPNAME
+  descriptionHTML: '<p>The name of the HTTP header used to determine the application
+    name applied when filtering the authentication and assertion requests to the Oracle
+    Identity Cloud Service. When no value is supplied or can be determined, requests
+    are not filtered by an application.</p> '
+  name: AppNameFilterHeaderName
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: appRoles
+  descriptionHTML: '<p>Used to get AppRoles from the token.</p> '
+  name: AppRolesTokenClaim
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: true
+  descriptionHTML: '<p>Specifies whether the audience from the access token is stored
+    in the subject for later use by the application.</p> '
+  name: AudienceEnabled
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Specifies whether the tokens that are passed to the Oracle
+    Identity Cloud Integrator provider for identity assertion are base 64 decoded
+    first. This setting is defined by the Oracle Identity Cloud Integrator provider
+    based on the supported tokens.</p> '
+  name: Base64DecodingRequired
+  type: boolean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The URI base path used for the connection to the Oracle Identity
+    Cloud Service.</p> '
+  name: BasePath
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: true
+  descriptionHTML: '<p>Specifies whether to cache the Oracle Identity Cloud Service
+    user''s information.</p> '
+  name: CacheEnabled
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: 500
+  descriptionHTML: '<p>Specifies the maximum number of entries to cache.</p> '
+  name: CacheSize
+  type: java.lang.Integer
+  writable: true
+- defaultValue:
+    value:
+      value: 300
+  descriptionHTML: '<p>The time-to-live (TTL) of the Oracle Identity Cloud Service
+    user cache, in seconds.</p> '
+  name: CacheTTL
+  type: java.lang.Integer
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Specifies whether the client name from the access token is
+    stored in the subject as the username for later use by the application.</p> '
+  name: ClientAsUserPrincipalEnabled
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: ''
+  descriptionHTML: '<p>Used for Client ID App Assertion. The default value            results
+    in the use of the attribute configured by the Oracle Identity Cloud Service.</p> '
+  name: ClientIDResourceAttribute
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: client_id
+  descriptionHTML: '<p>Used to get the client Id (GUID) from the access token. </p> '
+  name: ClientIDTokenClaim
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The Client Id used when retrieving tokens from the Oracle Identity
+    Cloud Service.</p> '
+  name: ClientId
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: client_name
+  descriptionHTML: '<p>Used to get the client name from the access token.</p> '
+  name: ClientNameTokenClaim
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The Client secret used when retrieving tokens from the Oracle
+    Identity Cloud Service.</p> '
+  encrypted: true
+  name: ClientSecret
+  type: java.lang.String
+  writable: true
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: ' '
+  encrypted: true
+  name: ClientSecretEncrypted
+  type: byte
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The tenant in which the Client Id resides from the Oracle Identity
+    Cloud Service.            When no client tenant name is configured, the tenant
+    configured for the provider is used.</p> '
+  name: ClientTenant
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: client_tenantname
+  descriptionHTML: '<p>Used to get the Identity Domain for the client from the access
+    token.</p> '
+  name: ClientTenantTokenClaim
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: 60
+  descriptionHTML: '<p>The maximum time to wait, in seconds, for the connection to
+    the Oracle Identity Cloud Service to be established.</p> '
+  name: ConnectTimeout
+  type: java.lang.Integer
+  writable: true
+- defaultValue:
+    value:
+      value: Provider that performs identity assertion for Oracle Identity Cloud Service
+        tokens
+  descriptionHTML: '<p>A short description of the Oracle Identity Cloud Integrator
+    provider.</p> '
+  name: Description
+  type: java.lang.String
+- defaultValue:
+    value:
+      value: groups
+  descriptionHTML: '<p>Used to get groups from the token.</p> '
+  name: GroupsTokenClaim
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: localhost
+  descriptionHTML: '<p>The host name used to connect to the Oracle Identity Cloud
+    Service.</p> '
+  name: Host
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: ''
+  descriptionHTML: '<p>An override for the token issuer value used during validation.            The
+    issuer is normally obtained from the Oracle Identity Cloud Service Discovery Metadata.            When
+    configured, the issuer value is used for all tenants.</p> '
+  name: Issuer
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: ''
+  descriptionHTML: '<p>An override for the JSON Web Key Set location (jwks_uri) used
+    during validation of tokens.            A file location can be specified to load
+    keys from the local environment.            The location of the keys is normally
+    obtained from the Oracle Identity Cloud Service Discovery Metadata.            When
+    configured, the URI is used for all tenants.</p> '
+  name: JSONWebKeySetURI
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: 300
+  descriptionHTML: '<p>The time-to-live (TTL) of the empty metadata for known Oracle
+    Identity Cloud Service tenants in Oracle Identity Cloud Service metadata cache,
+    in seconds. The default value 300.</p> '
+  name: KnownTenantEmptyMetadataTTL
+  type: java.lang.Integer
+  writable: true
+- array: true
+  defaultValue:
+    value:
+      value:
+      - idcs-
+  descriptionHTML: '<p>The list of tenant prefixes that would identify known or valid
+    Oracle Identity Cloud Service tenant names.            Used in combination with
+    KnownTenantEmptyMetadataTTL to decide the TTL of cached empty metadata for Oracle
+    Identity Cloud Service tenants.            When no perfixes are configured, all
+    tenants are considered as Oracle Identity Cloud Service tenants.</p> '
+  name: KnownTenantPrefixList
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: OracleIdentityCloudIntegrator
+  descriptionHTML: ' '
+  name: Name
+  type: java.lang.String
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Specifies whether the claims about the user from the token
+    are the only claims processed when a subject is created.         Any additional
+    information in the subject about the user, including groups and application roles,
+    is obtained from the Oracle Identity Cloud Service.</p> '
+  name: OnlyUserTokenClaimsEnabled
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: 0
+  descriptionHTML: '<p>The port number used to connect to the Oracle Identity Cloud
+    Service.</p> '
+  name: Port
+  type: java.lang.Integer
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p> Specifies whether to use the alternate user id instead of
+    user id to populate as the guid in the user principal.         </p> '
+  name: PreferAltID
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: weblogic.security.providers.authentication.IDCSIntegratorProviderImpl
+  descriptionHTML: '<p>The name of the Java class used to load the Oracle Identity
+    Cloud Integrator provider.</p> '
+  name: ProviderClassName
+  type: java.lang.String
+- defaultValue:
+    value:
+      value: tenant
+  descriptionHTML: '<p>Used to get the Identity Domain for the resource from the access
+    token.</p> '
+  name: ResourceTenantTokenClaim
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: 60
+  descriptionHTML: '<p>The maximum time to wait, in seconds, for a response from the
+    Oracle Identity Cloud Service.</p> '
+  name: ResponseReadTimeout
+  type: java.lang.Integer
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Specifies whether the TLS/SSL protocol is used when connecting
+    to the Oracle Identity Cloud Service.</p> '
+  name: SSLEnabled
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: true
+  descriptionHTML: '<p>Specifies whether to backoff and retry requests when Oracle
+    Identity Cloud Service returns a response that too many requests are being processed
+    in a specific time window.</p> '
+  name: ServerBackoffEnabled
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: 300
+  descriptionHTML: '<p>The interval, in seconds, that the count of authentication
+    failures caused by the Oracle Identity Cloud Service not being available are logged
+    to the server log.             Setting to zero (0) or negative value  turns off
+    the logging of the count.</p> '
+  name: ServerNotAvailableCounterInterval
+  type: java.lang.Integer
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>If the optional X.509 certificate chain ("x5c claim") is available
+    from the JSON Web Key Set, this attribute specifies whether the public key obtained
+    from the X.509 certificate in the supplied chain is used during the verification
+    of the token signature.</p> '
+  name: SignaturePreferX509Certificate
+  type: boolean
+  writable: true
+- array: true
+  defaultValue:
+    value:
+      value:
+      - idcs_user_assertion
+      - Idcs_user_assertion
+      - Authorization
+      - REMOTE_USER
+      - IDCS_REMOTE_USER
+  descriptionHTML: '<p>The types of tokens supported by the Oracle Identity Cloud
+    Integrator provider.</p> '
+  name: SupportedTypes
+  type: java.lang.String
+- defaultValue:
+    value:
+      value: true
+  descriptionHTML: '<p>Specifies whether the synchronization filter is enabled for
+    servlet applications deployed on the security realm.</p> '
+  name: SyncFilterEnabled
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Specifies whether the synchronization filter performs case
+    match when comparing the session user and the remote user.</p> '
+  name: SyncFilterMatchCase
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: true
+  descriptionHTML: '<p>Specifies whether the synchronization filter only filters the
+    requests with CLIENT_CERT or CLIENT-CERT Auth Type.</p> '
+  name: SyncFilterOnlyClientCertRequests
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Specifies whether the synchronization filter looks into the
+    requests header before looking at the token for the remote user and tenant.         This
+    attribute is used only when the synchronization filter is enabled for requests
+    with all authentication types.</p> '
+  name: SyncFilterPreferHeader
+  type: boolean
+  writable: true
+- array: true
+  defaultValue:
+    value:
+      value: &id001 [
+        ]
+  descriptionHTML: '<p>The names of HTTP headers sent on requests that the synchronization
+    filter uses to look for remote user information.</p> '
+  name: SyncFilterUserHeaderNames
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: ''
+  descriptionHTML: '<p>The name of the primary tenant where users and groups reside
+    from the Oracle Identity Cloud Service.            When the primary tenant is
+    not configured, the user authentication processing must identify the tenant name.</p> '
+  name: Tenant
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: 0
+  descriptionHTML: '<p>The interval, in seconds, that the cached data for all the
+    tenants, including the metadata and public key is flushed.             Adjusting
+    the interval impacts how long the tenant data is cached for reuse before it is
+    updated.            The default value is 0, which means that tenant data from
+    a previous download is not cleared unless triggered by an MBean operation or configuration
+    change.</p> '
+  name: TenantDataFlushInterval
+  type: java.lang.Integer
+  writable: true
+- defaultValue:
+    value:
+      value: true
+  descriptionHTML: '<p>Specifies whether to re-load Oracle Identity Cloud Service
+    tenant data when a token validation error occurs.</p> '
+  name: TenantDataReloadEnabled
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: 300
+  descriptionHTML: '<p>The interval, in seconds, that the Oracle Identity Cloud Service
+    tenant data would not be removed when a token validation error occurs.            Adjusting
+    the interval impacts how long the tenant data is cached for reuse before repeated
+    token validation errors result in a tenant data re-load.</p> '
+  name: TenantDataReloadInterval
+  type: java.lang.Integer
+  writable: true
+- array: true
+  defaultValue:
+    value:
+      value:
+      - X-USER-IDENTITY-SERVICE-GUID
+      - X-USER-IDENTITY-DOMAIN-NAME
+      - X-RESOURCE-IDENTITY-SERVICE-GUID
+      - X-RESOURCE-IDENTITY-DOMAIN-NAME
+  descriptionHTML: '<p>The names of HTTP headers sent on requests to the Oracle Identity
+    Cloud Service that are used to determine the tenancy during authentication.</p> '
+  name: TenantHeaderNames
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: '{%tenant}.{%host}'
+  descriptionHTML: '<p>The tenant-based host name, in Fully Qualified Domain name
+    (FQDN) format, comprised of a tenant name and a host name.         This attribute
+    contains the tokens, such as {%tenant}.{%host}, that are replaced with the actual
+    values.         </p> '
+  name: TenantHostNameTemplate
+  type: java.lang.String
+  writable: true
+- array: true
+  defaultValue:
+    value:
+      value: *id001
+  descriptionHTML: '<p>The list of allowable tenant names consumed from the Oracle
+    Identity Cloud Service.            When no tenant names are configured, any tenant
+    from the Oracle Identity Cloud Service is accessible.</p> '
+  name: TenantNames
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: user_tenantname
+  descriptionHTML: '<p>Used to get the Identity Domain from the token.</p> '
+  name: TenantTokenClaim
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: 120
+  descriptionHTML: '<p>The maximum time to wait, in seconds, when a thread attempts
+    to acquire a synchronization lock for obtaining metadata, keys and access tokens.</p> '
+  name: ThreadLockTimeout
+  type: java.lang.Integer
+  writable: true
+- defaultValue:
+    value:
+      value: true
+  descriptionHTML: '<p>Specifies whether to cache Oracle Identity Cloud Service tokens
+    after successful validation of the token.</p> '
+  name: TokenCacheEnabled
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: 120
+  descriptionHTML: '<p>The allowable variance, in seconds, for the token Expiration,
+    Issued At, and Not Before attributes.</p> '
+  name: TokenClockSkew
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Determines whether the Oracle Identity Cloud Integrator provider
+    checks for a secure transport connection before accepting active token types.            When
+    enabled and a secure transport connection cannot be determined, tokens are not
+    accepted for identity assertion.</p> '
+  name: TokenSecureTransportRequired
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: NORMAL
+  descriptionHTML: '<p>The level of validation performed on Oracle Identity Cloud
+    Service tokens passed to the Identity Asserter. Valid values           are <code>FULL</code>,
+    <code>NORMAL</code>, <code>SIGNATURE</code> and <code>NONE</code>.</p> '
+  legalValues:
+  - FULL
+  - NORMAL
+  - SIGNATURE
+  - NONE
+  name: TokenValidationLevel
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Determines whether to allow identity assertion to authenticate
+    WebLogic Server users who are not represented in the security store.</p> '
+  name: TokenVirtualUserAllowed
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: 0
+  descriptionHTML: '<p>The time-to-live (TTL) of the empty metadata for unknown tenants
+    in Oracle Identity Cloud Service metadata cache, in seconds.            The default
+    value is 0 to disable the TTL.</p> '
+  name: UnknownTenantEmptyMetadataTTL
+  type: java.lang.Integer
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Specifies whether to get the value of the "userName" attribute
+    from the authentication response to create the Principal.           The actual
+    attribute name is obtained from getUserNameResourceAttribute(),         and can
+    be configured with setUserNameResourceAttribute(String).</p> '
+  name: UseRetrievedUserNameAsPrincipal
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: ''
+  descriptionHTML: '<p>Used for User Authentication and Assertion. The default value         results
+    in the use of the attribute configured by the Oracle Identity Cloud Service.</p> '
+  name: UserAuthenticationAssertionAttribute
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: id
+  descriptionHTML: '<p>SCIM User resource type attribute that specifies the ID (GUID)
+    of the         user.</p> '
+  name: UserIDResourceAttribute
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: user_id
+  descriptionHTML: '<p>Used to get the user ID (GUID) from the token. Corresponds
+    to the SCIM User ID resource type         attribute.</p> '
+  name: UserIDTokenClaim
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: userName
+  descriptionHTML: '<p>SCIM User resource type attribute that specifies the name of
+    the         user.</p> '
+  name: UserNameResourceAttribute
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: ''
+  descriptionHTML: '<p>Used to get the user name from the token. Corresponds to the
+    SCIM User name resource type         attribute. If not set, the subject ("sub
+    claim") is used.</p> '
+  name: UserNameTokenClaim
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: '1.0'
+  descriptionHTML: '<p>The version number of the Oracle Identity Cloud Integrator
+    provider.</p> '
+  name: Version
+  type: java.lang.String

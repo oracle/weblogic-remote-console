@@ -1,12 +1,6 @@
-# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2025, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
-actions: [
-  ]
-baseTypes: [
-  ]
-derivedTypes: [
-  ]
 descriptionHTML: ' '
 name: weblogic.j2ee.descriptor.wl.MaxCacheSizeBean
 properties:
@@ -15,7 +9,7 @@ properties:
       value: -1
   descriptionHTML: ' '
   exclude: true
-  name: Megabytes
+  name: Bytes
   supported: false
   type: int
   writable: true
@@ -24,7 +18,7 @@ properties:
       value: -1
   descriptionHTML: ' '
   exclude: true
-  name: Bytes
+  name: Megabytes
   supported: false
   type: int
   writable: true

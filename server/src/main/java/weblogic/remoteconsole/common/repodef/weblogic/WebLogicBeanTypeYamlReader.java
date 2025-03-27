@@ -1,15 +1,15 @@
-// Copyright (c) 2022, 2024, Oracle and/or its affiliates.
+// Copyright (c) 2022, 2025, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef.weblogic;
 
+import weblogic.console.schema.beaninfo.BeanTypeDefSource;
 import weblogic.remoteconsole.common.repodef.BeanRepoDef;
 import weblogic.remoteconsole.common.repodef.BeanTypeDef;
 import weblogic.remoteconsole.common.repodef.CreateFormPagePath;
 import weblogic.remoteconsole.common.repodef.SlicePagePath;
 import weblogic.remoteconsole.common.repodef.TablePagePath;
 import weblogic.remoteconsole.common.repodef.schema.BeanTypeDefCustomizerSource;
-import weblogic.remoteconsole.common.repodef.schema.BeanTypeDefSource;
 import weblogic.remoteconsole.common.repodef.schema.CreateFormDefSource;
 import weblogic.remoteconsole.common.repodef.schema.LinksDefSource;
 import weblogic.remoteconsole.common.repodef.schema.NavTreeDefSource;

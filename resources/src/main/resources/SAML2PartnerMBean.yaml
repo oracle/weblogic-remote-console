@@ -1,15 +1,9 @@
-# Copyright (c) 2023, Oracle and/or its affiliates.
+# Copyright (c) 2023, 2025, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 name: weblogic.security.providers.saml2.SAML2PartnerMBean
 baseTypes:
 - weblogic.management.WebLogicMBean
-derivedTypes:
-- weblogic.security.providers.saml2.SAML2BindingClientPartnerMBean
-- weblogic.security.providers.saml2.SAML2IdPPartnerMBean
-- weblogic.security.providers.saml2.SAML2SPartnerMBean
-- weblogic.security.providers.saml2.SAML2MetadataPartnerMBean
-- weblogic.security.providers.saml2.SAML2WSSPartnerMBean
 
 properties:
 - name: Name

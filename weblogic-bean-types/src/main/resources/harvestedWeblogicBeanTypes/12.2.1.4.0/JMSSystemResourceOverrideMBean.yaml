@@ -1,12 +1,8 @@
-# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2025, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
-actions: [
-  ]
 baseTypes:
 - weblogic.management.configuration.ConfigurationMBean
-derivedTypes: [
-  ]
 descriptionHTML: 'For each configuration entity that supports per-partition-override
   via a MBean, we have two MBeans, the original configure MBean and the corresponding
   override MBean, that eventually determine the effective settings of the configured

@@ -1,4 +1,4 @@
-// Copyright (c) 2022, 2024, Oracle and/or its affiliates.
+// Copyright (c) 2022, 2025, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.repo;
@@ -12,6 +12,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 
+import weblogic.console.utils.Path;
 import weblogic.remoteconsole.common.repodef.BeanChildDef;
 import weblogic.remoteconsole.common.repodef.CustomCreateFormDef;
 import weblogic.remoteconsole.common.repodef.CustomFormSectionDef;
@@ -31,8 +32,7 @@ import weblogic.remoteconsole.common.repodef.PagePropertyDef;
 import weblogic.remoteconsole.common.repodef.PageRepoDef;
 import weblogic.remoteconsole.common.repodef.PagesPath;
 import weblogic.remoteconsole.common.repodef.weblogic.AggregatedRuntimeMBeanNameHandler;
-import weblogic.remoteconsole.common.utils.Path;
-import weblogic.remoteconsole.common.utils.StringUtils;
+import weblogic.remoteconsole.common.utils.UrlUtils;
 
 /**
  * Utility class for managing filtering dashboard definitions.
@@ -93,7 +93,7 @@ public class FilteringDashboardDefManager {
     // convert it to it's unaggregated btp.
     //   e.g. DomainRuntime/CombinedServerRuntimes/*/ServerRuntime/Foo/Bar/Bazz
     btp = AggregatedRuntimeMBeanNameHandler.INSTANCE.getUnaggregatedBeanTreePath(btp);
-    return  StringUtils.computeQueryParam("path", btp.getPath().getComponents());
+    return UrlUtils.computeQueryParam("path", btp.getPath().getComponents());
   }
 
   public static BeanTreePath getBeanTreePathTemplateFromPathQueryParam(InvocationContext ic) {

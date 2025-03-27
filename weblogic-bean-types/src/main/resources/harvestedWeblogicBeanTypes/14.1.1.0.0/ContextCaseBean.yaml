@@ -1,15 +1,17 @@
-# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2025, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
-actions: [
-  ]
-baseTypes: [
-  ]
-derivedTypes: [
-  ]
 descriptionHTML: ' '
 name: weblogic.j2ee.descriptor.wl.ContextCaseBean
 properties:
+- creators:
+  - weblogic.j2ee.descriptor.wl.FairShareRequestClassBean
+  defaultValue: {
+    }
+  descriptionHTML: ' '
+  name: FairShareRequestClass
+  relationship: containment
+  type: weblogic.j2ee.descriptor.wl.FairShareRequestClassBean
 - defaultValue: {
     }
   descriptionHTML: ' '
@@ -21,7 +23,7 @@ properties:
 - defaultValue: {
     }
   descriptionHTML: ' '
-  name: UserName
+  name: Id
   redeployNeeded: true
   restartNeeded: true
   type: java.lang.String
@@ -43,18 +45,10 @@ properties:
   name: ResponseTimeRequestClass
   relationship: containment
   type: weblogic.j2ee.descriptor.wl.ResponseTimeRequestClassBean
-- creators:
-  - weblogic.j2ee.descriptor.wl.FairShareRequestClassBean
-  defaultValue: {
-    }
-  descriptionHTML: ' '
-  name: FairShareRequestClass
-  relationship: containment
-  type: weblogic.j2ee.descriptor.wl.FairShareRequestClassBean
 - defaultValue: {
     }
   descriptionHTML: ' '
-  name: Id
+  name: UserName
   redeployNeeded: true
   restartNeeded: true
   type: java.lang.String

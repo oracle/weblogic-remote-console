@@ -1,4 +1,4 @@
-// Copyright (c) 2020, 2024, Oracle and/or its affiliates.
+// Copyright (c) 2020, 2025, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.webapp;
@@ -38,7 +38,7 @@ import javax.ws.rs.core.Response.Status;
 
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
-import weblogic.remoteconsole.common.utils.StringUtils;
+import weblogic.console.utils.StringUtils;
 import weblogic.remoteconsole.server.providers.AdminServerDataProvider;
 import weblogic.remoteconsole.server.providers.AdminServerDataProviderImpl;
 import weblogic.remoteconsole.server.providers.PropertyListDataProviderImpl;

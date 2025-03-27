@@ -10,7 +10,6 @@
 // Calls to require() are cached, but are also blocking.
 // This why we put all the ones used in this module, here
 // at the top.
-const net = require('net');
 const path = require('path');
 const fs = require('fs');
 const readline = require('readline');
@@ -23,6 +22,8 @@ const logger = require('./js/console-logger');
 
 const I18NUtils = require('./js/i18n-utils');
 const OSUtils = require('./js/os-utils');
+// Declare variable for IIFE class used to handle Custom URL
+const TokenUtils = require('./js/token-utils');
 // Declare variable for IIFE class used to perform file
 // management operations for JET side of WRC
 const FileUtils = require('./js/file-utils');
@@ -76,6 +77,7 @@ const AppConstants = Object.freeze({
   LOG_BASEFILENAME: 'out'
 });
 
+let logOptions;
 let window;
 let checkPid = 0;
 let cbePort = 0;
@@ -107,16 +109,27 @@ let cbe;
   const exePath = path.dirname(app.getPath('exe'));
   const userDataPath = app.getPath('userData');
 
-  let options = {
+  logOptions = {
     appPaths: {
       userData: userDataPath
     },
     baseFilename: AppConstants.LOG_BASEFILENAME,
     loggingLevel: 'debug'
   };
-  logger.initializeLog(options);
+  logger.initializeLog(logOptions);
 
-  options = {
+  // Register the Custom URL for processing on Mac and Windows...
+  if (!OSUtils.isLinuxOS() && !app.isDefaultProtocolClient('wrc')) {
+    if (process.defaultApp) {
+      if (process.argv.length >= 2) {
+        app.setAsDefaultProtocolClient("wrc", process.execPath, [path.resolve(process.argv[1])]);
+      }
+    } else {
+      app.setAsDefaultProtocolClient("wrc");
+    }
+  }
+
+  const options = {
     appPaths: {
       userData: userDataPath,
       exe: exePath
@@ -182,6 +195,24 @@ app.on('activate', () => {
   if (!window && app.requestSingleInstanceLock()) {
     app.releaseSingleInstanceLock();
     start_another_me();
+    if (isHeadlessMode())
+      AppWindow.hideDockIconMacOS();
+  }
+});
+
+// Register for Custom URL event handling on MacOS!
+// The Custom URL is only used when the browser is unable
+// to send the token via an HTTP request to the backend.
+// Safari is a browser that prevents access to localhost
+// and thus the Custom URL is used to pass the token.
+// On other platforms, see the 'whenReady' processing...
+app.on("open-url", (event, url) => {
+  if (url) {
+    logger.log('debug', `Handle Custom URL for process: ${process.pid}`);
+    if (event) event.preventDefault();
+    TokenUtils.processCustomUrl(url);
+    if (isHeadlessMode())
+      AppWindow.hideDockIconMacOS();
   }
 });
 
@@ -194,9 +225,13 @@ function doCheckPid() {
 }
 
 function doit() {
-  if (!app.commandLine.hasSwitch('headless')) {
+  if (!isHeadlessMode()) {
     AppWindow.load(`http://localhost:${cbePort}/`);
   }
+}
+
+function isHeadlessMode() {
+  return app.commandLine.hasSwitch('headless');
 }
 
 function processCmdLineOptions() {
@@ -290,7 +325,7 @@ function start_cbe() {
   });
 
   readlineStderr.on('line', (line) => {
-    logger.log('info', line);
+    logger.log('info', line, false);
     lines.push(line);
   });
 
@@ -324,10 +359,9 @@ function start_cbe() {
 }
 
 // This is only used on Mac
-function start_another_me(event = null) {
+function start_another_me() {
   logger.log('debug', `Starting another remote console (${process.pid})`);
-  const execArg = (event ? `${event.customUrl}` : null);
-  another_me = execFile(`${instDir}/WebLogic Remote Console`, (execArg ? [execArg] : []), () => {
+  another_me = execFile(`${instDir}/WebLogic Remote Console`, [], () => {
     another_me = null;
   });
 }
@@ -341,17 +375,31 @@ app.whenReady()
       process.kill(process.pid, 9);
     }
 
-    logger.setOptions({ isHeadlessMode: app.commandLine.hasSwitch('headless')});
+    // Check for the Custom URL on the command line!
+    // The Custom URL is only used when the browser is unable
+    // to send the token via an HTTP request to the backend.
+    // After handling the Custom URL the process terminates!
+    // For MacOS, see the 'open-url' event processing...
+    const cmdlineUrl = process.argv.find((argv) => argv.startsWith('wrc://'));
+    if (cmdlineUrl) {
+      logger.log('debug', `Handle command line Custom URL for process: ${process.pid}`);
+      TokenUtils.processCustomUrl(cmdlineUrl, true);
+      return;
+    }
+
+    // Rotate the log file as the process is expected to continue running...
+    logOptions['isHeadlessMode'] = isHeadlessMode();
+    logger.rotateLog(logOptions);
     processCmdLineOptions();
 
-    if (!app.commandLine.hasSwitch('headless')) {
+    if (!isHeadlessMode()) {
       // Attempt to obtain the single instance lock.  This is not used as a
       // "lock", really, but as a signifier that we have a running instance
       // that is not headless.  See app.on for "activate" above.
       app.requestSingleInstanceLock();
 
       // No way to prompt for updates in a headless process
-      const supportsUpgradeCheck = !app.commandLine.hasSwitch('headless');
+      const supportsUpgradeCheck = !isHeadlessMode();
 
       // On Linux, only AppImages can be updated in place
       const supportsAutoUpgrades = supportsUpgradeCheck &&
@@ -397,8 +445,7 @@ app.whenReady()
       AppWindow.renderAppMenu();
     }
     else {
-      if (OSUtils.isMacOS())
-        app.dock.hide();
+      AppWindow.hideDockIconMacOS();
     }
     Watcher.initialize(app.getPath('userData'), window, [UserProjects, UserPrefs, AutoPrefs, AppConfig]);
     start_cbe();
@@ -545,14 +592,14 @@ ipcMain.handle('external-url-opening', async (event, arg) => {
 });
 
 ipcMain.handle('complete-login', async (event, arg) => {
-  logger.log('debug', `'complete-login' provider='${arg.name}'`);
+  logger.log('info', `'complete-login' provider='${arg.name}'`);
   AppWindow.showMainWindow();
 });
 
 ipcMain.handle('perform-login', async (event, arg) => {
   return new Promise(function (resolve, reject) {
     if (arg) {
-      logger.log('debug', `'perform-login' provider='${arg.name}' url='${arg.loginUrl}'`);
+      logger.log('info', `'perform-login' provider='${arg.name}' url='${arg.loginUrl}'`);
 
       // Validate the URL content and exec the user's browser
       try {

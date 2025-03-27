@@ -1,4 +1,4 @@
-// Copyright (c) 2020, 2024, Oracle Corporation and/or its affiliates.
+// Copyright (c) 2020, 2025, Oracle Corporation and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.customizers;
@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import weblogic.remoteconsole.common.utils.StringUtils;
+import weblogic.console.utils.StringUtils;
 import weblogic.remoteconsole.server.repo.SettableValue;
 import weblogic.remoteconsole.server.repo.StringValue;
 import weblogic.remoteconsole.server.repo.Value;

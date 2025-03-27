@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2020, 2024, Oracle and/or its affiliates.
+ * Copyright (c) 2020, 2025, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
@@ -13,6 +13,7 @@ define([
   'wrc-frontend/microservices/provider-management/data-provider-helper',
   'wrc-frontend/integration/viewModels/utils',
   'wrc-frontend/core/runtime',
+  'wrc-frontend/microservices/provider-management/data-provider-manager',
   'ojs/ojknockout',
   'ojs/ojmodule-element',
   'ojs/ojmodule'
@@ -23,7 +24,8 @@ define([
     ModuleElementUtils,
     DataProviderHelper,
     ViewModelUtils,
-    Runtime
+    Runtime,
+    DataProviderManager
   ) {
     function HeaderTemplate(viewParams){
       const self = this;
@@ -40,6 +42,14 @@ define([
         labels: {
           connectivity: {
             insecure: oj.Translations.getTranslatedString('wrc-connectivity.labels.insecure.value')
+          }
+        },
+        buttons: {
+          hosted: {
+            logout: {
+              label: oj.Translations.getTranslatedString('wrc-header.buttons.logout.label'),
+              visible: ko.observable(false)
+            }
           }
         },
         icons: {
@@ -142,6 +152,18 @@ define([
         }
       });
 
+      self.logoutClickHandler = () => {
+        DataProviderManager.logout().then((resp) => {
+          const redirectUrl = resp?.body?.data?.url;
+          if (redirectUrl) {
+            window.location.href = redirectUrl;
+          } else {
+            window.location.reload();
+          }
+        });
+        return false;
+      };
+
       this.signalBindings = [];
 
       this.connected = function () {
@@ -168,7 +190,7 @@ define([
         });
 
         self.signalBindings.push(binding);
-
+        
         binding = viewParams.signaling.projectSwitched.add((fromProject) => {
           setConsoleConnectionInsecureState(false);
         });
@@ -189,6 +211,13 @@ define([
 
         this.signalBindings.push(binding);
 
+        this.signalBindings.push(binding);
+
+        DataProviderManager.getCapabilities().then(caps => {
+          const logoutEnabled = caps && caps.indexOf('Logout') != -1;
+
+          this.i18n.buttons.hosted.logout.visible(logoutEnabled);
+        });
       }.bind(this);
 
       this.disconnected = function () {

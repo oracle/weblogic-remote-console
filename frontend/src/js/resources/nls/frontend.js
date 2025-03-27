@@ -9,6 +9,11 @@ define({
           "value": "Application Header"
         }
       },
+      "buttons": {
+        "logout": {
+          "label": "Logout"
+        }
+      },
       "icons": {
         "navtree": {
           "toggler": {
@@ -1161,6 +1166,9 @@ define({
         },
         "reloadHidden": {
           "value": "Reload the table to view the current {0} values"
+        },
+        "noData": {
+          "value": "No data found."
         }
       }
     },

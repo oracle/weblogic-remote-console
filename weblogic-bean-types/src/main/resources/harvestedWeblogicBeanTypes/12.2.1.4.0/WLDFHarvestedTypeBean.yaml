@@ -1,12 +1,8 @@
-# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2025, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
-actions: [
-  ]
 baseTypes:
 - weblogic.diagnostics.descriptor.WLDFBean
-derivedTypes: [
-  ]
 descriptionHTML: '<p>Defines the set of types (beans) that are harvested. The WLDF
   framework allows the harvesting of all designated server-local Weblogic Server runtime
   MBeans, and most customer MBeans that are registered in the local server''s runtime

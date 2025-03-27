@@ -1,4 +1,4 @@
-// Copyright (c) 2021, 2024, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2025, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef.weblogic;
@@ -11,6 +11,9 @@ import java.util.jar.JarFile;
 import java.util.logging.Logger;
 import java.util.zip.ZipEntry;
 
+import weblogic.console.schema.YamlSource;
+import weblogic.console.schema.beaninfo.BeanTypeDefSource;
+import weblogic.console.utils.StringUtils;
 import weblogic.remoteconsole.common.YamlUtils;
 import weblogic.remoteconsole.common.repodef.BeanRepoDef;
 import weblogic.remoteconsole.common.repodef.BeanTypeDef;
@@ -19,7 +22,6 @@ import weblogic.remoteconsole.common.repodef.PagePath;
 import weblogic.remoteconsole.common.repodef.SlicePagePath;
 import weblogic.remoteconsole.common.repodef.TablePagePath;
 import weblogic.remoteconsole.common.repodef.schema.BeanTypeDefCustomizerSource;
-import weblogic.remoteconsole.common.repodef.schema.BeanTypeDefSource;
 import weblogic.remoteconsole.common.repodef.schema.CreateFormDefSource;
 import weblogic.remoteconsole.common.repodef.schema.LinksDefSource;
 import weblogic.remoteconsole.common.repodef.schema.NavTreeDefSource;
@@ -28,12 +30,10 @@ import weblogic.remoteconsole.common.repodef.schema.SliceFormDefSource;
 import weblogic.remoteconsole.common.repodef.schema.SliceTableDefSource;
 import weblogic.remoteconsole.common.repodef.schema.SlicesDefSource;
 import weblogic.remoteconsole.common.repodef.schema.TableDefSource;
-import weblogic.remoteconsole.common.repodef.schema.YamlSource;
 import weblogic.remoteconsole.common.repodef.yaml.SlicesDefImpl;
 import weblogic.remoteconsole.common.repodef.yaml.YamlDirectoryReader;
 import weblogic.remoteconsole.common.repodef.yaml.YamlReader;
 import weblogic.remoteconsole.common.utils.RemoteConsoleExtension;
-import weblogic.remoteconsole.common.utils.StringUtils;
 import weblogic.remoteconsole.common.utils.WebLogicMBeansVersion;
 
 /**

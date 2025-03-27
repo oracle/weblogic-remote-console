@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2023, Oracle and/or its affiliates.
+ * Copyright (c) 2023, 2025, Oracle and/or its affiliates.
  * Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
  * @ignore
  */
@@ -18,6 +18,7 @@ let failed;
 let _updateInfo;
 let _window;
 let downloadingDialogAbortController;
+let pastStartup = false;
 
 autoUpdater.on('error', error => {
   failed = true;
@@ -29,8 +30,11 @@ autoUpdater.on('error', error => {
     // dialog is started.
     setTimeout(() => showError(error), 100);
   }
-  else
-    showError(error);
+  else {
+    if (pastStartup) {
+      showError(error);
+    }
+  }
 });
 
 (() => {
@@ -101,7 +105,12 @@ autoUpdater.on('update-available', (info) => {
 });
 
 
+async function checkForUpdatesAtStart() {
+  return Promise.resolve(autoUpdater.checkForUpdates());
+}
+
 async function checkForUpdates() {
+  pastStartup = true;
   return Promise.resolve(autoUpdater.checkForUpdates());
 }
 
@@ -110,6 +119,7 @@ function getVersion() {
 }
 
 async function doUpdate(window) {
+  pastStartup = true;
   _window = window;
   downloadingDialogAbortController = new AbortController();
   dialog.showMessageBox(
@@ -138,5 +148,6 @@ module.exports = {
   doUpdate,
   getVersion,
   setFeedURL,
-  checkForUpdates
+  checkForUpdates,
+  checkForUpdatesAtStart
 };

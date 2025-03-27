@@ -1,12 +1,8 @@
-# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2025, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
-actions: [
-  ]
 baseTypes:
 - weblogic.management.runtime.RuntimeMBean
-derivedTypes: [
-  ]
 descriptionHTML: '<p>This MBean is the user API for initiating deployment requests
   and exists only on an Administration Server. To access this MBean, use weblogic.management.deploy.DeployerRuntime.getDeployerRuntime().</p>  <p>The
   deployment methods in this MBean provide access to the two-phase deployment protocol.

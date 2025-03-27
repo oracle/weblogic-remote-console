@@ -1,4 +1,4 @@
-// Copyright (c) 2021, 2024, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2025, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.repo;
@@ -14,6 +14,7 @@ import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
 import javax.json.JsonValue;
 
+import weblogic.console.utils.StringUtils;
 import weblogic.remoteconsole.common.repodef.ActionInputFormDef;
 import weblogic.remoteconsole.common.repodef.BeanActionDef;
 import weblogic.remoteconsole.common.repodef.BeanValueDef;
@@ -38,7 +39,6 @@ import weblogic.remoteconsole.common.repodef.SliceTableDef;
 import weblogic.remoteconsole.common.repodef.SlicesDef;
 import weblogic.remoteconsole.common.repodef.TableDef;
 import weblogic.remoteconsole.common.repodef.UsedIfDef;
-import weblogic.remoteconsole.common.utils.StringUtils;
 
 /**
  * Converts a PageDef to a PDJ

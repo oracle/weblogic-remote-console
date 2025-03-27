@@ -1,12 +1,8 @@
-# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2025, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
-actions: [
-  ]
 baseTypes:
 - weblogic.management.runtime.JaxRsResourceMethodBaseRuntimeMBean
-derivedTypes: [
-  ]
 descriptionHTML: 'The runtime MBean of a resource method. A resource method is Java
   method that is available on a JAX-RS resource class. The resource method is always
   annotated with exactly one http method designator. '

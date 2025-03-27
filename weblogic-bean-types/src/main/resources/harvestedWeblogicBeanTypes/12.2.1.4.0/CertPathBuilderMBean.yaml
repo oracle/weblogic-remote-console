@@ -1,15 +1,8 @@
-# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2025, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
-actions: [
-  ]
 baseTypes:
 - weblogic.management.security.pk.CertPathProviderMBean
-derivedTypes:
-- weblogic.security.providers.pk.WebLogicCertPathProviderMBean
-- weblogic.security.providers.pk.CertificateRegistryMBean
 descriptionHTML: 'The SSPI MBean that all certification path providers with CertPathBuilder
   services must extend. '
 name: weblogic.management.security.pk.CertPathBuilderMBean
-properties: [
-  ]

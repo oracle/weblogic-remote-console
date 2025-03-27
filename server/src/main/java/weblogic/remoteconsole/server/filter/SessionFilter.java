@@ -1,4 +1,4 @@
-// Copyright (c) 2022, 2024, Oracle Corporation and/or its affiliates.
+// Copyright (c) 2022, 2025, Oracle Corporation and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.filter;
@@ -19,7 +19,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.ext.Provider;
 
-import weblogic.remoteconsole.common.utils.StringUtils;
+import weblogic.remoteconsole.common.utils.UrlUtils;
 import weblogic.remoteconsole.server.providers.ProviderManager;
 import weblogic.remoteconsole.server.repo.Frontend;
 import weblogic.remoteconsole.server.repo.FrontendManager;
@@ -177,7 +177,7 @@ public class SessionFilter implements ContainerRequestFilter {
 
     ProviderManager pm = frontend.getProviderManager();
     // Decode only the provider segment
-    String provider = StringUtils.urlDecode(segs.get(1).getPath());
+    String provider = UrlUtils.urlDecode(segs.get(1).getPath());
     if (!pm.hasProvider(provider)) {
       requestContext.abortWith(Response.status(Status.FORBIDDEN).build());
       LOGGER.fine(

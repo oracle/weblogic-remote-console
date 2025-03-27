@@ -111,6 +111,9 @@ define([
         labels: {
           'totalRows': {
             value: ko.observable()
+          },
+          'noData': {
+            value: oj.Translations.getTranslatedString('wrc-table.labels.noData.value')
           }
         },
         dialog: {
@@ -870,7 +873,8 @@ define([
             const ele = document.getElementById('table');
             if (ele !== null) {
               ele.setAttribute('data-clipboard-copycelldata', target.innerText);
-              ele.setAttribute('data-clipboard-copyrowdata', target.parentElement.parentElement.innerText.replace(/^\t/, ''));
+              const match = target.parentElement.innerText.match(/(^\t)?(.+)/);
+              ele.setAttribute('data-clipboard-copyrowdata', (match ? match.at(-1) : ''));
             }
           }
         }
@@ -1199,6 +1203,7 @@ define([
         if (CoreUtils.isNotUndefinedNorNull(hiddenColumns)) {
           columns = columns.concat(hiddenColumns);
         }
+
         const pdjTypes = new PageDataTypes(columns, perspectiveId);
 
         let columnMetadata = self.columnDataProvider();
@@ -1498,10 +1503,7 @@ define([
           properties = [...properties, ...pdjData.table.hiddenColumns];
         }
 
-        const column1 = helpForm.i18n.tables.help.columns.header.name;
-        const column2 = helpForm.i18n.tables.help.columns.header.description;
-
-        const helpData = helpForm.getHelpData(properties, column1, column2);
+        const helpData = helpForm.getHelpData(properties);
         self.helpDataSource(helpData);
 
         const div = helpForm.render();

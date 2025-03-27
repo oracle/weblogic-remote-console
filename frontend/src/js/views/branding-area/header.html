@@ -1,5 +1,5 @@
 <!--
-Copyright (c) 2020, 2024, Oracle and/or its affiliates.
+Copyright (c) 2020, 2025, Oracle and/or its affiliates.
  The Universal Permissive License (UPL), Version 1.0
 -->
 <div id="header-container" role="region" :aria-label="[[i18n.app.region.ariaLabel.value]]">
@@ -33,6 +33,14 @@ Copyright (c) 2020, 2024, Oracle and/or its affiliates.
         <oj-module config="[[appThemeModuleConfig]]"></oj-module>
       </div>
 
+      <oj-bind-if test="[[i18n.buttons.hosted.logout.visible]]">
+        <div id="header-control-buttons" class="oj-flex-item cfe-logout-button">
+          <a href="#" role="link" on-click="[[logoutClickHandler]]" :aria-label="[[i18n.buttons.hosted.logout.label]]">
+            <span><oj-bind-text value="[[i18n.buttons.hosted.logout.label]]"></span>
+          </a>
+        </div>
+      </oj-bind-if>
+      
       <oj-bind-if test="[[i18n.icons.whatsNew.visible]]">
         <a
           :id="[[i18n.icons.whatsNew.id]]"

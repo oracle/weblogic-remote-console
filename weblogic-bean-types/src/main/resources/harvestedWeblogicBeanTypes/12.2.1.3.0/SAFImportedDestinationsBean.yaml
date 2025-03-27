@@ -1,12 +1,8 @@
-# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2025, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
-actions: [
-  ]
 baseTypes:
 - weblogic.j2ee.descriptor.wl.TargetableBean
-derivedTypes: [
-  ]
 descriptionHTML: 'Store-and-Forward (SAF) Imported Destinations is a collection of
   a SAF queues and topics that reside in a different cluster or server. These sets
   of SAF queues and topics refer to the same SAF Remote Context. They can also share

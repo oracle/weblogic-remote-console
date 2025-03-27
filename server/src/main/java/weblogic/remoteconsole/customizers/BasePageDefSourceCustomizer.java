@@ -1,4 +1,4 @@
-// Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+// Copyright (c) 2020, 2025, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.customizers;
@@ -6,17 +6,17 @@ package weblogic.remoteconsole.customizers;
 import java.util.ArrayList;
 import java.util.List;
 
+import weblogic.console.schema.beaninfo.BeanPropertyDefSource;
+import weblogic.console.schema.beaninfo.DefaultValueDefSource;
+import weblogic.console.schema.beaninfo.ValueDefSource;
+import weblogic.console.utils.StringUtils;
 import weblogic.remoteconsole.common.repodef.PagePath;
 import weblogic.remoteconsole.common.repodef.schema.BeanFieldPresentationDefSource;
 import weblogic.remoteconsole.common.repodef.schema.BeanPropertyDefCustomizerSource;
-import weblogic.remoteconsole.common.repodef.schema.BeanPropertyDefSource;
-import weblogic.remoteconsole.common.repodef.schema.DefaultValueDefSource;
 import weblogic.remoteconsole.common.repodef.schema.FormSectionDefSource;
 import weblogic.remoteconsole.common.repodef.schema.LegalValueDefCustomizerSource;
 import weblogic.remoteconsole.common.repodef.schema.PageDefSource;
 import weblogic.remoteconsole.common.repodef.schema.UsedIfDefSource;
-import weblogic.remoteconsole.common.repodef.schema.ValueDefSource;
-import weblogic.remoteconsole.common.utils.StringUtils;
 
 /**
  * Base class with common utils needed to customize a PDY

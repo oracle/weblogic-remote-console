@@ -1,12 +1,8 @@
-# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2025, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
-actions: [
-  ]
 baseTypes:
 - weblogic.management.configuration.ConfigurationMBean
-derivedTypes: [
-  ]
 descriptionHTML: '<p>Use this interface to configure the WebLogic Diagnostic Framework
   (WLDF) components that are defined for each WebLogic Server instance.</p> '
 name: weblogic.management.configuration.WLDFServerDiagnosticMBean

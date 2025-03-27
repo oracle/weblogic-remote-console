@@ -1,4 +1,4 @@
-// Copyright (c) 2021, 2024, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2025, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.repo;
@@ -6,13 +6,13 @@ package weblogic.remoteconsole.server.repo;
 import java.util.ArrayList;
 import java.util.List;
 
+import weblogic.console.utils.Path;
 import weblogic.remoteconsole.common.repodef.BeanChildDef;
 import weblogic.remoteconsole.common.repodef.BeanChildNavTreeNodeDef;
 import weblogic.remoteconsole.common.repodef.BeanTypeDef;
 import weblogic.remoteconsole.common.repodef.GroupNavTreeNodeDef;
 import weblogic.remoteconsole.common.repodef.NavTreeDef;
 import weblogic.remoteconsole.common.repodef.NavTreeNodeDef;
-import weblogic.remoteconsole.common.utils.Path;
 
 /**
  * This class manages expanding nav tree nodes.
@@ -136,6 +136,13 @@ class NavTreeReader extends PageReader {
       BeanChildNavTreeNodeDef childNodeDef,
       NavTreeNode nodeToExpand
     ) {
+      if (childNodeDef.isForceNotExpandable()) {
+        nodeToComplete.setSelectable(true);
+        nodeToComplete.setType(NavTreeNode.Type.COLLECTION);
+        nodeToComplete.setExpandable(false);
+        nodeToComplete.setExpanded(false);
+        return nodeToComplete;
+      }
       Response<List<BeanSearchResults>> getCollectionResponse =
         getCollectionResults(
           getSearchResults(navTreePath.getLastSegment().getBeanTreePath()),
@@ -326,13 +333,16 @@ class NavTreeReader extends PageReader {
       NavTreePath navTreePath =
         new NavTreePath(getPageRepo(), parentNavTreePath.childPath(nodeName));
       if (nodeDef.isChildNodeDef()) {
-        BeanTreePath beanPath = navTreePath.getLastSegment().getBeanTreePath();
-        BeanTypeDef typeDef = beanPath.getTypeDef();
-        addCollectionToSearch(getSearchBuilder(beanPath), beanPath, List.of(typeDef.getIdentityPropertyDef()));
-        if (beanPath.isCollection()) {
-          addCollectionNodeChildrenToExpand(navTreePath, nodeDef.asChildNodeDef(), nodeToExpand);
-        } else {
-          addChildNodeChildrenToExpand(navTreePath, nodeDef.asChildNodeDef(), nodeToExpand);
+        BeanChildNavTreeNodeDef childNodeDef = nodeDef.asChildNodeDef();
+        if (!childNodeDef.isForceNotExpandable()) {
+          BeanTreePath beanPath = navTreePath.getLastSegment().getBeanTreePath();
+          BeanTypeDef typeDef = beanPath.getTypeDef();
+          addCollectionToSearch(getSearchBuilder(beanPath), beanPath, List.of(typeDef.getIdentityPropertyDef()));
+          if (beanPath.isCollection()) {
+            addCollectionNodeChildrenToExpand(navTreePath, childNodeDef, nodeToExpand);
+          } else {
+            addChildNodeChildrenToExpand(navTreePath, childNodeDef, nodeToExpand);
+          }
         }
       } else if (nodeDef.isGroupNodeDef()) {
         addGroupNodeChildrenToExpand(navTreePath, nodeDef.asGroupNodeDef(), nodeToExpand);

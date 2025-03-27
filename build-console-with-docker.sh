@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Copyright 2021, 2024, Oracle Corporation and/or its affiliates.  All rights reserved.
+# Copyright 2021, 2025, Oracle Corporation and/or its affiliates.  All rights reserved.
 # Licensed under the Universal Permissive License v 1.0 as shown at http://oss.oracle.com/licenses/upl.
 
 set -e
@@ -24,6 +24,7 @@ then
 fi
 docker cp $DOCKER_ID:/build/installer/target/. installer/target
 docker cp $DOCKER_ID:/build/frontend/web/. frontend/web
+docker cp $DOCKER_ID:/build/sample-security-providers/target sample-security-providers || true
 docker cp $DOCKER_ID:/build/on-weblogic/target on-weblogic || true
 docker cp $DOCKER_ID:/build/console-rest-ext/target console-rest-ext || true
 docker cp $DOCKER_ID:/build/wls-remote-console-helper-war/war/target wls-remote-console-helper-war/war || true

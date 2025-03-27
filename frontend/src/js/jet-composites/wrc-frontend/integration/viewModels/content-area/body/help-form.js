@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2020, 2024, Oracle and/or its affiliates.
+ * Copyright (c) 2020, 2025, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
@@ -105,7 +105,7 @@ define([
         this.pdjData = pdjData;
       },
 
-      getHelpData: function (properties, column1, column2) {
+      getHelpData: function (properties) {
         function hasPolicyExpressionSliceLayout(pdjData) {
           let rtnval = false;
           if (PageDefinitionHelper.hasSliceFormSlices(pdjData) && PageDefinitionHelper.hasSliceFormProperties(pdjData)) {
@@ -124,10 +124,9 @@ define([
             const name = frontendActionsHelpColumns[i].id;
             const label = frontendActionsHelpColumns[i].helpLabel;
             const fullHelp = frontendActionsHelpColumns[i].detailedHelpHTML;
-            const description = {view: HtmlUtils.stringToNodeArray(fullHelp), data: this};
-            const entries = new Map([[column1, label], [column2, description]]);
-
-            helpData.push(Object.fromEntries(entries));
+            const description = { view: HtmlUtils.stringToNodeArray(fullHelp), data: this };
+            
+            helpData.push({Name: label, Description: description});
           }
         }
 
@@ -146,9 +145,7 @@ define([
             // columns, in a way that honors the language locale
             // skip properties for which there is no help
             if (description) {
-              const entries = new Map([[column1, label], [column2, description]]);
-
-              helpData.push(Object.fromEntries(entries));
+              helpData.push({Name: label, Description: description});
             }
           }
         }
@@ -168,9 +165,7 @@ define([
             // columns, in a way that honors the language locale
             // skip any property that lacks a descprtion
             if (fullHelp) {
-              const entries = new Map([[column1, label], [column2, description]]);
-
-              helpData.push(Object.fromEntries(entries));
+              helpData.push({Name: label, Description: description});
             }
           }
         }

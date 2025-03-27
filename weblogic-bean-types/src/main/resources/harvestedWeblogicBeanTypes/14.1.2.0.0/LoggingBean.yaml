@@ -1,24 +1,9 @@
-# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2025, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
-actions: [
-  ]
-baseTypes: [
-  ]
-derivedTypes: [
-  ]
 descriptionHTML: ' '
 name: weblogic.j2ee.descriptor.wl.LoggingBean
 properties:
-- defaultValue:
-    value:
-      value: 7
-  descriptionHTML: ' '
-  exclude: true
-  name: FileCount
-  supported: false
-  type: int
-  writable: true
 - defaultValue:
     derivedDefault: true
   descriptionHTML: '<p>The date format pattern used for rendering dates in the Server
@@ -34,14 +19,55 @@ properties:
   writable: true
 - defaultValue:
     value:
-      value: bySize
+      value: 7
   descriptionHTML: ' '
   exclude: true
-  legalValues:
-  - bySize
-  - byTime
-  - none
-  name: RotationType
+  name: FileCount
+  supported: false
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: 500
+  descriptionHTML: ' '
+  exclude: true
+  name: FileSizeLimit
+  supported: false
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: 24
+  descriptionHTML: ' '
+  exclude: true
+  name: FileTimeSpan
+  supported: false
+  type: int
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: ' '
+  exclude: true
+  name: Id
+  restartNeeded: true
+  supported: false
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: ' '
+  exclude: true
+  name: LogFileRotationDir
+  supported: false
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: 'Gets the "log-filename" element '
+  exclude: true
+  name: LogFilename
+  redeployNeeded: true
+  restartNeeded: true
   supported: false
   type: java.lang.String
   writable: true
@@ -56,15 +82,6 @@ properties:
   writable: true
 - defaultValue:
     value:
-      value: true
-  descriptionHTML: ' '
-  exclude: true
-  name: RotateLogOnStartup
-  supported: false
-  type: boolean
-  writable: true
-- defaultValue:
-    value:
       value: false
   descriptionHTML: ' '
   exclude: true
@@ -74,12 +91,12 @@ properties:
   writable: true
 - defaultValue:
     value:
-      value: 24
+      value: true
   descriptionHTML: ' '
   exclude: true
-  name: FileTimeSpan
+  name: RotateLogOnStartup
   supported: false
-  type: int
+  type: boolean
   writable: true
 - defaultValue:
     value:
@@ -97,39 +114,16 @@ properties:
   supported: false
   type: java.lang.String
   writable: true
-- defaultValue: {
-    }
-  descriptionHTML: ' '
-  exclude: true
-  name: LogFileRotationDir
-  supported: false
-  type: java.lang.String
-  writable: true
-- defaultValue: {
-    }
-  descriptionHTML: ' '
-  exclude: true
-  name: Id
-  restartNeeded: true
-  supported: false
-  type: java.lang.String
-  writable: true
 - defaultValue:
     value:
-      value: 500
+      value: bySize
   descriptionHTML: ' '
   exclude: true
-  name: FileSizeLimit
-  supported: false
-  type: int
-  writable: true
-- defaultValue: {
-    }
-  descriptionHTML: 'Gets the "log-filename" element '
-  exclude: true
-  name: LogFilename
-  redeployNeeded: true
-  restartNeeded: true
+  legalValues:
+  - bySize
+  - byTime
+  - none
+  name: RotationType
   supported: false
   type: java.lang.String
   writable: true

@@ -1,13 +1,13 @@
-// Copyright (c) 2021, 2023, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2025, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef.yaml;
 
+import weblogic.console.schema.beaninfo.BeanActionParamDefSource;
+import weblogic.console.utils.StringUtils;
 import weblogic.remoteconsole.common.repodef.BeanActionDef;
 import weblogic.remoteconsole.common.repodef.BeanActionParamDef;
 import weblogic.remoteconsole.common.repodef.schema.BeanActionParamDefCustomizerSource;
-import weblogic.remoteconsole.common.repodef.schema.BeanActionParamDefSource;
-import weblogic.remoteconsole.common.utils.StringUtils;
 import weblogic.remoteconsole.server.repo.Value;
 
 /**

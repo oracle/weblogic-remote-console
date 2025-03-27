@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2023, 2024,, Oracle and/or its affiliates.
+ * Copyright (c) 2023, 2025, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
@@ -170,6 +170,19 @@ define([
                   actionPolling['pollCount'] = 0;
                   viewParams.onActionPollingStarted(actionPolling);
                 }
+
+                // If the action was one that required only a single row to be selected
+                // (e.g. 'Move up'/'Move down') then uncheck the row..
+                // This optimizes for the case where a user 
+                //  1. selects a row then performs an action,
+                //  2. selects another row and performs possibly the same action
+                // by obviating the need to deselect the initial row
+                const button = declarativeActions.buttons.find(button => button.name === options.action);
+                
+                if (button && button.rows === DeclarativeActionsManager.RowSelectionType.ONE.name) {
+                  declarativeActions.checkedRows.clear();
+                }
+                
                 viewParams.onCheckedRowsRefreshed();
                 viewParams.onActionButtonsRefreshed();
               }

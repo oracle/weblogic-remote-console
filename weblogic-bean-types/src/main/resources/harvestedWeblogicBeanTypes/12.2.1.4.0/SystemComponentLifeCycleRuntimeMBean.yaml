@@ -1,12 +1,8 @@
-# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2025, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
-actions: [
-  ]
 baseTypes:
 - weblogic.management.runtime.RuntimeMBean
-derivedTypes: [
-  ]
 descriptionHTML: '<p>Provides methods that transition system component from one state
   to another. This class is instantiated only on the Administration Server, but you
   can use it to transition the states of all managed system component servers.</p>  <p>To

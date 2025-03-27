@@ -1,25 +1,8 @@
-# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2025, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
-actions: [
-  ]
 baseTypes:
 - weblogic.management.runtime.RuntimeMBean
-derivedTypes:
-- weblogic.management.runtime.PartitionLifeCycleTaskRuntimeMBean
-- weblogic.diagnostics.accessor.runtime.DataRetirementTaskRuntimeMBean
-- weblogic.management.runtime.WLDFImageCreationTaskRuntimeMBean
-- weblogic.management.runtime.ScalingTaskRuntimeMBean
-- weblogic.management.runtime.DeploymentTaskRuntimeMBean
-- weblogic.management.runtime.JDBCDataSourceTaskRuntimeMBean
-- weblogic.management.runtime.ResourceGroupLifeCycleTaskRuntimeMBean
-- weblogic.management.runtime.JMSMessageManagementTaskRuntimeMBean
-- weblogic.management.runtime.DeploymentRequestTaskRuntimeMBean
-- weblogic.management.runtime.WorkflowTaskRuntimeMBean
-- weblogic.management.runtime.WLDFDebugPatchTaskRuntimeMBean
-- weblogic.management.runtime.MigrationTaskRuntimeMBean
-- weblogic.management.runtime.ServerLifeCycleTaskRuntimeMBean
-- com.bea.wls.redef.runtime.ClassRedefinitionTaskRuntimeMBean
 descriptionHTML: '<p>Exposes monitoring information about an ongoing and potentially
   long-running administrative process.  This should be taken to mean, at minimum,
   any OA&amp;M operation involving I/O.  Examples include starting and stopping servers,

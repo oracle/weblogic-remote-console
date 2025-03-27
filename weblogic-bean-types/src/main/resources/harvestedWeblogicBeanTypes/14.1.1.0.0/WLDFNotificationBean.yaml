@@ -1,23 +1,8 @@
-# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2025, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
-actions: [
-  ]
 baseTypes:
 - weblogic.diagnostics.descriptor.WLDFBean
-derivedTypes:
-- weblogic.diagnostics.descriptor.WLDFJMSNotificationBean
-- weblogic.diagnostics.descriptor.WLDFScriptActionBean
-- weblogic.diagnostics.descriptor.WLDFSMTPNotificationBean
-- weblogic.diagnostics.descriptor.WLDFHeapDumpActionBean
-- weblogic.diagnostics.descriptor.WLDFActionBean
-- weblogic.diagnostics.descriptor.WLDFLogActionBean
-- weblogic.diagnostics.descriptor.WLDFScalingActionBean
-- weblogic.diagnostics.descriptor.WLDFImageNotificationBean
-- weblogic.diagnostics.descriptor.WLDFSNMPNotificationBean
-- weblogic.diagnostics.descriptor.WLDFThreadDumpActionBean
-- weblogic.diagnostics.descriptor.WLDFJMXNotificationBean
-- weblogic.diagnostics.descriptor.WLDFRESTNotificationBean
 descriptionHTML: '<p>Use this interface to define the base class for the different
   types of actions sent by a policy when it evaluates to <code>true</code>.</p> '
 name: weblogic.diagnostics.descriptor.WLDFNotificationBean

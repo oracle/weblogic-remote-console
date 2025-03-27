@@ -1,12 +1,8 @@
-# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2025, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
-actions: [
-  ]
 baseTypes:
 - weblogic.management.configuration.DeploymentMBean
-derivedTypes: [
-  ]
 descriptionHTML: 'This MBean defines the response time goal for this request class.  <p>
   Response time goals can be used to differentiate request classes. We do not try
   to meet a response time goal for an individual request. Rather we compute a tolerable

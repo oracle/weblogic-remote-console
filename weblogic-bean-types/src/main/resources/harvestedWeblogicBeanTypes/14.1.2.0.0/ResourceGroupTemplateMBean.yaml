@@ -1,12 +1,8 @@
-# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2025, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
-actions: [
-  ]
 baseTypes:
 - weblogic.management.configuration.ConfigurationMBean
-derivedTypes:
-- weblogic.management.configuration.ResourceGroupMBean
 descriptionHTML: 'A resource group template is a named, domain-level collection of
   deployable resources intended to be used as a pattern by (usually) multiple resource
   groups. Each resource group that refers to a given template will have its own runtime

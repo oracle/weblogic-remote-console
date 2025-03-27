@@ -1,4 +1,4 @@
-// Copyright (c) 2022, 2023, Oracle and/or its affiliates.
+// Copyright (c) 2022, 2025, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.repo;
@@ -7,10 +7,10 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import weblogic.console.utils.Path;
 import weblogic.remoteconsole.common.repodef.BeanChildDef;
 import weblogic.remoteconsole.common.repodef.PagePropertyDef;
 import weblogic.remoteconsole.common.utils.DateUtils;
-import weblogic.remoteconsole.common.utils.Path;
 
 /**
  * Utility class to convert the in-memory dashboards to the

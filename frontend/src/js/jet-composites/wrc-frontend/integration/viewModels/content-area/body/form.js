@@ -45,6 +45,11 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
             areYouSure: {value: oj.Translations.getTranslatedString('wrc-unsaved-changes.prompts.unsavedChanges.areYouSure.value')}
           }
         },
+        labels: {
+          'noData': {
+            value: oj.Translations.getTranslatedString('wrc-table.labels.noData.value')
+          }
+        },
         icons: {
           restart: {
             iconFile: 'restart-required-org_24x24',
@@ -363,6 +368,16 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
       }
 
       this.connected = function () {
+
+        function setIsReadOnlyRuntimeProperty(pdjData) { 
+          Runtime.setProperty(Runtime.PropertyName.CFE_IS_READONLY, !['configuration', 'modeling', 'properties', 'security'].includes(viewParams.perspective.id));
+          self.readonly(Runtime.isReadOnly());
+        }
+
+        const pdjData = viewParams.parentRouter.data.pdjData();
+        
+        setIsReadOnlyRuntimeProperty(pdjData);
+
         function setWindowTitle(windowTitle) {
           if (Runtime.getRole() === CoreTypes.Console.RuntimeRole.APP.name) {
             document.title = windowTitle;
@@ -2748,6 +2763,10 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
               resourceUrl.searchParams.delete('view');
               rdjUrl = resourceUrl.toString();
             }
+            else if (resourceUrl.searchParams.get('slice') !== '') {
+              resourceUrl.searchParams.delete('slice');
+              rdjUrl = resourceUrl.toString();
+            }
             if (resourceUrl.pathname.endsWith('Dashboards')) dataAction = '';
             const url = `${rdjUrl}${dataAction}`;
             return DataOperations.mbean.save(url, dataPayload)
@@ -4267,7 +4286,8 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
             const ele = document.getElementById('table');
             if (ele !== null) {
               ele.setAttribute('data-clipboard-copycelldata', target.innerText);
-              ele.setAttribute('data-clipboard-copyrowdata', target.parentElement.parentElement.innerText.replace(/^\t/, ''));
+              const match = target.parentElement.innerText.match(/(^\t)?(.+)/);
+              ele.setAttribute('data-clipboard-copyrowdata', (match ? match.at(-1) : ''));
             }
           }
         }
@@ -5654,10 +5674,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojmodule-element-utils', 
         const includeAdvancedFields = (self.showAdvancedFields().length !== 0);
         const properties = getSliceProperties(pdjData, includeAdvancedFields);
 
-        const column1 = helpForm.i18n.tables.help.columns.header.name;
-        const column2 = helpForm.i18n.tables.help.columns.header.description;
-
-        const helpData = helpForm.getHelpData(properties, column1, column2);
+        const helpData = helpForm.getHelpData(properties);
         self.helpDataSource(helpData);
 
         const div = helpForm.render();

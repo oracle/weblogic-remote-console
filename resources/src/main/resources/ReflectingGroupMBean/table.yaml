@@ -1,0 +1,28 @@
+# Copyright (c) 2025, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+getTableRowsMethod: weblogic.remoteconsole.customizers.UserGroupMBeanCustomizer.getGroups
+customizePageMethod: weblogic.remoteconsole.customizers.UserGroupMBeanCustomizer.customizeReflectingGroupsTable
+
+introductionHTML: >
+  <p>This page displays information about each group that has been configured
+  in this authentication provider.</p>
+  <p>A group is an abstract, logical collection of users which has static membership.
+  Groups can be used to define security policies for WebLogic resources.</p>
+  <p>You do not have to use the default groups provided by WebLogic Server.
+  Oracle recommends creating groups that more closely reflect your own business structure and practices.</p>
+
+actions:
+- name: filter
+  rows: none
+  requiredCapabilities:
+  - UserGroupFiltering
+
+displayedColumns:
+- name: "Name"
+- name: "Description"
+
+helpTopics:
+- label: "Securing Resources Using Roles and Policies for Oracle WebLogic Server"
+  href: "roles/index.html"
+  type: "edocs"

@@ -1,4 +1,4 @@
-// Copyright (c) 2022, 2024, Oracle and/or its affiliates.
+// Copyright (c) 2022, 2025, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef;
@@ -6,8 +6,8 @@ package weblogic.remoteconsole.common.repodef;
 import java.util.HashSet;
 import java.util.Set;
 
-import weblogic.remoteconsole.common.utils.Path;
-import weblogic.remoteconsole.common.utils.StringUtils;
+import weblogic.console.utils.Path;
+import weblogic.console.utils.StringUtils;
 import weblogic.remoteconsole.common.utils.WebLogicRoles;
 import weblogic.remoteconsole.server.repo.Value;
 

@@ -1,4 +1,4 @@
-// Copyright (c) 2020, 2024, Oracle Corporation and/or its affiliates.
+// Copyright (c) 2020, 2025, Oracle Corporation and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.utils;
@@ -8,6 +8,8 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Type;
 import java.util.Arrays;
 import java.util.List;
+
+import weblogic.console.utils.StringUtils;
 
 /** Utilities used to help invoke customizers */
 public class CustomizerInvocationUtils {

@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2023, 2024, Oracle and/or its affiliates.
+ * Copyright (c) 2023, 2025, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
@@ -11,6 +11,7 @@ define([
     'knockout',
     'ojs/ojarraydataprovider',
     'ojs/ojmodule-element-utils',
+    'wrc-frontend/microservices/pages-history/pages-history-manager',
     'wrc-frontend/microservices/provider-management/data-provider-manager',
     'wrc-frontend/microservices/provider-management/data-provider',
     './provider-management',
@@ -40,6 +41,7 @@ define([
     ko,
     ArrayDataProvider,
     ModuleElementUtils,
+    PagesHistoryManager,
     DataProviderManager,
     DataProvider,
     ProviderManagement,
@@ -2671,6 +2673,8 @@ define([
         self.connectionsModelsSelectedItem(null);
         // Select 'dataproviders' tab strip and collapse console Kiosk
         viewParams.signaling.ancillaryContentItemCleared.dispatch('providers');
+        // Clear pages history
+        PagesHistoryManager.resetPagesHistoryData();
       }
 
       function removeSucceededHandler(dataProvider, showDialog = true) {

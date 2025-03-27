@@ -1,4 +1,4 @@
-// Copyright (c) 2022, 2024, Oracle and/or its affiliates.
+// Copyright (c) 2022, 2025, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.customizers;
@@ -9,13 +9,13 @@ import java.util.Map;
 import java.util.TreeMap;
 import javax.ws.rs.NotFoundException;
 
+import weblogic.console.utils.Path;
+import weblogic.console.utils.StringUtils;
 import weblogic.remoteconsole.common.repodef.BeanPropertyDef;
 import weblogic.remoteconsole.common.repodef.BeanTypeDef;
 import weblogic.remoteconsole.common.repodef.LocalizedConstants;
 import weblogic.remoteconsole.common.repodef.PageActionDef;
 import weblogic.remoteconsole.common.repodef.PageDef;
-import weblogic.remoteconsole.common.utils.Path;
-import weblogic.remoteconsole.common.utils.StringUtils;
 import weblogic.remoteconsole.server.repo.BeanReaderRepoSearchResults;
 import weblogic.remoteconsole.server.repo.BeanSearchResults;
 import weblogic.remoteconsole.server.repo.BeanTreePath;

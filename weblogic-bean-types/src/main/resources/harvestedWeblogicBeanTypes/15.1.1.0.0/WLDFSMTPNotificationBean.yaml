@@ -1,0 +1,49 @@
+# Copyright (c) 2020, 2025, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+baseTypes:
+- weblogic.diagnostics.descriptor.WLDFNotificationBean
+descriptionHTML: '<p>Use this interface to define a SMTP action, which is sent when
+  a diagnostic policy evaluates to <code>true</code>.</p> <p>Note: As of WebLogic
+  Server 12.2.1, the terms <i>watch</i> and <i>notification</i> are replaced by <i>policy</i>
+  and <i>action</i>, respectively. However, the definition of these terms has not
+  changed.</p> '
+name: weblogic.diagnostics.descriptor.WLDFSMTPNotificationBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The body for the mail message. If the body is not specified,
+    a body is created from the action information.</p> '
+  name: Body
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The JNDI name of the mail session. This name must match the
+    attribute in the corresponding MailSessionMBean.</p> '
+  name: MailSessionJNDIName
+  nullable: true
+  type: java.lang.String
+  writable: true
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: '<p>The address of the recipient or recipients of the SMTP action
+    mail. The address uses the syntax defined in RFC822. Typical address syntax is
+    of the form <code><i>user</i>@<i>host</i>.<i>domain</i></code> or <code><i>Personal
+    Name</i></code>. An address can include multiple recipients, separated by commas
+    or spaces.</p>  <p>For more information, refer to the jakarta.mail.internet.InternetAddress.parse
+    method.</p> '
+  name: Recipients
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The subject for the mail message. If the subject is not specified,
+    a subject is created from the action information.</p> '
+  name: Subject
+  type: java.lang.String
+  writable: true
+roles:
+  allowed:
+  - Deployer

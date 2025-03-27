@@ -1,18 +1,8 @@
-# Copyright (c) 2020, 2024, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2025, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
-actions: [
-  ]
 baseTypes:
 - weblogic.management.security.authentication.AuthenticationProviderMBean
-derivedTypes:
-- weblogic.security.providers.authentication.OIDCIdentityAsserterMBean
-- com.bea.security.saml2.providers.SAML2IdentityAsserterMBean
-- weblogic.security.providers.authentication.DefaultIdentityAsserterMBean
-- weblogic.security.providers.authentication.NegotiateIdentityAsserterMBean
-- weblogic.security.providers.saml.SAMLIdentityAsserterV2MBean
-- weblogic.security.providers.authentication.OracleIdentityCloudIntegratorMBean
-- weblogic.security.providers.authentication.LDAPX509IdentityAsserterMBean
 descriptionHTML: 'The SSPI MBean that all Identity Assertion providers must extend.
   This MBean enables an Identity Assertion provider to specify the token types for
   which it is capable of asserting identity. '

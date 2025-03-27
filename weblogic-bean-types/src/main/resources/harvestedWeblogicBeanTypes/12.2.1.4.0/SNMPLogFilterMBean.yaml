@@ -1,12 +1,8 @@
-# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2025, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
-actions: [
-  ]
 baseTypes:
 - weblogic.management.configuration.SNMPTrapSourceMBean
-derivedTypes: [
-  ]
 descriptionHTML: 'This MBean represents a filter to qualify log messages which are
   logged to the server logfile. A message must qualify criteria specified as a filter
   in order to generate a notification. Multiple instances of this MBean can be defined,

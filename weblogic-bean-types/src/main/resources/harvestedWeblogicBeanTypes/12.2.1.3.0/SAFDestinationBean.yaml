@@ -1,13 +1,8 @@
-# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2025, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
-actions: [
-  ]
 baseTypes:
 - weblogic.j2ee.descriptor.wl.NamedEntityBean
-derivedTypes:
-- weblogic.j2ee.descriptor.wl.SAFQueueBean
-- weblogic.j2ee.descriptor.wl.SAFTopicBean
 descriptionHTML: 'Store-and-Forward (SAF) destinations are used for asynchronous and
   disconnected peer communications. A message delivered to a SAF queue or a SAF topic
   will be forwarded to a queue or a topic in a remote cluster or server. Aspects of

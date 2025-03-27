@@ -1,15 +1,17 @@
-// Copyright (c) 2021, 2023, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2025, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef.weblogic;
 
+import weblogic.console.schema.beaninfo.BeanActionDefSource;
+import weblogic.console.schema.beaninfo.BeanPropertyDefSource;
+import weblogic.console.schema.beaninfo.BeanTypeDefSource;
+import weblogic.console.utils.Path;
+import weblogic.console.utils.StringUtils;
 import weblogic.remoteconsole.common.repodef.BeanPropertyDef;
 import weblogic.remoteconsole.common.repodef.schema.BeanActionDefCustomizerSource;
-import weblogic.remoteconsole.common.repodef.schema.BeanActionDefSource;
 import weblogic.remoteconsole.common.repodef.schema.BeanChildDefCustomizerSource;
 import weblogic.remoteconsole.common.repodef.schema.BeanPropertyDefCustomizerSource;
-import weblogic.remoteconsole.common.repodef.schema.BeanPropertyDefSource;
-import weblogic.remoteconsole.common.repodef.schema.BeanTypeDefSource;
 import weblogic.remoteconsole.common.repodef.schema.PseudoBeanTypeDefSource;
 import weblogic.remoteconsole.common.repodef.yaml.BaseBeanTypeDefImpl;
 import weblogic.remoteconsole.common.repodef.yaml.BeanActionDefImpl;
@@ -18,8 +20,6 @@ import weblogic.remoteconsole.common.repodef.yaml.BeanPropertyDefImpl;
 import weblogic.remoteconsole.common.repodef.yaml.BeanRepoDefImpl;
 import weblogic.remoteconsole.common.repodef.yaml.NormalBeanTypeDefImpl;
 import weblogic.remoteconsole.common.repodef.yaml.PseudoBeanTypeDefImpl;
-import weblogic.remoteconsole.common.utils.Path;
-import weblogic.remoteconsole.common.utils.StringUtils;
 import weblogic.remoteconsole.common.utils.WebLogicMBeansVersion;
 
 /**

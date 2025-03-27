@@ -1,4 +1,4 @@
-// Copyright (c) 2021, 2024, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2025, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.repo.weblogic;
@@ -14,10 +14,11 @@ import javax.json.JsonObject;
 import javax.ws.rs.core.Response.Status;
 
 import org.glassfish.jersey.media.multipart.FormDataMultiPart;
+import weblogic.console.utils.Path;
 import weblogic.remoteconsole.common.repodef.LocalizableString;
 import weblogic.remoteconsole.common.repodef.LocalizedConsoleRestExtensionConstants;
 import weblogic.remoteconsole.common.utils.Message;
-import weblogic.remoteconsole.common.utils.Path;
+import weblogic.remoteconsole.common.utils.UrlUtils;
 import weblogic.remoteconsole.server.repo.InvocationContext;
 import weblogic.remoteconsole.server.repo.Response;
 import weblogic.remoteconsole.server.utils.ResponseHelper;
@@ -53,7 +54,7 @@ public class WebLogicRestInvoker {
     WebLogicRestRequest request =
       builder
         .connection(ic.getConnection())
-        .path(path.getRelativeUri())
+        .path(UrlUtils.pathToRelativeUri(path))
         .expandedValues(expandedValues)
         // returns properties tagged @restInternal,
         // e.g. some deprecated ServerRuntimeMBean properties the remote console uses:
@@ -94,7 +95,7 @@ public class WebLogicRestInvoker {
     WebLogicRestRequest request =
       builder
         .connection(ic.getConnection())
-        .path(path.getRelativeUri())
+        .path(UrlUtils.pathToRelativeUri(path))
         .saveChanges(saveChanges)
         .expandedValues(expandedValues)
         .asynchronous(asynchronous)
@@ -123,7 +124,7 @@ public class WebLogicRestInvoker {
     WebLogicRestRequest request =
       WebLogicRestRequest.builder()
       .connection(ic.getConnection())
-      .path(path.getRelativeUri())
+      .path(UrlUtils.pathToRelativeUri(path))
       .saveChanges(saveChanges)
       .expandedValues(expandedValues)
       .asynchronous(asynchronous)
@@ -149,7 +150,7 @@ public class WebLogicRestInvoker {
     WebLogicRestRequest request =
       WebLogicRestRequest.builder()
       .connection(ic.getConnection())
-      .path(path.getRelativeUri())
+      .path(UrlUtils.pathToRelativeUri(path))
       .saveChanges(saveChanges)
       .asynchronous(asynchronous)
       .build();

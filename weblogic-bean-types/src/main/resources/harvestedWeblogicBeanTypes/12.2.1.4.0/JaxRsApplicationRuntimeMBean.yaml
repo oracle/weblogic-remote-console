@@ -1,12 +1,8 @@
-# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2025, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
-actions: [
-  ]
 baseTypes:
 - weblogic.management.runtime.JaxRsMonitoringInfoRuntimeMBean
-derivedTypes: [
-  ]
 descriptionHTML: 'This the runtime server MBean for a JAX-RS application. There can
   be more than one JAX-RS application per Web Application. The list of available JAX-RS
   applications can be got through the method <code>public JaxRsApplicationMBean[]

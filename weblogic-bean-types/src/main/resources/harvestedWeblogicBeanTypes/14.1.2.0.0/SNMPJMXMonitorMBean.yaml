@@ -1,14 +1,8 @@
-# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2025, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
-actions: [
-  ]
 baseTypes:
 - weblogic.management.configuration.SNMPTrapSourceMBean
-derivedTypes:
-- weblogic.management.configuration.SNMPGaugeMonitorMBean
-- weblogic.management.configuration.SNMPCounterMonitorMBean
-- weblogic.management.configuration.SNMPStringMonitorMBean
 descriptionHTML: '<p>This is a base class for Monitor based trap configuration MBeans
   : SNMPCounterMonitorMBean, SNMPStringMonitorMBean and SNMPGaugeMonitorMBean.</p> '
 name: weblogic.management.configuration.SNMPJMXMonitorMBean

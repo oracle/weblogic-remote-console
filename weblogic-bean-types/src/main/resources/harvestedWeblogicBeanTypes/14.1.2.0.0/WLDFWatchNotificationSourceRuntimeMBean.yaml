@@ -1,12 +1,8 @@
-# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2025, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
-actions: [
-  ]
 baseTypes:
 - weblogic.management.runtime.RuntimeMBean
-derivedTypes: [
-  ]
 descriptionHTML: '<p>Attaches an action listener in order to receive action events
   when a policy evaluates to <code>true</code>. Note that the listener will receive
   all actions; the caller must filter the output.</p>  <p>Unlike the deprecated WLDFWatchJMXNotificationRuntimeMBean,
@@ -16,5 +12,3 @@ descriptionHTML: '<p>Attaches an action listener in order to receive action even
   replaced by <i>policy</i> and <i>action</i>, respectively. However, the definition
   of these terms has not changed.</p> '
 name: weblogic.management.runtime.WLDFWatchNotificationSourceRuntimeMBean
-properties: [
-  ]

@@ -1,13 +1,8 @@
-# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2025, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
-actions: [
-  ]
 baseTypes:
 - weblogic.diagnostics.descriptor.WLDFNotificationBean
-derivedTypes:
-- weblogic.diagnostics.descriptor.WLDFScaleUpActionBean
-- weblogic.diagnostics.descriptor.WLDFScaleDownActionBean
 descriptionHTML: '<p> Base interface that defines the common attributes for all scaling
   event actions that can be assigned to a WLDF policy.  Each scaling action type can
   be configured to scale a target cluster up or down a number of instances, indicated

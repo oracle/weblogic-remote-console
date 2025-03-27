@@ -1,12 +1,8 @@
-# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2025, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
-actions: [
-  ]
 baseTypes:
 - weblogic.descriptor.SettableBean
-derivedTypes: [
-  ]
 descriptionHTML: '<p>Many delivery parameters can be set by the JMS client.  These
   overrides, if set, will cause those specific parameters to be ignored and replaced
   by the value set here.</p> '

@@ -5,8 +5,12 @@ package weblogic.remoteconsole.common.repodef.schema;
 
 import java.util.List;
 
+import weblogic.console.schema.BooleanValue;
+import weblogic.console.schema.ListValue;
+import weblogic.console.schema.StringValue;
+import weblogic.console.schema.YamlSource;
+import weblogic.console.utils.StringUtils;
 import weblogic.remoteconsole.common.utils.CustomizerInvocationUtils;
-import weblogic.remoteconsole.common.utils.StringUtils;
 
 /**
  * This POJO mirrors the yaml source file format for configuring information about any page.

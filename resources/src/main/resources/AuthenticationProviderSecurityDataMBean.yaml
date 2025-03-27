@@ -1,10 +1,6 @@
-# Copyright (c) 2023, 2024, Oracle and/or its affiliates.
+# Copyright (c) 2023, 2025, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 name: weblogic.management.security.AuthenticationProviderSecurityDataMBean
 baseTypes:
 - weblogic.management.security.ProviderSecurityDataMBean
-derivedTypes:
-- weblogic.security.providers.authentication.DefaultAuthenticatorSecurityDataMBean
-- com.bea.security.saml2.providers.SAML2IdentityAsserterSecurityDataMBean
-- weblogic.management.security.authentication.UserGroupReaderMBean

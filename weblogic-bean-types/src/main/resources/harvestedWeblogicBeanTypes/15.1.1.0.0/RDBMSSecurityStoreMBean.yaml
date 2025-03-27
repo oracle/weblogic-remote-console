@@ -1,0 +1,193 @@
+# Copyright (c) 2020, 2025, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+baseTypes:
+- weblogic.descriptor.SettableBean
+descriptionHTML: '<p>The MBean that represents configuration attributes for a RDBMS
+  security store. It is used to specify the required and optional properties for connecting
+  to a RDBMS back-end store.</p> '
+name: weblogic.management.security.RDBMSSecurityStoreMBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The JDBC driver specific connection parameters. This attribute
+    is a comma-delimited list of key-value properties to pass to the driver for configuration
+    of JDBC connection pool, in the form of <code><i>xx</i>Key=<i>xx</i>Value, <i>xx</i>Key=<i>xx</i>Value</code>.</p>  <p>The
+    syntax of the attribute will be validated and an <code>InvalidAttributeValueException</code>
+    is thrown if the check failed.</p> '
+  name: ConnectionProperties
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The URL of the database to which to connect. The format of
+    the URL varies by JDBC driver.</p>  <p>The URL is passed to the JDBC driver to
+    create the physical database connections.</p> '
+  name: ConnectionURL
+  nullable: true
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The full package name of the JDBC driver class used to create
+    the physical database connections in the connection pool. Note that this driver
+    class must be in the classpath of any server to which it is deployed.</p>  <p>For
+    example:</p> <ul> <li><code>oracle.jdbc.OracleDriver</code></li> <li><code>com.microsoft.sqlserver.jdbc.SQLServerDriver</code></li>
+    </ul> <p>It must be the name of a class that implements the <code>java.sql.Driver</code>
+    interface. The full pathname of the JDBC driver is available in the documentation.
+    </p> '
+  name: DriverName
+  nullable: true
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: 0
+  descriptionHTML: '<p>The number of times to attempt to reconnect if the JMS system
+    notifies Kodo of a serious connection error.</p>  <p>The default is 0, and by
+    default the error is logged but ignored. The value cannot be less than 0.</p> '
+  name: JMSExceptionReconnectAttempts
+  restartNeeded: true
+  type: int
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: 'The JMS topic to which the Kodo remote commit provider should
+    publish notifications and subscribe for notifications sent from other JVMs. This
+    setting varies depending on the application server in use. '
+  name: JMSTopic
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The JNDI name of a <code>jakarta.jms.TopicConnectionFactory</code>
+    instance to use for finding JMS topics.</p>  <p>This setting varies depending
+    on the application server in use. Consult the JMS documentation for details about
+    how this parameter should be specified.</p> '
+  name: JMSTopicConnectionFactory
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The password to authenticate the user defined in the <code>JNDIUsername</code>
+    attribute for Kodo notification.</p> <p>When getting the value of this attribute,
+    WebLogic Server does the following:</p> <ul> <li>Retrieves the value of the <code>JNDIPasswordEncrypted</code>
+    attribute.</li> <li>Decrypts the value and returns the unencrypted password as
+    a String. </li> </ul>  <p>When you set the value of this attribute, WebLogic Server
+    does the following:</p> <ul> <li>Encrypts the value.</li> <li>Sets the value of
+    the <code>JNDIPasswordEncrypted</code> attribute to the encrypted value.</li>
+    </ul>  <p>Using this attribute (<code>JNDIPassword</code>) is a potential security
+    risk because the String object (which contains the unencrypted password) remains
+    in the JVM''s memory until garbage collection removes it and the memory is reallocated.
+    Depending on how memory is allocated in the JVM, a significant amount of time
+    could pass before this unencrypted data is removed from memory.</p>  <p>Instead
+    of using this attribute, use <code>JNDIPasswordEncrypted</code>.</p> '
+  encrypted: true
+  name: JNDIPassword
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: '<p>Returns the encrypted password to authenticate the user defined
+    in the <code>JNDIUsername</code> attribute for Kodo notification.</p>  <p>To set
+    this attribute, use <code>weblogic.management.EncryptionHelper.encrypt()</code>
+    to encrypt the value. Then set this attribute to the output of the encrypt() method.</p>  <p>To
+    compare a password that a user enters with the encrypted value of this attribute,
+    go to the same WebLogic Server instance that you used to set and encrypt this
+    attribute and use <code>weblogic.management.EncryptionHelper.encrypt()</code>
+    to encrypt the user-supplied password. Then compare the encrypted values.</p> '
+  encrypted: true
+  name: JNDIPasswordEncrypted
+  restartNeeded: true
+  type: byte
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: 'The JNDI user name used for Kodo notification. '
+  name: JNDIUsername
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: RDBMSSecurityStore
+  descriptionHTML: 'The name of this configuration. '
+  name: Name
+  type: java.lang.String
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The comma-delimited list of key-value properties to pass to
+    the JNDI InitialContext on construction, in the form of <code><i>xx</i>Key=<i>xx</i>Value,
+    <i>xx</i>Key=<i>xx</i>Value</code>.</p>  <p>The following are examples of keys:</p>
+    <ul> <li><code>java.naming.provider.url:</code> property for specifying configuration
+    information for the service provider to use. The value of the property should
+    contain a URL string (For example: <code>iiops://localhost:7002</code>).</li>
+    <li><code>java.naming.factory.initial:</code> property for specifying the initial
+    context factory to use. The value of the property should be the fully qualified
+    class name of the factory class that will create an initial context (For example:
+    <code>weblogic.jndi.WLInitialContextFactory</code>).</li> </ul>  <p>When setting
+    the attribute, the syntax of its value is validated, and an <code>InvalidAttributeValueException</code>
+    is thrown if the check fails.</p> '
+  name: NotificationProperties
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The password for the user specified in the <code>Username</code>
+    attribute for connecting to the datastore.</p>  <p>When getting the value of this
+    attribute, WebLogic Server does the following:</p> <ul> <li>Retrieves the value
+    of the <code>PasswordEncrypted</code> attribute.</li> <li>Decrypts the value and
+    returns the unencrypted password as a String.</li> </ul>  <p>When you set the
+    value of this attribute, WebLogic Server does the following:</p> <ul> <li>Encrypts
+    the value.</li> <li>Sets the value of the <code>PasswordEncrypted</code> attribute
+    to the encrypted value.</li> </ul>  <p>Note that use of the <code>Password</code>
+    attribute is a potential security risk because the String object that contains
+    the unencrypted password remains in the JVM''s memory until garbage collection
+    removes it and the memory is reallocated. Depending on how memory is allocated
+    in the JVM, a significant amount of time could pass before this unencrypted data
+    is removed from memory.</p>  <p>Instead of using this attribute, use <code>PasswordEncrypted</code>.</p> '
+  encrypted: true
+  name: Password
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: '<p>Returns the encrypted password to authenticate the user defined
+    in the <code>Username</code> attribute when connecting to the data store.</p>  <p>To
+    set this attribute, use <code>weblogic.management.EncryptionHelper.encrypt()</code>
+    to encrypt the value. Then set this attribute to the output of the encrypt() method.</p>  <p>To
+    compare a password that a user enters with the encrypted value of this attribute,
+    go to the same WebLogic Server instance that you used to set and encrypt this
+    attribute and use <code>weblogic.management.EncryptionHelper.encrypt()</code>
+    to encrypt the user-supplied password. Then compare the encrypted values.</p> '
+  encrypted: true
+  name: PasswordEncrypted
+  restartNeeded: true
+  type: byte
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: 'Returns the realm that contains this RDBMS security store. Returns
+    null if this RDBMS security store is not contained by a realm. '
+  name: Realm
+  relationship: reference
+  transient: true
+  type: weblogic.management.security.RealmMBean
+- defaultValue: {
+    }
+  descriptionHTML: 'The username to use when connecting to the datastore. '
+  name: Username
+  nullable: true
+  restartNeeded: true
+  type: java.lang.String
+  writable: true

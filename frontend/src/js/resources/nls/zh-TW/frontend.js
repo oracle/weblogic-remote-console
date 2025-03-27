@@ -8,6 +8,11 @@ define({
         "value": "應用程式標頭"
       }
     },
+    "buttons": {
+      "logout": {
+        "label": "Logout"
+      }
+    },
     "icons": {
       "navtree": {
         "toggler": {
@@ -1160,6 +1165,9 @@ define({
       },
       "reloadHidden": {
         "value": "重新載入表格以檢視目前的 {0} 值"
+      },
+      "noData": {
+        "value": "找不到資料."
       }
     }
   },

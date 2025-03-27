@@ -1,22 +1,8 @@
-# Copyright (c) 2020, 2024, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2025, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
-actions: [
-  ]
 baseTypes:
 - weblogic.management.security.IdentityDomainAwareProviderMBean
-derivedTypes:
-- weblogic.security.providers.authentication.LDAPAuthenticatorMBean
-- weblogic.security.providers.authentication.OIDCIdentityAsserterMBean
-- weblogic.security.providers.authentication.VirtualUserAuthenticatorMBean
-- weblogic.security.providers.authentication.DefaultAuthenticatorMBean
-- com.bea.security.saml2.providers.SAML2IdentityAsserterMBean
-- weblogic.security.providers.authentication.DefaultIdentityAsserterMBean
-- weblogic.security.providers.authentication.NegotiateIdentityAsserterMBean
-- weblogic.security.providers.saml.SAMLIdentityAsserterV2MBean
-- weblogic.security.providers.authentication.DBMSAuthenticatorMBean
-- weblogic.security.providers.saml.SAMLAuthenticatorMBean
-- weblogic.security.providers.authentication.LDAPX509IdentityAsserterMBean
 descriptionHTML: 'Defines methods used to get/set the identity domain attribute used
   to determine the identity domain that an authenticator or identity asserter handles. '
 name: weblogic.management.security.authentication.IdentityDomainAuthenticatorMBean

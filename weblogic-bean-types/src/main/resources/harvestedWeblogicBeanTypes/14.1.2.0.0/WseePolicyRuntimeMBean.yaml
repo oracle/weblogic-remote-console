@@ -1,12 +1,8 @@
-# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2025, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
-actions: [
-  ]
 baseTypes:
 - weblogic.management.runtime.RuntimeMBean
-derivedTypes: [
-  ]
 descriptionHTML: '<p>Specifies runtime information about the WS-Policy files that
   are available for the Web Service.</p>  <p>Web Services can have one or more WS-Policy
   files associated with the endpoint itself or its operations; the WS-Policy files

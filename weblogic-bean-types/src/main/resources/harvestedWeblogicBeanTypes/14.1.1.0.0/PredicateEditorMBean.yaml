@@ -1,15 +1,8 @@
-# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2025, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
-actions: [
-  ]
 baseTypes:
 - weblogic.management.security.authorization.PredicateReaderMBean
-derivedTypes:
-- weblogic.security.providers.xacml.authorization.XACMLAuthorizerMBean
-- weblogic.security.providers.xacml.authorization.XACMLRoleMapperMBean
-- weblogic.security.providers.authorization.DefaultRoleMapperMBean
-- weblogic.security.providers.authorization.DefaultAuthorizerMBean
 descriptionHTML: 'This MBean edits data about predicates and their arguments.  This
   is a type-safe interface for a WebLogic Server MBean, which you can import into
   your client classes and access through <code>weblogic.management.MBeanHome</code>.
@@ -19,5 +12,3 @@ descriptionHTML: 'This MBean edits data about predicates and their arguments.  T
   use the <code>javax.management.MBeanServerConnection</code> interface to discover
   MBeans, attributes, and attribute types at runtime. '
 name: weblogic.management.security.authorization.PredicateEditorMBean
-properties: [
-  ]

@@ -1,12 +1,6 @@
-# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2025, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
-actions: [
-  ]
-baseTypes: [
-  ]
-derivedTypes: [
-  ]
 descriptionHTML: ' '
 name: weblogic.j2ee.descriptor.wl.XAParamsBean
 properties:
@@ -14,16 +8,7 @@ properties:
     }
   descriptionHTML: ' '
   exclude: true
-  name: XaSetTransactionTimeout
-  restartNeeded: true
-  supported: false
-  type: boolean
-  writable: true
-- defaultValue: {
-    }
-  descriptionHTML: ' '
-  exclude: true
-  name: XaRetryDurationSeconds
+  name: DebugLevel
   restartNeeded: true
   supported: false
   type: int
@@ -32,16 +17,7 @@ properties:
     }
   descriptionHTML: ' '
   exclude: true
-  name: RecoverOnlyOnceEnabled
-  restartNeeded: true
-  supported: false
-  type: boolean
-  writable: true
-- defaultValue: {
-    }
-  descriptionHTML: ' '
-  exclude: true
-  name: NewConnForCommitEnabled
+  name: EndOnlyOnceEnabled
   restartNeeded: true
   supported: false
   type: boolean
@@ -59,7 +35,25 @@ properties:
     }
   descriptionHTML: ' '
   exclude: true
+  name: KeepLogicalConnOpenOnRelease
+  restartNeeded: true
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: ' '
+  exclude: true
   name: LocalTransactionSupported
+  restartNeeded: true
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: ' '
+  exclude: true
+  name: NewConnForCommitEnabled
   restartNeeded: true
   supported: false
   type: boolean
@@ -77,7 +71,7 @@ properties:
     }
   descriptionHTML: ' '
   exclude: true
-  name: KeepLogicalConnOpenOnRelease
+  name: RecoverOnlyOnceEnabled
   restartNeeded: true
   supported: false
   type: boolean
@@ -95,7 +89,7 @@ properties:
     }
   descriptionHTML: ' '
   exclude: true
-  name: EndOnlyOnceEnabled
+  name: RollbackLocaltxUponConnclose
   restartNeeded: true
   supported: false
   type: boolean
@@ -113,28 +107,28 @@ properties:
     }
   descriptionHTML: ' '
   exclude: true
+  name: XaRetryDurationSeconds
+  restartNeeded: true
+  supported: false
+  type: int
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: ' '
+  exclude: true
+  name: XaSetTransactionTimeout
+  restartNeeded: true
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: ' '
+  exclude: true
   name: XaTransactionTimeout
   restartNeeded: true
   supported: false
   type: int
-  writable: true
-- defaultValue: {
-    }
-  descriptionHTML: ' '
-  exclude: true
-  name: DebugLevel
-  restartNeeded: true
-  supported: false
-  type: int
-  writable: true
-- defaultValue: {
-    }
-  descriptionHTML: ' '
-  exclude: true
-  name: RollbackLocaltxUponConnclose
-  restartNeeded: true
-  supported: false
-  type: boolean
   writable: true
 roles:
   allowed:

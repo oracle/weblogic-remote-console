@@ -1,4 +1,4 @@
-// Copyright (c) 2021, 2023, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2025, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef.yaml;
@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 
+import weblogic.console.utils.Path;
 import weblogic.remoteconsole.common.repodef.ActionInputFormPagePath;
 import weblogic.remoteconsole.common.repodef.BeanRepoDef;
 import weblogic.remoteconsole.common.repodef.BeanTypeDef;
@@ -28,7 +29,6 @@ import weblogic.remoteconsole.common.repodef.schema.SliceFormDefSource;
 import weblogic.remoteconsole.common.repodef.schema.SliceTableDefSource;
 import weblogic.remoteconsole.common.repodef.schema.SlicesDefSource;
 import weblogic.remoteconsole.common.repodef.schema.TableDefSource;
-import weblogic.remoteconsole.common.utils.Path;
 
 /**
  * yaml-based implemetation of the PageRepoDef interface

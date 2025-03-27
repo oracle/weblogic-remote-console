@@ -1,4 +1,4 @@
-// Copyright (c) 2020, 2024, Oracle Corporation and/or its affiliates.
+// Copyright (c) 2020, 2025, Oracle Corporation and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.providers;
@@ -11,6 +11,7 @@ import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.TreeSet;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.json.Json;
@@ -20,10 +21,11 @@ import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
 import javax.ws.rs.core.Response;
 
+import weblogic.console.utils.StringUtils;
 import weblogic.remoteconsole.common.repodef.LocalizableString;
 import weblogic.remoteconsole.common.repodef.LocalizedConstants;
 //import weblogic.remoteconsole.common.utils.RemoteConsoleExtension;
-import weblogic.remoteconsole.common.utils.StringUtils;
+import weblogic.remoteconsole.common.utils.UrlUtils;
 import weblogic.remoteconsole.common.utils.WebLogicMBeansVersion;
 import weblogic.remoteconsole.common.utils.WebLogicRoles;
 import weblogic.remoteconsole.server.ConsoleBackendRuntime;
@@ -79,6 +81,7 @@ public class AdminServerDataProviderImpl implements AdminServerDataProvider {
   private Root securityDataRoot;
   private Timer localConnectionTimer = null;
   private volatile ClientAuthHeader clientAuthHeader = null;
+  private Map<String,Object> cache = new ConcurrentHashMap<>();
   private static LocalConnectionInfoFetcher localConnectionInfoFetcher;
 
   public AdminServerDataProviderImpl(
@@ -530,7 +533,7 @@ public class AdminServerDataProviderImpl implements AdminServerDataProvider {
 
   private void addStatusToJSON(JsonObjectBuilder jsonBuilder) {
     JsonObjectBuilder statusBuilder = Json.createObjectBuilder();
-    String resourceData = "/" + UriUtils.API_URI + "/" + StringUtils.urlEncode(getName()) + "/domainStatus";
+    String resourceData = "/" + UriUtils.API_URI + "/" + UrlUtils.urlEncode(getName()) + "/domainStatus";
     statusBuilder.add("resourceData", resourceData);
     statusBuilder.add("refreshSeconds", 15);
     jsonBuilder.add("domainStatus", statusBuilder);
@@ -546,6 +549,11 @@ public class AdminServerDataProviderImpl implements AdminServerDataProvider {
   @Override
   public boolean isValidPath(String path) {
     return true;
+  }
+
+  @Override
+  public Map<String,Object> getCache() {
+    return cache;
   }
 
   private boolean refreshLocalConnectionToken() {
@@ -684,7 +692,8 @@ public class AdminServerDataProviderImpl implements AdminServerDataProvider {
         messageLabel = LocalizedConstants.WEBLOGIC_REST_DELEGATION_NOT_WORKING_MESSAGE;
         setExternalLink(
           LocalizedConstants.WEBLOGIC_REST_DELEGATION_NOT_WORKING_LINK,
-          ConsoleBackendRuntimeConfig.getDocumentationSite() + "/reference/troubleshoot/#rest-communication"
+          ConsoleBackendRuntimeConfig.getDocumentationSite()
+            + "/troubleshoot-weblogic-remote-console/#GUID-2EF5267E-FE34-4D74-BF2F-3F318E47062A"
         );
         setMessageDetails(
           LocalizedConstants.WEBLOGIC_REST_DELEGATION_NOT_WORKING_DETAILS_LABEL,
@@ -835,7 +844,7 @@ public class AdminServerDataProviderImpl implements AdminServerDataProvider {
 
     private void setPageLink(LocalizableString label, String path) {
       linkLabel = label;
-      linkResourceData = "/" + UriUtils.API_URI + "/" + StringUtils.urlEncode(getName()) + "/" + path;
+      linkResourceData = "/" + UriUtils.API_URI + "/" + UrlUtils.urlEncode(getName()) + "/" + path;
       linkHref = null;
     }
 

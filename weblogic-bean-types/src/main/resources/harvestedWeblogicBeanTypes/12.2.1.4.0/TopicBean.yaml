@@ -1,12 +1,8 @@
-# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2025, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
-actions: [
-  ]
 baseTypes:
 - weblogic.j2ee.descriptor.wl.DestinationBean
-derivedTypes:
-- weblogic.j2ee.descriptor.wl.UniformDistributedTopicBean
 descriptionHTML: '<p>Topics are used for asynchronous peer communications.  A message
   delivered to a topic will be distributed to all topic consumers.  Several aspects
   of a topics behavior can be configured with a topic bean.</p> '

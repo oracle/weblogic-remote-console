@@ -396,6 +396,7 @@ define([
 						PagesHistoryManager.setPagesHistoryCurrentAction('navigate.to');
 						const historyEntry = PagesHistoryManager.performNavigateToAction(rowKeyValue);
 						if (CoreUtils.isNotUndefinedNorNull(historyEntry)) {
+							setUndefinedBeanTree();
 							visitBeanPathHistoryEntry(historyEntry);
 						}
 

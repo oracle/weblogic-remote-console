@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import weblogic.console.utils.Path;
+import weblogic.console.utils.StringUtils;
 import weblogic.remoteconsole.common.repodef.HelpTopicDef;
 import weblogic.remoteconsole.common.repodef.LocalizableString;
 import weblogic.remoteconsole.common.repodef.PageActionDef;
@@ -19,8 +21,6 @@ import weblogic.remoteconsole.common.repodef.schema.HelpTopicDefSource;
 import weblogic.remoteconsole.common.repodef.schema.PageActionDefSource;
 import weblogic.remoteconsole.common.repodef.schema.PageDefSource;
 import weblogic.remoteconsole.common.utils.CustomizerInvocationUtils;
-import weblogic.remoteconsole.common.utils.Path;
-import weblogic.remoteconsole.common.utils.StringUtils;
 
 /**
  * yaml-based implementation of the PageDef interface.

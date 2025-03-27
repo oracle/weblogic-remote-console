@@ -1,8 +1,18 @@
-# Copyright (c) 2020, 2021, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2020, 2025, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 introductionHTML: >
-  Add expressions to create the rule for your Log Filter
+  The filter expression is specified as a string in the query language. The
+  query language supports Boolean operators: AND, OR, and NOT, and relational
+  operators. You can use the following column message attributes in a
+  query to filter data going to a log destination: RECORDID, DATE, SEVERITY,
+  SUBSYSTEM, MACHINE, SERVER, THREAD, USERID, TXID, CONTEXTID, TIMESTAMP, MSGID,
+  and MESSAGE.  For example, this is a valid expression:
+  <pre>
+    (SEVERITY = 'Warning') AND (MSGID = 'BEA-320012')
+  </pre>
+  <p>
+  See help links for more information.
 
 properties:
 - name: "Name"

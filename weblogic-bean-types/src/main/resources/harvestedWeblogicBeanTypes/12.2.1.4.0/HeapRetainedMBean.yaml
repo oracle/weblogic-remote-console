@@ -1,13 +1,9 @@
-# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2025, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
-actions: [
-  ]
 baseTypes:
-- weblogic.management.configuration.RCMResourceFairShareMBean
 - weblogic.management.configuration.RCMResourceMBean
-derivedTypes: [
-  ]
+- weblogic.management.configuration.RCMResourceFairShareMBean
 descriptionHTML: '<p> A <code>HeapRetainedMBean</code> represents a resource consumption
   management policy for the "Heap Retained" resource type. </p> <p> The "Heap Retained"
   resource type tracks the amount of Heap memory retained (in use) by the Partition.
@@ -16,5 +12,3 @@ descriptionHTML: '<p> A <code>HeapRetainedMBean</code> represents a resource con
   types for the "Heap Retained" resource type are: </p> <ul> <li>notify</li> <li>slow</li>
   <li>shutdown</li> </ul> '
 name: weblogic.management.configuration.HeapRetainedMBean
-properties: [
-  ]

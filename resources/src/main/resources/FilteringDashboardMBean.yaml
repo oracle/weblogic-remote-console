@@ -1,10 +1,8 @@
-# Copyright (c) 2022, 2023, Oracle and/or its affiliates.
+# Copyright (c) 2022, 2025, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 baseTypes:
 - weblogic.management.DashboardMBean
-derivedTypes: [
-  ]
 descriptionHTML: >
   <p>A iltering dashboard displays monitoring information about all the
   beans in the domain that match a set of filters,</p>

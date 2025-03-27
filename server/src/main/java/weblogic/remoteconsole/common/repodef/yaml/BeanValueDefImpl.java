@@ -1,4 +1,4 @@
-// Copyright (c) 2021, 2024, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2025, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef.yaml;
@@ -8,11 +8,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
 
+import weblogic.console.schema.beaninfo.BeanValueDefSource;
+import weblogic.console.utils.StringUtils;
 import weblogic.remoteconsole.common.repodef.BeanTypeDef;
 import weblogic.remoteconsole.common.repodef.BeanValueDef;
 import weblogic.remoteconsole.common.repodef.schema.BeanValueDefCustomizerSource;
-import weblogic.remoteconsole.common.repodef.schema.BeanValueDefSource;
-import weblogic.remoteconsole.common.utils.StringUtils;
 import weblogic.remoteconsole.server.repo.ArrayValue;
 import weblogic.remoteconsole.server.repo.BooleanValue;
 import weblogic.remoteconsole.server.repo.DoubleValue;

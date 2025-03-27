@@ -10,13 +10,14 @@ import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
 
+import weblogic.console.utils.Path;
+import weblogic.console.utils.StringUtils;
 import weblogic.remoteconsole.common.repodef.ActionInputFormDef;
 import weblogic.remoteconsole.common.repodef.ActionInputFormPagePath;
 import weblogic.remoteconsole.common.repodef.LocalizedConstants;
 import weblogic.remoteconsole.common.repodef.PageActionDef;
 import weblogic.remoteconsole.common.repodef.PagePath;
-import weblogic.remoteconsole.common.utils.Path;
-import weblogic.remoteconsole.common.utils.StringUtils;
+import weblogic.remoteconsole.common.utils.UrlUtils;
 import weblogic.remoteconsole.server.repo.BeanTreePath;
 import weblogic.remoteconsole.server.repo.FilteringDashboardDefManager;
 import weblogic.remoteconsole.server.repo.Form;
@@ -180,7 +181,7 @@ public class GetPageResponseMapper extends ResponseMapper<Page> {
   private void addSelf() {
     Path navigation = getPage().getNavTreePath();
     if (!navigation.isEmpty()) {
-      getEntityBuilder().add("navigation", navigation.getRelativeUri());
+      getEntityBuilder().add("navigation", UrlUtils.pathToRelativeUri(navigation));
     }
     BeanTreePath btp = getPage().getSelf();
     PagePath pagePath = getPage().getPageDef().getPagePath();

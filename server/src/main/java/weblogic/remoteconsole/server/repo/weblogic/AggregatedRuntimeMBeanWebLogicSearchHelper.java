@@ -1,4 +1,4 @@
-// Copyright (c) 2022, 2024, Oracle and/or its affiliates.
+// Copyright (c) 2022, 2025, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.repo.weblogic;
@@ -13,9 +13,9 @@ import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
 
+import weblogic.console.utils.Path;
 import weblogic.remoteconsole.common.repodef.BeanPropertyDef;
 import weblogic.remoteconsole.common.repodef.weblogic.AggregatedRuntimeMBeanNameHandler;
-import weblogic.remoteconsole.common.utils.Path;
 import weblogic.remoteconsole.server.repo.BeanTreePath;
 
 /**

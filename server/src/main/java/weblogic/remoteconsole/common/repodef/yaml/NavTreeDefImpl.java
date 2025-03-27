@@ -1,4 +1,4 @@
-// Copyright (c) 2021, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2025, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef.yaml;
@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import weblogic.console.utils.Path;
 import weblogic.remoteconsole.common.repodef.BeanChildNavTreeNodeDef;
 import weblogic.remoteconsole.common.repodef.BeanTypeDef;
 import weblogic.remoteconsole.common.repodef.NavTreeDef;
@@ -16,7 +17,6 @@ import weblogic.remoteconsole.common.repodef.NavTreeNodeDef;
 import weblogic.remoteconsole.common.repodef.PageRepoDef;
 import weblogic.remoteconsole.common.repodef.schema.NavTreeDefSource;
 import weblogic.remoteconsole.common.repodef.schema.NavTreeNodeDefSource;
-import weblogic.remoteconsole.common.utils.Path;
 
 /**
  * yaml-based implementation of the NavTreeDef interface.

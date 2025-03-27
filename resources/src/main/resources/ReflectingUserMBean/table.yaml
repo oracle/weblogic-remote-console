@@ -1,0 +1,30 @@
+# Copyright (c) 2025, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+getTableRowsMethod: weblogic.remoteconsole.customizers.UserGroupMBeanCustomizer.getUsers
+customizePageMethod: weblogic.remoteconsole.customizers.UserGroupMBeanCustomizer.customizeReflectingUsersTable
+
+introductionHTML: >
+  <p>This page displays information about each user that has been configured
+  in this authentication provider.</p>
+  <p>Users are entities that can be authenticated.
+  A user can be a person or software entity, such as a Java client.
+  Each user is given a unique identity within a security realm.
+  Oracle recommends assigning users to groups for two reasons:
+  it makes the WebLogic Security Service perform better,
+  and makes it more efficient for administrators who work with large numbers of users.</p>
+
+actions:
+- name: filter
+  rows: none
+  requiredCapabilities:
+  - UserGroupFiltering
+
+displayedColumns:
+- name: "Name"
+- name: "Description"
+
+helpTopics:
+- label: "Securing Resources Using Roles and Policies for Oracle WebLogic Server"
+  href: "roles/index.html"
+  type: "edocs"

@@ -733,17 +733,41 @@ define([
               aggregatedData.add('rawPath', uri);
               aggregatedData.add('rdjUrl', reply.rdjUrl);
               aggregatedData.add('rdjData', reply.rdjData);
-              aggregatedData.add('pdjUrl', Runtime.getBackendUrl()+reply.rdjData.pageDescription.replace('?view=table', '?view=createForm'));
+
+              const inlinePageDescription = reply.rdjData.inlinePageDescription;
+
+              aggregatedData.add('rdjReply', reply);
+
+              if (inlinePageDescription) {
+                aggregatedData.add('pdjData', inlinePageDescription);
+                aggregatedData.add('pageTitle', `${Runtime.getName()} - ${inlinePageDescription.helpPageTitle}`);
+                aggregatedData.add('pdjUrl', rdjUrl);
+              } else {
+                if (aggregatedData.has('pdjData'))
+                  aggregatedData.remove('pdjData');
+                aggregatedData.add('pdjUrl', Runtime.getBackendUrl()+reply.rdjData.pageDescription.replace('?view=table', '?view=createForm'));
+              }
+              
               return aggregatedData;
             })
             .then(aggregatedData => {
-              return getData.call(this, {url: aggregatedData.get('pdjUrl')})
-                .then((reply) => {
-                  aggregatedData.add('pdjData', reply.body.data);
-                  reply.body['data'] = aggregatedData;
-                  reply.body['data'].add('pageTitle', `${Runtime.getName()} - ${reply.body.data.get('pdjData').helpPageTitle}`);
-                  resolve(reply);
-                });
+              // if there is already pdjData in the aggregatedData, it means it was present
+              // in the rdj as an inlinePageDescription.. so just return the reply from the
+              // rdj request...
+              if (aggregatedData.has('pdjData')) {
+                const reply = aggregatedData.get('rdjReply');
+                reply.body = { data: aggregatedData };
+
+                resolve(reply);
+              } else {
+                return getData.call(this, { url: aggregatedData.get('pdjUrl') })
+                  .then((reply) => {
+                    aggregatedData.add('pdjData', reply.body.data);
+                    reply.body['data'] = aggregatedData;
+                    reply.body['data'].add('pageTitle', `${Runtime.getName()} - ${reply.body.data.get('pdjData').helpPageTitle}`);
+                    resolve(reply);
+                  });
+              }
             })
             .catch(response =>{
               if (response.failureType === CoreTypes.FailureType.UNEXPECTED) {
@@ -1547,6 +1571,16 @@ define([
       deleteCompositeData: function(dataProviderId) {
         const url = getUrlByServiceType.call(this, CbeTypes.ServiceType.PROVIDERS);
         return deleteData.call(this, {url: `${url}/WDTCompositeModel/${dataProviderId}`});
+      },
+
+      doLogout: function () {
+        const url = getUrlByServiceType.call(this, CbeTypes.ServiceType.LOGOUT);
+        return getData.call(this, {url: url});  
+      },
+
+      about: function() {
+        const url = getUrlByServiceType.call(this, CbeTypes.ServiceType.INFORMATION);
+        return getData.call(this, {url: url});
       },
 
       listDataProviders: function() {

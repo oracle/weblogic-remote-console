@@ -1,0 +1,25 @@
+# Copyright (c) 2025, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+name: weblogic.management.security.authentication.ReflectingUserMBean
+baseTypes:
+- weblogic.management.WebLogicMBean
+properties:
+- name: Name
+  descriptionHTML: "<p>The login name of this user.</p>"
+  type: java.lang.String
+- name: Description
+  descriptionHTML: "<p>A short description of this user. For example, the user's full name.</p>"
+  type: java.lang.String
+  writable: true
+- name: Password
+  descriptionHTML: "<p>The new password of this user.</p>"
+  type: java.lang.String
+  encrypted: true
+  writable: true
+- name: Groups
+  descriptionHTML: "<p>	This user can be a member of any of these parent groups.</p>"
+  type: weblogic.management.security.authentication.ReflectingGroupMBean
+  relationship: reference
+  array: true
+  writable: true

@@ -1,4 +1,4 @@
-// Copyright (c) 2021, 2023, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2025, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.webapp;
@@ -7,9 +7,10 @@ import javax.json.JsonObject;
 import javax.ws.rs.core.Response;
 
 import org.glassfish.jersey.media.multipart.FormDataMultiPart;
+import weblogic.console.utils.Path;
 import weblogic.remoteconsole.common.repodef.BeanTypeDef;
 import weblogic.remoteconsole.common.repodef.PagePath;
-import weblogic.remoteconsole.common.utils.Path;
+import weblogic.remoteconsole.common.utils.UrlUtils;
  
 /** Base resource for resources that manage a bean or a collection of beans. */
 public class BeanResource extends BaseResource {
@@ -24,7 +25,7 @@ public class BeanResource extends BaseResource {
    * It's used to identify the bean/beans in log and exception messages.
    */
   protected String getPageRepoRelativeUri() {
-    return getInvocationContext().getBeanTreePath().getPath().getRelativeUri();
+    return UrlUtils.pathToRelativeUri(getInvocationContext().getBeanTreePath().getPath());
   }
 
   protected void setSlicePagePath(String slice) {

@@ -1,15 +1,8 @@
-# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2025, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
-actions: [
-  ]
 baseTypes:
 - weblogic.management.configuration.DynamicDeploymentMBean
-derivedTypes:
-- weblogic.management.configuration.ReplicatedStoreMBean
-- weblogic.management.configuration.JDBCStoreMBean
-- weblogic.management.configuration.FileStoreMBean
-- weblogic.management.configuration.TransactionLogStoreMBean
 descriptionHTML: '<p>This MBean is the parent of the GenericFileStoreMBean and GenericJDBCStoreMBean.
   It is not intended for deployment.</p> '
 name: weblogic.management.configuration.PersistentStoreMBean

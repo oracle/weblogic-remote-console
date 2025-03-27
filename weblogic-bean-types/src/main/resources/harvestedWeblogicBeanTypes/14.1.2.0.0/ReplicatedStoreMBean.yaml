@@ -1,12 +1,8 @@
-# Copyright (c) 2020, 2024, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2025, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
-actions: [
-  ]
 baseTypes:
 - weblogic.management.configuration.PersistentStoreMBean
-derivedTypes: [
-  ]
 descriptionHTML: '<p>Defines an instance of a Replicated Store.</p>  <p>A WebLogic
   Replicated Store is a high performance storage option for Exalogic hosted Weblogic
   Messaging Services and is an alternative to WebLogic Server''s File and JDBC persistent

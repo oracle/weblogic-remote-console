@@ -1,4 +1,4 @@
-// Copyright (c) 2021, 2023, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2025, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef;
@@ -18,4 +18,7 @@ public interface TableDef extends PageDef {
 
   // Gets the column defs for columns that are hidden by default.
   public List<PagePropertyDef> getHiddenColumnDefs();
+
+  // Get the name of the method to call to get the table rows.
+  public String getGetTableRowsMethod();
 }

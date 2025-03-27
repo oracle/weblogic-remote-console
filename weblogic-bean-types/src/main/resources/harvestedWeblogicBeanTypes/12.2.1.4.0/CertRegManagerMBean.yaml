@@ -1,15 +1,11 @@
-# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2025, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
-actions: [
-  ]
 baseTypes:
-- weblogic.management.security.ImportMBean
-- weblogic.management.utils.NameListerMBean
-- weblogic.management.security.ExportMBean
 - weblogic.management.security.ProviderMBean
-derivedTypes:
-- weblogic.security.providers.pk.CertificateRegistryMBean
+- weblogic.management.security.ImportMBean
+- weblogic.management.security.ExportMBean
+- weblogic.management.utils.NameListerMBean
 descriptionHTML: "<p>The CertRegManager is used manage a certificate registry that\
   \ is \t\t\tstored in the embedded LDAP server. This is utility code that is \t\t\
   \tshared by the CertificateRegistry and SAML.</p> "

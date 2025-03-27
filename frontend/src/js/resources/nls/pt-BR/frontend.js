@@ -8,6 +8,11 @@ define({
         "value": "Cabeçalho do Aplicativo"
       }
     },
+    "buttons": {
+      "logout": {
+        "label": "Logout"
+      }
+    },
     "icons": {
       "navtree": {
         "toggler": {
@@ -1160,6 +1165,9 @@ define({
       },
       "reloadHidden": {
         "value": "Recarregar a tabela para ver os valores {0} atuais"
+      },
+      "noData": {
+        "value": "Não foram encontrados dados."
       }
     }
   },

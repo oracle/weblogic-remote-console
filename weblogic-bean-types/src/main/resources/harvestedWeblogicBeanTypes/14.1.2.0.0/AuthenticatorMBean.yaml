@@ -1,16 +1,8 @@
-# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2025, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
-actions: [
-  ]
 baseTypes:
 - weblogic.management.security.authentication.AuthenticationProviderMBean
-derivedTypes:
-- weblogic.security.providers.authentication.VirtualUserAuthenticatorMBean
-- weblogic.security.providers.authentication.LoginExceptionPropagatorMBean
-- weblogic.security.providers.authentication.DBMSAuthenticatorMBean
-- weblogic.security.providers.authentication.OracleIdentityCloudIntegratorMBean
-- weblogic.security.providers.saml.SAMLAuthenticatorMBean
 descriptionHTML: 'The SSPI MBean that all Authentication providers with login services
   must extend. This MBean provides a ControlFlag to determine whether the Authentication
   provider is a REQUIRED, REQUISITE, SUFFICIENT, or OPTIONAL part of the login sequence. '
