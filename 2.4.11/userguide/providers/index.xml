@@ -2,31 +2,32 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Provider types on WebLogic Remote Console</title>
-    <link>/2.4.11/userguide/providers/</link>
+    <link>https://oracle.github.io/weblogic-remote-console/2.4.11/userguide/providers/</link>
     <description>Recent content in Provider types on WebLogic Remote Console</description>
-    <generator>Hugo</generator>
-    <language>en</language>
-    <atom:link href="/2.4.11/userguide/providers/index.xml" rel="self" type="application/rss+xml" />
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 22 Feb 2022 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://oracle.github.io/weblogic-remote-console/2.4.11/userguide/providers/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Property lists</title>
-      <link>/2.4.11/userguide/providers/property-list/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>/2.4.11/userguide/providers/property-list/</guid>
-      <description>&lt;p&gt;Property lists are an editable set of key-value pairs.&lt;/p&gt;&#xA;&lt;p&gt;You can add property lists to WDT model files as WDT variables, which streamline the configuration of WDT model files. Once connected to a WDT model file, you can insert a property into the WDT model file as a &lt;a href=&#34;/2.4.11/userguide/providers/wdt-model/#model_tokens&#34;&gt;WDT model token&lt;/a&gt; and edit token values from within the property list.&lt;/p&gt;&#xA;&lt;h2 id=&#34;create-a-new-property-list&#34;&gt;Create a new property list&lt;/h2&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;Open the Providers drawer and beside the project name, click ⋮. Select &lt;strong&gt;Create Provider for New Property List&lt;/strong&gt;.&lt;/li&gt;&#xA;&lt;li&gt;Enter a name for the property list provider. This is the name that will appear in the Project list of providers so you can identify which provider you&amp;rsquo;re working on.&lt;/li&gt;&#xA;&lt;li&gt;Enter a name for the property list file in the &lt;strong&gt;Property List Filename&lt;/strong&gt; field. Include .properties or .props at the end of the file name.&lt;/li&gt;&#xA;&lt;li&gt;Click &lt;strong&gt;Pick directory&lt;/strong&gt; and browse to the directory where you want to save the new property list file.&lt;/li&gt;&#xA;&lt;li&gt;Click &lt;strong&gt;OK&lt;/strong&gt; to create the file.&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;h2 id=&#34;upload-an-existing-property-list&#34;&gt;Upload an existing property list&lt;/h2&gt;&#xA;&lt;p&gt;If you&amp;rsquo;ve already created a property list file, you can upload it to WebLogic Remote Console where you can continue to edit it.&lt;/p&gt;</description>
+      <link>https://oracle.github.io/weblogic-remote-console/2.4.11/userguide/providers/property-list/</link>
+      <pubDate>Tue, 22 Feb 2022 00:00:00 +0000</pubDate>
+      <guid>https://oracle.github.io/weblogic-remote-console/2.4.11/userguide/providers/property-list/</guid>
+      <description>Property lists are an editable set of key-value pairs.&#xA;You can add property lists to WDT model files as WDT variables, which streamline the configuration of WDT model files. Once connected to a WDT model file, you can insert a property into the WDT model file as a WDT model token and edit token values from within the property list.&#xA;Create a new property list Open the Providers drawer and beside the project name, click ⋮.</description>
     </item>
     <item>
       <title>WDT model files</title>
-      <link>/2.4.11/userguide/providers/wdt-model/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>/2.4.11/userguide/providers/wdt-model/</guid>
-      <description>&lt;p&gt;WDT metadata models are descriptions of a WebLogic Server domain configuration, generally written in YAML but occasionally JSON. These models are not connected to a live domain and you edit them &amp;lsquo;offline&amp;rsquo; before using the WebLogic Deploy Tooling (WDT) to build or modify live domains from the models.&lt;/p&gt;&#xA;&lt;p&gt;See the &lt;a href=&#34;https://oracle.github.io/weblogic-deploy-tooling/&#34;&gt;WebLogic Deploy Tooling&lt;/a&gt; documentation for more information.&lt;/p&gt;&#xA;&#xA;&#xA;&lt;div class=&#34;alert alert-primary&#34; role=&#34;alert&#34;&gt;&#xA;&lt;h4 class=&#34;alert-heading&#34;&gt;Note&lt;/h4&gt;&#xA;&#xA;    The WebLogic Remote Console assumes WDT model files are in YAML format. If you upload a file with no file extension, the WebLogic Remote Console will convert it to YAML format after you save your changes.&#xA;&#xA;&lt;/div&gt;&#xA;&lt;h2 id=&#34;create-a-new-wdt-model-file&#34;&gt;Create a new WDT model file&lt;/h2&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;Open the Providers drawer and beside the project name, click ⋮. Select &lt;strong&gt;Create Provider for New WDT Model File&lt;/strong&gt;.&lt;/li&gt;&#xA;&lt;li&gt;Enter a name for the WDT model file provider. This is the name that will appear in the Project list of providers so you can identify which provider you&amp;rsquo;re working on.&lt;/li&gt;&#xA;&lt;li&gt;Enter a name for the WDT model file in the &lt;strong&gt;WDT Model Filename&lt;/strong&gt; field. Include .yaml or .json at the end of the file name.&lt;/li&gt;&#xA;&lt;li&gt;Browse to the directory where you want to save the new WDT model file.&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Optional&lt;/strong&gt;: Enable &lt;strong&gt;Use Sparse Template&lt;/strong&gt; to create a WDT model file which does not contain any references to an Administration Server.&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Optional&lt;/strong&gt;: Choose a property list provider from the &lt;strong&gt;WDT Variables&lt;/strong&gt; dropdown list. If you add WDT variables to your WDT model file, you can update the variables in your WDT model file from a single location - the property list provider. If you don&amp;rsquo;t have a property list provider yet, you can edit the WDT model file settings later to add or change the associated WDT variables. See &lt;a href=&#34;/2.4.11/userguide/providers/wdt-model/#model_tokens&#34;&gt;WDT Model Tokens&lt;/a&gt; for more information.&lt;/li&gt;&#xA;&lt;li&gt;Click &lt;strong&gt;OK&lt;/strong&gt; to create the file.&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;h2 id=&#34;upload-an-existing-wdt-model-file&#34;&gt;Upload an existing WDT model file&lt;/h2&gt;&#xA;&lt;p&gt;If you&amp;rsquo;ve already created a WDT model file, you can upload it to WebLogic Remote Console where you can continue to edit it.&lt;/p&gt;</description>
+      <link>https://oracle.github.io/weblogic-remote-console/2.4.11/userguide/providers/wdt-model/</link>
+      <pubDate>Wed, 01 Sep 2021 00:00:00 +0000</pubDate>
+      <guid>https://oracle.github.io/weblogic-remote-console/2.4.11/userguide/providers/wdt-model/</guid>
+      <description>WDT metadata models are descriptions of a WebLogic Server domain configuration, generally written in YAML but occasionally JSON. These models are not connected to a live domain and you edit them &amp;lsquo;offline&amp;rsquo; before using the WebLogic Deploy Tooling (WDT) to build or modify live domains from the models.&#xA;See the WebLogic Deploy Tooling documentation for more information.&#xA;The WebLogic Remote Console assumes WDT model files are in YAML format. If you upload a file with no file extension, the WebLogic Remote Console will convert it to YAML format after you save your changes.</description>
     </item>
     <item>
       <title>WDT composite models</title>
-      <link>/2.4.11/userguide/providers/wdt-composite/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>/2.4.11/userguide/providers/wdt-composite/</guid>
-      <description>&lt;p&gt;WDT composite models are read-only representations of multiple, merged &lt;a href=&#34;/2.4.11/userguide/providers/wdt-model/&#34;&gt;WDT model files&lt;/a&gt;.&lt;/p&gt;&#xA;&lt;h2 id=&#34;create-a-wdt-composite-model&#34;&gt;Create a WDT composite model&lt;/h2&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;&#xA;&lt;p&gt;Create or upload two or more WDT model files to the WebLogic Remote Console.&lt;/p&gt;&#xA;&lt;/li&gt;&#xA;&lt;li&gt;&#xA;&lt;p&gt;Open the Providers drawer and beside the project name, click ⋮. Select &lt;strong&gt;Add WDT Composite Model File Provider&lt;/strong&gt;.&lt;/p&gt;&#xA;&lt;/li&gt;&#xA;&lt;li&gt;&#xA;&lt;p&gt;Enter a name for the WDT Composite Model. This is the name that will appear in the Project list of providers so you can identify which provider you’re working on.&lt;/p&gt;</description>
+      <link>https://oracle.github.io/weblogic-remote-console/2.4.11/userguide/providers/wdt-composite/</link>
+      <pubDate>Wed, 01 Sep 2021 00:00:00 +0000</pubDate>
+      <guid>https://oracle.github.io/weblogic-remote-console/2.4.11/userguide/providers/wdt-composite/</guid>
+      <description>WDT composite models are read-only representations of multiple, merged WDT model files.&#xA;Create a WDT composite model Create or upload two or more WDT model files to the WebLogic Remote Console.&#xA;Open the Providers drawer and beside the project name, click ⋮. Select Add WDT Composite Model File Provider.&#xA;Enter a name for the WDT Composite Model. This is the name that will appear in the Project list of providers so you can identify which provider you’re working on.</description>
     </item>
   </channel>
 </rss>

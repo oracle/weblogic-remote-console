@@ -1,294 +1,617 @@
-<!doctype html>
-<html itemscope itemtype="http://schema.org/WebPage" lang="en" class="no-js">
+<!DOCTYPE html>
+<html lang="en" class="js csstransforms3d">
   <head>
     <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link rel="alternate" type="application/rss&#43;xml" href="/administration-server/monitoring-domains/index.xml">
-<meta name="robots" content="index, follow">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="Hugo 0.123.7">
+    <meta name="description" content="">
 
 
-<link rel="shortcut icon" href="/favicons/favicon.ico" >
-<link rel="apple-touch-icon" href="/favicons/apple-touch-icon-180x180.png" sizes="180x180">
-<link rel="icon" type="image/png" href="/favicons/favicon-16x16.png" sizes="16x16">
-<link rel="icon" type="image/png" href="/favicons/favicon-32x32.png" sizes="32x32">
-<link rel="icon" type="image/png" href="/favicons/android-36x36.png" sizes="36x36">
-<link rel="icon" type="image/png" href="/favicons/android-48x48.png" sizes="48x48">
-<link rel="icon" type="image/png" href="/favicons/android-72x72.png" sizes="72x72">
-<link rel="icon" type="image/png" href="/favicons/android-96x96.png" sizes="96x96">
-<link rel="icon" type="image/png" href="/favicons/android-144x144.png" sizes="144x144">
-<link rel="icon" type="image/png" href="/favicons/android-192x192.png" sizes="192x192">
+    <link rel="icon" href="/weblogic-remote-console/images/logo.png" type="image/png">
 
-<title>Monitoring Domains | WebLogic Remote Console</title>
-<meta name="description" content="Use WebLogic Remote Console to monitor WebLogic Server and its related resources and services.
-For general information on monitoring, diagnostic, and tuning tools in WebLogic Server, see Monitoring, Diagnosing, and Troubleshooting in Understanding Oracle WebLogic Server.
-Monitor Servers Review the servers in your domain to ensure they are functioning as expected.
-In the Monitoring Tree, go to Environment, then Servers.
-Use the Servers table to monitor and compare properties across the different server instances in your domain.">
-<meta property="og:url" content="/administration-server/monitoring-domains/">
-  <meta property="og:site_name" content="WebLogic Remote Console">
-  <meta property="og:title" content="Monitoring Domains">
-  <meta property="og:description" content="Use WebLogic Remote Console to monitor WebLogic Server and its related resources and services.
-For general information on monitoring, diagnostic, and tuning tools in WebLogic Server, see Monitoring, Diagnosing, and Troubleshooting in Understanding Oracle WebLogic Server.
-Monitor Servers Review the servers in your domain to ensure they are functioning as expected.
-In the Monitoring Tree, go to Environment, then Servers.
-Use the Servers table to monitor and compare properties across the different server instances in your domain.">
-  <meta property="og:locale" content="en">
-  <meta property="og:type" content="website">
+    <title>Monitoring Domains :: WebLogic Remote Console</title>
 
-  <meta itemprop="name" content="Monitoring Domains">
-  <meta itemprop="description" content="Use WebLogic Remote Console to monitor WebLogic Server and its related resources and services.
-For general information on monitoring, diagnostic, and tuning tools in WebLogic Server, see Monitoring, Diagnosing, and Troubleshooting in Understanding Oracle WebLogic Server.
-Monitor Servers Review the servers in your domain to ensure they are functioning as expected.
-In the Monitoring Tree, go to Environment, then Servers.
-Use the Servers table to monitor and compare properties across the different server instances in your domain.">
-  <meta itemprop="wordCount" content="3418">
-  <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="Monitoring Domains">
-  <meta name="twitter:description" content="Use WebLogic Remote Console to monitor WebLogic Server and its related resources and services.
-For general information on monitoring, diagnostic, and tuning tools in WebLogic Server, see Monitoring, Diagnosing, and Troubleshooting in Understanding Oracle WebLogic Server.
-Monitor Servers Review the servers in your domain to ensure they are functioning as expected.
-In the Monitoring Tree, go to Environment, then Servers.
-Use the Servers table to monitor and compare properties across the different server instances in your domain.">
-<link rel="preload" href="/scss/main.min.48c25d0a5a23a1e8cae94d6c5e7622061e5345cf098171b1d6ee41d8e309e6c8.css" as="style" integrity="sha256-SMJdClojoejK6U1sXnYiBh5TRc8JgXGx1u5B2OMJ5sg=" crossorigin="anonymous">
-<link href="/scss/main.min.48c25d0a5a23a1e8cae94d6c5e7622061e5345cf098171b1d6ee41d8e309e6c8.css" rel="stylesheet" integrity="sha256-SMJdClojoejK6U1sXnYiBh5TRc8JgXGx1u5B2OMJ5sg=" crossorigin="anonymous">
-<script
-  src="https://code.jquery.com/jquery-3.7.1.min.js"
-  integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
-  crossorigin="anonymous"></script>
-<script defer
-  src="https://unpkg.com/lunr@2.3.9/lunr.min.js"
-  integrity="sha384-203J0SNzyqHby3iU6hzvzltrWi/M41wOP5Gu+BiJMz5nwKykbkUx8Kp7iti0Lpli"
-  crossorigin="anonymous"></script>
+    
+    <link href="/weblogic-remote-console/css/nucleus.css?1739383889" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/fontawesome-all.min.css?1739383889" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/hybrid.css?1739383889" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/featherlight.min.css?1739383889" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/perfect-scrollbar.min.css?1739383889" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/auto-complete.css?1739383889" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/atom-one-dark-reasonable.css?1739383889" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/theme.css?1739383889" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/tabs.css?1739383889" rel="stylesheet">
+    <link href="/weblogic-remote-console/css/hugo-theme.css?1739383889" rel="stylesheet">
+    
+    
 
+    <script src="/weblogic-remote-console/js/jquery-3.6.0.min.js?1739383889"></script>
+
+    <style>
+      :root #header + #content > #left > #rlblock_left{
+          display:none !important;
+      }
+      
+        :not(pre) > code + span.copy-to-clipboard {
+            display: none;
+        }
+      
+    </style>
+    
   </head>
-  <body class="td-section">
-    <header>
-      <nav class="td-navbar js-navbar-scroll" data-bs-theme="dark">
-<div class="container-fluid flex-column flex-md-row">
-  <a class="navbar-brand" href="/"><span class="navbar-brand__logo navbar-logo"></span><span class="navbar-brand__name">WebLogic Remote Console</span></a>
-  <div class="td-navbar-nav-scroll ms-md-auto" id="main_navbar">
-    <ul class="navbar-nav">
-      <li class="nav-item">
-        <a class="nav-link" href="/overview"><span>Documentation</span></a>
-      </li>
-      <li class="nav-item dropdown d-none d-lg-block">
-        <div class="dropdown">
-  <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Releases</a>
-  <ul class="dropdown-menu">
-    <li><a class="dropdown-item" href="/weblogic-remote-console/overview">Latest (v2.4.16)</a></li>
-    <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.15">v2.4.15</a></li>
-    <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.14">v2.4.14</a></li>
-    <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.13">v2.4.13</a></li>
-    <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.12">v2.4.12</a></li>
-    <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.11">v2.4.11</a></li>
-    </ul>
-</div></li>
-      <li class="td-light-dark-menu nav-item dropdown">
-        <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
-  <symbol id="check2" viewBox="0 0 16 16">
-    <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/>
-  </symbol>
-  <symbol id="circle-half" viewBox="0 0 16 16">
-    <path d="M8 15A7 7 0 1 0 8 1v14zm0 1A8 8 0 1 1 8 0a8 8 0 0 1 0 16z"/>
-  </symbol>
-  <symbol id="moon-stars-fill" viewBox="0 0 16 16">
-    <path d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z"/>
-    <path d="M10.794 3.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387a1.734 1.734 0 0 0-1.097 1.097l-.387 1.162a.217.217 0 0 1-.412 0l-.387-1.162A1.734 1.734 0 0 0 9.31 6.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387a1.734 1.734 0 0 0 1.097-1.097l.387-1.162zM13.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.156 1.156 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.156 1.156 0 0 0-.732-.732l-.774-.258a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732L13.863.1z"/>
-  </symbol>
-  <symbol id="sun-fill" viewBox="0 0 16 16">
-    <path d="M8 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13zm8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5zM3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8zm10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0zm-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708z"/>
-  </symbol>
-</svg>
+  <body class="" data-url="/weblogic-remote-console/administration-server/monitoring-domains/">
+    <nav id="sidebar" class="">
 
-<button class="btn btn-link nav-link dropdown-toggle d-flex align-items-center"
-        id="bd-theme"
-        type="button"
-        aria-expanded="false"
-        data-bs-toggle="dropdown"
-        data-bs-display="static"
-        aria-label="Toggle theme (auto)">
-  <svg class="bi my-1 theme-icon-active"><use href="#circle-half"></use></svg>
-</button>
-<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="bd-theme-text">
-  <li>
-    <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="light" aria-pressed="false">
-      <svg class="bi me-2 opacity-50"><use href="#sun-fill"></use></svg>
-      Light
-      <svg class="bi ms-auto d-none"><use href="#check2"></use></svg>
-    </button>
-  </li>
-  <li>
-    <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="dark" aria-pressed="false">
-      <svg class="bi me-2 opacity-50"><use href="#moon-stars-fill"></use></svg>
-      Dark
-      <svg class="bi ms-auto d-none"><use href="#check2"></use></svg>
-    </button>
-  </li>
-  <li>
-    <button type="button" class="dropdown-item d-flex align-items-center active" data-bs-theme-value="auto" aria-pressed="true">
-      <svg class="bi me-2 opacity-50"><use href="#circle-half"></use></svg>
-      Auto
-      <svg class="bi ms-auto d-none"><use href="#check2"></use></svg>
-    </button>
-  </li>
-</ul>
 
-      </li>
-      </ul>
-  </div>
-  <div class="d-none d-lg-block">
-    <div class="td-search td-search--offline">
-  <div class="td-search__icon"></div>
-  <input
-    type="search"
-    class="td-search__input form-control"
-    placeholder="Search this site…"
-    aria-label="Search this site…"
-    autocomplete="off"
+
+  <div id="header-wrapper">
+    <div id="header">
+      <a id="logo" href="https://oracle.github.io/weblogic-remote-console/">
+  <img src="https://oracle.github.io/weblogic-remote-console//images/logo.png" height="60"><br/>
+  WebLogic Remote Console
+</a>
+
+    </div>
     
-    data-offline-search-index-json-src="/offline-search-index.f951367ede6ec8211f5538ed03e68743.json"
-    data-offline-search-base-href="/"
-    data-offline-search-max-results="10"
-  >
+        <div class="searchbox">
+    <label for="search-by"><i class="fas fa-search"></i></label>
+    <input data-search-input id="search-by" type="search" placeholder="Search...">
+    <span data-search-clear=""><i class="fas fa-times"></i></span>
 </div>
+
+<script type="text/javascript" src="/weblogic-remote-console/js/lunr.min.js?1739383889"></script>
+<script type="text/javascript" src="/weblogic-remote-console/js/auto-complete.js?1739383889"></script>
+<script type="text/javascript">
+    
+        var baseurl = "https:\/\/oracle.github.io\/weblogic-remote-console\/";
+    
+</script>
+<script type="text/javascript" src="/weblogic-remote-console/js/search.js?1739383889"></script>
+
+    
   </div>
-</div>
+
+    <div class="highlightable">
+    <ul class="topics">
+      
+        
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/weblogic-remote-console/set-console/" title="Get Started" class="dd-item
+        
+        
+        
+        ">
+      <a href="/weblogic-remote-console/set-console/">
+          Get Started
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/weblogic-remote-console/set-console/get-know-console/" title="Get to Know the Console" class="dd-item
+        
+        
+        
+        ">
+      <a href="/weblogic-remote-console/set-console/get-know-console/">
+          Get to Know the Console
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/weblogic-remote-console/set-console/contribute-wrc-repository/" title="Contribute to WebLogic Remote Console" class="dd-item
+        
+        
+        
+        ">
+      <a href="/weblogic-remote-console/set-console/contribute-wrc-repository/">
+          Contribute to WebLogic Remote Console
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/weblogic-remote-console/set-console/support-information/" title="Support Information" class="dd-item
+        
+        
+        
+        ">
+      <a href="/weblogic-remote-console/set-console/support-information/">
+          Support Information
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/weblogic-remote-console/administration-server/" title="Administration Server" class="dd-item
+        parent
+        
+        
+        ">
+      <a href="/weblogic-remote-console/administration-server/">
+          Administration Server
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/weblogic-remote-console/administration-server/domain-configuration/" title="Domain Configuration" class="dd-item
+        
+        
+        
+        ">
+      <a href="/weblogic-remote-console/administration-server/domain-configuration/">
+          Domain Configuration
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/weblogic-remote-console/administration-server/securing-domains/" title="Securing Domains" class="dd-item
+        
+        
+        
+        ">
+      <a href="/weblogic-remote-console/administration-server/securing-domains/">
+          Securing Domains
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/weblogic-remote-console/administration-server/deploying-applications/" title="Deploying Applications" class="dd-item
+        
+        
+        
+        ">
+      <a href="/weblogic-remote-console/administration-server/deploying-applications/">
+          Deploying Applications
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/weblogic-remote-console/administration-server/monitoring-domains/" title="Monitoring Domains" class="dd-item
+        
+        active
+        
+        ">
+      <a href="/weblogic-remote-console/administration-server/monitoring-domains/">
+          Monitoring Domains
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/weblogic-remote-console/administration-server/configuring-services/" title="Configuring Services" class="dd-item
+        
+        
+        
+        ">
+      <a href="/weblogic-remote-console/administration-server/configuring-services/">
+          Configuring Services
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/weblogic-remote-console/administration-server/configuring-coherence/" title="Configuring Coherence" class="dd-item
+        
+        
+        
+        ">
+      <a href="/weblogic-remote-console/administration-server/configuring-coherence/">
+          Configuring Coherence
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/weblogic-remote-console/administration-server/scheduling-work/" title="Scheduling Work" class="dd-item
+        
+        
+        
+        ">
+      <a href="/weblogic-remote-console/administration-server/scheduling-work/">
+          Scheduling Work
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/weblogic-remote-console/weblogic-deploy-tooling/" title="WebLogic Deploy Tooling" class="dd-item
+        
+        
+        
+        ">
+      <a href="/weblogic-remote-console/weblogic-deploy-tooling/">
+          WebLogic Deploy Tooling
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/weblogic-remote-console/weblogic-deploy-tooling/wdt-model-files/" title="WDT Model Files" class="dd-item
+        
+        
+        
+        ">
+      <a href="/weblogic-remote-console/weblogic-deploy-tooling/wdt-model-files/">
+          WDT Model Files
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/weblogic-remote-console/weblogic-deploy-tooling/wdt-composites/" title="WDT Composite Models" class="dd-item
+        
+        
+        
+        ">
+      <a href="/weblogic-remote-console/weblogic-deploy-tooling/wdt-composites/">
+          WDT Composite Models
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/weblogic-remote-console/weblogic-deploy-tooling/property-lists/" title="Property Lists" class="dd-item
+        
+        
+        
+        ">
+      <a href="/weblogic-remote-console/weblogic-deploy-tooling/property-lists/">
+          Property Lists
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/weblogic-remote-console/troubleshoot-weblogic-remote-console/" title="Troubleshoot Issues with WebLogic Remote Console" class="dd-item
+        
+        
+        
+        ">
+      <a href="/weblogic-remote-console/troubleshoot-weblogic-remote-console/">
+          Troubleshoot Issues with WebLogic Remote Console
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+          
+        
+      
+    </ul>
+
+    
+    
+
+    
+    <section id="footer">
+      <p>Created with <i class="fas fa-heart"></i> from <a href="https://www.oracle.com">Oracle</a></p>
+<p>&nbsp</p>
+<p><a href="https://github.com/oracle/weblogic-remote-console"><i class="fab fa-github"></i> GitHub repo</a></p>
+<p><a href="https://join.slack.com/t/oracle-weblogic/shared_invite/zt-1ni1gtjv6-PGC6CQ4uIte3KBdm_67~aQ"><i class="fab fa-slack"></i> Public Slack #remote-console</a></p>
+
+    </section>
+  </div>
 </nav>
-    </header>
-    <div class="container-fluid td-outer">
-      <div class="td-main">
-        <div class="row flex-xl-nowrap">
-          <aside class="col-12 col-md-3 col-xl-2 td-sidebar d-print-none">
-            <div id="td-sidebar-menu" class="td-sidebar__inner">
-  <div id="content-mobile">
-  <form class="td-sidebar__search d-flex align-items-center">
-    <div class="td-search td-search--offline">
-  <div class="td-search__icon"></div>
-  <input
-    type="search"
-    class="td-search__input form-control"
-    placeholder="Search this site…"
-    aria-label="Search this site…"
-    autocomplete="off"
-    
-    data-offline-search-index-json-src="/offline-search-index.f951367ede6ec8211f5538ed03e68743.json"
-    data-offline-search-base-href="/"
-    data-offline-search-max-results="10"
-  >
-</div>
-    <button class="btn btn-link td-sidebar__toggle d-md-none p-0 ms-3 fas fa-bars" type="button" data-bs-toggle="collapse" data-bs-target="#td-section-nav" aria-controls="td-section-nav" aria-expanded="false" aria-label="Toggle section navigation">
-    </button>
-  </form>
-  </div>
-  <div id="content-desktop"></div>
-  <nav class="td-sidebar-nav collapse td-sidebar-nav--search-disabled foldable-nav" id="td-section-nav">
-    <ul class="td-sidebar-nav__section pe-md-3 ul-0">
-      <li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child active-path" id="m-overview-li">
-  <a href="/overview/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section tree-root" id="m-overview"><span class="">About WebLogic Remote Console</span></a>
-  <ul class="ul-1">
-    <li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-set-console-li">
-  <input type="checkbox" id="m-set-console-check"/>
-  <label for="m-set-console-check"><a href="/set-console/" class="align-left ps-0  td-sidebar-link td-sidebar-link__section" id="m-set-console"><span class="">Get Started</span></a></label>
-  
-  <ul class="ul-2 foldable">
-    <li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-set-consoleget-know-console-li">
-  <input type="checkbox" id="m-set-consoleget-know-console-check"/>
-  <label for="m-set-consoleget-know-console-check"><a href="/set-console/get-know-console/" class="align-left ps-0  td-sidebar-link td-sidebar-link__section" id="m-set-consoleget-know-console"><span class="">Get to Know the Console</span></a></label>
-  
-  <ul class="ul-3 foldable">
-    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-set-consoleget-know-consolebean-map-li">
-  <input type="checkbox" id="m-set-consoleget-know-consolebean-map-check"/>
-  <label for="m-set-consoleget-know-consolebean-map-check"><a href="/set-console/get-know-console/bean-map/" class="align-left ps-0  td-sidebar-link td-sidebar-link__section" id="m-set-consoleget-know-consolebean-map"><span class="">A Map of the Console</span></a></label>
-  
-</li>
-  </ul>
-</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-set-consolecontribute-wrc-repository-li">
-  <input type="checkbox" id="m-set-consolecontribute-wrc-repository-check"/>
-  <label for="m-set-consolecontribute-wrc-repository-check"><a href="/set-console/contribute-wrc-repository/" class="align-left ps-0  td-sidebar-link td-sidebar-link__section" id="m-set-consolecontribute-wrc-repository"><span class="">Contribute to WebLogic Remote Console</span></a></label>
-  
-</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-set-consolesupport-information-li">
-  <input type="checkbox" id="m-set-consolesupport-information-check"/>
-  <label for="m-set-consolesupport-information-check"><a href="/set-console/support-information/" class="align-left ps-0  td-sidebar-link td-sidebar-link__section" id="m-set-consolesupport-information"><span class="">Support Information</span></a></label>
-  
-</li>
-  </ul>
-</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child active-path" id="m-administration-server-li">
-  <input type="checkbox" id="m-administration-server-check" checked/>
-  <label for="m-administration-server-check"><a href="/administration-server/" class="align-left ps-0  td-sidebar-link td-sidebar-link__section" id="m-administration-server"><span class="">Administration Server</span></a></label>
-  
-  <ul class="ul-2 foldable">
-    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-administration-serverdomain-configuration-li">
-  <input type="checkbox" id="m-administration-serverdomain-configuration-check"/>
-  <label for="m-administration-serverdomain-configuration-check"><a href="/administration-server/domain-configuration/" class="align-left ps-0  td-sidebar-link td-sidebar-link__section" id="m-administration-serverdomain-configuration"><span class="">Domain Configuration</span></a></label>
-  
-</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-administration-serversecuring-domains-li">
-  <input type="checkbox" id="m-administration-serversecuring-domains-check"/>
-  <label for="m-administration-serversecuring-domains-check"><a href="/administration-server/securing-domains/" class="align-left ps-0  td-sidebar-link td-sidebar-link__section" id="m-administration-serversecuring-domains"><span class="">Securing Domains</span></a></label>
-  
-</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-administration-serverdeploying-applications-li">
-  <input type="checkbox" id="m-administration-serverdeploying-applications-check"/>
-  <label for="m-administration-serverdeploying-applications-check"><a href="/administration-server/deploying-applications/" class="align-left ps-0  td-sidebar-link td-sidebar-link__section" id="m-administration-serverdeploying-applications"><span class="">Deploying Applications</span></a></label>
-  
-</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child active-path" id="m-administration-servermonitoring-domains-li">
-  <input type="checkbox" id="m-administration-servermonitoring-domains-check" checked/>
-  <label for="m-administration-servermonitoring-domains-check"><a href="/administration-server/monitoring-domains/" class="align-left ps-0  active td-sidebar-link td-sidebar-link__section" id="m-administration-servermonitoring-domains"><span class="td-sidebar-nav-active-item">Monitoring Domains</span></a></label>
-  
-</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-administration-serverconfiguring-services-li">
-  <input type="checkbox" id="m-administration-serverconfiguring-services-check"/>
-  <label for="m-administration-serverconfiguring-services-check"><a href="/administration-server/configuring-services/" class="align-left ps-0  td-sidebar-link td-sidebar-link__section" id="m-administration-serverconfiguring-services"><span class="">Configuring Services</span></a></label>
-  
-</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-administration-serverconfiguring-coherence-li">
-  <input type="checkbox" id="m-administration-serverconfiguring-coherence-check"/>
-  <label for="m-administration-serverconfiguring-coherence-check"><a href="/administration-server/configuring-coherence/" class="align-left ps-0  td-sidebar-link td-sidebar-link__section" id="m-administration-serverconfiguring-coherence"><span class="">Configuring Coherence</span></a></label>
-  
-</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-administration-serverscheduling-work-li">
-  <input type="checkbox" id="m-administration-serverscheduling-work-check"/>
-  <label for="m-administration-serverscheduling-work-check"><a href="/administration-server/scheduling-work/" class="align-left ps-0  td-sidebar-link td-sidebar-link__section" id="m-administration-serverscheduling-work"><span class="">Scheduling Work</span></a></label>
-  
-</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-administration-serverinteroperability-li">
-  <input type="checkbox" id="m-administration-serverinteroperability-check"/>
-  <label for="m-administration-serverinteroperability-check"><a href="/administration-server/interoperability/" class="align-left ps-0  td-sidebar-link td-sidebar-link__section" id="m-administration-serverinteroperability"><span class="">Interoperating with Oracle Tuxedo</span></a></label>
-  
-</li>
-  </ul>
-</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-weblogic-deploy-tooling-li">
-  <input type="checkbox" id="m-weblogic-deploy-tooling-check"/>
-  <label for="m-weblogic-deploy-tooling-check"><a href="/weblogic-deploy-tooling/" class="align-left ps-0  td-sidebar-link td-sidebar-link__section" id="m-weblogic-deploy-tooling"><span class="">WebLogic Deploy Tooling</span></a></label>
-  
-  <ul class="ul-2 foldable">
-    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-weblogic-deploy-toolingwdt-model-files-li">
-  <input type="checkbox" id="m-weblogic-deploy-toolingwdt-model-files-check"/>
-  <label for="m-weblogic-deploy-toolingwdt-model-files-check"><a href="/weblogic-deploy-tooling/wdt-model-files/" class="align-left ps-0  td-sidebar-link td-sidebar-link__section" id="m-weblogic-deploy-toolingwdt-model-files"><span class="">WDT Model Files</span></a></label>
-  
-</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-weblogic-deploy-toolingwdt-composites-li">
-  <input type="checkbox" id="m-weblogic-deploy-toolingwdt-composites-check"/>
-  <label for="m-weblogic-deploy-toolingwdt-composites-check"><a href="/weblogic-deploy-tooling/wdt-composites/" class="align-left ps-0  td-sidebar-link td-sidebar-link__section" id="m-weblogic-deploy-toolingwdt-composites"><span class="">WDT Composite Models</span></a></label>
-  
-</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-weblogic-deploy-toolingproperty-lists-li">
-  <input type="checkbox" id="m-weblogic-deploy-toolingproperty-lists-check"/>
-  <label for="m-weblogic-deploy-toolingproperty-lists-check"><a href="/weblogic-deploy-tooling/property-lists/" class="align-left ps-0  td-sidebar-link td-sidebar-link__section" id="m-weblogic-deploy-toolingproperty-lists"><span class="">Property Lists</span></a></label>
-  
-</li>
-  </ul>
-</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-troubleshoot-weblogic-remote-console-li">
-  <input type="checkbox" id="m-troubleshoot-weblogic-remote-console-check"/>
-  <label for="m-troubleshoot-weblogic-remote-console-check"><a href="/troubleshoot-weblogic-remote-console/" class="align-left ps-0  td-sidebar-link td-sidebar-link__section" id="m-troubleshoot-weblogic-remote-console"><span class="">Troubleshoot Issues with WebLogic Remote Console</span></a></label>
-  
-</li>
-  </ul>
-</li>
-    </ul>
-  </nav>
-</div>
 
-          </aside>
-          <aside class="d-none d-xl-block col-xl-2 td-sidebar-toc d-print-none">
-            <div class="td-page-meta ms-2 pb-1 pt-2 mb-0">
 
-</div>
 
-            <div class="td-toc">
-        <nav id="TableOfContents">
+
+        <section id="body">
+        <div id="overlay"></div>
+        <div class="padding highlightable">
+              
+              <div>
+                <div id="top-bar">
+                
+                
+                <div id="breadcrumbs" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+                    <span id="sidebar-toggle-span">
+                        <a href="#" id="sidebar-toggle" data-sidebar-toggle="">
+                          <i class="fas fa-bars"></i>
+                        </a>
+                    </span>
+                  
+                  <span id="toc-menu"><i class="fas fa-list-alt"></i></span>
+                  
+                  <span class="links">
+                 
+                 
+                    
+          
+          
+            
+            
+          
+          
+            
+            
+          
+          
+            <a href='/weblogic-remote-console/'>About WebLogic Remote Console</a> > <a href='/weblogic-remote-console/administration-server/'>Administration Server</a> > Monitoring Domains
+          
+        
+          
+        
+          
+        
+                 
+                  </span>
+                </div>
+                
+                    <div class="progress">
+    <div class="wrapper">
+<nav id="TableOfContents">
   <ul>
     <li><a href="#GUID-883264DD-C3C8-48B6-81A4-F26ABA0EFEAA">Monitor Servers</a>
       <ul>
@@ -318,31 +641,29 @@ Use the Servers table to monitor and compare properties across the different ser
     <li><a href="#GUID-F414237C-43D2-43CF-8A72-B999D19A1D2E">Tuning Performance</a></li>
   </ul>
 </nav>
-      </div>
-    
-            
+    </div>
+</div>
 
-          </aside>
-          <main class="col-12 col-md-9 col-xl-8 ps-md-5" role="main">
+                
+              </div>
+            </div>
             
-  
-            <nav aria-label="breadcrumb" class="td-breadcrumbs">
-  <ol class="breadcrumb">
-  <li class="breadcrumb-item">
-    <a href="/overview/">About WebLogic Remote Console</a></li>
-  <li class="breadcrumb-item">
-    <a href="/administration-server/">Administration Server</a></li>
-  <li class="breadcrumb-item active" aria-current="page">
-    Monitoring Domains</li>
-  </ol>
-</nav>
-            
-<div class="td-content">
-	<h1>Monitoring Domains</h1>
-  
-	<header class="article-meta">
-		
-</header>
+        <div id="head-tags">
+        
+        </div>
+        
+        <div id="body-inner">
+          
+            <h1>
+              
+              Monitoring Domains
+            </h1>
+          
+
+        
+
+
+
 	<p>Use WebLogic Remote Console to monitor WebLogic Server and its related resources and services.</p>
 <p>For general information on monitoring, diagnostic, and tuning tools in WebLogic Server, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=INTRO-GUID-F6276D78-0B63-4520-8CF8-E57AB49196E4">Monitoring, Diagnosing, and Troubleshooting</a> in <strong>Understanding Oracle WebLogic Server</strong>.</p>
 <h2 id="GUID-883264DD-C3C8-48B6-81A4-F26ABA0EFEAA">Monitor Servers</h2>
@@ -362,12 +683,7 @@ Use the Servers table to monitor and compare properties across the different ser
 <p>You can check the current status of Node Manager and use Node Manager logs to help troubleshoot problems in starting or stopping individual Managed Servers.</p>
 <p>For more information, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=NODEM-GUID-A3AACA8B-4AFC-4082-9855-118A6DDDC67F">Log Files</a> in <strong>Administering Node Manager for Oracle WebLogic Server</strong>.</p>
 
-
-<div class="alert alert-primary" role="alert">
-<h4 class="alert-heading">Note</h4>
-
-    Node Manager must be running to view its logs.
-
+<div class="notices note" ><p>Node Manager must be running to view its logs.</p>
 </div>
 <ol>
 <li>
@@ -400,12 +716,8 @@ Use the Servers table to monitor and compare properties across the different ser
 <p>Dashboards are highly customizable. Start from any node in the <strong>Monitoring</strong> perspective and you can use its properties to develop precise criteria that go far beyond simple true/false statements. Dashboards let you find obscure, cross-functional data that might otherwise require comparison across multiple nodes.</p>
 <p>Dashboards are only available on the <strong>Monitoring Tree</strong> perspective.</p>
 
-
-<div class="alert alert-primary" role="alert">
-<h4 class="alert-heading">Note</h4>
-
-    You can expand the <strong>Dashboards</strong> node at the bottom of the Navigation tree to see any saved or built-in dashboards.
-
+<div class="notices note" ><p><strong>Tip:</strong></p>
+<p>You can expand the <strong>Dashboards</strong> node at the bottom of the Navigation tree to see any saved or built-in dashboards.</p>
 </div>
 <h3 id="GUID-2E5979B0-99ED-400B-A626-A525AA0FC3D8">Dashboard Filters</h3>
 <p>In dashboards, filters are the criteria that you use to curate your results. Generally, filters are based on the properties of a node.</p>
@@ -434,7 +746,7 @@ Use the Servers table to monitor and compare properties across the different ser
 <p>Click <strong>New Dashboard</strong>.</p>
 </li>
 <li>
-<p>Enter a name for your new dashboard and then begin configuring the filters that will determine the results of the dashboard. For guidance on how to build filters, see <a href="/administration-server/monitoring-domains/#GUID-2E5979B0-99ED-400B-A626-A525AA0FC3D8">Dashboard Filters</a>.</p>
+<p>Enter a name for your new dashboard and then begin configuring the filters that will determine the results of the dashboard. For guidance on how to build filters, see <a href="#GUID-2E5979B0-99ED-400B-A626-A525AA0FC3D8">Dashboard Filters</a>.</p>
 </li>
 <li>
 <p>Click <strong>Create</strong> to generate the dashboard.</p>
@@ -450,7 +762,7 @@ Use the Servers table to monitor and compare properties across the different ser
 <p>Use WebLogic Remote Console to configure WebLogic Server Logging services. For general information on WebLogic Server logging services, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=WLLOG-GUID-7E52F7E6-55A1-4E0D-A3F6-CBC110ABD975">Understanding WebLogic Logging Services</a> in <strong>Configuring Log Files and Filtering Log Messages for Oracle WebLogic Server</strong>.</p>
 <h3 id="GUID-7DE040D7-9BF2-420A-9810-F1CA993A32CA">View Logs</h3>
 <p>Each subsystem within WebLogic Server generates log messages to communicate its status. To keep a record of the messages that its subsystems generate, WebLogic Server writes the messages to log files.</p>
-<p>The contents of log files are generated according to the logging settings that are currently defined for a server. To manage what information is sent to a log file, see <a href="/administration-server/monitoring-domains/#GUID-B5244A71-B792-42E1-ACFF-B0DDC9A53E67">Configure Logs</a>.</p>
+<p>The contents of log files are generated according to the logging settings that are currently defined for a server. To manage what information is sent to a log file, see <a href="#GUID-B5244A71-B792-42E1-ACFF-B0DDC9A53E67">Configure Logs</a>.</p>
 <p>For more information on WebLogic logging services, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=WLLOG-GUID-7E52F7E6-55A1-4E0D-A3F6-CBC110ABD975">Understanding WebLogic Logging Services</a> in <strong>Configuring Log Files and Filtering Log Messages for Oracle WebLogic Server</strong>.</p>
 <ol>
 <li>
@@ -516,7 +828,7 @@ Use the Servers table to monitor and compare properties across the different ser
 <p>Click <strong>Save</strong>.</p>
 </li>
 </ol>
-<p>If you haven&rsquo;t already, you should configure general logging settings for this server. See <a href="/administration-server/monitoring-domains/#GUID-B5244A71-B792-42E1-ACFF-B0DDC9A53E67">Configure Logs</a>.</p>
+<p>If you haven&rsquo;t already, you should configure general logging settings for this server. See <a href="#GUID-B5244A71-B792-42E1-ACFF-B0DDC9A53E67">Configure Logs</a>.</p>
 <p>If you create applications to run on WebLogic Server, you can configure your applications to generate messages of severity <code>DEBUG</code>. These messages are never forwarded to the domain log and are intended to contain detailed information about the operation of an application or the server.</p>
 <h3 id="GUID-EB50E0B0-91AB-416A-A61F-79D414282DEE">Filter Log Messages</h3>
 <p>WebLogic Server can generate a significant amount of data in its log messages. You can filter log messages so only certain messages are published.</p>
@@ -557,7 +869,7 @@ Use the Servers table to monitor and compare properties across the different ser
 <p>If you want to control which log messages are published, you can create log filters which use custom logic to evaluate log message content and then accept or reject it for publication based on its criteria. You can apply log filters to these log message destinations: log file, standard out, and domain log broadcaster.</p>
 <ol>
 <li>
-<p><a href="/administration-server/monitoring-domains/#GUID-0D37D991-A698-4D2C-8163-DC3B1A0BBC65">Create a Log Filter</a>.</p>
+<p><a href="#GUID-0D37D991-A698-4D2C-8163-DC3B1A0BBC65">Create a Log Filter</a>.</p>
 </li>
 <li>
 <p>To apply a log filter to the log file message destination, choose your preferred severity level from the <strong>Log File Severity Level</strong> drop-down list, then choose a log filter from the <strong>Log File Filter</strong> drop-down list.</p>
@@ -597,17 +909,12 @@ Use the Servers table to monitor and compare properties across the different ser
 <p>Click <strong>Save</strong>.</p>
 </li>
 </ol>
-<p>Update your logging settings to apply this log filter. See <a href="/administration-server/monitoring-domains/#GUID-EB50E0B0-91AB-416A-A61F-79D414282DEE">Filter Log Messages</a>.</p>
+<p>Update your logging settings to apply this log filter. See <a href="#GUID-EB50E0B0-91AB-416A-A61F-79D414282DEE">Filter Log Messages</a>.</p>
 <h3 id="GUID-212C2424-746F-4150-8664-F6F9A0B0A4EF">Rotate Log Files</h3>
 <p>Set a rotation schedule for the log files generated by WebLogic Server.</p>
 <p>For more information, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=WLLOG-GUID-FCA331B8-F60C-4E52-A91B-FABACCC9EFBE">Rotating Log Files</a> in <strong>Configuring Log Files and Filtering Log Messages for Oracle WebLogic Server</strong>.</p>
 
-
-<div class="alert alert-primary" role="alert">
-<h4 class="alert-heading">Note</h4>
-
-    WebLogic Server sets a threshold size limit of 2,097,152 kilobytes before it forces a hard rotation to prevent excessive log file growth.
-
+<div class="notices note" ><p>WebLogic Server sets a threshold size limit of 2,097,152 kilobytes before it forces a hard rotation to prevent excessive log file growth.</p>
 </div>
 <ol>
 <li>
@@ -641,7 +948,7 @@ Use the Servers table to monitor and compare properties across the different ser
 </ol>
 </li>
 <li>
-<p>If you chose <strong>By Size or Time</strong> as the Rotation Type, then configure the <strong>By Size</strong> and <strong>By Time</strong> options as described in steps <a href="/administration-server/monitoring-domains/#STEP_Z2F_JLF_B2C">3</a> and <a href="/administration-server/monitoring-domains/#STEP_TQJ_JLF_B2C">4</a>.</p>
+<p>If you chose <strong>By Size or Time</strong> as the Rotation Type, then configure the <strong>By Size</strong> and <strong>By Time</strong> options as described in steps <a href="#STEP_Z2F_JLF_B2C">3</a> and <a href="#STEP_TQJ_JLF_B2C">4</a>.</p>
 </li>
 <li>
 <p>If you want to limit the number of log files that the server creates to store old log messages, enable the <strong>Limit Number of Retained Log Files</strong> option. Then, in the <strong>Files to Retain</strong> field, enter the maximum number of files. If the server receives additional log messages after reaching the capacity of the last log file, it overwrites the oldest log file.</p>
@@ -663,7 +970,7 @@ Use the Servers table to monitor and compare properties across the different ser
 <h2 id="GUID-BB85D9BB-5E36-4067-AA9F-E01EBFF027CD">Enable Configuration Auditing</h2>
 <p>You can configure the Administration Server to emit audit messages that enable auditing of configuration changes in a domain.</p>
 <p>This provides a record of changes to the configuration of any resource within a domain or invokes management operations on any resource within a domain. Configuration audit records can be saved to a log file, sent to an Auditing provider in the security realm, or both.</p>
-<p>If you plan to audit configuration changes, then you must configure the WebLogic Auditing Provider first. See <a href="/administration-server/securing-domains/#GUID-553E0BEB-BD7E-44EF-AD4D-782F1A01C3B8">Configure an Auditing Provider</a>.</p>
+<p>If you plan to audit configuration changes, then you must configure the WebLogic Auditing Provider first. See <a href="../securing-domains#GUID-553E0BEB-BD7E-44EF-AD4D-782F1A01C3B8">Configure an Auditing Provider</a>.</p>
 <ol>
 <li>
 <p>In the <strong>Edit Tree</strong>, go to <strong>Environment</strong>, then <strong>Domain</strong>.</p>
@@ -718,35 +1025,370 @@ Use the Servers table to monitor and compare properties across the different ser
 </li>
 </ol>
 
-  <div class="section-index">
-    
-    
-    </div>
-</div>
 
-          </main>
-        </div>
-      </div>
-      <footer class="td-footer row d-print-none">
-  <div class="container-fluid">
-    <div class="row mx-md-2">
-      <div class="td-footer__left col-6 col-sm-4 order-sm-1">
-        
-      </div><div class="td-footer__right col-6 col-sm-4 order-sm-3">
-        
-      </div><div class="td-footer__center col-12 col-sm-4 py-2 order-sm-2">
-        <span class="td-footer__copyright">&copy;
-    2020&ndash;2025
-    <span class="td-footer__authors">Oracle | <a href="https://github.com/oracle/weblogic-remote-console/blob/main/LICENSE.txt">UPL 1.0</a></span></span><span class="td-footer__all_rights_reserved">All Rights Reserved</span>
-      </div>
-    </div>
-  </div>
+
+
+
+<footer class=" footline" >
+	
 </footer>
 
+        
+        </div>
+        
+
+      </div>
+
+    <div id="navigation">
+        
+        
+
+        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+
+        
+
+
+	 
+	 
+		
+			<a class="nav nav-prev" href="/weblogic-remote-console/administration-server/deploying-applications/" title="Deploying Applications"> <i class="fa fa-chevron-left"></i></a>
+		
+		
+			<a class="nav nav-next" href="/weblogic-remote-console/administration-server/configuring-services/" title="Configuring Services" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+		
+	
     </div>
-    <script src="/js/main.min.90902a026ed2aee7ed45d85797f4c790b240ba148ac6f8a6f194cb1981ffecf5.js" integrity="sha256-kJAqAm7SruftRdhXl/THkLJAuhSKxvim8ZTLGYH/7PU=" crossorigin="anonymous"></script>
-<script defer src="/js/click-to-copy.min.73478a7d4807698aed7e355eb23f9890ca18fea3158604c8471746d046702bad.js" integrity="sha256-c0eKfUgHaYrtfjVesj&#43;YkMoY/qMVhgTIRxdG0EZwK60=" crossorigin="anonymous"></script>
-<script src='/js/tabpane-persist.js'></script>
+
+    </section>
+
+    <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
+      <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
+    </div>
+    <script src="/weblogic-remote-console/js/clipboard.min.js?1739383889"></script>
+    <script src="/weblogic-remote-console/js/perfect-scrollbar.min.js?1739383889"></script>
+    <script src="/weblogic-remote-console/js/perfect-scrollbar.jquery.min.js?1739383889"></script>
+    <script src="/weblogic-remote-console/js/jquery.sticky.js?1739383889"></script>
+    <script src="/weblogic-remote-console/js/featherlight.min.js?1739383889"></script>
+    <script src="/weblogic-remote-console/js/highlight.pack.js?1739383889"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script src="/weblogic-remote-console/js/modernizr.custom-3.6.0.js?1739383889"></script>
+    <script src="/weblogic-remote-console/js/learn.js?1739383889"></script>
+    <script src="/weblogic-remote-console/js/hugo-learn.js?1739383889"></script>
+    
+        
+            <script src="/weblogic-remote-console/mermaid/mermaid.js?1739383889"></script>
+        
+        <script>
+            mermaid.initialize({ startOnLoad: true });
+        </script>
+    
+    
 
   </body>
 </html>

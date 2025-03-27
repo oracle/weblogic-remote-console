@@ -2,10 +2,10 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Securing Domains on WebLogic Remote Console</title>
-    <link>/2.4.13/administration-server/securing-domains/</link>
+    <link>https://oracle.github.io/weblogic-remote-console/2.4.13/administration-server/securing-domains/</link>
     <description>Recent content in Securing Domains on WebLogic Remote Console</description>
-    <generator>Hugo</generator>
-    <language>en</language>
-    <atom:link href="/2.4.13/administration-server/securing-domains/index.xml" rel="self" type="application/rss+xml" />
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <atom:link href="https://oracle.github.io/weblogic-remote-console/2.4.13/administration-server/securing-domains/index.xml" rel="self" type="application/rss+xml" />
   </channel>
 </rss>
