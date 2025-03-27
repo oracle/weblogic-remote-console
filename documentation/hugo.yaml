@@ -1,0 +1,124 @@
+title: WebLogic Remote Console
+# baseURL: https://oracle.github.io/weblogic-remote-console/
+# languageCode: en-us
+
+# Language settings
+contentDir: content/en
+defaultContentLanguage: en
+defaultContentLanguageInSubdir: false
+
+enableRobotsTXT: true
+
+# Comment out to enable taxonomies in Docsy
+disableKinds: [taxonomy]
+
+# Language configuration
+languages:
+  en:
+    languageName: English
+    title: WebLogic Remote Console
+    permalinks:
+      section:
+        latest: /:sections[1:]
+    params:
+      description: A guide for using WebLogic Remote Console to manage WebLogic Server domains.
+  # cSpell:disable
+
+# TODO update path to include '/3**' when major version increases to 3.x
+
+cascade: 
+  - type: 'docs'
+    target:
+      path: '{/2**,/latest**}'
+  - params:
+    archived_version: true
+    # param.version is a vestigial attribute from original version-banner partial
+    version: 2
+    exclude_search: true
+    target:
+      path: /2**
+
+menus:
+  main:
+  - name: Documentation
+    url: /overview
+    weight: 10
+
+markup:
+  goldmark:
+    parser:
+      attribute:
+        block: true
+    renderer:
+      unsafe: true
+  highlight:
+    # See a complete list of available styles at https://xyproto.github.io/splash/docs/all.html
+    style: tango
+    # Uncomment if you want your chosen highlight style used for code blocks without a specified language
+    # guessSyntax: true
+
+params:
+
+  # Enable Lunr.js offline search
+  offlineSearch: true
+
+  copyright:
+    authors: Oracle | [UPL 1.0](https://github.com/oracle/weblogic-remote-console/blob/main/LICENSE.txt)
+    from_year: 2020
+
+  ui:
+    # Set to true to disable breadcrumb navigation.
+    breadcrumb_disable: false
+    # Set to false if you don't want to display a logo (/assets/icons/logo.svg) in the top navbar
+    navbar_logo: false
+    # Set to true if you don't want the top navbar to be translucent when over a `block/cover`, like on the homepage.
+    navbar_translucent_over_cover_disable: false
+    # Enable to show the side bar menu in its compact state.
+    sidebar_menu_compact: true
+    # Set to true to hide the sidebar search box (the top nav search box will still be displayed if search is enabled)
+    sidebar_search_disable: true
+    sidebar_menu_foldable: true
+    # Set to true to show light/dark menu
+    showLightDarkModeMenu: true
+
+  # wrc version
+  console_version: 2.4.16
+  # console rest extension version
+  console_rest_ext: console-rest-ext-2.4.16.war
+
+  # Menu title if your navbar has a versions selector to access old versions of your site.
+  # This menu appears only if you have at least one [params.versions] set.
+  # TODO if you can't figure out how to make the url behave with the actual base path, make url absolute
+  version_menu: Releases
+  url_latest_version: '/weblogic-remote-console/overview'
+  versions:
+    - version: Latest (v2.4.16)
+      url: '/weblogic-remote-console/overview'
+    - version: v2.4.15
+      url: '/weblogic-remote-console/2.4.15'
+    - version: v2.4.14
+      url: '/weblogic-remote-console/2.4.14'
+    - version: v2.4.13
+      url: '/weblogic-remote-console/2.4.13'
+    - version: v2.4.12
+      url: '/weblogic-remote-console/2.4.12'
+    - version: v2.4.11
+      url: '/weblogic-remote-console/2.4.11'
+
+  # DO NOT USE: The following versioning flags are used by the original "version-banner" partial from docsy, which is currently overriden by a custom version-banner partial under layouts/partials/ that uses page.Params instead of site.Params.
+  #archived_version: false
+  #version: 0.0
+
+
+
+
+
+
+module:
+  proxy: direct
+  hugoVersion:
+    extended: true
+    min: 0.73.0
+  imports:
+    - path: github.com/google/docsy
+      disable: false

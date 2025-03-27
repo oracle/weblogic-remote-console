@@ -1,0 +1,771 @@
+<!doctype html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+
+
+<link rel="shortcut icon" href="/weblogic-remote-console/favicons/favicon.ico" >
+<link rel="apple-touch-icon" href="/weblogic-remote-console/favicons/apple-touch-icon-180x180.png" sizes="180x180">
+<link rel="icon" type="image/png" href="/weblogic-remote-console/favicons/favicon-16x16.png" sizes="16x16">
+<link rel="icon" type="image/png" href="/weblogic-remote-console/favicons/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="/weblogic-remote-console/favicons/android-36x36.png" sizes="36x36">
+<link rel="icon" type="image/png" href="/weblogic-remote-console/favicons/android-48x48.png" sizes="48x48">
+<link rel="icon" type="image/png" href="/weblogic-remote-console/favicons/android-72x72.png" sizes="72x72">
+<link rel="icon" type="image/png" href="/weblogic-remote-console/favicons/android-96x96.png" sizes="96x96">
+<link rel="icon" type="image/png" href="/weblogic-remote-console/favicons/android-144x144.png" sizes="144x144">
+<link rel="icon" type="image/png" href="/weblogic-remote-console/favicons/android-192x192.png" sizes="192x192">
+
+<title>Editing security data | WebLogic Remote Console</title>
+<meta name="description" content="You can manage security data and supported security providers for your domain in the Security Data tree perspective.
+Note You must be logged in as a user with the Admin role and have the WebLogic Remote Console extension installed to access this perspective. See Install the WebLogic Remote Console for instructions. Any changes you make within the Security Data perspective are immediate - you don’t need to commit or restart the server to apply your changes.">
+<meta property="og:url" content="https://oracle.github.io/weblogic-remote-console/2.4.11/userguide/providers/administration-server/security-data/">
+  <meta property="og:site_name" content="WebLogic Remote Console">
+  <meta property="og:title" content="Editing security data">
+  <meta property="og:description" content="You can manage security data and supported security providers for your domain in the Security Data tree perspective.
+Note You must be logged in as a user with the Admin role and have the WebLogic Remote Console extension installed to access this perspective. See Install the WebLogic Remote Console for instructions. Any changes you make within the Security Data perspective are immediate - you don’t need to commit or restart the server to apply your changes.">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="2.4.11">
+
+  <meta itemprop="name" content="Editing security data">
+  <meta itemprop="description" content="You can manage security data and supported security providers for your domain in the Security Data tree perspective.
+Note You must be logged in as a user with the Admin role and have the WebLogic Remote Console extension installed to access this perspective. See Install the WebLogic Remote Console for instructions. Any changes you make within the Security Data perspective are immediate - you don’t need to commit or restart the server to apply your changes.">
+  <meta itemprop="wordCount" content="3874">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Editing security data">
+  <meta name="twitter:description" content="You can manage security data and supported security providers for your domain in the Security Data tree perspective.
+Note You must be logged in as a user with the Admin role and have the WebLogic Remote Console extension installed to access this perspective. See Install the WebLogic Remote Console for instructions. Any changes you make within the Security Data perspective are immediate - you don’t need to commit or restart the server to apply your changes.">
+<link rel="preload" href="/weblogic-remote-console/scss/main.min.48c25d0a5a23a1e8cae94d6c5e7622061e5345cf098171b1d6ee41d8e309e6c8.css" as="style" integrity="sha256-SMJdClojoejK6U1sXnYiBh5TRc8JgXGx1u5B2OMJ5sg=" crossorigin="anonymous">
+<link href="/weblogic-remote-console/scss/main.min.48c25d0a5a23a1e8cae94d6c5e7622061e5345cf098171b1d6ee41d8e309e6c8.css" rel="stylesheet" integrity="sha256-SMJdClojoejK6U1sXnYiBh5TRc8JgXGx1u5B2OMJ5sg=" crossorigin="anonymous">
+<script
+  src="https://code.jquery.com/jquery-3.7.1.min.js"
+  integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+  crossorigin="anonymous"></script>
+<script defer
+  src="https://unpkg.com/lunr@2.3.9/lunr.min.js"
+  integrity="sha384-203J0SNzyqHby3iU6hzvzltrWi/M41wOP5Gu+BiJMz5nwKykbkUx8Kp7iti0Lpli"
+  crossorigin="anonymous"></script>
+
+  </head>
+  <body class="td-page">
+    <header>
+      <nav class="td-navbar js-navbar-scroll" data-bs-theme="dark">
+<div class="container-fluid flex-column flex-md-row">
+  <a class="navbar-brand" href="/weblogic-remote-console/"><span class="navbar-brand__logo navbar-logo"></span><span class="navbar-brand__name">WebLogic Remote Console</span></a>
+  <div class="td-navbar-nav-scroll ms-md-auto" id="main_navbar">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" href="/weblogic-remote-console/overview"><span>Documentation</span></a>
+      </li>
+      <li class="nav-item dropdown d-none d-lg-block">
+        <div class="dropdown">
+  <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Releases</a>
+  <ul class="dropdown-menu">
+    <li><a class="dropdown-item" href="/weblogic-remote-console/overview">Latest (v2.4.16)</a></li>
+    <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.15">v2.4.15</a></li>
+    <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.14">v2.4.14</a></li>
+    <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.13">v2.4.13</a></li>
+    <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.12">v2.4.12</a></li>
+    <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.11">v2.4.11</a></li>
+    </ul>
+</div></li>
+      <li class="td-light-dark-menu nav-item dropdown">
+        <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
+  <symbol id="check2" viewBox="0 0 16 16">
+    <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/>
+  </symbol>
+  <symbol id="circle-half" viewBox="0 0 16 16">
+    <path d="M8 15A7 7 0 1 0 8 1v14zm0 1A8 8 0 1 1 8 0a8 8 0 0 1 0 16z"/>
+  </symbol>
+  <symbol id="moon-stars-fill" viewBox="0 0 16 16">
+    <path d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z"/>
+    <path d="M10.794 3.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387a1.734 1.734 0 0 0-1.097 1.097l-.387 1.162a.217.217 0 0 1-.412 0l-.387-1.162A1.734 1.734 0 0 0 9.31 6.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387a1.734 1.734 0 0 0 1.097-1.097l.387-1.162zM13.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.156 1.156 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.156 1.156 0 0 0-.732-.732l-.774-.258a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732L13.863.1z"/>
+  </symbol>
+  <symbol id="sun-fill" viewBox="0 0 16 16">
+    <path d="M8 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13zm8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5zM3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8zm10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0zm-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708z"/>
+  </symbol>
+</svg>
+
+<button class="btn btn-link nav-link dropdown-toggle d-flex align-items-center"
+        id="bd-theme"
+        type="button"
+        aria-expanded="false"
+        data-bs-toggle="dropdown"
+        data-bs-display="static"
+        aria-label="Toggle theme (auto)">
+  <svg class="bi my-1 theme-icon-active"><use href="#circle-half"></use></svg>
+</button>
+<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="bd-theme-text">
+  <li>
+    <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="light" aria-pressed="false">
+      <svg class="bi me-2 opacity-50"><use href="#sun-fill"></use></svg>
+      Light
+      <svg class="bi ms-auto d-none"><use href="#check2"></use></svg>
+    </button>
+  </li>
+  <li>
+    <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="dark" aria-pressed="false">
+      <svg class="bi me-2 opacity-50"><use href="#moon-stars-fill"></use></svg>
+      Dark
+      <svg class="bi ms-auto d-none"><use href="#check2"></use></svg>
+    </button>
+  </li>
+  <li>
+    <button type="button" class="dropdown-item d-flex align-items-center active" data-bs-theme-value="auto" aria-pressed="true">
+      <svg class="bi me-2 opacity-50"><use href="#circle-half"></use></svg>
+      Auto
+      <svg class="bi ms-auto d-none"><use href="#check2"></use></svg>
+    </button>
+  </li>
+</ul>
+
+      </li>
+      </ul>
+  </div>
+  <div class="d-none d-lg-block">
+    <div class="td-search td-search--offline">
+  <div class="td-search__icon"></div>
+  <input
+    type="search"
+    class="td-search__input form-control"
+    placeholder="Search this site…"
+    aria-label="Search this site…"
+    autocomplete="off"
+    
+    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.e152858a1bbec0f36c67cf871ab007ef.json"
+    data-offline-search-base-href="/"
+    data-offline-search-max-results="10"
+  >
+</div>
+  </div>
+</div>
+</nav>
+    </header>
+    <div class="container-fluid td-outer">
+      <div class="td-main">
+        <div class="row flex-xl-nowrap">
+          <aside class="col-12 col-md-3 col-xl-2 td-sidebar d-print-none">
+            <div id="td-sidebar-menu" class="td-sidebar__inner">
+  <div id="content-mobile">
+  <form class="td-sidebar__search d-flex align-items-center">
+    <div class="td-search td-search--offline">
+  <div class="td-search__icon"></div>
+  <input
+    type="search"
+    class="td-search__input form-control"
+    placeholder="Search this site…"
+    aria-label="Search this site…"
+    autocomplete="off"
+    
+    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.e152858a1bbec0f36c67cf871ab007ef.json"
+    data-offline-search-base-href="/"
+    data-offline-search-max-results="10"
+  >
+</div>
+    <button class="btn btn-link td-sidebar__toggle d-md-none p-0 ms-3 fas fa-bars" type="button" data-bs-toggle="collapse" data-bs-target="#td-section-nav" aria-controls="td-section-nav" aria-expanded="false" aria-label="Toggle section navigation">
+    </button>
+  </form>
+  </div>
+  <div id="content-desktop"></div>
+  <nav class="td-sidebar-nav collapse td-sidebar-nav--search-disabled foldable-nav" id="td-section-nav">
+    <ul class="td-sidebar-nav__section pe-md-3 ul-0">
+      <li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child active-path" id="m-weblogic-remote-console2411-li">
+  <a href="/weblogic-remote-console/2.4.11/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section tree-root" id="m-weblogic-remote-console2411"><span class="">WebLogic Remote Console</span></a>
+  <ul class="ul-1">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-weblogic-remote-console2411setup-li">
+  <input type="checkbox" id="m-weblogic-remote-console2411setup-check"/>
+  <label for="m-weblogic-remote-console2411setup-check"><a href="/weblogic-remote-console/2.4.11/setup/" class="align-left ps-0  td-sidebar-link td-sidebar-link__section" id="m-weblogic-remote-console2411setup"><span class="">Get started</span></a></label>
+  
+  <ul class="ul-2 foldable">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-weblogic-remote-console2411setupconsole-li">
+  <input type="checkbox" id="m-weblogic-remote-console2411setupconsole-check"/>
+  <label for="m-weblogic-remote-console2411setupconsole-check"><a href="/weblogic-remote-console/2.4.11/setup/console/" class="align-left ps-0  td-sidebar-link td-sidebar-link__page" id="m-weblogic-remote-console2411setupconsole"><span class="">Explore the WebLogic Remote Console</span></a></label>
+  
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-weblogic-remote-console2411setupadmin-console-diff-li">
+  <input type="checkbox" id="m-weblogic-remote-console2411setupadmin-console-diff-check"/>
+  <label for="m-weblogic-remote-console2411setupadmin-console-diff-check"><a href="/weblogic-remote-console/2.4.11/setup/admin-console-diff/" class="align-left ps-0  td-sidebar-link td-sidebar-link__page" id="m-weblogic-remote-console2411setupadmin-console-diff"><span class="">Differences with the Administration Console</span></a></label>
+  
+</li>
+  </ul>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child active-path" id="m-weblogic-remote-console2411userguide-li">
+  <input type="checkbox" id="m-weblogic-remote-console2411userguide-check" checked/>
+  <label for="m-weblogic-remote-console2411userguide-check"><a href="/weblogic-remote-console/2.4.11/userguide/" class="align-left ps-0  td-sidebar-link td-sidebar-link__section" id="m-weblogic-remote-console2411userguide"><span class="">User guide</span></a></label>
+  
+  <ul class="ul-2 foldable">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-weblogic-remote-console2411userguideprojects-li">
+  <input type="checkbox" id="m-weblogic-remote-console2411userguideprojects-check"/>
+  <label for="m-weblogic-remote-console2411userguideprojects-check"><a href="/weblogic-remote-console/2.4.11/userguide/projects/" class="align-left ps-0  td-sidebar-link td-sidebar-link__page" id="m-weblogic-remote-console2411userguideprojects"><span class="">Projects</span></a></label>
+  
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child active-path" id="m-weblogic-remote-console2411userguideproviders-li">
+  <input type="checkbox" id="m-weblogic-remote-console2411userguideproviders-check" checked/>
+  <label for="m-weblogic-remote-console2411userguideproviders-check"><a href="/weblogic-remote-console/2.4.11/userguide/providers/" class="align-left ps-0  td-sidebar-link td-sidebar-link__section" id="m-weblogic-remote-console2411userguideproviders"><span class="">Provider types</span></a></label>
+  
+  <ul class="ul-3 foldable">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child active-path" id="m-weblogic-remote-console2411userguideprovidersadministration-server-li">
+  <input type="checkbox" id="m-weblogic-remote-console2411userguideprovidersadministration-server-check" checked/>
+  <label for="m-weblogic-remote-console2411userguideprovidersadministration-server-check"><a href="/weblogic-remote-console/2.4.11/userguide/providers/administration-server/" class="align-left ps-0  td-sidebar-link td-sidebar-link__section" id="m-weblogic-remote-console2411userguideprovidersadministration-server"><span class="">Administration Servers</span></a></label>
+  
+  <ul class="ul-4 foldable">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child active-path" id="m-weblogic-remote-console2411userguideprovidersadministration-serversecurity-data-li">
+  <input type="checkbox" id="m-weblogic-remote-console2411userguideprovidersadministration-serversecurity-data-check" checked/>
+  <label for="m-weblogic-remote-console2411userguideprovidersadministration-serversecurity-data-check"><a href="/weblogic-remote-console/2.4.11/userguide/providers/administration-server/security-data/" class="align-left ps-0  active td-sidebar-link td-sidebar-link__page" id="m-weblogic-remote-console2411userguideprovidersadministration-serversecurity-data"><span class="td-sidebar-nav-active-item">Editing security data</span></a></label>
+  
+</li>
+  </ul>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-weblogic-remote-console2411userguideprovidersproperty-list-li">
+  <input type="checkbox" id="m-weblogic-remote-console2411userguideprovidersproperty-list-check"/>
+  <label for="m-weblogic-remote-console2411userguideprovidersproperty-list-check"><a href="/weblogic-remote-console/2.4.11/userguide/providers/property-list/" class="align-left ps-0  td-sidebar-link td-sidebar-link__page" id="m-weblogic-remote-console2411userguideprovidersproperty-list"><span class="">Property lists</span></a></label>
+  
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-weblogic-remote-console2411userguideproviderswdt-model-li">
+  <input type="checkbox" id="m-weblogic-remote-console2411userguideproviderswdt-model-check"/>
+  <label for="m-weblogic-remote-console2411userguideproviderswdt-model-check"><a href="/weblogic-remote-console/2.4.11/userguide/providers/wdt-model/" class="align-left ps-0  td-sidebar-link td-sidebar-link__page" id="m-weblogic-remote-console2411userguideproviderswdt-model"><span class="">WDT model files</span></a></label>
+  
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-weblogic-remote-console2411userguideproviderswdt-composite-li">
+  <input type="checkbox" id="m-weblogic-remote-console2411userguideproviderswdt-composite-check"/>
+  <label for="m-weblogic-remote-console2411userguideproviderswdt-composite-check"><a href="/weblogic-remote-console/2.4.11/userguide/providers/wdt-composite/" class="align-left ps-0  td-sidebar-link td-sidebar-link__page" id="m-weblogic-remote-console2411userguideproviderswdt-composite"><span class="">WDT composite models</span></a></label>
+  
+</li>
+  </ul>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-weblogic-remote-console2411userguideadvanced-settings-li">
+  <input type="checkbox" id="m-weblogic-remote-console2411userguideadvanced-settings-check"/>
+  <label for="m-weblogic-remote-console2411userguideadvanced-settings-check"><a href="/weblogic-remote-console/2.4.11/userguide/advanced-settings/" class="align-left ps-0  td-sidebar-link td-sidebar-link__page" id="m-weblogic-remote-console2411userguideadvanced-settings"><span class="">Customize settings</span></a></label>
+  
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-weblogic-remote-console2411userguidedashboards-li">
+  <input type="checkbox" id="m-weblogic-remote-console2411userguidedashboards-check"/>
+  <label for="m-weblogic-remote-console2411userguidedashboards-check"><a href="/weblogic-remote-console/2.4.11/userguide/dashboards/" class="align-left ps-0  td-sidebar-link td-sidebar-link__page" id="m-weblogic-remote-console2411userguidedashboards"><span class="">Generate dashboards</span></a></label>
+  
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-weblogic-remote-console2411userguideupgrade-li">
+  <input type="checkbox" id="m-weblogic-remote-console2411userguideupgrade-check"/>
+  <label for="m-weblogic-remote-console2411userguideupgrade-check"><a href="/weblogic-remote-console/2.4.11/userguide/upgrade/" class="align-left ps-0  td-sidebar-link td-sidebar-link__page" id="m-weblogic-remote-console2411userguideupgrade"><span class="">Upgrade the WebLogic Remote Console</span></a></label>
+  
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-weblogic-remote-console2411userguidelogging-li">
+  <input type="checkbox" id="m-weblogic-remote-console2411userguidelogging-check"/>
+  <label for="m-weblogic-remote-console2411userguidelogging-check"><a href="/weblogic-remote-console/2.4.11/userguide/logging/" class="align-left ps-0  td-sidebar-link td-sidebar-link__page" id="m-weblogic-remote-console2411userguidelogging"><span class="">Check log files</span></a></label>
+  
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-weblogic-remote-console2411userguiderole-access-li">
+  <input type="checkbox" id="m-weblogic-remote-console2411userguiderole-access-check"/>
+  <label for="m-weblogic-remote-console2411userguiderole-access-check"><a href="/weblogic-remote-console/2.4.11/userguide/role-access/" class="align-left ps-0  td-sidebar-link td-sidebar-link__page" id="m-weblogic-remote-console2411userguiderole-access"><span class="">Understand access discrepancies</span></a></label>
+  
+</li>
+  </ul>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-weblogic-remote-console2411develop-li">
+  <input type="checkbox" id="m-weblogic-remote-console2411develop-check"/>
+  <label for="m-weblogic-remote-console2411develop-check"><a href="/weblogic-remote-console/2.4.11/develop/" class="align-left ps-0  td-sidebar-link td-sidebar-link__section" id="m-weblogic-remote-console2411develop"><span class="">Development</span></a></label>
+  
+  <ul class="ul-2 foldable">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-weblogic-remote-console2411developbuild-source-li">
+  <input type="checkbox" id="m-weblogic-remote-console2411developbuild-source-check"/>
+  <label for="m-weblogic-remote-console2411developbuild-source-check"><a href="/weblogic-remote-console/2.4.11/develop/build-source/" class="align-left ps-0  td-sidebar-link td-sidebar-link__page" id="m-weblogic-remote-console2411developbuild-source"><span class="">Build from source</span></a></label>
+  
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-weblogic-remote-console2411developcontribute-li">
+  <input type="checkbox" id="m-weblogic-remote-console2411developcontribute-check"/>
+  <label for="m-weblogic-remote-console2411developcontribute-check"><a href="/weblogic-remote-console/2.4.11/develop/contribute/" class="align-left ps-0  td-sidebar-link td-sidebar-link__page" id="m-weblogic-remote-console2411developcontribute"><span class="">Contribute to WebLogic Remote Console</span></a></label>
+  
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-weblogic-remote-console2411developdocs-contribute-li">
+  <input type="checkbox" id="m-weblogic-remote-console2411developdocs-contribute-check"/>
+  <label for="m-weblogic-remote-console2411developdocs-contribute-check"><a href="/weblogic-remote-console/2.4.11/develop/docs-contribute/" class="align-left ps-0  td-sidebar-link td-sidebar-link__page" id="m-weblogic-remote-console2411developdocs-contribute"><span class="">Contribute to the documentation</span></a></label>
+  
+</li>
+  </ul>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-weblogic-remote-console2411reference-li">
+  <input type="checkbox" id="m-weblogic-remote-console2411reference-check"/>
+  <label for="m-weblogic-remote-console2411reference-check"><a href="/weblogic-remote-console/2.4.11/reference/" class="align-left ps-0  td-sidebar-link td-sidebar-link__section" id="m-weblogic-remote-console2411reference"><span class="">Reference</span></a></label>
+  
+  <ul class="ul-2 foldable">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-weblogic-remote-console2411referencefaqs-li">
+  <input type="checkbox" id="m-weblogic-remote-console2411referencefaqs-check"/>
+  <label for="m-weblogic-remote-console2411referencefaqs-check"><a href="/weblogic-remote-console/2.4.11/reference/faqs/" class="align-left ps-0  td-sidebar-link td-sidebar-link__page" id="m-weblogic-remote-console2411referencefaqs"><span class="">Frequently asked questions</span></a></label>
+  
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-weblogic-remote-console2411referenceknown_issues-li">
+  <input type="checkbox" id="m-weblogic-remote-console2411referenceknown_issues-check"/>
+  <label for="m-weblogic-remote-console2411referenceknown_issues-check"><a href="/weblogic-remote-console/2.4.11/reference/known_issues/" class="align-left ps-0  td-sidebar-link td-sidebar-link__page" id="m-weblogic-remote-console2411referenceknown_issues"><span class="">Known issues</span></a></label>
+  
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-weblogic-remote-console2411referencetroubleshoot-li">
+  <input type="checkbox" id="m-weblogic-remote-console2411referencetroubleshoot-check"/>
+  <label for="m-weblogic-remote-console2411referencetroubleshoot-check"><a href="/weblogic-remote-console/2.4.11/reference/troubleshoot/" class="align-left ps-0  td-sidebar-link td-sidebar-link__page" id="m-weblogic-remote-console2411referencetroubleshoot"><span class="">Troubleshoot issues</span></a></label>
+  
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-weblogic-remote-console2411referencesecurity-warnings-li">
+  <input type="checkbox" id="m-weblogic-remote-console2411referencesecurity-warnings-check"/>
+  <label for="m-weblogic-remote-console2411referencesecurity-warnings-check"><a href="/weblogic-remote-console/2.4.11/reference/security-warnings/" class="align-left ps-0  td-sidebar-link td-sidebar-link__page" id="m-weblogic-remote-console2411referencesecurity-warnings"><span class="">Review security issues</span></a></label>
+  
+</li>
+  </ul>
+</li>
+  </ul>
+</li>
+    </ul>
+  </nav>
+</div>
+
+          </aside>
+          <aside class="d-none d-xl-block col-xl-2 td-sidebar-toc d-print-none">
+            <div class="td-page-meta ms-2 pb-1 pt-2 mb-0">
+
+</div>
+
+            <div class="td-toc">
+        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#user_groups">Managing users and groups</a>
+      <ul>
+        <li><a href="#create-a-user">Create a user</a></li>
+        <li><a href="#create-groups">Create groups</a></li>
+        <li><a href="#edit-users">Edit users</a></li>
+        <li><a href="#edit-groups">Edit groups</a></li>
+        <li><a href="#delete-users">Delete users</a></li>
+        <li><a href="#delete-groups">Delete groups</a></li>
+      </ul>
+    </li>
+    <li><a href="#managing-security-policies-and-roles">Managing Security Policies and Roles</a>
+      <ul>
+        <li><a href="#security-roles">Security roles</a></li>
+        <li><a href="#sec_policies">Security policies</a></li>
+      </ul>
+    </li>
+    <li><a href="#managing-credential-mappers">Managing credential mappers</a>
+      <ul>
+        <li><a href="#ejbs">App Deployments: EJBs</a></li>
+        <li><a href="#jdbc-apps">App Deployments: JDBC Application</a></li>
+        <li><a href="#jdbc-modules">App Deployments: JDBC Modules</a></li>
+        <li><a href="#resource-adapters">App Deployments: Resource Adapters</a></li>
+        <li><a href="#data-sources">Data Sources</a></li>
+        <li><a href="#remote-resources">Remote Resources</a></li>
+        <li><a href="#credential-mappings">Credential mappings</a></li>
+        <li><a href="#credentials">Credentials</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+      </div>
+    
+            
+
+          </aside>
+          <main class="col-12 col-md-9 col-xl-8 ps-md-5" role="main">
+            
+  
+  
+  
+  
+  <div class="pageinfo pageinfo-warning">
+    <p>You are viewing documentation for an older release of WebLogic Remote Console. Read the  
+        <a href="/weblogic-remote-console/overview" target="_blank">latest documentation</a> instead.</p>
+        <p>Stay up-to-date with the newest features and fixes. Download the latest release of WebLogic Remote Console from <a href="https://github.com/oracle/weblogic-remote-console/releases" target="_blank">WebLogic Remote Console - Releases</a></p>
+      
+    
+  </div>
+
+            <nav aria-label="breadcrumb" class="td-breadcrumbs">
+  <ol class="breadcrumb">
+  <li class="breadcrumb-item">
+    <a href="/weblogic-remote-console/2.4.11/">WebLogic Remote Console</a></li>
+  <li class="breadcrumb-item">
+    <a href="/weblogic-remote-console/2.4.11/userguide/">User guide</a></li>
+  <li class="breadcrumb-item">
+    <a href="/weblogic-remote-console/2.4.11/userguide/providers/">Provider types</a></li>
+  <li class="breadcrumb-item">
+    <a href="/weblogic-remote-console/2.4.11/userguide/providers/administration-server/">Administration Servers</a></li>
+  <li class="breadcrumb-item active" aria-current="page">
+    Editing security data</li>
+  </ol>
+</nav>
+            
+<div class="td-content">
+	<h1>Editing security data</h1>
+	
+	<header class="article-meta">
+		
+</header>
+	<p>You can manage security data and supported security providers for your domain in the Security Data tree perspective.</p>
+
+
+<div class="alert alert-primary" role="alert">
+<h4 class="alert-heading">Note</h4>
+
+    You must be logged in as a user with the Admin role and have the WebLogic Remote Console extension installed to access this perspective. See <a href="../../../../setup#install">Install the WebLogic Remote Console</a> for instructions.
+
+</div>
+<p>Any changes you make within the Security Data perspective are immediate - you don&rsquo;t need to commit or restart the server to apply your changes.</p>
+<h2 id="user_groups">Managing users and groups</h2>
+<p>You can easily manage the WebLogic Server users and groups that are configured as part of the default authentication provider (WebLogic Authentication Provider) within a security realm. Only the default authentication provider is supported. If you&rsquo;re not using the default authentication provider, you&rsquo;ll need to manage its users and groups through its own external tools.</p>
+<h3 id="create-a-user">Create a user</h3>
+<ol>
+<li>In the Security Data Tree perspective, expand Realms.</li>
+<li>Select the Security Realm to which you want to add users.</li>
+<li>Expand the Authentication Provider node and then select the authentication provider to which you want to add users.</li>
+<li>Expand Users and click <strong>New</strong>.</li>
+<li>Enter a Name, Description and Password for this user. User names must be unique in the security realm and passwords must be eight characters or longer.</li>
+<li>Click <strong>Create</strong>.</li>
+</ol>
+<h3 id="create-groups">Create groups</h3>
+<ol>
+<li>In the Security Data Tree perspective, expand Realms.</li>
+<li>Select the Security Realm to which you want to add groups.</li>
+<li>Expand the Authentication Provider node and then select the authentication provider to which you want to add groups.</li>
+<li>Expand Groups and click <strong>New</strong>.</li>
+<li>Enter a Name and Description for this group. Group names must be unique in the security realm.</li>
+<li>Click <strong>Create</strong>.</li>
+</ol>
+<h3 id="edit-users">Edit users</h3>
+<ol>
+<li>In the Security Data Tree perspective, go to Realms &gt; <em>realmName</em> &gt; Authentication Providers &gt; <em>providerName</em> &gt; Users.</li>
+<li>Click the user that you want to edit.</li>
+<li>Move through the various tabs to update the properties of the user. You cannot edit the name of a user - you must delete and create a new user.</li>
+<li>You can add users to groups. Under the Membership tab, select any Available group to which you want to add the user and move them over to Chosen.</li>
+<li>Click <strong>Save</strong>.</li>
+</ol>
+<h3 id="edit-groups">Edit groups</h3>
+<ol>
+<li>In the Security Data Tree perspective, go to Realms &gt; <em>realmName</em> &gt; Authentication Providers &gt; <em>providerName</em> &gt; Groups.</li>
+<li>Click the group that you want to edit. You can modify the group description or, under the Membership tab, nest the current group under other groups. You cannot edit the name of a group - you must delete and create a new group.</li>
+<li>Click <strong>Save</strong>.</li>
+</ol>
+<h3 id="delete-users">Delete users</h3>
+<ol>
+<li>In the Security Data Tree perspective, go to Realms &gt; <em>realmName</em> &gt; Authentication Providers &gt; <em>providerName</em> &gt; Users.</li>
+<li>Beside the user that you want to delete, click the trash icon <img src="/weblogic-remote-console/images/ui-icons/delete-icon-blk_24x24.png" alt="Trash icon">.</li>
+</ol>
+<h3 id="delete-groups">Delete groups</h3>
+<p>Deleting a group will not delete the users within that group.</p>
+<ol>
+<li>In the Security Data Tree perspective, go to Realms &gt; <em>realmName</em> &gt; Authentication Providers &gt; <em>providerName</em> &gt; Groups.</li>
+<li>Beside the group that you want to delete, click the trash icon <img src="/weblogic-remote-console/images/ui-icons/delete-icon-blk_24x24.png" alt="Trash icon">.</li>
+</ol>
+<h2 id="managing-security-policies-and-roles">Managing Security Policies and Roles</h2>
+<p>Use security policies to manage who can access a resource in a WebLogic Server domain.</p>
+<p>A resource is an entity (such as a Web Service or a server instance) or an action (such as a method in a Web Service or the act of shutting down a server instance). For a list of resource types, see <a href="https://docs.oracle.com/en/middleware/standalone/weblogic-server/14.1.1.0/roles/types.html">Resource Types You Can Secure with Policies</a>.</p>
+<p>A security policy specifies which users, groups, or roles can access the resource according to a set of conditions. Whenever possible, you should use security roles to determine access control. A security role, like a security group, grants an identity to a user. Unlike a group, however, membership in a role can be based on a set of conditions that are evaluated at runtime.</p>
+<p>For most types of WebLogic resources, you can use the WebLogic Remote Console to define the security policies and roles that restrict access. However, for Web application and EJB resources, you can also use deployment descriptors.</p>
+<p>The general process to secure a WebLogic resource is:</p>
+<ol>
+<li>Create <a href="/weblogic-remote-console/2.4.11/userguide/providers/administration-server/security-data/#user_groups">users and groups</a></li>
+<li><strong>Optional</strong>: Manage default security roles or create new ones. We recommend that you use roles to secure WebLogic resources (instead of users or groups) to increase efficiency for administrators who work with many users. You can use the default roles that WebLogic Server provides or create your own.</li>
+<li>Create and apply security policies.</li>
+</ol>
+<p>For more information, see <a href="https://docs.oracle.com/en/middleware/standalone/weblogic-server/14.1.1.0/roles/intro.html#GUID-E454A766-0F19-472B-A470-F2BD9B6BEF64">Securing Resources Using Roles and Policies for Oracle WebLogic Server</a>.</p>
+<h3 id="security-roles">Security roles</h3>
+<p>A security role is an identity granted to users or groups based on specific conditions. Multiple users or groups can be granted the same security role and a user or group can be in more than one security role. Security roles are used by policies to determine who can access a WebLogic resource.</p>
+<p>WebLogic Server provides a default set of roles that you can use with any policy (global roles). You can create your own global roles or create roles that can be used by policies only for a specific resource (scoped roles). For example, you can place all of your system administrators in WebLogic Server&rsquo;s Admin role. You can then create a scoped role for a specific EJB that contains highly sensitive business logic. When you create a policy for the EJB, you can specify that only the scoped role can access the EJB.</p>
+<p>If two roles conflict, the role of a narrower scope overrides the role of the broader scope. For example, a scoped role for an EJB resource overrides a global role or a scoped role for the enterprise application that contains the EJB.</p>
+<p>Security roles are created within a security realm, and the roles can be used only when the realm is active.</p>
+<p>For more information, see <a href="https://docs.oracle.com/en/middleware/standalone/weblogic-server/14.1.1.0/roles/secroles.html#GUID-79645C45-C982-454D-A22C-6115B86EDAD3">Overview of Security Roles</a>.</p>
+<h4 id="create-global-roles">Create global roles</h4>
+<p>Before creating a new global security role, review the <a href="https://docs.oracle.com/en/middleware/standalone/weblogic-server/14.1.1.0/roles/secroles.html#GUID-84859935-E7A5-4D3E-8A11-CBF63F93571A">Global Security Roles</a> in <em>Securing Resources Using Roles and Policies for Oracle WebLogic Server</em> to assess if an existing role is sufficient for your needs.</p>
+<ol>
+<li>In the Security Data Tree perspective, expand Realms.</li>
+<li>Select the Security Realm where you want to add a global role.</li>
+<li>Expand Role Mappers &gt; XACMLRoleMapper &gt; Global &gt; Roles.</li>
+<li>Click <strong>New</strong>.</li>
+<li>Enter a name for the new global role and click <strong>Create</strong>.</li>
+<li>Click <strong>Save</strong>.</li>
+</ol>
+<p>After the role is created, you can build a policy that uses conditions to determine which users or groups it encompasses. We recommend that whenever possible you use the Group condition which grants the security role to all members of the specified group. See <a href="/weblogic-remote-console/2.4.11/userguide/providers/administration-server/security-data/#edit-policy">Edit a policy</a> for more details on how you can edit conditions.</p>
+<p>For a description of conditions in the Predicate List, see <a href="https://docs.oracle.com/en/middleware/standalone/weblogic-server/14.1.1.0/roles/secroles.html#GUID-06D3F08F-5A98-4649-A3F4-5D08B76C72CD">Security Role Conditions</a></p>
+<h4 id="create-scoped-roles">Create scoped roles</h4>
+<p>Scoped roles can only be used with policies that apply to specific resources.</p>
+<ol>
+<li>In the Security Data Tree perspective, expand Realms.</li>
+<li>Select the Security Realm where you want to add a scoped role.</li>
+<li>Expand Role Mappers &gt; XACMLRoleMapper &gt; <em>Resource</em> &gt; Roles.</li>
+<li>Click <strong>New</strong>.</li>
+<li>Enter a name for the new scoped role and click <strong>Create</strong>.</li>
+</ol>
+<p>After the role is created, you can build a policy that uses conditions to determine which users or groups it encompasses. We recommend that whenever possible you use the Group condition which grants the security role to all members of a specified group. See <a href="/weblogic-remote-console/2.4.11/userguide/providers/administration-server/security-data/#edit-policy">Edit a policy</a> for more details on how you can edit conditions.</p>
+<p>For a description of conditions in the Predicate List, see <a href="https://docs.oracle.com/en/middleware/standalone/weblogic-server/14.1.1.0/roles/secroles.html#GUID-06D3F08F-5A98-4649-A3F4-5D08B76C72CD">Security Role Conditions</a></p>
+<h3 id="sec_policies">Security policies</h3>
+<p>A security policy specifies the conditions that users, groups, or roles must meet to access a resource. Policies must have one or more conditions and you can combine conditions to create complex policies for more dynamic access control.</p>
+<p>Root level policies apply to all instances of a specific resource type, for example, all JMS resources in your domain. All default security policies are root level policies.</p>
+<p>You can also create policies that only apply to a specific resource instance. If the instance contains other resources, the policy will apply to the included resource as well. For example, you can create a policy for an entire JMS system resource, or for a particular queue or topic within that resource.</p>
+<p>The policy of a narrower scope overrides policy of a broader scope. For example, if you create a security policy for a JMS system resource and a policy for a JMS queue within that system resource, the JMS queue will be protected by its own policy and will ignore the policy for the system resource.</p>
+<p>For more information, see <a href="https://docs.oracle.com/en/middleware/standalone/weblogic-server/14.1.1.0/roles/sec_poly.html">Security Policies</a> in <em>Securing Resources Using Roles and Policies for Oracle WebLogic Server</em>.</p>
+<p>It&rsquo;s recommended that you use the Role condition where possible. Basing conditions on security roles lets you create one security policy that takes into account multiple users or groups, and is a more efficient method of management.</p>
+<p>See <a href="https://docs.oracle.com/en/middleware/standalone/weblogic-server/14.1.1.0/roles/sec_poly.html#GUID-F91088E1-EFA5-42BE-BD14-27127C797F23">Security Policy Conditions</a> in <em>Securing Resources Using Roles and Policies for Oracle WebLogic Server</em> to learn more.</p>
+<h4 id="create-a-policy-for-resource-instances">Create a policy for resource instances</h4>
+<p>You can create a security policy that only applies to a specific resource instance. If the instance contains other resources, the policy will apply to the included resources as well.</p>
+<ol>
+<li>In the Security Data Tree perspective, expand Realms.</li>
+<li>Select the Security Realm that contains the resource instance where you want to add a policy.</li>
+<li>Expand Authorizers &gt; XACMLAuthorizer &gt; <em>resourceInstance</em>.</li>
+<li>Click <strong>Add Condition</strong> to open the Add New First Condition dialog box.</li>
+<li>Select a predicate from the <strong>Predicate List</strong>. Depending on the predicate you choose, you may need to configure arguments for the condition.</li>
+<li>Click <strong>OK</strong>.</li>
+<li>Click <strong>Save</strong>.</li>
+</ol>
+<p>You can add more conditions to the policy to increase its complexity.</p>
+<h4 id="edit-policy">Edit a policy</h4>
+<p>You can edit a policy by modifying a condition&rsquo;s arguments or by modifying the relationships between conditions in the policy.</p>
+<ol>
+<li>Go to the policy that you want to edit.</li>
+<li>Click on the condition you want to edit.
+You can only edit the arguments of the condition. If you want to use a different predicate for the condition, you must add a new condition.</li>
+</ol>
+<p>Conditions have three different types of relationships: AND, OR, and Combination.</p>
+<ul>
+<li>AND: All of the conditions joined by an AND operator must be met.</li>
+<li>OR: At least one of the conditions joined by an OR operator must be met.</li>
+<li>Combination: Two or more conditions are combined and must be evaluated as a group. Conditions <em>within</em> a combination are themselves related to each other through AND or OR operators.</li>
+</ul>
+<p>By default, a new condition is added as a simple condition at the top of the list of conditions. To insert a new condition elsewhere, select an existing condition and then click Add Condition. You&rsquo;ll get a dropdown list with options to add the new condition either above or below the selected condition. The order of conditions is not meaningful to how the policy is interpreted.</p>
+<p>A policy can contain multiple simple or compound conditions or a mix of simple and compound conditions. You can also nest compound conditions.</p>
+
+
+<div class="alert alert-info" role="alert">
+<h4 class="alert-heading">Tip</h4>
+
+    <p>Why should you use compound conditions? Consider this scenario: a resource exists where you want Administrators to always have access, but Deployers to only have access between 9 am and 5 pm. The following policy would address both requirements.</p>
+<ul>
+<li>
+<p>Condition 1 (simple): Role: Admin</p>
+<ul>
+<li><strong>OR</strong></li>
+</ul>
+</li>
+<li>
+<p>Condition 2 (compound): Role: Deployer <strong>AND</strong> access occurs between 09:00:00 and 17:00:00 GMT -7:00</p>
+</li>
+</ul>
+
+
+</div>
+<p>Use the actions on the Policy page to edit a policy.</p>
+<table>
+  <thead>
+      <tr>
+          <th>Action</th>
+          <th>Description</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Add Condition</td>
+          <td>Adds a new condition to the policy. You can choose to add the new condition above or below another condition.</td>
+      </tr>
+      <tr>
+          <td>Combine</td>
+          <td>When multiple conditions are selected, you can combine them to create a compound condition.</td>
+      </tr>
+      <tr>
+          <td>Uncombine</td>
+          <td>When a compound condition is selected, you can break it into independent conditions.</td>
+      </tr>
+      <tr>
+          <td>Remove</td>
+          <td>Deletes a simple or compound condition from the policy. When there are no conditions in a policy, the default policy will apply.</td>
+      </tr>
+      <tr>
+          <td>Negate</td>
+          <td>Reverses the meaning of a condition. The criteria to access a resource becomes the opposite of the original condition.</td>
+      </tr>
+      <tr>
+          <td>Reset</td>
+          <td>Reverts the policy to its last <em>saved</em> change, not the last change. It&rsquo;s recommended that you save your policy frequently or you may unintentionally lose several changes using the Reset action.</td>
+      </tr>
+  </tbody>
+</table>
+<p>You can also edit a policy from its <strong>Advanced</strong> tab where the policy is expressed as string. Any changes made to a policy in the Advanced tab are reflected in the main Policy tab, and vice versa.</p>
+<h4 id="delete-a-policy">Delete a policy</h4>
+<p>Before you delete a policy, make sure that the default security policy for the resource instance will provide adequate access control.</p>
+<ol>
+<li>Go to the policy you want to delete.</li>
+<li>Delete all of the conditions in the policy.</li>
+<li>Click <strong>Save</strong>.</li>
+</ol>
+<h2 id="managing-credential-mappers">Managing credential mappers</h2>
+<p>A Credential Mapping provider lets WebLogic Server map a WebLogic resource to a set of credentials in an external system so that the WebLogic resource can log into that external system on behalf of a subject that has already been authenticated. You can map multiple WebLogic resources (of the same type) to the same external system (and even to the same subject within that system).</p>
+<p>You can manage the credential mappings for the default credential mapper provider (WebLogic Credential Mapping Provider) within a security realm. Only the default credential mapping provider is supported.</p>
+<p>The general process for mapping credentials remains the same across WebLogic resources:</p>
+<ol>
+<li>Configure an applicable MBean in the Edit Tree perspective such as deploying an app or adding a data source.</li>
+<li>Commit your changes and restart the server if any of your changes are non-dynamic.</li>
+<li>In the Security Data Tree perspective, under Credential Mappers, find the corresponding node for the MBean. If necessary, define the properties of a WebLogic resource to identify it and form a connection between the MBean&rsquo;s configuration data and its security data.</li>
+<li>Create mappings for the WebLogic resource.</li>
+</ol>
+<p>You can create credential mappings for the following WebLogic resources:</p>
+<ul>
+<li>App Deployments
+<ul>
+<li><a href="/weblogic-remote-console/2.4.11/userguide/providers/administration-server/security-data/#ejbs">EJBs</a></li>
+<li><a href="/weblogic-remote-console/2.4.11/userguide/providers/administration-server/security-data/#jdbc-apps">JDBC applications</a></li>
+<li><a href="/weblogic-remote-console/2.4.11/userguide/providers/administration-server/security-data/#jdbc-modules">JDBC modules</a></li>
+<li><a href="/weblogic-remote-console/2.4.11/userguide/providers/administration-server/security-data/#resource-adapters">Resource adapters</a></li>
+</ul>
+</li>
+<li><a href="/weblogic-remote-console/2.4.11/userguide/providers/administration-server/security-data/#data-sources">Data Sources</a></li>
+<li><a href="/weblogic-remote-console/2.4.11/userguide/providers/administration-server/security-data/#remote-resources">Remote Resources</a></li>
+</ul>
+<h3 id="ejbs">App Deployments: EJBs</h3>
+<h4 id="identify-an-ejb-component">Identify an EJB Component</h4>
+<p>The first time you add a reference to an EJB component, you&rsquo;ll also create a credential mapping for that EJB component.</p>
+<ol>
+<li>In the Security Data Tree perspective, expand Realms.</li>
+<li>Select the Security Realm where you want to add a EJB component. Go to Credential Mappers &gt; <em>credentialMapperName</em> &gt; App Deployments &gt; <em>applicationName</em> &gt; EJBs.</li>
+<li>Click <strong>New</strong>.</li>
+<li>Fill in the fields as required.</li>
+<li>Click <strong>Create</strong>.</li>
+</ol>
+<p>A reference to the EJB component is added under the EJBs node. The name of the EJB component is generated by the properties of the application and those you set when adding the EJB component.</p>
+<p>For information on how to manage the credential mappings, see <a href="/weblogic-remote-console/2.4.11/userguide/providers/administration-server/security-data/#credential-mappings">Credential Mappings</a>.</p>
+<h4 id="remove-a-reference-to-an-ejb-component">Remove a reference to an EJB Component</h4>
+<p>You cannot delete a reference to an EJB component with multiple credential mappings. To delete an EJB component reference, you must delete all of the credential mappings first - which will then delete the EJB component reference automatically - or delete all but one of the credential mappings and then follow these steps:</p>
+<ol>
+<li>In the Security Data Tree perspective, go to Credential Mappers &gt; <em>credentialMapperName</em> &gt; App Deployments &gt; <em>applicationName</em> &gt; EJBs.</li>
+<li>Beside the EJB component that you want to delete, click the trash icon <img src="/weblogic-remote-console/images/ui-icons/delete-icon-blk_24x24.png" alt="Trash icon">.</li>
+</ol>
+<h3 id="jdbc-apps">App Deployments: JDBC Application</h3>
+<p>You can only add credential mappings for JDBC applications, not manage the JDBC applications themselves.</p>
+<p>For information on how to manage the credential mappings, see <a href="/weblogic-remote-console/2.4.11/userguide/providers/administration-server/security-data/#credential-mappings">Credential Mappings</a>.</p>
+<h3 id="jdbc-modules">App Deployments: JDBC Modules</h3>
+<h4 id="identify-a-jdbc-module">Identify a JDBC Module</h4>
+<p>The first time you add a reference to a JDBC module, you&rsquo;ll also create a credential mapping for that JDBC module.</p>
+<ol>
+<li>In the Security Data Tree perspective, expand Realms.</li>
+<li>Select the Security Realm where you want to add a JDBC module. Go to Credential Mappers &gt; <em>credentialMapperName</em> &gt; App Deployments &gt; <em>applicationName</em> &gt; JDBC Modules.</li>
+<li>Click <strong>New</strong>.</li>
+<li>Fill in the fields as required.</li>
+<li>Click <strong>Create</strong>.</li>
+</ol>
+<p>For information on how to manage the credential mappings, see <a href="/weblogic-remote-console/2.4.11/userguide/providers/administration-server/security-data/#credential-mappings">Credential Mappings</a>.</p>
+<h4 id="remove-a-reference-to-a-jdbc-module">Remove a reference to a JDBC Module</h4>
+<p>You cannot delete a reference to a JDBC module with multiple credential mappings. To delete a JDBC module reference, you must delete all of the credential mappings first - which will then delete the JDBC module reference automatically - or delete all but one of the credential mappings and then follow these steps:</p>
+<ol>
+<li>In the Security Data Tree perspective, go to Credential Mappers &gt; <em>credentialMapperName</em> &gt; App Deployments &gt; <em>applicationName</em> &gt; JDBC Module.</li>
+<li>Beside the JDBC module that you want to delete, click the trash icon <img src="/weblogic-remote-console/images/ui-icons/delete-icon-blk_24x24.png" alt="Trash icon">.</li>
+</ol>
+<h3 id="resource-adapters">App Deployments: Resource Adapters</h3>
+<h4 id="identify-a-resource-adapter">Identify a Resource Adapter</h4>
+<p>The first time you add a reference to a resource adapter, you&rsquo;ll also create a credential mapping for that resource adapter.</p>
+<ol>
+<li>In the Security Data Tree perspective, expand Realms.</li>
+<li>Select the Security Realm where you want to add a resource adapter. Go to Credential Mappers &gt; <em>credentialMapperName</em> &gt; App Deployments &gt; <em>applicationName</em> &gt; Resource Adapters.</li>
+<li>Click <strong>New</strong>.</li>
+<li>Fill in the fields as required.</li>
+<li>Click <strong>Create</strong>.</li>
+</ol>
+<p>A reference to a resource adapter is added under the Remote Adapters node. The name of the resource adapter is generated by combining its property values.</p>
+<p>For information on how to manage the credential mappings, see <a href="/weblogic-remote-console/2.4.11/userguide/providers/administration-server/security-data/#credential-mappings">Credential Mappings</a>.</p>
+<h4 id="remove-a-reference-to-resource-adapter">Remove a reference to Resource Adapter</h4>
+<p>You cannot delete a reference to a resource adapter with multiple credential mappings. To delete a resource adapter reference, you must delete all of the credential mappings first - which will then delete the resource adapter reference automatically - or delete all but one of the credential mappings and then follow these steps:</p>
+<ol>
+<li>In the Security Data Tree perspective, go to Credential Mappers &gt; <em>credentialMapperName</em> &gt; App Deployments &gt; <em>applicationName</em> &gt; Resource Adapter.</li>
+<li>Beside the Resource Adapter that you want to delete, click the trash icon <img src="/weblogic-remote-console/images/ui-icons/delete-icon-blk_24x24.png" alt="Trash icon">.</li>
+</ol>
+<h3 id="data-sources">Data Sources</h3>
+<p>You can only add credential mappings for data sources, not manage the data sources themselves. You can manage data sources in the Edit tree perspective.</p>
+<p>For information on how to manage the credential mappings, see <a href="/weblogic-remote-console/2.4.11/userguide/providers/administration-server/security-data/#credential-mappings">Credential Mappings</a>.</p>
+<h3 id="remote-resources">Remote Resources</h3>
+<h4 id="identify-a-remote-resource">Identify a remote resource</h4>
+<p>The first time you add a reference to a remote resource, you&rsquo;ll also create a credential mapping for that remote resource.</p>
+
+
+<div class="alert alert-primary" role="alert">
+<h4 class="alert-heading">Note</h4>
+
+    If you add a remote resource with the cross-domain protocol enabled, it will create a WebLogic Server user named cross-domain. Only the cross-domain user can be used to create credential mappings. While the WebLogic Remote Console will let you add other WebLogic Server users and credential mappings within the remote resource, the mappings will not work and will not provide access to the remote resource.
+
+</div>
+<ol>
+<li>In the Security Data Tree perspective, expand Realms.</li>
+<li>Select the Security Realm where you want to add a credential mapping. Navigate down to Credential Mappers &gt; <em>credentialMapperName</em> &gt; Remote Resources.</li>
+<li>Click <strong>New</strong>.</li>
+<li>Fill in the fields as needed. Certain fields are disabled depending on whether you choose to use the cross-domain protocol.</li>
+<li>Click <strong>Create</strong>.</li>
+</ol>
+<p>A reference to a remote resource is added under the remote resources node. The name of the remote resource is generated by combining its property values.</p>
+<p>For information on how to manage the credential mappings, see <a href="/weblogic-remote-console/2.4.11/userguide/providers/administration-server/security-data/#credential-mappings">Credential Mappings</a>.</p>
+<h4 id="remove-a-reference-to-a-remote-resource">Remove a reference to a remote resource</h4>
+<p>You cannot delete a reference to a remote resource with multiple credential mappings. To delete a remote resource reference, you must delete all of the credential mappings first - which will then delete the remote resource reference automatically - or delete all but one of the credential mappings and then follow these steps:</p>
+<ol>
+<li>In the Security Data Tree perspective, go to Realms &gt; <em>realmName</em> &gt; Credential Mappers &gt; <em>credentialMapperName</em> &gt; Remote Resources.</li>
+<li>Beside the remote resource that you want to delete, click the trash icon <img src="/weblogic-remote-console/images/ui-icons/delete-icon-blk_24x24.png" alt="Trash icon">.</li>
+</ol>
+<h3 id="credential-mappings">Credential mappings</h3>
+<h4 id="add-a-credential-mapping">Add a credential mapping</h4>
+<p>You can add a new credential mapping to associate another WebLogic resource to a remote user.</p>
+<p>The credential mappings and credentials for each WebLogic resource appear under the resource&rsquo;s node.</p>
+<ol>
+<li>In the Security Data Tree perspective, go to Realms &gt; <em>realmName</em> &gt; Credential Mappers &gt; <em>credentialMapperName</em> &gt; <em>wlResourceType</em> &gt; <em>wlResourceName</em> &gt; Credential Mappings.</li>
+<li>Click <strong>New</strong>.</li>
+<li>Fill in the fields as needed. If you want to map to a remote user that is already referenced in the remote resource, disable the Create Credential toggle.</li>
+<li>Click <strong>Create</strong>.</li>
+</ol>
+<h4 id="remap-a-weblogic-resource">Remap a WebLogic resource</h4>
+<p>You can edit a credential mapping to associate a WebLogic user for a WebLogic resource to a different remote user. The WebLogic Remote Console must already be aware of the remote user before you can remap the WebLogic Server user. If you want to remap the WebLogic resource to a new remote user, you must first add it to the WebLogic Remote Console.</p>
+<ol>
+<li>In the Security Data Tree perspective, go to Realms &gt; <em>realmName</em> &gt; Credential Mappers &gt; <em>credentialMapperName</em> &gt; <em>wlResourceType</em> &gt; <em>wlResourceName</em> &gt; Credential Mappings.</li>
+<li>Select the credential mapping you want to edit.</li>
+<li>In the Remote User field, replace the current remote user with the username of the remote user you want to remap the WebLogic resource to.</li>
+<li>Click <strong>Save.</strong></li>
+</ol>
+<h4 id="delete-a-credential-mapping">Delete a credential mapping</h4>
+<p>When you delete a credential mapping, the remote user that the WebLogic resource was previously associated with is also deleted if it was the only credential mapping using that remote user.</p>
+<ol>
+<li>In the Security Data Tree perspective, go to Realms &gt; <em>realmName</em> &gt; Credential Mappers &gt; <em>credentialMapperName</em> &gt; <em>wlResourceType</em> &gt; <em>wlResourceName</em> &gt; Credential Mappings.</li>
+<li>Beside the credential mapping that you want to delete, click the trash icon <img src="/weblogic-remote-console/images/ui-icons/delete-icon-blk_24x24.png" alt="Trash icon">.</li>
+</ol>
+<h3 id="credentials">Credentials</h3>
+<h4 id="add-a-credential">Add a credential</h4>
+<p>After you have added the first set of credentials for a remote system to a WebLogic resource, you can add more users from that remote system.</p>
+<ol>
+<li>In the Security Data Tree perspective, go to Realms &gt; <em>realmName</em> &gt; Credential Mappers &gt; <em>credentialMapperName</em> &gt; <em>wlResourceType</em> &gt; <em>wlResourceName</em> &gt; Credentials</li>
+<li>Click <strong>New</strong>.</li>
+<li>Enter the username and password for the remote user.</li>
+<li>Click <strong>Create</strong>.</li>
+</ol>
+<p>You can now map a WebLogic user for the WebLogic resource to the new set of credentials.</p>
+<h4 id="change-a-remote-user-password">Change a remote user password</h4>
+<p>If the password of the remote user changes, you&rsquo;ll need to update it in the WebLogic Remote Console or the mapping will break and prevent the WebLogic resource from logging into the remote system.</p>
+<ol>
+<li>In the Security Data Tree perspective, go to Realms &gt; <em>realmName</em> &gt; Credential Mappers &gt; <em>credentialMapperName</em> &gt; <em>wlResourceType</em> &gt; <em>wlResourceName</em> &gt; Credentials.</li>
+<li>Select the remote user whose password you want to change.</li>
+<li>Change the password.</li>
+<li>Click <strong>Save</strong>.</li>
+</ol>
+<h4 id="remove-a-credential">Remove a credential</h4>
+<p>Each WebLogic resource has its own set of credentials
+Removing a credential from the WebLogic Remote Console will not affect the user in the remote system.</p>
+<p>You cannot delete a credential that currently has a WebLogic resource mapped to it.</p>
+<ol>
+<li>In the Security Data Tree perspective, go to Realms &gt; <em>realmName</em> &gt; Credential Mappers &gt; <em>credentialMapperName</em> &gt; <em>wlResourceType</em> &gt; <em>wlResourceName</em> &gt; Credential Mappings.</li>
+<li>You&rsquo;ll need to either map the current credential mapping to a different credential or delete all of the credential mappings using that credential:
+<ul>
+<li>Select any relevant mappings and update the Remote User field to a new remote user.</li>
+<li>Beside any credential mappings that you want to delete, click the trash icon <img src="/weblogic-remote-console/images/ui-icons/delete-icon-blk_24x24.png" alt="Trash icon">. Once all credential mappings associated with the credential are deleted, the credential itself will also be automatically deleted and you can skip the rest of the steps.</li>
+</ul>
+</li>
+<li>Under the same WebLogic resource, expand the Credentials node.</li>
+<li>Beside the credential that you want to delete, click the trash icon <img src="/weblogic-remote-console/images/ui-icons/delete-icon-blk_24x24.png" alt="Trash icon">.</li>
+<li>Click <strong>Save</strong>.</li>
+</ol>
+
+	
+</div>
+
+
+          </main>
+        </div>
+      </div>
+      <footer class="td-footer row d-print-none">
+  <div class="container-fluid">
+    <div class="row mx-md-2">
+      <div class="td-footer__left col-6 col-sm-4 order-sm-1">
+        
+      </div><div class="td-footer__right col-6 col-sm-4 order-sm-3">
+        
+      </div><div class="td-footer__center col-12 col-sm-4 py-2 order-sm-2">
+        <span class="td-footer__copyright">&copy;
+    2020&ndash;2025
+    <span class="td-footer__authors">Oracle | <a href="https://github.com/oracle/weblogic-remote-console/blob/main/LICENSE.txt">UPL 1.0</a></span></span><span class="td-footer__all_rights_reserved">All Rights Reserved</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <script src="/weblogic-remote-console/js/main.min.90902a026ed2aee7ed45d85797f4c790b240ba148ac6f8a6f194cb1981ffecf5.js" integrity="sha256-kJAqAm7SruftRdhXl/THkLJAuhSKxvim8ZTLGYH/7PU=" crossorigin="anonymous"></script>
+<script defer src="/weblogic-remote-console/js/click-to-copy.min.73478a7d4807698aed7e355eb23f9890ca18fea3158604c8471746d046702bad.js" integrity="sha256-c0eKfUgHaYrtfjVesj&#43;YkMoY/qMVhgTIRxdG0EZwK60=" crossorigin="anonymous"></script>
+<script src='/weblogic-remote-console/js/tabpane-persist.js'></script>
+
+  </body>
+</html>

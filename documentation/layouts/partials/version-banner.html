@@ -1,0 +1,14 @@
+<!-- Check the variable that indicates whether this is an archived doc set.
+  If yes, display a banner. -->
+  {{ if .Page.Params.archived_version }}
+  {{ $color := "warning" }}
+  {{ $latest_version := .Site.Params.url_latest_version }}
+  {{ $current_version := .Page.Params.version }}
+  <div class="pageinfo pageinfo-{{ $color }}">
+    {{ with $current_version }}<p>{{ with $latest_version }}You are viewing documentation for an older release of WebLogic Remote Console. Read the  
+        <a href="{{ $latest_version | safeURL }}" target="_blank">latest documentation</a> instead.</p>
+        <p>Stay up-to-date with the newest features and fixes. Download the latest release of WebLogic Remote Console from <a href="https://github.com/oracle/weblogic-remote-console/releases" target="_blank">WebLogic Remote Console - Releases</a></p>
+      {{ end }}
+    {{ end }}
+  </div>
+{{ end }}

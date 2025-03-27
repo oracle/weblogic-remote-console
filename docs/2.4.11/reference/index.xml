@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Reference on WebLogic Remote Console</title>
+    <link>https://oracle.github.io/weblogic-remote-console/2.4.11/reference/</link>
+    <description>Recent content in Reference on WebLogic Remote Console</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <atom:link href="https://oracle.github.io/weblogic-remote-console/2.4.11/reference/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Frequently asked questions</title>
+      <link>https://oracle.github.io/weblogic-remote-console/2.4.11/reference/faqs/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://oracle.github.io/weblogic-remote-console/2.4.11/reference/faqs/</guid>
+      <description>&lt;p&gt;This section provides answers to frequently asked questions about the WebLogic Remote Console.&lt;/p&gt;&#xA;&lt;h4 id=&#34;my-domain-is-behind-a-firewall-how-do-i-connect-to-the-weblogic-remote-console&#34;&gt;My domain is behind a firewall. How do I connect to the WebLogic Remote Console?&lt;/h4&gt;&#xA;&lt;p&gt;For WebLogic Remote Console to connect to a domain&amp;rsquo;s Administration Server, the management endpoint of the domain, &lt;code&gt;management/*&lt;/code&gt;, must be publicly accessible. If your Administration Server is behind a firewall or load balancer, or otherwise externally unavailable, you will need to expose the endpoint manually.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Known issues</title>
+      <link>https://oracle.github.io/weblogic-remote-console/2.4.11/reference/known_issues/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://oracle.github.io/weblogic-remote-console/2.4.11/reference/known_issues/</guid>
+      <description>&lt;p&gt;This page lists the limitations and known issues (and their workarounds if available) of the WebLogic Remote Console.&lt;/p&gt;&#xA;&lt;h2 id=&#34;limitations&#34;&gt;Limitations&lt;/h2&gt;&#xA;&lt;p&gt;In this release of WebLogic Remote Console, you cannot:&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;Record WLST scripts while you configure WebLogic Server using the WebLogic Remote Console.&lt;/li&gt;&#xA;&lt;li&gt;Test automatically if an application was successfully deployed. See &lt;a href=&#34;https://oracle.github.io/weblogic-remote-console/2.4.11/userguide/providers/administration-server/#app-test&#34;&gt;Test Application Deployment&lt;/a&gt; for a manual option.&lt;/li&gt;&#xA;&lt;li&gt;Reorder security providers in WDT model file providers. However, you can download the WDT model file and edit the YAML file manually to rearrange the order of the security providers.&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h2 id=&#34;limited-mbean-property-support&#34;&gt;Limited MBean property support&lt;/h2&gt;&#xA;&lt;p&gt;The WebLogic Remote Console includes the vast majority of the MBean properties that the WebLogic Server Administration Console supports. However, due to limitations in the WebLogic REST API, some are missing, including some that are deprecated. If you need an MBean property that&amp;rsquo;s not currently available in the WebLogic Remote Console, please let us know.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Troubleshoot issues</title>
+      <link>https://oracle.github.io/weblogic-remote-console/2.4.11/reference/troubleshoot/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://oracle.github.io/weblogic-remote-console/2.4.11/reference/troubleshoot/</guid>
+      <description>&lt;p&gt;Learn how to prevent and recover from issues in the WebLogic Remote Console.&lt;/p&gt;&#xA;&lt;h2 id=&#34;basic-troubleshooting-steps&#34;&gt;Basic troubleshooting steps&lt;/h2&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;Review &lt;a href=&#34;https://oracle.github.io/weblogic-remote-console/2.4.11/reference/known_issues/&#34;&gt;Known issues&lt;/a&gt; to see if there is a workaround.&lt;/li&gt;&#xA;&lt;li&gt;Check the log files for errors. The WebLogic Remote Console provides log files for both front and back end processes. See &lt;a href=&#34;https://oracle.github.io/weblogic-remote-console/2.4.11/userguide/logging/&#34;&gt;Check Log Files&lt;/a&gt; to learn how to access these files.&lt;/li&gt;&#xA;&lt;li&gt;Update to the latest versions of the WebLogic Remote Console and the WebLogic Remote Console extension.&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;hr&gt;&#xA;&lt;h2 id=&#34;issue-connectivity-issues&#34;&gt;Issue: Connectivity issues&lt;/h2&gt;&#xA;&lt;p&gt;If you&amp;rsquo;re having trouble connecting to your Administration server from the WebLogic Remote Console, here are some steps you can take to identify and fix the issue.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Review security issues</title>
+      <link>https://oracle.github.io/weblogic-remote-console/2.4.11/reference/security-warnings/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://oracle.github.io/weblogic-remote-console/2.4.11/reference/security-warnings/</guid>
+      <description>&lt;p&gt;WebLogic Server regularly checks domains to ensure they comply with its recommended security policies. If a domain does not meet the recommendations, a security warning is logged and displayed in the WebLogic Remote Console.&lt;/p&gt;&#xA;&#xA;&#xA;&lt;div class=&#34;alert alert-primary&#34; role=&#34;alert&#34;&gt;&#xA;&lt;h4 class=&#34;alert-heading&#34;&gt;Note&lt;/h4&gt;&#xA;&#xA;    You must have the July 2021 Patch Set Update (PSU) for WebLogic Server applied to your  domain to receive security warnings.&#xA;&#xA;&lt;/div&gt;&#xA;&lt;p&gt;When there are active security warnings in your domain, a banner with red text appears at the top of the WebLogic Remote Console window. Click the banner to see the current security warnings. You can also get to the security warnings pages through &lt;strong&gt;Monitoring&lt;/strong&gt; &amp;gt; &lt;strong&gt;Environment&lt;/strong&gt; &amp;gt; &lt;strong&gt;Domain Security Runtime&lt;/strong&gt;.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>
