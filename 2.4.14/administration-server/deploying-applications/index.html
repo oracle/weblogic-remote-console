@@ -1,623 +1,275 @@
-<!DOCTYPE html>
-<html lang="en" class="js csstransforms3d">
+<!doctype html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="en" class="no-js">
   <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="generator" content="Hugo 0.123.7">
-    <meta name="description" content="">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel="alternate" type="application/rss&#43;xml" href="/2.4.14/administration-server/deploying-applications/index.xml">
+<meta name="robots" content="index, follow">
 
 
-    <link rel="icon" href="/weblogic-remote-console/2.4.14/images/logo.png" type="image/png">
+<link rel="shortcut icon" href="/favicons/favicon.ico" >
+<link rel="apple-touch-icon" href="/favicons/apple-touch-icon-180x180.png" sizes="180x180">
+<link rel="icon" type="image/png" href="/favicons/favicon-16x16.png" sizes="16x16">
+<link rel="icon" type="image/png" href="/favicons/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="/favicons/android-36x36.png" sizes="36x36">
+<link rel="icon" type="image/png" href="/favicons/android-48x48.png" sizes="48x48">
+<link rel="icon" type="image/png" href="/favicons/android-72x72.png" sizes="72x72">
+<link rel="icon" type="image/png" href="/favicons/android-96x96.png" sizes="96x96">
+<link rel="icon" type="image/png" href="/favicons/android-144x144.png" sizes="144x144">
+<link rel="icon" type="image/png" href="/favicons/android-192x192.png" sizes="192x192">
 
-    <title>Deploying Applications :: WebLogic Remote Console</title>
+<title>Deploying Applications | WebLogic Remote Console</title>
+<meta name="description" content="You can use WebLogic Remote Console to manage the deployment process of applications to WebLogic Server.
+For general information on the application deployment process, see Understanding WebLogic Server Deployment in Deploying Applications to Oracle WebLogic Server.
+Supported Deployment Units A deployment unit refers to a Java EE application (an enterprise application or Web application) or a standalone Java EE module (such as an EJB or resource adapter) that has been organized according to the Java EE specification and can be deployed to WebLogic Server.">
+<meta property="og:url" content="/2.4.14/administration-server/deploying-applications/">
+  <meta property="og:site_name" content="WebLogic Remote Console">
+  <meta property="og:title" content="Deploying Applications">
+  <meta property="og:description" content="You can use WebLogic Remote Console to manage the deployment process of applications to WebLogic Server.
+For general information on the application deployment process, see Understanding WebLogic Server Deployment in Deploying Applications to Oracle WebLogic Server.
+Supported Deployment Units A deployment unit refers to a Java EE application (an enterprise application or Web application) or a standalone Java EE module (such as an EJB or resource adapter) that has been organized according to the Java EE specification and can be deployed to WebLogic Server.">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="website">
 
-    
-    <link href="/weblogic-remote-console/2.4.14/css/nucleus.css?1739383894" rel="stylesheet">
-    <link href="/weblogic-remote-console/2.4.14/css/fontawesome-all.min.css?1739383894" rel="stylesheet">
-    <link href="/weblogic-remote-console/2.4.14/css/hybrid.css?1739383894" rel="stylesheet">
-    <link href="/weblogic-remote-console/2.4.14/css/featherlight.min.css?1739383894" rel="stylesheet">
-    <link href="/weblogic-remote-console/2.4.14/css/perfect-scrollbar.min.css?1739383894" rel="stylesheet">
-    <link href="/weblogic-remote-console/2.4.14/css/auto-complete.css?1739383894" rel="stylesheet">
-    <link href="/weblogic-remote-console/2.4.14/css/atom-one-dark-reasonable.css?1739383894" rel="stylesheet">
-    <link href="/weblogic-remote-console/2.4.14/css/theme.css?1739383894" rel="stylesheet">
-    <link href="/weblogic-remote-console/2.4.14/css/tabs.css?1739383894" rel="stylesheet">
-    <link href="/weblogic-remote-console/2.4.14/css/hugo-theme.css?1739383894" rel="stylesheet">
-    
-    
+  <meta itemprop="name" content="Deploying Applications">
+  <meta itemprop="description" content="You can use WebLogic Remote Console to manage the deployment process of applications to WebLogic Server.
+For general information on the application deployment process, see Understanding WebLogic Server Deployment in Deploying Applications to Oracle WebLogic Server.
+Supported Deployment Units A deployment unit refers to a Java EE application (an enterprise application or Web application) or a standalone Java EE module (such as an EJB or resource adapter) that has been organized according to the Java EE specification and can be deployed to WebLogic Server.">
+  <meta itemprop="wordCount" content="2570">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Deploying Applications">
+  <meta name="twitter:description" content="You can use WebLogic Remote Console to manage the deployment process of applications to WebLogic Server.
+For general information on the application deployment process, see Understanding WebLogic Server Deployment in Deploying Applications to Oracle WebLogic Server.
+Supported Deployment Units A deployment unit refers to a Java EE application (an enterprise application or Web application) or a standalone Java EE module (such as an EJB or resource adapter) that has been organized according to the Java EE specification and can be deployed to WebLogic Server.">
+<link rel="preload" href="/scss/main.min.48c25d0a5a23a1e8cae94d6c5e7622061e5345cf098171b1d6ee41d8e309e6c8.css" as="style" integrity="sha256-SMJdClojoejK6U1sXnYiBh5TRc8JgXGx1u5B2OMJ5sg=" crossorigin="anonymous">
+<link href="/scss/main.min.48c25d0a5a23a1e8cae94d6c5e7622061e5345cf098171b1d6ee41d8e309e6c8.css" rel="stylesheet" integrity="sha256-SMJdClojoejK6U1sXnYiBh5TRc8JgXGx1u5B2OMJ5sg=" crossorigin="anonymous">
+<script
+  src="https://code.jquery.com/jquery-3.7.1.min.js"
+  integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+  crossorigin="anonymous"></script>
+<script defer
+  src="https://unpkg.com/lunr@2.3.9/lunr.min.js"
+  integrity="sha384-203J0SNzyqHby3iU6hzvzltrWi/M41wOP5Gu+BiJMz5nwKykbkUx8Kp7iti0Lpli"
+  crossorigin="anonymous"></script>
 
-    <script src="/weblogic-remote-console/2.4.14/js/jquery-3.6.0.min.js?1739383894"></script>
-
-    <style>
-      :root #header + #content > #left > #rlblock_left{
-          display:none !important;
-      }
-      
-        :not(pre) > code + span.copy-to-clipboard {
-            display: none;
-        }
-      
-    </style>
-    
   </head>
-  <body class="" data-url="/weblogic-remote-console/2.4.14/administration-server/deploying-applications/">
-    <nav id="sidebar" class="">
+  <body class="td-section">
+    <header>
+      <nav class="td-navbar js-navbar-scroll" data-bs-theme="dark">
+<div class="container-fluid flex-column flex-md-row">
+  <a class="navbar-brand" href="/"><span class="navbar-brand__logo navbar-logo"></span><span class="navbar-brand__name">WebLogic Remote Console</span></a>
+  <div class="td-navbar-nav-scroll ms-md-auto" id="main_navbar">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" href="/overview"><span>Documentation</span></a>
+      </li>
+      <li class="nav-item dropdown d-none d-lg-block">
+        <div class="dropdown">
+  <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Releases</a>
+  <ul class="dropdown-menu">
+    <li><a class="dropdown-item" href="/weblogic-remote-console/overview">Latest (v2.4.16)</a></li>
+    <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.15">v2.4.15</a></li>
+    <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.14">v2.4.14</a></li>
+    <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.13">v2.4.13</a></li>
+    <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.12">v2.4.12</a></li>
+    <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.11">v2.4.11</a></li>
+    </ul>
+</div></li>
+      <li class="td-light-dark-menu nav-item dropdown">
+        <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
+  <symbol id="check2" viewBox="0 0 16 16">
+    <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/>
+  </symbol>
+  <symbol id="circle-half" viewBox="0 0 16 16">
+    <path d="M8 15A7 7 0 1 0 8 1v14zm0 1A8 8 0 1 1 8 0a8 8 0 0 1 0 16z"/>
+  </symbol>
+  <symbol id="moon-stars-fill" viewBox="0 0 16 16">
+    <path d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z"/>
+    <path d="M10.794 3.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387a1.734 1.734 0 0 0-1.097 1.097l-.387 1.162a.217.217 0 0 1-.412 0l-.387-1.162A1.734 1.734 0 0 0 9.31 6.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387a1.734 1.734 0 0 0 1.097-1.097l.387-1.162zM13.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.156 1.156 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.156 1.156 0 0 0-.732-.732l-.774-.258a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732L13.863.1z"/>
+  </symbol>
+  <symbol id="sun-fill" viewBox="0 0 16 16">
+    <path d="M8 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13zm8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5zM3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8zm10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0zm-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708z"/>
+  </symbol>
+</svg>
 
+<button class="btn btn-link nav-link dropdown-toggle d-flex align-items-center"
+        id="bd-theme"
+        type="button"
+        aria-expanded="false"
+        data-bs-toggle="dropdown"
+        data-bs-display="static"
+        aria-label="Toggle theme (auto)">
+  <svg class="bi my-1 theme-icon-active"><use href="#circle-half"></use></svg>
+</button>
+<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="bd-theme-text">
+  <li>
+    <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="light" aria-pressed="false">
+      <svg class="bi me-2 opacity-50"><use href="#sun-fill"></use></svg>
+      Light
+      <svg class="bi ms-auto d-none"><use href="#check2"></use></svg>
+    </button>
+  </li>
+  <li>
+    <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="dark" aria-pressed="false">
+      <svg class="bi me-2 opacity-50"><use href="#moon-stars-fill"></use></svg>
+      Dark
+      <svg class="bi ms-auto d-none"><use href="#check2"></use></svg>
+    </button>
+  </li>
+  <li>
+    <button type="button" class="dropdown-item d-flex align-items-center active" data-bs-theme-value="auto" aria-pressed="true">
+      <svg class="bi me-2 opacity-50"><use href="#circle-half"></use></svg>
+      Auto
+      <svg class="bi ms-auto d-none"><use href="#check2"></use></svg>
+    </button>
+  </li>
+</ul>
 
-
-  <div id="header-wrapper">
-    <div id="header">
-      <a id="logo" href="https://oracle.github.io/weblogic-remote-console/2.4.14/">
-  <img src="https://oracle.github.io/weblogic-remote-console/2.4.14//images/logo.png" height="60"><br/>
-  WebLogic Remote Console
-</a>
-
-    </div>
+      </li>
+      </ul>
+  </div>
+  <div class="d-none d-lg-block">
+    <div class="td-search td-search--offline">
+  <div class="td-search__icon"></div>
+  <input
+    type="search"
+    class="td-search__input form-control"
+    placeholder="Search this site…"
+    aria-label="Search this site…"
+    autocomplete="off"
     
-        <div class="searchbox">
-    <label for="search-by"><i class="fas fa-search"></i></label>
-    <input data-search-input id="search-by" type="search" placeholder="Search...">
-    <span data-search-clear=""><i class="fas fa-times"></i></span>
+    data-offline-search-index-json-src="/offline-search-index.f951367ede6ec8211f5538ed03e68743.json"
+    data-offline-search-base-href="/"
+    data-offline-search-max-results="10"
+  >
+</div>
+  </div>
+</div>
+</nav>
+    </header>
+    <div class="container-fluid td-outer">
+      <div class="td-main">
+        <div class="row flex-xl-nowrap">
+          <aside class="col-12 col-md-3 col-xl-2 td-sidebar d-print-none">
+            <div id="td-sidebar-menu" class="td-sidebar__inner">
+  <div id="content-mobile">
+  <form class="td-sidebar__search d-flex align-items-center">
+    <div class="td-search td-search--offline">
+  <div class="td-search__icon"></div>
+  <input
+    type="search"
+    class="td-search__input form-control"
+    placeholder="Search this site…"
+    aria-label="Search this site…"
+    autocomplete="off"
+    
+    data-offline-search-index-json-src="/offline-search-index.f951367ede6ec8211f5538ed03e68743.json"
+    data-offline-search-base-href="/"
+    data-offline-search-max-results="10"
+  >
+</div>
+    <button class="btn btn-link td-sidebar__toggle d-md-none p-0 ms-3 fas fa-bars" type="button" data-bs-toggle="collapse" data-bs-target="#td-section-nav" aria-controls="td-section-nav" aria-expanded="false" aria-label="Toggle section navigation">
+    </button>
+  </form>
+  </div>
+  <div id="content-desktop"></div>
+  <nav class="td-sidebar-nav collapse td-sidebar-nav--search-disabled foldable-nav" id="td-section-nav">
+    <ul class="td-sidebar-nav__section pe-md-3 ul-0">
+      <li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child active-path" id="m-2414-li">
+  <a href="/2.4.14/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section tree-root" id="m-2414"><span class="">About WebLogic Remote Console</span></a>
+  <ul class="ul-1">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-2414set-console-li">
+  <input type="checkbox" id="m-2414set-console-check"/>
+  <label for="m-2414set-console-check"><a href="/2.4.14/set-console/" class="align-left ps-0  td-sidebar-link td-sidebar-link__section" id="m-2414set-console"><span class="">Get Started</span></a></label>
+  
+  <ul class="ul-2 foldable">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-2414set-consoleget-know-console-li">
+  <input type="checkbox" id="m-2414set-consoleget-know-console-check"/>
+  <label for="m-2414set-consoleget-know-console-check"><a href="/2.4.14/set-console/get-know-console/" class="align-left ps-0  td-sidebar-link td-sidebar-link__section" id="m-2414set-consoleget-know-console"><span class="">Get to Know the Console</span></a></label>
+  
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-2414set-consolecontribute-wrc-repository-li">
+  <input type="checkbox" id="m-2414set-consolecontribute-wrc-repository-check"/>
+  <label for="m-2414set-consolecontribute-wrc-repository-check"><a href="/2.4.14/set-console/contribute-wrc-repository/" class="align-left ps-0  td-sidebar-link td-sidebar-link__section" id="m-2414set-consolecontribute-wrc-repository"><span class="">Contribute to WebLogic Remote Console</span></a></label>
+  
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-2414set-consolesupport-information-li">
+  <input type="checkbox" id="m-2414set-consolesupport-information-check"/>
+  <label for="m-2414set-consolesupport-information-check"><a href="/2.4.14/set-console/support-information/" class="align-left ps-0  td-sidebar-link td-sidebar-link__section" id="m-2414set-consolesupport-information"><span class="">Support Information</span></a></label>
+  
+</li>
+  </ul>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child active-path" id="m-2414administration-server-li">
+  <input type="checkbox" id="m-2414administration-server-check" checked/>
+  <label for="m-2414administration-server-check"><a href="/2.4.14/administration-server/" class="align-left ps-0  td-sidebar-link td-sidebar-link__section" id="m-2414administration-server"><span class="">Administration Server</span></a></label>
+  
+  <ul class="ul-2 foldable">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-2414administration-serverdomain-configuration-li">
+  <input type="checkbox" id="m-2414administration-serverdomain-configuration-check"/>
+  <label for="m-2414administration-serverdomain-configuration-check"><a href="/2.4.14/administration-server/domain-configuration/" class="align-left ps-0  td-sidebar-link td-sidebar-link__section" id="m-2414administration-serverdomain-configuration"><span class="">Domain Configuration</span></a></label>
+  
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-2414administration-serversecuring-domains-li">
+  <input type="checkbox" id="m-2414administration-serversecuring-domains-check"/>
+  <label for="m-2414administration-serversecuring-domains-check"><a href="/2.4.14/administration-server/securing-domains/" class="align-left ps-0  td-sidebar-link td-sidebar-link__section" id="m-2414administration-serversecuring-domains"><span class="">Securing Domains</span></a></label>
+  
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child active-path" id="m-2414administration-serverdeploying-applications-li">
+  <input type="checkbox" id="m-2414administration-serverdeploying-applications-check" checked/>
+  <label for="m-2414administration-serverdeploying-applications-check"><a href="/2.4.14/administration-server/deploying-applications/" class="align-left ps-0  active td-sidebar-link td-sidebar-link__section" id="m-2414administration-serverdeploying-applications"><span class="td-sidebar-nav-active-item">Deploying Applications</span></a></label>
+  
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-2414administration-servermonitoring-domains-li">
+  <input type="checkbox" id="m-2414administration-servermonitoring-domains-check"/>
+  <label for="m-2414administration-servermonitoring-domains-check"><a href="/2.4.14/administration-server/monitoring-domains/" class="align-left ps-0  td-sidebar-link td-sidebar-link__section" id="m-2414administration-servermonitoring-domains"><span class="">Monitoring Domains</span></a></label>
+  
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-2414administration-serverconfiguring-services-li">
+  <input type="checkbox" id="m-2414administration-serverconfiguring-services-check"/>
+  <label for="m-2414administration-serverconfiguring-services-check"><a href="/2.4.14/administration-server/configuring-services/" class="align-left ps-0  td-sidebar-link td-sidebar-link__section" id="m-2414administration-serverconfiguring-services"><span class="">Configuring Services</span></a></label>
+  
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-2414administration-serverconfiguring-coherence-li">
+  <input type="checkbox" id="m-2414administration-serverconfiguring-coherence-check"/>
+  <label for="m-2414administration-serverconfiguring-coherence-check"><a href="/2.4.14/administration-server/configuring-coherence/" class="align-left ps-0  td-sidebar-link td-sidebar-link__section" id="m-2414administration-serverconfiguring-coherence"><span class="">Configuring Coherence</span></a></label>
+  
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-2414administration-serverscheduling-work-li">
+  <input type="checkbox" id="m-2414administration-serverscheduling-work-check"/>
+  <label for="m-2414administration-serverscheduling-work-check"><a href="/2.4.14/administration-server/scheduling-work/" class="align-left ps-0  td-sidebar-link td-sidebar-link__section" id="m-2414administration-serverscheduling-work"><span class="">Scheduling Work</span></a></label>
+  
+</li>
+  </ul>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-2414weblogic-deploy-tooling-li">
+  <input type="checkbox" id="m-2414weblogic-deploy-tooling-check"/>
+  <label for="m-2414weblogic-deploy-tooling-check"><a href="/2.4.14/weblogic-deploy-tooling/" class="align-left ps-0  td-sidebar-link td-sidebar-link__section" id="m-2414weblogic-deploy-tooling"><span class="">WebLogic Deploy Tooling</span></a></label>
+  
+  <ul class="ul-2 foldable">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-2414weblogic-deploy-toolingwdt-model-files-li">
+  <input type="checkbox" id="m-2414weblogic-deploy-toolingwdt-model-files-check"/>
+  <label for="m-2414weblogic-deploy-toolingwdt-model-files-check"><a href="/2.4.14/weblogic-deploy-tooling/wdt-model-files/" class="align-left ps-0  td-sidebar-link td-sidebar-link__section" id="m-2414weblogic-deploy-toolingwdt-model-files"><span class="">WDT Model Files</span></a></label>
+  
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-2414weblogic-deploy-toolingwdt-composites-li">
+  <input type="checkbox" id="m-2414weblogic-deploy-toolingwdt-composites-check"/>
+  <label for="m-2414weblogic-deploy-toolingwdt-composites-check"><a href="/2.4.14/weblogic-deploy-tooling/wdt-composites/" class="align-left ps-0  td-sidebar-link td-sidebar-link__section" id="m-2414weblogic-deploy-toolingwdt-composites"><span class="">WDT Composite Models</span></a></label>
+  
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-2414weblogic-deploy-toolingproperty-lists-li">
+  <input type="checkbox" id="m-2414weblogic-deploy-toolingproperty-lists-check"/>
+  <label for="m-2414weblogic-deploy-toolingproperty-lists-check"><a href="/2.4.14/weblogic-deploy-tooling/property-lists/" class="align-left ps-0  td-sidebar-link td-sidebar-link__section" id="m-2414weblogic-deploy-toolingproperty-lists"><span class="">Property Lists</span></a></label>
+  
+</li>
+  </ul>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-2414troubleshoot-weblogic-remote-console-li">
+  <input type="checkbox" id="m-2414troubleshoot-weblogic-remote-console-check"/>
+  <label for="m-2414troubleshoot-weblogic-remote-console-check"><a href="/2.4.14/troubleshoot-weblogic-remote-console/" class="align-left ps-0  td-sidebar-link td-sidebar-link__section" id="m-2414troubleshoot-weblogic-remote-console"><span class="">Troubleshoot Issues with WebLogic Remote Console</span></a></label>
+  
+</li>
+  </ul>
+</li>
+    </ul>
+  </nav>
 </div>
 
-<script type="text/javascript" src="/weblogic-remote-console/2.4.14/js/lunr.min.js?1739383894"></script>
-<script type="text/javascript" src="/weblogic-remote-console/2.4.14/js/auto-complete.js?1739383894"></script>
-<script type="text/javascript">
-    
-        var baseurl = "https:\/\/oracle.github.io\/weblogic-remote-console\/2.4.14\/";
-    
-</script>
-<script type="text/javascript" src="/weblogic-remote-console/2.4.14/js/search.js?1739383894"></script>
+          </aside>
+          <aside class="d-none d-xl-block col-xl-2 td-sidebar-toc d-print-none">
+            <div class="td-page-meta ms-2 pb-1 pt-2 mb-0">
 
-    
-  </div>
+</div>
 
-    <div class="highlightable">
-    <ul class="topics">
-      
-        
-          
-          
-
-
-
-
- 
-  
-    
-    <li data-nav-id="/weblogic-remote-console/2.4.14/set-console/" title="Get Started" class="dd-item
-        
-        
-        
-        ">
-      <a href="/weblogic-remote-console/2.4.14/set-console/">
-          Get Started
-          
-      </a>
-      
-      
-        <ul>
-          
-          
-            
-          
-          
-
-        
-          
-            
-            
-
-
-
-
- 
-  
-    
-    <li data-nav-id="/weblogic-remote-console/2.4.14/set-console/get-know-console/" title="Get to Know the Console" class="dd-item
-        
-        
-        
-        ">
-      <a href="/weblogic-remote-console/2.4.14/set-console/get-know-console/">
-          Get to Know the Console
-          
-      </a>
-      
-      
-    </li>
-  
- 
-
-            
-          
-            
-            
-
-
-
-
- 
-  
-    
-    <li data-nav-id="/weblogic-remote-console/2.4.14/set-console/contribute-wrc-repository/" title="Contribute to WebLogic Remote Console" class="dd-item
-        
-        
-        
-        ">
-      <a href="/weblogic-remote-console/2.4.14/set-console/contribute-wrc-repository/">
-          Contribute to WebLogic Remote Console
-          
-      </a>
-      
-      
-    </li>
-  
- 
-
-            
-          
-            
-            
-
-
-
-
- 
-  
-    
-    <li data-nav-id="/weblogic-remote-console/2.4.14/set-console/support-information/" title="Support Information" class="dd-item
-        
-        
-        
-        ">
-      <a href="/weblogic-remote-console/2.4.14/set-console/support-information/">
-          Support Information
-          
-      </a>
-      
-      
-    </li>
-  
- 
-
-            
-          
-        
-        </ul>
-      
-    </li>
-  
- 
-
-          
-          
-
-
-
-
- 
-  
-    
-    <li data-nav-id="/weblogic-remote-console/2.4.14/administration-server/" title="Administration Server" class="dd-item
-        parent
-        
-        
-        ">
-      <a href="/weblogic-remote-console/2.4.14/administration-server/">
-          Administration Server
-          
-      </a>
-      
-      
-        <ul>
-          
-          
-            
-          
-          
-
-        
-          
-            
-            
-
-
-
-
- 
-  
-    
-    <li data-nav-id="/weblogic-remote-console/2.4.14/administration-server/domain-configuration/" title="Domain Configuration" class="dd-item
-        
-        
-        
-        ">
-      <a href="/weblogic-remote-console/2.4.14/administration-server/domain-configuration/">
-          Domain Configuration
-          
-      </a>
-      
-      
-    </li>
-  
- 
-
-            
-          
-            
-            
-
-
-
-
- 
-  
-    
-    <li data-nav-id="/weblogic-remote-console/2.4.14/administration-server/securing-domains/" title="Securing Domains" class="dd-item
-        
-        
-        
-        ">
-      <a href="/weblogic-remote-console/2.4.14/administration-server/securing-domains/">
-          Securing Domains
-          
-      </a>
-      
-      
-    </li>
-  
- 
-
-            
-          
-            
-            
-
-
-
-
- 
-  
-    
-    <li data-nav-id="/weblogic-remote-console/2.4.14/administration-server/deploying-applications/" title="Deploying Applications" class="dd-item
-        
-        active
-        
-        ">
-      <a href="/weblogic-remote-console/2.4.14/administration-server/deploying-applications/">
-          Deploying Applications
-          
-      </a>
-      
-      
-    </li>
-  
- 
-
-            
-          
-            
-            
-
-
-
-
- 
-  
-    
-    <li data-nav-id="/weblogic-remote-console/2.4.14/administration-server/monitoring-domains/" title="Monitoring Domains" class="dd-item
-        
-        
-        
-        ">
-      <a href="/weblogic-remote-console/2.4.14/administration-server/monitoring-domains/">
-          Monitoring Domains
-          
-      </a>
-      
-      
-    </li>
-  
- 
-
-            
-          
-            
-            
-
-
-
-
- 
-  
-    
-    <li data-nav-id="/weblogic-remote-console/2.4.14/administration-server/configuring-services/" title="Configuring Services" class="dd-item
-        
-        
-        
-        ">
-      <a href="/weblogic-remote-console/2.4.14/administration-server/configuring-services/">
-          Configuring Services
-          
-      </a>
-      
-      
-    </li>
-  
- 
-
-            
-          
-            
-            
-
-
-
-
- 
-  
-    
-    <li data-nav-id="/weblogic-remote-console/2.4.14/administration-server/configuring-coherence/" title="Configuring Coherence" class="dd-item
-        
-        
-        
-        ">
-      <a href="/weblogic-remote-console/2.4.14/administration-server/configuring-coherence/">
-          Configuring Coherence
-          
-      </a>
-      
-      
-    </li>
-  
- 
-
-            
-          
-            
-            
-
-
-
-
- 
-  
-    
-    <li data-nav-id="/weblogic-remote-console/2.4.14/administration-server/scheduling-work/" title="Scheduling Work" class="dd-item
-        
-        
-        
-        ">
-      <a href="/weblogic-remote-console/2.4.14/administration-server/scheduling-work/">
-          Scheduling Work
-          
-      </a>
-      
-      
-    </li>
-  
- 
-
-            
-          
-        
-        </ul>
-      
-    </li>
-  
- 
-
-          
-          
-
-
-
-
- 
-  
-    
-    <li data-nav-id="/weblogic-remote-console/2.4.14/weblogic-deploy-tooling/" title="WebLogic Deploy Tooling" class="dd-item
-        
-        
-        
-        ">
-      <a href="/weblogic-remote-console/2.4.14/weblogic-deploy-tooling/">
-          WebLogic Deploy Tooling
-          
-      </a>
-      
-      
-        <ul>
-          
-          
-            
-          
-          
-
-        
-          
-            
-            
-
-
-
-
- 
-  
-    
-    <li data-nav-id="/weblogic-remote-console/2.4.14/weblogic-deploy-tooling/wdt-model-files/" title="WDT Model Files" class="dd-item
-        
-        
-        
-        ">
-      <a href="/weblogic-remote-console/2.4.14/weblogic-deploy-tooling/wdt-model-files/">
-          WDT Model Files
-          
-      </a>
-      
-      
-    </li>
-  
- 
-
-            
-          
-            
-            
-
-
-
-
- 
-  
-    
-    <li data-nav-id="/weblogic-remote-console/2.4.14/weblogic-deploy-tooling/wdt-composites/" title="WDT Composite Models" class="dd-item
-        
-        
-        
-        ">
-      <a href="/weblogic-remote-console/2.4.14/weblogic-deploy-tooling/wdt-composites/">
-          WDT Composite Models
-          
-      </a>
-      
-      
-    </li>
-  
- 
-
-            
-          
-            
-            
-
-
-
-
- 
-  
-    
-    <li data-nav-id="/weblogic-remote-console/2.4.14/weblogic-deploy-tooling/property-lists/" title="Property Lists" class="dd-item
-        
-        
-        
-        ">
-      <a href="/weblogic-remote-console/2.4.14/weblogic-deploy-tooling/property-lists/">
-          Property Lists
-          
-      </a>
-      
-      
-    </li>
-  
- 
-
-            
-          
-        
-        </ul>
-      
-    </li>
-  
- 
-
-          
-          
-
-
-
-
- 
-  
-    
-    <li data-nav-id="/weblogic-remote-console/2.4.14/troubleshoot-weblogic-remote-console/" title="Troubleshoot Issues with WebLogic Remote Console" class="dd-item
-        
-        
-        
-        ">
-      <a href="/weblogic-remote-console/2.4.14/troubleshoot-weblogic-remote-console/">
-          Troubleshoot Issues with WebLogic Remote Console
-          
-      </a>
-      
-      
-    </li>
-  
- 
-
-          
-        
-      
-    </ul>
-
-    
-    
-
-    
-    <section id="footer">
-      <p>Created with <i class="fas fa-heart"></i> from <a href="https://www.oracle.com">Oracle</a></p>
-<p>&nbsp</p>
-<table border="1" bgcolor="white"><tbody><tr><td align="center"><p style="color: red">
-    You are viewing the archived documentation for version 2.4.14.
-    To view the documentation for the current release, please
-    <a href="https://oracle.github.io/weblogic-remote-console/">click here</a>
-</p></td></tr></tbody></table>
-<p>&nbsp</p>
-<p><a href="https://github.com/oracle/weblogic-remote-console"><i class="fab fa-github"></i> GitHub repo</a></p>
-<p><a href="https://join.slack.com/t/oracle-weblogic/shared_invite/zt-1ni1gtjv6-PGC6CQ4uIte3KBdm_67~aQ"><i class="fab fa-slack"></i> Public Slack #remote-console</a></p>
-
-    </section>
-  </div>
-</nav>
-
-
-
-
-        <section id="body">
-        <div id="overlay"></div>
-        <div class="padding highlightable">
-              
-              <div>
-                <div id="top-bar">
-                
-                
-                <div id="breadcrumbs" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
-                    <span id="sidebar-toggle-span">
-                        <a href="#" id="sidebar-toggle" data-sidebar-toggle="">
-                          <i class="fas fa-bars"></i>
-                        </a>
-                    </span>
-                  
-                  <span id="toc-menu"><i class="fas fa-list-alt"></i></span>
-                  
-                  <span class="links">
-                 
-                 
-                    
-          
-          
-            
-            
-          
-          
-            
-            
-          
-          
-            <a href='/weblogic-remote-console/2.4.14/'>About WebLogic Remote Console</a> > <a href='/weblogic-remote-console/2.4.14/administration-server/'>Administration Server</a> > Deploying Applications
-          
-        
-          
-        
-          
-        
-                 
-                  </span>
-                </div>
-                
-                    <div class="progress">
-    <div class="wrapper">
-<nav id="TableOfContents">
+            <div class="td-toc">
+        <nav id="TableOfContents">
   <ul>
     <li><a href="#SECTION_JCN_YYR_FCC">Supported Deployment Units</a></li>
     <li><a href="#GUID-C9A911B0-1942-4383-BD91-49BC745F21DA">Install an Application</a></li>
@@ -640,29 +292,42 @@
     <li><a href="#GUID-07822B40-E226-4044-8C07-4CDB6D5D007E">Configure JASPIC for a Web Application</a></li>
   </ul>
 </nav>
-    </div>
-</div>
-
-                
-              </div>
-            </div>
+      </div>
+    
             
-        <div id="head-tags">
-        
-        </div>
-        
-        <div id="body-inner">
-          
-            <h1>
-              
-              Deploying Applications
-            </h1>
-          
 
-        
+          </aside>
+          <main class="col-12 col-md-9 col-xl-8 ps-md-5" role="main">
+            
+  
+  
+  
+  
+  <div class="pageinfo pageinfo-warning">
+    <p>You are viewing documentation for an older release of WebLogic Remote Console. Read the  
+        <a href="/weblogic-remote-console/overview" target="_blank">latest documentation</a> instead.</p>
+        <p>Stay up-to-date with the newest features and fixes. Download the latest release of WebLogic Remote Console from <a href="https://github.com/oracle/weblogic-remote-console/releases" target="_blank">WebLogic Remote Console - Releases</a></p>
+      
+    
+  </div>
 
-
-
+            <nav aria-label="breadcrumb" class="td-breadcrumbs">
+  <ol class="breadcrumb">
+  <li class="breadcrumb-item">
+    <a href="/2.4.14/">About WebLogic Remote Console</a></li>
+  <li class="breadcrumb-item">
+    <a href="/2.4.14/administration-server/">Administration Server</a></li>
+  <li class="breadcrumb-item active" aria-current="page">
+    Deploying Applications</li>
+  </ol>
+</nav>
+            
+<div class="td-content">
+	<h1>Deploying Applications</h1>
+  
+	<header class="article-meta">
+		
+</header>
 	<p>You can use WebLogic Remote Console to manage the deployment process of applications to WebLogic Server.</p>
 <p>For general information on the application deployment process, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=DEPGD-GUID-F6E8BF0B-FBCF-44D2-A33F-13C4EF2E0031">Understanding WebLogic Server Deployment</a> in <strong>Deploying Applications to Oracle WebLogic Server</strong>.</p>
 <h2 id="SECTION_JCN_YYR_FCC">Supported Deployment Units</h2>
@@ -697,7 +362,7 @@
 <p>For more information on each deployment unit, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=DEPGD-GUID-DC6C0B59-7560-4A6F-964B-201480072A3D">Supported Deployment Units</a> in <strong>Deploying Applications to Oracle WebLogic Server</strong></p>
 <h2 id="GUID-C9A911B0-1942-4383-BD91-49BC745F21DA">Install an Application</h2>
 <p>An application can be installed as an archived EAR file or as an exploded directory. Installing an application makes its physical file or directory known to WebLogic Server.</p>
-<p>This procedure applies to all of the deployment units listed in <a href="#SECTION_JCN_YYR_FCC">Supported Deployment Units</a>, with the exception of Java EE libraries. For Java EE libraries, see <a href="#GUID-BE65E318-925C-4CEC-9041-76A7214AFA6A">Install a Java EE Library</a> instead.</p>
+<p>This procedure applies to all of the deployment units listed in <a href="/2.4.14/administration-server/deploying-applications/#SECTION_JCN_YYR_FCC">Supported Deployment Units</a>, with the exception of Java EE libraries. For Java EE libraries, see <a href="/2.4.14/administration-server/deploying-applications/#GUID-BE65E318-925C-4CEC-9041-76A7214AFA6A">Install a Java EE Library</a> instead.</p>
 <ol>
 <li>
 <p>In the <strong>Edit Tree</strong>, go to <strong>Deployments</strong>, then <strong>App Deployments</strong>.</p>
@@ -769,9 +434,14 @@
 <p>After you deploy an application, you can configure additional settings to meet the needs of your environment.</p>
 <ol>
 <li>
-<p>If you haven&rsquo;t already, create a deployment plan for the application. You can view the default configuration settings without creating a plan but they are read-only until you create a deployment plan. For more information, see <a href="#GUID-9FACBC3D-4F1D-4D68-82FB-68E65A992886">Deployment Plans</a>.</p>
+<p>If you haven&rsquo;t already, create a deployment plan for the application. You can view the default configuration settings without creating a plan but they are read-only until you create a deployment plan. For more information, see <a href="/2.4.14/administration-server/deploying-applications/#GUID-9FACBC3D-4F1D-4D68-82FB-68E65A992886">Deployment Plans</a>.</p>
 
-<div class="notices note" ><p>You cannot create a deployment plan for applications that were auto-deployed.</p>
+
+<div class="alert alert-primary" role="alert">
+<h4 class="alert-heading">Note</h4>
+
+    You cannot create a deployment plan for applications that were auto-deployed.
+
 </div>
 <ol>
 <li>
@@ -793,14 +463,19 @@
 <li>
 <p>Go to <strong>Deployments</strong>, then <strong>Application Management</strong>, then <em>myApplication</em>, then <strong>Configuration</strong>. Explore the Configuration node and its children to see the available deployment configuration options.</p>
 
-<div class="notices note" ><p>The contents of the Configuration node and its children differ based on application type. For example, web applications include settings for container descriptors while resource adapters include settings for outbound connection pools.</p>
+
+<div class="alert alert-primary" role="alert">
+<h4 class="alert-heading">Note</h4>
+
+    The contents of the Configuration node and its children differ based on application type. For example, web applications include settings for container descriptors while resource adapters include settings for outbound connection pools.
+
 </div>
 </li>
 <li>
 <p>Click <strong>Save</strong> as you make changes. Any changes that you make to the Configuration node and its children are automatically reflected in the deployment plan of the application.</p>
 </li>
 <li>
-<p>Update and possibly redeploy your application to apply your changes. See <a href="#GUID-240675E5-E13F-4335-B0B1-E9684DAFB6A9">Update or Redeploy an Application</a> for instructions.</p>
+<p>Update and possibly redeploy your application to apply your changes. See <a href="/2.4.14/administration-server/deploying-applications/#GUID-240675E5-E13F-4335-B0B1-E9684DAFB6A9">Update or Redeploy an Application</a> for instructions.</p>
 </li>
 </ol>
 <h2 id="GUID-9FACBC3D-4F1D-4D68-82FB-68E65A992886">Deployment Plans</h2>
@@ -808,10 +483,15 @@
 <p>A deployment plan is an optional document that works with or overrides your application’s deployment descriptors to configure an application for deployment to a specific WebLogic Server environment. Deployment plans are written in XML.</p>
 <p>See <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=DEPGD-GUID-29545865-3AC0-4777-8243-A85CDB04F33C">Understanding WebLogic Server Deployment Plans</a> in <strong>Deploying Applications to Oracle WebLogic Server</strong>.</p>
 
-<div class="notices note" ><p>You cannot create a deployment plan for applications that were auto-deployed.</p>
+
+<div class="alert alert-primary" role="alert">
+<h4 class="alert-heading">Note</h4>
+
+    You cannot create a deployment plan for applications that were auto-deployed.
+
 </div>
 <p>For deployment plan descriptions and examples, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=DEPGD-GUID-003B951E-051B-4BFA-B8C5-E006C0A0FDE7">Understanding Deployment Plan Contents</a> in <strong>Deploying Applications to Oracle WebLogic Server</strong>.</p>
-<p>Generally, if you need to modify the deployment properties of an application, you should use the Configuration node (as described in <a href="#GUID-0D2646E1-C9DB-4B65-A691-F835E0C0274A">Specify Deployment Properties</a>), instead of manually editing the deployment plan.</p>
+<p>Generally, if you need to modify the deployment properties of an application, you should use the Configuration node (as described in <a href="/2.4.14/administration-server/deploying-applications/#GUID-0D2646E1-C9DB-4B65-A691-F835E0C0274A">Specify Deployment Properties</a>), instead of manually editing the deployment plan.</p>
 <p>If your changes in the deployment plan include non-dynamic changes, you must redeploy the application to propagate the changes from the deployment plan to the application.</p>
 <h3 id="GUID-B68813D1-ADDB-44D1-BF2E-5779426A3826">Modify a Deployment Plan</h3>
 <p>You can manually update a deployment plan with new deployment instructions for an application.</p>
@@ -841,14 +521,20 @@
 </ul>
 </li>
 <li>
-<p>Update and possibly redeploy your application to apply your changes. See <a href="#GUID-240675E5-E13F-4335-B0B1-E9684DAFB6A9">Update or Redeploy an Application</a> for instructions.</p>
+<p>Update and possibly redeploy your application to apply your changes. See <a href="/2.4.14/administration-server/deploying-applications/#GUID-240675E5-E13F-4335-B0B1-E9684DAFB6A9">Update or Redeploy an Application</a> for instructions.</p>
 </li>
 </ol>
 <h2 id="GUID-240675E5-E13F-4335-B0B1-E9684DAFB6A9">Update or Redeploy an Application</h2>
 <p>After you make changes to a deployed application or its deployment plan, you need to update the application with the new instructions and possibly redeploy the application to make the changes available to WebLogic Server clients.</p>
 
-<div class="notices note" ><p>If your changes are dynamic, then you only need to update the deployment plan. However, if your changes include non-dynamic changes, you must redeploy the application to propagate the changes from the deployment plan to the application.</p>
+
+<div class="alert alert-primary" role="alert">
+<h4 class="alert-heading">Note</h4>
+
+    <p>If your changes are dynamic, then you only need to update the deployment plan. However, if your changes include non-dynamic changes, you must redeploy the application to propagate the changes from the deployment plan to the application.</p>
 <p>If you try to update a deployment plan but your changes require a redeployment, WebLogic Remote Console will prompt you to redeploy the application instead.</p>
+
+
 </div>
 <p>If the application is deployed in a production environment, review <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=DEPGD-GUID-69BCEEBE-D19A-4B55-B14D-DAA10A209C21">Overview of Redeployment Strategies</a> in <strong>Deploying Applications to Oracle WebLogic Server</strong> for guidance on limiting downtime for the application.</p>
 <ol>
@@ -881,7 +567,12 @@
 <li>
 <p>Construct a URL using the target server address plus the <code>ContextPath</code> and <code>Name</code> values from the Servlets table. For example, for an application deployed on the Administration Server, a test URL might look like: <code>http://adminserver:7001/myapp/welcome</code>.</p>
 
-<div class="notices note" ><p>Remember to consider any changes you made to network channels that may affect the application deployment. For example, the application may be on a different port.</p>
+
+<div class="alert alert-primary" role="alert">
+<h4 class="alert-heading">Note</h4>
+
+    Remember to consider any changes you made to network channels that may affect the application deployment. For example, the application may be on a different port.
+
 </div>
 </li>
 <li>
@@ -890,7 +581,7 @@
 </ol>
 <h2 id="GUID-ECC35452-5C21-4714-B1AA-AAEC6B0BA786">Remove an Application from a Domain</h2>
 <p>An installed application or module remains available in the domain to stop, restart, or update until you explicitly remove it. After you delete an application or module from a domain, you must redeploy it to make it available to a WebLogic Server client again.</p>
-<p>To temporarily make a deployed application unavailable to WebLogic Server clients, consider stopping it instead of deleting it. See <a href="#GUID-1E6C78A0-AFA0-44BE-BFC3-9CE77FB1E483">Stop an Application</a>.</p>
+<p>To temporarily make a deployed application unavailable to WebLogic Server clients, consider stopping it instead of deleting it. See <a href="/2.4.14/administration-server/deploying-applications/#GUID-1E6C78A0-AFA0-44BE-BFC3-9CE77FB1E483">Stop an Application</a>.</p>
 <ol>
 <li>
 <p>In the <strong>Edit Tree</strong>, go to <strong>Deployments</strong>, then <strong>App Deployments</strong>.</p>
@@ -923,7 +614,12 @@
 If you specify an exploded directory, WebLogic Server installs all components it finds in and below the specified directory.</li>
 </ul>
 
-<div class="notices note" ><p>You can install only the following types of archive files (or their corresponding exploded directories) as Java EE libraries: EJB JARs, Web application WARs, EAR files that contain EJB JARs or WARs, or plain JAR files that contain compiled classes.</p>
+
+<div class="alert alert-primary" role="alert">
+<h4 class="alert-heading">Note</h4>
+
+    You can install only the following types of archive files (or their corresponding exploded directories) as Java EE libraries: EJB JARs, Web application WARs, EAR files that contain EJB JARs or WARs, or plain JAR files that contain compiled classes.
+
 </div>
 </li>
 <li>
@@ -985,7 +681,7 @@ If you specify an exploded directory, WebLogic Server installs all components it
 <li>
 <p>If the application does not have a deployment plan, click <strong>Create Plan</strong>.</p>
 <p>WebLogic Server will create a basic deployment plan for the application which you can edit using the newly created <strong>Configuration</strong> and <strong>Deployment Plan (Advanced)</strong> child nodes.</p>
-<p>Whenever possible, use the <strong>Configuration</strong> node to edit deployment properties rather than editing the deployment plan directly. See <a href="#GUID-0D2646E1-C9DB-4B65-A691-F835E0C0274A">Specify Deployment Properties</a>.</p>
+<p>Whenever possible, use the <strong>Configuration</strong> node to edit deployment properties rather than editing the deployment plan directly. See <a href="/2.4.14/administration-server/deploying-applications/#GUID-0D2646E1-C9DB-4B65-A691-F835E0C0274A">Specify Deployment Properties</a>.</p>
 </li>
 <li>
 <p>Expand the <strong>Configuration</strong> node and go to the <strong>JASPIC Container</strong> node.</p>
@@ -1002,370 +698,35 @@ If you specify an exploded directory, WebLogic Server installs all components it
 </li>
 </ol>
 
+  <div class="section-index">
+    
+    
+    </div>
+</div>
 
-
-
-
-<footer class=" footline" >
-	
+          </main>
+        </div>
+      </div>
+      <footer class="td-footer row d-print-none">
+  <div class="container-fluid">
+    <div class="row mx-md-2">
+      <div class="td-footer__left col-6 col-sm-4 order-sm-1">
+        
+      </div><div class="td-footer__right col-6 col-sm-4 order-sm-3">
+        
+      </div><div class="td-footer__center col-12 col-sm-4 py-2 order-sm-2">
+        <span class="td-footer__copyright">&copy;
+    2020&ndash;2025
+    <span class="td-footer__authors">Oracle | <a href="https://github.com/oracle/weblogic-remote-console/blob/main/LICENSE.txt">UPL 1.0</a></span></span><span class="td-footer__all_rights_reserved">All Rights Reserved</span>
+      </div>
+    </div>
+  </div>
 </footer>
 
-        
-        </div>
-        
-
-      </div>
-
-    <div id="navigation">
-        
-        
-
-        
-            
-            
-                
-                    
-                    
-                
-                
-
-                    
-                    
-                        
-                    
-                    
-
-                    
-                        
-            
-            
-                
-                    
-                        
-                        
-                    
-                
-                
-
-                    
-                    
-                        
-                    
-                    
-
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-            
-        
-                    
-                        
-            
-            
-                
-                    
-                    
-                
-                
-
-                    
-                    
-                        
-                    
-                    
-
-                    
-                        
-            
-            
-                
-                    
-                        
-                        
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-                        
-            
-            
-                
-                    
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-                        
-            
-            
-                
-                    
-                        
-                        
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-            
-        
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                        
-                    
-                    
-
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-            
-        
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-            
-        
-
-        
-
-
-	 
-	 
-		
-			<a class="nav nav-prev" href="/weblogic-remote-console/2.4.14/administration-server/securing-domains/" title="Securing Domains"> <i class="fa fa-chevron-left"></i></a>
-		
-		
-			<a class="nav nav-next" href="/weblogic-remote-console/2.4.14/administration-server/monitoring-domains/" title="Monitoring Domains" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
-		
-	
     </div>
-
-    </section>
-
-    <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
-      <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
-    </div>
-    <script src="/weblogic-remote-console/2.4.14/js/clipboard.min.js?1739383894"></script>
-    <script src="/weblogic-remote-console/2.4.14/js/perfect-scrollbar.min.js?1739383894"></script>
-    <script src="/weblogic-remote-console/2.4.14/js/perfect-scrollbar.jquery.min.js?1739383894"></script>
-    <script src="/weblogic-remote-console/2.4.14/js/jquery.sticky.js?1739383894"></script>
-    <script src="/weblogic-remote-console/2.4.14/js/featherlight.min.js?1739383894"></script>
-    <script src="/weblogic-remote-console/2.4.14/js/highlight.pack.js?1739383894"></script>
-    <script>hljs.initHighlightingOnLoad();</script>
-    <script src="/weblogic-remote-console/2.4.14/js/modernizr.custom-3.6.0.js?1739383894"></script>
-    <script src="/weblogic-remote-console/2.4.14/js/learn.js?1739383894"></script>
-    <script src="/weblogic-remote-console/2.4.14/js/hugo-learn.js?1739383894"></script>
-    
-        
-            <script src="/weblogic-remote-console/2.4.14/mermaid/mermaid.js?1739383894"></script>
-        
-        <script>
-            mermaid.initialize({ startOnLoad: true });
-        </script>
-    
-    
+    <script src="/js/main.min.90902a026ed2aee7ed45d85797f4c790b240ba148ac6f8a6f194cb1981ffecf5.js" integrity="sha256-kJAqAm7SruftRdhXl/THkLJAuhSKxvim8ZTLGYH/7PU=" crossorigin="anonymous"></script>
+<script defer src="/js/click-to-copy.min.73478a7d4807698aed7e355eb23f9890ca18fea3158604c8471746d046702bad.js" integrity="sha256-c0eKfUgHaYrtfjVesj&#43;YkMoY/qMVhgTIRxdG0EZwK60=" crossorigin="anonymous"></script>
+<script src='/js/tabpane-persist.js'></script>
 
   </body>
 </html>

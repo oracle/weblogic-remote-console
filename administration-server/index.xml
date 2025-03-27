@@ -2,10 +2,10 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Administration Server on WebLogic Remote Console</title>
-    <link>https://oracle.github.io/weblogic-remote-console/administration-server/</link>
+    <link>/administration-server/</link>
     <description>Recent content in Administration Server on WebLogic Remote Console</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
-    <atom:link href="https://oracle.github.io/weblogic-remote-console/administration-server/index.xml" rel="self" type="application/rss+xml" />
+    <generator>Hugo</generator>
+    <language>en</language>
+    <atom:link href="/administration-server/index.xml" rel="self" type="application/rss+xml" />
   </channel>
 </rss>

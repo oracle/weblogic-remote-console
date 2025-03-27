@@ -1,776 +1,312 @@
-<!DOCTYPE html>
-<html lang="en" class="js csstransforms3d">
+<!doctype html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="en" class="no-js">
   <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="generator" content="Hugo 0.123.7">
-    <meta name="description" content="How to manage security data in the WebLogic Remote Console">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
 
 
-    <link rel="icon" href="/weblogic-remote-console/2.4.11/images/logo.png" type="image/png">
+<link rel="shortcut icon" href="/favicons/favicon.ico" >
+<link rel="apple-touch-icon" href="/favicons/apple-touch-icon-180x180.png" sizes="180x180">
+<link rel="icon" type="image/png" href="/favicons/favicon-16x16.png" sizes="16x16">
+<link rel="icon" type="image/png" href="/favicons/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="/favicons/android-36x36.png" sizes="36x36">
+<link rel="icon" type="image/png" href="/favicons/android-48x48.png" sizes="48x48">
+<link rel="icon" type="image/png" href="/favicons/android-72x72.png" sizes="72x72">
+<link rel="icon" type="image/png" href="/favicons/android-96x96.png" sizes="96x96">
+<link rel="icon" type="image/png" href="/favicons/android-144x144.png" sizes="144x144">
+<link rel="icon" type="image/png" href="/favicons/android-192x192.png" sizes="192x192">
 
-    <title>Editing security data :: WebLogic Remote Console</title>
+<title>Editing security data | WebLogic Remote Console</title>
+<meta name="description" content="You can manage security data and supported security providers for your domain in the Security Data tree perspective.
+Note You must be logged in as a user with the Admin role and have the WebLogic Remote Console extension installed to access this perspective. See Install the WebLogic Remote Console for instructions. Any changes you make within the Security Data perspective are immediate - you don’t need to commit or restart the server to apply your changes.">
+<meta property="og:url" content="/2.4.11/userguide/providers/administration-server/security-data/">
+  <meta property="og:site_name" content="WebLogic Remote Console">
+  <meta property="og:title" content="Editing security data">
+  <meta property="og:description" content="You can manage security data and supported security providers for your domain in the Security Data tree perspective.
+Note You must be logged in as a user with the Admin role and have the WebLogic Remote Console extension installed to access this perspective. See Install the WebLogic Remote Console for instructions. Any changes you make within the Security Data perspective are immediate - you don’t need to commit or restart the server to apply your changes.">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="2.4.11">
 
-    
-    <link href="/weblogic-remote-console/2.4.11/css/nucleus.css?1739383893" rel="stylesheet">
-    <link href="/weblogic-remote-console/2.4.11/css/fontawesome-all.min.css?1739383893" rel="stylesheet">
-    <link href="/weblogic-remote-console/2.4.11/css/hybrid.css?1739383893" rel="stylesheet">
-    <link href="/weblogic-remote-console/2.4.11/css/featherlight.min.css?1739383893" rel="stylesheet">
-    <link href="/weblogic-remote-console/2.4.11/css/perfect-scrollbar.min.css?1739383893" rel="stylesheet">
-    <link href="/weblogic-remote-console/2.4.11/css/auto-complete.css?1739383893" rel="stylesheet">
-    <link href="/weblogic-remote-console/2.4.11/css/atom-one-dark-reasonable.css?1739383893" rel="stylesheet">
-    <link href="/weblogic-remote-console/2.4.11/css/theme.css?1739383893" rel="stylesheet">
-    <link href="/weblogic-remote-console/2.4.11/css/tabs.css?1739383893" rel="stylesheet">
-    <link href="/weblogic-remote-console/2.4.11/css/hugo-theme.css?1739383893" rel="stylesheet">
-    
-    
+  <meta itemprop="name" content="Editing security data">
+  <meta itemprop="description" content="You can manage security data and supported security providers for your domain in the Security Data tree perspective.
+Note You must be logged in as a user with the Admin role and have the WebLogic Remote Console extension installed to access this perspective. See Install the WebLogic Remote Console for instructions. Any changes you make within the Security Data perspective are immediate - you don’t need to commit or restart the server to apply your changes.">
+  <meta itemprop="wordCount" content="3874">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Editing security data">
+  <meta name="twitter:description" content="You can manage security data and supported security providers for your domain in the Security Data tree perspective.
+Note You must be logged in as a user with the Admin role and have the WebLogic Remote Console extension installed to access this perspective. See Install the WebLogic Remote Console for instructions. Any changes you make within the Security Data perspective are immediate - you don’t need to commit or restart the server to apply your changes.">
+<link rel="preload" href="/scss/main.min.48c25d0a5a23a1e8cae94d6c5e7622061e5345cf098171b1d6ee41d8e309e6c8.css" as="style" integrity="sha256-SMJdClojoejK6U1sXnYiBh5TRc8JgXGx1u5B2OMJ5sg=" crossorigin="anonymous">
+<link href="/scss/main.min.48c25d0a5a23a1e8cae94d6c5e7622061e5345cf098171b1d6ee41d8e309e6c8.css" rel="stylesheet" integrity="sha256-SMJdClojoejK6U1sXnYiBh5TRc8JgXGx1u5B2OMJ5sg=" crossorigin="anonymous">
+<script
+  src="https://code.jquery.com/jquery-3.7.1.min.js"
+  integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+  crossorigin="anonymous"></script>
+<script defer
+  src="https://unpkg.com/lunr@2.3.9/lunr.min.js"
+  integrity="sha384-203J0SNzyqHby3iU6hzvzltrWi/M41wOP5Gu+BiJMz5nwKykbkUx8Kp7iti0Lpli"
+  crossorigin="anonymous"></script>
 
-    <script src="/weblogic-remote-console/2.4.11/js/jquery-3.6.0.min.js?1739383893"></script>
-
-    <style>
-      :root #header + #content > #left > #rlblock_left{
-          display:none !important;
-      }
-      
-        :not(pre) > code + span.copy-to-clipboard {
-            display: none;
-        }
-      
-    </style>
-    
   </head>
-  <body class="" data-url="/weblogic-remote-console/2.4.11/userguide/providers/administration-server/security-data/">
-    <nav id="sidebar" class="">
+  <body class="td-page">
+    <header>
+      <nav class="td-navbar js-navbar-scroll" data-bs-theme="dark">
+<div class="container-fluid flex-column flex-md-row">
+  <a class="navbar-brand" href="/"><span class="navbar-brand__logo navbar-logo"></span><span class="navbar-brand__name">WebLogic Remote Console</span></a>
+  <div class="td-navbar-nav-scroll ms-md-auto" id="main_navbar">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" href="/overview"><span>Documentation</span></a>
+      </li>
+      <li class="nav-item dropdown d-none d-lg-block">
+        <div class="dropdown">
+  <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Releases</a>
+  <ul class="dropdown-menu">
+    <li><a class="dropdown-item" href="/weblogic-remote-console/overview">Latest (v2.4.16)</a></li>
+    <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.15">v2.4.15</a></li>
+    <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.14">v2.4.14</a></li>
+    <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.13">v2.4.13</a></li>
+    <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.12">v2.4.12</a></li>
+    <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.11">v2.4.11</a></li>
+    </ul>
+</div></li>
+      <li class="td-light-dark-menu nav-item dropdown">
+        <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
+  <symbol id="check2" viewBox="0 0 16 16">
+    <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/>
+  </symbol>
+  <symbol id="circle-half" viewBox="0 0 16 16">
+    <path d="M8 15A7 7 0 1 0 8 1v14zm0 1A8 8 0 1 1 8 0a8 8 0 0 1 0 16z"/>
+  </symbol>
+  <symbol id="moon-stars-fill" viewBox="0 0 16 16">
+    <path d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z"/>
+    <path d="M10.794 3.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387a1.734 1.734 0 0 0-1.097 1.097l-.387 1.162a.217.217 0 0 1-.412 0l-.387-1.162A1.734 1.734 0 0 0 9.31 6.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387a1.734 1.734 0 0 0 1.097-1.097l.387-1.162zM13.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.156 1.156 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.156 1.156 0 0 0-.732-.732l-.774-.258a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732L13.863.1z"/>
+  </symbol>
+  <symbol id="sun-fill" viewBox="0 0 16 16">
+    <path d="M8 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13zm8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5zM3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8zm10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0zm-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708z"/>
+  </symbol>
+</svg>
 
+<button class="btn btn-link nav-link dropdown-toggle d-flex align-items-center"
+        id="bd-theme"
+        type="button"
+        aria-expanded="false"
+        data-bs-toggle="dropdown"
+        data-bs-display="static"
+        aria-label="Toggle theme (auto)">
+  <svg class="bi my-1 theme-icon-active"><use href="#circle-half"></use></svg>
+</button>
+<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="bd-theme-text">
+  <li>
+    <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="light" aria-pressed="false">
+      <svg class="bi me-2 opacity-50"><use href="#sun-fill"></use></svg>
+      Light
+      <svg class="bi ms-auto d-none"><use href="#check2"></use></svg>
+    </button>
+  </li>
+  <li>
+    <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="dark" aria-pressed="false">
+      <svg class="bi me-2 opacity-50"><use href="#moon-stars-fill"></use></svg>
+      Dark
+      <svg class="bi ms-auto d-none"><use href="#check2"></use></svg>
+    </button>
+  </li>
+  <li>
+    <button type="button" class="dropdown-item d-flex align-items-center active" data-bs-theme-value="auto" aria-pressed="true">
+      <svg class="bi me-2 opacity-50"><use href="#circle-half"></use></svg>
+      Auto
+      <svg class="bi ms-auto d-none"><use href="#check2"></use></svg>
+    </button>
+  </li>
+</ul>
 
-
-  <div id="header-wrapper">
-    <div id="header">
-      <a id="logo" href="https://oracle.github.io/weblogic-remote-console/2.4.11/">
-  <img src="https://oracle.github.io/weblogic-remote-console/2.4.11//images/logo.png" height="60"><br/>
-  WebLogic Remote Console
-</a>
-
-    </div>
+      </li>
+      </ul>
+  </div>
+  <div class="d-none d-lg-block">
+    <div class="td-search td-search--offline">
+  <div class="td-search__icon"></div>
+  <input
+    type="search"
+    class="td-search__input form-control"
+    placeholder="Search this site…"
+    aria-label="Search this site…"
+    autocomplete="off"
     
-        <div class="searchbox">
-    <label for="search-by"><i class="fas fa-search"></i></label>
-    <input data-search-input id="search-by" type="search" placeholder="Search...">
-    <span data-search-clear=""><i class="fas fa-times"></i></span>
+    data-offline-search-index-json-src="/offline-search-index.f951367ede6ec8211f5538ed03e68743.json"
+    data-offline-search-base-href="/"
+    data-offline-search-max-results="10"
+  >
+</div>
+  </div>
+</div>
+</nav>
+    </header>
+    <div class="container-fluid td-outer">
+      <div class="td-main">
+        <div class="row flex-xl-nowrap">
+          <aside class="col-12 col-md-3 col-xl-2 td-sidebar d-print-none">
+            <div id="td-sidebar-menu" class="td-sidebar__inner">
+  <div id="content-mobile">
+  <form class="td-sidebar__search d-flex align-items-center">
+    <div class="td-search td-search--offline">
+  <div class="td-search__icon"></div>
+  <input
+    type="search"
+    class="td-search__input form-control"
+    placeholder="Search this site…"
+    aria-label="Search this site…"
+    autocomplete="off"
+    
+    data-offline-search-index-json-src="/offline-search-index.f951367ede6ec8211f5538ed03e68743.json"
+    data-offline-search-base-href="/"
+    data-offline-search-max-results="10"
+  >
+</div>
+    <button class="btn btn-link td-sidebar__toggle d-md-none p-0 ms-3 fas fa-bars" type="button" data-bs-toggle="collapse" data-bs-target="#td-section-nav" aria-controls="td-section-nav" aria-expanded="false" aria-label="Toggle section navigation">
+    </button>
+  </form>
+  </div>
+  <div id="content-desktop"></div>
+  <nav class="td-sidebar-nav collapse td-sidebar-nav--search-disabled foldable-nav" id="td-section-nav">
+    <ul class="td-sidebar-nav__section pe-md-3 ul-0">
+      <li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child active-path" id="m-2411-li">
+  <a href="/2.4.11/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section tree-root" id="m-2411"><span class="">WebLogic Remote Console</span></a>
+  <ul class="ul-1">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-2411setup-li">
+  <input type="checkbox" id="m-2411setup-check"/>
+  <label for="m-2411setup-check"><a href="/2.4.11/setup/" class="align-left ps-0  td-sidebar-link td-sidebar-link__section" id="m-2411setup"><span class="">Get started</span></a></label>
+  
+  <ul class="ul-2 foldable">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-2411setupconsole-li">
+  <input type="checkbox" id="m-2411setupconsole-check"/>
+  <label for="m-2411setupconsole-check"><a href="/2.4.11/setup/console/" class="align-left ps-0  td-sidebar-link td-sidebar-link__page" id="m-2411setupconsole"><span class="">Explore the WebLogic Remote Console</span></a></label>
+  
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-2411setupadmin-console-diff-li">
+  <input type="checkbox" id="m-2411setupadmin-console-diff-check"/>
+  <label for="m-2411setupadmin-console-diff-check"><a href="/2.4.11/setup/admin-console-diff/" class="align-left ps-0  td-sidebar-link td-sidebar-link__page" id="m-2411setupadmin-console-diff"><span class="">Differences with the Administration Console</span></a></label>
+  
+</li>
+  </ul>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child active-path" id="m-2411userguide-li">
+  <input type="checkbox" id="m-2411userguide-check" checked/>
+  <label for="m-2411userguide-check"><a href="/2.4.11/userguide/" class="align-left ps-0  td-sidebar-link td-sidebar-link__section" id="m-2411userguide"><span class="">User guide</span></a></label>
+  
+  <ul class="ul-2 foldable">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-2411userguideprojects-li">
+  <input type="checkbox" id="m-2411userguideprojects-check"/>
+  <label for="m-2411userguideprojects-check"><a href="/2.4.11/userguide/projects/" class="align-left ps-0  td-sidebar-link td-sidebar-link__page" id="m-2411userguideprojects"><span class="">Projects</span></a></label>
+  
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child active-path" id="m-2411userguideproviders-li">
+  <input type="checkbox" id="m-2411userguideproviders-check" checked/>
+  <label for="m-2411userguideproviders-check"><a href="/2.4.11/userguide/providers/" class="align-left ps-0  td-sidebar-link td-sidebar-link__section" id="m-2411userguideproviders"><span class="">Provider types</span></a></label>
+  
+  <ul class="ul-3 foldable">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child active-path" id="m-2411userguideprovidersadministration-server-li">
+  <input type="checkbox" id="m-2411userguideprovidersadministration-server-check" checked/>
+  <label for="m-2411userguideprovidersadministration-server-check"><a href="/2.4.11/userguide/providers/administration-server/" class="align-left ps-0  td-sidebar-link td-sidebar-link__section" id="m-2411userguideprovidersadministration-server"><span class="">Administration Servers</span></a></label>
+  
+  <ul class="ul-4 foldable">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child active-path" id="m-2411userguideprovidersadministration-serversecurity-data-li">
+  <input type="checkbox" id="m-2411userguideprovidersadministration-serversecurity-data-check" checked/>
+  <label for="m-2411userguideprovidersadministration-serversecurity-data-check"><a href="/2.4.11/userguide/providers/administration-server/security-data/" class="align-left ps-0  active td-sidebar-link td-sidebar-link__page" id="m-2411userguideprovidersadministration-serversecurity-data"><span class="td-sidebar-nav-active-item">Editing security data</span></a></label>
+  
+</li>
+  </ul>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-2411userguideprovidersproperty-list-li">
+  <input type="checkbox" id="m-2411userguideprovidersproperty-list-check"/>
+  <label for="m-2411userguideprovidersproperty-list-check"><a href="/2.4.11/userguide/providers/property-list/" class="align-left ps-0  td-sidebar-link td-sidebar-link__page" id="m-2411userguideprovidersproperty-list"><span class="">Property lists</span></a></label>
+  
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-2411userguideproviderswdt-model-li">
+  <input type="checkbox" id="m-2411userguideproviderswdt-model-check"/>
+  <label for="m-2411userguideproviderswdt-model-check"><a href="/2.4.11/userguide/providers/wdt-model/" class="align-left ps-0  td-sidebar-link td-sidebar-link__page" id="m-2411userguideproviderswdt-model"><span class="">WDT model files</span></a></label>
+  
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-2411userguideproviderswdt-composite-li">
+  <input type="checkbox" id="m-2411userguideproviderswdt-composite-check"/>
+  <label for="m-2411userguideproviderswdt-composite-check"><a href="/2.4.11/userguide/providers/wdt-composite/" class="align-left ps-0  td-sidebar-link td-sidebar-link__page" id="m-2411userguideproviderswdt-composite"><span class="">WDT composite models</span></a></label>
+  
+</li>
+  </ul>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-2411userguideadvanced-settings-li">
+  <input type="checkbox" id="m-2411userguideadvanced-settings-check"/>
+  <label for="m-2411userguideadvanced-settings-check"><a href="/2.4.11/userguide/advanced-settings/" class="align-left ps-0  td-sidebar-link td-sidebar-link__page" id="m-2411userguideadvanced-settings"><span class="">Customize settings</span></a></label>
+  
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-2411userguidedashboards-li">
+  <input type="checkbox" id="m-2411userguidedashboards-check"/>
+  <label for="m-2411userguidedashboards-check"><a href="/2.4.11/userguide/dashboards/" class="align-left ps-0  td-sidebar-link td-sidebar-link__page" id="m-2411userguidedashboards"><span class="">Generate dashboards</span></a></label>
+  
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-2411userguideupgrade-li">
+  <input type="checkbox" id="m-2411userguideupgrade-check"/>
+  <label for="m-2411userguideupgrade-check"><a href="/2.4.11/userguide/upgrade/" class="align-left ps-0  td-sidebar-link td-sidebar-link__page" id="m-2411userguideupgrade"><span class="">Upgrade the WebLogic Remote Console</span></a></label>
+  
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-2411userguidelogging-li">
+  <input type="checkbox" id="m-2411userguidelogging-check"/>
+  <label for="m-2411userguidelogging-check"><a href="/2.4.11/userguide/logging/" class="align-left ps-0  td-sidebar-link td-sidebar-link__page" id="m-2411userguidelogging"><span class="">Check log files</span></a></label>
+  
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-2411userguiderole-access-li">
+  <input type="checkbox" id="m-2411userguiderole-access-check"/>
+  <label for="m-2411userguiderole-access-check"><a href="/2.4.11/userguide/role-access/" class="align-left ps-0  td-sidebar-link td-sidebar-link__page" id="m-2411userguiderole-access"><span class="">Understand access discrepancies</span></a></label>
+  
+</li>
+  </ul>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-2411develop-li">
+  <input type="checkbox" id="m-2411develop-check"/>
+  <label for="m-2411develop-check"><a href="/2.4.11/develop/" class="align-left ps-0  td-sidebar-link td-sidebar-link__section" id="m-2411develop"><span class="">Development</span></a></label>
+  
+  <ul class="ul-2 foldable">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-2411developbuild-source-li">
+  <input type="checkbox" id="m-2411developbuild-source-check"/>
+  <label for="m-2411developbuild-source-check"><a href="/2.4.11/develop/build-source/" class="align-left ps-0  td-sidebar-link td-sidebar-link__page" id="m-2411developbuild-source"><span class="">Build from source</span></a></label>
+  
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-2411developcontribute-li">
+  <input type="checkbox" id="m-2411developcontribute-check"/>
+  <label for="m-2411developcontribute-check"><a href="/2.4.11/develop/contribute/" class="align-left ps-0  td-sidebar-link td-sidebar-link__page" id="m-2411developcontribute"><span class="">Contribute to WebLogic Remote Console</span></a></label>
+  
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-2411developdocs-contribute-li">
+  <input type="checkbox" id="m-2411developdocs-contribute-check"/>
+  <label for="m-2411developdocs-contribute-check"><a href="/2.4.11/develop/docs-contribute/" class="align-left ps-0  td-sidebar-link td-sidebar-link__page" id="m-2411developdocs-contribute"><span class="">Contribute to the documentation</span></a></label>
+  
+</li>
+  </ul>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-2411reference-li">
+  <input type="checkbox" id="m-2411reference-check"/>
+  <label for="m-2411reference-check"><a href="/2.4.11/reference/" class="align-left ps-0  td-sidebar-link td-sidebar-link__section" id="m-2411reference"><span class="">Reference</span></a></label>
+  
+  <ul class="ul-2 foldable">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-2411referencefaqs-li">
+  <input type="checkbox" id="m-2411referencefaqs-check"/>
+  <label for="m-2411referencefaqs-check"><a href="/2.4.11/reference/faqs/" class="align-left ps-0  td-sidebar-link td-sidebar-link__page" id="m-2411referencefaqs"><span class="">Frequently asked questions</span></a></label>
+  
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-2411referenceknown_issues-li">
+  <input type="checkbox" id="m-2411referenceknown_issues-check"/>
+  <label for="m-2411referenceknown_issues-check"><a href="/2.4.11/reference/known_issues/" class="align-left ps-0  td-sidebar-link td-sidebar-link__page" id="m-2411referenceknown_issues"><span class="">Known issues</span></a></label>
+  
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-2411referencetroubleshoot-li">
+  <input type="checkbox" id="m-2411referencetroubleshoot-check"/>
+  <label for="m-2411referencetroubleshoot-check"><a href="/2.4.11/reference/troubleshoot/" class="align-left ps-0  td-sidebar-link td-sidebar-link__page" id="m-2411referencetroubleshoot"><span class="">Troubleshoot issues</span></a></label>
+  
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-2411referencesecurity-warnings-li">
+  <input type="checkbox" id="m-2411referencesecurity-warnings-check"/>
+  <label for="m-2411referencesecurity-warnings-check"><a href="/2.4.11/reference/security-warnings/" class="align-left ps-0  td-sidebar-link td-sidebar-link__page" id="m-2411referencesecurity-warnings"><span class="">Review security issues</span></a></label>
+  
+</li>
+  </ul>
+</li>
+  </ul>
+</li>
+    </ul>
+  </nav>
 </div>
 
-<script type="text/javascript" src="/weblogic-remote-console/2.4.11/js/lunr.min.js?1739383893"></script>
-<script type="text/javascript" src="/weblogic-remote-console/2.4.11/js/auto-complete.js?1739383893"></script>
-<script type="text/javascript">
-    
-        var baseurl = "https:\/\/oracle.github.io\/weblogic-remote-console\/2.4.11\/";
-    
-</script>
-<script type="text/javascript" src="/weblogic-remote-console/2.4.11/js/search.js?1739383893"></script>
+          </aside>
+          <aside class="d-none d-xl-block col-xl-2 td-sidebar-toc d-print-none">
+            <div class="td-page-meta ms-2 pb-1 pt-2 mb-0">
 
-    
-  </div>
+</div>
 
-    <div class="highlightable">
-    <ul class="topics">
-      
-        
-          
-          
-
-
-
-
- 
-  
-    
-    <li data-nav-id="/weblogic-remote-console/2.4.11/setup/" title="Get started" class="dd-item
-        
-        
-        
-        ">
-      <a href="/weblogic-remote-console/2.4.11/setup/">
-          Get started
-          
-      </a>
-      
-      
-        <ul>
-          
-          
-          
-
-        
-          
-            
-            
-
-
-
-
- 
-  
-    
-      <li data-nav-id="/weblogic-remote-console/2.4.11/setup/console/" title="Explore the WebLogic Remote Console" class="dd-item ">
-        <a href="/weblogic-remote-console/2.4.11/setup/console/">
-        Explore the WebLogic Remote Console
-        
-        </a>
-    </li>
-     
-  
- 
-
-            
-          
-            
-            
-
-
-
-
- 
-  
-    
-      <li data-nav-id="/weblogic-remote-console/2.4.11/setup/admin-console-diff/" title="Differences with the Administration Console" class="dd-item ">
-        <a href="/weblogic-remote-console/2.4.11/setup/admin-console-diff/">
-        Differences with the Administration Console
-        
-        </a>
-    </li>
-     
-  
- 
-
-            
-          
-        
-        </ul>
-      
-    </li>
-  
- 
-
-          
-          
-
-
-
-
- 
-  
-    
-    <li data-nav-id="/weblogic-remote-console/2.4.11/userguide/" title="User guide" class="dd-item
-        parent
-        
-        
-        ">
-      <a href="/weblogic-remote-console/2.4.11/userguide/">
-          User guide
-          
-      </a>
-      
-      
-        <ul>
-          
-          
-            
-          
-          
-
-        
-          
-            
-            
-
-
-
-
- 
-  
-    
-      <li data-nav-id="/weblogic-remote-console/2.4.11/userguide/projects/" title="Projects" class="dd-item ">
-        <a href="/weblogic-remote-console/2.4.11/userguide/projects/">
-        Projects
-        
-        </a>
-    </li>
-     
-  
- 
-
-            
-          
-            
-            
-
-
-
-
- 
-  
-    
-    <li data-nav-id="/weblogic-remote-console/2.4.11/userguide/providers/" title="Provider types" class="dd-item
-        parent
-        
-        
-        ">
-      <a href="/weblogic-remote-console/2.4.11/userguide/providers/">
-          Provider types
-          
-      </a>
-      
-      
-        <ul>
-          
-          
-            
-          
-          
-
-        
-          
-            
-            
-
-
-
-
- 
-  
-    
-    <li data-nav-id="/weblogic-remote-console/2.4.11/userguide/providers/administration-server/" title="Administration Servers" class="dd-item
-        parent
-        
-        
-        ">
-      <a href="/weblogic-remote-console/2.4.11/userguide/providers/administration-server/">
-          Administration Servers
-          
-      </a>
-      
-      
-        <ul>
-          
-          
-          
-
-        
-          
-            
-            
-
-
-
-
- 
-  
-    
-      <li data-nav-id="/weblogic-remote-console/2.4.11/userguide/providers/administration-server/security-data/" title="Editing security data" class="dd-item active">
-        <a href="/weblogic-remote-console/2.4.11/userguide/providers/administration-server/security-data/">
-        Editing security data
-        
-        </a>
-    </li>
-     
-  
- 
-
-            
-          
-        
-        </ul>
-      
-    </li>
-  
- 
-
-            
-          
-            
-            
-
-
-
-
- 
-  
-    
-      <li data-nav-id="/weblogic-remote-console/2.4.11/userguide/providers/property-list/" title="Property lists" class="dd-item ">
-        <a href="/weblogic-remote-console/2.4.11/userguide/providers/property-list/">
-        Property lists
-        
-        </a>
-    </li>
-     
-  
- 
-
-            
-          
-            
-            
-
-
-
-
- 
-  
-    
-      <li data-nav-id="/weblogic-remote-console/2.4.11/userguide/providers/wdt-model/" title="WDT model files" class="dd-item ">
-        <a href="/weblogic-remote-console/2.4.11/userguide/providers/wdt-model/">
-        WDT model files
-        
-        </a>
-    </li>
-     
-  
- 
-
-            
-          
-            
-            
-
-
-
-
- 
-  
-    
-      <li data-nav-id="/weblogic-remote-console/2.4.11/userguide/providers/wdt-composite/" title="WDT composite models" class="dd-item ">
-        <a href="/weblogic-remote-console/2.4.11/userguide/providers/wdt-composite/">
-        WDT composite models
-        
-        </a>
-    </li>
-     
-  
- 
-
-            
-          
-        
-        </ul>
-      
-    </li>
-  
- 
-
-            
-          
-            
-            
-
-
-
-
- 
-  
-    
-      <li data-nav-id="/weblogic-remote-console/2.4.11/userguide/dashboards/" title="Generate dashboards" class="dd-item ">
-        <a href="/weblogic-remote-console/2.4.11/userguide/dashboards/">
-        Generate dashboards
-        
-        </a>
-    </li>
-     
-  
- 
-
-            
-          
-            
-            
-
-
-
-
- 
-  
-    
-      <li data-nav-id="/weblogic-remote-console/2.4.11/userguide/advanced-settings/" title="Customize settings" class="dd-item ">
-        <a href="/weblogic-remote-console/2.4.11/userguide/advanced-settings/">
-        Customize settings
-        
-        </a>
-    </li>
-     
-  
- 
-
-            
-          
-            
-            
-
-
-
-
- 
-  
-    
-      <li data-nav-id="/weblogic-remote-console/2.4.11/userguide/upgrade/" title="Upgrade the WebLogic Remote Console" class="dd-item ">
-        <a href="/weblogic-remote-console/2.4.11/userguide/upgrade/">
-        Upgrade the WebLogic Remote Console
-        
-        </a>
-    </li>
-     
-  
- 
-
-            
-          
-            
-            
-
-
-
-
- 
-  
-    
-      <li data-nav-id="/weblogic-remote-console/2.4.11/userguide/logging/" title="Check log files" class="dd-item ">
-        <a href="/weblogic-remote-console/2.4.11/userguide/logging/">
-        Check log files
-        
-        </a>
-    </li>
-     
-  
- 
-
-            
-          
-            
-            
-
-
-
-
- 
-  
-    
-      <li data-nav-id="/weblogic-remote-console/2.4.11/userguide/role-access/" title="Understand access discrepancies" class="dd-item ">
-        <a href="/weblogic-remote-console/2.4.11/userguide/role-access/">
-        Understand access discrepancies
-        
-        </a>
-    </li>
-     
-  
- 
-
-            
-          
-        
-        </ul>
-      
-    </li>
-  
- 
-
-          
-          
-
-
-
-
- 
-  
-    
-    <li data-nav-id="/weblogic-remote-console/2.4.11/develop/" title="Development" class="dd-item
-        
-        
-        
-        ">
-      <a href="/weblogic-remote-console/2.4.11/develop/">
-          Development
-          
-      </a>
-      
-      
-        <ul>
-          
-          
-          
-
-        
-          
-            
-            
-
-
-
-
- 
-  
-    
-      <li data-nav-id="/weblogic-remote-console/2.4.11/develop/build-source/" title="Build from source" class="dd-item ">
-        <a href="/weblogic-remote-console/2.4.11/develop/build-source/">
-        Build from source
-        
-        </a>
-    </li>
-     
-  
- 
-
-            
-          
-            
-            
-
-
-
-
- 
-  
-    
-      <li data-nav-id="/weblogic-remote-console/2.4.11/develop/contribute/" title="Contribute to WebLogic Remote Console" class="dd-item ">
-        <a href="/weblogic-remote-console/2.4.11/develop/contribute/">
-        Contribute to WebLogic Remote Console
-        
-        </a>
-    </li>
-     
-  
- 
-
-            
-          
-            
-            
-
-
-
-
- 
-  
-    
-      <li data-nav-id="/weblogic-remote-console/2.4.11/develop/docs-contribute/" title="Contribute to the documentation" class="dd-item ">
-        <a href="/weblogic-remote-console/2.4.11/develop/docs-contribute/">
-        Contribute to the documentation
-        
-        </a>
-    </li>
-     
-  
- 
-
-            
-          
-        
-        </ul>
-      
-    </li>
-  
- 
-
-          
-          
-
-
-
-
- 
-  
-    
-    <li data-nav-id="/weblogic-remote-console/2.4.11/reference/" title="Reference" class="dd-item
-        
-        
-        
-        ">
-      <a href="/weblogic-remote-console/2.4.11/reference/">
-          Reference
-          
-      </a>
-      
-      
-        <ul>
-          
-          
-          
-
-        
-          
-            
-            
-
-
-
-
- 
-  
-    
-      <li data-nav-id="/weblogic-remote-console/2.4.11/reference/faqs/" title="Frequently asked questions" class="dd-item ">
-        <a href="/weblogic-remote-console/2.4.11/reference/faqs/">
-        Frequently asked questions
-        
-        </a>
-    </li>
-     
-  
- 
-
-            
-          
-            
-            
-
-
-
-
- 
-  
-    
-      <li data-nav-id="/weblogic-remote-console/2.4.11/reference/known_issues/" title="Known issues" class="dd-item ">
-        <a href="/weblogic-remote-console/2.4.11/reference/known_issues/">
-        Known issues
-        
-        </a>
-    </li>
-     
-  
- 
-
-            
-          
-            
-            
-
-
-
-
- 
-  
-    
-      <li data-nav-id="/weblogic-remote-console/2.4.11/reference/troubleshoot/" title="Troubleshoot issues" class="dd-item ">
-        <a href="/weblogic-remote-console/2.4.11/reference/troubleshoot/">
-        Troubleshoot issues
-        
-        </a>
-    </li>
-     
-  
- 
-
-            
-          
-            
-            
-
-
-
-
- 
-  
-    
-      <li data-nav-id="/weblogic-remote-console/2.4.11/reference/security-warnings/" title="Review security issues" class="dd-item ">
-        <a href="/weblogic-remote-console/2.4.11/reference/security-warnings/">
-        Review security issues
-        
-        </a>
-    </li>
-     
-  
- 
-
-            
-          
-        
-        </ul>
-      
-    </li>
-  
- 
-
-          
-        
-      
-    </ul>
-
-    
-    
-
-    
-    <section id="footer">
-      <p>Created with <i class="fas fa-heart"></i> from <a href="https://www.oracle.com">Oracle</a></p>
-<p>&nbsp</p>
-<table border="1" bgcolor="white"><tbody><tr><td align="center"><p style="color: red">
-    You are viewing the archived documentation for version 2.4.11.
-    To view the documentation for the current release, please
-    <a href="https://oracle.github.io/weblogic-remote-console/">click here</a>
-</p></td></tr></tbody></table>
-<p>&nbsp</p>
-<p><a href="https://github.com/oracle/weblogic-remote-console"><i class="fab fa-github"></i> GitHub repo</a></p>
-<p><a href="https://join.slack.com/t/oracle-weblogic/shared_invite/zt-1ni1gtjv6-PGC6CQ4uIte3KBdm_67~aQ"><i class="fab fa-slack"></i> Public Slack #remote-console</a></p>
-
-    </section>
-  </div>
-</nav>
-
-
-
-
-        <section id="body">
-        <div id="overlay"></div>
-        <div class="padding highlightable">
-              
-              <div>
-                <div id="top-bar">
-                
-                
-                <div id="breadcrumbs" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
-                    <span id="sidebar-toggle-span">
-                        <a href="#" id="sidebar-toggle" data-sidebar-toggle="">
-                          <i class="fas fa-bars"></i>
-                        </a>
-                    </span>
-                  
-                  <span id="toc-menu"><i class="fas fa-list-alt"></i></span>
-                  
-                  <span class="links">
-                 
-                 
-                    
-          
-          
-            
-            
-          
-          
-            
-            
-          
-          
-            
-            
-          
-          
-            
-            
-          
-          
-            <a href='/weblogic-remote-console/2.4.11/'>WebLogic Remote Console</a> > <a href='/weblogic-remote-console/2.4.11/userguide/'>User guide</a> > <a href='/weblogic-remote-console/2.4.11/userguide/providers/'>Provider types</a> > <a href='/weblogic-remote-console/2.4.11/userguide/providers/administration-server/'>Administration Servers</a> > Editing security data
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-                 
-                  </span>
-                </div>
-                
-                    <div class="progress">
-    <div class="wrapper">
-<nav id="TableOfContents">
+            <div class="td-toc">
+        <nav id="TableOfContents">
   <ul>
     <li><a href="#user_groups">Managing users and groups</a>
       <ul>
@@ -802,33 +338,55 @@
     </li>
   </ul>
 </nav>
-    </div>
-</div>
-
-                
-              </div>
-            </div>
+      </div>
+    
             
-        <div id="head-tags">
-        
-        </div>
-        
-        <div id="body-inner">
-          
-            <h1>
-              
-              Editing security data
-            </h1>
-          
 
-        
+          </aside>
+          <main class="col-12 col-md-9 col-xl-8 ps-md-5" role="main">
+            
+  
+  
+  
+  
+  <div class="pageinfo pageinfo-warning">
+    <p>You are viewing documentation for an older release of WebLogic Remote Console. Read the  
+        <a href="/weblogic-remote-console/overview" target="_blank">latest documentation</a> instead.</p>
+        <p>Stay up-to-date with the newest features and fixes. Download the latest release of WebLogic Remote Console from <a href="https://github.com/oracle/weblogic-remote-console/releases" target="_blank">WebLogic Remote Console - Releases</a></p>
+      
+    
+  </div>
+
+            <nav aria-label="breadcrumb" class="td-breadcrumbs">
+  <ol class="breadcrumb">
+  <li class="breadcrumb-item">
+    <a href="/2.4.11/">WebLogic Remote Console</a></li>
+  <li class="breadcrumb-item">
+    <a href="/2.4.11/userguide/">User guide</a></li>
+  <li class="breadcrumb-item">
+    <a href="/2.4.11/userguide/providers/">Provider types</a></li>
+  <li class="breadcrumb-item">
+    <a href="/2.4.11/userguide/providers/administration-server/">Administration Servers</a></li>
+  <li class="breadcrumb-item active" aria-current="page">
+    Editing security data</li>
+  </ol>
+</nav>
+            
+<div class="td-content">
+	<h1>Editing security data</h1>
+	
+	<header class="article-meta">
+		
+</header>
+	<p>You can manage security data and supported security providers for your domain in the Security Data tree perspective.</p>
 
 
-<p>You can manage security data and supported security providers for your domain in the Security Data tree perspective.</p>
+<div class="alert alert-primary" role="alert">
+<h4 class="alert-heading">Note</h4>
 
-<div class="notices note" ><p>You must be logged in as a user with the Admin role and have the WebLogic Remote Console extension installed to access this perspective. See <a href="/weblogic-remote-console/2.4.11/setup/#install">Install the WebLogic Remote Console</a> for instructions.</p>
+    You must be logged in as a user with the Admin role and have the WebLogic Remote Console extension installed to access this perspective. See <a href="../../../../setup#install">Install the WebLogic Remote Console</a> for instructions.
+
 </div>
-
 <p>Any changes you make within the Security Data perspective are immediate - you don&rsquo;t need to commit or restart the server to apply your changes.</p>
 <h2 id="user_groups">Managing users and groups</h2>
 <p>You can easily manage the WebLogic Server users and groups that are configured as part of the default authentication provider (WebLogic Authentication Provider) within a security realm. Only the default authentication provider is supported. If you&rsquo;re not using the default authentication provider, you&rsquo;ll need to manage its users and groups through its own external tools.</p>
@@ -867,13 +425,13 @@
 <h3 id="delete-users">Delete users</h3>
 <ol>
 <li>In the Security Data Tree perspective, go to Realms &gt; <em>realmName</em> &gt; Authentication Providers &gt; <em>providerName</em> &gt; Users.</li>
-<li>Beside the user that you want to delete, click the trash icon <img src="/weblogic-remote-console/images/icons/data-providers-delete-icon-brn_24x24.png" alt="Settings icon">.</li>
+<li>Beside the user that you want to delete, click the trash icon <img src="/weblogic-remote-console/images/ui-icons/delete-icon-blk_24x24.png" alt="Trash icon">.</li>
 </ol>
 <h3 id="delete-groups">Delete groups</h3>
 <p>Deleting a group will not delete the users within that group.</p>
 <ol>
 <li>In the Security Data Tree perspective, go to Realms &gt; <em>realmName</em> &gt; Authentication Providers &gt; <em>providerName</em> &gt; Groups.</li>
-<li>Beside the group that you want to delete, click the trash icon <img src="/weblogic-remote-console/images/icons/data-providers-delete-icon-brn_24x24.png" alt="Settings icon">.</li>
+<li>Beside the group that you want to delete, click the trash icon <img src="/weblogic-remote-console/images/ui-icons/delete-icon-blk_24x24.png" alt="Trash icon">.</li>
 </ol>
 <h2 id="managing-security-policies-and-roles">Managing Security Policies and Roles</h2>
 <p>Use security policies to manage who can access a resource in a WebLogic Server domain.</p>
@@ -882,7 +440,7 @@
 <p>For most types of WebLogic resources, you can use the WebLogic Remote Console to define the security policies and roles that restrict access. However, for Web application and EJB resources, you can also use deployment descriptors.</p>
 <p>The general process to secure a WebLogic resource is:</p>
 <ol>
-<li>Create <a href="#user_groups">users and groups</a></li>
+<li>Create <a href="/2.4.11/userguide/providers/administration-server/security-data/#user_groups">users and groups</a></li>
 <li><strong>Optional</strong>: Manage default security roles or create new ones. We recommend that you use roles to secure WebLogic resources (instead of users or groups) to increase efficiency for administrators who work with many users. You can use the default roles that WebLogic Server provides or create your own.</li>
 <li>Create and apply security policies.</li>
 </ol>
@@ -903,7 +461,7 @@
 <li>Enter a name for the new global role and click <strong>Create</strong>.</li>
 <li>Click <strong>Save</strong>.</li>
 </ol>
-<p>After the role is created, you can build a policy that uses conditions to determine which users or groups it encompasses. We recommend that whenever possible you use the Group condition which grants the security role to all members of the specified group. See <a href="#edit-policy">Edit a policy</a> for more details on how you can edit conditions.</p>
+<p>After the role is created, you can build a policy that uses conditions to determine which users or groups it encompasses. We recommend that whenever possible you use the Group condition which grants the security role to all members of the specified group. See <a href="/2.4.11/userguide/providers/administration-server/security-data/#edit-policy">Edit a policy</a> for more details on how you can edit conditions.</p>
 <p>For a description of conditions in the Predicate List, see <a href="https://docs.oracle.com/en/middleware/standalone/weblogic-server/14.1.1.0/roles/secroles.html#GUID-06D3F08F-5A98-4649-A3F4-5D08B76C72CD">Security Role Conditions</a></p>
 <h4 id="create-scoped-roles">Create scoped roles</h4>
 <p>Scoped roles can only be used with policies that apply to specific resources.</p>
@@ -914,7 +472,7 @@
 <li>Click <strong>New</strong>.</li>
 <li>Enter a name for the new scoped role and click <strong>Create</strong>.</li>
 </ol>
-<p>After the role is created, you can build a policy that uses conditions to determine which users or groups it encompasses. We recommend that whenever possible you use the Group condition which grants the security role to all members of a specified group. See <a href="#edit-policy">Edit a policy</a> for more details on how you can edit conditions.</p>
+<p>After the role is created, you can build a policy that uses conditions to determine which users or groups it encompasses. We recommend that whenever possible you use the Group condition which grants the security role to all members of a specified group. See <a href="/2.4.11/userguide/providers/administration-server/security-data/#edit-policy">Edit a policy</a> for more details on how you can edit conditions.</p>
 <p>For a description of conditions in the Predicate List, see <a href="https://docs.oracle.com/en/middleware/standalone/weblogic-server/14.1.1.0/roles/secroles.html#GUID-06D3F08F-5A98-4649-A3F4-5D08B76C72CD">Security Role Conditions</a></p>
 <h3 id="sec_policies">Security policies</h3>
 <p>A security policy specifies the conditions that users, groups, or roles must meet to access a resource. Policies must have one or more conditions and you can combine conditions to create complex policies for more dynamic access control.</p>
@@ -952,7 +510,11 @@ You can only edit the arguments of the condition. If you want to use a different
 <p>By default, a new condition is added as a simple condition at the top of the list of conditions. To insert a new condition elsewhere, select an existing condition and then click Add Condition. You&rsquo;ll get a dropdown list with options to add the new condition either above or below the selected condition. The order of conditions is not meaningful to how the policy is interpreted.</p>
 <p>A policy can contain multiple simple or compound conditions or a mix of simple and compound conditions. You can also nest compound conditions.</p>
 
-<div class="notices tip" ><p>Why should you use compound conditions? Consider this scenario: a resource exists where you want Administrators to always have access, but Deployers to only have access between 9 am and 5 pm. The following policy would address both requirements.</p>
+
+<div class="alert alert-info" role="alert">
+<h4 class="alert-heading">Tip</h4>
+
+    <p>Why should you use compound conditions? Consider this scenario: a resource exists where you want Administrators to always have access, but Deployers to only have access between 9 am and 5 pm. The following policy would address both requirements.</p>
 <ul>
 <li>
 <p>Condition 1 (simple): Role: Admin</p>
@@ -964,42 +526,43 @@ You can only edit the arguments of the condition. If you want to use a different
 <p>Condition 2 (compound): Role: Deployer <strong>AND</strong> access occurs between 09:00:00 and 17:00:00 GMT -7:00</p>
 </li>
 </ul>
-</div>
 
+
+</div>
 <p>Use the actions on the Policy page to edit a policy.</p>
 <table>
-<thead>
-<tr>
-<th>Action</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Add Condition</td>
-<td>Adds a new condition to the policy. You can choose to add the new condition above or below another condition.</td>
-</tr>
-<tr>
-<td>Combine</td>
-<td>When multiple conditions are selected, you can combine them to create a compound condition.</td>
-</tr>
-<tr>
-<td>Uncombine</td>
-<td>When a compound condition is selected, you can break it into independent conditions.</td>
-</tr>
-<tr>
-<td>Remove</td>
-<td>Deletes a simple or compound condition from the policy. When there are no conditions in a policy, the default policy will apply.</td>
-</tr>
-<tr>
-<td>Negate</td>
-<td>Reverses the meaning of a condition. The criteria to access a resource becomes the opposite of the original condition.</td>
-</tr>
-<tr>
-<td>Reset</td>
-<td>Reverts the policy to its last <em>saved</em> change, not the last change. It&rsquo;s recommended that you save your policy frequently or you may unintentionally lose several changes using the Reset action.</td>
-</tr>
-</tbody>
+  <thead>
+      <tr>
+          <th>Action</th>
+          <th>Description</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Add Condition</td>
+          <td>Adds a new condition to the policy. You can choose to add the new condition above or below another condition.</td>
+      </tr>
+      <tr>
+          <td>Combine</td>
+          <td>When multiple conditions are selected, you can combine them to create a compound condition.</td>
+      </tr>
+      <tr>
+          <td>Uncombine</td>
+          <td>When a compound condition is selected, you can break it into independent conditions.</td>
+      </tr>
+      <tr>
+          <td>Remove</td>
+          <td>Deletes a simple or compound condition from the policy. When there are no conditions in a policy, the default policy will apply.</td>
+      </tr>
+      <tr>
+          <td>Negate</td>
+          <td>Reverses the meaning of a condition. The criteria to access a resource becomes the opposite of the original condition.</td>
+      </tr>
+      <tr>
+          <td>Reset</td>
+          <td>Reverts the policy to its last <em>saved</em> change, not the last change. It&rsquo;s recommended that you save your policy frequently or you may unintentionally lose several changes using the Reset action.</td>
+      </tr>
+  </tbody>
 </table>
 <p>You can also edit a policy from its <strong>Advanced</strong> tab where the policy is expressed as string. Any changes made to a policy in the Advanced tab are reflected in the main Policy tab, and vice versa.</p>
 <h4 id="delete-a-policy">Delete a policy</h4>
@@ -1023,14 +586,14 @@ You can only edit the arguments of the condition. If you want to use a different
 <ul>
 <li>App Deployments
 <ul>
-<li><a href="#ejbs">EJBs</a></li>
-<li><a href="#jdbc-apps">JDBC applications</a></li>
-<li><a href="#jdbc-modules">JDBC modules</a></li>
-<li><a href="#resource-adapters">Resource adapters</a></li>
+<li><a href="/2.4.11/userguide/providers/administration-server/security-data/#ejbs">EJBs</a></li>
+<li><a href="/2.4.11/userguide/providers/administration-server/security-data/#jdbc-apps">JDBC applications</a></li>
+<li><a href="/2.4.11/userguide/providers/administration-server/security-data/#jdbc-modules">JDBC modules</a></li>
+<li><a href="/2.4.11/userguide/providers/administration-server/security-data/#resource-adapters">Resource adapters</a></li>
 </ul>
 </li>
-<li><a href="#data-sources">Data Sources</a></li>
-<li><a href="#remote-resources">Remote Resources</a></li>
+<li><a href="/2.4.11/userguide/providers/administration-server/security-data/#data-sources">Data Sources</a></li>
+<li><a href="/2.4.11/userguide/providers/administration-server/security-data/#remote-resources">Remote Resources</a></li>
 </ul>
 <h3 id="ejbs">App Deployments: EJBs</h3>
 <h4 id="identify-an-ejb-component">Identify an EJB Component</h4>
@@ -1043,16 +606,16 @@ You can only edit the arguments of the condition. If you want to use a different
 <li>Click <strong>Create</strong>.</li>
 </ol>
 <p>A reference to the EJB component is added under the EJBs node. The name of the EJB component is generated by the properties of the application and those you set when adding the EJB component.</p>
-<p>For information on how to manage the credential mappings, see <a href="#credential-mappings">Credential Mappings</a>.</p>
+<p>For information on how to manage the credential mappings, see <a href="/2.4.11/userguide/providers/administration-server/security-data/#credential-mappings">Credential Mappings</a>.</p>
 <h4 id="remove-a-reference-to-an-ejb-component">Remove a reference to an EJB Component</h4>
 <p>You cannot delete a reference to an EJB component with multiple credential mappings. To delete an EJB component reference, you must delete all of the credential mappings first - which will then delete the EJB component reference automatically - or delete all but one of the credential mappings and then follow these steps:</p>
 <ol>
 <li>In the Security Data Tree perspective, go to Credential Mappers &gt; <em>credentialMapperName</em> &gt; App Deployments &gt; <em>applicationName</em> &gt; EJBs.</li>
-<li>Beside the EJB component that you want to delete, click the trash icon <img src="/weblogic-remote-console/images/icons/data-providers-delete-icon-brn_24x24.png" alt="Settings icon">.</li>
+<li>Beside the EJB component that you want to delete, click the trash icon <img src="/weblogic-remote-console/images/ui-icons/delete-icon-blk_24x24.png" alt="Trash icon">.</li>
 </ol>
 <h3 id="jdbc-apps">App Deployments: JDBC Application</h3>
 <p>You can only add credential mappings for JDBC applications, not manage the JDBC applications themselves.</p>
-<p>For information on how to manage the credential mappings, see <a href="#credential-mappings">Credential Mappings</a>.</p>
+<p>For information on how to manage the credential mappings, see <a href="/2.4.11/userguide/providers/administration-server/security-data/#credential-mappings">Credential Mappings</a>.</p>
 <h3 id="jdbc-modules">App Deployments: JDBC Modules</h3>
 <h4 id="identify-a-jdbc-module">Identify a JDBC Module</h4>
 <p>The first time you add a reference to a JDBC module, you&rsquo;ll also create a credential mapping for that JDBC module.</p>
@@ -1063,12 +626,12 @@ You can only edit the arguments of the condition. If you want to use a different
 <li>Fill in the fields as required.</li>
 <li>Click <strong>Create</strong>.</li>
 </ol>
-<p>For information on how to manage the credential mappings, see <a href="#credential-mappings">Credential Mappings</a>.</p>
+<p>For information on how to manage the credential mappings, see <a href="/2.4.11/userguide/providers/administration-server/security-data/#credential-mappings">Credential Mappings</a>.</p>
 <h4 id="remove-a-reference-to-a-jdbc-module">Remove a reference to a JDBC Module</h4>
 <p>You cannot delete a reference to a JDBC module with multiple credential mappings. To delete a JDBC module reference, you must delete all of the credential mappings first - which will then delete the JDBC module reference automatically - or delete all but one of the credential mappings and then follow these steps:</p>
 <ol>
 <li>In the Security Data Tree perspective, go to Credential Mappers &gt; <em>credentialMapperName</em> &gt; App Deployments &gt; <em>applicationName</em> &gt; JDBC Module.</li>
-<li>Beside the JDBC module that you want to delete, click the trash icon <img src="/weblogic-remote-console/images/icons/data-providers-delete-icon-brn_24x24.png" alt="Settings icon">.</li>
+<li>Beside the JDBC module that you want to delete, click the trash icon <img src="/weblogic-remote-console/images/ui-icons/delete-icon-blk_24x24.png" alt="Trash icon">.</li>
 </ol>
 <h3 id="resource-adapters">App Deployments: Resource Adapters</h3>
 <h4 id="identify-a-resource-adapter">Identify a Resource Adapter</h4>
@@ -1081,23 +644,27 @@ You can only edit the arguments of the condition. If you want to use a different
 <li>Click <strong>Create</strong>.</li>
 </ol>
 <p>A reference to a resource adapter is added under the Remote Adapters node. The name of the resource adapter is generated by combining its property values.</p>
-<p>For information on how to manage the credential mappings, see <a href="#credential-mappings">Credential Mappings</a>.</p>
+<p>For information on how to manage the credential mappings, see <a href="/2.4.11/userguide/providers/administration-server/security-data/#credential-mappings">Credential Mappings</a>.</p>
 <h4 id="remove-a-reference-to-resource-adapter">Remove a reference to Resource Adapter</h4>
 <p>You cannot delete a reference to a resource adapter with multiple credential mappings. To delete a resource adapter reference, you must delete all of the credential mappings first - which will then delete the resource adapter reference automatically - or delete all but one of the credential mappings and then follow these steps:</p>
 <ol>
 <li>In the Security Data Tree perspective, go to Credential Mappers &gt; <em>credentialMapperName</em> &gt; App Deployments &gt; <em>applicationName</em> &gt; Resource Adapter.</li>
-<li>Beside the Resource Adapter that you want to delete, click the trash icon <img src="/weblogic-remote-console/images/icons/data-providers-delete-icon-brn_24x24.png" alt="Settings icon">.</li>
+<li>Beside the Resource Adapter that you want to delete, click the trash icon <img src="/weblogic-remote-console/images/ui-icons/delete-icon-blk_24x24.png" alt="Trash icon">.</li>
 </ol>
 <h3 id="data-sources">Data Sources</h3>
 <p>You can only add credential mappings for data sources, not manage the data sources themselves. You can manage data sources in the Edit tree perspective.</p>
-<p>For information on how to manage the credential mappings, see <a href="#credential-mappings">Credential Mappings</a>.</p>
+<p>For information on how to manage the credential mappings, see <a href="/2.4.11/userguide/providers/administration-server/security-data/#credential-mappings">Credential Mappings</a>.</p>
 <h3 id="remote-resources">Remote Resources</h3>
 <h4 id="identify-a-remote-resource">Identify a remote resource</h4>
 <p>The first time you add a reference to a remote resource, you&rsquo;ll also create a credential mapping for that remote resource.</p>
 
-<div class="notices note" ><p>If you add a remote resource with the cross-domain protocol enabled, it will create a WebLogic Server user named cross-domain. Only the cross-domain user can be used to create credential mappings. While the WebLogic Remote Console will let you add other WebLogic Server users and credential mappings within the remote resource, the mappings will not work and will not provide access to the remote resource.</p>
-</div>
 
+<div class="alert alert-primary" role="alert">
+<h4 class="alert-heading">Note</h4>
+
+    If you add a remote resource with the cross-domain protocol enabled, it will create a WebLogic Server user named cross-domain. Only the cross-domain user can be used to create credential mappings. While the WebLogic Remote Console will let you add other WebLogic Server users and credential mappings within the remote resource, the mappings will not work and will not provide access to the remote resource.
+
+</div>
 <ol>
 <li>In the Security Data Tree perspective, expand Realms.</li>
 <li>Select the Security Realm where you want to add a credential mapping. Navigate down to Credential Mappers &gt; <em>credentialMapperName</em> &gt; Remote Resources.</li>
@@ -1106,12 +673,12 @@ You can only edit the arguments of the condition. If you want to use a different
 <li>Click <strong>Create</strong>.</li>
 </ol>
 <p>A reference to a remote resource is added under the remote resources node. The name of the remote resource is generated by combining its property values.</p>
-<p>For information on how to manage the credential mappings, see <a href="#credential-mappings">Credential Mappings</a>.</p>
+<p>For information on how to manage the credential mappings, see <a href="/2.4.11/userguide/providers/administration-server/security-data/#credential-mappings">Credential Mappings</a>.</p>
 <h4 id="remove-a-reference-to-a-remote-resource">Remove a reference to a remote resource</h4>
 <p>You cannot delete a reference to a remote resource with multiple credential mappings. To delete a remote resource reference, you must delete all of the credential mappings first - which will then delete the remote resource reference automatically - or delete all but one of the credential mappings and then follow these steps:</p>
 <ol>
 <li>In the Security Data Tree perspective, go to Realms &gt; <em>realmName</em> &gt; Credential Mappers &gt; <em>credentialMapperName</em> &gt; Remote Resources.</li>
-<li>Beside the remote resource that you want to delete, click the trash icon <img src="/weblogic-remote-console/images/icons/data-providers-delete-icon-brn_24x24.png" alt="Settings icon">.</li>
+<li>Beside the remote resource that you want to delete, click the trash icon <img src="/weblogic-remote-console/images/ui-icons/delete-icon-blk_24x24.png" alt="Trash icon">.</li>
 </ol>
 <h3 id="credential-mappings">Credential mappings</h3>
 <h4 id="add-a-credential-mapping">Add a credential mapping</h4>
@@ -1135,7 +702,7 @@ You can only edit the arguments of the condition. If you want to use a different
 <p>When you delete a credential mapping, the remote user that the WebLogic resource was previously associated with is also deleted if it was the only credential mapping using that remote user.</p>
 <ol>
 <li>In the Security Data Tree perspective, go to Realms &gt; <em>realmName</em> &gt; Credential Mappers &gt; <em>credentialMapperName</em> &gt; <em>wlResourceType</em> &gt; <em>wlResourceName</em> &gt; Credential Mappings.</li>
-<li>Beside the credential mapping that you want to delete, click the trash icon <img src="/weblogic-remote-console/images/icons/data-providers-delete-icon-brn_24x24.png" alt="Settings icon">.</li>
+<li>Beside the credential mapping that you want to delete, click the trash icon <img src="/weblogic-remote-console/images/ui-icons/delete-icon-blk_24x24.png" alt="Trash icon">.</li>
 </ol>
 <h3 id="credentials">Credentials</h3>
 <h4 id="add-a-credential">Add a credential</h4>
@@ -1164,504 +731,41 @@ Removing a credential from the WebLogic Remote Console will not affect the user 
 <li>You&rsquo;ll need to either map the current credential mapping to a different credential or delete all of the credential mappings using that credential:
 <ul>
 <li>Select any relevant mappings and update the Remote User field to a new remote user.</li>
-<li>Beside any credential mappings that you want to delete, click the trash icon <img src="/weblogic-remote-console/images/icons/data-providers-delete-icon-brn_24x24.png" alt="Settings icon">. Once all credential mappings associated with the credential are deleted, the credential itself will also be automatically deleted and you can skip the rest of the steps.</li>
+<li>Beside any credential mappings that you want to delete, click the trash icon <img src="/weblogic-remote-console/images/ui-icons/delete-icon-blk_24x24.png" alt="Trash icon">. Once all credential mappings associated with the credential are deleted, the credential itself will also be automatically deleted and you can skip the rest of the steps.</li>
 </ul>
 </li>
 <li>Under the same WebLogic resource, expand the Credentials node.</li>
-<li>Beside the credential that you want to delete, click the trash icon <img src="/weblogic-remote-console/images/icons/data-providers-delete-icon-brn_24x24.png" alt="Settings icon">.</li>
+<li>Beside the credential that you want to delete, click the trash icon <img src="/weblogic-remote-console/images/ui-icons/delete-icon-blk_24x24.png" alt="Trash icon">.</li>
 <li>Click <strong>Save</strong>.</li>
 </ol>
 
-
-<footer class="footline">
 	
+</div>
+
+
+          </main>
+        </div>
+      </div>
+      <footer class="td-footer row d-print-none">
+  <div class="container-fluid">
+    <div class="row mx-md-2">
+      <div class="td-footer__left col-6 col-sm-4 order-sm-1">
+        
+      </div><div class="td-footer__right col-6 col-sm-4 order-sm-3">
+        
+      </div><div class="td-footer__center col-12 col-sm-4 py-2 order-sm-2">
+        <span class="td-footer__copyright">&copy;
+    2020&ndash;2025
+    <span class="td-footer__authors">Oracle | <a href="https://github.com/oracle/weblogic-remote-console/blob/main/LICENSE.txt">UPL 1.0</a></span></span><span class="td-footer__all_rights_reserved">All Rights Reserved</span>
+      </div>
+    </div>
+  </div>
 </footer>
 
-        
-        </div>
-        
-
-      </div>
-
-    <div id="navigation">
-        
-        
-
-        
-            
-            
-                
-                    
-                    
-                
-                
-
-                    
-                    
-                        
-                    
-                    
-
-                    
-                        
-            
-            
-                
-                    
-                        
-                        
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-            
-        
-                    
-                        
-            
-            
-                
-                    
-                    
-                
-                
-
-                    
-                    
-                        
-                    
-                    
-
-                    
-                        
-            
-            
-                
-                    
-                        
-                        
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-                        
-            
-            
-                
-                    
-                    
-                
-                
-
-                    
-                    
-                        
-                    
-                    
-
-                    
-                        
-            
-            
-                
-                    
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-                        
-            
-            
-                
-                    
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-            
-        
-                    
-                        
-            
-            
-                
-                    
-                        
-                        
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-            
-        
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-            
-        
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-            
-        
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-            
-        
-                    
-            
-        
-
-        
-
-
-	 
-	 
-		
-			<a class="nav nav-prev" href="/weblogic-remote-console/2.4.11/userguide/providers/administration-server/" title="Administration Servers"> <i class="fa fa-chevron-left"></i></a>
-		
-		
-			<a class="nav nav-next" href="/weblogic-remote-console/2.4.11/userguide/providers/property-list/" title="Property lists" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
-		
-	
     </div>
-
-    </section>
-
-    <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
-      <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
-    </div>
-    <script src="/weblogic-remote-console/2.4.11/js/clipboard.min.js?1739383893"></script>
-    <script src="/weblogic-remote-console/2.4.11/js/perfect-scrollbar.min.js?1739383893"></script>
-    <script src="/weblogic-remote-console/2.4.11/js/perfect-scrollbar.jquery.min.js?1739383893"></script>
-    <script src="/weblogic-remote-console/2.4.11/js/jquery.sticky.js?1739383893"></script>
-    <script src="/weblogic-remote-console/2.4.11/js/featherlight.min.js?1739383893"></script>
-    <script src="/weblogic-remote-console/2.4.11/js/highlight.pack.js?1739383893"></script>
-    <script>hljs.initHighlightingOnLoad();</script>
-    <script src="/weblogic-remote-console/2.4.11/js/modernizr.custom-3.6.0.js?1739383893"></script>
-    <script src="/weblogic-remote-console/2.4.11/js/learn.js?1739383893"></script>
-    <script src="/weblogic-remote-console/2.4.11/js/hugo-learn.js?1739383893"></script>
-    
-        
-            <script src="/weblogic-remote-console/2.4.11/mermaid/mermaid.js?1739383893"></script>
-        
-        <script>
-            mermaid.initialize({ startOnLoad: true });
-        </script>
-    
-    
+    <script src="/js/main.min.90902a026ed2aee7ed45d85797f4c790b240ba148ac6f8a6f194cb1981ffecf5.js" integrity="sha256-kJAqAm7SruftRdhXl/THkLJAuhSKxvim8ZTLGYH/7PU=" crossorigin="anonymous"></script>
+<script defer src="/js/click-to-copy.min.73478a7d4807698aed7e355eb23f9890ca18fea3158604c8471746d046702bad.js" integrity="sha256-c0eKfUgHaYrtfjVesj&#43;YkMoY/qMVhgTIRxdG0EZwK60=" crossorigin="anonymous"></script>
+<script src='/js/tabpane-persist.js'></script>
 
   </body>
 </html>
-

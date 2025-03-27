@@ -1,623 +1,275 @@
-<!DOCTYPE html>
-<html lang="en" class="js csstransforms3d">
+<!doctype html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="en" class="no-js">
   <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="generator" content="Hugo 0.123.7">
-    <meta name="description" content="">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel="alternate" type="application/rss&#43;xml" href="/2.4.13/administration-server/securing-domains/index.xml">
+<meta name="robots" content="index, follow">
 
 
-    <link rel="icon" href="/weblogic-remote-console/2.4.13/images/logo.png" type="image/png">
+<link rel="shortcut icon" href="/favicons/favicon.ico" >
+<link rel="apple-touch-icon" href="/favicons/apple-touch-icon-180x180.png" sizes="180x180">
+<link rel="icon" type="image/png" href="/favicons/favicon-16x16.png" sizes="16x16">
+<link rel="icon" type="image/png" href="/favicons/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="/favicons/android-36x36.png" sizes="36x36">
+<link rel="icon" type="image/png" href="/favicons/android-48x48.png" sizes="48x48">
+<link rel="icon" type="image/png" href="/favicons/android-72x72.png" sizes="72x72">
+<link rel="icon" type="image/png" href="/favicons/android-96x96.png" sizes="96x96">
+<link rel="icon" type="image/png" href="/favicons/android-144x144.png" sizes="144x144">
+<link rel="icon" type="image/png" href="/favicons/android-192x192.png" sizes="192x192">
 
-    <title>Securing Domains :: WebLogic Remote Console</title>
+<title>Securing Domains | WebLogic Remote Console</title>
+<meta name="description" content="WebLogic Server offers a robust set of security tools to protect your WebLogic Server environment from unauthorized access. Use WebLogic Remote Console to secure your system.
+For general information on security concepts in WebLogic Server, see:
+Understanding Security for Oracle WebLogic Server Administering Security for Oracle WebLogic Server Securing Resources Using Roles and Policies for Oracle WebLogic Server Securing a Production Environment for Oracle WebLogic Server Address Potential Security Issues WebLogic Server regularly checks your domain to ensure it complies with its recommended security policies. If a domain does not meet the recommendations, a security warning is logged and displayed in WebLogic Remote Console.">
+<meta property="og:url" content="/2.4.13/administration-server/securing-domains/">
+  <meta property="og:site_name" content="WebLogic Remote Console">
+  <meta property="og:title" content="Securing Domains">
+  <meta property="og:description" content="WebLogic Server offers a robust set of security tools to protect your WebLogic Server environment from unauthorized access. Use WebLogic Remote Console to secure your system.
+For general information on security concepts in WebLogic Server, see:
+Understanding Security for Oracle WebLogic Server Administering Security for Oracle WebLogic Server Securing Resources Using Roles and Policies for Oracle WebLogic Server Securing a Production Environment for Oracle WebLogic Server Address Potential Security Issues WebLogic Server regularly checks your domain to ensure it complies with its recommended security policies. If a domain does not meet the recommendations, a security warning is logged and displayed in WebLogic Remote Console.">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="website">
 
-    
-    <link href="/weblogic-remote-console/2.4.13/css/nucleus.css?1739383893" rel="stylesheet">
-    <link href="/weblogic-remote-console/2.4.13/css/fontawesome-all.min.css?1739383893" rel="stylesheet">
-    <link href="/weblogic-remote-console/2.4.13/css/hybrid.css?1739383893" rel="stylesheet">
-    <link href="/weblogic-remote-console/2.4.13/css/featherlight.min.css?1739383893" rel="stylesheet">
-    <link href="/weblogic-remote-console/2.4.13/css/perfect-scrollbar.min.css?1739383893" rel="stylesheet">
-    <link href="/weblogic-remote-console/2.4.13/css/auto-complete.css?1739383893" rel="stylesheet">
-    <link href="/weblogic-remote-console/2.4.13/css/atom-one-dark-reasonable.css?1739383893" rel="stylesheet">
-    <link href="/weblogic-remote-console/2.4.13/css/theme.css?1739383893" rel="stylesheet">
-    <link href="/weblogic-remote-console/2.4.13/css/tabs.css?1739383893" rel="stylesheet">
-    <link href="/weblogic-remote-console/2.4.13/css/hugo-theme.css?1739383893" rel="stylesheet">
-    
-    
+  <meta itemprop="name" content="Securing Domains">
+  <meta itemprop="description" content="WebLogic Server offers a robust set of security tools to protect your WebLogic Server environment from unauthorized access. Use WebLogic Remote Console to secure your system.
+For general information on security concepts in WebLogic Server, see:
+Understanding Security for Oracle WebLogic Server Administering Security for Oracle WebLogic Server Securing Resources Using Roles and Policies for Oracle WebLogic Server Securing a Production Environment for Oracle WebLogic Server Address Potential Security Issues WebLogic Server regularly checks your domain to ensure it complies with its recommended security policies. If a domain does not meet the recommendations, a security warning is logged and displayed in WebLogic Remote Console.">
+  <meta itemprop="wordCount" content="13221">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Securing Domains">
+  <meta name="twitter:description" content="WebLogic Server offers a robust set of security tools to protect your WebLogic Server environment from unauthorized access. Use WebLogic Remote Console to secure your system.
+For general information on security concepts in WebLogic Server, see:
+Understanding Security for Oracle WebLogic Server Administering Security for Oracle WebLogic Server Securing Resources Using Roles and Policies for Oracle WebLogic Server Securing a Production Environment for Oracle WebLogic Server Address Potential Security Issues WebLogic Server regularly checks your domain to ensure it complies with its recommended security policies. If a domain does not meet the recommendations, a security warning is logged and displayed in WebLogic Remote Console.">
+<link rel="preload" href="/scss/main.min.48c25d0a5a23a1e8cae94d6c5e7622061e5345cf098171b1d6ee41d8e309e6c8.css" as="style" integrity="sha256-SMJdClojoejK6U1sXnYiBh5TRc8JgXGx1u5B2OMJ5sg=" crossorigin="anonymous">
+<link href="/scss/main.min.48c25d0a5a23a1e8cae94d6c5e7622061e5345cf098171b1d6ee41d8e309e6c8.css" rel="stylesheet" integrity="sha256-SMJdClojoejK6U1sXnYiBh5TRc8JgXGx1u5B2OMJ5sg=" crossorigin="anonymous">
+<script
+  src="https://code.jquery.com/jquery-3.7.1.min.js"
+  integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+  crossorigin="anonymous"></script>
+<script defer
+  src="https://unpkg.com/lunr@2.3.9/lunr.min.js"
+  integrity="sha384-203J0SNzyqHby3iU6hzvzltrWi/M41wOP5Gu+BiJMz5nwKykbkUx8Kp7iti0Lpli"
+  crossorigin="anonymous"></script>
 
-    <script src="/weblogic-remote-console/2.4.13/js/jquery-3.6.0.min.js?1739383893"></script>
-
-    <style>
-      :root #header + #content > #left > #rlblock_left{
-          display:none !important;
-      }
-      
-        :not(pre) > code + span.copy-to-clipboard {
-            display: none;
-        }
-      
-    </style>
-    
   </head>
-  <body class="" data-url="/weblogic-remote-console/2.4.13/administration-server/securing-domains/">
-    <nav id="sidebar" class="">
+  <body class="td-section">
+    <header>
+      <nav class="td-navbar js-navbar-scroll" data-bs-theme="dark">
+<div class="container-fluid flex-column flex-md-row">
+  <a class="navbar-brand" href="/"><span class="navbar-brand__logo navbar-logo"></span><span class="navbar-brand__name">WebLogic Remote Console</span></a>
+  <div class="td-navbar-nav-scroll ms-md-auto" id="main_navbar">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" href="/overview"><span>Documentation</span></a>
+      </li>
+      <li class="nav-item dropdown d-none d-lg-block">
+        <div class="dropdown">
+  <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Releases</a>
+  <ul class="dropdown-menu">
+    <li><a class="dropdown-item" href="/weblogic-remote-console/overview">Latest (v2.4.16)</a></li>
+    <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.15">v2.4.15</a></li>
+    <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.14">v2.4.14</a></li>
+    <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.13">v2.4.13</a></li>
+    <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.12">v2.4.12</a></li>
+    <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.11">v2.4.11</a></li>
+    </ul>
+</div></li>
+      <li class="td-light-dark-menu nav-item dropdown">
+        <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
+  <symbol id="check2" viewBox="0 0 16 16">
+    <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/>
+  </symbol>
+  <symbol id="circle-half" viewBox="0 0 16 16">
+    <path d="M8 15A7 7 0 1 0 8 1v14zm0 1A8 8 0 1 1 8 0a8 8 0 0 1 0 16z"/>
+  </symbol>
+  <symbol id="moon-stars-fill" viewBox="0 0 16 16">
+    <path d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z"/>
+    <path d="M10.794 3.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387a1.734 1.734 0 0 0-1.097 1.097l-.387 1.162a.217.217 0 0 1-.412 0l-.387-1.162A1.734 1.734 0 0 0 9.31 6.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387a1.734 1.734 0 0 0 1.097-1.097l.387-1.162zM13.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.156 1.156 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.156 1.156 0 0 0-.732-.732l-.774-.258a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732L13.863.1z"/>
+  </symbol>
+  <symbol id="sun-fill" viewBox="0 0 16 16">
+    <path d="M8 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13zm8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5zM3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8zm10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0zm-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708z"/>
+  </symbol>
+</svg>
 
+<button class="btn btn-link nav-link dropdown-toggle d-flex align-items-center"
+        id="bd-theme"
+        type="button"
+        aria-expanded="false"
+        data-bs-toggle="dropdown"
+        data-bs-display="static"
+        aria-label="Toggle theme (auto)">
+  <svg class="bi my-1 theme-icon-active"><use href="#circle-half"></use></svg>
+</button>
+<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="bd-theme-text">
+  <li>
+    <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="light" aria-pressed="false">
+      <svg class="bi me-2 opacity-50"><use href="#sun-fill"></use></svg>
+      Light
+      <svg class="bi ms-auto d-none"><use href="#check2"></use></svg>
+    </button>
+  </li>
+  <li>
+    <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="dark" aria-pressed="false">
+      <svg class="bi me-2 opacity-50"><use href="#moon-stars-fill"></use></svg>
+      Dark
+      <svg class="bi ms-auto d-none"><use href="#check2"></use></svg>
+    </button>
+  </li>
+  <li>
+    <button type="button" class="dropdown-item d-flex align-items-center active" data-bs-theme-value="auto" aria-pressed="true">
+      <svg class="bi me-2 opacity-50"><use href="#circle-half"></use></svg>
+      Auto
+      <svg class="bi ms-auto d-none"><use href="#check2"></use></svg>
+    </button>
+  </li>
+</ul>
 
-
-  <div id="header-wrapper">
-    <div id="header">
-      <a id="logo" href="https://oracle.github.io/weblogic-remote-console/2.4.13/">
-  <img src="https://oracle.github.io/weblogic-remote-console/2.4.13//images/logo.png" height="60"><br/>
-  WebLogic Remote Console
-</a>
-
-    </div>
+      </li>
+      </ul>
+  </div>
+  <div class="d-none d-lg-block">
+    <div class="td-search td-search--offline">
+  <div class="td-search__icon"></div>
+  <input
+    type="search"
+    class="td-search__input form-control"
+    placeholder="Search this site…"
+    aria-label="Search this site…"
+    autocomplete="off"
     
-        <div class="searchbox">
-    <label for="search-by"><i class="fas fa-search"></i></label>
-    <input data-search-input id="search-by" type="search" placeholder="Search...">
-    <span data-search-clear=""><i class="fas fa-times"></i></span>
+    data-offline-search-index-json-src="/offline-search-index.f951367ede6ec8211f5538ed03e68743.json"
+    data-offline-search-base-href="/"
+    data-offline-search-max-results="10"
+  >
+</div>
+  </div>
+</div>
+</nav>
+    </header>
+    <div class="container-fluid td-outer">
+      <div class="td-main">
+        <div class="row flex-xl-nowrap">
+          <aside class="col-12 col-md-3 col-xl-2 td-sidebar d-print-none">
+            <div id="td-sidebar-menu" class="td-sidebar__inner">
+  <div id="content-mobile">
+  <form class="td-sidebar__search d-flex align-items-center">
+    <div class="td-search td-search--offline">
+  <div class="td-search__icon"></div>
+  <input
+    type="search"
+    class="td-search__input form-control"
+    placeholder="Search this site…"
+    aria-label="Search this site…"
+    autocomplete="off"
+    
+    data-offline-search-index-json-src="/offline-search-index.f951367ede6ec8211f5538ed03e68743.json"
+    data-offline-search-base-href="/"
+    data-offline-search-max-results="10"
+  >
+</div>
+    <button class="btn btn-link td-sidebar__toggle d-md-none p-0 ms-3 fas fa-bars" type="button" data-bs-toggle="collapse" data-bs-target="#td-section-nav" aria-controls="td-section-nav" aria-expanded="false" aria-label="Toggle section navigation">
+    </button>
+  </form>
+  </div>
+  <div id="content-desktop"></div>
+  <nav class="td-sidebar-nav collapse td-sidebar-nav--search-disabled foldable-nav" id="td-section-nav">
+    <ul class="td-sidebar-nav__section pe-md-3 ul-0">
+      <li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child active-path" id="m-2413-li">
+  <a href="/2.4.13/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section tree-root" id="m-2413"><span class="">About WebLogic Remote Console</span></a>
+  <ul class="ul-1">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-2413set-console-li">
+  <input type="checkbox" id="m-2413set-console-check"/>
+  <label for="m-2413set-console-check"><a href="/2.4.13/set-console/" class="align-left ps-0  td-sidebar-link td-sidebar-link__section" id="m-2413set-console"><span class="">Get Started</span></a></label>
+  
+  <ul class="ul-2 foldable">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-2413set-consoleget-know-console-li">
+  <input type="checkbox" id="m-2413set-consoleget-know-console-check"/>
+  <label for="m-2413set-consoleget-know-console-check"><a href="/2.4.13/set-console/get-know-console/" class="align-left ps-0  td-sidebar-link td-sidebar-link__section" id="m-2413set-consoleget-know-console"><span class="">Get to Know the Console</span></a></label>
+  
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-2413set-consolecontribute-wrc-repository-li">
+  <input type="checkbox" id="m-2413set-consolecontribute-wrc-repository-check"/>
+  <label for="m-2413set-consolecontribute-wrc-repository-check"><a href="/2.4.13/set-console/contribute-wrc-repository/" class="align-left ps-0  td-sidebar-link td-sidebar-link__section" id="m-2413set-consolecontribute-wrc-repository"><span class="">Contribute to WebLogic Remote Console</span></a></label>
+  
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-2413set-consolesupport-information-li">
+  <input type="checkbox" id="m-2413set-consolesupport-information-check"/>
+  <label for="m-2413set-consolesupport-information-check"><a href="/2.4.13/set-console/support-information/" class="align-left ps-0  td-sidebar-link td-sidebar-link__section" id="m-2413set-consolesupport-information"><span class="">Support Information</span></a></label>
+  
+</li>
+  </ul>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child active-path" id="m-2413administration-server-li">
+  <input type="checkbox" id="m-2413administration-server-check" checked/>
+  <label for="m-2413administration-server-check"><a href="/2.4.13/administration-server/" class="align-left ps-0  td-sidebar-link td-sidebar-link__section" id="m-2413administration-server"><span class="">Administration Server</span></a></label>
+  
+  <ul class="ul-2 foldable">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-2413administration-serverdomain-configuration-li">
+  <input type="checkbox" id="m-2413administration-serverdomain-configuration-check"/>
+  <label for="m-2413administration-serverdomain-configuration-check"><a href="/2.4.13/administration-server/domain-configuration/" class="align-left ps-0  td-sidebar-link td-sidebar-link__section" id="m-2413administration-serverdomain-configuration"><span class="">Domain Configuration</span></a></label>
+  
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child active-path" id="m-2413administration-serversecuring-domains-li">
+  <input type="checkbox" id="m-2413administration-serversecuring-domains-check" checked/>
+  <label for="m-2413administration-serversecuring-domains-check"><a href="/2.4.13/administration-server/securing-domains/" class="align-left ps-0  active td-sidebar-link td-sidebar-link__section" id="m-2413administration-serversecuring-domains"><span class="td-sidebar-nav-active-item">Securing Domains</span></a></label>
+  
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-2413administration-serverdeploying-applications-li">
+  <input type="checkbox" id="m-2413administration-serverdeploying-applications-check"/>
+  <label for="m-2413administration-serverdeploying-applications-check"><a href="/2.4.13/administration-server/deploying-applications/" class="align-left ps-0  td-sidebar-link td-sidebar-link__section" id="m-2413administration-serverdeploying-applications"><span class="">Deploying Applications</span></a></label>
+  
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-2413administration-servermonitoring-domains-li">
+  <input type="checkbox" id="m-2413administration-servermonitoring-domains-check"/>
+  <label for="m-2413administration-servermonitoring-domains-check"><a href="/2.4.13/administration-server/monitoring-domains/" class="align-left ps-0  td-sidebar-link td-sidebar-link__section" id="m-2413administration-servermonitoring-domains"><span class="">Monitoring Domains</span></a></label>
+  
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-2413administration-serverconfiguring-services-li">
+  <input type="checkbox" id="m-2413administration-serverconfiguring-services-check"/>
+  <label for="m-2413administration-serverconfiguring-services-check"><a href="/2.4.13/administration-server/configuring-services/" class="align-left ps-0  td-sidebar-link td-sidebar-link__section" id="m-2413administration-serverconfiguring-services"><span class="">Configuring Services</span></a></label>
+  
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-2413administration-serverconfiguring-coherence-li">
+  <input type="checkbox" id="m-2413administration-serverconfiguring-coherence-check"/>
+  <label for="m-2413administration-serverconfiguring-coherence-check"><a href="/2.4.13/administration-server/configuring-coherence/" class="align-left ps-0  td-sidebar-link td-sidebar-link__section" id="m-2413administration-serverconfiguring-coherence"><span class="">Configuring Coherence</span></a></label>
+  
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-2413administration-serverscheduling-work-li">
+  <input type="checkbox" id="m-2413administration-serverscheduling-work-check"/>
+  <label for="m-2413administration-serverscheduling-work-check"><a href="/2.4.13/administration-server/scheduling-work/" class="align-left ps-0  td-sidebar-link td-sidebar-link__section" id="m-2413administration-serverscheduling-work"><span class="">Scheduling Work</span></a></label>
+  
+</li>
+  </ul>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-2413weblogic-deploy-tooling-li">
+  <input type="checkbox" id="m-2413weblogic-deploy-tooling-check"/>
+  <label for="m-2413weblogic-deploy-tooling-check"><a href="/2.4.13/weblogic-deploy-tooling/" class="align-left ps-0  td-sidebar-link td-sidebar-link__section" id="m-2413weblogic-deploy-tooling"><span class="">WebLogic Deploy Tooling</span></a></label>
+  
+  <ul class="ul-2 foldable">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-2413weblogic-deploy-toolingwdt-model-files-li">
+  <input type="checkbox" id="m-2413weblogic-deploy-toolingwdt-model-files-check"/>
+  <label for="m-2413weblogic-deploy-toolingwdt-model-files-check"><a href="/2.4.13/weblogic-deploy-tooling/wdt-model-files/" class="align-left ps-0  td-sidebar-link td-sidebar-link__section" id="m-2413weblogic-deploy-toolingwdt-model-files"><span class="">WDT Model Files</span></a></label>
+  
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-2413weblogic-deploy-toolingwdt-composites-li">
+  <input type="checkbox" id="m-2413weblogic-deploy-toolingwdt-composites-check"/>
+  <label for="m-2413weblogic-deploy-toolingwdt-composites-check"><a href="/2.4.13/weblogic-deploy-tooling/wdt-composites/" class="align-left ps-0  td-sidebar-link td-sidebar-link__section" id="m-2413weblogic-deploy-toolingwdt-composites"><span class="">WDT Composite Models</span></a></label>
+  
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-2413weblogic-deploy-toolingproperty-lists-li">
+  <input type="checkbox" id="m-2413weblogic-deploy-toolingproperty-lists-check"/>
+  <label for="m-2413weblogic-deploy-toolingproperty-lists-check"><a href="/2.4.13/weblogic-deploy-tooling/property-lists/" class="align-left ps-0  td-sidebar-link td-sidebar-link__section" id="m-2413weblogic-deploy-toolingproperty-lists"><span class="">Property Lists</span></a></label>
+  
+</li>
+  </ul>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-2413troubleshoot-weblogic-remote-console-li">
+  <input type="checkbox" id="m-2413troubleshoot-weblogic-remote-console-check"/>
+  <label for="m-2413troubleshoot-weblogic-remote-console-check"><a href="/2.4.13/troubleshoot-weblogic-remote-console/" class="align-left ps-0  td-sidebar-link td-sidebar-link__section" id="m-2413troubleshoot-weblogic-remote-console"><span class="">Troubleshoot Issues with WebLogic Remote Console</span></a></label>
+  
+</li>
+  </ul>
+</li>
+    </ul>
+  </nav>
 </div>
 
-<script type="text/javascript" src="/weblogic-remote-console/2.4.13/js/lunr.min.js?1739383893"></script>
-<script type="text/javascript" src="/weblogic-remote-console/2.4.13/js/auto-complete.js?1739383893"></script>
-<script type="text/javascript">
-    
-        var baseurl = "https:\/\/oracle.github.io\/weblogic-remote-console\/2.4.13\/";
-    
-</script>
-<script type="text/javascript" src="/weblogic-remote-console/2.4.13/js/search.js?1739383893"></script>
+          </aside>
+          <aside class="d-none d-xl-block col-xl-2 td-sidebar-toc d-print-none">
+            <div class="td-page-meta ms-2 pb-1 pt-2 mb-0">
 
-    
-  </div>
+</div>
 
-    <div class="highlightable">
-    <ul class="topics">
-      
-        
-          
-          
-
-
-
-
- 
-  
-    
-    <li data-nav-id="/weblogic-remote-console/2.4.13/set-console/" title="Get Started" class="dd-item
-        
-        
-        
-        ">
-      <a href="/weblogic-remote-console/2.4.13/set-console/">
-          Get Started
-          
-      </a>
-      
-      
-        <ul>
-          
-          
-            
-          
-          
-
-        
-          
-            
-            
-
-
-
-
- 
-  
-    
-    <li data-nav-id="/weblogic-remote-console/2.4.13/set-console/get-know-console/" title="Get to Know the Console" class="dd-item
-        
-        
-        
-        ">
-      <a href="/weblogic-remote-console/2.4.13/set-console/get-know-console/">
-          Get to Know the Console
-          
-      </a>
-      
-      
-    </li>
-  
- 
-
-            
-          
-            
-            
-
-
-
-
- 
-  
-    
-    <li data-nav-id="/weblogic-remote-console/2.4.13/set-console/contribute-wrc-repository/" title="Contribute to WebLogic Remote Console" class="dd-item
-        
-        
-        
-        ">
-      <a href="/weblogic-remote-console/2.4.13/set-console/contribute-wrc-repository/">
-          Contribute to WebLogic Remote Console
-          
-      </a>
-      
-      
-    </li>
-  
- 
-
-            
-          
-            
-            
-
-
-
-
- 
-  
-    
-    <li data-nav-id="/weblogic-remote-console/2.4.13/set-console/support-information/" title="Support Information" class="dd-item
-        
-        
-        
-        ">
-      <a href="/weblogic-remote-console/2.4.13/set-console/support-information/">
-          Support Information
-          
-      </a>
-      
-      
-    </li>
-  
- 
-
-            
-          
-        
-        </ul>
-      
-    </li>
-  
- 
-
-          
-          
-
-
-
-
- 
-  
-    
-    <li data-nav-id="/weblogic-remote-console/2.4.13/administration-server/" title="Administration Server" class="dd-item
-        parent
-        
-        
-        ">
-      <a href="/weblogic-remote-console/2.4.13/administration-server/">
-          Administration Server
-          
-      </a>
-      
-      
-        <ul>
-          
-          
-            
-          
-          
-
-        
-          
-            
-            
-
-
-
-
- 
-  
-    
-    <li data-nav-id="/weblogic-remote-console/2.4.13/administration-server/domain-configuration/" title="Domain Configuration" class="dd-item
-        
-        
-        
-        ">
-      <a href="/weblogic-remote-console/2.4.13/administration-server/domain-configuration/">
-          Domain Configuration
-          
-      </a>
-      
-      
-    </li>
-  
- 
-
-            
-          
-            
-            
-
-
-
-
- 
-  
-    
-    <li data-nav-id="/weblogic-remote-console/2.4.13/administration-server/securing-domains/" title="Securing Domains" class="dd-item
-        
-        active
-        
-        ">
-      <a href="/weblogic-remote-console/2.4.13/administration-server/securing-domains/">
-          Securing Domains
-          
-      </a>
-      
-      
-    </li>
-  
- 
-
-            
-          
-            
-            
-
-
-
-
- 
-  
-    
-    <li data-nav-id="/weblogic-remote-console/2.4.13/administration-server/deploying-applications/" title="Deploying Applications" class="dd-item
-        
-        
-        
-        ">
-      <a href="/weblogic-remote-console/2.4.13/administration-server/deploying-applications/">
-          Deploying Applications
-          
-      </a>
-      
-      
-    </li>
-  
- 
-
-            
-          
-            
-            
-
-
-
-
- 
-  
-    
-    <li data-nav-id="/weblogic-remote-console/2.4.13/administration-server/monitoring-domains/" title="Monitoring Domains" class="dd-item
-        
-        
-        
-        ">
-      <a href="/weblogic-remote-console/2.4.13/administration-server/monitoring-domains/">
-          Monitoring Domains
-          
-      </a>
-      
-      
-    </li>
-  
- 
-
-            
-          
-            
-            
-
-
-
-
- 
-  
-    
-    <li data-nav-id="/weblogic-remote-console/2.4.13/administration-server/configuring-services/" title="Configuring Services" class="dd-item
-        
-        
-        
-        ">
-      <a href="/weblogic-remote-console/2.4.13/administration-server/configuring-services/">
-          Configuring Services
-          
-      </a>
-      
-      
-    </li>
-  
- 
-
-            
-          
-            
-            
-
-
-
-
- 
-  
-    
-    <li data-nav-id="/weblogic-remote-console/2.4.13/administration-server/configuring-coherence/" title="Configuring Coherence" class="dd-item
-        
-        
-        
-        ">
-      <a href="/weblogic-remote-console/2.4.13/administration-server/configuring-coherence/">
-          Configuring Coherence
-          
-      </a>
-      
-      
-    </li>
-  
- 
-
-            
-          
-            
-            
-
-
-
-
- 
-  
-    
-    <li data-nav-id="/weblogic-remote-console/2.4.13/administration-server/scheduling-work/" title="Scheduling Work" class="dd-item
-        
-        
-        
-        ">
-      <a href="/weblogic-remote-console/2.4.13/administration-server/scheduling-work/">
-          Scheduling Work
-          
-      </a>
-      
-      
-    </li>
-  
- 
-
-            
-          
-        
-        </ul>
-      
-    </li>
-  
- 
-
-          
-          
-
-
-
-
- 
-  
-    
-    <li data-nav-id="/weblogic-remote-console/2.4.13/weblogic-deploy-tooling/" title="WebLogic Deploy Tooling" class="dd-item
-        
-        
-        
-        ">
-      <a href="/weblogic-remote-console/2.4.13/weblogic-deploy-tooling/">
-          WebLogic Deploy Tooling
-          
-      </a>
-      
-      
-        <ul>
-          
-          
-            
-          
-          
-
-        
-          
-            
-            
-
-
-
-
- 
-  
-    
-    <li data-nav-id="/weblogic-remote-console/2.4.13/weblogic-deploy-tooling/wdt-model-files/" title="WDT Model Files" class="dd-item
-        
-        
-        
-        ">
-      <a href="/weblogic-remote-console/2.4.13/weblogic-deploy-tooling/wdt-model-files/">
-          WDT Model Files
-          
-      </a>
-      
-      
-    </li>
-  
- 
-
-            
-          
-            
-            
-
-
-
-
- 
-  
-    
-    <li data-nav-id="/weblogic-remote-console/2.4.13/weblogic-deploy-tooling/wdt-composites/" title="WDT Composite Models" class="dd-item
-        
-        
-        
-        ">
-      <a href="/weblogic-remote-console/2.4.13/weblogic-deploy-tooling/wdt-composites/">
-          WDT Composite Models
-          
-      </a>
-      
-      
-    </li>
-  
- 
-
-            
-          
-            
-            
-
-
-
-
- 
-  
-    
-    <li data-nav-id="/weblogic-remote-console/2.4.13/weblogic-deploy-tooling/property-lists/" title="Property Lists" class="dd-item
-        
-        
-        
-        ">
-      <a href="/weblogic-remote-console/2.4.13/weblogic-deploy-tooling/property-lists/">
-          Property Lists
-          
-      </a>
-      
-      
-    </li>
-  
- 
-
-            
-          
-        
-        </ul>
-      
-    </li>
-  
- 
-
-          
-          
-
-
-
-
- 
-  
-    
-    <li data-nav-id="/weblogic-remote-console/2.4.13/troubleshoot-weblogic-remote-console/" title="Troubleshoot Issues with WebLogic Remote Console" class="dd-item
-        
-        
-        
-        ">
-      <a href="/weblogic-remote-console/2.4.13/troubleshoot-weblogic-remote-console/">
-          Troubleshoot Issues with WebLogic Remote Console
-          
-      </a>
-      
-      
-    </li>
-  
- 
-
-          
-        
-      
-    </ul>
-
-    
-    
-
-    
-    <section id="footer">
-      <p>Created with <i class="fas fa-heart"></i> from <a href="https://www.oracle.com">Oracle</a></p>
-<p>&nbsp</p>
-<table border="1" bgcolor="white"><tbody><tr><td align="center"><p style="color: red">
-    You are viewing the archived documentation for version 2.4.13.
-    To view the documentation for the current release, please
-    <a href="https://oracle.github.io/weblogic-remote-console/">click here</a>
-</p></td></tr></tbody></table>
-<p>&nbsp</p>
-<p><a href="https://github.com/oracle/weblogic-remote-console"><i class="fab fa-github"></i> GitHub repo</a></p>
-<p><a href="https://join.slack.com/t/oracle-weblogic/shared_invite/zt-1ni1gtjv6-PGC6CQ4uIte3KBdm_67~aQ"><i class="fab fa-slack"></i> Public Slack #remote-console</a></p>
-
-    </section>
-  </div>
-</nav>
-
-
-
-
-        <section id="body">
-        <div id="overlay"></div>
-        <div class="padding highlightable">
-              
-              <div>
-                <div id="top-bar">
-                
-                
-                <div id="breadcrumbs" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
-                    <span id="sidebar-toggle-span">
-                        <a href="#" id="sidebar-toggle" data-sidebar-toggle="">
-                          <i class="fas fa-bars"></i>
-                        </a>
-                    </span>
-                  
-                  <span id="toc-menu"><i class="fas fa-list-alt"></i></span>
-                  
-                  <span class="links">
-                 
-                 
-                    
-          
-          
-            
-            
-          
-          
-            
-            
-          
-          
-            <a href='/weblogic-remote-console/2.4.13/'>About WebLogic Remote Console</a> > <a href='/weblogic-remote-console/2.4.13/administration-server/'>Administration Server</a> > Securing Domains
-          
-        
-          
-        
-          
-        
-                 
-                  </span>
-                </div>
-                
-                    <div class="progress">
-    <div class="wrapper">
-<nav id="TableOfContents">
+            <div class="td-toc">
+        <nav id="TableOfContents">
   <ul>
     <li><a href="#GUID-5CEC217D-8EDB-4FF8-A258-869C32AEE3A1">Address Potential Security Issues</a>
       <ul>
@@ -696,29 +348,42 @@
     </li>
   </ul>
 </nav>
-    </div>
-</div>
-
-                
-              </div>
-            </div>
+      </div>
+    
             
-        <div id="head-tags">
-        
-        </div>
-        
-        <div id="body-inner">
-          
-            <h1>
-              
-              Securing Domains
-            </h1>
-          
 
-        
+          </aside>
+          <main class="col-12 col-md-9 col-xl-8 ps-md-5" role="main">
+            
+  
+  
+  
+  
+  <div class="pageinfo pageinfo-warning">
+    <p>You are viewing documentation for an older release of WebLogic Remote Console. Read the  
+        <a href="/weblogic-remote-console/overview" target="_blank">latest documentation</a> instead.</p>
+        <p>Stay up-to-date with the newest features and fixes. Download the latest release of WebLogic Remote Console from <a href="https://github.com/oracle/weblogic-remote-console/releases" target="_blank">WebLogic Remote Console - Releases</a></p>
+      
+    
+  </div>
 
-
-
+            <nav aria-label="breadcrumb" class="td-breadcrumbs">
+  <ol class="breadcrumb">
+  <li class="breadcrumb-item">
+    <a href="/2.4.13/">About WebLogic Remote Console</a></li>
+  <li class="breadcrumb-item">
+    <a href="/2.4.13/administration-server/">Administration Server</a></li>
+  <li class="breadcrumb-item active" aria-current="page">
+    Securing Domains</li>
+  </ol>
+</nav>
+            
+<div class="td-content">
+	<h1>Securing Domains</h1>
+  
+	<header class="article-meta">
+		
+</header>
 	<p>WebLogic Server offers a robust set of security tools to protect your WebLogic Server environment from unauthorized access. Use WebLogic Remote Console to secure your system.</p>
 <p>For general information on security concepts in WebLogic Server, see:</p>
 <ul>
@@ -733,7 +398,12 @@
 <p>For more information on the issues that might trigger a security warning, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=LOCKD-GUID-4148D1BE-2D54-4DA5-8E94-A35D48DCEF1D">Review Potential Security Issues</a> in <strong>Securing a Production Environment for Oracle WebLogic Server</strong>.</p>
 <p>Do not rely on the Security Warnings Report alone to determine the security of your domain. While these security configuration settings cover a broad set of potential security issues, other security issues that do not generate warnings may still exist in your domain.</p>
 
-<div class="notices note" ><p>Environments running WebLogic Server 14.1.1.0 and earlier require the July 2021 Patch Set Update (PSU) to see security warnings.</p>
+
+<div class="alert alert-primary" role="alert">
+<h4 class="alert-heading">Note</h4>
+
+    Environments running WebLogic Server 14.1.1.0 and earlier require the July 2021 Patch Set Update (PSU) to see security warnings.
+
 </div>
 <ol>
 <li>
@@ -755,7 +425,12 @@
 <h3 id="GUID-965B4726-4622-454D-8049-C6B37A2EE867">Security Warning Fixes</h3>
 <p>For the latest information on security warnings and their suggested steps for resolution, see the My Oracle Support article, <em>WebLogic Server Security Warnings (Doc ID 2788605.1)</em>.</p>
 
-<div class="notices note" ><p>The same issue may affect multiple servers within your domain simultaneously. As you review the Security Warnings Report, make sure that you fix the issue on every affected server. Depending on the problem and its resolution, you may need to restart servers to update the Security Warnings Report.</p>
+
+<div class="alert alert-primary" role="alert">
+<h4 class="alert-heading">Note</h4>
+
+    The same issue may affect multiple servers within your domain simultaneously. As you review the Security Warnings Report, make sure that you fix the issue on every affected server. Depending on the problem and its resolution, you may need to restart servers to update the Security Warnings Report.
+
 </div>
 <h2 id="GUID-CBC31FBB-68EB-445A-972C-F0F70378AF1A">Security Realms</h2>
 <p>A security realm is a collection of mechanisms designed to protect WebLogic Server resources. Each security realm consists of a set of configured security providers, users, groups, security roles, and security policies. A user must be defined in a security realm in order to access any WebLogic resources belonging to that realm.</p>
@@ -763,7 +438,12 @@
 <p>WebLogic Server provisions each new domain with a security realm with pre-configured security configurations. See <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=SECMG-GUID-24E513F2-913C-4A9E-B840-2EFD75BED3C0">The Default Security Configuration in WebLogic Server</a> in <strong>Administering Security for Oracle WebLogic Server</strong>.</p>
 <p>If the default security configurations do not meet your requirements, you can create a new security realm with custom settings and providers and set it as the default security realm. See <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=SECMG-GUID-B7B5C407-788A-4E0E-B06A-2FF3ABD9EF03">Customizing the Default Security Configuration</a> in <strong>Administering Security for Oracle WebLogic Server</strong>.</p>
 
-<div class="notices note" ><p>You can set WebLogic Server to immediately apply non-dynamic changes to a security realm without restarting WebLogic Server. See <a href="#GUID-65011AC0-166C-414C-8FD5-A085E7599FA7">Enable Automatic Realm Restart</a>.</p>
+
+<div class="alert alert-primary" role="alert">
+<h4 class="alert-heading">Note</h4>
+
+    You can set WebLogic Server to immediately apply non-dynamic changes to a security realm without restarting WebLogic Server. See <a href="/#GUID-65011AC0-166C-414C-8FD5-A085E7599FA7">Enable Automatic Realm Restart</a>.
+
 </div>
 <h3 id="SECTION_HWH_VBM_NCC">Required Security Providers</h3>
 <p>For a security realm to be valid, the following security providers must be configured:</p>
@@ -793,7 +473,12 @@
 <p>Turn on the <strong>Create Default Providers</strong> option if you want WebLogic Server to add the required security providers to the security realm, ensuring that the new security realm is valid.</p>
 <p>You can modify the default providers or replace them with another provider as needed.</p>
 
-<div class="notices note" ><p>If you do not enable <strong>Create Default Providers</strong>, then you must manually configure the required security providers before you can commit the new security realm. For a list of which security providers are required, see <a href="#SECTION_HWH_VBM_NCC">Required Security Providers</a>.</p>
+
+<div class="alert alert-primary" role="alert">
+<h4 class="alert-heading">Note</h4>
+
+    If you do not enable <strong>Create Default Providers</strong>, then you must manually configure the required security providers before you can commit the new security realm. For a list of which security providers are required, see <a href="/#SECTION_HWH_VBM_NCC">Required Security Providers</a>.
+
 </div>
 </li>
 <li>
@@ -803,11 +488,16 @@
 <h3 id="GUID-7E4AA558-1D90-429E-987A-63A90056E708">Change Default Security Realm</h3>
 <p>You can configure WebLogic Server to replace the default security configurations with a custom security realm.</p>
 
-<div class="notices note" ><p>Although you can customize the original default security configuration, Oracle recommends creating an entirely new security realm and making changes to security configurations there, which allows you to easily revert to the original default security configuration if necessary.</p>
+
+<div class="alert alert-primary" role="alert">
+<h4 class="alert-heading">Note</h4>
+
+    Although you can customize the original default security configuration, Oracle recommends creating an entirely new security realm and making changes to security configurations there, which allows you to easily revert to the original default security configuration if necessary.
+
 </div>
 <ol>
 <li>
-<p>If you haven&rsquo;t done so already, create a new security realm. See <a href="#GUID-E197F5AA-FFF5-46B3-A14D-58C5213F9BA1">Create a Security Realm</a>.</p>
+<p>If you haven&rsquo;t done so already, create a new security realm. See <a href="/2.4.13/administration-server/securing-domains/#GUID-E197F5AA-FFF5-46B3-A14D-58C5213F9BA1">Create a Security Realm</a>.</p>
 </li>
 <li>
 <p>In the <strong>Edit Tree</strong>, go to <strong>Environment</strong>, then <strong>Domain</strong>.</p>
@@ -822,13 +512,18 @@
 <p>Click <strong>Save</strong>.</p>
 </li>
 </ol>
-<p>Consider enabling the configuration archive to save previous domain configurations so you can revert to a previous security configuration if necessary. See <a href="../domain-configuration#GUID-6A1B7D7D-174F-417F-907D-900442FF0A87">Back Up Configuration Files</a>.</p>
+<p>Consider enabling the configuration archive to save previous domain configurations so you can revert to a previous security configuration if necessary. See <a href="/2.4.13/administration-server/domain-configuration/#GUID-6A1B7D7D-174F-417F-907D-900442FF0A87">Back Up Configuration Files</a>.</p>
 <h3 id="GUID-252EE9B4-2FF3-4B3C-83D1-61F28B7D0E1A">Revert to a Previous Security Configuration</h3>
 <p>Certain mistakes when configuring a new security realm or security providers can prevent you from booting the server. If this happens, then you can revert the configuration XML files to reinstate a previous realm configuration and recover from the error.</p>
-<p>You can only revert to a previous configuration if configuration archiving is enabled and has been saving previous versions of the configuration. See <a href="../domain-configuration#GUID-6A1B7D7D-174F-417F-907D-900442FF0A87">Back Up Configuration Files</a>.</p>
+<p>You can only revert to a previous configuration if configuration archiving is enabled and has been saving previous versions of the configuration. See <a href="/2.4.13/administration-server/domain-configuration/#GUID-6A1B7D7D-174F-417F-907D-900442FF0A87">Back Up Configuration Files</a>.</p>
 <p>You can also use WLST Offline to correct a mistake that prevents you from booting the server.</p>
 
-<div class="notices note" ><p>This process will only revert your security realm (meaning, the configuration of the realm and its providers), not the users, groups, roles, or security policies used by the realm, which are persisted in a data store and not in the configuration files.</p>
+
+<div class="alert alert-primary" role="alert">
+<h4 class="alert-heading">Note</h4>
+
+    This process will only revert your security realm (meaning, the configuration of the realm and its providers), not the users, groups, roles, or security policies used by the realm, which are persisted in a data store and not in the configuration files.
+
 </div>
 <ol>
 <li>
@@ -902,7 +597,7 @@
 <p>Click <strong>Save</strong>.</p>
 </li>
 </ol>
-<p>We recommend that you configure the Password Validation provider immediately after configuring a new WebLogic domain. The password validation provider, which is included with WebLogic Server, can be configured with several out-of-the-box authentication providers to manage and enforce password composition rules. Whenever a password is created or updated in the security realm, the corresponding authentication provider automatically invokes the password validation provider to ensure that the password meets the established composition requirements. For more information, see <a href="#GUID-0F8BACA8-97AC-427F-8763-19628B13BF8D">Configure the Password Validation Provider</a>.</p>
+<p>We recommend that you configure the Password Validation provider immediately after configuring a new WebLogic domain. The password validation provider, which is included with WebLogic Server, can be configured with several out-of-the-box authentication providers to manage and enforce password composition rules. Whenever a password is created or updated in the security realm, the corresponding authentication provider automatically invokes the password validation provider to ensure that the password meets the established composition requirements. For more information, see <a href="/2.4.13/administration-server/securing-domains/#GUID-0F8BACA8-97AC-427F-8763-19628B13BF8D">Configure the Password Validation Provider</a>.</p>
 <h4 id="GUID-D4C6B9CA-C9B3-4B6A-9175-FC031A45B254">Set the JAAS Control Flag</h4>
 <p>If you have multiple Authentication providers in your domain, use the JAAS control flag to control how each Authentication provider is used in the login sequence.</p>
 <p>For information on how WebLogic Server handles multiple Authentication providers, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=SECMG-GUID-34508D19-FA55-4A84-8A1A-F1FD21428DD8">Using More Than One Authentication Provider</a> in <strong>Administering Security for Oracle WebLogic Server</strong>.</p>
@@ -934,7 +629,12 @@ For information on each value, see <a href="https://docs.oracle.com/pls/topic/lo
 <p>Use Authorization providers to determine who has access to a resource.</p>
 <p>For more information on Authorization providers, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=SECMG-GUID-0738AFBF-0D98-45D7-9473-10D8D2FAE10F">Configuring an Authorization Provider</a> in <strong>Administering Security for Oracle WebLogic Server</strong>.</p>
 
-<div class="notices note" ><p>The WebLogic Authorization provider was deprecated in WebLogic Server 14.1.1.0.0 and will be removed in a future release. The XACML Authorization provider is the default provider.</p>
+
+<div class="alert alert-primary" role="alert">
+<h4 class="alert-heading">Note</h4>
+
+    The WebLogic Authorization provider was deprecated in WebLogic Server 14.1.1.0.0 and will be removed in a future release. The XACML Authorization provider is the default provider.
+
 </div>
 <ol>
 <li>
@@ -992,7 +692,12 @@ For information on each value, see <a href="https://docs.oracle.com/pls/topic/lo
 <p>Role mapping is the process whereby principals (users or groups) are dynamically mapped to security roles at runtime. A Role Mapping provider determines what security roles apply to the principals stored in a subject when the subject is attempting to perform an operation on a WebLogic resource.</p>
 <p>Since these operations usually involve gaining access to a WebLogic resource, Role Mapping providers are typically used with Authorization providers.</p>
 
-<div class="notices note" ><p>The WebLogic Role Mapping provider was deprecated in WebLogic Server 14.1.1.0.0 and will be removed in a future release. The XACML Role Mapping provider is the default provider.</p>
+
+<div class="alert alert-primary" role="alert">
+<h4 class="alert-heading">Note</h4>
+
+    The WebLogic Role Mapping provider was deprecated in WebLogic Server 14.1.1.0.0 and will be removed in a future release. The XACML Role Mapping provider is the default provider.
+
 </div>
 <p>For more information on Role Mapping providers, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=SECMG-GUID-DACD6542-0A06-4730-AAB9-3AA8AC91E08B">Configuring a Role Mapping Provider</a> in <strong>Administering Security for Oracle WebLogic Server</strong>.</p>
 <ol>
@@ -1022,7 +727,7 @@ For information on each value, see <a href="https://docs.oracle.com/pls/topic/lo
 <p>An Auditing provider collects, stores, and distributes information about operating requests and the outcome of those requests for the purposes of non-repudiation.</p>
 <p>You can configure multiple Auditing providers in a security realm, but none are required. The default security realm does not include an Auditing provider.</p>
 <p>WebLogic Auditing provider is the standard Auditing provider for the WebLogic Security Framework. Note that the WebLogic Remote Console refers to the WebLogic Auditing provider as the Default Auditor.</p>
-<p>You can also configure WebLogic Server to audit configuration actions. See <a href="../monitoring-domains#GUID-BB85D9BB-5E36-4067-AA9F-E01EBFF027CD">Enable Configuration Auditing</a>.</p>
+<p>You can also configure WebLogic Server to audit configuration actions. See <a href="/2.4.13/administration-server/monitoring-domains/#GUID-BB85D9BB-5E36-4067-AA9F-E01EBFF027CD">Enable Configuration Auditing</a>.</p>
 <p>For more information on Auditing providers, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=SECMG-GUID-9BF2B900-C8D0-4742-A405-5E155CF4D83F">Configuring the WebLogic Auditing Provider</a>.</p>
 <ol>
 <li>
@@ -1085,13 +790,18 @@ For information on each value, see <a href="https://docs.oracle.com/pls/topic/lo
 <p>The general process is:</p>
 <ol>
 <li>In the Edit Tree, configure an MBean. Commit your changes and then restart the server, if necessary.</li>
-<li>In the Security Data Tree, under Credential Mappers, find the corresponding node for the MBean you configured. You may need to define the properties of the WebLogic resource to identify it, forming a connection between the MBean&rsquo;s configuration data and its security data. See <a href="#GUID-1D5D77AF-5F1A-4AF4-8E97-31E30AF69891">Identify Resources for Credential Mapping</a>.</li>
+<li>In the Security Data Tree, under Credential Mappers, find the corresponding node for the MBean you configured. You may need to define the properties of the WebLogic resource to identify it, forming a connection between the MBean&rsquo;s configuration data and its security data. See <a href="/2.4.13/administration-server/securing-domains/#GUID-1D5D77AF-5F1A-4AF4-8E97-31E30AF69891">Identify Resources for Credential Mapping</a>.</li>
 <li>Create mappings for the WebLogic resource.</li>
 </ol>
 <h4 id="GUID-1D5D77AF-5F1A-4AF4-8E97-31E30AF69891">Identify Resources for Credential Mapping</h4>
 <p>Certain WebLogic resources require that you manually form a connection between its MBean configuration data and its security data.</p>
 
-<div class="notices note" ><p>As part of this process, you will create the first credential mapping for the resource.</p>
+
+<div class="alert alert-primary" role="alert">
+<h4 class="alert-heading">Note</h4>
+
+    As part of this process, you will create the first credential mapping for the resource.
+
 </div>
 <p>You must configure the WebLogic resource before you can add any mappings.</p>
 <ol>
@@ -1128,7 +838,12 @@ You do not need to identify data sources.</li>
 <li>
 <p>Fill in the fields as needed.</p>
 
-<div class="notices note" ><p>If you want to map to a remote user that is already referenced in the remote resource, disable the <strong>Create Credential</strong> option.</p>
+
+<div class="alert alert-primary" role="alert">
+<h4 class="alert-heading">Note</h4>
+
+    If you want to map to a remote user that is already referenced in the remote resource, disable the <strong>Create Credential</strong> option.
+
 </div>
 </li>
 <li>
@@ -1172,7 +887,12 @@ You do not need to identify data sources.</li>
 </ol>
 <p>You can now map a WebLogic user for the WebLogic resource to the new set of credentials.</p>
 
-<div class="notices note" ><p>If the password of the remote user changes, you’ll need to update it in WebLogic Remote Console or the mapping will break and prevent the WebLogic resource from logging into the remote system.</p>
+
+<div class="alert alert-primary" role="alert">
+<h4 class="alert-heading">Note</h4>
+
+    If the password of the remote user changes, you’ll need to update it in WebLogic Remote Console or the mapping will break and prevent the WebLogic resource from logging into the remote system.
+
 </div>
 <h4 id="GUID-D0D0CADB-77E3-4246-A6A9-D9398A98D0BC">Delete a Set of Credentials</h4>
 <p>Each WebLogic resource has its own set of credentials. Removing a set of credential from WebLogic Remote Console will not affect the user in the remote system.</p>
@@ -1240,7 +960,12 @@ You do not need to identify data sources.</li>
 </ul>
 <p>Passwords cannot contain a curly brace <code>{</code> as the first character.</p>
 
-<div class="notices note" ><p>If the Default Authentication provider is configured in the security realm, make sure that the setting for the minimum password length is consistent in both the Default Authentication provider and the Password Validation provider.</p>
+
+<div class="alert alert-primary" role="alert">
+<h4 class="alert-heading">Note</h4>
+
+    If the Default Authentication provider is configured in the security realm, make sure that the setting for the minimum password length is consistent in both the Default Authentication provider and the Password Validation provider.
+
 </div>
 <ol>
 <li>
@@ -1277,7 +1002,11 @@ You do not need to identify data sources.</li>
 <li>
 <p>Add the custom security provider to the domain&rsquo;s security realm using WLST or the WebLogic Server RESTful management interface.</p>
 
-<div class="notices note" ><ul>
+
+<div class="alert alert-primary" role="alert">
+<h4 class="alert-heading">Note</h4>
+
+    <ul>
 <li>
 <p>If you are adding a deployable Authorization provider and the provider does not support parallel security policy, then set the <code>RealmMBean.DeployableProviderSynchronizationEnabled</code> attribute to <code>true</code>. Next, for the <code>RealmMBean.DeployableProviderSynchronizationTimeout</code> attribute, enter a timeout value (in milliseconds) or accept the default value.</p>
 </li>
@@ -1286,6 +1015,8 @@ You do not need to identify data sources.</li>
 </li>
 </ul>
 <p>For more information, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=DEVSP-GUID-EBD9A070-313E-468A-BB03-10B965F20172">Is Your Custom Authorization Provider Thread Safe?</a> or <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=DEVSP-GUID-A4BBD4FC-6721-49CF-8311-ECF7BC276D98">Is Your Custom Role Mapping Provider Thread Safe?</a> in <strong>Developing Security Providers for Oracle WebLogic Server</strong>.</p>
+
+
 </div>
 </li>
 </ol>
@@ -1312,7 +1043,12 @@ You do not need to identify data sources.</li>
 </li>
 </ol>
 
-<div class="notices note" ><p>The WebLogic Security providers store their data in the embedded LDAP server. When you delete a WebLogic Security provider, the security data in the embedded LDAP server is not automatically deleted. The security data remains in the embedded LDAP server in case you want to use the provider again. Use an external LDAP browser to delete the security data from the embedded LDAP server.</p>
+
+<div class="alert alert-primary" role="alert">
+<h4 class="alert-heading">Note</h4>
+
+    The WebLogic Security providers store their data in the embedded LDAP server. When you delete a WebLogic Security provider, the security data in the embedded LDAP server is not automatically deleted. The security data remains in the embedded LDAP server in case you want to use the provider again. Use an external LDAP browser to delete the security data from the embedded LDAP server.
+
 </div>
 <h2 id="GUID-BFD3516F-073A-4AC0-8804-1FEFE6B439E4">Users and Groups</h2>
 <p>WebLogic Server employs users and groups to control access to its resources.</p>
@@ -1434,7 +1170,12 @@ You do not need to identify data sources.</li>
 <h4 id="GUID-1D9925E8-CF23-4D3A-B4FF-61BBD466C454">Create a Global Role</h4>
 <p>Create a new role that applies to all WebLogic resources deployed within a security realm (and thus the entire WebLogic Server domain).</p>
 
-<div class="notices note" ><p>Before creating a new global security role, review the <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=ROLES-GUID-84859935-E7A5-4D3E-8A11-CBF63F93571A">Default Global Roles</a> in <strong>Securing Resources Using Roles and Policies for Oracle WebLogic Server</strong> to assess if an existing role is sufficient for your needs.</p>
+
+<div class="alert alert-primary" role="alert">
+<h4 class="alert-heading">Note</h4>
+
+    Before creating a new global security role, review the <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=ROLES-GUID-84859935-E7A5-4D3E-8A11-CBF63F93571A">Default Global Roles</a> in <strong>Securing Resources Using Roles and Policies for Oracle WebLogic Server</strong> to assess if an existing role is sufficient for your needs.
+
 </div>
 <ol>
 <li>
@@ -1480,7 +1221,12 @@ You do not need to identify data sources.</li>
 <h4 id="GUID-338F66D1-8D4C-40A0-ADF2-B84F4EF99A0B">Building Security Policies</h4>
 <p>You can build and edit a policy by modifying a condition&rsquo;s arguments or by modifying the relationships between conditions in the policy.</p>
 
-<div class="notices note" ><p>You can only edit the arguments of the condition. If you want to use a different predicate for the condition, you must add a new condition.</p>
+
+<div class="alert alert-primary" role="alert">
+<h4 class="alert-heading">Note</h4>
+
+    You can only edit the arguments of the condition. If you want to use a different predicate for the condition, you must add a new condition.
+
 </div>
 <p>Conditions have three different types of relationships: <code>AND</code>, <code>OR</code>, and <code>Combination</code>.</p>
 <ul>
@@ -1491,7 +1237,11 @@ You do not need to identify data sources.</li>
 <p>By default, a new condition is added as a simple condition at the top of the list of conditions. To insert a new condition elsewhere, select an existing condition and then click <strong>Add Condition</strong>. You will get a drop-down list with options to add the new condition either above or below the selected condition. The order of conditions is not meaningful to how the policy is interpreted.</p>
 <p>A policy can contain multiple simple or compound conditions or a mix of simple and compound conditions. You can also nest compound conditions.</p>
 
-<div class="notices note" ><p>Why should you use compound conditions? Consider the following scenario: a resource exists where you want Administrators to always have access, but to restrict Deployer access to between 9 a.m. and 5 p.m EST. The following policy would address both requirements:</p>
+
+<div class="alert alert-primary" role="alert">
+<h4 class="alert-heading">Note</h4>
+
+    <p>Why should you use compound conditions? Consider the following scenario: a resource exists where you want Administrators to always have access, but to restrict Deployer access to between 9 a.m. and 5 p.m EST. The following policy would address both requirements:</p>
 <ul>
 <li>Condition 1 (simple): Role: Admin</li>
 </ul>
@@ -1499,6 +1249,8 @@ You do not need to identify data sources.</li>
 <ul>
 <li>Condition 2 (compound): Role: Deployer <code>AND</code> access occurs between 09:00:00 and 17:00:00 GMT -5:00</li>
 </ul>
+
+
 </div>
 <p>Use the actions on the Policy page to edit a policy.</p>
 <table id="GUID-338F66D1-8D4C-40A0-ADF2-B84F4EF99A0B__TABLE_HWN_KZT_ZZB">
@@ -1588,14 +1340,19 @@ You do not need to identify data sources.</li>
 <li><a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=SECMG-GUID-7F03EB9C-9755-430B-8B86-17199E0C01DC">Configuring Keystores</a> in <strong>Administering Security for Oracle WebLogic Server</strong></li>
 </ul>
 
-<div class="notices note" ><p>If you are using the demo certificates in a multi-server domain, Managed Server instances will fail to boot if you specify the fully-qualified DNS name. For information about this limitation and suggested workarounds, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=SECMG-GUID-1EDCFA15-FB24-4B70-AEEF-63AF46F80D00">Limitation on CertGen Usage</a> in <strong>Administering Security for Oracle WebLogic Server</strong></p>
+
+<div class="alert alert-primary" role="alert">
+<h4 class="alert-heading">Note</h4>
+
+    If you are using the demo certificates in a multi-server domain, Managed Server instances will fail to boot if you specify the fully-qualified DNS name. For information about this limitation and suggested workarounds, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=SECMG-GUID-1EDCFA15-FB24-4B70-AEEF-63AF46F80D00">Limitation on CertGen Usage</a> in <strong>Administering Security for Oracle WebLogic Server</strong>
+
 </div>
 <p>The OPSS Keystore Service (KSS) provides an alternative mechanism to manage keys and certificates for message security. See <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=JISEC-GUID-4B6B2303-D7F2-4E50-A8CE-02A04D7CF3A7">Managing Keys and Certificates</a> in <strong>Securing Applications with Oracle Platform Security Services</strong>. The OPSS KSS makes using certificates and keys easier by providing central management and storage of keys and certificates for all servers in a domain. You can use the OPSS KSS to create and maintain keystores of type KSS. If the Oracle Java Required Files (JRF) template is installed on the WebLogic Server system, you have the option to use KSS keystores. The KSS keystore is available only with the JRF template and is not available with the default WebLogic Server configuration.</p>
 <h3 id="configuring-identity-and-trust-in-weblogic-server">Configuring Identity and Trust in WebLogic Server</h3>
 <ol>
 <li>
 <p>Obtain digital certificates, private keys, and trusted CA certificates from the <code>CertGen</code> utility, the <code>keytool</code> utility, the OPSS Keystore Service, or a reputable vendor that creates and signs certificates for use on the internet. You can also use the digital certificates, private keys, and trusted CA certificates provided by WebLogic Server. The demonstration digital certificates, private keys, and trusted CA certificates should be used in a development environment only.</p>
-<p>See <a href="#GUID-E7406380-0590-42EA-8C3F-C5C302D0A692">Configure Keystores</a>.</p>
+<p>See <a href="/2.4.13/administration-server/securing-domains/#GUID-E7406380-0590-42EA-8C3F-C5C302D0A692">Configure Keystores</a>.</p>
 </li>
 <li>
 <p>If using KSS, verify whether KSS is properly populated, and note the KSS URIs and aliases of the required certificates and keys. You will need the KSS URIs and key aliases when specifying keystores, keys, and certificates.</p>
@@ -1604,22 +1361,28 @@ You do not need to identify data sources.</li>
 <p>Store the private keys, digital certificates, and trusted CA certificates. Private keys and trusted CA certificates are stored in a keystore. If using KSS, import the required keys and certificates to KSS.</p>
 </li>
 <li>
-<p>Configure the identity and trust keystores for a WebLogic Server instance. See <a href="#GUID-E7406380-0590-42EA-8C3F-C5C302D0A692">Configure Keystores</a>.</p>
+<p>Configure the identity and trust keystores for a WebLogic Server instance. See <a href="/2.4.13/administration-server/securing-domains/#GUID-E7406380-0590-42EA-8C3F-C5C302D0A692">Configure Keystores</a>.</p>
 </li>
 <li>
-<p>Configure SSL/TLS attributes for the server. These attributes describe the location of the identity key and certificate in the keystore. See <a href="#GUID-E4A623A5-532D-443B-BA39-0E13B004EB94">Set Up SSL/TLS</a>.</p>
+<p>Configure SSL/TLS attributes for the server. These attributes describe the location of the identity key and certificate in the keystore. See <a href="/2.4.13/administration-server/securing-domains/#GUID-E4A623A5-532D-443B-BA39-0E13B004EB94">Set Up SSL/TLS</a>.</p>
 </li>
 </ol>
 <h3 id="GUID-E7406380-0590-42EA-8C3F-C5C302D0A692">Configure Keystores</h3>
 <p>WebLogic Server uses private keys, digital certificates, and trusted certificates issues by certification authorities to establish and verify server identity and trust. You can use JKS or PKCS12 keystores for identity and trust.</p>
 <p>For more information, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=SECMG-GUID-7F03EB9C-9755-430B-8B86-17199E0C01DC">Configuring Keystores</a> in <strong>Administering Security for Oracle WebLogic Server</strong>.</p>
 
-<div class="notices note" ><p>For testing and development purposes <em>only</em>, WebLogic Server provides a demonstration identity keystore and a demonstration trust keystore. For production environments, you should configure your own identity and trust keystores.</p>
+
+<div class="alert alert-primary" role="alert">
+<h4 class="alert-heading">Note</h4>
+
+    <p>For testing and development purposes <em>only</em>, WebLogic Server provides a demonstration identity keystore and a demonstration trust keystore. For production environments, you should configure your own identity and trust keystores.</p>
 <ul>
 <li>In WebLogic Server 14.1.1.0 and earlier, the demo identity keystore and demo trust keystore are <code><em>DOMAIN_NAME</em>/security/DemoIdentity.jks</code> and <code><em>WL_HOME</em>/server/lib/DemoTrust.jks</code>, respectively.</li>
 <li>In WebLogic Server 14.1.2.0 and later, the demo identity keystore and demo trust keystore are <code><em>DOMAIN_NAME</em>/security/DemoIdentity.p12</code> and <code><em>DOMAIN_NAME</em>/security/DemoTrust.p12</code>, respectively.</li>
 </ul>
 <p>Additionally, the JDK installation provides the <code>cacerts</code> truststore in JKS format at <code><code><em>JDK</em>/lib/security/cacerts</code></code>.</p>
+
+
 </div>
 <ol>
 <li>
@@ -1688,7 +1451,7 @@ See <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-m
 <h3 id="GUID-C8C53705-3C69-4525-AE9D-39BBB6478C44">Enable Certificate Revocation Checking</h3>
 <p>WebLogic Server’s JSSE implementation supports X.509 certificate revocation (CR) checking, which checks a certificate’s revocation status as part of the SSL/TLS certificate validation process. CR checking improves the security of certificate usage by ensuring that received certificates have not been revoked by the issuing certificate authority. By default, CR checking is disabled in WebLogic Server.</p>
 <p>WebLogic Server&rsquo;s CR checking implementation includes both the Online Certificate Status Protocol (OCSP) and certificate revocation lists (CRLs). For more information, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=SECMG-GUID-3833DBD7-32E5-4CCF-AC3C-09D68696AA0F">X.509 Certificate Revocation Checking</a> in <strong>Administering Security for Oracle WebLogic Server</strong>.</p>
-<p>Ensure that you have configured the identity and trust keystores for WebLogic Server. See <a href="#GUID-219D9EBA-79E1-430F-AECD-28B4A41FDAE9">Identity and Trust</a>.</p>
+<p>Ensure that you have configured the identity and trust keystores for WebLogic Server. See <a href="/2.4.13/administration-server/securing-domains/#GUID-219D9EBA-79E1-430F-AECD-28B4A41FDAE9">Identity and Trust</a>.</p>
 <ol>
 <li>
 <p>In the <strong>Edit Tree</strong>, go to <strong>Environment</strong>, then <strong>Domain</strong>.</p>
@@ -1711,13 +1474,13 @@ See <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-m
 <p>Click <strong>Save</strong>.</p>
 </li>
 </ol>
-<p>You can configure certificate authority overrides to the certificate revocation configuration. See <a href="#GUID-E94764E7-FE43-49E7-A6F5-8699F2039103">Configure Certificate Authority Overrides</a>.</p>
+<p>You can configure certificate authority overrides to the certificate revocation configuration. See <a href="/2.4.13/administration-server/securing-domains/#GUID-E94764E7-FE43-49E7-A6F5-8699F2039103">Configure Certificate Authority Overrides</a>.</p>
 <h4 id="GUID-E94764E7-FE43-49E7-A6F5-8699F2039103">Configure Certificate Authority Overrides</h4>
 <p>Configuring a certificate authority override allows you to specify CR checking behavior that is specific to certificates issued by a particular certificate authority (CA). A certificate authority override always supersedes the corresponding certificate revocation (CR) checking configuration that is set at the domain level.</p>
 <p>A certificate authority override can be used to supersede, for a given CA, any domain-wide CR checking configuration settings, with the exception of the CRL local cache, which is configured on a domain-wide basis only.</p>
 <ol>
 <li>
-<p>If you haven&rsquo;t done so already, enable certificate revocation checking as described in <a href="#GUID-C8C53705-3C69-4525-AE9D-39BBB6478C44">Enable Certificate Revocation Checking</a>.</p>
+<p>If you haven&rsquo;t done so already, enable certificate revocation checking as described in <a href="/2.4.13/administration-server/securing-domains/#GUID-C8C53705-3C69-4525-AE9D-39BBB6478C44">Enable Certificate Revocation Checking</a>.</p>
 </li>
 <li>
 <p>In the <strong>Edit Tree</strong>, go to <strong>Security</strong>, then <strong>Certificate Authority Overrides</strong>.</p>
@@ -1756,11 +1519,16 @@ in <strong>Administering Security for Oracle WebLogic Server</strong>.</li>
 </ul>
 <p>For more information on how SSL/TLS is used in WebLogic Server, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=SECMG-GUID-5274E688-51EC-4A63-A35E-FC718B35C897">Configuring SSL</a> in <strong>Administering Security for Oracle WebLogic Server</strong>.</p>
 
-<div class="notices note" ><p>Although the terms TLS, SSL, and SSL/TLS are used interchangeably throughout WebLogic Server documentation, it is expected and encouraged that you use a currently supported version of TLS, not SSL, to secure communication in WebLogic Server.</p>
+
+<div class="alert alert-primary" role="alert">
+<h4 class="alert-heading">Note</h4>
+
+    Although the terms TLS, SSL, and SSL/TLS are used interchangeably throughout WebLogic Server documentation, it is expected and encouraged that you use a currently supported version of TLS, not SSL, to secure communication in WebLogic Server.
+
 </div>
 <h3 id="GUID-E4A623A5-532D-443B-BA39-0E13B004EB94">Set Up SSL/TLS</h3>
 <p>Establish secure communication between multiple applications connecting over a network connection.</p>
-<p>Configure the identity and trust keystores for WebLogic Server. See <a href="#GUID-E7406380-0590-42EA-8C3F-C5C302D0A692">Configure Keystores</a>.</p>
+<p>Configure the identity and trust keystores for WebLogic Server. See <a href="/2.4.13/administration-server/securing-domains/#GUID-E7406380-0590-42EA-8C3F-C5C302D0A692">Configure Keystores</a>.</p>
 <ol>
 <li>
 <p>In the <strong>Edit Tree</strong>, go to <strong>Environment</strong>, then <strong>Servers</strong>, then <em>myServer</em>.</p>
@@ -1782,7 +1550,7 @@ in <strong>Administering Security for Oracle WebLogic Server</strong>.</li>
 </li>
 <li>
 <p>Turn off the <strong>Disable Hostname Verification</strong> option.</p>
-<p>See <a href="#GUID-2B9A775D-A1E1-4A4B-B773-96CC37D9FBF0">Enable Host Name Verification</a>.</p>
+<p>See <a href="/2.4.13/administration-server/securing-domains/#GUID-2B9A775D-A1E1-4A4B-B773-96CC37D9FBF0">Enable Host Name Verification</a>.</p>
 </li>
 <li>
 <p>In the <strong>Export Key Lifespan</strong> field, indicate the number of times WebLogic Server can use an exportable key between a domestic server and an exportable client before generating a new key. The more secure you want WebLogic Server to be, the fewer times the key should be used before generating a new key.</p>
@@ -1798,7 +1566,7 @@ For more information, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=
 <li>
 <p>Enable two-way SSL/TLS.</p>
 <p>By default, WebLogic Server is configured to use one-way SSL/TLS, where the server passes its identity to the client. In a two-way SSL/TLS connection, the client verifies the identity of the server and then passes its identity certificate to the server. The server then validates the identity certificate of the client before completing the SSL/TLS handshake. The server determines whether or not two-way SSL/TLS is used.</p>
-<p>Before enabling two-way SSL/TLS, ensure that the trust keystore for the server includes the certificate for the trusted certificate authority that signed the certificate for the client. See <a href="#GUID-219D9EBA-79E1-430F-AECD-28B4A41FDAE9">Identity and Trust</a>.</p>
+<p>Before enabling two-way SSL/TLS, ensure that the trust keystore for the server includes the certificate for the trusted certificate authority that signed the certificate for the client. See <a href="/2.4.13/administration-server/securing-domains/#GUID-219D9EBA-79E1-430F-AECD-28B4A41FDAE9">Identity and Trust</a>.</p>
 <ol>
 <li>
 <p>Turn on the <strong>Two Way SSL Enabled</strong> option.</p>
@@ -1828,7 +1596,12 @@ For more information, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=
 <p>A host name verifier ensures the host name in the URL to which the client connects matches the host name in the digital certificate that the server sends back as part of the SSL/TLS connection. If the host name in the certificate matches the local machine’s host name, host name verification passes if the URL specifies <code>localhost</code>, <code>127.0.0.1</code>, or the default IP address of the local machine.</p>
 <p>A host name verifier is useful when a SSL/TLS client (or a WebLogic Server acting as an SSL/TLS client) connects to an application server on a remote host. Host name verification is performed only by a SSL/TLS client. By default, WebLogic Server has host name verification enabled and we recommend keeping it enabled for production environments.</p>
 
-<div class="notices note" ><p>The following steps only apply when a WebLogic Server instance is acting as an SSL/TLS client. Stand alone SSL/TLS clients specify the use of host name verification using command-line arguments or the API.</p>
+
+<div class="alert alert-primary" role="alert">
+<h4 class="alert-heading">Note</h4>
+
+    The following steps only apply when a WebLogic Server instance is acting as an SSL/TLS client. Stand alone SSL/TLS clients specify the use of host name verification using command-line arguments or the API.
+
 </div>
 <ol>
 <li>
@@ -1850,8 +1623,14 @@ For more information, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=
 <li>
 <p>If you want to use a custom verifier, follow these steps.</p>
 
-<div class="notices note" ><p>If you write a custom host name verifier, the class that implements the host name verifier must be specified in the <code>CLASSPATH</code> of WebLogic Server (when acting as an SSL/TLS client) or a stand alone SSL/TLS client.</p>
+
+<div class="alert alert-primary" role="alert">
+<h4 class="alert-heading">Note</h4>
+
+    <p>If you write a custom host name verifier, the class that implements the host name verifier must be specified in the <code>CLASSPATH</code> of WebLogic Server (when acting as an SSL/TLS client) or a stand alone SSL/TLS client.</p>
 <p>When you use stand alone SSL/TLS clients, a custom host name verifier must be specified on the command line using the following argument or through the API: <code>-Dweblogic.security.SSL.HostnameVerifier=<em>classname</em></code> where <em>classname</em> specifies the implementation of the <code>weblogic.security.SSL.HostnameVerifier</code> interface.</p>
+
+
 </div>
 <ol>
 <li>
@@ -1874,7 +1653,7 @@ For more information, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=
 <p>All server SSL/TLS attributes are dynamic. You can modify these attributes and then apply your changes without rebooting WebLogic Server. Instead, only the corresponding SSL/TLS server or channel SSL/TLS server will restart and use the new settings for new connections. Existing connections continue to run with the old configuration.</p>
 <ol>
 <li>
-<p>If you haven&rsquo;t done so already, turn on automatic realm restart in the default security realm. See <a href="#GUID-65011AC0-166C-414C-8FD5-A085E7599FA7">Enable Automatic Realm Restart</a>.</p>
+<p>If you haven&rsquo;t done so already, turn on automatic realm restart in the default security realm. See <a href="/2.4.13/administration-server/securing-domains/#GUID-65011AC0-166C-414C-8FD5-A085E7599FA7">Enable Automatic Realm Restart</a>.</p>
 <p>If automatic realm restart is not enabled, old connections will continue to run with the old configuration and you must restart WebLogic Server after restarting SSL/TLS to ensure that all the SSL/TLS connections exist according to the specified configuration.</p>
 </li>
 <li>
@@ -1931,12 +1710,12 @@ For more information, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=
 <p>Click <strong>Save</strong> and then commit your changes.</p>
 </li>
 <li>
-<p>Create a user for cross domain security and assign it to the <code>CrossDomainConnectors</code> group. See <a href="#GUID-7A265AF1-F634-45EE-B685-C969A95DC476">Create a User</a>.</p>
+<p>Create a user for cross domain security and assign it to the <code>CrossDomainConnectors</code> group. See <a href="/2.4.13/administration-server/securing-domains/#GUID-7A265AF1-F634-45EE-B685-C969A95DC476">Create a User</a>.</p>
 <p>For more information on, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=SECMG-GUID-6732713E-C103-4808-9D8C-0E4CA70DCC5A">Configuring Cross-Domain Users</a> in <strong>Administering Security for Oracle WebLogic Server</strong>.</p>
 </li>
 <li>
 <p>Configure a cross-domain security credential mapping for the cross-domain security user.</p>
-<p>For information on credential mapping, see <a href="#GUID-49DE7039-810D-433A-A5EB-6A4E1FEB885C">Configure a Credential Mapping Provider</a>.</p>
+<p>For information on credential mapping, see <a href="/2.4.13/administration-server/securing-domains/#GUID-49DE7039-810D-433A-A5EB-6A4E1FEB885C">Configure a Credential Mapping Provider</a>.</p>
 <ol>
 <li>
 <p>In the <strong>Security Data Tree</strong>, go to <strong>Realms</strong>, then <em>myRealm</em>, then <strong>Credential Mappers</strong>, then <em>myCredentialMapper</em>, then <strong>Remote Resources</strong>.</p>
@@ -1965,7 +1744,7 @@ For more information, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=
 <h2 id="GUID-61D9E1FF-834E-4692-9770-DF23C3374D3C">Enable Global Trust Between Domains</h2>
 <p>If you want multiple WebLogic Server domains to interoperate, you can specify the same domain credential for each of the domains. Typically, the domain credential is randomly generated by default and therefore, no two domains have the same domain credential.</p>
 <p>When this feature is enabled, identity is passed between WebLogic Server domains over an RMI connection without requiring authentication in the second domain. When inter-domain trust is enabled, transactions can commit across domains. A trust relationship is established when the domain credential for one domain matches the domain credential for another domain. For more information, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=SECMG-GUID-F00E7299-2E4D-40DE-B740-3529A5BB7BF0">Enabling Global Trust</a> in <strong>Administering Security for Oracle WebLogic Server</strong>.</p>
-<p>Instead of enabling global trust between domains, consider using the CrossDomainConnector role, as described in <a href="#GUID-A76CFD94-8A70-4149-924C-4AEE42D828FB">Enable Cross Domain Security</a>.</p>
+<p>Instead of enabling global trust between domains, consider using the CrossDomainConnector role, as described in <a href="/2.4.13/administration-server/securing-domains/#GUID-A76CFD94-8A70-4149-924C-4AEE42D828FB">Enable Cross Domain Security</a>.</p>
 <ol>
 <li>
 <p>In the <strong>Edit Tree</strong>, go to <strong>Environment</strong>, then <strong>Domain</strong>.</p>
@@ -2019,7 +1798,12 @@ For more information, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=
 <p>For more information, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=SECMG-GUID-74A34AA1-B139-431C-B87A-578DAAA682B1">Using JEP 290 in Oracle WebLogic Server</a> in <strong>Administering Security for Oracle WebLogic Server</strong>.</p>
 <p>When using the allowlist model, WebLogic Server and the customer define a list of the acceptable classes and packages that are allowed to be deserialized, and block all other classes.</p>
 
-<div class="notices note" ><p>WebLogic Server also supports using blocklists for JEP 290 filtering. For instructions on using blocklists, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=SECMG-GUID-56C7F67B-69EC-4F03-A057-F32024B26E3F">How WebLogic Server Uses JEP 290 Blocklists and Allowlists</a> in <strong>Administering Security for Oracle WebLogic Server</strong>.</p>
+
+<div class="alert alert-primary" role="alert">
+<h4 class="alert-heading">Note</h4>
+
+    WebLogic Server also supports using blocklists for JEP 290 filtering. For instructions on using blocklists, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=SECMG-GUID-56C7F67B-69EC-4F03-A057-F32024B26E3F">How WebLogic Server Uses JEP 290 Blocklists and Allowlists</a> in <strong>Administering Security for Oracle WebLogic Server</strong>.
+
 </div>
 <ol>
 <li>
@@ -2074,7 +1858,12 @@ weblogic.oif.serialGlobalFilter=\
 </li>
 </ul>
 
-<div class="notices note" ><p>You can also set the <code>AllowListViolationAction</code> on a channel using the network access point. Doing so allows you to use an allowlist on untrusted external channels and a blocklist on internal trusted channels.</p>
+
+<div class="alert alert-primary" role="alert">
+<h4 class="alert-heading">Note</h4>
+
+    You can also set the <code>AllowListViolationAction</code> on a channel using the network access point. Doing so allows you to use an allowlist on untrusted external channels and a blocklist on internal trusted channels.
+
 </div>
 </li>
 <li>
@@ -2102,7 +1891,12 @@ weblogic.oif.serialGlobalFilter=\
 <li>
 <p>Configure your production domain to use allowlists by copying the recorded allowlist configuration file that you just created to the <code><em>DOMAIN_HOME</em>/config/security</code> directory of the production domain.</p>
 
-<div class="notices note" ><p>Oracle recommends that you run your production domain with <code>AllowListViolationAction</code> set to <code>Log</code> for some period of time to ensure that all classes and packages were recorded.</p>
+
+<div class="alert alert-primary" role="alert">
+<h4 class="alert-heading">Note</h4>
+
+    Oracle recommends that you run your production domain with <code>AllowListViolationAction</code> set to <code>Log</code> for some period of time to ensure that all classes and packages were recorded.
+
 </div>
 </li>
 </ol>
@@ -2111,11 +1905,16 @@ weblogic.oif.serialGlobalFilter=\
 <p>You can configure your WebLogic Server instance as either a Service Provider or Identity Provider.</p>
 <p>For more information on using SAML 2.0 with WebLogic Server, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=SECMG-GUID-6064D37D-5934-4A10-A8BD-527CA778A642">Configuring SAML 2.0 Services</a> in <strong>Administering Security for Oracle WebLogic Server</strong>.</p>
 
-<div class="notices note" ><p>You cannot configure SAML 1.1 services using WebLogic Remote Console.</p>
+
+<div class="alert alert-primary" role="alert">
+<h4 class="alert-heading">Note</h4>
+
+    You cannot configure SAML 1.1 services using WebLogic Remote Console.
+
 </div>
 <ol>
 <li>
-<p>If you plan to have SAML 2.0 services running in more than one WebLogic Server instance in the domain, then create a domain in which the RDBMS security store is configured. See <a href="#GUID-76152470-62AE-434B-93EF-E6EF31AF1B7A">Use the RDBMS Security Store</a>.</p>
+<p>If you plan to have SAML 2.0 services running in more than one WebLogic Server instance in the domain, then create a domain in which the RDBMS security store is configured. See <a href="/2.4.13/administration-server/securing-domains/#GUID-76152470-62AE-434B-93EF-E6EF31AF1B7A">Use the RDBMS Security Store</a>.</p>
 <p>The RDBMS security store is required by SAML 2.0 security providers in production environments so that the data they manage can be synchronized across all of the WebLogic Server instances that share that data.</p>
 <p>Oracle does not recommend upgrading an existing domain in place to use the RDBMS security store. If you want to use the RDBMS security store, then you should configure the RDBMS security store at the time of domain creation. If you have an existing domain with which you want to use the RDBMS security store, then create the new domain and migrate your existing security realm to it.</p>
 <p>See <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=SECMG-GUID-7AE06479-0168-4277-AA84-6D5C87F1A004">Managing the RDBMS Security Store</a> in <strong>Administering Security for Oracle WebLogic Server</strong>.</p>
@@ -2124,22 +1923,22 @@ weblogic.oif.serialGlobalFilter=\
 <p>Review the considerations described in <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=SECMG-GUID-AB58954F-E9B6-41BC-AF03-3C5C106F034F">Web Application Deployment Considerations for SAML 2.0</a> in <strong>Administering Security for Oracle WebLogic Server</strong>.</p>
 </li>
 <li>
-<p>Configure SAML 2.0 general services. Apply the same configuration settings to each server instance. See <a href="#GUID-E1F19992-4206-480A-982D-330FDA4BA315">Configure SAML 2.0 General Services</a>.</p>
+<p>Configure SAML 2.0 general services. Apply the same configuration settings to each server instance. See <a href="/2.4.13/administration-server/securing-domains/#GUID-E1F19992-4206-480A-982D-330FDA4BA315">Configure SAML 2.0 General Services</a>.</p>
 </li>
 <li>
 <p>If you are configuring a SAML 2.0 Identity Provider site,</p>
 <ol>
 <li>
-<p>Create an instance of the SAML 2.0 Credential Mapping provider in the security realm. See <a href="#GUID-49DE7039-810D-433A-A5EB-6A4E1FEB885C">Configure a Credential Mapping Provider</a>.</p>
+<p>Create an instance of the SAML 2.0 Credential Mapping provider in the security realm. See <a href="/2.4.13/administration-server/securing-domains/#GUID-49DE7039-810D-433A-A5EB-6A4E1FEB885C">Configure a Credential Mapping Provider</a>.</p>
 </li>
 <li>
-<p>Configure SAML 2.0 Identity Provider services. Apply the same configuration settings to each server instance. See <a href="#GUID-7D3ABA17-47D8-42D0-84FF-BDBF3C5B6C9B">Configure SAML 2.0 Identity Provider Services</a>.</p>
+<p>Configure SAML 2.0 Identity Provider services. Apply the same configuration settings to each server instance. See <a href="/2.4.13/administration-server/securing-domains/#GUID-7D3ABA17-47D8-42D0-84FF-BDBF3C5B6C9B">Configure SAML 2.0 Identity Provider Services</a>.</p>
 </li>
 <li>
-<p>Publish the metadata file describing your site, and manually distribute it to your Service Provider partners. See <a href="#GUID-895BD614-CF55-4553-934F-39FF9152A35F">Publish SAML Metadata</a>.</p>
+<p>Publish the metadata file describing your site, and manually distribute it to your Service Provider partners. See <a href="/2.4.13/administration-server/securing-domains/#GUID-895BD614-CF55-4553-934F-39FF9152A35F">Publish SAML Metadata</a>.</p>
 </li>
 <li>
-<p>Create and configure your Service Provider partners. See <a href="#GUID-7398DB64-9761-46ED-821F-3C94ADFC5363">Create a SAML 2.0 Web Service Service Provider Partner</a> or <a href="#GUID-F89D61B8-4931-4B96-B113-CC8AB0885996">Create a SAML 2.0 Web Single Sign-On Service Provider Partner</a>.</p>
+<p>Create and configure your Service Provider partners. See <a href="/2.4.13/administration-server/securing-domains/#GUID-7398DB64-9761-46ED-821F-3C94ADFC5363">Create a SAML 2.0 Web Service Service Provider Partner</a> or <a href="/2.4.13/administration-server/securing-domains/#GUID-F89D61B8-4931-4B96-B113-CC8AB0885996">Create a SAML 2.0 Web Single Sign-On Service Provider Partner</a>.</p>
 </li>
 </ol>
 </li>
@@ -2147,19 +1946,19 @@ weblogic.oif.serialGlobalFilter=\
 <p>If you are configuring a SAML 2.0 Service Provider site,</p>
 <ol>
 <li>
-<p>Create an instance of the SAML 2.0 Identity Assertion provider in the security realm. See <a href="#GUID-F8F5FE70-EB42-4F31-9AFE-70037E23510A">Configure an Authentication or Identity Assertion Provider</a></p>
+<p>Create an instance of the SAML 2.0 Identity Assertion provider in the security realm. See <a href="/2.4.13/administration-server/securing-domains/#GUID-F8F5FE70-EB42-4F31-9AFE-70037E23510A">Configure an Authentication or Identity Assertion Provider</a></p>
 </li>
 <li>
 <p>If you are allowing virtual users to log in using SAML, create an instance of the SAML Authentication provider. See <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=SECMG-GUID-2F98AC11-0161-4D2E-868B-ED778802F57A">Configuring the SAML Authentication Provider</a> in <strong>Administering Security for Oracle WebLogic Server</strong>.</p>
 </li>
 <li>
-<p>Configure SAML 2.0 Service Provider services. Apply the same configuration settings to each server instance. See <a href="#GUID-63E10B5D-0DE1-42B3-90D2-DEE3BAC93CC9">Configure SAML 2.0 Service Provider Services</a></p>
+<p>Configure SAML 2.0 Service Provider services. Apply the same configuration settings to each server instance. See <a href="/2.4.13/administration-server/securing-domains/#GUID-63E10B5D-0DE1-42B3-90D2-DEE3BAC93CC9">Configure SAML 2.0 Service Provider Services</a></p>
 </li>
 <li>
-<p>Publish the metadata file describing your site, and manually distribute it to your Identity Provider partners. See <a href="#GUID-895BD614-CF55-4553-934F-39FF9152A35F">Publish SAML Metadata</a></p>
+<p>Publish the metadata file describing your site, and manually distribute it to your Identity Provider partners. See <a href="/2.4.13/administration-server/securing-domains/#GUID-895BD614-CF55-4553-934F-39FF9152A35F">Publish SAML Metadata</a></p>
 </li>
 <li>
-<p>Create and configure your Identity Provider partners. See <a href="#GUID-CF599ABB-5F8F-4218-949F-F32A40F368E8">Create a SAML 2.0 Web Service Identity Provider Partner</a> or <a href="#GUID-6E546B34-2490-4372-B811-2A3992244A7E">Create a SAML 2.0 Web Single Sign-On Identity Provider Partner</a>.</p>
+<p>Create and configure your Identity Provider partners. See <a href="/2.4.13/administration-server/securing-domains/#GUID-CF599ABB-5F8F-4218-949F-F32A40F368E8">Create a SAML 2.0 Web Service Identity Provider Partner</a> or <a href="/2.4.13/administration-server/securing-domains/#GUID-6E546B34-2490-4372-B811-2A3992244A7E">Create a SAML 2.0 Web Single Sign-On Identity Provider Partner</a>.</p>
 </li>
 </ol>
 </li>
@@ -2169,7 +1968,7 @@ weblogic.oif.serialGlobalFilter=\
 <p>For more information, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=SECMG-GUID-F9E5C1F5-4E5C-466A-90AB-B78B029F5407">Configuring SAML 2.0 General Services</a> in <strong>Administering Security for Oracle WebLogic Server</strong>.</p>
 <ol>
 <li>
-<p>Review the general steps for configuring SAML 2.0 services as described in <a href="#GUID-40F47509-2155-4280-8438-E4E54F4EB082">Configure SAML 2.0 Services: Main Steps</a>.</p>
+<p>Review the general steps for configuring SAML 2.0 services as described in <a href="/2.4.13/administration-server/securing-domains/#GUID-40F47509-2155-4280-8438-E4E54F4EB082">Configure SAML 2.0 Services: Main Steps</a>.</p>
 </li>
 <li>
 <p>In the <strong>Edit Tree</strong>, go to <strong>Environment</strong>, then <strong>Servers</strong>.</p>
@@ -2194,10 +1993,10 @@ weblogic.oif.serialGlobalFilter=\
 <p>Repeat for the rest of the servers in domain. Make sure you apply the exact same configuration settings to all servers.</p>
 </li>
 <li>
-<p>Publish the metadata file. See <a href="#GUID-895BD614-CF55-4553-934F-39FF9152A35F">Publish SAML Metadata</a>.</p>
+<p>Publish the metadata file. See <a href="/2.4.13/administration-server/securing-domains/#GUID-895BD614-CF55-4553-934F-39FF9152A35F">Publish SAML Metadata</a>.</p>
 </li>
 </ol>
-<p>Next, configure the server as an Identity Provider or as a Service Provider. See <a href="#GUID-7D3ABA17-47D8-42D0-84FF-BDBF3C5B6C9B">Configure SAML 2.0 Identity Provider Services</a> or <a href="#GUID-63E10B5D-0DE1-42B3-90D2-DEE3BAC93CC9">Configure SAML 2.0 Service Provider Services</a>, respectively.</p>
+<p>Next, configure the server as an Identity Provider or as a Service Provider. See <a href="/2.4.13/administration-server/securing-domains/#GUID-7D3ABA17-47D8-42D0-84FF-BDBF3C5B6C9B">Configure SAML 2.0 Identity Provider Services</a> or <a href="/2.4.13/administration-server/securing-domains/#GUID-63E10B5D-0DE1-42B3-90D2-DEE3BAC93CC9">Configure SAML 2.0 Service Provider Services</a>, respectively.</p>
 <h3 id="GUID-895BD614-CF55-4553-934F-39FF9152A35F">Publish SAML Metadata</h3>
 <p>The SAML metadata file contains the information about this site&rsquo;s SAML 2.0 services. Share this file with your federated partners to facilitate SAML 2.0 web single sign-on.</p>
 <ol>
@@ -2221,10 +2020,10 @@ weblogic.oif.serialGlobalFilter=\
 <p>A SAML 2.0 Identity Provider creates, maintains, and manages identity information for principals, and provides principal authentication to other Service Provider partners within a federation by generating SAML 2.0 assertions for those partners.</p>
 <ol>
 <li>
-<p>Perform the SAML 2.0 general services configuration as described in <a href="#GUID-E1F19992-4206-480A-982D-330FDA4BA315">Configure SAML 2.0 General Services</a>.</p>
+<p>Perform the SAML 2.0 general services configuration as described in <a href="/2.4.13/administration-server/securing-domains/#GUID-E1F19992-4206-480A-982D-330FDA4BA315">Configure SAML 2.0 General Services</a>.</p>
 </li>
 <li>
-<p>Configure a SAML 2.0 Credential Mapping provider if you haven&rsquo;t done so already. See <a href="#GUID-49DE7039-810D-433A-A5EB-6A4E1FEB885C">Configure a Credential Mapping Provider</a>.</p>
+<p>Configure a SAML 2.0 Credential Mapping provider if you haven&rsquo;t done so already. See <a href="/2.4.13/administration-server/securing-domains/#GUID-49DE7039-810D-433A-A5EB-6A4E1FEB885C">Configure a Credential Mapping Provider</a>.</p>
 </li>
 <li>
 <p>In the <strong>Edit Tree</strong>, go to <strong>Environment</strong>, then <strong>Servers</strong>.</p>
@@ -2248,7 +2047,7 @@ weblogic.oif.serialGlobalFilter=\
 <p>Repeat for the rest of the servers. Make sure you apply the same configuration settings to all servers.</p>
 </li>
 </ol>
-<p>Create and configure your Service Provider partners. See <a href="#GUID-F89D61B8-4931-4B96-B113-CC8AB0885996">Create a SAML 2.0 Web Single Sign-On Service Provider Partner</a> or <a href="#GUID-7398DB64-9761-46ED-821F-3C94ADFC5363">Create a SAML 2.0 Web Service Service Provider Partner</a>.</p>
+<p>Create and configure your Service Provider partners. See <a href="/2.4.13/administration-server/securing-domains/#GUID-F89D61B8-4931-4B96-B113-CC8AB0885996">Create a SAML 2.0 Web Single Sign-On Service Provider Partner</a> or <a href="/2.4.13/administration-server/securing-domains/#GUID-7398DB64-9761-46ED-821F-3C94ADFC5363">Create a SAML 2.0 Web Service Service Provider Partner</a>.</p>
 <p>Coordinate with your federated partners to ensure that the SAML bindings you have enabled for this SAML authority, as well as your requirements for signed documents, are compatible with your partners.</p>
 <h4 id="GUID-7398DB64-9761-46ED-821F-3C94ADFC5363">Create a SAML 2.0 Web Service Service Provider Partner</h4>
 <p>A SAML 2.0 Service Provider partner is an entity that consumes the SAML 2.0 assertions generated by the Identity Provider site.</p>
@@ -2325,10 +2124,10 @@ weblogic.oif.serialGlobalFilter=\
 <p>A Service Provider is a SAML authority that can receive SAML assertions and extract identity information from those assertions. The identity information can then be mapped to local Subjects, and optionally groups as well, that can be authenticated.</p>
 <ol>
 <li>
-<p>Perform the SAML 2.0 general services configuration as described in <a href="#GUID-E1F19992-4206-480A-982D-330FDA4BA315">Configure SAML 2.0 General Services</a>.</p>
+<p>Perform the SAML 2.0 general services configuration as described in <a href="/2.4.13/administration-server/securing-domains/#GUID-E1F19992-4206-480A-982D-330FDA4BA315">Configure SAML 2.0 General Services</a>.</p>
 </li>
 <li>
-<p>If you haven&rsquo;t done so already, configure a SAML 2.0 Identity Assertion provider . See <a href="#GUID-F8F5FE70-EB42-4F31-9AFE-70037E23510A">Configure an Authentication or Identity Assertion Provider</a>.</p>
+<p>If you haven&rsquo;t done so already, configure a SAML 2.0 Identity Assertion provider . See <a href="/2.4.13/administration-server/securing-domains/#GUID-F8F5FE70-EB42-4F31-9AFE-70037E23510A">Configure an Authentication or Identity Assertion Provider</a>.</p>
 </li>
 <li>
 <p>In the <strong>Edit Tree</strong>, go to <strong>Environment</strong>, then <strong>Servers</strong>.</p>
@@ -2352,7 +2151,7 @@ weblogic.oif.serialGlobalFilter=\
 <p>Repeat for the rest of the servers. Make sure you apply the same configuration settings to all servers.</p>
 </li>
 </ol>
-<p>Create and configure your Identity Provider partners. See <a href="#GUID-6E546B34-2490-4372-B811-2A3992244A7E">Create a SAML 2.0 Web Single Sign-On Identity Provider Partner</a> or <a href="#GUID-CF599ABB-5F8F-4218-949F-F32A40F368E8">Create a SAML 2.0 Web Service Identity Provider Partner</a>.</p>
+<p>Create and configure your Identity Provider partners. See <a href="/2.4.13/administration-server/securing-domains/#GUID-6E546B34-2490-4372-B811-2A3992244A7E">Create a SAML 2.0 Web Single Sign-On Identity Provider Partner</a> or <a href="/2.4.13/administration-server/securing-domains/#GUID-CF599ABB-5F8F-4218-949F-F32A40F368E8">Create a SAML 2.0 Web Service Identity Provider Partner</a>.</p>
 <h4 id="GUID-CF599ABB-5F8F-4218-949F-F32A40F368E8">Create a SAML 2.0 Web Service Identity Provider Partner</h4>
 <p>A SAML 2.0 Identity Provider partner is an entity that generates SAML 2.0 assertions consumed by the Service Provider site.</p>
 <ol>
@@ -2441,12 +2240,17 @@ weblogic.oif.serialGlobalFilter=\
 <p>If you plan to use the RDBMS security store, you should set it up when you first create the domain. If you have an existing domain, then you should create a new domain, configure it for RDBMS, and then migrate security data from the existing domain over to the new domain. We do not recommend trying to enable the RDBMS security store on an existing domain.</p>
 <p>For information on using the RDBMS security store in WebLogic Server, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=SECMG-GUID-7AE06479-0168-4277-AA84-6D5C87F1A004">Managing the RDBMS Security Store</a> in <strong>Administering Security for Oracle WebLogic Server</strong>.</p>
 <p>For a list of security providers affected by the RDBMS, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=SECMG-GUID-0A2733DC-7EF6-4452-BA40-683202EDB4C0">Security Providers that Use the RDBMS Security Store</a> in <strong>Administering Security for Oracle WebLogic Server</strong>.</p>
-<p>For a list of the specific RDBMS systems supported in this release of WebLogic Server for use as an RDBMS security store, see <a href="unilink:suppconf">Oracle Fusion Middleware Supported System Configurations</a>.</p>
+<p>For a list of the specific RDBMS systems supported in this release of WebLogic Server for use as an RDBMS security store, see <a href="#ZgotmplZ">Oracle Fusion Middleware Supported System Configurations</a>.</p>
 <ol>
 <li>
 <p>Create a new WebLogic domain using either the Domain Configuration wizard or WLST Offline. See <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=WLDCW-GUID-40F10C88-F8A2-4849-869C-65CFC5243B71">Creating a WebLogic Domain</a> in <strong>Creating WebLogic Domains Using the Configuration Wizard</strong> or <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=WLSTG-GUID-5FC3AA22-BCB0-4F98-801A-8EBC5E05DC6A">Creating WebLogic Domains Using WLST Offline</a> in <strong>Understanding the WebLogic Scripting Tool</strong>, respectively.</p>
 
-<div class="notices note" ><p>Do not start the domain at this time.</p>
+
+<div class="alert alert-primary" role="alert">
+<h4 class="alert-heading">Note</h4>
+
+    Do not start the domain at this time.
+
 </div>
 </li>
 <li>
@@ -2483,9 +2287,14 @@ weblogic.oif.serialGlobalFilter=\
 <p>Specify a JNDI user name and password. This can be any valid user in the security realm who has access to JNDI.</p>
 </li>
 <li>
-<p>Create a JMS topic. You can reuse an existing one. See <a href="../configuring-services#GUID-723C3B6E-6C57-48E7-B265-C4FF90D270A6">Configure Resources for JMS System Modules</a>.</p>
+<p>Create a JMS topic. You can reuse an existing one. See <a href="/2.4.13/administration-server/configuring-services/#GUID-723C3B6E-6C57-48E7-B265-C4FF90D270A6">Configure Resources for JMS System Modules</a>.</p>
 
-<div class="notices note" ><p>Failure to configure JMS actions in a multiserver domain in which the RDBMS security store is configured may result in a security vulnerability.</p>
+
+<div class="alert alert-primary" role="alert">
+<h4 class="alert-heading">Note</h4>
+
+    Failure to configure JMS actions in a multiserver domain in which the RDBMS security store is configured may result in a security vulnerability.
+
 </div>
 </li>
 </ol>
@@ -2496,370 +2305,35 @@ weblogic.oif.serialGlobalFilter=\
 </ol>
 <p>If the JMS topic with which the RDBMS security store is configured goes down, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=SECMG-GUID-7AE06479-0168-4277-AA84-6D5C87F1A004">Managing the RDBMS Security Store</a> in <strong>Administering Security for Oracle WebLogic Server</strong> for important information about restoring it.</p>
 
+  <div class="section-index">
+    
+    
+    </div>
+</div>
 
-
-
-
-<footer class=" footline" >
-	
+          </main>
+        </div>
+      </div>
+      <footer class="td-footer row d-print-none">
+  <div class="container-fluid">
+    <div class="row mx-md-2">
+      <div class="td-footer__left col-6 col-sm-4 order-sm-1">
+        
+      </div><div class="td-footer__right col-6 col-sm-4 order-sm-3">
+        
+      </div><div class="td-footer__center col-12 col-sm-4 py-2 order-sm-2">
+        <span class="td-footer__copyright">&copy;
+    2020&ndash;2025
+    <span class="td-footer__authors">Oracle | <a href="https://github.com/oracle/weblogic-remote-console/blob/main/LICENSE.txt">UPL 1.0</a></span></span><span class="td-footer__all_rights_reserved">All Rights Reserved</span>
+      </div>
+    </div>
+  </div>
 </footer>
 
-        
-        </div>
-        
-
-      </div>
-
-    <div id="navigation">
-        
-        
-
-        
-            
-            
-                
-                    
-                    
-                
-                
-
-                    
-                    
-                        
-                    
-                    
-
-                    
-                        
-            
-            
-                
-                    
-                        
-                        
-                    
-                
-                
-
-                    
-                    
-                        
-                    
-                    
-
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-            
-        
-                    
-                        
-            
-            
-                
-                    
-                    
-                
-                
-
-                    
-                    
-                        
-                    
-                    
-
-                    
-                        
-            
-            
-                
-                    
-                        
-                        
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-                        
-            
-            
-                
-                    
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-                        
-            
-            
-                
-                    
-                        
-                        
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-            
-        
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                        
-                    
-                    
-
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-            
-        
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-            
-        
-
-        
-
-
-	 
-	 
-		
-			<a class="nav nav-prev" href="/weblogic-remote-console/2.4.13/administration-server/domain-configuration/" title="Domain Configuration"> <i class="fa fa-chevron-left"></i></a>
-		
-		
-			<a class="nav nav-next" href="/weblogic-remote-console/2.4.13/administration-server/deploying-applications/" title="Deploying Applications" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
-		
-	
     </div>
-
-    </section>
-
-    <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
-      <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
-    </div>
-    <script src="/weblogic-remote-console/2.4.13/js/clipboard.min.js?1739383894"></script>
-    <script src="/weblogic-remote-console/2.4.13/js/perfect-scrollbar.min.js?1739383894"></script>
-    <script src="/weblogic-remote-console/2.4.13/js/perfect-scrollbar.jquery.min.js?1739383894"></script>
-    <script src="/weblogic-remote-console/2.4.13/js/jquery.sticky.js?1739383894"></script>
-    <script src="/weblogic-remote-console/2.4.13/js/featherlight.min.js?1739383894"></script>
-    <script src="/weblogic-remote-console/2.4.13/js/highlight.pack.js?1739383894"></script>
-    <script>hljs.initHighlightingOnLoad();</script>
-    <script src="/weblogic-remote-console/2.4.13/js/modernizr.custom-3.6.0.js?1739383894"></script>
-    <script src="/weblogic-remote-console/2.4.13/js/learn.js?1739383894"></script>
-    <script src="/weblogic-remote-console/2.4.13/js/hugo-learn.js?1739383894"></script>
-    
-        
-            <script src="/weblogic-remote-console/2.4.13/mermaid/mermaid.js?1739383894"></script>
-        
-        <script>
-            mermaid.initialize({ startOnLoad: true });
-        </script>
-    
-    
+    <script src="/js/main.min.90902a026ed2aee7ed45d85797f4c790b240ba148ac6f8a6f194cb1981ffecf5.js" integrity="sha256-kJAqAm7SruftRdhXl/THkLJAuhSKxvim8ZTLGYH/7PU=" crossorigin="anonymous"></script>
+<script defer src="/js/click-to-copy.min.73478a7d4807698aed7e355eb23f9890ca18fea3158604c8471746d046702bad.js" integrity="sha256-c0eKfUgHaYrtfjVesj&#43;YkMoY/qMVhgTIRxdG0EZwK60=" crossorigin="anonymous"></script>
+<script src='/js/tabpane-persist.js'></script>
 
   </body>
 </html>
