@@ -89,7 +89,7 @@ We recommend setting the viewport of WebLogic Remote Console to 1300 px or wider
 
 Desktop WebLogic Remote Console is a version of WebLogic Remote Console that is based on the Electron framework and installed as a desktop application.
 
-1.  Download the latest version of WebLogic Remote Console from the [WebLogic Remote Console GitHub Repository](https://github.com/oracle/weblogic-remote-console-releases) releases page. Choose the appropriate installer for your operating system.
+1.  Download the latest version of WebLogic Remote Console from the [WebLogic Remote Console GitHub Repository](https://github.com/oracle/weblogic-remote-console/releases) releases page. Choose the appropriate installer for your operating system.
 
 2.  Follow the typical process for installing applications on your operating system.
 
@@ -211,7 +211,7 @@ For an overview of the functionality provided by the WebLogic Remote Console ext
 
 1.  Under <code>*DOMAIN_HOME*/</code>, create a folder and name it <code>management-services-ext</code>.
 
-2.  Download the latest WebLogic Remote Console extension, <code>console-rest-ext-2.4.16.war</code>, from the [WebLogic Remote Console GitHub Repository](https://github.com/oracle/weblogic-remote-console-releases) releases page.
+2.  Download the latest WebLogic Remote Console extension, <code>console-rest-ext-2.4.16.war</code>, from the [WebLogic Remote Console GitHub Repository](https://github.com/oracle/weblogic-remote-console/releases) releases page.
 
 3.  Save the extension under <code>management-services-ext</code>.
 
@@ -351,7 +351,7 @@ If a newer version of Desktop WebLogic Remote Console is available, an alert wil
 
     Desktop WebLogic Remote Console update runs in the background so you can continue working in WebLogic Remote Console with no interruptions. The next time the console is launched, the updates will apply.
 
-    You can also download the update from the [WebLogic Remote Console GitHub Repository](https://github.com/oracle/weblogic-remote-console-releases) releases page and apply the update manually.
+    You can also download the update from the [WebLogic Remote Console GitHub Repository](https://github.com/oracle/weblogic-remote-console/releases) releases page and apply the update manually.
 
 2.  *For WebLogic Server 14.1.1.0.0 and earlier:* Update the WebLogic Remote Console *extension*.
 
@@ -372,7 +372,7 @@ If a newer version of Desktop WebLogic Remote Console is available, an alert wil
 
     2.  Go to <code>*DOMAIN_HOME*/management-services-ext</code> and delete the existing WebLogic Remote Console extension.
 
-    3.  Download the WebLogic Remote Console extension that matches your WebLogic Remote Console from the [WebLogic Remote Console GitHub Repository](https://github.com/oracle/weblogic-remote-console-releases). It will be within the matching WebLogic Remote Console release section.
+    3.  Download the WebLogic Remote Console extension that matches your WebLogic Remote Console from the [WebLogic Remote Console GitHub Repository](https://github.com/oracle/weblogic-remote-console/releases). It will be within the matching WebLogic Remote Console release section.
 
     4.  Save the extension to <code>*DOMAIN_HOME*/management-services-ext</code>.
 

@@ -65,6 +65,7 @@ electron/signed/**
 hugo/*/docs/
 hugo/*/.vscode/
 hugo/*/.hugo_build.lock
+documentation/public/
 
 *start-weblogic.out
 

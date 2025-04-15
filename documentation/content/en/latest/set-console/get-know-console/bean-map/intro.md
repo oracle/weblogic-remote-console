@@ -10,7 +10,7 @@ This page is split into two sections, both with subsections:
 
 * **Perspective trees**: Use this section to see a high-level, hierarchal view of how MBeans are organized, by [perspective](/weblogic-remote-console/administration-server/domain-configuration/#GUID-E1D3A576-47A8-4291-9F56-617B1039168F). These trees go to the page-level of the console. 
     * Jump to [Monitoring Tree](#monitoring)
-    * Jump to [Edit/Configuration Trees](#edit)
+    * Jump to [Configuration View/Configuration Edit Trees](#edit)
     * Jump to [Security Data Tree](#securityData)
 * **Page Summaries**: Use this section to learn about the specific attributes of an MBean: how they are labeled in the UI, which page tab they're located on, and a short description of the field (plus a link to more information).
 

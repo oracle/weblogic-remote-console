@@ -1,46 +1,768 @@
-<!doctype html><html itemscope itemtype=http://schema.org/WebPage lang=en class=no-js><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no"><link rel=alternate type=application/rss+xml href=https://lcr01022.us.oracle.com/weblogic-remote-console/2.4.11/userguide/providers/administration-server/index.xml><meta name=robots content="index, follow"><link rel="shortcut icon" href=/weblogic-remote-console/favicons/favicon.ico><link rel=apple-touch-icon href=/weblogic-remote-console/favicons/apple-touch-icon-180x180.png sizes=180x180><link rel=icon type=image/png href=/weblogic-remote-console/favicons/favicon-16x16.png sizes=16x16><link rel=icon type=image/png href=/weblogic-remote-console/favicons/favicon-32x32.png sizes=32x32><link rel=icon type=image/png href=/weblogic-remote-console/favicons/android-36x36.png sizes=36x36><link rel=icon type=image/png href=/weblogic-remote-console/favicons/android-48x48.png sizes=48x48><link rel=icon type=image/png href=/weblogic-remote-console/favicons/android-72x72.png sizes=72x72><link rel=icon type=image/png href=/weblogic-remote-console/favicons/android-96x96.png sizes=96x96><link rel=icon type=image/png href=/weblogic-remote-console/favicons/android-144x144.png sizes=144x144><link rel=icon type=image/png href=/weblogic-remote-console/favicons/android-192x192.png sizes=192x192><title>Administration Servers | WebLogic Remote Console</title>
-<meta name=description content="The WebLogic Remote Console can connect directly to a WebLogic Administration Server to view and edit its domain, much like the WebLogic Server Administration Console, though there are some differences.
+<!doctype html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="en" class="no-js">
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel="alternate" type="application/rss&#43;xml" href="//localhost:1313/2.4.11/userguide/providers/administration-server/index.xml">
+<meta name="robots" content="noindex, nofollow">
+
+
+<link rel="shortcut icon" href="/favicons/favicon.ico" >
+<link rel="apple-touch-icon" href="/favicons/apple-touch-icon-180x180.png" sizes="180x180">
+<link rel="icon" type="image/png" href="/favicons/favicon-16x16.png" sizes="16x16">
+<link rel="icon" type="image/png" href="/favicons/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="/favicons/android-36x36.png" sizes="36x36">
+<link rel="icon" type="image/png" href="/favicons/android-48x48.png" sizes="48x48">
+<link rel="icon" type="image/png" href="/favicons/android-72x72.png" sizes="72x72">
+<link rel="icon" type="image/png" href="/favicons/android-96x96.png" sizes="96x96">
+<link rel="icon" type="image/png" href="/favicons/android-144x144.png" sizes="144x144">
+<link rel="icon" type="image/png" href="/favicons/android-192x192.png" sizes="192x192">
+
+<title>Administration Servers | WebLogic Remote Console</title>
+<meta name="description" content="The WebLogic Remote Console can connect directly to a WebLogic Administration Server to view and edit its domain, much like the WebLogic Server Administration Console, though there are some differences.
 You can save the connection details for multiple WebLogic Administration Servers, making it easy to switch between domains with a click.
-Connect to a WebLogic Administration Server Start the WebLogic Administration Server."><meta property="og:url" content="https://lcr01022.us.oracle.com/weblogic-remote-console/2.4.11/userguide/providers/administration-server/"><meta property="og:site_name" content="WebLogic Remote Console"><meta property="og:title" content="Administration Servers"><meta property="og:description" content="The WebLogic Remote Console can connect directly to a WebLogic Administration Server to view and edit its domain, much like the WebLogic Server Administration Console, though there are some differences.
+Connect to a WebLogic Administration Server Start the WebLogic Administration Server.">
+<meta property="og:url" content="//localhost:1313/2.4.11/userguide/providers/administration-server/">
+  <meta property="og:site_name" content="WebLogic Remote Console">
+  <meta property="og:title" content="Administration Servers">
+  <meta property="og:description" content="The WebLogic Remote Console can connect directly to a WebLogic Administration Server to view and edit its domain, much like the WebLogic Server Administration Console, though there are some differences.
 You can save the connection details for multiple WebLogic Administration Servers, making it easy to switch between domains with a click.
-Connect to a WebLogic Administration Server Start the WebLogic Administration Server."><meta property="og:locale" content="en"><meta property="og:type" content="website"><meta itemprop=name content="Administration Servers"><meta itemprop=description content="The WebLogic Remote Console can connect directly to a WebLogic Administration Server to view and edit its domain, much like the WebLogic Server Administration Console, though there are some differences.
+Connect to a WebLogic Administration Server Start the WebLogic Administration Server.">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="website">
+
+  <meta itemprop="name" content="Administration Servers">
+  <meta itemprop="description" content="The WebLogic Remote Console can connect directly to a WebLogic Administration Server to view and edit its domain, much like the WebLogic Server Administration Console, though there are some differences.
 You can save the connection details for multiple WebLogic Administration Servers, making it easy to switch between domains with a click.
-Connect to a WebLogic Administration Server Start the WebLogic Administration Server."><meta itemprop=wordCount content="3061"><meta name=twitter:card content="summary"><meta name=twitter:title content="Administration Servers"><meta name=twitter:description content="The WebLogic Remote Console can connect directly to a WebLogic Administration Server to view and edit its domain, much like the WebLogic Server Administration Console, though there are some differences.
+Connect to a WebLogic Administration Server Start the WebLogic Administration Server.">
+  <meta itemprop="wordCount" content="3061">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Administration Servers">
+  <meta name="twitter:description" content="The WebLogic Remote Console can connect directly to a WebLogic Administration Server to view and edit its domain, much like the WebLogic Server Administration Console, though there are some differences.
 You can save the connection details for multiple WebLogic Administration Servers, making it easy to switch between domains with a click.
-Connect to a WebLogic Administration Server Start the WebLogic Administration Server."><link rel=preload href=/weblogic-remote-console/scss/main.min.48c25d0a5a23a1e8cae94d6c5e7622061e5345cf098171b1d6ee41d8e309e6c8.css as=style integrity="sha256-SMJdClojoejK6U1sXnYiBh5TRc8JgXGx1u5B2OMJ5sg=" crossorigin=anonymous><link href=/weblogic-remote-console/scss/main.min.48c25d0a5a23a1e8cae94d6c5e7622061e5345cf098171b1d6ee41d8e309e6c8.css rel=stylesheet integrity="sha256-SMJdClojoejK6U1sXnYiBh5TRc8JgXGx1u5B2OMJ5sg=" crossorigin=anonymous><script src=https://code.jquery.com/jquery-3.7.1.min.js integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin=anonymous></script><script defer src=https://unpkg.com/lunr@2.3.9/lunr.min.js integrity=sha384-203J0SNzyqHby3iU6hzvzltrWi/M41wOP5Gu+BiJMz5nwKykbkUx8Kp7iti0Lpli crossorigin=anonymous></script></head><body class=td-section><header><nav class="td-navbar js-navbar-scroll" data-bs-theme=dark><div class="container-fluid flex-column flex-md-row"><a class=navbar-brand href=/weblogic-remote-console/><span class="navbar-brand__logo navbar-logo"></span><span class=navbar-brand__name>WebLogic Remote Console</span></a><div class="td-navbar-nav-scroll ms-md-auto" id=main_navbar><ul class=navbar-nav><li class=nav-item><a class=nav-link href=/weblogic-remote-console/overview><span>Documentation</span></a></li><li class="nav-item dropdown d-none d-lg-block"><div class=dropdown><a class="nav-link dropdown-toggle" href=# role=button data-bs-toggle=dropdown aria-haspopup=true aria-expanded=false>Releases</a><ul class=dropdown-menu><li><a class=dropdown-item href=/weblogic-remote-console/overview>Latest (v2.4.16)</a></li><li><a class=dropdown-item href=/weblogic-remote-console/2.4.15>v2.4.15</a></li><li><a class=dropdown-item href=/weblogic-remote-console/2.4.14>v2.4.14</a></li><li><a class=dropdown-item href=/weblogic-remote-console/2.4.13>v2.4.13</a></li><li><a class=dropdown-item href=/weblogic-remote-console/2.4.12>v2.4.12</a></li><li><a class=dropdown-item href=/weblogic-remote-console/2.4.11>v2.4.11</a></li></ul></div></li><li class="td-light-dark-menu nav-item dropdown"><svg class="d-none"><symbol id="check2" viewBox="0 0 16 16"><path d="M13.854 3.646a.5.5.0 010 .708l-7 7a.5.5.0 01-.708.0l-3.5-3.5a.5.5.0 11.708-.708L6.5 10.293l6.646-6.647a.5.5.0 01.708.0z"/></symbol><symbol id="circle-half" viewBox="0 0 16 16"><path d="M8 15A7 7 0 108 1v14zm0 1A8 8 0 118 0a8 8 0 010 16z"/></symbol><symbol id="moon-stars-fill" viewBox="0 0 16 16"><path d="M6 .278a.768.768.0 01.08.858 7.208 7.208.0 00-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527.0 1.04-.055 1.533-.16a.787.787.0 01.81.316.733.733.0 01-.031.893A8.349 8.349.0 018.344 16C3.734 16 0 12.286.0 7.71.0 4.266 2.114 1.312 5.124.06A.752.752.0 016 .278z"/><path d="M10.794 3.148a.217.217.0 01.412.0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217.0 010 .412l-1.162.387A1.734 1.734.0 0011.593 7.69l-.387 1.162a.217.217.0 01-.412.0l-.387-1.162A1.734 1.734.0 009.31 6.593l-1.162-.387a.217.217.0 010-.412l1.162-.387a1.734 1.734.0 001.097-1.097l.387-1.162zM13.863.099a.145.145.0 01.274.0l.258.774c.115.346.386.617.732.732l.774.258a.145.145.0 010 .274l-.774.258a1.156 1.156.0 00-.732.732l-.258.774a.145.145.0 01-.274.0l-.258-.774a1.156 1.156.0 00-.732-.732l-.774-.258a.145.145.0 010-.274l.774-.258c.346-.115.617-.386.732-.732L13.863.1z"/></symbol><symbol id="sun-fill" viewBox="0 0 16 16"><path d="M8 12a4 4 0 100-8 4 4 0 000 8zM8 0a.5.5.0 01.5.5v2a.5.5.0 01-1 0v-2A.5.5.0 018 0zm0 13a.5.5.0 01.5.5v2a.5.5.0 01-1 0v-2A.5.5.0 018 13zm8-5a.5.5.0 01-.5.5h-2a.5.5.0 010-1h2a.5.5.0 01.5.5zM3 8a.5.5.0 01-.5.5h-2a.5.5.0 010-1h2A.5.5.0 013 8zm10.657-5.657a.5.5.0 010 .707l-1.414 1.415a.5.5.0 11-.707-.708l1.414-1.414a.5.5.0 01.707.0zm-9.193 9.193a.5.5.0 010 .707L3.05 13.657a.5.5.0 01-.707-.707l1.414-1.414a.5.5.0 01.707.0zm9.193 2.121a.5.5.0 01-.707.0l-1.414-1.414a.5.5.0 01.707-.707l1.414 1.414a.5.5.0 010 .707zM4.464 4.465a.5.5.0 01-.707.0L2.343 3.05a.5.5.0 11.707-.707l1.414 1.414a.5.5.0 010 .708z"/></symbol></svg>
-<button class="btn btn-link nav-link dropdown-toggle d-flex align-items-center" id=bd-theme type=button aria-expanded=false data-bs-toggle=dropdown data-bs-display=static aria-label="Toggle theme (auto)"><svg class="bi my-1 theme-icon-active"><use href="#circle-half"/></svg></button><ul class="dropdown-menu dropdown-menu-end" aria-labelledby=bd-theme-text><li><button type=button class="dropdown-item d-flex align-items-center" data-bs-theme-value=light aria-pressed=false>
-<svg class="bi me-2 opacity-50"><use href="#sun-fill"/></svg>
-Light<svg class="bi ms-auto d-none"><use href="#check2"/></svg></button></li><li><button type=button class="dropdown-item d-flex align-items-center" data-bs-theme-value=dark aria-pressed=false>
-<svg class="bi me-2 opacity-50"><use href="#moon-stars-fill"/></svg>
-Dark<svg class="bi ms-auto d-none"><use href="#check2"/></svg></button></li><li><button type=button class="dropdown-item d-flex align-items-center active" data-bs-theme-value=auto aria-pressed=true>
-<svg class="bi me-2 opacity-50"><use href="#circle-half"/></svg>
-Auto<svg class="bi ms-auto d-none"><use href="#check2"/></svg></button></li></ul></li></ul></div><div class="d-none d-lg-block"><div class="td-search td-search--offline"><div class=td-search__icon></div><input type=search class="td-search__input form-control" placeholder="Search this site…" aria-label="Search this site…" autocomplete=off data-offline-search-index-json-src=/weblogic-remote-console/offline-search-index.e152858a1bbec0f36c67cf871ab007ef.json data-offline-search-base-href=/ data-offline-search-max-results=10></div></div></div></nav></header><div class="container-fluid td-outer"><div class=td-main><div class="row flex-xl-nowrap"><aside class="col-12 col-md-3 col-xl-2 td-sidebar d-print-none"><div id=td-sidebar-menu class=td-sidebar__inner><div id=content-mobile><form class="td-sidebar__search d-flex align-items-center"><div class="td-search td-search--offline"><div class=td-search__icon></div><input type=search class="td-search__input form-control" placeholder="Search this site…" aria-label="Search this site…" autocomplete=off data-offline-search-index-json-src=/weblogic-remote-console/offline-search-index.e152858a1bbec0f36c67cf871ab007ef.json data-offline-search-base-href=/ data-offline-search-max-results=10></div><button class="btn btn-link td-sidebar__toggle d-md-none p-0 ms-3 fas fa-bars" type=button data-bs-toggle=collapse data-bs-target=#td-section-nav aria-controls=td-section-nav aria-expanded=false aria-label="Toggle section navigation"></button></form></div><div id=content-desktop></div><nav class="td-sidebar-nav collapse td-sidebar-nav--search-disabled foldable-nav" id=td-section-nav><ul class="td-sidebar-nav__section pe-md-3 ul-0"><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child active-path" id=m-weblogic-remote-console2411-li><a href=/weblogic-remote-console/2.4.11/ class="align-left ps-0 td-sidebar-link td-sidebar-link__section tree-root" id=m-weblogic-remote-console2411><span>WebLogic Remote Console</span></a><ul class=ul-1><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id=m-weblogic-remote-console2411setup-li><input type=checkbox id=m-weblogic-remote-console2411setup-check>
-<label for=m-weblogic-remote-console2411setup-check><a href=/weblogic-remote-console/2.4.11/setup/ class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id=m-weblogic-remote-console2411setup><span>Get started</span></a></label><ul class="ul-2 foldable"><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id=m-weblogic-remote-console2411setupconsole-li><input type=checkbox id=m-weblogic-remote-console2411setupconsole-check>
-<label for=m-weblogic-remote-console2411setupconsole-check><a href=/weblogic-remote-console/2.4.11/setup/console/ class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id=m-weblogic-remote-console2411setupconsole><span>Explore the WebLogic Remote Console</span></a></label></li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id=m-weblogic-remote-console2411setupadmin-console-diff-li><input type=checkbox id=m-weblogic-remote-console2411setupadmin-console-diff-check>
-<label for=m-weblogic-remote-console2411setupadmin-console-diff-check><a href=/weblogic-remote-console/2.4.11/setup/admin-console-diff/ class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id=m-weblogic-remote-console2411setupadmin-console-diff><span>Differences with the Administration Console</span></a></label></li></ul></li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child active-path" id=m-weblogic-remote-console2411userguide-li><input type=checkbox id=m-weblogic-remote-console2411userguide-check checked>
-<label for=m-weblogic-remote-console2411userguide-check><a href=/weblogic-remote-console/2.4.11/userguide/ class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id=m-weblogic-remote-console2411userguide><span>User guide</span></a></label><ul class="ul-2 foldable"><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id=m-weblogic-remote-console2411userguideprojects-li><input type=checkbox id=m-weblogic-remote-console2411userguideprojects-check>
-<label for=m-weblogic-remote-console2411userguideprojects-check><a href=/weblogic-remote-console/2.4.11/userguide/projects/ class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id=m-weblogic-remote-console2411userguideprojects><span>Projects</span></a></label></li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child active-path" id=m-weblogic-remote-console2411userguideproviders-li><input type=checkbox id=m-weblogic-remote-console2411userguideproviders-check checked>
-<label for=m-weblogic-remote-console2411userguideproviders-check><a href=/weblogic-remote-console/2.4.11/userguide/providers/ class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id=m-weblogic-remote-console2411userguideproviders><span>Provider types</span></a></label><ul class="ul-3 foldable"><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child active-path" id=m-weblogic-remote-console2411userguideprovidersadministration-server-li><input type=checkbox id=m-weblogic-remote-console2411userguideprovidersadministration-server-check checked>
-<label for=m-weblogic-remote-console2411userguideprovidersadministration-server-check><a href=/weblogic-remote-console/2.4.11/userguide/providers/administration-server/ class="align-left ps-0 active td-sidebar-link td-sidebar-link__section" id=m-weblogic-remote-console2411userguideprovidersadministration-server><span class=td-sidebar-nav-active-item>Administration Servers</span></a></label><ul class="ul-4 foldable"><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id=m-weblogic-remote-console2411userguideprovidersadministration-serversecurity-data-li><input type=checkbox id=m-weblogic-remote-console2411userguideprovidersadministration-serversecurity-data-check>
-<label for=m-weblogic-remote-console2411userguideprovidersadministration-serversecurity-data-check><a href=/weblogic-remote-console/2.4.11/userguide/providers/administration-server/security-data/ class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id=m-weblogic-remote-console2411userguideprovidersadministration-serversecurity-data><span>Editing security data</span></a></label></li></ul></li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id=m-weblogic-remote-console2411userguideprovidersproperty-list-li><input type=checkbox id=m-weblogic-remote-console2411userguideprovidersproperty-list-check>
-<label for=m-weblogic-remote-console2411userguideprovidersproperty-list-check><a href=/weblogic-remote-console/2.4.11/userguide/providers/property-list/ class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id=m-weblogic-remote-console2411userguideprovidersproperty-list><span>Property lists</span></a></label></li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id=m-weblogic-remote-console2411userguideproviderswdt-model-li><input type=checkbox id=m-weblogic-remote-console2411userguideproviderswdt-model-check>
-<label for=m-weblogic-remote-console2411userguideproviderswdt-model-check><a href=/weblogic-remote-console/2.4.11/userguide/providers/wdt-model/ class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id=m-weblogic-remote-console2411userguideproviderswdt-model><span>WDT model files</span></a></label></li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id=m-weblogic-remote-console2411userguideproviderswdt-composite-li><input type=checkbox id=m-weblogic-remote-console2411userguideproviderswdt-composite-check>
-<label for=m-weblogic-remote-console2411userguideproviderswdt-composite-check><a href=/weblogic-remote-console/2.4.11/userguide/providers/wdt-composite/ class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id=m-weblogic-remote-console2411userguideproviderswdt-composite><span>WDT composite models</span></a></label></li></ul></li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id=m-weblogic-remote-console2411userguideadvanced-settings-li><input type=checkbox id=m-weblogic-remote-console2411userguideadvanced-settings-check>
-<label for=m-weblogic-remote-console2411userguideadvanced-settings-check><a href=/weblogic-remote-console/2.4.11/userguide/advanced-settings/ class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id=m-weblogic-remote-console2411userguideadvanced-settings><span>Customize settings</span></a></label></li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id=m-weblogic-remote-console2411userguidedashboards-li><input type=checkbox id=m-weblogic-remote-console2411userguidedashboards-check>
-<label for=m-weblogic-remote-console2411userguidedashboards-check><a href=/weblogic-remote-console/2.4.11/userguide/dashboards/ class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id=m-weblogic-remote-console2411userguidedashboards><span>Generate dashboards</span></a></label></li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id=m-weblogic-remote-console2411userguideupgrade-li><input type=checkbox id=m-weblogic-remote-console2411userguideupgrade-check>
-<label for=m-weblogic-remote-console2411userguideupgrade-check><a href=/weblogic-remote-console/2.4.11/userguide/upgrade/ class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id=m-weblogic-remote-console2411userguideupgrade><span>Upgrade the WebLogic Remote Console</span></a></label></li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id=m-weblogic-remote-console2411userguidelogging-li><input type=checkbox id=m-weblogic-remote-console2411userguidelogging-check>
-<label for=m-weblogic-remote-console2411userguidelogging-check><a href=/weblogic-remote-console/2.4.11/userguide/logging/ class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id=m-weblogic-remote-console2411userguidelogging><span>Check log files</span></a></label></li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id=m-weblogic-remote-console2411userguiderole-access-li><input type=checkbox id=m-weblogic-remote-console2411userguiderole-access-check>
-<label for=m-weblogic-remote-console2411userguiderole-access-check><a href=/weblogic-remote-console/2.4.11/userguide/role-access/ class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id=m-weblogic-remote-console2411userguiderole-access><span>Understand access discrepancies</span></a></label></li></ul></li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id=m-weblogic-remote-console2411develop-li><input type=checkbox id=m-weblogic-remote-console2411develop-check>
-<label for=m-weblogic-remote-console2411develop-check><a href=/weblogic-remote-console/2.4.11/develop/ class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id=m-weblogic-remote-console2411develop><span>Development</span></a></label><ul class="ul-2 foldable"><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id=m-weblogic-remote-console2411developbuild-source-li><input type=checkbox id=m-weblogic-remote-console2411developbuild-source-check>
-<label for=m-weblogic-remote-console2411developbuild-source-check><a href=/weblogic-remote-console/2.4.11/develop/build-source/ class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id=m-weblogic-remote-console2411developbuild-source><span>Build from source</span></a></label></li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id=m-weblogic-remote-console2411developcontribute-li><input type=checkbox id=m-weblogic-remote-console2411developcontribute-check>
-<label for=m-weblogic-remote-console2411developcontribute-check><a href=/weblogic-remote-console/2.4.11/develop/contribute/ class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id=m-weblogic-remote-console2411developcontribute><span>Contribute to WebLogic Remote Console</span></a></label></li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id=m-weblogic-remote-console2411developdocs-contribute-li><input type=checkbox id=m-weblogic-remote-console2411developdocs-contribute-check>
-<label for=m-weblogic-remote-console2411developdocs-contribute-check><a href=/weblogic-remote-console/2.4.11/develop/docs-contribute/ class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id=m-weblogic-remote-console2411developdocs-contribute><span>Contribute to the documentation</span></a></label></li></ul></li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id=m-weblogic-remote-console2411reference-li><input type=checkbox id=m-weblogic-remote-console2411reference-check>
-<label for=m-weblogic-remote-console2411reference-check><a href=/weblogic-remote-console/2.4.11/reference/ class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id=m-weblogic-remote-console2411reference><span>Reference</span></a></label><ul class="ul-2 foldable"><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id=m-weblogic-remote-console2411referencefaqs-li><input type=checkbox id=m-weblogic-remote-console2411referencefaqs-check>
-<label for=m-weblogic-remote-console2411referencefaqs-check><a href=/weblogic-remote-console/2.4.11/reference/faqs/ class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id=m-weblogic-remote-console2411referencefaqs><span>Frequently asked questions</span></a></label></li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id=m-weblogic-remote-console2411referenceknown_issues-li><input type=checkbox id=m-weblogic-remote-console2411referenceknown_issues-check>
-<label for=m-weblogic-remote-console2411referenceknown_issues-check><a href=/weblogic-remote-console/2.4.11/reference/known_issues/ class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id=m-weblogic-remote-console2411referenceknown_issues><span>Known issues</span></a></label></li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id=m-weblogic-remote-console2411referencetroubleshoot-li><input type=checkbox id=m-weblogic-remote-console2411referencetroubleshoot-check>
-<label for=m-weblogic-remote-console2411referencetroubleshoot-check><a href=/weblogic-remote-console/2.4.11/reference/troubleshoot/ class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id=m-weblogic-remote-console2411referencetroubleshoot><span>Troubleshoot issues</span></a></label></li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id=m-weblogic-remote-console2411referencesecurity-warnings-li><input type=checkbox id=m-weblogic-remote-console2411referencesecurity-warnings-check>
-<label for=m-weblogic-remote-console2411referencesecurity-warnings-check><a href=/weblogic-remote-console/2.4.11/reference/security-warnings/ class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id=m-weblogic-remote-console2411referencesecurity-warnings><span>Review security issues</span></a></label></li></ul></li></ul></li></ul></nav></div></aside><aside class="d-none d-xl-block col-xl-2 td-sidebar-toc d-print-none"><div class="td-page-meta ms-2 pb-1 pt-2 mb-0"></div><div class=td-toc><nav id=TableOfContents><ul><li><a href=#connect-to-a-weblogic-administration-server>Connect to a WebLogic Administration Server</a></li><li><a href=#changes_adminserver>Edit a WebLogic Administration Server</a><ul><li><a href=#shopping_cart>Shopping cart</a></li></ul></li><li><a href=#edit-the-connection-details-of-a-weblogic-administration-server>Edit the connection details of a WebLogic Administration Server</a></li><li><a href=#view-the-connection-details-of-a-weblogic-administration-server>View the connection details of a WebLogic Administration Server</a></li><li><a href=#delete-a-connection-to-a-weblogic-administration-server>Delete a connection to a WebLogic Administration Server</a></li><li><a href=#create-a-managed-server>Create a managed server</a></li><li><a href=#controls>Control Operations</a><ul><li><a href=#change-server-state>Change server state</a></li></ul></li><li><a href=#create>Create MBeans</a></li><li><a href=#application-deployment>Application Deployment</a><ul><li><a href=#install-an-application>Install an application</a></li><li><a href=#start-an-application>Start an application</a></li><li><a href=#stop-an-application>Stop an application</a></li><li><a href=#app-test>Test application deployment</a></li><li><a href=#view-an-applications-current-state>View an application&rsquo;s current state</a></li><li><a href=#review-an-applications-runtime-statistics>Review an application&rsquo;s runtime statistics</a></li><li><a href=#configure-deployment>Configure Deployment</a></li></ul></li></ul></nav></div></aside><main class="col-12 col-md-9 col-xl-8 ps-md-5" role=main><div class="pageinfo pageinfo-warning"><p>You are viewing documentation for an older release of WebLogic Remote Console. Read the
-<a href=/weblogic-remote-console/overview target=_blank>latest documentation</a> instead.</p><p>Stay up-to-date with the newest features and fixes. Download the latest release of WebLogic Remote Console from <a href=https://github.com/oracle/weblogic-remote-console/releases target=_blank>WebLogic Remote Console - Releases</a></p></div><nav aria-label=breadcrumb class=td-breadcrumbs><ol class=breadcrumb><li class=breadcrumb-item><a href=/weblogic-remote-console/2.4.11/>WebLogic Remote Console</a></li><li class=breadcrumb-item><a href=/weblogic-remote-console/2.4.11/userguide/>User guide</a></li><li class=breadcrumb-item><a href=/weblogic-remote-console/2.4.11/userguide/providers/>Provider types</a></li><li class="breadcrumb-item active" aria-current=page>Administration Servers</li></ol></nav><div class=td-content><h1>Administration Servers</h1><header class=article-meta></header><p>The WebLogic Remote Console can connect directly to a WebLogic Administration Server to view and edit its domain, much like the WebLogic Server Administration Console, though there are <a href=/weblogic-remote-console/2.4.11/setup/admin-console-diff/>some differences</a>.</p><p>You can save the connection details for multiple WebLogic Administration Servers, making it easy to switch between domains with a click.</p><h2 id=connect-to-a-weblogic-administration-server>Connect to a WebLogic Administration Server</h2><ol><li><p>Start the WebLogic Administration Server.</p></li><li><p>Open the Providers drawer and beside the project name, click ⋮. Select <strong>Add Admin Server Connection Provider</strong>.</p></li><li><p>Enter a name for the Administration Server connection. This is the name that will appear in the Project list of providers so you can identify which provider you’re working on.</p></li><li><p>Enter a username and password for a user account with editing privileges in the selected Administration Server.
-As with the Administration Console, your management capabilities will be limited depending on the level of access granted to your user account. See <a href=/weblogic-remote-console/2.4.11/userguide/role-access/>Understand access discrepancies</a> for more information. You can choose to have multiple connections to the same Administration Server with different users.</p></li><li><p>Enter the URL for the Administration Server.</p><p><strong>Note</strong>: Make sure that the <code>management/*</code> endpoint of your Administration Server is accessible by the WebLogic Remote Console. If your administration server&rsquo;s endpoints are behind a load balancer, firewall, or otherwise externally unavailable, you will need to expose that endpoint manually.</p></li><li><p><strong>Optional</strong>:</p><ul><li>If you want to force WebLogic Remote Console to connect to an Administration Server regardless of warnings about expired, untrusted, or missing certificates, enable the <strong>Insecure Connection</strong> checkbox. We <em>strongly</em> recommend that you only enable this setting for development or demonstration environments.</li><li>If you want to facilitate communication between a WebLogic Server domain that resides in a different network and the WebLogic Remote Console, enter a proxy server address in the <strong>Proxy Override</strong> field. You can also <a href=/weblogic-remote-console/2.4.11/userguide/advanced-settings/#proxy>set a proxy address globally</a> that applies to all administration server connections.</li></ul></li><li><p>Click <strong>OK</strong> to connect the WebLogic Remote Console to the WebLogic Administration Server.</p></li></ol><p>The WebLogic Remote Console is now connected to a WebLogic Administration Server. You can make changes to the domain as desired.</p><div class="alert alert-info" role=alert><h4 class=alert-heading>Tip</h4>You can use the WebLogic Remote Console to manage a WebLogic Server domain running on Kubernetes. For details about how to set up access to WebLogic Server domains running on Kubernetes, see <a href=https://oracle.github.io/weblogic-kubernetes-operator/managing-domains/accessing-the-domain/remote-admin-console/>Use the Remote Console</a> in the <em>WebLogic Kubernetes Operator User Guide</em>.</div><p>The Administration Server provider is split into multiple perspectives, each of which focuses on a different management area for a WebLogic domain:</p><ul><li><strong>Edit Tree</strong>: an editable view of the WebLogic Server domain. Enter this perspective when you want to make and commit changes to the domain.</li><li><strong>Configuration Tree</strong>: a read-only view of the WebLogic Server domain. Enter this perspective if you want to see the current settings of the domain, without making any changes.</li><li><strong>Monitoring Tree</strong>: an overview of the runtime statistics for the running domain. You can view statistics by server or aggregated across servers. For example, applications running on Server1 vs. applications running on one or more servers. The Monitoring Tree also provides some control operations such as starting or stopping servers or applications.</li><li><strong>Security Data Tree</strong>: an editable view of the security providers&rsquo; data in the security realm. This includes users, groups, policies, and so on.</li></ul><div class="alert alert-primary" role=alert><h4 class=alert-heading>Note</h4><p>While the Edit Tree and the Configuration Tree perspectives look similar, they are generated from two separate collections of configuration MBeans, which results in important and distinct nuances between the two perspectives:</p><ol><li><p>Changes made in the Edit Tree perspective do not appear in the Configuration Tree perspective until you commit them, or for non-dynamic changes, until you restart the server.</p></li><li><p>Certain dynamically computed domain contents do not appear in the Edit Tree. For example,</p><ul><li>Dynamic clusters (and their servers)</li><li>Situational configurations</li><li>Changes made from the command line using system properties</li><li>Changes to some production mode-related settings</li></ul></li></ol><p>For more information on the differences between editable Configuration MBeans and read-only Configuration MBeans, see <a href=https://docs.oracle.com/en/middleware/standalone/weblogic-server/14.1.1.0/domcf/changes.html#GUID-223E202F-DA06-45C3-B297-E66655F4E9AB>Managing Configuration Changes</a> in Understanding Domain Configuration for Oracle WebLogic Server.</p></div><h2 id=changes_adminserver>Edit a WebLogic Administration Server</h2><p>Editing a domain in the WebLogic Remote Console is similar in process to the Administration Console. When you start editing a domain, a configuration lock is created that blocks other users from making simultaneous changes. Once you&rsquo;re satisfied with your changes, you can activate these changes and perpetuate them to the Administration and Management Servers.</p><div class="alert alert-primary" role=alert><h4 class=alert-heading>Note</h4>Certain areas and actions in the WebLogic Remote Console are hidden from non-administrators. For example, users with the Operator role cannot see the Edit Tree at all. For more information on what each user role can (or cannot) access, see <a href=../../role-access>Understand Access Discrepancies</a>.</div><ol><li>Open the Providers drawer and select the Administration Server you want to edit.</li><li>Click the <strong>Edit Tree</strong> perspective and make your changes to the domain configuration. Fields marked with <img src=/weblogic-remote-console/images/ui-icons/restart-required-blk_24x24.png alt="Server restart icon"> require a server restart.</li><li>Click <strong>Save</strong> on every page after making your changes.</li><li>If you have the extension installed, open the Providers drawer and select <strong>Shopping Cart</strong> to view your changes.</li><li>Commit your changes. In the upper right corner of the content pane, click <img src=/weblogic-remote-console/images/ui-icons/shopping-cart-icon_24x24.png alt="Shopping cart icon"> and then <strong>Commit Changes</strong>.</li><li>Restart your server if necessary.<ol><li>Check if any servers require a restart on the <strong>Monitoring Tree</strong> perspective > <strong>Environment</strong> > <strong>Servers</strong> page.</li></ol></li></ol><div class="alert alert-info" role=alert><h4 class=alert-heading>Tip</h4>You can restore fields to their default value. Right-click on a field and click <strong>Restore to default</strong>.</div><h3 id=shopping_cart>Shopping cart</h3><p>The Shopping Cart (equivalent to the Change List in the WebLogic Server Administration Console) holds all the pending changes for the current session in the WebLogic Remote Console. In the shopping cart, you can see if any changes are pending, commit those changes or discard them entirely.</p><p>If you installed the console extension, <code>console-rest-ext-2.4.11.war</code>, then you can also see the specific changes you&rsquo;ve made and the status of the lock in the Change Manager.</p><p>Open the Shopping Cart menu and click <strong>View Changes</strong> to see your pending changes.</p><p>Some changes can be activated immediately (dynamic) while other changes require a server restart to activate (non-dynamic). When you need to activate non-dynamic changes, navigate to the <strong>Environment</strong> > <strong>Servers</strong> node in the Monitoring perspective to see which servers need a restart.</p><p>If you need to undo a change, you must discard all Shopping Cart contents or manually revert the change in the Edit Tree perspective.</p><div class="alert alert-primary" role=alert><h4 class=alert-heading>Note</h4><p>The configuration change lock does not prevent you from making conflicting configuration edits using the same administrator user account. For example, if you obtain a configuration change lock in the WebLogic Remote Console, and then use the Administration Console or WebLogic Scripting Tool (WLST) with the same user account, you will access the same edit session that you opened in the WebLogic Remote Console and you will not be blocked from making changes with the other tools.</p><p>We recommend against making changes using multiple tools because when one of the sessions activates their changes, it releases the lock and the other session will not be able to save or activate their changes.</p></div><h2 id=edit-the-connection-details-of-a-weblogic-administration-server>Edit the connection details of a WebLogic Administration Server</h2><ol><li>Open the Providers drawer and beside the WebLogic Administration Server connection that you want to edit, click the <img src=/weblogic-remote-console/images/ui-icons/data-providers-manage-icon-brn_24x24.png alt="Settings icon"> icon.</li><li>Edit the details of the WebLogic Administration Server. You can change its name in WebLogic Remote Console, switch user accounts or update the URL.</li><li>Click <strong>OK</strong> to save your changes.</li></ol><h2 id=view-the-connection-details-of-a-weblogic-administration-server>View the connection details of a WebLogic Administration Server</h2><p>It&rsquo;s easy to view the details of a WebLogic Server Connection.</p><ol><li>Open the Providers drawer and beside the WebLogic Administration Server, click the <img src=/weblogic-remote-console/images/ui-icons/data-providers-info-icon-brn_24x24.png alt="Details icon"> icon.</li></ol><p>A list of connection details will appear, including:</p><ul><li>Provider ID</li><li>Domain Name</li><li>Domain URL</li><li>Domain Version</li><li>Username</li><li>Role</li></ul><h2 id=delete-a-connection-to-a-weblogic-administration-server>Delete a connection to a WebLogic Administration Server</h2><p>This will only delete the WebLogic Remote Console access to the WebLogic Administration Server. The domain itself will be unaffected.</p><ol><li>Open the Providers drawer and beside the WebLogic Administration Server, click the <img src=/weblogic-remote-console/images/ui-icons/delete-icon-blk_24x24.png alt="Trash icon"> icon.</li></ol><h2 id=create-a-managed-server>Create a managed server</h2><ol><li>In the Edit Tree perspective, expand the <strong>Environment</strong> > <strong>Servers</strong> node.</li><li>Click <strong>New</strong>.</li><li>Enter a name for the new server.</li><li><strong>Optional</strong>: If you want to copy the settings from an existing server onto your new server, select a server from the <strong>Copy settings from another server</strong> dropdown. Only the server&rsquo;s settings will be copied; children, such as channels, are not copied. Any settings that are not supported by the WebLogic Server REST API are also not copied.</li><li>Click <strong>Create</strong>.</li></ol><h2 id=controls>Control Operations</h2><p>The WebLogic Remote Console provides control operations for the Administration Server in the Monitoring perspective.</p><h3 id=change-server-state>Change server state</h3><p>Server state indicates the specific condition of a server in the life cycle management.</p><ol><li>Open the Providers drawer and select a WebLogic Administration Server connection.</li><li>Choose the <strong>Monitoring</strong> perspective from the home page.</li><li>Go to <strong>Environment</strong> > <strong>Servers</strong></li><li>Choose the action for the server(s):<ul><li>Start</li><li>Resume</li><li>Suspend</li><li>Shutdown</li><li>Restart SSL</li></ul></li><li>Choose when to initiate the action:<ul><li>When work completes</li><li>Force shutdown now</li></ul></li><li>In the dialog box, move the servers whose state you want to change from <strong>Available</strong> to <strong>Chosen</strong>.</li><li>Initiate the action.</li></ol><h2 id=create>Create MBeans</h2><p>The WebLogic Remote Console includes simplified wizards for deploying applications and creating JDBC system resources.</p><p>In most other cases, when you create a new MBean on a page, you are prompted to fill in a few key properties, such as Name, then click <strong>Create</strong>. Unlike the WebLogic Server Administration Console, the WebLogic Remote Console does not guide you through configuring other properties that you typically need to complete the configuration. Instead, it displays the new bean&rsquo;s pages where you can click through the tabs to finish configuring the bean.</p><div class="alert alert-primary" role=alert><h4 class=alert-heading>Note</h4>When you configure a bean property that references another bean, you must first create the other bean. For example, if you want to assign Server1 to Cluster1, you need to create Cluster1 first, unlike in the WebLogic Server Administration Console where you can choose to create Cluster1 during server creation.</div><h2 id=application-deployment>Application Deployment</h2><p>You can use the WebLogic Remote Console to manage the deployment process for applications to WebLogic Server.</p><p>For more information on the general process for application deployment, see <a href=https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/12.2.1.4/depgd/intro.html#GUID-DD8754D5-0E35-4FDC-97BD-D9CD9876CC9B>Deploying Applications to Oracle WebLogic Server</a>.</p><h3 id=install-an-application>Install an application</h3><p>When you install an application, you make its physical file or directory known to WebLogic Server. An application can be installed as an archived EAR file or as an exploded directory.</p><ol><li>In the <strong>Edit Tree</strong>, navigate to <strong>Deployments</strong> > <strong>App Deployments</strong>.</li><li>Select <strong>New</strong>.</li><li>Fill in the required fields.</li><li>Click <strong>Create</strong>.</li><li>Commit your changes.</li></ol><p>Your new application appears under the App Deployment node. You can make additional changes to the application on this page.</p><p>You must start an application before it can process client requests.</p><h3 id=start-an-application>Start an application</h3><p>You need to start an application to make it available to WebLogic Server clients.</p><p>When you start an application, you can make it immediately available to clients, or you can start it in Administration Mode to first ensure that it is working as you expect. Starting in Administration Mode allows you to perform final (&ldquo;sanity&rdquo;) checking of the distributed application directly in the production environment without disrupting clients.</p><ol><li>In the Monitoring Tree, navigate to <strong>Deployments</strong> > <strong>Application Management</strong>.</li><li>Select the application that you want to start.</li><li>Click <strong>Start</strong> and choose either:<ul><li><strong>Servicing all requests</strong>: to make the application immediately available to all clients.</li><li><strong>Servicing only administration request</strong>: to make the application available in Administration Mode only.</li></ul></li></ol><h3 id=stop-an-application>Stop an application</h3><p>When you stop an application, you can choose whether no clients can use it, or stop it in Administration Mode so that only administrative tasks can be performed.</p><p>Stopping an application does not remove its source files from the server; you can later redeploy a stopped application to make it available to WebLogic Server clients again.</p><ol><li>In the Monitoring Tree, navigate to Deployments > Application Management.</li><li>Select the application that you want to stop.</li><li>Click <strong>Stop</strong> and choose either:<ul><li><strong>When work completes</strong>: to allow the application to finish its work and for all currently connected users to disconnect.</li><li><strong>Force stop now</strong>: to stop the application immediately, regardless of the work that is being performed and the users that are connected.</li><li><strong>Servicing non-administration requests</strong>: to stop the application once all its work has finished, but to then put the application in Administration Mode so it remains accessible for administrative purposes.</li></ul></li></ol><h3 id=app-test>Test application deployment</h3><p>After you deploy an application, you may want to confirm that it was deployed successfully.</p><ol><li><p>In the <strong>Monitoring Tree</strong>, navigate to <strong>Environment</strong> > <strong>Servers</strong> > <em>myServer</em> > <strong>Deployments</strong> > <strong>Application Runtimes</strong> > <em>myApp</em> > <strong>Component Runtimes</strong> > <em>myServer/myApp</em> > <strong>Servlets</strong>.</p></li><li><p>Construct a URL using the target server address plus the <code>ContextPath</code> and <code>Name</code> values from the Servlets table. For example, for an application deployed on the Administration Server, a test URL might look like <code>http://adminserver:7001/myapp/welcome</code>.</p><p><strong>Note</strong>: Remember to consider any changes you made to network channels that may affect the application deployment. For example, the application may be on a different port.</p></li><li><p>Enter the URL into your browser. If the page loads correctly, then your application was deployed successfully.</p></li></ol><h3 id=view-an-applications-current-state>View an application&rsquo;s current state</h3><ol><li>In the <strong>Monitoring Tree</strong>, navigate to <strong>Deployments</strong> > <strong>Application Management</strong> and choose the application whose state you want to view.</li></ol><h3 id=review-an-applications-runtime-statistics>Review an application&rsquo;s runtime statistics</h3><ol><li>In the <strong>Monitoring Tree</strong>, navigate to <strong>Deployments</strong> > <strong>Application Runtime Data</strong> and choose the application for which you want to view runtime information.</li><li>Explore the child nodes of the selected application to see its various runtime data.</li></ol><h3 id=configure-deployment>Configure Deployment</h3><p>After you deploy an application, you can configure additional settings to meet the needs of your environment.</p><ol><li><p>If you haven&rsquo;t already, create a deployment plan for the application. You can view the default configuration settings but they are read-only until you create a deployment plan. For more information, see <a href=/weblogic-remote-console/2.4.11/userguide/providers/administration-server/#deployment-plan>Deployment Plans</a>.</p><p><strong>Note</strong>: You cannot create a deployment plan for applications that were auto-deployed.</p><ol><li><p>In the <strong>Monitoring Tree</strong>, navigate to <strong>Deployments</strong> > <strong>Application Management</strong> and select your application.</p></li><li><p>Click <strong>Create Plan</strong>.</p></li><li><p>In the <strong>Plan Path</strong> field, enter a file path for the new deployment plan. You should create the new deployment plan for a single application within a <code>plan/</code> subdirectory of the application&rsquo;s root directory. Deployment plans must be in XML format and should be called <code>plan.xml</code>.</p></li><li><p>Click <strong>Done</strong>. WebLogic Server will create a basic deployment plan.</p><p><strong>Note</strong>: You can see the deployment plan for an application under <strong>Deployments</strong> > <strong>Application Management</strong> > <em>myApplication</em> > <strong>Deployment Plan (Advanced)</strong>.</p></li></ol></li><li><p>Go to <strong>Deployments</strong> > <strong>Application Management</strong> > <em>myApplication</em> > <strong>Configuration</strong>. Explore the Configuration node and its children to see the available deployment configuration options.</p><p><strong>Note</strong>: The contents of the Configuration node and its children differ based on application type. For example, web applications include settings for container descriptors while resource adapters include settings for outbound connection pools.</p></li><li><p>Click <strong>Save</strong> as you make changes. Any changes that you make to the <strong>Configuration</strong> node and its children are automatically reflected in the deployment plan.</p></li><li><p>Update and possibly redeploy your application to apply your changes. See <a href=/weblogic-remote-console/2.4.11/userguide/providers/administration-server/#redeploy-app>Update or redeploy an application</a> for instructions.</p></li></ol><h4 id=redeploy-app>Update or redeploy an application</h4><p>If your changes are dynamic, then you only need to update the deployment plan. However, if your changes include non-dynamic changes, you must redeploy the application to propagate the changes from the deployment plan to the application.</p><p>For more information, see <a href=https://docs.oracle.com/en/middleware/standalone/weblogic-server/14.1.1.0/depgd/redeploy.html#GUID-69BCEEBE-D19A-4B55-B14D-DAA10A209C21>Overview of Redeployment Strategies</a> in <em>Deploying Applications to Oracle WebLogic Server</em>.</p><p>To update or redeploy an application with an updated deployment settings.</p><ol><li>In the <strong>Monitoring Tree</strong>, navigate to <strong>Deployments</strong> > <strong>Application Management</strong> and select your application.</li><li>Click <strong>Update/Redeploy</strong>.</li><li>Choose one of the options:<ul><li>Update with New Deployment Plan:<ul><li><strong>Deployment Plan on Server</strong>: Updates the application using a new deployment plan located on the server. This option only applies dynamic changes to the application.</li><li><strong>Deployment Plan on Local Machine</strong>: Updates the application using a new deployment plan located on the local machine and then uploads it to the Administration Server&rsquo;s upload directory. This option only applies dynamic changes to the application.</li></ul></li><li><strong>Update with Modified Existing Deployment Plan</strong>: Updates the existing deployment plan. This option only applies dynamic changes to the application.</li><li>Redeploy:<ul><li><strong>Deployment Plan and Source on Server</strong>: Updates a deployment plan located on the server and redeploys the application. Use this option if your changes include non-dynamic changes that require the application to restart.</li><li><strong>Deployment Plan and Source on Local Machine</strong>: Updates a deployment plan located on the local machine and redeploys the application. Use this option if your changes include non-dynamic changes that the application to restart.</li></ul></li></ul></li></ol><h4 id=deployment-plan>Deployment Plans</h4><p>You can use a deployment plan to specify deployment property values for an application. A deployment plan is an optional document that works with or overrides your application&rsquo;s deployment descriptors to configure an application for deployment to a specific WebLogic Server environment. Deployment plans are written in XML.</p><p>For more information, see <a href=https://docs.oracle.com/en/middleware/standalone/weblogic-server/14.1.1.0/depgd/config.html#GUID-29545865-3AC0-4777-8243-A85CDB04F33C>Understanding WebLogic Server Deployment Plans</a> in Deploying Applications to Oracle WebLogic Server.</p><p><strong>Note</strong>: You cannot create a deployment plan for applications that were auto-deployed.</p><p>Generally, if you need to modify the deployment settings of an application, you should use the Configuration node (as described in <a href=/weblogic-remote-console/2.4.11/userguide/providers/administration-server/#configure-deployment>Configure Deployment</a>), instead of manually editing the deployment plan.</p><h5 id=create-a-deployment-plan>Create a Deployment Plan</h5><ol><li>In the <strong>Monitoring Tree</strong>, navigate to <strong>Deployments</strong> > <strong>Application Management</strong> and select your application.</li><li>Click <strong>Create Plan</strong>.</li><li>In the <strong>Plan Path</strong> field, enter a file path for the new deployment plan. You should create the new deployment plan for a single application within a <code>plan/</code> subdirectory of the application&rsquo;s root directory. Deployment plans must be in XML format and should be called <code>plan.xml</code>.</li><li>Click <strong>Done</strong>.</li></ol><h5 id=update-dep-plan>Update a Deployment Plan</h5><p>You can manually edit a deployment plan to update it with new deployment instructions for an application.</p><p>For more information, see <a href=https://docs.oracle.com/en/middleware/standalone/weblogic-server/14.1.1.0/depgd/export.html#GUID-CE85B546-1757-4AE3-BC82-E2C8EC202D0C>Manually Customizing the Deployment Plan</a> in Deploying Applications to Oracle WebLogic Server.</p><ol><li>In the <strong>Monitoring Tree</strong>, navigate to <strong>Deployments</strong> > <strong>Application Management</strong> > <em>myApplication</em> > <strong>Deployment Plan (Advanced)</strong>.</li><li>You can edit the the deployment plan as a whole or the individual variable assignments within a deployment plan:<ul><li>To edit a deployment plan document:<ol><li>Select the <strong>Deployment Plan</strong> tab.</li><li>Edit the deployment plan directly within the text box field or copy and paste the plan into a text editor. Make your edits and then copy and paste it back into the WebLogic Remote Console.</li><li>Click <strong>Save</strong>.</li></ol></li><li>To edit individual variable assignments:<ol><li>Select the variable assignment module that you want to edit and click <strong>Edit</strong>.</li><li>Enter a value and, if updating an array, choose an operation.</li><li>Click <strong>Done</strong>.</li></ol></li></ul></li><li>You will need to update and possibly redeploy your application to apply your changes. See <a href=/weblogic-remote-console/2.4.11/userguide/providers/administration-server/#redeploy-app>Update or redeploy an application</a> for instructions.</li></ol><div class=section-index><hr class=panel-line><div class=entry><h5><a href=/weblogic-remote-console/2.4.11/userguide/providers/administration-server/security-data/>Editing security data</a></h5><p></p></div></div></div></main></div></div><footer class="td-footer row d-print-none"><div class=container-fluid><div class="row mx-md-2"><div class="td-footer__left col-6 col-sm-4 order-sm-1"></div><div class="td-footer__right col-6 col-sm-4 order-sm-3"></div><div class="td-footer__center col-12 col-sm-4 py-2 order-sm-2"><span class=td-footer__copyright>&copy;
-2020&ndash;2025
-<span class=td-footer__authors>Oracle | <a href=https://github.com/oracle/weblogic-remote-console/blob/main/LICENSE.txt>UPL 1.0</a></span></span><span class=td-footer__all_rights_reserved>All Rights Reserved</span></div></div></div></footer></div><script src=/weblogic-remote-console/js/main.min.90902a026ed2aee7ed45d85797f4c790b240ba148ac6f8a6f194cb1981ffecf5.js integrity="sha256-kJAqAm7SruftRdhXl/THkLJAuhSKxvim8ZTLGYH/7PU=" crossorigin=anonymous></script><script defer src=/weblogic-remote-console/js/click-to-copy.min.73478a7d4807698aed7e355eb23f9890ca18fea3158604c8471746d046702bad.js integrity="sha256-c0eKfUgHaYrtfjVesj+YkMoY/qMVhgTIRxdG0EZwK60=" crossorigin=anonymous></script><script src=/weblogic-remote-console/js/tabpane-persist.js></script></body></html>
+Connect to a WebLogic Administration Server Start the WebLogic Administration Server.">
+<link href="/scss/main.css" rel="stylesheet">
+<script
+  src="https://code.jquery.com/jquery-3.7.1.min.js"
+  integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+  crossorigin="anonymous"></script>
+<script defer
+  src="https://unpkg.com/lunr@2.3.9/lunr.min.js"
+  integrity="sha384-203J0SNzyqHby3iU6hzvzltrWi/M41wOP5Gu+BiJMz5nwKykbkUx8Kp7iti0Lpli"
+  crossorigin="anonymous"></script>
+
+  </head>
+  <body class="td-section">
+    <header>
+      <nav class="td-navbar js-navbar-scroll" data-bs-theme="dark">
+<div class="container-fluid flex-column flex-md-row">
+  <a class="navbar-brand" href="/"><span class="navbar-brand__logo navbar-logo"></span><span class="navbar-brand__name">WebLogic Remote Console</span></a>
+  <div class="td-navbar-nav-scroll ms-md-auto" id="main_navbar">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" href="/overview"><span>Documentation</span></a>
+      </li>
+      <li class="nav-item dropdown d-none d-lg-block">
+        <div class="dropdown">
+  <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Releases</a>
+  <ul class="dropdown-menu">
+    <li><a class="dropdown-item" href="/weblogic-remote-console/overview">Latest (v2.4.16)</a></li>
+    <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.15">v2.4.15</a></li>
+    <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.14">v2.4.14</a></li>
+    <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.13">v2.4.13</a></li>
+    <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.12">v2.4.12</a></li>
+    <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.11">v2.4.11</a></li>
+    </ul>
+</div></li>
+      <li class="td-light-dark-menu nav-item dropdown">
+        <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
+  <symbol id="check2" viewBox="0 0 16 16">
+    <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/>
+  </symbol>
+  <symbol id="circle-half" viewBox="0 0 16 16">
+    <path d="M8 15A7 7 0 1 0 8 1v14zm0 1A8 8 0 1 1 8 0a8 8 0 0 1 0 16z"/>
+  </symbol>
+  <symbol id="moon-stars-fill" viewBox="0 0 16 16">
+    <path d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z"/>
+    <path d="M10.794 3.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387a1.734 1.734 0 0 0-1.097 1.097l-.387 1.162a.217.217 0 0 1-.412 0l-.387-1.162A1.734 1.734 0 0 0 9.31 6.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387a1.734 1.734 0 0 0 1.097-1.097l.387-1.162zM13.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.156 1.156 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.156 1.156 0 0 0-.732-.732l-.774-.258a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732L13.863.1z"/>
+  </symbol>
+  <symbol id="sun-fill" viewBox="0 0 16 16">
+    <path d="M8 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13zm8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5zM3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8zm10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0zm-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708z"/>
+  </symbol>
+</svg>
+
+<button class="btn btn-link nav-link dropdown-toggle d-flex align-items-center"
+        id="bd-theme"
+        type="button"
+        aria-expanded="false"
+        data-bs-toggle="dropdown"
+        data-bs-display="static"
+        aria-label="Toggle theme (auto)">
+  <svg class="bi my-1 theme-icon-active"><use href="#circle-half"></use></svg>
+</button>
+<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="bd-theme-text">
+  <li>
+    <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="light" aria-pressed="false">
+      <svg class="bi me-2 opacity-50"><use href="#sun-fill"></use></svg>
+      Light
+      <svg class="bi ms-auto d-none"><use href="#check2"></use></svg>
+    </button>
+  </li>
+  <li>
+    <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="dark" aria-pressed="false">
+      <svg class="bi me-2 opacity-50"><use href="#moon-stars-fill"></use></svg>
+      Dark
+      <svg class="bi ms-auto d-none"><use href="#check2"></use></svg>
+    </button>
+  </li>
+  <li>
+    <button type="button" class="dropdown-item d-flex align-items-center active" data-bs-theme-value="auto" aria-pressed="true">
+      <svg class="bi me-2 opacity-50"><use href="#circle-half"></use></svg>
+      Auto
+      <svg class="bi ms-auto d-none"><use href="#check2"></use></svg>
+    </button>
+  </li>
+</ul>
+
+      </li>
+      </ul>
+  </div>
+  <div class="d-none d-lg-block">
+    <div class="td-search td-search--offline">
+  <div class="td-search__icon"></div>
+  <input
+    type="search"
+    class="td-search__input form-control"
+    placeholder="Search this site…"
+    aria-label="Search this site…"
+    autocomplete="off"
+    
+    data-offline-search-index-json-src="/offline-search-index.json"
+    data-offline-search-base-href="/"
+    data-offline-search-max-results="10"
+  >
+</div>
+  </div>
+</div>
+</nav>
+    </header>
+    <div class="container-fluid td-outer">
+      <div class="td-main">
+        <div class="row flex-xl-nowrap">
+          <aside class="col-12 col-md-3 col-xl-2 td-sidebar d-print-none">
+            <div id="td-sidebar-menu" class="td-sidebar__inner">
+  <div id="content-mobile">
+  <form class="td-sidebar__search d-flex align-items-center">
+    <div class="td-search td-search--offline">
+  <div class="td-search__icon"></div>
+  <input
+    type="search"
+    class="td-search__input form-control"
+    placeholder="Search this site…"
+    aria-label="Search this site…"
+    autocomplete="off"
+    
+    data-offline-search-index-json-src="/offline-search-index.json"
+    data-offline-search-base-href="/"
+    data-offline-search-max-results="10"
+  >
+</div>
+    <button class="btn btn-link td-sidebar__toggle d-md-none p-0 ms-3 fas fa-bars" type="button" data-bs-toggle="collapse" data-bs-target="#td-section-nav" aria-controls="td-section-nav" aria-expanded="false" aria-label="Toggle section navigation">
+    </button>
+  </form>
+  </div>
+  <div id="content-desktop"></div>
+  <nav class="td-sidebar-nav collapse td-sidebar-nav--search-disabled foldable-nav" id="td-section-nav">
+    <ul class="td-sidebar-nav__section pe-md-3 ul-0">
+      <li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child active-path" id="m-2411-li">
+  <a href="/2.4.11/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section tree-root" id="m-2411"><span class="">WebLogic Remote Console</span></a>
+  <ul class="ul-1">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-2411setup-li">
+  <input type="checkbox" id="m-2411setup-check"/>
+  <label for="m-2411setup-check"><a href="/2.4.11/setup/" class="align-left ps-0  td-sidebar-link td-sidebar-link__section" id="m-2411setup"><span class="">Get started</span></a></label>
+  
+  <ul class="ul-2 foldable">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-2411setupconsole-li">
+  <input type="checkbox" id="m-2411setupconsole-check"/>
+  <label for="m-2411setupconsole-check"><a href="/2.4.11/setup/console/" class="align-left ps-0  td-sidebar-link td-sidebar-link__page" id="m-2411setupconsole"><span class="">Explore the WebLogic Remote Console</span></a></label>
+  
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-2411setupadmin-console-diff-li">
+  <input type="checkbox" id="m-2411setupadmin-console-diff-check"/>
+  <label for="m-2411setupadmin-console-diff-check"><a href="/2.4.11/setup/admin-console-diff/" class="align-left ps-0  td-sidebar-link td-sidebar-link__page" id="m-2411setupadmin-console-diff"><span class="">Differences with the Administration Console</span></a></label>
+  
+</li>
+  </ul>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child active-path" id="m-2411userguide-li">
+  <input type="checkbox" id="m-2411userguide-check" checked/>
+  <label for="m-2411userguide-check"><a href="/2.4.11/userguide/" class="align-left ps-0  td-sidebar-link td-sidebar-link__section" id="m-2411userguide"><span class="">User guide</span></a></label>
+  
+  <ul class="ul-2 foldable">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-2411userguideprojects-li">
+  <input type="checkbox" id="m-2411userguideprojects-check"/>
+  <label for="m-2411userguideprojects-check"><a href="/2.4.11/userguide/projects/" class="align-left ps-0  td-sidebar-link td-sidebar-link__page" id="m-2411userguideprojects"><span class="">Projects</span></a></label>
+  
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child active-path" id="m-2411userguideproviders-li">
+  <input type="checkbox" id="m-2411userguideproviders-check" checked/>
+  <label for="m-2411userguideproviders-check"><a href="/2.4.11/userguide/providers/" class="align-left ps-0  td-sidebar-link td-sidebar-link__section" id="m-2411userguideproviders"><span class="">Provider types</span></a></label>
+  
+  <ul class="ul-3 foldable">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child active-path" id="m-2411userguideprovidersadministration-server-li">
+  <input type="checkbox" id="m-2411userguideprovidersadministration-server-check" checked/>
+  <label for="m-2411userguideprovidersadministration-server-check"><a href="/2.4.11/userguide/providers/administration-server/" class="align-left ps-0  active td-sidebar-link td-sidebar-link__section" id="m-2411userguideprovidersadministration-server"><span class="td-sidebar-nav-active-item">Administration Servers</span></a></label>
+  
+  <ul class="ul-4 foldable">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-2411userguideprovidersadministration-serversecurity-data-li">
+  <input type="checkbox" id="m-2411userguideprovidersadministration-serversecurity-data-check"/>
+  <label for="m-2411userguideprovidersadministration-serversecurity-data-check"><a href="/2.4.11/userguide/providers/administration-server/security-data/" class="align-left ps-0  td-sidebar-link td-sidebar-link__page" id="m-2411userguideprovidersadministration-serversecurity-data"><span class="">Editing security data</span></a></label>
+  
+</li>
+  </ul>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-2411userguideprovidersproperty-list-li">
+  <input type="checkbox" id="m-2411userguideprovidersproperty-list-check"/>
+  <label for="m-2411userguideprovidersproperty-list-check"><a href="/2.4.11/userguide/providers/property-list/" class="align-left ps-0  td-sidebar-link td-sidebar-link__page" id="m-2411userguideprovidersproperty-list"><span class="">Property lists</span></a></label>
+  
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-2411userguideproviderswdt-model-li">
+  <input type="checkbox" id="m-2411userguideproviderswdt-model-check"/>
+  <label for="m-2411userguideproviderswdt-model-check"><a href="/2.4.11/userguide/providers/wdt-model/" class="align-left ps-0  td-sidebar-link td-sidebar-link__page" id="m-2411userguideproviderswdt-model"><span class="">WDT model files</span></a></label>
+  
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-2411userguideproviderswdt-composite-li">
+  <input type="checkbox" id="m-2411userguideproviderswdt-composite-check"/>
+  <label for="m-2411userguideproviderswdt-composite-check"><a href="/2.4.11/userguide/providers/wdt-composite/" class="align-left ps-0  td-sidebar-link td-sidebar-link__page" id="m-2411userguideproviderswdt-composite"><span class="">WDT composite models</span></a></label>
+  
+</li>
+  </ul>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-2411userguideadvanced-settings-li">
+  <input type="checkbox" id="m-2411userguideadvanced-settings-check"/>
+  <label for="m-2411userguideadvanced-settings-check"><a href="/2.4.11/userguide/advanced-settings/" class="align-left ps-0  td-sidebar-link td-sidebar-link__page" id="m-2411userguideadvanced-settings"><span class="">Customize settings</span></a></label>
+  
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-2411userguidedashboards-li">
+  <input type="checkbox" id="m-2411userguidedashboards-check"/>
+  <label for="m-2411userguidedashboards-check"><a href="/2.4.11/userguide/dashboards/" class="align-left ps-0  td-sidebar-link td-sidebar-link__page" id="m-2411userguidedashboards"><span class="">Generate dashboards</span></a></label>
+  
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-2411userguideupgrade-li">
+  <input type="checkbox" id="m-2411userguideupgrade-check"/>
+  <label for="m-2411userguideupgrade-check"><a href="/2.4.11/userguide/upgrade/" class="align-left ps-0  td-sidebar-link td-sidebar-link__page" id="m-2411userguideupgrade"><span class="">Upgrade the WebLogic Remote Console</span></a></label>
+  
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-2411userguidelogging-li">
+  <input type="checkbox" id="m-2411userguidelogging-check"/>
+  <label for="m-2411userguidelogging-check"><a href="/2.4.11/userguide/logging/" class="align-left ps-0  td-sidebar-link td-sidebar-link__page" id="m-2411userguidelogging"><span class="">Check log files</span></a></label>
+  
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-2411userguiderole-access-li">
+  <input type="checkbox" id="m-2411userguiderole-access-check"/>
+  <label for="m-2411userguiderole-access-check"><a href="/2.4.11/userguide/role-access/" class="align-left ps-0  td-sidebar-link td-sidebar-link__page" id="m-2411userguiderole-access"><span class="">Understand access discrepancies</span></a></label>
+  
+</li>
+  </ul>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-2411develop-li">
+  <input type="checkbox" id="m-2411develop-check"/>
+  <label for="m-2411develop-check"><a href="/2.4.11/develop/" class="align-left ps-0  td-sidebar-link td-sidebar-link__section" id="m-2411develop"><span class="">Development</span></a></label>
+  
+  <ul class="ul-2 foldable">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-2411developbuild-source-li">
+  <input type="checkbox" id="m-2411developbuild-source-check"/>
+  <label for="m-2411developbuild-source-check"><a href="/2.4.11/develop/build-source/" class="align-left ps-0  td-sidebar-link td-sidebar-link__page" id="m-2411developbuild-source"><span class="">Build from source</span></a></label>
+  
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-2411developcontribute-li">
+  <input type="checkbox" id="m-2411developcontribute-check"/>
+  <label for="m-2411developcontribute-check"><a href="/2.4.11/develop/contribute/" class="align-left ps-0  td-sidebar-link td-sidebar-link__page" id="m-2411developcontribute"><span class="">Contribute to WebLogic Remote Console</span></a></label>
+  
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-2411developdocs-contribute-li">
+  <input type="checkbox" id="m-2411developdocs-contribute-check"/>
+  <label for="m-2411developdocs-contribute-check"><a href="/2.4.11/develop/docs-contribute/" class="align-left ps-0  td-sidebar-link td-sidebar-link__page" id="m-2411developdocs-contribute"><span class="">Contribute to the documentation</span></a></label>
+  
+</li>
+  </ul>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-2411reference-li">
+  <input type="checkbox" id="m-2411reference-check"/>
+  <label for="m-2411reference-check"><a href="/2.4.11/reference/" class="align-left ps-0  td-sidebar-link td-sidebar-link__section" id="m-2411reference"><span class="">Reference</span></a></label>
+  
+  <ul class="ul-2 foldable">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-2411referencefaqs-li">
+  <input type="checkbox" id="m-2411referencefaqs-check"/>
+  <label for="m-2411referencefaqs-check"><a href="/2.4.11/reference/faqs/" class="align-left ps-0  td-sidebar-link td-sidebar-link__page" id="m-2411referencefaqs"><span class="">Frequently asked questions</span></a></label>
+  
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-2411referenceknown_issues-li">
+  <input type="checkbox" id="m-2411referenceknown_issues-check"/>
+  <label for="m-2411referenceknown_issues-check"><a href="/2.4.11/reference/known_issues/" class="align-left ps-0  td-sidebar-link td-sidebar-link__page" id="m-2411referenceknown_issues"><span class="">Known issues</span></a></label>
+  
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-2411referencetroubleshoot-li">
+  <input type="checkbox" id="m-2411referencetroubleshoot-check"/>
+  <label for="m-2411referencetroubleshoot-check"><a href="/2.4.11/reference/troubleshoot/" class="align-left ps-0  td-sidebar-link td-sidebar-link__page" id="m-2411referencetroubleshoot"><span class="">Troubleshoot issues</span></a></label>
+  
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-2411referencesecurity-warnings-li">
+  <input type="checkbox" id="m-2411referencesecurity-warnings-check"/>
+  <label for="m-2411referencesecurity-warnings-check"><a href="/2.4.11/reference/security-warnings/" class="align-left ps-0  td-sidebar-link td-sidebar-link__page" id="m-2411referencesecurity-warnings"><span class="">Review security issues</span></a></label>
+  
+</li>
+  </ul>
+</li>
+  </ul>
+</li>
+    </ul>
+  </nav>
+</div>
+
+          </aside>
+          <aside class="d-none d-xl-block col-xl-2 td-sidebar-toc d-print-none">
+            <div class="td-page-meta ms-2 pb-1 pt-2 mb-0">
+
+</div>
+
+            <div class="td-toc">
+        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#connect-to-a-weblogic-administration-server">Connect to a WebLogic Administration Server</a></li>
+    <li><a href="#changes_adminserver">Edit a WebLogic Administration Server</a>
+      <ul>
+        <li><a href="#shopping_cart">Shopping cart</a></li>
+      </ul>
+    </li>
+    <li><a href="#edit-the-connection-details-of-a-weblogic-administration-server">Edit the connection details of a WebLogic Administration Server</a></li>
+    <li><a href="#view-the-connection-details-of-a-weblogic-administration-server">View the connection details of a WebLogic Administration Server</a></li>
+    <li><a href="#delete-a-connection-to-a-weblogic-administration-server">Delete a connection to a WebLogic Administration Server</a></li>
+    <li><a href="#create-a-managed-server">Create a managed server</a></li>
+    <li><a href="#controls">Control Operations</a>
+      <ul>
+        <li><a href="#change-server-state">Change server state</a></li>
+      </ul>
+    </li>
+    <li><a href="#create">Create MBeans</a></li>
+    <li><a href="#application-deployment">Application Deployment</a>
+      <ul>
+        <li><a href="#install-an-application">Install an application</a></li>
+        <li><a href="#start-an-application">Start an application</a></li>
+        <li><a href="#stop-an-application">Stop an application</a></li>
+        <li><a href="#app-test">Test application deployment</a></li>
+        <li><a href="#view-an-applications-current-state">View an application&rsquo;s current state</a></li>
+        <li><a href="#review-an-applications-runtime-statistics">Review an application&rsquo;s runtime statistics</a></li>
+        <li><a href="#configure-deployment">Configure Deployment</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+      </div>
+    
+            
+
+          </aside>
+          <main class="col-12 col-md-9 col-xl-8 ps-md-5" role="main">
+            
+  
+  
+  
+  
+  <div class="pageinfo pageinfo-warning">
+    <p>You are viewing documentation for an older release of WebLogic Remote Console. Read the  
+        <a href="/weblogic-remote-console/overview" target="_blank">latest documentation</a> instead.</p>
+        <p>Stay up-to-date with the newest features and fixes. Download the latest release of WebLogic Remote Console from <a href="https://github.com/oracle/weblogic-remote-console/releases" target="_blank">WebLogic Remote Console - Releases</a></p>
+      
+    
+  </div>
+
+            <nav aria-label="breadcrumb" class="td-breadcrumbs">
+  <ol class="breadcrumb">
+  <li class="breadcrumb-item">
+    <a href="/2.4.11/">WebLogic Remote Console</a></li>
+  <li class="breadcrumb-item">
+    <a href="/2.4.11/userguide/">User guide</a></li>
+  <li class="breadcrumb-item">
+    <a href="/2.4.11/userguide/providers/">Provider types</a></li>
+  <li class="breadcrumb-item active" aria-current="page">
+    Administration Servers</li>
+  </ol>
+</nav>
+            
+<div class="td-content">
+	<h1>Administration Servers</h1>
+  
+	<header class="article-meta">
+		
+</header>
+	<p>The WebLogic Remote Console can connect directly to a WebLogic Administration Server to view and edit its domain, much like the WebLogic Server Administration Console, though there are <a href="/2.4.11/setup/admin-console-diff/">some differences</a>.</p>
+<p>You can save the connection details for multiple WebLogic Administration Servers, making it easy to switch between domains with a click.</p>
+<!-- You can even choose to add the same Administration Server multiple times, as long as it's either in a different project or has a different user account associated. -->
+<h2 id="connect-to-a-weblogic-administration-server">Connect to a WebLogic Administration Server</h2>
+<ol>
+<li>
+<p>Start the WebLogic Administration Server.</p>
+</li>
+<li>
+<p>Open the Providers drawer and beside the project name, click ⋮. Select <strong>Add Admin Server Connection Provider</strong>.</p>
+</li>
+<li>
+<p>Enter a name for the Administration Server connection. This is the name that will appear in the Project list of providers so you can identify which provider you’re working on.</p>
+</li>
+<li>
+<p>Enter a username and password for a user account with editing privileges in the selected Administration Server.
+As with the Administration Console, your management capabilities will be limited depending on the level of access granted to your user account. See <a href="/2.4.11/userguide/role-access/">Understand access discrepancies</a> for more information. You can choose to have multiple connections to the same Administration Server with different users.</p>
+</li>
+<li>
+<p>Enter the URL for the Administration Server.</p>
+<p><strong>Note</strong>: Make sure that the <code>management/*</code> endpoint of your Administration Server is accessible by the WebLogic Remote Console. If your administration server&rsquo;s endpoints are behind a load balancer, firewall, or otherwise externally unavailable, you will need to expose that endpoint manually.</p>
+</li>
+<li>
+<p><strong>Optional</strong>:</p>
+<ul>
+<li>If you want to force WebLogic Remote Console to connect to an Administration Server regardless of warnings about expired, untrusted, or missing certificates, enable the <strong>Insecure Connection</strong> checkbox. We <em>strongly</em> recommend that you only enable this setting for development or demonstration environments.</li>
+<li>If you want to facilitate communication between a WebLogic Server domain that resides in a different network and the WebLogic Remote Console, enter a proxy server address in the <strong>Proxy Override</strong> field. You can also <a href="/2.4.11/userguide/advanced-settings/#proxy">set a proxy address globally</a> that applies to all administration server connections.</li>
+</ul>
+</li>
+<li>
+<p>Click <strong>OK</strong> to connect the WebLogic Remote Console to the WebLogic Administration Server.</p>
+</li>
+</ol>
+<p>The WebLogic Remote Console is now connected to a WebLogic Administration Server. You can make changes to the domain as desired.</p>
+
+
+<div class="alert alert-info" role="alert">
+<h4 class="alert-heading">Tip</h4>
+
+    You can use the WebLogic Remote Console to manage a WebLogic Server domain running on Kubernetes. For details about how to set up access to WebLogic Server domains running on Kubernetes, see <a href="https://oracle.github.io/weblogic-kubernetes-operator/managing-domains/accessing-the-domain/remote-admin-console/">Use the Remote Console</a> in the <em>WebLogic Kubernetes Operator User Guide</em>.
+
+</div>
+<p>The Administration Server provider is split into multiple perspectives, each of which focuses on a different management area for a WebLogic domain:</p>
+<ul>
+<li><strong>Edit Tree</strong>: an editable view of the WebLogic Server domain. Enter this perspective when you want to make and commit changes to the domain.</li>
+<li><strong>Configuration Tree</strong>: a read-only view of the WebLogic Server domain. Enter this perspective if you want to see the current settings of the domain, without making any changes.</li>
+<li><strong>Monitoring Tree</strong>: an overview of the runtime statistics for the running domain. You can view statistics by server or aggregated across servers. For example, applications running on Server1  vs. applications running on one or more servers. The Monitoring Tree also provides some control operations such as starting or stopping servers or applications.</li>
+<li><strong>Security Data Tree</strong>: an editable view of the security providers&rsquo; data in the security realm. This includes users, groups, policies, and so on.</li>
+</ul>
+
+
+<div class="alert alert-primary" role="alert">
+<h4 class="alert-heading">Note</h4>
+
+    <p>While the Edit Tree and the Configuration Tree perspectives look similar, they are generated from two separate collections of configuration MBeans, which results in important and distinct nuances between the two perspectives:</p>
+<ol>
+<li>
+<p>Changes made in the Edit Tree perspective do not appear in the Configuration Tree perspective until you commit them, or for non-dynamic changes, until you restart the server.</p>
+</li>
+<li>
+<p>Certain dynamically computed domain contents do not appear in the Edit Tree. For example,</p>
+<ul>
+<li>Dynamic clusters (and their servers)</li>
+<li>Situational configurations</li>
+<li>Changes made from the command line using system properties</li>
+<li>Changes to some production mode-related settings</li>
+</ul>
+</li>
+</ol>
+<p>For more information on the differences between editable Configuration MBeans and read-only Configuration MBeans, see <a href="https://docs.oracle.com/en/middleware/standalone/weblogic-server/14.1.1.0/domcf/changes.html#GUID-223E202F-DA06-45C3-B297-E66655F4E9AB">Managing Configuration Changes</a> in Understanding Domain Configuration for Oracle WebLogic Server.</p>
+
+
+</div>
+<h2 id="changes_adminserver">Edit a WebLogic Administration Server</h2>
+<p>Editing a domain in the WebLogic Remote Console is similar in process to the Administration Console. When you start editing a domain, a configuration lock is created that blocks other users from making simultaneous changes. Once you&rsquo;re satisfied with your changes, you can activate these changes and perpetuate them to the Administration and Management Servers.</p>
+
+
+<div class="alert alert-primary" role="alert">
+<h4 class="alert-heading">Note</h4>
+
+    Certain areas and actions in the WebLogic Remote Console are hidden from non-administrators. For example, users with the Operator role cannot see the Edit Tree at all. For more information on what each user role can (or cannot) access, see <a href="../../role-access">Understand Access Discrepancies</a>.
+
+</div>
+<ol>
+<li>Open the Providers drawer and select the Administration Server you want to edit.</li>
+<li>Click the <strong>Edit Tree</strong> perspective and make your changes to the domain configuration. Fields marked with <img src="/weblogic-remote-console/images/ui-icons/restart-required-blk_24x24.png" alt="Server restart icon"> require a server restart.</li>
+<li>Click <strong>Save</strong> on every page after making your changes.</li>
+<li>If you have the extension installed, open the Providers drawer and select <strong>Shopping Cart</strong> to view your changes.</li>
+<li>Commit your changes. In the upper right corner of the content pane, click <img src="/weblogic-remote-console/images/ui-icons/shopping-cart-icon_24x24.png" alt="Shopping cart icon"> and then <strong>Commit Changes</strong>.</li>
+<li>Restart your server if necessary.
+<ol>
+<li>Check if any servers require a restart on the <strong>Monitoring Tree</strong> perspective &gt; <strong>Environment</strong> &gt; <strong>Servers</strong> page.</li>
+</ol>
+</li>
+</ol>
+
+
+<div class="alert alert-info" role="alert">
+<h4 class="alert-heading">Tip</h4>
+
+    You can restore fields to their default value. Right-click on a field and click <strong>Restore to default</strong>.
+
+</div>
+<h3 id="shopping_cart">Shopping cart</h3>
+<p>The Shopping Cart (equivalent to the Change List in the WebLogic Server Administration Console) holds all the pending changes for the current session in the WebLogic Remote Console. In the shopping cart, you can see if any changes are pending, commit those changes or discard them entirely.</p>
+<p>If you installed the console extension, <code>console-rest-ext-2.4.11.war</code>, then you can also see the specific changes you&rsquo;ve made and the status of the lock in the Change Manager.</p>
+<p>Open the Shopping Cart menu and click <strong>View Changes</strong> to see your pending changes.</p>
+<p>Some changes can be activated immediately (dynamic) while other changes require a server restart to activate (non-dynamic). When you need to activate non-dynamic changes, navigate to the <strong>Environment</strong> &gt; <strong>Servers</strong> node in the Monitoring perspective to see which servers need a restart.</p>
+<p>If you need to undo a change, you must discard all Shopping Cart contents or manually revert the change in the Edit Tree perspective.</p>
+
+
+<div class="alert alert-primary" role="alert">
+<h4 class="alert-heading">Note</h4>
+
+    <p>The configuration change lock does not prevent you from making conflicting configuration edits using the same administrator user account. For example, if you obtain a configuration change lock in the WebLogic Remote Console, and then use the Administration Console or WebLogic Scripting Tool (WLST) with the same user account, you will access the same edit session that you opened in the WebLogic Remote Console and you will not be blocked from making changes with the other tools.</p>
+<p>We recommend against making changes using multiple tools because when one of the sessions activates their changes, it releases the lock and the other session will not be able to save or activate their changes.</p>
+
+
+</div>
+<h2 id="edit-the-connection-details-of-a-weblogic-administration-server">Edit the connection details of a WebLogic Administration Server</h2>
+<ol>
+<li>Open the Providers drawer and beside the WebLogic Administration Server connection that you want to edit, click the <img src="/weblogic-remote-console/images/ui-icons/data-providers-manage-icon-brn_24x24.png" alt="Settings icon"> icon.</li>
+<li>Edit the details of the WebLogic Administration Server. You can change its name in WebLogic Remote Console, switch user accounts or update the URL.</li>
+<li>Click <strong>OK</strong> to save your changes.</li>
+</ol>
+<h2 id="view-the-connection-details-of-a-weblogic-administration-server">View the connection details of a WebLogic Administration Server</h2>
+<p>It&rsquo;s easy to view the details of a WebLogic Server Connection.</p>
+<ol>
+<li>Open the Providers drawer and beside the WebLogic Administration Server, click the <img src="/weblogic-remote-console/images/ui-icons/data-providers-info-icon-brn_24x24.png" alt="Details icon"> icon.</li>
+</ol>
+<p>A list of connection details will appear, including:</p>
+<ul>
+<li>Provider ID</li>
+<li>Domain Name</li>
+<li>Domain URL</li>
+<li>Domain Version</li>
+<li>Username</li>
+<li>Role</li>
+</ul>
+<h2 id="delete-a-connection-to-a-weblogic-administration-server">Delete a connection to a WebLogic Administration Server</h2>
+<p>This will only delete the WebLogic Remote Console access to the WebLogic Administration Server. The domain itself will be unaffected.</p>
+<ol>
+<li>Open the Providers drawer and beside the WebLogic Administration Server, click the <img src="/weblogic-remote-console/images/ui-icons/delete-icon-blk_24x24.png" alt="Trash icon"> icon.</li>
+</ol>
+<h2 id="create-a-managed-server">Create a managed server</h2>
+<ol>
+<li>In the Edit Tree perspective, expand the <strong>Environment</strong> &gt; <strong>Servers</strong> node.</li>
+<li>Click <strong>New</strong>.</li>
+<li>Enter a name for the new server.</li>
+<li><strong>Optional</strong>: If you want to copy the settings from an existing server onto your new server, select a server from the <strong>Copy settings from another server</strong> dropdown. Only the server&rsquo;s settings will be copied; children, such as channels, are not copied. Any settings that are not supported by the WebLogic Server REST API are also not copied.</li>
+<li>Click <strong>Create</strong>.</li>
+</ol>
+<h2 id="controls">Control Operations</h2>
+<p>The WebLogic Remote Console provides control operations for the Administration Server in the Monitoring perspective.</p>
+<h3 id="change-server-state">Change server state</h3>
+<p>Server state indicates the specific condition of a server in the life cycle management.</p>
+<ol>
+<li>Open the Providers drawer and select a WebLogic Administration Server connection.</li>
+<li>Choose the <strong>Monitoring</strong> perspective from the home page.</li>
+<li>Go to <strong>Environment</strong> &gt; <strong>Servers</strong></li>
+<li>Choose the action for the server(s):
+<ul>
+<li>Start</li>
+<li>Resume</li>
+<li>Suspend</li>
+<li>Shutdown</li>
+<li>Restart SSL</li>
+</ul>
+</li>
+<li>Choose when to initiate the action:
+<ul>
+<li>When work completes</li>
+<li>Force shutdown now</li>
+</ul>
+</li>
+<li>In the dialog box, move the servers whose state you want to change from <strong>Available</strong> to <strong>Chosen</strong>.</li>
+<li>Initiate the action.</li>
+</ol>
+<h2 id="create">Create MBeans</h2>
+<p>The WebLogic Remote Console includes simplified wizards for deploying applications and creating JDBC system resources.</p>
+<p>In most other cases, when you create a new MBean on a page, you are prompted to fill in a few key properties, such as Name, then click <strong>Create</strong>. Unlike the WebLogic Server Administration Console, the WebLogic Remote Console does not guide you through configuring other properties that you typically need to complete the configuration. Instead, it displays the new bean&rsquo;s pages where you can click through the tabs to finish configuring the bean.</p>
+
+
+<div class="alert alert-primary" role="alert">
+<h4 class="alert-heading">Note</h4>
+
+    When you configure a bean property that references another bean, you must first create the other bean. For example, if you want to assign Server1 to Cluster1, you need to create Cluster1 first, unlike in the WebLogic Server Administration Console where you can choose to create Cluster1 during server creation.
+
+</div>
+<h2 id="application-deployment">Application Deployment</h2>
+<p>You can use the WebLogic Remote Console to manage the deployment process for applications to WebLogic Server.</p>
+<p>For more information on the general process for application deployment, see <a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/12.2.1.4/depgd/intro.html#GUID-DD8754D5-0E35-4FDC-97BD-D9CD9876CC9B">Deploying Applications to Oracle WebLogic Server</a>.</p>
+<h3 id="install-an-application">Install an application</h3>
+<p>When you install an application, you make its physical file or directory known to WebLogic Server. An application can be installed as an archived EAR file or as an exploded directory.</p>
+<ol>
+<li>In the <strong>Edit Tree</strong>, navigate to <strong>Deployments</strong> &gt; <strong>App Deployments</strong>.</li>
+<li>Select <strong>New</strong>.</li>
+<li>Fill in the required fields.</li>
+<li>Click <strong>Create</strong>.</li>
+<li>Commit your changes.</li>
+</ol>
+<p>Your new application appears under the App Deployment node. You can make additional changes to the application on this page.</p>
+<p>You must start an application before it can process client requests.</p>
+<h3 id="start-an-application">Start an application</h3>
+<p>You need to start an application to make it available to WebLogic Server clients.</p>
+<p>When you start an application, you can make it immediately available to clients, or you can start it in Administration Mode to first ensure that it is working as you expect. Starting in Administration Mode allows you to perform final (&ldquo;sanity&rdquo;) checking of the distributed application directly in the production environment without disrupting clients.</p>
+<ol>
+<li>In the Monitoring Tree, navigate to <strong>Deployments</strong> &gt; <strong>Application Management</strong>.</li>
+<li>Select the application that you want to start.</li>
+<li>Click <strong>Start</strong> and choose either:
+<ul>
+<li><strong>Servicing all requests</strong>: to make the application immediately available to all clients.</li>
+<li><strong>Servicing only administration request</strong>: to make the application available in Administration Mode only.</li>
+</ul>
+</li>
+</ol>
+<h3 id="stop-an-application">Stop an application</h3>
+<p>When you stop an application, you can choose whether no clients can use it, or stop it in Administration Mode so that only administrative tasks can be performed.</p>
+<p>Stopping an application does not remove its source files from the server; you can later redeploy a stopped application to make it available to WebLogic Server clients again.</p>
+<ol>
+<li>In the Monitoring Tree, navigate to Deployments &gt; Application Management.</li>
+<li>Select the application that you want to stop.</li>
+<li>Click <strong>Stop</strong> and choose either:
+<ul>
+<li><strong>When work completes</strong>: to allow the application to finish its work and for all currently connected users to disconnect.</li>
+<li><strong>Force stop now</strong>: to stop the application immediately, regardless of the work that is being performed and the users that are connected.</li>
+<li><strong>Servicing non-administration requests</strong>: to stop the application once all its work has finished, but to then put the application in Administration Mode so it remains accessible for administrative purposes.</li>
+</ul>
+</li>
+</ol>
+<h3 id="app-test">Test application deployment</h3>
+<p>After you deploy an application, you may want to confirm that it was deployed successfully.</p>
+<ol>
+<li>
+<p>In the <strong>Monitoring Tree</strong>, navigate to <strong>Environment</strong> &gt; <strong>Servers</strong> &gt; <em>myServer</em> &gt; <strong>Deployments</strong> &gt; <strong>Application Runtimes</strong> &gt; <em>myApp</em> &gt; <strong>Component Runtimes</strong> &gt; <em>myServer/myApp</em> &gt; <strong>Servlets</strong>.</p>
+</li>
+<li>
+<p>Construct a URL using the target server address plus the <code>ContextPath</code> and <code>Name</code> values from the Servlets table. For example, for an application deployed on the Administration Server, a test URL might look like <code>http://adminserver:7001/myapp/welcome</code>.</p>
+<p><strong>Note</strong>: Remember to consider any changes you made to network channels that may affect the application deployment. For example, the application may be on a different port.</p>
+</li>
+<li>
+<p>Enter the URL into your browser. If the page loads correctly, then your application was deployed successfully.</p>
+</li>
+</ol>
+<h3 id="view-an-applications-current-state">View an application&rsquo;s current state</h3>
+<ol>
+<li>In the <strong>Monitoring Tree</strong>, navigate to <strong>Deployments</strong> &gt; <strong>Application Management</strong> and choose the application whose state you want to view.</li>
+</ol>
+<h3 id="review-an-applications-runtime-statistics">Review an application&rsquo;s runtime statistics</h3>
+<ol>
+<li>In the <strong>Monitoring Tree</strong>, navigate to <strong>Deployments</strong> &gt; <strong>Application Runtime Data</strong> and choose the application for which you want to view runtime information.</li>
+<li>Explore the child nodes of the selected application to see its various runtime data.</li>
+</ol>
+<h3 id="configure-deployment">Configure Deployment</h3>
+<p>After you deploy an application, you can configure additional settings to meet the needs of your environment.</p>
+<ol>
+<li>
+<p>If you haven&rsquo;t already, create a deployment plan for the application. You can view the default configuration settings but they are read-only until you create a deployment plan. For more information, see <a href="/2.4.11/userguide/providers/administration-server/#deployment-plan">Deployment Plans</a>.</p>
+<p><strong>Note</strong>: You cannot create a deployment plan for applications that were auto-deployed.</p>
+<ol>
+<li>
+<p>In the <strong>Monitoring Tree</strong>, navigate to <strong>Deployments</strong> &gt; <strong>Application Management</strong> and select your application.</p>
+</li>
+<li>
+<p>Click <strong>Create Plan</strong>.</p>
+</li>
+<li>
+<p>In the <strong>Plan Path</strong> field, enter a file path for the new deployment plan. You should create the new deployment plan for a single application within a <code>plan/</code> subdirectory of the application&rsquo;s root directory. Deployment plans must be in XML format and should be called <code>plan.xml</code>.</p>
+</li>
+<li>
+<p>Click <strong>Done</strong>. WebLogic Server will create a basic deployment plan.</p>
+<p><strong>Note</strong>: You can see the deployment plan for an application under <strong>Deployments</strong> &gt; <strong>Application Management</strong> &gt; <em>myApplication</em> &gt; <strong>Deployment Plan (Advanced)</strong>.</p>
+</li>
+</ol>
+</li>
+<li>
+<p>Go to <strong>Deployments</strong> &gt; <strong>Application Management</strong> &gt; <em>myApplication</em> &gt; <strong>Configuration</strong>. Explore the Configuration node and its children to see the available deployment configuration options.</p>
+<p><strong>Note</strong>: The contents of the Configuration node and its children differ based on application type. For example, web applications include settings for container descriptors while resource adapters include settings for outbound connection pools.</p>
+</li>
+<li>
+<p>Click <strong>Save</strong> as you make changes. Any changes that you make to the <strong>Configuration</strong> node and its children are automatically reflected in the deployment plan.</p>
+</li>
+<li>
+<p>Update and possibly redeploy your application to apply your changes. See <a href="/2.4.11/userguide/providers/administration-server/#redeploy-app">Update or redeploy an application</a> for instructions.</p>
+</li>
+</ol>
+<h4 id="redeploy-app">Update or redeploy an application</h4>
+<p>If your changes are dynamic, then you only need to update the deployment plan. However, if your changes include non-dynamic changes, you must redeploy the application to propagate the changes from the deployment plan to the application.</p>
+<p>For more information, see <a href="https://docs.oracle.com/en/middleware/standalone/weblogic-server/14.1.1.0/depgd/redeploy.html#GUID-69BCEEBE-D19A-4B55-B14D-DAA10A209C21">Overview of Redeployment Strategies</a> in <em>Deploying Applications to Oracle WebLogic Server</em>.</p>
+<p>To update or redeploy an application with an updated deployment settings.</p>
+<ol>
+<li>In the <strong>Monitoring Tree</strong>, navigate to <strong>Deployments</strong> &gt; <strong>Application Management</strong> and select your application.</li>
+<li>Click <strong>Update/Redeploy</strong>.</li>
+<li>Choose one of the options:
+<ul>
+<li>Update with New Deployment Plan:
+<ul>
+<li><strong>Deployment Plan on Server</strong>: Updates the application using a new deployment plan located on the server. This option only applies dynamic changes to the application.</li>
+<li><strong>Deployment Plan on Local Machine</strong>: Updates the application using a new deployment plan located on the local machine and then uploads it to the Administration Server&rsquo;s upload directory. This option only applies dynamic changes to the application.</li>
+</ul>
+</li>
+<li><strong>Update with Modified Existing Deployment Plan</strong>: Updates the existing deployment plan. This option only applies dynamic changes to the application.</li>
+<li>Redeploy:
+<ul>
+<li><strong>Deployment Plan and Source on Server</strong>: Updates a deployment plan located on the server and redeploys the application. Use this option if your changes include non-dynamic changes that require the application to restart.</li>
+<li><strong>Deployment Plan and Source on Local Machine</strong>: Updates a deployment plan located on the local machine and redeploys the application. Use this option if your changes include non-dynamic changes that the application to restart.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<h4 id="deployment-plan">Deployment Plans</h4>
+<p>You can use a deployment plan to specify deployment property values for an application. A deployment plan is an optional document that works with or overrides your application&rsquo;s deployment descriptors to configure an application for deployment to a specific WebLogic Server environment. Deployment plans are written in XML.</p>
+<p>For more information, see <a href="https://docs.oracle.com/en/middleware/standalone/weblogic-server/14.1.1.0/depgd/config.html#GUID-29545865-3AC0-4777-8243-A85CDB04F33C">Understanding WebLogic Server Deployment Plans</a> in Deploying Applications to Oracle WebLogic Server.</p>
+<p><strong>Note</strong>: You cannot create a deployment plan for applications that were auto-deployed.</p>
+<p>Generally, if you need to modify the deployment settings of an application, you should use the Configuration node (as described in <a href="/2.4.11/userguide/providers/administration-server/#configure-deployment">Configure Deployment</a>), instead of manually editing the deployment plan.</p>
+<h5 id="create-a-deployment-plan">Create a Deployment Plan</h5>
+<ol>
+<li>In the <strong>Monitoring Tree</strong>, navigate to <strong>Deployments</strong> &gt; <strong>Application Management</strong> and select your application.</li>
+<li>Click <strong>Create Plan</strong>.</li>
+<li>In the <strong>Plan Path</strong> field, enter a file path for the new deployment plan. You should create the new deployment plan for a single application within a <code>plan/</code> subdirectory of the application&rsquo;s root directory. Deployment plans must be in XML format and should be called <code>plan.xml</code>.</li>
+<li>Click <strong>Done</strong>.</li>
+</ol>
+<h5 id="update-dep-plan">Update a Deployment Plan</h5>
+<p>You can manually edit a deployment plan to update it with new deployment instructions for an application.</p>
+<p>For more information, see <a href="https://docs.oracle.com/en/middleware/standalone/weblogic-server/14.1.1.0/depgd/export.html#GUID-CE85B546-1757-4AE3-BC82-E2C8EC202D0C">Manually Customizing the Deployment Plan</a> in Deploying Applications to Oracle WebLogic Server.</p>
+<ol>
+<li>In the <strong>Monitoring Tree</strong>, navigate to <strong>Deployments</strong> &gt; <strong>Application Management</strong> &gt; <em>myApplication</em> &gt; <strong>Deployment Plan (Advanced)</strong>.</li>
+<li>You can edit the the deployment plan as a whole or the individual variable assignments within a deployment plan:
+<ul>
+<li>To edit a deployment plan document:
+<ol>
+<li>Select the <strong>Deployment Plan</strong> tab.</li>
+<li>Edit the deployment plan directly within the text box field or copy and paste the plan into a text editor. Make your edits and then copy and paste it back into the WebLogic Remote Console.</li>
+<li>Click <strong>Save</strong>.</li>
+</ol>
+</li>
+<li>To edit individual variable assignments:
+<ol>
+<li>Select the variable assignment module that you want to edit and click <strong>Edit</strong>.</li>
+<li>Enter a value and, if updating an array, choose an operation.</li>
+<li>Click <strong>Done</strong>.</li>
+</ol>
+</li>
+</ul>
+</li>
+<li>You will need to update and possibly redeploy your application to apply your changes. See <a href="/2.4.11/userguide/providers/administration-server/#redeploy-app">Update or redeploy an application</a> for instructions.</li>
+</ol>
+
+  <div class="section-index">
+    
+    
+    <hr class="panel-line">
+        <div class="entry">
+                <h5>
+                    <a href="/2.4.11/userguide/providers/administration-server/security-data/">Editing security data</a>
+                </h5>
+                <p></p>
+            </div>
+        </div>
+</div>
+
+          </main>
+        </div>
+      </div>
+      <footer class="td-footer row d-print-none">
+  <div class="container-fluid">
+    <div class="row mx-md-2">
+      <div class="td-footer__left col-6 col-sm-4 order-sm-1">
+        
+      </div><div class="td-footer__right col-6 col-sm-4 order-sm-3">
+        
+      </div><div class="td-footer__center col-12 col-sm-4 py-2 order-sm-2">
+        <span class="td-footer__copyright">&copy;
+    2020&ndash;2025
+    <span class="td-footer__authors">Oracle | <a href="https://github.com/oracle/weblogic-remote-console/blob/main/LICENSE.txt">UPL 1.0</a></span></span><span class="td-footer__all_rights_reserved">All Rights Reserved</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <script src="/js/main.js"></script>
+<script defer src="/js/click-to-copy.js" crossorigin="anonymous"></script>
+<script src='/js/tabpane-persist.js'></script>
+
+  </body>
+</html>

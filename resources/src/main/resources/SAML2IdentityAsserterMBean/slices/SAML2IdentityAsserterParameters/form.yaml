@@ -1,9 +1,0 @@
-# Copyright (c) 2020, 2021, Oracle and/or its affiliates.
-# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
-introductionHTML: >
-  <p>Use this page to configure provider-specific information for this SAML 2.0 Identity Assertion provider.</p>
-
-properties:
-- name: ReplicatedCacheEnabled
-- name: NameMapperClassName
-- name: IdentityDomain

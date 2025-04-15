@@ -1,9 +1,0 @@
-# Copyright (c) 2020, 2021, Oracle and/or its affiliates.
-# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
-introductionHTML: >
-  This page displays the current state of message listener endpoints in this resource adapter.
-displayedColumns:
-- name: "Name"
-- name: "Type"
-- name: "MsgListenerType"
-- name: "State"

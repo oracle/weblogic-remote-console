@@ -1,7 +1,18 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>About WebLogic Remote Console on WebLogic Remote Console</title><link>https://lcr01022.us.oracle.com/weblogic-remote-console/2.4.13/</link><description>Recent content in About WebLogic Remote Console on WebLogic Remote Console</description><generator>Hugo</generator><language>en</language><atom:link href="https://lcr01022.us.oracle.com/weblogic-remote-console/2.4.13/index.xml" rel="self" type="application/rss+xml"/><item><title>Preface</title><link>https://lcr01022.us.oracle.com/weblogic-remote-console/2.4.13/preface/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://lcr01022.us.oracle.com/weblogic-remote-console/2.4.13/preface/</guid><description>&lt;p>&lt;strong>Oracle WebLogic Remote Console Online Help&lt;/strong> describes how to use WebLogic Remote Console to administer WebLogic Server domains, whether through their Administration Server or as WebLogic Deploy Tooling metadata model files.&lt;/p>
-&lt;h2 id="GUID-2FF7B275-1ADB-4A83-A2D3-0298677E5325">Audience&lt;/h2>
-&lt;p>This document is intended for users who are responsible for administering WebLogic Server domains.&lt;/p>
-&lt;h2 id="GUID-E409CC44-9A8F-4043-82C8-6B95CD939296">Documentation Accessibility&lt;/h2>
-&lt;p>For information about Oracle&amp;rsquo;s commitment to accessibility, visit the Oracle Accessibility Program website at &lt;a href="http://www.oracle.com/pls/topic/lookup?ctx=acc&amp;amp;id=docacc">http://www.oracle.com/pls/topic/lookup?ctx=acc&amp;amp;id=docacc&lt;/a>.&lt;/p>
-&lt;h3 id="GUID-D88DC1A6-B2C8-4B61-85D2-23B0215F1664">Access to Oracle Support&lt;/h3>
-&lt;p>Oracle customers that have purchased support have access to electronic support through My Oracle Support. For information, visit &lt;a href="http://www.oracle.com/pls/topic/lookup?ctx=acc&amp;amp;id=info">http://www.oracle.com/pls/topic/lookup?ctx=acc&amp;amp;id=info&lt;/a> or visit &lt;a href="http://www.oracle.com/pls/topic/lookup?ctx=acc&amp;amp;id=trs">http://www.oracle.com/pls/topic/lookup?ctx=acc&amp;amp;id=trs&lt;/a> if you are hearing impaired.&lt;/p></description></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>About WebLogic Remote Console on WebLogic Remote Console</title>
+    <link>//localhost:1313/2.4.13/</link>
+    <description>Recent content in About WebLogic Remote Console on WebLogic Remote Console</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <atom:link href="//localhost:1313/2.4.13/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Preface</title>
+      <link>//localhost:1313/2.4.13/preface/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>//localhost:1313/2.4.13/preface/</guid>
+      <description>&lt;p&gt;&lt;strong&gt;Oracle WebLogic Remote Console Online Help&lt;/strong&gt; describes how to use WebLogic Remote Console to administer WebLogic Server domains, whether through their Administration Server or as WebLogic Deploy Tooling metadata model files.&lt;/p&gt;&#xA;&lt;h2 id=&#34;GUID-2FF7B275-1ADB-4A83-A2D3-0298677E5325&#34;&gt;Audience&lt;/h2&gt;&#xA;&lt;p&gt;This document is intended for users who are responsible for administering WebLogic Server domains.&lt;/p&gt;&#xA;&lt;h2 id=&#34;GUID-E409CC44-9A8F-4043-82C8-6B95CD939296&#34;&gt;Documentation Accessibility&lt;/h2&gt;&#xA;&lt;p&gt;For information about Oracle&amp;rsquo;s commitment to accessibility, visit the Oracle Accessibility Program website at &lt;a href=&#34;http://www.oracle.com/pls/topic/lookup?ctx=acc&amp;amp;id=docacc&#34;&gt;http://www.oracle.com/pls/topic/lookup?ctx=acc&amp;amp;id=docacc&lt;/a&gt;.&lt;/p&gt;&#xA;&lt;h3 id=&#34;GUID-D88DC1A6-B2C8-4B61-85D2-23B0215F1664&#34;&gt;Access to Oracle Support&lt;/h3&gt;&#xA;&lt;p&gt;Oracle customers that have purchased support have access to electronic support through My Oracle Support. For information, visit &lt;a href=&#34;http://www.oracle.com/pls/topic/lookup?ctx=acc&amp;amp;id=info&#34;&gt;http://www.oracle.com/pls/topic/lookup?ctx=acc&amp;amp;id=info&lt;/a&gt; or visit &lt;a href=&#34;http://www.oracle.com/pls/topic/lookup?ctx=acc&amp;amp;id=trs&#34;&gt;http://www.oracle.com/pls/topic/lookup?ctx=acc&amp;amp;id=trs&lt;/a&gt; if you are hearing impaired.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>
