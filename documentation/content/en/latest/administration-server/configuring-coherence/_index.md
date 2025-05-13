@@ -1,5 +1,5 @@
 ---
-weight: 212
+weight: 213
 title: Configuring Coherence
 ---
 
@@ -62,7 +62,7 @@ For optimal performance or scalability, Coherence is typically set up using WebL
 
     {{< alert title="Note" color="primary" >}}
 
-    
+
 
     Alternatively, for development purposes, you can set up a single standalone Managed Server instance to act as both a cache server and a cache client. See [Configure and Deploy Coherence on a Single-Server Cluster](#GUID-DB577D5C-A80B-48DB-A940-C95D764532C5).
 
@@ -81,7 +81,7 @@ For optimal performance or scalability, Coherence is typically set up using WebL
 
     A Coherence application tier is a WebLogic Server cluster that is associated with a Coherence cluster and hosts any number of storage-disabled managed Coherence servers. For more information, see [Configuring and Managing a Coherence Application Tier](https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=CLUST-GUID-AF4B64A6-598A-4DFB-978B-D7C3B92F42E4) in **Administering Clusters for Oracle WebLogic Server**.
 
-5.  Configure a proxy tier as described in [Create a Coherence Proxy Tier](#GUID-042599BA-C133-43E0-8572-30B84149BB4F).
+5.  **Optional**: Configure a proxy tier as described in [Create a Coherence Proxy Tier](#GUID-042599BA-C133-43E0-8572-30B84149BB4F).
 
     A Coherence proxy tier is a WebLogic Server cluster that is associated with a Coherence cluster and hosts any number of managed Coherence proxy servers. Managed Coherence proxy servers allow Coherence*Extend clients to use Coherence caches without being cluster members. For more information, see [Configuring and Managing a Coherence Proxy Tier](https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=CLUST-GUID-FC671FC0-0A23-4FA0-BBAD-0A3A72DFF261) in **Administering Clusters for Oracle WebLogic Server**.
 
@@ -106,11 +106,11 @@ Configure cluster properties and then target Coherence clusters to WebLogic Serv
 
 4.  Select a **Clustering Mode** and then adjust the Coherence general properties according to the clustering mode you selected.
 
-5.  If you want to specify operational settings that are not available through the provided MBeans, you can upload a cluster configuration file with your supplemental settings. Click **Import Configuration**, then, in the **Custom Cluster Configuration File Name** dialog box, enter the location of the cluster configuration file, relative to the domain configuration directory.
+5.  **Optional**: If you want to specify operational settings that are not available through the provided MBeans, you can upload a cluster configuration file with your supplemental settings. Click **Import Configuration**, then, in the **Custom Cluster Configuration File Name** dialog box, enter the location of the cluster configuration file, relative to the domain configuration directory.
 
     {{< alert title="Note" color="primary" >}}
 
-    
+
 
     Avoid configuring the same operational settings in both an external cluster configuration file and through the MBeans.
 
@@ -178,7 +178,7 @@ For more information on configuring persistence in Coherence, see [Persisting Ca
     -   **Active**: In this mode, cache contents are automatically persisted on all mutations and are automatically recovered on cluster/service startup. The persistence coordinator can still be used in active persistence mode to perform on-demand snapshots.
     -   **Active-Async**: In this mode, the storage servers can persist data asynchronously. Thus, a mutating request is successful after the primary stores the data and (if there is a synchronous backup) after the backup receives the update.
     -   **Active Backup**: In this mode, persistence behaves similarly to the active persistence mode but it also stores backup partitions asynchronously on a disk.
-4.  You can override the default locations where various persistence files are stored. Enter new file locations in the appropriate fields:
+4.  **Optional**: You can override the default locations where various persistence files are stored. Enter new file locations in the appropriate fields:
 
     -   **Active Directory**
     -   **Snapshot Directory**
@@ -223,7 +223,7 @@ For more information, see [Securing Oracle Coherence in Oracle WebLogic Server](
 
     {{< alert title="Note" color="primary" >}}
 
-    
+
 
     If the **Secured Production** option is not set, Coherence will inherit its domain mode from WebLogic Server.
 
@@ -324,7 +324,7 @@ You can use WebLogic Server authorization to restrict access to Coherence servic
 
     {{< alert title="Note" color="primary" >}}
 
-    
+
 
     The exact name must include the scope name as a prefix to the service name. The scope name can be explicitly defined in the cache configuration file or, more commonly, taken from the deployment module name. For example, if you deploy a GAR named <code>contacts.gar</code> that defines a service named <code>ContactsService</code>, then the exact service name is <code>contacts:ContactsService</code>.
 
@@ -516,5 +516,3 @@ To set up Coherence for production use, follow the steps outlined in [Configure 
 8.  Create and package a Coherence Grid Archive (GAR) module for any application modules (Web application, EJB, etc.) that use Coherence. See [Creating Coherence Applications for WebLogic Server](https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=WLCOH-GUID-C34A3F98-55D5-4D5A-8BCC-E3EBC718B57D) in **Developing Oracle Coherence Applications for Oracle WebLogic Server**.
 
 9.  Deploy your Coherence GAR module to your WebLogic Server domain. Standalone GARs are deployed in the same way as other Jakarta EE modules. See [Deploying Coherence Applications in WebLogic Server](https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=WLCOH-GUID-9284398A-509D-4BC0-9007-502CCCA4D758) in **Developing Oracle Coherence Applications for Oracle WebLogic Server**.
-
-

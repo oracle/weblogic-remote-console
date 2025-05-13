@@ -118,7 +118,7 @@ You can create your own custom dashboards to monitor the state of your domain.
 
 4.  Click **Create** to generate the dashboard.
 
-5.  Click **Customize Table** to control which columns appear in the dashboard.
+5.  **Optional**: Click **Customize Table** to control which columns appear in the dashboard.
 
 
 All of your dashboards are available in the **Dashboards** node of the Monitoring Tree.
@@ -291,11 +291,11 @@ WebLogic Server sets a threshold size limit of 2,097,152 kilobytes before it for
     -   **By Time** - rotates log messages after a specified time interval passes.
     -   **By Size or Time** - rotates log messages if the file size reaches the specified size or if the specified time interval passes, whichever occurs first.
     -   **None** - log messages are not automatically rotated. You must manually erase the contents of the file when the size becomes too large.
-3.  If you chose **By Size** as the Rotation Type.
+3.  <a id="STEP_Z2F_JLF_B2C"></a>If you chose **By Size** as the Rotation Type.
 
     1.  In the **Rotation file size** field, enter the file size that triggers the server to move log messages to a separate file. After the log file reaches the specified size, the next time the server checks the file size it renames the current log file by appending a 5-digit integer; for example, <code>SERVER_NAME.log00007</code>. After the server renames the file, subsequent messages accumulate in a new file named <code>SERVER_NAME.log</code>.
 
-4.  If you chose **By Time** as the Rotation Type.
+4.  <a id="STEP_TQJ_JLF_B2C"></a>If you chose **By Time** as the Rotation Type.
 
     1.  In the **Begin rotation time** field, enter the start time
 
@@ -305,13 +305,13 @@ WebLogic Server sets a threshold size limit of 2,097,152 kilobytes before it for
 
 5.  If you chose **By Size or Time** as the Rotation Type, then configure the **By Size** and **By Time** options as described in steps [3](#STEP_Z2F_JLF_B2C) and [4](#STEP_TQJ_JLF_B2C).
 
-6.  If you want to limit the number of log files that the server creates to store old log messages, enable the **Limit Number of Retained Log Files** option. Then, in the **Files to Retain** field, enter the maximum number of files. If the server receives additional log messages after reaching the capacity of the last log file, it overwrites the oldest log file.
+6.  **Optional**: If you want to limit the number of log files that the server creates to store old log messages, enable the **Limit Number of Retained Log Files** option. Then, in the **Files to Retain** field, enter the maximum number of files. If the server receives additional log messages after reaching the capacity of the last log file, it overwrites the oldest log file.
 
 7.  In the **Log file rotation directory** field, enter the directory location where the rotated log files will be stored.
 
     Enter an absolute pathname or a pathname that is relative to the server's root directory. By default, the rotated files are stored in the same directory where the log file is stored.
 
-8.  If you want to add a time or date stamp to the file name when the log file is rotated, then in the **Log file name** field, add <code>java.text.SimpleDateFormat</code> variables to the file name and surround each variable with percentage (%) characters.
+8.  **Optional**: If you want to add a time or date stamp to the file name when the log file is rotated, then in the **Log file name** field, add <code>java.text.SimpleDateFormat</code> variables to the file name and surround each variable with percentage (%) characters.
 
     For example, if you enter the following value in the Log file name field: <code>myserver_%yyyy%_%MM%_%dd%_%hh%_%mm%.log</code>, the server's log file will be named <code>myserver_*yyyy_MM_dd_hh_mm*.log</code>.
 
@@ -320,6 +320,33 @@ WebLogic Server sets a threshold size limit of 2,097,152 kilobytes before it for
     If you do not include a time and date stamp, the rotated log files are numbered in order of creation <code>*SERVER_NAME*.log*nnnnn*</code>, where <code>*SERVER_NAME*</code> is the name configured for the log file. For example: <code>myserver.log00007</code>.
 
 9.  Click **Save**.
+
+
+### Configure java.util.logging Logger Levels {#GUID-F6536203-9FD6-4ABF-B302-B06DA05E980D}
+
+WebLogic Server supports configuring <code>java.util.logging.Logger</code> levels for named loggers in the JDK <code>LogManager</code>.
+
+See [Configuring java.util.logging Logger Levels](https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=WLLOG-GUID-879637F5-B93F-4236-8B3D-D9BB319A748D) in **Configuring Log Files and Filtering Log Messages for Oracle WebLogic Server**.
+
+-   To configure <code>java.util.logging.Logger</code> levels for the WebLogic Server logging configuration (also known as platform loggers):
+
+    WebLogic Server loggers are configured in terms of <code>weblogic.logging.Severities</code> through the <code>LoggerSeverities</code> attribute. These loggers are not available in the JDK's default global <code>LogManager</code>.
+
+    1.  In the **Edit Tree**, go to **Environment**, then **Servers**, then *myServer*.
+
+    2.  Click the **Logging** tab.
+
+    3.  On the **Platform Logger Levels** subtab, click **+** to add a new row. Then, enter the logging level name under the **Properties Name** column and the logging level under **Properties Value** column.
+
+    4.  Click **Save**.
+
+-   To configure <code>java.util.logging.Logger</code> levels for Desktop WebLogic Remote Console:
+
+    1.  Go to **File**, then **Settings**. (On macOS, go to **WebLogic Remote Console**, then **Settings**.)
+
+    2.  Under the **Logging/Debugging** section, click **+** to add a new row and enter the logging level as a name-value pair, separated by <code>=</code>.
+
+    3.  Click **Save**.
 
 
 ## Enable Configuration Auditing {#GUID-BB85D9BB-5E36-4067-AA9F-E01EBFF027CD}
@@ -369,5 +396,3 @@ For guidance on the performance tuning options that are available in WebLogic Se
 4.  Click **Save**.
 
 5.  Repeat as needed for the rest of the servers in your domain.
-
-

@@ -1,5 +1,5 @@
 ---
-weight: 249
+weight: 250
 title: WDT Model Files
 ---
 
@@ -51,7 +51,7 @@ resources:
             Target: [
                 Cluster2
             ]
-            
+
 appDeployments:
     Application:
         Application1:
@@ -108,9 +108,9 @@ To create a WDT model file for use with the WebLogic Deploy Tooling:
 
 4.  Click **Pick Directory** and browse to the directory where you want to save the new WDT model file.
 
-5.  Enable **Use Sparse Template** to create a WDT model file which does not contain any references to an Administration Server.
+5.  **Optional**: Enable **Use Sparse Template** to create a WDT model file which does not contain any references to an Administration Server.
 
-6.  If you want to use WDT variables with this WDT model file, then from the **WDT Variables** dropdown list, choose a property list provider. If you don't have a property list provider yet, you can add one later.
+6.  **Optional**: If you want to use WDT variables with this WDT model file, then from the **WDT Variables** dropdown list, choose a property list provider. If you don't have a property list provider yet, you can add one later.
 
 7.  Click **OK** to create the WDT model file.
 
@@ -127,7 +127,7 @@ If you created a WDT model file elsewhere, you can upload it to WebLogic Remote 
 
     The WDT model file must be in <code>YAML</code> or <code>JSON</code> format.
 
-4.  If you want to use WDT variables with this WDT model file, then from the **WDT Variables** drop-down list, choose a property list provider. If you don't have a property list provider yet, you can edit this provider's settings later to add one.
+4.  **Optional**: If you want to use WDT variables with this WDT model file, then from the **WDT Variables** drop-down list, choose a property list provider. If you don't have a property list provider yet, you can edit this provider's settings later to add one.
 
 5.  Click **OK** to upload the WDT model file.
 
@@ -153,7 +153,7 @@ For guidance on where to find specific domain configuration options and how to a
 
 4.  Set a new value for the field, using one of the following options:
 
-    
+
 
 <table id="GUID-B0B9CBA4-29E4-417D-8094-5BA8B4522ED7__TABLE_YMB_PZN_SDC">
                               <span>Describes the various ways to set values for a field.</span>
@@ -212,5 +212,3 @@ When you're satisfied with the properties of your WDT model file, you can transf
 2.  Download the latest version of WDT from the [WDT GitHub Repository](https://github.com/oracle/weblogic-deploy-tooling).
 
 3.  Follow the instructions in the [WDT Documentation](https://oracle.github.io/weblogic-deploy-tooling/) for creating a domain from a WDT model file.
-
-

@@ -35,7 +35,7 @@ NoteCoherence can also be installed in a standalone mode that does not rely on 
   <meta itemprop="description" content="Oracle Coherence enables organizations to predictably scale mission-critical applications by providing fast and reliable access to frequently used data. By automatically and dynamically partitioning data in memory across multiple servers, Coherence enables continuous data availability and transactional integrity, even in the event of a server failure.
 WebLogic Server domains include a Coherence container that simplifies the management and deployment of Coherence clusters and Coherence-based applications.
 NoteCoherence can also be installed in a standalone mode that does not rely on WebLogic Server. WebLogic Remote Console cannot administer standalone Coherence installations, therefore this documentation focuses solely on using Coherence with WebLogic Server.">
-  <meta itemprop="wordCount" content="3938">
+  <meta itemprop="wordCount" content="3941">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Configuring Coherence">
   <meta name="twitter:description" content="Oracle Coherence enables organizations to predictably scale mission-critical applications by providing fast and reliable access to frequently used data. By automatically and dynamically partitioning data in memory across multiple servers, Coherence enables continuous data availability and transactional integrity, even in the event of a server failure.
@@ -138,7 +138,7 @@ NoteCoherence can also be installed in a standalone mode that does not rely on 
     aria-label="Search this site…"
     autocomplete="off"
     
-    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.0372ac0fd932fb8274a455a832473265.json"
+    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.525ad98426979583eac4f9f0a1f2c27f.json"
     data-offline-search-base-href="/"
     data-offline-search-max-results="10"
   >
@@ -163,7 +163,7 @@ NoteCoherence can also be installed in a standalone mode that does not rely on 
     aria-label="Search this site…"
     autocomplete="off"
     
-    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.0372ac0fd932fb8274a455a832473265.json"
+    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.525ad98426979583eac4f9f0a1f2c27f.json"
     data-offline-search-base-href="/"
     data-offline-search-max-results="10"
   >
@@ -382,7 +382,7 @@ NoteCoherence can also be installed in a standalone mode that does not rely on 
 <div class="alert alert-primary" role="alert">
 <h4 class="alert-heading">Note</h4>
 
-    <p>Alternatively, for development purposes, you can set up a single standalone Managed Server instance to act as both a cache server and a cache client. See <a href="/weblogic-remote-console/#GUID-DB577D5C-A80B-48DB-A940-C95D764532C5">Configure and Deploy Coherence on a Single-Server Cluster</a>.</p>
+    <p>Alternatively, for development purposes, you can set up a single standalone Managed Server instance to act as both a cache server and a cache client. See <a href="/weblogic-remote-console/administration-server/configuring-coherence/#GUID-DB577D5C-A80B-48DB-A940-C95D764532C5">Configure and Deploy Coherence on a Single-Server Cluster</a>.</p>
 <p>Single-server topologies are not recommended for production use.</p>
 
 
@@ -400,7 +400,7 @@ NoteCoherence can also be installed in a standalone mode that does not rely on 
 <p>A Coherence application tier is a WebLogic Server cluster that is associated with a Coherence cluster and hosts any number of storage-disabled managed Coherence servers. For more information, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=CLUST-GUID-AF4B64A6-598A-4DFB-978B-D7C3B92F42E4">Configuring and Managing a Coherence Application Tier</a> in <strong>Administering Clusters for Oracle WebLogic Server</strong>.</p>
 </li>
 <li>
-<p>Configure a proxy tier as described in <a href="/weblogic-remote-console/administration-server/configuring-coherence/#GUID-042599BA-C133-43E0-8572-30B84149BB4F">Create a Coherence Proxy Tier</a>.</p>
+<p><strong>Optional</strong>: Configure a proxy tier as described in <a href="/weblogic-remote-console/administration-server/configuring-coherence/#GUID-042599BA-C133-43E0-8572-30B84149BB4F">Create a Coherence Proxy Tier</a>.</p>
 <p>A Coherence proxy tier is a WebLogic Server cluster that is associated with a Coherence cluster and hosts any number of managed Coherence proxy servers. Managed Coherence proxy servers allow Coherence*Extend clients to use Coherence caches without being cluster members. For more information, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=CLUST-GUID-FC671FC0-0A23-4FA0-BBAD-0A3A72DFF261">Configuring and Managing a Coherence Proxy Tier</a> in <strong>Administering Clusters for Oracle WebLogic Server</strong>.</p>
 </li>
 <li>
@@ -428,7 +428,7 @@ NoteCoherence can also be installed in a standalone mode that does not rely on 
 <p>Select a <strong>Clustering Mode</strong> and then adjust the Coherence general properties according to the clustering mode you selected.</p>
 </li>
 <li>
-<p>If you want to specify operational settings that are not available through the provided MBeans, you can upload a cluster configuration file with your supplemental settings. Click <strong>Import Configuration</strong>, then, in the <strong>Custom Cluster Configuration File Name</strong> dialog box, enter the location of the cluster configuration file, relative to the domain configuration directory.</p>
+<p><strong>Optional</strong>: If you want to specify operational settings that are not available through the provided MBeans, you can upload a cluster configuration file with your supplemental settings. Click <strong>Import Configuration</strong>, then, in the <strong>Custom Cluster Configuration File Name</strong> dialog box, enter the location of the cluster configuration file, relative to the domain configuration directory.</p>
 
 
 <div class="alert alert-primary" role="alert">
@@ -508,7 +508,7 @@ NoteCoherence can also be installed in a standalone mode that does not rely on 
 </ul>
 </li>
 <li>
-<p>You can override the default locations where various persistence files are stored. Enter new file locations in the appropriate fields:</p>
+<p><strong>Optional</strong>: You can override the default locations where various persistence files are stored. Enter new file locations in the appropriate fields:</p>
 <ul>
 <li><strong>Active Directory</strong></li>
 <li><strong>Snapshot Directory</strong></li>
@@ -865,7 +865,7 @@ NoteCoherence can also be installed in a standalone mode that does not rely on 
 <div class="alert alert-primary" role="alert">
 <h4 class="alert-heading">Note</h4>
 
-    To set up Coherence for production use, follow the steps outlined in <a href="/weblogic-remote-console/#GUID-B7D3071F-A32F-4AE9-9A36-FF28E3B674C8">Configure Coherence: Main Steps</a> instead.
+    To set up Coherence for production use, follow the steps outlined in <a href="/weblogic-remote-console/administration-server/configuring-coherence/#GUID-B7D3071F-A32F-4AE9-9A36-FF28E3B674C8">Configure Coherence: Main Steps</a> instead.
 
 </div>
 <ol>

@@ -1,10 +1,10 @@
 <!doctype html>
 <html itemscope itemtype="http://schema.org/WebPage" lang="en" class="no-js">
-  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <head>
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link rel="alternate" type="application/rss&#43;xml" href="//localhost:1313/weblogic-deploy-tooling/wdt-model-files/index.xml">
-<meta name="robots" content="noindex, nofollow">
+<link rel="alternate" type="application/rss&#43;xml" href="/weblogic-deploy-tooling/wdt-model-files/index.xml">
+<meta name="robots" content="index, follow">
 
 
 <link rel="shortcut icon" href="/favicons/favicon.ico" >
@@ -21,7 +21,7 @@
 <title>WDT Model Files | WebLogic Remote Console</title>
 <meta name="description" content="WDT metadata model files are descriptions of a WebLogic Server domain configuration. These models are not connected to a running WebLogic Server domain; you make edits to a model file and then use WebLogic Deploy Tooling (WDT) to build or modify live domains.
 WDT model files are simplistic representations of a domain. They are generally written in YAML but WebLogic Remote Console also accepts models in JSON format. For brevity, a WDT model file only describes departures from the default configuration.">
-<meta property="og:url" content="//localhost:1313/weblogic-deploy-tooling/wdt-model-files/">
+<meta property="og:url" content="/weblogic-deploy-tooling/wdt-model-files/">
   <meta property="og:site_name" content="WebLogic Remote Console">
   <meta property="og:title" content="WDT Model Files">
   <meta property="og:description" content="WDT metadata model files are descriptions of a WebLogic Server domain configuration. These models are not connected to a running WebLogic Server domain; you make edits to a model file and then use WebLogic Deploy Tooling (WDT) to build or modify live domains.
@@ -32,12 +32,13 @@ WDT model files are simplistic representations of a domain. They are generally w
   <meta itemprop="name" content="WDT Model Files">
   <meta itemprop="description" content="WDT metadata model files are descriptions of a WebLogic Server domain configuration. These models are not connected to a running WebLogic Server domain; you make edits to a model file and then use WebLogic Deploy Tooling (WDT) to build or modify live domains.
 WDT model files are simplistic representations of a domain. They are generally written in YAML but WebLogic Remote Console also accepts models in JSON format. For brevity, a WDT model file only describes departures from the default configuration.">
-  <meta itemprop="wordCount" content="1180">
+  <meta itemprop="wordCount" content="1183">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="WDT Model Files">
   <meta name="twitter:description" content="WDT metadata model files are descriptions of a WebLogic Server domain configuration. These models are not connected to a running WebLogic Server domain; you make edits to a model file and then use WebLogic Deploy Tooling (WDT) to build or modify live domains.
 WDT model files are simplistic representations of a domain. They are generally written in YAML but WebLogic Remote Console also accepts models in JSON format. For brevity, a WDT model file only describes departures from the default configuration.">
-<link href="/scss/main.css" rel="stylesheet">
+<link rel="preload" href="/scss/main.min.48c25d0a5a23a1e8cae94d6c5e7622061e5345cf098171b1d6ee41d8e309e6c8.css" as="style" integrity="sha256-SMJdClojoejK6U1sXnYiBh5TRc8JgXGx1u5B2OMJ5sg=" crossorigin="anonymous">
+<link href="/scss/main.min.48c25d0a5a23a1e8cae94d6c5e7622061e5345cf098171b1d6ee41d8e309e6c8.css" rel="stylesheet" integrity="sha256-SMJdClojoejK6U1sXnYiBh5TRc8JgXGx1u5B2OMJ5sg=" crossorigin="anonymous">
 <script
   src="https://code.jquery.com/jquery-3.7.1.min.js"
   integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
@@ -133,7 +134,7 @@ WDT model files are simplistic representations of a domain. They are generally w
     aria-label="Search this site…"
     autocomplete="off"
     
-    data-offline-search-index-json-src="/offline-search-index.json"
+    data-offline-search-index-json-src="/offline-search-index.d874cf970bc57419b247ef101f81d5e2.json"
     data-offline-search-base-href="/"
     data-offline-search-max-results="10"
   >
@@ -158,7 +159,7 @@ WDT model files are simplistic representations of a domain. They are generally w
     aria-label="Search this site…"
     autocomplete="off"
     
-    data-offline-search-index-json-src="/offline-search-index.json"
+    data-offline-search-index-json-src="/offline-search-index.d874cf970bc57419b247ef101f81d5e2.json"
     data-offline-search-base-href="/"
     data-offline-search-max-results="10"
   >
@@ -358,7 +359,7 @@ resources:
             Target: [
                 Cluster2
             ]
-            
+
 appDeployments:
     Application:
         Application1:
@@ -406,10 +407,10 @@ appDeployments:
 <p>Click <strong>Pick Directory</strong> and browse to the directory where you want to save the new WDT model file.</p>
 </li>
 <li>
-<p>Enable <strong>Use Sparse Template</strong> to create a WDT model file which does not contain any references to an Administration Server.</p>
+<p><strong>Optional</strong>: Enable <strong>Use Sparse Template</strong> to create a WDT model file which does not contain any references to an Administration Server.</p>
 </li>
 <li>
-<p>If you want to use WDT variables with this WDT model file, then from the <strong>WDT Variables</strong> dropdown list, choose a property list provider. If you don&rsquo;t have a property list provider yet, you can add one later.</p>
+<p><strong>Optional</strong>: If you want to use WDT variables with this WDT model file, then from the <strong>WDT Variables</strong> dropdown list, choose a property list provider. If you don&rsquo;t have a property list provider yet, you can add one later.</p>
 </li>
 <li>
 <p>Click <strong>OK</strong> to create the WDT model file.</p>
@@ -429,7 +430,7 @@ appDeployments:
 <p>The WDT model file must be in <code>YAML</code> or <code>JSON</code> format.</p>
 </li>
 <li>
-<p>If you want to use WDT variables with this WDT model file, then from the <strong>WDT Variables</strong> drop-down list, choose a property list provider. If you don&rsquo;t have a property list provider yet, you can edit this provider&rsquo;s settings later to add one.</p>
+<p><strong>Optional</strong>: If you want to use WDT variables with this WDT model file, then from the <strong>WDT Variables</strong> drop-down list, choose a property list provider. If you don&rsquo;t have a property list provider yet, you can edit this provider&rsquo;s settings later to add one.</p>
 </li>
 <li>
 <p>Click <strong>OK</strong> to upload the WDT model file.</p>
@@ -442,7 +443,7 @@ appDeployments:
 <div class="alert alert-primary" role="alert">
 <h4 class="alert-heading">Note</h4>
 
-    For guidance on where to find specific domain configuration options and how to apply them, review the tasks under <a href="../../administration-server#GUID-BC6883D0-1917-4130-B79B-02727F1242D6">Administration Server</a>. The WDT Model Tree perspective is very similar to the Edit Tree perspective in an Administration Server provider.
+    For guidance on where to find specific domain configuration options and how to apply them, review the tasks under <a href="/administration-server/#GUID-BC6883D0-1917-4130-B79B-02727F1242D6">Administration Server</a>. The WDT Model Tree perspective is very similar to the Edit Tree perspective in an Administration Server provider.
 
 </div>
 <ol>
@@ -542,8 +543,8 @@ appDeployments:
 </footer>
 
     </div>
-    <script src="/js/main.js"></script>
-<script defer src="/js/click-to-copy.js" crossorigin="anonymous"></script>
+    <script src="/js/main.min.90902a026ed2aee7ed45d85797f4c790b240ba148ac6f8a6f194cb1981ffecf5.js" integrity="sha256-kJAqAm7SruftRdhXl/THkLJAuhSKxvim8ZTLGYH/7PU=" crossorigin="anonymous"></script>
+<script defer src="/js/click-to-copy.min.73478a7d4807698aed7e355eb23f9890ca18fea3158604c8471746d046702bad.js" integrity="sha256-c0eKfUgHaYrtfjVesj&#43;YkMoY/qMVhgTIRxdG0EZwK60=" crossorigin="anonymous"></script>
 <script src='/js/tabpane-persist.js'></script>
 
   </body>

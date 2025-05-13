@@ -65,15 +65,15 @@ This section provides answers to frequently asked questions about WebLogic Remot
 
 ### My domain is behind a firewall. How do I connect to WebLogic Remote Console? {}
 
-For WebLogic Remote Console to connect to a domain's Administration Server, the management endpoint of the domain, <code>management/*</code>, must be publicly accessible. If your Administration Server is behind a firewall or load balancer, or otherwise externally unavailable, you will need to expose the endpoint manually.
+For WebLogic Remote Console to connect to a domain's Administration Server, the management endpoint of the domain, <code>management/\*</code>, must be publicly accessible. If your Administration Server is behind a firewall or load balancer, or otherwise externally unavailable, you will need to expose the endpoint manually.
 
-If you use the Hosted WebLogic Remote Console, you will also need to expose <code>rconsole/*</code>.
+If you use the Hosted WebLogic Remote Console, you will also need to expose <code>rconsole/\*</code>.
 
 {{< alert title="Note" color="primary" >}}
 
 
 
-If you needed to expose <code>console/*</code> to access the WebLogic Server Administration Console for your domain, simply follow the same procedure to expose <code>management/*</code> for WebLogic Remote Console.
+If you needed to expose <code>console/\*</code> to access the WebLogic Server Administration Console for your domain, simply follow the same procedure to expose <code>management/\*</code> for WebLogic Remote Console.
 
 {{< /alert >}}
 
@@ -94,9 +94,9 @@ Yes. For details on how to set up access to WebLogic Server domains running on K
 
 ### Which versions of WebLogic Server can I use with WebLogic Remote Console? {}
 
-WebLogic Remote Console is compatible with WebLogic Server 12.2.1.4 or later.
+WebLogic Remote Console is compatible with WebLogic Server 12.2.1.4 and later.
 
-### Can I use both WebLogic Remote Console and WebLogic Server Administration Console to manage WebLogic Server Administration Servers? {}
+### Can I use both WebLogic Remote Console and WebLogic Server Administration Console to manage WebLogic Server domains? {}
 
 It depends on the WebLogic Server release that you have installed. The Administration Console was removed in WebLogic Server 14.1.2.0.0 and therefore is not available as of that release.
 
@@ -126,3 +126,17 @@ As an example, if your domain is set to secured production mode and you choose t
 
 See [Verifying Attribute Values That Are Set on the Command Line](https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=ADMRF-GUID-F7332CBC-80E4-4C77-B1D1-AD670EF29185) in **Command Reference for Oracle WebLogic Server**.
 
+### Why did the versioning scheme of the WebLogic Remote Console extension change? {#section_syq_f3k_y2c}
+
+With the release of WebLogic Remote Console 2.4.11, the versioning scheme of the WebLogic Remote Console extension was updated to match that of WebLogic Remote Console. There are no versions between <code>console-rest-ext-9.0.war</code> (released with WebLogic Remote Console 2.4.10) and <code>console-rest-ext-2.4.11.war</code> (released with WebLogic Remote Console 2.4.11).
+
+### Why are there two versions of the WebLogic Remote Console extension? {#section_utt_w55_bfc}
+
+WebLogic Remote Console provides two variations of the WebLogic Remote Console extension to support the implementations of Java EE and Jakarta EE that are supported by the different releases of WebLogic Server. If you need to manually install the WebLogic Remote Console extension, make sure you choose the correct variation for your associated WebLogic Server domain.
+
+-   If your domain is running WebLogic Server 14.1.2.0.0 or earlier, use <code>console-rest-ext-x.x.x.war</code>.
+
+-   If your domain is running WebLogic Server 15.1.1.0.0 or later, use <code>console-rest-ext-**jakarta**-x.x.x.war</code>.
+
+
+As of WebLogic Server 14.1.2.0.0, the WebLogic Remote Console extension is included in the WebLogic Server installation and updated with each Patch Set Update (PSU). You should not need to install the extension manually.

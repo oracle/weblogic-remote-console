@@ -52,7 +52,7 @@ This procedure applies to all of the deployment units listed in [Supported Deplo
 
     -   If the application is on your file system and you need to upload it to the Administration Server, enable the **Upload** option. Then, beside **Source**, click **Choose File** to browse to the application's location on your system.
     -   If the application is already in the file system of the Administration Server, disable the **Upload** option. Then, in the **Source Path** field, enter the file path to the application.
-6.  Add a deployment plan, choose another staging mode, or set application behavior at deployment.
+6.  **Optional**: Add a deployment plan, choose another staging mode, or set application behavior at deployment.
 
 7.  Click **Create**.
 
@@ -201,7 +201,7 @@ If the application is deployed in a production environment, review [Overview of 
     -   **Update - Deployment Plan on Local Machine**: Updates the application using a new deployment plan located on the local machine and then uploads it to the Administration Server's upload directory. Use this option if all of your changes are dynamic.
     -   **Redeploy - Deployment Source and Plan on Server**: Updates a deployment plan located on the server and redeploys the application. Use this option if your changes include non-dynamic changes that require the application to restart.
     -   **Redeploy - Deployment Source and Plan on Local Machine**: Updates a deployment plan located on the local machine and redeploys the application. Use this option if your changes include non-dynamic changes that the application to restart.
-3.  If necessary for your selection, enter the file path to the new deployment plan.
+3.  **Optional**: If necessary for your selection, enter the file path to the new deployment plan.
 
 4.  Click **Done** to update or redeploy the application.
 
@@ -259,14 +259,14 @@ Installing a Java EE library means making its physical file or directory known t
 
     {{< alert title="Note" color="primary" >}}
 
-    
+
 
     You can install only the following types of archive files (or their corresponding exploded directories) as Java EE libraries: EJB JARs, Web application WARs, EAR files that contain EJB JARs or WARs, or plain JAR files that contain compiled classes.
 
     {{< /alert >}}
 
 
-6.  Select a different staging mode.
+6.  **Optional**: Select a different staging mode.
 
 7.  Click **Create**.
 
@@ -330,7 +330,7 @@ You can review the JASPIC specification at **[JSR 196: Java Authentication Servi
 
 Use credential mapping to control access between WebLogic resources and remote systems. WebLogic Server allows you to restrict access on a per-application basis.
 
-1.  Determine which MBean configuration data is required to form a connection between the WebLogic resource and its security data.
+1.  <a id="STEP_WQV_TFR_42C"></a>Determine which MBean configuration data is required to form a connection between the WebLogic resource and its security data.
 
     1.  In the **Security Data Tree**, go to **Realms**, then *myRealm*, then **Credential Mappers**.
 
@@ -357,5 +357,3 @@ Use credential mapping to control access between WebLogic resources and remote s
     This process will also create the first credential mapping for the application.
 
 7.  If you want to create more credential mappings, see [Add a Credential Mapping](../securing-domains#GUID-8D69A192-3B3D-46E8-A9F7-924641511E97).
-
-

@@ -18,7 +18,9 @@ Use WebLogic Remote Console to:
 -   Configure security parameters, including managing users, groups, and roles
 -   Configure WebLogic Server services, such as database connectivity (JDBC), and messaging (JMS)
 
-See what's new in the latest release of WebLogic Remote Console at https://github.com/oracle/weblogic-remote-console/releases.
+See what's new in the latest release of WebLogic Remote Console. Visit [WebLogic Remote Console GitHub Repository - Releases](https://github.com/oracle/weblogic-remote-console/releases).
+
+The latest available release of Desktop WebLogic Remote Console may be ahead of the latest release of Hosted WebLogic Remote Console, which is released with the WebLogic Server Patch Set Update (PSU) on a quarterly basis. Always confirm that you are looking at the appropriate release notes for your current release. You can see the release number of your WebLogic Remote Console in the top-left corner of its user interface.
 
 ## Related Content {}
 

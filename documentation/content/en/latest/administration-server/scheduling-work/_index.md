@@ -1,5 +1,5 @@
 ---
-weight: 232
+weight: 233
 title: Scheduling Work
 ---
 
@@ -85,7 +85,7 @@ A constraint defines the minimum and maximum numbers of threads allocated to exe
 
 6.  Click **Save**.
 
-7.  Repeat to add another type of constraint, if necessary.
+7.  **Optional**: Repeat to add another type of constraint, if necessary.
 
     Each Work Manager can contain only one constraint of each type.
 
@@ -223,5 +223,3 @@ You can create managed thread factory (MTF) templates that are used by applicati
     Only applications that have been deployed to the selected servers and clusters can use this MTF template.
 
 9.  Click **Save**.
-
-

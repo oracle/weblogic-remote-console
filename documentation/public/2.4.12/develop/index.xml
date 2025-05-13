@@ -2,30 +2,30 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Development on WebLogic Remote Console</title>
-    <link>//localhost:1313/2.4.12/develop/</link>
+    <link>/2.4.12/develop/</link>
     <description>Recent content in Development on WebLogic Remote Console</description>
     <generator>Hugo</generator>
     <language>en</language>
-    <atom:link href="//localhost:1313/2.4.12/develop/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="/2.4.12/develop/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Build from source</title>
-      <link>//localhost:1313/2.4.12/develop/build-source/</link>
+      <link>/2.4.12/develop/build-source/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>//localhost:1313/2.4.12/develop/build-source/</guid>
+      <guid>/2.4.12/develop/build-source/</guid>
       <description>&lt;h3 id=&#34;prerequisites&#34;&gt;Prerequisites&lt;/h3&gt;&#xA;&lt;p&gt;Before you can build the WebLogic Remote Console, you need to install the following software in your local build environment:&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://www.oracle.com/java/technologies/downloads&#34;&gt;Java SE 11+&lt;/a&gt;&lt;/li&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://maven.apache.org/download.cgi&#34;&gt;Maven 3.6.1+&lt;/a&gt;&lt;/li&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://nodejs.org/en/download/&#34;&gt;Node.js 18.0.0+&lt;/a&gt; This download includes npm.&lt;/li&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://www.oracle.com/tools/downloads/jet-downloads.html&#34;&gt;Oracle JET 15.1.0 client libraries&lt;/a&gt; To install the required Oracle JET software, run &lt;code&gt;npm install --location=global @oracle/ojet-cli@~15.1.0&lt;/code&gt;. On Linux and macOS, you will need to use &lt;code&gt;sudo&lt;/code&gt;.&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;p&gt;You can verify you&amp;rsquo;ve installed the correct versions of the listed software by running the following commands:&lt;/p&gt;</description>
     </item>
     <item>
       <title>Contribute to WebLogic Remote Console</title>
-      <link>//localhost:1313/2.4.12/develop/contribute/</link>
+      <link>/2.4.12/develop/contribute/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>//localhost:1313/2.4.12/develop/contribute/</guid>
+      <guid>/2.4.12/develop/contribute/</guid>
       <description>&lt;p&gt;We welcome contributions to this repository from anyone.&lt;/p&gt;&#xA;&lt;p&gt;If you want to submit a pull request to fix a bug or enhance an existing feature, please first open an issue and link to that issue when you submit your pull request.&lt;/p&gt;&#xA;&lt;p&gt;If you have any questions about a possible submission, feel free to open an issue too.&lt;/p&gt;&#xA;&lt;h3 id=&#34;contribute&#34;&gt;Contributing to the WebLogic Remote Console repository&lt;/h3&gt;&#xA;&lt;p&gt;Pull requests can be made under &lt;a href=&#34;https://oca.opensource.oracle.com/&#34;&gt;The Oracle Contributor Agreement&lt;/a&gt; (OCA).&lt;/p&gt;</description>
     </item>
     <item>
       <title>Contribute to the documentation</title>
-      <link>//localhost:1313/2.4.12/develop/docs-contribute/</link>
+      <link>/2.4.12/develop/docs-contribute/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>//localhost:1313/2.4.12/develop/docs-contribute/</guid>
+      <guid>/2.4.12/develop/docs-contribute/</guid>
       <description>&lt;p&gt;The WebLogic Remote Console documentation is produced using the &lt;a href=&#34;https://gohugo.io/&#34;&gt;Hugo static site generator&lt;/a&gt;. The webpages are created in markdown and hosted within the same repository as the WebLogic Remote Console. This makes it easy to suggest edits and improvements directly to the documentation.&lt;/p&gt;&#xA;&lt;p&gt;To make an update to the documentation:&lt;/p&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;&#xA;&lt;p&gt;Clone the repository.&lt;/p&gt;&#xA;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ git clone https://github.com/oracle/weblogic-remote-console&#xA;&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;&#xA;&lt;li&gt;&#xA;&lt;p&gt;Create a new branch.&lt;/p&gt;&#xA;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ git checkout -b &amp;lt;your-branch&amp;gt;&#xA;&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;&#xA;&lt;li&gt;&#xA;&lt;p&gt;Make your changes to the documentation. Edit the markdown source files in &lt;code&gt;hugo/staging/content&lt;/code&gt;.&lt;/p&gt;</description>
     </item>
   </channel>

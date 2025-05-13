@@ -13,11 +13,11 @@ The structure of WebLogic Remote Console remains similar across provider types, 
 
 ## Key Elements of the Interface {}
 
-Open the ![Providers drawer](/weblogic-remote-console/images/ui-icons/project-management-blk_24x24.png) **Providers** drawer to see and manage your saved provider connections.
+Open the ![Providers drawer](/weblogic-remote-console/images/ui-icons/project-management-blk-24x24.png) **Providers** drawer to see and manage your saved provider connections.
 
 Browse the **Navigation Tree** to see the structure of the provider as a node tree. In providers based on domains, such as Administration Servers or WDT model files, the node tree builds upon the MBean structure that defines a WebLogic Server domain. Beside the Navigation Tree is the **NavStrip**. On providers with multiple perspectives, you can also use the icons in the NavStrip to move between perspectives.
 
-Click ![Toggle Navigation Tree visibility](/weblogic-remote-console/images/ui-icons/navigation-icon-toggle-blk_24x24.png) above the NavStrip to hide the Navigation Tree when you want a bigger editing area. Click it again to bring the Navigation Tree back.
+Click ![Toggle Navigation Tree visibility](/weblogic-remote-console/images/ui-icons/navigation-icon-toggle-blk-24x24.png) above the NavStrip to hide the Navigation Tree when you want a bigger editing area. Click it again to bring the Navigation Tree back.
 
 The **Content Pane** is the main editing area for managing your domains or property lists. As you move through the nodes of the Navigation Tree, the Content Pane updates to match your new position.
 
@@ -45,73 +45,73 @@ Tool icons only appear on pages where they are applicable. For example, the Shop
                         <tr>
                            <td>
                               <img id="GUID-6DDEDC3B-00F5-4075-8849-66D3707C2C16__IMAGE_NGZ_4MY_MDC"
-                                   src="/weblogic-remote-console/images/ui-icons/home-icon-blk_24x24.png"/> Home</td>
+                                   src="/weblogic-remote-console/images/ui-icons/home-icon-blk-24x24.png"/> Home</td>
                            <td>Sends you to the Home Page of the provider.</td>
                         </tr>
                         <tr>
                            <td>
                               <img id="GUID-6DDEDC3B-00F5-4075-8849-66D3707C2C16__IMAGE_GFR_D2Z_MDC"
-                                   src="/weblogic-remote-console/images/ui-icons/shopping-cart-icon_24x24.png"/> Shopping Cart </td>
+                                   src="/weblogic-remote-console/images/ui-icons/shopping-cart-icon-24x24.png"/> Shopping Cart </td>
                            <td>Indicates if there are pending changes ready to be committed to a WebLogic Server domain.<p>When the <span>Shopping Cart</span> is full, you can click it to see the pending changes and then commit or discard them.</p>
                            </td>
                         </tr>
                         <tr>
                            <td>
                               <img id="GUID-6DDEDC3B-00F5-4075-8849-66D3707C2C16__IMAGE_J45_P2Z_MDC"
-                                   src="/weblogic-remote-console/images/ui-icons/beanpath-history-icon-blk_24x24.png"/> Visibility of History</td>
+                                   src="/weblogic-remote-console/images/ui-icons/beanpath-history-icon-blk-24x24.png"/> Visibility of History</td>
                            <td>Triggers a record of the pages you visit. When active, a drop-down list appears where you can see, and return to, your previous pages. History is limited to the current perspective. <p>Click <span>More ︙</span>, then <span>Clear History Entries</span> to delete your navigation history.</p>
                            </td>
                         </tr>
                         <tr>
                            <td>
                               <img id="GUID-6DDEDC3B-00F5-4075-8849-66D3707C2C16__IMAGE_ACC_NHF_B2C"
-                                   src="/weblogic-remote-console/images/ui-icons/project-management-blk_24x24.png"/>
+                                   src="/weblogic-remote-console/images/ui-icons/project-management-blk-24x24.png"/>
                            </td>
                            <td>Opens the <span>Providers</span> drawer where you can manage your provider connections.</td>
                         </tr>
                         <tr>
                            <td>
                               <img id="GUID-6DDEDC3B-00F5-4075-8849-66D3707C2C16__IMAGE_DJS_JYX_12C"
-                                   src="/weblogic-remote-console/images/ui-icons/pages-history-back-blk_24x24.png"/>/<img id="GUID-6DDEDC3B-00F5-4075-8849-66D3707C2C16__IMAGE_CDN_LYX_12C"
-                                   src="/weblogic-remote-console/images/ui-icons/pages-history-next-blk_24x24.png"/> Browse Back and Forward</td>
-                           <td>Browses  backward or forward through your previously visited pages in <span id="GUID-6DDEDC3B-00F5-4075-8849-66D3707C2C16__WRC">WebLogic Remote Console</span>.</td>
+                                   src="/weblogic-remote-console/images/ui-icons/pages-history-back-blk-24x24.png"/>/<img id="GUID-6DDEDC3B-00F5-4075-8849-66D3707C2C16__IMAGE_CDN_LYX_12C"
+                                   src="/weblogic-remote-console/images/ui-icons/pages-history-next-blk-24x24.png"/> Browse Back and Forward</td>
+                           <td>Browses  backward or forward through your previously visited pages in WebLogic Remote Console.</td>
                         </tr>
                         <tr>
                            <td>
                               <img id="GUID-6DDEDC3B-00F5-4075-8849-66D3707C2C16__IMAGE_AZP_5ZX_12C"
-                                   src="/weblogic-remote-console/images/ui-icons/pages-history-icon-blk_24x24.png"/> Pages History</td>
-                           <td>Opens the <span>Pages History</span> dialog box, which lists the pages that you have  previously visited in <span id="GUID-6DDEDC3B-00F5-4075-8849-66D3707C2C16__WRC">WebLogic Remote Console</span>.</td>
+                                   src="/weblogic-remote-console/images/ui-icons/pages-history-icon-blk-24x24.png"/> Pages History</td>
+                           <td>Opens the <span>Pages History</span> dialog box, which lists the pages that you have  previously visited in WebLogic Remote Console.</td>
                         </tr>
                         <tr>
                            <td>
                               <img id="GUID-6DDEDC3B-00F5-4075-8849-66D3707C2C16__IMAGE_U5V_TDZ_MDC"
-                                   src="/weblogic-remote-console/images/ui-icons/landing-page-icon-blk_24x24.png"/> Landing Page</td>
+                                   src="/weblogic-remote-console/images/ui-icons/landing-page-icon-blk-24x24.png"/> Landing Page</td>
                            <td>Sends you to the Landing Page of the current perspective.</td>
                         </tr>
                         <tr>
                            <td>
                               <img id="GUID-6DDEDC3B-00F5-4075-8849-66D3707C2C16__IMAGE_SJV_VDZ_MDC"
-                                   src="/weblogic-remote-console/images/ui-icons/toggle-help-icon-blk_16x16.png"/> Help</td>
+                                   src="/weblogic-remote-console/images/ui-icons/toggle-help-icon-blk-16x16.png"/> Help</td>
                            <td>Shows reference information about the attributes present on the current page.</td>
                         </tr>
                         <tr>
                            <td>
                               <img id="GUID-6DDEDC3B-00F5-4075-8849-66D3707C2C16__IMAGE_NWY_ZDZ_MDC"
-                                   src="/weblogic-remote-console/images/ui-icons/sync-icon-blk_24x24.png"/> Reload</td>
+                                   src="/weblogic-remote-console/images/ui-icons/sync-icon-blk-24x24.png"/> Reload</td>
                            <td>Refreshes any forms or tables on the current page with the latest available data.<p>When <span>Auto Reload Interval</span> is enabled, this icon will bounce continuously.</p>
                            </td>
                         </tr>
                         <tr>
                            <td>
                               <img id="GUID-6DDEDC3B-00F5-4075-8849-66D3707C2C16__IMAGE_R5R_B2Z_MDC"
-                                   src="/weblogic-remote-console/images/ui-icons/sync-interval-icon-blk_24x24.png"/> Auto Reload Interval</td>
-                           <td>Sets a time interval (in seconds) for how often <span id="GUID-6DDEDC3B-00F5-4075-8849-66D3707C2C16__WRC">WebLogic Remote Console</span> should reload a page to refresh its information. If you select another tab or move to another page, automatic reload stops.<p>To stop auto reload, click the bouncing <span>Reload</span> icon or click <span>Auto Reload Interval</span> and set the interval to <code>0</code>.</p>
+                                   src="/weblogic-remote-console/images/ui-icons/sync-interval-icon-blk-24x24.png"/> Auto Reload Interval</td>
+                           <td>Sets a time interval (in seconds) for how often WebLogic Remote Console should reload a page to refresh its information. If you select another tab or move to another page, automatic reload stops.<p>To stop auto reload, click the bouncing <span>Reload</span> icon or click <span>Auto Reload Interval</span> and set the interval to <code>0</code>.</p>
                            </td>
                         </tr>
                         <tr>
                            <td>
                               <img id="GUID-6DDEDC3B-00F5-4075-8849-66D3707C2C16__IMAGE_ZNL_M2Z_MDC"
-                                   src="/weblogic-remote-console/images/ui-icons/action-reset-icon-blk_24x24.png"/> Refresh Page Values</td>
+                                   src="/weblogic-remote-console/images/ui-icons/action-reset-icon-blk-24x24.png"/> Refresh Page Values</td>
                            <td>Updates the Content Pane with the latest values. </td>
                         </tr>
                      </tbody>
@@ -207,7 +207,7 @@ To arrange providers into a collection:
 
 5.  Click **OK** to add the provider to your project.
 
-6.  Add more providers to the project.
+6.  **Optional**: Add more providers to the project.
 
 
 You can add or remove providers from the project at any point. To switch to another project, open **File**, then **Switch to project** and choose the project that you want to switch to.
@@ -263,12 +263,10 @@ On devices running macOS, you must specifically enable keyboard navigation befor
 
 3.  Turn on the **Keyboard Navigation** option.
 
-4.  If you plan to use the Safari browser with Hosted WebLogic Remote Console, then do the following:
+4.  **Optional**: If you plan to use the Safari browser with Hosted WebLogic Remote Console, then do the following:
 
     1.  Open the Safari browser and open its main menu.
 
     2.  Select **Settings**.
 
     3.  On the **Advanced** tab, turn on the **Press Tab to highlight each item on a webpage** option.
-
-

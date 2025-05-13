@@ -25,7 +25,6 @@ WebLogic Remote Console is part of the thriving WebLogic Server community. Explo
 
 -   Read general [Oracle WebLogic Server](http://www.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware&id=menuwls) documentation in the Oracle Help Center for comprehensive descriptions of the concepts and features of WebLogic Server.
 
--   Read the [WebLogic Deploy Tooling]( https://oracle.github.io/weblogic-deploy-tooling/) documentation to learn how to transform WDT model files into fully functional WebLogic Server domains.
+-   Read the [WebLogic Deploy Tooling](https://oracle.github.io/weblogic-deploy-tooling/) documentation to learn how to transform WDT model files into fully functional WebLogic Server domains.
 
 -   Read the [WebLogic Kubernetes Toolkit User Interface](https://oracle.github.io/weblogic-toolkit-ui/) documentation to understand how to deploy WebLogic Server to Kubernetes clusters.
-

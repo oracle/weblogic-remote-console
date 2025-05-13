@@ -3,7 +3,7 @@
 <div class="alert alert-{{ $color }}" role="alert">
 {{ with .Get "title" }}<h4 class="alert-heading">{{ . | safeHTML }}</h4>{{ end }}
 {{ if eq .Page.File.Ext "md" }}
-    {{ .InnerDeindent | markdownify }}
+    {{ .InnerDeindent | strings.TrimSpace | .Page.RenderString }}
 {{ else }}
     {{ .InnerDeindent | htmlUnescape | safeHTML }}
 {{ end }}

@@ -1,10 +1,10 @@
 <!doctype html>
 <html itemscope itemtype="http://schema.org/WebPage" lang="en" class="no-js">
-  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <head>
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link rel="alternate" type="application/rss&#43;xml" href="//localhost:1313/troubleshoot-weblogic-remote-console/index.xml">
-<meta name="robots" content="noindex, nofollow">
+<link rel="alternate" type="application/rss&#43;xml" href="/troubleshoot-weblogic-remote-console/index.xml">
+<meta name="robots" content="index, follow">
 
 
 <link rel="shortcut icon" href="/favicons/favicon.ico" >
@@ -22,7 +22,7 @@
 <meta name="description" content="Learn how to identify and recover from issues in WebLogic Server or WebLogic Remote Console.
 Perform these preliminary troubleshooting steps to get started:
 Restart all servers in the domain. Confirm that the Administration Server can reach your Managed Servers and clusters. See Investigate Server Connection Issues. Check the log files for any errors. See Review Log Files. Review any known issues. See Known Issues. Update to the latest versions of Desktop WebLogic Remote Console and the WebLogic Remote Console extension. See Upgrade Desktop WebLogic Remote Console. Investigate Server Connection Issues If the Administration Server cannot reach a Managed Server or cluster, you may be able to determine the cause using WebLogic Remote Console.">
-<meta property="og:url" content="//localhost:1313/troubleshoot-weblogic-remote-console/">
+<meta property="og:url" content="/troubleshoot-weblogic-remote-console/">
   <meta property="og:site_name" content="WebLogic Remote Console">
   <meta property="og:title" content="Troubleshoot Issues with WebLogic Remote Console">
   <meta property="og:description" content="Learn how to identify and recover from issues in WebLogic Server or WebLogic Remote Console.
@@ -41,7 +41,8 @@ Restart all servers in the domain. Confirm that the Administration Server can re
   <meta name="twitter:description" content="Learn how to identify and recover from issues in WebLogic Server or WebLogic Remote Console.
 Perform these preliminary troubleshooting steps to get started:
 Restart all servers in the domain. Confirm that the Administration Server can reach your Managed Servers and clusters. See Investigate Server Connection Issues. Check the log files for any errors. See Review Log Files. Review any known issues. See Known Issues. Update to the latest versions of Desktop WebLogic Remote Console and the WebLogic Remote Console extension. See Upgrade Desktop WebLogic Remote Console. Investigate Server Connection Issues If the Administration Server cannot reach a Managed Server or cluster, you may be able to determine the cause using WebLogic Remote Console.">
-<link href="/scss/main.css" rel="stylesheet">
+<link rel="preload" href="/scss/main.min.48c25d0a5a23a1e8cae94d6c5e7622061e5345cf098171b1d6ee41d8e309e6c8.css" as="style" integrity="sha256-SMJdClojoejK6U1sXnYiBh5TRc8JgXGx1u5B2OMJ5sg=" crossorigin="anonymous">
+<link href="/scss/main.min.48c25d0a5a23a1e8cae94d6c5e7622061e5345cf098171b1d6ee41d8e309e6c8.css" rel="stylesheet" integrity="sha256-SMJdClojoejK6U1sXnYiBh5TRc8JgXGx1u5B2OMJ5sg=" crossorigin="anonymous">
 <script
   src="https://code.jquery.com/jquery-3.7.1.min.js"
   integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
@@ -137,7 +138,7 @@ Restart all servers in the domain. Confirm that the Administration Server can re
     aria-label="Search this site…"
     autocomplete="off"
     
-    data-offline-search-index-json-src="/offline-search-index.json"
+    data-offline-search-index-json-src="/offline-search-index.d874cf970bc57419b247ef101f81d5e2.json"
     data-offline-search-base-href="/"
     data-offline-search-max-results="10"
   >
@@ -162,7 +163,7 @@ Restart all servers in the domain. Confirm that the Administration Server can re
     aria-label="Search this site…"
     autocomplete="off"
     
-    data-offline-search-index-json-src="/offline-search-index.json"
+    data-offline-search-index-json-src="/offline-search-index.d874cf970bc57419b247ef101f81d5e2.json"
     data-offline-search-base-href="/"
     data-offline-search-max-results="10"
   >
@@ -371,8 +372,8 @@ Restart all servers in the domain. Confirm that the Administration Server can re
 <p>The location of <code>out.log</code> varies depending on your platform:</p>
 <ul>
 <li>Linux: <code>$HOME/.config/weblogic-remote-console/out.log</code></li>
-<li>macOS: <code>/Users/<user>/Library/Application Support/weblogic-remote-console/out.log</code></li>
-<li>Windows: <code>C:Users<user>AppDataRoamingweblogic-remote-consoleout.log</code>
+<li>macOS: <code>/Users/<em>user</em>/Library/Application Support/weblogic-remote-console/out.log</code></li>
+<li>Windows: <code>C:\Users\<em>user</em>\AppData\Roaming\weblogic-remote-console\out.log</code>
 Log file entries from previous sessions are saved to a new file in the same directory, marked by date: <code>out-yyyy-mm-dd.log</code>.</li>
 </ul>
 </li>
@@ -382,7 +383,7 @@ Log file entries from previous sessions are saved to a new file in the same dire
 <div class="alert alert-primary" role="alert">
 <h4 class="alert-heading">Note</h4>
 
-    If you want to generate log files for WebLogic Server, see <a href="../administration-server/monitoring-domains#GUID-280EB231-F28A-4FF2-A8B2-08DEBDD9CD4B">Log Messages</a> instead.
+    If you want to generate log files for WebLogic Server, see <a href="/administration-server/monitoring-domains/#GUID-280EB231-F28A-4FF2-A8B2-08DEBDD9CD4B">Log Messages</a> instead.
 
 </div>
 <h2 id="GUID-A2824DAE-C040-43E0-A645-041FDFB8936F">Known Issues</h2>
@@ -467,7 +468,7 @@ Log file entries from previous sessions are saved to a new file in the same dire
 </code></pre><p><strong>Note</strong>: Adding <code>-k</code> makes this connection insecure. It tells curl to skip the verification step that it normally performs on secure connections.</p>
 </li>
 </ul>
-<p>If the command fails, then a more general connectivity issue is affecting your domain. See <a href="/troubleshoot-weblogic-remote-console/#GUID-B3D14A11-0144-4B31-BFE3-E6AC59AEFCBE">Cannot connect to the Administration Server</a>.</p>
+<p>If this command fails, then a more general connectivity issue is affecting your domain. See <a href="/troubleshoot-weblogic-remote-console/#GUID-B3D14A11-0144-4B31-BFE3-E6AC59AEFCBE">Cannot connect to the Administration Server</a>.</p>
 </li>
 <li>
 <p>To get the Administration Server’s runtime statistics <em>indirectly</em>:</p>
@@ -525,7 +526,7 @@ Log file entries from previous sessions are saved to a new file in the same dire
 <ul>
 <li>Linux: <code><em>$HOME</em>/.config/weblogic-remote-console/auto-prefs.json</code></li>
 <li>macOS: <code>/Users/<em>user</em>/Library/Application Support/weblogic-remote-console/auto-prefs.json</code></li>
-<li>Windows: <code>C:Users<em>user</em>AppDataRoamingweblogic-remote-consoleauto-prefs.json</code></li>
+<li>Windows: <code>C:\Users\<em>user</em>\AppData\Roaming\weblogic-remote-console\auto-prefs.json</code></li>
 </ul>
 </li>
 <li>Restart WebLogic Remote Console.</li>
@@ -557,8 +558,8 @@ Log file entries from previous sessions are saved to a new file in the same dire
 </footer>
 
     </div>
-    <script src="/js/main.js"></script>
-<script defer src="/js/click-to-copy.js" crossorigin="anonymous"></script>
+    <script src="/js/main.min.90902a026ed2aee7ed45d85797f4c790b240ba148ac6f8a6f194cb1981ffecf5.js" integrity="sha256-kJAqAm7SruftRdhXl/THkLJAuhSKxvim8ZTLGYH/7PU=" crossorigin="anonymous"></script>
+<script defer src="/js/click-to-copy.min.73478a7d4807698aed7e355eb23f9890ca18fea3158604c8471746d046702bad.js" integrity="sha256-c0eKfUgHaYrtfjVesj&#43;YkMoY/qMVhgTIRxdG0EZwK60=" crossorigin="anonymous"></script>
 <script src='/js/tabpane-persist.js'></script>
 
   </body>

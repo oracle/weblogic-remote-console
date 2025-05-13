@@ -1,5 +1,5 @@
 ---
-weight: 259
+weight: 260
 title: Troubleshoot Issues with WebLogic Remote Console
 ---
 
@@ -48,8 +48,8 @@ If you experience any issues with WebLogic Remote Console, then you can check it
     The location of <code>out.log</code> varies depending on your platform:
 
     -   Linux: <code>$HOME/.config/weblogic-remote-console/out.log</code>
-    -   macOS: <code>/Users/<user>/Library/Application Support/weblogic-remote-console/out.log</code>
-    -   Windows: <code>C:Users<user>AppDataRoamingweblogic-remote-consoleout.log</code>
+    -   macOS: <code>/Users/*user*/Library/Application Support/weblogic-remote-console/out.log</code>
+    -   Windows: <code>C:\Users\\*user*\AppData\Roaming\weblogic-remote-console\out.log</code>
     Log file entries from previous sessions are saved to a new file in the same directory, marked by date: <code>out-yyyy-mm-dd.log</code>.
 
 
@@ -127,7 +127,7 @@ If you experience issues connecting to an Administration Server when using WebLo
 
     If you can connect successfully over HTTPS, then the problem is likely that WebLogic Remote Console does not trust the SSL certificate of the Administration Server. You can either import the Administration Server’s certificate into your client’s keystore, or, if you’re using demo certificates, enable the **Make Insecure Connection** option when you connect to the Administration Server.
 
--   Make sure your Administration Server's management endpoint, <code>management/*</code>, is accessible to clients. It may be blocked if your domain is behind a load-balancer or firewall, or is in a Docker container. You will need to expose the endpoint manually.
+-   Make sure your Administration Server's management endpoint, <code>management/\*</code>, is accessible to clients. It may be blocked if your domain is behind a load-balancer or firewall, or is in a Docker container. You will need to expose the endpoint manually.
 
     You should also make sure that the value of the Remote Console Helper Context Path attribute (<code>RemoteConsoleHelperMBean.ContextPath</code>) has not been changed. The default value is <code>console</code>, which WebLogic Remote Console appends to the domain URL. If you modify the context path, it may prevent WebLogic Remote Console from successfully connecting to the Administration Server. Do not change it unless you understand the possible impacts to Desktop WebLogic Remote Console. See [Configure Web Authentication](../administration-server/domain-configuration#GUID-A6191FE0-2A4C-45B6-A138-7FD9B157D28F).
 
@@ -179,7 +179,7 @@ You can test the REST connection using curl.
 
         **Note**: Adding <code>-k</code> makes this connection insecure. It tells curl to skip the verification step that it normally performs on secure connections.
 
-    If the command fails, then a more general connectivity issue is affecting your domain. See [Cannot connect to the Administration Server](#GUID-B3D14A11-0144-4B31-BFE3-E6AC59AEFCBE).
+    If this command fails, then a more general connectivity issue is affecting your domain. See [Cannot connect to the Administration Server](#GUID-B3D14A11-0144-4B31-BFE3-E6AC59AEFCBE).
 
 -   To get the Administration Server’s runtime statistics *indirectly*:
 
@@ -250,6 +250,5 @@ If <code>auto-prefs.json</code> does become corrupted, you can reset it, but all
 2.  Delete <code>auto-prefs.json</code>. The location of <code>auto-prefs.json</code> varies depending on your platform:
     -   Linux: <code>*$HOME*/.config/weblogic-remote-console/auto-prefs.json</code>
     -   macOS: <code>/Users/*user*/Library/Application Support/weblogic-remote-console/auto-prefs.json</code>
-    -   Windows: <code>C:Users*user*AppDataRoamingweblogic-remote-consoleauto-prefs.json</code>
+    -   Windows: <code>C:\Users\\*user*\AppData\Roaming\weblogic-remote-console\auto-prefs.json</code>
 3.  Restart WebLogic Remote Console.
-

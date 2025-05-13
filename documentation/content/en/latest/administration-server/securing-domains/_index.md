@@ -109,7 +109,7 @@ Before you create a new security realm, review the considerations outlined in [B
 
     {{< alert title="Note" color="primary" >}}
 
-    
+
 
     If you do not enable **Create Default Providers**, then you must manually configure the required security providers before you can commit the new security realm. For a list of which security providers are required, see [Required Security Providers](#SECTION_HWH_VBM_NCC).
 
@@ -528,7 +528,7 @@ For more information on certificate validation on WebLogic Server, see [Configur
 
 5.  Click **Create**.
 
-6.  If you want to make this CLV provider the current builder of certificate chains for this realm, perform the following steps:
+6.  **Optional**: If you want to make this CLV provider the current builder of certificate chains for this realm, perform the following steps:
 
     1.  In the **Edit Tree**, go to **Security**, then **Realms**, then *myRealm*.
 
@@ -585,7 +585,7 @@ If the security providers provided by WebLogic Server do not meet the needs of y
 
     {{< alert title="Note" color="primary" >}}
 
-    
+
 
     -   If you are adding a deployable Authorization provider and the provider does not support parallel security policy, then set the <code>RealmMBean.DeployableProviderSynchronizationEnabled</code> attribute to <code>true</code>. Next, for the <code>RealmMBean.DeployableProviderSynchronizationTimeout</code> attribute, enter a timeout value (in milliseconds) or accept the default value.
 
@@ -653,7 +653,7 @@ You can add users to the WebLogic Authentication provider.
 
 4.  Click **Create**.
 
-5.  If you want to add the new user to a group, then under the **Membership** tab, select a group under the **Available** section and move it to the **Chosen** section.
+5.  **Optional**: If you want to add the new user to a group, then under the **Membership** tab, select a group under the **Available** section and move it to the **Chosen** section.
 
     User groups provide an efficient way to manage multiple users with the same responsibilities.
 
@@ -946,7 +946,7 @@ You can create a security policy that only applies to a specific resource instan
 
 5.  Click **Save**.
 
-6.  Add more conditions to the policy to increase its complexity.
+6.  **Optional**: Add more conditions to the policy to increase its complexity.
 
 
 ## Identity and Trust {#GUID-219D9EBA-79E1-430F-AECD-28B4A41FDAE9}
@@ -1034,9 +1034,9 @@ Additionally, the JDK installation provides the <code>cacerts</code> truststore 
 
 7.  Repeat on all applicable servers.
 
-8.  If you are updating a keystore configuration and have SSL/TLS configured already, you can check that all SSL/TLS connections exist according to the specified connection. In the **Monitoring Tree**, go to **Environment**, then **Servers**. Restart the applicable servers.
+8.  **Optional**: If you are updating a keystore configuration and have SSL/TLS configured already, you can check that all SSL/TLS connections exist according to the specified connection. In the **Monitoring Tree**, go to **Environment**, then **Servers**. Restart the applicable servers.
 
-9.  If you enabled custom keystores and want to use Node Manager to start Managed Servers, you must also update the <code>nodemanager.properties</code> file to match.
+9.  <a id="STEP_NPS_VMH_2CC"></a>**Optional**: If you enabled custom keystores and want to use Node Manager to start Managed Servers, you must also update the <code>nodemanager.properties</code> file to match.
 
     At minimum, update the following node manager properties as applicable to your environment:
 
@@ -1066,7 +1066,7 @@ Ensure that you have configured the identity and trust keystores for WebLogic Se
 
     Use the **OCSP** and **CRL** tabs to customize settings for the revocation checking method. For information on the options, see [Using the Online Certificate Status Protocol](https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=SECMG-GUID-6708C14D-1F37-4454-8DB7-69F2EC86ACBA) or [Using Certificate Revocation Lists](https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=SECMG-GUID-4E2A9AB6-233E-475C-A32E-FAACEB12052E) in **Administering Security for Oracle WebLogic Server**.
 
-5.  If you want a certificate whose revocation status cannot be determined to fail SSL/TLS certificate path validation, turn on the **Fail on Unknown Revocation Status** option.
+5.  **Optional**: If you want a certificate whose revocation status cannot be determined to fail SSL/TLS certificate path validation, turn on the **Fail on Unknown Revocation Status** option.
 
     When this option disabled, if an X.509 certificate’s revocation status cannot be determined, but the SSL/TLS certificate path validation is otherwise successful, the certificate will be accepted.
 
@@ -1157,7 +1157,7 @@ Configure the identity and trust keystores for WebLogic Server. See [Configure K
     -   **Builtin SSL Validation and Cert Path Validators**: Uses the built-in trusted CA-based validation and uses configured CertPathValidator providers to perform extra validation.
     For more information, see [Using Certificate Lookup and Validation Providers](https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=SECMG-GUID-21503641-395C-4F70-AAD7-6C3195B1EB02) in **Administering Security for Oracle WebLogic Server**.
 
-10. Enable two-way SSL/TLS.
+10. **Optional**: Enable two-way SSL/TLS.
 
     By default, WebLogic Server is configured to use one-way SSL/TLS, where the server passes its identity to the client. In a two-way SSL/TLS connection, the client verifies the identity of the server and then passes its identity certificate to the server. The server then validates the identity certificate of the client before completing the SSL/TLS handshake. The server determines whether or not two-way SSL/TLS is used.
 
@@ -1205,11 +1205,11 @@ The following steps only apply when a WebLogic Server instance is acting as an S
 
     As of WebLogic Server 14.1.1.0.0, the default verifier is the wildcard verifier.
 
-6.  If you want to use a custom verifier, follow these steps.
+6.  **Optional**: If you want to use a custom verifier, follow these steps.
 
     {{< alert title="Note" color="primary" >}}
 
-    
+
 
     If you write a custom host name verifier, the class that implements the host name verifier must be specified in the <code>CLASSPATH</code> of WebLogic Server (when acting as an SSL/TLS client) or a stand alone SSL/TLS client.
 
@@ -1256,7 +1256,7 @@ Configure cipher suites supported by WebLogic Server.
 
 4.  In the **Cipher Suites** field, enter the cipher suites that you want to support on this server.
 
-5.  In the **Excluded Cipher Suites** field, enter any cipher suites that you want to block on this server.
+5.  **Optional**: In the **Excluded Cipher Suites** field, enter any cipher suites that you want to block on this server.
 
 6.  Click **Save**.
 
@@ -1341,7 +1341,7 @@ For more information on connection filters, see [Using Connection Filters](https
 
     For more information about connection filter rules, see [Guidelines for Writing Connection Filter Rules](https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=SCPRG-GUID-A312878D-EC41-48DF-B318-E1E0D5A9307E) in **Developing Applications with the WebLogic Security Service**.
 
-6.  If you want WebLogic Server to ignore errors in filter rules during server startup, turn on the **Connection Filter Ignore Rule Errors** option.
+6.  **Optional**: If you want WebLogic Server to ignore errors in filter rules during server startup, turn on the **Connection Filter Ignore Rule Errors** option.
 
 7.  Click **Save**.
 
@@ -1363,7 +1363,7 @@ WebLogic Server also supports using blocklists for JEP 290 filtering. For instru
 {{< /alert >}}
 
 
-1.  Configure the domain to record all of the classes and packages used in both WebLogic Server and customer application deserialization.
+1.  <a id="STEP_HM2_SMZ_PCC"></a>Configure the domain to record all of the classes and packages used in both WebLogic Server and customer application deserialization.
 
     1.  In the **Edit Tree**, go to **Environment**, then **Domain**.
 
@@ -1375,15 +1375,19 @@ WebLogic Server also supports using blocklists for JEP 290 filtering. For instru
 
     4.  Save and commit the change.
 
-2.  Run a full set of tests to ensure that the recorded allowlist configuration file provides appropriate coverage of all packages and classes that must be allowed in order for your application to run successfully. When deserialization occurs, each class is recorded in <code>*DOMAIN_HOME*/config/security/jep290-recorded.serial.properties</code>.
+2.  <a id="STEP_DCB_VMZ_PCC"></a>Run a full set of tests to ensure that the recorded allowlist configuration file provides appropriate coverage of all packages and classes that must be allowed in order for your application to run successfully. When deserialization occurs, each class is recorded in <code>*DOMAIN_HOME*/config/security/jep290-recorded.serial.properties</code>.
 
     A sample <code>jep290-recorded.serial.properties</code> is shown below:
 
-    ```
-    Wed May 19 23:55:13 UTC 2021
-    weblogic.oif.serialFilter=        com.company1.common.collections.objs.*;        com.company1.common.tools.Calculator;        com.company2.shared.tools.Converter
-    weblogic.oif.serialGlobalFilter=        com.company1.common.lists.AList;        com.company1.common.tools.Calculator;        com.company2.shared.tools.*
-    ```
+    <pre>Wed May 19 23:55:13 UTC 2021
+    weblogic.oif.serialFilter=\
+        com.company1.common.collections.objs.*;\
+        com.company1.common.tools.Calculator;\
+        com.company2.shared.tools.Converter
+    weblogic.oif.serialGlobalFilter=\
+        com.company1.common.lists.AList;\
+        com.company1.common.tools.Calculator;\
+        com.company2.shared.tools.*</pre>
 
 3.  Turn off the **Recording Enabled** option. Save and commit the change.
 
@@ -1399,7 +1403,7 @@ WebLogic Server also supports using blocklists for JEP 290 filtering. For instru
 
         {{< alert title="Note" color="primary" >}}
 
-        
+
 
         You can also set the <code>AllowListViolationAction</code> on a channel using the network access point. Doing so allows you to use an allowlist on untrusted external channels and a blocklist on internal trusted channels.
 
@@ -1702,7 +1706,7 @@ For a list of the specific RDBMS systems supported in this release of WebLogic S
 
     {{< alert title="Note" color="primary" >}}
 
-    
+
 
     Do not start the domain at this time.
 
@@ -1740,7 +1744,7 @@ You can update the RDBMS security store settings. However, you should avoid modi
 
         {{< alert title="Note" color="primary" >}}
 
-        
+
 
         Failure to configure JMS actions in a multiserver domain in which the RDBMS security store is configured may result in a security vulnerability.
 
@@ -1751,4 +1755,3 @@ You can update the RDBMS security store settings. However, you should avoid modi
 
 
 If the JMS topic with which the RDBMS security store is configured goes down, see [Managing the RDBMS Security Store](https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=SECMG-GUID-7AE06479-0168-4277-AA84-6D5C87F1A004) in **Administering Security for Oracle WebLogic Server** for important information about restoring it.
-

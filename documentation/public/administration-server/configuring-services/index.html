@@ -1,10 +1,10 @@
 <!doctype html>
 <html itemscope itemtype="http://schema.org/WebPage" lang="en" class="no-js">
-  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <head>
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link rel="alternate" type="application/rss&#43;xml" href="//localhost:1313/administration-server/configuring-services/index.xml">
-<meta name="robots" content="noindex, nofollow">
+<link rel="alternate" type="application/rss&#43;xml" href="/administration-server/configuring-services/index.xml">
+<meta name="robots" content="index, follow">
 
 
 <link rel="shortcut icon" href="/favicons/favicon.ico" >
@@ -22,7 +22,7 @@
 <meta name="description" content="Use WebLogic Remote Console to manage services in a WebLogic Server domain.
 Data Sources You can connect WebLogic Server to databases by adding JDBC data sources to your domain. A data source is a Java EE standard method of configuring connectivity to a database.
 Each WebLogic data source contains a pool of database connections. Applications look up the data source on the JNDI tree or in the local application context and then use a database connection from the pool of connections. Data sources and their connection pools provide connection management processes that help keep your system running efficiently.">
-<meta property="og:url" content="//localhost:1313/administration-server/configuring-services/">
+<meta property="og:url" content="/administration-server/configuring-services/">
   <meta property="og:site_name" content="WebLogic Remote Console">
   <meta property="og:title" content="Configuring Services">
   <meta property="og:description" content="Use WebLogic Remote Console to manage services in a WebLogic Server domain.
@@ -35,13 +35,14 @@ Each WebLogic data source contains a pool of database connections. Applications 
   <meta itemprop="description" content="Use WebLogic Remote Console to manage services in a WebLogic Server domain.
 Data Sources You can connect WebLogic Server to databases by adding JDBC data sources to your domain. A data source is a Java EE standard method of configuring connectivity to a database.
 Each WebLogic data source contains a pool of database connections. Applications look up the data source on the JNDI tree or in the local application context and then use a database connection from the pool of connections. Data sources and their connection pools provide connection management processes that help keep your system running efficiently.">
-  <meta itemprop="wordCount" content="10325">
+  <meta itemprop="wordCount" content="10332">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Configuring Services">
   <meta name="twitter:description" content="Use WebLogic Remote Console to manage services in a WebLogic Server domain.
 Data Sources You can connect WebLogic Server to databases by adding JDBC data sources to your domain. A data source is a Java EE standard method of configuring connectivity to a database.
 Each WebLogic data source contains a pool of database connections. Applications look up the data source on the JNDI tree or in the local application context and then use a database connection from the pool of connections. Data sources and their connection pools provide connection management processes that help keep your system running efficiently.">
-<link href="/scss/main.css" rel="stylesheet">
+<link rel="preload" href="/scss/main.min.48c25d0a5a23a1e8cae94d6c5e7622061e5345cf098171b1d6ee41d8e309e6c8.css" as="style" integrity="sha256-SMJdClojoejK6U1sXnYiBh5TRc8JgXGx1u5B2OMJ5sg=" crossorigin="anonymous">
+<link href="/scss/main.min.48c25d0a5a23a1e8cae94d6c5e7622061e5345cf098171b1d6ee41d8e309e6c8.css" rel="stylesheet" integrity="sha256-SMJdClojoejK6U1sXnYiBh5TRc8JgXGx1u5B2OMJ5sg=" crossorigin="anonymous">
 <script
   src="https://code.jquery.com/jquery-3.7.1.min.js"
   integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
@@ -137,7 +138,7 @@ Each WebLogic data source contains a pool of database connections. Applications 
     aria-label="Search this site…"
     autocomplete="off"
     
-    data-offline-search-index-json-src="/offline-search-index.json"
+    data-offline-search-index-json-src="/offline-search-index.d874cf970bc57419b247ef101f81d5e2.json"
     data-offline-search-base-href="/"
     data-offline-search-max-results="10"
   >
@@ -162,7 +163,7 @@ Each WebLogic data source contains a pool of database connections. Applications 
     aria-label="Search this site…"
     autocomplete="off"
     
-    data-offline-search-index-json-src="/offline-search-index.json"
+    data-offline-search-index-json-src="/offline-search-index.d874cf970bc57419b247ef101f81d5e2.json"
     data-offline-search-base-href="/"
     data-offline-search-max-results="10"
   >
@@ -544,7 +545,7 @@ The option you select limits the data sources that you can select as part of the
 <p>From the <strong>Database Driver</strong> drop-down list, select JDBC drivers.</p>
 <ol>
 <li>
-<p>If you selected a non-XA driver, then select a <strong>Global Transactions Protocol</strong>.</p>
+<p><strong>Optional</strong>: If you selected a non-XA driver, then select a <strong>Global Transactions Protocol</strong>.</p>
 <p>See <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=JDBCA-GUID-4C929E67-5FD7-477B-A749-1EA0F4FD25D4">JDBC Data Source Transaction Options</a> in <strong>Administering JDBC Data Sources for Oracle WebLogic Server</strong>.</p>
 </li>
 </ol>
@@ -632,7 +633,7 @@ The option you select limits the data sources that you can select as part of the
                                  <td>Start</td>
                                  <td>
                                     <p>Use <span>Start</span> to start an individual instance of a data source.</p>
-                                    <p>For more information, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=JDBCA-GUID-6A301B9B-A0DD-4290-B02D-F2F57899A1B1">Starting a Data Source</a> in <span id="GUID-C61D7557-E83E-477D-A1E9-BF7281CF12D9__JDBCA">
+                                    <p>For more information, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=JDBCA-GUID-6A301B9B-A0DD-4290-B02D-F2F57899A1B1">Starting a Data Source</a> in <span>
                                           <cite>Administering JDBC Data Sources for Oracle WebLogic Server</cite>
                                        </span>.</p>
                                  </td>
@@ -641,7 +642,7 @@ The option you select limits the data sources that you can select as part of the
                                  <td>Resume</td>
                                  <td>
                                     <p>Use <span>Resume </span> to resume individual data sources that are in a  <code>Suspended</code> state.</p>
-                                    <p>For more information, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=JDBCA-GUID-80AB2650-2AFB-4D67-B650-DCEA15E2260A">Resuming a Connection Pool</a> in <span id="GUID-C61D7557-E83E-477D-A1E9-BF7281CF12D9__JDBCA">
+                                    <p>For more information, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=JDBCA-GUID-80AB2650-2AFB-4D67-B650-DCEA15E2260A">Resuming a Connection Pool</a> in <span>
                                           <cite>Administering JDBC Data Sources for Oracle WebLogic Server</cite>
                                        </span>. </p>
                                  </td>
@@ -654,7 +655,7 @@ The option you select limits the data sources that you can select as part of the
                                        <li>Choose <span>Gracefully</span> to mark the data source as disabled and block any new connection requests. If there are any reserved connections, the operation will wait for the period as specified by <code>InactiveTimeout</code>, otherwise the operation waits 60 seconds before suspending all connections. If successful, the health state is set to <code>Suspended</code>. All connections are preserved exactly as they were before the data source was suspended. When you resume the data source, clients that had reserved a connection before the data source was suspended can continue exactly where they left off.</li>
                                        <li>Choose <span>Force Suspend</span> to mark the data source as disabled. Any transaction on any currently reserved connection is rolled back, and all reserved connections are destroyed. Any subsequent attempts by applications to use their reserved connections will fail. If successful, the health state is set to <code>Suspended</code>. At this time, the data source attempts to replenish the connection pool by creating as many new connections as had been destroyed. When you <span>Resume</span>, clients must reserve new connections to proceed.</li>
                                     </ul>
-                                    <p>For more information, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=JDBCA-GUID-0EDEBF44-FCE6-4725-B319-6210D436D6C8">Suspending a Connection Pool</a> in <span id="GUID-C61D7557-E83E-477D-A1E9-BF7281CF12D9__JDBCA">
+                                    <p>For more information, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=JDBCA-GUID-0EDEBF44-FCE6-4725-B319-6210D436D6C8">Suspending a Connection Pool</a> in <span>
                                           <cite>Administering JDBC Data Sources for Oracle WebLogic Server</cite>
                                        </span>.</p>
                                  </td>
@@ -667,7 +668,7 @@ The option you select limits the data sources that you can select as part of the
                                        <li>Choose <span>Gracefully</span> to shut down a data source if there are no active connections. If any connections from the data source are currently in use, the <span>Shutdown</span> operation will fail and the health state remains <code>Running</code>.</li>
                                        <li>Choose <span>Force Shutdown</span> to shut down a data source and force the disconnection of all current connection users.</li>
                                     </ul>
-                                    <p>For more information, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=JDBCA-GUID-1CD1421C-44D4-4C23-B67A-0C019F0C2194">Shutting Down a Data Source</a> in <span id="GUID-C61D7557-E83E-477D-A1E9-BF7281CF12D9__JDBCA">
+                                    <p>For more information, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=JDBCA-GUID-1CD1421C-44D4-4C23-B67A-0C019F0C2194">Shutting Down a Data Source</a> in <span>
                                           <cite>Administering JDBC Data Sources for Oracle WebLogic Server</cite>
                                        </span>.</p>
                                  </td>
@@ -676,7 +677,7 @@ The option you select limits the data sources that you can select as part of the
                                  <td>Shrink</td>
                                  <td>
                                     <p>Use <span>Shrink </span> to shrink the pool of database connections in individual instances of a data source to the minimum capacity or the current number of connections in use, whichever is greater.</p>
-                                    <p>For more information, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=JDBCA-GUID-DE62B858-BE5A-4E22-BCCD-0605C437686E">Shrinking a Connection Pool</a> in <span id="GUID-C61D7557-E83E-477D-A1E9-BF7281CF12D9__JDBCA">
+                                    <p>For more information, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=JDBCA-GUID-DE62B858-BE5A-4E22-BCCD-0605C437686E">Shrinking a Connection Pool</a> in <span>
                                           <cite>Administering JDBC Data Sources for Oracle WebLogic Server</cite>
                                        </span>. </p>
                                  </td>
@@ -685,7 +686,7 @@ The option you select limits the data sources that you can select as part of the
                                  <td>Reset</td>
                                  <td>
                                     <p>Use <span>Reset </span> to reset the database connections in a JDBC data source by closing and then recreating all available database connections in the pool of connections in the data source.</p>
-                                    <p>For more information, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=JDBCA-GUID-B13E71AD-D6E1-44F4-ADC1-4156ACAC4756">Resetting a Connection Pool</a> in <span id="GUID-C61D7557-E83E-477D-A1E9-BF7281CF12D9__JDBCA">
+                                    <p>For more information, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=JDBCA-GUID-B13E71AD-D6E1-44F4-ADC1-4156ACAC4756">Resetting a Connection Pool</a> in <span>
                                           <cite>Administering JDBC Data Sources for Oracle WebLogic Server</cite>
                                        </span>.</p>
                                  </td>
@@ -694,7 +695,7 @@ The option you select limits the data sources that you can select as part of the
                                  <td>Clear cache</td>
                                  <td>
                                     <p>Use <span>Clear cache </span> to clear the statement cache for all connections in the instance of the data source. Statement caching must be enabled for the data source for WebLogic Server to cache prepared and callable statements that are used in each connection in the data source. Each connection has its own cache, but the caches for each connection are configured and managed as a group. </p>
-                                    <p>For more information, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=JDBCA-GUID-41996544-B805-4226-B0A0-29E8FCF93952">Managing the Statement Cache for a Data Source</a> and <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=JDBCA-GUID-AFDCC45F-7AD7-4C81-8FA9-1C7ECA05F08C">Increasing Performance with the Statement Cache</a> in <span id="GUID-C61D7557-E83E-477D-A1E9-BF7281CF12D9__JDBCA">
+                                    <p>For more information, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=JDBCA-GUID-41996544-B805-4226-B0A0-29E8FCF93952">Managing the Statement Cache for a Data Source</a> and <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=JDBCA-GUID-AFDCC45F-7AD7-4C81-8FA9-1C7ECA05F08C">Increasing Performance with the Statement Cache</a> in <span>
                                           <cite>Administering JDBC Data Sources for Oracle WebLogic Server</cite>
                                        </span>.</p>
                                  </td>
@@ -742,7 +743,7 @@ The option you select limits the data sources that you can select as part of the
 <p>It is important to regularly check that the database connections in a data source remain healthy, which helps keep your applications running properly. See <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=JDBCA-GUID-3E801058-5862-411B-BE83-319E101EE775">Testing Data Sources and Database Connections</a> in <strong>Administering JDBC Data Sources for Oracle WebLogic Server</strong>.</p>
 <ol>
 <li>
-<p>Configure testing options for the JDBC data source.</p>
+<p><strong>Optional</strong>: Configure testing options for the JDBC data source.</p>
 <p>You may want to modify the default database connection testing options to better match the needs of your environment.</p>
 <ol>
 <li>
@@ -794,7 +795,7 @@ The option you select limits the data sources that you can select as part of the
 <p>For more information about using JDBC over RMI, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=JDCBP-GUID-54294308-E996-46C4-82D2-0F1CE122956F">Using the WebLogic RMI Driver (Deprecated)</a> in <strong>Developing JDBC Applications for Oracle WebLogic Server</strong>.</p>
 <ol>
 <li>
-<p>If you plan to choose the <code>Secure</code> option, you must first configure an SSL/TLS listen port channel. See <a href="/administration-server/domain-configuration/#GUID-9084C04C-06CC-4E14-85B6-CFC755E7A428">Specify Listen Ports</a>.</p>
+<p><strong>Optional</strong>: If you plan to choose the <code>Secure</code> option, you must first configure an SSL/TLS listen port channel. See <a href="/administration-server/domain-configuration/#GUID-9084C04C-06CC-4E14-85B6-CFC755E7A428">Specify Listen Ports</a>.</p>
 </li>
 <li>
 <p>In the <strong>Edit Tree</strong>, go to <strong>Environment</strong>, then <strong>Servers</strong>. Click <strong>Show Advanced Fields</strong>.</p>
@@ -1283,7 +1284,7 @@ JMS SAF users should select <strong>Sending-only</strong> as JMS SAF doesn&rsquo
                               </td>
                               <td>
                                  <p>Deletes the selected JMS messages from the current queue.</p>
-                                 <p>See <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=JMSAD-GUID-A33AE053-4EC2-43F2-82C3-808E68A50400">Deleting Messages</a> in <span id="GUID-880A8C55-1B01-4407-8611-05158114E557__JMSAD">
+                                 <p>See <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=JMSAD-GUID-A33AE053-4EC2-43F2-82C3-808E68A50400">Deleting Messages</a> in <span>
                                        <cite>Administering JMS Resources for Oracle WebLogic Server</cite>
                                     </span>.</p>
                               </td>
@@ -1294,7 +1295,7 @@ JMS SAF users should select <strong>Sending-only</strong> as JMS SAF doesn&rsquo
                               </td>
                               <td>
                                  <p>Exports the selected messages from the current queue, which results in a JMS message that is converted to either XML or serialized format.</p>
-                                 <p>See <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=JMSAD-GUID-E7BB7D5E-933F-474D-94EC-CC50777B0BB3">Exporting Messages</a> in <span id="GUID-880A8C55-1B01-4407-8611-05158114E557__JMSAD">
+                                 <p>See <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=JMSAD-GUID-E7BB7D5E-933F-474D-94EC-CC50777B0BB3">Exporting Messages</a> in <span>
                                        <cite>Administering JMS Resources for Oracle WebLogic Server</cite>
                                     </span>.</p>
                               </td>
@@ -1305,7 +1306,7 @@ JMS SAF users should select <strong>Sending-only</strong> as JMS SAF doesn&rsquo
                               </td>
                               <td>
                                  <p>Imports the selected messages in XML format, which results in the creation or replacement of a message on the current queue.</p>
-                                 <p>See <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=JMSAD-GUID-D55047DD-0C4F-426D-ABDD-BD4C6C61A242">Importing Messages</a> in <span id="GUID-880A8C55-1B01-4407-8611-05158114E557__JMSAD">
+                                 <p>See <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=JMSAD-GUID-D55047DD-0C4F-426D-ABDD-BD4C6C61A242">Importing Messages</a> in <span>
                                        <cite>Administering JMS Resources for Oracle WebLogic Server</cite>
                                     </span>.</p>
                               </td>
@@ -1317,7 +1318,7 @@ JMS SAF users should select <strong>Sending-only</strong> as JMS SAF doesn&rsquo
                               <td>
                                  <p>Transfers selected JMS messages from the current queue to another destination, including a destination on a different JMS server. </p>
                                  <p>The message identifier does not change when you move a message. If the message being moved already exists on the target destination, a duplicate message with the same identifier is added to the destination.</p>
-                                 <p>See <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=JMSAD-GUID-929C8361-21D1-40C8-B4F1-400616DCCF24">Moving Messages</a> in <span id="GUID-880A8C55-1B01-4407-8611-05158114E557__JMSAD">
+                                 <p>See <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=JMSAD-GUID-929C8361-21D1-40C8-B4F1-400616DCCF24">Moving Messages</a> in <span>
                                        <cite>Administering JMS Resources for Oracle WebLogic Server</cite>
                                     </span>.</p>
                               </td>
@@ -1370,7 +1371,7 @@ JMS SAF users should select <strong>Sending-only</strong> as JMS SAF doesn&rsquo
 <p>Click the <strong>Targets</strong> tab and select the servers or clusters where you want to deploy this foreign JNDI provider.</p>
 </li>
 <li>
-<p>If you want to specify additional properties for the JNDI provider, click the <strong>Properties</strong> tab.</p>
+<p><strong>Optional</strong>: If you want to specify additional properties for the JNDI provider, click the <strong>Properties</strong> tab.</p>
 <p>These properties will be passed directly to the constructor for the JNDI provider&rsquo;s <code>InitialContext</code> class.</p>
 <ol>
 <li>
@@ -1441,7 +1442,7 @@ JMS SAF users should select <strong>Sending-only</strong> as JMS SAF doesn&rsquo
 <p>Enter a name for the XML registry and click <strong>Create</strong>.</p>
 </li>
 <li>
-<p>If you don&rsquo;t plan to use the default parser and transformer, you must specify your alternative settings.</p>
+<p><strong>Optional</strong>: If you don&rsquo;t plan to use the default parser and transformer, you must specify your alternative settings.</p>
 <ol>
 <li>
 <p>In the <strong>Document Builder Factory</strong> field, enter the fully qualified name of the class that implements the <code>javax.xml.parsers.DocumentBuilderFactory</code> interface.</p>
@@ -1551,7 +1552,7 @@ Session session = (Session) ic.lookup(&#34;myMailSession&#34;);
 <p>Click <strong>Save</strong>.</p>
 </li>
 <li>
-<p>You can specify additional properties for connecting to an existing mail server.</p>
+<p><strong>Optional</strong>: You can specify additional properties for connecting to an existing mail server.</p>
 
 
 <div class="alert alert-primary" role="alert">
@@ -1696,7 +1697,7 @@ Session session = (Session) ic.lookup(&#34;myMailSession&#34;);
 <p>In the <strong>Monitoring Tree</strong>, go to <strong>Services</strong>, then <strong>Transactions</strong>, then <strong>JTA Runtime</strong> to see statistics for all transactions coordinated by server.</p>
 </li>
 <li>
-<p>If you want to see the transaction statistics for only one server, click the server row in the table.</p>
+<p><strong>Optional</strong>: If you want to see the transaction statistics for only one server, click the server row in the table.</p>
 </li>
 <li>
 <p>You can also expand the child nodes under <strong>JTA Runtime</strong> to view transaction details by transaction name or by resource, details about current transactions, or details about transaction recovery performed by the server.</p>
@@ -1746,7 +1747,7 @@ Session session = (Session) ic.lookup(&#34;myMailSession&#34;);
 <p>Click <strong>Save</strong> and then commit your changes.</p>
 </li>
 <li>
-<p>Create a user for local domain security and assign it to the <code>CrossDomainConnectors</code> group. See <a href="/administration-server/securing-domains/#GUID-7A265AF1-F634-45EE-B685-C969A95DC476">Create a User</a>.</p>
+<p><a id="STEP_BN1_MJV_2DC"></a>Create a user for local domain security and assign it to the <code>CrossDomainConnectors</code> group. See <a href="/administration-server/securing-domains/#GUID-7A265AF1-F634-45EE-B685-C969A95DC476">Create a User</a>.</p>
 <p>This user will be authorized to perform all JTA communication between servers in the domain.</p>
 </li>
 <li>
@@ -1829,8 +1830,8 @@ Session session = (Session) ic.lookup(&#34;myMailSession&#34;);
 </footer>
 
     </div>
-    <script src="/js/main.js"></script>
-<script defer src="/js/click-to-copy.js" crossorigin="anonymous"></script>
+    <script src="/js/main.min.90902a026ed2aee7ed45d85797f4c790b240ba148ac6f8a6f194cb1981ffecf5.js" integrity="sha256-kJAqAm7SruftRdhXl/THkLJAuhSKxvim8ZTLGYH/7PU=" crossorigin="anonymous"></script>
+<script defer src="/js/click-to-copy.min.73478a7d4807698aed7e355eb23f9890ca18fea3158604c8471746d046702bad.js" integrity="sha256-c0eKfUgHaYrtfjVesj&#43;YkMoY/qMVhgTIRxdG0EZwK60=" crossorigin="anonymous"></script>
 <script src='/js/tabpane-persist.js'></script>
 
   </body>

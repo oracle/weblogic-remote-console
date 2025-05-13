@@ -26,7 +26,7 @@ WebLogic Remote Console is compatible with WebLogic Server 12.2.1.4.0 and later.
 
 
 
-Hosted WebLogic Remote Console is only supported on Administration Servers running WebLogic Server 14.1.2.0.0 or later, and is subject to the same system requirements as its associated WebLogic Server release. To see the applicable certification matrix for your release of WebLogic Server, refer to [Oracle Fusion Middleware Supported System Configurations](unilink:fmwcert).
+Hosted WebLogic Remote Console is only supported on Administration Servers running WebLogic Server 14.1.2.0.0 or later, and is subject to the same system requirements as its associated WebLogic Server release. To see the applicable certification matrix for your release of WebLogic Server, refer to [Oracle Fusion Middleware Supported System Configurations](https://www.oracle.com/middleware/technologies/fusion-certification.html).
 
 {{< /alert >}}
 

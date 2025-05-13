@@ -1,9 +1,9 @@
 <!doctype html>
 <html itemscope itemtype="http://schema.org/WebPage" lang="en" class="no-js">
-  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <head>
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="robots" content="noindex, nofollow">
+<meta name="robots" content="index, follow">
 
 
 <link rel="shortcut icon" href="/favicons/favicon.ico" >
@@ -21,7 +21,7 @@
 <meta name="description" content="WDT metadata models are descriptions of a WebLogic Server domain configuration, generally written in YAML but occasionally JSON. These models are not connected to a live domain and you edit them ‘offline’ before using the WebLogic Deploy Tooling (WDT) to build or modify live domains from the models.
 See the WebLogic Deploy Tooling documentation for more information.
 NoteThe WebLogic Remote Console assumes WDT model files are in YAML format. If you upload a file with no file extension, the WebLogic Remote Console will convert it to YAML format after you save your changes.Create a new WDT model file Open the Providers drawer and beside the project name, click ⋮. Select Create Provider for New WDT Model File. Enter a name for the WDT model file provider. This is the name that will appear in the Project list of providers so you can identify which provider you’re working on. Enter a name for the WDT model file in the WDT Model Filename field. Include .yaml or .json at the end of the file name. Browse to the directory where you want to save the new WDT model file. Optional: Enable Use Sparse Template to create a WDT model file which does not contain any references to an Administration Server. Optional: Choose a property list provider from the WDT Variables dropdown list. If you add WDT variables to your WDT model file, you can update the variables in your WDT model file from a single location - the property list provider. If you don’t have a property list provider yet, you can edit the WDT model file settings later to add or change the associated WDT variables. See WDT Model Tokens for more information. Click OK to create the file. Upload an existing WDT model file If you’ve already created a WDT model file, you can upload it to WebLogic Remote Console where you can continue to edit it.">
-<meta property="og:url" content="//localhost:1313/2.4.12/userguide/providers/wdt-model/">
+<meta property="og:url" content="/2.4.12/userguide/providers/wdt-model/">
   <meta property="og:site_name" content="WebLogic Remote Console">
   <meta property="og:title" content="WDT model files">
   <meta property="og:description" content="WDT metadata models are descriptions of a WebLogic Server domain configuration, generally written in YAML but occasionally JSON. These models are not connected to a live domain and you edit them ‘offline’ before using the WebLogic Deploy Tooling (WDT) to build or modify live domains from the models.
@@ -41,7 +41,8 @@ NoteThe WebLogic Remote Console assumes WDT model files are in YAML format. If 
   <meta name="twitter:description" content="WDT metadata models are descriptions of a WebLogic Server domain configuration, generally written in YAML but occasionally JSON. These models are not connected to a live domain and you edit them ‘offline’ before using the WebLogic Deploy Tooling (WDT) to build or modify live domains from the models.
 See the WebLogic Deploy Tooling documentation for more information.
 NoteThe WebLogic Remote Console assumes WDT model files are in YAML format. If you upload a file with no file extension, the WebLogic Remote Console will convert it to YAML format after you save your changes.Create a new WDT model file Open the Providers drawer and beside the project name, click ⋮. Select Create Provider for New WDT Model File. Enter a name for the WDT model file provider. This is the name that will appear in the Project list of providers so you can identify which provider you’re working on. Enter a name for the WDT model file in the WDT Model Filename field. Include .yaml or .json at the end of the file name. Browse to the directory where you want to save the new WDT model file. Optional: Enable Use Sparse Template to create a WDT model file which does not contain any references to an Administration Server. Optional: Choose a property list provider from the WDT Variables dropdown list. If you add WDT variables to your WDT model file, you can update the variables in your WDT model file from a single location - the property list provider. If you don’t have a property list provider yet, you can edit the WDT model file settings later to add or change the associated WDT variables. See WDT Model Tokens for more information. Click OK to create the file. Upload an existing WDT model file If you’ve already created a WDT model file, you can upload it to WebLogic Remote Console where you can continue to edit it.">
-<link href="/scss/main.css" rel="stylesheet">
+<link rel="preload" href="/scss/main.min.48c25d0a5a23a1e8cae94d6c5e7622061e5345cf098171b1d6ee41d8e309e6c8.css" as="style" integrity="sha256-SMJdClojoejK6U1sXnYiBh5TRc8JgXGx1u5B2OMJ5sg=" crossorigin="anonymous">
+<link href="/scss/main.min.48c25d0a5a23a1e8cae94d6c5e7622061e5345cf098171b1d6ee41d8e309e6c8.css" rel="stylesheet" integrity="sha256-SMJdClojoejK6U1sXnYiBh5TRc8JgXGx1u5B2OMJ5sg=" crossorigin="anonymous">
 <script
   src="https://code.jquery.com/jquery-3.7.1.min.js"
   integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
@@ -137,7 +138,7 @@ NoteThe WebLogic Remote Console assumes WDT model files are in YAML format. If 
     aria-label="Search this site…"
     autocomplete="off"
     
-    data-offline-search-index-json-src="/offline-search-index.json"
+    data-offline-search-index-json-src="/offline-search-index.d874cf970bc57419b247ef101f81d5e2.json"
     data-offline-search-base-href="/"
     data-offline-search-max-results="10"
   >
@@ -162,7 +163,7 @@ NoteThe WebLogic Remote Console assumes WDT model files are in YAML format. If 
     aria-label="Search this site…"
     autocomplete="off"
     
-    data-offline-search-index-json-src="/offline-search-index.json"
+    data-offline-search-index-json-src="/offline-search-index.d874cf970bc57419b247ef101f81d5e2.json"
     data-offline-search-base-href="/"
     data-offline-search-max-results="10"
   >
@@ -334,9 +335,9 @@ NoteThe WebLogic Remote Console assumes WDT model files are in YAML format. If 
   
   
   <div class="pageinfo pageinfo-warning">
-    <p>You are viewing documentation for an older release of WebLogic Remote Console. Read the  
+    <p>You are viewing documentation for an older release of WebLogic Remote Console. Read the
         <a href="/weblogic-remote-console/overview" target="_blank">latest documentation</a> instead.</p>
-        <p>Stay up-to-date with the newest features and fixes. Download the latest release of WebLogic Remote Console from <a href="https://github.com/oracle/weblogic-remote-console/releases" target="_blank">WebLogic Remote Console - Releases</a></p>
+        <p>To stay up-to-date with the newest features and fixes, download the latest release of WebLogic Remote Console from <a href="https://github.com/oracle/weblogic-remote-console/releases" target="_blank">WebLogic Remote Console - Releases</a>!</p>
       
     
   </div>
@@ -501,8 +502,8 @@ NoteThe WebLogic Remote Console assumes WDT model files are in YAML format. If 
 </footer>
 
     </div>
-    <script src="/js/main.js"></script>
-<script defer src="/js/click-to-copy.js" crossorigin="anonymous"></script>
+    <script src="/js/main.min.90902a026ed2aee7ed45d85797f4c790b240ba148ac6f8a6f194cb1981ffecf5.js" integrity="sha256-kJAqAm7SruftRdhXl/THkLJAuhSKxvim8ZTLGYH/7PU=" crossorigin="anonymous"></script>
+<script defer src="/js/click-to-copy.min.73478a7d4807698aed7e355eb23f9890ca18fea3158604c8471746d046702bad.js" integrity="sha256-c0eKfUgHaYrtfjVesj&#43;YkMoY/qMVhgTIRxdG0EZwK60=" crossorigin="anonymous"></script>
 <script src='/js/tabpane-persist.js'></script>
 
   </body>

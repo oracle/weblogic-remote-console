@@ -23,11 +23,11 @@ You can connect to a running WebLogic Server domain through its Administration S
 
     This name appears in the Project list of providers so you can identify which domain you're connected to.
 
-5.  *For domains running WebLogic Server 14.1.2.0.0 or later only:* If you have configured WebLogic Server to delegate authentication to an external service using a browser, enable the **Use Web Authentication** option. Otherwise, leave it unselected and enter credentials for a local user account as described in step [6](#STEP_YRV_XJM_BDC).
+5.  **Optional**: *For domains running WebLogic Server 14.1.2.0.0 or later only:* If you have configured WebLogic Server to delegate authentication to an external service using a browser, enable the **Use Web Authentication** option. Otherwise, leave it unselected and enter credentials for a local user account as described in step [6](#STEP_YRV_XJM_BDC).
 
     For more information, see [Configure Web Authentication](#GUID-A6191FE0-2A4C-45B6-A138-7FD9B157D28F).
 
-6.  Enter a username and password for a user account in the domain.
+6.  <a id="STEP_YRV_XJM_BDC"></a>Enter a username and password for a user account in the domain.
 
     Log in with a user who has the necessary privileges for the tasks you plan to perform. To prevent unauthorized modifications, WebLogic Remote Console limits which tasks and screens are available to a user, based on their role.
 
@@ -39,13 +39,13 @@ You can connect to a running WebLogic Server domain through its Administration S
     http://localhost:7001
     ```
 
-    Make sure that the <code>management/*</code> endpoint of your Administration Server is accessible by WebLogic Remote Console. If your Administration Server's endpoints are behind a firewall, load balancer, or otherwise externally unavailable, you will need to expose the endpoint manually.
+    Make sure that the <code>management/\*</code> endpoint of your Administration Server is accessible by WebLogic Remote Console. If your Administration Server's endpoints are behind a firewall, load balancer, or otherwise externally unavailable, you will need to expose the endpoint manually.
 
-    If you are using Hosted WebLogic Remote Console, you will also need to expose the <code>rconsole/*</code> endpoint.
+    If you are using Hosted WebLogic Remote Console, you will also need to expose the <code>rconsole/\*</code> endpoint.
 
-8.  If you want WebLogic Remote Console to ignore warnings about expired, untrusted, or missing certificates when connecting to an Administration Server, enable the **Make Insecure Connection** checkbox. We recommend that you only enable this setting for development or demonstration environments.
+8.  **Optional**: If you want WebLogic Remote Console to ignore warnings about expired, untrusted, or missing certificates when connecting to an Administration Server, enable the **Make Insecure Connection** checkbox. We recommend that you only enable this setting for development or demonstration environments.
 
-9.  If this WebLogic Server domain resides in a different network, you can still facilitate communication between it and WebLogic Remote Console. In the **Proxy Override** field, enter a proxy server address.
+9.  **Optional**: If this WebLogic Server domain resides in a different network, you can still facilitate communication between it and WebLogic Remote Console. In the **Proxy Override** field, enter a proxy server address.
 
     You can also set a proxy address that applies to all Administration Server connections. See [Connect using a Proxy Server](#GUID-D7AD7F50-88F8-4FC9-A28B-CBF98B5FD479).
 
@@ -74,11 +74,21 @@ You can either use WebLogic Remote Console to specify the type and location of t
 
 3.  Click **Choose a trust store file** to browse to the file location of your trust store.
 
-4.  Click **Change** beside **Trust Store Key**, then enter the secret for your trust store key.
+4.  Beside the **Trust Store Password** field, click **Change**, then enter the secret for your trust store.
 
 5.  Click **Save** to add the secret.
 
-6.  Click **Save** to apply your changes.
+6.  **Optional**: If you want WebLogic Remote Console to support two-way SSL/TLS, perform the following steps:
+
+    1.  In the **Identity Key Store Type** field, enter the algorithm name for your identity key store. Depending on the Identity Key Store Type that you provide, additional fields may appear.
+
+    2.  Click **Choose an identity key store file** to browse to the file location of your identity key store.
+
+    3.  Beside the **Identity Store Key Password** field, click **Change**, then enter the secret for your identity key store.
+
+    4.  Click **Save** to add the secret.
+
+7.  Click **Save** (for the **Settings** dialog box) to apply your changes.
 
 
 ### Configure Web Authentication {#GUID-A6191FE0-2A4C-45B6-A138-7FD9B157D28F}
@@ -118,22 +128,24 @@ The general process for setting up web authentication is as follows:
     -   [Configuring the WebLogic Authentication Provider](https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=SECMG-GUID-F61EF14D-7461-4F29-80D9-A171DEE3E882)
     -   [Configuring LDAP Authentication Providers](https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=SECMG-GUID-C1478BFB-A1FF-46F0-8931-627A00B7945A)
     -   [Configuring RDBMS Authentication Providers](https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=SECMG-GUID-8E2F4AEB-A54E-48E9-BB6B-7B6AF7C4FDC5)
-3.  Ensure that both the login and management endpoints (<code>console/*</code> and <code>management/*</code>, respectively) of your Administration Server are accessible by WebLogic Remote Console. If your Administration Server's endpoints are behind a firewall, load balancer, or otherwise externally unavailable, you will need to expose those endpoints manually.
+3.  Ensure that both the login and management endpoints (<code>console/\*</code> and <code>management/\*</code>, respectively) of your Administration Server are accessible by WebLogic Remote Console. If your Administration Server's endpoints are behind a firewall, load balancer, or otherwise externally unavailable, you will need to expose those endpoints manually.
+
+    The <code>console/\*</code> endpoint handles requests to obtain the identity token so it should be protected by a policy defined by your identity and access management (IAM) solution, where these policies typically enable an SSO solution. The <code>management/\*</code> endpoint is the service endpoint that is protected by the token obtained after authentication with the <code>console/\*</code> endpoint completes successfully.
 
     {{< alert title="Note" color="primary" >}}
 
-    
 
-    If you want to customize the login endpoint, update the **Remote Console Helper Context Path** attribute (see step [4](#STEP_JMG_NLW_CDC)) with a new endpoint and restart WebLogic Server. Be aware that this only replaces <code>console</code>; you cannot change the <code>login</code> segment.
+
+    If you want to customize the login endpoint, you can replace the <code>console</code> segment of the login endpoint. The <code>login</code> segment remains unchanged. However, if you modify the login endpoint, it can prevent WebLogic Remote Console from successfully connecting to *any* Administration Server. Do not change it unless you fully understand how changing the login endpoint will affect access to your environments. Consider configuring a proxy server to route requests to WebLogic Server instead.
+
+    To customize the login endpoint, update the Remote Console Helper Context Path attribute (see step [4](#STEP_JMG_NLW_CDC)) with a new endpoint and restart WebLogic Server.
 
     Then, go to **File**, then **Settings**. (On macOS, go to **WebLogic Remote Console**, then **Settings**.) Under the **Other Java System Properties** section, click **+** to add a new row and enter <code>console.ssoDomainLoginUri=/*newEndpoint*/login</code>.
-
-    If you modify the Remote Console Helper Context Path, it can prevent WebLogic Remote Console from successfully connecting to the Administration Server. Do not change it unless you understand how changing the login endpoint will affect access to your environment.
 
     {{< /alert >}}
 
 
-4.  Customize the Remote Console Helper.
+4.  <a id="STEP_JMG_NLW_CDC"></a>**Optional**: Customize the Remote Console Helper.
 
     1.  In the **Edit Tree**, go to **Environment**, then **Domain**.
 
@@ -149,7 +161,7 @@ The general process for setting up web authentication is as follows:
         -   Remote Console Helper Token Timeout
     4.  Click **Save**.
 
-5.  If you want to support the authentication of virtual users, then you must add each virtual user to the default authentication provider (WebLogic Authentication provider) or another configured LDAP or RDBMS provider. The REST communication from WebLogic Remote Console does not directly support the use of virtual users.
+5.  **Optional**: If you want to support the authentication of virtual users, then you must add each virtual user to the default authentication provider (WebLogic Authentication provider) or another configured LDAP or RDBMS provider. The REST communication from WebLogic Remote Console does not directly support the use of virtual users.
 
     Make sure to add the users as members of a group with permissions to accomplish their responsibilities, such as Administrators, Operators, or so on.
 
@@ -189,7 +201,7 @@ As this functionality relies on web authentication, it is only supported on doma
 
     -   Secure the published site URL by using <code>https</code> and the SSL/TLS listen port. For example, <code>https://wls.example.com:7002/saml2</code>. See [About SAML 2.0 General Services](https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=SECMG-GUID-F11352EE-6FF1-4B96-83B4-FA375BF4D5E5) in **Administering Security for Oracle WebLogic Server**.
 
-2.  If you want to support the authentication of virtual users, then you need to configure an LDAP or RDBMS authentication provider and add each virtual user to that provider. The REST communication from WebLogic Remote Console does not directly support the use of virtual users.
+2.  **Optional**: If you want to support the authentication of virtual users, then you need to configure an LDAP or RDBMS authentication provider and add each virtual user to that provider. The REST communication from WebLogic Remote Console does not directly support the use of virtual users.
 
     If you add the virtual user to the WebLogic Authentication provider, then you can use WebLogic Remote Console to create the user as described in [Create a User](../securing-domains#GUID-7A265AF1-F634-45EE-B685-C969A95DC476). Otherwise, to add a virtual user to the provider, you'll need to use an external tool specific to the provider.
 
@@ -308,7 +320,7 @@ To delete a property, select the row and click **-**.
                               <tr>
                                  <td>
                                     <p>To set the <code>SameSite</code> cookie attribute if required for web browser support.</p>
-                                    <p>When <span id="GUID-352F58BB-AE18-4414-9A9A-64A96429DAF0__WRC">WebLogic Remote Console</span> establishes a connection with the WebLogic Server domain, a HTTP cookie is established with the Web Browser session.</p>
+                                    <p>When WebLogic Remote Console establishes a connection with the WebLogic Server domain, a HTTP cookie is established with the Web Browser session.</p>
                                     <p>For security reasons, the <code>SameSite</code> attribute of the HTTP cookie may need to be set for the Web Browser to accept the HTTP session cookie.</p>
                                  </td>
                                  <td>
@@ -339,9 +351,9 @@ To delete a property, select the row and click **-**.
                               </tr>
                               <tr>
                                  <td>
-                                    <p>To specify a custom logging configuration file so you can control the logging information that <span id="GUID-352F58BB-AE18-4414-9A9A-64A96429DAF0__WRC">WebLogic Remote Console</span> collects.</p>
+                                    <p>To specify a custom logging configuration file so you can control the logging information that WebLogic Remote Console collects.</p>
                                     <p>The custom logging configuration file must follow the Java format for configuration files. You can see an example of a Java logging configuration file at <code>$JAVA_HOME/conf/logging.properties</code>.</p>
-                                    <p>If a problem occurs with your custom logging configuration file, <span id="GUID-352F58BB-AE18-4414-9A9A-64A96429DAF0__WRC">WebLogic Remote Console</span> will fallback to use its default logging configuration file. <code>STDOUT</code> includes a log message indicating which file was used.</p>
+                                    <p>If a problem occurs with your custom logging configuration file, WebLogic Remote Console will fallback to use its default logging configuration file. <code>STDOUT</code> includes a log message indicating which file was used.</p>
                                  </td>
                                  <td>
                                     <code>java.util.logging.config.file=&lt;path-to-logging.properties&gt;</code>
@@ -384,7 +396,7 @@ Avoid using making changes using multiple tools simultaneously. When one session
 
 When you are satisfied with your changes, you must commit them for the changes to apply to the domain. Open the Shopping Cart and then click **Commit Changes**.
 
-Some configuration changes apply to the domain immediately - these are called dynamic changes. Other configuration changes require a server restart to take effect and are called non-dynamic changes. A server restart required icon ![Restart required](../../restart-required-blk_24x24.png) appears beside any attribute that is non-dynamic.
+Some configuration changes apply to the domain immediately - these are called dynamic changes. Other configuration changes require a server restart to take effect and are called non-dynamic changes. A server restart required icon ![Restart required](/weblogic-remote-console/images/ui-icons/restart-required-blk-24x24.png) appears beside any attribute that is non-dynamic.
 
 {{< alert title="Note" color="primary" >}}
 
@@ -457,7 +469,7 @@ The majority of domain configuration is performed within the **Edit Tree** persp
  The Configuration View Tree perspective is read-only and no management tasks are performed within it. Therefore, it's not included in this table.
 
 {{< /alert >}}
- 
+
 
 <table id="GUID-E1D3A576-47A8-4291-9F56-617B1039168F__TABLE_XXF_KS2_GZB">
                         <caption>
@@ -596,7 +608,7 @@ For more information, see [Users, Groups, And Security Roles](https://docs.oracl
                         </tr>
                         <tr>
                            <td>Monitor</td>
-                           <td>User access to <span id="GUID-BA0BFEB9-FA9D-4063-90E0-1D44551FB2E2__WRC">WebLogic Remote Console</span> is entirely read-only.</td>
+                           <td>User access to WebLogic Remote Console is entirely read-only.</td>
                         </tr>
                         <tr>
                            <td>Operator</td>
@@ -626,7 +638,7 @@ You can configure Managed Servers as standalone instances or organize them into 
 
     See [Domain and Server Name Restrictions](https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=DOMCF-GUID-AB0C82F6-39F2-4CF7-9187-6685050ABDC3) in **Understanding Domain Configuration for Oracle WebLogic Server**.
 
-4.  You can copy the settings from an existing server onto your new server. Select a server from the **Copy settings from another server** drop-down list.
+4.  **Optional**: You can copy the settings from an existing server onto your new server. Select a server from the **Copy settings from another server** drop-down list.
 
     Only the server's settings will be copied. Children, such as channels, are not copied. Any settings that are not supported by the WebLogic Server REST API are also not copied.
 
@@ -659,7 +671,7 @@ Start a Managed Server from WebLogic Remote Console.
 
     3.  [Configure Startup Arguments for a Managed Server](#GUID-C1986FE5-E41C-41CC-880E-D6C78A691A7C).
 
-3.  Change the startup mode for the Managed Server. The default is <code>RUNNING</code>. See [Specify a Startup Mode](#GUID-2802C481-742D-4EC6-8094-1734C19288C4).
+3.  **Optional**: Change the startup mode for the Managed Server. The default is <code>RUNNING</code>. See [Specify a Startup Mode](#GUID-2802C481-742D-4EC6-8094-1734C19288C4).
 
 4.  Start Node Manager on the computer that you want to host the Managed Server.
 
@@ -777,11 +789,11 @@ Create a cluster that dynamically scales depending on the resource needs of your
 
 5.  In the **Server Name Prefix**, specify the naming convention you want to use for the dynamic servers in your cluster.
 
-6.  If you want to specify how the dynamic servers in your cluster are distributed across machines, turn on **Enable Calculated Machine Associations** and then configure **Machine Name Match Expression**.
+6.  **Optional**: If you want to specify how the dynamic servers in your cluster are distributed across machines, turn on **Enable Calculated Machine Associations** and then configure **Machine Name Match Expression**.
 
     Machine distribution is determined by the pattern set in **Machine Name Match Expression**. If a machine in the domain matches the expression, then it will be included in the set of machines used by these dynamic servers. The expression is a comma-separated set of values that specifies the machines to match. The value can either match a machine name exactly or, you can use a trailing <code>*</code> to match multiple machine names. If you do not enter a pattern, then all machines in the domain are available to the dynamic servers.
 
-7.  If you want to specify whether listen ports are calculated, turn on **Enable Calculated Listen Ports**.
+7.  **Optional**: If you want to specify whether listen ports are calculated, turn on **Enable Calculated Listen Ports**.
 
 8.  Click **Save**.
 
@@ -834,7 +846,7 @@ Singleton services can only be migrated automatically within a cluster. Ensure t
 
 9.  Click **Save**.
 
-10. If you want to specify the migration behavior of this target, go to the **Migration** tab.
+10. **Optional**: If you want to specify the migration behavior of this target, go to the **Migration** tab.
 
     1.  From the **User Preferred Server** drop-down list, select the preferred server instance for this singleton service.
 
@@ -901,7 +913,7 @@ As part of the machine configuration process, you'll also configure each machine
 
 3.  Enter a name for the new machine.
 
-4.  If you are creating a machine that will run on a UNIX platform, select **UNIX Machine** from the **Type** drop-down list.
+4.  **Optional**: If you are creating a machine that will run on a UNIX platform, select **UNIX Machine** from the **Type** drop-down list.
 
 5.  Click **Create**.
 
@@ -917,7 +929,7 @@ As part of the machine configuration process, you'll also configure each machine
 
     3.  In the **Listen Port** field, enter the port value where Node Manager listens for incoming requests.
 
-    4.  If you set **Type** to <code>SSH</code> or <code>RSH</code>, you should also specify values in the **Node Manager Home** and **Shell Commands** fields.
+    4.  **Optional**: If you set **Type** to <code>SSH</code> or <code>RSH</code>, you should also specify values in the **Node Manager Home** and **Shell Commands** fields.
 
     5.  Turn on **Debug Enabled** if you want to enable Node Manager debugging.
 
@@ -1034,7 +1046,7 @@ You can create custom Java classes that extend server features or that perform s
 
         {{< alert title="Note" color="primary" >}}
 
-        
+
 
         Ensure that all of the classes that WebLogic Server requires are also on the class path. Use absolute paths or paths relative to the Node Manager's home directory. Separate multiple classes with either <code>:</code> (BASH) or <code>;</code> (Windows).
 
@@ -1093,7 +1105,7 @@ You can create custom Java classes that extend server features or that perform s
 
         {{< alert title="Note" color="primary" >}}
 
-        
+
 
         Ensure that all of the classes that WebLogic Server requires are also on the class path. Use absolute paths or paths relative to the Node Manager's home directory. Separate multiple classes with either <code>:</code> (BASH) or <code>;</code> (Windows).
 
@@ -1155,7 +1167,7 @@ See [Configure an Administration Port for the Domain](https://docs.oracle.com/pl
 
 5.  In the **Administration Port** field, enter the SSL/TLS port number that server instances in the domain should use as the administration port.
 
-6.  If multiple server instances run on the same computer in a domain that uses a domain-wide administration port, then you must perform one of the following actions:
+6.  **Optional**: If multiple server instances run on the same computer in a domain that uses a domain-wide administration port, then you must perform one of the following actions:
 
     -   Host the server instances on a multi-homed machine and assign each server instance a unique listen address
     -   Override the domain-wide administration port on all but one of the servers instances on the machine. On the **Environment**: **Servers**: *myServer* page for each Managed Server, enter a unique port value in the **Local Administration Port Override** field.
@@ -1253,11 +1265,11 @@ You can define settings for HTTP connections.
 
 2.  On the **Protocols** tab, go to the **HTTP** subtab and update the settings for HTTP as necessary.
 
-3.  If you want to enable the tunneling of connections, turn on the **Enable Tunneling** option and then enter values in the **Tunneling Client Ping** and **Tunneling Client Timeout** fields.
+3.  **Optional**: If you want to enable the tunneling of connections, turn on the **Enable Tunneling** option and then enter values in the **Tunneling Client Ping** and **Tunneling Client Timeout** fields.
 
     {{< alert title="Note" color="primary" >}}
 
-    
+
 
     These settings apply to all protocols in the server's default network configuration that support tunneling. See [Setting Up WebLogic Server for HTTP Tunneling](https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=CNFGD-GUID-9B08A327-0DBF-4DE9-B0E7-B4155DF51331) in **Administering Server Environments for Oracle WebLogic Server**.
 
@@ -1277,11 +1289,11 @@ T3 is an Oracle proprietary remote network protocol that implements the Remote M
 
 3.  In the **Maximum Message Size** field, enter the maximum number of bytes allowed in messages that are received over all supported protocols, unless overridden by a protocol-specific setting or a custom channel setting.
 
-4.  Turn on the **Enable Tunneling** option and then enter values in the **Tunneling Client Ping** and **Tunneling Client Timeout** fields.
+4.  **Optional**: Turn on the **Enable Tunneling** option and then enter values in the **Tunneling Client Ping** and **Tunneling Client Timeout** fields.
 
     {{< alert title="Note" color="primary" >}}
 
-    
+
 
     These settings apply to all protocols in the server's default network configuration that support tunneling. See [Setting Up WebLogic Server for HTTP Tunneling](https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=CNFGD-GUID-9B08A327-0DBF-4DE9-B0E7-B4155DF51331) in **Administering Server Environments for Oracle WebLogic Server**.
 
@@ -1335,7 +1347,7 @@ If you *upgrade* from WebLogic Server 14.1.1.0.0 and earlier, the behavior of yo
 
 3.  Change the domain mode:
 
-    
+
 
 <table id="GUID-8FA92B79-CB09-4ECA-9254-5323FECEC1E0__TABLE_MPM_VYN_SDC">
                               <span>Describes how to change the domain mode.</span>
@@ -1360,7 +1372,7 @@ If you *upgrade* from WebLogic Server 14.1.1.0.0 and earlier, the behavior of yo
                                  <tr>
                                     <td>Secured Production Mode</td>
                                     <td>Enable the <span>Production Mode</span> and <span>Secured Production Mode</span> options.<p>
-                                          <strong>Note</strong>: For more information, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=SECMG-GUID-9ED2EF38-F763-4999-80ED-27A3FBCB9D7D">Using Secured Production Mode</a> in <span id="GUID-8FA92B79-CB09-4ECA-9254-5323FECEC1E0__SECMG">
+                                          <strong>Note</strong>: For more information, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=SECMG-GUID-9ED2EF38-F763-4999-80ED-27A3FBCB9D7D">Using Secured Production Mode</a> in <span>
                                              <cite>Administering Security for Oracle WebLogic Server</cite>
                                           </span>.</p>
                                     </td>
@@ -1412,7 +1424,7 @@ WebLogic Remote Console is one of several tools you can use to shut down a serve
 
 If you shut down the Administration Server, you won't be able to manage the domain from WebLogic Remote Console until it is restarted.
 
-1.  If you want to shut down a server gracefully and allow some WebLogic Server subsystems to complete existing tasks, then you can configure graceful shutdown settings.
+1.  **Optional**: If you want to shut down a server gracefully and allow some WebLogic Server subsystems to complete existing tasks, then you can configure graceful shutdown settings.
 
     These options only apply when a server is shutdown gracefully. A forceful shutdown ignores them.
 
@@ -1437,5 +1449,3 @@ If you shut down the Administration Server, you won't be able to manage the doma
     -   **When work completes**: initiates a graceful shutdown, which gives WebLogic Server subsystems time to complete certain application processing currently in progress.
     -   **Force shutdown now**: initiates a forced shutdown, in which the server instructs subsystems to immediately drop in-flight requests.
     See [Understanding Server Life Cycle](https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=START-GUID-2C1BF849-3578-4BB8-A929-B491C10FF365) in **Administering Server Startup and Shutdown for Oracle WebLogic Server**.
-
-

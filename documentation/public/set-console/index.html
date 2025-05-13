@@ -1,10 +1,10 @@
 <!doctype html>
 <html itemscope itemtype="http://schema.org/WebPage" lang="en" class="no-js">
-  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <head>
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link rel="alternate" type="application/rss&#43;xml" href="//localhost:1313/set-console/index.xml">
-<meta name="robots" content="noindex, nofollow">
+<link rel="alternate" type="application/rss&#43;xml" href="/set-console/index.xml">
+<meta name="robots" content="index, follow">
 
 
 <link rel="shortcut icon" href="/favicons/favicon.ico" >
@@ -22,7 +22,7 @@
 <meta name="description" content="WebLogic Remote Console is easy to install and you can quickly start managing your domains.
 WebLogic Remote Console is available in two formats:
 Desktop WebLogic Remote Console, a desktop application installed on your computer. Hosted WebLogic Remote Console, a web application deployed to an Administration Server and accessed through a browser. Generally, the two formats have similar functionality, though the desktop application offers certain conveniences that are not possible when using a browser.">
-<meta property="og:url" content="//localhost:1313/set-console/">
+<meta property="og:url" content="/set-console/">
   <meta property="og:site_name" content="WebLogic Remote Console">
   <meta property="og:title" content="Get Started">
   <meta property="og:description" content="WebLogic Remote Console is easy to install and you can quickly start managing your domains.
@@ -35,13 +35,14 @@ Desktop WebLogic Remote Console, a desktop application installed on your compute
   <meta itemprop="description" content="WebLogic Remote Console is easy to install and you can quickly start managing your domains.
 WebLogic Remote Console is available in two formats:
 Desktop WebLogic Remote Console, a desktop application installed on your computer. Hosted WebLogic Remote Console, a web application deployed to an Administration Server and accessed through a browser. Generally, the two formats have similar functionality, though the desktop application offers certain conveniences that are not possible when using a browser.">
-  <meta itemprop="wordCount" content="1883">
+  <meta itemprop="wordCount" content="1821">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Get Started">
   <meta name="twitter:description" content="WebLogic Remote Console is easy to install and you can quickly start managing your domains.
 WebLogic Remote Console is available in two formats:
 Desktop WebLogic Remote Console, a desktop application installed on your computer. Hosted WebLogic Remote Console, a web application deployed to an Administration Server and accessed through a browser. Generally, the two formats have similar functionality, though the desktop application offers certain conveniences that are not possible when using a browser.">
-<link href="/scss/main.css" rel="stylesheet">
+<link rel="preload" href="/scss/main.min.48c25d0a5a23a1e8cae94d6c5e7622061e5345cf098171b1d6ee41d8e309e6c8.css" as="style" integrity="sha256-SMJdClojoejK6U1sXnYiBh5TRc8JgXGx1u5B2OMJ5sg=" crossorigin="anonymous">
+<link href="/scss/main.min.48c25d0a5a23a1e8cae94d6c5e7622061e5345cf098171b1d6ee41d8e309e6c8.css" rel="stylesheet" integrity="sha256-SMJdClojoejK6U1sXnYiBh5TRc8JgXGx1u5B2OMJ5sg=" crossorigin="anonymous">
 <script
   src="https://code.jquery.com/jquery-3.7.1.min.js"
   integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
@@ -137,7 +138,7 @@ Desktop WebLogic Remote Console, a desktop application installed on your compute
     aria-label="Search this site…"
     autocomplete="off"
     
-    data-offline-search-index-json-src="/offline-search-index.json"
+    data-offline-search-index-json-src="/offline-search-index.d874cf970bc57419b247ef101f81d5e2.json"
     data-offline-search-base-href="/"
     data-offline-search-max-results="10"
   >
@@ -162,7 +163,7 @@ Desktop WebLogic Remote Console, a desktop application installed on your compute
     aria-label="Search this site…"
     autocomplete="off"
     
-    data-offline-search-index-json-src="/offline-search-index.json"
+    data-offline-search-index-json-src="/offline-search-index.d874cf970bc57419b247ef101f81d5e2.json"
     data-offline-search-base-href="/"
     data-offline-search-max-results="10"
   >
@@ -422,7 +423,7 @@ Desktop WebLogic Remote Console, a desktop application installed on your compute
 <p>For Unix operating systems, enter:</p>
 <pre tabindex="0"><code>wlst.sh *WL_HOME*/server/bin/remote_console_deployment.py t3://*hostname*:*port* *username* &lt; *password.txt*
 </code></pre><p>For Windows operating systems, enter:</p>
-<pre tabindex="0"><code>wlst.cmd *WL_HOME*serverbinremote_console_deployment.py t3://*hostname*:*port* *username* &lt; *password.txt*
+<pre tabindex="0"><code>wlst.cmd *WL_HOME*\server\bin\remote_console_deployment.py t3://*hostname*:*port* *username* &lt; *password.txt*
 </code></pre><p>Where:</p>
 <ul>
 <li><code><em>WL_HOME</em></code> is the top-level installation directory for WebLogic Server.</li>
@@ -430,12 +431,12 @@ Desktop WebLogic Remote Console, a desktop application installed on your compute
 <li><code><em>port</em></code> is the port number of the Administration Server.</li>
 <li><code><em>username</em></code> is a user account capable of deploying applications.</li>
 <li><code><em>password.txt</em></code> is the path to a file containing the password for the specified user account.
-Eamples:</li>
+Examples:</li>
 </ul>
 <p>On Unix operating systems:</p>
 <pre tabindex="0"><code>wlst.sh /Users/smithdoe/Oracle/Middleware/Oracle_Home/wlserver/server/bin/remote_console_deployment.py t3://localhost:7001 admin &lt; /Users/smithdoe/password.txt
 </code></pre><p>On Windows operating systems:</p>
-<pre tabindex="0"><code>wlst.cmd C:OracleMiddlewareOracle_Homewlserverserverbinremote_console_deployment.py t3://localhost:7001 admin &lt; C:Userssmithdoepassword.txt
+<pre tabindex="0"><code>wlst.cmd C:\Oracle\Middleware\Oracle_Home\wlserver\server\bin\remote_console_deployment.py t3://localhost:7001 admin &lt; C:\Users\smithdoe\password.txt
 </code></pre></li>
 </ol>
 </li>
@@ -458,7 +459,7 @@ Eamples:</li>
 <div class="alert alert-primary" role="alert">
 <h4 class="alert-heading">Note</h4>
 
-    <p>If your Administration Server is behind a firewall or load balancer, or otherwise externally unavailable, you must manually expose the <code>rconsole/<em></code> endpoint to make it accessible, similar to exposing <code>console/</em></code> for the WebLogic Server Administration Console.</p>
+    <p>If your Administration Server is behind a firewall or load balancer, or otherwise externally unavailable, you must manually expose the <code>rconsole/*</code> endpoint to make it accessible, similar to exposing <code>console/*</code> for the WebLogic Server Administration Console.</p>
 <p>This is in addition to exposing the <code>management/*</code> endpoint which is required for general domain configuration.</p>
 
 
@@ -477,7 +478,7 @@ Eamples:</li>
 <div class="alert alert-primary" role="alert">
 <h4 class="alert-heading">Note</h4>
 
-    You can use Hosted WebLogic Remote Console to connect to and manage other providers beyond the Administration Server it is hosted on. See <a href="/#GUID-98F273C5-CC1E-4272-B560-604CA23A739A">Connect to a Provider</a>.
+    You can use Hosted WebLogic Remote Console to connect to and manage other providers beyond the Administration Server it is hosted on. See <a href="/set-console/#GUID-98F273C5-CC1E-4272-B560-604CA23A739A">Connect to a Provider</a>.
 
 </div>
 <h2 id="GUID-40440E0F-0310-4830-9B4B-00FC9ABBB591">Install the WebLogic Remote Console Extension</h2>
@@ -497,6 +498,7 @@ Eamples:</li>
 </li>
 <li>
 <p>Download the latest WebLogic Remote Console extension, <code>console-rest-ext-2.4.16.war</code>, from the <a href="https://github.com/oracle/weblogic-remote-console/releases">WebLogic Remote Console GitHub Repository</a> releases page.</p>
+<p><code>console-rest-ext-jakarta-2.4.16.war</code> is intended for domains running WebLogic Server 15.1.1.0.0 or later; you should not need to install it manually.</p>
 </li>
 <li>
 <p>Save the extension under <code>management-services-ext</code>.</p>
@@ -511,14 +513,6 @@ Eamples:</li>
 </ol>
 <p>The WebLogic Remote Console extension is updated with WebLogic Remote Console. Whenever you update WebLogic Remote Console, make sure you also update the extension to match.</p>
 <p>If you need to update the WebLogic Remote Console extension separately from the console, follow the instructions outlined in step <a href="/set-console/#STEP_H13_HCK_DCC">2</a> of <a href="/set-console/#GUID-281298E0-AEE6-4DEC-ADF1-949780E75D76">Upgrade Desktop WebLogic Remote Console</a>. Note that if you manually install the WebLogic Remote Console extension in domains running WebLogic Server 14.1.2.0.0 or later, under <code><em>DOMAIN_HOME</em>/</code>, it will supersede the version of the extension that is automatically installed and updated.</p>
-
-
-<div class="alert alert-primary" role="alert">
-<h4 class="alert-heading">Note</h4>
-
-    With the release of WebLogic Remote Console 2.4.11, the versioning scheme of the WebLogic Remote Console <em>extension</em> was updated to match that of WebLogic Remote Console. There are no versions between <code>console-rest-ext-9.0.war</code> (released with WebLogic Remote Console 2.4.10) and <code>console-rest-ext-2.4.11.war</code> (released with WebLogic Remote Console 2.4.11).
-
-</div>
 <h3 id="GUID-6357222A-F7D4-46FC-BC87-22D6D1A6568A">Features of the WebLogic Remote Console Extension</h3>
 <p>The WebLogic Remote Console extension adds many features to WebLogic Remote Console that are useful for the administration of WebLogic Server domains.</p>
 <p>When the WebLogic Remote Console extension is installed, it grants the following capabilities to WebLogic Remote Console:</p>
@@ -568,8 +562,7 @@ Eamples:</li>
 <h2 id="GUID-82C1C605-D42E-45EA-AC16-5BA3D5853C96">Provider Types</h2>
 <p>Use WebLogic Remote Console to connect to the following provider types, each of which offers a different approach for managing your WebLogic Server domains.</p>
 <table id="GUID-82C1C605-D42E-45EA-AC16-5BA3D5853C96__TABLE_I4W_4ZY_RZB">
-                     <span>The provider types available in <span id="GUID-82C1C605-D42E-45EA-AC16-5BA3D5853C96__WRC">WebLogic Remote Console</span>
-                     </span>
+                     <span>The provider types available in WebLogic Remote Console</span>
                      <thead>
                         <tr>
                            <th>Provider</th>
@@ -639,17 +632,9 @@ For information on the different providers, see <a href="/set-console/#GUID-82C1
 <p>You can also download the update from the <a href="https://github.com/oracle/weblogic-remote-console/releases">WebLogic Remote Console GitHub Repository</a> releases page and apply the update manually.</p>
 </li>
 <li>
-<p><em>For WebLogic Server 14.1.1.0.0 and earlier:</em> Update the WebLogic Remote Console <em>extension</em>.</p>
+<p><a id="STEP_H13_HCK_DCC"></a><em>For WebLogic Server 14.1.1.0.0 and earlier:</em> Update the WebLogic Remote Console <em>extension</em>.</p>
 <p>In WebLogic Server 14.1.2.0.0 and later, the WebLogic Remote Console extension is included with the initial installation and is updated by subsequent Patch Set Updates (PSU) and should not be updated manually.</p>
 <p>For the best experience, you should keep the versions of WebLogic Remote Console and its extension in sync with each other. That is, when you are running WebLogic Remote Console 2.4.16, you should have <code>console-rest-ext-2.4.16.war</code> installed.</p>
-
-
-<div class="alert alert-primary" role="alert">
-<h4 class="alert-heading">Note</h4>
-
-    With the release of WebLogic Remote Console 2.4.11, the versioning scheme of the extension was updated to match WebLogic Remote Console. Due to this change, the extension version jumps from <code>console-rest-ext-9.0.war</code> to <code>console-rest-ext-2.4.11.war</code>.
-
-</div>
 <ol>
 <li>
 <p>While connected to the domain, open the <strong>Providers</strong> drawer and beside the provider connection, click the <strong>Get Info</strong> icon to see the <strong>Console Extension Version</strong>. If it matches WebLogic Remote Console version, you can skip the rest of the steps. Otherwise, continue.</p>
@@ -715,8 +700,8 @@ For information on the different providers, see <a href="/set-console/#GUID-82C1
 </footer>
 
     </div>
-    <script src="/js/main.js"></script>
-<script defer src="/js/click-to-copy.js" crossorigin="anonymous"></script>
+    <script src="/js/main.min.90902a026ed2aee7ed45d85797f4c790b240ba148ac6f8a6f194cb1981ffecf5.js" integrity="sha256-kJAqAm7SruftRdhXl/THkLJAuhSKxvim8ZTLGYH/7PU=" crossorigin="anonymous"></script>
+<script defer src="/js/click-to-copy.min.73478a7d4807698aed7e355eb23f9890ca18fea3158604c8471746d046702bad.js" integrity="sha256-c0eKfUgHaYrtfjVesj&#43;YkMoY/qMVhgTIRxdG0EZwK60=" crossorigin="anonymous"></script>
 <script src='/js/tabpane-persist.js'></script>
 
   </body>

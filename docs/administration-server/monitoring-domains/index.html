@@ -41,7 +41,7 @@ For general information on monitoring, diagnostic, and tuning tools in WebLogic 
 Monitor Servers Review the servers in your domain to ensure they are functioning as expected.
 In the Monitoring Tree, go to Environment, then Servers.
 Use the Servers table to monitor and compare properties across the different server instances in your domain.">
-  <meta itemprop="wordCount" content="3418">
+  <meta itemprop="wordCount" content="3591">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Monitoring Domains">
   <meta name="twitter:description" content="Use WebLogic Remote Console to monitor WebLogic Server and its related resources and services.
@@ -146,7 +146,7 @@ Use the Servers table to monitor and compare properties across the different ser
     aria-label="Search this site…"
     autocomplete="off"
     
-    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.0372ac0fd932fb8274a455a832473265.json"
+    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.525ad98426979583eac4f9f0a1f2c27f.json"
     data-offline-search-base-href="/"
     data-offline-search-max-results="10"
   >
@@ -171,7 +171,7 @@ Use the Servers table to monitor and compare properties across the different ser
     aria-label="Search this site…"
     autocomplete="off"
     
-    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.0372ac0fd932fb8274a455a832473265.json"
+    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.525ad98426979583eac4f9f0a1f2c27f.json"
     data-offline-search-base-href="/"
     data-offline-search-max-results="10"
   >
@@ -311,6 +311,7 @@ Use the Servers table to monitor and compare properties across the different ser
         <li><a href="#GUID-EB50E0B0-91AB-416A-A61F-79D414282DEE">Filter Log Messages</a></li>
         <li><a href="#GUID-0D37D991-A698-4D2C-8163-DC3B1A0BBC65">Create a Log Filter</a></li>
         <li><a href="#GUID-212C2424-746F-4150-8664-F6F9A0B0A4EF">Rotate Log Files</a></li>
+        <li><a href="#GUID-F6536203-9FD6-4ABF-B302-B06DA05E980D">Configure java.util.logging Logger Levels</a></li>
       </ul>
     </li>
     <li><a href="#GUID-BB85D9BB-5E36-4067-AA9F-E01EBFF027CD">Enable Configuration Auditing</a></li>
@@ -440,7 +441,7 @@ Use the Servers table to monitor and compare properties across the different ser
 <p>Click <strong>Create</strong> to generate the dashboard.</p>
 </li>
 <li>
-<p>Click <strong>Customize Table</strong> to control which columns appear in the dashboard.</p>
+<p><strong>Optional</strong>: Click <strong>Customize Table</strong> to control which columns appear in the dashboard.</p>
 </li>
 </ol>
 <p>All of your dashboards are available in the <strong>Dashboards</strong> node of the Monitoring Tree.</p>
@@ -623,13 +624,13 @@ Use the Servers table to monitor and compare properties across the different ser
 </ul>
 </li>
 <li>
-<p>If you chose <strong>By Size</strong> as the Rotation Type.</p>
+<p><a id="STEP_Z2F_JLF_B2C"></a>If you chose <strong>By Size</strong> as the Rotation Type.</p>
 <ol>
 <li>In the <strong>Rotation file size</strong> field, enter the file size that triggers the server to move log messages to a separate file. After the log file reaches the specified size, the next time the server checks the file size it renames the current log file by appending a 5-digit integer; for example, <code>SERVER_NAME.log00007</code>. After the server renames the file, subsequent messages accumulate in a new file named <code>SERVER_NAME.log</code>.</li>
 </ol>
 </li>
 <li>
-<p>If you chose <strong>By Time</strong> as the Rotation Type.</p>
+<p><a id="STEP_TQJ_JLF_B2C"></a>If you chose <strong>By Time</strong> as the Rotation Type.</p>
 <ol>
 <li>
 <p>In the <strong>Begin rotation time</strong> field, enter the start time</p>
@@ -644,14 +645,14 @@ Use the Servers table to monitor and compare properties across the different ser
 <p>If you chose <strong>By Size or Time</strong> as the Rotation Type, then configure the <strong>By Size</strong> and <strong>By Time</strong> options as described in steps <a href="/weblogic-remote-console/administration-server/monitoring-domains/#STEP_Z2F_JLF_B2C">3</a> and <a href="/weblogic-remote-console/administration-server/monitoring-domains/#STEP_TQJ_JLF_B2C">4</a>.</p>
 </li>
 <li>
-<p>If you want to limit the number of log files that the server creates to store old log messages, enable the <strong>Limit Number of Retained Log Files</strong> option. Then, in the <strong>Files to Retain</strong> field, enter the maximum number of files. If the server receives additional log messages after reaching the capacity of the last log file, it overwrites the oldest log file.</p>
+<p><strong>Optional</strong>: If you want to limit the number of log files that the server creates to store old log messages, enable the <strong>Limit Number of Retained Log Files</strong> option. Then, in the <strong>Files to Retain</strong> field, enter the maximum number of files. If the server receives additional log messages after reaching the capacity of the last log file, it overwrites the oldest log file.</p>
 </li>
 <li>
 <p>In the <strong>Log file rotation directory</strong> field, enter the directory location where the rotated log files will be stored.</p>
 <p>Enter an absolute pathname or a pathname that is relative to the server&rsquo;s root directory. By default, the rotated files are stored in the same directory where the log file is stored.</p>
 </li>
 <li>
-<p>If you want to add a time or date stamp to the file name when the log file is rotated, then in the <strong>Log file name</strong> field, add <code>java.text.SimpleDateFormat</code> variables to the file name and surround each variable with percentage (%) characters.</p>
+<p><strong>Optional</strong>: If you want to add a time or date stamp to the file name when the log file is rotated, then in the <strong>Log file name</strong> field, add <code>java.text.SimpleDateFormat</code> variables to the file name and surround each variable with percentage (%) characters.</p>
 <p>For example, if you enter the following value in the Log file name field: <code>myserver_%yyyy%<em>%MM%</em>%dd%<em>%hh%</em>%mm%.log</code>, the server&rsquo;s log file will be named <code>myserver_<em>yyyy_MM_dd_hh_mm</em>.log</code>.</p>
 <p>When the server instance rotates the log file, the rotated file name contains the date stamp. For example, if the server instance rotates its local log file on 4 March 2020 at 10:15 AM, the log file that contains the old log messages will be named <code>myserver_2020_03_04_10_15.log<em>nnnnn</em></code>. (The current, in-use server log file retains the name <code>myserver_<em>yyyy_MM_dd_hh_mm</em>.log</code>.)</p>
 <p>If you do not include a time and date stamp, the rotated log files are numbered in order of creation <code><em>SERVER_NAME</em>.log<em>nnnnn</em></code>, where <code><em>SERVER_NAME</em></code> is the name configured for the log file. For example: <code>myserver.log00007</code>.</p>
@@ -660,6 +661,43 @@ Use the Servers table to monitor and compare properties across the different ser
 <p>Click <strong>Save</strong>.</p>
 </li>
 </ol>
+<h3 id="GUID-F6536203-9FD6-4ABF-B302-B06DA05E980D">Configure java.util.logging Logger Levels</h3>
+<p>WebLogic Server supports configuring <code>java.util.logging.Logger</code> levels for named loggers in the JDK <code>LogManager</code>.</p>
+<p>See <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=WLLOG-GUID-879637F5-B93F-4236-8B3D-D9BB319A748D">Configuring java.util.logging Logger Levels</a> in <strong>Configuring Log Files and Filtering Log Messages for Oracle WebLogic Server</strong>.</p>
+<ul>
+<li>
+<p>To configure <code>java.util.logging.Logger</code> levels for the WebLogic Server logging configuration (also known as platform loggers):</p>
+<p>WebLogic Server loggers are configured in terms of <code>weblogic.logging.Severities</code> through the <code>LoggerSeverities</code> attribute. These loggers are not available in the JDK&rsquo;s default global <code>LogManager</code>.</p>
+<ol>
+<li>
+<p>In the <strong>Edit Tree</strong>, go to <strong>Environment</strong>, then <strong>Servers</strong>, then <em>myServer</em>.</p>
+</li>
+<li>
+<p>Click the <strong>Logging</strong> tab.</p>
+</li>
+<li>
+<p>On the <strong>Platform Logger Levels</strong> subtab, click <strong>+</strong> to add a new row. Then, enter the logging level name under the <strong>Properties Name</strong> column and the logging level under <strong>Properties Value</strong> column.</p>
+</li>
+<li>
+<p>Click <strong>Save</strong>.</p>
+</li>
+</ol>
+</li>
+<li>
+<p>To configure <code>java.util.logging.Logger</code> levels for Desktop WebLogic Remote Console:</p>
+<ol>
+<li>
+<p>Go to <strong>File</strong>, then <strong>Settings</strong>. (On macOS, go to <strong>WebLogic Remote Console</strong>, then <strong>Settings</strong>.)</p>
+</li>
+<li>
+<p>Under the <strong>Logging/Debugging</strong> section, click <strong>+</strong> to add a new row and enter the logging level as a name-value pair, separated by <code>=</code>.</p>
+</li>
+<li>
+<p>Click <strong>Save</strong>.</p>
+</li>
+</ol>
+</li>
+</ul>
 <h2 id="GUID-BB85D9BB-5E36-4067-AA9F-E01EBFF027CD">Enable Configuration Auditing</h2>
 <p>You can configure the Administration Server to emit audit messages that enable auditing of configuration changes in a domain.</p>
 <p>This provides a record of changes to the configuration of any resource within a domain or invokes management operations on any resource within a domain. Configuration audit records can be saved to a log file, sent to an Auditing provider in the security realm, or both.</p>

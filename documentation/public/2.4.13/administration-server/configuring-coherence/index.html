@@ -1,10 +1,10 @@
 <!doctype html>
 <html itemscope itemtype="http://schema.org/WebPage" lang="en" class="no-js">
-  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <head>
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link rel="alternate" type="application/rss&#43;xml" href="//localhost:1313/2.4.13/administration-server/configuring-coherence/index.xml">
-<meta name="robots" content="noindex, nofollow">
+<link rel="alternate" type="application/rss&#43;xml" href="/2.4.13/administration-server/configuring-coherence/index.xml">
+<meta name="robots" content="index, follow">
 
 
 <link rel="shortcut icon" href="/favicons/favicon.ico" >
@@ -22,7 +22,7 @@
 <meta name="description" content="Oracle Coherence enables organizations to predictably scale mission-critical applications by providing fast and reliable access to frequently used data. By automatically and dynamically partitioning data in memory across multiple servers, Coherence enables continuous data availability and transactional integrity, even in the event of a server failure.
 WebLogic Server domains include a Coherence container that simplifies the management and deployment of Coherence clusters and Coherence-based applications.
 NoteCoherence can also be installed in a standalone mode that does not rely on WebLogic Server. WebLogic Remote Console cannot administer standalone Coherence installations, therefore this documentation focuses solely on using Coherence with WebLogic Server.">
-<meta property="og:url" content="//localhost:1313/2.4.13/administration-server/configuring-coherence/">
+<meta property="og:url" content="/2.4.13/administration-server/configuring-coherence/">
   <meta property="og:site_name" content="WebLogic Remote Console">
   <meta property="og:title" content="Configuring Coherence">
   <meta property="og:description" content="Oracle Coherence enables organizations to predictably scale mission-critical applications by providing fast and reliable access to frequently used data. By automatically and dynamically partitioning data in memory across multiple servers, Coherence enables continuous data availability and transactional integrity, even in the event of a server failure.
@@ -41,7 +41,8 @@ NoteCoherence can also be installed in a standalone mode that does not rely on 
   <meta name="twitter:description" content="Oracle Coherence enables organizations to predictably scale mission-critical applications by providing fast and reliable access to frequently used data. By automatically and dynamically partitioning data in memory across multiple servers, Coherence enables continuous data availability and transactional integrity, even in the event of a server failure.
 WebLogic Server domains include a Coherence container that simplifies the management and deployment of Coherence clusters and Coherence-based applications.
 NoteCoherence can also be installed in a standalone mode that does not rely on WebLogic Server. WebLogic Remote Console cannot administer standalone Coherence installations, therefore this documentation focuses solely on using Coherence with WebLogic Server.">
-<link href="/scss/main.css" rel="stylesheet">
+<link rel="preload" href="/scss/main.min.48c25d0a5a23a1e8cae94d6c5e7622061e5345cf098171b1d6ee41d8e309e6c8.css" as="style" integrity="sha256-SMJdClojoejK6U1sXnYiBh5TRc8JgXGx1u5B2OMJ5sg=" crossorigin="anonymous">
+<link href="/scss/main.min.48c25d0a5a23a1e8cae94d6c5e7622061e5345cf098171b1d6ee41d8e309e6c8.css" rel="stylesheet" integrity="sha256-SMJdClojoejK6U1sXnYiBh5TRc8JgXGx1u5B2OMJ5sg=" crossorigin="anonymous">
 <script
   src="https://code.jquery.com/jquery-3.7.1.min.js"
   integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
@@ -137,7 +138,7 @@ NoteCoherence can also be installed in a standalone mode that does not rely on 
     aria-label="Search this site…"
     autocomplete="off"
     
-    data-offline-search-index-json-src="/offline-search-index.json"
+    data-offline-search-index-json-src="/offline-search-index.d874cf970bc57419b247ef101f81d5e2.json"
     data-offline-search-base-href="/"
     data-offline-search-max-results="10"
   >
@@ -162,7 +163,7 @@ NoteCoherence can also be installed in a standalone mode that does not rely on 
     aria-label="Search this site…"
     autocomplete="off"
     
-    data-offline-search-index-json-src="/offline-search-index.json"
+    data-offline-search-index-json-src="/offline-search-index.d874cf970bc57419b247ef101f81d5e2.json"
     data-offline-search-base-href="/"
     data-offline-search-max-results="10"
   >
@@ -310,9 +311,9 @@ NoteCoherence can also be installed in a standalone mode that does not rely on 
   
   
   <div class="pageinfo pageinfo-warning">
-    <p>You are viewing documentation for an older release of WebLogic Remote Console. Read the  
+    <p>You are viewing documentation for an older release of WebLogic Remote Console. Read the
         <a href="/weblogic-remote-console/overview" target="_blank">latest documentation</a> instead.</p>
-        <p>Stay up-to-date with the newest features and fixes. Download the latest release of WebLogic Remote Console from <a href="https://github.com/oracle/weblogic-remote-console/releases" target="_blank">WebLogic Remote Console - Releases</a></p>
+        <p>To stay up-to-date with the newest features and fixes, download the latest release of WebLogic Remote Console from <a href="https://github.com/oracle/weblogic-remote-console/releases" target="_blank">WebLogic Remote Console - Releases</a>!</p>
       
     
   </div>
@@ -381,7 +382,7 @@ NoteCoherence can also be installed in a standalone mode that does not rely on 
 <div class="alert alert-primary" role="alert">
 <h4 class="alert-heading">Note</h4>
 
-    <p>Alternatively, for development purposes, you can set up a single standalone Managed Server instance to act as both a cache server and a cache client. See <a href="/#GUID-DB577D5C-A80B-48DB-A940-C95D764532C5">Configure and Deploy Coherence on a Single-Server Cluster</a>.</p>
+    <p>Alternatively, for development purposes, you can set up a single standalone Managed Server instance to act as both a cache server and a cache client. See <a href="/2.4.13/administration-server/configuring-coherence/#GUID-DB577D5C-A80B-48DB-A940-C95D764532C5">Configure and Deploy Coherence on a Single-Server Cluster</a>.</p>
 <p>Single-server topologies are not recommended for production use.</p>
 
 
@@ -864,7 +865,7 @@ NoteCoherence can also be installed in a standalone mode that does not rely on 
 <div class="alert alert-primary" role="alert">
 <h4 class="alert-heading">Note</h4>
 
-    To set up Coherence for production use, follow the steps outlined in <a href="/#GUID-B7D3071F-A32F-4AE9-9A36-FF28E3B674C8">Configure Coherence: Main Steps</a> instead.
+    To set up Coherence for production use, follow the steps outlined in <a href="/2.4.13/administration-server/configuring-coherence/#GUID-B7D3071F-A32F-4AE9-9A36-FF28E3B674C8">Configure Coherence: Main Steps</a> instead.
 
 </div>
 <ol>
@@ -927,8 +928,8 @@ NoteCoherence can also be installed in a standalone mode that does not rely on 
 </footer>
 
     </div>
-    <script src="/js/main.js"></script>
-<script defer src="/js/click-to-copy.js" crossorigin="anonymous"></script>
+    <script src="/js/main.min.90902a026ed2aee7ed45d85797f4c790b240ba148ac6f8a6f194cb1981ffecf5.js" integrity="sha256-kJAqAm7SruftRdhXl/THkLJAuhSKxvim8ZTLGYH/7PU=" crossorigin="anonymous"></script>
+<script defer src="/js/click-to-copy.min.73478a7d4807698aed7e355eb23f9890ca18fea3158604c8471746d046702bad.js" integrity="sha256-c0eKfUgHaYrtfjVesj&#43;YkMoY/qMVhgTIRxdG0EZwK60=" crossorigin="anonymous"></script>
 <script src='/js/tabpane-persist.js'></script>
 
   </body>

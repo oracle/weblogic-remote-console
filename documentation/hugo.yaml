@@ -26,7 +26,7 @@ languages:
 
 # TODO update path to include '/3**' when major version increases to 3.x
 
-cascade: 
+cascade:
   - type: 'docs'
     target:
       path: '{/2**,/latest**}'
@@ -88,7 +88,6 @@ params:
 
   # Menu title if your navbar has a versions selector to access old versions of your site.
   # This menu appears only if you have at least one [params.versions] set.
-  # TODO if you can't figure out how to make the url behave with the actual base path, make url absolute
   version_menu: Releases
   url_latest_version: '/weblogic-remote-console/overview'
   versions:

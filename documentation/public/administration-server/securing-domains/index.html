@@ -1,10 +1,10 @@
 <!doctype html>
 <html itemscope itemtype="http://schema.org/WebPage" lang="en" class="no-js">
-  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <head>
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link rel="alternate" type="application/rss&#43;xml" href="//localhost:1313/administration-server/securing-domains/index.xml">
-<meta name="robots" content="noindex, nofollow">
+<link rel="alternate" type="application/rss&#43;xml" href="/administration-server/securing-domains/index.xml">
+<meta name="robots" content="index, follow">
 
 
 <link rel="shortcut icon" href="/favicons/favicon.ico" >
@@ -22,7 +22,7 @@
 <meta name="description" content="WebLogic Server offers a robust set of security tools to protect your WebLogic Server environment from unauthorized access. Use WebLogic Remote Console to secure your system.
 For general information on security concepts in WebLogic Server, see:
 Understanding Security for Oracle WebLogic Server Administering Security for Oracle WebLogic Server Securing Resources Using Roles and Policies for Oracle WebLogic Server Securing a Production Environment for Oracle WebLogic Server Address Potential Security Issues WebLogic Server regularly checks your domain to ensure it complies with its recommended security policies. If a domain does not meet the recommendations, a security warning is logged and displayed in WebLogic Remote Console.">
-<meta property="og:url" content="//localhost:1313/administration-server/securing-domains/">
+<meta property="og:url" content="/administration-server/securing-domains/">
   <meta property="og:site_name" content="WebLogic Remote Console">
   <meta property="og:title" content="Securing Domains">
   <meta property="og:description" content="WebLogic Server offers a robust set of security tools to protect your WebLogic Server environment from unauthorized access. Use WebLogic Remote Console to secure your system.
@@ -35,13 +35,14 @@ Understanding Security for Oracle WebLogic Server Administering Security for Ora
   <meta itemprop="description" content="WebLogic Server offers a robust set of security tools to protect your WebLogic Server environment from unauthorized access. Use WebLogic Remote Console to secure your system.
 For general information on security concepts in WebLogic Server, see:
 Understanding Security for Oracle WebLogic Server Administering Security for Oracle WebLogic Server Securing Resources Using Roles and Policies for Oracle WebLogic Server Securing a Production Environment for Oracle WebLogic Server Address Potential Security Issues WebLogic Server regularly checks your domain to ensure it complies with its recommended security policies. If a domain does not meet the recommendations, a security warning is logged and displayed in WebLogic Remote Console.">
-  <meta itemprop="wordCount" content="13496">
+  <meta itemprop="wordCount" content="13506">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Securing Domains">
   <meta name="twitter:description" content="WebLogic Server offers a robust set of security tools to protect your WebLogic Server environment from unauthorized access. Use WebLogic Remote Console to secure your system.
 For general information on security concepts in WebLogic Server, see:
 Understanding Security for Oracle WebLogic Server Administering Security for Oracle WebLogic Server Securing Resources Using Roles and Policies for Oracle WebLogic Server Securing a Production Environment for Oracle WebLogic Server Address Potential Security Issues WebLogic Server regularly checks your domain to ensure it complies with its recommended security policies. If a domain does not meet the recommendations, a security warning is logged and displayed in WebLogic Remote Console.">
-<link href="/scss/main.css" rel="stylesheet">
+<link rel="preload" href="/scss/main.min.48c25d0a5a23a1e8cae94d6c5e7622061e5345cf098171b1d6ee41d8e309e6c8.css" as="style" integrity="sha256-SMJdClojoejK6U1sXnYiBh5TRc8JgXGx1u5B2OMJ5sg=" crossorigin="anonymous">
+<link href="/scss/main.min.48c25d0a5a23a1e8cae94d6c5e7622061e5345cf098171b1d6ee41d8e309e6c8.css" rel="stylesheet" integrity="sha256-SMJdClojoejK6U1sXnYiBh5TRc8JgXGx1u5B2OMJ5sg=" crossorigin="anonymous">
 <script
   src="https://code.jquery.com/jquery-3.7.1.min.js"
   integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
@@ -137,7 +138,7 @@ Understanding Security for Oracle WebLogic Server Administering Security for Ora
     aria-label="Search this site…"
     autocomplete="off"
     
-    data-offline-search-index-json-src="/offline-search-index.json"
+    data-offline-search-index-json-src="/offline-search-index.d874cf970bc57419b247ef101f81d5e2.json"
     data-offline-search-base-href="/"
     data-offline-search-max-results="10"
   >
@@ -162,7 +163,7 @@ Understanding Security for Oracle WebLogic Server Administering Security for Ora
     aria-label="Search this site…"
     autocomplete="off"
     
-    data-offline-search-index-json-src="/offline-search-index.json"
+    data-offline-search-index-json-src="/offline-search-index.d874cf970bc57419b247ef101f81d5e2.json"
     data-offline-search-base-href="/"
     data-offline-search-max-results="10"
   >
@@ -442,7 +443,7 @@ Understanding Security for Oracle WebLogic Server Administering Security for Ora
 <div class="alert alert-primary" role="alert">
 <h4 class="alert-heading">Note</h4>
 
-    You can set WebLogic Server to immediately apply non-dynamic changes to a security realm without restarting WebLogic Server. See <a href="/#GUID-65011AC0-166C-414C-8FD5-A085E7599FA7">Enable Automatic Realm Restart</a>.
+    You can set WebLogic Server to immediately apply non-dynamic changes to a security realm without restarting WebLogic Server. See <a href="/administration-server/securing-domains/#GUID-65011AC0-166C-414C-8FD5-A085E7599FA7">Enable Automatic Realm Restart</a>.
 
 </div>
 <h3 id="SECTION_HWH_VBM_NCC">Required Security Providers</h3>
@@ -477,7 +478,7 @@ Understanding Security for Oracle WebLogic Server Administering Security for Ora
 <div class="alert alert-primary" role="alert">
 <h4 class="alert-heading">Note</h4>
 
-    If you do not enable <strong>Create Default Providers</strong>, then you must manually configure the required security providers before you can commit the new security realm. For a list of which security providers are required, see <a href="/#SECTION_HWH_VBM_NCC">Required Security Providers</a>.
+    If you do not enable <strong>Create Default Providers</strong>, then you must manually configure the required security providers before you can commit the new security realm. For a list of which security providers are required, see <a href="/administration-server/securing-domains/#SECTION_HWH_VBM_NCC">Required Security Providers</a>.
 
 </div>
 </li>
@@ -940,7 +941,7 @@ You do not need to identify data sources.</li>
 <p>Click <strong>Create</strong>.</p>
 </li>
 <li>
-<p>If you want to make this CLV provider the current builder of certificate chains for this realm, perform the following steps:</p>
+<p><strong>Optional</strong>: If you want to make this CLV provider the current builder of certificate chains for this realm, perform the following steps:</p>
 <ol>
 <li>
 <p>In the <strong>Edit Tree</strong>, go to <strong>Security</strong>, then <strong>Realms</strong>, then <em>myRealm</em>.</p>
@@ -1077,7 +1078,7 @@ You do not need to identify data sources.</li>
 <p>Click <strong>Create</strong>.</p>
 </li>
 <li>
-<p>If you want to add the new user to a group, then under the <strong>Membership</strong> tab, select a group under the <strong>Available</strong> section and move it to the <strong>Chosen</strong> section.</p>
+<p><strong>Optional</strong>: If you want to add the new user to a group, then under the <strong>Membership</strong> tab, select a group under the <strong>Available</strong> section and move it to the <strong>Chosen</strong> section.</p>
 <p>User groups provide an efficient way to manage multiple users with the same responsibilities.</p>
 </li>
 </ol>
@@ -1351,7 +1352,7 @@ The match is case-insensitive.</li>
 <p>Click <strong>Save</strong>.</p>
 </li>
 <li>
-<p>Add more conditions to the policy to increase its complexity.</p>
+<p><strong>Optional</strong>: Add more conditions to the policy to increase its complexity.</p>
 </li>
 </ol>
 <h2 id="GUID-219D9EBA-79E1-430F-AECD-28B4A41FDAE9">Identity and Trust</h2>
@@ -1461,10 +1462,10 @@ The match is case-insensitive.</li>
 <p>Repeat on all applicable servers.</p>
 </li>
 <li>
-<p>If you are updating a keystore configuration and have SSL/TLS configured already, you can check that all SSL/TLS connections exist according to the specified connection. In the <strong>Monitoring Tree</strong>, go to <strong>Environment</strong>, then <strong>Servers</strong>. Restart the applicable servers.</p>
+<p><strong>Optional</strong>: If you are updating a keystore configuration and have SSL/TLS configured already, you can check that all SSL/TLS connections exist according to the specified connection. In the <strong>Monitoring Tree</strong>, go to <strong>Environment</strong>, then <strong>Servers</strong>. Restart the applicable servers.</p>
 </li>
 <li>
-<p>If you enabled custom keystores and want to use Node Manager to start Managed Servers, you must also update the <code>nodemanager.properties</code> file to match.</p>
+<p><a id="STEP_NPS_VMH_2CC"></a><strong>Optional</strong>: If you enabled custom keystores and want to use Node Manager to start Managed Servers, you must also update the <code>nodemanager.properties</code> file to match.</p>
 <p>At minimum, update the following node manager properties as applicable to your environment:</p>
 <ul>
 <li><code>CustomIdentityAlias</code></li>
@@ -1495,7 +1496,7 @@ See <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-m
 <p>Use the <strong>OCSP</strong> and <strong>CRL</strong> tabs to customize settings for the revocation checking method. For information on the options, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=SECMG-GUID-6708C14D-1F37-4454-8DB7-69F2EC86ACBA">Using the Online Certificate Status Protocol</a> or <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=SECMG-GUID-4E2A9AB6-233E-475C-A32E-FAACEB12052E">Using Certificate Revocation Lists</a> in <strong>Administering Security for Oracle WebLogic Server</strong>.</p>
 </li>
 <li>
-<p>If you want a certificate whose revocation status cannot be determined to fail SSL/TLS certificate path validation, turn on the <strong>Fail on Unknown Revocation Status</strong> option.</p>
+<p><strong>Optional</strong>: If you want a certificate whose revocation status cannot be determined to fail SSL/TLS certificate path validation, turn on the <strong>Fail on Unknown Revocation Status</strong> option.</p>
 <p>When this option disabled, if an X.509 certificate’s revocation status cannot be determined, but the SSL/TLS certificate path validation is otherwise successful, the certificate will be accepted.</p>
 </li>
 <li>
@@ -1592,7 +1593,7 @@ For more information, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=
 </ul>
 </li>
 <li>
-<p>Enable two-way SSL/TLS.</p>
+<p><strong>Optional</strong>: Enable two-way SSL/TLS.</p>
 <p>By default, WebLogic Server is configured to use one-way SSL/TLS, where the server passes its identity to the client. In a two-way SSL/TLS connection, the client verifies the identity of the server and then passes its identity certificate to the server. The server then validates the identity certificate of the client before completing the SSL/TLS handshake. The server determines whether or not two-way SSL/TLS is used.</p>
 <p>Before enabling two-way SSL/TLS, ensure that the trust keystore for the server includes the certificate for the trusted certificate authority that signed the certificate for the client. See <a href="/administration-server/securing-domains/#GUID-219D9EBA-79E1-430F-AECD-28B4A41FDAE9">Identity and Trust</a>.</p>
 <ol>
@@ -1649,7 +1650,7 @@ For more information, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=
 <p>As of WebLogic Server 14.1.1.0.0, the default verifier is the wildcard verifier.</p>
 </li>
 <li>
-<p>If you want to use a custom verifier, follow these steps.</p>
+<p><strong>Optional</strong>: If you want to use a custom verifier, follow these steps.</p>
 
 
 <div class="alert alert-primary" role="alert">
@@ -1710,7 +1711,7 @@ For more information, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=
 <p>In the <strong>Cipher Suites</strong> field, enter the cipher suites that you want to support on this server.</p>
 </li>
 <li>
-<p>In the <strong>Excluded Cipher Suites</strong> field, enter any cipher suites that you want to block on this server.</p>
+<p><strong>Optional</strong>: In the <strong>Excluded Cipher Suites</strong> field, enter any cipher suites that you want to block on this server.</p>
 </li>
 <li>
 <p>Click <strong>Save</strong>.</p>
@@ -1815,7 +1816,7 @@ For more information, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=
 <p>For more information about connection filter rules, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=SCPRG-GUID-A312878D-EC41-48DF-B318-E1E0D5A9307E">Guidelines for Writing Connection Filter Rules</a> in <strong>Developing Applications with the WebLogic Security Service</strong>.</p>
 </li>
 <li>
-<p>If you want WebLogic Server to ignore errors in filter rules during server startup, turn on the <strong>Connection Filter Ignore Rule Errors</strong> option.</p>
+<p><strong>Optional</strong>: If you want WebLogic Server to ignore errors in filter rules during server startup, turn on the <strong>Connection Filter Ignore Rule Errors</strong> option.</p>
 </li>
 <li>
 <p>Click <strong>Save</strong>.</p>
@@ -1835,7 +1836,7 @@ For more information, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=
 </div>
 <ol>
 <li>
-<p>Configure the domain to record all of the classes and packages used in both WebLogic Server and customer application deserialization.</p>
+<p><a id="STEP_HM2_SMZ_PCC"></a>Configure the domain to record all of the classes and packages used in both WebLogic Server and customer application deserialization.</p>
 <ol>
 <li>
 <p>In the <strong>Edit Tree</strong>, go to <strong>Environment</strong>, then <strong>Domain</strong>.</p>
@@ -1853,12 +1854,18 @@ For more information, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=
 </ol>
 </li>
 <li>
-<p>Run a full set of tests to ensure that the recorded allowlist configuration file provides appropriate coverage of all packages and classes that must be allowed in order for your application to run successfully. When deserialization occurs, each class is recorded in <code><em>DOMAIN_HOME</em>/config/security/jep290-recorded.serial.properties</code>.</p>
+<p><a id="STEP_DCB_VMZ_PCC"></a>Run a full set of tests to ensure that the recorded allowlist configuration file provides appropriate coverage of all packages and classes that must be allowed in order for your application to run successfully. When deserialization occurs, each class is recorded in <code><em>DOMAIN_HOME</em>/config/security/jep290-recorded.serial.properties</code>.</p>
 <p>A sample <code>jep290-recorded.serial.properties</code> is shown below:</p>
-<pre tabindex="0"><code>Wed May 19 23:55:13 UTC 2021
-weblogic.oif.serialFilter=        com.company1.common.collections.objs.*;        com.company1.common.tools.Calculator;        com.company2.shared.tools.Converter
-weblogic.oif.serialGlobalFilter=        com.company1.common.lists.AList;        com.company1.common.tools.Calculator;        com.company2.shared.tools.*
-</code></pre></li>
+<pre>Wed May 19 23:55:13 UTC 2021
+weblogic.oif.serialFilter=\
+    com.company1.common.collections.objs.*;\
+    com.company1.common.tools.Calculator;\
+    com.company2.shared.tools.Converter
+weblogic.oif.serialGlobalFilter=\
+    com.company1.common.lists.AList;\
+    com.company1.common.tools.Calculator;\
+    com.company2.shared.tools.*</pre>
+</li>
 <li>
 <p>Turn off the <strong>Recording Enabled</strong> option. Save and commit the change.</p>
 </li>
@@ -2352,8 +2359,8 @@ weblogic.oif.serialGlobalFilter=        com.company1.common.lists.AList;        
 </footer>
 
     </div>
-    <script src="/js/main.js"></script>
-<script defer src="/js/click-to-copy.js" crossorigin="anonymous"></script>
+    <script src="/js/main.min.90902a026ed2aee7ed45d85797f4c790b240ba148ac6f8a6f194cb1981ffecf5.js" integrity="sha256-kJAqAm7SruftRdhXl/THkLJAuhSKxvim8ZTLGYH/7PU=" crossorigin="anonymous"></script>
+<script defer src="/js/click-to-copy.min.73478a7d4807698aed7e355eb23f9890ca18fea3158604c8471746d046702bad.js" integrity="sha256-c0eKfUgHaYrtfjVesj&#43;YkMoY/qMVhgTIRxdG0EZwK60=" crossorigin="anonymous"></script>
 <script src='/js/tabpane-persist.js'></script>
 
   </body>
