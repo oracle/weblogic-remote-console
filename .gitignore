@@ -66,6 +66,7 @@ hugo/*/docs/
 hugo/*/.vscode/
 hugo/*/.hugo_build.lock
 documentation/public/
+documentation/node_modules
 
 *start-weblogic.out
 
