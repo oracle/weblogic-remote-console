@@ -13,7 +13,7 @@ import weblogic.console.schema.YamlSource;
  * about the nav tree nodes directly beneath a type, e.g. DomainMBean/nav-tree.yaml
  */
 public class NavTreeDefSource extends YamlSource {
-  private ListValue<NavTreeNodeDefSource> contents = new ListValue<>();
+  private ListValue<NavTreeNodeDefSource> contents = ListValue.create();
 
   // The top level nav tree nodes for this type.
   public List<NavTreeNodeDefSource> getContents() {
@@ -21,7 +21,11 @@ public class NavTreeDefSource extends YamlSource {
   }
 
   public void setContents(List<NavTreeNodeDefSource> value) {
-    contents.setValue(value);
+    contents = contents.setValue(value);
+  }
+
+  public void addContent(NavTreeNodeDefSource value) {
+    contents = contents.add(value);
   }
 
   @Override

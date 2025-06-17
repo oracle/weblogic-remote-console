@@ -124,6 +124,22 @@ properties:
   type: boolean
   writable: true
 - defaultValue:
+    value:
+      value: domainpki-server-identity
+  descriptionHTML: '<p>The keystore alias to use for the server certificate when using
+    Domain PKI Keystores.</p> '
+  name: DomainCertificateAlias
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: domainpki-client-identity
+  descriptionHTML: '<p>The keystore alias to use for the server''s client certificate
+    when using Domain PKI Keystores.</p> '
+  name: DomainClientCertificateAlias
+  type: java.lang.String
+  writable: true
+- defaultValue:
     derivedDefault: true
   descriptionHTML: '<p>Indicates whether the server can be reached through the default
     SSL listen port.</p>  <p>If there is no explicit setting for this attribute, it

@@ -847,6 +847,7 @@ properties:
   descriptionHTML: '<p>Which configuration rules should be used for finding the server''s
     identity and trust keystores?</p> '
   legalValues:
+  - DomainPkiKeystores
   - DemoIdentityAndDemoTrust
   - CustomIdentityAndJavaStandardTrust
   - CustomIdentityAndCustomTrust

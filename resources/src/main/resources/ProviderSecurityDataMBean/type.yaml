@@ -1,4 +1,56 @@
-# Copyright (c) 2022, Oracle and/or its affiliates.
+# Copyright (c) 2022, 2025, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 disableMBeanJavadoc: true
+
+actions:
+- name: "exportData"
+  label: "Export"
+  helpHTML: >
+    <p>Export this security provider's security data to a file.</p>
+    <p><bold>Note</bold>:The file's contents will be overwritten if the file already exists.</p>
+  successMessage: Successfully exported this security provider's security data.
+  failureMessage: Failed to export this security provider's security data.
+  actionMethod: weblogic.remoteconsole.customizers.ProviderSecurityDataMBeanCustomizer.exportData
+  inputForm:
+    customizePageDefMethod: weblogic.remoteconsole.customizers.ProviderSecurityDataMBeanCustomizer.customizeExportDataActionInputFormDef
+    customizePageMethod: weblogic.remoteconsole.customizers.ProviderSecurityDataMBeanCustomizer.customizeExportDataActionInputForm
+    instanceBasedPDJ: true
+    introductionHTML: >
+      <p>Export this security provider's security data to a file.</p>
+      <p><b>Note</b>:The file's contents will be overwritten if the file already exists.</p>
+    parameters:
+    - name: "FileName"
+    - name: "Format"
+    - name: "Constraints"
+    helpTopics:
+    - label: "Migrating Security Data"
+      href: "secmg/security_data_migration.html"
+      type: "edocs"
+    - label: "Understanding Security for Oracle WebLogic Server"
+      href: "scovr/index.html"
+      type: "edocs"
+- name: "importData"
+  label: "Import"
+  helpHTML: >
+    <p>Import security data from a file into this security provider.</p>
+  successMessage: Successfully imported security data into this security provider.
+  failureMessage: Failed to import security data into this security provider.
+  actionMethod: weblogic.remoteconsole.customizers.ProviderSecurityDataMBeanCustomizer.importData
+  inputForm:
+    customizePageDefMethod: weblogic.remoteconsole.customizers.ProviderSecurityDataMBeanCustomizer.customizeImportDataActionInputFormDef
+    customizePageMethod: weblogic.remoteconsole.customizers.ProviderSecurityDataMBeanCustomizer.customizeImportDataActionInputForm
+    instanceBasedPDJ: true
+    introductionHTML: >
+      <p>Import security data from a file into this security provider.</p>
+    parameters:
+    - name: "FileName"
+    - name: "Format"
+    - name: "Constraints"
+    helpTopics:
+    - label: "Migrating Security Data"
+      href: "secmg/security_data_migration.html"
+      type: "edocs"
+    - label: "Understanding Security for Oracle WebLogic Server"
+      href: "scovr/index.html"
+      type: "edocs"

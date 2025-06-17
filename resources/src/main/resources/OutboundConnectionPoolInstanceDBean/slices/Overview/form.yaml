@@ -1,11 +1,22 @@
-# Copyright (c) 2024, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2024, 2025, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 customizePageMethod: weblogic.remoteconsole.customizers.DescriptorBeanCustomizer.customizePage
 customizePageDefMethod: weblogic.remoteconsole.customizers.DescriptorBeanCustomizer.customizePageDef
 
+introductionHTML: >
+  <p>Use this page to manage the general settings of this outbound connection instance.</p>
+  <p><b>Note</b>: If you have not explictly set a value on this instance
+  (e.g. <code>Transaction Support</code>), WebLogic will use the value from this instance's group.
+  Similarly, if you have not set the value on the group, WebLogic will use the value from <code>ra.xml</code>.
+  Use this deployment's <code>Deployment Plan</code> or <code>Variable Assignments</code> page
+  to see which values have been set on this instance and its group.</p>
+
 properties:
 - name: Name
+- name: TransactionSupport
+- name: ReauthenticationSupport
+- name: ResAuth
 
 helpTopics:
 - label: "Creating and Configuring Resource Adapters"

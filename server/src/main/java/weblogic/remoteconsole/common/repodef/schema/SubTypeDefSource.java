@@ -15,9 +15,9 @@ import weblogic.console.schema.YamlSource;
  * e.g. AuthenticationProviderMBean/type.yaml.
  */
 public class SubTypeDefSource extends YamlSource {
-  private StringValue value = new StringValue();
-  private StringValue type = new StringValue();
-  private ListValue<String> requiredCapabilities = new ListValue<>();
+  private StringValue value = StringValue.create();
+  private StringValue type = StringValue.create();
+  private ListValue<String> requiredCapabilities = ListValue.create();
 
   // The value of the subTypeDiscrimintorProperty on the bean instance that
   // indicates that the instance is of this sub type.
@@ -26,7 +26,7 @@ public class SubTypeDefSource extends YamlSource {
   }
 
   public void setValue(String val) {
-    value.setValue(val);
+    value = value.setValue(val);
   }
 
   // The name of sub type
@@ -35,7 +35,7 @@ public class SubTypeDefSource extends YamlSource {
   }
 
   public void setType(String val) {
-    type.setValue(val);
+    type = type.setValue(val);
   }
 
   // The bean repo capabilities that are required for this sub type to be present
@@ -44,6 +44,6 @@ public class SubTypeDefSource extends YamlSource {
   }
   
   public void setRequiredCapabilities(List<String> val) {
-    requiredCapabilities.setValue(val);
+    requiredCapabilities = requiredCapabilities.setValue(val);
   }
 }

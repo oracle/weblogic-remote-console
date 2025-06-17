@@ -59,6 +59,14 @@ properties:
   restartNeeded: true
   type: int
   writable: true
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: 'Provides access to the plugin instances that are deployed to the
+    domain. '
+  name: PluginDeploymentRuntimes
+  relationship: containment
+  type: weblogic.management.runtime.PluginDeploymentRuntimeMBean
 roles:
   allowed:
   - Deployer

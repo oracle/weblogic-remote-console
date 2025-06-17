@@ -17,34 +17,35 @@ import weblogic.console.utils.Path;
  * e.g. ServerTemplateMBean/type.yaml
  */
 public class BeanChildDefCustomizerSource extends YamlSource {
-  private StringValue name = new StringValue();
-  private StringValue onlineName = new StringValue();
-  private StringValue offlineName = new StringValue();
-  private BooleanValue useUnlocalizedNameAsLabel = new BooleanValue();
-  private StringValue label = new StringValue();
-  private StringValue singularLabel = new StringValue();
-  private BooleanValue nonCreatableOptionalSingleton = new BooleanValue();
-  private BooleanValue collapsedInWDT = new BooleanValue();
-  private BooleanValue creatable = new BooleanValue();
-  private BooleanValue deletable = new BooleanValue();
-  private BooleanValue asyncCreate = new BooleanValue();
-  private BooleanValue asyncDelete = new BooleanValue();
-  private ListValue<String> requiredCapabilities = new ListValue<>();
+  private StringValue name = StringValue.create();
+  private StringValue onlineName = StringValue.create();
+  private StringValue offlineName = StringValue.create();
+  private BooleanValue useUnlocalizedNameAsLabel = BooleanValue.create();
+  private StringValue label = StringValue.create();
+  private StringValue singularLabel = StringValue.create();
+  private BooleanValue nonCreatableOptionalSingleton = BooleanValue.create();
+  private BooleanValue collapsedInWDT = BooleanValue.create();
+  private BooleanValue creatable = BooleanValue.create();
+  private BooleanValue deletable = BooleanValue.create();
+  private BooleanValue asyncCreate = BooleanValue.create();
+  private BooleanValue asyncDelete = BooleanValue.create();
+  private ListValue<String> requiredCapabilities = ListValue.create();
 
   public void merge(BeanChildDefCustomizerSource from, Path fromContainedBeanPath) {
     // don't merge name - it's fixed by whoever created this instance
-    onlineName.merge(from.onlineName, fromContainedBeanPath);
-    offlineName.merge(from.offlineName, fromContainedBeanPath);
-    useUnlocalizedNameAsLabel.merge(from.useUnlocalizedNameAsLabel, fromContainedBeanPath);
-    label.merge(from.label, fromContainedBeanPath);
-    singularLabel.merge(from.singularLabel, fromContainedBeanPath);
-    nonCreatableOptionalSingleton.merge(from.nonCreatableOptionalSingleton, fromContainedBeanPath);
-    collapsedInWDT.merge(from.collapsedInWDT, fromContainedBeanPath);
-    creatable.merge(from.creatable, fromContainedBeanPath);
-    deletable.merge(from.deletable, fromContainedBeanPath);
-    asyncCreate.merge(from.asyncCreate, fromContainedBeanPath);
-    asyncDelete.merge(from.asyncDelete, fromContainedBeanPath);
-    requiredCapabilities.merge(from.requiredCapabilities, fromContainedBeanPath);
+    onlineName = onlineName.merge(from.onlineName, fromContainedBeanPath);
+    offlineName = offlineName.merge(from.offlineName, fromContainedBeanPath);
+    useUnlocalizedNameAsLabel = useUnlocalizedNameAsLabel.merge(from.useUnlocalizedNameAsLabel, fromContainedBeanPath);
+    label = label.merge(from.label, fromContainedBeanPath);
+    singularLabel = singularLabel.merge(from.singularLabel, fromContainedBeanPath);
+    nonCreatableOptionalSingleton =
+      nonCreatableOptionalSingleton.merge(from.nonCreatableOptionalSingleton, fromContainedBeanPath);
+    collapsedInWDT = collapsedInWDT.merge(from.collapsedInWDT, fromContainedBeanPath);
+    creatable = creatable.merge(from.creatable, fromContainedBeanPath);
+    deletable = deletable.merge(from.deletable, fromContainedBeanPath);
+    asyncCreate = asyncCreate.merge(from.asyncCreate, fromContainedBeanPath);
+    asyncDelete = asyncDelete.merge(from.asyncDelete, fromContainedBeanPath);
+    requiredCapabilities = requiredCapabilities.merge(from.requiredCapabilities, fromContainedBeanPath);
   }
 
   // The path from the page-relative bean type to this child,
@@ -56,7 +57,7 @@ public class BeanChildDefCustomizerSource extends YamlSource {
   }
 
   public void setName(String value) {
-    name.setValue(value);
+    name = name.setValue(value);
   }
 
   // The name of this child in online WebLogic admin server connections.
@@ -66,7 +67,7 @@ public class BeanChildDefCustomizerSource extends YamlSource {
   }
 
   public void setOnlineName(String value) {
-    onlineName.setValue(value);
+    onlineName = onlineName.setValue(value);
   }
 
   // The name of this property in offline WLST and in WDT models.
@@ -76,7 +77,7 @@ public class BeanChildDefCustomizerSource extends YamlSource {
   }
 
   public void setOfflineName(String value) {
-    offlineName.setValue(value);
+    offlineName = offlineName.setValue(value);
   }
 
   // Whether to use the unlocalized name of the property as its label.
@@ -85,7 +86,7 @@ public class BeanChildDefCustomizerSource extends YamlSource {
   }
 
   public void setUseUnlocalizedNameAsLabel(boolean value) {
-    useUnlocalizedNameAsLabel.setValue(value);
+    useUnlocalizedNameAsLabel = useUnlocalizedNameAsLabel.setValue(value);
   }
 
   // The english label to display for this child.
@@ -94,7 +95,7 @@ public class BeanChildDefCustomizerSource extends YamlSource {
   }
 
   public void setLabel(String value) {
-    label.setValue(value);
+    label = label.setValue(value);
   }
 
   // The english singular label to display for this child.
@@ -103,7 +104,7 @@ public class BeanChildDefCustomizerSource extends YamlSource {
   }
 
   public void setSingularLabel(String value) {
-    singularLabel.setValue(value);
+    singularLabel = singularLabel.setValue(value);
   }
 
   // Usually the bean info give us enough information to determine the child's type, i.e.:
@@ -122,7 +123,7 @@ public class BeanChildDefCustomizerSource extends YamlSource {
   }
 
   public void setNonCreatableOptionalSingleton(boolean value) {
-    nonCreatableOptionalSingleton.setValue(value);
+    nonCreatableOptionalSingleton = nonCreatableOptionalSingleton.setValue(value);
   }
 
   // Whether this collection should be collapsed in WDT
@@ -134,7 +135,7 @@ public class BeanChildDefCustomizerSource extends YamlSource {
   }
 
   public void setCollapsedInWDT(boolean value) {
-    collapsedInWDT.setValue(value);
+    collapsedInWDT = collapsedInWDT.setValue(value);
   }
 
   // Indicates that whether this child is creatable is specified in type.yaml
@@ -157,7 +158,7 @@ public class BeanChildDefCustomizerSource extends YamlSource {
   }
 
   public void setCreatable(boolean value) {
-    creatable.setValue(value);
+    creatable = creatable.setValue(value);
   }
 
   // Indicates that whether this child is deletable is specified in type.yaml
@@ -178,7 +179,7 @@ public class BeanChildDefCustomizerSource extends YamlSource {
   }
 
   public void setDeletable(boolean value) {
-    deletable.setValue(value);
+    deletable = deletable.setValue(value);
   }
 
   // Whether creating this child is asynchronous.
@@ -187,7 +188,7 @@ public class BeanChildDefCustomizerSource extends YamlSource {
   }
 
   public void setAsyncCreate(boolean value) {
-    asyncCreate.setValue(value);
+    asyncCreate = asyncCreate.setValue(value);
   }
 
   // Whether deleting this child is asynchronous.
@@ -196,7 +197,7 @@ public class BeanChildDefCustomizerSource extends YamlSource {
   }
 
   public void setAsyncDelete(boolean value) {
-    asyncDelete.setValue(value);
+    asyncDelete = asyncDelete.setValue(value);
   }
 
   // The bean repo capabilities that are required for child to be present
@@ -205,6 +206,6 @@ public class BeanChildDefCustomizerSource extends YamlSource {
   }
 
   public void setRequiredCapabilities(List<String> val) {
-    requiredCapabilities.setValue(val);
+    requiredCapabilities = requiredCapabilities.setValue(val);
   }
 }

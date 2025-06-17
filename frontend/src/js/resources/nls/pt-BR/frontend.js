@@ -10,7 +10,7 @@ define({
     },
     "buttons": {
       "logout": {
-        "label": "Logout"
+        "label": "Fazer Log-out"
       }
     },
     "icons": {
@@ -1523,7 +1523,33 @@ define({
     "messages": {
       "pageNoLongerExists": {
         "summary": "A Página Não Existe Mais",
-        "detail": "Você foi redirecionado para a página {0} porque {1} foi excluído(a) por outro usuário, ou não existe mais."
+        "detail1": "You have been redirected to the {0} page because ",
+        "detail2": "{0} was deleted by another user, or no longer exists. "
+      }
+    }
+  },
+  "wrc-pages-bookmark": {
+    "labels": {
+      "ariaLabel": {
+        "value": "Page Bookmarks"
+      }
+    },
+    "menus": {
+      "bookmark": {
+        "add": {
+          "label": "Add Bookmark for Current Page"
+        },
+        "show": {
+          "label": "Show Page Bookmarks..."
+        }
+      }
+    },
+    "messages": {
+      "pageAlreadyBookmarked": {
+        "summary": "There is already a bookmark for this page! "
+      },
+      "pagesBookmarkAdded": {
+        "summary": "Current page was successfully bookmarked! "
       }
     }
   },
@@ -1681,7 +1707,7 @@ define({
           "value": "Mostrar Histórico de Páginas"
         },
         "star": {
-          "value": "Página Marcador"
+          "value": "Page Bookmarks"
         }
       },
       "pageInfo": {
@@ -1710,7 +1736,10 @@ define({
         "value": "Alertas"
       },
       "pagesHistory": {
-        "value": "Esta janela permite que você veja ou selecione uma página visitada anteriormente."
+        "value": "Here are the pages visited since selecting the current provider. Click on any column in row to navigate to associated page."
+      },
+      "pagesBookmark": {
+        "value": "Here are the pages bookmarked for the {0} provider type. Click on any column in row to navigate to associated page."
       }
     },
     "placeholders": {

@@ -6,10 +6,7 @@ baseTypes:
 descriptionHTML: '<p>Provides methods for retrieving information about the Java Virtual
   Machine (JVM) within with the current server instance is running. You cannot change
   the JVM''s operating parameters while the JVM is active. Instead, use the startup
-  options that are described in the JVM''s documentation.</p>  <p>The WebLogic JVM
-  contains only one of these Runtime MBeans:</p> <ul> <li> <p>If the JVM is an instance
-  of a JRockit JDK, then the JVM contains <code>JRockitRuntime MBean</code>.</p></li>  <li>
-  <p> Otherwise, it contains the <code>JVMRuntimeMBean</code>.</p></li> </ul> '
+  options that are described in the JVM''s documentation.</p> '
 name: weblogic.management.runtime.JVMRuntimeMBean
 properties:
 - defaultValue: {

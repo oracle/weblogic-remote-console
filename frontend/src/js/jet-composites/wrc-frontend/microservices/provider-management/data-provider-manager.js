@@ -6,8 +6,28 @@
  */
 'use strict';
 
-define(['js-yaml', 'wrc-frontend/microservices/common/id-generator', './data-provider', 'wrc-frontend/microservices/connection-management/domain-connection-manager', 'wrc-frontend/apis/data-operations', 'wrc-frontend/core/runtime', 'wrc-frontend/core/types', 'wrc-frontend/core/utils', 'ojs/ojlogger'],
-  function (parser, IdGenerator, DataProvider, DomainConnectionManager, DataOperations, Runtime, CoreTypes, CoreUtils, Logger) {
+define([
+  'js-yaml',
+  'wrc-frontend/microservices/common/id-generator',
+  './data-provider',
+  'wrc-frontend/microservices/connection-management/domain-connection-manager',
+  'wrc-frontend/apis/data-operations',
+  'wrc-frontend/core/runtime',
+  'wrc-frontend/core/types',
+  'wrc-frontend/core/utils',
+  'ojs/ojlogger'
+],
+  function (
+    parser,
+    IdGenerator,
+    DataProvider,
+    DomainConnectionManager,
+    DataOperations,
+    Runtime,
+    CoreTypes,
+    CoreUtils,
+    Logger
+  ) {
     var dataproviders = [];
 
     /**
@@ -1022,6 +1042,10 @@ define(['js-yaml', 'wrc-frontend/microservices/common/id-generator', './data-pro
 
       pollDomainStatus: function (dataProvider) {
         return DataOperations.providers.domainStatus(dataProvider);
+      },
+
+      getPageBookmarks: function () {
+        return DataOperations.bookmarks.get();
       }
     };
   }

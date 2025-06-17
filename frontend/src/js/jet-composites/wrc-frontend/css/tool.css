@@ -30,6 +30,10 @@
   --breadcrumbs-container-calc-display: none;
   --textarea-resizable-both-calc-width: 315px;
   --overlayDialog-calc-min-width: 1135px;
+
+  --overlay-wlsform-calc-max-width: 850px;
+  --overlay-wlsform-max-height: 180px;
+
   /* DON'T CHANGE! must initially come from "dark" theme: */
   --preferences-theme-invert-filter: .9;
   /* DON'T CHANGE! must initially come from "light" theme: */
@@ -129,6 +133,10 @@
   --recentlyVisitedDialog-width: 1120px;
   --recentlyVisitedDialog-min-height: 660px;
   --recentlyVisitedTable-max-height: 490px;
+
+  --pagesBookmarkDialog-width: 1120px;
+  --pagesBookmarkDialog-min-height: 660px;
+  --pagesBookmarkTable-max-height: 490px;
 
   --syncIntervalDialog-width: 330px;
   --confirmDialog-width: 375px;
@@ -546,7 +554,7 @@ html:not([dir="rtl"]) .oj-listbox-results-depth-1 > .oj-listbox-result-label {
 }
 
 #shoppingCartImage,
-#saveToShoppingCartImage
+#pagesBookmarkImage
 {
   height: 1.75rem;
   width: 1.75rem;
@@ -1200,6 +1208,14 @@ oj-dialog[id="recentlyVisitedPagesDialog"]
   border: 1px none #f8f6f5;
 }
 
+oj-dialog[id="pagesBookmarkDialog"]
+{
+    width: var(--pagesBookmarkDialog-width);
+    height: var(--pagesBookmarkDialog-min-height);
+    background-color: var(--dialog-body-background-color);
+    border: 1px none #f8f6f5;
+}
+
 oj-dialog[id="actionsDialog"]
 {
   width: var(--actionDialog-width);
@@ -1224,6 +1240,7 @@ oj-dialog[id="wdtOptionsDialog"] {
 }
 
 oj-dialog[id="recentlyVisitedPagesDialog"] div.oj-dialog-header h1.oj-dialog-title,
+oj-dialog[id="pagesBookmarkDialog"] div.oj-dialog-header h1.oj-dialog-title,
 oj-dialog[id="actionsDialog"] div.oj-dialog-header h1.oj-dialog-title,
 oj-dialog[id="syncIntervalDialog"] div.oj-dialog-header h1.oj-dialog-title,
 oj-dialog[id="confirmDialog"] div.oj-dialog-header h1.oj-dialog-title,
@@ -1244,6 +1261,7 @@ oj-dialog[id="wdtOptionsDialog"] div.oj-dialog-header h1.oj-dialog-title
 }
 
 oj-dialog[id="recentlyVisitedPagesDialog"] div.oj-dialog-header,
+oj-dialog[id="pagesBookmarkDialog"] div.oj-dialog-header,
 oj-dialog[id="actionsDialog"] div.oj-dialog-header,
 oj-dialog[id="syncIntervalDialog"] div.oj-dialog-header,
 oj-dialog[id="confirmDialog"] div.oj-dialog-header,
@@ -1265,7 +1283,8 @@ oj-dialog[id="wdtOptionsDialog"] div.oj-dialog-header
   min-height: 2.25rem;
 }
 
-oj-dialog[id="recentlyVisitedPagesDialog"] div.oj-dialog-body
+oj-dialog[id="recentlyVisitedPagesDialog"] div.oj-dialog-body,
+oj-dialog[id="pagesBookmarkDialog"] div.oj-dialog-body
 {
   box-sizing: border-box;
   padding: 0 0.9375rem;
@@ -1305,6 +1324,7 @@ oj-dialog[id="syncIntervalDialog"] div.oj-dialog-content
 }
 
 oj-dialog[id="recentlyVisitedPagesDialog"] div.oj-dialog-footer,
+oj-dialog[id="pagesBookmarkDialog"] div.oj-dialog-footer,
 oj-dialog[id="actionsDialog"] div.oj-dialog-footer,
 oj-dialog[id="syncIntervalDialog"] div.oj-dialog-footer,
 oj-dialog[id="confirmDialog"] div.oj-dialog-footer,
@@ -1636,23 +1656,27 @@ table[id="help-table"] > tfoot div ul {
   text-decoration: underline;
 }
 
-oj-table[id="pages-history-table"]
+oj-table[id="pages-history-table"],
+oj-table[id="pages-bookmark-table"]
 {
   width: 100%;
 }
 
-oj-table[id="pages-history-table"] .oj-table-scroller
+oj-table[id="pages-history-table"] .oj-table-scroller,
+oj-table[id="pages-bookmark-table"] .oj-table-scroller
 {
   max-height: var(--recentlyVisitedTable-max-height);
 }
 
-oj-table[id="pages-history-table"] .oj-table-scroller > table > thead > tr  th
+oj-table[id="pages-history-table"] .oj-table-scroller > table > thead > tr  th,
+oj-table[id="pages-bookmark-table"] .oj-table-scroller > table > thead > tr  th
 {
   position: sticky;
   top: 0;
 }
 
-oj-table[id="pages-history-table"] .oj-table-scroller > table
+oj-table[id="pages-history-table"] .oj-table-scroller > table,
+oj-table[id="pages-bookmark-table"] .oj-table-scroller > table
 {
   border-collapse: collapse;
 }
@@ -1717,6 +1741,17 @@ oj-dialog[id="overlayFormDialog"] div.oj-dialog-body
 oj-dialog[id="overlayFormDialog"] div.oj-dialog-body
 {
   background-color: white;
+}
+
+#MessageBody\|input
+{
+  font-size: .8em;
+  padding: 0.325rem;
+  height: var(--overlay-wlsform-max-height);
+/*  max-height: var(--overlay-wlsform-max-height); */
+  width: var(--overlay-wlsform-calc-max-width);
+  overflow-wrap: break-word;
+  scrollbar-color: var(--scrollbar-thumb-color) var(--scrollbar-track-color);
 }
 
 /*
@@ -1887,7 +1922,11 @@ div[id="menu-button-container"] .oj-button-nocomp
 }
 
 .cfe-ux-ico-iconfont-24 {
-  font-size: 2em;  /* 24pt; */
+    font-size: 1.5em;  /* 24px; */
+}
+
+.cfe-ux-ico-iconfont-32 {
+    font-size: 2em;  /* 32px; */
 }
 
 .cfe-iconbar {

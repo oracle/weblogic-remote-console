@@ -1,5 +1,5 @@
 #!/bin/bash
-# Copyright 2021, 2024, Oracle and/or its affiliates.
+# Copyright 2021, 2025, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at http://oss.oracle.com/licenses/upl.
 
 do_docker_pull() {
@@ -170,6 +170,7 @@ then
   export ELECTRON_GET_USE_PROXY=true GLOBAL_AGENT_HTTPS_PROXY=$https_proxy
 fi
 
+npm install --location=global npm || true
 npm install
 
 rm -rf dist

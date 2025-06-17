@@ -23,6 +23,7 @@ then
 fi
 if [ ! -d node_modules ]
 then
+  npm install --location=global npm
   npm install
 fi
 case "$(uname -s)" in

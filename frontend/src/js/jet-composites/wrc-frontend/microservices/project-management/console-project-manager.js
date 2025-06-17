@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2021, 2024, Oracle and/or its affiliates.
+ * Copyright (c) 2021, 2025, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
@@ -11,8 +11,30 @@
  * Module used to manage console projects.
  * @module
  */
-define(['wrc-frontend/core/parsers/yaml', 'wrc-frontend/core/parsers/json', 'text!wrc-frontend/config/wrc-projects.json', 'text!wrc-frontend/config/wrc-projects.yaml', './console-project', 'wrc-frontend/microservices/provider-management/data-provider-manager', 'wrc-frontend/microservices/provider-management/data-provider', 'wrc-frontend/core/runtime', 'wrc-frontend/core/utils', 'wrc-frontend/core/types', 'wrc-frontend/core/cfe-errors', 'ojs/ojlogger' ],
-  function(YamlParser, JsonParser, WrcProjectsFileContentsJSON, WrcProjectsFileContents, ConsoleProject, DataProviderManager, DataProvider, Runtime, CoreUtils, CoreTypes, CfeErrors, Logger){
+define([
+    'wrc-frontend/core/parsers/yaml',
+    'text!wrc-frontend/config/wrc-projects.json',
+    'text!wrc-frontend/config/wrc-projects.yaml',
+    './console-project',
+    'wrc-frontend/microservices/provider-management/data-provider-manager',
+    'wrc-frontend/microservices/provider-management/data-provider',
+    'wrc-frontend/core/utils',
+    'wrc-frontend/core/types',
+    'wrc-frontend/core/cfe-errors',
+    'wrc-frontend/microservices/data-management/cbe-data-manager'
+  ],
+  function(
+    YamlParser,
+    WrcProjectsFileContentsJSON,
+    WrcProjectsFileContents,
+    ConsoleProject,
+    DataProviderManager,
+    DataProvider,
+    CoreUtils,
+    CoreTypes,
+    CfeErrors,
+    CbeDataManager
+  ) {
     var projects = [];
 
     function createProject(entry) {
@@ -269,11 +291,6 @@ define(['wrc-frontend/core/parsers/yaml', 'wrc-frontend/core/parsers/json', 'tex
         }
       },
 
-      export: function(id) {
-        //TODO: Save ConsoleProject associated with name
-        //       to the "config/wrc-projects.yaml" file.
-      },
-
       /**
        * Add an array of projects to in-memory structure, all at once
        * <p>This will replace all existing projects, not append to them.</p>
@@ -377,23 +394,58 @@ define(['wrc-frontend/core/parsers/yaml', 'wrc-frontend/core/parsers/json', 'tex
        * @param {string} jsonString
        * @returns {Promise<ConsoleProject|*>}
        */
-      createFromJSONString: function(jsonString) {
-        return JsonParser.parse(jsonString)
-          .then(entry => {
-            if (CoreUtils.isNotUndefinedNorNull(entry.name)) {
-              entry.isDefault = false;
-              const project = this.createFromEntry(entry);
-              return Promise.resolve(project);
-            }
-            else {
-              const failure = {
-                failureType: CoreTypes.FailureType.INCORRECT_CONTENT
-              };
-              return Promise.reject(failure);
-            }
-          });
+      createFromJSONString: async function(jsonString) {
+        const projectJSON = JSON.parse(jsonString);
+        if (projectJSON?.name) {
+          projectJSON.isDefault = false;
+          return this.createFromEntry(projectJSON);
+        }
+        const failure = {
+          failureType: CoreTypes.FailureType.INCORRECT_CONTENT
+        };
+        throw failure;
       },
-
+      addToProjectFromJSONString: async function(jsonString) {
+        const inputProject = JSON.parse(jsonString);
+        if (!inputProject?.name) {
+          throw {
+            failureType: CoreTypes.FailureType.INCORRECT_CONTENT
+          };
+        }
+        let currentProject = projects.find(proj => proj.isDefault);
+        if (!inputProject?.dataProviders) {
+          return currentProject;
+        }
+        let dataPayload = { dataProviders: [] };
+        inputProject.dataProviders.forEach(inputProv => {
+          let oldProvider = currentProject.dataProviders?.
+              find(prov => prov.name === inputProv.name);
+          if (oldProvider) {
+            inputProv.name = inputProv.name + '-' + inputProject.name;
+            oldProvider =
+              currentProject.dataProviders?.
+                find(prov => prov.name === inputProv.name);
+            if (oldProvider) {
+              // FortifyIssueSuppression Insecure Randomness
+              // There is no intention for this random number to be secure
+              inputProv.name = inputProv.name + '-' + Math.floor(Math.random() * 10000);
+            }
+          }
+          currentProject.dataProviders.push(inputProv);
+          let provForPost = JSON.parse(JSON.stringify(inputProv));
+          if (provForPost.type === 'adminserver')
+            provForPost.providerType = 'AdminServerConnection';
+          else
+            provForPost.providerType = provForPost.type;
+          provForPost.domainUrl = provForPost.url;
+          delete provForPost.type;
+          delete provForPost.url;
+          delete provForPost.passwordEncrypted;
+          dataPayload.dataProviders.push(provForPost);
+        });
+        await CbeDataManager.stageConnectionData(dataPayload, null);
+        return currentProject;
+      },
       loadConfigProjects: function() {
         if (WrcProjectsFileContentsJSON.length != 0) {
           return this.createFromJSONString(WrcProjectsFileContentsJSON);
@@ -407,7 +459,6 @@ define(['wrc-frontend/core/parsers/yaml', 'wrc-frontend/core/parsers/json', 'tex
               projects.forEach((project, index) => {
                 if (project.isDefault) projects[index].isDefault = false;
               });
-              console.log(`WrcProjects is ${JSON.stringify(WrcProjects)}`);
               WrcProjects[0].isDefault = true;
               this.createFromEntry(WrcProjects[0]);
             }

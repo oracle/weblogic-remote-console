@@ -10,7 +10,7 @@ define({
     },
     "buttons": {
       "logout": {
-        "label": "Logout"
+        "label": "로그아웃"
       }
     },
     "icons": {
@@ -1523,7 +1523,33 @@ define({
     "messages": {
       "pageNoLongerExists": {
         "summary": "페이지가 더 이상 존재하지 않음",
-        "detail": "{1}은(는) 다른 사용자에 의해 삭제되었거나 더 이상 존재하지 않으므로 {0} 페이지로 재지정되었습니다. "
+        "detail1": "You have been redirected to the {0} page because ",
+        "detail2": "{0} was deleted by another user, or no longer exists. "
+      }
+    }
+  },
+  "wrc-pages-bookmark": {
+    "labels": {
+      "ariaLabel": {
+        "value": "Page Bookmarks"
+      }
+    },
+    "menus": {
+      "bookmark": {
+        "add": {
+          "label": "Add Bookmark for Current Page"
+        },
+        "show": {
+          "label": "Show Page Bookmarks..."
+        }
+      }
+    },
+    "messages": {
+      "pageAlreadyBookmarked": {
+        "summary": "There is already a bookmark for this page! "
+      },
+      "pagesBookmarkAdded": {
+        "summary": "Current page was successfully bookmarked! "
       }
     }
   },
@@ -1681,7 +1707,7 @@ define({
           "value": "페이지 내역 표시"
         },
         "star": {
-          "value": "페이지에 책갈피 추가"
+          "value": "Page Bookmarks"
         }
       },
       "pageInfo": {
@@ -1710,7 +1736,10 @@ define({
         "value": "경보"
       },
       "pagesHistory": {
-        "value": "이 창에서는 이전에 방문한 페이지를 보거나 선택할 수 있습니다."
+        "value": "Here are the pages visited since selecting the current provider. Click on any column in row to navigate to associated page."
+      },
+      "pagesBookmark": {
+        "value": "Here are the pages bookmarked for the {0} provider type. Click on any column in row to navigate to associated page."
       }
     },
     "placeholders": {

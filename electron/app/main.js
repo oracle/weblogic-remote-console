@@ -241,6 +241,10 @@ function processCmdLineOptions() {
     cbePort = config['server.port'];
   }
 
+  if (app.commandLine.hasSwitch('verbose')) {
+    logger.setStdoutEnabled();
+  }
+
   if (app.commandLine.hasSwitch('check-ppid'))
     checkPid = process.ppid;
   else
@@ -301,7 +305,14 @@ function start_cbe() {
     
   fs.mkdirSync(cbeTempDir);
 
-  let spawnArgs = [
+  let spawnArgs = [ ];
+  const config = AppConfig.getAll();
+  if (config['weblogic.remoteconsole.java.startoptions']) {
+    for (var arg of config['weblogic.remoteconsole.java.startoptions'].split(';')) {
+      spawnArgs.push(arg);
+    }
+  }
+  spawnArgs.push(...[
     `-Djava.io.tmpdir=${cbeTempDir}`,
     `-Dserver.port=${cbePort}`,
     '-jar',
@@ -310,7 +321,7 @@ function start_cbe() {
     `${app.getPath('userData')}`,
     '--showPort',
     '--stdin'
-  ];
+  ]);
   if (useTokenNotCookie) {
     spawnArgs.push('--useTokenNotCookie');
   }

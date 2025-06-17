@@ -1,4 +1,4 @@
-# Copyright (c) 2023, 2024, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2023, 2025, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 introductionHTML: >
@@ -15,6 +15,9 @@ actions:
   - name: "deleteMessages"
     label: "Messages"
     rows: none
+- name: "importMessages"
+  label: "Import"
+  rows: none
 - name: "exportActions"
   label: "Export"
   actions:
@@ -23,9 +26,6 @@ actions:
   - name: "exportMessages"
     label: "Messages"
     rows: none
-- name: "importMessages"
-  label: "Import"
-  rows: none
 - name: "moveActions"
   label: "Move"
   actions:
@@ -34,6 +34,9 @@ actions:
   - name: "moveMessages"
     label: "Messages"
     rows: none
+- name: "viewMessage"
+  label: "View"
+  rows: one
 
 displayedColumns:
 - name: "JMSMessageID" # TBD WLS console called it 'ID'

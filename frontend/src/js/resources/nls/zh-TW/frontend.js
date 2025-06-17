@@ -10,7 +10,7 @@ define({
     },
     "buttons": {
       "logout": {
-        "label": "Logout"
+        "label": "登出"
       }
     },
     "icons": {
@@ -1523,7 +1523,33 @@ define({
     "messages": {
       "pageNoLongerExists": {
         "summary": "頁面已不存在",
-        "detail": "{1} 被其他使用者刪除或不存在，因此已將您重新導向至 {0} 頁面。"
+        "detail1": "You have been redirected to the {0} page because ",
+        "detail2": "{0} was deleted by another user, or no longer exists. "
+      }
+    }
+  },
+  "wrc-pages-bookmark": {
+    "labels": {
+      "ariaLabel": {
+        "value": "Page Bookmarks"
+      }
+    },
+    "menus": {
+      "bookmark": {
+        "add": {
+          "label": "Add Bookmark for Current Page"
+        },
+        "show": {
+          "label": "Show Page Bookmarks..."
+        }
+      }
+    },
+    "messages": {
+      "pageAlreadyBookmarked": {
+        "summary": "There is already a bookmark for this page! "
+      },
+      "pagesBookmarkAdded": {
+        "summary": "Current page was successfully bookmarked! "
       }
     }
   },
@@ -1681,7 +1707,7 @@ define({
           "value": "顯示頁面歷史記錄"
         },
         "star": {
-          "value": "書籤頁面"
+          "value": "Page Bookmarks"
         }
       },
       "pageInfo": {
@@ -1710,7 +1736,10 @@ define({
         "value": "警示"
       },
       "pagesHistory": {
-        "value": "此視窗可讓您檢視或選取先前瀏覽過的頁面。"
+        "value": "Here are the pages visited since selecting the current provider. Click on any column in row to navigate to associated page."
+      },
+      "pagesBookmark": {
+        "value": "Here are the pages bookmarked for the {0} provider type. Click on any column in row to navigate to associated page."
       }
     },
     "placeholders": {

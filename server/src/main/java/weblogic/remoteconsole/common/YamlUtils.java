@@ -1,4 +1,4 @@
-// Copyright (c) 2020, 2024, Oracle and/or its affiliates.
+// Copyright (c) 2020, 2025, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common;
@@ -24,13 +24,12 @@ public class YamlUtils {
    * Throws an AssertionError if mustExist is true and the file does not exist.
    */
   public static <T> T readResource(String yamlPath, Class<T> type, boolean mustExist) {
-    return
-      read(
-        Thread.currentThread().getContextClassLoader().getResourceAsStream(yamlPath),
-        yamlPath,
-        type,
-        mustExist
-      );
+    try (InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream(yamlPath)) {
+      return read(is, yamlPath, type, mustExist);
+    } catch (IOException e) {
+      LOGGER.log(Level.WARNING, "Exception reading yaml resource " + yamlPath, e);
+      return null;
+    }
   }
 
   /**
@@ -44,18 +43,18 @@ public class YamlUtils {
     if (!file.exists()) {
       return null;
     }
-    InputStream is = null;
-    try {
+    try (InputStream is = new FileInputStream(yamlPath)) {
       // FortifyIssueSuppression Path Manipulation
       // The yaml file location is determined from a secure source
-      is = new FileInputStream(yamlPath);
+      return read(is, yamlPath, type, mustExist);
     } catch (IOException e) {
-      LOGGER.warning("Exception reading yaml file " + yamlPath + " : " + e);
+      LOGGER.log(Level.WARNING, "Exception reading yaml file " + yamlPath, e);
       return null;
     }
-    return read(is, yamlPath, type, mustExist);
   }
 
+  // Converts an input stream containing yaml to a java object.
+  // The caller is responsible for closing the input stream.
   public static <T> T read(InputStream is, String yamlPath, Class<T> type, boolean mustExist) {
     if ("true".equals(System.getenv("debugYaml")) && is != null) {
       // FortifyIssueSuppression Log Forging
@@ -83,12 +82,6 @@ public class YamlUtils {
           + type.getName(),
           t
         );
-    } finally {
-      try {
-        is.close();
-      } catch (Exception e) {
-        LOGGER.log(Level.WARNING, "Problem closing stream for " + yamlPath, e);
-      }
     }
   }
 

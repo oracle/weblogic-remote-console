@@ -17,22 +17,22 @@ import weblogic.remoteconsole.common.utils.CustomizerInvocationUtils;
  * e.g. ServerLifeCycleRuntimeMBean/type.yaml.
  */
 public class BeanTypeDefCustomizerSource extends YamlSource {
-  private ListValue<BeanPropertyDefCustomizerSource> properties = new ListValue<>();
-  private ListValue<BeanChildDefCustomizerSource> children = new ListValue<>();
-  private ListValue<BeanActionDefCustomizerSource> actions = new ListValue<>();
-  private ListValue<SubTypeDefSource> subTypes = new ListValue<>();
-  private StringValue defaultSubType = new StringValue();
-  private StringValue subTypeDiscriminatorProperty = new StringValue();
-  private StringValue deleteMethod = new StringValue();
-  private StringValue createResourceMethod = new StringValue();
-  private StringValue getCollectionMethod = new StringValue();
-  private BooleanValue disableMBeanJavadoc = new BooleanValue();
-  private StringValue instanceName = new StringValue();
-  private BooleanValue referenceable = new BooleanValue();
-  private BooleanValue ordered = new BooleanValue();
-  private BooleanValue editable = new BooleanValue();
-  private BooleanValue allowSearch = new BooleanValue(true);
-  private BooleanValue settable = new BooleanValue();
+  private ListValue<BeanPropertyDefCustomizerSource> properties = ListValue.create();
+  private ListValue<BeanChildDefCustomizerSource> children = ListValue.create();
+  private ListValue<BeanActionDefCustomizerSource> actions = ListValue.create();
+  private ListValue<SubTypeDefSource> subTypes = ListValue.create();
+  private StringValue defaultSubType = StringValue.create();
+  private StringValue subTypeDiscriminatorProperty = StringValue.create();
+  private StringValue deleteMethod = StringValue.create();
+  private StringValue createResourceMethod = StringValue.create();
+  private StringValue getCollectionMethod = StringValue.create();
+  private BooleanValue disableMBeanJavadoc = BooleanValue.create();
+  private StringValue instanceName = StringValue.create();
+  private BooleanValue referenceable = BooleanValue.create();
+  private BooleanValue ordered = BooleanValue.create();
+  private BooleanValue editable = BooleanValue.create();
+  private BooleanValue allowSearch = BooleanValue.create(true);
+  private BooleanValue settable = BooleanValue.create();
 
   // The list of properties on this type that have been customized.
   public List<BeanPropertyDefCustomizerSource> getProperties() {
@@ -40,11 +40,11 @@ public class BeanTypeDefCustomizerSource extends YamlSource {
   }
 
   public void setProperties(List<BeanPropertyDefCustomizerSource> value) {
-    properties.setValue(value);
+    properties = properties.setValue(value);
   }
 
   public void addProperty(BeanPropertyDefCustomizerSource value) {
-    properties.add(value);
+    properties = properties.add(value);
   }
 
   // The list of children (i.e. collections and singletons) on this
@@ -54,11 +54,11 @@ public class BeanTypeDefCustomizerSource extends YamlSource {
   }
 
   public void setChildren(List<BeanChildDefCustomizerSource> value) {
-    children.setValue(value);
+    children = children.setValue(value);
   }
 
   public void addChild(BeanChildDefCustomizerSource value) {
-    children.add(value);
+    children = children.add(value);
   }
 
   // The list of actions on this type that have been customized.
@@ -67,11 +67,11 @@ public class BeanTypeDefCustomizerSource extends YamlSource {
   }
 
   public void setActions(List<BeanActionDefCustomizerSource> value) {
-    actions.setValue(value);
+    actions = actions.setValue(value);
   }
 
   public void addAction(BeanActionDefCustomizerSource value) {
-    actions.add(value);
+    actions = actions.add(value);
   }
 
   // The list of instantiable derived (sub) types of this type.
@@ -82,11 +82,11 @@ public class BeanTypeDefCustomizerSource extends YamlSource {
   }
 
   public void setSubTypes(List<SubTypeDefSource> value) {
-    subTypes.setValue(value);
+    subTypes = subTypes.setValue(value);
   }
 
-  public void addSubTypes(SubTypeDefSource value) {
-    subTypes.add(value);
+  public void addSubType(SubTypeDefSource value) {
+    subTypes = subTypes.add(value);
   }
 
   // The type to use if the sub type discriminator
@@ -98,7 +98,7 @@ public class BeanTypeDefCustomizerSource extends YamlSource {
   }
 
   public void setDefaultSubType(String value) {
-    defaultSubType.setValue(value);
+    defaultSubType = defaultSubType.setValue(value);
   }
 
   // The name of the property on this type that can be used to
@@ -111,7 +111,7 @@ public class BeanTypeDefCustomizerSource extends YamlSource {
   }
 
   public void setSubTypeDiscriminatorProperty(String value) {
-    subTypeDiscriminatorProperty.setValue(value);
+    subTypeDiscriminatorProperty = subTypeDiscriminatorProperty.setValue(value);
   }
 
   // Specifics a custom static method to call to delete an instance of this bean type. (overrides
@@ -133,7 +133,7 @@ public class BeanTypeDefCustomizerSource extends YamlSource {
 
   public void setDeleteMethod(String value) {
     if (StringUtils.isEmpty(value) || CustomizerInvocationUtils.methodExists(value)) {
-      deleteMethod.setValue(value);
+      deleteMethod = deleteMethod.setValue(value);
     }
   }
 
@@ -151,7 +151,7 @@ public class BeanTypeDefCustomizerSource extends YamlSource {
 
   public void setCreateResourceMethod(String value) {
     if (StringUtils.isEmpty(value) || CustomizerInvocationUtils.methodExists(value)) {
-      createResourceMethod.setValue(value);
+      createResourceMethod = createResourceMethod.setValue(value);
     }
   }
 
@@ -171,7 +171,7 @@ public class BeanTypeDefCustomizerSource extends YamlSource {
 
   public void setGetCollectionMethod(String value) {
     if (StringUtils.isEmpty(value) || CustomizerInvocationUtils.methodExists(value)) {
-      getCollectionMethod.setValue(value);
+      getCollectionMethod = getCollectionMethod.setValue(value);
     }
   }
 
@@ -184,7 +184,7 @@ public class BeanTypeDefCustomizerSource extends YamlSource {
   }
 
   public void setDisableMBeanJavadoc(boolean value) {
-    disableMBeanJavadoc.setValue(value);
+    disableMBeanJavadoc = disableMBeanJavadoc.setValue(value);
   }
 
   // Specifics the name to use when referring to instances of this type, e.g. Server Runtimes.
@@ -194,7 +194,7 @@ public class BeanTypeDefCustomizerSource extends YamlSource {
   }
 
   public void setInstanceName(String value) {
-    instanceName.setValue(value);
+    instanceName = instanceName.setValue(value);
   }
 
   // Whether beans of this type can be referenced by other beans.
@@ -203,7 +203,7 @@ public class BeanTypeDefCustomizerSource extends YamlSource {
   }
 
   public void setReferenceable(boolean value) {
-    referenceable.setValue(value);
+    referenceable = referenceable.setValue(value);
   }
 
 
@@ -213,7 +213,7 @@ public class BeanTypeDefCustomizerSource extends YamlSource {
   }
 
   public void setOrdered(boolean value) {
-    ordered.setValue(value);
+    ordered = ordered.setValue(value);
   }
 
   // Indicates that whether this type is editable is specified in type.yaml
@@ -234,7 +234,7 @@ public class BeanTypeDefCustomizerSource extends YamlSource {
   }
 
   public void setEditable(boolean value) {
-    editable.setValue(value);
+    editable = editable.setValue(value);
   }
 
   // Indicates that whether this type is settable is specified in type.yaml
@@ -255,7 +255,7 @@ public class BeanTypeDefCustomizerSource extends YamlSource {
   }
 
   public void setSettable(boolean value) {
-    settable.setValue(value);
+    settable = settable.setValue(value);
   }
 
   // Whether to search this type.
@@ -265,7 +265,7 @@ public class BeanTypeDefCustomizerSource extends YamlSource {
   }
 
   public void setAllowSearch(boolean value) {
-    allowSearch.setValue(value);
+    allowSearch = allowSearch.setValue(value);
   }
 
   @Override

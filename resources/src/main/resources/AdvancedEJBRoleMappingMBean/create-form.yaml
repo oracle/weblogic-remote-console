@@ -1,0 +1,19 @@
+# Copyright (c) 2025, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+introductionHTML: Create a new EJB role mapping
+sections:
+- properties:
+  - name: roleName
+  - name: ejb_application
+  - name: ejb_module
+  - name: ejb_ejb
+  - name: ejb_method
+  - name: ejb_methodInterface
+  - name: ejb_any_signature
+- usedIf:
+    property: ejb_any_signature
+    values:
+    - false
+  properties:
+  - name: ejb_signature

@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2020, 2024, Oracle and/or its affiliates.
+ * Copyright (c) 2020, 2025, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
@@ -139,6 +139,14 @@ define([
         }
       });
 
+      this.pagesBookmarkIconModuleConfig = ModuleElementUtils.createConfig({
+        name: 'content-area/header/pages-bookmark-icon',
+        params: {
+          parentRouter: viewParams.parentRouter,
+          signaling: viewParams.signaling
+        }
+      });
+
       this.shoppingCartMenuModuleConfig = ModuleElementUtils.createConfig({
         name: 'content-area/header/shoppingcart-menu',
         params: {
@@ -203,6 +211,12 @@ define([
             .then(moduleConfig => {
               // Hide the "Dashboards" shortcut icon
               moduleConfig.viewModel.setShortcutIconVisibility('dashboards', false);
+            });
+
+          self.pagesBookmarkIconModuleConfig
+            .then(moduleConfig => {
+              // Hide the "Page Bookmarks" menu launcher icon
+              moduleConfig.viewModel.setIconbarIconVisibility('bookmarks', false);
             });
 
           self.shoppingCartMenuModuleConfig

@@ -5,11 +5,14 @@ package weblogic.remoteconsole.server.providers;
 
 import java.net.URI;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Level;
@@ -27,6 +30,7 @@ import weblogic.remoteconsole.common.repodef.LocalizedConstants;
 //import weblogic.remoteconsole.common.utils.RemoteConsoleExtension;
 import weblogic.remoteconsole.common.utils.UrlUtils;
 import weblogic.remoteconsole.common.utils.WebLogicMBeansVersion;
+import weblogic.remoteconsole.common.utils.WebLogicMBeansVersions;
 import weblogic.remoteconsole.common.utils.WebLogicRoles;
 import weblogic.remoteconsole.server.ConsoleBackendRuntime;
 import weblogic.remoteconsole.server.ConsoleBackendRuntimeConfig;
@@ -34,6 +38,7 @@ import weblogic.remoteconsole.server.connection.Connection;
 import weblogic.remoteconsole.server.connection.ConnectionManager;
 import weblogic.remoteconsole.server.filter.ClientAuthHeader;
 import weblogic.remoteconsole.server.repo.InvocationContext;
+import weblogic.remoteconsole.server.repo.PageRepo;
 import weblogic.remoteconsole.server.repo.weblogic.WebLogicRestDomainRuntimePageRepo;
 import weblogic.remoteconsole.server.repo.weblogic.WebLogicRestEditPageRepo;
 import weblogic.remoteconsole.server.repo.weblogic.WebLogicRestSecurityDataPageRepo;
@@ -55,8 +60,11 @@ public class AdminServerDataProviderImpl implements AdminServerDataProvider {
     ConsoleBackendRuntime.INSTANCE.getConnectionManager();
   private static final Logger LOGGER =
     Logger.getLogger(AdminServerDataProviderImpl.class.getName());
+  // Keep the repos of the 3 most recently stale admin providers in memory:
+  private static final int MAX_STALE_PROVIDERS = 3;
 
   private String connectionId;
+  private ProviderManager providerManager;
   private String name;
   private String label;
   private String url;
@@ -69,7 +77,6 @@ public class AdminServerDataProviderImpl implements AdminServerDataProvider {
   private boolean isDisabledHostnameVerification = false;
   private boolean isInsecureConnection = false;
   private String proxyOverride = null;
-  private WebLogicMBeansVersion mbeansVersion;
   private String connectionWarning;
   private String lastMessage;
   private boolean isLastConnectionAttemptSuccessful;
@@ -82,15 +89,23 @@ public class AdminServerDataProviderImpl implements AdminServerDataProvider {
   private Timer localConnectionTimer = null;
   private volatile ClientAuthHeader clientAuthHeader = null;
   private Map<String,Object> cache = new ConcurrentHashMap<>();
+  // Share the lock across all providers so we're consistent when cleaning up stale ones:
+  private static Object reposInitializationLock = new Object();
+  private boolean reposInitialized = false;
+  private static long lastTimeDiscardedStaleRepos = System.currentTimeMillis();
+  private static long DISCARD_STALE_REPO_INTERVAL = 10 * 1000; // milliseconds
+  private long lastUsed;
   private static LocalConnectionInfoFetcher localConnectionInfoFetcher;
 
   public AdminServerDataProviderImpl(
+    ProviderManager providerManager,
     String name,
     String label,
     String url,
     String authorizationHeader,
     boolean local
   ) {
+    this.providerManager = providerManager;
     this.name = name;
     this.label = label;
     this.url = url;
@@ -133,6 +148,7 @@ public class AdminServerDataProviderImpl implements AdminServerDataProvider {
       Root.NAV_TREE_RESOURCE,
       Root.SIMPLE_SEARCH_RESOURCE
     );
+    updateLastUsed();
   }
 
   public static void setLocalConnectionInfoFetcher(LocalConnectionInfoFetcher localConnectionInfoFetcher) {
@@ -374,14 +390,12 @@ public class AdminServerDataProviderImpl implements AdminServerDataProvider {
         isAnyConnectionAttemptSuccessful = true;
         connectionId = result.getConnectionId();
         connection = CONNECTION_MANAGER.getConnection(connectionId);
-        mbeansVersion = CONNECTION_MANAGER.getWebLogicMBeansVersion(connection);
-        editRoot.setPageRepo(new WebLogicRestEditPageRepo(mbeansVersion));
-        viewRoot.setPageRepo(new WebLogicRestServerConfigPageRepo(mbeansVersion));
-        monitoringRoot.setPageRepo(new WebLogicRestDomainRuntimePageRepo(mbeansVersion));
+        CONNECTION_MANAGER.initializeConnectionUserRoles(connection);
         roots.clear();
         roots.put(viewRoot.getName(), viewRoot);
         roots.put(monitoringRoot.getName(), monitoringRoot);
-        if (mbeansVersion.isAccessAllowed(Set.of(WebLogicRoles.ADMIN, WebLogicRoles.DEPLOYER))) {
+        Set<String> roles = connection.getRoles();
+        if (WebLogicMBeansVersion.isAccessAllowed(roles, Set.of(WebLogicRoles.ADMIN, WebLogicRoles.DEPLOYER))) {
           // Admins and deployers are allowed to edit the configuration
           roots.put(editRoot.getName(), editRoot);
         } else {
@@ -390,8 +404,7 @@ public class AdminServerDataProviderImpl implements AdminServerDataProvider {
         // See if the domain has a version of the remote console rest extension installed that supports security data.
         if (connection.getCapabilities().contains("RealmsSecurityData")) {
           // Only admins are allowed to manage the security data.
-          if (mbeansVersion.isAccessAllowed(Set.of(WebLogicRoles.ADMIN))) {
-            securityDataRoot.setPageRepo(new WebLogicRestSecurityDataPageRepo(mbeansVersion));
+          if (WebLogicMBeansVersion.isAccessAllowed(roles, Set.of(WebLogicRoles.ADMIN))) {
             roots.put(securityDataRoot.getName(), securityDataRoot);
           }
         }
@@ -406,8 +419,88 @@ public class AdminServerDataProviderImpl implements AdminServerDataProvider {
     } else {
       connection = CONNECTION_MANAGER.getConnection(connectionId);
     }
+    initializeRepos(connection);
     ic.setConnection(connection);
+    discardStaleRepos(ic);
     return true;
+  }
+
+  private boolean isReposInitialized() {
+    return reposInitialized;
+  }
+
+  private synchronized void initializeRepos(Connection connection) {
+    synchronized (reposInitializationLock) {
+      if (reposInitialized) {
+        return;
+      }
+      LOGGER.finest("Initialize repos " + getName() + " " + getLabel());
+      WebLogicMBeansVersion mbeansVersion = WebLogicMBeansVersions.getVersion(connection);
+      editRoot.setPageRepo(new WebLogicRestEditPageRepo(mbeansVersion));
+      viewRoot.setPageRepo(new WebLogicRestServerConfigPageRepo(mbeansVersion));
+      monitoringRoot.setPageRepo(new WebLogicRestDomainRuntimePageRepo(mbeansVersion));
+      if (connection.getCapabilities().contains("RealmsSecurityData")) {
+        // Only admins are allowed to manage the security data.
+        if (mbeansVersion.isAccessAllowed(Set.of(WebLogicRoles.ADMIN))) {
+          securityDataRoot.setPageRepo(new WebLogicRestSecurityDataPageRepo(mbeansVersion));
+        }
+      }
+      reposInitialized = true;
+    }
+  }
+
+  // This provider is starting, which means that none of the other providers are being used.
+  // Discard their repos (except for the few most recently used providers) so we don't use too much memory.
+  // Keep a few around so that switching back and forth between a few providers is fast.
+  private void discardStaleRepos(InvocationContext ic) {
+    if (System.currentTimeMillis() < lastTimeDiscardedStaleRepos + DISCARD_STALE_REPO_INTERVAL) {
+      // too soon
+      return;
+    }
+    synchronized (reposInitializationLock) {
+      if (System.currentTimeMillis() < lastTimeDiscardedStaleRepos + DISCARD_STALE_REPO_INTERVAL) {
+        // too soon
+        return;
+      }
+      Map<Long,AdminServerDataProviderImpl> sortedLastUsedToStaleProvider = new TreeMap<>();
+      for (Provider provider : providerManager.getAll()) {
+        if (provider != this && provider instanceof AdminServerDataProviderImpl) {
+          AdminServerDataProviderImpl adminProvider = (AdminServerDataProviderImpl)provider;
+          if (adminProvider.isReposInitialized()) {
+            sortedLastUsedToStaleProvider.put(adminProvider.getLastUsed(), adminProvider);
+          }
+        }
+      }
+      List<AdminServerDataProviderImpl> candidateStaleProviders =
+        new ArrayList<>(sortedLastUsedToStaleProvider.values());
+      for (int i = 0; i < candidateStaleProviders.size() - MAX_STALE_PROVIDERS; i++) {
+        candidateStaleProviders.get(i).discardRepos(ic);
+      }
+      lastTimeDiscardedStaleRepos = System.currentTimeMillis();
+    }
+  }
+
+  private void discardRepos(InvocationContext ic) {
+    synchronized (reposInitializationLock) {
+      if (!reposInitialized) {
+        return;
+      }
+      LOGGER.finest("Discard repos " + getName() + " " + getLabel());
+      discardRepos(ic, editRoot);
+      discardRepos(ic, viewRoot);
+      discardRepos(ic, monitoringRoot);
+      discardRepos(ic, securityDataRoot);
+      reposInitialized = false;
+    }
+  }
+
+  private void discardRepos(InvocationContext ic, Root root) {
+    // Always called from the synchronized start method, so no need for further synchronization
+    PageRepo pageRepo = root.getPageRepo();
+    if (pageRepo != null) {
+      pageRepo.prepareForRemoval(ic);
+      root.setPageRepo(null);
+    }
   }
 
   @Override
@@ -505,7 +598,7 @@ public class AdminServerDataProviderImpl implements AdminServerDataProvider {
     }
     addStatusToJSON(ret);
     addRootsToJSON(ret, connection, ic);
-    addRolesToJSON(ret);
+    addRolesToJSON(ret, connection);
     return ret.build();
   }
 
@@ -520,11 +613,11 @@ public class AdminServerDataProviderImpl implements AdminServerDataProvider {
     jsonBuilder.add("roots", builder);
   }
 
-  private void addRolesToJSON(JsonObjectBuilder jsonBuilder) {
+  private void addRolesToJSON(JsonObjectBuilder jsonBuilder, Connection connection) {
     JsonArrayBuilder builder = Json.createArrayBuilder();
-    if (mbeansVersion != null) {
+    if (connection != null && connection.getRoles() != null) {
       // We've know the user's roles.  Send them back.
-      for (String role : mbeansVersion.getRoles()) {
+      for (String role : connection.getRoles()) {
         builder.add(role);
       }
     }
@@ -554,6 +647,16 @@ public class AdminServerDataProviderImpl implements AdminServerDataProvider {
   @Override
   public Map<String,Object> getCache() {
     return cache;
+  }
+
+  @Override
+  public void updateLastUsed() {
+    lastUsed = System.currentTimeMillis();
+  }
+
+  @Override
+  public long getLastUsed() {
+    return lastUsed;
   }
 
   private boolean refreshLocalConnectionToken() {

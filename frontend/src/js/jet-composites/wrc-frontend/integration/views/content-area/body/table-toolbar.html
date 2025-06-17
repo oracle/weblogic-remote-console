@@ -111,13 +111,25 @@
                on-keyup="[[registerTableIconbarIconsKeyUpFocuser('.cfe-content-area-body-iconbar-icon')]]"
                data-key-focuser-id=".cfe-content-area-body-iconbar-icon"
           >
-            <a
-              href="#"
-              on-click="[[pagesHistoryIconClick]]"
-            >
+            <a id="pagesBookmarkMenuLauncher" href="#" on-click="[[launchPagesBookmarkMenu]]">
               <img id="pages-history-star-icon" aria-hidden="true"
                    data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.icons.pagesHistory.star.iconFile() + '.png', alt: i18n.icons.pagesHistory.star.tooltip, 'title': i18n.icons.pagesHistory.star.tooltip}"/>
             </a>
+            <oj-menu
+                id="pagesBookmarkMenu"
+                aria-labelledby="pagesBookmarkMenuLauncher"
+                on-oj-action="[[pagesBookmarkMenuClickListener]]"
+                open-options.launcher="pagesBookmarkMenuLauncher"
+                open-options.initial-focus="firstItem"
+            >
+              <oj-option :id="[[i18n.menus.bookmarks.add.id]]" value="[[i18n.menus.bookmarks.add.value]]" disabled="[[i18n.menus.bookmarks.add.disabled()]]">
+                <span class="button-label"><oj-bind-text value="[[i18n.menus.bookmarks.add.label]]"></oj-bind-text></span>
+              </oj-option>
+              <oj-option>---</oj-option>
+              <oj-option :id="[[i18n.menus.bookmarks.show.id]]" value="[[i18n.menus.bookmarks.show.value]]">
+                <span class="button-label"><oj-bind-text value="[[i18n.menus.bookmarks.show.label]]"></oj-bind-text></span>
+              </oj-option>
+            </oj-menu>
           </div>
         </oj-bind-if>
 

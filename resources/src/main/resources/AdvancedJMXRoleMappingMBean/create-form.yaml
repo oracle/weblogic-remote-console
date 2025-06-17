@@ -1,0 +1,10 @@
+# Copyright (c) 2025, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+introductionHTML: Create a new JMX role mapping
+properties:
+- name: roleName
+- name: jmx_operation
+- name: jmx_application
+- name: jmx_mbeanType
+- name: jmx_target

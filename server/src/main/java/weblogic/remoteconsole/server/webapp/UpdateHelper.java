@@ -1,4 +1,4 @@
-// Copyright (c) 2021, 2023, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2025, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.webapp;
@@ -62,8 +62,13 @@ public class UpdateHelper {
       return VoidResponseMapper.toResponse(actualIc, response);
     }
     // Update the underlying beans
-    response = ic.getPageRepo().asPageEditorRepo().update(actualIc, customizeResponse.getResults());
+    response = updateUnderlyingBeans(actualIc, customizeResponse.getResults());
+
     return VoidResponseMapper.toResponse(actualIc, response);
+  }
+
+  protected Response<Void> updateUnderlyingBeans(InvocationContext ic, List<FormProperty> properties) {
+    return ic.getPageRepo().asPageEditorRepo().update(ic, properties);
   }
 
   protected Response<List<FormProperty>> customizeFormProperties(

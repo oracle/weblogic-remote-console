@@ -66,45 +66,54 @@ public class CreateHelper {
     FormDataMultiPart parts
   ) {
     Response<BeanTreePath> response = new Response<>();
+    boolean multiPart = parts != null;
     // Unmarshal the request body.
     Response<List<FormProperty>> unmarshalResponse =
       FormRequestBodyMapper.fromRequestBody(ic, requestBody, parts);
     if (!unmarshalResponse.isSuccess()) {
-      response.copyUnsuccessfulResponse(unmarshalResponse);
-      return CreateResponseMapper.toResponse(ic, response);
+      return
+        CreateResponseMapper.toResponse(
+          ic,
+          (new Response<BeanTreePath>()).copyUnsuccessfulResponse(unmarshalResponse)
+        );
     }
-    // Find the new bean's expected path
     List<FormProperty> properties = unmarshalResponse.getResults();
-    Response<BeanTreePath> pathResponse = computeNewBeanPath(ic, properties);
-    if (!pathResponse.isSuccess()) {
-      response.copyUnsuccessfulResponse(pathResponse);
-      return CreateResponseMapper.toResponse(ic, response);
-    }
-    BeanTreePath newBeanPath = pathResponse.getResults();
-    // Make sure the bean doesn't exist
-    {
-      Response<Void> r = ic.getPageRepo().asPageReaderRepo().verifyDoesntExist(ic, newBeanPath);
-      if (!r.isSuccess()) {
-        response.copyUnsuccessfulResponse(r);
-        return CreateResponseMapper.toResponse(ic, response);
-      }
-    }
     // Create the bean
-    {
-      Response<Void> r = createBean(ic, properties);
-      if (!r.isSuccess()) {
-        response.copyUnsuccessfulResponse(r);
-        return CreateResponseMapper.toResponse(ic, response);
-      } else {
-        response.copyMessages(r);
-      }
-    }
-    response.setSuccess(newBeanPath);
-    return CreateResponseMapper.toResponse(ic, response);
+    return CreateResponseMapper.toResponse(ic, createBeanInternal(ic, properties, multiPart));
+  }
+
+  protected Response<Void> createBean(InvocationContext ic, List<FormProperty> properties, boolean multiPart) {
+    return createBean(ic, properties);
   }
 
   protected Response<Void> createBean(InvocationContext ic, List<FormProperty> properties) {
     return ic.getPageRepo().asPageEditorRepo().create(ic, properties);
+  }
+
+  protected Response<BeanTreePath> createBeanInternal(
+    InvocationContext ic,
+    List<FormProperty> properties,
+    boolean multiPart
+  ) {
+    Response<BeanTreePath> response = new Response<>();
+    // Find the new bean's expected path
+    Response<BeanTreePath> pathResponse = computeNewBeanPath(ic, properties);
+    if (!pathResponse.isSuccess()) {
+      return response.copyUnsuccessfulResponse(pathResponse);
+    }
+    BeanTreePath newBeanPath = pathResponse.getResults();
+    // Make sure the bean doesn't exist
+    Response<Void> existsResponse =
+      ic.getPageRepo().asPageReaderRepo().verifyDoesntExist(ic, newBeanPath);
+    if (!existsResponse.isSuccess()) {
+      return response.copyUnsuccessfulResponse(existsResponse);
+    }
+    // Create the bean
+    Response<Void> createResponse = createBean(ic, properties, multiPart);
+    if (!createResponse.isSuccess()) {
+      return response.copyUnsuccessfulResponse(createResponse);
+    }
+    return response.copyMessages(createResponse).setSuccess(newBeanPath);
   }
 
   protected Response<Void> cloneBean(

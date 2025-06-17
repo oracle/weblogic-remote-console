@@ -1,0 +1,40 @@
+# Copyright (c) 2020, 2025, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+baseTypes:
+- weblogic.management.configuration.ConfigurationMBean
+descriptionHTML: 'This MBean stores common plugin configuration. It is expected that
+  this MBean serves as the base configuration MBean for type-specific plugin configuration
+  MBeans. '
+name: weblogic.management.configuration.PluginConfigurationMBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Returns the credential set for this plugin configuration.</p> '
+  name: CredentialSet
+  relationship: reference
+  restartNeeded: true
+  type: weblogic.management.configuration.CredentialSetMBean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Returns the plugin deployment for this plugin configuration.</p> '
+  name: Deployment
+  relationship: reference
+  restartNeeded: true
+  type: weblogic.management.configuration.PluginDeploymentMBean
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Whether this plugin configuration is enabled or not.</p> '
+  name: Enabled
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: 'Returns the properties. Since we cannot know in advance the configuration
+    properties that a plugin provider might need, we make them available as <code>Properties</code>. '
+  name: Properties
+  type: java.util.Properties
+  writable: true

@@ -12,6 +12,7 @@ define([
     'ojs/ojarraydataprovider',
     'ojs/ojmodule-element-utils',
     'wrc-frontend/microservices/pages-history/pages-history-manager',
+    'wrc-frontend/microservices/pages-history/pages-bookmark-manager',
     'wrc-frontend/microservices/provider-management/data-provider-manager',
     'wrc-frontend/microservices/provider-management/data-provider',
     './provider-management',
@@ -42,6 +43,7 @@ define([
     ArrayDataProvider,
     ModuleElementUtils,
     PagesHistoryManager,
+    PagesBookmarkManager,
     DataProviderManager,
     DataProvider,
     ProviderManagement,
@@ -2675,6 +2677,8 @@ define([
         viewParams.signaling.ancillaryContentItemCleared.dispatch('providers');
         // Clear pages history
         PagesHistoryManager.resetPagesHistoryData();
+        // Load page bookmarks
+        loadPageBookmarks(dataProvider);
       }
 
       function removeSucceededHandler(dataProvider, showDialog = true) {
@@ -3066,6 +3070,25 @@ define([
           // reflect the location of the file on disk.
           if (dataprovider.file !== filePath) {
             dataprovider.putValue('file', filePath);
+          }
+        }
+      }
+
+      function loadPageBookmarks(dataProvider) {
+        if (CoreUtils.isNotUndefinedNorNull(dataProvider)) {
+          if ([DataProvider.prototype.Type.ADMINSERVER.name, DataProvider.prototype.Type.MODEL.name].includes(dataProvider.type)) {
+            DataProviderManager.getPageBookmarks()
+              .then(reply => {
+                PagesBookmarkManager.setPagesBookmarkData(reply.body.data, dataProvider);
+              })
+              .catch(response => {
+                if (response.failureType === CoreTypes.FailureType.CBE_REST_API) {
+                  MessageDisplaying.displayResponseMessages(response.body.messages);
+                }
+                else {
+                  ViewModelUtils.failureResponseDefaultHandling(response);
+                }
+              });
           }
         }
       }

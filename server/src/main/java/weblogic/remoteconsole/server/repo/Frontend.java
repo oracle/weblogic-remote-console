@@ -119,6 +119,11 @@ public class Frontend {
     clean();
   }
 
+  public synchronized void removeData(String key, Object referenceKey) {
+    storedData.remove(key + referenceKey);
+    clean();
+  }
+
   private static class StoredDataObject {
     public WeakReference<Object> referenceKey;
     public Object value;

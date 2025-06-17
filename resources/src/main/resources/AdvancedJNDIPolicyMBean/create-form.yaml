@@ -1,0 +1,15 @@
+# Copyright (c) 2025, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+introductionHTML: Create a new URL security policy
+sections:
+- properties:
+  - name: jndi_application
+  - name: jndi_action
+  - name: jndi_any_path
+- usedIf:
+    property: jndi_any_path
+    values:
+    - false
+  properties:
+  - name: jndi_path

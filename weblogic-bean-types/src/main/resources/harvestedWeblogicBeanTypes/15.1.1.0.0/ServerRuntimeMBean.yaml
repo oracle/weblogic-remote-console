@@ -93,6 +93,12 @@ properties:
   type: weblogic.management.runtime.BatchJobRepositoryRuntimeMBean
 - defaultValue: {
     }
+  descriptionHTML: '<p>Gets the CertificateManagementServerRuntimeMBean for this server.</p> '
+  name: CertificateManagementServerRuntime
+  relationship: containment
+  type: weblogic.management.runtime.CertificateManagementServerRuntimeMBean
+- defaultValue: {
+    }
   descriptionHTML: '<p>Get statistics for system-level class loading.</p> '
   name: ClassLoaderRuntime
   relationship: containment
@@ -427,6 +433,13 @@ properties:
   name: PersistentStoreRuntimes
   relationship: containment
   type: weblogic.management.runtime.PersistentStoreRuntimeMBean
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: '<p> Returns all deployed Plugins </p> '
+  name: PluginRuntimes
+  relationship: containment
+  type: weblogic.management.runtime.PluginRuntimeMBean
 - array: true
   defaultValue: {
     }

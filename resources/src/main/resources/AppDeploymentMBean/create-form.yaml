@@ -1,4 +1,4 @@
-# Copyright (c) 2020, 2024, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2025, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 # TODO: Should  add the new properties for upload case only if the extension supports uploadAndDeploy
@@ -73,6 +73,35 @@ sections:
          set, it cannot be changed while the application is configured in the domain. The
          only way to change the staging mode is to undeploy and then redeploy the application.</p>
        <p>This attribute overrides the server''s staging mode. </p> '
+
+  - name: SecurityModelUpload
+    label: "Security Model"
+    legalValues:
+      - value: "DDOnly"
+        label: "DD Only"
+      - value: "CustomRoles"
+        label: "Custom Roles"
+      - value: "CustomRolesAndPolicies"
+        label: "Custom Roles and Policies"
+      - value: "Advanced"
+        label: "Advanced"
+    definition:
+      name: SecurityModelUpload
+      type: java.lang.String
+      legalValues:
+        - "DDOnly"
+        - "CustomRoles"
+        - "CustomRolesAndPolicies"
+        - "Advanced"
+      writable: true
+      defaultValue:
+        value:
+          value: "DDOnly"
+      descriptionHTML: '<p>The security model that is used to secure a deployed module. </p>
+      <ul><li>DD Only: Use only roles and policies that are defined in the deployment descriptors.</li>
+       <li>Custom Roles: Use roles that are defined in the WebLogic Remote Console; use policies that are defined in the deployment descriptor.</li>
+       <li>Custom Roles and Policies: Use only roles and policies that are defined in the WebLogic Remote Console.</li>
+       <li>Advanced: Use a custom model that you have configured on the realm''s configuration page.</li></ul>'
   - name: OnDeploymentUpload
     label: On Deployment
     legalValues:
@@ -131,6 +160,35 @@ sections:
          set, it cannot be changed while the application is configured in the domain. The
          only way to change the staging mode is to undeploy and then redeploy the application.</p>
        <p>This attribute overrides the server''s staging mode. </p> '
+  - name: SecurityModel
+    label: "Security Model"
+    legalValues:
+      - value: "DDOnly"
+        label: "DD Only"
+      - value: "CustomRoles"
+        label: "Custom Roles"
+      - value: "CustomRolesAndPolicies"
+        label: "Custom Roles and Policies"
+      - value: "Advanced"
+        label: "Advanced"
+    definition:
+      name: SecurityModel
+      type: java.lang.String
+      legalValues:
+        - "DDOnly"
+        - "CustomRoles"
+        - "CustomRolesAndPolicies"
+        - "Advanced"
+      writable: true
+      defaultValue:
+        value:
+          value: "DDOnly"
+      descriptionHTML: '<p>The security model that is used to secure a deployed module. </p>
+      <ul><li>DD Only: Use only roles and policies that are defined in the deployment descriptors.</li>
+       <li>Custom Roles: Use roles that are defined in the WebLogic Remote Console; use policies that are 
+       defined in the deployment descriptor.</li>
+       <li>Custom Roles and Policies: Use only roles and policies that are defined in the WebLogic Remote Console.</li>
+       <li>Advanced: Use a custom model that you have configured on the realm''s configuration page.</li></ul>'
   - name: OnDeployment
     legalValues:
       - value: "doNotStart"

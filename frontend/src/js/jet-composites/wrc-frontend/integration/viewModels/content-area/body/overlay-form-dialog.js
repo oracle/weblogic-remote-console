@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2021, 2024, Oracle and/or its affiliates.
+ * Copyright (c) 2021, 2025, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
@@ -208,6 +208,9 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'oj
       };
 
       this.onOjFocus = (event) => {
+        if (viewParams.overlayDialogParams?.action && viewParams.overlayDialogParams.action === 'viewMessage') {
+          event.target.setAttribute('resize-behavior', 'resizable');
+        }
         ViewModelUtils.setFocusFirstIncompleteField('input.oj-inputtext-input, input.oj-inputpassword-input, textarea.oj-textarea-input');
       };
       
@@ -956,10 +959,16 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'oj
           else if (pdjTypes.isArray(name) || pdjTypes.isPropertiesType(name) || pdjTypes.isMultiLineStringType(name)) {
             const options = {
               'className': (pdjTypes.getWidthPresentation(name) !== null ? pdjTypes.getWidthPresentation(name) : 'cfe-form-input-textarea'),
-              'resize-behavior': 'vertical',
+              'resize-behavior': (pdjTypes.isMultiLineStringType(name) ? 'both' : 'vertical'),
               'placeholder': pdjTypes.getInLineHelpPresentation(name),
               'readonly': pdjTypes.isReadOnly(name) || isReadOnly
             };
+            if (CoreUtils.isNotUndefinedNorNull(dataValues[name])) {
+              const lineBreaksCount = PageDefinitionUtils.getLineBreaksCount(dataValues[name].value);
+              if (lineBreaksCount !== -1) {
+                options['rows'] = (lineBreaksCount > 20 ? 20 : lineBreaksCount);
+              }
+            }
             field = PageDefinitionFields.createTextArea(options);
             field.setAttribute('title', value);
             let nthChild = self.perspectiveMemory.getNthChildrenItem.call(self.perspectiveMemory, name);

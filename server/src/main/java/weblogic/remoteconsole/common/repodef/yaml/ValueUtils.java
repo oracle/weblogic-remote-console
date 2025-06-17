@@ -1,4 +1,4 @@
-// Copyright (c) 2021, 2023, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2025, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef.yaml;
@@ -19,7 +19,7 @@ import weblogic.remoteconsole.server.repo.Value;
  * Utilities to handle values defined in yaml files
  * (e.g. boolean, ints and strings for default property values)
  */
-class ValueUtils {
+public class ValueUtils {
 
   private ValueUtils() {
   }
@@ -63,5 +63,18 @@ class ValueUtils {
       return null; // Can't map the default value - skip it
     }
     throw new AssertionError("Unsupported type: " + object.getClass() + " " + object);
+  }
+
+  public static String getValueAsString(Value value) {
+    if (value.isString()) {
+      return value.asString().getValue();
+    }
+    if (value.isInt()) {
+      return "" + value.asInt().getValue();
+    }
+    if (value.isLong()) {
+      return "" + value.asLong().getValue();
+    }
+    throw new AssertionError("Unsupport legal value: " + value);
   }
 }

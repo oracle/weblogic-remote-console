@@ -14,10 +14,10 @@ import weblogic.console.schema.YamlSource;
  * e.g. ServerMBean/slices.yaml
  */
 public class SliceDefSource extends YamlSource {
-  private StringValue name = new StringValue();
-  private StringValue label = new StringValue();
-  private ListValue<SliceDefSource> slices = new ListValue<>();
-  private ListValue<String> requiredCapabilities = new ListValue<>();
+  private StringValue name = StringValue.create();
+  private StringValue label = StringValue.create();
+  private ListValue<SliceDefSource> slices = ListValue.create();
+  private ListValue<String> requiredCapabilities = ListValue.create();
 
   // The name of this slice (i.e. what to put into its PDJ url)
   // Not configured in yaml.  Instead, the CBE sets it.
@@ -26,7 +26,7 @@ public class SliceDefSource extends YamlSource {
   }
 
   public void setName(String value) {
-    name.setValue(value);
+    name = name.setValue(value);
   }
 
   // The english label of this slice (i.e. what to display to the user)
@@ -35,7 +35,7 @@ public class SliceDefSource extends YamlSource {
   }
 
   public void setLabel(String value) {
-    label.setValue(value);
+    label = label.setValue(value);
   }
 
   // The list of slices this slice immediately parents.
@@ -44,11 +44,11 @@ public class SliceDefSource extends YamlSource {
   }
 
   public void setSlices(List<SliceDefSource> value) {
-    slices.setValue(value);
+    slices = slices.setValue(value);
   }
 
   public void addSlice(SliceDefSource value) {
-    slices.add(value);
+    slices = slices.add(value);
   }
 
   // The bean repo capabilities that are required for this slice to be present
@@ -57,7 +57,7 @@ public class SliceDefSource extends YamlSource {
   }
   
   public void setRequiredCapabilities(List<String> val) {
-    requiredCapabilities.setValue(val);
+    requiredCapabilities = requiredCapabilities.setValue(val);
   }
 
   @Override

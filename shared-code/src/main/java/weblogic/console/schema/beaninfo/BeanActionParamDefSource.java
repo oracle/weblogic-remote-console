@@ -10,8 +10,8 @@ import weblogic.console.schema.StringValue;
  * parameter of an action on weblogic bean's type, e.g. ServerLifeCycleRuntimeMBean/type.yaml
  */
 public class BeanActionParamDefSource extends BeanValueDefSource {
-  private StringValue name = new StringValue();
-  private StringValue descriptionHTML = new StringValue();
+  private StringValue name = StringValue.create();
+  private StringValue descriptionHTML = StringValue.create();
 
   // The name of parameter.
   public String getName() {
@@ -19,7 +19,7 @@ public class BeanActionParamDefSource extends BeanValueDefSource {
   }
 
   public void setName(String value) {
-    name.setValue(value);
+    name = name.setValue(value);
   }
 
   // The parameter's description
@@ -28,6 +28,6 @@ public class BeanActionParamDefSource extends BeanValueDefSource {
   }
 
   public void setDescriptionHTML(String val) {
-    descriptionHTML.setValue(val);
+    descriptionHTML = descriptionHTML.setValue(val);
   }
 }

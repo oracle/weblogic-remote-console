@@ -78,7 +78,6 @@ in some artifacts (usually source distributions); but is always available
 from the source code management (SCM) system project uses.
 
 io.helidon.common-helidon-common-context
--------- Copyrights
 Copyright (c) 2019, 2020 Oracle and/or its affiliates.
 Copyright (c) 2019, 2021 Oracle and/or its affiliates.
 Copyright (c) 2019 Oracle and/or its affiliates. All rights reserved.
@@ -87,7 +86,6 @@ Copyright (c) 2020 Oracle and/or its affiliates.
 Copyright (c) 2019, 2020 Oracle and/or its affiliates. All rights reserved.
 
 io.helidon.microprofile.server-helidon-microprofile-server
--------- Copyrights
 Copyright (c) 2018, 2020 Oracle and/or its affiliates.
 Copyright (c) 2019, 2022 Oracle and/or its affiliates.
 Copyright (c) 2018 Oracle and/or its affiliates. All rights reserved.
@@ -6225,7 +6223,6 @@ bare-events
    Copyright [yyyy] [name of copyright owner]
 
 io.helidon.common-helidon-common-configurable
--------- Copyrights
 Copyright (c) 2023 Oracle and/or its affiliates.
 Copyright (c) 2019, 2021 Oracle and/or its affiliates.
 Copyright (c) 2021 Oracle and/or its affiliates.
@@ -6237,11 +6234,9 @@ Copyright (c) 2019, 2022 Oracle and/or its affiliates.
 Copyright (c) 2018, 2022 Oracle and/or its affiliates.
 
 io.helidon.common-helidon-common-crypto
--------- Copyrights
 Copyright (c) 2021 Oracle and/or its affiliates.
 
 io.helidon.common-helidon-common-http
--------- Copyrights
 Copyright (c) 2018 Oracle and/or its affiliates. All rights reserved.
 Copyright (c) 2021, 2023 Oracle and/or its affiliates.
 Copyright (c) 2018, 2020 Oracle and/or its affiliates. All rights reserved.
@@ -6257,26 +6252,22 @@ Copyright (c) 2018, 2022 Oracle and/or its affiliates.
 Copyright (c) 2022 Oracle and/or its affiliates.
 
 io.helidon.common-helidon-common-key-util
--------- Copyrights
 Copyright (c) 2017, 2022 Oracle and/or its affiliates.
 Copyright (c) 2021, 2022 Oracle and/or its affiliates.
 Copyright (c) 2017, 2018 Oracle and/or its affiliates. All rights reserved.
 Copyright (c) 2018, 2021 Oracle and/or its affiliates.
 
 io.helidon.common-helidon-common-mapper
--------- Copyrights
 Copyright (c) 2020, 2021 Oracle and/or its affiliates.
 Copyright (c) 2019 Oracle and/or its affiliates. All rights reserved.
 Copyright (c) 2019, 2021 Oracle and/or its affiliates.
 
 io.helidon.common-helidon-common-media-type
--------- Copyrights
 Copyright (c) 2019 Oracle and/or its affiliates. All rights reserved.
 Copyright (c) 2019, 2020 Oracle and/or its affiliates.
 Copyright (c) 2019, 2021 Oracle and/or its affiliates.
 
 io.helidon.common-helidon-common-reactive
--------- Copyrights
 Copyright (c) 2020, 2021 Oracle and/or its affiliates.
 Copyright (c) 2021, 2022 Oracle and/or its affiliates.
 Copyright (c) 2019 Oracle and/or its affiliates. All rights reserved.
@@ -6291,29 +6282,25 @@ Copyright (c) 2017, 2020 Oracle and/or its affiliates.
 Copyright (c) 2018, 2020 Oracle and/or its affiliates.
 
 io.helidon.common-helidon-common-service-loader
--------- Copyrights
 Copyright (c) 2019, 2020 Oracle and/or its affiliates.
 Copyright (c) 2019 Oracle and/or its affiliates. All rights reserved.
 
 io.helidon.common-helidon-common
--------- Copyrights
-Copyright (c) 2023 Oracle and/or its affiliates.
-Copyright (c) 2019, 2021 Oracle and/or its affiliates.
 Copyright (c) 2021 Oracle and/or its affiliates.
-Copyright (c) 2017, 2022 Oracle and/or its affiliates.
 Copyright (c) 2017, 2021 Oracle and/or its affiliates.
+Copyright (c) 2020, 2022 Oracle and/or its affiliates.
+Copyright (c) 2020 Oracle and/or its affiliates.
 Copyright (c) 2018, 2021 Oracle and/or its affiliates.
-Copyright (c) 2018, 2020 Oracle and/or its affiliates.
-Copyright (c) 2019, 2022 Oracle and/or its affiliates.
-Copyright (c) 2018, 2022 Oracle and/or its affiliates.
+Copyright (c) 2019, 2020 Oracle and/or its affiliates.
+Copyright (c) 2019, 2021 Oracle and/or its affiliates.
+Copyright (c) 2021, 2022 Oracle and/or its affiliates.
+Copyright (c) 2017, 2020 Oracle and/or its affiliates.
 
 io.helidon.config-helidon-config-metadata
--------- Copyrights
 Copyright (c) 2021, 2022 Oracle and/or its affiliates.
 Copyright (c) 2021 Oracle and/or its affiliates.
 
 io.helidon.config-helidon-config-mp
--------- Copyrights
 Copyright (c) 2020, 2021 Oracle and/or its affiliates.
 Copyright (c) 2020, 2022 Oracle and/or its affiliates.
 Copyright (c) 2019, 2022 Oracle and/or its affiliates.
@@ -6324,52 +6311,55 @@ Copyright (c) 2020, 2023 Oracle and/or its affiliates.
 Copyright (c) 2020 Oracle and/or its affiliates.
 
 io.helidon.config-helidon-config-yaml-mp
--------- Copyrights
 Copyright (c) 2021, 2022 Oracle and/or its affiliates.
 Copyright (c) 2022 Oracle and/or its affiliates.
 Copyright (c) 2021, 2023 Oracle and/or its affiliates.
 Copyright (c) 2021 Oracle and/or its affiliates.
 
 io.helidon.config-helidon-config-yaml
--------- Copyrights
-Copyright (c) 2021, 2022 Oracle and/or its affiliates.
-Copyright (c) 2022 Oracle and/or its affiliates.
-Copyright (c) 2021, 2023 Oracle and/or its affiliates.
-Copyright (c) 2021 Oracle and/or its affiliates.
-
-io.helidon.config-helidon-config
--------- Copyrights
-Copyright (c) 2018, 2021 Oracle and/or its affiliates.
-Copyright (c) 2018, 2020 Oracle and/or its affiliates.
-Copyright (c) 2018, 2022 Oracle and/or its affiliates.
+Copyright (c) 2020, 2023 Oracle and/or its affiliates.
+Copyright (c) 2017, 2020 Oracle and/or its affiliates.
 Copyright (c) 2017, 2021 Oracle and/or its affiliates.
 
+io.helidon.config-helidon-config
+Copyright (c) 2017, 2020 Oracle and/or its affiliates.
+Copyright (c) 2020, 2022 Oracle and/or its affiliates.
+Copyright (c) 2020 Oracle and/or its affiliates.
+Copyright (c) 2017, 2023 Oracle and/or its affiliates.
+Copyright (c) 2017, 2022 Oracle and/or its affiliates.
+Copyright (c) 2017, 2024 Oracle and/or its affiliates.
+Copyright (c) 2017, 2021 Oracle and/or its affiliates.
+Copyright (c) 2020, 2021 Oracle and/or its affiliates.
+Copyright (c) 2018, 2020 Oracle and/or its affiliates.
+Copyright (c) 2018, 2022 Oracle and/or its affiliates.
+Copyright (c) 2023 Oracle and/or its affiliates.
+Copyright (c) 2019, 2021 Oracle and/or its affiliates.
+Copyright (c) 2019, 2020 Oracle and/or its affiliates.
+Copyright (c) 2021 Oracle and/or its affiliates.
+Copyright (c) 2020, 2023 Oracle and/or its affiliates.
+Copyright (c) 2019, 2022 Oracle and/or its affiliates.
+Copyright (c) 2018, 2021 Oracle and/or its affiliates.
+
 io.helidon.fault-tolerance-helidon-fault-tolerance
--------- Copyrights
 Copyright (c) 2020 Oracle and/or its affiliates.
 Copyright (c) 2020, 2022 Oracle and/or its affiliates.
 
 io.helidon.health-helidon-health-common
--------- Copyrights
 Copyright (c) 2019, 2021 Oracle and/or its affiliates.
 Copyright (c) 2019, 2020 Oracle and/or its affiliates.
 
 io.helidon.health-helidon-health
--------- Copyrights
-Copyright (c) 2018, 2022 Oracle and/or its affiliates.
 Copyright (c) 2018, 2021 Oracle and/or its affiliates.
+Copyright (c) 2018, 2022 Oracle and/or its affiliates.
 
 io.helidon.jersey-helidon-jersey-common
--------- Copyrights
 Copyright (c) 2019, 2021 Oracle and/or its affiliates.
 Copyright (c) 2020 Oracle and/or its affiliates.
 
 io.helidon.logging-helidon-logging-common
--------- Copyrights
 Copyright (c) 2020 Oracle and/or its affiliates.
 
 io.helidon.media-helidon-media-common
--------- Copyrights
 Copyright (c) 2020 Oracle and/or its affiliates.
 Copyright (c) 2019, 2022 Oracle and/or its affiliates.
 Copyright (c) 2017, 2021 Oracle and/or its affiliates.
@@ -6381,28 +6371,29 @@ Copyright (c) 2019, 2021 Oracle and/or its affiliates.
 Copyright (c) 2018, 2020 Oracle and/or its affiliates. All rights reserved.
 
 io.helidon.media-helidon-media-jsonp
--------- Copyrights
 Copyright (c) 2020 Oracle and/or its affiliates.
 Copyright (c) 2020, 2022 Oracle and/or its affiliates.
 Copyright (c) 2019, 2020 Oracle and/or its affiliates.
 
 io.helidon.metrics-helidon-metrics-api
--------- Copyrights
 Copyright (c) 2021 Oracle and/or its affiliates.
 Copyright (c) 2021, 2023 Oracle and/or its affiliates.
 
 io.helidon.metrics-helidon-metrics-service-api
--------- Copyrights
 Copyright (c) 2021, 2022 Oracle and/or its affiliates.
 Copyright (c) 2021 Oracle and/or its affiliates.
 
 io.helidon.metrics-helidon-metrics
--------- Copyrights
+Copyright (c) 2018, 2021 Oracle and/or its affiliates.
+Copyright (c) 2018, 2019 Oracle and/or its affiliates. All rights reserved.
+Copyright (c) 2021, 2022 Oracle and/or its affiliates.
+Copyright (c) 2018, 2020 Oracle and/or its affiliates. All rights reserved.
 Copyright (c) 2021 Oracle and/or its affiliates.
-Copyright (c) 2021, 2023 Oracle and/or its affiliates.
+Copyright (c) 2018, 2023 Oracle and/or its affiliates.
+Copyright (c) 2020, 2023 Oracle and/or its affiliates.
+Copyright (c) 2018, 2022 Oracle and/or its affiliates.
 
 io.helidon.microprofile.cdi-helidon-microprofile-cdi
--------- Copyrights
 Copyright (c) 2020 Oracle and/or its affiliates. All rights reserved.
 Copyright (c) 2019, 2020 Oracle and/or its affiliates.
 Copyright (c) 2020 Oracle and/or its affiliates.
@@ -6411,43 +6402,41 @@ Copyright (c) 2019, 2022 Oracle and/or its affiliates.
 Copyright (c) 2019, 2021 Oracle and/or its affiliates.
 
 io.helidon.microprofile.weld-weld-core-impl
--------- Copyrights
 Copyright 2008, Red Hat, Inc. and/or its affiliates, and individual contributors
 Copyright (c) 2020, 2023 Oracle and/or its affiliates.
 
 io.helidon.microprofile.weld-weld-se-core
--------- Copyrights
   (no copyright notices found)
 
 io.helidon.service-common-helidon-service-common-rest-cdi
--------- Copyrights
 Copyright (c) 2021, 2022 Oracle and/or its affiliates.
 
 io.helidon.service-common-helidon-service-common-rest
--------- Copyrights
 Copyright (c) 2021, 2022 Oracle and/or its affiliates.
+Copyright (c) 2021 Oracle and/or its affiliates.
 
 io.helidon.tracing-helidon-tracing-config
--------- Copyrights
 Copyright (c) 2019 Oracle and/or its affiliates. All rights reserved.
 
 io.helidon.webclient-helidon-webclient-security
--------- Copyrights
 Copyright (c) 2020, 2022 Oracle and/or its affiliates.
 Copyright (c) 2020 Oracle and/or its affiliates.
 
 io.helidon.webclient-helidon-webclient-tracing
--------- Copyrights
 Copyright (c) 2020 Oracle and/or its affiliates.
 
 io.helidon.webclient-helidon-webclient
--------- Copyrights
-Copyright (c) 2019, 2022 Oracle and/or its affiliates.
-Copyright (c) 2019, 2020 Oracle and/or its affiliates.
-Copyright (c) 2019 Oracle and/or its affiliates. All rights reserved.
+Copyright (c) 2022, 2023 Oracle and/or its affiliates.
+Copyright (c) 2020, 2021 Oracle and/or its affiliates.
+Copyright (c) 2021 Oracle and/or its affiliates.
+Copyright (c) 2020 Oracle and/or its affiliates.
+Copyright (c) 2021, 2022 Oracle and/or its affiliates.
+Copyright (c) 2020, 2022 Oracle and/or its affiliates.
+Copyright (c) 2020, 2024 Oracle and/or its affiliates.
+Copyright (c) 2020, 2023 Oracle and/or its affiliates.
+Copyright (c) 2019, 2024 Oracle and/or its affiliates.
 
 io.helidon.webserver-helidon-webserver-jersey
--------- Copyrights
 Copyright (c) 2020, 2021 Oracle and/or its affiliates.
 Copyright (c) 2021, 2023 Oracle and/or its affiliates.
 Copyright (c) 2017, 2023 Oracle and/or its affiliates.
@@ -6457,18 +6446,36 @@ Copyright (c) 2017, 2021 Oracle and/or its affiliates.
 Copyright (c) 2018, 2022 Oracle and/or its affiliates.
 
 io.helidon.webserver-helidon-webserver-static-content
--------- Copyrights
 Copyright (c) 2017, 2021 Oracle and/or its affiliates.
 Copyright (c) 2021 Oracle and/or its affiliates.
 
 io.helidon.webserver-helidon-webserver
--------- Copyrights
-Copyright (c) 2020, 2022 Oracle and/or its affiliates.
+Copyright (c) 2022 Oracle and/or its affiliates.
+Copyright (c) 2017, 2018 Oracle and/or its affiliates. All rights reserved.
+Copyright (c) 2017, 2023 Oracle and/or its affiliates.
+Copyright (c) 2017, 2022 Oracle and/or its affiliates.
+Copyright (c) 2021, 2023 Oracle and/or its affiliates.
+Copyright (c) 2017, 2021 Oracle and/or its affiliates.
+Copyright (c) 2020 Oracle and/or its affiliates.
+Copyright (c) 2021 Oracle and/or its affiliates.
+Copyright (c) 2017, 2020 Oracle and/or its affiliates.
+Copyright (c) 2019, 2020 Oracle and/or its affiliates.
+Copyright (c) 2017, 2020 Oracle and/or its affiliates. All rights reserved.
+Copyright (c) 2017, 2024 Oracle and/or its affiliates.
+Copyright (c) 2018, 2022 Oracle and/or its affiliates.
+Copyright (c) 2018 Oracle and/or its affiliates. All rights reserved.
+Copyright (c) 2019 Oracle and/or its affiliates. All rights reserved.
+Copyright (c) 2018, 2021 Oracle and/or its affiliates.
+Copyright (c) 2018, 2019 Oracle and/or its affiliates. All rights reserved.
+Copyright (c) 2017, 2019 Oracle and/or its affiliates. All rights reserved.
+Copyright (c) 2022, 2023 Oracle and/or its affiliates.
 Copyright (c) 2020, 2021 Oracle and/or its affiliates.
-Copyright (c) 2020, 2024 Oracle and/or its affiliates.
+Copyright (c) 2023 Oracle and/or its affiliates.
+Copyright (c) 2020, 2022 Oracle and/or its affiliates.
+Copyright (c) 2019, 2022 Oracle and/or its affiliates.
+Copyright (c) 2018, 2023 Oracle and/or its affiliates.
 
 io.netty-netty-buffer
--------- Copyrights
 Copyright 2012 The Netty Project
 Copyright 2013 The Netty Project
 Copyright 2016 The Netty Project
@@ -6480,14 +6487,12 @@ Copyright 2020 The Netty Project
 Copyright 2014 The Netty Project
 
 io.netty-netty-codec-dns
--------- Copyrights
 Copyright 2015 The Netty Project
 Copyright 2016 The Netty Project
 Copyright 2019 The Netty Project
 Copyright 2021 The Netty Project
 
 io.netty-netty-codec-http2
--------- Copyrights
 Copyright 2015 The Netty Project
 Copyright 2019 The Netty Project
 Copyright 2016 The Netty Project
@@ -6499,33 +6504,39 @@ Copyright 2022 The Netty Project
 Copyright 2023 The Netty Project
 
 io.netty-netty-codec-http
--------- Copyrights
-Copyright 2015 The Netty Project
-Copyright 2019 The Netty Project
-Copyright 2016 The Netty Project
-Copyright 2017 The Netty Project
 Copyright 2014 The Netty Project
-Copyright 2020 The Netty Project
-Copyright 2014 Twitter, Inc.
-Copyright 2022 The Netty Project
+Copyright 2015 The Netty Project
+Copyright 2013 The Netty Project
+Copyright 2021 The Netty Project
+Copyright 2012 The Netty Project
 Copyright 2023 The Netty Project
+Copyright 2022 The Netty Project
+Copyright 2017 The Netty Project
+Copyright 2016 The Netty Project
+Copyright 2020 The Netty Project
+Copyright 2019 The Netty Project
+Copyright (c) 2008-2009 Bjoern Hoehrmann <bjoern@hoehrmann.de>
+Copyright (c) 2011, Joe Walnes and contributors
+Copyright 2024 The Netty Project
 
 io.netty-netty-codec-socks
--------- Copyrights
 Copyright 2013 The Netty Project
 Copyright 2012 The Netty Project
 Copyright 2014 The Netty Project
 Copyright 2015 The Netty Project
 
 io.netty-netty-codec
--------- Copyrights
+Copyright 2014 The Netty Project
+Copyright 2012 The Netty Project
 Copyright 2015 The Netty Project
 Copyright 2016 The Netty Project
-Copyright 2019 The Netty Project
 Copyright 2021 The Netty Project
+Copyright 2024 The Netty Project
+Copyright 2013 The Netty Project
+Copyright 2023 The Netty Project
+Copyright 2019 The Netty Project
 
 io.netty-netty-common
--------- Copyrights
 Copyright 2012 The Netty Project
 Copyright 2013 The Netty Project
 Copyright 2014 The Netty Project
@@ -6540,15 +6551,25 @@ Copyright 2019 The Netty Project
 Copyright (c) 2004-2011 QOS.ch
 
 io.netty-netty-handler-proxy
--------- Copyrights
 Copyright 2014 The Netty Project
 
 io.netty-netty-handler
--------- Copyrights
+Copyright 2019 The Netty Project
+Copyright 2020 The Netty Project
+Copyright 2016 The Netty Project
 Copyright 2014 The Netty Project
+Copyright 2012 The Netty Project
+Copyright 2023 The Netty Project
+Copyright 2017 The Netty Project
+Copyright 2015 The Netty Project
+Copyright 2021 The Netty Project
+Copyright 2022 The Netty Project
+Copyright 2018 The Netty Project
+Copyright 2024 The Netty Project
+Copyright 2013 The Netty Project
+Copyright 2011 The Netty Project
 
 io.netty-netty-resolver-dns
--------- Copyrights
 Copyright 2018 The Netty Project
 Copyright 2017 The Netty Project
 Copyright 2019 The Netty Project
@@ -6561,7 +6582,6 @@ Copyright 2022 The Netty Project
 Copyright 2020 The Netty Project
 
 io.netty-netty-transport-native-unix-common
--------- Copyrights
 Copyright 2018 The Netty Project
 Copyright 2015 The Netty Project
 Copyright 2021 The Netty Project
@@ -6571,14 +6591,19 @@ Copyright 2014 The Netty Project
 Copyright 2017 The Netty Project
 
 io.netty-netty-transport
--------- Copyrights
-Copyright 2018 The Netty Project
+Copyright 2012 The Netty Project
+Copyright 2016 The Netty Project
+Copyright 2013 The Netty Project
+Copyright 2023 The Netty Project
+Copyright 2017 The Netty Project
+Copyright 2014 The Netty Project
+Copyright 2019 The Netty Project
 Copyright 2015 The Netty Project
 Copyright 2021 The Netty Project
-Copyright 2016 The Netty Project
+Copyright 2018 The Netty Project
+Copyright 2020 The Netty Project
+Copyright 2024 The Netty Project
 Copyright 2022 The Netty Project
-Copyright 2014 The Netty Project
-Copyright 2017 The Netty Project
 
 io.opentracing-opentracing-api
 Copyright 2016-2019 The OpenTracing Authors

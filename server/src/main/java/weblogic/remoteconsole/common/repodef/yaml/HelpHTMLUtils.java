@@ -8,7 +8,7 @@ import weblogic.console.utils.StringUtils;
 /**
  * Utilities to help compute a property or action's help summary and detailed help.
  */
-class HelpHTMLUtils {
+public class HelpHTMLUtils {
 
   private static final String PARA_BEGIN = "<p>";
   private static final String PARA_END = "</p>";
@@ -16,7 +16,7 @@ class HelpHTMLUtils {
   private HelpHTMLUtils() {
   }
 
-  static String getEnglishHelpSummaryHTML(
+  public static String getEnglishHelpSummaryHTML(
     String harvestedHelp,
     String pdyHelp,
     String pdySummary,
@@ -38,7 +38,7 @@ class HelpHTMLUtils {
     return getSummary(harvestedHelp);
   }
 
-  static String getEnglishDetailedHelpHTML(
+  public static String getEnglishDetailedHelpHTML(
     String harvestedHelp,
     String pdyHelp,
     String pdySummary,

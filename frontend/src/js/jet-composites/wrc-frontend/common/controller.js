@@ -68,6 +68,7 @@ define([
       beanPathDeleted: new signals.Signal(),
       beanPathHistoryToggled: new signals.Signal(),
       pagesHistoryChanged: new signals.Signal(),
+      pagesBookmarkChanged: new signals.Signal(),
       selectedBeanPathChanged: new signals.Signal(),
       unsavedChangesDetected: new signals.Signal(),
       changesAutoDownloaded: new signals.Signal(),

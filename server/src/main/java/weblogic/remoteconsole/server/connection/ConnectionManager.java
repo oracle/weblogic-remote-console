@@ -45,8 +45,6 @@ import org.glassfish.jersey.media.multipart.MultiPartFeature;
 import weblogic.console.utils.StringUtils;
 import weblogic.remoteconsole.common.repodef.LocalizableString;
 import weblogic.remoteconsole.common.repodef.LocalizedConstants;
-import weblogic.remoteconsole.common.utils.WebLogicMBeansVersion;
-import weblogic.remoteconsole.common.utils.WebLogicMBeansVersions;
 import weblogic.remoteconsole.common.utils.WebLogicRoles;
 import weblogic.remoteconsole.common.utils.WebLogicVersion;
 import weblogic.remoteconsole.common.utils.WebLogicVersions;
@@ -316,23 +314,11 @@ public class ConnectionManager {
   }
 
   /**
-   * Returns the user's view of the weblogic mbeans on this connection.
-   * 
-   * Returns null if there was a problem figuring out the version
-   * (e.g. a WLS REST call to find out if the user is an Admin fails)
-   */
-  public WebLogicMBeansVersion getWebLogicMBeansVersion(Connection connection) {
-    Set<String> roles = getConnectionUserRoles(connection);
-    if (roles != null) {
-      return
-        WebLogicMBeansVersions.getVersion(
-          connection.getWebLogicVersion(),
-          roles,
-          connection.getCapabilities(),
-          connection.getExtensions()
-        );
-    }
-    return null;
+   * Determines which of the standard roles (Admin, Deployer, Operator, Monitor)
+   * the connection user is in then stores them in the connection.
+   */  
+  public void initializeConnectionUserRoles(Connection connection) {
+    ((ConnectionImpl)connection).setRoles(getConnectionUserRoles(connection));
   }
 
   /**

@@ -4,7 +4,6 @@
 baseTypes:
 - weblogic.management.WebLogicMBean
 - weblogic.descriptor.SettableBean
-- weblogic.descriptor.SettableBean
 descriptionHTML: '<p>The tagging interface for configuration MBeans.</p> '
 name: weblogic.management.configuration.ConfigurationMBean
 properties:

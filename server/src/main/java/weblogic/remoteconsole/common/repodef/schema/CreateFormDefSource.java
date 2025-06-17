@@ -10,7 +10,7 @@ import weblogic.console.schema.Value;
  * a create form page, e.g. ClusterMBean/createForm.yaml
  */
 public class CreateFormDefSource extends FormDefSource {
-  private Value<CreateFormPresentationDefSource> presentation = new Value<>(new CreateFormPresentationDefSource());
+  private Value<CreateFormPresentationDefSource> presentation = Value.create(new CreateFormPresentationDefSource());
 
   // Returns presentation info about this create form
   // (e.g. whether the properties should be displayed
@@ -22,7 +22,7 @@ public class CreateFormDefSource extends FormDefSource {
   }
 
   public void setPresentation(CreateFormPresentationDefSource value) {
-    presentation.setValue(value);
+    presentation = presentation.setValue(value);
   }
 
   @Override

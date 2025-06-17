@@ -1,0 +1,19 @@
+# Copyright (c) 2025, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+introductionHTML: "<p>This page lists this Authorization Provider's JMS security policies.</p>"
+
+displayedColumns:
+- name: jms_application
+- name: jms_module
+- name: jms_destinationType
+- name: jms_resource
+- name: jms_action
+- name: PolicyStringExpression
+hiddenColumns:
+- name: resourceId
+- name: scope
+
+helpTopics:
+- label: "Securing Resources Using Roles and Policies for Oracle WebLogic Server"
+  href: "roles/index.html"
+  type: "edocs"

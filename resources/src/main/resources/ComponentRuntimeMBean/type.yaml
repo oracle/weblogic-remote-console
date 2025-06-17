@@ -1,4 +1,4 @@
-# Copyright (c) 2021, Oracle and/or its affiliates.
+# Copyright (c) 2021, 2025, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 properties:
 - name: DeploymentState
@@ -31,6 +31,8 @@ subTypes:
   value: ComponentConcurrentRuntime
 - type: JDBCDataSourceRuntimeMBean
   value: JDBCDataSourceRuntime
+- type: JDBCOracleDataSourceRuntimeMBean
+  value: JDBCOracleDataSourceRuntime
 - type: ConnectorComponentRuntimeMBean
   value: ConnectorComponentRuntime
 - type: EJBComponentRuntimeMBean

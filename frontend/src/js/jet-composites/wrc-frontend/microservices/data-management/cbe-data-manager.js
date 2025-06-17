@@ -116,6 +116,19 @@ define([
       return url;
     }
 
+    function getResourceURL(uri) {
+      let resourceUrl = uri;
+      const url = new URL(uri, Runtime.getBackendUrl());
+      const queryParams = url.searchParams.toString();
+      if (queryParams !== '') {
+        resourceUrl = `${Runtime.getBackendUrl()}${url.pathname}?${queryParams}`;
+      }
+      else {
+        resourceUrl = `${Runtime.getBackendUrl()}${url.pathname}`;
+      }
+      return resourceUrl;
+    }
+
     /**
      * Returns the data or error returned from the CBE REST API
      * @param {*} options
@@ -549,13 +562,7 @@ define([
     //public:
     return {
       mockupAlerts: function (uri) {
-        let rdjUrl = uri;
-        if (uri.startsWith(Runtime.getBackendUrl())) {
-          uri = uri.replace(Runtime.getBackendUrl(), '');
-        }
-        else {
-          rdjUrl = `${Runtime.getBackendUrl()}${uri}`;
-        }
+        let rdjUrl = getResourceURL(uri);
         const pathSegments = uri.split('/').filter(e => e);
         const reply = JSON.parse(alertsRDJ.replaceAll('{dataProviderId}', pathSegments[1]));
         const aggregatedData = new CbeDataStorage(uri);
@@ -601,10 +608,7 @@ define([
        */
       getAggregatedData: function (uri) {
         return new Promise((resolve, reject) => {
-          let rdjUrl = uri;
-          if (!rdjUrl.startsWith(Runtime.getBackendUrl())) {
-            rdjUrl = `${Runtime.getBackendUrl()}${uri}`;
-          }
+          let rdjUrl = getResourceURL(uri);
           getData.call(this, {url: rdjUrl})
             .then(reply => {
               return {rdjUrl: rdjUrl, rdjData: reply.body.data};
@@ -614,7 +618,7 @@ define([
               aggregatedData.add('rawPath', uri);
               aggregatedData.add('rdjUrl', reply.rdjUrl);
               aggregatedData.add('rdjData', reply.rdjData);
-              
+
               const inlinePageDescription = reply.rdjData.inlinePageDescription;
 
               aggregatedData.add('rdjReply', reply);
@@ -628,7 +632,7 @@ define([
                   aggregatedData.remove('pdjData');
                 aggregatedData.add('pdjUrl', `${Runtime.getBackendUrl()}${reply.rdjData.pageDescription}`);
               }
-              
+
               return aggregatedData;
             })
             .then(aggregatedData => {
@@ -670,30 +674,48 @@ define([
 
       postAggregatedData: function (uri, dataPayload) {
         return new Promise((resolve, reject) => {
-          let rdjUrl = uri;
-          if (!rdjUrl.startsWith(Runtime.getBackendUrl())) {
-            rdjUrl = `${Runtime.getBackendUrl()}${uri}`;
-          }
+          let rdjUrl = getResourceURL(uri);
           postData.call(this, {url: rdjUrl}, dataPayload)
             .then(reply => {
               return {rdjUrl: rdjUrl, rdjData: reply.body.data};
             })
             .then(reply => {
+              const inlinePageDescription = reply.rdjData.inlinePageDescription;
               const aggregatedData = new CbeDataStorage(uri);
+
+              aggregatedData.add('rdjReply', reply);
               aggregatedData.add('rawPath', uri);
-              aggregatedData.add('rdjUrl', reply.rdjUrl);
               aggregatedData.add('rdjData', reply.rdjData);
-              aggregatedData.add('pdjUrl', Runtime.getBackendUrl()+reply.rdjData.pageDescription);
+              if (inlinePageDescription) {
+                aggregatedData.add('pdjData', inlinePageDescription);
+                aggregatedData.add('pageTitle', `${Runtime.getName()} - ${inlinePageDescription.helpPageTitle}`);
+                aggregatedData.add('pdjUrl', rdjUrl);
+                aggregatedData.add('rdjData', reply.rdjData);
+              } else {
+                if (aggregatedData.has('pdjData'))
+                  aggregatedData.remove('pdjData');
+                aggregatedData.add('pdjUrl', `${Runtime.getBackendUrl()}${reply.rdjData.pageDescription}`);
+              }
               return aggregatedData;
             })
             .then(aggregatedData => {
-              return getData.call(this, {url: aggregatedData.get('pdjUrl')})
+              // if there is already pdjData in the aggregatedData, it means it was present
+              // in the rdj as an inlinePageDescription.. so just return the reply from the
+              // rdj request...
+              if (aggregatedData.has('pdjData')) {
+                const reply = aggregatedData.get('rdjReply');
+                reply.body = { data : aggregatedData };
+
+                resolve(reply);
+              } else {
+                return getData.call(this, { url: aggregatedData.get('pdjUrl') })
                 .then((reply) => {
                   aggregatedData.add('pdjData', reply.body.data);
                   reply.body['data'] = aggregatedData;
                   reply.body['data'].add('pageTitle', `${Runtime.getName()} - ${reply.body.data.get('pdjData').helpPageTitle}`);
                   resolve(reply);
                 });
+              }
             })
             .catch(response =>{
               if (response.failureType === CoreTypes.FailureType.UNEXPECTED) {
@@ -720,10 +742,7 @@ define([
        */
       putData: function (uri) {
         return new Promise((resolve, reject) => {
-          let rdjUrl = uri;
-          if (!rdjUrl.startsWith(Runtime.getBackendUrl())) {
-            rdjUrl = `${Runtime.getBackendUrl()}${uri}`;
-          }
+          let rdjUrl = getResourceURL(uri);
           getData.call(this, {url: rdjUrl})
             .then(reply => {
               return {rdjUrl: rdjUrl, rdjData: reply.body.data};
@@ -747,7 +766,7 @@ define([
                   aggregatedData.remove('pdjData');
                 aggregatedData.add('pdjUrl', Runtime.getBackendUrl()+reply.rdjData.pageDescription.replace('?view=table', '?view=createForm'));
               }
-              
+
               return aggregatedData;
             })
             .then(aggregatedData => {
@@ -795,6 +814,89 @@ define([
        */
       postData: function (options, dataPayload) {
         return postData.call(this, options, dataPayload);
+      },
+
+      /**
+       *
+       * @param {string} url
+       * @param {object} dataPayload
+       * @returns {Promise<{transport?: {status: number, statusText: string}, body: {data: any, messages?: any}}|{failureType: FailureType, failureReason?: any}|{Error}>}
+       */
+      putPayloadData: function (url, dataPayload) {
+        return new Promise((resolve, reject) => {
+          if (!url.startsWith(Runtime.getBackendUrl())) {
+            url = `${Runtime.getBackendUrl()}${url}`;
+          }
+          const data = JSON.stringify(dataPayload);
+          const jqXHR = $.ajax({
+            type: 'PUT',
+            url: url,
+            data: data,
+            contentType: 'application/json',
+            dataType: 'json',
+            beforeSend: function ( jqXHR, settings) {
+              const sessionToken = getSessionToken(Runtime.getProperty('X-Session-Token'));
+              if (sessionToken) {
+                jqXHR.setRequestHeader('X-Session-Token', sessionToken);
+              }
+              jqXHR.setRequestHeader('Unique-Id', Runtime.getUniqueId());
+            },
+            xhrFields: { withCredentials: true },
+          });
+          // The data argument is what's in the response body,
+          // while the jqXHR argument is the response metadata
+          // and response body.
+          jqXHR
+              .then((data, textStatus, jqXHR) => {
+                const responseBody = jqXHR.responseJSON;
+                let messages = [];
+                if (responseBody.messages) {
+                  messages = JSON.parse(JSON.stringify(responseBody.messages));
+                  delete responseBody.messages;
+                }
+                else {
+                  messages = getResponseJSONMessages(jqXHR.responseJSON.data);
+                }
+                resolve({
+                  transport: {
+                    status: jqXHR.status,
+                    statusText: jqXHR.statusText
+                  },
+                  body: {
+                    data: responseBody,
+                    messages: messages
+                  }
+                });
+              })
+              .fail((jqXHR, textStatus, errorThrown) => {
+                let messages = [];
+                if (textStatus === 'error') {
+                  messages.push({severity: textStatus, message: errorThrown});
+                }
+                else {
+                  messages = getResponseJSONMessages(jqXHR.responseJSON);
+                }
+                // jqXHR is the main thing we need here.
+                // jqXHR.responseJSON is the response body and
+                // it's better to get the transport status
+                // values from there, as well. errorThrown is
+                // not a JavaScript Error. It is the statusText
+                // for the status (e.g. "Bad Request" for 400)
+                reject({
+                  transport: {
+                    status: jqXHR.status,
+                    statusText: jqXHR.statusText
+                  },
+                  body: {
+                    data: {},
+                    messages: getResponseJSONMessages(jqXHR.responseJSON)
+                  },
+                  failureType: (jqXHR.status === 0 && jqXHR.statusText === 'error' ? CoreTypes.FailureType.CONNECTION_REFUSED : CoreTypes.FailureType.CBE_REST_API),
+                  failureReason: errorThrown
+                });
+              });
+        });
+
       },
 
       /**
@@ -1130,10 +1232,7 @@ define([
 
       getMessageCenterData: function (uri) {
         return new Promise((resolve) => {
-          let rdjUrl = uri;
-          if (!rdjUrl.startsWith(Runtime.getBackendUrl())) {
-            rdjUrl = `${Runtime.getBackendUrl()}${uri}`;
-          }
+          let rdjUrl = getResourceURL(uri);
           if (rdjUrl.endsWith('DomainRuntime/MessageCenter/Alerts')) {
             const pathSegments = uri.split('/').filter(e => e);
             const reply = JSON.parse(alertsRDJ.replaceAll('{dataProviderId}', pathSegments[1]));
@@ -1578,6 +1677,19 @@ define([
         return getData.call(this, {url: url});  
       },
 
+      createPagesBookmark: function (data) {
+        const url = getUrlByServiceType.call(this, CbeTypes.ServiceType.BOOKMARKS);
+        return this.putPayloadData(url, data);
+      },
+      getPagesBookmarks: function () {
+        const url = getUrlByServiceType.call(this, CbeTypes.ServiceType.BOOKMARKS);
+        return getData.call(this, {url: url});
+      },
+      savePagesBookmarks: function (data) {
+        const url = getUrlByServiceType.call(this, CbeTypes.ServiceType.BOOKMARKS);
+        return postData.call(this, {url: url}, data);
+      },
+
       about: function() {
         const url = getUrlByServiceType.call(this, CbeTypes.ServiceType.INFORMATION);
         return getData.call(this, {url: url});
@@ -1595,10 +1707,7 @@ define([
        * @returns {Promise<{transport?: {status: number, statusText: string}, body: {data: *, messages?: *}}|{failureType: exports.FailureType, failureReason?: *}|{Error}>}
        */
       submitPolicy: function(uri, dataPayload){
-        let rdjUrl = uri;
-        if (!rdjUrl.startsWith(Runtime.getBackendUrl())) {
-          rdjUrl = `${Runtime.getBackendUrl()}${uri}`;
-        }
+        let rdjUrl = getResourceURL(uri);
         return postData.call(this, {url: rdjUrl}, dataPayload);
       },
 

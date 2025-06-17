@@ -25,6 +25,12 @@ properties:
   name: BatchJobRepositoryRuntime
   relationship: containment
   type: weblogic.management.runtime.BatchJobRepositoryRuntimeMBean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Returns the Domain Certificate Management runtime MBean.</p> '
+  name: CertificateManagementDomainRuntime
+  relationship: containment
+  type: weblogic.management.runtime.CertificateManagementDomainRuntimeMBean
 - array: true
   defaultValue: {
     }

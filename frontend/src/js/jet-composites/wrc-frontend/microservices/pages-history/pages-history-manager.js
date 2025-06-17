@@ -16,7 +16,7 @@ define([
     Runtime
   ){
     let pagesHistoryData = {
-      currentAction: 'bypass',   // 'route', 'navigate.back', 'navigate.next', 'navigate.to', 'bypass', 'cancel'
+      currentAction: 'bypass',   // 'route', 'navigate.back', 'navigate.next', 'navigate.to', 'bypass', 'cancel', 'integrate'
       current: null,
       positionSequence: -1,
       canNext: false,
@@ -96,37 +96,42 @@ define([
       }
     }
 
-    //public:
+    function createPagesHistoryItem(pathParam, breadcrumbLabels, provider, perspective, sliceItem) {
+      pagesHistoryData.positionSequence++;
+      const newItem = {
+        position: pagesHistoryData.positionSequence,
+        value: pathParam,
+        breadcrumbLabels: breadcrumbLabels,
+        provider: {id: provider.id, type: provider.type},
+        perspective: perspective
+      };
+      if (typeof sliceItem === 'undefined') {
+        newItem['slice'] = {
+          name: PageDefinitionUtils.getPathParamsTab(pathParam),
+          level: 0
+        };
+      }
+      else {
+        newItem['slice'] = sliceItem;
+      }
+      pagesHistoryData.items.push(newItem);
+      pagesHistoryData.next.push(newItem.position);
+
+      pagesHistoryData.back = [];
+
+      const newPosition = pagesHistoryData.next.at(-1);
+      pagesHistoryData.current = getPagesHistoryItem(newPosition);
+
+      if (pagesHistoryData.items.length > Runtime.getPagesHistoryMaxQueueSize()) {
+        truncatePagesHistory();
+      }
+    }
+
+  //public:
     return {
-      addPagesHistoryItem: (pathParam, breadcrumbLabels, perspective, sliceItem) => {
+      addPagesHistoryItem: (pathParam, breadcrumbLabels, provider, perspective, sliceItem) => {
         if (pathParam && pathParam !== '' && pagesHistoryData.currentAction === 'route') {
-          pagesHistoryData.positionSequence++;
-          const newItem = {
-            position: pagesHistoryData.positionSequence,
-            value: pathParam,
-            breadcrumbLabels: breadcrumbLabels,
-            perspective: perspective
-          };
-          if (typeof sliceItem === 'undefined') {
-            newItem['slice'] = {
-              name: PageDefinitionUtils.getPathParamsTab(pathParam),
-              level: 0
-            };
-          }
-          else {
-            newItem['slice'] = sliceItem;
-          }
-          pagesHistoryData.items.push(newItem);
-          pagesHistoryData.next.push(newItem.position);
-
-          pagesHistoryData.back = [];
-
-          const newPosition = pagesHistoryData.next.at(-1);
-          pagesHistoryData.current = getPagesHistoryItem(newPosition);
-
-          if (pagesHistoryData.items.length > Runtime.getPagesHistoryMaxQueueSize()) {
-            truncatePagesHistory();
-          }
+          createPagesHistoryItem(pathParam, breadcrumbLabels, provider, perspective, sliceItem);
         }
       },
       deletePagesHistoryItem: (pathParam) => {
@@ -161,7 +166,7 @@ define([
         pagesHistoryData.canBack = false;
         pagesHistoryData.canLaunch = false;
         pagesHistoryData.canBookmark = false,
-          pagesHistoryData.back = [];
+        pagesHistoryData.back = [];
         pagesHistoryData.next = [];
         pagesHistoryData.items = [];
       },
@@ -222,7 +227,7 @@ define([
         return pagesHistoryData.currentAction;
       },
       setPagesHistoryCurrentAction: (value = 'bypass') => {
-        pagesHistoryData.currentAction = (['route', 'navigate.back', 'navigate.next', 'navigate.to', 'bypass', 'cancel'].includes(value) ? value: 'bypass');
+        pagesHistoryData.currentAction = (['route', 'navigate.back', 'navigate.next', 'navigate.to', 'bypass', 'cancel', 'integrate'].includes(value) ? value: 'bypass');
       },
       performNavigateBackAction: () => {
         if (pagesHistoryData.currentAction === 'navigate.back') {
@@ -276,6 +281,13 @@ define([
           }
           // Make newPosition the current item
           pagesHistoryData.current = getPagesHistoryItem(newPosition);
+        }
+        // Return the current item
+        return pagesHistoryData.current;
+      },
+      performIntegrateAction: (bookmark) => {
+        if (pagesHistoryData.currentAction === 'integrate') {
+          createPagesHistoryItem(bookmark.value, bookmark.breadcrumbLabels, bookmark.provider, bookmark.perspective, bookmark.slice);
         }
         // Return the current item
         return pagesHistoryData.current;

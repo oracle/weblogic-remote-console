@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2022, 2024, Oracle and/or its affiliates.
+ * Copyright (c) 2022, 2025, Oracle and/or its affiliates.
  * Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
  * @ignore
  */
@@ -46,6 +46,7 @@ const AppConfig = (() => {
       if (settings.checkPpidMillis) _config['checkPpidMillis'] = settings.checkPpidMillis;
       if (settings.javaPath) _config['javaPath'] = `${settings.javaPath}`;
       if (settings.executablePath) _config['executableJar'] = `${_appPaths.exe}/${settings.executablePath}`;
+      if (settings['weblogic.remoteconsole.java.startoptions']) _config['weblogic.remoteconsole.java.startoptions'] = `${settings['weblogic.remoteconsole.java.startoptions']}`;
     },
     read: () => {
       if (fs.existsSync(AppConfig.getPath())) {
@@ -60,6 +61,8 @@ const AppConfig = (() => {
         }
         catch(err) {
           log('error', err);
+          const WindowManagement = require('./window-management');
+          WindowManagement.corruptFile(AppConfig.getPath());
         }
       }
     },

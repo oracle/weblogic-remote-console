@@ -1,4 +1,4 @@
-// Copyright (c) 2022, 2024, Oracle and/or its affiliates.
+// Copyright (c) 2022, 2025, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.customizers;
@@ -24,6 +24,10 @@ public class LibraryMBeanUploadableCreatableBeanCollectionResource
       String stageMode = getStringProperty("StagingMode", false);
       if (stageMode != null && !stageMode.equals("default")) {
         deploymentOptions.setProperty("stageMode", stageMode);
+      }
+      String securityModel = getStringProperty("SecurityModel", false);
+      if (securityModel != null && !securityModel.equals("DDOnly")) {
+        deploymentOptions.setProperty("securityModel", securityModel);
       }
       return deploymentOptions;
     }

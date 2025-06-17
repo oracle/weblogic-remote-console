@@ -1,4 +1,4 @@
-# Copyright (c) 2021, 2024, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2021, 2025, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 actions:
 
@@ -90,8 +90,8 @@ actions:
     in its own directory to avoid it being inadvertently shared with other applications.</p>
     <p><code>Plan.xml</code> is the highly recommended name for the file.</p>
     <p><i>The plan file will be overwritten if it already exists.  Other files located in its directory may be overwritten too.</i></p>
-    <p>Note: if your new deployment plan isn't visible in the WebLogic Remote Console, go to the 'Edit' view
-    and see if the shopping cart has changes that need to be committed.</p>
+    <p>Note: if you are in an edit session, 
+    go to the 'Edit' view after the plan creation and see if the shopping cart has changes that need to be committed.</p>
   inputForm:
     customizePageMethod: weblogic.remoteconsole.customizers.AppDeploymentRuntimeMBeanCustomizer.customizeCreatePlanActionInputForm
     introductionHTML: >
@@ -100,8 +100,8 @@ actions:
       The plan file location must be under domain home</p>
       <p><code>Plan.xml</code> is the highly recommended name for the file.</p>
       <p><i>The plan file will be overwritten if it already exists.  Other files located in its directory may be overwritten too.</i></p>
-      <p>Note: if your new deployment plan isn't visible in the WebLogic Remote Console, go to the 'Edit' view
-      and see if the shopping cart has changes that need to be committed.</p>
+      <p>Note: if you are in an edit session, 
+      go to the 'Edit' view after the plan creation and see if the shopping cart has changes that need to be committed.</p>
     parameters:
     - name: "PlanPath"
       required: true
@@ -131,12 +131,17 @@ actions:
     to apply resource binding changes to a production application.</p>
     <p>This method targets only root modules. Module level targeting is 
     not supported.</p>
+    <p>Note: if you are in an edit session, 
+    go to the 'Edit' view after the operation and see if the shopping cart has changes that need to be committed.</p>
+
   inputForm:
     customizePageMethod: weblogic.remoteconsole.customizers.AppDeploymentRuntimeMBeanCustomizer.customizeUpdatePlanActionInputForm
     introductionHTML: >
       <p>Use this page to update the application with a new or modified deployment plan.</p>
       <p>You can specify a different deployment plan which is located on the admin server's file system.  The status of the update
         will be available at the Deployment Progress Objects tree node. </p>
+      <p>Note: if you are in an edit session, 
+        go to the 'Edit' view after the operation and see if the shopping cart has changes that need to be committed.</p>
     parameters:
       - name: "PlanPath"
         required: true
@@ -161,6 +166,9 @@ actions:
       <p>You can specify a different location for the application or a different deployment plan. Both must be located 
       on the administration server's file system.</p>
       <p>If the plan path is not specified, the application will be redeployed without a deployment plan. </p>
+      <p>Note: if you are in an edit session, 
+      go to the 'Edit' view after the operation and see if the shopping cart has changes that need to be committed.</p>
+
     parameters:
       - name: "SourcePath"
         required: true
@@ -181,6 +189,8 @@ actions:
     <p>If the original source or plan is not under administration server's upload directory, a new directory will be 
     created and the files will be upload there. The original archive or plan, which is outside the upload directory, will not be deleted.</p>
     <p>If the plan is not selected, the application will be redeployed without a deployment plan. </p>
+    <p>Note: if you are in an edit session, 
+    go to the 'Edit' view after the operation and see if the shopping cart has changes that need to be committed.</p>
   inputForm:
     introductionHTML: >
       <p>Use this page to redeploy the application with a new or modified deployment plan.</p>
@@ -188,6 +198,8 @@ actions:
       <p>If the original source or plan is not under administration server's upload directory, a new directory will be 
       created and the files will be upload there. The original archive or plan, which is outside the upload directory, will not be deleted.</p>
       <p>If the plan is not selected, the application will be redeployed without a deployment plan. </p>
+      <p>Note: if you are in an edit session, 
+      go to the 'Edit' view after the operation and see if the shopping cart has changes that need to be committed.</p>
     parameters:
     - name: Source
       required: true
@@ -209,12 +221,16 @@ actions:
     <p>The selected plan file will be uploaded to the server machine, under the administration server's upload directory.</p>
     <p>If the Plan was not under administration server's upload directory, a new directory will be created and the files will be upload there. 
     The original plan, which is outside the upload directory, will not be deleted.</p>
+    <p>Note: if you are in an edit session, 
+     go to the 'Edit' view after the operation and see if the shopping cart has changes that need to be committed.</p>
   inputForm:
     introductionHTML: >
       <p>Use this page to update the deployment plan of the application.</p>
       <p>The selected plan file will be uploaded to the server machine, under the administration server's upload directory.</p>
       <p>If the Plan was not under administration server's upload directory, a new directory will be created and the files will be upload there. 
       The original plan, which is outside the upload directory, will not be deleted.</p>
+      <p>Note: if you are in an edit session, 
+       go to the 'Edit' view after the operation and see if the shopping cart has changes that need to be committed.</p>
     parameters:
       - name: Plan
         required: true

@@ -20,12 +20,12 @@ const LoggingLevels = [
 let _logFilename;
 let _loggingLevel;
 let _isHeadlessMode;
-let _isStdoutErrorEpipe;
+let _isStdoutEnabled;
 
 (function () {
   _loggingLevel = 'info';
   _isHeadlessMode = false;
-  _isStdoutErrorEpipe = false;
+  _isStdoutEnabled = false;
   const _error = console.error;
   const _warning = console.warning;
   const _debug = console.debug;
@@ -53,7 +53,7 @@ let _isStdoutErrorEpipe;
 
   // Handle error on stdout and also prevent a dialog box when using console logging functions...
   process.stdout.on('error', function (error) {
-    if (error.code == 'EPIPE') _isStdoutErrorEpipe = true;
+    if (error.code == 'EPIPE') _isStdoutEnabled = false;
     const caller = _getCaller((new Error('StackLog')));
     const line = `${getLogEntryDateTime()} ${getLogEntryLevel('error')} ${caller} ${error}`;
     fs.appendFileSync(_logFilename, line + os.EOL);
@@ -61,7 +61,7 @@ let _isStdoutErrorEpipe;
 })();
 
 function _useConsoleLogging() {
-  return (!_isHeadlessMode && !_isStdoutErrorEpipe);
+  return (_isStdoutEnabled && !_isHeadlessMode);
 }
 
 function initializeLog(options) {
@@ -179,6 +179,10 @@ function setOptions(options) {
   }
 }
 
+function setStdoutEnabled() {
+  _isStdoutEnabled = true;
+}
+
 function rotateLog(options) {
   _logFilename = _rotateLogfile(options.appPaths.userData, options.baseFilename);
   if (options.loggingLevel) _loggingLevel = options.loggingLevel;
@@ -226,5 +230,6 @@ module.exports = {
   setLoggingLevel,
   getLoggingLevel,
   setOptions,
+  setStdoutEnabled,
   rotateLog
 };

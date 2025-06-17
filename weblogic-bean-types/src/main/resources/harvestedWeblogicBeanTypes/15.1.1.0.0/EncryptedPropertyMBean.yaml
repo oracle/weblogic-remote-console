@@ -1,0 +1,36 @@
+# Copyright (c) 2020, 2025, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+baseTypes:
+- weblogic.management.configuration.ConfigurationMBean
+descriptionHTML: 'This MBean stores a key/value pair where the value is encrypted.
+  Callers of this MBean will pass an unencrypted value and the MBean will encrypt
+  it. Callers use <code>getValueEncrypted()</code> to fetch the encrypted bytes and
+  then call <code>weblogic.management.EncryptionHelper.decrypt()</code> (or a similar
+  function) to decrypt the value. '
+name: weblogic.management.configuration.EncryptedPropertyMBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: 'Returns the value. The value may or may not be decrypted depending
+    on the context. '
+  encrypted: true
+  name: EncryptedValue
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: 'Returns the encrypted value bytes. '
+  encrypted: true
+  name: EncryptedValueEncrypted
+  type: byte
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: 'Returns the key. '
+  name: Key
+  restartNeeded: true
+  type: java.lang.String
+  writable: true

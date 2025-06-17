@@ -1,0 +1,31 @@
+# Copyright (c) 2025, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+introductionHTML: >
+  <p>Migrates all services deployed to the migratable target to another destination server. </br>
+  Select one migratable target from the table and then press the 'Migrate JMS' action to do the migration. </p>
+  <p>Note: if you are in an edit session, after the action is done, 
+  go to the 'Edit' view and see if the shopping cart has changes that need to be committed.</p>
+
+getTableRowsMethod: weblogic.remoteconsole.customizers.MigrationCoordinatorMBeanCustomizer.getMigrateJMSSliceTableRows
+actions:
+  - name: "migrate"
+    label: Migrate JMS
+    rows: one
+displayedColumns:
+  - name: "Name"
+    label: Migratable Targets
+    definition:
+      type: "java.lang.String"
+      descriptionHTML: Migratable Target for migration
+  - name: "UserPreferredServer"
+    definition:
+      type: "java.lang.String"
+      descriptionHTML: User Preferred Serve for migrating to.
+  - name: "HostingServer"
+    definition:
+      type: "java.lang.String"
+      descriptionHTML: Server that is hosting this migratable target.
+  - name: "Cluster"
+    definition:
+      type: "java.lang.String"
+      descriptionHTML: Cluster that this migratable target is part of.

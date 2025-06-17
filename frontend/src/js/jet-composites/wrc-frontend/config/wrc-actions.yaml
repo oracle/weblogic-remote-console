@@ -51,6 +51,10 @@ actions:
       iconFile: delete-icon-blk_24x24
     - id: exportActions
       iconFile: action-export-3d-icon-blk_24x24
+    - id: exportData
+      iconFile: action-export-3d-icon-blk_24x24
+    - id: importData
+      iconFile: action-import-3d-icon-blk_24x24
     - id: importMessages
       iconFile: action-import-3d-icon-blk_24x24
     - id: moveActions
@@ -72,6 +76,14 @@ actions:
     - id: importAssertionSigningCert
       iconFile: action-import-3d-icon-blk_24x24
     - id: publishSingleSignOnServices
+      iconFile: action-publish-icon-blk_24x24
+    - id: migrate
+      iconFile: action-publish-icon-blk_24x24
+    - id: migrateJTA
+      iconFile: action-publish-icon-blk_24x24
+    - id: migrateServer
+      iconFile: action-publish-icon-blk_24x24
+    - id: migrateSingleton
       iconFile: action-publish-icon-blk_24x24
     - id: unlockUser
       iconFile: action-unlock-blk_24x24
@@ -95,7 +107,9 @@ actions:
       iconFile: action-import-3d-icon-blk_24x24
     - id: filter
       iconFile: action-filter-icon-blk_24x24
-
+    - id: viewMessage
+      iconFile: action-view-3d-icon-blk_24x24
+  
   frontend:
     - id: new
       iconFile: new-icon-blk_24x24

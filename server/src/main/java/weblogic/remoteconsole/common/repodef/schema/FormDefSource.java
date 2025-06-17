@@ -16,8 +16,8 @@ import weblogic.console.schema.ListValue;
  * add properties for slice and create form specific settings.
  */
 public class FormDefSource extends PageDefSource {
-  private ListValue<BeanPropertyDefCustomizerSource> properties = new ListValue<>();
-  private ListValue<FormSectionDefSource> sections = new ListValue<>();
+  private ListValue<BeanPropertyDefCustomizerSource> properties = ListValue.create();
+  private ListValue<FormSectionDefSource> sections = ListValue.create();
 
   // The list of 'normal' properties to display on this form.
   // Note: SliceFormDefSource adds 'advancedProperties'.
@@ -29,11 +29,11 @@ public class FormDefSource extends PageDefSource {
   }
 
   public void setProperties(List<BeanPropertyDefCustomizerSource> value) {
-    properties.setValue(value);
+    properties = properties.setValue(value);
   }
 
   public void addProperty(BeanPropertyDefCustomizerSource value) {
-    properties.add(value);
+    properties = properties.add(value);
   }
 
   // The sections to display on this form.
@@ -45,11 +45,11 @@ public class FormDefSource extends PageDefSource {
   }
 
   public void setSections(List<FormSectionDefSource> value) {
-    sections.setValue(value);
+    sections = sections.setValue(value);
   }
 
   public void addSection(FormSectionDefSource value) {
-    sections.add(value);
+    sections = sections.add(value);
   }
 
   @Override

@@ -1,4 +1,4 @@
-# Copyright (c) 2022, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2022, 2025, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 contents:
@@ -15,3 +15,34 @@ contents:
 - child: JDBCSystemResources
 - child: JMSSystemResources
 - child: Servers
+- label: Advanced
+  type: group
+  contents:
+  - child: AdvancedAdminRoleMappings
+    forceNotExpandable: true
+  - child: AdvancedApplicationRoleMappings
+    forceNotExpandable: true
+  - child: AdvancedCOMRoleMappings
+    forceNotExpandable: true
+  - child: AdvancedEISRoleMappings
+    forceNotExpandable: true
+  - child: AdvancedEJBRoleMappings
+    forceNotExpandable: true
+  - child: AdvancedJDBCRoleMappings
+    forceNotExpandable: true
+  - child: AdvancedJMSRoleMappings
+    forceNotExpandable: true
+  - child: AdvancedJMXRoleMappings
+    forceNotExpandable: true
+  - child: AdvancedJNDIRoleMappings
+    forceNotExpandable: true
+  - child: AdvancedServerRoleMappings
+    forceNotExpandable: true
+  - child: AdvancedURLRoleMappings
+    forceNotExpandable: true
+  - child: AdvancedWebServiceRoleMappings
+    forceNotExpandable: true
+  - child: AdvancedWorkContextRoleMappings
+    forceNotExpandable: true
+  - child: AdvancedAllRoleMappings
+    forceNotExpandable: true

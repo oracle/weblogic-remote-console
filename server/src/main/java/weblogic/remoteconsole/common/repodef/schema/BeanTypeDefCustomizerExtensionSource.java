@@ -12,9 +12,9 @@ import weblogic.console.schema.YamlSource;
  * This POJO mirrors the yaml source file format for extending type.yaml
  */
 public class BeanTypeDefCustomizerExtensionSource extends YamlSource {
-  private ListValue<BeanPropertyDefCustomizerSource> properties = new ListValue<>();
-  private ListValue<BeanChildDefCustomizerSource> children = new ListValue<>();
-  private ListValue<SubTypeDefSource> subTypes = new ListValue<>();
+  private ListValue<BeanPropertyDefCustomizerSource> properties = ListValue.create();
+  private ListValue<BeanChildDefCustomizerSource> children = ListValue.create();
+  private ListValue<SubTypeDefSource> subTypes = ListValue.create();
 
   // The list of properties on this type that have been customized.
   public List<BeanPropertyDefCustomizerSource> getProperties() {
@@ -22,11 +22,11 @@ public class BeanTypeDefCustomizerExtensionSource extends YamlSource {
   }
 
   public void setProperties(List<BeanPropertyDefCustomizerSource> value) {
-    properties.setValue(value);
+    properties = properties.setValue(value);
   }
 
   public void addProperty(BeanPropertyDefCustomizerSource value) {
-    properties.add(value);
+    properties = properties.add(value);
   }
 
   // The list of children (i.e. collections and singletons) on this
@@ -36,11 +36,11 @@ public class BeanTypeDefCustomizerExtensionSource extends YamlSource {
   }
 
   public void setChildren(List<BeanChildDefCustomizerSource> value) {
-    children.setValue(value);
+    children = children.setValue(value);
   }
 
   public void addChild(BeanChildDefCustomizerSource value) {
-    children.add(value);
+    children = children.add(value);
   }
 
   // The list of instantiable derived (sub) types of this type.
@@ -51,11 +51,11 @@ public class BeanTypeDefCustomizerExtensionSource extends YamlSource {
   }
 
   public void setSubTypes(List<SubTypeDefSource> value) {
-    subTypes.setValue(value);
+    subTypes = subTypes.setValue(value);
   }
 
-  public void addSubTypes(SubTypeDefSource value) {
-    subTypes.add(value);
+  public void addSubType(SubTypeDefSource value) {
+    subTypes = subTypes.add(value);
   }
 
   @Override

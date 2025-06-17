@@ -6,6 +6,7 @@ package weblogic.remoteconsole.common.repodef.schema;
 import java.util.List;
 
 import weblogic.console.schema.ListValue;
+import weblogic.console.schema.Value;
 
 /**
  * This POJO mirrors the yaml source file format for configuring information about an action input form.
@@ -17,7 +18,9 @@ public class ActionInputFormDefSource extends PageDefSource {
   //   customizePageMethod
   //   actions
 
-  private ListValue<BeanActionParamDefCustomizerSource> parameters = new ListValue<>();
+  private ListValue<BeanActionParamDefCustomizerSource> parameters = ListValue.create();
+  private Value<ActionInputFormPresentationDefSource> presentation =
+    Value.create(new ActionInputFormPresentationDefSource());
 
   // The list of parameters to display on this form.
   public List<BeanActionParamDefCustomizerSource> getParameters() {
@@ -25,11 +28,23 @@ public class ActionInputFormDefSource extends PageDefSource {
   }
 
   public void setParameters(List<BeanActionParamDefCustomizerSource> value) {
-    parameters.setValue(value);
+    parameters = parameters.setValue(value);
   }
 
   public void addParameter(BeanActionParamDefCustomizerSource value) {
-    parameters.add(value);
+    parameters = parameters.add(value);
+  }
+
+  // Returns presentation info about this action input form
+  // (e.g. whether the properties should be displayed in a single column).
+  //
+  // Returns null if the default presentation should be used.
+  public ActionInputFormPresentationDefSource getPresentation() {
+    return presentation.getValue();
+  }
+
+  public void setPresentation(ActionInputFormPresentationDefSource value) {
+    presentation = presentation.setValue(value);
   }
 
   @Override

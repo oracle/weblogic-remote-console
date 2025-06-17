@@ -984,6 +984,13 @@ properties:
   name: PathServices
   relationship: containment
   type: weblogic.management.configuration.PathServiceMBean
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: '<p>The collection of plugin deployments in this domain</p> '
+  name: PluginDeployments
+  relationship: containment
+  type: weblogic.management.configuration.PluginDeploymentMBean
 - defaultValue: {
     }
   descriptionHTML: '<p>Specifies whether all servers in this domain run in production

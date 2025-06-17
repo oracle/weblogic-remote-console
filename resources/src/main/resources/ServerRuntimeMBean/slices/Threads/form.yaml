@@ -1,4 +1,4 @@
-# Copyright (c) 2020, 2021, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2025, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 introductionHTML: >
     <p>This page provides information on the thread activity for the current
@@ -10,6 +10,9 @@ properties:
 - name: ThreadPoolRuntime.HoggingThreadCount
 - name: ThreadPoolRuntime.StandbyThreadCount
 - name: ThreadPoolRuntime.StuckThreadCount
+- name: ThreadPoolRuntime.ExecuteThreadActiveCount
+- name: ThreadPoolRuntime.ExecuteThreadTotalCount
+- name: ThreadPoolRuntime.ExecuteThreadIdleCount
 - name: ThreadPoolRuntime.MinThreadsConstraintsCompleted
 - name: ThreadPoolRuntime.MinThreadsConstraintsPending
 - name: ThreadPoolRuntime.QueueLength

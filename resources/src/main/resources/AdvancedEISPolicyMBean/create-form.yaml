@@ -1,0 +1,9 @@
+# Copyright (c) 2025, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+introductionHTML: Create a new EIS security policy
+properties:
+- name: eis_application
+- name: eis_module
+- name: eis_eis
+- name: eis_destinationId

@@ -11,8 +11,8 @@ import weblogic.console.schema.YamlSource;
  * information about a slice form
  */
 public class SliceFormPresentationDefSource extends YamlSource {
-  private BooleanValue useCheckBoxesForBooleans = new BooleanValue();
-  private BooleanValue singleColumn = new BooleanValue();
+  private BooleanValue useCheckBoxesForBooleans = BooleanValue.create();
+  private BooleanValue singleColumn = BooleanValue.create();
 
   // Whether to display boolean properties on this form as check boxes.
   // If not specified, they're displayed as sliders.
@@ -24,7 +24,7 @@ public class SliceFormPresentationDefSource extends YamlSource {
   }
 
   public void setUseCheckBoxesForBooleans(boolean val) {
-    useCheckBoxesForBooleans.setValue(val);
+    useCheckBoxesForBooleans = useCheckBoxesForBooleans.setValue(val);
   }
 
   // Whether to display the properties in a single column.
@@ -34,6 +34,6 @@ public class SliceFormPresentationDefSource extends YamlSource {
   }
 
   public void setSingleColumn(boolean val) {
-    singleColumn.setValue(val);
+    singleColumn = singleColumn.setValue(val);
   }
 }

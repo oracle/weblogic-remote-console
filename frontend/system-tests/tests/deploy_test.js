@@ -1339,8 +1339,8 @@ describe.only('Test Suite: deploy_test , Redeploy and undeploy for Application a
            await driver.findElement(
                By.xpath("//oj-button[@id='[[i18n.buttons.save.id]]']")).click();
            await driver.sleep(8400);
-           console.log("Click Reload Interval Icon");
-           await driver.findElement(By.xpath("//img[@id='sync-icon']")).click();
+           //console.log("Click Reload Interval Icon");
+           //await driver.findElement(By.xpath("//img[@id='sync-icon']")).click();
            await driver.sleep(9600);
            console.log("Click sampleWarFileWithPlan Node");
            element = driver.findElement(

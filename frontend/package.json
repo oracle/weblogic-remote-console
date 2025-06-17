@@ -51,6 +51,7 @@
     "yargs": "^16.0.3"
   },
   "overrides": {
+    "brace-expansion": "^4.0.1",
     "cookie": "^0.7.0",
     "path-to-regexp": "^0.1.12"
   },

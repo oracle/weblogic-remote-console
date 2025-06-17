@@ -7,8 +7,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import weblogic.console.schema.beaninfo.BeanPropertyDefSource;
 import weblogic.console.utils.Path;
-import weblogic.remoteconsole.common.utils.ListUtils;
+import weblogic.console.utils.StringUtils;
+import weblogic.remoteconsole.common.repodef.LocalizableString;
+import weblogic.remoteconsole.common.repodef.yaml.BeanPropertyDefImpl;
+import weblogic.remoteconsole.common.repodef.yaml.HelpHTMLUtils;
+import weblogic.remoteconsole.common.repodef.yaml.ValueUtils;
 import weblogic.remoteconsole.server.repo.Value;
 
 /**
@@ -17,41 +22,62 @@ import weblogic.remoteconsole.server.repo.Value;
  * Used for building custom pages.
  */
 public class CustomPagePropertyDef implements PagePropertyDef {
+  // Note: CustomPageFieldDef and CustomBeanPropertyDef both include all the
+  // fields from BeanFieldDef.  Just uses the ones from CustomPageFieldDef.
+  private CustomPageFieldDef pageFieldDef = new CustomPageFieldDef();
   private CustomBeanPropertyDef beanPropertyDef = new CustomBeanPropertyDef();
   private PageDef pageDef;
-  private LocalizableString helpSummaryHTML;
-  private LocalizableString detailedHelpHTML;
-  private List<LegalValueDef> legalValueDefs = new ArrayList<>();
-  private boolean supportsOptions;
-  private List<String> optionsSources = new ArrayList<>();
-  private boolean allowNoneOption;
-  private LocalizableString label;
-  private PageFieldPresentationDef presentationDef;
   private PagePropertyUsedIfDef usedIfDef;
   private PagePropertyExternalHelpDef externalHelpDef;
-  private boolean pageLevelProperty;
   private boolean dontReturnIfHiddenColumn;
 
   public CustomPagePropertyDef() {
   }
 
+  public CustomPagePropertyDef(BeanPropertyDef toClone) {
+    pageFieldDef = new CustomPageFieldDef(toClone);
+    beanPropertyDef = new CustomBeanPropertyDef(toClone);
+    setLabel(
+      new LocalizableString(
+        StringUtils.camelCaseToUpperCaseWords(toClone.getPropertyName())
+      )
+    );
+    if (toClone instanceof BeanPropertyDefImpl) {
+      BeanPropertyDefSource source = ((BeanPropertyDefImpl)toClone).getSource();
+      setHelpSummaryHTML(
+        new LocalizableString(
+          HelpHTMLUtils.getEnglishHelpSummaryHTML(source.getDescriptionHTML(), null, null, null)
+        )
+      );
+      setDetailedHelpHTML(
+        new LocalizableString(
+          HelpHTMLUtils.getEnglishDetailedHelpHTML(source.getDescriptionHTML(), null, null, null)
+        )
+      );
+      List<LegalValueDef> legalValueDefs = new ArrayList<>();
+      for (Object legalValue : source.getLegalValues()) {
+        CustomLegalValueDef customLegalValueDef = new CustomLegalValueDef();
+        customLegalValueDef.setFieldDef(this);
+        Value value = ValueUtils.createValue(legalValue);
+        customLegalValueDef.setValue(value);
+        customLegalValueDef.setLabel(
+          new LocalizableString(
+            StringUtils.camelCaseToUpperCaseWords(ValueUtils.getValueAsString(value))
+          )
+        );
+        legalValueDefs.add(customLegalValueDef);
+      }
+      setLegalValueDefs(legalValueDefs);
+    }
+  }
+
   public CustomPagePropertyDef(PagePropertyDef toClone) {
+    pageFieldDef = new CustomPageFieldDef(toClone);
     beanPropertyDef = new CustomBeanPropertyDef(toClone);
     setPageDef(toClone.getPageDef());
-    setHelpSummaryHTML(toClone.getHelpSummaryHTML());
-    setDetailedHelpHTML(toClone.getDetailedHelpHTML());
-    getLegalValueDefs().addAll(ListUtils.nonNull(toClone.getLegalValueDefs()));
-    setSupportsOptions(toClone.isSupportsOptions());
-    getOptionsSources().addAll(ListUtils.nonNull(toClone.getOptionsSources()));
-    setAllowNoneOption(toClone.isAllowNoneOption());
-    setLabel(toClone.getLabel());
     setUsedIfDef(toClone.getUsedIfDef());
-    setPresentationDef(toClone.getPresentationDef());
     setExternalHelpDef(toClone.getExternalHelpDef());
-    setPageLevelProperty(toClone.isPageLevelField());
     setDontReturnIfHiddenColumn(toClone.isDontReturnIfHiddenColumn());
-    setMultiLineString(toClone.isMultiLineString());
-    setDynamicEnum(toClone.isDynamicEnum());
   }
 
   @Override
@@ -70,104 +96,6 @@ public class CustomPagePropertyDef implements PagePropertyDef {
   }
 
   @Override
-  public LocalizableString getHelpSummaryHTML() {
-    return helpSummaryHTML;
-  }
-
-  public void setHelpSummaryHTML(LocalizableString val) {
-    helpSummaryHTML = val;
-  }
-
-  public CustomPagePropertyDef helpSummaryHTML(LocalizableString val) {
-    setHelpSummaryHTML(val);
-    return this;
-  }
-
-  @Override
-  public LocalizableString getDetailedHelpHTML() {
-    return detailedHelpHTML;
-  }
-
-  public void setDetailedHelpHTML(LocalizableString val) {
-    detailedHelpHTML = val;
-  }
-
-  public CustomPagePropertyDef detailedHelpHTML(LocalizableString val) {
-    setDetailedHelpHTML(val);
-    return this;
-  }
-
-  @Override
-  public List<LegalValueDef> getLegalValueDefs() {
-    return legalValueDefs;
-  }
-
-  public void setLegalValueDefs(List<LegalValueDef> val) {
-    legalValueDefs = val;
-  }
-
-  public CustomPagePropertyDef legalValueDefs(List<LegalValueDef> val) {
-    setLegalValueDefs(val);
-    return this;
-  }
-
-  @Override
-  public boolean isSupportsOptions() {
-    return supportsOptions;
-  }
-
-  public void setSupportsOptions(boolean val) {
-    supportsOptions = val;
-  }
-
-  public CustomPagePropertyDef supportsOptions(boolean val) {
-    setSupportsOptions(val);
-    return this;
-  }
-
-  @Override
-  public List<String> getOptionsSources() {
-    return optionsSources;
-  }
-
-  public void setOptionsSources(List<String> val) {
-    optionsSources = val;
-  }
-
-  public CustomPagePropertyDef optionsSources(List<String> val) {
-    setOptionsSources(val);
-    return this;
-  }
-
-  @Override
-  public boolean isAllowNoneOption() {
-    return allowNoneOption;
-  }
-
-  public void setAllowNoneOption(boolean val) {
-    allowNoneOption = val;
-  }
-
-  public CustomPagePropertyDef allowNoneOption(boolean val) {
-    setAllowNoneOption(val);
-    return this;
-  }
-
-  @Override
-  public LocalizableString getLabel() {
-    return label;
-  }
-
-  public void setLabel(LocalizableString val) {
-    label = val;
-  }
-
-  public CustomPagePropertyDef label(LocalizableString val) {
-    setLabel(val);
-    return this;
-  }
-
-  @Override
   public PagePropertyUsedIfDef getUsedIfDef() {
     return usedIfDef;
   }
@@ -178,20 +106,6 @@ public class CustomPagePropertyDef implements PagePropertyDef {
 
   public CustomPagePropertyDef usedIfDef(PagePropertyUsedIfDef val) {
     setUsedIfDef(val);
-    return this;
-  }
-
-  @Override
-  public PageFieldPresentationDef getPresentationDef() {
-    return presentationDef;
-  }
-
-  public void setPresentationDef(PageFieldPresentationDef val) {
-    presentationDef = val;
-  }
-
-  public CustomPagePropertyDef presentationDef(PageFieldPresentationDef val) {
-    setPresentationDef(val);
     return this;
   }
 
@@ -210,20 +124,6 @@ public class CustomPagePropertyDef implements PagePropertyDef {
   }
 
   @Override
-  public boolean isPageLevelField() {
-    return pageLevelProperty;
-  }
-
-  public void setPageLevelProperty(boolean val) {
-    pageLevelProperty = val;
-  }
-
-  public CustomPagePropertyDef pageLevelProperty(boolean val) {
-    setPageLevelProperty(val);
-    return this;
-  }
-
-  @Override
   public boolean isDontReturnIfHiddenColumn() {
     return dontReturnIfHiddenColumn;
   }
@@ -234,6 +134,272 @@ public class CustomPagePropertyDef implements PagePropertyDef {
 
   public CustomPagePropertyDef dontReturnIfHiddenColumn(boolean val) {
     setDontReturnIfHiddenColumn(val);
+    return this;
+  }
+
+  @Override
+  public LocalizableString getHelpSummaryHTML() {
+    return pageFieldDef.getHelpSummaryHTML();
+  }
+
+  public void setHelpSummaryHTML(LocalizableString val) {
+    pageFieldDef.setHelpSummaryHTML(val);
+  }
+
+  public CustomPagePropertyDef helpSummaryHTML(LocalizableString val) {
+    setHelpSummaryHTML(val);
+    return this;
+  }
+
+  @Override
+  public LocalizableString getDetailedHelpHTML() {
+    return pageFieldDef.getDetailedHelpHTML();
+  }
+
+  public void setDetailedHelpHTML(LocalizableString val) {
+    pageFieldDef.setDetailedHelpHTML(val);
+  }
+
+  public CustomPagePropertyDef detailedHelpHTML(LocalizableString val) {
+    setDetailedHelpHTML(val);
+    return this;
+  }
+
+  @Override
+  public boolean isSupportsOptions() {
+    return pageFieldDef.isSupportsOptions();
+  }
+
+  public void setSupportsOptions(boolean val) {
+    pageFieldDef.setSupportsOptions(val);
+  }
+
+  public CustomPagePropertyDef supportsOptions(boolean val) {
+    setSupportsOptions(val);
+    return this;
+  }
+
+  @Override
+  public List<String> getOptionsSources() {
+    return pageFieldDef.getOptionsSources();
+  }
+
+  public void setOptionsSources(List<String> val) {
+    pageFieldDef.setOptionsSources(val);
+  }
+
+  public CustomPagePropertyDef optionsSources(List<String> val) {
+    setOptionsSources(val);
+    return this;
+  }
+
+  @Override
+  public boolean isAllowNoneOption() {
+    return pageFieldDef.isAllowNoneOption();
+  }
+
+  public void setAllowNoneOption(boolean val) {
+    pageFieldDef.setAllowNoneOption(val);
+  }
+
+  public CustomPagePropertyDef allowNoneOption(boolean val) {
+    setAllowNoneOption(val);
+    return this;
+  }
+
+  @Override
+  public LocalizableString getLabel() {
+    return pageFieldDef.getLabel();
+  }
+
+  public void setLabel(LocalizableString val) {
+    pageFieldDef.setLabel(val);
+  }
+
+  public CustomPagePropertyDef label(LocalizableString val) {
+    setLabel(val);
+    return this;
+  }
+
+  @Override
+  public boolean isPageLevelField() {
+    return pageFieldDef.isPageLevelField();
+  }
+
+  public void setPageLevelField(boolean val) {
+    pageFieldDef.setPageLevelField(val);
+  }
+
+  public CustomPagePropertyDef pageLevelField(boolean val) {
+    setPageLevelField(val);
+    return this;
+  }
+
+  @Override
+  public List<LegalValueDef> getLegalValueDefs() {
+    return pageFieldDef.getLegalValueDefs();
+  }
+
+  public void setLegalValueDefs(List<LegalValueDef> val) {
+    pageFieldDef.setLegalValueDefs(val);
+  }
+
+  public CustomPagePropertyDef legalValueDefs(List<LegalValueDef> val) {
+    setLegalValueDefs(val);
+    return this;
+  }
+
+  @Override
+  public PageFieldPresentationDef getPresentationDef() {
+    return pageFieldDef.getPresentationDef();
+  }
+
+  public void setPresentationDef(PageFieldPresentationDef val) {
+    pageFieldDef.setPresentationDef(val);
+  }
+
+  public CustomPagePropertyDef presentationDef(PageFieldPresentationDef val) {
+    setPresentationDef(val);
+    return this;
+  }
+
+  @Override
+  public String getFormFieldName() {
+    return pageFieldDef.getFormFieldName();
+  }
+
+  public void setFormFieldName(String val) {
+    pageFieldDef.setFormFieldName(val);
+  }
+
+  public CustomPagePropertyDef formFieldName(String val) {
+    setFormFieldName(val);
+    return this;
+  }
+
+  @Override
+  public boolean isRequired() {
+    return pageFieldDef.isRequired();
+  }
+
+  public void setRequired(boolean val) {
+    pageFieldDef.setRequired(val);
+  }
+
+  public CustomPagePropertyDef required(boolean val) {
+    setRequired(val);
+    return this;
+  }
+
+  @Override
+  public ValueKind getValueKind() {
+    return pageFieldDef.getValueKind();
+  }
+
+  public void setValueKind(ValueKind val) {
+    pageFieldDef.setValueKind(val);
+  }
+
+  public CustomPagePropertyDef valueKind(ValueKind val) {
+    setValueKind(val);
+    return this;
+  }
+
+  @Override
+  public boolean isArray() {
+    return pageFieldDef.isArray();
+  }
+
+  public void setArray(boolean val) {
+    pageFieldDef.setArray(val);
+  }
+
+  public CustomPagePropertyDef array(boolean val) {
+    setArray(val);
+    return this;
+  }
+
+  @Override
+  public boolean isOrdered() {
+    return pageFieldDef.isOrdered();
+  }
+
+  public void setOrdered(boolean val) {
+    pageFieldDef.setOrdered(val);
+  }
+
+  public CustomPagePropertyDef ordered(boolean val) {
+    setOrdered(val);
+    return this;
+  }
+
+  @Override
+  public BeanTypeDef getReferenceTypeDef() {
+    return pageFieldDef.getReferenceTypeDef();
+  }
+
+  public void setReferenceTypeDef(BeanTypeDef val) {
+    pageFieldDef.setReferenceTypeDef(val);
+  }
+
+  public CustomPagePropertyDef referenceTypeDef(BeanTypeDef val) {
+    setReferenceTypeDef(val);
+    return this;
+  }
+
+  @Override
+  public boolean isReferenceAsReferences() {
+    return pageFieldDef.isReferenceAsReferences();
+  }
+
+  public void setReferenceAsReferences(boolean val) {
+    pageFieldDef.setReferenceAsReferences(val);
+  }
+
+  public CustomPagePropertyDef referenceAsReferences(boolean val) {
+    setReferenceAsReferences(val);
+    return this;
+  }
+
+  @Override
+  public boolean isDateAsLong() {
+    return pageFieldDef.isDateAsLong();
+  }
+
+  public void setDateAsLong(boolean val) {
+    pageFieldDef.setDateAsLong(val);
+  }
+
+  public CustomPagePropertyDef dateAsLong(boolean val) {
+    setDateAsLong(val);
+    return this;
+  }
+
+  @Override
+  public boolean isMultiLineString() {
+    return pageFieldDef.isMultiLineString();
+  }
+
+  public void setMultiLineString(boolean val) {
+    pageFieldDef.setMultiLineString(val);
+  }
+
+  public CustomPagePropertyDef multiLineString(boolean val) {
+    setMultiLineString(val);
+    return this;
+  }
+
+  @Override
+  public boolean isDynamicEnum() {
+    return pageFieldDef.isDynamicEnum();
+  }
+
+  public void setDynamicEnum(boolean val) {
+    pageFieldDef.setDynamicEnum(val);
+  }
+
+  public CustomPagePropertyDef dynamicEnum(boolean val) {
+    setDynamicEnum(val);
     return this;
   }
 
@@ -262,20 +428,6 @@ public class CustomPagePropertyDef implements PagePropertyDef {
 
   public CustomPagePropertyDef propertyName(String val) {
     setPropertyName(val);
-    return this;
-  }
-
-  @Override
-  public String getFormFieldName() {
-    return beanPropertyDef.getFormFieldName();
-  }
-
-  public void setFormFieldName(String val) {
-    beanPropertyDef.setFormFieldName(val);
-  }
-
-  public CustomPagePropertyDef formFieldName(String val) {
-    setFormFieldName(val);
     return this;
   }
 
@@ -318,48 +470,6 @@ public class CustomPagePropertyDef implements PagePropertyDef {
 
   public CustomPagePropertyDef parentPath(Path val) {
     setParentPath(val);
-    return this;
-  }
-
-  @Override
-  public boolean isOrdered() {
-    return beanPropertyDef.isOrdered();
-  }
-
-  public void setOrdered(boolean val) {
-    beanPropertyDef.setOrdered(val);
-  }
-
-  public CustomPagePropertyDef ordered(boolean val) {
-    setOrdered(val);
-    return this;
-  }
-
-  @Override
-  public boolean isMultiLineString() {
-    return beanPropertyDef.isMultiLineString();
-  }
-
-  public void setMultiLineString(boolean val) {
-    beanPropertyDef.setMultiLineString(val);
-  }
-
-  public CustomPagePropertyDef multiLineString(boolean val) {
-    setMultiLineString(val);
-    return this;
-  }
-
-  @Override
-  public boolean isDynamicEnum() {
-    return beanPropertyDef.isDynamicEnum();
-  }
-
-  public void setDynamicEnum(boolean val) {
-    beanPropertyDef.setDynamicEnum(val);
-  }
-
-  public CustomPagePropertyDef dynamicEnum(boolean val) {
-    setDynamicEnum(val);
     return this;
   }
 
@@ -411,20 +521,6 @@ public class CustomPagePropertyDef implements PagePropertyDef {
 
   public CustomPagePropertyDef writable(boolean val) {
     setWritable(val);
-    return this;
-  }
-
-  @Override
-  public boolean isRequired() {
-    return beanPropertyDef.isRequired();
-  }
-
-  public void setRequired(boolean val) {
-    beanPropertyDef.setRequired(val);
-  }
-
-  public CustomPagePropertyDef required(boolean val) {
-    setRequired(val);
     return this;
   }
 
@@ -565,76 +661,6 @@ public class CustomPagePropertyDef implements PagePropertyDef {
 
   public CustomPagePropertyDef setRoles(Set<String> val) {
     setSetRoles(val);
-    return this;
-  }
-
-  @Override
-  public ValueKind getValueKind() {
-    return beanPropertyDef.getValueKind();
-  }
-
-  public void setValueKind(ValueKind val) {
-    beanPropertyDef.setValueKind(val);
-  }
-
-  public CustomPagePropertyDef valueKind(ValueKind val) {
-    setValueKind(val);
-    return this;
-  }
-
-  @Override
-  public boolean isArray() {
-    return beanPropertyDef.isArray();
-  }
-
-  public void setArray(boolean val) {
-    beanPropertyDef.setArray(val);
-  }
-
-  public CustomPagePropertyDef array(boolean val) {
-    setArray(val);
-    return this;
-  }
-
-  @Override
-  public BeanTypeDef getReferenceTypeDef() {
-    return beanPropertyDef.getReferenceTypeDef();
-  }
-
-  public void setReferenceTypeDef(BeanTypeDef val) {
-    beanPropertyDef.setReferenceTypeDef(val);
-  }
-
-  public CustomPagePropertyDef referenceTypeDef(BeanTypeDef val) {
-    setReferenceTypeDef(val);
-    return this;
-  }
-
-  @Override
-  public boolean isReferenceAsReferences() {
-    return beanPropertyDef.isReferenceAsReferences();
-  }
-
-  public void setReferenceAsReferences(boolean val) {
-    beanPropertyDef.setReferenceAsReferences(val);
-  }
-
-  public CustomPagePropertyDef referenceAsReferences(boolean val) {
-    setReferenceAsReferences(val);
-    return this;
-  }
-
-  @Override
-  public boolean isDateAsLong() {
-    return beanPropertyDef.isDateAsLong();
-  }
-
-  public void setDateAsLong(boolean val) {
-    beanPropertyDef.setDateAsLong(val);
-  }
-
-  public CustomPagePropertyDef dateAsLong(boolean val) {
-    setDateAsLong(val);
     return this;
   }
 }

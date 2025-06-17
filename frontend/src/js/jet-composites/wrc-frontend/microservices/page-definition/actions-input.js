@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2023,2024, Oracle and/or its affiliates.
+ * Copyright (c) 2023,2025, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
@@ -65,6 +65,7 @@ define([
           pdjData: ko.observable(actionInputFormData.body.data.get('pdjData')),
           rawPath: ko.observable(actionInputFormConfig.path)
         };
+        const minWidth = (actionInputFormConfig?.formLayout?.minWidth ? actionInputFormConfig.formLayout.minWidth : parseInt(ViewModelUtils.getCustomCssProperty('overlayDialog-actionInput-width'), 10));
         return ModuleElementUtils.createConfig({
           viewPath: `${Controller.getModulePathPrefix()}views/content-area/body/overlay-form-dialog.html`,
           viewModelPath: `${Controller.getModulePathPrefix()}viewModels/content-area/body/overlay-form-dialog`,
@@ -82,11 +83,11 @@ define([
               formLayout: {
                 options: {
                   name: 'overlay-wlsform',
-                  labelWidthPcnt: '24%',
+                  labelWidthPcnt: (actionInputFormConfig?.formLayout?.options?.labelWidthPcnt ? actionInputFormConfig.formLayout.options.labelWidthPcnt: '24%'),
                   maxColumns: '1',
                   fullWidth: true
                 },
-                minWidth: parseInt(ViewModelUtils.getCustomCssProperty('overlayDialog-actionInput-width'), 10)
+                minWidth: minWidth
               },
               onSubmit: actionInputFormConfig.submitCallback,
               checkedRows: actionInputFormConfig.checkedRows

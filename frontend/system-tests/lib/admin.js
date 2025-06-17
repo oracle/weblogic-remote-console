@@ -1216,7 +1216,7 @@ module.exports = function (driver, file) {
 
         saveToShoppingCartImage: async function(driver) {
             console.log("Click create/save to shopping cart");
-            element = driver.findElement(By.id("saveToShoppingCartImage"));
+            element = driver.findElement(By.id("shoppingCartImage"));
             driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
             await driver.sleep(600);
             if (element.isEnabled()) {
@@ -1247,7 +1247,7 @@ module.exports = function (driver, file) {
             if (element.isEnabled()) {
                 await element.click();
             }
-            await driver.sleep(1200);
+            await driver.sleep(6400);
             console.log("Click Discard Changes menu");
             await driver.findElement(By.xpath("//span[contains(.,'Discard Changes')]")).click();
             await driver.sleep(1200);
@@ -1261,7 +1261,7 @@ module.exports = function (driver, file) {
             if (element.isEnabled()) {
                 await element.click();
             }
-            await driver.sleep(1200);
+            await driver.sleep(6400);
             console.log("Click Commit Changes menu");
             await driver.findElement(By.xpath("//span[contains(.,'Commit Changes')]")).click();
             await driver.sleep(9800);

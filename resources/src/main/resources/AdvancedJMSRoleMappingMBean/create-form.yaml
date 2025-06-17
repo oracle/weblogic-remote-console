@@ -1,0 +1,11 @@
+# Copyright (c) 2025, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+introductionHTML: Create a new JMS role mapping
+properties:
+- name: roleName
+- name: jms_application
+- name: jms_module
+- name: jms_destinationType
+- name: jms_resource
+- name: jms_action

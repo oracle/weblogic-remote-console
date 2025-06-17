@@ -20,34 +20,35 @@ import weblogic.remoteconsole.common.utils.CustomizerInvocationUtils;
  */
 public class BeanFieldDefCustomizerSource extends BeanValueDefCustomizerSource {
 
-  private StringValue name = new StringValue();
-  private StringValue formName = new StringValue();
-  private StringValue label = new StringValue();
-  private StringValue helpSummaryHTML = new StringValue();
-  private StringValue helpDetailsHTML = new StringValue();
-  private StringValue helpHTML = new StringValue();
-  private BooleanValue required = new BooleanValue();
-  private ListValue<String> optionsSources = new ListValue<>();
-  private BooleanValue allowNullReference = new BooleanValue(true);
-  private StringValue getMethod = new StringValue();
-  private StringValue optionsMethod = new StringValue();
-  private Value<BeanFieldPresentationDefSource> presentation = new Value<>(new BeanFieldPresentationDefSource());
-  private BooleanValue useUnlocalizedLegalValuesAsLabels = new BooleanValue();
-  private ListValue<LegalValueDefCustomizerSource> legalValues = new ListValue<>();
+  private StringValue name = StringValue.create();
+  private StringValue formName = StringValue.create();
+  private StringValue label = StringValue.create();
+  private StringValue helpSummaryHTML = StringValue.create();
+  private StringValue helpDetailsHTML = StringValue.create();
+  private StringValue helpHTML = StringValue.create();
+  private BooleanValue required = BooleanValue.create();
+  private ListValue<String> optionsSources = ListValue.create();
+  private BooleanValue allowNullReference = BooleanValue.create(true);
+  private StringValue getMethod = StringValue.create();
+  private StringValue optionsMethod = StringValue.create();
+  private Value<BeanFieldPresentationDefSource> presentation = Value.create(new BeanFieldPresentationDefSource());
+  private BooleanValue useUnlocalizedLegalValuesAsLabels = BooleanValue.create();
+  private ListValue<LegalValueDefCustomizerSource> legalValues = ListValue.create();
 
   public void merge(BeanFieldDefCustomizerSource from, Path fromContainedBeanPath) {
     // don't merge name - it's fixed by whoever created this instance
     super.merge(from, fromContainedBeanPath);
-    formName.merge(from.formName, fromContainedBeanPath);
-    label.merge(from.label, fromContainedBeanPath);
-    required.merge(from.required, fromContainedBeanPath);
-    optionsSources.merge(from.optionsSources, fromContainedBeanPath);
-    allowNullReference.merge(from.allowNullReference, fromContainedBeanPath);
-    getMethod.merge(from.getMethod, fromContainedBeanPath);
-    optionsMethod.merge(from.optionsMethod, fromContainedBeanPath);
-    presentation.merge(from.presentation, fromContainedBeanPath);
-    useUnlocalizedLegalValuesAsLabels.merge(from.useUnlocalizedLegalValuesAsLabels, fromContainedBeanPath);
-    legalValues.merge(from.legalValues, fromContainedBeanPath);
+    formName = formName.merge(from.formName, fromContainedBeanPath);
+    label = label.merge(from.label, fromContainedBeanPath);
+    required = required.merge(from.required, fromContainedBeanPath);
+    optionsSources = optionsSources.merge(from.optionsSources, fromContainedBeanPath);
+    allowNullReference = allowNullReference.merge(from.allowNullReference, fromContainedBeanPath);
+    getMethod = getMethod.merge(from.getMethod, fromContainedBeanPath);
+    optionsMethod = optionsMethod.merge(from.optionsMethod, fromContainedBeanPath);
+    presentation = presentation.merge(from.presentation, fromContainedBeanPath);
+    useUnlocalizedLegalValuesAsLabels =
+      useUnlocalizedLegalValuesAsLabels.merge(from.useUnlocalizedLegalValuesAsLabels, fromContainedBeanPath);
+    legalValues = legalValues.merge(from.legalValues, fromContainedBeanPath);
     mergeHelp(from, fromContainedBeanPath);
   }
 
@@ -60,9 +61,9 @@ public class BeanFieldDefCustomizerSource extends BeanValueDefCustomizerSource {
         || from.helpSummaryHTML.isSpecifiedInYaml()
         || from.helpDetailsHTML.isSpecifiedInYaml()
     ) {
-      helpSummaryHTML.copyFrom(from.helpSummaryHTML, fromContainedBeanPath);
-      helpDetailsHTML.copyFrom(from.helpDetailsHTML, fromContainedBeanPath);
-      helpHTML.copyFrom(from.helpHTML, fromContainedBeanPath);
+      helpSummaryHTML = helpSummaryHTML.copyFrom(from.helpSummaryHTML, fromContainedBeanPath);
+      helpDetailsHTML = helpDetailsHTML.copyFrom(from.helpDetailsHTML, fromContainedBeanPath);
+      helpHTML = helpHTML.copyFrom(from.helpHTML, fromContainedBeanPath);
     }
   }
 
@@ -74,7 +75,7 @@ public class BeanFieldDefCustomizerSource extends BeanValueDefCustomizerSource {
   }
 
   public void setName(String value) {
-    name.setValue(value);
+    name = name.setValue(value);
   }
 
   // The name of this field in the form for the HTTP api for a page
@@ -86,7 +87,7 @@ public class BeanFieldDefCustomizerSource extends BeanValueDefCustomizerSource {
   }
 
   public void setFormName(String value) {
-    formName.setValue(value);
+    formName = formName.setValue(value);
   }
 
   // The english name to display for this field.
@@ -95,7 +96,7 @@ public class BeanFieldDefCustomizerSource extends BeanValueDefCustomizerSource {
   }
 
   public void setLabel(String value) {
-    label.setValue(value);
+    label = label.setValue(value);
   }
 
   // The help summary for this field.
@@ -109,7 +110,7 @@ public class BeanFieldDefCustomizerSource extends BeanValueDefCustomizerSource {
   }
 
   public void setHelpSummaryHTML(String value) {
-    helpSummaryHTML.setValue(value);
+    helpSummaryHTML = helpSummaryHTML.setValue(value);
   }
 
   // The help details for this field (minus the help summary).
@@ -125,7 +126,7 @@ public class BeanFieldDefCustomizerSource extends BeanValueDefCustomizerSource {
   }
 
   public void setHelpDetailsHTML(String value) {
-    helpDetailsHTML.setValue(value);
+    helpDetailsHTML = helpDetailsHTML.setValue(value);
   }
 
   // This is used when the help summary and the help details
@@ -139,7 +140,7 @@ public class BeanFieldDefCustomizerSource extends BeanValueDefCustomizerSource {
   }
 
   public void setHelpHTML(String value) {
-    helpHTML.setValue(value);
+    helpHTML = helpHTML.setValue(value);
   }
 
   // Indicates that whether this field is required is specified in type.yaml
@@ -153,7 +154,7 @@ public class BeanFieldDefCustomizerSource extends BeanValueDefCustomizerSource {
   }
 
   public void setRequired(boolean value) {
-    required.setValue(value);
+    required = required.setValue(value);
   }
 
   // A list of templates specifying where to find the lists of options for this field.
@@ -169,11 +170,11 @@ public class BeanFieldDefCustomizerSource extends BeanValueDefCustomizerSource {
   }
 
   public void setOptionsSources(List<String> value) {
-    optionsSources.setValue(value);
+    optionsSources = optionsSources.setValue(value);
   }
 
   public void addOptionsSource(String value) {
-    optionsSources.add(value);
+    optionsSources = optionsSources.add(value);
   }
 
   // Whether to allow the user to set a reference field to null.
@@ -183,7 +184,7 @@ public class BeanFieldDefCustomizerSource extends BeanValueDefCustomizerSource {
   }
 
   public void setAllowNullReference(boolean value) {
-    allowNullReference.setValue(value);
+    allowNullReference = allowNullReference.setValue(value);
   }
 
   // Specifics a custom static method to call to get the value of this field.
@@ -194,7 +195,7 @@ public class BeanFieldDefCustomizerSource extends BeanValueDefCustomizerSource {
 
   public void setGetMethod(String value) {
     if (StringUtils.isEmpty(value) || CustomizerInvocationUtils.methodExists(value)) {
-      getMethod.setValue(value);
+      getMethod = getMethod.setValue(value);
     }
   }
 
@@ -214,7 +215,7 @@ public class BeanFieldDefCustomizerSource extends BeanValueDefCustomizerSource {
 
   public void setOptionsMethod(String value) {
     if (StringUtils.isEmpty(value) || CustomizerInvocationUtils.methodExists(value)) {
-      optionsMethod.setValue(value);
+      optionsMethod = optionsMethod.setValue(value);
     }
   }
 
@@ -231,7 +232,7 @@ public class BeanFieldDefCustomizerSource extends BeanValueDefCustomizerSource {
   }
 
   public void setPresentation(BeanFieldPresentationDefSource value) {
-    presentation.setValue(value);
+    presentation = presentation.setValue(value);
   }
 
   // Whether to use the unlocalized value of each legal value as its label.
@@ -240,7 +241,7 @@ public class BeanFieldDefCustomizerSource extends BeanValueDefCustomizerSource {
   }
 
   public void setUseUnlocalizedLegalValuesAsLabels(boolean value) {
-    useUnlocalizedLegalValuesAsLabels.setValue(value);
+    useUnlocalizedLegalValuesAsLabels = useUnlocalizedLegalValuesAsLabels.setValue(value);
   }
 
   // Custom labels to display for this property's legal values.
@@ -250,11 +251,11 @@ public class BeanFieldDefCustomizerSource extends BeanValueDefCustomizerSource {
   }
 
   public void setLegalValues(List<LegalValueDefCustomizerSource> value) {
-    legalValues.setValue(value);
+    legalValues = legalValues.setValue(value);
   }
 
   public void addLegalValue(LegalValueDefCustomizerSource value) {
-    legalValues.add(value);
+    legalValues = legalValues.add(value);
   }
 
   public String toString() {

@@ -2,7 +2,7 @@
   "name": "weblogic-remote-console",
   "productName": "WebLogic Remote Console",
   "homepage": "https://github.com/oracle/weblogic-remote-console",
-  "version": "2.4.16",
+  "version": "2.4.17",
   "main": "app/main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -36,5 +36,8 @@
     "electron": "^33.0.0",
     "electron-builder": "^25.0.0",
     "eslint": "^9.0.0"
+  },
+  "overrides": {
+    "brace-expansion": "^4.0.1"
   }
 }

@@ -12,8 +12,8 @@ import weblogic.console.schema.YamlSource;
  */
 public class BeanActionPollingDefSource extends YamlSource {
 
-  private IntValue reloadSeconds = new IntValue();
-  private IntValue maxAttempts = new IntValue();
+  private IntValue reloadSeconds = IntValue.create();
+  private IntValue maxAttempts = IntValue.create();
 
   // Returns the polling interval in seconds:
   public int getReloadSeconds() {
@@ -21,7 +21,7 @@ public class BeanActionPollingDefSource extends YamlSource {
   }
 
   public void setReloadSeconds(int val) {
-    reloadSeconds.setValue(val);
+    reloadSeconds = reloadSeconds.setValue(val);
   }
 
   // Returns the maximum number of times poll:
@@ -30,7 +30,7 @@ public class BeanActionPollingDefSource extends YamlSource {
   }
 
   public void setMaxAttempts(int val) {
-    maxAttempts.setValue(val);
+    maxAttempts = maxAttempts.setValue(val);
   }
 
   public String toString() {

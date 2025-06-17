@@ -11,7 +11,7 @@ import weblogic.console.schema.YamlSource;
  * information about a create form
  */
 public class CreateFormPresentationDefSource extends YamlSource {
-  private BooleanValue singleColumn = new BooleanValue();
+  private BooleanValue singleColumn = BooleanValue.create();
 
   // Whether the properties on this create form should be
   // displayed in a single column.  If false, then they
@@ -22,6 +22,6 @@ public class CreateFormPresentationDefSource extends YamlSource {
   }
 
   public void setSingleColumn(boolean val) {
-    singleColumn.setValue(val);
+    singleColumn = singleColumn.setValue(val);
   }
 }

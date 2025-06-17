@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2023, 2024, Oracle and/or its affiliates.
+ * Copyright (c) 2023, 2025, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
@@ -836,23 +836,32 @@ define([
           });
       }
 
+      function callImporter(isMultiProject, fileContents) {
+        if (isMultiProject) {
+          return ConsoleProjectManager.createFromJSONString(fileContents);
+        } else {
+          return ConsoleProjectManager.addToProjectFromJSONString(fileContents);
+        }
+      }
+
       function readImportedProjectFile(fileText) {
         // Remove any line breaks from fileText
         const fileContents = CoreUtils.removeLineBreaks(fileText);
-        ConsoleProjectManager.createFromJSONString(fileContents)
-          .then(project => {
+        DataProviderManager.getCapabilities().then(caps => {
+          const isMultiProject = !caps || (caps.indexOf('SingleProject') == -1);
+          callImporter(isMultiProject, fileContents).then(project => {
             // There were no JSON parsing issues and fileContents is the
             // JSON representation of a project, so go ahead and trigger
             // knockout change subscription.
             self.projectFileContents(project);
-          })
-          .catch(response => {
+          }).catch(response => {
             if (CoreUtils.isNotUndefinedNorNull(response.failureType) && response.failureType === CoreTypes.FailureType.INCORRECT_CONTENT) {
               response = Error(oj.Translations.getTranslatedString('wrc-common.messages.incorrectFileContent.detail', self.projectFile(), 'project'));
               response.name = oj.Translations.getTranslatedString('wrc-common.title.incorrectFileContent.value');
             }
             ViewModelUtils.failureResponseDefaultHandling(response);
           });
+        });
       }
 
       function exportAllToProject(dialogFields){

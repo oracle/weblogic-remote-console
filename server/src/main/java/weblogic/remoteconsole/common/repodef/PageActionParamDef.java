@@ -1,4 +1,4 @@
-// Copyright (c) 2023, Oracle and/or its affiliates.
+// Copyright (c) 2023, 2025, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef;
@@ -12,4 +12,8 @@ package weblogic.remoteconsole.common.repodef;
 public interface PageActionParamDef extends PageFieldDef, BeanActionParamDef {
   // Get the corresponding action input form def
   public ActionInputFormDef getInputFormDef();
+
+  // Whether this parameter is a read-only field on the action input form
+  // that is never used to invoke the action.
+  public boolean isReadOnly();
 }

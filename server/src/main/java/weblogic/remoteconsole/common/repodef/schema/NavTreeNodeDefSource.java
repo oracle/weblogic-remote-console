@@ -36,12 +36,12 @@ public class NavTreeNodeDefSource extends YamlSource {
     group
   }
 
-  private Value<Type> type = new Value<>(Type.child);
-  private StringValue child = new StringValue();
-  private StringValue label = new StringValue();
-  private BooleanValue forceNotExpandable = new BooleanValue();
-  private ListValue<NavTreeNodeDefSource> contents = new ListValue<>();
-  private Value<RolesDefSource> roles = new Value<>(null);
+  private Value<Type> type = Value.create(Type.child);
+  private StringValue child = StringValue.create();
+  private StringValue label = StringValue.create();
+  private BooleanValue forceNotExpandable = BooleanValue.create();
+  private ListValue<NavTreeNodeDefSource> contents = ListValue.create();
+  private Value<RolesDefSource> roles = Value.create();
 
   // The type of the nav tree node.
   public Type getType() {
@@ -49,7 +49,7 @@ public class NavTreeNodeDefSource extends YamlSource {
   }
 
   public void setType(Type value) {
-    type.setValue(value);
+    type = type.setValue(value);
   }
 
   // The relative path name of the child bean property for this node.
@@ -63,7 +63,7 @@ public class NavTreeNodeDefSource extends YamlSource {
   }
 
   public void setChild(String value) {
-    child.setValue(value);
+    child = child.setValue(value);
   }
 
   // The english label to display for this node.
@@ -77,7 +77,7 @@ public class NavTreeNodeDefSource extends YamlSource {
   }
 
   public void setLabel(String value) {
-    label.setValue(value);
+    label = label.setValue(value);
   }
 
   // Whether this node cannot be expanded even if it normally would be expandable.
@@ -88,7 +88,7 @@ public class NavTreeNodeDefSource extends YamlSource {
   }
 
   public void setForceNotExpandable(boolean value) {
-    forceNotExpandable.setValue(value);
+    forceNotExpandable = forceNotExpandable.setValue(value);
   }
 
   // The nav tree nodes directly under this node.
@@ -100,11 +100,11 @@ public class NavTreeNodeDefSource extends YamlSource {
   }
 
   public void setContents(List<NavTreeNodeDefSource> value) {
-    contents.setValue(value);
+    contents = contents.setValue(value);
   }
 
   public void addContent(NavTreeNodeDefSource value) {
-    contents.add(value);
+    contents = contents.add(value);
   }
 
   // The roles that are allowed to view this node.
@@ -122,7 +122,7 @@ public class NavTreeNodeDefSource extends YamlSource {
   }
 
   public void setRoles(RolesDefSource value) {
-    roles.setValue(value);
+    roles = roles.setValue(value);
   }
 
   @Override

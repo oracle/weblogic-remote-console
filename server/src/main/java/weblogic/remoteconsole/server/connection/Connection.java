@@ -1,4 +1,4 @@
-// Copyright (c) 2020, 2024, Oracle and/or its affiliates.
+// Copyright (c) 2020, 2025, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.connection;
@@ -47,6 +47,11 @@ public interface Connection {
 
   /** Obtain the Connection Username */
   public String getUsername();
+
+  /**
+   * Obtain the weblogic roles for this connection's user
+   */
+  public Set<String> getRoles();
 
   /** Obtain the JAX-RS Client for the Connection */
   public Client getClient();

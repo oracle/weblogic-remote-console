@@ -43,7 +43,12 @@ public class JMSMessageManagementRuntimeMBeanInvokeActionHelper extends InvokeAc
 
   @Override
   protected Response<Void> invokeSliceTableRowsAction() {
-    if (SELECTED_MESSAGES_ACTIONS.containsKey(getPageActionDef().getActionName())) {
+    String actionName = getPageActionDef().getActionName();
+    if ("viewMessage".equals(actionName)) {
+      // The action input form already displayed the message.  The action is a no-op.
+      return new Response<Void>().setSuccess(null);
+    }
+    if (SELECTED_MESSAGES_ACTIONS.containsKey(actionName)) {
       return invokeSelectedMessagesAction();
     }
     return super.invokeSliceTableRowsAction();

@@ -1,0 +1,18 @@
+# Copyright (c) 2025, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+introductionHTML: "<p>This page lists this Authorization Provider's EIS security policies.</p>"
+
+displayedColumns:
+- name: eis_application
+- name: eis_module
+- name: eis_eis
+- name: eis_destinationId
+- name: PolicyStringExpression
+hiddenColumns:
+- name: resourceId
+- name: scope
+
+helpTopics:
+- label: "Securing Resources Using Roles and Policies for Oracle WebLogic Server"
+  href: "roles/index.html"
+  type: "edocs"

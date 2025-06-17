@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2023, 2024, Oracle Corporation and/or its affiliates.
+ * Copyright (c) 2023, 2025, Oracle Corporation and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
@@ -143,7 +143,30 @@ define([
           });
         }
         return beanTrees;
+      },
+
+      /**
+       *
+       * @param {string} beanTreeType
+       * @returns {string}
+       */
+      getProviderTypeByBeanTreeType: (beanTreeType) => {
+        let type = '';
+        if (['configuration', 'view', 'monitoring', 'security'].includes(beanTreeType)) {
+          type = 'adminserver';
+        }
+        else if (beanTreeType === 'modeling') {
+          type = 'model';
+        }
+        else if (beanTreeType === 'composite') {
+          type = 'modelComposite';
+        }
+        else if (beanTreeType === 'properties') {
+          type = 'properties';
+        }
+        return type;
       }
+
     };
 
   }
