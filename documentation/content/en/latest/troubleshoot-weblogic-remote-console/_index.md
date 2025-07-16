@@ -1,5 +1,5 @@
 ---
-weight: 260
+weight: 267
 title: Troubleshoot Issues with WebLogic Remote Console
 ---
 
@@ -29,7 +29,7 @@ If the Administration Server cannot reach a Managed Server or cluster, you may b
 
     Depending on the result of the test, WebLogic Remote Console provides different information:
 
-    -   If the Administration Server cannot find the HTTP/S address for sending administration traffic to the server (typically because the server is not running), then the **Server URL** field will return <code>unknown</code>.
+    -   If the Administration Server cannot find the HTTP/S address for sending administration traffic to the server \(typically because the server is not running\), then the **Server URL** field will return <code>unknown</code>.
     -   If the Administration Server receives a response from the server, then WebLogic Remote Console will populate the **Status**, **Response Headers**, and **Response Body** fields.
     -   If the Administration Server receives a Java exception, then WebLogic Remote Console will populate the **Exception** and **Stack Trace** fields.
 
@@ -47,9 +47,9 @@ If you experience any issues with WebLogic Remote Console, then you can check it
 
     The location of <code>out.log</code> varies depending on your platform:
 
-    -   Linux: <code>$HOME/.config/weblogic-remote-console/out.log</code>
+    -   Linux: <code>*$HOME*/.config/weblogic-remote-console/out.log</code>
     -   macOS: <code>/Users/*user*/Library/Application Support/weblogic-remote-console/out.log</code>
-    -   Windows: <code>C:\Users\\*user*\AppData\Roaming\weblogic-remote-console\out.log</code>
+    -   Windows: <code>C:\Users\*user*\AppData\Roaming\weblogic-remote-console\out.log</code>
     Log file entries from previous sessions are saved to a new file in the same directory, marked by date: <code>out-yyyy-mm-dd.log</code>.
 
 
@@ -89,7 +89,7 @@ By default, WebLogic Remote Console uses HTTP Basic Authentication which support
 
 In Hosted WebLogic Remote Console, an orange banner appears along the top of the console that indicates it cannot reach the Administration Server.
 
-**Solution**: Try logging into Hosted WebLogic Remote Console again. In the browser's address bar, enter <code>http://*hostname*:*port*/rconsole/signin</code> (or <code>https://*hostname*:*port*/rconsole/signin</code>) and re-enter your credentials.
+**Solution**: Try logging into Hosted WebLogic Remote Console again. In the browser's address bar, enter <code>http://*hostname*:*port*/rconsole/signin</code> \(or <code>https://*hostname*:*port*/rconsole/signin</code>\) and re-enter your credentials.
 
 ### Deleted Items Do Not Re-Appear When Change is Reverted {}
 
@@ -102,6 +102,18 @@ If you delete an item but then discard the change instead of committing it, WebL
 If you open Hosted WebLogic Remote Console in multiple browser tabs and edit the domain, the different instances will interfere with each other and may result in configuration errors.
 
 **Solution**: Only use Hosted WebLogic Remote Console in one browser tab at a time.
+
+### The WebLogic Remote Console Log File Looks Corrupted {#section_f5d_yk4_nfc}
+
+If the WebLogic Remote Console log file has unprintable characters and appears corrupted, it may be because your JVM's file encodings are not compatible with the UTF-8 file encoding used by Desktop WebLogic Remote Console.
+
+**Workaround**: Set the JDK JVM encodings for Desktop WebLogic Remote Console to use UTF-8.
+
+### Children of Newly Created Nodes do not Appear Automatically {#section_f42_zh3_zfc}
+
+Occasionally, when you create an item, its top-level node appears in the Navigation Tree but its child nodes do not appear.
+
+**Workaround**: Reload the page by navigating to another perspective tree and then back to the original perspective. The child nodes should now be visible.
 
 ## Cannot connect to the Administration Server {#GUID-B3D14A11-0144-4B31-BFE3-E6AC59AEFCBE}
 
@@ -127,9 +139,9 @@ If you experience issues connecting to an Administration Server when using WebLo
 
     If you can connect successfully over HTTPS, then the problem is likely that WebLogic Remote Console does not trust the SSL certificate of the Administration Server. You can either import the Administration Server’s certificate into your client’s keystore, or, if you’re using demo certificates, enable the **Make Insecure Connection** option when you connect to the Administration Server.
 
--   Make sure your Administration Server's management endpoint, <code>management/\*</code>, is accessible to clients. It may be blocked if your domain is behind a load-balancer or firewall, or is in a Docker container. You will need to expose the endpoint manually.
+-   Make sure your Administration Server's management endpoint, <code>management/*</code>, is accessible to clients. It may be blocked if your domain is behind a load-balancer or firewall, or is in a Docker container. You will need to expose the endpoint manually.
 
-    You should also make sure that the value of the Remote Console Helper Context Path attribute (<code>RemoteConsoleHelperMBean.ContextPath</code>) has not been changed. The default value is <code>console</code>, which WebLogic Remote Console appends to the domain URL. If you modify the context path, it may prevent WebLogic Remote Console from successfully connecting to the Administration Server. Do not change it unless you understand the possible impacts to Desktop WebLogic Remote Console. See [Configure Web Authentication](../administration-server/domain-configuration#GUID-A6191FE0-2A4C-45B6-A138-7FD9B157D28F).
+    You should also make sure that the value of the Remote Console Helper Context Path attribute \(<code>RemoteConsoleHelperMBean.ContextPath</code>\) has not been changed. The default value is <code>console</code>, which WebLogic Remote Console appends to the domain URL. If you modify the context path, it may prevent WebLogic Remote Console from successfully connecting to the Administration Server. Do not change it unless you understand the possible impacts to Desktop WebLogic Remote Console. See [Configure Web Authentication](../administration-server/domain-configuration#GUID-A6191FE0-2A4C-45B6-A138-7FD9B157D28F).
 
 -   If the Administration Server resides in a different network than WebLogic Remote Console, then make sure the proxy settings of WebLogic Remote Console are properly configured to allow communication between the two. See [Connect using a Proxy Server](../administration-server/domain-configuration#GUID-D7AD7F50-88F8-4FC9-A28B-CBF98B5FD479).
 
@@ -211,8 +223,8 @@ Certain configuration changes can block REST communication between servers, incl
 -   Disabling the default Identity Asserter provider.
 -   Disabling the default Credential Mapping provider.
 -   Removing <code>weblogic-jwt-token</code> from the default Identity Asserter provider’s Active Types.
--   Applying incompatible REST invocation policies to the WebLogic Server REST API. For example, using Oracle Web Services Manager (OWSM) to protect the domain may inadvertently restrict access to the REST API.
--   Changing the listen port (including enabling the Administration port) without immediately restarting the servers.
+-   Applying incompatible REST invocation policies to the WebLogic Server REST API. For example, using Oracle Web Services Manager \(OWSM\) to protect the domain may inadvertently restrict access to the REST API.
+-   Changing the listen port \(including enabling the Administration port\) without immediately restarting the servers.
 
 You must update your configuration changes so they no longer block REST communication.
 
@@ -250,5 +262,6 @@ If <code>auto-prefs.json</code> does become corrupted, you can reset it, but all
 2.  Delete <code>auto-prefs.json</code>. The location of <code>auto-prefs.json</code> varies depending on your platform:
     -   Linux: <code>*$HOME*/.config/weblogic-remote-console/auto-prefs.json</code>
     -   macOS: <code>/Users/*user*/Library/Application Support/weblogic-remote-console/auto-prefs.json</code>
-    -   Windows: <code>C:\Users\\*user*\AppData\Roaming\weblogic-remote-console\auto-prefs.json</code>
+    -   Windows: <code>C:\Users\*user*\AppData\Roaming\weblogic-remote-console\auto-prefs.json</code>
 3.  Restart WebLogic Remote Console.
+

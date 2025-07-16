@@ -1,5 +1,5 @@
 ---
-weight: 26
+weight: 27
 title: Contribute to WebLogic Remote Console
 ---
 
@@ -11,7 +11,7 @@ Contributions from the community to the WebLogic Remote Console project help us 
 
     If you only want to raise a bug or file an enhancement request, you can stop here - you're done! Thank you for helping to improve WebLogic Remote Console.
 
-2.  If you want to fix an issue yourself, you must sign the Oracle Contributor Agreement (OCA) before you can submit a pull request. For instructions, see the [Oracle Contributor Agreement](https://oca.opensource.oracle.com/). We cannot merge pull requests from contributors who have not signed the OCA.
+2.  If you want to fix an issue yourself, you must sign the Oracle Contributor Agreement \(OCA\) before you can submit a pull request. For instructions, see the [Oracle Contributor Agreement](https://oca.opensource.oracle.com/). We cannot merge pull requests from contributors who have not signed the OCA.
 
 3.  Fork the WebLogic Remote Console GitHub repository.
 

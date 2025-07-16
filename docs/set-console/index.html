@@ -35,7 +35,7 @@ Desktop WebLogic Remote Console, a desktop application installed on your compute
   <meta itemprop="description" content="WebLogic Remote Console is easy to install and you can quickly start managing your domains.
 WebLogic Remote Console is available in two formats:
 Desktop WebLogic Remote Console, a desktop application installed on your computer. Hosted WebLogic Remote Console, a web application deployed to an Administration Server and accessed through a browser. Generally, the two formats have similar functionality, though the desktop application offers certain conveniences that are not possible when using a browser.">
-  <meta itemprop="wordCount" content="1821">
+  <meta itemprop="wordCount" content="1813">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Get Started">
   <meta name="twitter:description" content="WebLogic Remote Console is easy to install and you can quickly start managing your domains.
@@ -61,13 +61,17 @@ Desktop WebLogic Remote Console, a desktop application installed on your compute
   <div class="td-navbar-nav-scroll ms-md-auto" id="main_navbar">
     <ul class="navbar-nav">
       <li class="nav-item">
-        <a class="nav-link" href="/weblogic-remote-console/overview"><span>Documentation</span></a>
+        <a class="nav-link active" href="/weblogic-remote-console/overview/"><span>Documentation</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/weblogic-remote-console/set-console/get-know-console/bean-map/"><span>Console Map</span></a>
       </li>
       <li class="nav-item dropdown d-none d-lg-block">
         <div class="dropdown">
   <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Releases</a>
   <ul class="dropdown-menu">
-    <li><a class="dropdown-item" href="/weblogic-remote-console/overview">Latest (v2.4.16)</a></li>
+    <li><a class="dropdown-item" href="/weblogic-remote-console/overview">Latest (v2.4.17)</a></li>
+    <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.16">v2.4.16</a></li>
     <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.15">v2.4.15</a></li>
     <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.14">v2.4.14</a></li>
     <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.13">v2.4.13</a></li>
@@ -138,7 +142,7 @@ Desktop WebLogic Remote Console, a desktop application installed on your compute
     aria-label="Search this site…"
     autocomplete="off"
     
-    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.525ad98426979583eac4f9f0a1f2c27f.json"
+    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.1c3f7e3c36c633fec73beac9b615e3ab.json"
     data-offline-search-base-href="/"
     data-offline-search-max-results="10"
   >
@@ -163,7 +167,7 @@ Desktop WebLogic Remote Console, a desktop application installed on your compute
     aria-label="Search this site…"
     autocomplete="off"
     
-    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.525ad98426979583eac4f9f0a1f2c27f.json"
+    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.1c3f7e3c36c633fec73beac9b615e3ab.json"
     data-offline-search-base-href="/"
     data-offline-search-max-results="10"
   >
@@ -339,50 +343,36 @@ Desktop WebLogic Remote Console, a desktop application installed on your compute
 
 </div>
 <p>Desktop WebLogic Remote Console is supported on the following platforms.</p>
-<table id="GUID-FFC1F9AC-7CE7-4BC1-9D3D-BD59CC228C6B__TABLE_B5D_JSX_HZB">
-                        <caption>
-                           <span>
-                              <span>Table 1. </span>Requirements. </span>
-                           <span>For the best experience, make sure your environment meets the following requirements.</span>
-                        </caption>
-                        <thead>
-                           <tr>
-                              <th>Platform</th>
-                              <th>Minimum Requirement</th>
-                           </tr>
-                        </thead>
-                        <tbody>
-                           <tr>
-                              <td>Linux</td>
-                              <td>
-                                 <p>64 bit only.</p>
-                                 <ul id="GUID-FFC1F9AC-7CE7-4BC1-9D3D-BD59CC228C6B__UL_QFM_4SX_HZB">
-                                    <li>Debian 11 and later</li>
-                                    <li>Fedora 40 and later<ul id="GUID-FFC1F9AC-7CE7-4BC1-9D3D-BD59CC228C6B__UL_GM1_VSX_HZB">
-                                          <li>Oracle Linux 7 and later</li>
-                                       </ul>
-                                    </li>
-                                    <li>Ubuntu 16.04 and later</li>
-                                 </ul>
-                              </td>
-                           </tr>
-                           <tr>
-                              <td>macOS</td>
-                              <td>
-                                 <p>13 (Ventura) or later</p>
-                                 <p>
-                                    <strong>Note</strong>: Intel machines must be 64 bit.</p>
-                              </td>
-                           </tr>
-                           <tr>
-                              <td>Windows</td>
-                              <td>
-                                 <p>64 bit only.</p>
-                                 <p>Windows 10 and later.</p>
-                              </td>
-                           </tr>
-                        </tbody>
-                     </table>
+<table id="TABLE_B5D_JSX_HZB"><thead><tr><th>
+<p>Platform</p>
+</th><th>
+<p>Minimum Requirement</p>
+</th></tr></thead><tbody><tr><td>
+<p>Linux</p>
+</td><td>
+<p>64 bit only.</p>
+<ul>
+<li>Debian 11 and later</li>
+<li>Fedora 40 and later
+<ul>
+<li>Oracle Linux 7 and later</li>
+</ul>
+</li>
+<li>Ubuntu 16.04 and later</li>
+</ul>
+</td></tr><tr><td>
+<p>macOS</p>
+</td><td>
+<p>13 (Ventura) or later</p>
+<p><strong>Note</strong>: Intel machines must be 64 bit.</p>
+</td></tr><tr><td>
+<p>Windows</p>
+</td><td>
+<p>64 bit only.</p>
+<p>Windows 10 and later.</p>
+</td></tr></tbody>
+</table>
+<p>Table 1. Requirements. For the best experience, make sure your environment meets the following requirements.</p>
 <p>We recommend setting the viewport of WebLogic Remote Console to 1300 px or wider. On narrower viewports, UI elements may overlap or disappear.</p>
 <h2 id="GUID-F178ACDD-4929-4918-8126-274997E5312E">Install Desktop WebLogic Remote Console</h2>
 <p>Desktop WebLogic Remote Console is a version of WebLogic Remote Console that is based on the Electron framework and installed as a desktop application.</p>
@@ -421,9 +411,9 @@ Desktop WebLogic Remote Console, a desktop application installed on your compute
 <li>
 <p>Invoke WLST with the following options:</p>
 <p>For Unix operating systems, enter:</p>
-<pre tabindex="0"><code>wlst.sh *WL_HOME*/server/bin/remote_console_deployment.py t3://*hostname*:*port* *username* &lt; *password.txt*
+<pre tabindex="0"><code>wlst.sh *WL\_HOME*/server/bin/remote_console_deployment.py t3://*hostname*:*port* *username* &lt; *password.txt*
 </code></pre><p>For Windows operating systems, enter:</p>
-<pre tabindex="0"><code>wlst.cmd *WL_HOME*\server\bin\remote_console_deployment.py t3://*hostname*:*port* *username* &lt; *password.txt*
+<pre tabindex="0"><code>wlst.cmd *WL\_HOME*\server\bin\remote_console_deployment.py t3://*hostname*:*port* *username* &lt; *password.txt*
 </code></pre><p>Where:</p>
 <ul>
 <li><code><em>WL_HOME</em></code> is the top-level installation directory for WebLogic Server.</li>
@@ -459,7 +449,7 @@ Examples:</li>
 <div class="alert alert-primary" role="alert">
 <h4 class="alert-heading">Note</h4>
 
-    <p>If your Administration Server is behind a firewall or load balancer, or otherwise externally unavailable, you must manually expose the <code>rconsole/*</code> endpoint to make it accessible, similar to exposing <code>console/*</code> for the WebLogic Server Administration Console.</p>
+    <p>If your Administration Server is behind a firewall or load balancer, or otherwise externally unavailable, you must manually expose the <code>rconsole/<em></code> endpoint to make it accessible, similar to exposing <code>console/</em></code> for the WebLogic Server Administration Console.</p>
 <p>This is in addition to exposing the <code>management/*</code> endpoint which is required for general domain configuration.</p>
 
 
@@ -497,12 +487,12 @@ Examples:</li>
 <p>Under <code><em>DOMAIN_HOME</em>/</code>, create a folder and name it <code>management-services-ext</code>.</p>
 </li>
 <li>
-<p>Download the latest WebLogic Remote Console extension, <code>console-rest-ext-2.4.16.war</code>, from the <a href="https://github.com/oracle/weblogic-remote-console/releases">WebLogic Remote Console GitHub Repository</a> releases page.</p>
-<p><code>console-rest-ext-jakarta-2.4.16.war</code> is intended for domains running WebLogic Server 15.1.1.0.0 or later; you should not need to install it manually.</p>
+<p>Download the latest WebLogic Remote Console extension, <code>console-rest-ext-2.4.17.war</code>, from the <a href="https://github.com/oracle/weblogic-remote-console/releases">WebLogic Remote Console GitHub Repository</a> releases page.</p>
+<p><code>console-rest-ext-jakarta-2.4.17.war</code> is intended for domains running WebLogic Server 15.1.1.0.0 or later; you should not need to install it manually.</p>
 </li>
 <li>
 <p>Save the extension under <code>management-services-ext</code>.</p>
-<p>You do not need to deploy <code>console-rest-ext-2.4.16.war</code> as an application in your domain.</p>
+<p>You do not need to deploy <code>console-rest-ext-2.4.17.war</code> as an application in your domain.</p>
 </li>
 <li>
 <p>Restart the Administration Server.</p>
@@ -561,41 +551,32 @@ Examples:</li>
 <p>For installation instructions, see <a href="/weblogic-remote-console/set-console/#GUID-40440E0F-0310-4830-9B4B-00FC9ABBB591">Install the WebLogic Remote Console Extension</a>.</p>
 <h2 id="GUID-82C1C605-D42E-45EA-AC16-5BA3D5853C96">Provider Types</h2>
 <p>Use WebLogic Remote Console to connect to the following provider types, each of which offers a different approach for managing your WebLogic Server domains.</p>
-<table id="GUID-82C1C605-D42E-45EA-AC16-5BA3D5853C96__TABLE_I4W_4ZY_RZB">
-                     <span>The provider types available in WebLogic Remote Console</span>
-                     <thead>
-                        <tr>
-                           <th>Provider</th>
-                           <th>Description</th>
-                        </tr>
-                     </thead>
-                     <tbody>
-                        <tr>
-                           <td>
-                              <a href="../administration-server#GUID-BC6883D0-1917-4130-B79B-02727F1242D6">Administration Server</a>
-                           </td>
-                           <td>Connect to a running WebLogic Server domain through its Administration Server.</td>
-                        </tr>
-                        <tr>
-                           <td>
-                              <a href="../weblogic-deploy-tooling/wdt-model-files#GUID-2AEF7470-25FA-4A9D-85FB-16F8F5415C35">WDT Model Files</a>
-                           </td>
-                           <td>Edit WebLogic Deploy Tooling (WDT) metadata models of WebLogic Server domains.</td>
-                        </tr>
-                        <tr>
-                           <td>
-                              <a href="../weblogic-deploy-tooling/wdt-composites#GUID-904FB61C-F32C-4D33-8698-59346E279140">WDT Composite Models</a>
-                           </td>
-                           <td>Combine and compare settings across multiple WDT model files.   </td>
-                        </tr>
-                        <tr>
-                           <td>
-                              <a href="../weblogic-deploy-tooling/property-lists#GUID-62721515-29E5-4DC4-BBD8-E2D1C8A7529D">Property Lists</a>
-                           </td>
-                           <td>Edit the key-value pairs that enable the use of variables in WDT model files.</td>
-                        </tr>
-                     </tbody>
-                  </table>
+<table>
+  <thead>
+      <tr>
+          <th>Provider</th>
+          <th>Description</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><a href="/weblogic-remote-console/administration-server/#GUID-BC6883D0-1917-4130-B79B-02727F1242D6">Administration Server</a></td>
+          <td>Connect to a running WebLogic Server domain through its Administration Server.</td>
+      </tr>
+      <tr>
+          <td><a href="/weblogic-remote-console/weblogic-deploy-tooling/wdt-model-files/#GUID-2AEF7470-25FA-4A9D-85FB-16F8F5415C35">WDT Model Files</a></td>
+          <td>Edit WebLogic Deploy Tooling (WDT) metadata models of WebLogic Server domains.</td>
+      </tr>
+      <tr>
+          <td><a href="/weblogic-remote-console/weblogic-deploy-tooling/wdt-composites/#GUID-904FB61C-F32C-4D33-8698-59346E279140">WDT Composite Models</a></td>
+          <td>Combine and compare settings across multiple WDT model files.</td>
+      </tr>
+      <tr>
+          <td><a href="/weblogic-remote-console/weblogic-deploy-tooling/property-lists/#GUID-62721515-29E5-4DC4-BBD8-E2D1C8A7529D">Property Lists</a></td>
+          <td>Edit the key-value pairs that enable the use of variables in WDT model files.</td>
+      </tr>
+  </tbody>
+</table>
 <h2 id="GUID-98F273C5-CC1E-4272-B560-604CA23A739A">Connect to a Provider</h2>
 <p>You can connect WebLogic Remote Console to a WebLogic Administration Server, WDT model file, or another provider.</p>
 <ol>
@@ -634,7 +615,7 @@ For information on the different providers, see <a href="/weblogic-remote-consol
 <li>
 <p><a id="STEP_H13_HCK_DCC"></a><em>For WebLogic Server 14.1.1.0.0 and earlier:</em> Update the WebLogic Remote Console <em>extension</em>.</p>
 <p>In WebLogic Server 14.1.2.0.0 and later, the WebLogic Remote Console extension is included with the initial installation and is updated by subsequent Patch Set Updates (PSU) and should not be updated manually.</p>
-<p>For the best experience, you should keep the versions of WebLogic Remote Console and its extension in sync with each other. That is, when you are running WebLogic Remote Console 2.4.16, you should have <code>console-rest-ext-2.4.16.war</code> installed.</p>
+<p>For the best experience, you should keep the versions of WebLogic Remote Console and its extension in sync with each other. That is, when you are running WebLogic Remote Console 2.4.17, you should have <code>console-rest-ext-2.4.17.war</code> installed.</p>
 <ol>
 <li>
 <p>While connected to the domain, open the <strong>Providers</strong> drawer and beside the provider connection, click the <strong>Get Info</strong> icon to see the <strong>Console Extension Version</strong>. If it matches WebLogic Remote Console version, you can skip the rest of the steps. Otherwise, continue.</p>

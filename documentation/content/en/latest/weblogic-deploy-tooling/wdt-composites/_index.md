@@ -1,5 +1,5 @@
 ---
-weight: 256
+weight: 263
 title: WDT Composite Models
 ---
 
@@ -33,5 +33,5 @@ There must be at least two WDT model file providers in the active project.
 
 The selected WDT model files are merged and you can view the combined set in the **WDT Composite Model Tree**.
 
-You can add or remove WDT model files from a WDT composite model as needed. Removing a WDT model file from a WDT composite model (or deleting the WDT composite model entirely) does not affect the constituent WDT model files.
+You can add or remove WDT model files from a WDT composite model as needed. Removing a WDT model file from a WDT composite model \(or deleting the WDT composite model entirely\) does not affect the constituent WDT model files.
 

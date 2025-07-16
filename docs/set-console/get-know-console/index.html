@@ -32,7 +32,7 @@ When you launch WebLogic Remote Console for the first time, it opens a Startup T
   <meta itemprop="name" content="Get to Know the Console">
   <meta itemprop="description" content="WebLogic Remote Console is your portal to managing WebLogic Server domains from a unified interface, whether they are running domains or model templates.
 When you launch WebLogic Remote Console for the first time, it opens a Startup Tasks dialog box with options to connect to a new provider, such as an Administration Server or WDT model file. WebLogic Remote Console remembers your connection details so on subsequent visits, it will open on your last project, letting you continue where you left off.">
-  <meta itemprop="wordCount" content="1649">
+  <meta itemprop="wordCount" content="1884">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Get to Know the Console">
   <meta name="twitter:description" content="WebLogic Remote Console is your portal to managing WebLogic Server domains from a unified interface, whether they are running domains or model templates.
@@ -57,13 +57,17 @@ When you launch WebLogic Remote Console for the first time, it opens a Startup T
   <div class="td-navbar-nav-scroll ms-md-auto" id="main_navbar">
     <ul class="navbar-nav">
       <li class="nav-item">
-        <a class="nav-link" href="/weblogic-remote-console/overview"><span>Documentation</span></a>
+        <a class="nav-link active" href="/weblogic-remote-console/overview/"><span>Documentation</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/weblogic-remote-console/set-console/get-know-console/bean-map/"><span>Console Map</span></a>
       </li>
       <li class="nav-item dropdown d-none d-lg-block">
         <div class="dropdown">
   <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Releases</a>
   <ul class="dropdown-menu">
-    <li><a class="dropdown-item" href="/weblogic-remote-console/overview">Latest (v2.4.16)</a></li>
+    <li><a class="dropdown-item" href="/weblogic-remote-console/overview">Latest (v2.4.17)</a></li>
+    <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.16">v2.4.16</a></li>
     <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.15">v2.4.15</a></li>
     <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.14">v2.4.14</a></li>
     <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.13">v2.4.13</a></li>
@@ -134,7 +138,7 @@ When you launch WebLogic Remote Console for the first time, it opens a Startup T
     aria-label="Search this site…"
     autocomplete="off"
     
-    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.525ad98426979583eac4f9f0a1f2c27f.json"
+    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.1c3f7e3c36c633fec73beac9b615e3ab.json"
     data-offline-search-base-href="/"
     data-offline-search-max-results="10"
   >
@@ -159,7 +163,7 @@ When you launch WebLogic Remote Console for the first time, it opens a Startup T
     aria-label="Search this site…"
     autocomplete="off"
     
-    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.525ad98426979583eac4f9f0a1f2c27f.json"
+    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.1c3f7e3c36c633fec73beac9b615e3ab.json"
     data-offline-search-base-href="/"
     data-offline-search-max-results="10"
   >
@@ -283,6 +287,7 @@ When you launch WebLogic Remote Console for the first time, it opens a Startup T
     <li><a href="#explore-your-domain">Explore your Domain</a></li>
     <li><a href="#change-indicators">Change Indicators</a></li>
     <li><a href="#GUID-709F9244-296B-443C-827F-AC8B26513FAC">Change Console Preferences</a></li>
+    <li><a href="#GUID-BB23744E-D6F9-4D35-8CEB-01EBCF03636F">Bookmark Pages</a></li>
     <li><a href="#GUID-FF37D291-F8C5-4EFB-8A18-DADF035348C9">Customize a Table</a></li>
     <li><a href="#GUID-A6323CCF-02F4-4E77-BDF2-A2DB1623A598">Projects</a>
       <ul>
@@ -330,93 +335,61 @@ When you launch WebLogic Remote Console for the first time, it opens a Startup T
 <h2 id="tools">Tools</h2>
 <p>Tools are a set of quick actions that you can use to navigate or manipulate the interface. Icons for these actions are scattered across the top of WebLogic Remote Console.</p>
 <p>Tool icons only appear on pages where they are applicable. For example, the Shopping Cart, used to indicate pending changes to an active domain, only appears in Administration Server providers.</p>
-<table id="GUID-6DDEDC3B-00F5-4075-8849-66D3707C2C16__TABLE_GQ3_FQF_NZB">
-                     <caption>
-                        <span>
-                           <span>Table 1. </span>Tools. </span>
-                        <span>Tool icons that may appear along the top of the Content Pane.</span>
-                     </caption>
-                     <thead>
-                        <tr>
-                           <th>Tool Icon</th>
-                           <th>Description</th>
-                        </tr>
-                     </thead>
-                     <tbody>
-                        <tr>
-                           <td>
-                              <img id="GUID-6DDEDC3B-00F5-4075-8849-66D3707C2C16__IMAGE_NGZ_4MY_MDC"
-                                   src="/weblogic-remote-console/images/ui-icons/home-icon-blk-24x24.png"/> Home</td>
-                           <td>Sends you to the Home Page of the provider.</td>
-                        </tr>
-                        <tr>
-                           <td>
-                              <img id="GUID-6DDEDC3B-00F5-4075-8849-66D3707C2C16__IMAGE_GFR_D2Z_MDC"
-                                   src="/weblogic-remote-console/images/ui-icons/shopping-cart-icon-24x24.png"/> Shopping Cart </td>
-                           <td>Indicates if there are pending changes ready to be committed to a WebLogic Server domain.<p>When the <span>Shopping Cart</span> is full, you can click it to see the pending changes and then commit or discard them.</p>
-                           </td>
-                        </tr>
-                        <tr>
-                           <td>
-                              <img id="GUID-6DDEDC3B-00F5-4075-8849-66D3707C2C16__IMAGE_J45_P2Z_MDC"
-                                   src="/weblogic-remote-console/images/ui-icons/beanpath-history-icon-blk-24x24.png"/> Visibility of History</td>
-                           <td>Triggers a record of the pages you visit. When active, a drop-down list appears where you can see, and return to, your previous pages. History is limited to the current perspective. <p>Click <span>More ︙</span>, then <span>Clear History Entries</span> to delete your navigation history.</p>
-                           </td>
-                        </tr>
-                        <tr>
-                           <td>
-                              <img id="GUID-6DDEDC3B-00F5-4075-8849-66D3707C2C16__IMAGE_ACC_NHF_B2C"
-                                   src="/weblogic-remote-console/images/ui-icons/project-management-blk-24x24.png"/>
-                           </td>
-                           <td>Opens the <span>Providers</span> drawer where you can manage your provider connections.</td>
-                        </tr>
-                        <tr>
-                           <td>
-                              <img id="GUID-6DDEDC3B-00F5-4075-8849-66D3707C2C16__IMAGE_DJS_JYX_12C"
-                                   src="/weblogic-remote-console/images/ui-icons/pages-history-back-blk-24x24.png"/>/<img id="GUID-6DDEDC3B-00F5-4075-8849-66D3707C2C16__IMAGE_CDN_LYX_12C"
-                                   src="/weblogic-remote-console/images/ui-icons/pages-history-next-blk-24x24.png"/> Browse Back and Forward</td>
-                           <td>Browses  backward or forward through your previously visited pages in WebLogic Remote Console.</td>
-                        </tr>
-                        <tr>
-                           <td>
-                              <img id="GUID-6DDEDC3B-00F5-4075-8849-66D3707C2C16__IMAGE_AZP_5ZX_12C"
-                                   src="/weblogic-remote-console/images/ui-icons/pages-history-icon-blk-24x24.png"/> Pages History</td>
-                           <td>Opens the <span>Pages History</span> dialog box, which lists the pages that you have  previously visited in WebLogic Remote Console.</td>
-                        </tr>
-                        <tr>
-                           <td>
-                              <img id="GUID-6DDEDC3B-00F5-4075-8849-66D3707C2C16__IMAGE_U5V_TDZ_MDC"
-                                   src="/weblogic-remote-console/images/ui-icons/landing-page-icon-blk-24x24.png"/> Landing Page</td>
-                           <td>Sends you to the Landing Page of the current perspective.</td>
-                        </tr>
-                        <tr>
-                           <td>
-                              <img id="GUID-6DDEDC3B-00F5-4075-8849-66D3707C2C16__IMAGE_SJV_VDZ_MDC"
-                                   src="/weblogic-remote-console/images/ui-icons/toggle-help-icon-blk-16x16.png"/> Help</td>
-                           <td>Shows reference information about the attributes present on the current page.</td>
-                        </tr>
-                        <tr>
-                           <td>
-                              <img id="GUID-6DDEDC3B-00F5-4075-8849-66D3707C2C16__IMAGE_NWY_ZDZ_MDC"
-                                   src="/weblogic-remote-console/images/ui-icons/sync-icon-blk-24x24.png"/> Reload</td>
-                           <td>Refreshes any forms or tables on the current page with the latest available data.<p>When <span>Auto Reload Interval</span> is enabled, this icon will bounce continuously.</p>
-                           </td>
-                        </tr>
-                        <tr>
-                           <td>
-                              <img id="GUID-6DDEDC3B-00F5-4075-8849-66D3707C2C16__IMAGE_R5R_B2Z_MDC"
-                                   src="/weblogic-remote-console/images/ui-icons/sync-interval-icon-blk-24x24.png"/> Auto Reload Interval</td>
-                           <td>Sets a time interval (in seconds) for how often WebLogic Remote Console should reload a page to refresh its information. If you select another tab or move to another page, automatic reload stops.<p>To stop auto reload, click the bouncing <span>Reload</span> icon or click <span>Auto Reload Interval</span> and set the interval to <code>0</code>.</p>
-                           </td>
-                        </tr>
-                        <tr>
-                           <td>
-                              <img id="GUID-6DDEDC3B-00F5-4075-8849-66D3707C2C16__IMAGE_ZNL_M2Z_MDC"
-                                   src="/weblogic-remote-console/images/ui-icons/action-reset-icon-blk-24x24.png"/> Refresh Page Values</td>
-                           <td>Updates the Content Pane with the latest values. </td>
-                        </tr>
-                     </tbody>
-                  </table>
+<table id="TABLE_GQ3_FQF_NZB"><thead><tr><th>
+<p>Tool Icon</p>
+</th><th>
+<p>Description</p>
+</th></tr></thead><tbody><tr><td>
+<p><img src="/weblogic-remote-console/images/ui-icons/home-icon-blk-24x24.png" alt="Home"> Home</p>
+</td><td>
+<p>Sends you to the Home Page of the provider.</p>
+</td></tr><tr><td>
+<p><img src="/weblogic-remote-console/images/ui-icons/shopping-cart-icon-24x24.png" alt="Empty shopping cart"> Shopping Cart</p>
+</td><td>
+<p>Indicates if there are pending changes ready to be committed to a WebLogic Server domain.When the <strong>Shopping Cart</strong> is full, you can click it to see the pending changes and then commit or discard them.</p>
+</td></tr><tr><td>
+<p><img src="/weblogic-remote-console/images/ui-icons/beanpath-history-icon-blk-24x24.png" alt="Visibility of history"> Visibility of History</p>
+</td><td>
+<p>Triggers a record of the pages you visit. When active, a drop-down list appears where you can see, and return to, your previous pages. History is limited to the current perspective. Click <strong>More ︙</strong>, then <strong>Clear History Entries</strong> to delete your navigation history.</p>
+</td></tr><tr><td>
+<p><img src="/weblogic-remote-console/images/ui-icons/project-management-blk-24x24.png" alt="Providers drawer"> Providers</p>
+</td><td>
+<p>Opens the <strong>Providers</strong> drawer where you can manage your provider connections.</p>
+</td></tr><tr><td>
+<p><img src="../../pages-history-back-blk-24x24.png" alt="Back">/<img src="/weblogic-remote-console/images/ui-icons/pages-history-next-blk-24x24.png" alt="Next"> Browse Back and Forward</p>
+</td><td>
+<p>Browses backward or forward through your previously visited pages in WebLogic Remote Console.</p>
+</td></tr><tr><td>
+<p><img src="/weblogic-remote-console/images/ui-icons/pages-history-icon-blk-24x24.png" alt="Pages history"> Pages History</p>
+</td><td>
+<p>Opens the <strong>Pages History</strong> dialog box, which lists the pages that you have previously visited in WebLogic Remote Console.</p>
+</td></tr><tr><td>
+<p><img src="/weblogic-remote-console/images/ui-icons/landing-page-icon-blk-24x24.png" alt="Landing page"> Landing Page</p>
+</td><td>
+<p>Sends you to the Landing Page of the current perspective.</p>
+</td></tr><tr><td>
+<p><img src="/weblogic-remote-console/images/ui-icons/toggle-help-icon-blk-16x16.png" alt="Help"> Help</p>
+</td><td>
+<p>Shows reference information about the attributes present on the current page.</p>
+</td></tr><tr><td>
+<p><img src="/weblogic-remote-console/images/ui-icons/sync-icon-blk-24x24.png" alt="Reload"> Reload</p>
+</td><td>
+<p>Refreshes any forms or tables on the current page with the latest available data.When <strong>Auto Reload Interval</strong> is enabled, this icon will bounce continuously.</p>
+</td></tr><tr><td>
+<p><img src="/weblogic-remote-console/images/ui-icons/sync-interval-icon-blk-24x24.png" alt="Auto-reload interval"> Auto Reload Interval</p>
+</td><td>
+<p>Sets a time interval (in seconds) for how often WebLogic Remote Console should reload a page to refresh its information. If you select another tab or move to another page, automatic reload stops.To stop auto reload, click the bouncing <strong>Reload</strong> icon or click <strong>Auto Reload Interval</strong> and set the interval to <code>0</code>.</p>
+</td></tr><tr><td>
+<p><img src="/weblogic-remote-console/images/ui-icons/action-reset-icon-blk-24x24.png" alt="Refresh page values"> Refresh Page Values</p>
+</td><td>
+<p>Updates the Content Pane with the latest values.</p>
+</td></tr><tr><td>
+<p><strong>☆</strong> Page Bookmarks</p>
+</td><td>
+<p>Saves the current page as a bookmark. You can also view existing bookmarks.</p>
+</td></tr></tbody>
+</table>
+<p>Table 1. Tools. Tool icons that may appear along the top of the Content Pane.</p>
 <h2 id="explore-your-domain">Explore your Domain</h2>
 <p>WebLogic Server domains can be complex structures, so WebLogic Remote Console provides multiple methods to locate your objective.</p>
 <p><strong>Navigation Tree</strong>: Expand the nodes of the Navigation Tree to browse its children and gain a high level understanding of the hierarchical relationship of a WebLogic Server domain.</p>
@@ -447,6 +420,31 @@ When you launch WebLogic Remote Console for the first time, it opens a Startup T
 <p>Close the <strong>Preferences</strong> dialog box to apply your changes.</p>
 </li>
 </ol>
+<h2 id="GUID-BB23744E-D6F9-4D35-8CEB-01EBCF03636F">Bookmark Pages</h2>
+<p>You can save WebLogic Remote Console pages that you visit frequently.</p>
+<p>Bookmarks are shared between providers of the same type. For example, if you save a page in an Administration Server provider, that page will be bookmarked in every Administration Server provider, but it won&rsquo;t be bookmarked in a WDT Model provider.</p>
+<ul>
+<li>
+<p>To save a page in WebLogic Remote Console as a bookmark:</p>
+</li>
+<li>
+<p>On the page that you want to save, click <strong>Page Bookmarks ☆</strong> in the tool bar, then select <strong>Add Bookmark for Current Page</strong>.</p>
+<p>On pages that are already bookmarked, the star will be filled in.</p>
+</li>
+<li>
+<p>To go to a bookmarked page:</p>
+</li>
+<li>
+<p>In the upper top right corner (beside Pages History <img src="/weblogic-remote-console/images/ui-icons/pages-history-icon-blk-24x24.png" alt="Pages history">), click <strong>Page Bookmarks ☆</strong>, then select the page you want to visit.</p>
+</li>
+<li>
+<p>To delete a bookmark:</p>
+</li>
+<li>
+<p>In the upper top right corner (beside Pages History <img src="/weblogic-remote-console/images/ui-icons/pages-history-icon-blk-24x24.png" alt="Pages history">), click <strong>Page Bookmarks ☆</strong>, then, in the row for the the page that you want to delete, click <strong>Delete</strong>, then <strong>Apply</strong>.</p>
+<p>If you clicked <strong>Delete</strong> on the wrong bookmark, you can click <strong>Reset</strong> to undo the deletion, if you haven&rsquo;t clicked <strong>Apply</strong> yet.</p>
+</li>
+</ul>
 <h2 id="GUID-FF37D291-F8C5-4EFB-8A18-DADF035348C9">Customize a Table</h2>
 <p>You can choose which columns are visible in a table, hiding irrelevant data so you can focus on the important details.</p>
 <ol>
@@ -547,7 +545,14 @@ For more information on the different provider types, see <a href="/weblogic-rem
 <p>Click <strong>Import</strong>.</p>
 </li>
 </ol>
-<p>The imported project automatically becomes the current project loaded in WebLogic Remote Console.</p>
+<ul>
+<li>
+<p>In Desktop WebLogic Remote Console, the imported project replaces the current project. To return to the previous project, open <strong>File</strong>, then <strong>Switch to project</strong> and choose the previous project.</p>
+</li>
+<li>
+<p>In Hosted WebLogic Remote Console, the providers of the imported project are added to the current project.</p>
+</li>
+</ul>
 <h2 id="GUID-5C611ED8-29EF-4B21-B181-557C7D192C96">Enable Keyboard Navigation on macOS</h2>
 <p>On devices running macOS, you must specifically enable keyboard navigation before you can use the Tab key (or Shift + Tab keys) to navigate between the controls in WebLogic Remote Console.</p>
 <ol>

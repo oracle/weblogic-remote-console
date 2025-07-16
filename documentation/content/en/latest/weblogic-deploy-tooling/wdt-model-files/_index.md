@@ -1,11 +1,11 @@
 ---
-weight: 250
+weight: 257
 title: WDT Model Files
 ---
 
 
 
-WDT metadata model files are descriptions of a WebLogic Server domain configuration. These models are not connected to a running WebLogic Server domain; you make edits to a model file and then use WebLogic Deploy Tooling (WDT) to build or modify live domains.
+WDT metadata model files are descriptions of a WebLogic Server domain configuration. These models are not connected to a running WebLogic Server domain; you make edits to a model file and then use WebLogic Deploy Tooling \(WDT\) to build or modify live domains.
 
 WDT model files are simplistic representations of a domain. They are generally written in <code>YAML</code> but WebLogic Remote Console also accepts models in <code>JSON</code> format. For brevity, a WDT model file only describes departures from the default configuration.
 
@@ -51,7 +51,7 @@ resources:
             Target: [
                 Cluster2
             ]
-
+            
 appDeployments:
     Application:
         Application1:
@@ -153,50 +153,15 @@ For guidance on where to find specific domain configuration options and how to a
 
 4.  Set a new value for the field, using one of the following options:
 
-
-
-<table id="GUID-B0B9CBA4-29E4-417D-8094-5BA8B4522ED7__TABLE_YMB_PZN_SDC">
-                              <span>Describes the various ways to set values for a field.</span>
-                              <thead>
-                                 <tr>
-                                    <th>Option</th>
-                                    <th>Description</th>
-                                 </tr>
-                              </thead>
-                              <tbody>
-                                 <tr>
-                                    <td>Default (unset)</td>
-                                    <td>Restore field to its default value.</td>
-                                 </tr>
-                                 <tr>
-                                    <td>Select Value</td>
-                                    <td>Select a reference to a component that exists in the current WDT model file.</td>
-                                 </tr>
-                                 <tr>
-                                    <td>Enter Value</td>
-                                    <td>Enter a fixed value.</td>
-                                 </tr>
-                                 <tr>
-                                    <td>Enter Model Token</td>
-                                    <td>Enter a WDT model token.</td>
-                                 </tr>
-                                 <tr>
-                                    <td>Enter Unresolved Reference</td>
-                                    <td>Enter a reference to a component that does not exist in the current WDT model file but will exist at a later point.</td>
-                                 </tr>
-                                 <tr>
-                                    <td>Select Model Token Variable</td>
-                                    <td>Select a WDT model token variable from the list of available options. The WDT model file must be connected with a property list to see this option.</td>
-                                 </tr>
-                                 <tr>
-                                    <td>Create Model Token Variable</td>
-                                    <td>Enter a Variable Name and Variable Value to create a new WDT model token variable. New model token variables are added to the connected property list. The WDT model file must be connected with a property list to see this option.</td>
-                                 </tr>
-                              </tbody>
-                           </table>
-
-
-
+    |Option|Description|
+    |------|-----------|
+    |Default \(unset\)|Restore field to its default value.|
+    |Select Value|Select a reference to a component that exists in the current WDT model file.|
+    |Enter Value|Enter a fixed value.|
+    |Enter Model Token|Enter a WDT model token.|
+    |Enter Unresolved Reference|Enter a reference to a component that does not exist in the current WDT model file but will exist at a later point.|
+    |Select Model Token Variable|Select a WDT model token variable from the list of available options. The WDT model file must be connected with a property list to see this option.|
+    |Create Model Token Variable|Enter a Variable Name and Variable Value to create a new WDT model token variable. New model token variables are added to the connected property list. The WDT model file must be connected with a property list to see this option.|
 
 5.  Click **Save Now** to update the <code>YAML</code> file with your changes.
 
@@ -205,10 +170,12 @@ If you want to restore fields to their default value, right-click on a field and
 
 ## Build a WebLogic Server Domain {#GUID-4A5C092D-A16B-4F7F-A5CC-38DCF2293FBE}
 
-When you're satisfied with the properties of your WDT model file, you can transform it into a live WebLogic Server domain with WebLogic Deploy Tooling (WDT).
+When you're satisfied with the properties of your WDT model file, you can transform it into a live WebLogic Server domain with WebLogic Deploy Tooling \(WDT\).
 
 1.  Save the WDT model file in WebLogic Remote Console. Make a note of the location of the <code>YAML</code> file on your computer.
 
 2.  Download the latest version of WDT from the [WDT GitHub Repository](https://github.com/oracle/weblogic-deploy-tooling).
 
 3.  Follow the instructions in the [WDT Documentation](https://oracle.github.io/weblogic-deploy-tooling/) for creating a domain from a WDT model file.
+
+

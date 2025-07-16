@@ -61,13 +61,17 @@ Use the WebLogic Tuxedo Connector (WTC) to develop and support applications inte
   <div class="td-navbar-nav-scroll ms-md-auto" id="main_navbar">
     <ul class="navbar-nav">
       <li class="nav-item">
-        <a class="nav-link" href="/overview"><span>Documentation</span></a>
+        <a class="nav-link active" href="/overview/"><span>Documentation</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/set-console/get-know-console/bean-map/"><span>Console Map</span></a>
       </li>
       <li class="nav-item dropdown d-none d-lg-block">
         <div class="dropdown">
   <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Releases</a>
   <ul class="dropdown-menu">
-    <li><a class="dropdown-item" href="/weblogic-remote-console/overview">Latest (v2.4.16)</a></li>
+    <li><a class="dropdown-item" href="/weblogic-remote-console/overview">Latest (v2.4.17)</a></li>
+    <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.16">v2.4.16</a></li>
     <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.15">v2.4.15</a></li>
     <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.14">v2.4.14</a></li>
     <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.13">v2.4.13</a></li>
@@ -138,7 +142,7 @@ Use the WebLogic Tuxedo Connector (WTC) to develop and support applications inte
     aria-label="Search this site…"
     autocomplete="off"
     
-    data-offline-search-index-json-src="/offline-search-index.d874cf970bc57419b247ef101f81d5e2.json"
+    data-offline-search-index-json-src="/offline-search-index.6acb553d7869483f57e2c80febd06cda.json"
     data-offline-search-base-href="/"
     data-offline-search-max-results="10"
   >
@@ -163,7 +167,7 @@ Use the WebLogic Tuxedo Connector (WTC) to develop and support applications inte
     aria-label="Search this site…"
     autocomplete="off"
     
-    data-offline-search-index-json-src="/offline-search-index.d874cf970bc57419b247ef101f81d5e2.json"
+    data-offline-search-index-json-src="/offline-search-index.6acb553d7869483f57e2c80febd06cda.json"
     data-offline-search-base-href="/"
     data-offline-search-max-results="10"
   >
@@ -355,69 +359,45 @@ Use the WebLogic Tuxedo Connector (WTC) to develop and support applications inte
 <li>In the <strong>Edit Tree</strong>, go to <strong>Interoperability</strong>, then <strong>WTC Servers</strong>, then <em>myWTCServer</em>, and select the configuration parameter you want to edit.</li>
 </ol>
 <p>See <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=WTCCF-GUID-65A4FE3C-A3B4-405A-A92D-AC749604257B">Configuring WebLogic Tuxedo Connector for Your Applications</a> in <strong>Administering WebLogic Tuxedo Connector for Oracle WebLogic Server</strong>.</p>
-<table id="GUID-DB9133EB-73F7-480C-B4A9-6A1AB3AA8C35__TABLE_QXD_DJG_N2C">
-                        <caption>
-                           <span>
-                              <span>Table 1. </span>Tuxedo Interactions. </span>
-                           <span>Various ways to coordinate between WebLogic Server and Tuxedo</span>
-                        </caption>
-                        <thead>
-                           <tr>
-                              <th>Option</th>
-                              <th>Description</th>
-                           </tr>
-                        </thead>
-                        <tbody>
-                           <tr>
-                              <td>Local Access Point</td>
-                              <td>
-                                 <p>Local Tuxedo access points provide configuration information to connect available remote Tuxedo domains to a WTC server. </p>
-                              </td>
-                           </tr>
-                           <tr>
-                              <td>Remote Acess Point</td>
-                              <td>
-                                 <p>Remote Tuxedo access points provide configuration information to connect a WTC server to available remote Tuxedo domains. </p>
-                              </td>
-                           </tr>
-                           <tr>
-                              <td>Exported Services</td>
-                              <td>
-                                 <p>Exported services provide information about how to provide Java application services to remote Tuxedo application environments.</p>
-                              </td>
-                           </tr>
-                           <tr>
-                              <td>Imported  Services</td>
-                              <td>
-                                 <p>Imported services provide information on how to access services that are available on remote Tuxedo domains. </p>
-                              </td>
-                           </tr>
-                           <tr>
-                              <td>Passwords</td>
-                              <td>
-                                 <p>Password configurations provide passwords for inter-domain authentication through access points. </p>
-                              </td>
-                           </tr>
-                           <tr>
-                              <td>Resources</td>
-                              <td>
-                                 <p>Resources specify field table classes, reference view buffer structures, and provide application passwords for domains. </p>
-                              </td>
-                           </tr>
-                           <tr>
-                              <td>Queuing Bridge </td>
-                              <td>
-                                 <p>A Tuxedo queuing bridge provides a bidirectional JMS interface that allows WTC applications to communicate with Tuxedo application environments. </p>
-                              </td>
-                           </tr>
-                           <tr>
-                              <td>Redirections</td>
-                              <td>
-                                 <p>Redirections are used to configure a one-to-one connection between the JMS interface and Tuxedo application environment.</p>
-                              </td>
-                           </tr>
-                        </tbody>
-                     </table>
+<table id="TABLE_QXD_DJG_N2C"><thead><tr><th>
+<p>Option</p>
+</th><th>
+<p>Description</p>
+</th></tr></thead><tbody><tr><td>
+<p>Local Access Point</p>
+</td><td>
+<p>Local Tuxedo access points provide configuration information to connect available remote Tuxedo domains to a WTC server.</p>
+</td></tr><tr><td>
+<p>Remote Acess Point</p>
+</td><td>
+<p>Remote Tuxedo access points provide configuration information to connect a WTC server to available remote Tuxedo domains.</p>
+</td></tr><tr><td>
+<p>Exported Services</p>
+</td><td>
+<p>Exported services provide information about how to provide Java application services to remote Tuxedo application environments.</p>
+</td></tr><tr><td>
+<p>Imported Services</p>
+</td><td>
+<p>Imported services provide information on how to access services that are available on remote Tuxedo domains.</p>
+</td></tr><tr><td>
+<p>Passwords</p>
+</td><td>
+<p>Password configurations provide passwords for inter-domain authentication through access points.</p>
+</td></tr><tr><td>
+<p>Resources</p>
+</td><td>
+<p>Resources specify field table classes, reference view buffer structures, and provide application passwords for domains.</p>
+</td></tr><tr><td>
+<p>Queuing Bridge</p>
+</td><td>
+<p>A Tuxedo queuing bridge provides a bidirectional JMS interface that allows WTC applications to communicate with Tuxedo application environments.</p>
+</td></tr><tr><td>
+<p>Redirections</p>
+</td><td>
+<p>Redirections are used to configure a one-to-one connection between the JMS interface and Tuxedo application environment.</p>
+</td></tr></tbody>
+</table>
+<p>Table 1. Tuxedo Interactions. Various ways to coordinate between WebLogic Server and Tuxedo</p>
 <h3 id="GUID-61659C15-4333-4557-BE92-8EA33856C8D9">Create a Local Access Point</h3>
 <p>Local Tuxedo access points provide configuration information to connect available remote Tuxedo domains to a WTC server.</p>
 <p>You must have at least one local Tuxedo access point configured to create a valid WTC server.</p>

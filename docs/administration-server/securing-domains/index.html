@@ -35,7 +35,7 @@ Understanding Security for Oracle WebLogic Server Administering Security for Ora
   <meta itemprop="description" content="WebLogic Server offers a robust set of security tools to protect your WebLogic Server environment from unauthorized access. Use WebLogic Remote Console to secure your system.
 For general information on security concepts in WebLogic Server, see:
 Understanding Security for Oracle WebLogic Server Administering Security for Oracle WebLogic Server Securing Resources Using Roles and Policies for Oracle WebLogic Server Securing a Production Environment for Oracle WebLogic Server Address Potential Security Issues WebLogic Server regularly checks your domain to ensure it complies with its recommended security policies. If a domain does not meet the recommendations, a security warning is logged and displayed in WebLogic Remote Console.">
-  <meta itemprop="wordCount" content="13506">
+  <meta itemprop="wordCount" content="14683">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Securing Domains">
   <meta name="twitter:description" content="WebLogic Server offers a robust set of security tools to protect your WebLogic Server environment from unauthorized access. Use WebLogic Remote Console to secure your system.
@@ -61,13 +61,17 @@ Understanding Security for Oracle WebLogic Server Administering Security for Ora
   <div class="td-navbar-nav-scroll ms-md-auto" id="main_navbar">
     <ul class="navbar-nav">
       <li class="nav-item">
-        <a class="nav-link" href="/weblogic-remote-console/overview"><span>Documentation</span></a>
+        <a class="nav-link active" href="/weblogic-remote-console/overview/"><span>Documentation</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/weblogic-remote-console/set-console/get-know-console/bean-map/"><span>Console Map</span></a>
       </li>
       <li class="nav-item dropdown d-none d-lg-block">
         <div class="dropdown">
   <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Releases</a>
   <ul class="dropdown-menu">
-    <li><a class="dropdown-item" href="/weblogic-remote-console/overview">Latest (v2.4.16)</a></li>
+    <li><a class="dropdown-item" href="/weblogic-remote-console/overview">Latest (v2.4.17)</a></li>
+    <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.16">v2.4.16</a></li>
     <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.15">v2.4.15</a></li>
     <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.14">v2.4.14</a></li>
     <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.13">v2.4.13</a></li>
@@ -138,7 +142,7 @@ Understanding Security for Oracle WebLogic Server Administering Security for Ora
     aria-label="Search this site…"
     autocomplete="off"
     
-    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.525ad98426979583eac4f9f0a1f2c27f.json"
+    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.1c3f7e3c36c633fec73beac9b615e3ab.json"
     data-offline-search-base-href="/"
     data-offline-search-max-results="10"
   >
@@ -163,7 +167,7 @@ Understanding Security for Oracle WebLogic Server Administering Security for Ora
     aria-label="Search this site…"
     autocomplete="off"
     
-    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.525ad98426979583eac4f9f0a1f2c27f.json"
+    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.1c3f7e3c36c633fec73beac9b615e3ab.json"
     data-offline-search-base-href="/"
     data-offline-search-max-results="10"
   >
@@ -292,6 +296,7 @@ Understanding Security for Oracle WebLogic Server Administering Security for Ora
         <li><a href="#SECTION_HWH_VBM_NCC">Required Security Providers</a></li>
         <li><a href="#GUID-E197F5AA-FFF5-46B3-A14D-58C5213F9BA1">Create a Security Realm</a></li>
         <li><a href="#GUID-7E4AA558-1D90-429E-987A-63A90056E708">Change Default Security Realm</a></li>
+        <li><a href="#GUID-72197DF1-A99D-45AE-95E2-DDA9AB8E388F">Migrate Security Data from a Security Provider</a></li>
         <li><a href="#GUID-252EE9B4-2FF3-4B3C-83D1-61F28B7D0E1A">Revert to a Previous Security Configuration</a></li>
         <li><a href="#GUID-65011AC0-166C-414C-8FD5-A085E7599FA7">Enable Automatic Realm Restart</a></li>
       </ul>
@@ -514,6 +519,50 @@ Understanding Security for Oracle WebLogic Server Administering Security for Ora
 </li>
 </ol>
 <p>Consider enabling the configuration archive to save previous domain configurations so you can revert to a previous security configuration if necessary. See <a href="/weblogic-remote-console/administration-server/domain-configuration/#GUID-6A1B7D7D-174F-417F-907D-900442FF0A87">Back Up Configuration Files</a>.</p>
+<h3 id="GUID-72197DF1-A99D-45AE-95E2-DDA9AB8E388F">Migrate Security Data from a Security Provider</h3>
+<p>You can export security data from a security provider in one security realm and then import it into the equivalent security provider in another security realm.</p>
+<p>Copying the security data of security providers between security realms is an efficient way to quickly prepare new security realms for development and testing purposes, or to move security data when transitioning from test to production environments.</p>
+<p>See <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=SECMG-GUID-754AD57E-2115-4B06-B8B0-0F172A546620">Migrating Security Data</a> in <strong>Administering Security for Oracle WebLogic Server</strong>.</p>
+<p>You can export and import data for the following security providers:</p>
+<ul>
+<li>DefaultAuthenticator (WebLogic Authentication Provider)</li>
+<li>XACMLAuthorizer (WebLogic XACML Authorization Provider)</li>
+<li>XACMLRoleMapper (WebLogic XACML Role Mapping Provider)</li>
+<li>DefaultCredentialMapper (WebLogic Credential Mapping Provider)</li>
+</ul>
+<ol>
+<li>
+<p>In the <strong>Security Data Tree</strong>, go to <strong>Realms</strong>, then <em>myrealm</em>, and navigate to the security provider whose security data you want to export.</p>
+</li>
+<li>
+<p>On the security provider&rsquo;s page, click <strong>Export</strong>.</p>
+</li>
+<li>
+<p>In the <strong>File Name</strong> field, specify where to save the security data file. By default, the file is saved to <code><em>DOMAIN_HOME/</em></code>.</p>
+</li>
+<li>
+<p>If you want to restrict which security data is exported, then, in the <strong>Constraints</strong> field, enter your constraints.</p>
+<p>See <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=SECMG-GUID-DA6095AD-AAE8-4E72-9AAD-499C479464FF">Formats and Constraints Supported by WebLogic Security Providers</a> in <strong>Administering Security for Oracle WebLogic Server</strong>.</p>
+</li>
+<li>
+<p>Click <strong>Done</strong>.</p>
+</li>
+<li>
+<p>To import the security provider data, perform the following steps on the equivalent security provider in the other security realm:</p>
+</li>
+<li>
+<p>In the <strong>Security Data Tree</strong>, go to <strong>Realms</strong>, then <em>myrealm</em>, and navigate to the security provider whose security data you want to import.</p>
+</li>
+<li>
+<p>On the security provider&rsquo;s page, click <strong>Import</strong>.</p>
+</li>
+<li>
+<p>In the <strong>File Name</strong> field, specify the file location of the security provider data file that you want to import. By default, the file location is set to <em><code>DOMAIN_HOME</code>/</em>.</p>
+</li>
+<li>
+<p>Click <strong>Done</strong>.</p>
+</li>
+</ol>
 <h3 id="GUID-252EE9B4-2FF3-4B3C-83D1-61F28B7D0E1A">Revert to a Previous Security Configuration</h3>
 <p>Certain mistakes when configuring a new security realm or security providers can prevent you from booting the server. If this happens, then you can revert the configuration XML files to reinstate a previous realm configuration and recover from the error.</p>
 <p>You can only revert to a previous configuration if configuration archiving is enabled and has been saving previous versions of the configuration. See <a href="/weblogic-remote-console/administration-server/domain-configuration/#GUID-6A1B7D7D-174F-417F-907D-900442FF0A87">Back Up Configuration Files</a>.</p>
@@ -1025,7 +1074,7 @@ You do not need to identify data sources.</li>
 </div>
 </li>
 </ol>
-<p>After you add the custom security provider to the security realm, you can use WebLogic Remote Console to configure and manage the inherited, standard attributes of the custom security provider. However, you cannot use WebLogic Remote Console to manage the custom attributes from your MDF file.</p>
+<p>After you add the custom security provider to the security realm, you can use WebLogic Remote Console to configure and manage the attributes of the custom security provider.</p>
 <h2 id="GUID-36DD7EB8-924F-4A43-A61C-3EE5E871F0BB">Configure the Embedded LDAP Server</h2>
 <p>The embedded LDAP server contains user, group, group membership, security role, security policy, and credential map information. By default, each WebLogic Server domain has an embedded LDAP server configured with the default values set for each attribute.</p>
 <p>The WebLogic Authentication, Authorization, Credential Mapping, and Role Mapping providers use the embedded LDAP server as their database. If you use any of these providers in a new security realm, you may want to change the default values for the embedded LDAP server to optimize its use in your environment.</p>
@@ -1282,54 +1331,37 @@ The match is case-insensitive.</li>
 
 </div>
 <p>Use the actions on the Policy page to edit a policy.</p>
-<table id="GUID-338F66D1-8D4C-40A0-ADF2-B84F4EF99A0B__TABLE_HWN_KZT_ZZB">
-                           <span>The actions available to configure a security policy.</span>
-                           <thead>
-                              <tr>
-                                 <th>Action</th>
-                                 <th>Description</th>
-                              </tr>
-                           </thead>
-                           <tbody>
-                              <tr>
-                                 <td>Add Condition</td>
-                                 <td>
-                                    <p>Adds a new condition to the policy. You can choose to add the new condition above or below another condition.</p>
-                                 </td>
-                              </tr>
-                              <tr>
-                                 <td>Combine</td>
-                                 <td>
-                                    <p>When multiple conditions are selected, you can combine them to create a compound condition.</p>
-                                 </td>
-                              </tr>
-                              <tr>
-                                 <td>Uncombine</td>
-                                 <td>
-                                    <p>When a compound condition is selected, you can break it into independent (simple) conditions.</p>
-                                 </td>
-                              </tr>
-                              <tr>
-                                 <td>Remove</td>
-                                 <td>
-                                    <p>Deletes a simple or compound condition from the policy. </p>
-                                    <p>When there are no conditions in a policy, the default policy applies.</p>
-                                 </td>
-                              </tr>
-                              <tr>
-                                 <td>Negate</td>
-                                 <td>
-                                    <p>Reverses the meaning of a condition. The criteria to access a resource becomes the opposite of the original condition.</p>
-                                 </td>
-                              </tr>
-                              <tr>
-                                 <td>Reset</td>
-                                 <td>
-                                    <p>Reverts the policy to its last <em>saved</em> change, not the last change. It's recommended that you save your policy frequently or you may lose several changes unintentionally using the Reset action.</p>
-                                 </td>
-                              </tr>
-                           </tbody>
-                        </table>
+<table id="TABLE_HWN_KZT_ZZB"><thead><tr><th>
+<p>Action</p>
+</th><th>
+<p>Description</p>
+</th></tr></thead><tbody><tr><td>
+<p>Add Condition</p>
+</td><td>
+<p>Adds a new condition to the policy. You can choose to add the new condition above or below another condition.</p>
+</td></tr><tr><td>
+<p>Combine</p>
+</td><td>
+<p>When multiple conditions are selected, you can combine them to create a compound condition.</p>
+</td></tr><tr><td>
+<p>Uncombine</p>
+</td><td>
+<p>When a compound condition is selected, you can break it into independent (simple) conditions.</p>
+</td></tr><tr><td>
+<p>Remove</p>
+</td><td>
+<p>Deletes a simple or compound condition from the policy.</p>
+<p>When there are no conditions in a policy, the default policy applies.</p>
+</td></tr><tr><td>
+<p>Negate</p>
+</td><td>
+<p>Reverses the meaning of a condition. The criteria to access a resource becomes the opposite of the original condition.</p>
+</td></tr><tr><td>
+<p>Reset</p>
+</td><td>
+<p>Reverts the policy to its last <em>saved</em> change, not the last change. It&rsquo;s recommended that you save your policy frequently or you may lose several changes unintentionally using the Reset action.</p>
+</td></tr></tbody>
+</table>
 <p>You can also edit a policy from its <strong>Advanced</strong> tab where the policy is expressed as string. Any changes made to a policy in the Advanced tab are reflected in the main Policy tab, and vice versa.</p>
 <p>To delete a policy, simply delete all of its conditions. Confirm that the default security policy for the resource instance will provide adequate access control before you delete a policy.</p>
 <h4 id="GUID-4D84C60C-9BBC-4DF2-B721-7F361F6D656A">Create a Policy for Resource Instances</h4>
@@ -1353,6 +1385,137 @@ The match is case-insensitive.</li>
 </li>
 <li>
 <p><strong>Optional</strong>: Add more conditions to the policy to increase its complexity.</p>
+</li>
+</ol>
+<h4 id="GUID-BDAEE9EF-4BC3-4047-AC91-3CD163A27D1C">Apply a Policy to a JMX Resource</h4>
+<p>Use WebLogic Remote Console to edit the default security policies for an MBean, MBean attribute, or MBean operation, or to create new policies.</p>
+<p>Many tasks that you complete in WebLogic Remote Console use Java Management Extensions (JMX) to invoke an operation in an underlying managed bean (MBean) or modify an MBean attribute. Oracle provides a default set of JMX resources and policies to protect WebLogic Server MBeans. See <a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/common/mbeansecroles.html">Default Security Policies for MBeans</a>.</p>
+
+
+<div class="alert alert-primary" role="alert">
+<h4 class="alert-heading">Note</h4>
+
+    MBean attributes and operations that represent particularly sensitive data or actions are protected by two sets of resources. Make sure that any modifications you make to the default MBean policies do not prevent a user from being authorized by both sets of resources. For example, to shut down a Managed Server from WebLogic Remote Console, you must satisfy the policy on the JMX resource <strong>and</strong> the policy on the server&rsquo;s Server resource. See <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=ROLES-GUID-8DD69153-ACB9-42B6-9AD2-6F7CB38A0078">JMX Resources</a> in <strong>Securing Resources Using Roles and Policies for Oracle WebLogic Server</strong>.
+
+</div>
+<ol>
+<li>
+<p>Delegate MBean authorization to the realm.</p>
+<p>By default, WebLogic Server uses a separate, internal security component to enforce its default policies for MBeans. If you want to modify the default security policies for MBeans, then you must enable the security realm to control access to MBeans.</p>
+<ol>
+<li>
+<p>In the <strong>Edit Tree</strong>, go to <strong>Security</strong>, then <strong>Realms</strong>, then <em>myrealm</em>.</p>
+</li>
+<li>
+<p>Enable <strong>Use Authorization Providers to Protect JMX Access</strong>.</p>
+</li>
+<li>
+<p>Click <strong>Save</strong> and commit your changes.</p>
+</li>
+<li>
+<p>Restart your servers.</p>
+</li>
+</ol>
+</li>
+<li>
+<p>In the <strong>Security Data Tree</strong>, go to <strong>Authorizers</strong>, then <strong>XACMLAuthorizer</strong> (or your custom Authorization provider), then <strong>Advanced</strong>, then <strong>JMX</strong>.</p>
+<p>This page is already populated with the default JMX security policies. If you want to edit an existing policy, then find it in the list, double click to open the policy editor and skip to step <a href="/weblogic-remote-console/administration-server/securing-domains/#step_u5m_phx_xfc">9</a>.</p>
+</li>
+<li>
+<p>Click <strong>New</strong>.</p>
+</li>
+<li>
+<p>From the <strong>Operation</strong> drop-down list, select the type of JMX operation for which you want to apply a security policy.</p>
+
+
+<div class="alert alert-primary" role="alert">
+<h4 class="alert-heading">Note</h4>
+
+    You will be able to specify whether the selected operation should apply to an entire MBean or only to an attribute of the MBean later on.
+
+</div>
+<ul>
+<li>
+<p><strong>Any Operation</strong>: Choose this operation if you plan to create a policy that applies to any action for the applicable MBean.</p>
+</li>
+<li>
+<p><strong>Get</strong>: Choose this operation if you plan to create a policy that controls who can read the value of all non-encrypted attributes in the applicable MBean.</p>
+</li>
+<li>
+<p><strong>Get Encrypted</strong>: Choose this operation if you plan to create a policy that controls who can read the value of all encrypted attributes in the applicable MBean.</p>
+<p>When WebLogic Server returns the value of an encrypted attribute, it returns the encrypted value; it does not unencrypt the value.</p>
+</li>
+<li>
+<p><strong>Set</strong>: Choose this operation if you plan to create a policy that controls who can write the value of all non-encrypted attributes in the applicable MBean.</p>
+</li>
+<li>
+<p><strong>Set Encrypted</strong>: Choose this operation if you plan to create a policy that controls who can write the value of all encrypted attributes in the applicable MBean.</p>
+</li>
+<li>
+<p><strong>Find</strong>: Choose this operation if you plan to create a policy that controls who can invoke lookup operations in the applicable MBean.</p>
+</li>
+<li>
+<p><strong>Invoke</strong>: Choose this operation if you plan to create a policy that controls who can invoke the specific operations supported by the applicable MBean. For example, <code>forceSuspend</code> on the <code>ServerRuntimeMBean</code>.</p>
+</li>
+<li>
+<p><strong>Create</strong>: Choose this operation if you plan to create a policy that controls who can create instances of the MBean type using the MBean-server&rsquo;s create method.</p>
+<p>This operation is only applicable to a few WebLogic Server MBeans and requires that WebLogic Server allows a JMX client to use the MBean server&rsquo;s create method for instances of the MBean type. Most WebLogic Server MBeans can only be created by invoking operations on the MBean&rsquo;s parent MBean. For example, only the <code>DomainMBean</code>&rsquo;s <code>createServer</code> operation can be used to create instances of <code>ServerMBean</code>.</p>
+</li>
+<li>
+<p><strong>Unregister</strong>: Choose this operation if you plan to create a policy that controls who can unregister instances of the MBean type using the MBean-server&rsquo;s <code>unregister</code> method.</p>
+<p>This operation is only applicable to a few WebLogic Server MBeans and requires that WebLogic Server allows a JMX client to use the MBean server&rsquo;s <code>unregister</code> method.</p>
+</li>
+</ul>
+</li>
+<li>
+<p>If the resource is part of an application, enter the application name in the <strong>Application</strong> field. Otherwise, leave this field blank.</p>
+</li>
+<li>
+<p>In the <strong>MBean Type</strong> field, enter the fully qualified type of the MBean resource. For example, <code>weblogic.management.configuration.ServerMBean</code> or <code>weblogic.j2ee.descriptor.wl.JMSConnectionFactoryBean</code></p>
+</li>
+<li>
+<p>In the <strong>Target</strong> field, enter the target of the MBean resource on which access is being requested.</p>
+<p>If you do not specify a security policy for the resource, the policy will apply to all methods or properties that match the other parameters of the resource specification.</p>
+<p>The Target differs depending on the operation:</p>
+<ul>
+<li>
+<p>For <code>invoke</code> or <code>find</code> operations, enter the method name.</p>
+</li>
+<li>
+<p>For <code>get</code>, <code>getEncrypted</code>, <code>set</code>, or <code>setEncrypted</code>, operations, enter the property name.</p>
+</li>
+<li>
+<p>For <code>create</code> or <code>unregister</code> operations, do not enter a target.</p>
+</li>
+<li>
+<p>For <code>create</code> or <code>unregister</code> operations, do not enter a target.</p>
+</li>
+</ul>
+</li>
+<li>
+<p>Click <strong>Save</strong>.</p>
+<p>You will be automatically taken to the Security Policy configuration page</p>
+</li>
+<li>
+<p><a id="step_u5m_phx_xfc"></a>Build a security policy for the JMX resource.</p>
+<p>The WebLogic Security Service evaluates conditions in the order they appear in the list. If you want the new condition to appear above an existing conditions (and thus be evaluated before it), select the checkbox beside the existing condition before you proceed.</p>
+<ol>
+<li>
+<p>Click <strong>Add Condition</strong>.</p>
+</li>
+<li>
+<p>Select a predicate from the <strong>Predicate List</strong>. Depending on the predicate you choose, you may need to configure arguments for the condition.</p>
+</li>
+<li>
+<p>Click <strong>OK</strong>.</p>
+</li>
+<li>
+<p>Click <strong>Save</strong>.</p>
+</li>
+</ol>
+</li>
+<li>
+<p><strong>Optional</strong>: Add more conditions to the policy as needed.</p>
 </li>
 </ol>
 <h2 id="GUID-219D9EBA-79E1-430F-AECD-28B4A41FDAE9">Identity and Trust</h2>
@@ -1856,7 +2019,7 @@ For more information, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=
 <li>
 <p><a id="STEP_DCB_VMZ_PCC"></a>Run a full set of tests to ensure that the recorded allowlist configuration file provides appropriate coverage of all packages and classes that must be allowed in order for your application to run successfully. When deserialization occurs, each class is recorded in <code><em>DOMAIN_HOME</em>/config/security/jep290-recorded.serial.properties</code>.</p>
 <p>A sample <code>jep290-recorded.serial.properties</code> is shown below:</p>
-<pre>Wed May 19 23:55:13 UTC 2021
+<pre tabindex="0"><code>Wed May 19 23:55:13 UTC 2021
 weblogic.oif.serialFilter=\
     com.company1.common.collections.objs.*;\
     com.company1.common.tools.Calculator;\
@@ -1864,8 +2027,8 @@ weblogic.oif.serialFilter=\
 weblogic.oif.serialGlobalFilter=\
     com.company1.common.lists.AList;\
     com.company1.common.tools.Calculator;\
-    com.company2.shared.tools.*</pre>
-</li>
+    com.company2.shared.tools.*
+</code></pre></li>
 <li>
 <p>Turn off the <strong>Recording Enabled</strong> option. Save and commit the change.</p>
 </li>

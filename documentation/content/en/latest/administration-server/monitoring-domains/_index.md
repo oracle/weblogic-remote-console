@@ -1,5 +1,5 @@
 ---
-weight: 155
+weight: 162
 title: Monitoring Domains
 ---
 
@@ -82,7 +82,7 @@ In dashboards, filters are the criteria that you use to curate your results. Gen
 
 WebLogic Remote Console restricts which filters are available based on your current node so you can focus on the criteria that is relevant to your goals. As such, the filters that are available on the Environments: Servers node are different than those available under Deployments: Application Runtime Data.
 
-Each filter consists of a **name** (or **property**) from the domain, a **value**, and an **operator** that determines how the name and value interact with each other. A basic dashboard filter is simply <code>name=value</code>. The following example dashboard filter returns any servers that require a restart to apply configuration changes:
+Each filter consists of a **name** \(or **property**\) from the domain, a **value**, and an **operator** that determines how the name and value interact with each other. A basic dashboard filter is simply <code>name=value</code>. The following example dashboard filter returns any servers that require a restart to apply configuration changes:
 
 ```
 ServerRuntime.RestartRequired == true
@@ -92,7 +92,7 @@ Values come in three formats:
 
 -   Text
 -   Numeric
--   Boolean (expressed as option toggles). Set the option to <code>On</code> for True, <code>Off</code> for False.
+-   Boolean \(expressed as option toggles\). Set the option to <code>On</code> for True, <code>Off</code> for False.
 
 Use operators to determine how a value should be assessed. Only the operators that are applicable to a name or property appear as options - you won't see <code>greater than</code> for text values. By default, all filters are set to <code>Any</code> to provide the broadest possible search parameters.
 
@@ -216,17 +216,17 @@ WebLogic Server offers multiple methods for filtering log messages and you can u
 
     The default level is <code>Info</code>. For information on message severity, see [Message Severity](https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=WLLOG-GUID-A7D779DC-43FE-40D1-ABBF-4D781FC72381) in **Configuring Log Files and Filtering Log Messages for Oracle WebLogic Server**.
 
-5.  If you want to redirect the standard out of the JVM in which the WebLogic Server instance runs to the four log message destinations (log file, standard out, domain log, and message buffer), then turn on **Redirect stdout logging enabled**. For more information, see [Redirecting JVM Output](https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=WLLOG-GUID-E11405DE-BAED-456F-9D5E-E155B2D24BA3) in **Configuring Log Files and Filtering Log Messages for Oracle WebLogic Server**.
+5.  If you want to redirect the standard out of the JVM in which the WebLogic Server instance runs to the four log message destinations \(log file, standard out, domain log, and message buffer\), then turn on **Redirect stdout logging enabled**. For more information, see [Redirecting JVM Output](https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=WLLOG-GUID-E11405DE-BAED-456F-9D5E-E155B2D24BA3) in **Configuring Log Files and Filtering Log Messages for Oracle WebLogic Server**.
 
-6.  If you want to override the setting for the root Logger (as specified by the **Minimum severity to log list** option) or its closest parent node in the logger tree, then do as follows:
+6.  If you want to override the setting for the root Logger \(as specified by the **Minimum severity to log list** option\) or its closest parent node in the logger tree, then do as follows:
 
     1.  Click the **Severity Properties** tab.
 
     2.  In the **Logger Severity Properties** table, click **+** to add a new key-value row, then double-click the row cells to update the key and value.
 
-    You can also use Logger severity properties to specify severity levels for packages (if using the Commons Logging API) or for individual WebLogic Server subsystem Loggers (if using the Message Catalog Logger).
+    You can also use Logger severity properties to specify severity levels for packages \(if using the Commons Logging API\) or for individual WebLogic Server subsystem Loggers \(if using the Message Catalog Logger\).
 
-    All loggers inherit the severity level of their nearest parent node in the logger hierarchy. You can specify a severity level for a given logger that is different than its nearest parent node using key-value pairs, where the key is the logger name and the value is the severity level (Info, Critical, Warning, and so on).
+    All loggers inherit the severity level of their nearest parent node in the logger hierarchy. You can specify a severity level for a given logger that is different than its nearest parent node using key-value pairs, where the key is the logger name and the value is the severity level \(Info, Critical, Warning, and so on\).
 
     See [Specifying Severity Level for Loggers](https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=WLLOG-GUID-4D87246E-F63B-4AA0-B471-E5326673C841) in **Configuring Log Files and Filtering Log Messages for Oracle WebLogic Server**.
 
@@ -311,13 +311,13 @@ WebLogic Server sets a threshold size limit of 2,097,152 kilobytes before it for
 
     Enter an absolute pathname or a pathname that is relative to the server's root directory. By default, the rotated files are stored in the same directory where the log file is stored.
 
-8.  **Optional**: If you want to add a time or date stamp to the file name when the log file is rotated, then in the **Log file name** field, add <code>java.text.SimpleDateFormat</code> variables to the file name and surround each variable with percentage (%) characters.
+8.  **Optional**: If you want to add a time or date stamp to the file name when the log file is rotated, then in the **Log file name** field, add <code>java.text.SimpleDateFormat</code> variables to the file name and surround each variable with percentage \(%\) characters.
 
-    For example, if you enter the following value in the Log file name field: <code>myserver_%yyyy%_%MM%_%dd%_%hh%_%mm%.log</code>, the server's log file will be named <code>myserver_*yyyy_MM_dd_hh_mm*.log</code>.
+    For example, if you enter the following value in the Log file name field: <code>myserver_%yyyy%_%MM%_%dd%_%hh%_%mm%.log</code>, the server's log file will be named <code>myserver_*yyyy\_MM\_dd\_hh\_mm*.log</code>.
 
-    When the server instance rotates the log file, the rotated file name contains the date stamp. For example, if the server instance rotates its local log file on 4 March 2020 at 10:15 AM, the log file that contains the old log messages will be named <code>myserver_2020_03_04_10_15.log*nnnnn*</code>. (The current, in-use server log file retains the name <code>myserver_*yyyy_MM_dd_hh_mm*.log</code>.)
+    When the server instance rotates the log file, the rotated file name contains the date stamp. For example, if the server instance rotates its local log file on 4 March 2020 at 10:15 AM, the log file that contains the old log messages will be named <code>myserver_2020_03_04_10_15.log*nnnnn*</code>. \(The current, in-use server log file retains the name <code>myserver_*yyyy\_MM\_dd\_hh\_mm*.log</code>.\)
 
-    If you do not include a time and date stamp, the rotated log files are numbered in order of creation <code>*SERVER_NAME*.log*nnnnn*</code>, where <code>*SERVER_NAME*</code> is the name configured for the log file. For example: <code>myserver.log00007</code>.
+    If you do not include a time and date stamp, the rotated log files are numbered in order of creation <code>*SERVER\_NAME*.log*nnnnn*</code>, where <code>*SERVER\_NAME*</code> is the name configured for the log file. For example: <code>myserver.log00007</code>.
 
 9.  Click **Save**.
 
@@ -328,7 +328,7 @@ WebLogic Server supports configuring <code>java.util.logging.Logger</code> level
 
 See [Configuring java.util.logging Logger Levels](https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=WLLOG-GUID-879637F5-B93F-4236-8B3D-D9BB319A748D) in **Configuring Log Files and Filtering Log Messages for Oracle WebLogic Server**.
 
--   To configure <code>java.util.logging.Logger</code> levels for the WebLogic Server logging configuration (also known as platform loggers):
+-   To configure <code>java.util.logging.Logger</code> levels for the WebLogic Server logging configuration \(also known as platform loggers\):
 
     WebLogic Server loggers are configured in terms of <code>weblogic.logging.Severities</code> through the <code>LoggerSeverities</code> attribute. These loggers are not available in the JDK's default global <code>LogManager</code>.
 
@@ -342,7 +342,7 @@ See [Configuring java.util.logging Logger Levels](https://docs.oracle.com/pls/to
 
 -   To configure <code>java.util.logging.Logger</code> levels for Desktop WebLogic Remote Console:
 
-    1.  Go to **File**, then **Settings**. (On macOS, go to **WebLogic Remote Console**, then **Settings**.)
+    1.  Go to **File**, then **Settings**. \(On macOS, go to **WebLogic Remote Console**, then **Settings**.\)
 
     2.  Under the **Logging/Debugging** section, click **+** to add a new row and enter the logging level as a name-value pair, separated by <code>=</code>.
 
@@ -396,3 +396,5 @@ For guidance on the performance tuning options that are available in WebLogic Se
 4.  Click **Save**.
 
 5.  Repeat as needed for the rest of the servers in your domain.
+
+

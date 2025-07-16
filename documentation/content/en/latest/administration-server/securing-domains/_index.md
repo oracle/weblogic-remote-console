@@ -1,5 +1,5 @@
 ---
-weight: 78
+weight: 83
 title: Securing Domains
 ---
 
@@ -28,7 +28,7 @@ Do not rely on the Security Warnings Report alone to determine the security of y
 
 
 
-Environments running WebLogic Server 14.1.1.0 and earlier require the July 2021 Patch Set Update (PSU) to see security warnings.
+Environments running WebLogic Server 14.1.1.0 and earlier require the July 2021 Patch Set Update \(PSU\) to see security warnings.
 
 {{< /alert >}}
 
@@ -50,7 +50,7 @@ Environments running WebLogic Server 14.1.1.0 and earlier require the July 2021 
 
 ### Security Warning Fixes {#GUID-965B4726-4622-454D-8049-C6B37A2EE867}
 
-For the latest information on security warnings and their suggested steps for resolution, see the My Oracle Support article, *WebLogic Server Security Warnings (Doc ID 2788605.1)*.
+For the latest information on security warnings and their suggested steps for resolution, see the My Oracle Support article, *WebLogic Server Security Warnings \(Doc ID 2788605.1\)*.
 
 {{< alert title="Note" color="primary" >}}
 
@@ -109,7 +109,7 @@ Before you create a new security realm, review the considerations outlined in [B
 
     {{< alert title="Note" color="primary" >}}
 
-
+    
 
     If you do not enable **Create Default Providers**, then you must manually configure the required security providers before you can commit the new security realm. For a list of which security providers are required, see [Required Security Providers](#SECTION_HWH_VBM_NCC).
 
@@ -143,6 +143,43 @@ You can configure WebLogic Server to replace the default security configurations
 
 Consider enabling the configuration archive to save previous domain configurations so you can revert to a previous security configuration if necessary. See [Back Up Configuration Files](../domain-configuration#GUID-6A1B7D7D-174F-417F-907D-900442FF0A87).
 
+### Migrate Security Data from a Security Provider {#GUID-72197DF1-A99D-45AE-95E2-DDA9AB8E388F}
+
+You can export security data from a security provider in one security realm and then import it into the equivalent security provider in another security realm.
+
+Copying the security data of security providers between security realms is an efficient way to quickly prepare new security realms for development and testing purposes, or to move security data when transitioning from test to production environments.
+
+See [Migrating Security Data](https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=SECMG-GUID-754AD57E-2115-4B06-B8B0-0F172A546620) in **Administering Security for Oracle WebLogic Server**.
+
+You can export and import data for the following security providers:
+
+-   DefaultAuthenticator \(WebLogic Authentication Provider\)
+-   XACMLAuthorizer \(WebLogic XACML Authorization Provider\)
+-   XACMLRoleMapper \(WebLogic XACML Role Mapping Provider\)
+-   DefaultCredentialMapper \(WebLogic Credential Mapping Provider\)
+
+1.  In the **Security Data Tree**, go to **Realms**, then *myrealm*, and navigate to the security provider whose security data you want to export.
+
+2.  On the security provider's page, click **Export**.
+
+3.  In the **File Name** field, specify where to save the security data file. By default, the file is saved to <code>*DOMAIN\_HOME/*</code>.
+
+4.  If you want to restrict which security data is exported, then, in the **Constraints** field, enter your constraints.
+
+    See [Formats and Constraints Supported by WebLogic Security Providers](https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=SECMG-GUID-DA6095AD-AAE8-4E72-9AAD-499C479464FF) in **Administering Security for Oracle WebLogic Server**.
+
+5.  Click **Done**.
+
+6.  To import the security provider data, perform the following steps on the equivalent security provider in the other security realm:
+7.  In the **Security Data Tree**, go to **Realms**, then *myrealm*, and navigate to the security provider whose security data you want to import.
+
+8.  On the security provider's page, click **Import**.
+
+9.  In the **File Name** field, specify the file location of the security provider data file that you want to import. By default, the file location is set to *<code>DOMAIN_HOME</code>/*.
+
+10. Click **Done**.
+
+
 ### Revert to a Previous Security Configuration {#GUID-252EE9B4-2FF3-4B3C-83D1-61F28B7D0E1A}
 
 Certain mistakes when configuring a new security realm or security providers can prevent you from booting the server. If this happens, then you can revert the configuration XML files to reinstate a previous realm configuration and recover from the error.
@@ -153,14 +190,14 @@ You can also use WLST Offline to correct a mistake that prevents you from bootin
 
 {{< alert title="Note" color="primary" >}}
 
- This process will only revert your security realm (meaning, the configuration of the realm and its providers), not the users, groups, roles, or security policies used by the realm, which are persisted in a data store and not in the configuration files.
+ This process will only revert your security realm \(meaning, the configuration of the realm and its providers\), not the users, groups, roles, or security policies used by the realm, which are persisted in a data store and not in the configuration files.
 
 {{< /alert >}}
 
 
 1.  Locate the <code>config.jar</code> file that contains the security configuration to which you want to revert, copy it to a temporary directory, and unpack it.
 
-2.  Copy the unpacked configuration files to the appropriate location in the <code>*DOMAIN_HOME*/config</code> directory. For information about which directories hold which configuration files, see [Domain Directory Contents](https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=DOMCF-GUID-F512F4B1-1282-40CD-8DBE-0836D9890924) in **Understanding Domain Configuration for Oracle WebLogic Server**.
+2.  Copy the unpacked configuration files to the appropriate location in the <code>*DOMAIN\_HOME*/config</code> directory. For information about which directories hold which configuration files, see [Domain Directory Contents](https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=DOMCF-GUID-F512F4B1-1282-40CD-8DBE-0836D9890924) in **Understanding Domain Configuration for Oracle WebLogic Server**.
 
 3.  Restart WebLogic Server.
 
@@ -306,7 +343,7 @@ For more information on Adjudication providers, see [Configuring the WebLogic Ad
 
 ### Configure a Role Mapping Provider {#GUID-122D3EE2-69C0-487B-AA7F-893FF19C8115}
 
-Role mapping is the process whereby principals (users or groups) are dynamically mapped to security roles at runtime. A Role Mapping provider determines what security roles apply to the principals stored in a subject when the subject is attempting to perform an operation on a WebLogic resource.
+Role mapping is the process whereby principals \(users or groups\) are dynamically mapped to security roles at runtime. A Role Mapping provider determines what security roles apply to the principals stored in a subject when the subject is attempting to perform an operation on a WebLogic resource.
 
 Since these operations usually involve gaining access to a WebLogic resource, Role Mapping providers are typically used with Authorization providers.
 
@@ -524,7 +561,7 @@ For more information on certificate validation on WebLogic Server, see [Configur
 
 3.  In the **Name** field, enter a name for the new provider.
 
-4.  From the **Type** drop-down list, select the type of Certificate Lookup and Validation (CLV) provider.
+4.  From the **Type** drop-down list, select the type of Certificate Lookup and Validation \(CLV\) provider.
 
 5.  Click **Create**.
 
@@ -579,17 +616,17 @@ If the security providers provided by WebLogic Server do not meet the needs of y
 
 1.  Create a custom security provider. For guidance, see [Introduction to Developing Security Providers for WebLogic Server](https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=DEVSP-GUID-E21CBD90-0348-4F6E-B9E8-D9B7D5A5B1C2) in **Developing Security Providers for Oracle WebLogic Server**.
 
-2.  Place the MBean JAR file for the custom provider in the <code>*WL_HOME*/server/lib/mbeantypes</code> directory.
+2.  Place the MBean JAR file for the custom provider in the <code>*WL\_HOME*/server/lib/mbeantypes</code> directory.
 
 3.  Add the custom security provider to the domain's security realm using WLST or the WebLogic Server RESTful management interface.
 
     {{< alert title="Note" color="primary" >}}
 
+    
 
+    -   If you are adding a deployable Authorization provider and the provider does not support parallel security policy, then set the <code>RealmMBean.DeployableProviderSynchronizationEnabled</code> attribute to <code>true</code>. Next, for the <code>RealmMBean.DeployableProviderSynchronizationTimeout</code> attribute, enter a timeout value \(in milliseconds\) or accept the default value.
 
-    -   If you are adding a deployable Authorization provider and the provider does not support parallel security policy, then set the <code>RealmMBean.DeployableProviderSynchronizationEnabled</code> attribute to <code>true</code>. Next, for the <code>RealmMBean.DeployableProviderSynchronizationTimeout</code> attribute, enter a timeout value (in milliseconds) or accept the default value.
-
-    -   If you are adding a deployable Role Mapping provider and the provider does not support role modification, then set the <code>RealmMBean.DeployableProviderSynchronizationEnabled</code> attribute to <code>true</code>. Next, for the <code>RealmMBean.DeployableProviderSynchronizationTimeout</code> attribute, enter a timeout value (in milliseconds) or accept the default value.
+    -   If you are adding a deployable Role Mapping provider and the provider does not support role modification, then set the <code>RealmMBean.DeployableProviderSynchronizationEnabled</code> attribute to <code>true</code>. Next, for the <code>RealmMBean.DeployableProviderSynchronizationTimeout</code> attribute, enter a timeout value \(in milliseconds\) or accept the default value.
 
     For more information, see [Is Your Custom Authorization Provider Thread Safe?](https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=DEVSP-GUID-EBD9A070-313E-468A-BB03-10B965F20172) or [Is Your Custom Role Mapping Provider Thread Safe?](https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=DEVSP-GUID-A4BBD4FC-6721-49CF-8311-ECF7BC276D98) in **Developing Security Providers for Oracle WebLogic Server**.
 
@@ -597,7 +634,7 @@ If the security providers provided by WebLogic Server do not meet the needs of y
 
 
 
-After you add the custom security provider to the security realm, you can use WebLogic Remote Console to configure and manage the inherited, standard attributes of the custom security provider. However, you cannot use WebLogic Remote Console to manage the custom attributes from your MDF file.
+After you add the custom security provider to the security realm, you can use WebLogic Remote Console to configure and manage the attributes of the custom security provider.
 
 ## Configure the Embedded LDAP Server {#GUID-36DD7EB8-924F-4A43-A61C-3EE5E871F0BB}
 
@@ -637,7 +674,7 @@ Groups are logically ordered sets of users. Users are organized into groups that
 
 For more information, see [Users, Groups, And Security Roles](https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=ROLES-GUID-A313D8DB-50DB-43EE-8BA1-EDECDC0DE2FE) in **Securing Resources Using Roles and Policies for Oracle WebLogic Server**.
 
-WebLogic Remote Console can only add, edit, or delete the users and groups within the default authentication provider (WebLogic Authentication Provider). If you are using another authentication provider that supports the required WebLogic Server APIs, you can view its users and groups in WebLogic Remote Console, but to manage them, you'll need to use an external tool specific to the provider. Providers that do not support the required WebLogic Server APIs do not appear in the Security Data tree.
+WebLogic Remote Console can only add, edit, or delete the users and groups within the default authentication provider \(WebLogic Authentication Provider\). If you are using another authentication provider that supports the required WebLogic Server APIs, you can view its users and groups in WebLogic Remote Console, but to manage them, you'll need to use an external tool specific to the provider. Providers that do not support the required WebLogic Server APIs do not appear in the Security Data tree.
 
 ### Create a User {#GUID-7A265AF1-F634-45EE-B685-C969A95DC476}
 
@@ -666,7 +703,7 @@ You can add groups to the WebLogic Authentication provider.
 
 2.  Click **New**.
 
-3.  Enter a **Name** (and optionally, a **Description**) for the group.
+3.  Enter a **Name** \(and optionally, a **Description**\) for the group.
 
     Group names must be unique in the security realm.
 
@@ -690,7 +727,7 @@ If you have a large number of users or groups in an authentication provider, the
     For example:
 
     -   If you enter <code>Deploy</code>, it will not return the Deployers group. Instead, use <code>Deployers</code> or <code>Deploy*</code> to show the Deployers group.
-    -   *For the Default authenticator (WebLogic Authentication provider) only*: You can add two <code>*</code> characters to the match criteria. If you enter <code>*admin*</code>, it will return any user or group that contains the string <code>admin</code> such as AdminChannelUsers, Administrators, and sysadmin.
+    -   *For the Default authenticator \(WebLogic Authentication provider\) only*: You can add two <code>*</code> characters to the match criteria. If you enter <code>*admin*</code>, it will return any user or group that contains the string <code>admin</code> such as AdminChannelUsers, Administrators, and sysadmin.
     The match is case-insensitive.
 
 4.  Click **Done**.
@@ -741,13 +778,13 @@ After you configure an authentication provider, you can view its users and group
 3.  Expand the **Users** or **Groups** nodes to view the users and groups.
 
 
-For the default authentication provider (WebLogic Authentication Provider) *only*, you can also add, modify, or delete users and groups.
+For the default authentication provider \(WebLogic Authentication Provider\) *only*, you can also add, modify, or delete users and groups.
 
 ## Security Policies and Roles {#GUID-6FDCFBD8-33DE-4962-9A17-F25BB3028D1E}
 
 Use security policies to manage who can access a resource in a WebLogic Server domain.
 
-A resource is an entity (such as a Web Service or a server instance) or an action (such as a method in a Web Service or the act of shutting down a server instance). For a list of resource types, see [Resource Types You Can Secure with Policies](https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=ROLES-GUID-A2DC979A-E464-4CDA-8B24-D9213709A7E3) in **Securing Resources Using Roles and Policies for Oracle WebLogic Server**.
+A resource is an entity \(such as a Web Service or a server instance\) or an action \(such as a method in a Web Service or the act of shutting down a server instance\). For a list of resource types, see [Resource Types You Can Secure with Policies](https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=ROLES-GUID-A2DC979A-E464-4CDA-8B24-D9213709A7E3) in **Securing Resources Using Roles and Policies for Oracle WebLogic Server**.
 
 A security policy specifies which users, groups, or roles can access the resource according to a set of conditions. Whenever possible, you should use security roles to determine access control. A security role, like a security group, grants an identity to a user. Unlike a group, however, membership in a role can be based on a set of conditions that are evaluated at runtime.
 
@@ -756,7 +793,7 @@ For most types of WebLogic resources, you can use WebLogic Remote Console to def
 The general process to secure a WebLogic resource is:
 
 1.  Create users and groups.
-2.  Manage default security roles or create new ones. We recommend that you use roles to secure WebLogic resources (instead of users or groups) to increase efficiency for administrators who work with many users. You can use the default roles that WebLogic Server provides or create your own.
+2.  Manage default security roles or create new ones. We recommend that you use roles to secure WebLogic resources \(instead of users or groups\) to increase efficiency for administrators who work with many users. You can use the default roles that WebLogic Server provides or create your own.
 3.  Create and apply security policies.
 
 For more information, see [**Securing Resources Using Roles and Policies for Oracle WebLogic Server**](https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=ROLES-GUID-E454A766-0F19-472B-A470-F2BD9B6BEF64).
@@ -777,7 +814,7 @@ For more information, see [Overview of Security Roles](https://docs.oracle.com/p
 
 #### Create a Global Role {#GUID-1D9925E8-CF23-4D3A-B4FF-61BBD466C454}
 
-Create a new role that applies to all WebLogic resources deployed within a security realm (and thus the entire WebLogic Server domain).
+Create a new role that applies to all WebLogic resources deployed within a security realm \(and thus the entire WebLogic Server domain\).
 
 {{< alert title="Note" color="primary" >}}
 
@@ -861,70 +898,77 @@ A policy can contain multiple simple or compound conditions or a mix of simple a
 
 Why should you use compound conditions? Consider the following scenario: a resource exists where you want Administrators to always have access, but to restrict Deployer access to between 9 a.m. and 5 p.m EST. The following policy would address both requirements:
 
--   Condition 1 (simple): Role: Admin
+-   Condition 1 \(simple\): Role: Admin
 
 <code>OR</code>
 
--   Condition 2 (compound): Role: Deployer <code>AND</code> access occurs between 09:00:00 and 17:00:00 GMT -5:00
+-   Condition 2 \(compound\): Role: Deployer <code>AND</code> access occurs between 09:00:00 and 17:00:00 GMT -5:00
 
 {{< /alert >}}
 
 
 Use the actions on the Policy page to edit a policy.
 
+<table id="TABLE_HWN_KZT_ZZB"><thead><tr><th>
 
+Action
 
-<table id="GUID-338F66D1-8D4C-40A0-ADF2-B84F4EF99A0B__TABLE_HWN_KZT_ZZB">
-                           <span>The actions available to configure a security policy.</span>
-                           <thead>
-                              <tr>
-                                 <th>Action</th>
-                                 <th>Description</th>
-                              </tr>
-                           </thead>
-                           <tbody>
-                              <tr>
-                                 <td>Add Condition</td>
-                                 <td>
-                                    <p>Adds a new condition to the policy. You can choose to add the new condition above or below another condition.</p>
-                                 </td>
-                              </tr>
-                              <tr>
-                                 <td>Combine</td>
-                                 <td>
-                                    <p>When multiple conditions are selected, you can combine them to create a compound condition.</p>
-                                 </td>
-                              </tr>
-                              <tr>
-                                 <td>Uncombine</td>
-                                 <td>
-                                    <p>When a compound condition is selected, you can break it into independent (simple) conditions.</p>
-                                 </td>
-                              </tr>
-                              <tr>
-                                 <td>Remove</td>
-                                 <td>
-                                    <p>Deletes a simple or compound condition from the policy. </p>
-                                    <p>When there are no conditions in a policy, the default policy applies.</p>
-                                 </td>
-                              </tr>
-                              <tr>
-                                 <td>Negate</td>
-                                 <td>
-                                    <p>Reverses the meaning of a condition. The criteria to access a resource becomes the opposite of the original condition.</p>
-                                 </td>
-                              </tr>
-                              <tr>
-                                 <td>Reset</td>
-                                 <td>
-                                    <p>Reverts the policy to its last <em>saved</em> change, not the last change. It's recommended that you save your policy frequently or you may lose several changes unintentionally using the Reset action.</p>
-                                 </td>
-                              </tr>
-                           </tbody>
-                        </table>
+</th><th>
 
+Description
 
+</th></tr></thead><tbody><tr><td>
 
+Add Condition
+
+</td><td>
+
+Adds a new condition to the policy. You can choose to add the new condition above or below another condition.
+
+</td></tr><tr><td>
+
+Combine
+
+</td><td>
+
+When multiple conditions are selected, you can combine them to create a compound condition.
+
+</td></tr><tr><td>
+
+Uncombine
+
+</td><td>
+
+When a compound condition is selected, you can break it into independent \(simple\) conditions.
+
+</td></tr><tr><td>
+
+Remove
+
+</td><td>
+
+Deletes a simple or compound condition from the policy.
+
+When there are no conditions in a policy, the default policy applies.
+
+</td></tr><tr><td>
+
+Negate
+
+</td><td>
+
+Reverses the meaning of a condition. The criteria to access a resource becomes the opposite of the original condition.
+
+</td></tr><tr><td>
+
+Reset
+
+</td><td>
+
+Reverts the policy to its last *saved* change, not the last change. It's recommended that you save your policy frequently or you may lose several changes unintentionally using the Reset action.
+
+</td></tr></tbody>
+</table>
 
 You can also edit a policy from its **Advanced** tab where the policy is expressed as string. Any changes made to a policy in the Advanced tab are reflected in the main Policy tab, and vice versa.
 
@@ -947,6 +991,105 @@ You can create a security policy that only applies to a specific resource instan
 5.  Click **Save**.
 
 6.  **Optional**: Add more conditions to the policy to increase its complexity.
+
+
+#### Apply a Policy to a JMX Resource {#GUID-BDAEE9EF-4BC3-4047-AC91-3CD163A27D1C}
+
+Use WebLogic Remote Console to edit the default security policies for an MBean, MBean attribute, or MBean operation, or to create new policies.
+
+Many tasks that you complete in WebLogic Remote Console use Java Management Extensions \(JMX\) to invoke an operation in an underlying managed bean \(MBean\) or modify an MBean attribute. Oracle provides a default set of JMX resources and policies to protect WebLogic Server MBeans. See [Default Security Policies for MBeans](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/common/mbeansecroles.html).
+
+{{< alert title="Note" color="primary" >}}
+
+
+
+MBean attributes and operations that represent particularly sensitive data or actions are protected by two sets of resources. Make sure that any modifications you make to the default MBean policies do not prevent a user from being authorized by both sets of resources. For example, to shut down a Managed Server from WebLogic Remote Console, you must satisfy the policy on the JMX resource **and** the policy on the server's Server resource. See [JMX Resources](https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=ROLES-GUID-8DD69153-ACB9-42B6-9AD2-6F7CB38A0078) in **Securing Resources Using Roles and Policies for Oracle WebLogic Server**.
+
+{{< /alert >}}
+
+
+1.  Delegate MBean authorization to the realm.
+
+    By default, WebLogic Server uses a separate, internal security component to enforce its default policies for MBeans. If you want to modify the default security policies for MBeans, then you must enable the security realm to control access to MBeans.
+
+    1.  In the **Edit Tree**, go to **Security**, then **Realms**, then *myrealm*.
+
+    2.  Enable **Use Authorization Providers to Protect JMX Access**.
+
+    3.  Click **Save** and commit your changes.
+
+    4.  Restart your servers.
+
+2.  In the **Security Data Tree**, go to **Authorizers**, then **XACMLAuthorizer** \(or your custom Authorization provider\), then **Advanced**, then **JMX**.
+
+    This page is already populated with the default JMX security policies. If you want to edit an existing policy, then find it in the list, double click to open the policy editor and skip to step [9](#step_u5m_phx_xfc).
+
+3.  Click **New**.
+
+4.  From the **Operation** drop-down list, select the type of JMX operation for which you want to apply a security policy.
+
+    {{< alert title="Note" color="primary" >}}
+
+    
+
+    You will be able to specify whether the selected operation should apply to an entire MBean or only to an attribute of the MBean later on.
+
+    {{< /alert >}}
+
+
+    -   **Any Operation**: Choose this operation if you plan to create a policy that applies to any action for the applicable MBean.
+    -   **Get**: Choose this operation if you plan to create a policy that controls who can read the value of all non-encrypted attributes in the applicable MBean.
+    -   **Get Encrypted**: Choose this operation if you plan to create a policy that controls who can read the value of all encrypted attributes in the applicable MBean.
+
+        When WebLogic Server returns the value of an encrypted attribute, it returns the encrypted value; it does not unencrypt the value.
+
+    -   **Set**: Choose this operation if you plan to create a policy that controls who can write the value of all non-encrypted attributes in the applicable MBean.
+    -   **Set Encrypted**: Choose this operation if you plan to create a policy that controls who can write the value of all encrypted attributes in the applicable MBean.
+    -   **Find**: Choose this operation if you plan to create a policy that controls who can invoke lookup operations in the applicable MBean.
+    -   **Invoke**: Choose this operation if you plan to create a policy that controls who can invoke the specific operations supported by the applicable MBean. For example, <code>forceSuspend</code> on the <code>ServerRuntimeMBean</code>.
+    -   **Create**: Choose this operation if you plan to create a policy that controls who can create instances of the MBean type using the MBean-server's create method.
+
+        This operation is only applicable to a few WebLogic Server MBeans and requires that WebLogic Server allows a JMX client to use the MBean server's create method for instances of the MBean type. Most WebLogic Server MBeans can only be created by invoking operations on the MBean's parent MBean. For example, only the <code>DomainMBean</code>'s <code>createServer</code> operation can be used to create instances of <code>ServerMBean</code>.
+
+    -   **Unregister**: Choose this operation if you plan to create a policy that controls who can unregister instances of the MBean type using the MBean-server's <code>unregister</code> method.
+
+        This operation is only applicable to a few WebLogic Server MBeans and requires that WebLogic Server allows a JMX client to use the MBean server's <code>unregister</code> method.
+
+5.  If the resource is part of an application, enter the application name in the **Application** field. Otherwise, leave this field blank.
+
+6.  In the **MBean Type** field, enter the fully qualified type of the MBean resource. For example, <code>weblogic.management.configuration.ServerMBean</code> or <code>weblogic.j2ee.descriptor.wl.JMSConnectionFactoryBean</code>
+
+7.  In the **Target** field, enter the target of the MBean resource on which access is being requested.
+
+    If you do not specify a security policy for the resource, the policy will apply to all methods or properties that match the other parameters of the resource specification.
+
+    The Target differs depending on the operation:
+
+    -   For <code>invoke</code> or <code>find</code> operations, enter the method name.
+
+    -   For <code>get</code>, <code>getEncrypted</code>, <code>set</code>, or <code>setEncrypted</code>, operations, enter the property name.
+
+    -   For <code>create</code> or <code>unregister</code> operations, do not enter a target.
+
+    -   For <code>create</code> or <code>unregister</code> operations, do not enter a target.
+
+8.  Click **Save**.
+
+    You will be automatically taken to the Security Policy configuration page
+
+9.  <a id="step_u5m_phx_xfc"></a>Build a security policy for the JMX resource.
+
+    The WebLogic Security Service evaluates conditions in the order they appear in the list. If you want the new condition to appear above an existing conditions \(and thus be evaluated before it\), select the checkbox beside the existing condition before you proceed.
+
+    1.  Click **Add Condition**.
+
+    2.  Select a predicate from the **Predicate List**. Depending on the predicate you choose, you may need to configure arguments for the condition.
+
+    3.  Click **OK**.
+
+    4.  Click **Save**.
+
+10. **Optional**: Add more conditions to the policy as needed.
 
 
 ## Identity and Trust {#GUID-219D9EBA-79E1-430F-AECD-28B4A41FDAE9}
@@ -974,7 +1117,7 @@ If you are using the demo certificates in a multi-server domain, Managed Server 
 {{< /alert >}}
 
 
-The OPSS Keystore Service (KSS) provides an alternative mechanism to manage keys and certificates for message security. See [Managing Keys and Certificates](https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=JISEC-GUID-4B6B2303-D7F2-4E50-A8CE-02A04D7CF3A7) in **Securing Applications with Oracle Platform Security Services**. The OPSS KSS makes using certificates and keys easier by providing central management and storage of keys and certificates for all servers in a domain. You can use the OPSS KSS to create and maintain keystores of type KSS. If the Oracle Java Required Files (JRF) template is installed on the WebLogic Server system, you have the option to use KSS keystores. The KSS keystore is available only with the JRF template and is not available with the default WebLogic Server configuration.
+The OPSS Keystore Service \(KSS\) provides an alternative mechanism to manage keys and certificates for message security. See [Managing Keys and Certificates](https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=JISEC-GUID-4B6B2303-D7F2-4E50-A8CE-02A04D7CF3A7) in **Securing Applications with Oracle Platform Security Services**. The OPSS KSS makes using certificates and keys easier by providing central management and storage of keys and certificates for all servers in a domain. You can use the OPSS KSS to create and maintain keystores of type KSS. If the Oracle Java Required Files \(JRF\) template is installed on the WebLogic Server system, you have the option to use KSS keystores. The KSS keystore is available only with the JRF template and is not available with the default WebLogic Server configuration.
 
 ### Configuring Identity and Trust in WebLogic Server {}
 
@@ -999,8 +1142,8 @@ For more information, see [Configuring Keystores](https://docs.oracle.com/pls/to
 
 For testing and development purposes *only*, WebLogic Server provides a demonstration identity keystore and a demonstration trust keystore. For production environments, you should configure your own identity and trust keystores.
 
--   In WebLogic Server 14.1.1.0 and earlier, the demo identity keystore and demo trust keystore are <code>*DOMAIN_NAME*/security/DemoIdentity.jks</code> and <code>*WL_HOME*/server/lib/DemoTrust.jks</code>, respectively.
--   In WebLogic Server 14.1.2.0 and later, the demo identity keystore and demo trust keystore are <code>*DOMAIN_NAME*/security/DemoIdentity.p12</code> and <code>*DOMAIN_NAME*/security/DemoTrust.p12</code>, respectively.
+-   In WebLogic Server 14.1.1.0 and earlier, the demo identity keystore and demo trust keystore are <code>*DOMAIN\_NAME*/security/DemoIdentity.jks</code> and <code>*WL\_HOME*/server/lib/DemoTrust.jks</code>, respectively.
+-   In WebLogic Server 14.1.2.0 and later, the demo identity keystore and demo trust keystore are <code>*DOMAIN\_NAME*/security/DemoIdentity.p12</code> and <code>*DOMAIN\_NAME*/security/DemoTrust.p12</code>, respectively.
 
 Additionally, the JDK installation provides the <code>cacerts</code> truststore in JKS format at <code><code>*JDK*/lib/security/cacerts</code></code>.
 
@@ -1009,7 +1152,7 @@ Additionally, the JDK installation provides the <code>cacerts</code> truststore 
 
 1.  If you are using custom identity and custom trust keystores:
 
-    1.  Obtain private keys and digital certificates from a reputable third-party certificate authority (CA).
+    1.  Obtain private keys and digital certificates from a reputable third-party certificate authority \(CA\).
 
     2.  Create identity and trust keystores.
 
@@ -1021,11 +1164,11 @@ Additionally, the JDK installation provides the <code>cacerts</code> truststore 
 
 4.  From the **Keystores** drop-down list, select a type for storing and managing private keys/digital certificate pairs and trusted CA certificates.
 
-    -   **Demo Identity and Demo Trust** - Select this option to use the demo certificates (suitable for development and testing). This is the default setting, and uses the demonstration identity and trust keystores, and the JDK <code>cacerts</code> keystore.
+    -   **Demo Identity and Demo Trust** - Select this option to use the demo certificates \(suitable for development and testing\). This is the default setting, and uses the demonstration identity and trust keystores, and the JDK <code>cacerts</code> keystore.
 
-        To use a KSS keystore for demo identity and trust, you must first enable the **Use KSS For Demo** option (on the **Environment: Domain** page, under the **Security** tab (click **Show Advanced Fields**)) which determines whether the Demo Identity and Demo Trust key stores should be obtained from the Oracle Key Store Service (KSS).
+        To use a KSS keystore for demo identity and trust, you must first enable the **Use KSS For Demo** option \(on the **Environment: Domain** page, under the **Security** tab \(click **Show Advanced Fields**\)\) which determines whether the Demo Identity and Demo Trust key stores should be obtained from the Oracle Key Store Service \(KSS\).
 
-    -   **Custom Identity and Java Standard Trust** - Select this option to use an identity keystore you created and the trusted CAs that are defined in the <code>cacerts</code> file in the <code>*JAVA_HOME*/jre/lib/security</code> directory.
+    -   **Custom Identity and Java Standard Trust** - Select this option to use an identity keystore you created and the trusted CAs that are defined in the <code>cacerts</code> file in the <code>*JAVA\_HOME*/jre/lib/security</code> directory.
     -   **Custom Identity and Custom Trust** - Select this option to use both identity and trust keystores that you created.
     -   **Custom Identity and Command Line Trust** - Select this option to use an identity keystore that you created, but the trust keystore is passed as an argument in the command that starts WebLogic Server.
 5.  Define attributes for the identity and trust keystores. Depending on the keystore type that you selected, different options are available.
@@ -1050,9 +1193,9 @@ Additionally, the JDK installation provides the <code>cacerts</code> truststore 
 
 ### Enable Certificate Revocation Checking {#GUID-C8C53705-3C69-4525-AE9D-39BBB6478C44}
 
-WebLogic Server’s JSSE implementation supports X.509 certificate revocation (CR) checking, which checks a certificate’s revocation status as part of the SSL/TLS certificate validation process. CR checking improves the security of certificate usage by ensuring that received certificates have not been revoked by the issuing certificate authority. By default, CR checking is disabled in WebLogic Server.
+WebLogic Server’s JSSE implementation supports X.509 certificate revocation \(CR\) checking, which checks a certificate’s revocation status as part of the SSL/TLS certificate validation process. CR checking improves the security of certificate usage by ensuring that received certificates have not been revoked by the issuing certificate authority. By default, CR checking is disabled in WebLogic Server.
 
-WebLogic Server's CR checking implementation includes both the Online Certificate Status Protocol (OCSP) and certificate revocation lists (CRLs). For more information, see [X.509 Certificate Revocation Checking](https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=SECMG-GUID-3833DBD7-32E5-4CCF-AC3C-09D68696AA0F) in **Administering Security for Oracle WebLogic Server**.
+WebLogic Server's CR checking implementation includes both the Online Certificate Status Protocol \(OCSP\) and certificate revocation lists \(CRLs\). For more information, see [X.509 Certificate Revocation Checking](https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=SECMG-GUID-3833DBD7-32E5-4CCF-AC3C-09D68696AA0F) in **Administering Security for Oracle WebLogic Server**.
 
 Ensure that you have configured the identity and trust keystores for WebLogic Server. See [Identity and Trust](#GUID-219D9EBA-79E1-430F-AECD-28B4A41FDAE9).
 
@@ -1062,7 +1205,7 @@ Ensure that you have configured the identity and trust keystores for WebLogic Se
 
 3.  Turn on the **Enable Certificate Revocation Checking** option.
 
-4.  Select a revocation checking method from the **Revocation Checks** drop-down list. The default is OCSP_THEN_CRL.
+4.  Select a revocation checking method from the **Revocation Checks** drop-down list. The default is OCSP\_THEN\_CRL.
 
     Use the **OCSP** and **CRL** tabs to customize settings for the revocation checking method. For information on the options, see [Using the Online Certificate Status Protocol](https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=SECMG-GUID-6708C14D-1F37-4454-8DB7-69F2EC86ACBA) or [Using Certificate Revocation Lists](https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=SECMG-GUID-4E2A9AB6-233E-475C-A32E-FAACEB12052E) in **Administering Security for Oracle WebLogic Server**.
 
@@ -1077,7 +1220,7 @@ You can configure certificate authority overrides to the certificate revocation 
 
 #### Configure Certificate Authority Overrides {#GUID-E94764E7-FE43-49E7-A6F5-8699F2039103}
 
-Configuring a certificate authority override allows you to specify CR checking behavior that is specific to certificates issued by a particular certificate authority (CA). A certificate authority override always supersedes the corresponding certificate revocation (CR) checking configuration that is set at the domain level.
+Configuring a certificate authority override allows you to specify CR checking behavior that is specific to certificates issued by a particular certificate authority \(CA\). A certificate authority override always supersedes the corresponding certificate revocation \(CR\) checking configuration that is set at the domain level.
 
 A certificate authority override can be used to supersede, for a given CA, any domain-wide CR checking configuration settings, with the exception of the CRL local cache, which is configured on a domain-wide basis only.
 
@@ -1089,7 +1232,7 @@ A certificate authority override can be used to supersede, for a given CA, any d
 
 4.  Click **Create**.
 
-5.  In the **Distinguished Name** field, enter the distinguished name of the CA. This must be the complete issuer distinguished name (defined in RFC 2253) of the certificates for which this override applies.
+5.  In the **Distinguished Name** field, enter the distinguished name of the CA. This must be the complete issuer distinguished name \(defined in RFC 2253\) of the certificates for which this override applies.
 
     For example, <code>CN=CertGenCAB, OU=FOR TESTING ONLY, O=MyOrganization, L=MyTown, ST=MyState,C=US</code>.
 
@@ -1105,7 +1248,7 @@ A certificate authority override can be used to supersede, for a given CA, any d
 
 ## SSL/TLS {#GUID-63D4159D-840B-4E4F-BAB7-1D12CCCD62DE}
 
-Transport Layer Security (TLS) and its predecessor, Secure Sockets Layer (SSL), ensure secure connections by allowing two applications connecting over a network connection to authenticate the other's identity and by encrypting the data exchanged between the applications.
+Transport Layer Security \(TLS\) and its predecessor, Secure Sockets Layer \(SSL\), ensure secure connections by allowing two applications connecting over a network connection to authenticate the other's identity and by encrypting the data exchanged between the applications.
 
 Authentication allows a server and optionally a client to verify the identity of the application on the other end of a network connection. Encryption makes data transmitted over the network intelligible only to the intended recipient.
 
@@ -1182,7 +1325,7 @@ Configure the identity and trust keystores for WebLogic Server. See [Configure K
 
 A host name verifier ensures the host name in the URL to which the client connects matches the host name in the digital certificate that the server sends back as part of the SSL/TLS connection. If the host name in the certificate matches the local machine’s host name, host name verification passes if the URL specifies <code>localhost</code>, <code>127.0.0.1</code>, or the default IP address of the local machine.
 
-A host name verifier is useful when a SSL/TLS client (or a WebLogic Server acting as an SSL/TLS client) connects to an application server on a remote host. Host name verification is performed only by a SSL/TLS client. By default, WebLogic Server has host name verification enabled and we recommend keeping it enabled for production environments.
+A host name verifier is useful when a SSL/TLS client \(or a WebLogic Server acting as an SSL/TLS client\) connects to an application server on a remote host. Host name verification is performed only by a SSL/TLS client. By default, WebLogic Server has host name verification enabled and we recommend keeping it enabled for production environments.
 
 {{< alert title="Note" color="primary" >}}
 
@@ -1209,9 +1352,9 @@ The following steps only apply when a WebLogic Server instance is acting as an S
 
     {{< alert title="Note" color="primary" >}}
 
+    
 
-
-    If you write a custom host name verifier, the class that implements the host name verifier must be specified in the <code>CLASSPATH</code> of WebLogic Server (when acting as an SSL/TLS client) or a stand alone SSL/TLS client.
+    If you write a custom host name verifier, the class that implements the host name verifier must be specified in the <code>CLASSPATH</code> of WebLogic Server \(when acting as an SSL/TLS client\) or a stand alone SSL/TLS client.
 
     When you use stand alone SSL/TLS clients, a custom host name verifier must be specified on the command line using the following argument or through the API: <code>-Dweblogic.security.SSL.HostnameVerifier=*classname*</code> where *classname* specifies the implementation of the <code>weblogic.security.SSL.HostnameVerifier</code> interface.
 
@@ -1276,7 +1419,7 @@ For more information, see [Configuring Cross-Domain Security](https://docs.oracl
     To reduce the impact on performance, WebLogic Server caches the authenticated subject. If you want to modify the cache settings for your environment, click **Show Advanced Fields** and change the following settings:
 
     -   To disable the cache, turn off **Cross Domain Security Cache Enabled**.
-    -   To change how often the cache is cleared, update the **Cross Domain Security Cache TTL** value (in seconds).
+    -   To change how often the cache is cleared, update the **Cross Domain Security Cache TTL** value \(in seconds\).
 3.  Click **Save** and then commit your changes.
 
 4.  Create a user for cross domain security and assign it to the <code>CrossDomainConnectors</code> group. See [Create a User](#GUID-7A265AF1-F634-45EE-B685-C969A95DC476).
@@ -1375,11 +1518,12 @@ WebLogic Server also supports using blocklists for JEP 290 filtering. For instru
 
     4.  Save and commit the change.
 
-2.  <a id="STEP_DCB_VMZ_PCC"></a>Run a full set of tests to ensure that the recorded allowlist configuration file provides appropriate coverage of all packages and classes that must be allowed in order for your application to run successfully. When deserialization occurs, each class is recorded in <code>*DOMAIN_HOME*/config/security/jep290-recorded.serial.properties</code>.
+2.  <a id="STEP_DCB_VMZ_PCC"></a>Run a full set of tests to ensure that the recorded allowlist configuration file provides appropriate coverage of all packages and classes that must be allowed in order for your application to run successfully. When deserialization occurs, each class is recorded in <code>*DOMAIN\_HOME*/config/security/jep290-recorded.serial.properties</code>.
 
     A sample <code>jep290-recorded.serial.properties</code> is shown below:
 
-    <pre>Wed May 19 23:55:13 UTC 2021
+    ```
+    Wed May 19 23:55:13 UTC 2021
     weblogic.oif.serialFilter=\
         com.company1.common.collections.objs.*;\
         com.company1.common.tools.Calculator;\
@@ -1387,7 +1531,8 @@ WebLogic Server also supports using blocklists for JEP 290 filtering. For instru
     weblogic.oif.serialGlobalFilter=\
         com.company1.common.lists.AList;\
         com.company1.common.tools.Calculator;\
-        com.company2.shared.tools.*</pre>
+        com.company2.shared.tools.*
+    ```
 
 3.  Turn off the **Recording Enabled** option. Save and commit the change.
 
@@ -1403,7 +1548,7 @@ WebLogic Server also supports using blocklists for JEP 290 filtering. For instru
 
         {{< alert title="Note" color="primary" >}}
 
-
+        
 
         You can also set the <code>AllowListViolationAction</code> on a channel using the network access point. Doing so allows you to use an allowlist on untrusted external channels and a blocklist on internal trusted channels.
 
@@ -1422,7 +1567,7 @@ WebLogic Server also supports using blocklists for JEP 290 filtering. For instru
 
     4.  Click **Save**.
 
-6.  Configure your production domain to use allowlists by copying the recorded allowlist configuration file that you just created to the <code>*DOMAIN_HOME*/config/security</code> directory of the production domain.
+6.  Configure your production domain to use allowlists by copying the recorded allowlist configuration file that you just created to the <code>*DOMAIN\_HOME*/config/security</code> directory of the production domain.
 
     {{< alert title="Note" color="primary" >}}
 
@@ -1656,7 +1801,7 @@ A SAML 2.0 Identity Provider partner is an entity that generates SAML 2.0 assert
 
 11. Click the **Assertion Signing Certificate** tab to configure the Identity Provider partner's assertion signing certificate.
 
-    1.  Coordinate with your partner to obtain the Assertion Signing Certificate in a secure manner. For more information, see [Using Security Assertion Markup Language (SAML) Tokens For Identity](https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=WSSOV-GUID-6965897A-0826-4BEB-897D-1524A1F1901D) in **Securing WebLogic Web Services for Oracle WebLogic Server**.
+    1.  Coordinate with your partner to obtain the Assertion Signing Certificate in a secure manner. For more information, see [Using Security Assertion Markup Language \(SAML\) Tokens For Identity](https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=WSSOV-GUID-6965897A-0826-4BEB-897D-1524A1F1901D) in **Securing WebLogic Web Services for Oracle WebLogic Server**.
 
     2.  Click **Import Certificate from File** and enter the file path to the <code>.pem</code> or <code>.der</code> file containing the X.509 certificate.
 
@@ -1706,7 +1851,7 @@ For a list of the specific RDBMS systems supported in this release of WebLogic S
 
     {{< alert title="Note" color="primary" >}}
 
-
+    
 
     Do not start the domain at this time.
 
@@ -1744,7 +1889,7 @@ You can update the RDBMS security store settings. However, you should avoid modi
 
         {{< alert title="Note" color="primary" >}}
 
-
+        
 
         Failure to configure JMS actions in a multiserver domain in which the RDBMS security store is configured may result in a security vulnerability.
 
@@ -1755,3 +1900,4 @@ You can update the RDBMS security store settings. However, you should avoid modi
 
 
 If the JMS topic with which the RDBMS security store is configured goes down, see [Managing the RDBMS Security Store](https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=SECMG-GUID-7AE06479-0168-4277-AA84-6D5C87F1A004) in **Administering Security for Oracle WebLogic Server** for important information about restoring it.
+

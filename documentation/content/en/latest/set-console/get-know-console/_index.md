@@ -27,98 +27,114 @@ Tools are a set of quick actions that you can use to navigate or manipulate the 
 
 Tool icons only appear on pages where they are applicable. For example, the Shopping Cart, used to indicate pending changes to an active domain, only appears in Administration Server providers.
 
+<table id="TABLE_GQ3_FQF_NZB"><thead><tr><th>
 
+Tool Icon
 
-<table id="GUID-6DDEDC3B-00F5-4075-8849-66D3707C2C16__TABLE_GQ3_FQF_NZB">
-                     <caption>
-                        <span>
-                           <span>Table 1. </span>Tools. </span>
-                        <span>Tool icons that may appear along the top of the Content Pane.</span>
-                     </caption>
-                     <thead>
-                        <tr>
-                           <th>Tool Icon</th>
-                           <th>Description</th>
-                        </tr>
-                     </thead>
-                     <tbody>
-                        <tr>
-                           <td>
-                              <img id="GUID-6DDEDC3B-00F5-4075-8849-66D3707C2C16__IMAGE_NGZ_4MY_MDC"
-                                   src="/weblogic-remote-console/images/ui-icons/home-icon-blk-24x24.png"/> Home</td>
-                           <td>Sends you to the Home Page of the provider.</td>
-                        </tr>
-                        <tr>
-                           <td>
-                              <img id="GUID-6DDEDC3B-00F5-4075-8849-66D3707C2C16__IMAGE_GFR_D2Z_MDC"
-                                   src="/weblogic-remote-console/images/ui-icons/shopping-cart-icon-24x24.png"/> Shopping Cart </td>
-                           <td>Indicates if there are pending changes ready to be committed to a WebLogic Server domain.<p>When the <span>Shopping Cart</span> is full, you can click it to see the pending changes and then commit or discard them.</p>
-                           </td>
-                        </tr>
-                        <tr>
-                           <td>
-                              <img id="GUID-6DDEDC3B-00F5-4075-8849-66D3707C2C16__IMAGE_J45_P2Z_MDC"
-                                   src="/weblogic-remote-console/images/ui-icons/beanpath-history-icon-blk-24x24.png"/> Visibility of History</td>
-                           <td>Triggers a record of the pages you visit. When active, a drop-down list appears where you can see, and return to, your previous pages. History is limited to the current perspective. <p>Click <span>More ︙</span>, then <span>Clear History Entries</span> to delete your navigation history.</p>
-                           </td>
-                        </tr>
-                        <tr>
-                           <td>
-                              <img id="GUID-6DDEDC3B-00F5-4075-8849-66D3707C2C16__IMAGE_ACC_NHF_B2C"
-                                   src="/weblogic-remote-console/images/ui-icons/project-management-blk-24x24.png"/>
-                           </td>
-                           <td>Opens the <span>Providers</span> drawer where you can manage your provider connections.</td>
-                        </tr>
-                        <tr>
-                           <td>
-                              <img id="GUID-6DDEDC3B-00F5-4075-8849-66D3707C2C16__IMAGE_DJS_JYX_12C"
-                                   src="/weblogic-remote-console/images/ui-icons/pages-history-back-blk-24x24.png"/>/<img id="GUID-6DDEDC3B-00F5-4075-8849-66D3707C2C16__IMAGE_CDN_LYX_12C"
-                                   src="/weblogic-remote-console/images/ui-icons/pages-history-next-blk-24x24.png"/> Browse Back and Forward</td>
-                           <td>Browses  backward or forward through your previously visited pages in WebLogic Remote Console.</td>
-                        </tr>
-                        <tr>
-                           <td>
-                              <img id="GUID-6DDEDC3B-00F5-4075-8849-66D3707C2C16__IMAGE_AZP_5ZX_12C"
-                                   src="/weblogic-remote-console/images/ui-icons/pages-history-icon-blk-24x24.png"/> Pages History</td>
-                           <td>Opens the <span>Pages History</span> dialog box, which lists the pages that you have  previously visited in WebLogic Remote Console.</td>
-                        </tr>
-                        <tr>
-                           <td>
-                              <img id="GUID-6DDEDC3B-00F5-4075-8849-66D3707C2C16__IMAGE_U5V_TDZ_MDC"
-                                   src="/weblogic-remote-console/images/ui-icons/landing-page-icon-blk-24x24.png"/> Landing Page</td>
-                           <td>Sends you to the Landing Page of the current perspective.</td>
-                        </tr>
-                        <tr>
-                           <td>
-                              <img id="GUID-6DDEDC3B-00F5-4075-8849-66D3707C2C16__IMAGE_SJV_VDZ_MDC"
-                                   src="/weblogic-remote-console/images/ui-icons/toggle-help-icon-blk-16x16.png"/> Help</td>
-                           <td>Shows reference information about the attributes present on the current page.</td>
-                        </tr>
-                        <tr>
-                           <td>
-                              <img id="GUID-6DDEDC3B-00F5-4075-8849-66D3707C2C16__IMAGE_NWY_ZDZ_MDC"
-                                   src="/weblogic-remote-console/images/ui-icons/sync-icon-blk-24x24.png"/> Reload</td>
-                           <td>Refreshes any forms or tables on the current page with the latest available data.<p>When <span>Auto Reload Interval</span> is enabled, this icon will bounce continuously.</p>
-                           </td>
-                        </tr>
-                        <tr>
-                           <td>
-                              <img id="GUID-6DDEDC3B-00F5-4075-8849-66D3707C2C16__IMAGE_R5R_B2Z_MDC"
-                                   src="/weblogic-remote-console/images/ui-icons/sync-interval-icon-blk-24x24.png"/> Auto Reload Interval</td>
-                           <td>Sets a time interval (in seconds) for how often WebLogic Remote Console should reload a page to refresh its information. If you select another tab or move to another page, automatic reload stops.<p>To stop auto reload, click the bouncing <span>Reload</span> icon or click <span>Auto Reload Interval</span> and set the interval to <code>0</code>.</p>
-                           </td>
-                        </tr>
-                        <tr>
-                           <td>
-                              <img id="GUID-6DDEDC3B-00F5-4075-8849-66D3707C2C16__IMAGE_ZNL_M2Z_MDC"
-                                   src="/weblogic-remote-console/images/ui-icons/action-reset-icon-blk-24x24.png"/> Refresh Page Values</td>
-                           <td>Updates the Content Pane with the latest values. </td>
-                        </tr>
-                     </tbody>
-                  </table>
+</th><th>
 
+Description
 
+</th></tr></thead><tbody><tr><td>
 
+![Home](/weblogic-remote-console/images/ui-icons/home-icon-blk-24x24.png) Home
+
+</td><td>
+
+Sends you to the Home Page of the provider.
+
+</td></tr><tr><td>
+
+![Empty shopping cart](/weblogic-remote-console/images/ui-icons/shopping-cart-icon-24x24.png) Shopping Cart
+
+</td><td>
+
+Indicates if there are pending changes ready to be committed to a WebLogic Server domain.When the **Shopping Cart** is full, you can click it to see the pending changes and then commit or discard them.
+
+</td></tr><tr><td>
+
+![Visibility of history](/weblogic-remote-console/images/ui-icons/beanpath-history-icon-blk-24x24.png) Visibility of History
+
+</td><td>
+
+Triggers a record of the pages you visit. When active, a drop-down list appears where you can see, and return to, your previous pages. History is limited to the current perspective. Click **More ︙**, then **Clear History Entries** to delete your navigation history.
+
+</td></tr><tr><td>
+
+![Providers drawer](/weblogic-remote-console/images/ui-icons/project-management-blk-24x24.png) Providers
+
+</td><td>
+
+Opens the **Providers** drawer where you can manage your provider connections.
+
+</td></tr><tr><td>
+
+![Back](../../pages-history-back-blk-24x24.png)/![Next](/weblogic-remote-console/images/ui-icons/pages-history-next-blk-24x24.png) Browse Back and Forward
+
+</td><td>
+
+Browses backward or forward through your previously visited pages in WebLogic Remote Console.
+
+</td></tr><tr><td>
+
+![Pages history](/weblogic-remote-console/images/ui-icons/pages-history-icon-blk-24x24.png) Pages History
+
+</td><td>
+
+Opens the **Pages History** dialog box, which lists the pages that you have previously visited in WebLogic Remote Console.
+
+</td></tr><tr><td>
+
+![Landing page](/weblogic-remote-console/images/ui-icons/landing-page-icon-blk-24x24.png) Landing Page
+
+</td><td>
+
+Sends you to the Landing Page of the current perspective.
+
+</td></tr><tr><td>
+
+![Help](/weblogic-remote-console/images/ui-icons/toggle-help-icon-blk-16x16.png) Help
+
+</td><td>
+
+Shows reference information about the attributes present on the current page.
+
+</td></tr><tr><td>
+
+![Reload](/weblogic-remote-console/images/ui-icons/sync-icon-blk-24x24.png) Reload
+
+</td><td>
+
+Refreshes any forms or tables on the current page with the latest available data.When **Auto Reload Interval** is enabled, this icon will bounce continuously.
+
+</td></tr><tr><td>
+
+![Auto-reload interval](/weblogic-remote-console/images/ui-icons/sync-interval-icon-blk-24x24.png) Auto Reload Interval
+
+</td><td>
+
+Sets a time interval \(in seconds\) for how often WebLogic Remote Console should reload a page to refresh its information. If you select another tab or move to another page, automatic reload stops.To stop auto reload, click the bouncing **Reload** icon or click **Auto Reload Interval** and set the interval to <code>0</code>.
+
+</td></tr><tr><td>
+
+![Refresh page values](/weblogic-remote-console/images/ui-icons/action-reset-icon-blk-24x24.png) Refresh Page Values
+
+</td><td>
+
+Updates the Content Pane with the latest values.
+
+</td></tr><tr><td>
+
+**☆** Page Bookmarks
+
+</td><td>
+
+Saves the current page as a bookmark. You can also view existing bookmarks.
+
+</td></tr></tbody>
+</table>
+
+Table 1. Tools. Tool icons that may appear along the top of the Content Pane.
 
 ## Explore your Domain {}
 
@@ -142,7 +158,7 @@ To return an MBean attribute to its default setting, right-click inside the attr
 
 
 
-The domain configuration file, <code>config.xml</code>, only describes MBean attributes if they are set to non-default values. After you use Restore to default, the (now unnecessary) attribute will be removed from the file.
+The domain configuration file, <code>config.xml</code>, only describes MBean attributes if they are set to non-default values. After you use Restore to default, the \(now unnecessary\) attribute will be removed from the file.
 
 {{< /alert >}}
 
@@ -151,11 +167,31 @@ The domain configuration file, <code>config.xml</code>, only describes MBean att
 
 You can customize Desktop WebLogic Remote Console to suit your needs.
 
-1.  Go to **File**, then **Preferences**. (On macOS, go to **WebLogic Remote Console**, then **Application Preferences** ).
+1.  Go to **File**, then **Preferences**. \(On macOS, go to **WebLogic Remote Console**, then **Application Preferences** \).
 
 2.  Choose a section tab and make your changes as needed.
 
 3.  Close the **Preferences** dialog box to apply your changes.
+
+
+## Bookmark Pages {#GUID-BB23744E-D6F9-4D35-8CEB-01EBCF03636F}
+
+You can save WebLogic Remote Console pages that you visit frequently.
+
+Bookmarks are shared between providers of the same type. For example, if you save a page in an Administration Server provider, that page will be bookmarked in every Administration Server provider, but it won't be bookmarked in a WDT Model provider.
+
+-   To save a page in WebLogic Remote Console as a bookmark:
+-   On the page that you want to save, click **Page Bookmarks ☆** in the tool bar, then select **Add Bookmark for Current Page**.
+
+    On pages that are already bookmarked, the star will be filled in.
+
+-   To go to a bookmarked page:
+-   In the upper top right corner \(beside Pages History ![Pages history](/weblogic-remote-console/images/ui-icons/pages-history-icon-blk-24x24.png)\), click **Page Bookmarks ☆**, then select the page you want to visit.
+
+-   To delete a bookmark:
+-   In the upper top right corner \(beside Pages History ![Pages history](/weblogic-remote-console/images/ui-icons/pages-history-icon-blk-24x24.png)\), click **Page Bookmarks ☆**, then, in the row for the the page that you want to delete, click **Delete**, then **Apply**.
+
+    If you clicked **Delete** on the wrong bookmark, you can click **Reset** to undo the deletion, if you haven't clicked **Apply** yet.
 
 
 ## Customize a Table {#GUID-FF37D291-F8C5-4EFB-8A18-DADF035348C9}
@@ -166,14 +202,14 @@ You can choose which columns are visible in a table, hiding irrelevant data so y
 
 2.  Click **Customize Table** to display the list of Available Columns.
 
-    The available column options differ by table as not all columns (that is, properties) are applicable to all tables.
+    The available column options differ by table as not all columns \(that is, properties\) are applicable to all tables.
 
 3.  Use the arrows to move your wanted columns from **Available Columns** to **Selected Columns**. Move any unwanted columns back to **Available Columns**. Move the columns to **Selected Columns** in the order that you want them to appear in the table. There must be at least one column under **Selected Columns**.
 
 4.  Click **Apply** to save your changes.
 
 
-Changes to table columns will persist indefinitely and apply to that specific table across all applicable providers. If you change the table columns for Server Templates in wdt-model_1, then those changes will also affect the Server Templates table in wdt-model_2 and admin-server_1 (Edit Tree).
+Changes to table columns will persist indefinitely and apply to that specific table across all applicable providers. If you change the table columns for Server Templates in wdt-model\_1, then those changes will also affect the Server Templates table in wdt-model\_2 and admin-server\_1 \(Edit Tree\).
 
 To return a table to its default set of columns, open **Customize Table** and click **Reset**.
 
@@ -251,11 +287,14 @@ You can import the project details of an existing project to rapidly ramp up pro
 5.  Click **Import**.
 
 
-The imported project automatically becomes the current project loaded in WebLogic Remote Console.
+-   In Desktop WebLogic Remote Console, the imported project replaces the current project. To return to the previous project, open **File**, then **Switch to project** and choose the previous project.
+
+-   In Hosted WebLogic Remote Console, the providers of the imported project are added to the current project.
+
 
 ## Enable Keyboard Navigation on macOS {#GUID-5C611ED8-29EF-4B21-B181-557C7D192C96}
 
-On devices running macOS, you must specifically enable keyboard navigation before you can use the Tab key (or Shift + Tab keys) to navigate between the controls in WebLogic Remote Console.
+On devices running macOS, you must specifically enable keyboard navigation before you can use the Tab key \(or Shift + Tab keys\) to navigate between the controls in WebLogic Remote Console.
 
 1.  On your device running macOS, open the Apple main menu and select **System Settings**.
 
@@ -270,3 +309,5 @@ On devices running macOS, you must specifically enable keyboard navigation befor
     2.  Select **Settings**.
 
     3.  On the **Advanced** tab, turn on the **Press Tab to highlight each item on a webpage** option.
+
+

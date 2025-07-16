@@ -6,7 +6,7 @@ url: overview
 
 Oracle WebLogic Remote Console is a graphical user interface that administers Oracle WebLogic Server domains.
 
-WebLogic Remote Console relies on REST APIs to provide flexibility, enabling it to connect to domains in varied environments: on physical or virtual machines, in containers or Kubernetes pods, in the cloud. Additionally, you can use WebLogic Remote Console to manage WebLogic Deploy Tooling (WDT) metadata models - meaning you can build domain templates and then manage them within the same environment.
+WebLogic Remote Console relies on REST APIs to provide flexibility, enabling it to connect to domains in varied environments: on physical or virtual machines, in containers or Kubernetes pods, in the cloud. Additionally, you can use WebLogic Remote Console to manage WebLogic Deploy Tooling \(WDT\) metadata models - meaning you can build domain templates and then manage them within the same environment.
 
 WebLogic Remote Console is compatible with WebLogic Server 12.2.1.4.0 or later and adjusts its user interface to match the features available to the relevant WebLogic Server release.
 
@@ -16,11 +16,11 @@ Use WebLogic Remote Console to:
 -   Create and modify WDT metadata models
 -   Deploy, manage, and monitor applications
 -   Configure security parameters, including managing users, groups, and roles
--   Configure WebLogic Server services, such as database connectivity (JDBC), and messaging (JMS)
+-   Configure WebLogic Server services, such as database connectivity \(JDBC\), and messaging \(JMS\)
 
 See what's new in the latest release of WebLogic Remote Console. Visit [WebLogic Remote Console GitHub Repository - Releases](https://github.com/oracle/weblogic-remote-console/releases).
 
-The latest available release of Desktop WebLogic Remote Console may be ahead of the latest release of Hosted WebLogic Remote Console, which is released with the WebLogic Server Patch Set Update (PSU) on a quarterly basis. Always confirm that you are looking at the appropriate release notes for your current release. You can see the release number of your WebLogic Remote Console in the top-left corner of its user interface.
+The latest available release of Desktop WebLogic Remote Console may be ahead of the latest release of Hosted WebLogic Remote Console, which is released with the WebLogic Server Patch Set Update \(PSU\) on a quarterly basis. Always confirm that you are looking at the appropriate release notes for your current release. You can see the release number of your WebLogic Remote Console in the top-left corner of its user interface.
 
 ## Related Content {}
 

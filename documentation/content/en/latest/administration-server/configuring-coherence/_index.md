@@ -1,5 +1,5 @@
 ---
-weight: 213
+weight: 220
 title: Configuring Coherence
 ---
 
@@ -49,7 +49,7 @@ For more information, see [Configuring and Managing Coherence Clusters](https://
 
 
 
-In previous releases, Coherence cluster members were organized into Coherence servers (also known as Coherence data nodes). This feature is deprecated and not supported by WebLogic Remote Console. Coherence tiers should be configured to use Managed Coherence servers instead.
+In previous releases, Coherence cluster members were organized into Coherence servers \(also known as Coherence data nodes\). This feature is deprecated and not supported by WebLogic Remote Console. Coherence tiers should be configured to use Managed Coherence servers instead.
 
 {{< /alert >}}
 
@@ -62,7 +62,7 @@ For optimal performance or scalability, Coherence is typically set up using WebL
 
     {{< alert title="Note" color="primary" >}}
 
-
+    
 
     Alternatively, for development purposes, you can set up a single standalone Managed Server instance to act as both a cache server and a cache client. See [Configure and Deploy Coherence on a Single-Server Cluster](#GUID-DB577D5C-A80B-48DB-A940-C95D764532C5).
 
@@ -83,9 +83,9 @@ For optimal performance or scalability, Coherence is typically set up using WebL
 
 5.  **Optional**: Configure a proxy tier as described in [Create a Coherence Proxy Tier](#GUID-042599BA-C133-43E0-8572-30B84149BB4F).
 
-    A Coherence proxy tier is a WebLogic Server cluster that is associated with a Coherence cluster and hosts any number of managed Coherence proxy servers. Managed Coherence proxy servers allow Coherence*Extend clients to use Coherence caches without being cluster members. For more information, see [Configuring and Managing a Coherence Proxy Tier](https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=CLUST-GUID-FC671FC0-0A23-4FA0-BBAD-0A3A72DFF261) in **Administering Clusters for Oracle WebLogic Server**.
+    A Coherence proxy tier is a WebLogic Server cluster that is associated with a Coherence cluster and hosts any number of managed Coherence proxy servers. Managed Coherence proxy servers allow Coherence\*Extend clients to use Coherence caches without being cluster members. For more information, see [Configuring and Managing a Coherence Proxy Tier](https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=CLUST-GUID-FC671FC0-0A23-4FA0-BBAD-0A3A72DFF261) in **Administering Clusters for Oracle WebLogic Server**.
 
-6.  Create and package a Coherence Grid Archive (GAR) module for any application modules (Web application, EJB, and so on) that use Coherence. For more information, see [Creating Coherence Applications for WebLogic Server](https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=WLCOH-GUID-C34A3F98-55D5-4D5A-8BCC-E3EBC718B57D) in **Developing Oracle Coherence Applications for Oracle WebLogic Server**.
+6.  Create and package a Coherence Grid Archive \(GAR\) module for any application modules \(Web application, EJB, and so on\) that use Coherence. For more information, see [Creating Coherence Applications for WebLogic Server](https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=WLCOH-GUID-C34A3F98-55D5-4D5A-8BCC-E3EBC718B57D) in **Developing Oracle Coherence Applications for Oracle WebLogic Server**.
 
 7.  Deploy your Coherence GAR module to your WebLogic Server domain as described in [Install an Application](../deploying-applications#GUID-C9A911B0-1942-4383-BD91-49BC745F21DA).
 
@@ -110,7 +110,7 @@ Configure cluster properties and then target Coherence clusters to WebLogic Serv
 
     {{< alert title="Note" color="primary" >}}
 
-
+    
 
     Avoid configuring the same operational settings in both an external cluster configuration file and through the MBeans.
 
@@ -155,7 +155,7 @@ For more information, see [Federating Caches Across Clusters](https://docs.oracl
 
 4.  In the **Remote Coherence Cluster Name** field, enter the name of the remote cluster to which this cluster is being federated.
 
-5.  In the **Remote Participant Hosts** field, enter one or more hosts (separated by commas) that are running managed Coherence servers on the remote cluster.
+5.  In the **Remote Participant Hosts** field, enter one or more hosts \(separated by commas\) that are running managed Coherence servers on the remote cluster.
 
 6.  If required, change the cluster port of the remote cluster in the **Remote Coherence Cluster Listen Port**. The default cluster port is typically not changed.
 
@@ -176,7 +176,7 @@ For more information on configuring persistence in Coherence, see [Persisting Ca
 
     -   **On-Demand**: In this mode, a cache service is manually persisted and recovered upon request using the persistence coordinator. The persistence coordinator is exposed as an MBean interface that provides operations for creating, archiving, and recovering snapshots of a cache service.
     -   **Active**: In this mode, cache contents are automatically persisted on all mutations and are automatically recovered on cluster/service startup. The persistence coordinator can still be used in active persistence mode to perform on-demand snapshots.
-    -   **Active-Async**: In this mode, the storage servers can persist data asynchronously. Thus, a mutating request is successful after the primary stores the data and (if there is a synchronous backup) after the backup receives the update.
+    -   **Active-Async**: In this mode, the storage servers can persist data asynchronously. Thus, a mutating request is successful after the primary stores the data and \(if there is a synchronous backup\) after the backup receives the update.
     -   **Active Backup**: In this mode, persistence behaves similarly to the active persistence mode but it also stores backup partitions asynchronously on a disk.
 4.  **Optional**: You can override the default locations where various persistence files are stored. Enter new file locations in the appropriate fields:
 
@@ -223,7 +223,7 @@ For more information, see [Securing Oracle Coherence in Oracle WebLogic Server](
 
     {{< alert title="Note" color="primary" >}}
 
-
+    
 
     If the **Secured Production** option is not set, Coherence will inherit its domain mode from WebLogic Server.
 
@@ -232,7 +232,7 @@ For more information, see [Securing Oracle Coherence in Oracle WebLogic Server](
 
 4.  Click **Save**.
 
-5.  Enable an Identity Asserter for a Coherence cluster to assert a client's identity token. For local extend clients, an identity asserter is already enabled for asserting a token of type <code>weblogic.security.acl.internal.AuthenticatedSubject</code>. For remote (outside of WebLogic Server) extend clients, a custom identity asserter implementation class must be packaged in a GAR. However, an identity asserter is not required if the remote extend client passes <code>null</code> as the token. If the proxy service receives a non-null token and there is no identity asserter implementation class configured, a <code>SecurityException</code> is thrown and the connection attempt is rejected.
+5.  Enable an Identity Asserter for a Coherence cluster to assert a client's identity token. For local extend clients, an identity asserter is already enabled for asserting a token of type <code>weblogic.security.acl.internal.AuthenticatedSubject</code>. For remote \(outside of WebLogic Server\) extend clients, a custom identity asserter implementation class must be packaged in a GAR. However, an identity asserter is not required if the remote extend client passes <code>null</code> as the token. If the proxy service receives a non-null token and there is no identity asserter implementation class configured, a <code>SecurityException</code> is thrown and the connection attempt is rejected.
 
     1.  Under the current Coherence cluster node in the navigation tree, select **Coherence Identity Asserter**.
 
@@ -324,7 +324,7 @@ You can use WebLogic Server authorization to restrict access to Coherence servic
 
     {{< alert title="Note" color="primary" >}}
 
-
+    
 
     The exact name must include the scope name as a prefix to the service name. The scope name can be explicitly defined in the cache configuration file or, more commonly, taken from the deployment module name. For example, if you deploy a GAR named <code>contacts.gar</code> that defines a service named <code>ContactsService</code>, then the exact service name is <code>contacts:ContactsService</code>.
 
@@ -353,7 +353,7 @@ Configure a well known address for a Coherence cluster. Other members can use th
 
 ### Configure a Coherence Address Provider {#GUID-8CBEB83E-5388-4E93-9BC0-93D6D11AA06F}
 
-An address provider specifies the TCP listener address (IP or DNS name, and port) for a proxy service.
+An address provider specifies the TCP listener address \(IP or DNS name, and port\) for a proxy service.
 
 1.  In the **Edit Tree**, go to **Environment**, then **Coherence Clusters**, then *myCoherenceCluster*, then **Coherence Address Providers**.
 
@@ -440,11 +440,11 @@ You should also create a Coherence data tier and, optionally, a Coherence proxy 
 
 ### Create a Coherence Proxy Tier {#GUID-042599BA-C133-43E0-8572-30B84149BB4F}
 
-A Coherence proxy tier is a WebLogic Server cluster that is associated with a Coherence cluster and hosts any number of managed Coherence proxy servers. Managed Coherence proxy servers allow Coherence*Extend clients to use Coherence caches without being cluster members.
+A Coherence proxy tier is a WebLogic Server cluster that is associated with a Coherence cluster and hosts any number of managed Coherence proxy servers. Managed Coherence proxy servers allow Coherence\*Extend clients to use Coherence caches without being cluster members.
 
 The number of managed Coherence proxy servers that are required in a proxy tier depends on the number of expected clients. At least two proxy servers must be created to allow for load balancing. However, additional servers may be required when supporting a large number of client connections and requests.
 
-For details on Coherence*Extend and creating extend clients, see [Introduction to Coherence*Extend](https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=COHCG-GUID-E935592F-DCA2-44BD-96D5-E276DFA3D3F9) in **Developing Remote Clients for Oracle Coherence**.
+For details on Coherence\*Extend and creating extend clients, see [Introduction to Coherence\*Extend](https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=COHCG-GUID-E935592F-DCA2-44BD-96D5-E276DFA3D3F9) in **Developing Remote Clients for Oracle Coherence**.
 
 1.  If you haven't already done so, create a Coherence cluster as described in [Create a Coherence Cluster](#GUID-D042E373-ED9F-4EC1-B0F4-89DFD803DF0C).
 
@@ -478,7 +478,7 @@ A Managed Coherence server is a Managed Server that is configured to be Coherenc
 
 ## Configure and Deploy Coherence on a Single-Server Cluster {#GUID-DB577D5C-A80B-48DB-A940-C95D764532C5}
 
-During development, a single-server cluster offers a quick way to start and stop a cluster. A single-server cluster is a cluster that is constrained to run on a single managed server instance and does not access the network. The server instance acts as a storage-enabled cluster member, a client, and (optionally) a proxy.
+During development, a single-server cluster offers a quick way to start and stop a cluster. A single-server cluster is a cluster that is constrained to run on a single managed server instance and does not access the network. The server instance acts as a storage-enabled cluster member, a client, and \(optionally\) a proxy.
 
 For more information on using a single-server Coherence cluster, see [Using a Single-Server Cluster](https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=CLUST-GUID-8B3138E3-53B0-4263-A24B-C3F681A61D9B) in **Administering Clusters for Oracle WebLogic Server**.
 
@@ -505,7 +505,7 @@ To set up Coherence for production use, follow the steps outlined in [Configure 
 
     This standalone Managed Server will now inherit settings directly from the Coherence cluster.
 
-5.  Turn on the **Local Storage Enabled** option to ensure the Managed Server will be a storage-enabled Coherence member (cache server).
+5.  Turn on the **Local Storage Enabled** option to ensure the Managed Server will be a storage-enabled Coherence member \(cache server\).
 
 6.  Set the **Unicast Listen Address** to an address that is routed to loop back. On most computers, setting the address to <code>127.0.0.1</code> works.
 
@@ -513,6 +513,8 @@ To set up Coherence for production use, follow the steps outlined in [Configure 
 
 7.  Click **Save**.
 
-8.  Create and package a Coherence Grid Archive (GAR) module for any application modules (Web application, EJB, etc.) that use Coherence. See [Creating Coherence Applications for WebLogic Server](https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=WLCOH-GUID-C34A3F98-55D5-4D5A-8BCC-E3EBC718B57D) in **Developing Oracle Coherence Applications for Oracle WebLogic Server**.
+8.  Create and package a Coherence Grid Archive \(GAR\) module for any application modules \(Web application, EJB, etc.\) that use Coherence. See [Creating Coherence Applications for WebLogic Server](https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=WLCOH-GUID-C34A3F98-55D5-4D5A-8BCC-E3EBC718B57D) in **Developing Oracle Coherence Applications for Oracle WebLogic Server**.
 
 9.  Deploy your Coherence GAR module to your WebLogic Server domain. Standalone GARs are deployed in the same way as other Jakarta EE modules. See [Deploying Coherence Applications in WebLogic Server](https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=WLCOH-GUID-9284398A-509D-4BC0-9007-502CCCA4D758) in **Developing Oracle Coherence Applications for Oracle WebLogic Server**.
+
+

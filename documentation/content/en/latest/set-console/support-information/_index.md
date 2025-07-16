@@ -1,5 +1,5 @@
 ---
-weight: 29
+weight: 30
 title: Support Information
 ---
 
@@ -26,7 +26,7 @@ Support for WebLogic Remote Console is available to Oracle customers that have p
 
 ## Community Support {}
 
--   [Join our Slack channel at #remote-console](https://join.slack.com/t/oracle-weblogic/shared_invite/zt-1ni1gtjv6-PGC6CQ4uIte3KBdm_67~aQ) in the Oracle WebLogic workspace! Ask questions, make suggestions, or just get in touch with developers and other users of WebLogic Remote Console.
+-   [Join our Slack channel at \#remote-console](https://join.slack.com/t/oracle-weblogic/shared_invite/zt-1ni1gtjv6-PGC6CQ4uIte3KBdm_67~aQ) in the Oracle WebLogic workspace! Ask questions, make suggestions, or just get in touch with developers and other users of WebLogic Remote Console.
 
 -   [Visit our GitHub repository](https://github.com/oracle/weblogic-remote-console) where you can contribute directly to the development of WebLogic Remote Console, whether it's through raising issues or submitting your own code.
 
@@ -42,21 +42,16 @@ We are currently considering the implementation of the following features. Note 
 -   Add support for adding and configuring certificate registries.
 -   Add support for adding JASPIC authentication configuration providers.
 -   Add support for viewing log file contents within WebLogic Remote Console.
--   Add support for viewing JMS message details within WebLogic Remote Console.
 -   Add support for deploying applications stored in the application installation directory.
 -   Add support for adding and managing SNMP credential mappings.
 -   Add support for adding and managing PKI credential mappings.
 -   Add support for securing JNDI nodes using roles and policies.
 -   Add support for adding and deleting durable JMS subscribers.
--   Add support for importing and exporting security data.
--   Add support for whole server migration.
--   Add support for service migration of singleton services.
 -   Add support for starting and stopping all servers in a cluster simultaneously.
 -   Add support for validating RDBMS security store configuration.
 -   Add support for notifying users of required system resource restarts.
--   Add support for configuring JDBC data sources with an unlisted (or Other) database type.
+-   Add support for configuring JDBC data sources with an unlisted \(or Other\) database type.
 -   Improve editing of transaction support variable assignments.
--   Improve configuration of custom security providers.
 -   Improve server cloning process to include server children, such as channels.
 
 ## Frequently Asked Questions {#GUID-7B03E877-CDAC-4E81-B86F-353BE86B7057}
@@ -65,15 +60,15 @@ This section provides answers to frequently asked questions about WebLogic Remot
 
 ### My domain is behind a firewall. How do I connect to WebLogic Remote Console? {}
 
-For WebLogic Remote Console to connect to a domain's Administration Server, the management endpoint of the domain, <code>management/\*</code>, must be publicly accessible. If your Administration Server is behind a firewall or load balancer, or otherwise externally unavailable, you will need to expose the endpoint manually.
+For WebLogic Remote Console to connect to a domain's Administration Server, the management endpoint of the domain, <code>management/*</code>, must be publicly accessible. If your Administration Server is behind a firewall or load balancer, or otherwise externally unavailable, you will need to expose the endpoint manually.
 
-If you use the Hosted WebLogic Remote Console, you will also need to expose <code>rconsole/\*</code>.
+If you use Hosted WebLogic Remote Console, you will also need to expose <code>rconsole/*</code>.
 
 {{< alert title="Note" color="primary" >}}
 
 
 
-If you needed to expose <code>console/\*</code> to access the WebLogic Server Administration Console for your domain, simply follow the same procedure to expose <code>management/\*</code> for WebLogic Remote Console.
+If you needed to expose <code>console/*</code> to access the WebLogic Server Administration Console for your domain, follow the same procedure to expose <code>management/*</code> for WebLogic Remote Console.
 
 {{< /alert >}}
 
@@ -108,7 +103,7 @@ To see a full list of the tools that you can use to administer WebLogic Server, 
 
 ### Do I need to upgrade my installation of WebLogic Remote Console whenever I upgrade or patch WebLogic Server? {}
 
-No, older releases of WebLogic Remote Console will continue to work with newer releases of WebLogic Server. However, we recommend that you update WebLogic Remote Console (and its extension) as frequently as possible to take advantage of any fixes and improvements, both to WebLogic Remote Console itself and those added in WebLogic Server patches.
+No, older releases of WebLogic Remote Console will continue to work with newer releases of WebLogic Server. However, we recommend that you update WebLogic Remote Console \(and its extension\) as frequently as possible to take advantage of any fixes and improvements, both to WebLogic Remote Console itself and those added in WebLogic Server patches.
 
 For example, if new fields or WebLogic MBeans were added in a WebLogic Server update, then outdated versions of WebLogic Remote Console will not detect or display those fields.
 
@@ -122,13 +117,13 @@ When you make changes to the domain configuration using system properties, the p
 
 See [Perspectives in the Administration Server Provider](../../administration-server/domain-configuration#GUID-E1D3A576-47A8-4291-9F56-617B1039168F).
 
-As an example, if your domain is set to secured production mode and you choose to temporarily disable secured production mode with the following system property, <code>-Dweblogic.securemode.SecureModeEnabled=false</code>, then only the Configuration View Tree will accurately report the domain mode as production mode. The Edit Tree (and <code>config.xml</code>) will continue to report that secured production mode is enabled, even though it is not.
+As an example, if your domain is set to secured production mode and you choose to temporarily disable secured production mode with the following system property, <code>-Dweblogic.securemode.SecureModeEnabled=false</code>, then only the Configuration View Tree will accurately report the domain mode as production mode. The Edit Tree \(and <code>config.xml</code>\) will continue to report that secured production mode is enabled, even though it is not.
 
 See [Verifying Attribute Values That Are Set on the Command Line](https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=ADMRF-GUID-F7332CBC-80E4-4C77-B1D1-AD670EF29185) in **Command Reference for Oracle WebLogic Server**.
 
 ### Why did the versioning scheme of the WebLogic Remote Console extension change? {#section_syq_f3k_y2c}
 
-With the release of WebLogic Remote Console 2.4.11, the versioning scheme of the WebLogic Remote Console extension was updated to match that of WebLogic Remote Console. There are no versions between <code>console-rest-ext-9.0.war</code> (released with WebLogic Remote Console 2.4.10) and <code>console-rest-ext-2.4.11.war</code> (released with WebLogic Remote Console 2.4.11).
+With the release of WebLogic Remote Console 2.4.11, the versioning scheme of the WebLogic Remote Console extension was updated to match that of WebLogic Remote Console. There are no versions between <code>console-rest-ext-9.0.war</code> \(released with WebLogic Remote Console 2.4.10\) and <code>console-rest-ext-2.4.11.war</code> \(released with WebLogic Remote Console 2.4.11\).
 
 ### Why are there two versions of the WebLogic Remote Console extension? {#section_utt_w55_bfc}
 
@@ -139,4 +134,5 @@ WebLogic Remote Console provides two variations of the WebLogic Remote Console e
 -   If your domain is running WebLogic Server 15.1.1.0.0 or later, use <code>console-rest-ext-**jakarta**-x.x.x.war</code>.
 
 
-As of WebLogic Server 14.1.2.0.0, the WebLogic Remote Console extension is included in the WebLogic Server installation and updated with each Patch Set Update (PSU). You should not need to install the extension manually.
+As of WebLogic Server 14.1.2.0.0, the WebLogic Remote Console extension is included in the WebLogic Server installation and updated with each Patch Set Update \(PSU\). You should not need to install the extension manually.
+

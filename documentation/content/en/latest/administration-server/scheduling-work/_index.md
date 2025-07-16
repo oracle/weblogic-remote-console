@@ -1,5 +1,5 @@
 ---
-weight: 233
+weight: 240
 title: Scheduling Work
 ---
 
@@ -136,7 +136,7 @@ For more information, see [Stuck Thread Handling](https://docs.oracle.com/pls/to
 
 ## Concurrent Managed Object Templates {#GUID-F4073670-85D5-4246-A195-966A6C331C02}
 
-WebLogic Server provides concurrency capabilities to Jakarta EE applications by using Concurrent Managed Object (CMO) templates to make threads container-managed. You can configure CMO templates and then make them available for use by application components, such as servlets and EJBs.
+WebLogic Server provides concurrency capabilities to Jakarta EE applications by using Concurrent Managed Object \(CMO\) templates to make threads container-managed. You can configure CMO templates and then make them available for use by application components, such as servlets and EJBs.
 
 You can define three types of CMO templates:
 
@@ -148,7 +148,7 @@ For more information, see [Configuring Concurrent Managed Objects](https://docs.
 
 ### Create a Global Managed Executor Service Template {#GUID-FF036380-DF70-429B-95EA-A9C962637804}
 
-You can create managed executor service (MES) templates that are used by applications to execute submitted tasks asynchronously.
+You can create managed executor service \(MES\) templates that are used by applications to execute submitted tasks asynchronously.
 
 1.  In the **Edit Tree**, go to **Scheduling**, then **Managed Executor Service Templates**.
 
@@ -175,7 +175,7 @@ You can create managed executor service (MES) templates that are used by applica
 
 ### Create a Global Managed Scheduled Executor Service Template {#GUID-8BF9B3FC-6EF0-4097-89A7-E3453CD7BAB1}
 
-You can create managed scheduled executor service (MSES) templates that are used by applications to execute submitted tasks asynchronously at specific times.
+You can create managed scheduled executor service \(MSES\) templates that are used by applications to execute submitted tasks asynchronously at specific times.
 
 1.  In the **Edit Tree**, go to **Scheduling**, then **Managed Scheduled Executor Service Templates**.
 
@@ -202,7 +202,7 @@ You can create managed scheduled executor service (MSES) templates that are used
 
 ### Create a Global Managed Thread Factory Template {#GUID-0FF74BB7-79AE-4DD4-BCD1-9E211140CAC4}
 
-You can create managed thread factory (MTF) templates that are used by applications to create managed threads.
+You can create managed thread factory \(MTF\) templates that are used by applications to create managed threads.
 
 1.  In the **Edit Tree**, go to **Scheduling**, then **Managed Thread Factory Templates**.
 
@@ -223,3 +223,5 @@ You can create managed thread factory (MTF) templates that are used by applicati
     Only applications that have been deployed to the selected servers and clusters can use this MTF template.
 
 9.  Click **Save**.
+
+

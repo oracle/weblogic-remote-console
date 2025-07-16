@@ -32,7 +32,7 @@ NoteStay up-to-date with the latest release of WebLogic Remote Console to get t
   <meta itemprop="name" content="Support Information">
   <meta itemprop="description" content="WebLogic Remote Console offers several avenues to receive support and help.
 NoteStay up-to-date with the latest release of WebLogic Remote Console to get the latest features and fixes. If you experience issues, try upgrading to the latest release, which may address your issue. For more information, see Upgrade Desktop WebLogic Remote Console.Oracle Documentation In addition to the current guide, you can retrieve information on WebLogic Remote Console from within the user interface. Click the Help icon in the Tool Bar or in dialog boxes to reveal descriptions of the fields on your current page.">
-  <meta itemprop="wordCount" content="1443">
+  <meta itemprop="wordCount" content="1402">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Support Information">
   <meta name="twitter:description" content="WebLogic Remote Console offers several avenues to receive support and help.
@@ -57,13 +57,17 @@ NoteStay up-to-date with the latest release of WebLogic Remote Console to get t
   <div class="td-navbar-nav-scroll ms-md-auto" id="main_navbar">
     <ul class="navbar-nav">
       <li class="nav-item">
-        <a class="nav-link" href="/weblogic-remote-console/overview"><span>Documentation</span></a>
+        <a class="nav-link active" href="/weblogic-remote-console/overview/"><span>Documentation</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/weblogic-remote-console/set-console/get-know-console/bean-map/"><span>Console Map</span></a>
       </li>
       <li class="nav-item dropdown d-none d-lg-block">
         <div class="dropdown">
   <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Releases</a>
   <ul class="dropdown-menu">
-    <li><a class="dropdown-item" href="/weblogic-remote-console/overview">Latest (v2.4.16)</a></li>
+    <li><a class="dropdown-item" href="/weblogic-remote-console/overview">Latest (v2.4.17)</a></li>
+    <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.16">v2.4.16</a></li>
     <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.15">v2.4.15</a></li>
     <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.14">v2.4.14</a></li>
     <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.13">v2.4.13</a></li>
@@ -134,7 +138,7 @@ NoteStay up-to-date with the latest release of WebLogic Remote Console to get t
     aria-label="Search this site…"
     autocomplete="off"
     
-    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.525ad98426979583eac4f9f0a1f2c27f.json"
+    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.1c3f7e3c36c633fec73beac9b615e3ab.json"
     data-offline-search-base-href="/"
     data-offline-search-max-results="10"
   >
@@ -159,7 +163,7 @@ NoteStay up-to-date with the latest release of WebLogic Remote Console to get t
     aria-label="Search this site…"
     autocomplete="off"
     
-    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.525ad98426979583eac4f9f0a1f2c27f.json"
+    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.1c3f7e3c36c633fec73beac9b615e3ab.json"
     data-offline-search-base-href="/"
     data-offline-search-max-results="10"
   >
@@ -355,34 +359,29 @@ NoteStay up-to-date with the latest release of WebLogic Remote Console to get t
 <li>Add support for adding and configuring certificate registries.</li>
 <li>Add support for adding JASPIC authentication configuration providers.</li>
 <li>Add support for viewing log file contents within WebLogic Remote Console.</li>
-<li>Add support for viewing JMS message details within WebLogic Remote Console.</li>
 <li>Add support for deploying applications stored in the application installation directory.</li>
 <li>Add support for adding and managing SNMP credential mappings.</li>
 <li>Add support for adding and managing PKI credential mappings.</li>
 <li>Add support for securing JNDI nodes using roles and policies.</li>
 <li>Add support for adding and deleting durable JMS subscribers.</li>
-<li>Add support for importing and exporting security data.</li>
-<li>Add support for whole server migration.</li>
-<li>Add support for service migration of singleton services.</li>
 <li>Add support for starting and stopping all servers in a cluster simultaneously.</li>
 <li>Add support for validating RDBMS security store configuration.</li>
 <li>Add support for notifying users of required system resource restarts.</li>
 <li>Add support for configuring JDBC data sources with an unlisted (or Other) database type.</li>
 <li>Improve editing of transaction support variable assignments.</li>
-<li>Improve configuration of custom security providers.</li>
 <li>Improve server cloning process to include server children, such as channels.</li>
 </ul>
 <h2 id="GUID-7B03E877-CDAC-4E81-B86F-353BE86B7057">Frequently Asked Questions</h2>
 <p>This section provides answers to frequently asked questions about WebLogic Remote Console.</p>
 <h3 id="my-domain-is-behind-a-firewall-how-do-i-connect-to-weblogic-remote-console">My domain is behind a firewall. How do I connect to WebLogic Remote Console?</h3>
 <p>For WebLogic Remote Console to connect to a domain&rsquo;s Administration Server, the management endpoint of the domain, <code>management/*</code>, must be publicly accessible. If your Administration Server is behind a firewall or load balancer, or otherwise externally unavailable, you will need to expose the endpoint manually.</p>
-<p>If you use the Hosted WebLogic Remote Console, you will also need to expose <code>rconsole/*</code>.</p>
+<p>If you use Hosted WebLogic Remote Console, you will also need to expose <code>rconsole/*</code>.</p>
 
 
 <div class="alert alert-primary" role="alert">
 <h4 class="alert-heading">Note</h4>
 
-    If you needed to expose <code>console/*</code> to access the WebLogic Server Administration Console for your domain, simply follow the same procedure to expose <code>management/*</code> for WebLogic Remote Console.
+    If you needed to expose <code>console/<em></code> to access the WebLogic Server Administration Console for your domain, follow the same procedure to expose <code>management/</em></code> for WebLogic Remote Console.
 
 </div>
 <h3 id="can-i-connect-weblogic-remote-console-to-domains-running-in-weblogic-on-oracle-cloud-infrastructure">Can I connect WebLogic Remote Console to domains running in WebLogic on Oracle Cloud Infrastructure?</h3>

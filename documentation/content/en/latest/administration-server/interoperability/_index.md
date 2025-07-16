@@ -1,5 +1,5 @@
 ---
-weight: 243
+weight: 250
 title: Interoperating with Oracle Tuxedo
 ---
 
@@ -9,7 +9,7 @@ WebLogic Server supports interoperability between WebLogic Server applications a
 
 Use WebLogic Remote Console to manage the connections between the two services using one of the following options:
 
--   Use the **WebLogic Tuxedo Connector (WTC)** to develop and support applications interoperating between WebLogic Server and Tuxedo by using a Java Application-to-Transaction Monitor Interface (JATMI) (similar to Tuxedo ATMI) or by using RMI over IIOP applications and Tuxedo CORBA remote objects. See [Create a WTC Server](#GUID-A86E2972-434C-490E-A4C2-3405E7318FFC).
+-   Use the **WebLogic Tuxedo Connector \(WTC\)** to develop and support applications interoperating between WebLogic Server and Tuxedo by using a Java Application-to-Transaction Monitor Interface \(JATMI\) \(similar to Tuxedo ATMI\) or by using RMI over IIOP applications and Tuxedo CORBA remote objects. See [Create a WTC Server](#GUID-A86E2972-434C-490E-A4C2-3405E7318FFC).
 
 -   Use **Jolt Connection Pools** to enable Tuxedo ATMI services for the Web, using WebLogic Server as the front-end HTTP and application server. See [Create a Jolt Connection Pool](#GUID-28B08CE4-75F5-4F72-B091-77C52B55957D).
 
@@ -18,7 +18,7 @@ For a comparison of these options, see [How WebLogic Tuxedo Connector Differs fr
 
 ## Create a WTC Server {#GUID-A86E2972-434C-490E-A4C2-3405E7318FFC}
 
-The WebLogic Tuxedo Connector (WTC) provides interoperability between WebLogic Server applications and Tuxedo services. It allows WTC clients to invoke Tuxedo services and Tuxedo clients to invoke WebLogic Server applications, such as EJBs and servlets.
+The WebLogic Tuxedo Connector \(WTC\) provides interoperability between WebLogic Server applications and Tuxedo services. It allows WTC clients to invoke Tuxedo services and Tuxedo clients to invoke WebLogic Server applications, such as EJBs and servlets.
 
 To configure the WTC, you must create a WTC server, which organizes the various attributes necessary to establish a session connection between WebLogic Server and Tuxedo.
 
@@ -43,74 +43,82 @@ After you create an WTC server, you can configure how it to determine how WebLog
 
 See [Configuring WebLogic Tuxedo Connector for Your Applications](https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=WTCCF-GUID-65A4FE3C-A3B4-405A-A92D-AC749604257B) in **Administering WebLogic Tuxedo Connector for Oracle WebLogic Server**.
 
+<table id="TABLE_QXD_DJG_N2C"><thead><tr><th>
 
+Option
 
-<table id="GUID-DB9133EB-73F7-480C-B4A9-6A1AB3AA8C35__TABLE_QXD_DJG_N2C">
-                        <caption>
-                           <span>
-                              <span>Table 1. </span>Tuxedo Interactions. </span>
-                           <span>Various ways to coordinate between WebLogic Server and Tuxedo</span>
-                        </caption>
-                        <thead>
-                           <tr>
-                              <th>Option</th>
-                              <th>Description</th>
-                           </tr>
-                        </thead>
-                        <tbody>
-                           <tr>
-                              <td>Local Access Point</td>
-                              <td>
-                                 <p>Local Tuxedo access points provide configuration information to connect available remote Tuxedo domains to a WTC server. </p>
-                              </td>
-                           </tr>
-                           <tr>
-                              <td>Remote Acess Point</td>
-                              <td>
-                                 <p>Remote Tuxedo access points provide configuration information to connect a WTC server to available remote Tuxedo domains. </p>
-                              </td>
-                           </tr>
-                           <tr>
-                              <td>Exported Services</td>
-                              <td>
-                                 <p>Exported services provide information about how to provide Java application services to remote Tuxedo application environments.</p>
-                              </td>
-                           </tr>
-                           <tr>
-                              <td>Imported  Services</td>
-                              <td>
-                                 <p>Imported services provide information on how to access services that are available on remote Tuxedo domains. </p>
-                              </td>
-                           </tr>
-                           <tr>
-                              <td>Passwords</td>
-                              <td>
-                                 <p>Password configurations provide passwords for inter-domain authentication through access points. </p>
-                              </td>
-                           </tr>
-                           <tr>
-                              <td>Resources</td>
-                              <td>
-                                 <p>Resources specify field table classes, reference view buffer structures, and provide application passwords for domains. </p>
-                              </td>
-                           </tr>
-                           <tr>
-                              <td>Queuing Bridge </td>
-                              <td>
-                                 <p>A Tuxedo queuing bridge provides a bidirectional JMS interface that allows WTC applications to communicate with Tuxedo application environments. </p>
-                              </td>
-                           </tr>
-                           <tr>
-                              <td>Redirections</td>
-                              <td>
-                                 <p>Redirections are used to configure a one-to-one connection between the JMS interface and Tuxedo application environment.</p>
-                              </td>
-                           </tr>
-                        </tbody>
-                     </table>
+</th><th>
 
+Description
 
+</th></tr></thead><tbody><tr><td>
 
+Local Access Point
+
+</td><td>
+
+Local Tuxedo access points provide configuration information to connect available remote Tuxedo domains to a WTC server.
+
+</td></tr><tr><td>
+
+Remote Acess Point
+
+</td><td>
+
+Remote Tuxedo access points provide configuration information to connect a WTC server to available remote Tuxedo domains.
+
+</td></tr><tr><td>
+
+Exported Services
+
+</td><td>
+
+Exported services provide information about how to provide Java application services to remote Tuxedo application environments.
+
+</td></tr><tr><td>
+
+Imported Services
+
+</td><td>
+
+Imported services provide information on how to access services that are available on remote Tuxedo domains.
+
+</td></tr><tr><td>
+
+Passwords
+
+</td><td>
+
+Password configurations provide passwords for inter-domain authentication through access points.
+
+</td></tr><tr><td>
+
+Resources
+
+</td><td>
+
+Resources specify field table classes, reference view buffer structures, and provide application passwords for domains.
+
+</td></tr><tr><td>
+
+Queuing Bridge
+
+</td><td>
+
+A Tuxedo queuing bridge provides a bidirectional JMS interface that allows WTC applications to communicate with Tuxedo application environments.
+
+</td></tr><tr><td>
+
+Redirections
+
+</td><td>
+
+Redirections are used to configure a one-to-one connection between the JMS interface and Tuxedo application environment.
+
+</td></tr></tbody>
+</table>
+
+Table 1. Tuxedo Interactions. Various ways to coordinate between WebLogic Server and Tuxedo
 
 ### Create a Local Access Point {#GUID-61659C15-4333-4557-BE92-8EA33856C8D9}
 

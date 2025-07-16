@@ -19,32 +19,24 @@
 <link rel="icon" type="image/png" href="/weblogic-remote-console/favicons/android-192x192.png" sizes="192x192">
 
 <title>A Map of the Console | WebLogic Remote Console</title>
-<meta name="description" content="You can use this page to learn about the relationships between MBeans and how they make up a domain - helping you to navigate WebLogic Remote Console and find what you’re looking for.
-This page is split into two sections, both with subsections:
-Perspective trees: Use this section to see a high-level, hierarchal view of how MBeans are organized, by perspective. These trees go to the page-level of the console.
-Jump to Monitoring Tree Jump to Configuration View/Configuration Edit Trees Jump to Security Data Tree Page Summaries: Use this section to learn about the specific attributes of an MBean: how they are labeled in the UI, which page tab they’re located on, and a short description of the field (plus a link to more information).">
+<meta name="description" content="Use this page to understand how the MBeans and other components that make up a WebLogic Server domain are organized in WebLogic Remote Console.
+The Map of the Console is generated from the latest available release of WebLogic Server. If you are running an earlier release of WebLogic Server, then you won’t see all of the items listed on this page because WebLogic Remote Console adjusts its user interface to hide features that are not supported by the active Administration Server provider.">
 <meta property="og:url" content="https://oracle.github.io/weblogic-remote-console/set-console/get-know-console/bean-map/">
   <meta property="og:site_name" content="WebLogic Remote Console">
   <meta property="og:title" content="A Map of the Console">
-  <meta property="og:description" content="You can use this page to learn about the relationships between MBeans and how they make up a domain - helping you to navigate WebLogic Remote Console and find what you’re looking for.
-This page is split into two sections, both with subsections:
-Perspective trees: Use this section to see a high-level, hierarchal view of how MBeans are organized, by perspective. These trees go to the page-level of the console.
-Jump to Monitoring Tree Jump to Configuration View/Configuration Edit Trees Jump to Security Data Tree Page Summaries: Use this section to learn about the specific attributes of an MBean: how they are labeled in the UI, which page tab they’re located on, and a short description of the field (plus a link to more information).">
+  <meta property="og:description" content="Use this page to understand how the MBeans and other components that make up a WebLogic Server domain are organized in WebLogic Remote Console.
+The Map of the Console is generated from the latest available release of WebLogic Server. If you are running an earlier release of WebLogic Server, then you won’t see all of the items listed on this page because WebLogic Remote Console adjusts its user interface to hide features that are not supported by the active Administration Server provider.">
   <meta property="og:locale" content="en">
   <meta property="og:type" content="website">
 
   <meta itemprop="name" content="A Map of the Console">
-  <meta itemprop="description" content="You can use this page to learn about the relationships between MBeans and how they make up a domain - helping you to navigate WebLogic Remote Console and find what you’re looking for.
-This page is split into two sections, both with subsections:
-Perspective trees: Use this section to see a high-level, hierarchal view of how MBeans are organized, by perspective. These trees go to the page-level of the console.
-Jump to Monitoring Tree Jump to Configuration View/Configuration Edit Trees Jump to Security Data Tree Page Summaries: Use this section to learn about the specific attributes of an MBean: how they are labeled in the UI, which page tab they’re located on, and a short description of the field (plus a link to more information).">
-  <meta itemprop="wordCount" content="137873">
+  <meta itemprop="description" content="Use this page to understand how the MBeans and other components that make up a WebLogic Server domain are organized in WebLogic Remote Console.
+The Map of the Console is generated from the latest available release of WebLogic Server. If you are running an earlier release of WebLogic Server, then you won’t see all of the items listed on this page because WebLogic Remote Console adjusts its user interface to hide features that are not supported by the active Administration Server provider.">
+  <meta itemprop="wordCount" content="137960">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="A Map of the Console">
-  <meta name="twitter:description" content="You can use this page to learn about the relationships between MBeans and how they make up a domain - helping you to navigate WebLogic Remote Console and find what you’re looking for.
-This page is split into two sections, both with subsections:
-Perspective trees: Use this section to see a high-level, hierarchal view of how MBeans are organized, by perspective. These trees go to the page-level of the console.
-Jump to Monitoring Tree Jump to Configuration View/Configuration Edit Trees Jump to Security Data Tree Page Summaries: Use this section to learn about the specific attributes of an MBean: how they are labeled in the UI, which page tab they’re located on, and a short description of the field (plus a link to more information).">
+  <meta name="twitter:description" content="Use this page to understand how the MBeans and other components that make up a WebLogic Server domain are organized in WebLogic Remote Console.
+The Map of the Console is generated from the latest available release of WebLogic Server. If you are running an earlier release of WebLogic Server, then you won’t see all of the items listed on this page because WebLogic Remote Console adjusts its user interface to hide features that are not supported by the active Administration Server provider.">
 <link rel="preload" href="/weblogic-remote-console/scss/main.min.48c25d0a5a23a1e8cae94d6c5e7622061e5345cf098171b1d6ee41d8e309e6c8.css" as="style" integrity="sha256-SMJdClojoejK6U1sXnYiBh5TRc8JgXGx1u5B2OMJ5sg=" crossorigin="anonymous">
 <link href="/weblogic-remote-console/scss/main.min.48c25d0a5a23a1e8cae94d6c5e7622061e5345cf098171b1d6ee41d8e309e6c8.css" rel="stylesheet" integrity="sha256-SMJdClojoejK6U1sXnYiBh5TRc8JgXGx1u5B2OMJ5sg=" crossorigin="anonymous">
 <script
@@ -65,13 +57,17 @@ Jump to Monitoring Tree Jump to Configuration View/Configuration Edit Trees Jump
   <div class="td-navbar-nav-scroll ms-md-auto" id="main_navbar">
     <ul class="navbar-nav">
       <li class="nav-item">
-        <a class="nav-link" href="/weblogic-remote-console/overview"><span>Documentation</span></a>
+        <a class="nav-link active" href="/weblogic-remote-console/overview/"><span>Documentation</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link active" href="/weblogic-remote-console/set-console/get-know-console/bean-map/"><span>Console Map</span></a>
       </li>
       <li class="nav-item dropdown d-none d-lg-block">
         <div class="dropdown">
   <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Releases</a>
   <ul class="dropdown-menu">
-    <li><a class="dropdown-item" href="/weblogic-remote-console/overview">Latest (v2.4.16)</a></li>
+    <li><a class="dropdown-item" href="/weblogic-remote-console/overview">Latest (v2.4.17)</a></li>
+    <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.16">v2.4.16</a></li>
     <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.15">v2.4.15</a></li>
     <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.14">v2.4.14</a></li>
     <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.13">v2.4.13</a></li>
@@ -142,7 +138,7 @@ Jump to Monitoring Tree Jump to Configuration View/Configuration Edit Trees Jump
     aria-label="Search this site…"
     autocomplete="off"
     
-    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.525ad98426979583eac4f9f0a1f2c27f.json"
+    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.1c3f7e3c36c633fec73beac9b615e3ab.json"
     data-offline-search-base-href="/"
     data-offline-search-max-results="10"
   >
@@ -167,7 +163,7 @@ Jump to Monitoring Tree Jump to Configuration View/Configuration Edit Trees Jump
     aria-label="Search this site…"
     autocomplete="off"
     
-    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.525ad98426979583eac4f9f0a1f2c27f.json"
+    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.1c3f7e3c36c633fec73beac9b615e3ab.json"
     data-offline-search-base-href="/"
     data-offline-search-max-results="10"
   >
@@ -309,20 +305,27 @@ Jump to Monitoring Tree Jump to Configuration View/Configuration Edit Trees Jump
 	<header class="article-meta">
 		
 </header>
-	<p>You can use this page to learn about the relationships between MBeans and how they make up a domain - helping you to navigate WebLogic Remote Console and find what you&rsquo;re looking for.</p>
-<p>This page is split into two sections, both with subsections:</p>
+	<p>Use this page to understand how the MBeans and other components that make up a WebLogic Server domain are organized in WebLogic Remote Console.</p>
+
+
+<div class="alert alert-secondary" role="alert">
+
+
+    <p>The Map of the Console is generated from the latest available release of WebLogic Server. If you are running an earlier release of WebLogic Server, then you won&rsquo;t see all of the items listed on this page because WebLogic Remote Console adjusts its user interface to hide features that are not supported by the active Administration Server provider.</p>
+<p>Additionally, depending on the security role assigned to your user, some items in the UI may be hidden by default. See <a href="/weblogic-remote-console/administration-server/domain-configuration/#GUID-BA0BFEB9-FA9D-4063-90E0-1D44551FB2E2">Access Limitations</a> for more information.</p>
+
+
+</div>
+<p>The Map of the Console is split into two sections, both of which have subsections:</p>
 <ul>
-<li>
-<p><strong>Perspective trees</strong>: Use this section to see a high-level, hierarchal view of how MBeans are organized, by <a href="/weblogic-remote-console/administration-server/domain-configuration/#GUID-E1D3A576-47A8-4291-9F56-617B1039168F">perspective</a>. These trees go to the page-level of the console.</p>
+<li><strong>Perspective Trees</strong>: Use this section to see a high-level, hierarchal view of how MBeans are organized, by <a href="/weblogic-remote-console/administration-server/domain-configuration/#GUID-E1D3A576-47A8-4291-9F56-617B1039168F">perspective</a>. These trees go to the page-level of the console.
 <ul>
 <li>Jump to <a href="/weblogic-remote-console/set-console/get-know-console/bean-map/#monitoring">Monitoring Tree</a></li>
 <li>Jump to <a href="/weblogic-remote-console/set-console/get-know-console/bean-map/#edit">Configuration View/Configuration Edit Trees</a></li>
 <li>Jump to <a href="/weblogic-remote-console/set-console/get-know-console/bean-map/#securityData">Security Data Tree</a></li>
 </ul>
 </li>
-<li>
-<p><strong>Page Summaries</strong>: Use this section to learn about the specific attributes of an MBean: how they are labeled in the UI, which page tab they&rsquo;re located on, and a short description of the field (plus a link to more information).</p>
-<p>MBeans in the Page Summaries section are listed alphabetically.</p>
+<li><strong>Page Summaries</strong>: Use this section to learn about the specific attributes of an MBean: how they are labeled in the UI, which page tab they&rsquo;re located on, and a short description of the field (plus a link to their respective page in the <a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/core/index.html">WebLogic Server MBean Reference</a>). MBeans in the Page Summaries section are listed alphabetically.
 <ul>
 <li>Jump to <a href="/weblogic-remote-console/set-console/get-know-console/bean-map/#bean-tree">Page Summaries</a></li>
 </ul>

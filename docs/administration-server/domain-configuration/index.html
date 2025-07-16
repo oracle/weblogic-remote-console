@@ -41,7 +41,7 @@ Connect to an Administration Server You can connect to a running WebLogic Server
 Start the Administration Server.
 See Starting and Stopping Servers in Administering Server Startup and Shutdown for Oracle WebLogic Server for instructions.
 Open the Providers drawer and click More ︙.">
-  <meta itemprop="wordCount" content="10205">
+  <meta itemprop="wordCount" content="11088">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Domain Configuration">
   <meta name="twitter:description" content="Use WebLogic Remote Console to make configuration changes to your WebLogic Server domain through its Administration Server.
@@ -69,13 +69,17 @@ Open the Providers drawer and click More ︙.">
   <div class="td-navbar-nav-scroll ms-md-auto" id="main_navbar">
     <ul class="navbar-nav">
       <li class="nav-item">
-        <a class="nav-link" href="/weblogic-remote-console/overview"><span>Documentation</span></a>
+        <a class="nav-link active" href="/weblogic-remote-console/overview/"><span>Documentation</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/weblogic-remote-console/set-console/get-know-console/bean-map/"><span>Console Map</span></a>
       </li>
       <li class="nav-item dropdown d-none d-lg-block">
         <div class="dropdown">
   <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Releases</a>
   <ul class="dropdown-menu">
-    <li><a class="dropdown-item" href="/weblogic-remote-console/overview">Latest (v2.4.16)</a></li>
+    <li><a class="dropdown-item" href="/weblogic-remote-console/overview">Latest (v2.4.17)</a></li>
+    <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.16">v2.4.16</a></li>
     <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.15">v2.4.15</a></li>
     <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.14">v2.4.14</a></li>
     <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.13">v2.4.13</a></li>
@@ -146,7 +150,7 @@ Open the Providers drawer and click More ︙.">
     aria-label="Search this site…"
     autocomplete="off"
     
-    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.525ad98426979583eac4f9f0a1f2c27f.json"
+    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.1c3f7e3c36c633fec73beac9b615e3ab.json"
     data-offline-search-base-href="/"
     data-offline-search-max-results="10"
   >
@@ -171,7 +175,7 @@ Open the Providers drawer and click More ︙.">
     aria-label="Search this site…"
     autocomplete="off"
     
-    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.525ad98426979583eac4f9f0a1f2c27f.json"
+    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.1c3f7e3c36c633fec73beac9b615e3ab.json"
     data-offline-search-base-href="/"
     data-offline-search-max-results="10"
   >
@@ -363,6 +367,13 @@ Open the Providers drawer and click More ︙.">
     <li><a href="#GUID-EC12E5AC-4E0A-41A5-8F3F-23E3670F3979">Resume a Server</a></li>
     <li><a href="#GUID-0DEF6963-839F-4E37-B080-6ADC2D694608">Suspend a Server</a></li>
     <li><a href="#GUID-1CC6DCA5-E882-4940-82E0-3F64659FAE4A">Shut Down a Server</a></li>
+    <li><a href="#GUID-E4B7E9F8-49E0-4FB3-BCA9-BF3470E3E167">Server and Service Migration</a>
+      <ul>
+        <li><a href="#GUID-019DA8C3-B231-43A0-A0E3-5375725862DD">Configure Whole Server Migration</a></li>
+        <li><a href="#GUID-DF76BC28-F003-48B6-A934-DAFE62C46E85">Configure Service Migration</a></li>
+        <li><a href="#GUID-15AD4516-7659-42AA-A436-3CE7A689CF1D">Manually Migrate Servers and Services</a></li>
+      </ul>
+    </li>
   </ul>
 </nav>
       </div>
@@ -511,8 +522,8 @@ Open the Providers drawer and click More ︙.">
 </ul>
 </li>
 <li>
-<p>Ensure that both the login and management endpoints (<code>console/*</code> and <code>management/*</code>, respectively) of your Administration Server are accessible by WebLogic Remote Console. If your Administration Server&rsquo;s endpoints are behind a firewall, load balancer, or otherwise externally unavailable, you will need to expose those endpoints manually.</p>
-<p>The <code>console/*</code> endpoint handles requests to obtain the identity token so it should be protected by a policy defined by your identity and access management (IAM) solution, where these policies typically enable an SSO solution. The <code>management/*</code> endpoint is the service endpoint that is protected by the token obtained after authentication with the <code>console/*</code> endpoint completes successfully.</p>
+<p>Ensure that both the login and management endpoints (<code>console/<em></code> and <code>management/</em></code>, respectively) of your Administration Server are accessible by WebLogic Remote Console. If your Administration Server&rsquo;s endpoints are behind a firewall, load balancer, or otherwise externally unavailable, you will need to expose those endpoints manually.</p>
+<p>The <code>console/<em></code> endpoint handles requests to obtain the identity token so it should be protected by a policy defined by your identity and access management (IAM) solution, where these policies typically enable an SSO solution. The <code>management/</em></code> endpoint is the service endpoint that is protected by the token obtained after authentication with the <code>console/*</code> endpoint completes successfully.</p>
 
 
 <div class="alert alert-primary" role="alert">
@@ -718,59 +729,37 @@ Open the Providers drawer and click More ︙.">
 </ol>
 <p>To delete a property, select the row and click <strong>-</strong>.</p>
 <h4 id="examples">Examples</h4>
-<table id="GUID-352F58BB-AE18-4414-9A9A-64A96429DAF0__TABLE_KSZ_MGQ_CBC">
-                           <span>Lists some examples of supported Java system properties</span>
-                           <thead>
-                              <tr>
-                                 <th>Usage</th>
-                                 <th>Syntax</th>
-                              </tr>
-                           </thead>
-                           <tbody>
-                              <tr>
-                                 <td>
-                                    <p>To set the <code>SameSite</code> cookie attribute if required for web browser support.</p>
-                                    <p>When WebLogic Remote Console establishes a connection with the WebLogic Server domain, a HTTP cookie is established with the Web Browser session.</p>
-                                    <p>For security reasons, the <code>SameSite</code> attribute of the HTTP cookie may need to be set for the Web Browser to accept the HTTP session cookie.</p>
-                                 </td>
-                                 <td>
-                                    <p>Set both properties:</p>
-                                    <ul id="GUID-352F58BB-AE18-4414-9A9A-64A96429DAF0__UL_AJK_FHQ_CBC">
-                                       <li>
-                                          <p>
-                                             <code>console.enableSameSiteCookieValue=true</code>
-                                          </p>
-                                       </li>
-                                       <li>
-                                          <p>
-                                             <code>console.valueSameSiteCookie=Lax|Strict</code>
-                                          </p>
-                                          <p>The default is <code>Lax</code>.</p>
-                                       </li>
-                                    </ul>
-                                 </td>
-                              </tr>
-                              <tr>
-                                 <td>
-                                    <p>To specify an alternative location for the JDK.</p>
-                                 </td>
-                                 <td>
-                                    <code>javaPath=<em>pathToJDK</em>
-                                    </code>
-                                 </td>
-                              </tr>
-                              <tr>
-                                 <td>
-                                    <p>To specify a custom logging configuration file so you can control the logging information that WebLogic Remote Console collects.</p>
-                                    <p>The custom logging configuration file must follow the Java format for configuration files. You can see an example of a Java logging configuration file at <code>$JAVA_HOME/conf/logging.properties</code>.</p>
-                                    <p>If a problem occurs with your custom logging configuration file, WebLogic Remote Console will fallback to use its default logging configuration file. <code>STDOUT</code> includes a log message indicating which file was used.</p>
-                                 </td>
-                                 <td>
-                                    <code>java.util.logging.config.file=&lt;path-to-logging.properties&gt;</code>
-                                 </td>
-                              </tr>
-                           </tbody>
-                        </table>
+<table id="TABLE_KSZ_MGQ_CBC"><thead><tr><th>
+<p>Usage</p>
+</th><th>
+<p>Syntax</p>
+</th></tr></thead><tbody><tr><td>
+<p>To set the <code>SameSite</code> cookie attribute if required for web browser support.</p>
+<p>When WebLogic Remote Console establishes a connection with the WebLogic Server domain, a HTTP cookie is established with the Web Browser session.</p>
+<p>For security reasons, the <code>SameSite</code> attribute of the HTTP cookie may need to be set for the Web Browser to accept the HTTP session cookie.</p>
+</td><td>
+<p>Set both properties:</p>
+<ul>
+<li>
+<p><code>console.enableSameSiteCookieValue=true</code></p>
+</li>
+<li>
+<p><code>console.valueSameSiteCookie=Lax|Strict</code></p>
+</li>
+</ul>
+<p>The default is <code>Lax</code>.</p>
+</td></tr><tr><td>
+<p>To specify an alternative location for the JDK.</p>
+</td><td>
+<p><code>javaPath=<em>pathToJDK</em></code></p>
+</td></tr><tr><td>
+<p>To specify a custom logging configuration file so you can control the logging information that WebLogic Remote Console collects.</p>
+<p>The custom logging configuration file must follow the Java format for configuration files. You can see an example of a Java logging configuration file at <code>$JAVA_HOME/conf/logging.properties</code>.</p>
+<p>If a problem occurs with your custom logging configuration file, WebLogic Remote Console will fallback to use its default logging configuration file. <code>STDOUT</code> includes a log message indicating which file was used.</p>
+</td><td>
+<p><code>java.util.logging.config.file=&lt;path-to-logging.properties&gt;</code></p>
+</td></tr></tbody>
+</table>
 <h2 id="GUID-1CD33411-D8B9-4CAB-88FE-1D043B5FEEEE">Configuring a WebLogic Server Domain</h2>
 <p>After you connect to an Administration Server with WebLogic Remote Console, you are ready to make configuration changes to your domain.</p>
 <p>For a comprehensive explanation of domain configuration in WebLogic Server, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=DOMCF-GUID-64E1CAC9-78A5-491C-BE42-6CBB81AA774B">Understanding Oracle WebLogic Server Domains</a> in <strong>Understanding Domain Configuration for Oracle WebLogic Server</strong>.</p>
@@ -870,97 +859,91 @@ Open the Providers drawer and click More ︙.">
     The Configuration View Tree perspective is read-only and no management tasks are performed within it. Therefore, it&rsquo;s not included in this table.
 
 </div>
-<table id="GUID-E1D3A576-47A8-4291-9F56-617B1039168F__TABLE_XXF_KS2_GZB">
-                        <caption>
-                           <span>
-                              <span>Table 1. </span>Tasks in Each
-                    Perspective. </span>
-                           <span>Identifies which perspective is responsible for different
-                    management tasks.</span>
-                        </caption>
-                        <thead>
-                           <tr>
-                              <th>Task</th>
-                              <th>Edit Tree</th>
-                              <th>Monitoring Tree</th>
-                              <th>Security Data Tree</th>
-                           </tr>
-                        </thead>
-                        <tbody>
-                           <tr>
-                              <td>Start or stop a server</td>
-                              <td> </td>
-                              <td>✔</td>
-                              <td> </td>
-                           </tr>
-                           <tr>
-                              <td>Deploy an application</td>
-                              <td>✔</td>
-                              <td> </td>
-                              <td> </td>
-                           </tr>
-                           <tr>
-                              <td>Start or stop an application</td>
-                              <td> </td>
-                              <td>✔</td>
-                              <td> </td>
-                           </tr>
-                           <tr>
-                              <td>Configure servers, clusters, and machines</td>
-                              <td>✔</td>
-                              <td> </td>
-                              <td> </td>
-                           </tr>
-                           <tr>
-                              <td>Manage access control</td>
-                              <td> </td>
-                              <td> </td>
-                              <td>✔</td>
-                           </tr>
-                           <tr>
-                              <td>Manage users, groups, roles, policies</td>
-                              <td> </td>
-                              <td> </td>
-                              <td>✔</td>
-                           </tr>
-                           <tr>
-                              <td>Configure security providers</td>
-                              <td>✔</td>
-                              <td> </td>
-                              <td> </td>
-                           </tr>
-                           <tr>
-                              <td>Configure database connectivity</td>
-                              <td>✔</td>
-                              <td> </td>
-                              <td> </td>
-                           </tr>
-                           <tr>
-                              <td>Configure messaging</td>
-                              <td>✔</td>
-                              <td> </td>
-                              <td> </td>
-                           </tr>
-                           <tr>
-                              <td>Diagnose domain issues</td>
-                              <td> </td>
-                              <td>✔</td>
-                              <td> </td>
-                           </tr>
-                           <tr>
-                              <td>Configure SSL/TLS</td>
-                              <td>✔</td>
-                              <td> </td>
-                              <td> </td>
-                           </tr>
-                           <tr>
-                              <td>Create dashboards</td>
-                              <td> </td>
-                              <td>✔</td>
-                              <td> </td>
-                           </tr>
-                        </tbody>
-                     </table>
+<table>
+  <thead>
+      <tr>
+          <th>Task</th>
+          <th>Edit Tree</th>
+          <th>Monitoring Tree</th>
+          <th>Security Data Tree</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Start or stop a server</td>
+          <td> </td>
+          <td>✔</td>
+          <td> </td>
+      </tr>
+      <tr>
+          <td>Deploy an application</td>
+          <td>✔</td>
+          <td> </td>
+          <td> </td>
+      </tr>
+      <tr>
+          <td>Start or stop an application</td>
+          <td> </td>
+          <td>✔</td>
+          <td> </td>
+      </tr>
+      <tr>
+          <td>Configure servers, clusters, and machines</td>
+          <td>✔</td>
+          <td> </td>
+          <td> </td>
+      </tr>
+      <tr>
+          <td>Manage access control</td>
+          <td> </td>
+          <td> </td>
+          <td>✔</td>
+      </tr>
+      <tr>
+          <td>Manage users, groups, roles, policies</td>
+          <td> </td>
+          <td> </td>
+          <td>✔</td>
+      </tr>
+      <tr>
+          <td>Configure security providers</td>
+          <td>✔</td>
+          <td> </td>
+          <td> </td>
+      </tr>
+      <tr>
+          <td>Configure database connectivity</td>
+          <td>✔</td>
+          <td> </td>
+          <td> </td>
+      </tr>
+      <tr>
+          <td>Configure messaging</td>
+          <td>✔</td>
+          <td> </td>
+          <td> </td>
+      </tr>
+      <tr>
+          <td>Diagnose domain issues</td>
+          <td> </td>
+          <td>✔</td>
+          <td> </td>
+      </tr>
+      <tr>
+          <td>Configure SSL/TLS</td>
+          <td>✔</td>
+          <td> </td>
+          <td> </td>
+      </tr>
+      <tr>
+          <td>Create dashboards</td>
+          <td> </td>
+          <td>✔</td>
+          <td> </td>
+      </tr>
+  </tbody>
+</table>
+<p>Table 1. Tasks in Each Perspective. Identifies which perspective is responsible for different management tasks.</p>
 <h2 id="GUID-BA0BFEB9-FA9D-4063-90E0-1D44551FB2E2">Access Limitations</h2>
 <p>To prevent unauthorized changes to your WebLogic Server domains, WebLogic Remote Console limits its functionality based on a user&rsquo;s role.</p>
 <p>If you log in as a user whose role has limited permissions, WebLogic Remote Console automatically adjusts its user interface to conceal the areas to which you do not have access. Users with the administrator role have full access to WebLogic Remote Console.</p>
@@ -976,33 +959,29 @@ Open the Providers drawer and click More ︙.">
 
 </div>
 <p><a href="/weblogic-remote-console/administration-server/domain-configuration/#TABLE_T22_2WX_HZB">Table 2</a> provides some examples of the limitations that users in non-Administrator roles might encounter.</p>
-<table id="GUID-BA0BFEB9-FA9D-4063-90E0-1D44551FB2E2__TABLE_T22_2WX_HZB">
-                     <caption>
-                        <span>
-                           <span>Table 2. </span>Access Limitations based on Role. </span>
-                        <span>Some examples of the limitations based on role.</span>
-                     </caption>
-                     <thead>
-                        <tr>
-                           <th>Role</th>
-                           <th>Limitations</th>
-                        </tr>
-                     </thead>
-                     <tbody>
-                        <tr>
-                           <td>Deployer</td>
-                           <td>User can view but not edit server or domain configurations. They can also modify areas related to application deployment including some JDBC and JMS resources.</td>
-                        </tr>
-                        <tr>
-                           <td>Monitor</td>
-                           <td>User access to WebLogic Remote Console is entirely read-only.</td>
-                        </tr>
-                        <tr>
-                           <td>Operator</td>
-                           <td>User can start and stop servers but cannot see the Edit Tree perspective.</td>
-                        </tr>
-                     </tbody>
-                  </table>
+<table>
+  <thead>
+      <tr>
+          <th>Role</th>
+          <th>Limitations</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Deployer</td>
+          <td>User can view but not edit server or domain configurations. They can also modify areas related to application deployment including some JDBC and JMS resources.</td>
+      </tr>
+      <tr>
+          <td>Monitor</td>
+          <td>User access to WebLogic Remote Console is entirely read-only.</td>
+      </tr>
+      <tr>
+          <td>Operator</td>
+          <td>User can start and stop servers but cannot see the Edit Tree perspective.</td>
+      </tr>
+  </tbody>
+</table>
+<p>Table 2. Access Limitations based on Role. Some examples of the limitations based on role.</p>
 <h2 id="GUID-6E2CC0CB-C93A-41A6-B4D0-F29114F9F756">Configure Managed Servers</h2>
 <p>Managed Servers are subordinate servers that are managed indirectly through the domain&rsquo;s Administration Server.</p>
 <p>In a typical production environment, you should create one or more Managed Servers in the domain to host business applications and only use the Administration Server to configure and monitor the Managed Servers.</p>
@@ -1857,36 +1836,33 @@ The external listen address and port are used to support Network Address Transla
 <p>Change the domain mode:</p>
 </li>
 </ol>
-<table id="GUID-8FA92B79-CB09-4ECA-9254-5323FECEC1E0__TABLE_MPM_VYN_SDC">
-                              <span>Describes how to change the domain mode.</span>
-                              <thead>
-                                 <tr>
-                                    <th>Target domain mode</th>
-                                    <th>Perform these steps</th>
-                                 </tr>
-                              </thead>
-                              <tbody>
-                                 <tr>
-                                    <td>Development Mode</td>
-                                    <td>Disable the <span>Production Mode</span> option to convert your domain to development mode.</td>
-                                 </tr>
-                                 <tr>
-                                    <td>Production Mode</td>
-                                    <td>Enable the <span>Production Mode</span> option to convert your domain to production mode. <div id="GUID-8FA92B79-CB09-4ECA-9254-5323FECEC1E0__GUID-70E009C1-2051-420A-9B2D-17DD275701EE">
-                                          <span>Note:</span> As of WebLogic Server 14.1.2.0.0, when you select production mode, <em>secured</em> production mode is enabled by default.<p> If you want to apply the features of basic production mode only, then you must explicitly disable the <span>Secured Production Mode</span> option. If you use Node Manager to start your Managed Servers, then you must also add the <code>-Dweblogic.securemode.SecureModeEnabled=false</code> startup argument to each Managed Server. See <a href="#GUID-C1986FE5-E41C-41CC-880E-D6C78A691A7C">Configure Startup Arguments for a Managed Server</a>.</p>
-                                       </div>
-                                    </td>
-                                 </tr>
-                                 <tr>
-                                    <td>Secured Production Mode</td>
-                                    <td>Enable the <span>Production Mode</span> and <span>Secured Production Mode</span> options.<p>
-                                          <strong>Note</strong>: For more information, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=SECMG-GUID-9ED2EF38-F763-4999-80ED-27A3FBCB9D7D">Using Secured Production Mode</a> in <span>
-                                             <cite>Administering Security for Oracle WebLogic Server</cite>
-                                          </span>.</p>
-                                    </td>
-                                 </tr>
-                              </tbody>
-                           </table>
+<table id="TABLE_MPM_VYN_SDC"><thead><tr><th>
+<p>Target domain mode</p>
+</th><th>
+<p>Perform these steps</p>
+</th></tr></thead><tbody><tr><td>
+<p>Development Mode</p>
+</td><td>
+<p>Disable the <strong>Production Mode</strong> option to convert your domain to development mode.</p>
+</td></tr><tr><td>
+<p>Production Mode</p>
+</td><td>
+<p>Enable the <strong>Production Mode</strong> option to convert your domain to production mode. 
+
+<div class="alert alert-primary" role="alert">
+<h4 class="alert-heading">Note</h4>
+
+    <p>As of WebLogic Server 14.1.2.0.0, when you select production mode, <em>secured</em> production mode is enabled by default.</p>
+<p>If you want to apply the features of basic production mode only, then you must explicitly disable the <strong>Secured Production Mode</strong> option. If you use Node Manager to start your Managed Servers, then you must also add the <code>-Dweblogic.securemode.SecureModeEnabled=false</code> startup argument to each Managed Server. See <a href="/weblogic-remote-console/administration-server/domain-configuration/#GUID-C1986FE5-E41C-41CC-880E-D6C78A691A7C">Configure Startup Arguments for a Managed Server</a>.</p>
+
+
+</div></p>
+</td></tr><tr><td>
+<p>Secured Production Mode</p>
+</td><td>
+<p>Enable the <strong>Production Mode</strong> and <strong>Secured Production Mode</strong> options.<strong>Note</strong>: For more information, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=SECMG-GUID-9ED2EF38-F763-4999-80ED-27A3FBCB9D7D">Using Secured Production Mode</a> in <strong>Administering Security for Oracle WebLogic Server</strong>.</p>
+</td></tr></tbody>
+</table>
 <ol start="4">
 <li>
 <p>Click <strong>Save</strong>.</p>
@@ -1967,6 +1943,180 @@ See <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-m
 </ul>
 </li>
 </ol>
+<h2 id="GUID-E4B7E9F8-49E0-4FB3-BCA9-BF3470E3E167">Server and Service Migration</h2>
+<p>You can configure WebLogic Server to automatically and seamlessly migrate whole server instances to new machines or migrate services to new servers in the event of a server failure. You can also migrate services or servers manually as needed.</p>
+<p>See <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=CLUST-GUID-BD940A79-CF6E-4FE6-9922-85220AE835B4">Whole Server Migration</a> and <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=CLUST-GUID-AEECC92D-88DA-4E07-8C42-A24DBC1C7076">Service Migration</a> in <strong>Administering Clusters for Oracle WebLogic Server</strong>.</p>
+<h3 id="GUID-019DA8C3-B231-43A0-A0E3-5375725862DD">Configure Whole Server Migration</h3>
+<p>You can configure clusters and Managed Servers within clusters to automatically migrate all of their services to a new machine if a failure is detected on their original physical machine.</p>
+<p>For guidance on how to set up your servers and clusters for whole server migration, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=CLUST-GUID-BD940A79-CF6E-4FE6-9922-85220AE835B4">Whole Server Migration</a> in <strong>Administering Clusters for Oracle WebLogic Server</strong>.</p>
+
+
+<div class="alert alert-primary" role="alert">
+<h4 class="alert-heading">Note</h4>
+
+    If you want to migrate services that are pinned to a server, see <a href="/weblogic-remote-console/administration-server/domain-configuration/#GUID-DF76BC28-F003-48B6-A934-DAFE62C46E85">Configure Service Migration</a> instead.
+
+</div>
+<ol>
+<li>
+<p>Make sure your environment is properly configured for whole server migration. Generally, this involves setting up Managed Servers, clusters, machines, data sources, and Node Manager. See <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=CLUST-GUID-ADD6E564-5CD4-42EB-963B-352DCC7EE8AA">Preparing for Automatic Whole Server Migration</a> and <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=CLUST-GUID-FC90C9BB-AF93-453A-91FF-A861B42E1442">Configuring Automatic Whole Server Migration</a> in <strong>Administering Clusters for Oracle WebLogic Server</strong>.</p>
+</li>
+<li>
+<p>In the <strong>Edit Tree</strong>, go to <strong>Environment</strong>, then <strong>Clusters</strong>, and select the cluster where you want to enable whole server migration.</p>
+</li>
+<li>
+<p>On the <strong>Migration</strong> tab, update values as necessary for your environment and click <strong>Save</strong>.</p>
+</li>
+<li>
+<p>On the <strong>Candidates</strong> subtab, under <strong>Candidate Machines for Migratable Servers</strong>, select all of the machines that you want available for migration and move them over to the <strong>Chosen</strong> side.</p>
+</li>
+<li>
+<p>Click <strong>Save</strong>.</p>
+</li>
+<li>
+<p>Still in the <strong>Edit Tree</strong>, go to <strong>Environment</strong>.</p>
+<ul>
+<li>If the cluster is a dynamic cluster, then go to <strong>Server Templates</strong>, select the server template that applies its settings to the cluster&rsquo;s server members and proceed to the next step.</li>
+<li>If the cluster consists of configured Managed Servers, then go to <strong>Servers</strong>, select a server within the cluster where you just enabled whole server migration and proceed to the next step.
+If the cluster is a mixed cluster, with both configured and dynamic servers, you&rsquo;ll need to configure migration settings on both the server template as well as on any configured server instances.</li>
+</ul>
+</li>
+<li>
+<p>On the server template or server&rsquo;s <strong>Migration</strong> tab, turn on <strong>Automatic Server Migration Enabled</strong>.</p>
+</li>
+<li>
+<p><strong>Optional</strong>: If you want a configured server to only use a subset of the candidate machines specified by the cluster, then in the <strong>Candidate Machines</strong> field, move the machines you want to be available for migrated to, to the <strong>Chosen</strong> side.</p>
+</li>
+<li>
+<p>Click <strong>Save</strong>.</p>
+</li>
+<li>
+<p>Repeat on every configured server in the cluster where you want to enable migration.</p>
+</li>
+</ol>
+<p>Your domain is now set up to automatically migrate a server and its services to another machine upon failure.</p>
+<p>If you want to manually migrate a server, see <a href="/weblogic-remote-console/administration-server/domain-configuration/#GUID-15AD4516-7659-42AA-A436-3CE7A689CF1D">Manually Migrate Servers and Services</a>.</p>
+<h3 id="GUID-DF76BC28-F003-48B6-A934-DAFE62C46E85">Configure Service Migration</h3>
+<p>You can configure services that are pinned to a single server to automatically migrate from their original server instance to a new server instance (within the same cluster) in the event of failure.</p>
+<p>You can migrate the following pinned services:</p>
+<ul>
+<li>JMS-Related Services</li>
+<li>JTA Transaction Recovery Services</li>
+<li>User-Defined Singleton Services</li>
+</ul>
+
+
+<div class="alert alert-primary" role="alert">
+<h4 class="alert-heading">Note</h4>
+
+    If you want to migrate a server instance and <em>all</em> of its services, see <a href="/weblogic-remote-console/administration-server/domain-configuration/#GUID-019DA8C3-B231-43A0-A0E3-5375725862DD">Configure Whole Server Migration</a> instead.
+
+</div>
+<p>For guidance on how to set up your WebLogic Server environment to automatically migrate services, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=CLUST-GUID-AEECC92D-88DA-4E07-8C42-A24DBC1C7076">Service Migration</a> in <strong>Administering Clusters for Oracle WebLogic Server</strong>, or more specifically:</p>
+<ul>
+<li>
+<p><a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=CLUST-GUID-F313A5C5-666A-4BFD-A7E1-6213EBA3B02B">Roadmap for Configuring Automatic Migration of JMS-Related Services</a></p>
+</li>
+<li>
+<p><a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=CLUST-GUID-F8F9E59A-766E-43BD-BF4C-F21A37F70798">Roadmap for Configuring Automatic Migration of the JTA Transaction Recovery Service</a></p>
+</li>
+<li>
+<p><a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=CLUST-GUID-1E5ED7D6-FF33-429F-9072-543B8BF7222A">Automatic Migration of User-Defined Singleton Services</a></p>
+</li>
+</ul>
+<p>If you want to manually migrate a service, see <a href="/weblogic-remote-console/administration-server/domain-configuration/#GUID-15AD4516-7659-42AA-A436-3CE7A689CF1D">Manually Migrate Servers and Services</a>.</p>
+<h3 id="GUID-15AD4516-7659-42AA-A436-3CE7A689CF1D">Manually Migrate Servers and Services</h3>
+<p>You can manually migrate services to new server instances or migrate servers to new machines as needed.</p>
+<p>Make sure your environment is properly configured for migration. See <a href="/weblogic-remote-console/administration-server/domain-configuration/#GUID-E4B7E9F8-49E0-4FB3-BCA9-BF3470E3E167">Server and Service Migration</a>.</p>
+<ol>
+<li>
+<p>In the <strong>Monitoring Tree</strong>, go to <strong>Environment</strong>, then <strong>Migration</strong> and select the tab that applies to the type of service or server that you want to migrate.</p>
+</li>
+<li>
+<p>For JMS-related services:</p>
+<ol>
+<li>
+<p>On the <strong>JMS</strong> tab, select a migratable target and click <strong>Migrate JMS</strong>.</p>
+</li>
+<li>
+<p>From the <strong>Destination</strong> dropdown list, choose the server where you want to send the JMS service.</p>
+</li>
+<li>
+<p>Click <strong>Done</strong>.</p>
+</li>
+<li>
+<p>Repeat for every JMS service that you want to migrate.</p>
+</li>
+</ol>
+</li>
+<li>
+<p>For JTA transaction recovery services:</p>
+<ol>
+<li>
+<p>On the <strong>JTA</strong> tab, select a migratable target and click <strong>Migrate JTA</strong>.</p>
+</li>
+<li>
+<p>From the <strong>Destination</strong> dropdown list, choose the server where you want to send the JTA service.</p>
+</li>
+<li>
+<p>Click <strong>Done</strong>.</p>
+</li>
+<li>
+<p>Repeat for every JTA service that you want to migrate.</p>
+</li>
+</ol>
+</li>
+<li>
+<p>For user-defined singleton services:</p>
+<ol>
+<li>
+<p>On the <strong>Singleton Services</strong> tab, select a singleton service and click <strong>Migrate Singleton Service</strong>.</p>
+</li>
+<li>
+<p>From the <strong>Destination</strong> dropdown list, choose the server where you want to send the singleton service.</p>
+</li>
+<li>
+<p>Click <strong>Done</strong>.</p>
+</li>
+<li>
+<p>Repeat for every singleton service that you want to migrate.</p>
+</li>
+</ol>
+</li>
+<li>
+<p>For whole servers:</p>
+
+
+<div class="alert alert-primary" role="alert">
+<h4 class="alert-heading">Note</h4>
+
+    You can only migrate servers that are currently running and have <strong>Automatic Server Migration Enabled</strong> enabled.
+
+</div>
+<ol>
+<li>
+<p>On the <strong>Servers</strong> tab, select a server and click <strong>Migrate Server</strong>.</p>
+</li>
+<li>
+<p>From the <strong>Destination</strong> dropdown list, choose the machine where you want to send the server.</p>
+</li>
+<li>
+<p>Click <strong>Done</strong>.</p>
+</li>
+<li>
+<p>Repeat for every server that you want to migrate.</p>
+</li>
+</ol>
+</li>
+<li>
+<p>To monitor the status of migration requests, go to <strong>Environment</strong>, then <strong>Migration</strong>.</p>
+<ul>
+<li>For services, go to <strong>Service Migration Data Runtimes</strong></li>
+<li>For whole server, go to <strong>Migration Data Runtimes</strong></li>
+</ul>
+</li>
+</ol>
+<p>Following migration, you should go to the <strong>Edit Tree</strong> and open the Shopping Cart to check if there are any pending changes that need to be committed.</p>
 
   <div class="section-index">
     

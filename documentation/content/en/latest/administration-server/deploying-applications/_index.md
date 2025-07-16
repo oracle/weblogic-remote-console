@@ -1,5 +1,5 @@
 ---
-weight: 141
+weight: 148
 title: Deploying Applications
 ---
 
@@ -11,7 +11,7 @@ For general information on the application deployment process, see [Understandin
 
 ## Supported Deployment Units {#SECTION_JCN_YYR_FCC}
 
-A deployment unit refers to a Java EE application (an enterprise application or Web application) or a standalone Java EE module (such as an EJB or resource adapter) that has been organized according to the Java EE specification and can be deployed to WebLogic Server.
+A deployment unit refers to a Java EE application \(an enterprise application or Web application\) or a standalone Java EE module \(such as an EJB or resource adapter\) that has been organized according to the Java EE specification and can be deployed to WebLogic Server.
 
 The following deployment units are supported:
 
@@ -52,8 +52,12 @@ This procedure applies to all of the deployment units listed in [Supported Deplo
 
     -   If the application is on your file system and you need to upload it to the Administration Server, enable the **Upload** option. Then, beside **Source**, click **Choose File** to browse to the application's location on your system.
     -   If the application is already in the file system of the Administration Server, disable the **Upload** option. Then, in the **Source Path** field, enter the file path to the application.
-6.  **Optional**: Add a deployment plan, choose another staging mode, or set application behavior at deployment.
+6.  **Optional**: Configure additional deployment settings as needed:
 
+    -   **Plan**: Upload a deployment plan to the Administration Server. You can also add a deployment plan to an application after deployment.
+    -   **Staging Mode**: Determine how deployment files are made available to target servers that must deploy an application or standalone module. See [Staging Mode Descriptions and Best Practices](https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=DEPGD-GUID-FB59AA94-522F-4A7F-8974-60F0C27F2161) in **Deploying Applications to Oracle WebLogic Server**.
+    -   **Security Model**: Specify which security model is applied to the application. See [Comparison of Security Models for Web Applications and EJBs](https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=ROLES-GUID-D38B3272-AD78-450A-9BED-29CDA571C31A) in **Securing Resources Using Roles and Policies for Oracle WebLogic Server**.
+    -   **On Deployment**: Specify whether the application should start on deployment, or start but only accept administrative requests, or to not start the application at all.
 7.  Click **Create**.
 
 
@@ -117,7 +121,7 @@ After you deploy an application, you can configure additional settings to meet t
 
     4.  Click **Done**. WebLogic Server will create a basic deployment plan.
 
-        You can see the deployment plan for an application under **Deployments**: **Application Management**: *myApplication*: **Deployment Plan (Advanced)**.
+        You can see the deployment plan for an application under **Deployments**: **Application Management**: *myApplication*: **Deployment Plan \(Advanced\)**.
 
 2.  Go to **Deployments**, then **Application Management**, then *myApplication*, then **Configuration**. Explore the Configuration node and its children to see the available deployment configuration options.
 
@@ -150,7 +154,7 @@ See [Understanding WebLogic Server Deployment Plans](https://docs.oracle.com/pls
 
 For deployment plan descriptions and examples, see [Understanding Deployment Plan Contents](https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=DEPGD-GUID-003B951E-051B-4BFA-B8C5-E006C0A0FDE7) in **Deploying Applications to Oracle WebLogic Server**.
 
-Generally, if you need to modify the deployment properties of an application, you should use the Configuration node (as described in [Specify Deployment Properties](#GUID-0D2646E1-C9DB-4B65-A691-F835E0C0274A)), instead of manually editing the deployment plan.
+Generally, if you need to modify the deployment properties of an application, you should use the Configuration node \(as described in [Specify Deployment Properties](#GUID-0D2646E1-C9DB-4B65-A691-F835E0C0274A)\), instead of manually editing the deployment plan.
 
 If your changes in the deployment plan include non-dynamic changes, you must redeploy the application to propagate the changes from the deployment plan to the application.
 
@@ -160,7 +164,7 @@ You can manually update a deployment plan with new deployment instructions for a
 
 For more information, see [Manually Customizing the Deployment Plan](https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=DEPGD-GUID-CE85B546-1757-4AE3-BC82-E2C8EC202D0C) in **Deploying Applications to Oracle WebLogic Server**.
 
-1.  In the **Monitoring Tree**, go to **Deployments**, then **Application Management**, then *myApplication*, then **Deployment Plan (Advanced)**.
+1.  In the **Monitoring Tree**, go to **Deployments**, then **Application Management**, then *myApplication*, then **Deployment Plan \(Advanced\)**.
 
 2.  You can edit the deployment plan as a whole or the individual variable assignments within a deployment plan:
 
@@ -239,7 +243,7 @@ To temporarily make a deployed application unavailable to WebLogic Server client
 
 ## Install a Java EE Library {#GUID-BE65E318-925C-4CEC-9041-76A7214AFA6A}
 
-A Java EE library can be a standalone EJB or Web application module, multiple EJB or Web application modules packaged in an enterprise application (EAR), or a single plain JAR file that is registered with the Java EE application container upon deployment. After the library has been installed and started, other deployed modules can reference the library.
+A Java EE library can be a standalone EJB or Web application module, multiple EJB or Web application modules packaged in an enterprise application \(EAR\), or a single plain JAR file that is registered with the Java EE application container upon deployment. After the library has been installed and started, other deployed modules can reference the library.
 
 Installing a Java EE library means making its physical file or directory known to WebLogic Server. A Java EE library can be installed as an archived EAR file or as an exploded directory. After you have installed the Java EE library, other deployed modules can start using it.
 
@@ -251,7 +255,7 @@ Installing a Java EE library means making its physical file or directory known t
 
 4.  Select the servers and clusters to which you want to deploy the Java EE library. Make sure to target all of the servers and clusters to which modules or applications that will reference the Java EE library are deployed.
 
-5.  Make the Java EE library (an archive file or exploded directory) that you want to install known to the Administration Server.
+5.  Make the Java EE library \(an archive file or exploded directory\) that you want to install known to the Administration Server.
 
     -   Enable **Upload** if the Java EE library is on your file system and you need to upload it to the Administration Server. Then, click **Choose File** to browse to the library's location on your system.
     -   If the Java EE library is already in the file system of the Administration Server, then disable the **Upload** option and enter the file path to the Java EE library.
@@ -259,9 +263,9 @@ Installing a Java EE library means making its physical file or directory known t
 
     {{< alert title="Note" color="primary" >}}
 
+    
 
-
-    You can install only the following types of archive files (or their corresponding exploded directories) as Java EE libraries: EJB JARs, Web application WARs, EAR files that contain EJB JARs or WARs, or plain JAR files that contain compiled classes.
+    You can install only the following types of archive files \(or their corresponding exploded directories\) as Java EE libraries: EJB JARs, Web application WARs, EAR files that contain EJB JARs or WARs, or plain JAR files that contain compiled classes.
 
     {{< /alert >}}
 
@@ -295,7 +299,7 @@ When you update a Java EE library, WebLogic Server redeploys the archive file or
 
 If using JASPIC, you can specify which Authentication Configuration provider applies to a specific Web application.
 
-The Java Authentication Service Provider Interface for Containers (JASPIC) specification defines a service provider interface (SPI). The JASPIC SPI is used by authentication providers that implement message authentication mechanisms that can be integrated in server Web application message processing.
+The Java Authentication Service Provider Interface for Containers \(JASPIC\) specification defines a service provider interface \(SPI\). The JASPIC SPI is used by authentication providers that implement message authentication mechanisms that can be integrated in server Web application message processing.
 
 You can review the JASPIC specification at **[JSR 196: Java Authentication Service Provider Interface for Containers](https://www.jcp.org/en/jsr/detail?id=196)**.
 
@@ -311,7 +315,7 @@ You can review the JASPIC specification at **[JSR 196: Java Authentication Servi
 
 3.  If the application does not have a deployment plan, click **Create Plan**.
 
-    WebLogic Server will create a basic deployment plan for the application which you can edit using the newly created **Configuration** and **Deployment Plan (Advanced)** child nodes.
+    WebLogic Server will create a basic deployment plan for the application which you can edit using the newly created **Configuration** and **Deployment Plan \(Advanced\)** child nodes.
 
     Whenever possible, use the **Configuration** node to edit deployment properties rather than editing the deployment plan directly. See [Specify Deployment Properties](#GUID-0D2646E1-C9DB-4B65-A691-F835E0C0274A).
 
@@ -336,7 +340,7 @@ Use credential mapping to control access between WebLogic resources and remote s
 
     2.  Continue until you reach the WebLogic resource that you want to prepare for credential mappings. See [Identify Resources for Credential Mapping](../securing-domains#GUID-1D5D77AF-5F1A-4AF4-8E97-31E30AF69891) for example node paths.
 
-    3.  Click **New** and make a note of all of the required attributes (fields marked by an asterisk) for which you will need to retrieve configuration data.
+    3.  Click **New** and make a note of all of the required attributes \(fields marked by an asterisk\) for which you will need to retrieve configuration data.
 
     4.  Click **Cancel**.
 
@@ -346,7 +350,7 @@ Use credential mapping to control access between WebLogic resources and remote s
 
 4.  Paste the values to a text file for use in a later step.
 
-5.  Locate any additional data (as determined in step [1](#STEP_WQV_TFR_42C)) that you require to identify the resource for its credential mapping. The necessary data will differ depending on the resource type.
+5.  Locate any additional data \(as determined in step [1](#STEP_WQV_TFR_42C)\) that you require to identify the resource for its credential mapping. The necessary data will differ depending on the resource type.
 
     For example:
 
@@ -357,3 +361,5 @@ Use credential mapping to control access between WebLogic resources and remote s
     This process will also create the first credential mapping for the application.
 
 7.  If you want to create more credential mappings, see [Add a Credential Mapping](../securing-domains#GUID-8D69A192-3B3D-46E8-A9F7-924641511E97).
+
+

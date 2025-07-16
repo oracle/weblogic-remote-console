@@ -35,7 +35,7 @@ Each WebLogic data source contains a pool of database connections. Applications 
   <meta itemprop="description" content="Use WebLogic Remote Console to manage services in a WebLogic Server domain.
 Data Sources You can connect WebLogic Server to databases by adding JDBC data sources to your domain. A data source is a Java EE standard method of configuring connectivity to a database.
 Each WebLogic data source contains a pool of database connections. Applications look up the data source on the JNDI tree or in the local application context and then use a database connection from the pool of connections. Data sources and their connection pools provide connection management processes that help keep your system running efficiently.">
-  <meta itemprop="wordCount" content="10332">
+  <meta itemprop="wordCount" content="10359">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Configuring Services">
   <meta name="twitter:description" content="Use WebLogic Remote Console to manage services in a WebLogic Server domain.
@@ -61,13 +61,17 @@ Each WebLogic data source contains a pool of database connections. Applications 
   <div class="td-navbar-nav-scroll ms-md-auto" id="main_navbar">
     <ul class="navbar-nav">
       <li class="nav-item">
-        <a class="nav-link" href="/overview"><span>Documentation</span></a>
+        <a class="nav-link active" href="/overview/"><span>Documentation</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/set-console/get-know-console/bean-map/"><span>Console Map</span></a>
       </li>
       <li class="nav-item dropdown d-none d-lg-block">
         <div class="dropdown">
   <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Releases</a>
   <ul class="dropdown-menu">
-    <li><a class="dropdown-item" href="/weblogic-remote-console/overview">Latest (v2.4.16)</a></li>
+    <li><a class="dropdown-item" href="/weblogic-remote-console/overview">Latest (v2.4.17)</a></li>
+    <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.16">v2.4.16</a></li>
     <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.15">v2.4.15</a></li>
     <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.14">v2.4.14</a></li>
     <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.13">v2.4.13</a></li>
@@ -138,7 +142,7 @@ Each WebLogic data source contains a pool of database connections. Applications 
     aria-label="Search this site…"
     autocomplete="off"
     
-    data-offline-search-index-json-src="/offline-search-index.d874cf970bc57419b247ef101f81d5e2.json"
+    data-offline-search-index-json-src="/offline-search-index.6acb553d7869483f57e2c80febd06cda.json"
     data-offline-search-base-href="/"
     data-offline-search-max-results="10"
   >
@@ -163,7 +167,7 @@ Each WebLogic data source contains a pool of database connections. Applications 
     aria-label="Search this site…"
     autocomplete="off"
     
-    data-offline-search-index-json-src="/offline-search-index.d874cf970bc57419b247ef101f81d5e2.json"
+    data-offline-search-index-json-src="/offline-search-index.6acb553d7869483f57e2c80febd06cda.json"
     data-offline-search-base-href="/"
     data-offline-search-max-results="10"
   >
@@ -616,92 +620,56 @@ The option you select limits the data sources that you can select as part of the
 <li>Select the data source that you want to manage and then choose the control operation that you want to perform on the data source.</li>
 </ol>
 <p><a href="/administration-server/configuring-services/#TABLE_YT5_TQW_CBC">Table 1</a> describes the control operations that you can perform on a JDBC data source.</p>
-<table id="GUID-C61D7557-E83E-477D-A1E9-BF7281CF12D9__TABLE_YT5_TQW_CBC">
-                           <caption>
-                              <span>
-                                 <span>Table 1. </span>Control Operations for JDBC Data Sources. </span>
-                              <span>describes the control operations that you can perform on a JDBC data source.</span>
-                           </caption>
-                           <thead>
-                              <tr>
-                                 <th>Operation</th>
-                                 <th>Description</th>
-                              </tr>
-                           </thead>
-                           <tbody>
-                              <tr>
-                                 <td>Start</td>
-                                 <td>
-                                    <p>Use <span>Start</span> to start an individual instance of a data source.</p>
-                                    <p>For more information, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=JDBCA-GUID-6A301B9B-A0DD-4290-B02D-F2F57899A1B1">Starting a Data Source</a> in <span>
-                                          <cite>Administering JDBC Data Sources for Oracle WebLogic Server</cite>
-                                       </span>.</p>
-                                 </td>
-                              </tr>
-                              <tr>
-                                 <td>Resume</td>
-                                 <td>
-                                    <p>Use <span>Resume </span> to resume individual data sources that are in a  <code>Suspended</code> state.</p>
-                                    <p>For more information, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=JDBCA-GUID-80AB2650-2AFB-4D67-B650-DCEA15E2260A">Resuming a Connection Pool</a> in <span>
-                                          <cite>Administering JDBC Data Sources for Oracle WebLogic Server</cite>
-                                       </span>. </p>
-                                 </td>
-                              </tr>
-                              <tr>
-                                 <td>Suspend</td>
-                                 <td>
-                                    <p>Use <span> Suspend</span> to pause individual instances of a data source. When you suspend a data source, applications can no longer get a database connection from the data source. You can choose how to handle active connections:</p>
-                                    <ul id="GUID-C61D7557-E83E-477D-A1E9-BF7281CF12D9__UL_XVT_RNW_CBC">
-                                       <li>Choose <span>Gracefully</span> to mark the data source as disabled and block any new connection requests. If there are any reserved connections, the operation will wait for the period as specified by <code>InactiveTimeout</code>, otherwise the operation waits 60 seconds before suspending all connections. If successful, the health state is set to <code>Suspended</code>. All connections are preserved exactly as they were before the data source was suspended. When you resume the data source, clients that had reserved a connection before the data source was suspended can continue exactly where they left off.</li>
-                                       <li>Choose <span>Force Suspend</span> to mark the data source as disabled. Any transaction on any currently reserved connection is rolled back, and all reserved connections are destroyed. Any subsequent attempts by applications to use their reserved connections will fail. If successful, the health state is set to <code>Suspended</code>. At this time, the data source attempts to replenish the connection pool by creating as many new connections as had been destroyed. When you <span>Resume</span>, clients must reserve new connections to proceed.</li>
-                                    </ul>
-                                    <p>For more information, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=JDBCA-GUID-0EDEBF44-FCE6-4725-B319-6210D436D6C8">Suspending a Connection Pool</a> in <span>
-                                          <cite>Administering JDBC Data Sources for Oracle WebLogic Server</cite>
-                                       </span>.</p>
-                                 </td>
-                              </tr>
-                              <tr>
-                                 <td>Shutdown</td>
-                                 <td>
-                                    <p>Use <span>Shutdown </span> to shut down individual instances of a data source. You can choose how to handle active connections:</p>
-                                    <ul id="GUID-C61D7557-E83E-477D-A1E9-BF7281CF12D9__UL_ZH4_5NW_CBC">
-                                       <li>Choose <span>Gracefully</span> to shut down a data source if there are no active connections. If any connections from the data source are currently in use, the <span>Shutdown</span> operation will fail and the health state remains <code>Running</code>.</li>
-                                       <li>Choose <span>Force Shutdown</span> to shut down a data source and force the disconnection of all current connection users.</li>
-                                    </ul>
-                                    <p>For more information, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=JDBCA-GUID-1CD1421C-44D4-4C23-B67A-0C019F0C2194">Shutting Down a Data Source</a> in <span>
-                                          <cite>Administering JDBC Data Sources for Oracle WebLogic Server</cite>
-                                       </span>.</p>
-                                 </td>
-                              </tr>
-                              <tr>
-                                 <td>Shrink</td>
-                                 <td>
-                                    <p>Use <span>Shrink </span> to shrink the pool of database connections in individual instances of a data source to the minimum capacity or the current number of connections in use, whichever is greater.</p>
-                                    <p>For more information, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=JDBCA-GUID-DE62B858-BE5A-4E22-BCCD-0605C437686E">Shrinking a Connection Pool</a> in <span>
-                                          <cite>Administering JDBC Data Sources for Oracle WebLogic Server</cite>
-                                       </span>. </p>
-                                 </td>
-                              </tr>
-                              <tr>
-                                 <td>Reset</td>
-                                 <td>
-                                    <p>Use <span>Reset </span> to reset the database connections in a JDBC data source by closing and then recreating all available database connections in the pool of connections in the data source.</p>
-                                    <p>For more information, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=JDBCA-GUID-B13E71AD-D6E1-44F4-ADC1-4156ACAC4756">Resetting a Connection Pool</a> in <span>
-                                          <cite>Administering JDBC Data Sources for Oracle WebLogic Server</cite>
-                                       </span>.</p>
-                                 </td>
-                              </tr>
-                              <tr>
-                                 <td>Clear cache</td>
-                                 <td>
-                                    <p>Use <span>Clear cache </span> to clear the statement cache for all connections in the instance of the data source. Statement caching must be enabled for the data source for WebLogic Server to cache prepared and callable statements that are used in each connection in the data source. Each connection has its own cache, but the caches for each connection are configured and managed as a group. </p>
-                                    <p>For more information, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=JDBCA-GUID-41996544-B805-4226-B0A0-29E8FCF93952">Managing the Statement Cache for a Data Source</a> and <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=JDBCA-GUID-AFDCC45F-7AD7-4C81-8FA9-1C7ECA05F08C">Increasing Performance with the Statement Cache</a> in <span>
-                                          <cite>Administering JDBC Data Sources for Oracle WebLogic Server</cite>
-                                       </span>.</p>
-                                 </td>
-                              </tr>
-                           </tbody>
-                        </table>
+<table id="TABLE_YT5_TQW_CBC"><thead><tr><th>
+<p>Operation</p>
+</th><th>
+<p>Description</p>
+</th></tr></thead><tbody><tr><td>
+<p>Start</p>
+</td><td>
+<p>Use <strong>Start</strong> to start an individual instance of a data source.</p>
+<p>For more information, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=JDBCA-GUID-6A301B9B-A0DD-4290-B02D-F2F57899A1B1">Starting a Data Source</a> in <strong>Administering JDBC Data Sources for Oracle WebLogic Server</strong>.</p>
+</td></tr><tr><td>
+<p>Resume</p>
+</td><td>
+<p>Use <strong>Resume</strong> to resume individual data sources that are in a <code>Suspended</code> state.</p>
+<p>For more information, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=JDBCA-GUID-80AB2650-2AFB-4D67-B650-DCEA15E2260A">Resuming a Connection Pool</a> in <strong>Administering JDBC Data Sources for Oracle WebLogic Server</strong>.</p>
+</td></tr><tr><td>
+<p>Suspend</p>
+</td><td>
+<p>Use <strong>Suspend</strong> to pause individual instances of a data source. When you suspend a data source, applications can no longer get a database connection from the data source. You can choose how to handle active connections:</p>
+<ul>
+<li>Choose <strong>Gracefully</strong> to mark the data source as disabled and block any new connection requests. If there are any reserved connections, the operation will wait for the period as specified by <code>InactiveTimeout</code>, otherwise the operation waits 60 seconds before suspending all connections. If successful, the health state is set to <code>Suspended</code>. All connections are preserved exactly as they were before the data source was suspended. When you resume the data source, clients that had reserved a connection before the data source was suspended can continue exactly where they left off.</li>
+<li>Choose <strong>Force Suspend</strong> to mark the data source as disabled. Any transaction on any currently reserved connection is rolled back, and all reserved connections are destroyed. Any subsequent attempts by applications to use their reserved connections will fail. If successful, the health state is set to <code>Suspended</code>. At this time, the data source attempts to replenish the connection pool by creating as many new connections as had been destroyed. When you <strong>Resume</strong>, clients must reserve new connections to proceed.</li>
+</ul>
+<p>For more information, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=JDBCA-GUID-0EDEBF44-FCE6-4725-B319-6210D436D6C8">Suspending a Connection Pool</a> in <strong>Administering JDBC Data Sources for Oracle WebLogic Server</strong>.</p>
+</td></tr><tr><td>
+<p>Shutdown</p>
+</td><td>
+<p>Use <strong>Shutdown</strong> to shut down individual instances of a data source. You can choose how to handle active connections:</p>
+<ul>
+<li>Choose <strong>Gracefully</strong> to shut down a data source if there are no active connections. If any connections from the data source are currently in use, the <strong>Shutdown</strong> operation will fail and the health state remains <code>Running</code>.</li>
+<li>Choose <strong>Force Shutdown</strong> to shut down a data source and force the disconnection of all current connection users.</li>
+</ul>
+<p>For more information, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=JDBCA-GUID-1CD1421C-44D4-4C23-B67A-0C019F0C2194">Shutting Down a Data Source</a> in <strong>Administering JDBC Data Sources for Oracle WebLogic Server</strong>.</p>
+</td></tr><tr><td>
+<p>Shrink</p>
+</td><td>
+<p>Use <strong>Shrink</strong> to shrink the pool of database connections in individual instances of a data source to the minimum capacity or the current number of connections in use, whichever is greater.</p>
+<p>For more information, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=JDBCA-GUID-DE62B858-BE5A-4E22-BCCD-0605C437686E">Shrinking a Connection Pool</a> in <strong>Administering JDBC Data Sources for Oracle WebLogic Server</strong>.</p>
+</td></tr><tr><td>
+<p>Reset</p>
+</td><td>
+<p>Use <strong>Reset</strong> to reset the database connections in a JDBC data source by closing and then recreating all available database connections in the pool of connections in the data source.</p>
+<p>For more information, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=JDBCA-GUID-B13E71AD-D6E1-44F4-ADC1-4156ACAC4756">Resetting a Connection Pool</a> in <strong>Administering JDBC Data Sources for Oracle WebLogic Server</strong>.</p>
+</td></tr><tr><td>
+<p>Clear cache</p>
+</td><td>
+<p>Use <strong>Clear cache</strong> to clear the statement cache for all connections in the instance of the data source. Statement caching must be enabled for the data source for WebLogic Server to cache prepared and callable statements that are used in each connection in the data source. Each connection has its own cache, but the caches for each connection are configured and managed as a group.</p>
+<p>For more information, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=JDBCA-GUID-41996544-B805-4226-B0A0-29E8FCF93952">Managing the Statement Cache for a Data Source</a> and <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=JDBCA-GUID-AFDCC45F-7AD7-4C81-8FA9-1C7ECA05F08C">Increasing Performance with the Statement Cache</a> in <strong>Administering JDBC Data Sources for Oracle WebLogic Server</strong>.</p>
+</td></tr></tbody>
+</table>
+<p>Table 1. Control Operations for JDBC Data Sources. Describes the control operations that you can perform on a JDBC data source.</p>
 <h3 id="GUID-D6ACE2D7-51AB-4332-B634-9DD00E964F62">Monitor Statistics for JDBC Data Sources</h3>
 <p>You can monitor a variety of statistics for each data source instance in your domain, such as the current number of database connections in the connection pool, current number of connections in use, and the longest wait time for a database connection.</p>
 <ol>
@@ -1265,66 +1233,39 @@ JMS SAF users should select <strong>Sending-only</strong> as JMS SAF doesn&rsquo
 <li>Under the selected server, go to <strong>Services</strong>, then <strong>Messaging</strong>, then <strong>JMS Runtime</strong>, then <strong>JMS Servers</strong>, then <em>myJMSServer</em>, then <strong>Destinations</strong> and select the JMS destination that currently hosts the messages that you want to move.</li>
 <li>On the <strong>Messages</strong> tab, select all of the messages on which you want to perform the action and then click the action&rsquo;s button. See <a href="/administration-server/configuring-services/#TABLE_ZTB_MFF_N2C">Table 2</a>.</li>
 </ol>
-<table id="GUID-880A8C55-1B01-4407-8611-05158114E557__TABLE_ZTB_MFF_N2C">
-                        <caption>
-                           <span>
-                              <span>Table 2. </span>JMS Message Actions. </span>
-                           <span>Actions that you can perform on JMS messages.</span>
-                        </caption>
-                        <thead>
-                           <tr>
-                              <th>Action</th>
-                              <th>Description</th>
-                           </tr>
-                        </thead>
-                        <tbody>
-                           <tr>
-                              <td>
-                                 <span>Delete</span>
-                              </td>
-                              <td>
-                                 <p>Deletes the selected JMS messages from the current queue.</p>
-                                 <p>See <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=JMSAD-GUID-A33AE053-4EC2-43F2-82C3-808E68A50400">Deleting Messages</a> in <span>
-                                       <cite>Administering JMS Resources for Oracle WebLogic Server</cite>
-                                    </span>.</p>
-                              </td>
-                           </tr>
-                           <tr>
-                              <td>
-                                 <span>Export</span>
-                              </td>
-                              <td>
-                                 <p>Exports the selected messages from the current queue, which results in a JMS message that is converted to either XML or serialized format.</p>
-                                 <p>See <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=JMSAD-GUID-E7BB7D5E-933F-474D-94EC-CC50777B0BB3">Exporting Messages</a> in <span>
-                                       <cite>Administering JMS Resources for Oracle WebLogic Server</cite>
-                                    </span>.</p>
-                              </td>
-                           </tr>
-                           <tr>
-                              <td>
-                                 <span>Import</span>
-                              </td>
-                              <td>
-                                 <p>Imports the selected messages in XML format, which results in the creation or replacement of a message on the current queue.</p>
-                                 <p>See <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=JMSAD-GUID-D55047DD-0C4F-426D-ABDD-BD4C6C61A242">Importing Messages</a> in <span>
-                                       <cite>Administering JMS Resources for Oracle WebLogic Server</cite>
-                                    </span>.</p>
-                              </td>
-                           </tr>
-                           <tr>
-                              <td>
-                                 <span>Move</span>
-                              </td>
-                              <td>
-                                 <p>Transfers selected JMS messages from the current queue to another destination, including a destination on a different JMS server. </p>
-                                 <p>The message identifier does not change when you move a message. If the message being moved already exists on the target destination, a duplicate message with the same identifier is added to the destination.</p>
-                                 <p>See <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=JMSAD-GUID-929C8361-21D1-40C8-B4F1-400616DCCF24">Moving Messages</a> in <span>
-                                       <cite>Administering JMS Resources for Oracle WebLogic Server</cite>
-                                    </span>.</p>
-                              </td>
-                           </tr>
-                        </tbody>
-                     </table>
+<table id="TABLE_ZTB_MFF_N2C"><thead><tr><th>
+<p>Action</p>
+</th><th>
+<p>Description</p>
+</th></tr></thead><tbody><tr><td>
+<p><strong>Delete</strong></p>
+</td><td>
+<p>Deletes the selected JMS messages from the current queue.</p>
+<p>See <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=JMSAD-GUID-A33AE053-4EC2-43F2-82C3-808E68A50400">Deleting Messages</a> in <strong>Administering JMS Resources for Oracle WebLogic Server</strong>.</p>
+</td></tr><tr><td>
+<p><strong>Export</strong></p>
+</td><td>
+<p>Exports the selected messages from the current queue, which results in a JMS message that is converted to either XML or serialized format.</p>
+<p>See <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=JMSAD-GUID-E7BB7D5E-933F-474D-94EC-CC50777B0BB3">Exporting Messages</a> in <strong>Administering JMS Resources for Oracle WebLogic Server</strong>.</p>
+</td></tr><tr><td>
+<p><strong>Import</strong></p>
+</td><td>
+<p>Imports the selected messages in XML format, which results in the creation or replacement of a message on the current queue.</p>
+<p>See <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=JMSAD-GUID-D55047DD-0C4F-426D-ABDD-BD4C6C61A242">Importing Messages</a> in <strong>Administering JMS Resources for Oracle WebLogic Server</strong>.</p>
+</td></tr><tr><td>
+<p><strong>Move</strong></p>
+</td><td>
+<p>Transfers selected JMS messages from the current queue to another destination, including a destination on a different JMS server.</p>
+<p>The message identifier does not change when you move a message. If the message being moved already exists on the target destination, a duplicate message with the same identifier is added to the destination.</p>
+<p>See <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=JMSAD-GUID-929C8361-21D1-40C8-B4F1-400616DCCF24">Moving Messages</a> in <strong>Administering JMS Resources for Oracle WebLogic Server</strong>.</p>
+</td></tr><tr><td>
+<p><strong>View</strong></p>
+</td><td>
+<p>Displays the contents of a JMS message.</p>
+<p><strong>Note</strong>: For larger messages, you will need to export the message to a file to view its full contents. WebLogic Remote Console will indicate when a message has been truncated.</p>
+</td></tr></tbody>
+</table>
+<p>Table 2. JMS Message Actions. Actions that you can perform on JMS messages.</p>
 <h2 id="GUID-780192AC-812D-48E6-ABC7-162C5A39D227">View Objects in the JNDI Table</h2>
 <p>You can use WebLogic Remote Console to view objects in the Java Naming and Directory Interface (JNDI) table.</p>
 <p>WebLogic Server implements the JNDI of the Java EE platform as a means to provide a standard, unified interface to multiple naming and directory services in an enterprise. See <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=WJNDI-GUID-DED922F8-6F8F-41C3-96DF-3D64B01250CC">Understanding WebLogic JNDI</a> in <strong>Developing JNDI Applications for Oracle WebLogic Server</strong>.</p>
@@ -1578,104 +1519,70 @@ Session session = (Session) ic.lookup(&#34;myMailSession&#34;);
 <p><a href="/administration-server/configuring-services/#TABLE_H4B_RWG_QBC">Table 3</a> describes the valid properties and default values, derived from the JavaMail API Design Specification.</p>
 </li>
 </ol>
-<table id="GUID-FACD70A2-6CEF-40A0-9A71-DBC51EF8A869__TABLE_H4B_RWG_QBC">
-                              <caption>
-                                 <span>
-                                    <span>Table 3. </span>Java Mail Properties. </span>
-                                 <span>The valid properties and default values, derived from the JavaMail API Design Specification.</span>
-                              </caption>
-                              <thead>
-                                 <tr>
-                                    <th>Property</th>
-                                    <th>Description</th>
-                                    <th>Default</th>
-                                 </tr>
-                              </thead>
-                              <tbody>
-                                 <tr>
-                                    <td>
-                                       <code>mail.store.protocol</code>
-                                    </td>
-                                    <td>Protocol for retrieving email. <p>For example, <code>mail.store.protocol=imap</code>.</p>
-                                    </td>
-                                    <td>
-                                       <code>imap</code>
-                                    </td>
-                                 </tr>
-                                 <tr>
-                                    <td>
-                                       <code>mail.transport.protocol</code>
-                                    </td>
-                                    <td>Protocol for sending email.  <p>For example, <code>mail.transport.protocol=smtp</code>
-                                       </p>
-                                    </td>
-                                    <td>
-                                       <code>smtp</code>
-                                    </td>
-                                 </tr>
-                                 <tr>
-                                    <td>
-                                       <code>mail.host</code>
-                                    </td>
-                                    <td>The name of the mail host machine.  <p>For example, <code>mail.host=mailserver</code>.</p>
-                                    </td>
-                                    <td>Local machine</td>
-                                 </tr>
-                                 <tr>
-                                    <td>
-                                       <code>mail.user</code>
-                                    </td>
-                                    <td>Name of the default user for retrieving email. <p>For example, <code>mail.user=postmaster</code>.</p>
-                                    </td>
-                                    <td>Value of the <code>user.name</code> Java system property.</td>
-                                 </tr>
-                                 <tr>
-                                    <td>
-                                       <code>mail.protocol.host</code>
-                                    </td>
-                                    <td>The mail host for a specific protocol. You can set <code>mail.SMTP.host</code> and <code>mail.IMAP.host</code> to different machine names.  <p>For example, <code>mail.smtp.host=mail.mydom.com mail.imap.host=localhost</code>
-                                       </p>
-                                    </td>
-                                    <td>Value of the <code>mail.host</code> property.</td>
-                                 </tr>
-                                 <tr>
-                                    <td>
-                                       <code>mail.protocol.user</code>
-                                    </td>
-                                    <td>Protocol-specific default user name for logging into a mailer server.  <p>For example, <code>mail.smtp.user=weblogic mail.imap.user=appuser</code>.</p>
-                                    </td>
-                                    <td>Value of the <code>mail.user</code> property.</td>
-                                 </tr>
-                                 <tr>
-                                    <td>
-                                       <code>mail.protocol.user</code>
-                                    </td>
-                                    <td>The default return address. <p>For example, <code>mail.from=master@mydom.com</code>
-                                       </p>
-                                    </td>
-                                    <td>
-                                       <code>username@host</code>
-                                    </td>
-                                 </tr>
-                                 <tr>
-                                    <td>
-                                       <code>mail.debug</code>
-                                    </td>
-                                    <td>Set to <code>True</code> to enable JavaMail debug output.</td>
-                                    <td>
-                                       <code>False</code>
-                                    </td>
-                                 </tr>
-                              </tbody>
-                           </table>
-
+<table id="TABLE_H4B_RWG_QBC"><thead><tr><th>
+<p>Property</p>
+</th><th>
+<p>Description</p>
+</th><th>
+<p>Default</p>
+</th></tr></thead><tbody><tr><td>
+<p><code>mail.store.protocol</code></p>
+</td><td>
+<p>Protocol for retrieving email. For example, <code>mail.store.protocol=imap</code>.</p>
+</td><td>
+<p><code>imap</code></p>
+</td></tr><tr><td>
+<p><code>mail.transport.protocol</code></p>
+</td><td>
+<p>Protocol for sending email. For example, <code>mail.transport.protocol=smtp</code></p>
+</td><td>
+<p><code>smtp</code></p>
+</td></tr><tr><td>
+<p><code>mail.host</code></p>
+</td><td>
+<p>The name of the mail host machine. For example, <code>mail.host=mailserver</code>.</p>
+</td><td>
+<p>Local machine</p>
+</td></tr><tr><td>
+<p><code>mail.user</code></p>
+</td><td>
+<p>Name of the default user for retrieving email. For example, <code>mail.user=postmaster</code>.</p>
+</td><td>
+<p>Value of the <code>user.name</code> Java system property.</p>
+</td></tr><tr><td>
+<p><code>mail.protocol.host</code></p>
+</td><td>
+<p>The mail host for a specific protocol. You can set <code>mail.SMTP.host</code> and <code>mail.IMAP.host</code> to different machine names. For example, <code>mail.smtp.host=mail.mydom.com mail.imap.host=localhost</code></p>
+</td><td>
+<p>Value of the <code>mail.host</code> property.</p>
+</td></tr><tr><td>
+<p><code>mail.protocol.user</code></p>
+</td><td>
+<p>Protocol-specific default user name for logging into a mailer server. For example, <code>mail.smtp.user=weblogic mail.imap.user=appuser</code>.</p>
+</td><td>
+<p>Value of the <code>mail.user</code> property.</p>
+</td></tr><tr><td>
+<p><code>mail.protocol.user</code></p>
+</td><td>
+<p>The default return address. For example, <code><a href="mailto:mail.from=master@mydom.com">mail.from=master@mydom.com</a></code></p>
+</td><td>
+<p><code>username@host</code></p>
+</td></tr><tr><td>
+<p><code>mail.debug</code></p>
+</td><td>
+<p>Set to <code>True</code> to enable JavaMail debug output.</p>
+</td><td>
+<p><code>False</code></p>
+</td></tr></tbody>
+</table>
+<p>Table 3. Java Mail Properties. The valid properties and default values, derived from the JavaMail API Design Specification.
 
 <div class="alert alert-primary" role="alert">
 <h4 class="alert-heading">Note</h4>
 
     Applications can override any properties set in the mail session by creating a <code>Properties</code> object containing the properties you want to override. See <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=WLPRG-GUID-A4FEDEB5-D57D-4BC5-95F6-C78C754AC07E">Programming JavaMail with WebLogic Server</a> in <strong>Developing Applications for Oracle WebLogic Server</strong>.
 
-</div>
+</div></p>
 <h2 id="GUID-AB51E3F2-F216-40B3-A5C9-F76A11428CA5">Configure Domain JTA Options</h2>
 <p>In WebLogic Server, you can set many options that affect transaction processing at the domain level so that they apply to all servers in the domain.</p>
 <ol>

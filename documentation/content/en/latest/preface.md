@@ -36,54 +36,38 @@ For more information, see these Oracle resources:
 
 The following text conventions are used in this document:
 
+<table><thead><tr><th>
 
+Convention
 
-<table>
-                     <span>This table summarizes text conventions used in this document.</span>
-                     <thead>
-                        <tr>
-                           <th>
-                              <p>Convention</p>
-                           </th>
-                           <th>
-                              <p>Meaning</p>
-                           </th>
-                        </tr>
-                     </thead>
-                     <tbody>
-                        <tr>
-                           <td>
-                              <p>
-                                 <strong>boldface</strong>
-                              </p>
-                           </td>
-                           <td>
-                              <p>Boldface type indicates graphical user interface elements associated with an action, or terms defined in text or the glossary.</p>
-                           </td>
-                        </tr>
-                        <tr>
-                           <td>
-                              <p>
-                                 <em>italic</em>
-                              </p>
-                           </td>
-                           <td>
-                              <p>Italic type indicates book titles, emphasis, or placeholder variables for which you supply particular values.</p>
-                           </td>
-                        </tr>
-                        <tr>
-                           <td>
-                              <p>
-                                 <code>monospace</code>
-                              </p>
-                           </td>
-                           <td>
-                              <p>Monospace type indicates commands within a paragraph, URLs, code in examples, text that appears on the screen, or text that you enter.</p>
-                           </td>
-                        </tr>
-                     </tbody>
-                  </table>
+</th><th>
 
+Meaning
 
+</th></tr></thead><tbody><tr><td>
 
+**boldface**
+
+</td><td>
+
+Boldface type indicates graphical user interface elements associated with an action, or terms defined in text or the glossary.
+
+</td></tr><tr><td>
+
+*italic*
+
+</td><td>
+
+Italic type indicates book titles, emphasis, or placeholder variables for which you supply particular values.
+
+</td></tr><tr><td>
+
+<code>monospace</code>
+
+</td><td>
+
+Monospace type indicates commands within a paragraph, URLs, code in examples, text that appears on the screen, or text that you enter.
+
+</td></tr></tbody>
+</table>
 
