@@ -6,7 +6,7 @@
     "@oracle/oraclejet": "~17.1.1",
     "@oracle/oraclejet-core-pack": "~17.1.1",
     "@oracle/oraclejet-tooling": "~17.1.0",
-    "electron": "^32.0.0",
+    "electron": "^35.7.5",
     "jquery": "^3.7.1",
     "jquery-ui": "^1.14.1",
     "js-yaml": "^4.1.0"
