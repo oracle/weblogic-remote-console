@@ -1,10 +1,11 @@
-# Copyright (c) 2020, 2024, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2025, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 introductionHTML: >
   <p>This page displays statistics associated with this JDBC data source.  Use this page to monitor the activity of the data source.</p>
 
 properties:
 - name: "Name"
+- name: "State"
 - name: "ActiveConnectionsAverageCount"
 - name: "ActiveConnectionsCurrentCount"
 - name: "ActiveConnectionsHighCount"
@@ -28,7 +29,6 @@ properties:
 - name: "PrepStmtCacheHitCount"
 - name: "PrepStmtCacheMissCount"
 - name: "ReserveRequestCount"
-- name: "State"
 - name: "VersionJDBCDriver"
 - name: "WaitSecondsHighCount"
 - name: "WaitingForConnectionCurrentCount"

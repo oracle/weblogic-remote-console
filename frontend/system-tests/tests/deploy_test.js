@@ -1086,26 +1086,26 @@ describe.only('Test Suite: deploy_test , Redeploy and undeploy for Application a
            console.log("Click New button");
            await driver.findElement(
                By.xpath("//oj-button[@id='[[i18n.buttons.new.id]]']/button/div/span/img")).click();
-           await driver.sleep(2400);
+           await driver.sleep(6400);
            console.log("Enter App Deployment Name = sample.war file with SamplePlan.xml file");
            await driver.findElement(By.id("Name|input")).clear();
            await driver.findElement(By.id("Name|input")).sendKeys("sampleWarFileWithPlan");
-           await driver.sleep(1200);
+           await driver.sleep(6400);
 
            console.log("Click to select AdminServer as target (3rd row in the oj-checkboxset list)");
            driver.findElement(By.xpath("//oj-checkboxset[@id='availableCheckboxset']/div[1]/span[3]")).click();
-           await driver.sleep(1200);
+           await driver.sleep(6400);
            console.log("Click to select Add > button");
            element = driver.findElement(By.xpath("//oj-button[@id='addToChosen']/button/div/span[1]"));
            driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
            element.click();
-           await driver.sleep(1200);
+           await driver.sleep(6400);
            console.log("Enter " +sampleWarFile+ " to deploy");
            console.log("Click Choose File image");
            element = driver.findElement(By.xpath("//*[@title='Choose File']"));
            driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
            element.click();
-           await driver.sleep(1200);
+           await driver.sleep(6400);
            console.log("Enter " +deploySampleWarFilePath+ " to deploy");
            await driver.findElement(
                By.xpath("//input[@id='file-chooser-form']")).sendKeys(deploySampleWarFilePath);
@@ -1125,10 +1125,10 @@ describe.only('Test Suite: deploy_test , Redeploy and undeploy for Application a
            await element.click();
            await driver.sleep(9600);
            await admin.commitChanges(driver);
-           await driver.sleep(6400);
+           await driver.sleep(9400);
            console.log("Click App Deployment from 'Table Header'");
            await driver.findElement(By.xpath("//a[text()='App Deployments']")).click();
-           await driver.sleep(1200);
+           await driver.sleep(3600);
            console.log("Click Application Management oj-button");
            await driver.findElement(
                By.xpath("//*[@id='breadcrumbs-container']/ul/li/oj-menu-button/button/div/span[2]")).click();
@@ -1140,57 +1140,30 @@ describe.only('Test Suite: deploy_test , Redeploy and undeploy for Application a
            console.log("Move the lower deployment window section to location (550,425) pixel");
            await driver.executeScript("window.scrollBy(550,450)");
            console.log("Click to select sampleWarFileWithPlan at 7th row and 1st column in the deployed app table list");
-           element = await driver.findElement(
-                By.xpath("//tr[7]/td[starts-with(@id,'table:')]/oj-selector/span/input"));
-           await driver.sleep(7200);
+           element = await driver.findElement(By.xpath("//tr[7]/td[starts-with(@id,'table:')]/oj-selector/span/input"));
+           await driver.sleep(9400);
            await element.click();
-           await driver.sleep(3600);
+           await driver.sleep(9400);
            console.log("Select 'updateRedeployActionsMenuLauncher' menu");
            await driver.findElement(
-               By.xpath("//oj-button[@id='updateRedeployActionsMenuLauncher']")).click();
-           await driver.sleep(3600);
+               By.xpath("//*[@id='updateRedeployActionsMenuLauncher']")).click();
+           await driver.sleep(9400);
            console.log("Select 'ReDeploy Source and Plan on Server' menu");
-           await driver.findElement(
-               By.xpath("//oj-option[@id='redeploy']")).click();
-           await driver.sleep(3600);
-           console.log("Enter Redeploy App "+redeploySampleUploadWarFilePath+" .....");
-           await driver.sleep(3600);
-           element = driver.findElement(
-               By.xpath("//input[@id='SourcePath|input']"));
-           await element.clear();
-           await element.sendKeys(redeploySampleUploadWarFilePath);
-           await driver.sleep(3600);
-           console.log("Enter Redeploy App Plan "+redeploySampleUploadWarPlanFilePath+" ....");
-           element = driver.findElement(
-               By.xpath("//input[@id='PlanPath|input']"));
-           await element.clear();
-           await element.sendKeys(redeploySampleUploadWarPlanFilePath);
-           await driver.sleep(3600);
+           await driver.findElement(By.xpath("//*[@id='redeploy']")).click();
+           await driver.sleep(9600);
            console.log("Click 'Done' button");
-           await driver.findElement(
-               By.xpath("//oj-button[@id='[[i18n.buttons.save.id]]']")).click();
-           await driver.sleep(8400);
+           await driver.findElement(By.xpath("//*[@id='[[i18n.buttons.save.id]]']")).click();
 
+           await driver.sleep(9600);
+           console.log("Click to close 'Information' dialog");
+           driver.findElement(By.xpath("//oj-button[@title='Close'] ")).click();
+           await driver.sleep(9600);
            console.log("Click Reload Interval Icon");
            await driver.findElement(By.xpath("//img[@id='sync-icon']")).click();
            await driver.sleep(9600);
-           console.log("Click sampleWarFileWithPlan Node");
-           element = driver.findElement(
-               By.xpath("//span[text()='sampleWarFileWithPlan' and @class='oj-navigationlist-item-label']"));
-           driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
-           await element.click();
-           await driver.sleep(7200);
-           console.log("Click at Deployment Plan (Advanced) navTree node");
-           element = driver.findElement(
-               By.xpath("//*[text()='Deployment Plan (Advanced)']"));
-           await driver.wait(until.elementIsVisible(element),8880);
-           await element.click();
-           await driver.sleep(7200);
-           console.log("Click Deployment Plan Tab");
-           await driver.findElement(
-               By.xpath("//span[text()='Deployment Plan' and @class='oj-tabbar-item-label']")).click();
-           await driver.sleep(7200);
 
+           await admin.goToNavTreeLevelFourLink(driver,"monitoring","Deployments",
+                "Application Management","sampleWarFileWithPlan","Deployment Plan (Advanced)");
            console.log("Check if Property <module-name>sample.war</module-name>");
            element = driver.findElement(By.xpath("//*[@id='DeploymentPlan']"));
            let deployPlanResult = await element.getAttribute("value");
@@ -1206,7 +1179,8 @@ describe.only('Test Suite: deploy_test , Redeploy and undeploy for Application a
            await driver.sleep(3600);
            console.log("Verify if sampleWarFileWithPlan exit, then delete it");
            await admin.deleteMBeanObject(driver,"sampleWarFileWithPlan","App Deployments",2,"configuration",
-		   "Deployments","App Deployments","","","",7);
+                "Deployments","App Deployments","","","",7);
+
         } catch (e) {
            await admin.takeScreenshot(driver, file);
            console.log(e.toString() + " TEST FAIL");
@@ -1338,26 +1312,17 @@ describe.only('Test Suite: deploy_test , Redeploy and undeploy for Application a
            console.log("Click 'Done' button");
            await driver.findElement(
                By.xpath("//oj-button[@id='[[i18n.buttons.save.id]]']")).click();
-           await driver.sleep(8400);
-           console.log("Click Reload Interval Icon");
-           await driver.findElement(By.xpath("//img[@id='sync-icon']")).click();
            await driver.sleep(9600);
-           console.log("Click sampleWarFileWithPlan Node");
-           element = driver.findElement(
-               By.xpath("//span[text()='sampleWarFileWithPlan' and @class='oj-navigationlist-item-label']"));
-           driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
-           await element.click();
-           await driver.sleep(7200);
-           console.log("Click at Deployment Plan (Advanced) navTree node");
-           element = driver.findElement(
-               By.xpath("//*[text()='Deployment Plan (Advanced)']"));
-           await driver.wait(until.elementIsVisible(element),8880);
-           await element.click();
-           await driver.sleep(7200);
-           console.log("Click Deployment Plan Tab");
-           await driver.findElement(
-               By.xpath("//span[text()='Deployment Plan' and @class='oj-tabbar-item-label']")).click();
-           await driver.sleep(7200);
+
+           console.log("Click to close 'Information' dialog");
+           driver.findElement(By.xpath("//*[@title='Close'] ")).click();
+           await driver.sleep(9600);
+           console.log("Click Reload Interval Icon");
+           await driver.findElement(By.xpath("//*[@id='sync-icon']")).click();
+           await driver.sleep(9600);
+
+           await admin.goToNavTreeLevelFourLink(driver,"monitoring","Deployments",
+                "Application Management","sampleWarFileWithPlan","Deployment Plan (Advanced)");
            console.log("Check if Property <module-name>simple.war</module-name>");
            element = driver.findElement(By.xpath("//*[@id='DeploymentPlan']"));
            let deployPlanResult = await element.getAttribute("value");
@@ -1373,6 +1338,7 @@ describe.only('Test Suite: deploy_test , Redeploy and undeploy for Application a
            console.log("Verify if sampleWarFileWithPlan exit, then delete it");
            await admin.deleteMBeanObject(driver,"sampleWarFileWithPlan","App Deployments",2,"configuration",
 		   "Deployments","App Deployments","","","",7);
+
         } catch (e) {
            await admin.takeScreenshot(driver, file);
            console.log(e.toString() + " TEST FAIL");
@@ -1487,26 +1453,17 @@ describe.only('Test Suite: deploy_test , Redeploy and undeploy for Application a
            console.log("Click Done button to accept "+defaultPathPlan);
            await driver.findElement(
                By.xpath("//*[@id='[[i18n.buttons.save.id]]']")).click();
-           await driver.sleep(3600);
+           await driver.sleep(9600);
+
+           console.log("Click to close 'Information' dialog");
+           driver.findElement(By.xpath("//oj-button[@title='Close'] ")).click();
+           await driver.sleep(9600);
            console.log("Click Reload Interval Icon");
            await driver.findElement(By.xpath("//img[@id='sync-icon']")).click();
            await driver.sleep(9600);
-           console.log("Click sampleWarFileWithPlan Node");
-           element = driver.findElement(
-                By.xpath("//span[text()='sampleWarFileWithPlan' and @class='oj-navigationlist-item-label']"));
-            driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
-            await element.click();
-            await driver.sleep(7200);
 
-            console.log("Click at Deployment Plan (Advanced) navTree node");
-            element = driver.findElement(
-                By.xpath("//*[text()='Deployment Plan (Advanced)']"));
-            await driver.wait(until.elementIsVisible(element),8880);
-            await element.click();
-            await driver.sleep(7200);
-            console.log("Click Deployment Plan Tab");
-            await driver.findElement(
-                By.xpath("//span[text()='Deployment Plan' and @class='oj-tabbar-item-label']")).click();
+           await admin.goToNavTreeLevelFourLink(driver,"monitoring","Deployments",
+                "Application Management","sampleWarFileWithPlan","Deployment Plan (Advanced)");
             await driver.sleep(7200);
             console.log("Check if Property <module-name>sample.war</module-name>");
             element = driver.findElement(By.xpath("//*[@id='DeploymentPlan']"));
@@ -1645,23 +1602,15 @@ describe.only('Test Suite: deploy_test , Redeploy and undeploy for Application a
                 await driver.findElement(
                     By.xpath("//oj-button[@id='[[i18n.buttons.save.id]]']")).click();
                 await driver.sleep(9600);
+                console.log("Click to close 'Information' dialog");
+                driver.findElement(By.xpath("//oj-button[@title='Close'] ")).click();
+                await driver.sleep(9600);
+                console.log("Click Reload Interval Icon");
+                await driver.findElement(By.xpath("//img[@id='sync-icon']")).click();
+                await driver.sleep(9600);
 
-                console.log("Click sampleWarFileWithPlan Node");
-                element = driver.findElement(
-                    By.xpath("//span[text()='sampleWarFileWithPlan' and @class='oj-navigationlist-item-label']"));
-                driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
-                await element.click();
-                await driver.sleep(7200);
-
-                console.log("Click at Deployment Plan (Advanced) navTree node");
-                element = driver.findElement(
-                    By.xpath("//*[text()='Deployment Plan (Advanced)']"));
-                await driver.wait(until.elementIsVisible(element),8880);
-                await element.click();
-                await driver.sleep(7200);
-                console.log("Click Deployment Plan Tab");
-                await driver.findElement(
-                    By.xpath("//span[text()='Deployment Plan' and @class='oj-tabbar-item-label']")).click();
+                await admin.goToNavTreeLevelFourLink(driver,"monitoring","Deployments",
+                    "Application Management","sampleWarFileWithPlan","Deployment Plan (Advanced)");
                 await driver.sleep(7200);
                 console.log("Check if Property <module-name>simple.war</module-name>");
                 element = driver.findElement(By.xpath("//*[@id='DeploymentPlan']"));

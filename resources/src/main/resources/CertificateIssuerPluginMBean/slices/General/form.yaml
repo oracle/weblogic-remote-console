@@ -1,0 +1,21 @@
+# Copyright (c) 2025, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+introductionHTML: >
+  <p>This page manages this Certificate Issuer Plugin.</p>
+
+presentation:
+  singleColumn: true
+
+properties:
+- name: Name
+- name: Enabled
+# The next 2 are going to be references.
+- name: CredentialSet
+- name: Deployment
+- name: Properties
+- name: CertificateRequestProperties
+
+# helpTopics:
+# TBD Add reference to external help about certificate/credential management.  See Robin Thomas
+# 7/3/25: todo CertificateManagement

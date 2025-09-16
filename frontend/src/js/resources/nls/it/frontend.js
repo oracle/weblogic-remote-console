@@ -1523,7 +1523,33 @@ define({
     "messages": {
       "pageNoLongerExists": {
         "summary": "La pagina non esiste più",
-        "detail": "Si è stati reindirizzati alla pagina {0} perché {1} è stato eliminato da un altro utente o non esiste più. "
+        "detail1": "Si è stati reindirizzati alla pagina {0} perché ",
+        "detail2": "{0} è stato eliminato da un altro utente o non esiste più. "
+      }
+    }
+  },
+  "wrc-pages-bookmark": {
+    "labels": {
+      "ariaLabel": {
+        "value": "Segnalibri pagina"
+      }
+    },
+    "menus": {
+      "bookmark": {
+        "add": {
+          "label": "Aggiungi segnalibro per la pagina corrente"
+        },
+        "show": {
+          "label": "Mostra segnalibri pagina..."
+        }
+      }
+    },
+    "messages": {
+      "pageAlreadyBookmarked": {
+        "summary": "Esiste già un segnalibro per questa pagina. "
+      },
+      "pagesBookmarkAdded": {
+        "summary": "Creazione del segnalibro per la pagina corrente riuscita. "
       }
     }
   },
@@ -1681,7 +1707,7 @@ define({
           "value": "Mostra cronologia pagine"
         },
         "star": {
-          "value": "Pagina segnalibro"
+          "value": "Segnalibri pagina"
         }
       },
       "pageInfo": {
@@ -1710,7 +1736,10 @@ define({
         "value": "Avvisi"
       },
       "pagesHistory": {
-        "value": "Questa finestra consente di visualizzare o selezionare una pagina visitata in precedenza."
+        "value": "Di seguito sono riportate le pagine visitate dopo la selezione del provider corrente. Fare clic su una colonna della riga per accedere alla pagina associata."
+      },
+      "pagesBookmark": {
+        "value": "Di seguito sono riportate le pagine con segnalibro per il tipo di provider {0}. Fare clic su una colonna della riga per accedere alla pagina associata."
       }
     },
     "placeholders": {

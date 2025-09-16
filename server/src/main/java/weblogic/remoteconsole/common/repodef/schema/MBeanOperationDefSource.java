@@ -10,8 +10,8 @@ import weblogic.console.schema.YamlSource;
  * This POJO mirrors the yaml source file format for specifying which mbean operation an action is related to
  */
 public class MBeanOperationDefSource extends YamlSource {
-  private StringValue type = new StringValue();
-  private StringValue operation = new StringValue();
+  private StringValue type = StringValue.create();
+  private StringValue operation = StringValue.create();
 
   // Returns the name of the mbean type, e.g. EJBRuntimeMBean
   public String getType() {
@@ -19,7 +19,7 @@ public class MBeanOperationDefSource extends YamlSource {
   }
 
   public void setType(String val) {
-    type.setValue(val);
+    type = type.setValue(val);
   }
 
   // Returns the name of the mbean operation on that type (or one of its singleton children),
@@ -29,7 +29,7 @@ public class MBeanOperationDefSource extends YamlSource {
   }
 
   public void setOperation(String val) {
-    operation.setValue(val);
+    operation = operation.setValue(val);
   }
 
   public String toString() {

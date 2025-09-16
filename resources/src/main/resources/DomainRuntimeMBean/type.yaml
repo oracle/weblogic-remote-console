@@ -1,7 +1,25 @@
-# Copyright (c) 2020, 2024, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2025, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
 children:
 - name: CombinedServerRuntimes
   label: Servers
 - name: NodeManagerRuntimes
   label: Node Manager Logs
+
+actions:
+- name: grabEditLock
+  actionMethod: weblogic.remoteconsole.customizers.DomainRuntimeMBeanCustomizer.grabEditLock
+  successMessage: Grabbed the edit session lock.
+  failureMessage: Failed to grab the edit session lock.
+  definition:
+    type: "void"
+    roles:
+      allowed:
+      - Deployer
+    descriptionHTML: >
+      <pGrab the domain's default edit sesion's lock."</p>
+      <p>If another user currently holds the lock, ownership
+      of the lock, as well as any changes made by the previous user,
+      are transferred to the current user.  The current user can use
+      the shopping cart in the Edit tree to either commit or discard them.</p>

@@ -492,7 +492,7 @@ define(['wrc-frontend/core/utils'],
 
     function getLineBreaksCount(value) {
       let lineBreaksCount = -1;
-      if (typeof value !== 'undefined' && value !== null) {
+      if (typeof value !== 'undefined' && value !== null && typeof value === 'string' && value !== '') {
         lineBreaksCount = (value.match(/\n/g)||[]).length;
       }
       return lineBreaksCount;

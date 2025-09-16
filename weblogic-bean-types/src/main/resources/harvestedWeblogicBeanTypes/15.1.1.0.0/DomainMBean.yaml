@@ -984,6 +984,13 @@ properties:
   name: PathServices
   relationship: containment
   type: weblogic.management.configuration.PathServiceMBean
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: '<p>The collection of plugin deployments in this domain</p> '
+  name: PluginDeployments
+  relationship: containment
+  type: weblogic.management.configuration.PluginDeploymentMBean
 - defaultValue: {
     }
   descriptionHTML: '<p>Specifies whether all servers in this domain run in production
@@ -1001,6 +1008,15 @@ properties:
   restartNeeded: true
   type: boolean
   writable: true
+- array: true
+  creators:
+  - weblogic.management.configuration.RMIForwardingMBean
+  defaultValue: {
+    }
+  descriptionHTML: 'Return a list of configured RMIForwardingMBeans '
+  name: RMIForwardings
+  relationship: containment
+  type: weblogic.management.configuration.RMIForwardingMBean
 - defaultValue: {
     }
   descriptionHTML: '<p>Get the configuration settings for the Remote Console Helper
@@ -1205,6 +1221,22 @@ properties:
   name: SelfTuning
   relationship: containment
   type: weblogic.management.configuration.SelfTuningMBean
+- defaultValue:
+    value:
+      value: DemoIdentityAndDemoTrust
+  descriptionHTML: '<p>Gets the domain-wide default value for the per-server <code>KeyStores</code>
+    attribute. This value can be overridden at the server level.</p>  <p>The server
+    <code>KeyStores</code> attribute selects the set of Identity and Trust keystores
+    the server will use.</p> '
+  legalValues:
+  - DomainKeystores
+  - DemoIdentityAndDemoTrust
+  - CustomIdentityAndJavaStandardTrust
+  - CustomIdentityAndCustomTrust
+  - CustomIdentityAndCommandLineTrust
+  name: ServerKeyStores
+  type: java.lang.String
+  writable: true
 - defaultValue:
     value:
       value: 100

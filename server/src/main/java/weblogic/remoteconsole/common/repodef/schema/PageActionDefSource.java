@@ -21,11 +21,11 @@ public class PageActionDefSource extends YamlSource {
     multiple
   }
 
-  private StringValue name = new StringValue();
-  private StringValue label = new StringValue();
+  private StringValue name = StringValue.create();
+  private StringValue label = StringValue.create();
   private Rows rows = Rows.multiple;
-  private ListValue<PageActionDefSource> actions = new ListValue<>();
-  private ListValue<String> requiredCapabilities = new ListValue<>();
+  private ListValue<PageActionDefSource> actions = ListValue.create();
+  private ListValue<String> requiredCapabilities = ListValue.create();
 
   // The name of the action (i.e. in the urls, PDJs and RDJs)
   public String getName() {
@@ -33,7 +33,7 @@ public class PageActionDefSource extends YamlSource {
   }
 
   public void setName(String value) {
-    name.setValue(value);
+    name = name.setValue(value);
   }
 
   // The english label to display for this action.
@@ -42,7 +42,7 @@ public class PageActionDefSource extends YamlSource {
   }
 
   public void setLabel(String value) {
-    this.label.setValue(value);
+    label = label.setValue(value);
   }
 
   // How many rows this action needs:
@@ -64,11 +64,11 @@ public class PageActionDefSource extends YamlSource {
   }
 
   public void setActions(List<PageActionDefSource> value) {
-    actions.setValue(value);
+    actions = actions.setValue(value);
   }
 
   public void addAction(PageActionDefSource value) {
-    actions.add(value);
+    actions = actions.add(value);
   }
 
   // The bean repo capabilities that are required for this action to be present
@@ -77,7 +77,7 @@ public class PageActionDefSource extends YamlSource {
   }
   
   public void setRequiredCapabilities(List<String> val) {
-    requiredCapabilities.setValue(val);
+    requiredCapabilities = requiredCapabilities.setValue(val);
   }
 
   @Override

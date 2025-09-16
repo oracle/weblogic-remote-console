@@ -16,13 +16,13 @@ import weblogic.remoteconsole.common.utils.CustomizerInvocationUtils;
  * This POJO mirrors the yaml source file format for configuring information about any page.
  */
 public class PageDefSource extends YamlSource {
-  private StringValue introductionHTML = new StringValue();
-  private ListValue<HelpTopicDefSource> helpTopics = new ListValue<>();
-  private StringValue customizePageDefSourceMethod = new StringValue();
-  private StringValue customizePageDefMethod = new StringValue();
-  private StringValue customizePageMethod = new StringValue();
-  private ListValue<PageActionDefSource> actions = new ListValue<>();
-  private BooleanValue instanceBasedPDJ = new BooleanValue();
+  private StringValue introductionHTML = StringValue.create();
+  private ListValue<HelpTopicDefSource> helpTopics = ListValue.create();
+  private StringValue customizePageDefSourceMethod = StringValue.create();
+  private StringValue customizePageDefMethod = StringValue.create();
+  private StringValue customizePageMethod = StringValue.create();
+  private ListValue<PageActionDefSource> actions = ListValue.create();
+  private BooleanValue instanceBasedPDJ = BooleanValue.create();
 
   // The page's english introduction text.
   public String getIntroductionHTML() {
@@ -30,7 +30,7 @@ public class PageDefSource extends YamlSource {
   }
 
   public void setIntroductionHTML(String value) {
-    introductionHTML.setValue(value);
+    introductionHTML = introductionHTML.setValue(value);
   }
 
   // The page's help topics.
@@ -39,7 +39,7 @@ public class PageDefSource extends YamlSource {
   }
 
   public void setHelpTopics(List<HelpTopicDefSource> value) {
-    helpTopics.setValue(value);
+    helpTopics = helpTopics.setValue(value);
   }
 
   public void addHelpTopic(HelpTopicDefSource value) {
@@ -52,11 +52,11 @@ public class PageDefSource extends YamlSource {
   }
 
   public void setActions(List<PageActionDefSource> value) {
-    actions.setValue(value);
+    actions = actions.setValue(value);
   }
 
   public void addAction(PageActionDefSource value) {
-    actions.add(value);
+    actions = actions.add(value);
   }
 
   // Specifies a custom static method to call to customize this page's definition's source
@@ -73,7 +73,7 @@ public class PageDefSource extends YamlSource {
 
   public void setCustomizePageDefSourceMethod(String value) {
     if (StringUtils.isEmpty(value) || CustomizerInvocationUtils.methodExists(value)) {
-      customizePageDefSourceMethod.setValue(value);
+      customizePageDefSourceMethod = customizePageDefSourceMethod.setValue(value);
     }
   }
 
@@ -92,7 +92,7 @@ public class PageDefSource extends YamlSource {
 
   public void setCustomizePageDefMethod(String value) {
     if (StringUtils.isEmpty(value) || CustomizerInvocationUtils.methodExists(value)) {
-      customizePageDefMethod.setValue(value);
+      customizePageDefMethod = customizePageDefMethod.setValue(value);
     }
   }
 
@@ -111,7 +111,7 @@ public class PageDefSource extends YamlSource {
   }
 
   public void setInstanceBasedPDJ(boolean value) {
-    instanceBasedPDJ.setValue(value);
+    instanceBasedPDJ = instanceBasedPDJ.setValue(value);
   }
 
   // Specifies a custom static method to call to customize the data for this page.
@@ -130,7 +130,7 @@ public class PageDefSource extends YamlSource {
 
   public void setCustomizePageMethod(String value) {
     if (StringUtils.isEmpty(value) || CustomizerInvocationUtils.methodExists(value)) {
-      customizePageMethod.setValue(value);
+      customizePageMethod = customizePageMethod.setValue(value);
     }
   }
 

@@ -10,7 +10,7 @@ define({
     },
     "buttons": {
       "logout": {
-        "label": "Logout"
+        "label": "Déconnexion"
       }
     },
     "icons": {
@@ -1523,7 +1523,33 @@ define({
     "messages": {
       "pageNoLongerExists": {
         "summary": "La page n'existe plus",
-        "detail": "Vous avez été redirigé vers la page {0} car la page {1} a été supprimée par un autre utilisateur ou n'existe plus. "
+        "detail1": "Vous avez été redirigé vers la page {0} car ",
+        "detail2": "{0} a été supprimée par un autre utilisateur ou n'existe plus. "
+      }
+    }
+  },
+  "wrc-pages-bookmark": {
+    "labels": {
+      "ariaLabel": {
+        "value": "Signets de page"
+      }
+    },
+    "menus": {
+      "bookmark": {
+        "add": {
+          "label": "Ajouter un signet pour la page en cours"
+        },
+        "show": {
+          "label": "Afficher les signets de page..."
+        }
+      }
+    },
+    "messages": {
+      "pageAlreadyBookmarked": {
+        "summary": "Un signet existe déjà pour cette page. "
+      },
+      "pagesBookmarkAdded": {
+        "summary": "Un signet a été ajouté à la page en cours. "
       }
     }
   },
@@ -1681,7 +1707,7 @@ define({
           "value": "Afficher l'historique des pages"
         },
         "star": {
-          "value": "Placer un signet sur la page"
+          "value": "Signets de page"
         }
       },
       "pageInfo": {
@@ -1710,7 +1736,10 @@ define({
         "value": "Alertes"
       },
       "pagesHistory": {
-        "value": "Cette fenêtre vous permet d'afficher ou de sélectionner une page précédemment consultée."
+        "value": "Voici les pages consultées depuis que le fournisseur en cours a été sélectionné. Cliquez sur n'importe quelle colonne de la ligne pour accéder à la page associée."
+      },
+      "pagesBookmark": {
+        "value": "Voici les pages avec signet pour le type de fournisseur {0}. Cliquez sur n'importe quelle colonne de la ligne pour accéder à la page associée."
       }
     },
     "placeholders": {

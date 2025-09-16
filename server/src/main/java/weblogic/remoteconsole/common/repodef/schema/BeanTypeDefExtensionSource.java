@@ -15,8 +15,8 @@ import weblogic.console.schema.beaninfo.BeanPropertyDefSource;
  * to a type, e.g. JVMRuntimeMBean/extension.yaml
  */
 public class BeanTypeDefExtensionSource extends YamlSource {
-  private ListValue<BeanPropertyDefSource> properties = new ListValue<>();
-  private ListValue<BeanActionDefSource> actions = new ListValue<>();
+  private ListValue<BeanPropertyDefSource> properties = ListValue.create();
+  private ListValue<BeanActionDefSource> actions = ListValue.create();
 
   // The list of extra properties to add to the type.
   public List<BeanPropertyDefSource> getProperties() {
@@ -24,7 +24,7 @@ public class BeanTypeDefExtensionSource extends YamlSource {
   }
 
   public void setProperties(List<BeanPropertyDefSource> value) {
-    properties.setValue(value);
+    properties = properties.setValue(value);
   }
 
   // The list of extra actions to add to the type.
@@ -33,7 +33,7 @@ public class BeanTypeDefExtensionSource extends YamlSource {
   }
 
   public void setActions(List<BeanActionDefSource> value) {
-    actions.setValue(value);
+    actions = actions.setValue(value);
   }
 
   @Override

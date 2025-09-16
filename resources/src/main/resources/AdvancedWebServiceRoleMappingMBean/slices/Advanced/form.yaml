@@ -1,0 +1,16 @@
+# Copyright (c) 2025, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+introductionHTML: >
+  <p>Use this page manage the underlying string form of the security policy,
+  and to view the corresponding security resource id.</p>
+
+properties:
+- name: PolicyStringExpression
+- name: roleName
+- name: resourceId
+- name: webservices_application
+- name: webservices_contextPath
+- name: webservices_webService
+- name: webservices_method
+- name: webservices_signature

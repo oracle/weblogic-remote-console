@@ -25,6 +25,13 @@ properties:
   name: BatchJobRepositoryRuntime
   relationship: containment
   type: weblogic.management.runtime.BatchJobRepositoryRuntimeMBean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Gets the Certificate Management runtime MBean for this domain.
+    If CertificateManagement is not enabled, this method will return <code>null</code>.</p> '
+  name: CertificateManagementRuntime
+  relationship: containment
+  type: weblogic.management.runtime.CertificateManagementDomainRuntimeMBean
 - array: true
   defaultValue: {
     }
@@ -67,6 +74,12 @@ properties:
   name: DeploymentManager
   relationship: containment
   type: weblogic.management.runtime.DeploymentManagerMBean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Gets the Domain Keystores runtime MBean for this domain.</p> '
+  name: DomainKeystoresRuntime
+  relationship: containment
+  type: weblogic.management.runtime.DomainKeystoresDomainRuntimeMBean
 - array: true
   defaultValue: {
     }

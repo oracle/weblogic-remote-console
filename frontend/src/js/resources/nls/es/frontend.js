@@ -10,7 +10,7 @@ define({
     },
     "buttons": {
       "logout": {
-        "label": "Logout"
+        "label": "Desconectarse"
       }
     },
     "icons": {
@@ -1523,7 +1523,33 @@ define({
     "messages": {
       "pageNoLongerExists": {
         "summary": "La página ya no existe",
-        "detail": "Se le ha redirigido a la página {0} porque otro usuario ha suprimido {1} o ya no existe. "
+        "detail1": "Se le ha redirigido a la página {0} porque ",
+        "detail2": "otro usuario ha suprimido {0} o ya no existe. "
+      }
+    }
+  },
+  "wrc-pages-bookmark": {
+    "labels": {
+      "ariaLabel": {
+        "value": "Marcador de página"
+      }
+    },
+    "menus": {
+      "bookmark": {
+        "add": {
+          "label": "Agregar marcador a la página actual"
+        },
+        "show": {
+          "label": "Mostrar marcadores de página..."
+        }
+      }
+    },
+    "messages": {
+      "pageAlreadyBookmarked": {
+        "summary": "Ya hay un marcador para esta página. "
+      },
+      "pagesBookmarkAdded": {
+        "summary": "La página actual se ha marcado correctamente. "
       }
     }
   },
@@ -1681,7 +1707,7 @@ define({
           "value": "Mostrar historial de páginas"
         },
         "star": {
-          "value": "Página de marcador"
+          "value": "Marcador de página"
         }
       },
       "pageInfo": {
@@ -1710,7 +1736,10 @@ define({
         "value": "Alertas"
       },
       "pagesHistory": {
-        "value": "Esta ventana le permite ver o seleccionar una página que haya visitado previamente."
+        "value": "Estas son las páginas visitadas desde que se seleccionó el proveedor actual. Haga clic en cualquier columna en la fila para navegar a la página asociada."
+      },
+      "pagesBookmark": {
+        "value": "Estas son las páginas marcadas para el tipo de proveedor {0}. Haga clic en cualquier columna en la fila para navegar a la página asociada."
       }
     },
     "placeholders": {

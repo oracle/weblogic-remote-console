@@ -10,7 +10,7 @@ define({
     },
     "buttons": {
       "logout": {
-        "label": "Logout"
+        "label": "Abmelden"
       }
     },
     "icons": {
@@ -1523,7 +1523,33 @@ define({
     "messages": {
       "pageNoLongerExists": {
         "summary": "Seite nicht mehr vorhanden",
-        "detail": "Sie wurden zur {0}-Seite umgeleitet, weil {1} von einem anderen Benutzer gelöscht wurde oder nicht mehr vorhanden ist. "
+        "detail1": "Sie wurden zur Seite {0} umgeleitet, weil ",
+        "detail2": "{0} von einem anderen Benutzer gelöscht wurde oder nicht mehr vorhanden ist. "
+      }
+    }
+  },
+  "wrc-pages-bookmark": {
+    "labels": {
+      "ariaLabel": {
+        "value": "Seitenlesezeichen"
+      }
+    },
+    "menus": {
+      "bookmark": {
+        "add": {
+          "label": "Lesezeichen für aktuelle Seite hinzufügen"
+        },
+        "show": {
+          "label": "Seitenlesezeichen anzeigen..."
+        }
+      }
+    },
+    "messages": {
+      "pageAlreadyBookmarked": {
+        "summary": "Für diese Seite ist bereits ein Lesezeichen vorhanden. "
+      },
+      "pagesBookmarkAdded": {
+        "summary": "Lesezeichen für aktuelle Seite wurde erfolgreich hinzugefügt. "
       }
     }
   },
@@ -1681,7 +1707,7 @@ define({
           "value": "Seitenhistorie anzeigen"
         },
         "star": {
-          "value": "Lesezeichen für Seite setzen"
+          "value": "Seitenlesezeichen"
         }
       },
       "pageInfo": {
@@ -1710,7 +1736,10 @@ define({
         "value": "Alerts"
       },
       "pagesHistory": {
-        "value": "In diesem Fenster können Sie eine zuvor besuchte Seite anzeigen oder auswählen."
+        "value": "Die folgenden Seiten wurden seit Auswahl des aktuellen Providers aufgerufen. Klicken Sie auf eine beliebige Spalte in der Zeile, um zur entsprechenden Seite zu navigieren."
+      },
+      "pagesBookmark": {
+        "value": "Für die folgenden Seiten für den Providertyp {0} wurden Lesezeichen hinzugefügt. Klicken Sie auf eine beliebige Spalte in der Zeile, um zur entsprechenden Seite zu navigieren."
       }
     },
     "placeholders": {

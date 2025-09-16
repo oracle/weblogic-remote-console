@@ -13,6 +13,7 @@ define([
     'wrc-frontend/common/keyup-focuser',
     'wrc-frontend/microservices/perspective/perspective-memory-manager',
     'wrc-frontend/microservices/pages-history/pages-history-manager',
+    'wrc-frontend/microservices/pages-history/pages-bookmark-manager',
     'wrc-frontend/microservices/change-management/change-manager',
     'wrc-frontend/common/page-definition-helper',
     'wrc-frontend/integration/viewModels/utils',
@@ -29,6 +30,7 @@ define([
     KeyUpFocuser,
     PerspectiveMemoryManager,
     PagesHistoryManager,
+    PagesBookmarkManager,
     ChangeManager,
     PageDefinitionHelper,
     ViewModelUtils,
@@ -108,7 +110,8 @@ define([
               tooltip: oj.Translations.getTranslatedString('wrc-common.tooltips.pagesHistory.launch.value')
             },
             'star': {
-              iconFile: ko.observable('pages-history-star-gry_24x24'), disabled: true, visible: ko.observable(false),
+              id: 'pages-history-star-icon',
+              iconFile: ko.observable('pages-bookmark-off_24x24'), disabled: true, visible: ko.observable(!Runtime.getProperty('features.bookmarks.disabled')),
               tooltip: oj.Translations.getTranslatedString('wrc-common.tooltips.pagesHistory.star.value')
             }
           },
@@ -147,6 +150,20 @@ define([
               disabled: false,
               value: oj.Translations.getTranslatedString('wrc-perspective.menus.history.clear.value'),
               label: oj.Translations.getTranslatedString('wrc-perspective.menus.history.clear.label')
+            }
+          },
+          bookmarks: {
+            'add': {
+              id: 'add-bookmark',
+              disabled: ko.observable(false),
+              value: 'addBookmark',
+              label: oj.Translations.getTranslatedString('wrc-pages-bookmark.menus.bookmark.add.label')
+            },
+            'show': {
+              id: 'show-bookmarks',
+              disabled: false,
+              value: 'showBookmarks',
+              label: oj.Translations.getTranslatedString('wrc-pages-bookmark.menus.bookmark.show.label')
             }
           }
         }
@@ -216,6 +233,14 @@ define([
 
         binding = viewParams.signaling.pagesHistoryChanged.add((changeType) => {
           self.refreshPagesHistoryIcons();
+        });
+
+        self.signalBindings.push(binding);
+
+        binding = viewParams.signaling.pagesBookmarkChanged.add((changeType) => {
+          if (changeType === 'bookmark-added' || changeType === 'bookmarks-removed') {
+            self.refreshPagesHistoryIcons();
+          }
         });
 
         self.signalBindings.push(binding);
@@ -347,9 +372,21 @@ define([
         self.i18n.icons.pagesHistory.next.disabled = !data.canNext;
         self.i18n.icons.pagesHistory.launch.iconFile(data.canLaunch ? 'pages-history-icon-blk_24x24' : 'pages-history-icon-gry_24x24');
         self.i18n.icons.pagesHistory.launch.disabled = !data.canLaunch;
-        self.i18n.icons.pagesHistory.star.iconFile(data.canBookmark ? 'pages-history-star-blk_24x24' : 'pages-history-star-gry_24x24');
+
+        const isBookmarked = PagesBookmarkManager.hasPagesBookmark(data.current);
+        self.i18n.icons.pagesHistory.star.iconFile(data.canBookmark ? (isBookmarked ? 'pages-bookmark-on_24x24' : 'pages-bookmark-off_24x24') : 'pages-bookmark-gry_24x24');
         self.i18n.icons.pagesHistory.star.disabled = !data.canBookmark;
       };
+
+      this.launchPagesBookmarkMenu = function (event) {
+        const pagesHistoryViewModel = ko.dataFor(document.getElementById('beanpath-history-container'));
+        pagesHistoryViewModel.launchPagesBookmarkMenu(event);
+      }.bind(this);
+
+      this.pagesBookmarkMenuClickListener = function (event) {
+        const pagesHistoryViewModel = ko.dataFor(document.getElementById('beanpath-history-container'));
+        pagesHistoryViewModel.pagesBookmarkMenuClickListener(event);
+      }.bind(this);
 
       function simulateSyncIconClickEvent(node) {
         event.preventDefault();

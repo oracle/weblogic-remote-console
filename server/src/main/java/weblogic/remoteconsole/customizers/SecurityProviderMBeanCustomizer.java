@@ -6,20 +6,24 @@ package weblogic.remoteconsole.customizers;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.TreeMap;
 
 import weblogic.console.utils.Path;
 import weblogic.console.utils.StringUtils;
 import weblogic.remoteconsole.common.repodef.BeanPropertyDef;
+import weblogic.remoteconsole.common.repodef.BeanTypeDef;
 import weblogic.remoteconsole.common.repodef.CustomCreateFormDef;
 import weblogic.remoteconsole.common.repodef.CustomFormSectionDef;
 import weblogic.remoteconsole.common.repodef.CustomFormSectionUsedIfDef;
 import weblogic.remoteconsole.common.repodef.CustomLegalValueDef;
 import weblogic.remoteconsole.common.repodef.CustomPagePropertyDef;
+import weblogic.remoteconsole.common.repodef.CustomSliceFormDef;
 import weblogic.remoteconsole.common.repodef.LegalValueDef;
 import weblogic.remoteconsole.common.repodef.LocalizableString;
 import weblogic.remoteconsole.common.repodef.PageDef;
 import weblogic.remoteconsole.common.repodef.PagePropertyDef;
+import weblogic.remoteconsole.common.repodef.SliceFormDef;
 import weblogic.remoteconsole.server.repo.BeanReaderRepoSearchBuilder;
 import weblogic.remoteconsole.server.repo.BeanReaderRepoSearchResults;
 import weblogic.remoteconsole.server.repo.BeanSearchResults;
@@ -33,6 +37,26 @@ import weblogic.remoteconsole.server.repo.Value;
  * Custom code for processing security providers
  */
 public class SecurityProviderMBeanCustomizer {
+
+  // Properties that all security providers support:
+  private static final Set<String> STANDARD_SECURITY_PROVIDER_PROPERTY_NAMES =
+    Set.of(
+      "identity",
+      "Name",
+      "Type",
+      "Version",
+      "Description",
+      "ProviderClassName",
+      "Realm"
+    );
+
+  private static final Set<String> STANDARD_AUTHENTICATION_PROVIDER_PROPERTY_NAMES =
+    Set.of(
+      "ControlFlag",
+      "Base64DecodingRequired",
+      "ActiveTypes",
+      "SupportedTypes"
+    );
 
   public static PageDef customizeCreateAdjudicatorPageDef(
     InvocationContext ic,
@@ -247,6 +271,86 @@ public class SecurityProviderMBeanCustomizer {
       sortedSupportedTypes.put(StringUtils.getLeafClassName(type), type);
     }
     return new ArrayList<>(sortedSupportedTypes.values());
+  }
+
+  public static PageDef customizeUnknownSecurityProviderCommonPageDef(
+    InvocationContext ic,
+    PageDef uncustomizedPageDef
+  ) {
+    if (hasCustomProperties(ic)) {
+      // Keep the CustomParameters slice
+      return uncustomizedPageDef;
+    }
+    CustomSliceFormDef customizedSliceFormDef = new CustomSliceFormDef(uncustomizedPageDef.asSliceFormDef());
+    CustomizerUtils.removeSliceIfPresent(customizedSliceFormDef, "CustomParameters");
+    return customizedSliceFormDef;
+  }
+
+  public static PageDef customizeUnknownSecurityProviderCustomParametersPageDef(
+    InvocationContext ic,
+    PageDef uncustomizedPageDef
+  ) {
+    SliceFormDef uncustomizedSliceFormDef = uncustomizedPageDef.asSliceFormDef();
+    CustomSliceFormDef customizedSliceFormDef = new CustomSliceFormDef(uncustomizedSliceFormDef);
+    List<PagePropertyDef> customizedPagePropertyDefs = new ArrayList<>();
+    customizedPagePropertyDefs.addAll(uncustomizedSliceFormDef.getPropertyDefs());
+    for (BeanPropertyDef beanPropertyDef : getCustomPropertyDefs(ic)) {
+      CustomPagePropertyDef pagePropertyDef = new CustomPagePropertyDef(beanPropertyDef);
+      pagePropertyDef.setPageDef(customizedSliceFormDef);
+      customizedPagePropertyDefs.add(pagePropertyDef);
+    }
+    customizedSliceFormDef.setPropertyDefs(customizedPagePropertyDefs);
+    return customizedSliceFormDef;
+  }
+
+  private static boolean hasCustomProperties(InvocationContext ic) {
+    return !getCustomPropertyDefs(ic).isEmpty();
+  }
+
+  private static List<BeanPropertyDef> getCustomPropertyDefs(InvocationContext ic) {
+    BeanTypeDef typeDef = getSecurityProviderTypeDef(ic);
+    if (typeDef == null) {
+      return List.of();
+    }
+    Set<String> extraPropertyNames = getExtraStandardPropertyNames(ic);
+    Map<String,BeanPropertyDef> sortedCustomPropertyDefs = new TreeMap<>();
+    for (BeanPropertyDef propertyDef : typeDef.getPropertyDefs()) {
+      String propertyName = propertyDef.getPropertyName();
+      if (!STANDARD_SECURITY_PROVIDER_PROPERTY_NAMES.contains(propertyName)
+           && !extraPropertyNames.contains(propertyName)) {
+        sortedCustomPropertyDefs.put(propertyName, propertyDef);
+      }
+    }
+    return new ArrayList<>(sortedCustomPropertyDefs.values());
+  }
+
+  private static BeanTypeDef getSecurityProviderTypeDef(InvocationContext ic) {
+    BeanTreePath btp = ic.getBeanTreePath();
+    BeanReaderRepoSearchBuilder builder =
+      ic.getPageRepo().getBeanRepo().asBeanReaderRepo().createSearchBuilder(ic, false);
+    BeanPropertyDef typePropertyDef = ic.getBeanTreePath().getTypeDef().getPropertyDef(new Path("Type"));
+    builder.addProperty(btp, typePropertyDef);
+    BeanReaderRepoSearchResults searchResults = builder.search().getResults();
+    BeanSearchResults beanResults = searchResults.getBean(btp);
+    if (beanResults == null) {
+      return null;
+    }
+    Value typeValue = beanResults.getValue(typePropertyDef);
+    if (typeValue == null) {
+      return null;
+    }
+    String typeName = typeValue.asString().getValue() + "MBean";
+    return ic.getPageRepo().getBeanRepo().getBeanRepoDef().getTypeDef(typeName);
+  }
+
+  private static Set<String> getExtraStandardPropertyNames(InvocationContext ic) {
+    // btp = Domain/SecurityConfiguration/Realms/<realmName>/<providerCollection>/<providerName>
+    String providerCollection = ic.getBeanTreePath().getPath().getComponents().get(4);
+    if ("AuthenticationProviders".equals(providerCollection)) {
+      return STANDARD_AUTHENTICATION_PROVIDER_PROPERTY_NAMES;
+    } else {
+      return Set.of();
+    }
   }
 
   private static boolean isAdminServerConnection(InvocationContext ic) {

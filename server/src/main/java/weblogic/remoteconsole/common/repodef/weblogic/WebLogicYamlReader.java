@@ -8,8 +8,10 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.jar.JarFile;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.zip.ZipEntry;
+import javax.ws.rs.core.Response;
 
 import weblogic.console.schema.YamlSource;
 import weblogic.console.schema.beaninfo.BeanTypeDefSource;
@@ -35,6 +37,9 @@ import weblogic.remoteconsole.common.repodef.yaml.YamlDirectoryReader;
 import weblogic.remoteconsole.common.repodef.yaml.YamlReader;
 import weblogic.remoteconsole.common.utils.RemoteConsoleExtension;
 import weblogic.remoteconsole.common.utils.WebLogicMBeansVersion;
+import weblogic.remoteconsole.server.connection.Connection;
+import weblogic.remoteconsole.server.utils.WebLogicRestClient;
+import weblogic.remoteconsole.server.utils.WebLogicRestRequest;
 
 /**
  * Utility class for reading yaml files describing the pages
@@ -66,7 +71,7 @@ class WebLogicYamlReader extends YamlReader {
     List<YamlDirectoryReader> extensionDirectoryReaders = getExtensionDirectoryReaders();
     typeCustomizationYamlDirectoryReaders.addAll(extensionDirectoryReaders);
     typeYamlDirectoryReaders.addAll(extensionDirectoryReaders);
-    // Finally search the hand coded extension names from the domain:
+    // Then search the hand coded extension names from the domain:
     List<RemoteConsoleExtension> extensions = mbeansVersion.getExtensions();
     if (extensions != null) {
       for (RemoteConsoleExtension extension : extensions) {
@@ -77,6 +82,12 @@ class WebLogicYamlReader extends YamlReader {
           typeYamlDirectoryReaders.add(reader);
         }
       }
+    }
+    // Finally see if the admin server can harvest the mbean type on-the-fly
+    if (mbeansVersion.isOnline() && mbeansVersion.getCapabilities().contains("BeanTypeDescriptions")) {
+      typeYamlDirectoryReaders.add(
+        new OnlineHarvestingYamlDirectoryReader(mbeansVersion.asOnline().getConnection())
+      );
     }
   }
 
@@ -274,8 +285,47 @@ class WebLogicYamlReader extends YamlReader {
           }
           return rtn;
         } catch (IOException e) {
-          // TBD log the problem?
+          LOGGER.log(Level.WARNING, "Unexpected remote console extension exception " + relativeYamlPath, e);
         }
+      }
+      return null;
+    }
+  }
+
+  private static class OnlineHarvestingYamlDirectoryReader implements YamlDirectoryReader {
+    private Connection connection;
+
+    private OnlineHarvestingYamlDirectoryReader(Connection connection) {
+      this.connection = connection;
+    }
+
+    @Override
+    public <T extends YamlSource> T readYaml(String relativeYamlPath, Class<T> type, boolean mustExist) {
+      if (!type.equals(BeanTypeDefSource.class)) {
+        // Can only download FooBean.yaml
+        return null;
+      }
+      // relativeYamlPath is <typeName>.yaml
+      String typeName = relativeYamlPath.substring(0, relativeYamlPath.indexOf(".yaml"));
+      String relativeRestPath = "serverConfig/consoleBackend/beanTypeDescriptions/" + typeName;
+      WebLogicRestRequest request =
+        WebLogicRestRequest.builder()
+          .connection(connection)
+          .path(relativeRestPath)
+          .build();
+      try (Response response = WebLogicRestClient.get(request, "application/yaml")) {
+        int status = response.getStatus();
+        if (Response.Status.OK.getStatusCode() == status) {
+          try (InputStream is = response.readEntity(InputStream.class)) {
+            return YamlUtils.read(is, relativeYamlPath, type, true);
+          }
+        } else if (Response.Status.NOT_FOUND.getStatusCode() == status) {
+          return null;
+        } else {
+          LOGGER.warning("Unexpected WebLogic Rest status code " + status + " " + relativeRestPath);
+        }
+      } catch (Exception e) {
+        LOGGER.log(Level.WARNING, "Unexpected WebLogic Rest exception " + relativeRestPath, e);
       }
       return null;
     }

@@ -424,7 +424,6 @@ public class ProviderResource extends BaseResource {
   ) {
     LOGGER.fine("POST provider");
 
-    ProviderManager pm = ProviderManager.getFromContext(resourceContext);
     // Check that all expected data is passed with the request
     if (data == null) {
       LOGGER.fine("POST create bad request: no data");
@@ -432,6 +431,32 @@ public class ProviderResource extends BaseResource {
         Status.BAD_REQUEST.getStatusCode(), "Missing Request Content").build();
     }
 
+    if (data.getJsonArray("dataProviders") != null) {
+      JsonArray dataProviders = data.getJsonArray("dataProviders");
+      for (int i = 0; i < dataProviders.size(); i++) {
+        Response resp = createOneAnyProvider(
+          resourceContext,
+          authorizationHeader,
+          dataProviders.getJsonObject(i)
+        );
+        if (resp.getStatus() != Response.Status.CREATED.getStatusCode()) {
+          return resp;
+        }
+      }
+      return Response.status(Status.CREATED)
+        .entity(Json.createObjectBuilder().build())
+        .type(MediaType.APPLICATION_JSON)
+        .build();
+    }
+    return createOneAnyProvider(resourceContext,authorizationHeader, data);
+  }
+
+  private Response createOneAnyProvider(
+    @Context ResourceContext resourceContext,
+    @HeaderParam(HttpHeaders.AUTHORIZATION) String authorizationHeader,
+    JsonObject data
+  ) {
+    ProviderManager pm = ProviderManager.getFromContext(resourceContext);
     JsonString jname = data.getJsonString(PROVIDER_NAME);
     if (jname == null) {
       LOGGER.fine("POST create bad request: no name");

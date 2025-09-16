@@ -48,4 +48,8 @@ public interface AdminServerDataProvider extends ConnectionOrientedProvider {
 
   // Used to record information specific to this provider, for example the user and group filters
   public Map<String,Object> getCache();
+
+  public void updateLastUsed();
+
+  public long getLastUsed();
 }

@@ -137,17 +137,17 @@ module.exports = function (driver, file) {
 
         goToAppDeploymentPage: async function(driver, landingImageName) {
             console.log("Click Home Image link");
-            await driver.sleep(1200);
+            await driver.sleep(9800);
             await driver.findElement(By.xpath("//span[@class='cfe-toolbar-button-label' and text()='Home']")).click();
             console.log("Click Config View Tree");
             await driver.findElement(By.xpath("//img[@alt=\'"+landingImageName+"\']")).click();
-            await driver.sleep(1200);
+            await driver.sleep(9800);
             console.log("Click Deployments Navtree link");
             await driver.findElement(By.xpath("//span[contains(.,\'Deployments\')]")).click();
-            await driver.sleep(1200);
+            await driver.sleep(9800);
             console.log("Click Click App Deployments Navtree link");
             await driver.findElement(By.xpath("//span[contains(.,\'App Deployments\')]")).click();
-            await driver.sleep(1200);
+            await driver.sleep(4800);
         },
 
         testUserPrivilegeRole: async function (driver, userName, navImageMenuLink,nonSSL=true) {
@@ -180,11 +180,11 @@ module.exports = function (driver, file) {
                     await this.goToAppDeploymentPage(driver,"Configuration View Tree");
                     console.log("Click App Deployments drop down menu");
                     await driver.findElement(By.xpath("//oj-menu-button/button/div/span[2]")).click();
-                    await driver.sleep(1200);
+                    await driver.sleep(9800);
                     console.log("Select Application Runtime Data Dashboard - Monitoring Tree");
                     await driver.findElement(
-                        By.xpath("//span[contains(.,'Application Runtime Data Dashboard - Monitoring Tree')]")).click();
-                    await driver.sleep(1200);
+                        By.xpath("//*[contains(.,'Application Runtime Data Dashboard - Monitoring Tree')]")).click();
+                    await driver.sleep(9800);
                     driver.findElements(By.xpath("//img[@alt='start']")).then((elements) => {
                         if (elements.length > 0) {
                             console.log("Test FAIL");
@@ -198,11 +198,11 @@ module.exports = function (driver, file) {
                     await this.goToServerPage(driver);
                     console.log("Click Servers drop down menu");
                     await driver.findElement(By.xpath("//oj-menu-button/button/div/span[2]")).click();
-                    await driver.sleep(1200);
+                    await driver.sleep(9800);
                     console.log("Select Server States Dashboard - Monitoring Tree");
                     await driver.findElement(
-                        By.xpath("//span[contains(.,'Server States Dashboard - Monitoring Tree')]")).click();
-                    await driver.sleep(1200);
+                        By.xpath("//*[contains(.,'Server States Dashboard - Monitoring Tree')]")).click();
+                    await driver.sleep(9800);
                     driver.findElements(By.xpath("//img[@alt='Start']")).then((elements) => {
                         if (elements.length > 0) {
                             console.log("Test FAIL");
@@ -249,11 +249,11 @@ module.exports = function (driver, file) {
                     await this.goToServerPage(driver);
                     console.log("Click Servers dop down menu");
                     await driver.findElement(By.xpath("//oj-menu-button/button/div/span[2]")).click();
-                    await driver.sleep(1200);
+                    await driver.sleep(9800);
                     console.log("Select Status Monitoring Tree");
-                    await driver.findElement(By.xpath("//span[contains(.,\'Runtime Data - Monitoring Tree\')]")).click();
-                    await driver.sleep(1200);
-                    driver.findElements(By.xpath("//img[@alt=\'Start\']")).then((elements) => {
+                    await driver.findElement(By.xpath("//*[contains(.,'Runtime Data - Monitoring Tree')]")).click();
+                    await driver.sleep(9800);
+                    driver.findElements(By.xpath("//img[@alt='Start']")).then((elements) => {
                         if (elements.length > 0) {
                             console.log("Test FAIL");
                             throw new Error("User: "+userName+" see start/stop Servers button - Validation FAIL");

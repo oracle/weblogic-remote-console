@@ -1,0 +1,54 @@
+# Copyright (c) 2025, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions:
+- name: rollDomainCertificateAuthority
+  type: void
+  descriptionHTML: >
+    <p>Generate a new self-signed CA certificate for the domain
+     and refresh the trust stores for servers and machines.</p>
+- name: refreshServerTrustAllServers
+  type: void
+  descriptionHTML: >
+    <p>Refresh domain trust on all the managed servers.</p>
+  roles:
+    allowed:
+    - Operator
+- name: refreshMachineTrustAllMachines
+  type: void
+  descriptionHTML: >
+    <p>Refresh the bootstrap trust keystore on all machines.</p>
+  roles:
+    allowed:
+    - Operator
+- name: refreshServerCertificateAllServers
+  type: void
+  descriptionHTML: >
+    <p>Refresh the certificate for <code>alias</code> on all servers.</p>
+  parameters:
+  - name: alias
+    type: java.lang.String
+    descriptionHTML: >
+      <p>The alias of the certificate to refresh. Aliases are case-insensitive.</p>
+  - name: isActiveOnly
+    type: boolean
+    descriptionHTML: >
+      <p>If true, certificate will only be refreshed if it's active
+      (i.e., the alias is configured for use on the SSLMBean,
+      a NetworkAccessPointMBean, or the SingleSignOnServicesMBean).</p>
+  - name: isForceUpdate
+    type: boolean
+    descriptionHTML: >
+      <p>If true, force the certificate to be updated even if it is already
+      present and valid. Normally, certificates are only updated if they
+      are missing or invalid (expired).</p>
+  roles:
+    allowed:
+    - Operator
+- name: refreshMachineCertificatesAllMachines
+  type: void
+  descriptionHTML: >
+    <p>Refresh the machine certificate for all machines.</p>
+  roles:
+    allowed:
+    - Operator

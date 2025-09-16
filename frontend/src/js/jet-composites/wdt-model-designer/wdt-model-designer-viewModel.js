@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2020, 2024, Oracle and/or its affiliates.
+ * Copyright (c) 2020, 2025, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
@@ -15,6 +15,8 @@ define([
   'wrc-frontend/common/controller',
   'wrc-frontend/microservices/perspective/perspective-manager',
   'wrc-frontend/microservices/perspective/perspective-memory-manager',
+  'wrc-frontend/microservices/pages-history/pages-history-manager',
+  'wrc-frontend/microservices/pages-history/pages-bookmark-manager',
   'wrc-frontend/microservices/provider-management/data-provider-manager',
   'wrc-frontend/microservices/provider-management/data-provider',
   'wrc-frontend/apis/message-displaying',
@@ -41,6 +43,8 @@ define([
     Controller,
     PerspectiveManager,
     PerspectiveMemoryManager,
+    PagesHistoryManager,
+    PagesBookmarkManager,
     DataProviderManager,
     DataProvider,
     MessageDisplaying,
@@ -605,9 +609,32 @@ define([
           // Create the parameter that will be the "path"
           // part of the "/modeling/{path}" route.
           Controller.getRootRouter().observableModuleConfig().params.ojRouter.parameters['path'] = ko.observable(encodeURIComponent(resourceData));
+          // Set pages history action to 'route', so resourceData will
+          // get added to the pages history items when router.go
+          // eventually loads the page.
+          PagesHistoryManager.setPagesHistoryCurrentAction('route');
           // Use a go() to set the stateId of the router.
           Controller.getRootRouter().go('/modeling/' + encodeURIComponent(resourceData));
           // Set cursor to BUSY
+        }
+      }
+
+      function loadPageBookmarks(dataProvider) {
+        if (CoreUtils.isNotUndefinedNorNull(dataProvider)) {
+          if ([DataProvider.prototype.Type.ADMINSERVER.name, DataProvider.prototype.Type.MODEL.name].includes(dataProvider.type)) {
+            DataProviderManager.getPageBookmarks()
+            .then(reply => {
+              PagesBookmarkManager.setPagesBookmarkData(reply.body.data, dataProvider);
+            })
+            .catch(response => {
+              if (response.failureType === CoreTypes.FailureType.CBE_REST_API) {
+                MessageDisplaying.displayResponseMessages(response.body.messages);
+              }
+              else {
+                ViewModelUtils.failureResponseDefaultHandling(response);
+              }
+            });
+          }
         }
       }
 
@@ -697,6 +724,8 @@ define([
           .then(reply => {
             dataProvider.populateFromResponse(reply.body.data);
             handleProviderActivated(dataProvider);
+            // Load page bookmarks
+            loadPageBookmarks(dataProvider);
           })
           .catch(response => {
             dataProvider.file = '';

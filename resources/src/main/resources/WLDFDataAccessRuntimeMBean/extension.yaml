@@ -1,4 +1,4 @@
-# Copyright (c) 2024, Oracle and/or its affiliates.
+# Copyright (c) 2024,2025, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 actions:
@@ -16,3 +16,15 @@ actions:
         - "PlainText"
         descriptionHTML: >
           <p>The file format for downloading.</p>
+      - name: "Since"
+        type: "java.util.Date"
+        descriptionHTML: >
+          <p>Download logs from this date and time.  Empty indicates from the beginning. </p>
+      - name: "Until"
+        type: "java.util.Date"
+        descriptionHTML: >
+          <p>Download logs until this date and time.  Empty indicates till the end. </p>
+      - name: "MaxRecords"
+        type: "long"
+        descriptionHTML: >
+          <p>Max number of records. -1 or 0 indicates no limit. </p>

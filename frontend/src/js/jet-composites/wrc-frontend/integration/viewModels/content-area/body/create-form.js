@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2020, 2024, Oracle and/or its affiliates.
+ * Copyright (c) 2020, 2025, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
@@ -305,7 +305,11 @@ define([
         if (this.backingData.attributes[attr.usedIf.parent.name].changed) {
           if (CoreUtils.isUndefinedOrNull(attr.usesDefault)) attr['usesDefault'] = true;
           if (attr.usesDefault) {
-            this.backingData.attributes[fieldName].value = this.backingData.attributes[fieldName].default;
+            // Only overwrite backing data value with default
+            // value, if no value was entered in form field.
+            if (CoreUtils.isUndefinedOrNull(this.backingData.attributes[fieldName].value)) {
+              this.backingData.attributes[fieldName].value = this.backingData.attributes[fieldName].default;
+            }
           }
         }
       }

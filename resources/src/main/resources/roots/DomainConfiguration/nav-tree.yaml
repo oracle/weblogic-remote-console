@@ -1,4 +1,4 @@
-# Copyright (c) 2021, 2024, Oracle and/or its affiliates.
+# Copyright (c) 2021, 2025, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 contents:
 - label: Environment
@@ -16,6 +16,7 @@ contents:
   - child: Domain.StartupClasses
   - child: Domain.ShutdownClasses
   - child: Domain.CoherenceClusterSystemResources
+  - child: Domain.RMIForwardings
 - label: Scheduling
   type: group
   contents:
@@ -35,6 +36,7 @@ contents:
   - child: Domain.AppDeployments
   - child: Domain.Libraries
   - child: Domain.DBClientDataDirectories
+  - child: Domain.PluginDeployments
 - label: Services
   type: group
   contents:
@@ -52,12 +54,14 @@ contents:
   - child: Domain.XMLRegistries
   - child: Domain.XMLEntityCaches
   - child: Domain.MailSessions
-  # - child: Domain.OsgiFrameworks # not supported by WDT
+  - child: Domain.OsgiFrameworks
 - label: Security
   type: group
   contents:
   - child: Domain.SecurityConfiguration.Realms
   - child: Domain.SecurityConfiguration.CertRevoc.CertRevocCas
+  - child: Domain.SecurityConfiguration.CertificateManagement.CertificateIssuerPlugins
+  - child: Domain.SecurityConfiguration.CredentialSets
   - child: Domain.WebserviceSecurities
 - label: Interoperability
   type: group
@@ -68,7 +72,7 @@ contents:
   type: group
   contents:
   - child: Domain.WLDFSystemResources
-  # - child: Domain.SNMPAgent            # not supported by WDT
-  # - child: Domain.SNMPAgentDeployments # not supoported by WDT
+  - child: Domain.SNMPAgent
+  - child: Domain.SNMPAgentDeployments
 - child: Domain.CustomResources
 - child: Domain.RecentSearches

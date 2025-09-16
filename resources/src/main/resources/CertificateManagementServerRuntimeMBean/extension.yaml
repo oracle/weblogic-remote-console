@@ -1,0 +1,61 @@
+# Copyright (c) 2025, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions:
+- name: refreshServerTrust
+  type: void
+  descriptionHTML: >
+    <p>Get the latest domain trust anchors from the admin server
+    (or the local certificate service if on the admin server).</p>
+  roles:
+    allowed:
+    - Operator
+- name: refreshMachineTrust
+  type: void
+  descriptionHTML: >
+    <p>Get the latest domain trust anchors from the admin server
+    (or the local certificate service if on the admin server),
+    and update the local machine's bootstrap trust keystore.</p>
+  roles:
+    allowed:
+    - Operator
+- name: refreshServerCertificate
+  type: void
+  descriptionHTML: >
+    <p>Refresh the server certificate for <code>alias</code>.</p>
+  parameters:
+  - name: alias
+    type: java.lang.String
+    descriptionHTML: >
+      <p>The alias of the certificate to refresh. Aliases are case-insensitive.</p>
+  - name: isActiveOnly
+    type: boolean
+    descriptionHTML: >
+      <p>If true, certificate will only be refreshed if it's active
+      (i.e., the alias is configured for use on the SSLMBean,
+      a NetworkAccessPointMBean, or the SingleSignOnServicesMBean).</p>
+  - name: isForceUpdate
+    type: boolean
+    descriptionHTML: >
+      <p>If true, force the certificate to be updated even if it is already
+      present and valid. Normally, certificates are only updated if they
+      are missing or invalid (expired).</p>
+  roles:
+    allowed:
+    - Operator
+- name: refreshMachineCertificates
+  type: void
+  descriptionHTML: >
+    <p>Refresh the machine certificate for the local machine.</p>
+  roles:
+    allowed:
+    - Operator
+- name: refreshActiveServerCertificates
+  type: void
+  descriptionHTML: >
+    <p>Refresh all active certificates for the server. An active certificate is any certificate
+     configured for use on the SSLMBean, a NetworkAccessPointMBean, or the
+     SingleSignOnServicesMBean.</p>
+  roles:
+    allowed:
+    - Operator

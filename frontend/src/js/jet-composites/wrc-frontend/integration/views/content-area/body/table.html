@@ -46,11 +46,11 @@ The Universal Permissive License (UPL), Version 1.0
         </oj-selector>
       </template>
       <template slot="cellTemplate" data-oj-as="cell">
-        <span data-bind="html: cell.data.label"></span>
+        <span data-bind="text: cell.data.label"></span>
       </template>
       <template slot="htmlCellTemplate" data-oj-as="cell">
         <a class="cfe-table-cell-html" href="#" :data-column-name="[[cell.data.name]]" :data-column-type="[[cell.data.type]]" on-click="[[cell.data.listener]]">
-          <span data-bind="html: cell.data.label"></span>
+          <span data-bind="text: cell.data.label"></span>
         </a>
       </template>
       <template slot="hrefCellTemplate" data-oj-as="cell">
@@ -61,7 +61,7 @@ The Universal Permissive License (UPL), Version 1.0
              :data-column-type="[[cell.data.type]]"
              on-click="[[cell.data.listener]]"
           >
-            <span data-bind="html: cell.data.label"></span>
+            <span data-bind="text: cell.data.label"></span>
           </a>
         </oj-bind-if>
         <oj-bind-if test="[[cell.data.type === 'download']]">
@@ -72,7 +72,7 @@ The Universal Permissive License (UPL), Version 1.0
             :data-column-type="[[cell.data.type]]"
             on-click="[[cell.data.listener]]"
           >
-            <span data-bind="html: cell.data.label"></span>
+            <span data-bind="text: cell.data.label"></span>
           </a>
         </oj-bind-if>
         <oj-bind-if test="[[typeof cell.data.type === 'undefined']]">

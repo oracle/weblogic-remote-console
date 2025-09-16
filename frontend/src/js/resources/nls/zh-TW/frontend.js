@@ -10,7 +10,7 @@ define({
     },
     "buttons": {
       "logout": {
-        "label": "Logout"
+        "label": "登出"
       }
     },
     "icons": {
@@ -1523,7 +1523,33 @@ define({
     "messages": {
       "pageNoLongerExists": {
         "summary": "頁面已不存在",
-        "detail": "{1} 被其他使用者刪除或不存在，因此已將您重新導向至 {0} 頁面。"
+        "detail1": "您被重新導向至 {0} 頁面，原因：",
+        "detail2": "{0} 被其他使用者刪除，或已不存在。"
+      }
+    }
+  },
+  "wrc-pages-bookmark": {
+    "labels": {
+      "ariaLabel": {
+        "value": "頁面書籤"
+      }
+    },
+    "menus": {
+      "bookmark": {
+        "add": {
+          "label": "新增目前頁面的書籤"
+        },
+        "show": {
+          "label": "顯示頁面書籤..."
+        }
+      }
+    },
+    "messages": {
+      "pageAlreadyBookmarked": {
+        "summary": "此頁面已有書籤！"
+      },
+      "pagesBookmarkAdded": {
+        "summary": "已順利將目前頁面加入書籤！"
       }
     }
   },
@@ -1681,7 +1707,7 @@ define({
           "value": "顯示頁面歷史記錄"
         },
         "star": {
-          "value": "書籤頁面"
+          "value": "頁面書籤"
         }
       },
       "pageInfo": {
@@ -1710,7 +1736,10 @@ define({
         "value": "警示"
       },
       "pagesHistory": {
-        "value": "此視窗可讓您檢視或選取先前瀏覽過的頁面。"
+        "value": "以下是自選取目前提供者以來瀏覽過的頁面。按一下資料列中的任一資料欄即可瀏覽至關聯的頁面。"
+      },
+      "pagesBookmark": {
+        "value": "以下是已為 {0} 提供者類型加入書籤的頁面。按一下資料列中的任一資料欄即可瀏覽至關聯的頁面。"
       }
     },
     "placeholders": {

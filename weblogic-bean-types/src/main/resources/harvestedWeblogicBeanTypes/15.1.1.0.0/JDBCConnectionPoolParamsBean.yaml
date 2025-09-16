@@ -146,6 +146,17 @@ properties:
   writable: true
 - defaultValue:
     value:
+      value: 10
+  descriptionHTML: '<p>The amount of time to wait for connection tests to complete
+    before the connection pool determines that a connection test is hung. Setting
+    the value to 0 disables the hang detection feature.</p> '
+  name: HangDetectionMaxTestWaitSeconds
+  redeployNeeded: true
+  restartNeeded: true
+  type: int
+  writable: true
+- defaultValue:
+    value:
       value: 2147483647
   descriptionHTML: '<p>The maximum number of connection requests that can concurrently
     block threads while waiting to reserve a connection from the data source''s connection
@@ -358,6 +369,17 @@ properties:
 - defaultValue:
     value:
       value: true
+  descriptionHTML: '<p>When true, the connection pool will attempt to replace a connection
+    that fails the periodic connection test.  When false, a connection that fails
+    the periodic test will be immediately removed.</p> '
+  name: RefreshAvailableAfterTestFailure
+  redeployNeeded: true
+  restartNeeded: true
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: true
   descriptionHTML: '<p>Specifies whether a connection will be removed from the connection
     pool after the application uses the underlying vendor connection object.</p>  <p>If
     you disable removing infected connections, you must make sure that the database
@@ -385,11 +407,44 @@ properties:
   writable: true
 - defaultValue:
     value:
+      value: 50
+  descriptionHTML: '<p>The percentage of the number of available connections to shrink
+    from current pool capacity to the maximum of the configured minimum capacity,
+    the current number of in-use connections or the running average (if configured).</p> '
+  name: ShrinkFactorPercent
+  redeployNeeded: true
+  restartNeeded: true
+  type: int
+  writable: true
+- defaultValue:
+    value:
       value: 900
   descriptionHTML: '<p>The number of seconds to wait before shrinking a connection
     pool that has incrementally increased to meet demand.</p>  <p>When set to <code>0</code>,
     shrinking is disabled.</p> '
   name: ShrinkFrequencySeconds
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: 0
+  descriptionHTML: '<p>The amount of time to maintain a running average of the number
+    of in-use connections.  Shrinking ignores the running average when set to 0.</p> '
+  name: ShrinkHistorySeconds
+  redeployNeeded: true
+  restartNeeded: true
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: 0
+  descriptionHTML: '<p>Specifies the number of additional number of connections to
+    maintain above the current connection usage or the running average when shrinking.  For
+    example, a value of 20 indicates that the pool will not shrink lower than the
+    current usage or running average plus 20%.</p> '
+  name: ShrinkSpareCapacityPercent
+  redeployNeeded: true
+  restartNeeded: true
   type: int
   writable: true
 - defaultValue:
@@ -475,6 +530,21 @@ properties:
     "SQL ISVALID" to use the <code>isValid()</code> method on the connection.</p> '
   name: TestTableName
   type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: -1
+  descriptionHTML: '<p>The time after which a test statement, or isValid method, currently
+    being executed will time out.</p>  <p>TestTimeout relies on underlying JDBC driver
+    support. WebLogic Server passes the time specified to the JDBC driver using the
+    <code>java.sql.Statement.setQueryTimeout()</code> method. If your JDBC driver
+    does not support this method, it may throw an exception and the timeout value
+    is ignored.</p>  <p>A value of <code>-1</code> disables this feature.</p> <p>A
+    value of <code>0</code> means that test statements will not time out.</p> '
+  name: TestTimeoutSeconds
+  redeployNeeded: true
+  restartNeeded: true
+  type: int
   writable: true
 - defaultValue:
     value:

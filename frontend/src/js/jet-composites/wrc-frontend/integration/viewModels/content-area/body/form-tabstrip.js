@@ -300,6 +300,8 @@ define([
             // result is a boolean indicating if form.js thinks
             // it's okay to change to the new slice.
             if (result) {
+              // Clear any of the selected rows for a slice table
+              viewParams.clearSelectedRows();
               // form.js says "Yes", so update slice using name
               // of currently selected tab, and the level that
               // was used earlier to set the self.tabDataProviders

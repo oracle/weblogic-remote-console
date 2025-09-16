@@ -10,7 +10,7 @@ define({
     },
     "buttons": {
       "logout": {
-        "label": "Logout"
+        "label": "로그아웃"
       }
     },
     "icons": {
@@ -1523,7 +1523,33 @@ define({
     "messages": {
       "pageNoLongerExists": {
         "summary": "페이지가 더 이상 존재하지 않음",
-        "detail": "{1}은(는) 다른 사용자에 의해 삭제되었거나 더 이상 존재하지 않으므로 {0} 페이지로 재지정되었습니다. "
+        "detail1": "{0} 페이지로 재지정되었습니다. ",
+        "detail2": "{0}이(가) 다른 사용자에 의해 삭제되었거나 더 이상 존재하지 않습니다. "
+      }
+    }
+  },
+  "wrc-pages-bookmark": {
+    "labels": {
+      "ariaLabel": {
+        "value": "페이지 책갈피"
+      }
+    },
+    "menus": {
+      "bookmark": {
+        "add": {
+          "label": "현재 페이지에 책갈피 추가"
+        },
+        "show": {
+          "label": "페이지 책갈피 표시..."
+        }
+      }
+    },
+    "messages": {
+      "pageAlreadyBookmarked": {
+        "summary": "이 페이지에 이미 책갈피가 있습니다! "
+      },
+      "pagesBookmarkAdded": {
+        "summary": "현재 페이지가 성공적으로 책갈피되었습니다! "
       }
     }
   },
@@ -1681,7 +1707,7 @@ define({
           "value": "페이지 내역 표시"
         },
         "star": {
-          "value": "페이지에 책갈피 추가"
+          "value": "페이지 책갈피"
         }
       },
       "pageInfo": {
@@ -1710,7 +1736,10 @@ define({
         "value": "경보"
       },
       "pagesHistory": {
-        "value": "이 창에서는 이전에 방문한 페이지를 보거나 선택할 수 있습니다."
+        "value": "다음은 현재 제공자를 선택한 이후 방문한 페이지입니다. 연관된 페이지로 이동하려면 행의 열을 누르십시오."
+      },
+      "pagesBookmark": {
+        "value": "다음은 {0} 제공자 유형에 책갈피된 페이지입니다. 연관된 페이지로 이동하려면 행의 열을 누르십시오."
       }
     },
     "placeholders": {

@@ -1,5 +1,5 @@
 #!/bin/bash
-# Copyright 2021, 2024, Oracle and/or its affiliates.
+# Copyright 2021, 2025, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at http://oss.oracle.com/licenses/upl.
 
 do_docker_pull() {
@@ -27,6 +27,8 @@ doit_docker() {
 $NPM_PREP_COMMANDS
 export DOWNLOAD_JAVA_URL=$DOWNLOAD_JAVA_URL
 export DOWNLOAD_NODE_URL=$DOWNLOAD_NODE_URL
+export DOWNLOAD_NODE_BASE=$DOWNLOAD_NODE_BASE
+export DOWNLOAD_JAVA_TEMPLATE=$DOWNLOAD_JAVA_TEMPLATE
 set -e
 if ! type zip > /dev/null 2>&1
 then
@@ -50,7 +52,7 @@ mkdir -p /root/.npm
 chmod -R 777 /root
 ./build-electron.sh $*
 !
-  ELECTRON_BUILDER_IMAGE=${ELECTRON_BUILDER_IMAGE:-electronuserland/builder:18}
+  ELECTRON_BUILDER_IMAGE=${ELECTRON_BUILDER_IMAGE:-wls-docker-dev-local.dockerhub-phx.oci.oraclecorp.com/electronuserland-builder-plus:18}
   if [ -n "$CONSOLE_DOCKER_MOUNT_DIRS" ]
   then
     declare -a EXTRA
@@ -86,9 +88,8 @@ chmod -R 777 /root
       mv "$build_copy"/electron/dist electron/dist
 }
 
-#     --entrypoint=/bin/bash \
-
 # Main
+umask 022
 if [ ! -f runnable/console.jar ]
 then
   if [ ! -f installer/target/console.zip ]
@@ -102,26 +103,6 @@ then
   mv runnable/console/* runnable
   rm -rf runnable/console
 fi
-case "$(uname -a)" in
-*indow*|*Msys*)
-  os=windows
-  # It depends on what shell you are running
-  case "$PATH" in
-  *';'*';'*)
-    pathsep=';'
-    ;;
-  *)
-    pathsep=:
-  esac
-  ;;
-*arwin*)
-  os=darwin
-  pathsep=:
-  ;;
-*)
-  os=linux
-  pathsep=:
-esac
 
 if [ -d /tmp/rancher-desktop ]
 then
@@ -136,6 +117,8 @@ fi
 
 set -e
 
+. run/detect_os.sh
+
 # For linux, we build various different installers/executables and we use the
 # electron builder docker image to do so, rather than requiring one to install
 # the software to build rpms, debian packages, etc.
@@ -149,10 +132,45 @@ then
   esac
 fi
 
+buildtype=external
+buildarch=$arch
+while [ -n "$1" ]
+do
+  case "$1" in
+  --type)
+    shift
+    buildtype="$1"
+    ;;
+  --arch)
+    shift
+    buildarch="$1"
+    ;;
+  *)
+    break
+  esac
+  shift
+done
+
 NEW_JAVA_BIN="$(run/get_java)"
 if [ -n "$NEW_JAVA_BIN" ]
 then
   PATH="$NEW_JAVA_BIN$pathsep$PATH"
+fi
+
+if [ "$arch" != "$buildarch" ]
+then
+  TARGET_ARCH_DIR=$(run/get_java -a $buildarch)
+  # The Mac structures things differently.  Let's
+  # just find the JAVA_HOME by finding it
+  while [ ! -d "$TARGET_ARCH_DIR/jmods" ]
+  do
+    TARGET_ARCH_DIR=${TARGET_ARCH_DIR%/*}
+    if [ -z "$TARGET_ARCH_DIR" ]
+    then
+      echo Cannot find jmods directory for $buildarch >&2
+      exit 1
+    fi
+  done
 fi
 
 NEW_NPM="$(run/get_npm)"
@@ -188,17 +206,21 @@ then
   extra_modules=",jdk.crypto.mscapi"
 fi
 
+if [ -n "$TARGET_ARCH_DIR" ]
+then
+  EXTRA[0]=--module-path
+  EXTRA[1]="$TARGET_ARCH_DIR"/jmods
+fi
 # Make a Custom JRE (if we had modules, we could do more, but this is fine)
-jlink --output "$extra"/customjre --no-header-files --no-man-pages --compress=zip-6 --strip-debug --add-modules java.base,java.desktop,java.logging,java.management,java.naming,java.sql,java.xml,jdk.crypto.ec,jdk.unsupported$extra_modules
+jlink --output "$extra"/customjre "${EXTRA[@]}" --no-header-files --no-man-pages --compress=zip-6 --strip-debug --add-modules java.base,java.desktop,java.logging,java.management,java.naming,java.sql,java.xml,jdk.crypto.ec,jdk.unsupported$extra_modules
 
 mkdir -p "$extra"/backend
-cp -rp ../runnable/* "$extra"/backend
+cp -r ../runnable/* "$extra"/backend
 
-buildtype=$1
 # We allow the building of multiple variants on the image via a custom script.
 # For example, if one wants to build a special version for the Memphis office,
 # you can create electron/custom/memphis and invoke "build-electron.sh memphis".
-cp -p package.json "$extra"
+cp package.json "$extra"
 rm -f electron-builder-custom.json
 cp electron-builder.json electron-builder-custom.json
 cp electron-builder-custom.json "$extra"
@@ -213,7 +235,6 @@ fi
 if [ -f "custom/$buildtype" -a -x "custom/$buildtype" ]
 then
   command="custom/$buildtype"
-  shift
   "$command" electron-builder-custom.json "$extra"
 fi
 
@@ -221,10 +242,7 @@ set -- "$@" -c electron-builder-custom.json
 
 ./gen-messages "$extra"/resources/nls ../frontend/src/resources/nls/frontend*.properties
 
-if [ "$os" = darwin ] && uname -a | grep -q arm64
-then
-  set -- --arm64 "$@"
-fi
+set -- --$buildarch "$@"
 
 while [ "$1" = -- ]
 do
@@ -251,13 +269,13 @@ esac
 # we allow for one to plug in custom signing scripts.
 if [ -x custom/sign ]
 then
-  custom/sign
+  custom/sign "$@"
 else
   case "$os" in
   darwin)
     if [ -x custom/signMac ]
     then
-      custom/signMac
+      custom/signMac "$@"
     fi
     ;;
   windows)
@@ -279,7 +297,7 @@ fi
 # you can create electron/custom/memphis and invoke "build-electron.sh memphis".
 #
 # You can create electron/custom/memphis-post to post-process the build as well.
-cp -p package.json "$extra"
+cp package.json "$extra"
 if [ -f "custom/$buildtype-post" -a -x "custom/$buildtype-post" ]
 then
   command="custom/$buildtype-post"

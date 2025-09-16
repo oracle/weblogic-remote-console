@@ -3,6 +3,7 @@
 
 package weblogic.remoteconsole.customizers;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 import java.util.logging.Logger;
@@ -17,8 +18,12 @@ import org.glassfish.jersey.media.multipart.FormDataMultiPart;
 import org.glassfish.jersey.media.multipart.file.StreamDataBodyPart;
 import weblogic.console.utils.Path;
 import weblogic.console.utils.StringUtils;
+import weblogic.remoteconsole.common.repodef.BeanPropertyDef;
 import weblogic.remoteconsole.common.utils.Message;
 import weblogic.remoteconsole.server.repo.ArrayValue;
+import weblogic.remoteconsole.server.repo.BeanReaderRepoSearchBuilder;
+import weblogic.remoteconsole.server.repo.BeanReaderRepoSearchResults;
+import weblogic.remoteconsole.server.repo.BeanSearchResults;
 import weblogic.remoteconsole.server.repo.BeanTreePath;
 import weblogic.remoteconsole.server.repo.ConfigurationTransactionHelper;
 import weblogic.remoteconsole.server.repo.FileContentsValue;
@@ -28,8 +33,7 @@ import weblogic.remoteconsole.server.repo.Response;
 import weblogic.remoteconsole.server.repo.Value;
 import weblogic.remoteconsole.server.repo.weblogic.WebLogicRestInvoker;
 import weblogic.remoteconsole.server.webapp.CreateHelper;
-import weblogic.remoteconsole.server.webapp.CreateResponseMapper;
-import weblogic.remoteconsole.server.webapp.FormRequestBodyMapper;
+
 
 /**
  * Custom JAXRS resource for uploading and deploying AppDeploymentMBeans
@@ -87,58 +91,54 @@ public class AppDeploymentMBeanUploadableCreatableBeanCollectionResource
       if (stageMode != null && !stageMode.equals("default")) {
         deploymentOptions.setProperty("stageMode", stageMode);
       }
+      String securityModel = getStringProperty("SecurityModel", false);
+      if (securityModel != null && !securityModel.equals("DDOnly")) {
+        deploymentOptions.setProperty("securityModel", securityModel);
+      }
       return deploymentOptions;
     }
 
     @Override
-    public javax.ws.rs.core.Response createBean(
-        InvocationContext ic,
-        JsonObject requestBody,
-        FormDataMultiPart parts
+    protected Response<BeanTreePath> createBeanInternal(
+      InvocationContext ic,
+      List<FormProperty> properties,
+      boolean multiPart
     ) {
-      if (parts == null) {
-        return super.createBean(ic, requestBody, parts);
-      }
-
-      Response<BeanTreePath> response = new Response<>();
-      // Unmarshal the request body.
-      Response<List<FormProperty>> unmarshalResponse =
-          FormRequestBodyMapper.fromRequestBody(ic, requestBody, parts);
-      if (!unmarshalResponse.isSuccess()) {
-        response.copyUnsuccessfulResponse(unmarshalResponse);
-        return CreateResponseMapper.toResponse(ic, response);
-      }
-      // Find the new bean's expected path
-      List<FormProperty> formProperties = unmarshalResponse.getResults();
-      Response<BeanTreePath> pathResponse = computeNewBeanPath(ic, formProperties);
-      if (!pathResponse.isSuccess()) {
-        response.copyUnsuccessfulResponse(pathResponse);
-        return CreateResponseMapper.toResponse(ic, response);
-      }
-      BeanTreePath newBeanPath = pathResponse.getResults();
-      // Make sure the bean doesn't exist
-      {
-        Response<Void> r = ic.getPageRepo().asPageReaderRepo().verifyDoesntExist(ic, newBeanPath);
-        if (!r.isSuccess()) {
-          response.copyUnsuccessfulResponse(r);
-          return CreateResponseMapper.toResponse(ic, response);
+      Response<BeanTreePath> response = super.createBeanInternal(ic, properties, multiPart);
+      if (response.isSuccess()) {
+        BeanTreePath defaultNewBeanPath = response.getResults();
+        String baseAppName = defaultNewBeanPath.getLastSegment().getKey();
+        Response<List<String>> matchResponse = getMatchingAppNames(ic, baseAppName);
+        if (!matchResponse.isSuccess()) {
+          // TBD - should we just navigate to the table instead?
+          return response.copyUnsuccessfulResponse(matchResponse);
+        }
+        BeanTreePath collectionBeanPath = ic.getBeanTreePath();
+        List<String> matchingNames = matchResponse.getResults();
+        if (matchingNames.size() == 1) {
+          // There's exactly one match.  Go there.
+          String actualName = matchingNames.get(0);
+          BeanTreePath actualNewBeanPath =
+            BeanTreePath.create(
+              collectionBeanPath.getBeanRepo(),
+              collectionBeanPath.getPath().childPath(actualName)
+            );
+          response.setSuccess(actualNewBeanPath);
+        } else {
+          // There are either multiple matches or zero matches.  Go back to the collection instead.
+          response.setSuccess(collectionBeanPath);
         }
       }
-      // Create the bean
-      {
-        Response<Void> r = createBeanUpload(ic, formProperties);
-        if (!r.isSuccess()) {
-          response.copyUnsuccessfulResponse(r);
-          return CreateResponseMapper.toResponse(ic, response);
-        }
-      }
-      response.setSuccess(newBeanPath);
-      return CreateResponseMapper.toResponse(ic, response);
+      return response;
     }
 
-    public Response<Void> createBeanUpload(InvocationContext ic, List<FormProperty> formProperties) {
+    @Override
+    protected Response<Void> createBean(InvocationContext ic, List<FormProperty> properties, boolean multiPart) {
+      if (!multiPart) {
+        return super.createBean(ic, properties, multiPart);
+      }
       this.ic = ic;
-      this.formProperties = formProperties;
+      this.formProperties = properties;
 
       return ConfigurationTransactionHelper.editConfiguration(
           ic,
@@ -151,6 +151,54 @@ public class AppDeploymentMBeanUploadableCreatableBeanCollectionResource
       );
     }
 
+    private Response<List<String>> getMatchingAppNames(InvocationContext ic, String appName) {
+      Response<List<String>> response = new Response<>();
+      Response<List<String>> getResponse = getAppNames(ic);
+      if (!getResponse.isSuccess()) {
+        return response.copyUnsuccessfulResponse(getResponse);
+      }
+      List<String> matchingNames = new ArrayList<>();
+      for (String candidateAppName : getResponse.getResults()) {
+        if (appNameMatches(candidateAppName, appName)) {
+          matchingNames.add(candidateAppName);
+        }
+      }
+      return new Response<List<String>>().setSuccess(matchingNames);
+    }
+
+    private boolean appNameMatches(String candidateAppName, String unversionedAppName) {
+      if (unversionedAppName.equals(candidateAppName)) {
+        return true;
+      }
+      int versionIndex = candidateAppName.indexOf("#");
+      if (versionIndex > -1) {
+        String candidateUnversionedAppName = candidateAppName.substring(0, versionIndex);
+        if (unversionedAppName.equals(candidateUnversionedAppName)) {
+          return true;
+        }
+      }
+      return false;
+    }
+  
+    private Response<List<String>> getAppNames(InvocationContext ic) {
+      Response<List<String>> response = new Response<>();
+      BeanTreePath collectionBTP = ic.getBeanTreePath();
+      BeanReaderRepoSearchBuilder builder =
+        ic.getPageRepo().getBeanRepo().asBeanReaderRepo().createSearchBuilder(ic, false);
+      BeanPropertyDef namePropertyDef =
+        collectionBTP.getTypeDef().getPropertyDef("Name");
+      builder.addProperty(collectionBTP, namePropertyDef);
+      Response<BeanReaderRepoSearchResults> searchResponse = builder.search();
+      if (!searchResponse.isSuccess()) {
+        return response.copyUnsuccessfulResponse(searchResponse);
+      }
+      List<String> names = new ArrayList<>();
+      for (BeanSearchResults beanResults : searchResponse.getResults().getCollection(collectionBTP)) {
+        names.add(beanResults.getValue(namePropertyDef).asString().getValue());
+      }
+      return response.setSuccess(names);
+    }
+  
     private Response<Void> doCreate() {
       Path restPath = (new Path("domainRuntime"));
       restPath.addComponent("deploymentManager");
@@ -171,6 +219,7 @@ public class AppDeploymentMBeanUploadableCreatableBeanCollectionResource
       JsonObjectBuilder builder = Json.createObjectBuilder();
       setStringValue(formProperties, "Name", "name", builder);
       setStringValue(formProperties, "StagingModeUpload", "stageMode", builder);
+      setStringValue(formProperties, "SecurityModelUpload", "securityModel", builder);
       setStringValue(formProperties, "OnDeploymentUpload", "onDeployment", builder);
       setArrayValue(formProperties, "Targets", "targets", builder);
       return builder.build();

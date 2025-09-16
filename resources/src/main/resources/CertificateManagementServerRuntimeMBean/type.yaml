@@ -1,0 +1,34 @@
+# Copyright (c) 2025, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions:
+- name: refreshServerTrust
+  label: Server Trust Certificates
+  successMessage: Refreshed the trust certificates of this server.
+  failureMessage: Failed to refresh the trust certificates of this server.
+- name: refreshMachineTrust
+  label: Machine Trust Certificates
+  successMessage: Refreshed the trust certificates of the local machine.
+  failureMessage: Failed to refresh the trust certificates of the local machine.
+- name: refreshServerCertificate
+  label: One Server Identity Certificate
+  successMessage: Refreshed the server identity certificate.
+  failureMessage: Failed to refresh the server identity certificate.
+  inputForm:
+    introductionHTML: >
+      <p>Refresh an identity certificate used by this server.</p>
+    parameters:
+    - name: alias
+      label: Alias
+    - name: isActiveOnly
+      label: Only If Active
+    - name: isForceUpdate
+      label: Force Update
+- name: refreshMachineCertificates
+  label: Machine Identity Certificates
+  successMessage: Refreshed the identity certificates of the local machine.
+  failureMessage: Failed to refresh the identity certificates of the local machine.
+- name: refreshActiveServerCertificates
+  label: Active Server Identity Certificates
+  successMessage: Refreshed the active identity certificates of the server.
+  failureMessage: Failed to refresh the active identity certificates of this server.

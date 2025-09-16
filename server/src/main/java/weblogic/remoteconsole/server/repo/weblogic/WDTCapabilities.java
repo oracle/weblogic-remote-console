@@ -1,4 +1,4 @@
-// Copyright (c) 2023, 2024, Oracle and/or its affiliates.
+// Copyright (c) 2023, 2025, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.repo.weblogic;
@@ -25,7 +25,12 @@ public class WDTCapabilities {
   private static final Set<String> CAPABILITIES =
     Set.of(
       // "AllowList",
-      "WDT"
+      "WDT",
+      // Really should get the bean repo for the WebLogic version that is being
+      // used for WDT and ask it if it includes CertificateManagementMBean.
+      // For now, WDT always uses the latest WebLogic version, so it always
+      // support CertificateManagementMBean.
+      "CertificateManagement"
     );
 
   public static Set<String> getCapabilities(WebLogicVersion weblogicVersion) {

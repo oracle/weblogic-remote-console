@@ -10,7 +10,7 @@ define({
     },
     "buttons": {
       "logout": {
-        "label": "Logout"
+        "label": "ログアウト"
       }
     },
     "icons": {
@@ -1523,7 +1523,33 @@ define({
     "messages": {
       "pageNoLongerExists": {
         "summary": "ページはすでに存在しません",
-        "detail": "{1}が別のユーザーによって削除されたか、すでに存在しないため、{0}ページにリダイレクトされました。"
+        "detail1": "次の理由で、{0}ページにリダイレクトされました: ",
+        "detail2": "{0}が別のユーザーによって削除されたか、存在しません。 "
+      }
+    }
+  },
+  "wrc-pages-bookmark": {
+    "labels": {
+      "ariaLabel": {
+        "value": "ページ・ブックマーク"
+      }
+    },
+    "menus": {
+      "bookmark": {
+        "add": {
+          "label": "現在のページのブックマークを追加"
+        },
+        "show": {
+          "label": "ページ・ブックマークの表示..."
+        }
+      }
+    },
+    "messages": {
+      "pageAlreadyBookmarked": {
+        "summary": "このページには、すでにブックマークがあります。"
+      },
+      "pagesBookmarkAdded": {
+        "summary": "現在のページは正常にブックマークされました。"
       }
     }
   },
@@ -1681,7 +1707,7 @@ define({
           "value": "ページ履歴の表示"
         },
         "star": {
-          "value": "ブックマーク・ページ"
+          "value": "ページ・ブックマーク"
         }
       },
       "pageInfo": {
@@ -1710,7 +1736,10 @@ define({
         "value": "アラート"
       },
       "pagesHistory": {
-        "value": "このウィンドウで、前にアクセスしたページを表示または選択できます。"
+        "value": "次に示すのは、現在のプロバイダを選択して以降アクセスしたページです。行の任意の列をクリックすると、関連付けられたページに移動します。"
+      },
+      "pagesBookmark": {
+        "value": "次に示すのは、{0}プロバイダ・タイプにブックマークされたページです。行の任意の列をクリックすると、関連付けられたページに移動します。"
       }
     },
     "placeholders": {

@@ -153,6 +153,7 @@ properties:
 - name: ServerDebug.DebugEjbDeployment
 - name: ServerDebug.DebugEjbInvoke
 - name: ServerDebug.DebugEjbLocking
+- name: ServerDebug.DebugEjbMdbAqMessageRecovery
 - name: ServerDebug.DebugEjbMdbConnection
 - name: ServerDebug.DebugEjbMdbListener
 - name: ServerDebug.DebugEjbMetadata

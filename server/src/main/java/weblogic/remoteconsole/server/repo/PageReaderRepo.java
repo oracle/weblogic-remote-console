@@ -27,6 +27,13 @@ public abstract class PageReaderRepo extends PageRepo {
     super(pageRepoDef, beanRepo);
   }
 
+  @Override
+  public void prepareForRemoval(InvocationContext ic) {
+    ic.removeSessionData("SimpleSearchManager", this);
+    ic.removeSessionData("DashboardManager", this);
+    ic.removeSessionData("TableCustomizationsManager", this);
+  }
+
   // Get the definition of the page referred to by the invocation context.
   public Response<PageDef> getPageDef(InvocationContext ic) {
     LOGGER.finest("PageReaderRepo.getPageDef " + ic.getPagePath());

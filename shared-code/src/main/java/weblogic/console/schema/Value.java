@@ -3,6 +3,7 @@
 
 package weblogic.console.schema;
 
+import weblogic.console.utils.Deduplicator;
 import weblogic.console.utils.Path;
 
 /**
@@ -18,49 +19,69 @@ import weblogic.console.utils.Path;
  *
  * It return the appropriate default value if the value hasn't been set in the yaml file.
  */
-public class Value<T> {
-  private T defaultValue;
-  private T value;
-  private boolean specifiedInYaml;
-  private Path containedBeanPath = new Path();
+public class Value<T> extends ReadOnlyValue<T> {
 
-  public Value(T defaultValue) {
-    this.defaultValue = defaultValue;
+  private static final Deduplicator DEDUPLICATOR = new Deduplicator("Value"); // untyped
+
+  private Value(
+    T defaultValue,
+    T yamlValue,
+    boolean specifiedInYaml,
+    Path containedBeanPath
+  ) {
+    super(defaultValue, yamlValue, specifiedInYaml, containedBeanPath);
   }
 
-  public T getValue() {
-    return (specifiedInYaml) ? value : defaultValue;
+  public static <T> Value<T> create() {
+    return create(null);
   }
 
-  public void setValue(T val) {
-    validateValue(val);
-    value = val;
-    specifiedInYaml = true;
+  public static <T> Value<T> create(T defaultValue) {
+    return create(defaultValue, null, false, new Path());
   }
 
-  protected void validateValue(T value) {
-    if (value == null) {
-      throw new AssertionError("yaml error. The value cannot be set to null");
-    }
+  @SuppressWarnings("unchecked")
+  private static <T> Value<T> create(
+    T defaultValue,
+    T yamlValue,
+    boolean specifiedInYaml,
+    Path containedBeanPath
+  ) {
+    return
+      (Value<T>)DEDUPLICATOR.deduplicate(
+        new Value<T>(defaultValue, yamlValue, specifiedInYaml, containedBeanPath)
+      );
   }
 
-  public boolean isSpecifiedInYaml() {
-    return specifiedInYaml;
+  public Value<T> setValue(T value) {
+    validateValue(value);
+    return create(getDefaultValue(), value, true, getContainedBeanPath());
   }
 
-  public Path getContainedBeanPath() {
-    return containedBeanPath;
+  public Value<T> copyFrom(Value<T> from, Path fromContainedBeanPath) {
+    return
+      create(
+        getDefaultValue(),
+        from.getValue(),
+        from.isSpecifiedInYaml(),
+        fromContainedBeanPath.childPath(from.getContainedBeanPath())
+      );
   }
 
-  public void copyFrom(Value<T> from, Path fromContainedBeanPath) {
-    value = from.value;
-    specifiedInYaml = from.specifiedInYaml;
-    containedBeanPath = fromContainedBeanPath.childPath(from.containedBeanPath);
-  }
-
-  public void merge(Value<T> from, Path fromContainedBeanPath) {
+  public Value<T> merge(Value<T> from, Path fromContainedBeanPath) {
     if (from.isSpecifiedInYaml()) {
-      copyFrom(from, fromContainedBeanPath);
+      return copyFrom(from, fromContainedBeanPath);
+    } else {
+      return this;
     }
+  }
+
+  @Override
+  protected String getValueKey(T value) {
+    if (value == null) {
+      // Treat all nulls as the same regardless of T:
+      return "null";
+    }
+    return null;
   }
 }

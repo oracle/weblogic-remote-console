@@ -1,4 +1,4 @@
-// Copyright (c) 2021, 2023, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2025, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef.yaml;
@@ -37,15 +37,6 @@ abstract class PagePropertyLegalValueDefImpl implements LegalValueDef {
   abstract boolean isOmit();
 
   String getValueAsString() {
-    if (getValue().isString()) {
-      return getValue().asString().getValue();
-    }
-    if (getValue().isInt()) {
-      return "" + getValue().asInt().getValue();
-    }
-    if (getValue().isLong()) {
-      return "" + getValue().asLong().getValue();
-    }
-    throw new AssertionError("Unsupport legal value: " + getValue());
+    return ValueUtils.getValueAsString(getValue());
   }
 }

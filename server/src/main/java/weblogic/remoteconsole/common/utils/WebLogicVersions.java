@@ -32,18 +32,18 @@ public class WebLogicVersions {
   // Must be newest to oldest.
   static {
 
+    // No 15.1.1.0.0 specific docs yet since 15.1.1 hasn't shipped yet
+    // The 15.1.1.0.0 release is in progress
     addVersion(
-      "14.1.2.0.0",
+      "15.1.1.0.0",
       "wls14120",
       "https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2",
       "https://docs.oracle.com/en/middleware/fusion-middleware/coherence/14.1.2",
       "wlmbr/mbeans"
     );
 
-    // No 15.1.1.0.0 specific docs yet since 15.1.1 hasn't shipped yet
-    // The 15.1.1.0.0 release is in progress
     addVersion(
-      "15.1.1.0.0",
+      "14.1.2.0.0",
       "wls14120",
       "https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2",
       "https://docs.oracle.com/en/middleware/fusion-middleware/coherence/14.1.2",

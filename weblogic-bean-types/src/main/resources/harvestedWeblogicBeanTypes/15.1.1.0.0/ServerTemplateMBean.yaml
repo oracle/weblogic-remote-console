@@ -535,12 +535,6 @@ properties:
   restartNeeded: true
   type: java.lang.String
   writable: true
-- defaultValue: {
-    }
-  descriptionHTML: '<p>Gets the Federation Services MBean</p> '
-  name: FederationServices
-  relationship: containment
-  type: weblogic.management.configuration.FederationServicesMBean
 - defaultValue:
     value:
       value: 0
@@ -808,7 +802,7 @@ properties:
   descriptionHTML: '<p>The password for the Java Standard Trust keystore. This password
     is defined when the keystore is created.</p> <p>If empty or null, then the keystore
     will be opened without a passphrase.</p>  <p>This attribute is only used if KeyStores
-    is CUSTOM_IDENTITY_AND_JAVA_STANDARD_TRUST or DEMO_IDENTITY_AND_DEMO_TRUST.</p>  <p>When
+    is CUSTOM_IDENTITY_AND_JAVA_STANDARD_TRUST, DEMO_IDENTITY_AND_DEMO_TRUST, or DOMAIN_KEYSTORES.</p>  <p>When
     you get the value of this attribute, WebLogic Server does the following:</p> <ol><li>Retrieves
     the value of the <code>JavaStandardTrustKeyStorePassPhraseEncrypted</code> attribute.</li>
     <li>Decrypts the value and returns the unencrypted password as a String.</li>
@@ -842,11 +836,12 @@ properties:
   type: byte
   writable: true
 - defaultValue:
-    value:
-      value: DemoIdentityAndDemoTrust
-  descriptionHTML: '<p>Which configuration rules should be used for finding the server''s
-    identity and trust keystores?</p> '
+    derivedDefault: true
+  descriptionHTML: '<p>Gets the value of the server''s <code>KeyStores</code> attribute.
+    This attribute selects the set of Identity and Trust keystores the server will
+    use.</p> '
   legalValues:
+  - DomainKeystores
   - DemoIdentityAndDemoTrust
   - CustomIdentityAndJavaStandardTrust
   - CustomIdentityAndCustomTrust
@@ -1154,6 +1149,15 @@ properties:
   restartNeeded: true
   type: java.lang.String
   writable: true
+- array: true
+  creators:
+  - weblogic.management.configuration.RMIForwardingMBean
+  defaultValue: {
+    }
+  descriptionHTML: 'Return a list of configured RMIForwardingMBeans '
+  name: RMIForwardings
+  relationship: containment
+  type: weblogic.management.configuration.RMIForwardingMBean
 - defaultValue: {
     }
   descriptionHTML: '<p>The reliable delivery policy for web services.</p> '

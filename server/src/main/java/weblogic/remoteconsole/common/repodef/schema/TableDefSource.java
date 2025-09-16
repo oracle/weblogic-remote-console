@@ -15,9 +15,9 @@ import weblogic.remoteconsole.common.utils.CustomizerInvocationUtils;
  * a table page, e.g. ClusterMBean/table.yaml
  */
 public class TableDefSource extends PageDefSource {
-  private ListValue<BeanPropertyDefCustomizerSource> displayedColumns = new ListValue<>();
-  private ListValue<BeanPropertyDefCustomizerSource> hiddenColumns = new ListValue<>();
-  private StringValue getTableRowsMethod = new StringValue();
+  private ListValue<BeanPropertyDefCustomizerSource> displayedColumns = ListValue.create();
+  private ListValue<BeanPropertyDefCustomizerSource> hiddenColumns = ListValue.create();
+  private StringValue getTableRowsMethod = StringValue.create();
 
   // The columns to initially display in the table.
   public List<BeanPropertyDefCustomizerSource> getDisplayedColumns() {
@@ -25,11 +25,11 @@ public class TableDefSource extends PageDefSource {
   }
 
   public void setDisplayedColumns(List<BeanPropertyDefCustomizerSource> value) {
-    displayedColumns.setValue(value);
+    displayedColumns = displayedColumns.setValue(value);
   }
 
   public void addDisplayedColumn(BeanPropertyDefCustomizerSource value) {
-    displayedColumns.add(value);
+    displayedColumns = displayedColumns.add(value);
   }
 
   // The columns to initially hide in the table.
@@ -38,11 +38,11 @@ public class TableDefSource extends PageDefSource {
   }
 
   public void setHiddenColumns(List<BeanPropertyDefCustomizerSource> value) {
-    hiddenColumns.setValue(value);
+    hiddenColumns = hiddenColumns.setValue(value);
   }
 
   public void addHiddenColumn(BeanPropertyDefCustomizerSource value) {
-    hiddenColumns.add(value);
+    hiddenColumns = hiddenColumns.add(value);
   }
 
   // Specifics a custom static method to call to customize getting this page's table rows.
@@ -59,7 +59,7 @@ public class TableDefSource extends PageDefSource {
 
   public void setGetTableRowsMethod(String value) {
     if (StringUtils.isEmpty(value) || CustomizerInvocationUtils.methodExists(value)) {
-      getTableRowsMethod.setValue(value);
+      getTableRowsMethod = getTableRowsMethod.setValue(value);
     }
   }
 

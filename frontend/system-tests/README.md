@@ -1,4 +1,4 @@
-#### Copyright (c) 2020, 2021, 2022 Oracle Corporation and/or its affiliates.
+#### Copyright (c) 2020, 2025, 2022 Oracle Corporation and/or its affiliates.
 #### [The Universal Permissive License (UPL), Version 1.0](http://oss.oracle.com/licenses/upl.)
 
 # Oracle WebLogic Server Remote Console Remote System Test 
@@ -26,7 +26,6 @@ npm config rm proxy
 npm config rm https-proxy
 npm config set noproxy localhost,127.0.0.1,.local,.oracle.com,.oraclecorp.com
 npm config set registry https://artifacthub-phx.oci.oraclecorp.com/api/npm/npmjs-remote
-npm config set chromedriver_cdnurl http://chromedriver.storage.googleapis.com
 ```
 Details to config npm registry is [here](https://confluence.oraclecorp.com/confluence/display/JET/JET+CLI+Setup)
 

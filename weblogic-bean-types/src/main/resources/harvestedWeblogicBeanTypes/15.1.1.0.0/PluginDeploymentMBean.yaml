@@ -1,0 +1,40 @@
+# Copyright (c) 2020, 2025, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+baseTypes:
+- weblogic.management.configuration.AppDeploymentMBean
+descriptionHTML: 'This MBean is used to configure a Plugin module which contains an
+  archive file or exploded archive directories that may contain a plugin implementation
+  for integrating to an external service. '
+name: weblogic.management.configuration.PluginDeploymentMBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The path to the plugin''s install-root directory, relative
+    to the domain/config/plugins directory.</p> <p>When the installation directory
+    is specified, SourcePath is derived from this path and need not be specified.</p>
+    <p>The default value for this is the name of the deployment.</p> '
+  name: InstallDir
+  type: java.lang.String
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Gets the type of the plugin.</p> '
+  legalValues:
+  - CertificateIssuerPlugin
+  name: PluginType
+  nullable: true
+  type: java.lang.String
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: '<p>The targets in the current domain on which this item can be
+    deployed. Plugin deployments are always targeted to all servers in the domain.</p> '
+  excludeFromRest: ' '
+  name: Targets
+  relationship: reference
+  supported: false
+  type: weblogic.management.configuration.TargetMBean
+  writable: true
+roles:
+  allowed:
+  - Deployer

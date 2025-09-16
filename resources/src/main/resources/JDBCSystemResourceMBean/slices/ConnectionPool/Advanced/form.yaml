@@ -1,9 +1,14 @@
-# Copyright (c) 2021, 2023, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2021, 2025, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 introductionHTML: >
   <p>Use this page to define the additional configuration for this data source's connection
   pool.</p>
+
+actions:
+- name: testConfiguration
+  requiredCapabilities:
+  - TestDataSourceConfiguration
 
 properties:
   - name: "JDBCResource.JDBCConnectionPoolParams.TestConnectionsOnReserve"
@@ -30,6 +35,12 @@ properties:
   - name: "JDBCResource.JDBCConnectionPoolParams.CountOfRefreshFailuresTillDisable"
   - name: "JDBCResource.JDBCConnectionPoolParams.CountOfTestFailuresTillFlush"
   - name: "JDBCResource.JDBCConnectionPoolParams.InvokeBeginEndRequest"
+  - name: "JDBCResource.JDBCConnectionPoolParams.HangDetectionMaxTestWaitSeconds"
+  - name: "JDBCResource.JDBCConnectionPoolParams.RefreshAvailableAfterTestFailure"
+  - name: "JDBCResource.JDBCConnectionPoolParams.ShrinkFactorPercent"
+  - name: "JDBCResource.JDBCConnectionPoolParams.ShrinkHistorySeconds"
+  - name: "JDBCResource.JDBCConnectionPoolParams.ShrinkSpareCapacityPercent"
+  - name: "JDBCResource.JDBCConnectionPoolParams.TestTimeoutSeconds"
 helpTopics:
   - label: "Configuring WebLogic JDBC Resources "
     href: "jdbca/config.html"

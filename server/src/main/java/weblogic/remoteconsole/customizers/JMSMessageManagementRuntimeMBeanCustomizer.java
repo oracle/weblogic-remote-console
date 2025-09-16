@@ -49,6 +49,11 @@ import weblogic.remoteconsole.server.webapp.BaseResource;
  */
 public class JMSMessageManagementRuntimeMBeanCustomizer {
 
+  private static long MAX_DISPLAYABLE_MESSAGE_SIZE =
+    Long.getLong("JMSMaximumDisplayableMessageSize", 200 * 1024); // 200 kb
+  private static int MAX_DISPLAYED_MESSAGE_BODY_LENGTH =
+    Integer.getInteger("JMSMaximumDisplayedMessageBodyLength", 10000); // characters
+
   private static String CONFIGURATION_LOCK = new String();
 
   // private static Map<Path,MessageFilters> destToMessageFilters = new HashMap<>();
@@ -119,6 +124,127 @@ public class JMSMessageManagementRuntimeMBeanCustomizer {
       }
     }
     initializeActionInputFormSelector(ic, page);
+  }
+
+  // Customizes the viewMessage action input form RDJ
+  public static void customizeViewMessageActionInputForm(InvocationContext ic, Page page) {
+    List<FormProperty> properties = page.asForm().getProperties();
+    List<FormProperty> originalProperties = new ArrayList<>(properties);
+    properties.clear();
+    String messageID = ic.getIdentifiers().get(0);
+    JsonObject metaData = getJMSMessage(ic, messageID).getJsonObject("metaData");
+    long messageSize = metaData.getJsonNumber("messageSize").longValueExact();
+    String messageType = metaData.getString("messageType");
+    if (!("text".equals(messageType) || "xml".equals(messageType))) {
+      page.setLocalizedIntroductionHTML(
+        ic.getLocalizer().localizeString(
+          LocalizedConstants.JMS_CANNOT_VIEW_MESSAGE_BODY_BECAUSE_WRONG_TYPE,
+          messageID
+        )
+      );
+      return;
+    }
+    if (messageSize > MAX_DISPLAYABLE_MESSAGE_SIZE) {
+      page.setLocalizedIntroductionHTML(
+        ic.getLocalizer().localizeString(
+          LocalizedConstants.JMS_CANNOT_VIEW_MESSAGE_BODY_BECAUSE_TOO_BIG,
+          messageID
+        )
+      );
+      return;
+    }
+    String messageBody = getJMSTextMessage(ic, messageID).getString("text");
+    int messageLength = messageBody.length();
+    if (messageLength > MAX_DISPLAYED_MESSAGE_BODY_LENGTH) {
+      messageBody = messageBody.substring(0, MAX_DISPLAYED_MESSAGE_BODY_LENGTH) + "...";
+      page.setLocalizedIntroductionHTML(
+        ic.getLocalizer().localizeString(
+          LocalizedConstants.JMS_DISPLAYED_TRIMMED_MESSAGE_BODY,
+          messageID
+        )
+      );
+    } else {
+      page.setLocalizedIntroductionHTML(
+        ic.getLocalizer().localizeString(
+          LocalizedConstants.JMS_DISPLAYED_MESSAGE_BODY,
+          messageID
+        )
+      );
+    }
+    properties.add(
+      new FormProperty(
+        FormProperty.findProperty("MessageBody", originalProperties).getFieldDef(),
+        new StringValue(messageBody)
+      )
+    );
+  }
+
+  private static JsonObject getJMSMessage(InvocationContext ic, String messageID) {
+    JsonObject invokeResponse =
+      WebLogicRestInvoker.post(
+        ic,
+        getJMSMessageManagementRuntimeWlsPath(ic).childPath("getJMSMessage"),
+        Json.createObjectBuilder().add("messageID", messageID).build(),
+        false, // expanded values
+        false, // save changes
+        false // asynchronous
+       ).getResults();
+    if (invokeResponse.isNull("return")) {
+      throw Response.notFoundException();
+    }
+    return invokeResponse.getJsonObject("return");
+  }
+
+  private static JsonObject getJMSTextMessage(InvocationContext ic, String messageID) {
+    JsonObject invokeResponse =
+      WebLogicRestInvoker.post(
+        ic,
+        getJMSMessageManagementRuntimeWlsPath(ic).childPath("getJMSTextMessage"),
+        Json.createObjectBuilder().add("messageID", messageID).build(),
+        false, // expanded values
+        false, // save changes
+        false // asynchronous
+       ).getResults();
+    if (invokeResponse.isNull("return")) {
+      throw Response.notFoundException();
+    }
+    return invokeResponse.getJsonObject("return");
+  }
+
+  private static Path getJMSMessageManagementRuntimeWlsPath(InvocationContext ic) {
+    //  0 DomainRuntime
+    //  1 CombinedServerRuntimes
+    //  2 <server>
+    //  3 ServerRuntime
+    //  4 JMSRuntime
+    //  5 JMSServers
+    //  6 <jmsServer>
+    //  7 Destinations
+    //  8 <destination>
+    //  9 DurableSubscribers
+    // 10 <durableSubscriber>
+    List<String> components = ic.getBeanTreePath().getPath().getComponents();
+    String server = components.get(2);
+    String jmsServer = components.get(6);
+    String destination = components.get(8);
+    Path wlsPath =
+      new Path()
+        .childPath("domainRuntime")
+        .childPath("serverRuntimes")
+        .childPath(server)
+        .childPath("JMSRuntime")
+        .childPath("JMSServers")
+        .childPath(jmsServer)
+        .childPath("destinations")
+        .childPath(destination);
+    if (components.size() >= 11) {
+      String durableSubscriber = components.get(10);
+      wlsPath =
+        wlsPath
+          .childPath("durableSubscribers")
+          .childPath(durableSubscriber);
+    }
+    return wlsPath;
   }
 
   // Returns all of the JMS destination runtimes in this JMS destination's JMS server

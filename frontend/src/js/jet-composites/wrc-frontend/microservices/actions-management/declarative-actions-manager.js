@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2023, 2024, Oracle and/or its affiliates.
+ * Copyright (c) 2023, 2025, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
@@ -964,6 +964,10 @@ define([
           'redeploySourceOnServer', 'uploadAndRedeploy'].includes(action)) {
           formLayout.options.labelWidthPcnt = '28%';
           formLayout.minWidth = 850;
+        }
+        else if (action === 'viewMessage') {
+          formLayout.options.labelWidthPcnt = '12%';
+          formLayout.minWidth = 1050;
         }
         return formLayout;
       },

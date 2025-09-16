@@ -67,6 +67,10 @@ public interface BeanTypeDef {
     return hasPropertyDef(propertyPath, false);
   }
 
+  public default boolean hasPropertyDef(String property) {
+    return hasPropertyDef(new Path(property));
+  }
+
   // Returns the definition fo a property on this type or one of its mandatory singletons.
   // For example, for the ServerMBean, if the property path is ListenPort,
   // it returns the ServerMBean's ListenPort property.  And, if the property path
@@ -93,6 +97,10 @@ public interface BeanTypeDef {
     return getPropertyDef(propertyPath, false);
   }
 
+  public default BeanPropertyDef getPropertyDef(String property) {
+    return getPropertyDef(new Path(property));
+  }
+
   // Find all of the properties defined on this type and its mandatory singleton children.
   // It does not return properties from the derived types too.
   public List<BeanPropertyDef> getPropertyDefs();
@@ -114,6 +122,10 @@ public interface BeanTypeDef {
     return hasChildDef(childPath, false);
   }
 
+  public default boolean hasChildDef(String child) {
+    return hasChildDef(new Path(child));
+  }
+
   // Similar to getPropertyDef(propertyPath, searchSubTypes) but
   // returns contained collections, mandatory singletons and optional singletons.
   public BeanChildDef getChildDef(Path childPath, boolean searchSubTypes);
@@ -121,6 +133,10 @@ public interface BeanTypeDef {
   // Same as getChildDef(childPath, false)
   public default BeanChildDef getChildDef(Path childPath) {
     return getChildDef(childPath, false);
+  }
+
+  public default BeanChildDef getChildDef(String child) {
+    return getChildDef(new Path(child));
   }
 
   // Similar to getPropertDefs but returns contained collections,
@@ -143,6 +159,10 @@ public interface BeanTypeDef {
     return hasActionDef(actionPath, false);
   }
 
+  public default boolean hasActionDef(String action) {
+    return hasActionDef(new Path(action));
+  }
+
   // Similar to getPropertyDef(propertyPath, searchSubTypes)
   //but returns actions (e.g. the ServerLifeCycleMBean's start action).
   public BeanActionDef getActionDef(Path actionPath, boolean searchSubTypes);
@@ -150,6 +170,10 @@ public interface BeanTypeDef {
   // The same as getActionDef(actionPath, false)
   public default BeanActionDef getActionDef(Path actionPath) {
     return getActionDef(actionPath, false);
+  }
+
+  public default BeanActionDef getActionDef(String action) {
+    return getActionDef(new Path(action));
   }
 
   // Similar to getPropertyDefs but returns actions.

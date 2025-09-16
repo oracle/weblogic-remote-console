@@ -10,7 +10,7 @@ import weblogic.console.schema.YamlSource;
  * This POJO mirrors the yaml file format for a bean property's default or legal value
  */
 public class ValueDefSource extends YamlSource {
-  private NullableValue<Object> value = new NullableValue<>();
+  private NullableValue<Object> value = NullableValue.create();
 
   // The value, as an object, so we can handle strings, booleans, ints, ...
   // It must be the same type as the corresponding property.
@@ -20,6 +20,6 @@ public class ValueDefSource extends YamlSource {
   }
 
   public void setValue(Object val) {
-    value.setValue(val);
+    value = value.setValue(val);
   }
 }

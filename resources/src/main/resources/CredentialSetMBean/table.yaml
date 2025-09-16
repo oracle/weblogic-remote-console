@@ -1,0 +1,11 @@
+# Copyright (c) 2025, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+introductionHTML: >
+  <p>This page manages the credential sets for authenticating to external services.</p>
+
+displayedColumns:
+- name: Name
+
+# 7/3/25: todo CertificateManagement
+# helpTopics:
+# TBD Add reference to external help about certificate/credential management.  See Robin Thomas

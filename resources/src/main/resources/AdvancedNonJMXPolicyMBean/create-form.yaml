@@ -1,0 +1,174 @@
+# Copyright (c) 2025, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+introductionHTML: Create a new non-JMX security policy
+
+sections:
+- properties:
+  - name: type
+    legalValues:
+    - value: resourceId
+      label: Resource Id
+    - value: adm
+      label: Admin
+    - value: app
+      label: Application
+    - value: com
+      label: COM
+    - value: eis
+      label: EIS
+    - value: ejb
+      label: EJB
+    - value: jdbc
+      label: JDBC
+    - value: jms
+      label: JMS
+    # don't include JMX since the table is for all non-JMX policies
+    - value: jndi
+      label: JNDI
+    - value: server
+      label: Server
+    - value: url
+      label: URL
+    - value: webservices
+      label: Web Service
+    - value: workcontext
+      label: Work Context
+- usedIf:
+    property: type
+    values:
+    - resourceId
+  properties:
+  - name: resourceId
+- usedIf:
+    property: type
+    values:
+    - adm
+  properties:
+  - name: adm_category
+  - name: adm_realm
+  - name: adm_action
+- usedIf:
+    property: type
+    values:
+    - app
+  properties:
+  - name: app_application
+- usedIf:
+    property: type
+    values:
+    - com
+  properties:
+  - name: com_application
+  - name: com_class
+- usedIf:
+    property: type
+    values:
+    - eis
+  properties:
+  - name: eis_application
+  - name: eis_module
+  - name: eis_eis
+  - name: eis_destinationId
+- usedIf:
+    property: type
+    values:
+    - ejb
+  sections:
+  - properties:
+    - name: ejb_application
+    - name: ejb_module
+    - name: ejb_ejb
+    - name: ejb_method
+    - name: ejb_methodInterface
+    - name: ejb_any_signature
+  - usedIf:
+      property: ejb_any_signature
+      values:
+      - false
+    properties:
+    - name: ejb_signature
+- usedIf:
+    property: type
+    values:
+    - jdbc
+  properties:
+  - name: jdbc_application
+  - name: jdbc_module
+  - name: jdbc_resourceType
+  - name: jdbc_resource
+  - name: jdbc_action
+- usedIf:
+    property: type
+    values:
+    - jms
+  properties:
+  - name: jms_application
+  - name: jms_module
+  - name: jms_destinationType
+  - name: jms_resource
+  - name: jms_action
+- usedIf:
+    property: type
+    values:
+    - jndi
+  sections:
+  - properties:
+    - name: jndi_application
+    - name: jndi_action
+    - name: jndi_any_path
+  - usedIf:
+      property: jndi_any_path
+      values:
+        - false
+    properties:
+    - name: jndi_path
+- usedIf:
+    property: type
+    values:
+    - server
+  properties:
+  - name: svr_application
+  - name: svr_server
+  - name: svr_action
+- usedIf:
+    property: type
+    values:
+    - url
+  properties:
+  - name: url_application
+  - name: url_contextPath
+  - name: url_uri
+  - name: url_httpMethod
+- usedIf:
+    property: type
+    values:
+    - webservices
+  sections:
+  - properties:
+    - name: webservices_application
+    - name: webservices_contextPath
+    - name: webservices_webService
+    - name: webservices_method
+    - name: workcontext_action
+    - name: webservices_any_signature
+  - usedIf:
+      property: webservices_any_signature
+      values:
+      - false
+    properties:
+    - name: webservices_signature_as_array
+- usedIf:
+    property: type
+    values:
+    - workcontext
+  sections:
+  - properties:
+    - name: workcontext_action
+    - name: workcontext_any_path
+  - usedIf:
+      property: workcontext_any_path
+      values:
+      - false
+    properties:
+    - name: workcontext_path

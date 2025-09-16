@@ -2,8 +2,10 @@
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 baseTypes:
-- weblogic.management.descriptor.PoolParamsDBean
+- weblogic.management.deployment.DBean
 name: weblogic.management.descriptor.ConnectionDefinitionPropertiesDBean
+# Can't just specify weblogic.j2ee.descriptor.wl.ConnectionDefinitionPropertiesBean as a base type
+# since it @excludes all the properties.  Repeat them here instead:
 properties:
 - name: Logging
   type: weblogic.management.descriptor.LoggingDBean
@@ -11,3 +13,47 @@ properties:
 - name: PoolParams
   type: weblogic.management.descriptor.PoolParamsDBean
   relationship: containment
+- name: TransactionSupport
+  type: java.lang.String
+  descriptionHTML: >
+    <p>Specifies the level of transaction support for a particular Connection Factory.
+    It provides the ability to override the <b>transaction-support</b> value specified in the
+    <b>ra.xml</b> deployment descriptor that is intended to be the default value for all
+    Connection Factories of the resource adapter</p>
+  writable: true
+  defaultValue:
+    value:
+      value: NoTransaction
+  legalValues:
+  - NoTransaction
+  - LocalTransaction
+  - XATransaction
+  redeployNeeded: true
+- name: ResAuth
+  type: java.lang.String
+  descriptionHTML: >
+    <p>Specifies whether to use container or application managed security.</p>
+  defaultValue:
+    value:
+      value: Container
+  legalValues:
+  - Application
+  - Container
+  writable: true
+  redeployNeeded: true
+- name: ReauthenticationSupport
+  type: boolean
+  descriptionHTML: >
+    <p>Specifies whether a particular connection factory supports re-authentication of
+    an existing <b>ManagedConnection</b> instance.
+    It provides the ability to override the <b>reauthentication-support</b> value specified in the
+    <b>ra.xml</b> deployment descriptor that is intended to be the default value for
+    all Connection Factories of the resource adapter.</p>
+  defaultValue:
+    value:
+      value: Container
+  legalValues:
+  - Application
+  - Container
+  writable: true
+  redeployNeeded: true

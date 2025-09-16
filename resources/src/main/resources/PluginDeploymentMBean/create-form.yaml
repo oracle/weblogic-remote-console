@@ -1,0 +1,42 @@
+# Copyright (c) 2025, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+introductionHTML: Create a new plugin deployment
+sections:
+- properties:
+  - name: Name
+  - name: PluginType
+  - name: Upload
+    required: true
+    definition:
+      name: Upload
+      type: boolean
+      writable: true
+      defaultValue:
+        value:
+          value: true
+      descriptionHTML: >
+        Do you want to upload the plugin deployment to the Administration Server
+        then deploy it or do you want to deploy a plugin deployment that is already
+        on the Administration Server's file system?
+- usedIf:
+    property: Upload
+    values:
+    - true
+  properties:
+  - name: Source
+    required: true
+    onlineName: sourcePath
+    mbeanAttribute:
+      attribute: SourcePath
+    definition:
+      name: Source
+      type: java.io.InputStream
+      writable: true
+      descriptionHTML: >
+        Select the plugin deployment to upload to the Administration Server and deploy.
+- usedIf:
+    property: Upload
+    values:
+    - false
+  properties:
+  - name: SourcePath

@@ -19,12 +19,12 @@ import weblogic.console.schema.Value;
  * is the return type of the action.
  */
 public class BeanActionDefSource extends BeanValueDefSource {
-  private StringValue name = new StringValue();
-  private StringValue descriptionHTML = new StringValue();
-  private StringValue remoteName = new StringValue();
-  private ListValue<BeanActionParamDefSource> parameters = new ListValue<>();
-  private BooleanValue extension =  new BooleanValue();
-  private Value<RolesDefSource> roles = new Value<>(null);
+  private StringValue name = StringValue.create();
+  private StringValue descriptionHTML = StringValue.create();
+  private StringValue remoteName = StringValue.create();
+  private ListValue<BeanActionParamDefSource> parameters = ListValue.create();
+  private BooleanValue extension =  BooleanValue.create();
+  private Value<RolesDefSource> roles = Value.create();
   private Impact impact = Impact.unknown;
 
   // Mirrors the JMX Operaration Impact
@@ -43,7 +43,7 @@ public class BeanActionDefSource extends BeanValueDefSource {
   }
 
   public void setName(String value) {
-    name.setValue(value);
+    name = name.setValue(value);
   }
 
   // The action's description
@@ -52,7 +52,7 @@ public class BeanActionDefSource extends BeanValueDefSource {
   }
 
   public void setDescriptionHTML(String val) {
-    descriptionHTML.setValue(val);
+    descriptionHTML = descriptionHTML.setValue(val);
   }
 
   // The name of the action when the CBE needs to invoke it
@@ -64,7 +64,7 @@ public class BeanActionDefSource extends BeanValueDefSource {
   }
 
   public void setRemoteName(String value) {
-    remoteName.setValue(value);
+    remoteName = remoteName.setValue(value);
   }
 
   // The input parameters of this action
@@ -73,11 +73,11 @@ public class BeanActionDefSource extends BeanValueDefSource {
   }
 
   public void setParameters(List<BeanActionParamDefSource> value) {
-    parameters.setValue(value);
+    parameters = parameters.setValue(value);
   }
 
   public void addParameter(BeanActionParamDefSource value) {
-    parameters.add(value);
+    parameters = parameters.add(value);
   }
 
   // Whether this property was defined in extension.yaml,
@@ -87,7 +87,7 @@ public class BeanActionDefSource extends BeanValueDefSource {
   }
 
   public void setExtension(boolean val) {
-    extension.setValue(val);
+    extension = extension.setValue(val);
   }
 
   // The roles that are allowed to invoke this action
@@ -96,7 +96,7 @@ public class BeanActionDefSource extends BeanValueDefSource {
   }
   
   public void setRoles(RolesDefSource value) {
-    roles.setValue(value);
+    roles = roles.setValue(value);
   }
 
   // The action's impact

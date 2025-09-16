@@ -352,6 +352,7 @@ define([
             const pdjData = viewParams.parentRouter.data.pdjData();
             const navigationProperty = PageDefinitionHelper.getNavigationProperty(pdjData);
             ViewModelUtils.setTableCursor(navigationProperty);
+            ViewModelUtils.removeAriaLabelledByAttribute('button.oj-button-button');
 
             const ojTable = setOnSelectedChange(navigationProperty);
             ContentAreaContainerAccessibility.setTableAccessKey(ojTable, 'T');
@@ -1082,7 +1083,7 @@ define([
             navigationPath = rdjData.navigation;
             if (isWdtTable() && window?.api?.ipc &&
               Runtime.getRole() === CoreTypes.Console.RuntimeRole.TOOL.name &&
-              rdjData.navigation.match(/^Deployments\/[AppDeployments|Libraries]/)) {
+              rdjData.navigation.match(/^Deployments\/[AppDeployments|Libraries|DBClientDataDirectories]/)) {
               const paths = self.wdtForm.getModelArchivePaths([rdjData.data.SourcePath, rdjData.data.PlanPath], self.wdtForm);
 
               if (paths.length > 0) {
@@ -1105,7 +1106,7 @@ define([
             const rdjData = viewParams.parentRouter.data.rdjData();
             if (isWdtTable() && window?.api?.ipc &&
               Runtime.getRole() === CoreTypes.Console.RuntimeRole.TOOL.name &&
-              rdjData.navigation.match(/^Deployments\/[AppDeployments|Libraries]/)) {
+              rdjData.navigation.match(/^Deployments\/[AppDeployments|Libraries|DBClientDataDirectories]/)) {
               const dataProvider = self.wdtForm.getDataProvider();
               const modelArchive = dataProvider.extensions.wktui.modelArchive;
               self.wdtForm.deleteModelArchivePaths(dataProvider, modelArchive);
@@ -1300,6 +1301,8 @@ define([
         }
 
         refreshActionsStripButtons();
+
+        refreshCheckedRowsKeySet();  
       };
 
       this.tableCellClickListener = function (event) {
@@ -1422,7 +1425,7 @@ define([
         function populateAddToArchiveSwitchValues(rdjData) {
           if (isWdtTable() && window?.api?.ipc &&
             Runtime.getRole() === CoreTypes.Console.RuntimeRole.TOOL.name &&
-            rdjData.navigation.match(/^Deployments\/[AppDeployments|Libraries]/)) {
+            rdjData.navigation.match(/^Deployments\/[AppDeployments|Libraries|DBClientDataDirectories]/)) {
             for (const row of rdjData.data) {
               self.perspectiveMemory.upsertAddToArchiveSwitchValue.call(self.perspectiveMemory, row['Name'].value, 'SourcePath', true);
               self.perspectiveMemory.upsertAddToArchiveSwitchValue.call(self.perspectiveMemory, row['Name'].value, 'PlanPath', true);

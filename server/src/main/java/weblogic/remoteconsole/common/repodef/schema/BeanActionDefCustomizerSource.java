@@ -19,35 +19,35 @@ import weblogic.remoteconsole.common.utils.CustomizerInvocationUtils;
  * type, e.g. ServerLifeCycleRuntimeMBean/type.yaml
  */
 public class BeanActionDefCustomizerSource extends BeanValueDefCustomizerSource {
-  private StringValue name = new StringValue();
-  private StringValue label = new StringValue();
-  private StringValue helpLabel = new StringValue();
-  private StringValue successMessage = new StringValue();
-  private StringValue failureMessage = new StringValue();
-  private StringValue helpSummaryHTML = new StringValue();
-  private StringValue helpDetailsHTML = new StringValue();
-  private StringValue helpHTML = new StringValue();
-  private StringValue actionMethod = new StringValue();
-  private Value<BeanActionDefSource> definition = new Value<>(null);
-  private Value<MBeanOperationDefSource> mbeanOperation = new Value<>(new MBeanOperationDefSource());
-  private Value<ActionInputFormDefSource> inputForm = new Value<>(null);
-  private ListValue<BeanActionParamDefCustomizerSource> parameters = new ListValue<>();
-  private Value<BeanActionPollingDefSource> polling = new Value<>(null);
-  private BooleanValue disableMBeanJavadoc = new BooleanValue();
+  private StringValue name = StringValue.create();
+  private StringValue label = StringValue.create();
+  private StringValue helpLabel = StringValue.create();
+  private StringValue successMessage = StringValue.create();
+  private StringValue failureMessage = StringValue.create();
+  private StringValue helpSummaryHTML = StringValue.create();
+  private StringValue helpDetailsHTML = StringValue.create();
+  private StringValue helpHTML = StringValue.create();
+  private StringValue actionMethod = StringValue.create();
+  private Value<BeanActionDefSource> definition = Value.create();
+  private Value<MBeanOperationDefSource> mbeanOperation = Value.create(new MBeanOperationDefSource());
+  private Value<ActionInputFormDefSource> inputForm = Value.create();
+  private ListValue<BeanActionParamDefCustomizerSource> parameters = ListValue.create();
+  private Value<BeanActionPollingDefSource> polling = Value.create();
+  private BooleanValue disableMBeanJavadoc = BooleanValue.create();
 
   public void merge(BeanActionDefCustomizerSource from, Path fromContainedBeanPath) {
     // don't merge name - it's fixed by whoever created this instance
     super.merge(from, fromContainedBeanPath);
-    label.merge(from.label, fromContainedBeanPath);
-    successMessage.merge(from.successMessage, fromContainedBeanPath);
-    failureMessage.merge(from.failureMessage, fromContainedBeanPath);
-    helpLabel.merge(from.helpLabel, fromContainedBeanPath);
-    actionMethod.merge(from.actionMethod, fromContainedBeanPath);
-    definition.merge(from.definition, fromContainedBeanPath);
-    mbeanOperation.merge(from.mbeanOperation, fromContainedBeanPath);
-    inputForm.merge(from.inputForm, fromContainedBeanPath);
-    polling.merge(from.polling, fromContainedBeanPath);
-    disableMBeanJavadoc.merge(from.disableMBeanJavadoc, fromContainedBeanPath);
+    label = label.merge(from.label, fromContainedBeanPath);
+    successMessage = successMessage.merge(from.successMessage, fromContainedBeanPath);
+    failureMessage = failureMessage.merge(from.failureMessage, fromContainedBeanPath);
+    helpLabel = helpLabel.merge(from.helpLabel, fromContainedBeanPath);
+    actionMethod = actionMethod.merge(from.actionMethod, fromContainedBeanPath);
+    definition = definition.merge(from.definition, fromContainedBeanPath);
+    mbeanOperation = mbeanOperation.merge(from.mbeanOperation, fromContainedBeanPath);
+    inputForm = inputForm.merge(from.inputForm, fromContainedBeanPath);
+    polling = polling.merge(from.polling, fromContainedBeanPath);
+    disableMBeanJavadoc = disableMBeanJavadoc.merge(from.disableMBeanJavadoc, fromContainedBeanPath);
     mergeHelp(from, fromContainedBeanPath);
     mergeParameters(from, fromContainedBeanPath);
   }
@@ -61,9 +61,9 @@ public class BeanActionDefCustomizerSource extends BeanValueDefCustomizerSource 
         || from.helpSummaryHTML.isSpecifiedInYaml()
         || from.helpDetailsHTML.isSpecifiedInYaml()
     ) {
-      helpSummaryHTML.copyFrom(from.helpSummaryHTML, fromContainedBeanPath);
-      helpDetailsHTML.copyFrom(from.helpDetailsHTML, fromContainedBeanPath);
-      helpHTML.copyFrom(from.helpHTML, fromContainedBeanPath);
+      helpSummaryHTML = helpSummaryHTML.copyFrom(from.helpSummaryHTML, fromContainedBeanPath);
+      helpDetailsHTML = helpDetailsHTML.copyFrom(from.helpDetailsHTML, fromContainedBeanPath);
+      helpHTML = helpHTML.copyFrom(from.helpHTML, fromContainedBeanPath);
     }
   }
 
@@ -92,7 +92,7 @@ public class BeanActionDefCustomizerSource extends BeanValueDefCustomizerSource 
   }
 
   public void setName(String value) {
-    name.setValue(value);
+    name = name.setValue(value);
   }
 
   // The english label to display for this action.
@@ -101,7 +101,7 @@ public class BeanActionDefCustomizerSource extends BeanValueDefCustomizerSource 
   }
 
   public void setLabel(String value) {
-    this.label.setValue(value);
+    label = label.setValue(value);
   }
 
   // The english label to display for this action on the help page
@@ -110,7 +110,7 @@ public class BeanActionDefCustomizerSource extends BeanValueDefCustomizerSource 
   }
 
   public void setHelpLabel(String value) {
-    this.helpLabel.setValue(value);
+    helpLabel = helpLabel.setValue(value);
   }
 
   // The english label to display when this action succeeds.
@@ -120,7 +120,7 @@ public class BeanActionDefCustomizerSource extends BeanValueDefCustomizerSource 
   }
 
   public void setSuccessMessage(String value) {
-    this.successMessage.setValue(value);
+    successMessage = successMessage.setValue(value);
   }
 
   // The english label to display when this action fails.
@@ -130,7 +130,7 @@ public class BeanActionDefCustomizerSource extends BeanValueDefCustomizerSource 
   }
 
   public void setFailureMessage(String value) {
-    this.failureMessage.setValue(value);
+    failureMessage = failureMessage.setValue(value);
   }
 
   // The help summary for this attribute.
@@ -144,7 +144,7 @@ public class BeanActionDefCustomizerSource extends BeanValueDefCustomizerSource 
   }
 
   public void setHelpSummaryHTML(String value) {
-    helpSummaryHTML.setValue(value);
+    helpSummaryHTML = helpSummaryHTML.setValue(value);
   }
 
   // The help details for this attribute (minus the help summary).
@@ -160,7 +160,7 @@ public class BeanActionDefCustomizerSource extends BeanValueDefCustomizerSource 
   }
 
   public void setHelpDetailsHTML(String value) {
-    helpDetailsHTML.setValue(value);
+    helpDetailsHTML = helpDetailsHTML.setValue(value);
   }
 
   // This is used when the help summary and the help details
@@ -174,7 +174,7 @@ public class BeanActionDefCustomizerSource extends BeanValueDefCustomizerSource 
   }
 
   public void setHelpHTML(String value) {
-    helpHTML.setValue(value);
+    helpHTML = helpHTML.setValue(value);
   }
 
   // Customizes the implementation of this action.  Optional.
@@ -191,7 +191,7 @@ public class BeanActionDefCustomizerSource extends BeanValueDefCustomizerSource 
 
   public void setActionMethod(String value) {
     if (StringUtils.isEmpty(value) || CustomizerInvocationUtils.methodExists(value)) {
-      actionMethod.setValue(value);
+      actionMethod = actionMethod.setValue(value);
     }
   }
 
@@ -203,7 +203,7 @@ public class BeanActionDefCustomizerSource extends BeanValueDefCustomizerSource 
   }
 
   public void setDefinition(BeanActionDefSource value) {
-    definition.setValue(value);
+    definition = definition.setValue(value);
   }
 
   // Indicates which mbean operation this actions is related to.
@@ -214,7 +214,7 @@ public class BeanActionDefCustomizerSource extends BeanValueDefCustomizerSource 
   }
 
   public void setMbeanOperation(MBeanOperationDefSource value) {
-    mbeanOperation.setValue(value);
+    mbeanOperation = mbeanOperation.setValue(value);
   }
 
   // This returns the action's input form if one was configured.
@@ -224,7 +224,7 @@ public class BeanActionDefCustomizerSource extends BeanValueDefCustomizerSource 
   }
 
   public void setInputForm(ActionInputFormDefSource value) {
-    inputForm.setValue(value);
+    inputForm = inputForm.setValue(value);
   }
 
   // The list of params on this action that have been customized.
@@ -233,11 +233,11 @@ public class BeanActionDefCustomizerSource extends BeanValueDefCustomizerSource 
   }
 
   public void setParameters(List<BeanActionParamDefCustomizerSource> value) {
-    parameters.setValue(value);
+    parameters = parameters.setValue(value);
   }
 
   public void addParameter(BeanActionParamDefCustomizerSource value) {
-    parameters.add(value);
+    parameters = parameters.add(value);
   }
 
 
@@ -248,7 +248,7 @@ public class BeanActionDefCustomizerSource extends BeanValueDefCustomizerSource 
   }
 
   public void setPolling(BeanActionPollingDefSource value) {
-    polling.setValue(value);
+    polling = polling.setValue(value);
   }
 
   // Used to turn off this action's javadoc link.
@@ -258,7 +258,7 @@ public class BeanActionDefCustomizerSource extends BeanValueDefCustomizerSource 
   }
 
   public void setDisableMBeanJavadoc(boolean value) {
-    disableMBeanJavadoc.setValue(value);
+    disableMBeanJavadoc = disableMBeanJavadoc.setValue(value);
   }
 
   public String toString() {

@@ -1,4 +1,4 @@
-// Copyright (c) 2021, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2025, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.webapp;
@@ -25,6 +25,11 @@ public class CreateResponseMapper extends ResponseMapper<BeanTreePath> {
 
   @Override
   protected void addResults() {
-    getEntityBuilder().add("resourceData", beanTreePathToJson(getResponse().getResults()));
+    BeanTreePath btp = getResponse().getResults();
+    if (btp == null) {
+      return;
+    }
+    String queryParams = (btp.isCollection()) ? "?view=table" : "";
+    getEntityBuilder().add("resourceData", beanTreePathToJson(btp, queryParams));
   }
 }

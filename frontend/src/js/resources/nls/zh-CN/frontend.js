@@ -10,7 +10,7 @@ define({
     },
     "buttons": {
       "logout": {
-        "label": "Logout"
+        "label": "注销"
       }
     },
     "icons": {
@@ -1523,7 +1523,33 @@ define({
     "messages": {
       "pageNoLongerExists": {
         "summary": "页不再存在",
-        "detail": "您已重定向到 {0} 页，因为 {1} 已被其他用户删除，或不再存在。"
+        "detail1": "您已重定向到 {0} 页，因为",
+        "detail2": "{0} 已被其他用户删除，或不再存在。"
+      }
+    }
+  },
+  "wrc-pages-bookmark": {
+    "labels": {
+      "ariaLabel": {
+        "value": "页书签"
+      }
+    },
+    "menus": {
+      "bookmark": {
+        "add": {
+          "label": "为当前页添加书签"
+        },
+        "show": {
+          "label": "显示页书签..."
+        }
+      }
+    },
+    "messages": {
+      "pageAlreadyBookmarked": {
+        "summary": "此页已有书签！"
+      },
+      "pagesBookmarkAdded": {
+        "summary": "当前页已成功添加书签！"
       }
     }
   },
@@ -1681,7 +1707,7 @@ define({
           "value": "显示页历史记录"
         },
         "star": {
-          "value": "书签页"
+          "value": "页书签"
         }
       },
       "pageInfo": {
@@ -1710,7 +1736,10 @@ define({
         "value": "预警"
       },
       "pagesHistory": {
-        "value": "此窗口可用于查看或选择之前访问过的页。"
+        "value": "以下是自选择当前提供程序以来访问的页面。单击行中的任何列以导航到关联页。"
+      },
+      "pagesBookmark": {
+        "value": "以下是为 {0} 提供程序类型添加书签的页面。单击行中的任何列以导航到关联页。"
       }
     },
     "placeholders": {

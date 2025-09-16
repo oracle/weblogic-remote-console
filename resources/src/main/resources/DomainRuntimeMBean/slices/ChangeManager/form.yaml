@@ -1,0 +1,27 @@
+# Copyright (c) 2025, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+introductionHTML: >
+  <p>Use this page to perform advanced change manager operations.</p>
+
+customizePageMethod: weblogic.remoteconsole.customizers.DomainRuntimeMBeanCustomizer.customizeEditSessionPage
+
+properties:
+- name: editSession
+  definition:
+    type: java.lang.String
+    descriptionHTML: The name of the edit session that will be used to manage the configuration.
+- name: locked
+  definition:
+    type: boolean
+    descriptionHTML: Whether that edit session is locked.
+- name: lockOwner
+  definition:
+    type: java.lang.String
+    descriptionHTML: The name of the user who holds the lock.
+- name: hasChanges
+  definition:
+    type: boolean
+    descriptionHTML: Whether that edit session has changes (in-memory or saved to the <code>pending</code> directory).
+
+actions:
+- name: grabEditLock

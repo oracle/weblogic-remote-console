@@ -862,6 +862,85 @@ public class LocalizedConstants {
       "<p>No data is available because:</p><p>{0}</p>"
     );
 
+  public static final LocalizableString MIGRATION_TARGET_NOT_FOUND =
+      addConstant(
+          "migratableTargetNotFound",
+          "<p>Migratable Target does not exist.</p>"
+      );
+
+  public static final LocalizableString NO_HOSTING_SERVER_FOR_MT =
+    addConstant(
+      "noHostingServerForMT",
+      "<p>No server currently hosting the services on this migratable target.</p>"
+    );
+
+  public static final LocalizableString REFER_TO_MIGRATION_TASKS =
+    addConstant(
+      "referToMigrationTask",
+      "<p>Refer to migration task for more info.</p>"
+    );
+
+  public static final LocalizableString NONE_CONFIGURED =
+    addConstant(
+      "noneConfigured",
+      "None Configured"
+    );
+
+  public static final LocalizableString EXPORT_SECURITY_DATA_CONSTRAINTS_INTRO =
+    addConstant(
+      "exportSecurityDataConstraintsIntro",
+      "<p>This provider supports the following constraints: {0}."
+      + " If no constraints are specified then all security data will be exported.</p>"
+    );
+
+  public static final LocalizableString IMPORT_SECURITY_DATA_CONSTRAINTS_INTRO =
+    addConstant(
+      "importSecurityDataConstraintsIntro",
+      "<p>This provider supports the following constraints: {0}."
+      + " If no constraints are specified then all security data will be imported.</p>"
+    );
+
+  public static final LocalizableString JDBC_XA_DRIVER_INCOMPATIBLE_GLOBAL_TRANSACTIONS_PROTOCOL =
+    addConstant(
+      "javaXADriverIncompatibleGlobalTransactionsProtocol",
+      "<b>Warning</b>:"
+      + " This data source has an XA driver but its Global Transactions Protocol isn''t set to Two-Phase Commit."
+    );
+
+  public static final LocalizableString JDBC_NON_XA_DRIVER_INCOMPATIBLE_GLOBAL_TRANSACTIONS_PROTOCOL =
+    addConstant(
+      "javaNonXADriverIncompatibleGlobalTransactionsProtocol",
+      "<b>Warning</b>:"
+      + " This data source has a non-XA driver but its Global Transactions Protocol is set to Two-Phase Commit."
+    );
+
+  public static final LocalizableString JMS_CANNOT_VIEW_MESSAGE_BODY_BECAUSE_WRONG_TYPE =
+    addConstant(
+      "jmsCannotViewMessageBodyBecauseWrongType",
+      "<p>The message body for ''{0}'' cannot be viewed because it isn''t a text or xml message.</p>"
+      + "<p><b>Note</b>: Consider exporting the message to a file.</p>"
+    );
+
+  public static final LocalizableString JMS_CANNOT_VIEW_MESSAGE_BODY_BECAUSE_TOO_BIG =
+    addConstant(
+      "jmsCannotViewMessageBodyBecauseTooBig",
+      "<p>The message body for ''{0}'' cannot be viewed because it''s too big.</p>"
+      + "<p><b>Note</b>: You can view the message body by exporting the message to a file.</p>"
+    );
+
+  public static final LocalizableString JMS_DISPLAYED_TRIMMED_MESSAGE_BODY =
+    addConstant(
+      "jmsDisplayedTrimmedMessageBody",
+      "<p>This page displays the beginning of the message body for ''{0}''.</p>"
+      + "<p><b>Note</b>: You can view the full message body by exporting the message to a file.</p>"
+    );
+
+  public static final LocalizableString JMS_DISPLAYED_MESSAGE_BODY =
+    addConstant(
+      "jmsDisplayedMessageBody",
+      "<p>This page displays the message body for ''{0}''.</p>"
+    );
+
   // Returns all of the constants (used when the resource bundles are generated at build time)
   public static List<LocalizableString> getAllConstants() {
     return allConstants;

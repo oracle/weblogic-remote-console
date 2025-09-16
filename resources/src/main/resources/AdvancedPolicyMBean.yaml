@@ -1,0 +1,15 @@
+# Copyright (c) 2025, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+name: weblogic.management.security.authorization.AdvancedPolicyMBean
+baseTypes:
+- weblogic.management.security.SecurityResourceMBean
+properties:
+- name: Policy
+  descriptionHTML: "<p>The conditions that determine the access control of this resource.</p>"
+  type: EntitleNetExpression
+  writable: true
+- name: PolicyStringExpression
+  descriptionHTML: "<p>The conditions that determine the access control of this resource.</p>"
+  type: java.lang.String
+  writable: true

@@ -1,4 +1,4 @@
-// Copyright (c) 2020, 2024, Oracle and/or its affiliates.
+// Copyright (c) 2020, 2025, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.customizers;
@@ -19,6 +19,7 @@ public class JDBCSystemResourceMBeanCustomizerUtils {
   public static final String DATASOURCE_TYPE_GRIDLINK = "AGL";
   public static final String DATASOURCE_TYPE_UCP = "UCP";
   public static final String DATASOURCE_TYPE_MDS = "MDS";
+  public static final String GENERIC_OTHER_DATABASE = genericScopedName("OtherDatabase");
 
   // form property constants
   private static final String PROPERTY_DATABASE_DRIVER = "DatabaseDriver";
@@ -106,6 +107,11 @@ public class JDBCSystemResourceMBeanCustomizerUtils {
     return datasourceTypeScopedName(datasourceType, driverName(driverInfo));
   }
 
+  // Returns an 'other database' scoped name.
+  public static String otherDatabaseScopedName(String name) {
+    return vendorScopedName(DATASOURCE_TYPE_GENERIC, "OtherDatabase", name);
+  }
+
   // Return a vendor scoped name.
   // It includes the datasource type and database type (vendor).
   private static String vendorScopedName(String datasourceType, String vendorName, String name) {
@@ -176,10 +182,12 @@ public class JDBCSystemResourceMBeanCustomizerUtils {
     return driverName;
   }
 
-  public static boolean isXADriver(String driverName) {
-    JDBCDriverInfo jdbcDriverInfo = getDriverInfoFactory().getDriverInfoByClass(driverName);
-    //if we don't have the driveInfo for this driver, we just return false
-    return  (jdbcDriverInfo == null) ? false : jdbcDriverInfo.isForXA();
+  public static Boolean isXADriver(String driverName) {
+    JDBCDriverInfo driverInfo = getDriverInfoFactory().getDriverInfoByClass(driverName);
+    if (driverInfo == null) {
+      return null; // unknown
+    }
+    return driverInfo.isForXA();
   }
 
   private static String scopedName(String scope, String name) {

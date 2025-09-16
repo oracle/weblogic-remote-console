@@ -1,4 +1,4 @@
-# Copyright (c) 2022, 2024, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2022, 2025, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 subTypeDiscriminatorProperty: Type
@@ -13,3 +13,73 @@ disableMBeanJavadoc: true
 children:
 - name: JMSSystemResources
   label: JMS Modules
+- name: AdvancedNonJMXPolicies
+  label: All
+  creatable: true
+  requiredCapabilities:
+  - AdvancedPolicies
+- name: AdvancedAdminPolicies
+  label: Admin
+  creatable: true
+  requiredCapabilities:
+  - AdvancedPolicies
+- name: AdvancedApplicationPolicies
+  label: Application
+  creatable: true
+  requiredCapabilities:
+  - AdvancedPolicies
+- name: AdvancedCOMPolicies
+  label: COM
+  creatable: true
+  requiredCapabilities:
+  - AdvancedPolicies
+- name: AdvancedEISPolicies
+  label: EIS
+  creatable: true
+  requiredCapabilities:
+  - AdvancedPolicies
+- name: AdvancedEJBPolicies
+  label: EJB
+  creatable: true
+  requiredCapabilities:
+  - AdvancedPolicies
+- name: AdvancedJDBCPolicies
+  label: JDBC
+  creatable: true
+  requiredCapabilities:
+  - AdvancedPolicies
+- name: AdvancedJMSPolicies
+  label: JMS
+  creatable: true
+  requiredCapabilities:
+  - AdvancedPolicies
+- name: AdvancedJMXPolicies
+  label: JMX
+  creatable: true
+  requiredCapabilities:
+  - AdvancedPolicies
+- name: AdvancedJNDIPolicies
+  label: JNDI
+  creatable: true
+  requiredCapabilities:
+  - AdvancedPolicies
+- name: AdvancedServerPolicies
+  label: Server
+  creatable: true
+  requiredCapabilities:
+  - AdvancedPolicies
+- name: AdvancedURLPolicies
+  label: URL
+  creatable: true
+  requiredCapabilities:
+  - AdvancedPolicies
+- name: AdvancedWebServicePolicies
+  label: Web Service
+  creatable: true
+  requiredCapabilities:
+  - AdvancedPolicies
+- name: AdvancedWorkContextPolicies
+  label: Work Context
+  creatable: true
+  requiredCapabilities:
+  - AdvancedPolicies

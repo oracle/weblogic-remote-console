@@ -1,0 +1,16 @@
+# Copyright (c) 2025, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+introductionHTML: >
+  <p>Use this page to perform domain-wide credential management,
+  including refreshing certificates and rolling the domain certificate authority.</p>
+  <p><b>Note</b>: View the page help for more information.</p>
+
+actions:
+- name: refreshCertificateActions
+  label: Refresh Certificates
+  actions:
+  - name: refreshServerCertificateAllServers
+  - name: refreshServerTrustAllServers
+  - name: refreshMachineCertificatesAllMachines
+  - name: refreshMachineTrustAllMachines
+- name: rollDomainCertificateAuthority

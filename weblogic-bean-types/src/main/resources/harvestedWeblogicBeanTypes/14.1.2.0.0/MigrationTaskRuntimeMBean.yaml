@@ -3,20 +3,7 @@
 
 baseTypes:
 - weblogic.management.runtime.TaskRuntimeMBean
-descriptionHTML: '<p>Exposes monitoring information about an ongoing and potentially
-  long-running administrative process.  This should be taken to mean, at minimum,
-  any OAM operation involving IO.  Examples include starting and stopping servers,
-  deploying and undeploying applications, or migrating services.</p>  <p>An MBean
-  operation method of this sort should place the actual work on an ExecuteQueue and
-  immediately return an instance of TaskRuntimeMBean to the caller.  The caller can
-  then use this to track the task''s progress as desired, and if appropriate, provide
-  facilities for user interaction with the task, e.g. "cancel" or "continue anyway."  OA&M
-  clients can also query for all instances of TaskRuntimeMBean to get a summary of
-  both currently-running and recently-completed tasks.</p> <p>Instance of TaskRuntimeMBean
-  continue to exist in the MBeanServer after the completion of the work they describe.  They
-  will eventually either be explicitly deregistered by an OA&M client, or removed
-  by a scavenger process which periodically purges TaskRuntimeMBeans that have been
-  completed for some time.</p> '
+descriptionHTML: '<p>Represents a running or completed migration operation.</p> '
 name: weblogic.management.runtime.MigrationTaskRuntimeMBean
 properties:
 - defaultValue: {
@@ -30,9 +17,7 @@ properties:
 - defaultValue: {
     }
   descriptionHTML: '<p>Indicates whether the migration task moves a JTA recovery manager.</p> '
-  exclude: true
   name: JTA
-  supported: false
   type: boolean
 - defaultValue: {
     }
@@ -44,9 +29,7 @@ properties:
 - defaultValue: {
     }
   descriptionHTML: '<p>Indicates whether the Task is still running.</p> '
-  exclude: true
   name: Running
-  supported: false
   type: boolean
 - defaultValue: {
     }
@@ -59,21 +42,15 @@ properties:
 - defaultValue: {
     }
   descriptionHTML: '<p>Provides an int describing the status of this Task.</p> '
-  exclude: true
   name: StatusCode
-  supported: false
   type: int
 - defaultValue: {
     }
   descriptionHTML: '<p>Indicates whether the Task was successful, failed or was canceled.</p> '
-  exclude: true
   name: Terminal
-  supported: false
   type: boolean
 - defaultValue: {
     }
   descriptionHTML: '<p>Indicates whether the Task is waiting for user input.</p> '
-  exclude: true
   name: WaitingForUser
-  supported: false
   type: boolean

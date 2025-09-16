@@ -1,0 +1,15 @@
+# Copyright (c) 20205, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+properties:
+
+# SourcePath needs to be specified when creating a deployment
+- name: SourcePath
+  required: true
+  writable: createOnly
+
+- name: PluginType
+  writable: createOnly
+  required: true
+  legalValues:
+  - value: CertificateIssuerPlugin
+    label: Certificate Issuer Plugin

@@ -4,89 +4,54 @@
 package weblogic.remoteconsole.common.utils;
 
 import java.lang.ref.WeakReference;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.concurrent.ConcurrentHashMap;
 
+import weblogic.remoteconsole.server.connection.Connection;
+
 /** Contains information about the WebLogic mbean versions that the console supports. */
 public class WebLogicMBeansVersions {
+
+  // Maps from a weblogic version + capabilities to a sharable OfflineWebLogicMBeansVersion
+  private static Map<String, WeakReference<OfflineWebLogicMBeansVersion>> offlineVersionsMap =
+    new ConcurrentHashMap<>();
 
   private WebLogicMBeansVersions() {
   }
 
-  // Maps from a weblogic version + roles to a WebLogicMBeansVersion
-  private static Map<String, WeakReference<WebLogicMBeansVersion>> versionsMap = new ConcurrentHashMap<>();
-
-  public static WebLogicMBeansVersion getVersion(
-    WebLogicVersion weblogicVersion,
-    Set<String> capabilities
-  ) {
-    return getVersion(weblogicVersion, WebLogicRoles.ADMIN_ROLES, capabilities);
+  public static WebLogicMBeansVersion getVersion(Connection connection) {
+    // Online ones can't be shared since each domain can support different
+    // discoverable mbean types (like custom resources and custom security providers)
+    return new OnlineWebLogicMBeansVersion(connection);
   }
 
-  public static WebLogicMBeansVersion getVersion(
-    WebLogicVersion weblogicVersion,
-    Set<String> roles,
-    Set<String> capabilities
-  ) {
-    return getVersion(weblogicVersion, roles, capabilities, null);
-  }
-
-  public static WebLogicMBeansVersion getVersion(
-    WebLogicVersion weblogicVersion,
-    Set<String> roles,
-    Set<String> capabilities,
-    List<RemoteConsoleExtension> extensions
-  ) {
-    String key = computeKey(weblogicVersion, roles, capabilities, extensions);
-    WeakReference<WebLogicMBeansVersion> ret =
-      versionsMap.computeIfAbsent(
+  public static WebLogicMBeansVersion getVersion(WebLogicVersion weblogicVersion, Set<String> capabilities) {
+    // Offline ones can be shared since they never vary
+    String key = computeOfflineKey(weblogicVersion, capabilities);
+    WeakReference<OfflineWebLogicMBeansVersion> ret =
+      offlineVersionsMap.computeIfAbsent(
         key,
-        k -> new WeakReference<WebLogicMBeansVersion>(
-          new WebLogicMBeansVersion(weblogicVersion, roles, capabilities, extensions)
+        k -> new WeakReference<OfflineWebLogicMBeansVersion>(
+          new OfflineWebLogicMBeansVersion(weblogicVersion, capabilities)
         )
       );
     if (ret.get() == null) {
-      ret = new WeakReference<WebLogicMBeansVersion>(
-        new WebLogicMBeansVersion(weblogicVersion, roles, capabilities, extensions));
-      versionsMap.put(key, ret);
+      ret = new WeakReference<OfflineWebLogicMBeansVersion>(
+        new OfflineWebLogicMBeansVersion(weblogicVersion, capabilities)
+      );
+      offlineVersionsMap.put(key, ret);
     }
     return ret.get();
   }
 
-  private static String computeKey(
-    WebLogicVersion weblogicVersion,
-    Set<String> roles,
-    Set<String> capabilities,
-    List<RemoteConsoleExtension> extensions
-  ) {
+  private static String computeOfflineKey(WebLogicVersion weblogicVersion, Set<String> capabilities) {
     StringBuilder sb = new StringBuilder();
     sb.append(weblogicVersion.getDomainVersion());
-    if (roles.contains(WebLogicRoles.ADMIN)) {
-      // The user is an Admin and has permission to do anything.
-      // The user's other roles don't matter.
-      // Cache under just the Admin role so that the entry
-      // can be shared by other users that are in the Admin
-      // role plus any other roles.
-      roles = WebLogicRoles.ADMIN_ROLES;
-    }
-    for (String role : new TreeSet<String>(roles)) { // sort the roles
-      sb.append("_role_").append(role);
-    }
     for (String capability : new TreeSet<String>(capabilities)) { // sort the capabilities
       sb.append("_capability_").append(capability);
     }
-    if (extensions != null) {
-      for (RemoteConsoleExtension extension : extensions) { // already ordered
-        sb.append("_extension_").append(getExtensionKey(extension));
-      }
-    }
     return sb.toString();
-  }
-
-  private static String getExtensionKey(RemoteConsoleExtension extension) {
-    return extension.getName() + "_" + extension.getVersion();
   }
 }

@@ -72,6 +72,17 @@ properties:
   relationship: containment
   type: weblogic.coherence.descriptor.wl.CoherenceServiceBean
 - defaultValue:
+    value:
+      value: true
+  descriptionHTML: '<p>Controls whether the discovery address is set. If this property
+    is set, then Coherence will configure the discovery address to the unicast listen
+    address if there is one.</p> '
+  name: DiscoveryAddress
+  redeployNeeded: true
+  restartNeeded: true
+  type: boolean
+  writable: true
+- defaultValue:
     derivedDefault: true
   descriptionHTML: '<p>Specify the Global Socket Provider name. If not specified and
     secured production mode is enabled, Coherence uses WebLogic SSL configuration

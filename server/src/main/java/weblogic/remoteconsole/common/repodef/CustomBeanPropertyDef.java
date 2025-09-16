@@ -17,17 +17,15 @@ import weblogic.remoteconsole.server.repo.Value;
  * Used for building custom pages.
  */
 public class CustomBeanPropertyDef implements BeanPropertyDef {
-  private CustomBeanValueDef valueDef = new CustomBeanValueDef();
+  private CustomBeanFieldDef fieldDef = new CustomBeanFieldDef();
   private BeanTypeDef typeDef;
   private String propertyName;
-  private String formFieldName;
   private String onlinePropertyName;
   private String offlinePropertyName;
   private Path parentPath = new Path();
   private boolean key;
   private boolean createWritable;
   private boolean updateWritable;
-  private boolean required;
   private GetPropertyValueCustomizerDef getValueCustomizerDef;
   private GetPropertyOptionsCustomizerDef getOptionsCustomizerDef;
   private boolean restartNeeded;
@@ -43,17 +41,15 @@ public class CustomBeanPropertyDef implements BeanPropertyDef {
   }
 
   public CustomBeanPropertyDef(BeanPropertyDef toClone) {
-    valueDef = new CustomBeanValueDef(toClone);
+    fieldDef = new CustomBeanFieldDef(toClone);
     setTypeDef(toClone.getTypeDef());
     setPropertyName(toClone.getPropertyName());
-    setFormFieldName(toClone.getFormFieldName());
     setOnlinePropertyName(toClone.getOnlinePropertyName());
     setOfflinePropertyName(toClone.getOfflinePropertyName());
     setParentPath(toClone.getParentPath());
     setKey(toClone.isKey());
     setCreateWritable(toClone.isCreateWritable());
     setUpdateWritable(toClone.isUpdateWritable());
-    setRequired(toClone.isRequired());
     setGetValueCustomizerDef(toClone.getGetValueCustomizerDef());
     setGetOptionsCustomizerDef(toClone.getGetOptionsCustomizerDef());
     setRestartNeeded(toClone.isRestartNeeded());
@@ -91,20 +87,6 @@ public class CustomBeanPropertyDef implements BeanPropertyDef {
 
   public CustomBeanPropertyDef propertyName(String val) {
     setPropertyName(val);
-    return this;
-  }
-
-  @Override
-  public String getFormFieldName() {
-    return (formFieldName != null) ? formFieldName : getPropertyPath().getUnderscoreSeparatedPath();
-  }
-
-  public void setFormFieldName(String val) {
-    formFieldName = val;
-  }
-
-  public CustomBeanPropertyDef formFieldName(String val) {
-    setFormFieldName(val);
     return this;
   }
 
@@ -205,20 +187,6 @@ public class CustomBeanPropertyDef implements BeanPropertyDef {
 
   public CustomBeanPropertyDef writable(boolean val) {
     setWritable(val);
-    return this;
-  }
-
-  @Override
-  public boolean isRequired() {
-    return required;
-  }
-
-  public void setRequired(boolean val) {
-    required = val;
-  }
-
-  public CustomBeanPropertyDef required(boolean val) {
-    setRequired(val);
     return this;
   }
 
@@ -363,12 +331,41 @@ public class CustomBeanPropertyDef implements BeanPropertyDef {
   }
 
   @Override
+  public String getFormFieldName() {
+    String formFieldName = fieldDef.getFormFieldName();
+    return (formFieldName != null) ? formFieldName : getPropertyPath().getUnderscoreSeparatedPath();
+  }
+
+  public void setFormFieldName(String val) {
+    fieldDef.setFormFieldName(val);
+  }
+
+  public CustomBeanPropertyDef formFieldName(String val) {
+    setFormFieldName(val);
+    return this;
+  }
+
+  @Override
+  public boolean isRequired() {
+    return fieldDef.isRequired();
+  }
+
+  public void setRequired(boolean val) {
+    fieldDef.setRequired(val);
+  }
+
+  public CustomBeanPropertyDef required(boolean val) {
+    setRequired(val);
+    return this;
+  }
+
+  @Override
   public ValueKind getValueKind() {
-    return valueDef.getValueKind();
+    return fieldDef.getValueKind();
   }
 
   public void setValueKind(ValueKind val) {
-    valueDef.setValueKind(val);
+    fieldDef.setValueKind(val);
   }
 
   public CustomBeanPropertyDef valueKind(ValueKind val) {
@@ -378,11 +375,11 @@ public class CustomBeanPropertyDef implements BeanPropertyDef {
 
   @Override
   public boolean isArray() {
-    return valueDef.isArray();
+    return fieldDef.isArray();
   }
 
   public void setArray(boolean val) {
-    valueDef.setArray(val);
+    fieldDef.setArray(val);
   }
 
   public CustomBeanPropertyDef array(boolean val) {
@@ -392,11 +389,11 @@ public class CustomBeanPropertyDef implements BeanPropertyDef {
 
   @Override
   public boolean isOrdered() {
-    return valueDef.isOrdered();
+    return fieldDef.isOrdered();
   }
 
   public void setOrdered(boolean val) {
-    valueDef.setOrdered(val);
+    fieldDef.setOrdered(val);
   }
 
   public CustomBeanPropertyDef ordered(boolean val) {
@@ -406,11 +403,11 @@ public class CustomBeanPropertyDef implements BeanPropertyDef {
 
   @Override
   public BeanTypeDef getReferenceTypeDef() {
-    return valueDef.getReferenceTypeDef();
+    return fieldDef.getReferenceTypeDef();
   }
 
   public void setReferenceTypeDef(BeanTypeDef val) {
-    valueDef.setReferenceTypeDef(val);
+    fieldDef.setReferenceTypeDef(val);
   }
 
   public CustomBeanPropertyDef referenceTypeDef(BeanTypeDef val) {
@@ -420,11 +417,11 @@ public class CustomBeanPropertyDef implements BeanPropertyDef {
 
   @Override
   public boolean isReferenceAsReferences() {
-    return valueDef.isReferenceAsReferences();
+    return fieldDef.isReferenceAsReferences();
   }
 
   public void setReferenceAsReferences(boolean val) {
-    valueDef.setReferenceAsReferences(val);
+    fieldDef.setReferenceAsReferences(val);
   }
 
   public CustomBeanPropertyDef referenceAsReferences(boolean val) {
@@ -434,11 +431,11 @@ public class CustomBeanPropertyDef implements BeanPropertyDef {
 
   @Override
   public boolean isDateAsLong() {
-    return valueDef.isDateAsLong();
+    return fieldDef.isDateAsLong();
   }
 
   public void setDateAsLong(boolean val) {
-    valueDef.setDateAsLong(val);
+    fieldDef.setDateAsLong(val);
   }
 
   public CustomBeanPropertyDef dateAsLong(boolean val) {
@@ -448,11 +445,11 @@ public class CustomBeanPropertyDef implements BeanPropertyDef {
 
   @Override
   public boolean isMultiLineString() {
-    return valueDef.isMultiLineString();
+    return fieldDef.isMultiLineString();
   }
 
   public void setMultiLineString(boolean val) {
-    valueDef.setMultiLineString(val);
+    fieldDef.setMultiLineString(val);
   }
 
   public CustomBeanPropertyDef multiLineString(boolean val) {
@@ -462,11 +459,11 @@ public class CustomBeanPropertyDef implements BeanPropertyDef {
 
   @Override
   public boolean isDynamicEnum() {
-    return valueDef.isDynamicEnum();
+    return fieldDef.isDynamicEnum();
   }
 
   public void setDynamicEnum(boolean val) {
-    valueDef.setDynamicEnum(val);
+    fieldDef.setDynamicEnum(val);
   }
 
   public CustomBeanPropertyDef dynamicEnum(boolean val) {

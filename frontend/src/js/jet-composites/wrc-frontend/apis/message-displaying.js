@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2021, 2024, Oracle and/or its affiliates.
+ * Copyright (c) 2021, 2025, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
@@ -247,7 +247,8 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojhtmlutils', 'ojs/ojlogger'],
           const messagesAsHTML = {
             html: { view: HtmlUtils.stringToNodeArray(messagesHTML) },
             severity: severity,
-            summary: summary
+            summary: summary,
+            autoTimeout: messages?.[0]?.autoTimeout
           };
           getPopupMessageSentSignal().dispatch(messagesAsHTML, autoCloseInterval, 'userDismissed');
         }

@@ -80,7 +80,8 @@ properties:
   type: int
   writable: true
 - defaultValue:
-    derivedDefault: true
+    value:
+      value: false
   descriptionHTML: '<p>Specifies whether the provider is allowed to get the user name
     from a NameCallback           versus getting the user name (and identity domain)
     from an IdentityDomainUserCallback          when the provider is configured with

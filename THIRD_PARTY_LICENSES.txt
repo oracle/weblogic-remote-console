@@ -78,7 +78,6 @@ in some artifacts (usually source distributions); but is always available
 from the source code management (SCM) system project uses.
 
 io.helidon.common-helidon-common-context
--------- Copyrights
 Copyright (c) 2019, 2020 Oracle and/or its affiliates.
 Copyright (c) 2019, 2021 Oracle and/or its affiliates.
 Copyright (c) 2019 Oracle and/or its affiliates. All rights reserved.
@@ -87,7 +86,6 @@ Copyright (c) 2020 Oracle and/or its affiliates.
 Copyright (c) 2019, 2020 Oracle and/or its affiliates. All rights reserved.
 
 io.helidon.microprofile.server-helidon-microprofile-server
--------- Copyrights
 Copyright (c) 2018, 2020 Oracle and/or its affiliates.
 Copyright (c) 2019, 2022 Oracle and/or its affiliates.
 Copyright (c) 2018 Oracle and/or its affiliates. All rights reserved.
@@ -2601,23 +2599,8 @@ Copyright (c) Contributors to the Electron project
 @icons/material
 <img src="https://unpkg.com/@icons/material/svg/copyright.svg" width="24" height="24"> | `CopyrightIcon`
 
-@jridgewell/gen-mapping
-Copyright 2022 Justin Ridgewell <jridgewell@google.com>
-
 @jridgewell/resolve-uri
 Copyright 2019 Justin Ridgewell <jridgewell@google.com>
-
-@jridgewell/set-array
-Copyright 2022 Justin Ridgewell <jridgewell@google.com>
-
-@jridgewell/source-map
-Copyright 2019 Justin Ridgewell <jridgewell@google.com>
-
-@jridgewell/sourcemap-codec
-Copyright (c) 2015 Rich Harris
-
-@jridgewell/trace-mapping
-Copyright 2022 Justin Ridgewell <justin@ridgewell.name>
 
 @types/geojson
     Copyright (c) Microsoft Corporation.
@@ -2653,9 +2636,6 @@ Copyright (c) 2010-2018 Caolan McMahon
 asynckit
 Copyright (c) 2016 Alex Indigo
 
-balanced-match
-Copyright (c) 2013 Julian Gruber <julian@juliangruber.com>
-
 base64-js
 Copyright (c) 2014 Jameson Little
 
@@ -2669,9 +2649,6 @@ Copyright (c) 2014-2015 Douglas Christopher Wilson <doug@somethingdoug.com>
 body
 Copyright (c) 2012 Raynos.
 
-brace-expansion
-Copyright (c) 2013 Julian Gruber <julian@juliangruber.com>
-
 buffer-from
 Copyright (c) 2016, 2018 Linus Unnebäck
 
@@ -2682,11 +2659,7 @@ Copyright (c) 2015 Jed Watson <jed.watson@me.com>
 cacheable-request
 Copyright (c) 2017 Luke Childs
 
-call-bind
-Copyright (c) 2020 Jordan Harband
-
 chokidar
-Copyright (c) 2012 Paul Miller (https://paulmillr.com), Elan Shanker
 Copyright (c) 2012-2019 Paul Miller (https://paulmillr.com), Elan Shanker
 
 combined-stream
@@ -2694,9 +2667,6 @@ Copyright (c) 2011 Debuggable Limited <felix@debuggable.com>
 
 commander
 Copyright (c) 2011 TJ Holowaychuk <tj@vision-media.ca>
-
-concat-map
-No Copyright
 
 concat-stream
 Copyright (c) 2013 Max Ogden
@@ -2728,11 +2698,6 @@ Copyright (C) 2015-2019 by Roman Dvornov
 
 csstype
 Copyright (c) 2017-2018 Fredrik Nicol
-
-debug
-Copyright (c) 2014-2017 TJ Holowaychuk &lt;tj@vision-media.ca&gt;
-Copyright (c) 2014-2017 TJ Holowaychuk <tj@vision-media.ca>
-Copyright (c) 2018-2021 Josh Junon
 
 decompress-response
 Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (https://sindresorhus.com)
@@ -2785,17 +2750,11 @@ Copyright Mathias Bynens <https://mathiasbynens.be/>
 encodeurl
 Copyright (c) 2016 Douglas Christopher Wilson
 
-end-of-stream
-Copyright (c) 2014 Mathias Buus
-
 error-ex
 Copyright (c) 2015 JD Ballard
 
 error
 No Copyright
-
-es-define-property
-Copyright (c) 2024 Jordan Harband
 
 es-errors
 Copyright (c) 2024 Jordan Harband
@@ -2828,9 +2787,6 @@ Copyright (c) 2013 Raynos.
 gaze
 Copyright (c) 2018 Kyle Robinson Young
 
-get-intrinsic
-Copyright (c) 2020 Jordan Harband
-
 globalthis
 Copyright (c) 2016 Jordan Harband
 
@@ -2838,16 +2794,10 @@ globule
 Copyright (c) 2018 "Cowboy" Ben Alman
 Copyright (c) 2018 "Cowboy" Ben Alman  
 
-gopd
-Copyright (c) 2022 Jordan Harband
-
 hammerjs
 Copyright (C) 2011-2014 by Jorik Tangelder (Eight Media)
 
 has-property-descriptors
-Copyright (c) 2022 Inspect JS
-
-has-proto
 Copyright (c) 2022 Inspect JS
 
 hasown
@@ -2856,12 +2806,6 @@ Copyright (c) Jordan Harband and contributors
 http-errors
 Copyright (c) 2014 Jonathan Ong me@jongleberry.com
 Copyright (c) 2016 Douglas Christopher Wilson doug@somethingdoug.com
-
-http-parser-js
-  Copyright Joyent, Inc. and other Node contributors. All rights reserved.
-  Copyright Node.js contributors. All rights reserved.
-  Copyright io.js contributors. All rights reserved.
-Copyright (c) 2015 Tim Caswell (https://github.com/creationix) and other
 
 iconv-lite
 Copyright (c) 2011 Alexander Shtuchkin
@@ -2889,9 +2833,6 @@ No Copyright
 
 is-wsl
 Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com)
-
-isarray
-Copyright (c) 2013 Julian Gruber <julian@juliangruber.com>
 
 jquery-ui
 Copyright OpenJS Foundation and other contributors, https://openjsf.org/
@@ -3059,9 +3000,6 @@ Copyright (c) 2013 Steve King
 proxy-addr
 Copyright (c) 2014-2016 Douglas Christopher Wilson
 
-pump
-Copyright (c) 2014 Mathias Buus
-
 randombytes
 Copyright (c) 2017 crypto-browserify
 
@@ -3076,20 +3014,11 @@ Copyright (c) 2014-2022 Douglas Christopher Wilson <doug@somethingdoug.com>
 react-color
 Copyright (c) 2015 Case Sandberg
 
-react-dom
-Copyright (c) Facebook, Inc. and its affiliates.
-
 react-is
 Copyright (c) Facebook, Inc. and its affiliates.
 
 react-lifecycles-compat
 Copyright (c) 2013-present, Facebook, Inc.
-
-react-modal
-Copyright (c) 2017 Ryan Florence
-
-react
-Copyright (c) Facebook, Inc. and its affiliates.
 
 reactcss
 Copyright (c) 2015 Case Sandberg
@@ -3114,9 +3043,6 @@ Copyright (c) 2013 Raynos.
 safer-buffer
 Copyright (c) 2018 Nikita Skovoroda <chalkerx@gmail.com>
 
-scheduler
-Copyright (c) Facebook, Inc. and its affiliates.
-
 send
 Copyright (c) 2012 TJ Holowaychuk
 Copyright (c) 2014-2022 Douglas Christopher Wilson
@@ -3133,14 +3059,8 @@ Copyright (c) 2011 LearnBoost
 Copyright (c) 2011 TJ Holowaychuk
 Copyright (c) 2014-2016 Douglas Christopher Wilson
 
-set-function-length
-Copyright (c) Jordan Harband and contributors
-
 setimmediate
 Copyright (c) 2012 Barnesandnoble.com, llc, Donavon West, and Domenic Denicola
-
-side-channel
-Copyright (c) 2019 Jordan Harband
 
 signals
 No Copyright
@@ -3184,9 +3104,6 @@ Copyright (c) 2020 Zurab Benashvili (binier) <zura.bena@gmail.com>
 tinycolor2
 Copyright (c), Brian Grinstead, http://briangrinstead.com
 
-tmp
-Copyright (c) 2014 KARASZI István
-
 toidentifier
 Copyright (c) 2016 Douglas Christopher Wilson <doug@somethingdoug.com>
 
@@ -3208,9 +3125,6 @@ Copyright (c) 2012, Joshua Bell
 underscore
 Copyright (c) 2009-2022 Jeremy Ashkenas, Julian Gonggrijp, and DocumentCloud and Investigative Reporters & Editors
 
-undici-types
-Copyright (c) Matteo Collina and Undici contributors
-
 universalify
 Copyright (c) 2017, Ryan Zimmerman <opensrc@ryanzim.com>
 
@@ -3231,11 +3145,6 @@ Copyright (c) 2013-present, Facebook, Inc.
 
 write-json-file
 Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com)
-
-ws
-Copyright (c) 2011 Einar Otto Stangvik <einaros@gmail.com>
-Copyright (c) 2013 Arnout Kazemier and contributors
-Copyright (c) 2016 Luigi Pinca and contributors
 
 
 
@@ -3465,13 +3374,6 @@ The following packages are licensed under The Universal Permissive License (UPL)
 @oracle/oraclejet-core-pack
 No copyright
 
-@oracle/oraclejet-preact
-Copyright (c) 2013-2020 Scott Sauyet and Michael Hurley
-Copyright (c) 2018 Andrew Branch
-Copyright (c) 2021 Floating UI contributors
-Copyright (c) 2021 SEEK
-Copyright (c) 2022, Vladimir Agafonkin
-
 @oracle/oraclejet-tooling
  * @license RequireJS 2.3.6 Copyright jQuery Foundation and other contributors.
 Copyright (c) 2010 Sencha Inc.
@@ -3513,8 +3415,8 @@ Copyright (c) 2014, Mike Adair, Richard Greenwood, Didier Richard, Stephen Irons
 Copyright (c) 2015-present Jason Miller
 Copyright (c) 2017 Chai.js Assertion Library
 Copyright (c) 2017 Don McCurdy
-Copyright (c) 2024 Oracle and/or its affiliates and released under the
-Copyright (c) 2024 Oracle and/or its affiliates.
+Copyright (c) 2025 Oracle and/or its affiliates and released under the
+Copyright (c) 2025 Oracle and/or its affiliates.
 Copyright 2012 Igor Vaynberg
 Copyright 2014, ZURB
 Copyright OpenJS Foundation and other contributors, https://openjsf.org/
@@ -3600,6 +3502,9 @@ The following packages are licensed under Apache License, Version 2.0
    2. Grant of Copyright License. Subject to the terms and conditions of
    Copyright [yyyy] [name of copyright owner]
 
+@eslint/config-helpers
+No copyright
+
 @eslint/core
    2. Grant of Copyright License. Subject to the terms and conditions of
    Copyright [yyyy] [name of copyright owner]
@@ -3679,10 +3584,6 @@ Copyright JS Foundation and other contributors, https://js.foundation
 ejs
    2. Grant of Copyright License. Subject to the terms and conditions of
    Copyright [yyyy] [name of copyright owner]
-
-eslint-visitor-keys
-   2. Grant of Copyright License. Subject to the terms and conditions of
-   Copyright contributors
 
 exponential-backoff
    2. Grant of Copyright License. Subject to the terms and conditions of
@@ -3924,6 +3825,10 @@ Copyright JS Foundation and other contributors, https://js.foundation
 eslint-scope
 Copyright (C) 2012-2013 Yusuke Suzuki (twitter: @Constellation) and other contributors.
 Copyright JS Foundation and other contributors, https://js.foundation
+
+eslint-visitor-keys
+   2. Grant of Copyright License. Subject to the terms and conditions of
+   Copyright contributors
 
 espree
 Copyright (c) Open JS Foundation
@@ -4461,9 +4366,6 @@ Copyright (c) Isaac Z. Schlueter and Contributors
 cliui
 Copyright (c) 2015, Contributors
 
-cliui
-Copyright (c) 2015, Contributors
-
 color-support
 Copyright (c) Isaac Z. Schlueter and Contributors
 
@@ -4484,9 +4386,6 @@ Copyright (c) Isaac Z. Schlueter and Contributors
 
 gauge
 Copyright npm, Inc.
-
-get-caller-file
-Copyright 2018 Stefan Penner
 
 glob-parent
 Copyright (c) 2015, 2019 Elan Shanker, 2021 Blaine Bublitz <blaine.bublitz@gmail.com>, Eric Schoffstall <yo@contra.io> and other contributors
@@ -4519,7 +4418,7 @@ minimalistic-assert
 Copyright 2015 Calvin Metcalf
 
 minimatch
-Copyright (c) 2011-2023 Isaac Z. Schlueter and Contributors
+Copyright (c) Isaac Z. Schlueter and Contributors
 
 minimatch
 Copyright (c) Isaac Z. Schlueter and Contributors
@@ -4575,17 +4474,11 @@ Copyright npm, Inc
 wide-align
 Copyright (c) 2015, Rebecca Turner <me@re-becca.org>
 
-y18n
-Copyright (c) 2015, Contributors
-
 yallist
 Copyright (c) Isaac Z. Schlueter and Contributors
 
 yallist
 Copyright (c) Isaac Z. Schlueter and Contributors
-
-yargs-parser
-Copyright (c) 2016, Contributors
 
 yargs-parser
 Copyright (c) 2016, Contributors
@@ -4624,6 +4517,9 @@ Copyright (c) 2014-present Sebastian McKenzie and other contributors
 @babel/helper-compilation-targets
 Copyright (c) 2014-present Sebastian McKenzie and other contributors
 
+@babel/helper-globals
+Copyright (c) 2014-present Sebastian McKenzie and other contributors
+
 @babel/helper-module-imports
 Copyright (c) 2014-present Sebastian McKenzie and other contributors
 
@@ -4638,6 +4534,7 @@ Copyright (c) 2014-present Sebastian McKenzie and other contributors
 
 @babel/helpers
 Copyright (c) 2014-present Sebastian McKenzie and other contributors
+Copyright (c) 2014-present, Facebook, Inc. (ONLY ./src/helpers/regenerator* files)
 
 @babel/parser
 Copyright (C) 2012-2014 by various contributors (see AUTHORS)
@@ -4692,6 +4589,12 @@ Copyright OpenJS Foundation and other contributors, <www.openjsf.org>
 @gar/promisify
 Copyright © 2020-2022 Michael Garvin
 
+@isaacs/balanced-match
+No copyright
+
+@isaacs/brace-expansion
+No copyright
+
 @istanbuljs/schema
 Copyright (c) 2019 CFWare, LLC
 
@@ -4729,9 +4632,6 @@ copyright (c) 2019 Jake Teton-Landis
 @types/chai
     Copyright (c) Microsoft Corporation.
 
-@types/cookie
-    Copyright (c) Microsoft Corporation.
-
 @types/cors
     Copyright (c) Microsoft Corporation.
 
@@ -4757,10 +4657,13 @@ Copyright (c) Microsoft Corporation.
 Copyright (c) Microsoft Corporation. All rights reserved.
 
 @types/ms
-    Copyright (c) Microsoft Corporation.
+Copyright (c) Microsoft Corporation. All rights reserved.
 
 @types/node
     Copyright (c) Microsoft Corporation.
+
+@types/plist
+No copyright
 
 @types/sinon-chai
     Copyright (c) Microsoft Corporation.
@@ -4773,6 +4676,9 @@ Copyright (c) Microsoft Corporation.
 
 @types/sizzle
     Copyright (c) Microsoft Corporation.
+
+@types/verror
+No copyright
 
 @wdio/logger
 Copyright (c) OpenJS Foundation and other contributors
@@ -4788,7 +4694,6 @@ acorn
 Copyright (C) 2012-2022 by various contributors (see AUTHORS)
 
 agent-base
-Copyright (c) 2013 Nathan Rajlich &lt;nathan@tootallnate.net&gt;
 Copyright (c) 2013 Nathan Rajlich <nathan@tootallnate.net>
 
 agentkeepalive
@@ -4822,6 +4727,9 @@ Copyright (c) 2012-2014 Chris Talkington, contributors.
 
 asn1.js
 Copyright Fedor Indutny, 2013.
+
+assert-plus
+No copyright
 
 assert
 Copyright Joyent, Inc. and other Node contributors. All rights reserved.
@@ -4866,10 +4774,6 @@ Copyright (c) 2013-2018 Petka Antonov
 bn.js
 Copyright Fedor Indutny, 2015.
 
-brace-expansion
-Copyright (c) 2013 Julian Gruber &lt;julian@juliangruber.com&gt;
-Copyright (c) 2013 Julian Gruber <julian@juliangruber.com>
-
 braces
 Copyright (c) 2014-present, Jon Schlinkert.
 Copyright © 2019, [Jon Schlinkert](https://github.com/jonschlinkert).
@@ -4909,11 +4813,17 @@ Copyright (c) 2015 Daniel Cousens
 buffer
 Copyright (c) Feross Aboukhadijeh, and other contributors.
 
+builder-util-runtime
+Copyright (c) 2015 Loopline Systems
+
 builder-util
 Copyright (c) 2015 Loopline Systems
 
 builtin-status-codes
 Copyright (c) Ben Drucker <bvdrucker@gmail.com> (bendrucker.me)
+
+call-bind
+Copyright (c) 2020 Jordan Harband
 
 callsites
 Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com)
@@ -4950,6 +4860,9 @@ Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com)
 
 cli-spinners
 Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (https://sindresorhus.com)
+
+cli-truncate
+No copyright
 
 clone
 Copyright © 2011-2015 Paul Vorbach <paul@vorba.ch>
@@ -4995,6 +4908,9 @@ Copyright (c) 2013 Troy Goode <troygoode@gmail.com>
 
 crc32-stream
 Copyright (c) 2014 Chris Talkington, contributors.
+
+crc
+No copyright
 
 create-ecdh
 Copyright (c) 2014-2017 createECDH contributors
@@ -5052,6 +4968,9 @@ Copyright 2014 Liviu Grigorescu (grigoresculiviu@gmail.com)
 dmg-builder
 Copyright 2012-2016, JP Richardson  <jprichardson@gmail.com>
 
+dmg-license
+No copyright
+
 dom-serialize
 Copyright 2017 Nathan Rajlich
 
@@ -5079,10 +4998,6 @@ Copyright (c) 2015 Loopline Systems
 electron-publish
 Copyright (c) 2015 Loopline Systems
 
-electron
-Copyright (c) 2013-2020 GitHub Inc.
-Copyright (c) Electron contributors
-
 elliptic
 Copyright Fedor Indutny, 2014.
 
@@ -5097,13 +5012,10 @@ Copyright (c) 2014 Guillermo Rauch &lt;guillermo@learnboost.com&gt;
 Copyright (c) 2014-present Guillermo Rauch and Socket.IO contributors
 
 ent
-No Copyright
+Copyright (c) 2011 James Halliday and contributors
 
 err-code
 No copyright
-
-escalade
-Copyright (c) Luke Edwards <luke.edwards05@gmail.com> (lukeed.com)
 
 eslint
 Copyright OpenJS Foundation and other contributors, <www.openjsf.org>
@@ -5119,6 +5031,9 @@ Copyright (c) 2017 crypto-browserify contributors
 
 extend
 Copyright (c) 2014 Stefan Thomas
+
+extsprintf
+No copyright
 
 fast-deep-equal
 Copyright (c) 2017 Evgeny Poberezkin
@@ -5174,6 +5089,9 @@ Copyright (c) 2018 Mathias Buus
 fs
 None
 
+fsevents
+No copyright
+
 gensync
 Copyright 2018 Logan Smyth <loganfsmyth@gmail.com>
 
@@ -5197,9 +5115,6 @@ Copyright 2020 Filament (Anomalous Technologies Limited)
 
 has-flag
 Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com)
-
-has-tostringtag
-Copyright (c) 2021 Inspect JS
 
 hash-base
 Copyright (c) 2016 Kirill Fomichev
@@ -5227,11 +5142,13 @@ https-browserify
 Copyright (c) James Halliday
 
 https-proxy-agent
-Copyright (c) 2013 Nathan Rajlich &lt;nathan@tootallnate.net&gt;
 Copyright (c) 2013 Nathan Rajlich <nathan@tootallnate.net>
 
 humanize-ms
 Copyright(c) 2014 dead_horse <dead_horse@qq.com>
+
+iconv-corefoundation
+No copyright
 
 iconv-lite
 Copyright (c) 2011 Alexander Shtuchkin
@@ -5293,6 +5210,9 @@ Copyright (c) 2014-present, Jon Schlinkert.
 is-path-inside
 Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com)
 
+is-regex
+Copyright (c) 2014 Jordan Harband
+
 is-typed-array
 Copyright (c) 2015 Jordan Harband
 
@@ -5306,6 +5226,12 @@ is2
 Copyright (c) 2011 Enrico Marino
 Copyright (c) 2013 Edmond Meinfelder
 Copyright (c) 2013,2014 Edmond Meinfelder
+
+isarray
+Copyright (c) 2013 Julian Gruber <julian@juliangruber.com>
+
+isarray
+Copyright (c) 2013 Julian Gruber <julian@juliangruber.com>
 
 isbinaryfile
 Copyright (c) 2017 Garen J. Torikian
@@ -5454,6 +5380,9 @@ Copyright (c) 2011 Olivier Poitrey <rs@rhapsodyk.net>
 node-abi
 Copyright (c) 2016 Lukas Geiger
 
+node-addon-api
+No copyright
+
 node-api-version
 No copyright
 
@@ -5579,9 +5508,6 @@ Copyright Node.js contributors. All rights reserved.
 readdirp
 Copyright (c) 2012-2019 Thorsten Lorenz, Paul Miller (https://paulmillr.com)
 
-require-directory
-Copyright (c) 2011 Troy Goode <troygoode@gmail.com>
-
 requires-port
 Copyright (c) 2015 Unshift.io, Arnout Kazemier,  the Contributors.
 
@@ -5597,11 +5523,14 @@ Copyright (c) 2012 James Halliday
 restore-cursor
 Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com)
 
+ret
+Copyright (C) 2011 by fent
+
 retry
 Copyright (c) 2011:
 
 reusify
-Copyright (c) 2015 Matteo Collina
+Copyright (c) 2015-2024 Matteo Collina
 
 rfdc
 Copyright 2019 "David Mark Clements <david.mark.clements@gmail.com>"
@@ -5611,6 +5540,15 @@ Copyright (c) 2016 crypto-browserify
 
 run-parallel
 Copyright (c) Feross Aboukhadijeh
+
+safe-regex-test
+Copyright (c) 2022 Jordan Harband
+
+safe-regex2
+Copyright (c) 2019-present The Fastify team
+
+set-function-length
+Copyright (c) Jordan Harband and contributors
 
 sha.js
 Copyright (c) 1998 - 2009, Paul Johnston & Contributors
@@ -5681,15 +5619,15 @@ No Copyright
 text-table
 No Copyright
 
-through
-Copyright (c) 2011 Dominic Tarr
-
 timers-browserify
 Copyright Joyent, Inc. and other Node contributors. All rights reserved.
 Copyright © 2012 J. Ryan Stinnett <jryans@gmail.com>
 
 tmp-promise
 No Copyright
+
+to-buffer
+Copyright (c) 2016 Mathias Buus
 
 to-regex-range
 Copyright (c) 2015-present, Jon Schlinkert.
@@ -5711,12 +5649,14 @@ Copyright (c) 2013 Jake Luer <jake@alogicalparadox.com> (http://alogicalparadox.
 type-fest
 Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (https:/sindresorhus.com)
 
+typed-array-buffer
+Copyright (c) 2023 Jordan Harband
+
+typed-query-selector
+Copyright (c) 2020-present Pig Fang
+
 ua-parser-js
 Copyright (c) 2012-2024 Faisal Salman <<f@faisalman.com>>
-
-unbzip2-stream
-Copyright (c) 2017 by Jan Boelsche (jan@lagomorph.de)
-Copyright 2011 by antimatter15 (antimatter15@gmail.com)
 
 update-browserslist-db
 Copyright 2022 Andrey Sitnik <andrey@sitnik.ru> and other contributors
@@ -5724,15 +5664,15 @@ Copyright 2022 Andrey Sitnik <andrey@sitnik.ru> and other contributors
 url
 Copyright 2014 Joyent, Inc. and other Node contributors.
 
-urlpattern-polyfill
-Copyright 2020 Intel Corporation
-
 utf8-byte-length
  Copyright (C) 2004 Sam Hocevar <sam@hocevar.net> 
 Copyright 2023 Carl Xiong & Parsha Pourkhomami
 
 util
 Copyright Joyent, Inc. and other Node contributors. All rights reserved.
+
+verror
+No copyright
 
 vm-browserify
 No copyright
@@ -5754,9 +5694,6 @@ word-wrap
 Copyright (c) 2014-2016, Jon Schlinkert
 Copyright © 2023, [Jon Schlinkert](https://github.com/jonschlinkert).
 
-wrap-ansi
-Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (https://sindresorhus.com)
-
 xmlbuilder
 Copyright (c) 2013 Ozgur Ozcitak
 
@@ -5769,9 +5706,6 @@ Copyright (c) 2017 Made With MOXY Lda <hello@moxy.studio>
 yargs
 Copyright 2010 James Halliday (mail@substack.net); Modified work Copyright 2014 Contributors (ben@npmjs.com)
 
-yargs
-Copyright 2010 James Halliday (mail@substack.net); Modified work Copyright 2014 Contributors (ben@npmjs.com)
-
 yocto-queue
 Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (https://sindresorhus.com)
 
@@ -5779,7 +5713,7 @@ zip-stream
 Copyright (c) 2014 Chris Talkington, contributors.
 
 zod
-Copyright (c) 2020 Colin McDonnell
+Copyright (c) 2025 Colin McDonnell
 
 
 
@@ -6225,7 +6159,6 @@ bare-events
    Copyright [yyyy] [name of copyright owner]
 
 io.helidon.common-helidon-common-configurable
--------- Copyrights
 Copyright (c) 2023 Oracle and/or its affiliates.
 Copyright (c) 2019, 2021 Oracle and/or its affiliates.
 Copyright (c) 2021 Oracle and/or its affiliates.
@@ -6237,11 +6170,9 @@ Copyright (c) 2019, 2022 Oracle and/or its affiliates.
 Copyright (c) 2018, 2022 Oracle and/or its affiliates.
 
 io.helidon.common-helidon-common-crypto
--------- Copyrights
 Copyright (c) 2021 Oracle and/or its affiliates.
 
 io.helidon.common-helidon-common-http
--------- Copyrights
 Copyright (c) 2018 Oracle and/or its affiliates. All rights reserved.
 Copyright (c) 2021, 2023 Oracle and/or its affiliates.
 Copyright (c) 2018, 2020 Oracle and/or its affiliates. All rights reserved.
@@ -6257,26 +6188,22 @@ Copyright (c) 2018, 2022 Oracle and/or its affiliates.
 Copyright (c) 2022 Oracle and/or its affiliates.
 
 io.helidon.common-helidon-common-key-util
--------- Copyrights
 Copyright (c) 2017, 2022 Oracle and/or its affiliates.
 Copyright (c) 2021, 2022 Oracle and/or its affiliates.
 Copyright (c) 2017, 2018 Oracle and/or its affiliates. All rights reserved.
 Copyright (c) 2018, 2021 Oracle and/or its affiliates.
 
 io.helidon.common-helidon-common-mapper
--------- Copyrights
 Copyright (c) 2020, 2021 Oracle and/or its affiliates.
 Copyright (c) 2019 Oracle and/or its affiliates. All rights reserved.
 Copyright (c) 2019, 2021 Oracle and/or its affiliates.
 
 io.helidon.common-helidon-common-media-type
--------- Copyrights
 Copyright (c) 2019 Oracle and/or its affiliates. All rights reserved.
 Copyright (c) 2019, 2020 Oracle and/or its affiliates.
 Copyright (c) 2019, 2021 Oracle and/or its affiliates.
 
 io.helidon.common-helidon-common-reactive
--------- Copyrights
 Copyright (c) 2020, 2021 Oracle and/or its affiliates.
 Copyright (c) 2021, 2022 Oracle and/or its affiliates.
 Copyright (c) 2019 Oracle and/or its affiliates. All rights reserved.
@@ -6291,29 +6218,25 @@ Copyright (c) 2017, 2020 Oracle and/or its affiliates.
 Copyright (c) 2018, 2020 Oracle and/or its affiliates.
 
 io.helidon.common-helidon-common-service-loader
--------- Copyrights
 Copyright (c) 2019, 2020 Oracle and/or its affiliates.
 Copyright (c) 2019 Oracle and/or its affiliates. All rights reserved.
 
 io.helidon.common-helidon-common
--------- Copyrights
-Copyright (c) 2023 Oracle and/or its affiliates.
-Copyright (c) 2019, 2021 Oracle and/or its affiliates.
 Copyright (c) 2021 Oracle and/or its affiliates.
-Copyright (c) 2017, 2022 Oracle and/or its affiliates.
 Copyright (c) 2017, 2021 Oracle and/or its affiliates.
+Copyright (c) 2020, 2022 Oracle and/or its affiliates.
+Copyright (c) 2020 Oracle and/or its affiliates.
 Copyright (c) 2018, 2021 Oracle and/or its affiliates.
-Copyright (c) 2018, 2020 Oracle and/or its affiliates.
-Copyright (c) 2019, 2022 Oracle and/or its affiliates.
-Copyright (c) 2018, 2022 Oracle and/or its affiliates.
+Copyright (c) 2019, 2020 Oracle and/or its affiliates.
+Copyright (c) 2019, 2021 Oracle and/or its affiliates.
+Copyright (c) 2021, 2022 Oracle and/or its affiliates.
+Copyright (c) 2017, 2020 Oracle and/or its affiliates.
 
 io.helidon.config-helidon-config-metadata
--------- Copyrights
 Copyright (c) 2021, 2022 Oracle and/or its affiliates.
 Copyright (c) 2021 Oracle and/or its affiliates.
 
 io.helidon.config-helidon-config-mp
--------- Copyrights
 Copyright (c) 2020, 2021 Oracle and/or its affiliates.
 Copyright (c) 2020, 2022 Oracle and/or its affiliates.
 Copyright (c) 2019, 2022 Oracle and/or its affiliates.
@@ -6324,52 +6247,55 @@ Copyright (c) 2020, 2023 Oracle and/or its affiliates.
 Copyright (c) 2020 Oracle and/or its affiliates.
 
 io.helidon.config-helidon-config-yaml-mp
--------- Copyrights
 Copyright (c) 2021, 2022 Oracle and/or its affiliates.
 Copyright (c) 2022 Oracle and/or its affiliates.
 Copyright (c) 2021, 2023 Oracle and/or its affiliates.
 Copyright (c) 2021 Oracle and/or its affiliates.
 
 io.helidon.config-helidon-config-yaml
--------- Copyrights
-Copyright (c) 2021, 2022 Oracle and/or its affiliates.
-Copyright (c) 2022 Oracle and/or its affiliates.
-Copyright (c) 2021, 2023 Oracle and/or its affiliates.
-Copyright (c) 2021 Oracle and/or its affiliates.
-
-io.helidon.config-helidon-config
--------- Copyrights
-Copyright (c) 2018, 2021 Oracle and/or its affiliates.
-Copyright (c) 2018, 2020 Oracle and/or its affiliates.
-Copyright (c) 2018, 2022 Oracle and/or its affiliates.
+Copyright (c) 2020, 2023 Oracle and/or its affiliates.
+Copyright (c) 2017, 2020 Oracle and/or its affiliates.
 Copyright (c) 2017, 2021 Oracle and/or its affiliates.
 
+io.helidon.config-helidon-config
+Copyright (c) 2017, 2020 Oracle and/or its affiliates.
+Copyright (c) 2020, 2022 Oracle and/or its affiliates.
+Copyright (c) 2020 Oracle and/or its affiliates.
+Copyright (c) 2017, 2023 Oracle and/or its affiliates.
+Copyright (c) 2017, 2022 Oracle and/or its affiliates.
+Copyright (c) 2017, 2024 Oracle and/or its affiliates.
+Copyright (c) 2017, 2021 Oracle and/or its affiliates.
+Copyright (c) 2020, 2021 Oracle and/or its affiliates.
+Copyright (c) 2018, 2020 Oracle and/or its affiliates.
+Copyright (c) 2018, 2022 Oracle and/or its affiliates.
+Copyright (c) 2023 Oracle and/or its affiliates.
+Copyright (c) 2019, 2021 Oracle and/or its affiliates.
+Copyright (c) 2019, 2020 Oracle and/or its affiliates.
+Copyright (c) 2021 Oracle and/or its affiliates.
+Copyright (c) 2020, 2023 Oracle and/or its affiliates.
+Copyright (c) 2019, 2022 Oracle and/or its affiliates.
+Copyright (c) 2018, 2021 Oracle and/or its affiliates.
+
 io.helidon.fault-tolerance-helidon-fault-tolerance
--------- Copyrights
 Copyright (c) 2020 Oracle and/or its affiliates.
 Copyright (c) 2020, 2022 Oracle and/or its affiliates.
 
 io.helidon.health-helidon-health-common
--------- Copyrights
 Copyright (c) 2019, 2021 Oracle and/or its affiliates.
 Copyright (c) 2019, 2020 Oracle and/or its affiliates.
 
 io.helidon.health-helidon-health
--------- Copyrights
-Copyright (c) 2018, 2022 Oracle and/or its affiliates.
 Copyright (c) 2018, 2021 Oracle and/or its affiliates.
+Copyright (c) 2018, 2022 Oracle and/or its affiliates.
 
 io.helidon.jersey-helidon-jersey-common
--------- Copyrights
 Copyright (c) 2019, 2021 Oracle and/or its affiliates.
 Copyright (c) 2020 Oracle and/or its affiliates.
 
 io.helidon.logging-helidon-logging-common
--------- Copyrights
 Copyright (c) 2020 Oracle and/or its affiliates.
 
 io.helidon.media-helidon-media-common
--------- Copyrights
 Copyright (c) 2020 Oracle and/or its affiliates.
 Copyright (c) 2019, 2022 Oracle and/or its affiliates.
 Copyright (c) 2017, 2021 Oracle and/or its affiliates.
@@ -6381,28 +6307,29 @@ Copyright (c) 2019, 2021 Oracle and/or its affiliates.
 Copyright (c) 2018, 2020 Oracle and/or its affiliates. All rights reserved.
 
 io.helidon.media-helidon-media-jsonp
--------- Copyrights
 Copyright (c) 2020 Oracle and/or its affiliates.
 Copyright (c) 2020, 2022 Oracle and/or its affiliates.
 Copyright (c) 2019, 2020 Oracle and/or its affiliates.
 
 io.helidon.metrics-helidon-metrics-api
--------- Copyrights
 Copyright (c) 2021 Oracle and/or its affiliates.
 Copyright (c) 2021, 2023 Oracle and/or its affiliates.
 
 io.helidon.metrics-helidon-metrics-service-api
--------- Copyrights
 Copyright (c) 2021, 2022 Oracle and/or its affiliates.
 Copyright (c) 2021 Oracle and/or its affiliates.
 
 io.helidon.metrics-helidon-metrics
--------- Copyrights
+Copyright (c) 2018, 2021 Oracle and/or its affiliates.
+Copyright (c) 2018, 2019 Oracle and/or its affiliates. All rights reserved.
+Copyright (c) 2021, 2022 Oracle and/or its affiliates.
+Copyright (c) 2018, 2020 Oracle and/or its affiliates. All rights reserved.
 Copyright (c) 2021 Oracle and/or its affiliates.
-Copyright (c) 2021, 2023 Oracle and/or its affiliates.
+Copyright (c) 2018, 2023 Oracle and/or its affiliates.
+Copyright (c) 2020, 2023 Oracle and/or its affiliates.
+Copyright (c) 2018, 2022 Oracle and/or its affiliates.
 
 io.helidon.microprofile.cdi-helidon-microprofile-cdi
--------- Copyrights
 Copyright (c) 2020 Oracle and/or its affiliates. All rights reserved.
 Copyright (c) 2019, 2020 Oracle and/or its affiliates.
 Copyright (c) 2020 Oracle and/or its affiliates.
@@ -6411,43 +6338,41 @@ Copyright (c) 2019, 2022 Oracle and/or its affiliates.
 Copyright (c) 2019, 2021 Oracle and/or its affiliates.
 
 io.helidon.microprofile.weld-weld-core-impl
--------- Copyrights
 Copyright 2008, Red Hat, Inc. and/or its affiliates, and individual contributors
 Copyright (c) 2020, 2023 Oracle and/or its affiliates.
 
 io.helidon.microprofile.weld-weld-se-core
--------- Copyrights
   (no copyright notices found)
 
 io.helidon.service-common-helidon-service-common-rest-cdi
--------- Copyrights
 Copyright (c) 2021, 2022 Oracle and/or its affiliates.
 
 io.helidon.service-common-helidon-service-common-rest
--------- Copyrights
 Copyright (c) 2021, 2022 Oracle and/or its affiliates.
+Copyright (c) 2021 Oracle and/or its affiliates.
 
 io.helidon.tracing-helidon-tracing-config
--------- Copyrights
 Copyright (c) 2019 Oracle and/or its affiliates. All rights reserved.
 
 io.helidon.webclient-helidon-webclient-security
--------- Copyrights
 Copyright (c) 2020, 2022 Oracle and/or its affiliates.
 Copyright (c) 2020 Oracle and/or its affiliates.
 
 io.helidon.webclient-helidon-webclient-tracing
--------- Copyrights
 Copyright (c) 2020 Oracle and/or its affiliates.
 
 io.helidon.webclient-helidon-webclient
--------- Copyrights
-Copyright (c) 2019, 2022 Oracle and/or its affiliates.
-Copyright (c) 2019, 2020 Oracle and/or its affiliates.
-Copyright (c) 2019 Oracle and/or its affiliates. All rights reserved.
+Copyright (c) 2022, 2023 Oracle and/or its affiliates.
+Copyright (c) 2020, 2021 Oracle and/or its affiliates.
+Copyright (c) 2021 Oracle and/or its affiliates.
+Copyright (c) 2020 Oracle and/or its affiliates.
+Copyright (c) 2021, 2022 Oracle and/or its affiliates.
+Copyright (c) 2020, 2022 Oracle and/or its affiliates.
+Copyright (c) 2020, 2024 Oracle and/or its affiliates.
+Copyright (c) 2020, 2023 Oracle and/or its affiliates.
+Copyright (c) 2019, 2024 Oracle and/or its affiliates.
 
 io.helidon.webserver-helidon-webserver-jersey
--------- Copyrights
 Copyright (c) 2020, 2021 Oracle and/or its affiliates.
 Copyright (c) 2021, 2023 Oracle and/or its affiliates.
 Copyright (c) 2017, 2023 Oracle and/or its affiliates.
@@ -6457,18 +6382,37 @@ Copyright (c) 2017, 2021 Oracle and/or its affiliates.
 Copyright (c) 2018, 2022 Oracle and/or its affiliates.
 
 io.helidon.webserver-helidon-webserver-static-content
--------- Copyrights
 Copyright (c) 2017, 2021 Oracle and/or its affiliates.
 Copyright (c) 2021 Oracle and/or its affiliates.
 
 io.helidon.webserver-helidon-webserver
--------- Copyrights
-Copyright (c) 2020, 2022 Oracle and/or its affiliates.
+Copyright (c) 2022 Oracle and/or its affiliates.
+Copyright (c) 2017, 2018 Oracle and/or its affiliates. All rights reserved.
+Copyright (c) 2017, 2023 Oracle and/or its affiliates.
+Copyright (c) 2017, 2022 Oracle and/or its affiliates.
+Copyright (c) 2021, 2023 Oracle and/or its affiliates.
+Copyright (c) 2017, 2021 Oracle and/or its affiliates.
+Copyright (c) 2020 Oracle and/or its affiliates.
+Copyright (c) 2021 Oracle and/or its affiliates.
+Copyright (c) 2017, 2020 Oracle and/or its affiliates.
+Copyright (c) 2019, 2020 Oracle and/or its affiliates.
+Copyright (c) 2017, 2020 Oracle and/or its affiliates. All rights reserved.
+Copyright (c) 2017, 2025 Oracle and/or its affiliates.
+Copyright (c) 2018, 2022 Oracle and/or its affiliates.
+Copyright (c) 2018 Oracle and/or its affiliates. All rights reserved.
+Copyright (c) 2017, 2024 Oracle and/or its affiliates.
+Copyright (c) 2019 Oracle and/or its affiliates. All rights reserved.
+Copyright (c) 2018, 2021 Oracle and/or its affiliates.
+Copyright (c) 2018, 2019 Oracle and/or its affiliates. All rights reserved.
+Copyright (c) 2017, 2019 Oracle and/or its affiliates. All rights reserved.
+Copyright (c) 2022, 2023 Oracle and/or its affiliates.
 Copyright (c) 2020, 2021 Oracle and/or its affiliates.
-Copyright (c) 2020, 2024 Oracle and/or its affiliates.
+Copyright (c) 2023 Oracle and/or its affiliates.
+Copyright (c) 2020, 2022 Oracle and/or its affiliates.
+Copyright (c) 2019, 2022 Oracle and/or its affiliates.
+Copyright (c) 2018, 2023 Oracle and/or its affiliates.
 
 io.netty-netty-buffer
--------- Copyrights
 Copyright 2012 The Netty Project
 Copyright 2013 The Netty Project
 Copyright 2016 The Netty Project
@@ -6480,14 +6424,12 @@ Copyright 2020 The Netty Project
 Copyright 2014 The Netty Project
 
 io.netty-netty-codec-dns
--------- Copyrights
 Copyright 2015 The Netty Project
 Copyright 2016 The Netty Project
 Copyright 2019 The Netty Project
 Copyright 2021 The Netty Project
 
 io.netty-netty-codec-http2
--------- Copyrights
 Copyright 2015 The Netty Project
 Copyright 2019 The Netty Project
 Copyright 2016 The Netty Project
@@ -6497,35 +6439,43 @@ Copyright 2020 The Netty Project
 Copyright 2014 Twitter, Inc.
 Copyright 2022 The Netty Project
 Copyright 2023 The Netty Project
+Copyright 2025 The Netty Project
 
 io.netty-netty-codec-http
--------- Copyrights
-Copyright 2015 The Netty Project
-Copyright 2019 The Netty Project
-Copyright 2016 The Netty Project
-Copyright 2017 The Netty Project
 Copyright 2014 The Netty Project
-Copyright 2020 The Netty Project
-Copyright 2014 Twitter, Inc.
-Copyright 2022 The Netty Project
+Copyright 2015 The Netty Project
+Copyright 2013 The Netty Project
+Copyright 2021 The Netty Project
+Copyright 2012 The Netty Project
 Copyright 2023 The Netty Project
+Copyright 2022 The Netty Project
+Copyright 2017 The Netty Project
+Copyright 2016 The Netty Project
+Copyright 2025 The Netty Project
+Copyright 2020 The Netty Project
+Copyright 2019 The Netty Project
+Copyright (c) 2008-2009 Bjoern Hoehrmann <bjoern@hoehrmann.de>
+Copyright (c) 2011, Joe Walnes and contributors
+Copyright 2024 The Netty Project
 
 io.netty-netty-codec-socks
--------- Copyrights
 Copyright 2013 The Netty Project
 Copyright 2012 The Netty Project
 Copyright 2014 The Netty Project
 Copyright 2015 The Netty Project
 
 io.netty-netty-codec
--------- Copyrights
+Copyright 2014 The Netty Project
+Copyright 2012 The Netty Project
 Copyright 2015 The Netty Project
 Copyright 2016 The Netty Project
-Copyright 2019 The Netty Project
 Copyright 2021 The Netty Project
+Copyright 2024 The Netty Project
+Copyright 2013 The Netty Project
+Copyright 2023 The Netty Project
+Copyright 2019 The Netty Project
 
 io.netty-netty-common
--------- Copyrights
 Copyright 2012 The Netty Project
 Copyright 2013 The Netty Project
 Copyright 2014 The Netty Project
@@ -6534,21 +6484,33 @@ Copyright 2015 The Netty Project
 Copyright 2016 The Netty Project
 Copyright 2018 The Netty Project
 Copyright 2020 The Netty Project
+Copyright 2025 The Netty Project
 Copyright 2017 The Netty Project
 Copyright 2021 The Netty Project
 Copyright 2019 The Netty Project
 Copyright (c) 2004-2011 QOS.ch
 
 io.netty-netty-handler-proxy
--------- Copyrights
 Copyright 2014 The Netty Project
 
 io.netty-netty-handler
--------- Copyrights
+Copyright 2019 The Netty Project
+Copyright 2020 The Netty Project
+Copyright 2016 The Netty Project
 Copyright 2014 The Netty Project
+Copyright 2012 The Netty Project
+Copyright 2023 The Netty Project
+Copyright 2017 The Netty Project
+Copyright 2015 The Netty Project
+Copyright 2021 The Netty Project
+Copyright 2022 The Netty Project
+Copyright 2018 The Netty Project
+Copyright 2024 The Netty Project
+Copyright 2013 The Netty Project
+Copyright 2025 The Netty Project
+Copyright 2011 The Netty Project
 
 io.netty-netty-resolver-dns
--------- Copyrights
 Copyright 2018 The Netty Project
 Copyright 2017 The Netty Project
 Copyright 2019 The Netty Project
@@ -6561,7 +6523,6 @@ Copyright 2022 The Netty Project
 Copyright 2020 The Netty Project
 
 io.netty-netty-transport-native-unix-common
--------- Copyrights
 Copyright 2018 The Netty Project
 Copyright 2015 The Netty Project
 Copyright 2021 The Netty Project
@@ -6571,14 +6532,19 @@ Copyright 2014 The Netty Project
 Copyright 2017 The Netty Project
 
 io.netty-netty-transport
--------- Copyrights
-Copyright 2018 The Netty Project
+Copyright 2012 The Netty Project
+Copyright 2016 The Netty Project
+Copyright 2013 The Netty Project
+Copyright 2023 The Netty Project
+Copyright 2017 The Netty Project
+Copyright 2014 The Netty Project
+Copyright 2019 The Netty Project
 Copyright 2015 The Netty Project
 Copyright 2021 The Netty Project
-Copyright 2016 The Netty Project
+Copyright 2018 The Netty Project
+Copyright 2020 The Netty Project
+Copyright 2024 The Netty Project
 Copyright 2022 The Netty Project
-Copyright 2014 The Netty Project
-Copyright 2017 The Netty Project
 
 io.opentracing-opentracing-api
 Copyright 2016-2019 The OpenTracing Authors
@@ -6684,7 +6650,7 @@ org.reactivestreams-reactive-streams
 
 selenium-webdriver
    2. Grant of Copyright License. Subject to the terms and conditions of
-   Copyright 2024 Software Freedom Conservancy (SFC)
+   Copyright 2025 Software Freedom Conservancy (SFC)
 
 sumchecker
 Copyright 2016, 2017, 2019, 2021 Mark Lee and contributors
@@ -9272,8 +9238,14 @@ The following packages are licensed under ISC License
 @isaacs/cliui
 Copyright (c) 2015, Contributors
 
+cliui
+Copyright (c) 2015, Contributors
+
 foreground-child
 Copyright (c) 2015-2023 Isaac Z. Schlueter and Contributors
+
+get-caller-file
+Copyright 2018 Stefan Penner
 
 isexe
 Copyright (c) Isaac Z. Schlueter and Contributors
@@ -9304,6 +9276,12 @@ Copyright (c) Isaac Z. Schlueter and Contributors
 wrap-ansi-cjs
 Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (https://sindresorhus.com)
 
+y18n
+Copyright (c) 2015, Contributors
+
+yargs-parser
+Copyright (c) 2016, Contributors
+
 
 
 ISC License
@@ -9328,6 +9306,18 @@ Copyright (c) 2014-present Sebastian McKenzie and other contributors
 
 @babel/helper-validator-identifier
 Copyright (c) 2014-present Sebastian McKenzie and other contributors
+
+@jridgewell/gen-mapping
+Copyright 2024 Justin Ridgewell <justin@ridgewell.name>
+
+@jridgewell/source-map
+Copyright 2024 Justin Ridgewell <justin@ridgewell.name>
+
+@jridgewell/sourcemap-codec
+Copyright 2024 Justin Ridgewell <justin@ridgewell.name>
+
+@jridgewell/trace-mapping
+Copyright 2024 Justin Ridgewell <justin@ridgewell.name>
 
 @pkgjs/parseargs
    2. Grant of Copyright License. Subject to the terms and conditions of
@@ -9370,18 +9360,28 @@ Copyright (c) 2015 Chris Talkington.
 archiver
 Copyright (c) 2012-2014 Chris Talkington, contributors.
 
+balanced-match
+Copyright (c) 2013 Julian Gruber &lt;julian@juliangruber.com&gt;
+
 boolean
 Copyright (c) 2014-2022 the native web.
+
+brace-expansion
+Copyright (c) 2013 Julian Gruber &lt;julian@juliangruber.com&gt;
+Copyright (c) 2013 Julian Gruber <julian@juliangruber.com>
 
 buffer-crc32
 Copyright (c) 2013 Brian J. Brennan
 Copyright (c) 2013-2024 Brian J. Brennan
 
-builder-util-runtime
-Copyright (c) 2015 Loopline Systems
-
 cacheable-lookup
 Copyright (c) 2019 Szymon Marczak
+
+call-bind-apply-helpers
+Copyright (c) 2024 Jordan Harband
+
+call-bound
+Copyright (c) 2024 Jordan Harband
 
 clone-response
 Copyright (c) 2017 Luke Childs
@@ -9405,20 +9405,43 @@ Copyright (c) 2014 Chris Talkington, contributors.
 cross-spawn
 Copyright (c) 2018 Made With MOXY Lda <hello@moxy.studio>
 
+debug
+Copyright (c) 2014-2017 TJ Holowaychuk &lt;tj@vision-media.ca&gt;
+Copyright (c) 2014-2017 TJ Holowaychuk <tj@vision-media.ca>
+Copyright (c) 2018-2021 Josh Junon
+
 defer-to-connect
 Copyright (c) 2018 Szymon Marczak
 
 detect-node
 Copyright (c) 2017 Ilya Kantor
 
+dunder-proto
+Copyright (c) 2024 ECMAScript Shims
+
 eastasianwidth
 No copyright
+
+end-of-stream
+Copyright (c) 2014 Mathias Buus
 
 env-paths
 Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com)
 
+es-define-property
+Copyright (c) 2024 Jordan Harband
+
+es-object-atoms
+Copyright (c) 2024 Jordan Harband
+
+es-set-tostringtag
+Copyright (c) 2022 ECMAScript Shims
+
 es6-error
 Copyright (c) 2015 Ben Youngblood
+
+escalade
+Copyright (c) Luke Edwards <luke.edwards05@gmail.com> (lukeed.com)
 
 escape-string-regexp
 Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (https://sindresorhus.com)
@@ -9449,15 +9472,33 @@ Copyright (c) 2012 Felix Geisendörfer (felix@debuggable.com) and contributors
 fs-extra
 Copyright (c) 2011-2017 JP Richardson
 
+get-intrinsic
+Copyright (c) 2020 Jordan Harband
+
+get-proto
+Copyright (c) 2025 Jordan Harband
+
 get-stream
 Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (https://sindresorhus.com)
 Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com)
+
+gopd
+Copyright (c) 2022 Jordan Harband
 
 got
 Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com)
 
 has-symbols
 Copyright (c) 2016 Jordan Harband
+
+has-tostringtag
+Copyright (c) 2021 Inspect JS
+
+http-parser-js
+  Copyright Joyent, Inc. and other Node contributors. All rights reserved.
+  Copyright Node.js contributors. All rights reserved.
+  Copyright io.js contributors. All rights reserved.
+Copyright (c) 2015 Tim Caswell (https://github.com/creationix) and other
 
 http2-wrapper
 Copyright (c) 2018 Szymon Marczak
@@ -9476,6 +9517,9 @@ Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com)
 
 matcher
 Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (https://sindresorhus.com)
+
+math-intrinsics
+Copyright (c) 2024 ECMAScript Shims
 
 merge-descriptors
 Copyright (c) 2013 Jonathan Ong <me@jongleberry.com>
@@ -9514,11 +9558,20 @@ Copyright (c) 2013 Roman Shtylman <shtylman@gmail.com>
 progress
 Copyright (c) 2017 TJ Holowaychuk <tj@vision-media.ca>
 
-queue-tick
-Copyright (c) 2021 Mathias Buus
+pump
+Copyright (c) 2014 Mathias Buus
 
 quick-lru
 Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com)
+
+react-dom
+Copyright (c) Facebook, Inc. and its affiliates.
+
+react-modal
+Copyright (c) 2017 Ryan Florence
+
+react
+Copyright (c) Facebook, Inc. and its affiliates.
 
 readable-stream
 Copyright Joyent, Inc. and other Node contributors. All rights reserved.
@@ -9528,11 +9581,17 @@ readdirp
 Copyright (c) 2012-2019 Thorsten Lorenz, Paul Miller (<https://paulmillr.com>)
 Copyright (c) 2012-2019 Thorsten Lorenz, Paul Miller (https://paulmillr.com)
 
+require-directory
+Copyright (c) 2011 Troy Goode <troygoode@gmail.com>
+
 resolve-alpn
 Copyright (c) 2018 Szymon Marczak
 
 responselike
 Copyright (c) 2017 Luke Childs
+
+scheduler
+Copyright (c) Facebook, Inc. and its affiliates.
 
 semver-compare
 No Copyright
@@ -9546,6 +9605,18 @@ Copyright (c) Kevin Mårtensson <kevinmartensson@gmail.com> (github.com/kevva)
 shebang-regex
 Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com)
 
+side-channel-list
+Copyright (c) 2024 Jordan Harband
+
+side-channel-map
+Copyright (c) 2024 Jordan Harband
+
+side-channel-weakmap
+Copyright (c) 2019 Jordan Harband
+
+side-channel
+Copyright (c) 2019 Jordan Harband
+
 streamx
 Copyright (c) 2019 Mathias Buus
 
@@ -9555,11 +9626,28 @@ Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com)
 tar-stream
 Copyright (c) 2014 Mathias Buus
 
+tmp
+Copyright (c) 2014 KARASZI István
+
+undici-types
+Copyright (c) Matteo Collina and Undici contributors
+
 universalify
 Copyright (c) 2017, Ryan Zimmerman <opensrc@ryanzim.com>
 
 wkt-parser
 Copyright (c) 2014, Mike Adair, Richard Greenwood, Didier Richard, Stephen Irons, Olivier Terral and Calvin Metcalf
+
+wrap-ansi
+Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (https://sindresorhus.com)
+
+ws
+Copyright (c) 2011 Einar Otto Stangvik <einaros@gmail.com>
+Copyright (c) 2013 Arnout Kazemier and contributors
+Copyright (c) 2016 Luigi Pinca and contributors
+
+yargs
+Copyright 2010 James Halliday (mail@substack.net); Modified work Copyright 2014 Contributors (ben@npmjs.com)
 
 yauzl
 Copyright (c) 2014 Josh Wolfe
@@ -9641,59 +9729,15 @@ Copyright (c) 1997, 2021 Oracle and/or its affiliates. All rights reserved.
 -- --------------------------------------------------------------------------------
 The following packages are licensed under The Universal Permissive License (UPL), Version 1.0
 
+@oracle/oraclejet-preact
+Copyright (c) 2013-2020 Scott Sauyet and Michael Hurley
+Copyright (c) 2018 Andrew Branch
+Copyright (c) 2021 Floating UI contributors
+Copyright (c) 2021 SEEK
+Copyright (c) 2022, Vladimir Agafonkin
+
 @oracle/oraclejet-testing
 No copyright
-
-
-
-The Universal Permissive License (UPL), Version 1.0
-
-Subject to the condition set forth below, permission is
-hereby granted to any person obtaining a copy of this
-software, associated documentation and/or data
-(collectively the "Software"), free of charge and under
-any and all copyright rights in the Software, and any
-and all patent rights owned or freely licensable by
-each licensor hereunder covering either (i) the
-unmodified Software as contributed to or provided by
-such licensor, or (ii) the Larger Works (as defined
-below), to deal in both
-
-    (a) the Software, and
-
-    (b) any piece of software and/or hardware listed
-        in the lrgrwrks.txt file if one is included
-        with the Software (each a "Larger Work" to
-        which the Software is contributed by such
-        licensors),
-
-without restriction, including without limitation
-the rights to copy, create derivative works of,
-display, perform, and distribute the Software and
-make, use, sell, offer for sale, import, export,
-have made, and have sold the Software and the Larger
-Work(s), and to sublicense the foregoing rights on
-either these or other terms.
-
-This license is subject to the following condition:
-
-The above copyright notice and either this complete
-permission notice or at a minimum a reference to the
-UPL must be included in all copies or substantial
-portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY
-OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT
-LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND
-NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
-COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES
-OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
-TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
-CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
-DEALINGS IN THE SOFTWARE.
--- --------------------------------------------------------------------------------
-The following packages are licensed under The Universal Permissive License (UPL), Version 1.0
 
 @oracle/oraclejet-webdriver
     Copyright (c) Oracle Corporation. All rights reserved.

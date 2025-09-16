@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<deployment-plan xmlns="http://xmlns.oracle.com/weblogic/deployment-plan" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.oracle.com/weblogic/deployment-plan http://xmlns.oracle.com/weblogic/deployment-plan/1.0/deployment-plan.xsd">
+<deployment-plan xmlns="http://xmlns.oracle.com/weblogic/deployment-plan" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.oracle.com/weblogic/deployment-plan http://xmlns.oracle.com/weblogic/deployment-plan/1.0/deployment-plan.xsd" global-variables="false">
   <application-name>sample.war</application-name>
   <module-override>
     <module-name>sample.war</module-name>
@@ -17,5 +17,5 @@
       <uri>META-INF/weblogic-diagnostics.xml</uri>
     </module-descriptor>
   </module-override>
-  <config-root>servers/AdminServer/upload/sample/plan</config-root>
+  <config-root>./config/deployments/sample.war/plan</config-root>
 </deployment-plan>

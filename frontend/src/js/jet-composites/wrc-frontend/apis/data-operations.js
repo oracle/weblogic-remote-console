@@ -944,8 +944,20 @@ define([
         },
       },
 
+      bookmarks: {
+        create: function (dataPayload = {}) {
+          return CbeDataManager.createPagesBookmark({bookmarks: [dataPayload]});
+        },
+        get: function () {
+          return CbeDataManager.getPagesBookmarks();
+        },
+        save: function (dataPayload = {}) {
+          return CbeDataManager.savePagesBookmarks({bookmarks: dataPayload});
+        }
+      },
+
       providers: {
-        
+
         /**
          *
          * @returns {Promise<{body: {data: *, messages: [*]}} |{failureType: string, failureReason: *}>}

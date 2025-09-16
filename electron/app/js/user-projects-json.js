@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2022, 2023, Oracle and/or its affiliates.
+ * Copyright (c) 2022, 2025, Oracle and/or its affiliates.
  * Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
  * @ignore
  */
@@ -73,6 +73,23 @@ const UserProjects = (() => {
   }
 
   return {
+    clearPasswords: () => {
+      for (const proj of _projects) {
+        for (const prov of proj.dataProviders) {
+          delete prov.passwordEncrypted;
+          delete prov.password;
+        }
+      }
+    },
+    areThereAnyPasswordsStored: () => {
+      for (const proj of _projects) {
+        for (const prov of proj.dataProviders) {
+          if (prov.passwordEncrypted)
+            return true;
+        }
+      }
+      return false;
+    },
     /**
      *
      * @param {[{name: string, type: string, url?: string, username?: string, password?: string, settings?: *, file?: string, models?: [string], properties?: *}]} providers
