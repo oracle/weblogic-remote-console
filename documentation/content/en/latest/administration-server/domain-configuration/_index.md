@@ -407,6 +407,28 @@ You may not need to restart all servers to apply non-dynamic changes. In the **M
 {{< /alert >}}
 
 
+### Grab the Edit Lock {#GUID-376C1ED1-E4AF-48B8-9BEC-B57D5BDEB9B5}
+
+If you want to make configuration changes to the domain but cannot because another user currently holds the edit lock, you can transfer the edit lock to your user account.
+
+{{< alert title="Note" color="primary" >}}
+
+
+
+Only administrators can take the edit lock from another user.
+
+{{< /alert >}}
+
+
+1.  In the **Monitoring Tree**, go to **Environment**, then **Domain Runtime**.
+
+2.  Click the **Change Manager** tab and review the current attributes of the existing edit lock to make sure that you want to take the edit lock from the current user.
+
+3.  Click **Grab Edit Lock**.
+
+4.  **Optional**: If the previous user had pending changes, then your edit session will retain those changes when you transfer the configuration lock. Go to the **Edit Tree** and click the Shopping Cart, then **View Changes** to see their pending changes. If necessary, commit or discard them before making your own changes.
+
+
 ### Back Up Configuration Files {#GUID-6A1B7D7D-174F-417F-907D-900442FF0A87}
 
 You can set WebLogic Server to save a domain's existing configuration state before pending changes are committed. If you ever need to reverse a change, then WebLogic Server has the previous set of configuration files \(including the central configuration file, <code>config.xml</code>\) available as a back up.
@@ -1090,7 +1112,9 @@ A network channel is a configurable resource that defines the attributes of a ne
     -   External listen port
     The external listen address and port are used to support Network Address Translation \(NAT\) firewalls. These should match the IP address or DNS name that clients use to access application on the server.
 
-6.  Click **Save**.
+6.  **Optional**: If you want this custom network channel to use a custom identity keystore that is different from the one used by the Managed Server, read [Steps to Configure a Channel-Specific Identity Keystore](https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=SECMG-GUID-0DBA0F7A-FE96-4198-9054-264B7CAB8E56) and update the properties on the **Channel Security** tab as appropriate.
+
+7.  Click **Save**.
 
 
 ### Specify a Listen Address {#GUID-82313721-14D5-4A0B-81CE-44BA60717581}

@@ -41,7 +41,7 @@ Connect to an Administration Server You can connect to a running WebLogic Server
 Start the Administration Server.
 See Starting and Stopping Servers in Administering Server Startup and Shutdown for Oracle WebLogic Server for instructions.
 Open the Providers drawer and click More ︙.">
-  <meta itemprop="wordCount" content="11088">
+  <meta itemprop="wordCount" content="11272">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Domain Configuration">
   <meta name="twitter:description" content="Use WebLogic Remote Console to make configuration changes to your WebLogic Server domain through its Administration Server.
@@ -78,7 +78,8 @@ Open the Providers drawer and click More ︙.">
         <div class="dropdown">
   <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Releases</a>
   <ul class="dropdown-menu">
-    <li><a class="dropdown-item" href="/weblogic-remote-console/overview">Latest (v2.4.17)</a></li>
+    <li><a class="dropdown-item" href="/weblogic-remote-console/overview">Latest (v2.4.18)</a></li>
+    <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.17">v2.4.17</a></li>
     <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.16">v2.4.16</a></li>
     <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.15">v2.4.15</a></li>
     <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.14">v2.4.14</a></li>
@@ -150,7 +151,7 @@ Open the Providers drawer and click More ︙.">
     aria-label="Search this site…"
     autocomplete="off"
     
-    data-offline-search-index-json-src="/offline-search-index.6acb553d7869483f57e2c80febd06cda.json"
+    data-offline-search-index-json-src="/offline-search-index.fadcaad2f4da1a01d07e57ddac9a5bd8.json"
     data-offline-search-base-href="/"
     data-offline-search-max-results="10"
   >
@@ -175,7 +176,7 @@ Open the Providers drawer and click More ︙.">
     aria-label="Search this site…"
     autocomplete="off"
     
-    data-offline-search-index-json-src="/offline-search-index.6acb553d7869483f57e2c80febd06cda.json"
+    data-offline-search-index-json-src="/offline-search-index.fadcaad2f4da1a01d07e57ddac9a5bd8.json"
     data-offline-search-base-href="/"
     data-offline-search-max-results="10"
   >
@@ -308,6 +309,7 @@ Open the Providers drawer and click More ︙.">
       <ul>
         <li><a href="#step-one-edit">Step One: Edit</a></li>
         <li><a href="#step-two-commit">Step Two: Commit</a></li>
+        <li><a href="#GUID-376C1ED1-E4AF-48B8-9BEC-B57D5BDEB9B5">Grab the Edit Lock</a></li>
         <li><a href="#GUID-6A1B7D7D-174F-417F-907D-900442FF0A87">Back Up Configuration Files</a></li>
       </ul>
     </li>
@@ -799,6 +801,30 @@ Open the Providers drawer and click More ︙.">
     Any actions are performed within the Monitoring Tree or Security Data tree perspectives do not require a commit step. They are active immediately after the changes are saved.
 
 </div>
+<h3 id="GUID-376C1ED1-E4AF-48B8-9BEC-B57D5BDEB9B5">Grab the Edit Lock</h3>
+<p>If you want to make configuration changes to the domain but cannot because another user currently holds the edit lock, you can transfer the edit lock to your user account.</p>
+
+
+<div class="alert alert-primary" role="alert">
+<h4 class="alert-heading">Note</h4>
+
+    Only administrators can take the edit lock from another user.
+
+</div>
+<ol>
+<li>
+<p>In the <strong>Monitoring Tree</strong>, go to <strong>Environment</strong>, then <strong>Domain Runtime</strong>.</p>
+</li>
+<li>
+<p>Click the <strong>Change Manager</strong> tab and review the current attributes of the existing edit lock to make sure that you want to take the edit lock from the current user.</p>
+</li>
+<li>
+<p>Click <strong>Grab Edit Lock</strong>.</p>
+</li>
+<li>
+<p><strong>Optional</strong>: If the previous user had pending changes, then your edit session will retain those changes when you transfer the configuration lock. Go to the <strong>Edit Tree</strong> and click the Shopping Cart, then <strong>View Changes</strong> to see their pending changes. If necessary, commit or discard them before making your own changes.</p>
+</li>
+</ol>
 <h3 id="GUID-6A1B7D7D-174F-417F-907D-900442FF0A87">Back Up Configuration Files</h3>
 <p>You can set WebLogic Server to save a domain&rsquo;s existing configuration state before pending changes are committed. If you ever need to reverse a change, then WebLogic Server has the previous set of configuration files (including the central configuration file, <code>config.xml</code>) available as a back up.</p>
 <ol>
@@ -1677,6 +1703,9 @@ See <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-m
 <li>External listen port
 The external listen address and port are used to support Network Address Translation (NAT) firewalls. These should match the IP address or DNS name that clients use to access application on the server.</li>
 </ul>
+</li>
+<li>
+<p><strong>Optional</strong>: If you want this custom network channel to use a custom identity keystore that is different from the one used by the Managed Server, read <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=SECMG-GUID-0DBA0F7A-FE96-4198-9054-264B7CAB8E56">Steps to Configure a Channel-Specific Identity Keystore</a> and update the properties on the <strong>Channel Security</strong> tab as appropriate.</p>
 </li>
 <li>
 <p>Click <strong>Save</strong>.</p>

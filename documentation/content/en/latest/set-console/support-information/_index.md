@@ -50,7 +50,6 @@ We are currently considering the implementation of the following features. Note 
 -   Add support for starting and stopping all servers in a cluster simultaneously.
 -   Add support for validating RDBMS security store configuration.
 -   Add support for notifying users of required system resource restarts.
--   Add support for configuring JDBC data sources with an unlisted \(or Other\) database type.
 -   Improve editing of transaction support variable assignments.
 -   Improve server cloning process to include server children, such as channels.
 
@@ -89,13 +88,13 @@ Yes. For details on how to set up access to WebLogic Server domains running on K
 
 ### Which versions of WebLogic Server can I use with WebLogic Remote Console? {}
 
-WebLogic Remote Console is compatible with WebLogic Server 12.2.1.4 and later.
+WebLogic Remote Console is compatible with WebLogic Server 12.2.1.4.0 and later.
 
 ### Can I use both WebLogic Remote Console and WebLogic Server Administration Console to manage WebLogic Server domains? {}
 
 It depends on the WebLogic Server release that you have installed. The Administration Console was removed in WebLogic Server 14.1.2.0.0 and therefore is not available as of that release.
 
-However, if you're running WebLogic Server 14.1.1.0 or earlier, then you can continue to use the Administration Console for domain management alongside WebLogic Remote Console. Any changes you make in WebLogic Remote Console are reflected in the Administration Console.
+However, if you're running WebLogic Server 14.1.1.0.0 or earlier, then you can continue to use the Administration Console for domain management alongside WebLogic Remote Console. Any changes you make in WebLogic Remote Console are reflected in the Administration Console.
 
 As with any combination of system administration tools, avoid using them simultaneously as it can cause configuration conflicts and unexpected behavior.
 
@@ -135,4 +134,10 @@ WebLogic Remote Console provides two variations of the WebLogic Remote Console e
 
 
 As of WebLogic Server 14.1.2.0.0, the WebLogic Remote Console extension is included in the WebLogic Server installation and updated with each Patch Set Update \(PSU\). You should not need to install the extension manually.
+
+### Can I still use Java EE 7/8? I see a lot of Jakarta EE references in the documentation. {#section_vs2_hzq_4fc}
+
+Yes, *if you are using WebLogic Remote Console with WebLogic Server 12.2.1.4.0* \(which supports Java EE 7\) or *WebLogic Server 14.1.1.0.0 and 14.1.2.0.0* \(which support Java EE 8, and the functionally equivalent Jakarta EE 8\).
+
+If you are using WebLogic Remote Console with WebLogic Server 15.1.1.0.0, then your applications must comply with the Jakarta EE 9.1 specification instead.
 

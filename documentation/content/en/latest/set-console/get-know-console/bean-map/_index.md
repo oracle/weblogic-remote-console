@@ -3,7 +3,6 @@ weight: 18
 title: A Map of the Console
 notoc: true
 ---
-
 Use this page to understand how the MBeans and other components that make up a WebLogic Server domain are organized in WebLogic Remote Console.
 
 {{< alert title="" color="secondary" >}}
@@ -20,8 +19,6 @@ The Map of the Console is split into two sections, both of which have subsection
     * Jump to [Security Data Tree](#securityData)
 * **Page Summaries**: Use this section to learn about the specific attributes of an MBean: how they are labeled in the UI, which page tab they're located on, and a short description of the field (plus a link to their respective page in the [WebLogic Server MBean Reference](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/core/index.html)). MBeans in the Page Summaries section are listed alphabetically.
     * Jump to [Page Summaries](#bean-tree)
-
-
 <p><a id="domainRuntime">&nbsp;</a>
 
 <p>
@@ -57,6 +54,8 @@ The Map of the Console is split into two sections, both of which have subsection
     * [WAN Replication Runtime](#WANReplicationRuntime)
     * [Scaling Tasks](#ScalingTaskRuntime)
   * Migration
+    * [Manual Migration](#MigratableServiceCoordinatorRuntime)
+    * [Migration Task Runtimes](#MigrationTaskRuntime)
     * [Migration Data Runtimes](#MigrationDataRuntime)
     * [Service Migration Data Runtimes](#ServiceMigrationDataRuntime)
   * ZDT
@@ -140,6 +139,12 @@ The Map of the Console is split into two sections, both of which have subsection
       * [JDBCMultiDataSourceRuntime](#JDBCMultiDataSourceRuntime)
       * [Work Manager Runtimes](#WorkManagerRuntime)
         * [Capacity Runtime](#CapacityRuntime)
+      * [JDBCOracleDataSourceRuntime](#JDBCOracleDataSourceRuntime)
+      * [Tasks](#JDBCDataSourceTaskRuntime)
+      * [Work Manager Runtimes](#WorkManagerRuntime)
+        * [Capacity Runtime](#CapacityRuntime)
+      * [Instances](#JDBCOracleDataSourceInstanceRuntime)
+      * [ONS Daemon Runtimes](#ONSDaemonRuntime)
       * [AppClientComponentRuntime](#AppClientComponentRuntime)
       * [Work Manager Runtimes](#WorkManagerRuntime)
         * [Capacity Runtime](#CapacityRuntime)
@@ -723,6 +728,7 @@ The Map of the Console is split into two sections, both of which have subsection
     * [Server Failure Trigger](#ServerFailureTrigger)
     * [JTA Migratable Target](#JTAMigratableTarget)
     * [Health Score](#HealthScore)
+    * [Execute Queues](#ExecuteQueue)
   * [Clusters](#Cluster)
     * [Server Failure Trigger](#ServerFailureTrigger)
   * [Server Templates](#ServerTemplate)
@@ -731,6 +737,7 @@ The Map of the Console is split into two sections, both of which have subsection
     * [Server Failure Trigger](#ServerFailureTrigger)
     * [JTA Migratable Target](#JTAMigratableTarget)
     * [Health Score](#HealthScore)
+    * [Execute Queues](#ExecuteQueue)
   * [Machines](#Machine)
     * [UnixMachine](#UnixMachine)
     * [Machine](#Machine)
@@ -814,6 +821,7 @@ The Map of the Console is split into two sections, both of which have subsection
     * [XML Parser Select Registry Entries](#XMLParserSelectRegistryEntry)
   * [XML Entity Caches](#XMLEntityCache)
   * [Mail Sessions](#MailSession)
+  * [Osgi Frameworks](#OsgiFramework)
 * Security
   * [Realms](#Realm)
     * [RDBMS Security Store](#RDBMSSecurityStore)
@@ -902,6 +910,22 @@ The Map of the Console is split into two sections, both of which have subsection
     * [Script Actions](#WLDFScriptAction)
     * [REST Notifications](#WLDFRESTNotification)
     * [Thread Dump Actions](#WLDFThreadDumpAction)
+  * [Domain SNMP Agent](#SNMPAgent)
+    * [SNMP Proxies](#SNMPProxy)
+    * [SNMP Gauge Monitors](#SNMPGaugeMonitor)
+    * [SNMP String Monitors](#SNMPStringMonitor)
+    * [SNMP Counter Monitors](#SNMPCounterMonitor)
+    * [SNMP Log Filters](#SNMPLogFilter)
+    * [SNMP Attribute Changes](#SNMPAttributeChange)
+    * [SNMP Trap Destinations](#SNMPTrapDestination)
+  * [SNMP Agent Deployments](#SNMPAgentDeployment)
+    * [SNMP Proxies](#SNMPProxy)
+    * [SNMP Gauge Monitors](#SNMPGaugeMonitor)
+    * [SNMP String Monitors](#SNMPStringMonitor)
+    * [SNMP Counter Monitors](#SNMPCounterMonitor)
+    * [SNMP Log Filters](#SNMPLogFilter)
+    * [SNMP Attribute Changes](#SNMPAttributeChange)
+    * [SNMP Trap Destinations](#SNMPTrapDestination)
 * [Custom Resources](#CustomResource)
 * [Recent Searches](#SimpleSearch)
 
@@ -952,6 +976,21 @@ The Map of the Console is split into two sections, both of which have subsection
         * [Roles](#UniformDistributedTopicRole)
     * [Servers](#ServerRoles)
       * [Roles](#ServerRole)
+    * Advanced
+      * [Admin](#AdvancedAdminRoleMapping)
+      * [Application](#AdvancedApplicationRoleMapping)
+      * [COM](#AdvancedCOMRoleMapping)
+      * [EIS](#AdvancedEISRoleMapping)
+      * [EJB](#AdvancedEJBRoleMapping)
+      * [JDBC](#AdvancedJDBCRoleMapping)
+      * [JMS](#AdvancedJMSRoleMapping)
+      * [JMX](#AdvancedJMXRoleMapping)
+      * [JNDI](#AdvancedJNDIRoleMapping)
+      * [Server](#AdvancedServerRoleMapping)
+      * [URL](#AdvancedURLRoleMapping)
+      * [Web Service](#AdvancedWebServiceRoleMapping)
+      * [Work Context](#AdvancedWorkContextRoleMapping)
+      * [All](#AdvancedAnyRoleMapping)
     * [XACMLRoleMapperSecurityData](#XACMLRoleMapperSecurityData)
     * [App Deployments](#AppDeploymentRoles)
       * [Roles](#AppDeploymentRole)
@@ -978,6 +1017,21 @@ The Map of the Console is split into two sections, both of which have subsection
         * [Roles](#UniformDistributedTopicRole)
     * [Servers](#ServerRoles)
       * [Roles](#ServerRole)
+    * Advanced
+      * [Admin](#AdvancedAdminRoleMapping)
+      * [Application](#AdvancedApplicationRoleMapping)
+      * [COM](#AdvancedCOMRoleMapping)
+      * [EIS](#AdvancedEISRoleMapping)
+      * [EJB](#AdvancedEJBRoleMapping)
+      * [JDBC](#AdvancedJDBCRoleMapping)
+      * [JMS](#AdvancedJMSRoleMapping)
+      * [JMX](#AdvancedJMXRoleMapping)
+      * [JNDI](#AdvancedJNDIRoleMapping)
+      * [Server](#AdvancedServerRoleMapping)
+      * [URL](#AdvancedURLRoleMapping)
+      * [Web Service](#AdvancedWebServiceRoleMapping)
+      * [Work Context](#AdvancedWorkContextRoleMapping)
+      * [All](#AdvancedAnyRoleMapping)
   * [Authorizers](#AuthorizerSecurityData)
     * [DefaultAuthorizerSecurityData](#DefaultAuthorizerSecurityData)
     * [App Deployments](#AppDeploymentPolicy)
@@ -1046,6 +1100,21 @@ The Map of the Console is split into two sections, both of which have subsection
       * [shutdown](#ServerMethodPolicy)
       * [lock](#ServerMethodPolicy)
       * [unlock](#ServerMethodPolicy)
+    * Advanced
+      * [Admin](#AdvancedAdminPolicy)
+      * [Application](#AdvancedApplicationPolicy)
+      * [COM](#AdvancedCOMPolicy)
+      * [EIS](#AdvancedEISPolicy)
+      * [EJB](#AdvancedEJBPolicy)
+      * [JDBC](#AdvancedJDBCPolicy)
+      * [JMS](#AdvancedJMSPolicy)
+      * [JMX](#AdvancedJMXPolicy)
+      * [JNDI](#AdvancedJNDIPolicy)
+      * [Server](#AdvancedServerPolicy)
+      * [URL](#AdvancedURLPolicy)
+      * [Web Service](#AdvancedWebServicePolicy)
+      * [Work Context](#AdvancedWorkContextPolicy)
+      * [All](#AdvancedNonJMXPolicy)
     * [XACMLAuthorizerSecurityData](#XACMLAuthorizerSecurityData)
     * [App Deployments](#AppDeploymentPolicy)
     * [Coherence Cluster System Resources](#CoherenceClusterSystemResourcePolicy)
@@ -1113,6 +1182,21 @@ The Map of the Console is split into two sections, both of which have subsection
       * [shutdown](#ServerMethodPolicy)
       * [lock](#ServerMethodPolicy)
       * [unlock](#ServerMethodPolicy)
+    * Advanced
+      * [Admin](#AdvancedAdminPolicy)
+      * [Application](#AdvancedApplicationPolicy)
+      * [COM](#AdvancedCOMPolicy)
+      * [EIS](#AdvancedEISPolicy)
+      * [EJB](#AdvancedEJBPolicy)
+      * [JDBC](#AdvancedJDBCPolicy)
+      * [JMS](#AdvancedJMSPolicy)
+      * [JMX](#AdvancedJMXPolicy)
+      * [JNDI](#AdvancedJNDIPolicy)
+      * [Server](#AdvancedServerPolicy)
+      * [URL](#AdvancedURLPolicy)
+      * [Web Service](#AdvancedWebServicePolicy)
+      * [Work Context](#AdvancedWorkContextPolicy)
+      * [All](#AdvancedNonJMXPolicy)
   * [Credential Mappers](#CredentialMapperSecurityData)
     * [SAML2CredentialMapperSecurityData](#SAML2CredentialMapperSecurityData)
     * [Partners](#Service-Provider-Partner)
@@ -1209,6 +1293,620 @@ Property Name | Label | Tab Name | Description | MBean Reference
   UserSearchScope | User Search Scope | ActiveDirectoryAuthenticatorParameters | Specifies how deep in the LDAP directory tree the generic LDAP Authentication provider should search for users. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/ActiveDirectoryAuthenticatorMBean.html#UserSearchScope)
   Version | Version | Common | The version number of the LDAP Authentication provider. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/ActiveDirectoryAuthenticatorMBean.html#Version)
 
+<p><a id="AdvancedAdminPolicy">&nbsp;</a>
+<p>
+
+
+## AdvancedAdminPolicy
+
+<b>References to this type</b>:
+* Security Data -> Realms -> Authorizers -> DefaultAuthorizerSecurityData -> Advanced -> Admin
+* Security Data -> Realms -> Authorizers -> XACMLAuthorizerSecurityData -> Advanced -> Admin
+
+
+Property Name | Label | Tab Name | Description | MBean Reference
+--- | --- | --- | --- | ---
+  Policy | Policy | Policy | The conditions that determine the access control of this resource. |  
+  PolicyStringExpression | Policy | Advanced | The conditions that determine the access control of this resource. |  
+  adm_action | Action | Advanced | The action be requested on the Administrative resource. |  
+  adm_category | Category | Advanced | The category of the Administrative resource |  
+  adm_realm | Realm | Advanced | The name of the Administrative resource |  
+  resourceId | Resource Id | Advanced | The security resource id of this resource. |  
+  scope | Scope |   | The scope of this resource |  
+
+<p><a id="AdvancedAdminRoleMapping">&nbsp;</a>
+<p>
+
+
+## AdvancedAdminRoleMapping
+
+<b>References to this type</b>:
+* Security Data -> Realms -> Role Mappers -> XACMLRoleMapperSecurityData -> Advanced -> Admin
+* Security Data -> Realms -> Role Mappers -> DefaultRoleMapperSecurityData -> Advanced -> Admin
+
+
+Property Name | Label | Tab Name | Description | MBean Reference
+--- | --- | --- | --- | ---
+  Policy | Policy | Policy | The conditions that determine the access control of this resource. |  
+  PolicyStringExpression | Policy | Advanced | The conditions that determine the access control of this resource. |  
+  adm_action | Action | Advanced | The action be requested on the Administrative resource. |  
+  adm_category | Category | Advanced | The category of the Administrative resource |  
+  adm_realm | Realm | Advanced | The name of the Administrative resource |  
+  resourceId | Resource Id | Advanced | The security resource id of this resource. |  
+  roleName | Role | Advanced | The role's name |  
+  scope | Scope |   | The scope of this resource |  
+
+<p><a id="AdvancedAnyRoleMapping">&nbsp;</a>
+<p>
+
+
+## AdvancedAnyRoleMapping
+
+<b>References to this type</b>:
+* Security Data -> Realms -> Role Mappers -> XACMLRoleMapperSecurityData -> Advanced -> All
+* Security Data -> Realms -> Role Mappers -> DefaultRoleMapperSecurityData -> Advanced -> All
+
+
+Property Name | Label | Tab Name | Description | MBean Reference
+--- | --- | --- | --- | ---
+  Policy | Policy | Policy | The conditions that determine the access control of this resource. |  
+  PolicyStringExpression | Policy | Advanced | The conditions that determine the access control of this resource. |  
+  resourceId | Resource Id | Advanced | The security resource id of this resource. |  
+  roleName | Role | Advanced | The role's name |  
+  scope | Scope |   | The scope of this resource |  
+  type | Type |   | The type of this resource |  
+
+<p><a id="AdvancedApplicationPolicy">&nbsp;</a>
+<p>
+
+
+## AdvancedApplicationPolicy
+
+<b>References to this type</b>:
+* Security Data -> Realms -> Authorizers -> DefaultAuthorizerSecurityData -> Advanced -> Application
+* Security Data -> Realms -> Authorizers -> XACMLAuthorizerSecurityData -> Advanced -> Application
+
+
+Property Name | Label | Tab Name | Description | MBean Reference
+--- | --- | --- | --- | ---
+  Policy | Policy | Policy | The conditions that determine the access control of this resource. |  
+  PolicyStringExpression | Policy | Advanced | The conditions that determine the access control of this resource. |  
+  app_application | Application | Advanced | The name of the application in which the resource is deployed, as it appears in the corresponding <code>&lt;display-name&gt; </code> element. |  
+  resourceId | Resource Id | Advanced | The security resource id of this resource. |  
+  scope | Scope |   | The scope of this resource |  
+
+<p><a id="AdvancedApplicationRoleMapping">&nbsp;</a>
+<p>
+
+
+## AdvancedApplicationRoleMapping
+
+<b>References to this type</b>:
+* Security Data -> Realms -> Role Mappers -> DefaultRoleMapperSecurityData -> Advanced -> Application
+* Security Data -> Realms -> Role Mappers -> XACMLRoleMapperSecurityData -> Advanced -> Application
+
+
+Property Name | Label | Tab Name | Description | MBean Reference
+--- | --- | --- | --- | ---
+  Policy | Policy | Policy | The conditions that determine the access control of this resource. |  
+  PolicyStringExpression | Policy | Advanced | The conditions that determine the access control of this resource. |  
+  app_application | Application | Advanced | The name of the application in which the resource is deployed, as it appears in the corresponding <code>&lt;display-name&gt; </code> element. |  
+  resourceId | Resource Id | Advanced | The security resource id of this resource. |  
+  roleName | Role | Advanced | The role's name |  
+  scope | Scope |   | The scope of this resource |  
+
+<p><a id="AdvancedCOMPolicy">&nbsp;</a>
+<p>
+
+
+## AdvancedCOMPolicy
+
+<b>References to this type</b>:
+* Security Data -> Realms -> Authorizers -> DefaultAuthorizerSecurityData -> Advanced -> COM
+* Security Data -> Realms -> Authorizers -> XACMLAuthorizerSecurityData -> Advanced -> COM
+
+
+Property Name | Label | Tab Name | Description | MBean Reference
+--- | --- | --- | --- | ---
+  Policy | Policy | Policy | The conditions that determine the access control of this resource. |  
+  PolicyStringExpression | Policy | Advanced | The conditions that determine the access control of this resource. |  
+  com_application | Application | Advanced | Tthe name of the application in which the resource is deployed, as it appears in the corresponding <code>&lt;display-name&gt;</code> element The <code>&lt;display-name&gt;</code> element is associated with an <code>&lt;application&gt;</code> element in the deployment descriptor, in an <code>.ear</code> file. |  
+  com_class | Class | Advanced | The fully-qualified classname of the Java class to be exported to a COM client. |  
+  resourceId | Resource Id | Advanced | The security resource id of this resource. |  
+  scope | Scope |   | The scope of this resource |  
+
+<p><a id="AdvancedCOMRoleMapping">&nbsp;</a>
+<p>
+
+
+## AdvancedCOMRoleMapping
+
+<b>References to this type</b>:
+* Security Data -> Realms -> Role Mappers -> XACMLRoleMapperSecurityData -> Advanced -> COM
+* Security Data -> Realms -> Role Mappers -> DefaultRoleMapperSecurityData -> Advanced -> COM
+
+
+Property Name | Label | Tab Name | Description | MBean Reference
+--- | --- | --- | --- | ---
+  Policy | Policy | Policy | The conditions that determine the access control of this resource. |  
+  PolicyStringExpression | Policy | Advanced | The conditions that determine the access control of this resource. |  
+  com_application | Application | Advanced | Tthe name of the application in which the resource is deployed, as it appears in the corresponding <code>&lt;display-name&gt;</code> element The <code>&lt;display-name&gt;</code> element is associated with an <code>&lt;application&gt;</code> element in the deployment descriptor, in an <code>.ear</code> file. |  
+  com_class | Class | Advanced | The fully-qualified classname of the Java class to be exported to a COM client. |  
+  resourceId | Resource Id | Advanced | The security resource id of this resource. |  
+  roleName | Role | Advanced | The role's name |  
+  scope | Scope |   | The scope of this resource |  
+
+<p><a id="AdvancedEISPolicy">&nbsp;</a>
+<p>
+
+
+## AdvancedEISPolicy
+
+<b>References to this type</b>:
+* Security Data -> Realms -> Authorizers -> DefaultAuthorizerSecurityData -> Advanced -> EIS
+* Security Data -> Realms -> Authorizers -> XACMLAuthorizerSecurityData -> Advanced -> EIS
+
+
+Property Name | Label | Tab Name | Description | MBean Reference
+--- | --- | --- | --- | ---
+  Policy | Policy | Policy | The conditions that determine the access control of this resource. |  
+  PolicyStringExpression | Policy | Advanced | The conditions that determine the access control of this resource. |  
+  eis_application | Application | Advanced | The name of the application in which the resource is deployed, as it appears in the corresponding <code>&lt;display-name&gt;</code> element. |  
+  eis_destinationId | Destination | Advanced | The specific outbound destination for the resource as it appears in  the corresponding <code>&lt;jndi-name&gt;</code> element in the deployment descriptor. |  
+  eis_eis | EIS | Advanced | The name of the EIS resource, as it appears in the corresponding <code>&lt;eis-type&gt;</code> element in the deployment descriptor. |  
+  eis_module | Module | Advanced | The name of the module, as it appears in the corresponding <code>&lt;display-name&gt;</code> element. |  
+  resourceId | Resource Id | Advanced | The security resource id of this resource. |  
+  scope | Scope |   | The scope of this resource |  
+
+<p><a id="AdvancedEISRoleMapping">&nbsp;</a>
+<p>
+
+
+## AdvancedEISRoleMapping
+
+<b>References to this type</b>:
+* Security Data -> Realms -> Role Mappers -> XACMLRoleMapperSecurityData -> Advanced -> EIS
+* Security Data -> Realms -> Role Mappers -> DefaultRoleMapperSecurityData -> Advanced -> EIS
+
+
+Property Name | Label | Tab Name | Description | MBean Reference
+--- | --- | --- | --- | ---
+  Policy | Policy | Policy | The conditions that determine the access control of this resource. |  
+  PolicyStringExpression | Policy | Advanced | The conditions that determine the access control of this resource. |  
+  eis_application | Application | Advanced | The name of the application in which the resource is deployed, as it appears in the corresponding <code>&lt;display-name&gt;</code> element. |  
+  eis_destinationId | Destination | Advanced | The specific outbound destination for the resource as it appears in  the corresponding <code>&lt;jndi-name&gt;</code> element in the deployment descriptor. |  
+  eis_eis | EIS | Advanced | The name of the EIS resource, as it appears in the corresponding <code>&lt;eis-type&gt;</code> element in the deployment descriptor. |  
+  eis_module | Module | Advanced | The name of the module, as it appears in the corresponding <code>&lt;display-name&gt;</code> element. |  
+  resourceId | Resource Id | Advanced | The security resource id of this resource. |  
+  roleName | Role | Advanced | The role's name |  
+  scope | Scope |   | The scope of this resource |  
+
+<p><a id="AdvancedEJBPolicy">&nbsp;</a>
+<p>
+
+
+## AdvancedEJBPolicy
+
+<b>References to this type</b>:
+* Security Data -> Realms -> Authorizers -> DefaultAuthorizerSecurityData -> Advanced -> EJB
+* Security Data -> Realms -> Authorizers -> XACMLAuthorizerSecurityData -> Advanced -> EJB
+
+
+Property Name | Label | Tab Name | Description | MBean Reference
+--- | --- | --- | --- | ---
+  Policy | Policy | Policy | The conditions that determine the access control of this resource. |  
+  PolicyStringExpression | Policy | Advanced | The conditions that determine the access control of this resource. |  
+  ejb_application | Application | Advanced | The name of the application in which the resource is deployed, as it appears in the corresponding <code>&lt;display-name&gt;</code> element The <code>&lt;display-name&gt;</code> element is associated with an <code>&lt;application&gt;</code> element in the deployment descriptor, in an <code>.ear</code> file. |  
+  ejb_ejb | EJB | Advanced | The name of the EJB, as it appears in the corresponding <code>&lt;ejb-name&gt;</code> element in the deployment descriptor. |  
+  ejb_method | Method | Advanced | The name of the method on the EJB resource, as it appears in the corresponding <code>&lt;method-name&gt;</code> element in the deployment descriptor. |  
+  ejb_methodInterface | Method Interface | Advanced | The EJB interface of the resource, as it appears in the corresponding <code>&lt;method-intf&gt;</code> element in the deployment descriptor. |  
+  ejb_module | Module | Advanced | The name of the module, as it appears in t corresponding <code>&lt;display-name&gt;</code> element. |  
+  ejb_signature | Signature | Advanced |  The parameter signature of the target method. |  
+  resourceId | Resource Id | Advanced | The security resource id of this resource. |  
+  scope | Scope |   | The scope of this resource |  
+
+<p><a id="AdvancedEJBRoleMapping">&nbsp;</a>
+<p>
+
+
+## AdvancedEJBRoleMapping
+
+<b>References to this type</b>:
+* Security Data -> Realms -> Role Mappers -> XACMLRoleMapperSecurityData -> Advanced -> EJB
+* Security Data -> Realms -> Role Mappers -> DefaultRoleMapperSecurityData -> Advanced -> EJB
+
+
+Property Name | Label | Tab Name | Description | MBean Reference
+--- | --- | --- | --- | ---
+  Policy | Policy | Policy | The conditions that determine the access control of this resource. |  
+  PolicyStringExpression | Policy | Advanced | The conditions that determine the access control of this resource. |  
+  ejb_application | Application | Advanced | The name of the application in which the resource is deployed, as it appears in the corresponding <code>&lt;display-name&gt;</code> element The <code>&lt;display-name&gt;</code> element is associated with an <code>&lt;application&gt;</code> element in the deployment descriptor, in an <code>.ear</code> file. |  
+  ejb_ejb | EJB | Advanced | The name of the EJB, as it appears in the corresponding <code>&lt;ejb-name&gt;</code> element in the deployment descriptor. |  
+  ejb_method | Method | Advanced | The name of the method on the EJB resource, as it appears in the corresponding <code>&lt;method-name&gt;</code> element in the deployment descriptor. |  
+  ejb_methodInterface | Method Interface | Advanced | The EJB interface of the resource, as it appears in the corresponding <code>&lt;method-intf&gt;</code> element in the deployment descriptor. |  
+  ejb_module | Module | Advanced | The name of the module, as it appears in t corresponding <code>&lt;display-name&gt;</code> element. |  
+  ejb_signature | Signature | Advanced |  The parameter signature of the target method. |  
+  resourceId | Resource Id | Advanced | The security resource id of this resource. |  
+  roleName | Role | Advanced | The role's name |  
+  scope | Scope |   | The scope of this resource |  
+
+<p><a id="AdvancedJDBCPolicy">&nbsp;</a>
+<p>
+
+
+## AdvancedJDBCPolicy
+
+<b>References to this type</b>:
+* Security Data -> Realms -> Authorizers -> XACMLAuthorizerSecurityData -> Advanced -> JDBC
+* Security Data -> Realms -> Authorizers -> DefaultAuthorizerSecurityData -> Advanced -> JDBC
+
+
+Property Name | Label | Tab Name | Description | MBean Reference
+--- | --- | --- | --- | ---
+  Policy | Policy | Policy | The conditions that determine the access control of this resource. |  
+  PolicyStringExpression | Policy | Advanced | The conditions that determine the access control of this resource. |  
+  jdbc_action | Action | Advanced | The name of the action being requested on the resource. |  
+  jdbc_application | Application | Advanced | The name of the application in which the resource is deployed or the name of the system resource. |  
+  jdbc_module | Module | Advanced | The name of the module, as it appears in th corresponding <code>&lt;module&gt;</code> element associated with the <code>weblogic-application.xml</code> deployment descriptor. |  
+  jdbc_resource | Resource | Advanced | The name of the JDBC resource. |  
+  jdbc_resourceType | Resource Type | Advanced | The type of the JDBC resource. |  
+  resourceId | Resource Id | Advanced | The security resource id of this resource. |  
+  scope | Scope |   | The scope of this resource |  
+
+<p><a id="AdvancedJDBCRoleMapping">&nbsp;</a>
+<p>
+
+
+## AdvancedJDBCRoleMapping
+
+<b>References to this type</b>:
+* Security Data -> Realms -> Role Mappers -> XACMLRoleMapperSecurityData -> Advanced -> JDBC
+* Security Data -> Realms -> Role Mappers -> DefaultRoleMapperSecurityData -> Advanced -> JDBC
+
+
+Property Name | Label | Tab Name | Description | MBean Reference
+--- | --- | --- | --- | ---
+  Policy | Policy | Policy | The conditions that determine the access control of this resource. |  
+  PolicyStringExpression | Policy | Advanced | The conditions that determine the access control of this resource. |  
+  jdbc_action | Action | Advanced | The name of the action being requested on the resource. |  
+  jdbc_application | Application | Advanced | The name of the application in which the resource is deployed or the name of the system resource. |  
+  jdbc_module | Module | Advanced | The name of the module, as it appears in th corresponding <code>&lt;module&gt;</code> element associated with the <code>weblogic-application.xml</code> deployment descriptor. |  
+  jdbc_resource | Resource | Advanced | The name of the JDBC resource. |  
+  jdbc_resourceType | Resource Type | Advanced | The type of the JDBC resource. |  
+  resourceId | Resource Id | Advanced | The security resource id of this resource. |  
+  roleName | Role | Advanced | The role's name |  
+  scope | Scope |   | The scope of this resource |  
+
+<p><a id="AdvancedJMSPolicy">&nbsp;</a>
+<p>
+
+
+## AdvancedJMSPolicy
+
+<b>References to this type</b>:
+* Security Data -> Realms -> Authorizers -> XACMLAuthorizerSecurityData -> Advanced -> JMS
+* Security Data -> Realms -> Authorizers -> DefaultAuthorizerSecurityData -> Advanced -> JMS
+
+
+Property Name | Label | Tab Name | Description | MBean Reference
+--- | --- | --- | --- | ---
+  Policy | Policy | Policy | The conditions that determine the access control of this resource. |  
+  PolicyStringExpression | Policy | Advanced | The conditions that determine the access control of this resource. |  
+  jms_action | Action | Advanced | The name of the action being requested on the resource. |  
+  jms_application | Application | Advanced | The name of the application in which the resource is deployed, or the name of the system resource. |  
+  jms_destinationType | Destination Type | Advanced | The type of the destination resource. |  
+  jms_module | Module | Advanced | The name of the module as it appears in the corresponding <code>&lt;module&gt;</code> element associated with the <code>weblogic-application.xml</code> deployment descriptor. |  
+  jms_resource | Resource | Advanced | The name of the JMS resource. |  
+  resourceId | Resource Id | Advanced | The security resource id of this resource. |  
+  scope | Scope |   | The scope of this resource |  
+
+<p><a id="AdvancedJMSRoleMapping">&nbsp;</a>
+<p>
+
+
+## AdvancedJMSRoleMapping
+
+<b>References to this type</b>:
+* Security Data -> Realms -> Role Mappers -> DefaultRoleMapperSecurityData -> Advanced -> JMS
+* Security Data -> Realms -> Role Mappers -> XACMLRoleMapperSecurityData -> Advanced -> JMS
+
+
+Property Name | Label | Tab Name | Description | MBean Reference
+--- | --- | --- | --- | ---
+  Policy | Policy | Policy | The conditions that determine the access control of this resource. |  
+  PolicyStringExpression | Policy | Advanced | The conditions that determine the access control of this resource. |  
+  jms_action | Action | Advanced | The name of the action being requested on the resource. |  
+  jms_application | Application | Advanced | The name of the application in which the resource is deployed, or the name of the system resource. |  
+  jms_destinationType | Destination Type | Advanced | The type of the destination resource. |  
+  jms_module | Module | Advanced | The name of the module as it appears in the corresponding <code>&lt;module&gt;</code> element associated with the <code>weblogic-application.xml</code> deployment descriptor. |  
+  jms_resource | Resource | Advanced | The name of the JMS resource. |  
+  resourceId | Resource Id | Advanced | The security resource id of this resource. |  
+  roleName | Role | Advanced | The role's name |  
+  scope | Scope |   | The scope of this resource |  
+
+<p><a id="AdvancedJMXPolicy">&nbsp;</a>
+<p>
+
+
+## AdvancedJMXPolicy
+
+<b>References to this type</b>:
+* Security Data -> Realms -> Authorizers -> DefaultAuthorizerSecurityData -> Advanced -> JMX
+* Security Data -> Realms -> Authorizers -> XACMLAuthorizerSecurityData -> Advanced -> JMX
+
+
+Property Name | Label | Tab Name | Description | MBean Reference
+--- | --- | --- | --- | ---
+  Policy | Policy | Policy | The conditions that determine the access control of this resource. |  
+  PolicyStringExpression | Policy | Advanced | The conditions that determine the access control of this resource. |  
+  jmx_application | Application | Advanced | The name of the application in which the resource is deployed, or the name of the system resource. |  
+  jmx_mbeanType | MBean Type | Advanced | The type of the MBean resource on which access is being requested. |  
+  jmx_operation | Operation | Advanced | he name of the operation being requested on the resource. |  
+  jmx_target | Target | Advanced | The target of the MBean resource on whic access is being requested. |  
+  resourceId | Resource Id | Advanced | The security resource id of this resource. |  
+  scope | Scope |   | The scope of this resource |  
+
+<p><a id="AdvancedJMXRoleMapping">&nbsp;</a>
+<p>
+
+
+## AdvancedJMXRoleMapping
+
+<b>References to this type</b>:
+* Security Data -> Realms -> Role Mappers -> XACMLRoleMapperSecurityData -> Advanced -> JMX
+* Security Data -> Realms -> Role Mappers -> DefaultRoleMapperSecurityData -> Advanced -> JMX
+
+
+Property Name | Label | Tab Name | Description | MBean Reference
+--- | --- | --- | --- | ---
+  Policy | Policy | Policy | The conditions that determine the access control of this resource. |  
+  PolicyStringExpression | Policy | Advanced | The conditions that determine the access control of this resource. |  
+  jmx_application | Application | Advanced | The name of the application in which the resource is deployed, or the name of the system resource. |  
+  jmx_mbeanType | MBean Type | Advanced | The type of the MBean resource on which access is being requested. |  
+  jmx_operation | Operation | Advanced | he name of the operation being requested on the resource. |  
+  jmx_target | Target | Advanced | The target of the MBean resource on whic access is being requested. |  
+  resourceId | Resource Id | Advanced | The security resource id of this resource. |  
+  roleName | Role | Advanced | The role's name |  
+  scope | Scope |   | The scope of this resource |  
+
+<p><a id="AdvancedJNDIPolicy">&nbsp;</a>
+<p>
+
+
+## AdvancedJNDIPolicy
+
+<b>References to this type</b>:
+* Security Data -> Realms -> Authorizers -> DefaultAuthorizerSecurityData -> Advanced -> JNDI
+* Security Data -> Realms -> Authorizers -> XACMLAuthorizerSecurityData -> Advanced -> JNDI
+
+
+Property Name | Label | Tab Name | Description | MBean Reference
+--- | --- | --- | --- | ---
+  Policy | Policy | Policy | The conditions that determine the access control of this resource. |  
+  PolicyStringExpression | Policy | Advanced | The conditions that determine the access control of this resource. |  
+  jndi_action | Action | Advanced | The name of the action being requested on the JNDI resource. |  
+  jndi_application | Application | Advanced | The name of the application in which the resource is deployed, as it appears in the corresponding <code>&lt;display-name&gt;</code> element. |  
+  jndi_path | Path | Advanced | The path in the JNDI tree. |  
+  resourceId | Resource Id | Advanced | The security resource id of this resource. |  
+  scope | Scope |   | The scope of this resource |  
+
+<p><a id="AdvancedJNDIRoleMapping">&nbsp;</a>
+<p>
+
+
+## AdvancedJNDIRoleMapping
+
+<b>References to this type</b>:
+* Security Data -> Realms -> Role Mappers -> DefaultRoleMapperSecurityData -> Advanced -> JNDI
+* Security Data -> Realms -> Role Mappers -> XACMLRoleMapperSecurityData -> Advanced -> JNDI
+
+
+Property Name | Label | Tab Name | Description | MBean Reference
+--- | --- | --- | --- | ---
+  Policy | Policy | Policy | The conditions that determine the access control of this resource. |  
+  PolicyStringExpression | Policy | Advanced | The conditions that determine the access control of this resource. |  
+  jndi_action | Action | Advanced | The name of the action being requested on the JNDI resource. |  
+  jndi_application | Application | Advanced | The name of the application in which the resource is deployed, as it appears in the corresponding <code>&lt;display-name&gt;</code> element. |  
+  jndi_path | Path | Advanced | The path in the JNDI tree. |  
+  resourceId | Resource Id | Advanced | The security resource id of this resource. |  
+  roleName | Role | Advanced | The role's name |  
+  scope | Scope |   | The scope of this resource |  
+
+<p><a id="AdvancedNonJMXPolicy">&nbsp;</a>
+<p>
+
+
+## AdvancedNonJMXPolicy
+
+<b>References to this type</b>:
+* Security Data -> Realms -> Authorizers -> DefaultAuthorizerSecurityData -> Advanced -> All
+* Security Data -> Realms -> Authorizers -> XACMLAuthorizerSecurityData -> Advanced -> All
+
+
+Property Name | Label | Tab Name | Description | MBean Reference
+--- | --- | --- | --- | ---
+  Policy | Policy | Policy | The conditions that determine the access control of this resource. |  
+  PolicyStringExpression | Policy | Advanced | The conditions that determine the access control of this resource. |  
+  resourceId | Resource Id | Advanced | The security resource id of this resource. |  
+  scope | Scope |   | The scope of this resource |  
+  type | Type |   | The type of this resource |  
+
+<p><a id="AdvancedServerPolicy">&nbsp;</a>
+<p>
+
+
+## AdvancedServerPolicy
+
+<b>References to this type</b>:
+* Security Data -> Realms -> Authorizers -> XACMLAuthorizerSecurityData -> Advanced -> Server
+* Security Data -> Realms -> Authorizers -> DefaultAuthorizerSecurityData -> Advanced -> Server
+
+
+Property Name | Label | Tab Name | Description | MBean Reference
+--- | --- | --- | --- | ---
+  Policy | Policy | Policy | The conditions that determine the access control of this resource. |  
+  PolicyStringExpression | Policy | Advanced | The conditions that determine the access control of this resource. |  
+  resourceId | Resource Id | Advanced | The security resource id of this resource. |  
+  scope | Scope |   | The scope of this resource |  
+  svr_action | Action | Advanced | The name of the action being requested on the resource. |  
+  svr_application | Application | Advanced | The name of the application in which the resource is deployed, as it appears in the corresponding <code>&lt;display-name&gt;</code> element. |  
+  svr_server | Server | Advanced | The name of the Server resource. |  
+
+<p><a id="AdvancedServerRoleMapping">&nbsp;</a>
+<p>
+
+
+## AdvancedServerRoleMapping
+
+<b>References to this type</b>:
+* Security Data -> Realms -> Role Mappers -> DefaultRoleMapperSecurityData -> Advanced -> Server
+* Security Data -> Realms -> Role Mappers -> XACMLRoleMapperSecurityData -> Advanced -> Server
+
+
+Property Name | Label | Tab Name | Description | MBean Reference
+--- | --- | --- | --- | ---
+  Policy | Policy | Policy | The conditions that determine the access control of this resource. |  
+  PolicyStringExpression | Policy | Advanced | The conditions that determine the access control of this resource. |  
+  resourceId | Resource Id | Advanced | The security resource id of this resource. |  
+  roleName | Role | Advanced | The role's name |  
+  scope | Scope |   | The scope of this resource |  
+  svr_action | Action | Advanced | The name of the action being requested on the resource. |  
+  svr_application | Application | Advanced | The name of the application in which the resource is deployed, as it appears in the corresponding <code>&lt;display-name&gt;</code> element. |  
+  svr_server | Server | Advanced | The name of the Server resource. |  
+
+<p><a id="AdvancedURLPolicy">&nbsp;</a>
+<p>
+
+
+## AdvancedURLPolicy
+
+<b>References to this type</b>:
+* Security Data -> Realms -> Authorizers -> DefaultAuthorizerSecurityData -> Advanced -> URL
+* Security Data -> Realms -> Authorizers -> XACMLAuthorizerSecurityData -> Advanced -> URL
+
+
+Property Name | Label | Tab Name | Description | MBean Reference
+--- | --- | --- | --- | ---
+  Policy | Policy | Policy | The conditions that determine the access control of this resource. |  
+  PolicyStringExpression | Policy | Advanced | The conditions that determine the access control of this resource. |  
+  resourceId | Resource Id | Advanced | The security resource id of this resource. |  
+  scope | Scope |   | The scope of this resource |  
+  url_application | Application | Advanced | The name of the application in which the resource is deployed, as it appears in the corresponding <code>&lt;display-name&gt;</code> element. |  
+  url_contextPath | Context Path | Advanced | The context path of the Web application |  
+  url_httpMethod | Http Method | Advanced | The name of the HTTP method on the URL resource, as it appears in the corresponding <code>&lt;http-method&gt;</code> element in the deployment descriptor. |  
+  url_uri | URI | Advanced | The URI of the resource. |  
+
+<p><a id="AdvancedURLRoleMapping">&nbsp;</a>
+<p>
+
+
+## AdvancedURLRoleMapping
+
+<b>References to this type</b>:
+* Security Data -> Realms -> Role Mappers -> DefaultRoleMapperSecurityData -> Advanced -> URL
+* Security Data -> Realms -> Role Mappers -> XACMLRoleMapperSecurityData -> Advanced -> URL
+
+
+Property Name | Label | Tab Name | Description | MBean Reference
+--- | --- | --- | --- | ---
+  Policy | Policy | Policy | The conditions that determine the access control of this resource. |  
+  PolicyStringExpression | Policy | Advanced | The conditions that determine the access control of this resource. |  
+  resourceId | Resource Id | Advanced | The security resource id of this resource. |  
+  roleName | Role | Advanced | The role's name |  
+  scope | Scope |   | The scope of this resource |  
+  url_application | Application | Advanced | The name of the application in which the resource is deployed, as it appears in the corresponding <code>&lt;display-name&gt;</code> element. |  
+  url_contextPath | Context Path | Advanced | The context path of the Web application |  
+  url_httpMethod | Http Method | Advanced | The name of the HTTP method on the URL resource, as it appears in the corresponding <code>&lt;http-method&gt;</code> element in the deployment descriptor. |  
+  url_uri | URI | Advanced | The URI of the resource. |  
+
+<p><a id="AdvancedWebServicePolicy">&nbsp;</a>
+<p>
+
+
+## AdvancedWebServicePolicy
+
+<b>References to this type</b>:
+* Security Data -> Realms -> Authorizers -> DefaultAuthorizerSecurityData -> Advanced -> Web Service
+* Security Data -> Realms -> Authorizers -> XACMLAuthorizerSecurityData -> Advanced -> Web Service
+
+
+Property Name | Label | Tab Name | Description | MBean Reference
+--- | --- | --- | --- | ---
+  Policy | Policy | Policy | The conditions that determine the access control of this resource. |  
+  PolicyStringExpression | Policy | Advanced | The conditions that determine the access control of this resource. |  
+  resourceId | Resource Id | Advanced | The security resource id of this resource. |  
+  scope | Scope |   | The scope of this resource |  
+  webservices_application | Application | Advanced | The name of the application in which the resource is deployed, as it appears in the corresponding <code>&lt;display-name&gt;</code> element. |  
+  webservices_contextPath | Context Path | Advanced | The context path for the Web application. |  
+  webservices_method | Method | Advanced | The name of the service that is to be invoked. |  
+  webservices_signature | Signature | Advanced | The signature of the target method. |  
+  webservices_webService | Web Service | Advanced | The name of the Web Service. |  
+
+<p><a id="AdvancedWebServiceRoleMapping">&nbsp;</a>
+<p>
+
+
+## AdvancedWebServiceRoleMapping
+
+<b>References to this type</b>:
+* Security Data -> Realms -> Role Mappers -> XACMLRoleMapperSecurityData -> Advanced -> Web Service
+* Security Data -> Realms -> Role Mappers -> DefaultRoleMapperSecurityData -> Advanced -> Web Service
+
+
+Property Name | Label | Tab Name | Description | MBean Reference
+--- | --- | --- | --- | ---
+  Policy | Policy | Policy | The conditions that determine the access control of this resource. |  
+  PolicyStringExpression | Policy | Advanced | The conditions that determine the access control of this resource. |  
+  resourceId | Resource Id | Advanced | The security resource id of this resource. |  
+  roleName | Role | Advanced | The role's name |  
+  scope | Scope |   | The scope of this resource |  
+  webservices_application | Application | Advanced | The name of the application in which the resource is deployed, as it appears in the corresponding <code>&lt;display-name&gt;</code> element. |  
+  webservices_contextPath | Context Path | Advanced | The context path for the Web application. |  
+  webservices_method | Method | Advanced | The name of the service that is to be invoked. |  
+  webservices_signature | Signature | Advanced | The signature of the target method. |  
+  webservices_webService | Web Service | Advanced | The name of the Web Service. |  
+
+<p><a id="AdvancedWorkContextPolicy">&nbsp;</a>
+<p>
+
+
+## AdvancedWorkContextPolicy
+
+<b>References to this type</b>:
+* Security Data -> Realms -> Authorizers -> XACMLAuthorizerSecurityData -> Advanced -> Work Context
+* Security Data -> Realms -> Authorizers -> DefaultAuthorizerSecurityData -> Advanced -> Work Context
+
+
+Property Name | Label | Tab Name | Description | MBean Reference
+--- | --- | --- | --- | ---
+  Policy | Policy | Policy | The conditions that determine the access control of this resource. |  
+  PolicyStringExpression | Policy | Advanced | The conditions that determine the access control of this resource. |  
+  resourceId | Resource Id | Advanced | The security resource id of this resource. |  
+  scope | Scope |   | The scope of this resource |  
+  workcontext_action | Action | Advanced | The name of the action being requested on the WorkContext resource. |  
+  workcontext_path | Path | Advanced | The path to distinquish WorkContext. |  
+
+<p><a id="AdvancedWorkContextRoleMapping">&nbsp;</a>
+<p>
+
+
+## AdvancedWorkContextRoleMapping
+
+<b>References to this type</b>:
+* Security Data -> Realms -> Role Mappers -> XACMLRoleMapperSecurityData -> Advanced -> Work Context
+* Security Data -> Realms -> Role Mappers -> DefaultRoleMapperSecurityData -> Advanced -> Work Context
+
+
+Property Name | Label | Tab Name | Description | MBean Reference
+--- | --- | --- | --- | ---
+  Policy | Policy | Policy | The conditions that determine the access control of this resource. |  
+  PolicyStringExpression | Policy | Advanced | The conditions that determine the access control of this resource. |  
+  resourceId | Resource Id | Advanced | The security resource id of this resource. |  
+  roleName | Role | Advanced | The role's name |  
+  scope | Scope |   | The scope of this resource |  
+  workcontext_action | Action | Advanced | The name of the action being requested on the WorkContext resource. |  
+  workcontext_path | Path | Advanced | The path to distinquish WorkContext. |  
+
 <p><a id="AppClientComponentRuntime">&nbsp;</a>
 <p>
 
@@ -1249,7 +1947,7 @@ Property Name | Label | Tab Name | Description | MBean Reference
   PlanDir | Plan Dir | Overview | The location of this application's configuration area. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/AppDeploymentMBean.html#PlanDir)
   PlanPath | Plan Path | Overview | The path to the deployment plan document on the Administration Server. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/AppDeploymentMBean.html#PlanPath)
   PlanStagingMode | Plan Staging Mode | Overview | Specifies whether an application's deployment plan is copied from a source on the Administration Server to the Managed Server's staging area during application preparation. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/AppDeploymentMBean.html#PlanStagingMode)
-  SecurityDDModel | Security DD Model | Overview | The security model that is used to secure a deployed module. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/AppDeploymentMBean.html#SecurityDDModel)
+  SecurityDDModel | Security Model | Overview | The security model that is used to secure a deployed module. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/AppDeploymentMBean.html#SecurityDDModel)
   SourcePath | Source Path | Overview | The path to the source of the deployable unit on the Administration Server. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/AppDeploymentMBean.html#SourcePath)
   StagingMode | Staging Mode | Overview | Specifies whether a deployment's files are copied from a source on the Administration Server to the Managed Server's staging area during application preparation. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/AppDeploymentMBean.html#StagingMode)
   Targets | Targets | Targets | You must select a target on which an MBean will be deployed from this list of the targets in the current domain on which this item can be deployed. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/AppDeploymentMBean.html#Targets)
@@ -1528,23 +2226,24 @@ Property Name | Label | Tab Name | Description | MBean Reference
 * Monitoring -> Deployments -> Application Runtime Data -> Work Manager Runtimes -> Capacity Runtime
 * Monitoring -> Deployments -> Application Runtime Data -> Component Runtimes -> JDBCDataSourceRuntime -> Work Manager Runtimes -> Capacity Runtime
 * Monitoring -> Deployments -> Application Runtime Data -> Component Runtimes -> JMSComponentRuntime -> Work Manager Runtimes -> Capacity Runtime
-* Monitoring -> Deployments -> Application Runtime Data -> Component Runtimes -> JDBCMultiDataSourceRuntime -> Work Manager Runtimes -> Capacity Runtime
-* Monitoring -> Deployments -> Application Runtime Data -> Component Runtimes -> SCAPojoComponentRuntime -> Work Manager Runtimes -> Capacity Runtime
 * Monitoring -> Deployments -> Application Runtime Data -> Component Runtimes -> ConnectorComponentRuntime -> Work Manager Runtimes -> Capacity Runtime
-* Monitoring -> Services -> Data Sources -> JDBC Data Source Runtime MBeans -> JDBCDataSourceRuntime -> Work Manager Runtimes -> Capacity Runtime
 * Monitoring -> Services -> Data Sources -> JDBC Multi Data Source Runtime MBeans -> Work Manager Runtimes -> Capacity Runtime
 * Monitoring -> Deployments -> Application Runtime Data -> Component Runtimes -> Work Manager Runtimes -> Capacity Runtime
-* Monitoring -> Scheduling -> Work Manager Runtimes -> Capacity Runtime
-* Monitoring -> Deployments -> Application Runtime Data -> Component Runtimes -> JDBCReplayStatisticsRuntime -> Work Manager Runtimes -> Capacity Runtime
 * Monitoring -> Deployments -> Application Runtime Data -> Component Runtimes -> AppClientComponentRuntime -> Work Manager Runtimes -> Capacity Runtime
 * Monitoring -> Services -> Data Sources -> JDBC Data Source Runtime MBeans -> Work Manager Runtimes -> Capacity Runtime
 * Monitoring -> Deployments -> Application Runtime Data -> Component Runtimes -> SCASpringComponentRuntime -> Work Manager Runtimes -> Capacity Runtime
 * Monitoring -> Deployments -> Application Runtime Data -> Component Runtimes -> ComponentConcurrentRuntime -> Work Manager Runtimes -> Capacity Runtime
 * Monitoring -> Deployments -> Application Runtime Data -> Component Runtimes -> WebAppComponentRuntime -> Work Manager Runtimes -> Capacity Runtime
-* Monitoring -> Deployments -> Application Runtime Data -> Component Runtimes -> ComponentRuntime -> Work Manager Runtimes -> Capacity Runtime
 * Monitoring -> Deployments -> Application Runtime Data -> Component Runtimes -> InterceptionComponentRuntime -> Work Manager Runtimes -> Capacity Runtime
-* Monitoring -> Deployments -> Application Runtime Data -> Component Runtimes -> EJBComponentRuntime -> Work Manager Runtimes -> Capacity Runtime
 * Monitoring -> Services -> Data Sources -> JDBC Data Source Runtime MBeans -> JDBCOracleDataSourceRuntime -> Work Manager Runtimes -> Capacity Runtime
+* Monitoring -> Deployments -> Application Runtime Data -> Component Runtimes -> JDBCOracleDataSourceRuntime -> Work Manager Runtimes -> Capacity Runtime
+* Monitoring -> Deployments -> Application Runtime Data -> Component Runtimes -> JDBCMultiDataSourceRuntime -> Work Manager Runtimes -> Capacity Runtime
+* Monitoring -> Deployments -> Application Runtime Data -> Component Runtimes -> SCAPojoComponentRuntime -> Work Manager Runtimes -> Capacity Runtime
+* Monitoring -> Services -> Data Sources -> JDBC Data Source Runtime MBeans -> JDBCDataSourceRuntime -> Work Manager Runtimes -> Capacity Runtime
+* Monitoring -> Scheduling -> Work Manager Runtimes -> Capacity Runtime
+* Monitoring -> Deployments -> Application Runtime Data -> Component Runtimes -> JDBCReplayStatisticsRuntime -> Work Manager Runtimes -> Capacity Runtime
+* Monitoring -> Deployments -> Application Runtime Data -> Component Runtimes -> ComponentRuntime -> Work Manager Runtimes -> Capacity Runtime
+* Monitoring -> Deployments -> Application Runtime Data -> Component Runtimes -> EJBComponentRuntime -> Work Manager Runtimes -> Capacity Runtime
 
 
 Property Name | Label | Tab Name | Description | MBean Reference
@@ -1604,6 +2303,43 @@ Property Name | Label | Tab Name | Description | MBean Reference
   OcspResponseCacheEnabled | Enable Response Cache | OCSP | For this CA, determines whether the OCSP response local cache is enabled. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/CertRevocCaMBean.html#OcspResponseCacheEnabled)
   OcspResponseTimeout | Response Timeout (seconds) | OCSP | For this CA, determines the timeout for the OCSP response, expressed in seconds. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/CertRevocCaMBean.html#OcspResponseTimeout)
   OcspTimeTolerance | Time Tolerance (seconds) | OCSP | For this CA, determines the time tolerance value for handling clock-skew differences between clients and responders, expressed in seconds. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/CertRevocCaMBean.html#OcspTimeTolerance)
+
+<p><a id="CertificateIssuerPlugin">&nbsp;</a>
+<p>
+
+
+## CertificateIssuerPlugin
+Property Name | Label | Tab Name | Description | MBean Reference
+--- | --- | --- | --- | ---
+  CertificateRequestProperties | Certificate Request Properties | General | Returns the properties to be passed to the issuer when the Certificate Service requests a certificate. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/CertificateIssuerPluginMBean.html#CertificateRequestProperties)
+  CredentialSet | Credential Set | General | Returns the credential set for this plugin configuration. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/CertificateIssuerPluginMBean.html#CredentialSet)
+  Deployment | Deployment | General | Returns the plugin deployment for this plugin configuration. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/CertificateIssuerPluginMBean.html#Deployment)
+  Enabled | Enabled | General | Whether this plugin configuration is enabled or not. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/CertificateIssuerPluginMBean.html#Enabled)
+  Name | Name | General | The user-specified name of this MBean instance. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/CertificateIssuerPluginMBean.html#Name)
+  Properties | Initialization Properties | General | Returns the properties. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/CertificateIssuerPluginMBean.html#Properties)
+
+<p><a id="CertificateManagementDomainRuntime">&nbsp;</a>
+<p>
+
+
+## CertificateManagementDomainRuntime
+
+<b>Actions</b>: Refresh Certificates, Roll Domain Certificate Authority
+
+Property Name | Label | Tab Name | Description | MBean Reference
+--- | --- | --- | --- | ---
+
+<p><a id="CertificateManagementServerRuntime">&nbsp;</a>
+<p>
+
+
+## CertificateManagementServerRuntime
+
+<b>Actions</b>: Refresh Certificates
+
+Property Name | Label | Tab Name | Description | MBean Reference
+--- | --- | --- | --- | ---
+  Server | Server |   |  |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/ServerRuntimeMBean.html#Name)
 
 <p><a id="CertificateRegistry">&nbsp;</a>
 <p>
@@ -1735,6 +2471,7 @@ Property Name | Label | Tab Name | Description | MBean Reference
   ReplicationChannel | Replication Channel | Replication | The channel name to be used for replication traffic. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/ClusterMBean.html#ReplicationChannel)
   ReplicationTimeoutEnabled | Enable Replication Timeout | Replication | Indicates if timeout should be applied to session replication calls. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/ClusterMBean.html#ReplicationTimeoutEnabled)
   ReplicationTimeoutMillis | Replication Timeout Millis | Replication | Interval in milliseconds at which Migratable Servers and Cluster Masters prove their liveness via the database. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/ClusterMBean.html#ReplicationTimeoutMillis)
+  SecureClusterBroadcastEnabled | Secure Cluster Broadcast Enabled | Messaging | Servers in a cluster broadcast messages to each other using either unicast or multicast. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/ClusterMBean.html#SecureClusterBroadcastEnabled)
   SecureReplicationEnabled | Secure Replication Enabled | Replication | Servers in a cluster replicate session data. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/ClusterMBean.html#SecureReplicationEnabled)
   SecurityInteropMode | Security Interoperability Mode | JTA | Specifies the security mode of the communication channel used for XA calls between servers that participate in a global transaction. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JTAClusterMBean.html#SecurityInteropMode)
   Server | Server | Servers | A server assigned to this cluster. |  
@@ -1939,9 +2676,11 @@ Property Name | Label | Tab Name | Description | MBean Reference
   ClusteringMode | Clustering Mode | General | Specifies a clustering mode of either Unicast (default) or Multicast. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/CoherenceClusterParamsBean.html#ClusteringMode)
   CoherenceClientAuth | Client Authentication Mode | Security | The client authentication mode to use. Valid values are none, required and wanted. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/CoherenceKeystoreParamsBean.html#CoherenceClientAuth)
   CoherenceIdentityAlias | Private Key Alias | Security | The string alias used to store and retrieve the Coherence Identity private key in the keystore. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/CoherenceKeystoreParamsBean.html#CoherenceIdentityAlias)
+  CoherenceKeyRefreshPeriod | Coherence Key Refresh Period | Security | The period to use to attempt to refresh keys and certs. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/CoherenceKeystoreParamsBean.html#CoherenceKeyRefreshPeriod)
   CoherencePrivateKeyPassPhrase | Private Key Pass Phrase | Security | The passphrase used to retrieve the private key for the Coherence Identity specified in the server configured keystore. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/CoherenceKeystoreParamsBean.html#CoherencePrivateKeyPassPhrase)
   CustomClusterConfigurationFileName | Custom Cluster Configuration File Name | General | The location of the custom configuration file relative to the Domain Configuration directory. Use this field to import a new configuration file. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/CoherenceClusterSystemResourceMBean.html#CustomClusterConfigurationFileName)
   DefaultPersistenceMode | Default Persistence Mode | CoherencePersistence | Specifies the default persistence mode. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/CoherencePersistenceParamsBean.html#DefaultPersistenceMode)
+  DiscoveryAddress | Discovery Address | General | Controls whether the discovery address is set. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/CoherenceClusterParamsBean.html#DiscoveryAddress)
   Enabled | Enabled | Logging |  Specifies whether custom Coherence logging is enabled. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/CoherenceLoggingParamsBean.html#Enabled)
   EventsDirectory | Events Directory | CoherencePersistence | The events directory for the default persistence environment used to store durable events. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/CoherencePersistenceParamsBean.html#EventsDirectory)
   FederationTopology | Federation Topology | CoherenceFederation | Specify the federation topology. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/CoherenceFederationParamsBean.html#FederationTopology)
@@ -2582,6 +3321,18 @@ Property Name | Label | Tab Name | Description | MBean Reference
   Name | Name |   | The name of this security provider. |  
   Version | Version |   | This security provider's version. |  
 
+<p><a id="CredentialSet">&nbsp;</a>
+<p>
+
+
+## CredentialSet
+Property Name | Label | Tab Name | Description | MBean Reference
+--- | --- | --- | --- | ---
+  Name | Name | ReferencedBy | The user-specified name of this MBean instance. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/CredentialSetMBean.html#Name)
+  Path | Path | ReferencedBy | The path in the navigation tree to the referring object. |  
+  Properties | Properties | ReferencedBy | The names of the properties on the referring object that reference this object. |  
+  Type | Type | ReferencedBy | The type of the referring object. |  
+
 <p><a id="CrossTenantAuthenticator">&nbsp;</a>
 <p>
 
@@ -2855,6 +3606,9 @@ Property Name | Label | Tab Name | Description | MBean Reference
 
 ## DefaultAuthenticatorSecurityData
 
+<b>Actions</b>: Import, Export
+
+
 <b>References to this type</b>:
 * Security Data -> Realms -> Authentication Providers -> DefaultAuthenticatorSecurityData
 
@@ -2928,6 +3682,9 @@ Property Name | Label | Tab Name | Description | MBean Reference
 
 ## DefaultAuthorizerSecurityData
 
+<b>Actions</b>: Import, Export
+
+
 <b>References to this type</b>:
 * Security Data -> Realms -> Authorizers -> DefaultAuthorizerSecurityData
 
@@ -2962,6 +3719,9 @@ Property Name | Label | Tab Name | Description | MBean Reference
 
 
 ## DefaultCredentialMapperSecurityData
+
+<b>Actions</b>: Import, Export
+
 
 <b>References to this type</b>:
 * Security Data -> Realms -> Credential Mappers -> DefaultCredentialMapperSecurityData
@@ -3024,6 +3784,9 @@ Property Name | Label | Tab Name | Description | MBean Reference
 
 
 ## DefaultRoleMapperSecurityData
+
+<b>Actions</b>: Import, Export
+
 
 <b>References to this type</b>:
 * Security Data -> Realms -> Role Mappers -> DefaultRoleMapperSecurityData
@@ -3191,6 +3954,10 @@ Property Name | Label | Tab Name | Description | MBean Reference
   CacheSize | Cache Size | Security.EmbeddedLDAP | The size of the cache (in kilobytes) that is used with the embedded LDAP server. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/EmbeddedLDAPMBean.html#CacheSize)
   CacheTTL | Cache TTL | Security.EmbeddedLDAP | The time-to-live of the cache (in seconds) that is used with the embedded LDAP server. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/EmbeddedLDAPMBean.html#CacheTTL)
   CalculateIntervalSecs | Calculate Interval Secs | HealthScore | The interval time (in seconds) that WebLogic Server will call the health score plugin for calculating the server's health score. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/HealthScoreMBean.html#CalculateIntervalSecs)
+  CertificateAuthorityValidityPeriod | Certificate Authority Validity Period | Security.CertificateManagement | Returns the validity period (certificate lifetime) that the Domain Certificates Issuer should set when generating a new Certificate Authority certificate. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/CertificateManagementMBean.html#CertificateAuthorityValidityPeriod)
+  CertificateCheckInterval | Certificate Check Interval | Security.CertificateManagement | Returns the certificate check interval -- how often the Certificate Management Service should check for/refresh expiring certificates (in days). |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/CertificateManagementMBean.html#CertificateCheckInterval)
+  CertificateRefreshWindow | Certificate Refresh Window | Security.CertificateManagement | Returns the certificate refresh window. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/CertificateManagementMBean.html#CertificateRefreshWindow)
+  CertificateValidityPeriod | Certificate Validity Period | Security.CertificateManagement | Returns the validity period (certificate lifetime) that the Domain Certificates Issuer should set when generating a new certificate. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/CertificateManagementMBean.html#CertificateValidityPeriod)
   ChangeSessionIDOnAuthentication | Change Session ID On Authentication | WebApplication | Global property to determine if we need to generate a new SessionID after authentication. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/WebAppContainerMBean.html#ChangeSessionIDOnAuthentication)
   CheckCertificatesExpirationDays | Check Certificates Expiration Days | Security.Warnings | Returns the number of days before certificate expiration that warnings should be issued. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/SecurityConfigurationMBean.html#CheckCertificatesExpirationDays)
   CheckCertificatesIntervalDays | Check Certificates Interval Days | Security.Warnings | Returns the interval between checks for certificate expiration. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/SecurityConfigurationMBean.html#CheckCertificatesIntervalDays)
@@ -3252,10 +4019,12 @@ Property Name | Label | Tab Name | Description | MBean Reference
   HttpTraceSupportEnabled | Http Trace Support Enabled | WebApplication |  Returns the value of HttpTraceSupportEnabled. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/WebAppContainerMBean.html#HttpTraceSupportEnabled)
   IdentityDomainAwareProvidersRequired | Identity Domain Aware Providers Required | Security.General | Specifies whether all role mapping, authorization, credential mapping, and audit providers configured in the domain must support the <code>IdentityDomainAwareProviderMBean</code> interface's administrative identity domain. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/SecurityConfigurationMBean.html#IdentityDomainAwareProvidersRequired)
   ImplicitBeanDiscoveryEnabled | Enable Implicit Bean Discovery | General | Enable or disable implicit bean discovery for all applications deployed to the domain. This is used for CDI 1.0 application compatibility. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/CdiContainerMBean.html#ImplicitBeanDiscoveryEnabled)
+  IncludeRootCertificateInChain | Include Root Certificate In Chain | Security.CertificateManagement | Whether the Domain Certificates Issuer should include the self-signed root CA in the certificate chain for a generated certificate. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/CertificateManagementMBean.html#IncludeRootCertificateInChain)
   InitialWindowSize | Initial Window Size | WebApplication |  The server's initial window size (in octets) for stream-level flow control. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/Http2ConfigMBean.html#InitialWindowSize)
   InternalAppsDeployOnDemandEnabled | Enable on-demand deployment of internal applications | General | Specifies whether internal applications such as the console, uddi, wlstestclient, and uddiexplorer are deployed on demand (first access) instead of during server startup. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/DomainMBean.html#InternalAppsDeployOnDemandEnabled)
   InvocationTimeoutSeconds | Invocation Timeout Seconds | General | The number of seconds that internal WebLogic Server processes wait to connect to an MBean server, invoke an MBean server method, and return the results of the invocation. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JMXMBean.html#InvocationTimeoutSeconds)
   JSPCompilerBackwardsCompatible | JSP Compiler Backwards Compatible | WebApplication | Global property to determine the behavior of the JSP compiler. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/WebAppContainerMBean.html#JSPCompilerBackwardsCompatible)
+  JavaStandardTrustEnabled | Java Standard Trust Enabled | Security.CertificateManagement | Whether or not the domain should trust the Java Standard Trust certificates, in addition to the Domain Certificate Authority certificate(s) and any Provisioned Trust certificates. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/CertificateManagementMBean.html#JavaStandardTrustEnabled)
   ListenPortEnabled | Listen Port Enabled | General | Returns the domain-wide setting for isListenPortEnabled. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/DomainMBean.html#ListenPortEnabled)
   LogFileRotationDir | Log file rotation directory | Logging | The directory where the rotated log files will be stored. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/LogMBean.html#LogFileRotationDir)
   LogFormatCompatibilityEnabled | Server Log Format Compatibility Enabled | General | Configures whether log messages will be logged in legacy format without supplemental attributes. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/DomainMBean.html#LogFormatCompatibilityEnabled)
@@ -3267,6 +4036,7 @@ Property Name | Label | Tab Name | Description | MBean Reference
   MaxHeaderListSize | Maximum size of header list | WebApplication |  The maximum size of header list that the server is prepared to accept, in octets. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/Http2ConfigMBean.html#MaxHeaderListSize)
   MaxPostSize | Maximum Post Size | WebApplication | The maximum post size this server allows for reading HTTP POST data in a servlet request. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/WebAppContainerMBean.html#MaxPostSize)
   MaxPostTimeSecs | Maximum Post Time | WebApplication | Maximum post time (in seconds) for reading HTTP POST data in a servlet request. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/WebAppContainerMBean.html#MaxPostTimeSecs)
+  MaxRequestParameterCount | Maximum Request Parameter Count | WebApplication | The maximum request parameter count this server allows for reading maximum HTTP POST parameters count in a servlet request. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/WebAppContainerMBean.html#MaxRequestParameterCount)
   MaxSingleHeaderSize | Max Single Header Size | WebApplication | The maximum size of a single header (name and value) this server allows in a servlet request. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/WebAppContainerMBean.html#MaxSingleHeaderSize)
   MaxStreamResets | Max Stream Resets | WebApplication |  Gets the maximum number of stream resets(RST_STREAM frames) allowed per connection. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/Http2ConfigMBean.html#MaxStreamResets)
   MaxTotalHeadersSize | Max Total Headers Size | WebApplication | The maximum total headers size this server allows for reading HTTP headers in a servlet request. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/WebAppContainerMBean.html#MaxTotalHeadersSize)
@@ -3295,12 +4065,14 @@ Property Name | Label | Tab Name | Description | MBean Reference
   PrincipalEqualsCompareDnAndGuid | Use LDAP DN & GUID In Principal Matching | Security.General | Specifies whether the GUID and DN data in a WebLogic Server principal object are used when the equals method of that object is invoked. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/SecurityConfigurationMBean.html#PrincipalEqualsCompareDnAndGuid)
   ProductionModeEnabled | Production Mode | General | Specifies whether all servers in this domain run in production mode. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/DomainMBean.html#ProductionModeEnabled)
   ProtectedCookieEnabled | Remote Console Helper Protected Cookie Enabled | General | Determine if the Remote Console Helper session cookie is protected so that it is only visible to the helper. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/RemoteConsoleHelperMBean.html#ProtectedCookieEnabled)
+  ProvisionedCertificatesIssuerEnabled | Provisioned Certificates Issuer Enabled | Security.CertificateManagement | Returns true or false to indicate whether the Provisioned Certificates Issuer is enabled or not. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/CertificateManagementMBean.html#ProvisionedCertificatesIssuerEnabled)
   RefreshReplicaAtStartup | Refresh Replica At Startup | Security.EmbeddedLDAP | Specifies whether a Managed Server should refresh all replicated data at boot time. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/EmbeddedLDAPMBean.html#RefreshReplicaAtStartup)
   RejectMaliciousPathParameters | Reject Malicious Path Parameters | WebApplication | The WebApp Container configuration for rejection of URIs with malicious path parameters. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/WebAppContainerMBean.html#RejectMaliciousPathParameters)
   ReloginEnabled | Relogin Enabled | WebApplication | Beginning with the 9.0 release, the FORM/BASIC authentication behavior has been modified to conform strictly to the Java EE Specification. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/WebAppContainerMBean.html#ReloginEnabled)
   RemoteAnonymousRMIIIOPEnabled | Remote anonymous RMI access via IIOP | Security.General | Returns true if remote anonymous RMI access via IIOP is permitted. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/SecurityConfigurationMBean.html#RemoteAnonymousRMIIIOPEnabled)
   RemoteAnonymousRMIT3Enabled | Remote anonymous RMI access via T3 | Security.General | Returns true if remote anonymous RMI access via T3 is permitted. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/SecurityConfigurationMBean.html#RemoteAnonymousRMIT3Enabled)
   RemoteConsoleHelperEnabled | Remote Console Helper Enabled | General | Specifies whether the Administration Server automatically deploys the Remote Console Helper in the current domain. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/DomainMBean.html#RemoteConsoleHelperEnabled)
+  RestrictUserManagementAccessPatterns | Restrict User Management Access Patterns | WebApplication | The Username patterns for the WebLogic Restrict User Management Access Servlet Filter. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/WebAppContainerMBean.html#RestrictUserManagementAccessPatterns)
   RotateLogOnStartup | Rotate log file on startup | Logging | Specifies whether a server rotates its log file during its startup cycle. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/LogMBean.html#RotateLogOnStartup)
   RotationTime | Begin rotation time | Logging | Determines the start time (hour and minute) for a time-based rotation sequence. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/LogMBean.html#RotationTime)
   RotationType | Rotation Type | Logging | Criteria for moving old log messages to a separate file. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/LogMBean.html#RotationType)
@@ -3312,9 +4084,13 @@ Property Name | Label | Tab Name | Description | MBean Reference
   SameSiteFilterUserAgentRegEx | Same Site Filter User Agent Reg Ex | WebApplication | The User Agent configuration for the WebLogic HTTP SameSite Java EE Servlet Filter. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/WebAppContainerMBean.html#SameSiteFilterUserAgentRegEx)
   SecureModeEnabled | Secured Production Mode | General | Specifies whether the domain will run in secured production mode. The domain must be in production mode to enable secured production mode. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/SecureModeMBean.html#SecureModeEnabled)
   SerialPropFilePollingInterval | Serial Profile Polling Interval | Security.AllowList | Specifies the frequency, in seconds, at which the directory containing the allowlist configuration file is polled. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/AllowListMBean.html#SerialPropFilePollingInterval)
+  ServerKeyStores | Server Keystores | Security.General | Gets the domain-wide default value for the per-server <code>KeyStores</code> attribute. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/DomainMBean.html#ServerKeyStores)
   SessionTimeout | Remote Console Helper Session Timeout | General | The session timeout value (in seconds) for the Remote Console Helper. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/RemoteConsoleHelperMBean.html#SessionTimeout)
   ShowArchivedRealPathEnabled | Archived Real Path Enabled | WebApplication | Global property to determine the behavior of getRealPath() for archived web applications. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/WebAppContainerMBean.html#ShowArchivedRealPathEnabled)
+  SinglePurposeCertificatesEnabled | Single Purpose Certificates Enabled | Security.CertificateManagement | Returns the single purpose certificates enabled value: whether the Domain Certificates Issuer should generate separate, single-purpose certificates for different purposes (server authentication, client authentication, signing and encryption), or generate one certificate that supports all those purposes. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/CertificateManagementMBean.html#SinglePurposeCertificatesEnabled)
   SiteName | Site Name | General | The name of the site this domain is associated with. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/DomainMBean.html#SiteName)
+  SubjectAlternativeNames | Subject Alternative Names | Security.CertificateManagement | A space- or comma-separated list of words representing the Subject Alternative Names that the Domain Certificates Issuer should include when generating a server certificate. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/CertificateManagementMBean.html#SubjectAlternativeNames)
+  SubjectCommonName | Subject Common Name | Security.CertificateManagement | The name the Domain Certificates Issuer should use for the CN attribute of a certificate's Subject: either the local hostname (<code>hostname</code>) or the server's listen address (<code>listen_address</code>). |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/CertificateManagementMBean.html#SubjectCommonName)
   SynchronizedSessionTimeoutEnabled | Synchronized Session Timeout Enabled | WebApplication | Indicates whether to also invalidate all the other sessions when one of the sessions that share the same ID expires. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/WebAppContainerMBean.html#SynchronizedSessionTimeoutEnabled)
   SynthesizeAllowListEnabled | Synthesize Allow List Enabled | Security.AllowList | Returns whether we have to synthesize the allowlist. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/AllowListMBean.html#SynthesizeAllowListEnabled)
   Timeout | Timeout | Security.EmbeddedLDAP | Specifies the maximum number of seconds to wait for results from the embedded LDAP server before timing out. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/EmbeddedLDAPMBean.html#Timeout)
@@ -3338,6 +4114,40 @@ Property Name | Label | Tab Name | Description | MBean Reference
   WeblogicPluginEnabled | Weblogic Plugin Enabled | WebApplication | Specifies whether or not the proprietary <code>WL-Proxy-Client-IP</code> header should be honored. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/WebAppContainerMBean.html#WeblogicPluginEnabled)
   WorkContextPropagationEnabled | Work Context Propagation Enabled | WebApplication | Indicates whether or not WorkContextPropagation is enabled. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/WebAppContainerMBean.html#WorkContextPropagationEnabled)
   XPoweredByHeaderLevel | X-Powered-By Header | WebApplication |  WebLogic Server uses the X-Powered-By HTTP header, as recommended by the Servlet 3.1 specification, to publish its implementation information. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/WebAppContainerMBean.html#XPoweredByHeaderLevel)
+
+<p><a id="DomainKeystoresDomainRuntime">&nbsp;</a>
+<p>
+
+
+## DomainKeystoresDomainRuntime
+
+<b>Actions</b>: Import, Import, Delete, Delete, Export Trusted Certificates
+
+Property Name | Label | Tab Name | Description | MBean Reference
+--- | --- | --- | --- | ---
+  Alias | Alias | DomainCaKeystore | The certificate's alias |  
+  EntryType | Entry Type | DomainCaKeystore | The certificate's type |  
+  Issuer | Issuer | DomainCaKeystore | The certificate's issuer |  
+  NotAfter | Not After | DomainCaKeystore | The certificate is not valid after this date. |  
+  NotBefore | Not Before | DomainCaKeystore | The certificate is not valid before this date. |  
+  SerialNumber | Serial Number | DomainCaKeystore | The certificate's serial number |  
+  Subject | Subject | DomainCaKeystore | The certificate's subject |  
+
+<p><a id="DomainKeystoresServerRuntime">&nbsp;</a>
+<p>
+
+
+## DomainKeystoresServerRuntime
+Property Name | Label | Tab Name | Description | MBean Reference
+--- | --- | --- | --- | ---
+  Alias | Alias | MachineTrustKeystore | The certificate's alias |  
+  EntryType | Entry Type | MachineTrustKeystore | The certificate's type |  
+  Issuer | Issuer | MachineTrustKeystore | The certificate's issuer |  
+  NotAfter | Not After | MachineTrustKeystore | The certificate is not valid after this date. |  
+  NotBefore | Not Before | MachineTrustKeystore | The certificate is not valid before this date. |  
+  SerialNumber | Serial Number | MachineTrustKeystore | The certificate's serial number |  
+  Server | Server | Aggregate |  |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/ServerRuntimeMBean.html#Name)
+  Subject | Subject | MachineTrustKeystore | The certificate's subject |  
 
 <p><a id="DomainRole">&nbsp;</a>
 <p>
@@ -3363,16 +4173,23 @@ Property Name | Label | Tab Name | Description | MBean Reference
 
 ## DomainRuntime
 
+<b>Actions</b>: Grab Edit Lock
+
+
 <b>References to this type</b>:
 * Monitoring -> Environment -> Domain Runtime
 
 
 Property Name | Label | Tab Name | Description | MBean Reference
 --- | --- | --- | --- | ---
-  ActivationTime | Activation Time |   | The time when the domain became active. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/DomainRuntimeMBean.html#ActivationTime)
-  Enabled | Console Enabled |   | Is the console enabled? |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/ConsoleRuntimeMBean.html#Enabled)
-  Name | Name |   | The user-specified name of this MBean instance. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/DomainRuntimeMBean.html#Name)
-  Type | Type |   | Returns the type of the MBean. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/DomainRuntimeMBean.html#Type)
+  ActivationTime | Activation Time | General | The time when the domain became active. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/DomainRuntimeMBean.html#ActivationTime)
+  Enabled | Console Enabled | General | Is the console enabled? |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/ConsoleRuntimeMBean.html#Enabled)
+  Name | Name | General | The user-specified name of this MBean instance. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/DomainRuntimeMBean.html#Name)
+  Type | Type | General | Returns the type of the MBean. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/DomainRuntimeMBean.html#Type)
+  editSession | Edit Session | ChangeManager | The name of the edit session that will be used to manage the configuration. |  
+  hasChanges | Has Changes | ChangeManager | Whether that edit session has changes (in-memory or saved to the <code>pending</code> directory). |  
+  lockOwner | Lock Owner | ChangeManager | The name of the user who holds the lock. |  
+  locked | Locked | ChangeManager | Whether that edit session is locked. |  
 
 <p><a id="DomainSecurityRuntime">&nbsp;</a>
 <p>
@@ -3526,6 +4343,16 @@ Property Name | Label | Tab Name | Description | MBean Reference
 --- | --- | --- | --- | ---
   ModuleType | Module Type | Overview | The type of deployment: Enterprise Application, EJB Jar, Resource Adapter, Web Application, and so on. |  
   Name | Name | Overview | The deployment's name. |  
+
+<p><a id="EncryptedProperty">&nbsp;</a>
+<p>
+
+
+## EncryptedProperty
+Property Name | Label | Tab Name | Description | MBean Reference
+--- | --- | --- | --- | ---
+  EncryptedValue | Encrypted Value | General | Returns the value. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/EncryptedPropertyMBean.html#EncryptedValue)
+  Name | Name | General | The user-specified name of this MBean instance. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/EncryptedPropertyMBean.html#Name)
 
 <p><a id="EntityCache">&nbsp;</a>
 <p>
@@ -3728,6 +4555,27 @@ Property Name | Label | Tab Name | Description | MBean Reference
   EnvEntryType | Type | General | The environment entry's type. |  
   EnvEntryValue | Value | General | The environment entry's value. |  
   Name | Name | General | The environment entry's name. |  
+
+<p><a id="ExecuteQueue">&nbsp;</a>
+<p>
+
+
+## ExecuteQueue
+
+<b>References to this type</b>:
+* Configuration -> Environment -> Server Templates -> Execute Queues
+* Configuration -> Environment -> Servers -> Execute Queues
+
+
+Property Name | Label | Tab Name | Description | MBean Reference
+--- | --- | --- | --- | ---
+  Name | Name | General | The user-specified name of this MBean instance. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/ExecuteQueueMBean.html#Name)
+  QueueLength | Queue Length | General | The maximum number of simultaneous requests that this server can hold in the queue. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/ExecuteQueueMBean.html#QueueLength)
+  QueueLengthThresholdPercent | Queue Length Threshold Percent | General | The percentage of the Queue Length size that can be reached before this server indicates an overflow condition for the queue. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/ExecuteQueueMBean.html#QueueLengthThresholdPercent)
+  ThreadCount | Thread Count | General | The number of threads assigned to this queue. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/ExecuteQueueMBean.html#ThreadCount)
+  ThreadsIncrease | Threads Increase | General | Specifies the number of threads to increase the queue length when the queue length theshold is reached. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/ExecuteQueueMBean.html#ThreadsIncrease)
+  ThreadsMaximum | Threads Maximum | General | The maximum number of threads that this queue is allowed to have; this value prevents WebLogic Server from creating an overly high thread count in the queue in response to continual overflow conditions. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/ExecuteQueueMBean.html#ThreadsMaximum)
+  ThreadsMinimum | Threads Minimum | General | The minimum number of threads that WebLogic Server will maintain in the queue. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/ExecuteQueueMBean.html#ThreadsMinimum)
 
 <p><a id="ExecuteQueueRuntime">&nbsp;</a>
 <p>
@@ -4237,7 +5085,8 @@ Property Name | Label | Tab Name | Description | MBean Reference
   DriverName | Driver Class Name | ConnectionPool.General | The full package name of JDBC driver class used to create the physical database connections in the connection pool. (Note that this driver class must be in the classpath of any server to which it is deployed.) |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JDBCDriverParamsBean.html#DriverName)
   FanEnabled | Fan Enabled | ONS | Enables the data source to subscribe to and process Oracle FAN events. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JDBCOracleParamsBean.html#FanEnabled)
   FatalErrorCodes | Fatal Error Codes | ConnectionPool.Advanced | Specifies a comma-separated list of error codes that are treated as fatal errors. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JDBCConnectionPoolParamsBean.html#FatalErrorCodes)
-  GlobalTransactionsProtocol | Global Transactions Protocol | Transaction | Select this option to enable non-XA connections from the data source to participate in global transactions. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JDBCDataSourceParamsBean.html#GlobalTransactionsProtocol)
+  GlobalTransactionsProtocol | Global Transactions Protocol | Transaction | Determines the transaction protocol (global transaction processing behavior) for the data source. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JDBCDataSourceParamsBean.html#GlobalTransactionsProtocol)
+  HangDetectionMaxTestWaitSeconds | Hang Detection Max Test Wait Seconds | ConnectionPool.Advanced | The amount of time to wait for connection tests to complete before the connection pool determines that a connection test is hung. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JDBCConnectionPoolParamsBean.html#HangDetectionMaxTestWaitSeconds)
   HighestNumWaiters | Maximum Waiting for Connection | ConnectionPool.Advanced | The maximum number of connection requests that can concurrently block threads while waiting to reserve a connection from the data source's connection pool. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JDBCConnectionPoolParamsBean.html#HighestNumWaiters)
   IdentityBasedConnectionPoolingEnabled | Enable Identity Based Connection Pooling | IdentityOptions | Enables identity-based-connection-pooling for the data source. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JDBCConnectionPoolParamsBean.html#IdentityBasedConnectionPoolingEnabled)
   IgnoreInUseConnectionsEnabled | Ignore In-Use Connections | ConnectionPool.Advanced | Enables the data source to be shutdown even if connections obtained from the pool are still in use. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JDBCConnectionPoolParamsBean.html#IgnoreInUseConnectionsEnabled)
@@ -4268,11 +5117,15 @@ Property Name | Label | Tab Name | Description | MBean Reference
   Properties | Properties | ReferencedBy | The names of the properties on the referring object that reference this object. |  
   RebalanceOnUpEvent | Rebalance On Up Event | Oracle | Rebalancing connections incurs overhead due to connection creation to the new instance, and the closing of connections to existing instances, which may impact application performance under load, cause database logon storms, etc. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JDBCOracleParamsBean.html#RebalanceOnUpEvent)
   RecoverOnlyOnce | Recover Only Once | Transaction | Specifies that the transaction manager calls recover on the resource only once. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JDBCXAParamsBean.html#RecoverOnlyOnce)
+  RefreshAvailableAfterTestFailure | Refresh Available After Test Failure | ConnectionPool.Advanced | When true, the connection pool will attempt to replace a connection that fails the periodic connection test. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JDBCConnectionPoolParamsBean.html#RefreshAvailableAfterTestFailure)
   RemoveInfectedConnections | Remove Infected Connections Enabled | ConnectionPool.Advanced | Specifies whether a connection will be removed from the connection pool after the application uses the underlying vendor connection object. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JDBCConnectionPoolParamsBean.html#RemoveInfectedConnections)
   ReplayInitiationTimeout | Replay Initiation Timeout | Oracle | The amount of time, in seconds, a data source allows for Application Continuity replay processing before timing out and ending a replay session context. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JDBCOracleParamsBean.html#ReplayInitiationTimeout)
   ResourceHealthMonitoring | Resource Health Monitoring | Transaction | Enables JTA resource health monitoring for an XA data source. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JDBCXAParamsBean.html#ResourceHealthMonitoring)
   SecondsToTrustAnIdlePoolConnection | Seconds To Trust An Idle Pool Connection | ConnectionPool.Advanced | The number of seconds within a connection use that WebLogic Server trusts that the connection is still viable and will skip the connection test, either before delivering it to an application or during the periodic connection testing process. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JDBCConnectionPoolParamsBean.html#SecondsToTrustAnIdlePoolConnection)
+  ShrinkFactorPercent | Shrink Factor Percent | ConnectionPool.Advanced | The percentage of the number of available connections to shrink from current pool capacity to the maximum of the configured minimum capacity, the current number of in-use connections or the running average (if configured). |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JDBCConnectionPoolParamsBean.html#ShrinkFactorPercent)
   ShrinkFrequencySeconds | Shrink Frequency | ConnectionPool.Advanced | The number of seconds to wait before shrinking a connection pool that has incrementally increased to meet demand. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JDBCConnectionPoolParamsBean.html#ShrinkFrequencySeconds)
+  ShrinkHistorySeconds | Shrink History Seconds | ConnectionPool.Advanced | The amount of time to maintain a running average of the number of in-use connections. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JDBCConnectionPoolParamsBean.html#ShrinkHistorySeconds)
+  ShrinkSpareCapacityPercent | Shrink Spare Capacity Percent | ConnectionPool.Advanced | Specifies the number of additional number of connections to maintain above the current connection usage or the running average when shrinking. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JDBCConnectionPoolParamsBean.html#ShrinkSpareCapacityPercent)
   StatementCacheSize | Statement Cache Size | ConnectionPool.General | The number of prepared and callable statements stored in the cache. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JDBCConnectionPoolParamsBean.html#StatementCacheSize)
   StatementCacheType | Statement Cache Type | ConnectionPool.General | The algorithm used for maintaining the prepared statements stored in the statement cache. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JDBCConnectionPoolParamsBean.html#StatementCacheType)
   StatementTimeout | Statement Timeout | ConnectionPool.Advanced | The time after which a statement currently being executed will time out. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JDBCConnectionPoolParamsBean.html#StatementTimeout)
@@ -4280,16 +5133,17 @@ Property Name | Label | Tab Name | Description | MBean Reference
   TestConnectionsOnReserve | Test Connections On Reserve | ConnectionPool.Advanced | Enables WebLogic Server to test a connection before giving it to a client. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JDBCConnectionPoolParamsBean.html#TestConnectionsOnReserve)
   TestFrequencySeconds | Test Frequency | ConnectionPool.Advanced | The number of seconds a WebLogic Server instance waits between attempts when testing unused connections. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JDBCConnectionPoolParamsBean.html#TestFrequencySeconds)
   TestTableName | Test Table Name | ConnectionPool.Advanced | The name of the database table to use when testing physical database connections. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JDBCConnectionPoolParamsBean.html#TestTableName)
+  TestTimeoutSeconds | Test Timeout Seconds | ConnectionPool.Advanced | The time after which a test statement, or isValid method, currently being executed will time out. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JDBCConnectionPoolParamsBean.html#TestTimeoutSeconds)
   Type | Type | ReferencedBy | The type of the referring object. |  
   Url | Url | ConnectionPool.General | The URL of the database to connect to. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JDBCDriverParamsBean.html#Url)
   UseDatabaseCredentials | Use Database Credentials | IdentityOptions | If enabled, Oracle database credentials are used in getConnection instead of application server credentials. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JDBCOracleParamsBean.html#UseDatabaseCredentials)
   UseXaDataSourceInterface | Use Xa Data Source Interface | Transaction | Specifies that WebLogic Server should use the XA interface of the JDBC driver. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JDBCDriverParamsBean.html#UseXaDataSourceInterface)
   WrapTypes | Wrap Data Types | ConnectionPool.Advanced | By default, data type objects for Array, Blob, Clob, NClob, Ref, SQLXML, and Struct, plus ParameterMetaData and ResultSetMetaData objects are wrapped with a WebLogic wrapper. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JDBCConnectionPoolParamsBean.html#WrapTypes)
+  XADriver | XA Driver | Transaction | Whether this data source's driver supports global transactions. |  
   XaRetryDurationSeconds | XA Retry Duration | Transaction | Determines the duration in seconds for which the transaction manager will perform recover operations on the resource. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JDBCXAParamsBean.html#XaRetryDurationSeconds)
   XaRetryIntervalSeconds | XA Retry Interval | Transaction | The number of seconds between XA retry operations if XARetryDurationSeconds is set to a positive value. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JDBCXAParamsBean.html#XaRetryIntervalSeconds)
   XaSetTransactionTimeout | Set XA Transaction Timeout | Transaction | Enables WebLogic Server to set a transaction branch timeout based on the value for XaTransactionTimeout. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JDBCXAParamsBean.html#XaSetTransactionTimeout)
   XaTransactionTimeout | Xa Transaction Timeout | Transaction | The number of seconds to set as the transaction branch timeout. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JDBCXAParamsBean.html#XaTransactionTimeout)
-  isXADriver | XA JDBC Driver | Transaction |  whether the JDBC datasource driver is global (XA) or non-global (local).  |  
 
 <p><a id="JDBCApplicationUserPasswordCredential">&nbsp;</a>
 <p>
@@ -4387,6 +5241,7 @@ Property Name | Label | Tab Name | Description | MBean Reference
 <b>References to this type</b>:
 * Monitoring -> Deployments -> Application Runtime Data -> Component Runtimes -> JDBCDataSourceRuntime -> Tasks
 * Monitoring -> Services -> Data Sources -> JDBC Data Source Runtime MBeans -> JDBCOracleDataSourceRuntime -> Tasks
+* Monitoring -> Deployments -> Application Runtime Data -> Component Runtimes -> JDBCOracleDataSourceRuntime -> Tasks
 * Monitoring -> Services -> Data Sources -> JDBC Data Source Runtime MBeans -> JDBCDataSourceRuntime -> Tasks
 * Monitoring -> Services -> Data Sources -> JDBC Data Source Runtime MBeans -> Tasks
 
@@ -4449,7 +5304,8 @@ Property Name | Label | Tab Name | Description | MBean Reference
   DriverInterceptor | Driver Interceptor | Diagnostics | Specifies the absolute name of the application class used to intercept method calls to the JDBC driver. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JDBCConnectionPoolParamsBean.html#DriverInterceptor)
   DriverName | Driver Class Name | ConnectionPool.General | The full package name of JDBC driver class used to create the physical database connections in the connection pool. (Note that this driver class must be in the classpath of any server to which it is deployed.) |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JDBCDriverParamsBean.html#DriverName)
   FatalErrorCodes | Fatal Error Codes | ConnectionPool.Advanced | Specifies a comma-separated list of error codes that are treated as fatal errors. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JDBCConnectionPoolParamsBean.html#FatalErrorCodes)
-  GlobalTransactionsProtocol | Global Transactions Protocol | Transaction | Select this option to enable non-XA connections from the data source to participate in global transactions. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JDBCDataSourceParamsBean.html#GlobalTransactionsProtocol)
+  GlobalTransactionsProtocol | Global Transactions Protocol | Transaction | Determines the transaction protocol (global transaction processing behavior) for the data source. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JDBCDataSourceParamsBean.html#GlobalTransactionsProtocol)
+  HangDetectionMaxTestWaitSeconds | Hang Detection Max Test Wait Seconds | ConnectionPool.Advanced | The amount of time to wait for connection tests to complete before the connection pool determines that a connection test is hung. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JDBCConnectionPoolParamsBean.html#HangDetectionMaxTestWaitSeconds)
   HighestNumWaiters | Maximum Waiting for Connection | ConnectionPool.Advanced | The maximum number of connection requests that can concurrently block threads while waiting to reserve a connection from the data source's connection pool. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JDBCConnectionPoolParamsBean.html#HighestNumWaiters)
   IdentityBasedConnectionPoolingEnabled | Enable Identity Based Connection Pooling | IdentityOptions | Enables identity-based-connection-pooling for the data source. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JDBCConnectionPoolParamsBean.html#IdentityBasedConnectionPoolingEnabled)
   IgnoreInUseConnectionsEnabled | Ignore In-Use Connections | ConnectionPool.Advanced | Enables the data source to be shutdown even if connections obtained from the pool are still in use. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JDBCConnectionPoolParamsBean.html#IgnoreInUseConnectionsEnabled)
@@ -4477,11 +5333,15 @@ Property Name | Label | Tab Name | Description | MBean Reference
   Properties | Properties | ReferencedBy | The names of the properties on the referring object that reference this object. |  
   RebalanceOnUpEvent | Rebalance On Up Event | Oracle | Rebalancing connections incurs overhead due to connection creation to the new instance, and the closing of connections to existing instances, which may impact application performance under load, cause database logon storms, etc. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JDBCOracleParamsBean.html#RebalanceOnUpEvent)
   RecoverOnlyOnce | Recover Only Once | Transaction | Specifies that the transaction manager calls recover on the resource only once. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JDBCXAParamsBean.html#RecoverOnlyOnce)
+  RefreshAvailableAfterTestFailure | Refresh Available After Test Failure | ConnectionPool.Advanced | When true, the connection pool will attempt to replace a connection that fails the periodic connection test. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JDBCConnectionPoolParamsBean.html#RefreshAvailableAfterTestFailure)
   RemoveInfectedConnections | Remove Infected Connections Enabled | ConnectionPool.Advanced | Specifies whether a connection will be removed from the connection pool after the application uses the underlying vendor connection object. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JDBCConnectionPoolParamsBean.html#RemoveInfectedConnections)
   ReplayInitiationTimeout | Replay Initiation Timeout | Oracle | The amount of time, in seconds, a data source allows for Application Continuity replay processing before timing out and ending a replay session context. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JDBCOracleParamsBean.html#ReplayInitiationTimeout)
   ResourceHealthMonitoring | Resource Health Monitoring | Transaction | Enables JTA resource health monitoring for an XA data source. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JDBCXAParamsBean.html#ResourceHealthMonitoring)
   SecondsToTrustAnIdlePoolConnection | Seconds To Trust An Idle Pool Connection | ConnectionPool.Advanced | The number of seconds within a connection use that WebLogic Server trusts that the connection is still viable and will skip the connection test, either before delivering it to an application or during the periodic connection testing process. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JDBCConnectionPoolParamsBean.html#SecondsToTrustAnIdlePoolConnection)
+  ShrinkFactorPercent | Shrink Factor Percent | ConnectionPool.Advanced | The percentage of the number of available connections to shrink from current pool capacity to the maximum of the configured minimum capacity, the current number of in-use connections or the running average (if configured). |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JDBCConnectionPoolParamsBean.html#ShrinkFactorPercent)
   ShrinkFrequencySeconds | Shrink Frequency | ConnectionPool.Advanced | The number of seconds to wait before shrinking a connection pool that has incrementally increased to meet demand. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JDBCConnectionPoolParamsBean.html#ShrinkFrequencySeconds)
+  ShrinkHistorySeconds | Shrink History Seconds | ConnectionPool.Advanced | The amount of time to maintain a running average of the number of in-use connections. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JDBCConnectionPoolParamsBean.html#ShrinkHistorySeconds)
+  ShrinkSpareCapacityPercent | Shrink Spare Capacity Percent | ConnectionPool.Advanced | Specifies the number of additional number of connections to maintain above the current connection usage or the running average when shrinking. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JDBCConnectionPoolParamsBean.html#ShrinkSpareCapacityPercent)
   StatementCacheSize | Statement Cache Size | ConnectionPool.General | The number of prepared and callable statements stored in the cache. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JDBCConnectionPoolParamsBean.html#StatementCacheSize)
   StatementCacheType | Statement Cache Type | ConnectionPool.General | The algorithm used for maintaining the prepared statements stored in the statement cache. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JDBCConnectionPoolParamsBean.html#StatementCacheType)
   StatementTimeout | Statement Timeout | ConnectionPool.Advanced | The time after which a statement currently being executed will time out. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JDBCConnectionPoolParamsBean.html#StatementTimeout)
@@ -4489,16 +5349,17 @@ Property Name | Label | Tab Name | Description | MBean Reference
   TestConnectionsOnReserve | Test Connections On Reserve | ConnectionPool.Advanced | Enables WebLogic Server to test a connection before giving it to a client. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JDBCConnectionPoolParamsBean.html#TestConnectionsOnReserve)
   TestFrequencySeconds | Test Frequency | ConnectionPool.Advanced | The number of seconds a WebLogic Server instance waits between attempts when testing unused connections. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JDBCConnectionPoolParamsBean.html#TestFrequencySeconds)
   TestTableName | Test Table Name | ConnectionPool.Advanced | The name of the database table to use when testing physical database connections. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JDBCConnectionPoolParamsBean.html#TestTableName)
+  TestTimeoutSeconds | Test Timeout Seconds | ConnectionPool.Advanced | The time after which a test statement, or isValid method, currently being executed will time out. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JDBCConnectionPoolParamsBean.html#TestTimeoutSeconds)
   Type | Type | ReferencedBy | The type of the referring object. |  
   Url | Url | ConnectionPool.General | The URL of the database to connect to. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JDBCDriverParamsBean.html#Url)
   UseDatabaseCredentials | Use Database Credentials | IdentityOptions | If enabled, Oracle database credentials are used in getConnection instead of application server credentials. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JDBCOracleParamsBean.html#UseDatabaseCredentials)
   UseXaDataSourceInterface | Use Xa Data Source Interface | Transaction | Specifies that WebLogic Server should use the XA interface of the JDBC driver. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JDBCDriverParamsBean.html#UseXaDataSourceInterface)
   WrapTypes | Wrap Data Types | ConnectionPool.Advanced | By default, data type objects for Array, Blob, Clob, NClob, Ref, SQLXML, and Struct, plus ParameterMetaData and ResultSetMetaData objects are wrapped with a WebLogic wrapper. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JDBCConnectionPoolParamsBean.html#WrapTypes)
+  XADriver | XA Driver | Transaction | Whether this data source's driver supports global transactions. |  
   XaRetryDurationSeconds | XA Retry Duration | Transaction | Determines the duration in seconds for which the transaction manager will perform recover operations on the resource. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JDBCXAParamsBean.html#XaRetryDurationSeconds)
   XaRetryIntervalSeconds | XA Retry Interval | Transaction | The number of seconds between XA retry operations if XARetryDurationSeconds is set to a positive value. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JDBCXAParamsBean.html#XaRetryIntervalSeconds)
   XaSetTransactionTimeout | Set XA Transaction Timeout | Transaction | Enables WebLogic Server to set a transaction branch timeout based on the value for XaTransactionTimeout. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JDBCXAParamsBean.html#XaSetTransactionTimeout)
   XaTransactionTimeout | Xa Transaction Timeout | Transaction | The number of seconds to set as the transaction branch timeout. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JDBCXAParamsBean.html#XaTransactionTimeout)
-  isXADriver | XA JDBC Driver | Transaction |  whether the JDBC datasource driver is global (XA) or non-global (local).  |  
 
 <p><a id="JDBCModuleUserPasswordCredential">&nbsp;</a>
 <p>
@@ -4582,6 +5443,7 @@ Property Name | Label | Tab Name | Description | MBean Reference
 ## JDBCOracleDataSourceInstanceRuntime
 
 <b>References to this type</b>:
+* Monitoring -> Deployments -> Application Runtime Data -> Component Runtimes -> JDBCOracleDataSourceRuntime -> Instances
 * Monitoring -> Services -> Data Sources -> JDBC Data Source Runtime MBeans -> JDBCOracleDataSourceRuntime -> Instances
 
 
@@ -4609,6 +5471,7 @@ Property Name | Label | Tab Name | Description | MBean Reference
 ## JDBCOracleDataSourceRuntime
 
 <b>References to this type</b>:
+* Monitoring -> Deployments -> Application Runtime Data -> Component Runtimes -> JDBCOracleDataSourceRuntime
 * Monitoring -> Services -> Data Sources -> JDBC Data Source Runtime MBeans -> JDBCOracleDataSourceRuntime
 
 
@@ -4835,7 +5698,8 @@ Property Name | Label | Tab Name | Description | MBean Reference
   DriverInterceptor | Driver Interceptor | Diagnostics | Specifies the absolute name of the application class used to intercept method calls to the JDBC driver. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JDBCConnectionPoolParamsBean.html#DriverInterceptor)
   DriverName | Driver Class Name | ConnectionPool.General | The full package name of JDBC driver class used to create the physical database connections in the connection pool. (Note that this driver class must be in the classpath of any server to which it is deployed.) |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JDBCDriverParamsBean.html#DriverName)
   FatalErrorCodes | Fatal Error Codes | ConnectionPool.Advanced | Specifies a comma-separated list of error codes that are treated as fatal errors. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JDBCConnectionPoolParamsBean.html#FatalErrorCodes)
-  GlobalTransactionsProtocol | Global Transactions Protocol | Transaction | Select this option to enable non-XA connections from the data source to participate in global transactions. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JDBCDataSourceParamsBean.html#GlobalTransactionsProtocol)
+  GlobalTransactionsProtocol | Global Transactions Protocol | Transaction | Determines the transaction protocol (global transaction processing behavior) for the data source. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JDBCDataSourceParamsBean.html#GlobalTransactionsProtocol)
+  HangDetectionMaxTestWaitSeconds | Hang Detection Max Test Wait Seconds | ConnectionPool.Advanced | The amount of time to wait for connection tests to complete before the connection pool determines that a connection test is hung. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JDBCConnectionPoolParamsBean.html#HangDetectionMaxTestWaitSeconds)
   HighestNumWaiters | Maximum Waiting for Connection | ConnectionPool.Advanced | The maximum number of connection requests that can concurrently block threads while waiting to reserve a connection from the data source's connection pool. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JDBCConnectionPoolParamsBean.html#HighestNumWaiters)
   IdentityBasedConnectionPoolingEnabled | Enable Identity Based Connection Pooling | IdentityOptions | Enables identity-based-connection-pooling for the data source. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JDBCConnectionPoolParamsBean.html#IdentityBasedConnectionPoolingEnabled)
   IgnoreInUseConnectionsEnabled | Ignore In-Use Connections | ConnectionPool.Advanced | Enables the data source to be shutdown even if connections obtained from the pool are still in use. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JDBCConnectionPoolParamsBean.html#IgnoreInUseConnectionsEnabled)
@@ -4863,11 +5727,15 @@ Property Name | Label | Tab Name | Description | MBean Reference
   Properties | Properties | ReferencedBy | The names of the properties on the referring object that reference this object. |  
   RebalanceOnUpEvent | Rebalance On Up Event | Oracle | Rebalancing connections incurs overhead due to connection creation to the new instance, and the closing of connections to existing instances, which may impact application performance under load, cause database logon storms, etc. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JDBCOracleParamsBean.html#RebalanceOnUpEvent)
   RecoverOnlyOnce | Recover Only Once | Transaction | Specifies that the transaction manager calls recover on the resource only once. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JDBCXAParamsBean.html#RecoverOnlyOnce)
+  RefreshAvailableAfterTestFailure | Refresh Available After Test Failure | ConnectionPool.Advanced | When true, the connection pool will attempt to replace a connection that fails the periodic connection test. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JDBCConnectionPoolParamsBean.html#RefreshAvailableAfterTestFailure)
   RemoveInfectedConnections | Remove Infected Connections Enabled | ConnectionPool.Advanced | Specifies whether a connection will be removed from the connection pool after the application uses the underlying vendor connection object. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JDBCConnectionPoolParamsBean.html#RemoveInfectedConnections)
   ReplayInitiationTimeout | Replay Initiation Timeout | Oracle | The amount of time, in seconds, a data source allows for Application Continuity replay processing before timing out and ending a replay session context. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JDBCOracleParamsBean.html#ReplayInitiationTimeout)
   ResourceHealthMonitoring | Resource Health Monitoring | Transaction | Enables JTA resource health monitoring for an XA data source. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JDBCXAParamsBean.html#ResourceHealthMonitoring)
   SecondsToTrustAnIdlePoolConnection | Seconds To Trust An Idle Pool Connection | ConnectionPool.Advanced | The number of seconds within a connection use that WebLogic Server trusts that the connection is still viable and will skip the connection test, either before delivering it to an application or during the periodic connection testing process. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JDBCConnectionPoolParamsBean.html#SecondsToTrustAnIdlePoolConnection)
+  ShrinkFactorPercent | Shrink Factor Percent | ConnectionPool.Advanced | The percentage of the number of available connections to shrink from current pool capacity to the maximum of the configured minimum capacity, the current number of in-use connections or the running average (if configured). |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JDBCConnectionPoolParamsBean.html#ShrinkFactorPercent)
   ShrinkFrequencySeconds | Shrink Frequency | ConnectionPool.Advanced | The number of seconds to wait before shrinking a connection pool that has incrementally increased to meet demand. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JDBCConnectionPoolParamsBean.html#ShrinkFrequencySeconds)
+  ShrinkHistorySeconds | Shrink History Seconds | ConnectionPool.Advanced | The amount of time to maintain a running average of the number of in-use connections. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JDBCConnectionPoolParamsBean.html#ShrinkHistorySeconds)
+  ShrinkSpareCapacityPercent | Shrink Spare Capacity Percent | ConnectionPool.Advanced | Specifies the number of additional number of connections to maintain above the current connection usage or the running average when shrinking. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JDBCConnectionPoolParamsBean.html#ShrinkSpareCapacityPercent)
   StatementCacheSize | Statement Cache Size | ConnectionPool.General | The number of prepared and callable statements stored in the cache. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JDBCConnectionPoolParamsBean.html#StatementCacheSize)
   StatementCacheType | Statement Cache Type | ConnectionPool.General | The algorithm used for maintaining the prepared statements stored in the statement cache. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JDBCConnectionPoolParamsBean.html#StatementCacheType)
   StatementTimeout | Statement Timeout | ConnectionPool.Advanced | The time after which a statement currently being executed will time out. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JDBCConnectionPoolParamsBean.html#StatementTimeout)
@@ -4875,16 +5743,17 @@ Property Name | Label | Tab Name | Description | MBean Reference
   TestConnectionsOnReserve | Test Connections On Reserve | ConnectionPool.Advanced | Enables WebLogic Server to test a connection before giving it to a client. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JDBCConnectionPoolParamsBean.html#TestConnectionsOnReserve)
   TestFrequencySeconds | Test Frequency | ConnectionPool.Advanced | The number of seconds a WebLogic Server instance waits between attempts when testing unused connections. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JDBCConnectionPoolParamsBean.html#TestFrequencySeconds)
   TestTableName | Test Table Name | ConnectionPool.Advanced | The name of the database table to use when testing physical database connections. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JDBCConnectionPoolParamsBean.html#TestTableName)
+  TestTimeoutSeconds | Test Timeout Seconds | ConnectionPool.Advanced | The time after which a test statement, or isValid method, currently being executed will time out. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JDBCConnectionPoolParamsBean.html#TestTimeoutSeconds)
   Type | Type | ReferencedBy | The type of the referring object. |  
   Url | Url | ConnectionPool.General | The URL of the database to connect to. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JDBCDriverParamsBean.html#Url)
   UseDatabaseCredentials | Use Database Credentials | Oracle | If enabled, Oracle database credentials are used in getConnection instead of application server credentials. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JDBCOracleParamsBean.html#UseDatabaseCredentials)
   UseXaDataSourceInterface | Use Xa Data Source Interface | Transaction | Specifies that WebLogic Server should use the XA interface of the JDBC driver. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JDBCDriverParamsBean.html#UseXaDataSourceInterface)
   WrapTypes | Wrap Data Types | ConnectionPool.Advanced | By default, data type objects for Array, Blob, Clob, NClob, Ref, SQLXML, and Struct, plus ParameterMetaData and ResultSetMetaData objects are wrapped with a WebLogic wrapper. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JDBCConnectionPoolParamsBean.html#WrapTypes)
+  XADriver | XA Driver | Transaction | Whether this data source's driver supports global transactions. |  
   XaRetryDurationSeconds | XA Retry Duration | Transaction | Determines the duration in seconds for which the transaction manager will perform recover operations on the resource. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JDBCXAParamsBean.html#XaRetryDurationSeconds)
   XaRetryIntervalSeconds | XA Retry Interval | Transaction | The number of seconds between XA retry operations if XARetryDurationSeconds is set to a positive value. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JDBCXAParamsBean.html#XaRetryIntervalSeconds)
   XaSetTransactionTimeout | Set XA Transaction Timeout | Transaction | Enables WebLogic Server to set a transaction branch timeout based on the value for XaTransactionTimeout. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JDBCXAParamsBean.html#XaSetTransactionTimeout)
   XaTransactionTimeout | Xa Transaction Timeout | Transaction | The number of seconds to set as the transaction branch timeout. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JDBCXAParamsBean.html#XaTransactionTimeout)
-  isXADriver | XA JDBC Driver | Transaction |  whether the JDBC datasource driver is global (XA) or non-global (local).  |  
 
 <p><a id="JDBCSystemResourceMethodPolicy">&nbsp;</a>
 <p>
@@ -5214,7 +6083,7 @@ Property Name | Label | Tab Name | Description | MBean Reference
 
 ## JMSDestinationRuntime
 
-<b>Actions</b>: Import, Resume, Pause, Delete, Export, Move
+<b>Actions</b>: Import, Resume, Pause, Delete, View, Export, Move
 
 
 <b>References to this type</b>:
@@ -5303,7 +6172,7 @@ Property Name | Label | Tab Name | Description | MBean Reference
 
 ## JMSDurableSubscriberRuntime
 
-<b>Actions</b>: Import, Delete, Export, Move
+<b>Actions</b>: Import, Delete, View, Export, Move
 
 
 <b>References to this type</b>:
@@ -5434,7 +6303,7 @@ Property Name | Label | Tab Name | Description | MBean Reference
 
 ## JMSQueueRuntime
 
-<b>Actions</b>: Import, Delete, Export, Move
+<b>Actions</b>: Import, Delete, View, Export, Move
 
 
 <b>References to this type</b>:
@@ -6333,7 +7202,7 @@ Property Name | Label | Tab Name | Description | MBean Reference
   InstallDir | Install Dir | Overview | The path to the application's install-root directory, relative to the domain/config/deployments directory. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/LibraryMBean.html#InstallDir)
   ModuleType | Module Type | Overview | The type of the module (ear, jar, war, or rar) |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/LibraryMBean.html#ModuleType)
   Name | Name | Overview | The user-specified name of this MBean instance. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/LibraryMBean.html#Name)
-  SecurityDDModel | Security DD Model | Overview | The security model that is used to secure a deployed module. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/LibraryMBean.html#SecurityDDModel)
+  SecurityDDModel | Security Model | Overview | The security model that is used to secure a deployed module. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/LibraryMBean.html#SecurityDDModel)
   SourcePath | Source Path | Overview | The path to the source of the deployable unit on the Administration Server. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/LibraryMBean.html#SourcePath)
   StagingMode | Staging Mode | Overview | Specifies whether a deployment's files are copied from a source on the Administration Server to the Managed Server's staging area during application preparation. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/LibraryMBean.html#StagingMode)
   Targets | Targets | Targets | You must select a target on which an MBean will be deployed from this list of the targets in the current domain on which this item can be deployed. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/LibraryMBean.html#Targets)
@@ -6869,6 +7738,27 @@ Property Name | Label | Tab Name | Description | MBean Reference
   Server | Server |   |  |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/ServerRuntimeMBean.html#Name)
   State | Messaging Bridge State |   | The state of the messaging bridge. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/MessagingBridgeRuntimeMBean.html#State)
 
+<p><a id="MigratableServiceCoordinatorRuntime">&nbsp;</a>
+<p>
+
+
+## MigratableServiceCoordinatorRuntime
+
+<b>Actions</b>: Migrate JTA, Migrate Singleton Service, Migrate JMS, Migrate Server
+
+
+<b>References to this type</b>:
+* Monitoring -> Environment -> Migration -> Manual Migration
+
+
+Property Name | Label | Tab Name | Description | MBean Reference
+--- | --- | --- | --- | ---
+  Cluster | Cluster | Servers | Cluster that this migratable target is part of. |  
+  HostingServer | Hosting Server | JTA | Server that is hosting this migratable target. |  
+  Machine | Machine | Servers | Machine that the server is on. |  
+  Name | Server | Servers | Server for migration |  
+  UserPreferredServer | User Preferred Server | JTA | User Preferred Serve for migrating to. |  
+
 <p><a id="MigratableTarget">&nbsp;</a>
 <p>
 
@@ -6922,6 +7812,34 @@ Property Name | Label | Tab Name | Description | MBean Reference
   Server | Server |   |  |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/ServerRuntimeMBean.html#Name)
   ServerName | Server Name |   | Name of the server migrated |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/MigrationDataRuntimeMBean.html#ServerName)
   Status | Status |   | Name of the server migrated |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/MigrationDataRuntimeMBean.html#Status)
+
+<p><a id="MigrationTaskRuntime">&nbsp;</a>
+<p>
+
+
+## MigrationTaskRuntime
+
+<b>References to this type</b>:
+* Monitoring -> Environment -> Migration -> Migration Task Runtimes
+
+
+Property Name | Label | Tab Name | Description | MBean Reference
+--- | --- | --- | --- | ---
+  Completed | Completed |   | Whether this task has completed. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/MigrationTaskRuntimeMBean.html#Completed)
+  Description | Description |   | A description of this task. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/MigrationTaskRuntimeMBean.html#Description)
+  EndTime | End Time |   | The time this task ended. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/MigrationTaskRuntimeMBean.html#EndTime)
+  JTA | JTA |   | Indicates whether the migration task moves a JTA recovery manager. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/MigrationTaskRuntimeMBean.html#JTA)
+  Name | Name |   | The name of this configuration. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/MigrationTaskRuntimeMBean.html#Name)
+  Progress | Progress |   | How much progress this task has made. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/MigrationTaskRuntimeMBean.html#Progress)
+  Running | Running |   | Indicates whether the Task is still running. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/MigrationTaskRuntimeMBean.html#Running)
+  StartTime | Start Time |   | The time this task began. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/MigrationTaskRuntimeMBean.html#StartTime)
+  StatusCode | Status Code |   | Provides an int describing the status of this Task. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/MigrationTaskRuntimeMBean.html#StatusCode)
+  SystemTask | System Task |   | Indicates whether this task was initiated by the server versus a user. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/MigrationTaskRuntimeMBean.html#SystemTask)
+  TaskError | Error |   | Returns an exception describing the error, if any, that occurred while performing this task. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/MigrationTaskRuntimeMBean.html#TaskError)
+  TaskStatus | Status |   | The status of this task. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/MigrationTaskRuntimeMBean.html#TaskStatus)
+  Terminal | Terminal |   | Indicates whether the Task was successful, failed or was canceled. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/MigrationTaskRuntimeMBean.html#Terminal)
+  Type | Type |   | Returns the type of the MBean. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/MigrationTaskRuntimeMBean.html#Type)
+  WaitingForUser | Waiting For User |   | Indicates whether the Task is waiting for user input. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/MigrationTaskRuntimeMBean.html#WaitingForUser)
 
 <p><a id="MinThreadsConstraint">&nbsp;</a>
 <p>
@@ -7026,6 +7944,8 @@ Property Name | Label | Tab Name | Description | MBean Reference
   CustomIdentityKeyStoreType | Custom Identity Key Store Type | ChannelSecurity | The type of the keystore. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/NetworkAccessPointMBean.html#CustomIdentityKeyStoreType)
   CustomPrivateKeyAlias | Custom Channel Private Key Alias | ChannelSecurity | The string alias used to store and retrieve the channel's private key in the keystore. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/NetworkAccessPointMBean.html#CustomPrivateKeyAlias)
   CustomPrivateKeyPassPhrase | Custom Channel Private Key Pass Phrase | ChannelSecurity | The passphrase used to retrieve the server's private key from the keystore. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/NetworkAccessPointMBean.html#CustomPrivateKeyPassPhrase)
+  DomainKeystoresClientCertAlias | Domain Keystores Client Certificate Alias | ChannelSecurity | Gets the alias of the client certificate for this NetworkAccessPoint when SSLMBean.KeyStores is set to "DomainKeystores". |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/NetworkAccessPointMBean.html#DomainKeystoresClientCertAlias)
+  DomainKeystoresServerCertAlias | Domain Keystores Server Certificate Alias | ChannelSecurity | Gets the alias of the server certificate for this NetworkAccessPoint when SSLMBean.KeyStores is set to "DomainKeystores". |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/NetworkAccessPointMBean.html#DomainKeystoresServerCertAlias)
   Enabled | Enabled | ChannelGeneral | Specifies whether this channel should be started. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/NetworkAccessPointMBean.html#Enabled)
   ExcludedCiphersuites | Excluded Ciphersuites | ChannelSecurity | List of cipher suites not to be used by WebLogic Server. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/NetworkAccessPointMBean.html#ExcludedCiphersuites)
   HostnameVerificationIgnored | Disable Hostname Verification | ChannelSecurity | Specifies whether to ignore the installed implementation of the <code>weblogic.security.SSL.HostnameVerifier</code> interface (when this server is acting as a client to another application server). |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/NetworkAccessPointMBean.html#HostnameVerificationIgnored)
@@ -7271,6 +8191,7 @@ Property Name | Label | Tab Name | Description | MBean Reference
 
 <b>References to this type</b>:
 * Monitoring -> Services -> Data Sources -> JDBC Data Source Runtime MBeans -> JDBCOracleDataSourceRuntime -> ONS Daemon Runtimes
+* Monitoring -> Deployments -> Application Runtime Data -> Component Runtimes -> JDBCOracleDataSourceRuntime -> ONS Daemon Runtimes
 
 
 Property Name | Label | Tab Name | Description | MBean Reference
@@ -7597,6 +8518,28 @@ Property Name | Label | Tab Name | Description | MBean Reference
   UserSearchScope | User Search Scope | OracleVirtualDirectoryAuthenticatorParameters | Specifies how deep in the LDAP directory tree the generic LDAP Authentication provider should search for users. |  [More info](https://docs.oracle.com/middleware/12213/wls/WLMBR/mbeans/OracleVirtualDirectoryAuthenticatorMBean.html#UserSearchScope)
   Version | Version | Common | The version number of the LDAP Authentication provider. |  [More info](https://docs.oracle.com/middleware/12213/wls/WLMBR/mbeans/OracleVirtualDirectoryAuthenticatorMBean.html#Version)
 
+<p><a id="OsgiFramework">&nbsp;</a>
+<p>
+
+
+## OsgiFramework
+
+<b>References to this type</b>:
+* Configuration -> Services -> Osgi Frameworks
+
+
+Property Name | Label | Tab Name | Description | MBean Reference
+--- | --- | --- | --- | ---
+  DeployInstallationBundles | Deploy Installation Bundles | General | Determines if some WebLogic helper bundles will be installed into the framework  |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/OsgiFrameworkMBean.html#DeployInstallationBundles)
+  FactoryImplementationClass | Factory Implementation Class | General | The name of the frameworks implementation class for the org.osgi.framework.launch.FrameworkFactory class. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/OsgiFrameworkMBean.html#FactoryImplementationClass)
+  InitProperties | Init Properties | InitProperties | The properties to be used when initializing the framework. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/OsgiFrameworkMBean.html#InitProperties)
+  Name | Name | General | The user-specified name of this MBean instance. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/OsgiFrameworkMBean.html#Name)
+  OrgOsgiFrameworkBootdelegation | Boot delegation | General | The name of the org.osgi.framework.bootdelegation property. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/OsgiFrameworkMBean.html#OrgOsgiFrameworkBootdelegation)
+  OrgOsgiFrameworkSystemPackagesExtra | System Packages Extra | General | The name of the org.osgi.framework.system.packages.extra property. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/OsgiFrameworkMBean.html#OrgOsgiFrameworkSystemPackagesExtra)
+  RegisterGlobalDataSources | Register Global Data Sources | General | Returns true if global data sources should be added to the OSGi service registry. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/OsgiFrameworkMBean.html#RegisterGlobalDataSources)
+  RegisterGlobalWorkManagers | Register Global Work Managers | General | Returns true if global work managers should be added to the OSGi service registry. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/OsgiFrameworkMBean.html#RegisterGlobalWorkManagers)
+  Targets | Targets | Targets | You must select a target on which an MBean will be deployed from this list of the targets in the current domain on which this item can be deployed. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/OsgiFrameworkMBean.html#Targets)
+
 <p><a id="OutboundConnectionPoolGroup">&nbsp;</a>
 <p>
 
@@ -7613,6 +8556,9 @@ Property Name | Label | Tab Name | Description | MBean Reference
 Property Name | Label | Tab Name | Description | MBean Reference
 --- | --- | --- | --- | ---
   Name | Name | Overview | The outbound connection pool group's name. |  
+  ReauthenticationSupport | Reauthentication Support | Overview | Specifies whether a particular connection factory supports re-authentication of an existing <b>ManagedConnection</b> instance. |  
+  ResAuth | Res Auth | Overview | Specifies whether to use container or application managed security. |  
+  TransactionSupport | Transaction Support | Overview | Specifies the level of transaction support for a particular Connection Factory. |  
 
 <p><a id="OutboundConnectionPoolInstance">&nbsp;</a>
 <p>
@@ -7633,6 +8579,9 @@ Property Name | Label | Tab Name | Description | MBean Reference
 Property Name | Label | Tab Name | Description | MBean Reference
 --- | --- | --- | --- | ---
   Name | Name | Overview | The outbound connection pool instance's name. |  
+  ReauthenticationSupport | Reauthentication Support | Overview | Specifies whether a particular connection factory supports re-authentication of an existing <b>ManagedConnection</b> instance. |  
+  ResAuth | Res Auth | Overview | Specifies whether to use container or application managed security. |  
+  TransactionSupport | Transaction Support | Overview | Specifies the level of transaction support for a particular Connection Factory. |  
 
 <p><a id="PKICredentialMapper">&nbsp;</a>
 <p>
@@ -7765,6 +8714,19 @@ Property Name | Label | Tab Name | Description | MBean Reference
   ReadCount | Read Count |   | Number of read requests issued by this store, including requests that occur during store initialization. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/PersistentStoreRuntimeMBean.html#ReadCount)
   Server | Server |   |  |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/ServerRuntimeMBean.html#Name)
   UpdateCount | Update Count |   | Number of update requests issued by this store. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/PersistentStoreRuntimeMBean.html#UpdateCount)
+
+<p><a id="PluginDeployment">&nbsp;</a>
+<p>
+
+
+## PluginDeployment
+Property Name | Label | Tab Name | Description | MBean Reference
+--- | --- | --- | --- | ---
+  AbsoluteSourcePath | Absolute Source Path | Overview | The fully resolved location of this application's source files on the Administration Server. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/PluginDeploymentMBean.html#AbsoluteSourcePath)
+  InstallDir | Install Dir | Overview | The path to the plugin's install-root directory, relative to the domain/config/plugins directory. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/PluginDeploymentMBean.html#InstallDir)
+  Name | Name | Overview | The user-specified name of this MBean instance. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/PluginDeploymentMBean.html#Name)
+  PluginType | Plugin Type | Overview | Gets the type of the plugin. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/PluginDeploymentMBean.html#PluginType)
+  SourcePath | Source Path | Overview | The path to the source of the deployable unit on the Administration Server. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/PluginDeploymentMBean.html#SourcePath)
 
 <p><a id="Pool">&nbsp;</a>
 <p>
@@ -8105,6 +9067,16 @@ Property Name | Label | Tab Name | Description | MBean Reference
   NotificationProperties | Notification Properties | General | The comma-delimited list of key-value properties to pass to the JNDI InitialContext on construction, in the form of <code><i>xx</i>Key=<i>xx</i>Value, <i>xx</i>Key=<i>xx</i>Value</code>. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/RDBMSSecurityStoreMBean.html#NotificationProperties)
   Password | Password | General | The password for the user specified in the <code>Username</code> attribute for connecting to the datastore. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/RDBMSSecurityStoreMBean.html#Password)
   Username | Username | General | The username to use when connecting to the datastore. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/RDBMSSecurityStoreMBean.html#Username)
+
+<p><a id="RMIForwarding">&nbsp;</a>
+<p>
+
+
+## RMIForwarding
+Property Name | Label | Tab Name | Description | MBean Reference
+--- | --- | --- | --- | ---
+  Name | Name | General | The user-specified name of this MBean instance. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/RMIForwardingMBean.html#Name)
+  Url | Url | General |  |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/RMIForwardingMBean.html#Url)
 
 <p><a id="ReadOnlyGroup">&nbsp;</a>
 <p>
@@ -8811,6 +9783,9 @@ Property Name | Label | Tab Name | Description | MBean Reference
 
 ## SAML2CredentialMapperSecurityData
 
+<b>Actions</b>: Import, Export
+
+
 <b>References to this type</b>:
 * Security Data -> Realms -> Credential Mappers -> SAML2CredentialMapperSecurityData
 
@@ -8848,6 +9823,9 @@ Property Name | Label | Tab Name | Description | MBean Reference
 
 
 ## SAML2IdentityAsserterSecurityData
+
+<b>Actions</b>: Import, Export
+
 
 <b>References to this type</b>:
 * Security Data -> Realms -> Authentication Providers -> SAML2IdentityAsserterSecurityData
@@ -8964,6 +9942,11 @@ Property Name | Label | Tab Name | Description | MBean Reference
 
 
 ## SNMPAgent
+
+<b>References to this type</b>:
+* Configuration -> Diagnostics -> Domain SNMP Agent
+
+
 Property Name | Label | Tab Name | Description | MBean Reference
 --- | --- | --- | --- | ---
   AuthenticationProtocol | Authentication Protocol | General | The protocol that this SNMP agent uses to ensure that only authorized users can request or receive information about your WebLogic Server domain. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/SNMPAgentMBean.html#AuthenticationProtocol)
@@ -8981,6 +9964,35 @@ Property Name | Label | Tab Name | Description | MBean Reference
   SNMPPort | SNMP UDP Port | General | The port on which you want this SNMP agent to listen for incoming requests from SNMP managers that use the UDP protocol. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/SNMPAgentMBean.html#SNMPPort)
   SNMPTrapVersion | SNMP Trap Version | General | The SNMP notification version that this SNMP agent generates. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/SNMPAgentMBean.html#SNMPTrapVersion)
   SendAutomaticTrapsEnabled | Send Automatic Traps Enabled | General | Specifies whether this SNMP agent sends automatically generated notifications to SNMP managers. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/SNMPAgentMBean.html#SendAutomaticTrapsEnabled)
+
+<p><a id="SNMPAgentDeployment">&nbsp;</a>
+<p>
+
+
+## SNMPAgentDeployment
+
+<b>References to this type</b>:
+* Configuration -> Diagnostics -> SNMP Agent Deployments
+
+
+Property Name | Label | Tab Name | Description | MBean Reference
+--- | --- | --- | --- | ---
+  AuthenticationProtocol | Authentication Protocol | General | The protocol that this SNMP agent uses to ensure that only authorized users can request or receive information about your WebLogic Server domain. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/SNMPAgentDeploymentMBean.html#AuthenticationProtocol)
+  Enabled | Enabled | General | Specifies whether this SNMP agent is enabled. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/SNMPAgentDeploymentMBean.html#Enabled)
+  InformEnabled | Inform Enabled | General | Configures this SNMP agent to send notifications as an INFORM instead of a TRAP. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/SNMPAgentDeploymentMBean.html#InformEnabled)
+  InformRetryInterval | Inform Retry Interval | General | The number of milliseconds that this SNMP agent will wait for a response to an INFORM notification. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/SNMPAgentDeploymentMBean.html#InformRetryInterval)
+  ListenAddress | Listen Address | General | The listen address on which you want this SNMP agent to listen for incoming requests from SNMP managers that use the UDP protocol. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/SNMPAgentDeploymentMBean.html#ListenAddress)
+  LocalizedKeyCacheInvalidationInterval | Localized Key Cache Invalidation Interval | General | The number of milliseconds after which WebLogic Server invalidates its cache of SNMP security keys. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/SNMPAgentDeploymentMBean.html#LocalizedKeyCacheInvalidationInterval)
+  MasterAgentXPort | Master Agent XPort | General | The port that this SNMP agent uses to communicate with its subagents. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/SNMPAgentDeploymentMBean.html#MasterAgentXPort)
+  MaxInformRetryCount | Max Inform Retry Count | General | The maximum number of times that this SNMP agent will resend INFORM notifications for which it has not received a response. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/SNMPAgentDeploymentMBean.html#MaxInformRetryCount)
+  Name | Name | General | The user-specified name of this MBean instance. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/SNMPAgentDeploymentMBean.html#Name)
+  PrivacyProtocol | Privacy Protocol | General | The protocol that this SNMP agent uses to encrypt and unencrypt messages. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/SNMPAgentDeploymentMBean.html#PrivacyProtocol)
+  SNMPAccessForUserMBeansEnabled | SNMP Access For User MBeans Enabled | General | Configures this SNMP agent to provide read-only access to MBean types that you have created and registered (custom MBeans). |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/SNMPAgentDeploymentMBean.html#SNMPAccessForUserMBeansEnabled)
+  SNMPEngineId | SNMP Engine Id | General | An identifier for this SNMP agent that is unique amongst all other SNMP agents in the current WebLogic Server domain. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/SNMPAgentDeploymentMBean.html#SNMPEngineId)
+  SNMPPort | SNMP UDP Port | General | The port on which you want this SNMP agent to listen for incoming requests from SNMP managers that use the UDP protocol. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/SNMPAgentDeploymentMBean.html#SNMPPort)
+  SNMPTrapVersion | SNMP Trap Version | General | The SNMP notification version that this SNMP agent generates. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/SNMPAgentDeploymentMBean.html#SNMPTrapVersion)
+  SendAutomaticTrapsEnabled | Send Automatic Traps Enabled | General | Specifies whether this SNMP agent sends automatically generated notifications to SNMP managers. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/SNMPAgentDeploymentMBean.html#SendAutomaticTrapsEnabled)
+  Targets | Targets | Targets | You must select a target on which an MBean will be deployed from this list of the targets in the current domain on which this item can be deployed. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/SNMPAgentDeploymentMBean.html#Targets)
 
 <p><a id="SNMPAgentRuntime">&nbsp;</a>
 <p>
@@ -9016,6 +10028,12 @@ Property Name | Label | Tab Name | Description | MBean Reference
 
 
 ## SNMPAttributeChange
+
+<b>References to this type</b>:
+* Configuration -> Diagnostics -> Domain SNMP Agent -> SNMP Attribute Changes
+* Configuration -> Diagnostics -> SNMP Agent Deployments -> SNMP Attribute Changes
+
+
 Property Name | Label | Tab Name | Description | MBean Reference
 --- | --- | --- | --- | ---
   AttributeMBeanName | Monitored MBean Name | General | The name of the MBean instance that you want to monitor. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/SNMPAttributeChangeMBean.html#AttributeMBeanName)
@@ -9029,6 +10047,12 @@ Property Name | Label | Tab Name | Description | MBean Reference
 
 
 ## SNMPCounterMonitor
+
+<b>References to this type</b>:
+* Configuration -> Diagnostics -> Domain SNMP Agent -> SNMP Counter Monitors
+* Configuration -> Diagnostics -> SNMP Agent Deployments -> SNMP Counter Monitors
+
+
 Property Name | Label | Tab Name | Description | MBean Reference
 --- | --- | --- | --- | ---
   EnabledServers | Enabled Servers | Servers | This attribute is applicable only when the SNMP Agent is running on the Admin Server of a WebLogic Domain. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/SNMPCounterMonitorMBean.html#EnabledServers)
@@ -9046,6 +10070,12 @@ Property Name | Label | Tab Name | Description | MBean Reference
 
 
 ## SNMPGaugeMonitor
+
+<b>References to this type</b>:
+* Configuration -> Diagnostics -> Domain SNMP Agent -> SNMP Gauge Monitors
+* Configuration -> Diagnostics -> SNMP Agent Deployments -> SNMP Gauge Monitors
+
+
 Property Name | Label | Tab Name | Description | MBean Reference
 --- | --- | --- | --- | ---
   EnabledServers | Enabled Servers | Servers | This attribute is applicable only when the SNMP Agent is running on the Admin Server of a WebLogic Domain. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/SNMPGaugeMonitorMBean.html#EnabledServers)
@@ -9062,6 +10092,12 @@ Property Name | Label | Tab Name | Description | MBean Reference
 
 
 ## SNMPLogFilter
+
+<b>References to this type</b>:
+* Configuration -> Diagnostics -> SNMP Agent Deployments -> SNMP Log Filters
+* Configuration -> Diagnostics -> Domain SNMP Agent -> SNMP Log Filters
+
+
 Property Name | Label | Tab Name | Description | MBean Reference
 --- | --- | --- | --- | ---
   EnabledServers | Enabled Servers | Servers | This attribute is applicable only when the SNMP Agent is running on the Admin Server of a WebLogic Domain. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/SNMPLogFilterMBean.html#EnabledServers)
@@ -9077,6 +10113,12 @@ Property Name | Label | Tab Name | Description | MBean Reference
 
 
 ## SNMPProxy
+
+<b>References to this type</b>:
+* Configuration -> Diagnostics -> Domain SNMP Agent -> SNMP Proxies
+* Configuration -> Diagnostics -> SNMP Agent Deployments -> SNMP Proxies
+
+
 Property Name | Label | Tab Name | Description | MBean Reference
 --- | --- | --- | --- | ---
   Community | Community | General | The community name to be passed on for all SNMPv1 requests to this proxied SNMP agent. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/SNMPProxyMBean.html#Community)
@@ -9092,6 +10134,12 @@ Property Name | Label | Tab Name | Description | MBean Reference
 
 
 ## SNMPStringMonitor
+
+<b>References to this type</b>:
+* Configuration -> Diagnostics -> SNMP Agent Deployments -> SNMP String Monitors
+* Configuration -> Diagnostics -> Domain SNMP Agent -> SNMP String Monitors
+
+
 Property Name | Label | Tab Name | Description | MBean Reference
 --- | --- | --- | --- | ---
   EnabledServers | Enabled Servers | Servers | This attribute is applicable only when the SNMP Agent is running on the Admin Server of a WebLogic Domain. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/SNMPStringMonitorMBean.html#EnabledServers)
@@ -9109,6 +10157,12 @@ Property Name | Label | Tab Name | Description | MBean Reference
 
 
 ## SNMPTrapDestination
+
+<b>References to this type</b>:
+* Configuration -> Diagnostics -> Domain SNMP Agent -> SNMP Trap Destinations
+* Configuration -> Diagnostics -> SNMP Agent Deployments -> SNMP Trap Destinations
+
+
 Property Name | Label | Tab Name | Description | MBean Reference
 --- | --- | --- | --- | ---
   Host | Host | General | The DNS name or IP address of the computer on which the SNMP manager is running. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/SNMPTrapDestinationMBean.html#Host)
@@ -9449,6 +10503,7 @@ Property Name | Label | Tab Name | Description | MBean Reference
   DebugEjbDeployment | DebugEjbDeployment | Debug.All | Debug EJB deployment |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/ServerDebugMBean.html#DebugEjbDeployment)
   DebugEjbInvoke | DebugEjbInvoke | Debug.All | Debug EJB invocation processing |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/ServerDebugMBean.html#DebugEjbInvoke)
   DebugEjbLocking | DebugEjbLocking | Debug.All | Debug EJB locking |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/ServerDebugMBean.html#DebugEjbLocking)
+  DebugEjbMdbAqMessageRecovery | DebugEjbMdbAqMessageRecovery | Debug.All | Debug EJB MDB AQ JMS advanced message recovery processing |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/ServerDebugMBean.html#DebugEjbMdbAqMessageRecovery)
   DebugEjbMdbConnection | DebugEjbMdbConnection | Debug.All | Debug EJB MDB Connection processing |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/ServerDebugMBean.html#DebugEjbMdbConnection)
   DebugEjbMdbListener | DebugEjbMdbListener | Debug.All | Debug EJB MDB Listener processing |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/ServerDebugMBean.html#DebugEjbMdbListener)
   DebugEjbMetadata | DebugEjbMetadata | Debug.All | Debug EJB metadata processing |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/ServerDebugMBean.html#DebugEjbMetadata)
@@ -9774,6 +10829,8 @@ Property Name | Label | Tab Name | Description | MBean Reference
   DiagnosticStoreMinWindowBufferSize | Diagnostics Store Min Window Buffer Size | Advanced.DiagnosticArchive | The minimum amount of data, in bytes and rounded down to the nearest power of 2, mapped into the JVM's address space per diagnostic store file. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/WLDFServerDiagnosticMBean.html#DiagnosticStoreMinWindowBufferSize)
   Directory | Directory | Services.DefaultStore | The path name to the file system directory where the file store maintains its data files. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/DefaultFileStoreMBean.html#Directory)
   DomainAdministrationPortEnabled | Administration Port Enabled | General | Specifies whether the domain-wide administration port is enabled for this WebLogic Server domain. This can only be modified in the domain general page.  |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/DomainMBean.html#AdministrationPortEnabled)
+  DomainKeystoresClientCertAlias | Domain Keystores Client Certificate Alias | Security.SSL | Gets the alias of the client certificate for this server when SSLMBean.KeyStores is set to "DomainKeystores". |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/SSLMBean.html#DomainKeystoresClientCertAlias)
+  DomainKeystoresServerCertAlias | Domain Keystores Server Certificate Alias | Security.SSL | Gets the alias of the server certificate for this server when SSLMBean.KeyStores is set to "DomainKeystores". |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/SSLMBean.html#DomainKeystoresServerCertAlias)
   DomainLogBroadcastFilter | Domain Log Broadcast Filter | Logging.General | The filter configuration for log events being sent to the domain log. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/LogMBean.html#DomainLogBroadcastFilter)
   DomainLogBroadcastSeverity | Domain Log Broadcast Severity Level | Logging.General | The minimum severity of log messages going to the domain log from this server's log broadcaster. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/LogMBean.html#DomainLogBroadcastSeverity)
   DomainLogBroadcasterBufferSize | Buffer Size | Logging.General | Broadcasts log messages to the domain log in batch mode. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/LogMBean.html#DomainLogBroadcasterBufferSize)
@@ -9868,6 +10925,7 @@ Property Name | Label | Tab Name | Description | MBean Reference
   MaxMessageSize | Max Message Size | Protocols.General | The maximum number of bytes allowed in messages that are received over all supported protocols, unless overridden by a protocol-specific setting or a custom channel setting. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/ServerMBean.html#MaxMessageSize)
   MaxOpenSockCount | Maximum Open Sockets | Advanced.Tuning | The maximum number of open sockets allowed in server at a given point of time. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/ServerMBean.html#MaxOpenSockCount)
   MaxPostSize | Max Post Size | Protocols.Http | The maximum post size this server allows for reading HTTP POST and PUT data in a servlet request. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/WebServerMBean.html#MaxPostSize)
+  MaxRequestParameterCount | Max Request Parameter Count | Protocols.Http | Max Request Parameter Count this server allows for reading maximum HTTP POST Parameters count in a servlet request. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/WebServerMBean.html#MaxRequestParameterCount)
   MaxRetrySecondsBeforeTLOGFail | Maximum Retry Before Transaction Log Fail (seconds) | Services.JTA | The maximum amount of time, in seconds, WebLogic Server tries to recover from a JDBC TLog store failure. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/TransactionLogJDBCStoreMBean.html#MaxRetrySecondsBeforeTLOGFail)
   MaxRetrySecondsBeforeTXException | Maximum Retry Before Transaction Exception Thrown (seconds) | Services.JTA | The maximum amount of time, in seconds, WebLogic Server waits before trying to recover from a JDBC TLog store failure while processing a transaction. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/TransactionLogJDBCStoreMBean.html#MaxRetrySecondsBeforeTXException)
   MaxSingleHeaderSize | Max Single Header Size | Protocols.Http | The maximum size of a single header (name and value) that this server allows in a servlet request. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/WebServerMBean.html#MaxSingleHeaderSize)
@@ -10202,6 +11260,9 @@ Property Name | Label | Tab Name | Description | MBean Reference
   Context | Context | JNDI | The context that contains the binding. |  
   CurrentMachine | Current Machine | General | Return the machine on which the server is running. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/ServerRuntimeMBean.html#CurrentMachine)
   DefaultURL | Default URL | Networking | The URL that clients use to connect to this server's default network channel. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/ServerRuntimeMBean.html#DefaultURL)
+  ExecuteThreadActiveCount | Active Execute Threads | Threads | The number of active execute threads in the pool. |  
+  ExecuteThreadIdleCount | Idle ExecuteThreads | Threads | The number of idle threads in the pool. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/ThreadPoolRuntimeMBean.html#ExecuteThreadIdleCount)
+  ExecuteThreadTotalCount | Total Execute Threads | Threads | The total number of threads in the pool. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/ThreadPoolRuntimeMBean.html#ExecuteThreadTotalCount)
   HealthState | Health | General | The health state of the server as reported by the server's self-health monitoring. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/ServerRuntimeMBean.html#HealthState)
   HoggingThreadCount | Hogging Threads | Threads |  The threads that are being held by a request right now. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/ThreadPoolRuntimeMBean.html#HoggingThreadCount)
   JACCEnabled | JACC Enabled | General | Indicates whether JACC (Java Authorization Contract for Containers) was enabled on the commandline for the jvm hosting this server |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/ServerSecurityRuntimeMBean.html#JACCEnabled)
@@ -10447,6 +11508,7 @@ Property Name | Label | Tab Name | Description | MBean Reference
   DebugEjbDeployment | DebugEjbDeployment | Debug.All | Debug EJB deployment |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/ServerDebugMBean.html#DebugEjbDeployment)
   DebugEjbInvoke | DebugEjbInvoke | Debug.All | Debug EJB invocation processing |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/ServerDebugMBean.html#DebugEjbInvoke)
   DebugEjbLocking | DebugEjbLocking | Debug.All | Debug EJB locking |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/ServerDebugMBean.html#DebugEjbLocking)
+  DebugEjbMdbAqMessageRecovery | DebugEjbMdbAqMessageRecovery | Debug.All | Debug EJB MDB AQ JMS advanced message recovery processing |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/ServerDebugMBean.html#DebugEjbMdbAqMessageRecovery)
   DebugEjbMdbConnection | DebugEjbMdbConnection | Debug.All | Debug EJB MDB Connection processing |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/ServerDebugMBean.html#DebugEjbMdbConnection)
   DebugEjbMdbListener | DebugEjbMdbListener | Debug.All | Debug EJB MDB Listener processing |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/ServerDebugMBean.html#DebugEjbMdbListener)
   DebugEjbMetadata | DebugEjbMetadata | Debug.All | Debug EJB metadata processing |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/ServerDebugMBean.html#DebugEjbMetadata)
@@ -10771,6 +11833,8 @@ Property Name | Label | Tab Name | Description | MBean Reference
   DiagnosticStoreMinWindowBufferSize | Diagnostics Store Min Window Buffer Size | Advanced.DiagnosticArchive | The minimum amount of data, in bytes and rounded down to the nearest power of 2, mapped into the JVM's address space per diagnostic store file. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/WLDFServerDiagnosticMBean.html#DiagnosticStoreMinWindowBufferSize)
   Directory | Directory | Services.DefaultStore | The path name to the file system directory where the file store maintains its data files. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/DefaultFileStoreMBean.html#Directory)
   DomainAdministrationPortEnabled | Administration Port Enabled | General | Specifies whether the domain-wide administration port is enabled for this WebLogic Server domain.    This can only be modified in the domain general page.  |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/DomainMBean.html#AdministrationPortEnabled)
+  DomainKeystoresClientCertAlias | Domain Keystores Client Certificate Alias | Security.SSL | Gets the alias of the client certificate for this server when SSLMBean.KeyStores is set to "DomainKeystores". |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/SSLMBean.html#DomainKeystoresClientCertAlias)
+  DomainKeystoresServerCertAlias | Domain Keystores Server Certificate Alias | Security.SSL | Gets the alias of the server certificate for this server when SSLMBean.KeyStores is set to "DomainKeystores". |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/SSLMBean.html#DomainKeystoresServerCertAlias)
   DomainLogBroadcastFilter | Domain Log Broadcast Filter | Logging.General | The filter configuration for log events being sent to the domain log. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/LogMBean.html#DomainLogBroadcastFilter)
   DomainLogBroadcastSeverity | Domain Log Broadcast Severity Level | Logging.General | The minimum severity of log messages going to the domain log from this server's log broadcaster. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/LogMBean.html#DomainLogBroadcastSeverity)
   DomainLogBroadcasterBufferSize | Buffer Size | Logging.General | Broadcasts log messages to the domain log in batch mode. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/LogMBean.html#DomainLogBroadcasterBufferSize)
@@ -10863,6 +11927,7 @@ Property Name | Label | Tab Name | Description | MBean Reference
   MaxMessageSize | Max Message Size | Protocols.General | The maximum number of bytes allowed in messages that are received over all supported protocols, unless overridden by a protocol-specific setting or a custom channel setting. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/ServerTemplateMBean.html#MaxMessageSize)
   MaxOpenSockCount | Maximum Open Sockets | Advanced.Tuning | The maximum number of open sockets allowed in server at a given point of time. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/ServerTemplateMBean.html#MaxOpenSockCount)
   MaxPostSize | Max Post Size | Protocols.Http | The maximum post size this server allows for reading HTTP POST and PUT data in a servlet request. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/WebServerMBean.html#MaxPostSize)
+  MaxRequestParameterCount | Max Request Parameter Count | Protocols.Http | Max Request Parameter Count this server allows for reading maximum HTTP POST Parameters count in a servlet request. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/WebServerMBean.html#MaxRequestParameterCount)
   MaxRetrySecondsBeforeTLOGFail | Maximum Retry Before Transaction Log Fail (seconds) | Services.JTA | The maximum amount of time, in seconds, WebLogic Server tries to recover from a JDBC TLog store failure. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/TransactionLogJDBCStoreMBean.html#MaxRetrySecondsBeforeTLOGFail)
   MaxRetrySecondsBeforeTXException | Maximum Retry Before Transaction Exception Thrown (seconds) | Services.JTA | The maximum amount of time, in seconds, WebLogic Server waits before trying to recover from a JDBC TLog store failure while processing a transaction. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/TransactionLogJDBCStoreMBean.html#MaxRetrySecondsBeforeTXException)
   MaxSingleHeaderSize | Max Single Header Size | Protocols.Http | The maximum size of a single header (name and value) that this server allows in a servlet request. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/WebServerMBean.html#MaxSingleHeaderSize)
@@ -12515,6 +13580,7 @@ Property Name | Label | Tab Name | Description | MBean Reference
   LoggingEnabled | HTTP access log file enabled | Logging | Indicates whether this server logs HTTP requests. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/WebServerLogMBean.html#LoggingEnabled)
   MaxPostSize | Max Post Size | Http | The maximum post size this server allows for reading HTTP POST and PUT data in a servlet request. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/VirtualHostMBean.html#MaxPostSize)
   MaxPostTimeSecs | Max Post Time | Http | Max Post Time (in seconds) for reading HTTP POST data in a servlet request. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/VirtualHostMBean.html#MaxPostTimeSecs)
+  MaxRequestParameterCount | Max Request Parameter Count | Http | Max Request Parameter Count this server allows for reading maximum HTTP POST Parameters count in a servlet request. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/VirtualHostMBean.html#MaxRequestParameterCount)
   MaxSingleHeaderSize | Max Single Header Size | Http | The maximum size of a single header (name and value) that this server allows in a servlet request. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/VirtualHostMBean.html#MaxSingleHeaderSize)
   MaxTotalHeadersSize | Max Total Headers Size | Http | The maximum total headers size this server allows for reading HTTP headers in a servlet request. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/VirtualHostMBean.html#MaxTotalHeadersSize)
   Name | Name | ReferencedBy | The name of this virtual host. |  [More info](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/VirtualHostMBean.html#Name)
@@ -13838,6 +14904,7 @@ Property Name | Label | Tab Name | Description | MBean Reference
 * Monitoring -> Services -> Data Sources -> JDBC Data Source Runtime MBeans -> JDBCDataSourceRuntime -> Work Manager Runtimes
 * Monitoring -> Deployments -> Application Runtime Data -> Component Runtimes -> JDBCMultiDataSourceRuntime -> Work Manager Runtimes
 * Monitoring -> Deployments -> Application Runtime Data -> Component Runtimes -> ComponentConcurrentRuntime -> Work Manager Runtimes
+* Monitoring -> Deployments -> Application Runtime Data -> Component Runtimes -> JDBCOracleDataSourceRuntime -> Work Manager Runtimes
 * Monitoring -> Deployments -> Application Runtime Data -> Component Runtimes -> Work Manager Runtimes
 * Monitoring -> Deployments -> Application Runtime Data -> Component Runtimes -> JDBCDataSourceRuntime -> Work Manager Runtimes
 * Monitoring -> Deployments -> Application Runtime Data -> Component Runtimes -> SCASpringComponentRuntime -> Work Manager Runtimes
@@ -14267,6 +15334,9 @@ Property Name | Label | Tab Name | Description | MBean Reference
 
 ## XACMLAuthorizerSecurityData
 
+<b>Actions</b>: Import, Export
+
+
 <b>References to this type</b>:
 * Security Data -> Realms -> Authorizers -> XACMLAuthorizerSecurityData
 
@@ -14300,6 +15370,9 @@ Property Name | Label | Tab Name | Description | MBean Reference
 
 
 ## XACMLRoleMapperSecurityData
+
+<b>Actions</b>: Import, Export
+
 
 <b>References to this type</b>:
 * Security Data -> Realms -> Role Mappers -> XACMLRoleMapperSecurityData

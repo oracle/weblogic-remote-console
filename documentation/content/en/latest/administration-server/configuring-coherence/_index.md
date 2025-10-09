@@ -1,5 +1,5 @@
 ---
-weight: 220
+weight: 231
 title: Configuring Coherence
 ---
 
@@ -89,7 +89,7 @@ For optimal performance or scalability, Coherence is typically set up using WebL
 
 7.  Deploy your Coherence GAR module to your WebLogic Server domain as described in [Install an Application](../deploying-applications#GUID-C9A911B0-1942-4383-BD91-49BC745F21DA).
 
-    Standalone GARs are deployed in the same way as other Java EE modules. For more information, see [Deploying Coherence Applications in WebLogic Server](https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=WLCOH-GUID-9284398A-509D-4BC0-9007-502CCCA4D758) in **Developing Oracle Coherence Applications for Oracle WebLogic Server**.
+    Standalone GARs are deployed in the same way as other Jakarta EE modules. For more information, see [Deploying Coherence Applications in WebLogic Server](https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=WLCOH-GUID-9284398A-509D-4BC0-9007-502CCCA4D758) in **Developing Oracle Coherence Applications for Oracle WebLogic Server**.
 
 
 ## Create a Coherence Cluster {#GUID-D042E373-ED9F-4EC1-B0F4-89DFD803DF0C}

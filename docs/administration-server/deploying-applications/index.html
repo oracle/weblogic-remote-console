@@ -21,26 +21,26 @@
 <title>Deploying Applications | WebLogic Remote Console</title>
 <meta name="description" content="You can use WebLogic Remote Console to manage the deployment process of applications to WebLogic Server.
 For general information on the application deployment process, see Understanding WebLogic Server Deployment in Deploying Applications to Oracle WebLogic Server.
-Supported Deployment Units A deployment unit refers to a Java EE application (an enterprise application or Web application) or a standalone Java EE module (such as an EJB or resource adapter) that has been organized according to the Java EE specification and can be deployed to WebLogic Server.">
+Supported Deployment Units A deployment unit refers to a Jakarta EE application (an enterprise application or Web application) or a standalone Jakarta EE module (such as an EJB or resource adapter) that has been organized according to the Jakarta EE specification and can be deployed to WebLogic Server.">
 <meta property="og:url" content="https://oracle.github.io/weblogic-remote-console/administration-server/deploying-applications/">
   <meta property="og:site_name" content="WebLogic Remote Console">
   <meta property="og:title" content="Deploying Applications">
   <meta property="og:description" content="You can use WebLogic Remote Console to manage the deployment process of applications to WebLogic Server.
 For general information on the application deployment process, see Understanding WebLogic Server Deployment in Deploying Applications to Oracle WebLogic Server.
-Supported Deployment Units A deployment unit refers to a Java EE application (an enterprise application or Web application) or a standalone Java EE module (such as an EJB or resource adapter) that has been organized according to the Java EE specification and can be deployed to WebLogic Server.">
+Supported Deployment Units A deployment unit refers to a Jakarta EE application (an enterprise application or Web application) or a standalone Jakarta EE module (such as an EJB or resource adapter) that has been organized according to the Jakarta EE specification and can be deployed to WebLogic Server.">
   <meta property="og:locale" content="en">
   <meta property="og:type" content="website">
 
   <meta itemprop="name" content="Deploying Applications">
   <meta itemprop="description" content="You can use WebLogic Remote Console to manage the deployment process of applications to WebLogic Server.
 For general information on the application deployment process, see Understanding WebLogic Server Deployment in Deploying Applications to Oracle WebLogic Server.
-Supported Deployment Units A deployment unit refers to a Java EE application (an enterprise application or Web application) or a standalone Java EE module (such as an EJB or resource adapter) that has been organized according to the Java EE specification and can be deployed to WebLogic Server.">
-  <meta itemprop="wordCount" content="3010">
+Supported Deployment Units A deployment unit refers to a Jakarta EE application (an enterprise application or Web application) or a standalone Jakarta EE module (such as an EJB or resource adapter) that has been organized according to the Jakarta EE specification and can be deployed to WebLogic Server.">
+  <meta itemprop="wordCount" content="3059">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Deploying Applications">
   <meta name="twitter:description" content="You can use WebLogic Remote Console to manage the deployment process of applications to WebLogic Server.
 For general information on the application deployment process, see Understanding WebLogic Server Deployment in Deploying Applications to Oracle WebLogic Server.
-Supported Deployment Units A deployment unit refers to a Java EE application (an enterprise application or Web application) or a standalone Java EE module (such as an EJB or resource adapter) that has been organized according to the Java EE specification and can be deployed to WebLogic Server.">
+Supported Deployment Units A deployment unit refers to a Jakarta EE application (an enterprise application or Web application) or a standalone Jakarta EE module (such as an EJB or resource adapter) that has been organized according to the Jakarta EE specification and can be deployed to WebLogic Server.">
 <link rel="preload" href="/weblogic-remote-console/scss/main.min.48c25d0a5a23a1e8cae94d6c5e7622061e5345cf098171b1d6ee41d8e309e6c8.css" as="style" integrity="sha256-SMJdClojoejK6U1sXnYiBh5TRc8JgXGx1u5B2OMJ5sg=" crossorigin="anonymous">
 <link href="/weblogic-remote-console/scss/main.min.48c25d0a5a23a1e8cae94d6c5e7622061e5345cf098171b1d6ee41d8e309e6c8.css" rel="stylesheet" integrity="sha256-SMJdClojoejK6U1sXnYiBh5TRc8JgXGx1u5B2OMJ5sg=" crossorigin="anonymous">
 <script
@@ -70,7 +70,8 @@ Supported Deployment Units A deployment unit refers to a Java EE application (an
         <div class="dropdown">
   <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Releases</a>
   <ul class="dropdown-menu">
-    <li><a class="dropdown-item" href="/weblogic-remote-console/overview">Latest (v2.4.17)</a></li>
+    <li><a class="dropdown-item" href="/weblogic-remote-console/overview">Latest (v2.4.18)</a></li>
+    <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.17">v2.4.17</a></li>
     <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.16">v2.4.16</a></li>
     <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.15">v2.4.15</a></li>
     <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.14">v2.4.14</a></li>
@@ -142,7 +143,7 @@ Supported Deployment Units A deployment unit refers to a Java EE application (an
     aria-label="Search this site…"
     autocomplete="off"
     
-    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.1c3f7e3c36c633fec73beac9b615e3ab.json"
+    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.02f8aa39561ea342361c468546679f8f.json"
     data-offline-search-base-href="/"
     data-offline-search-max-results="10"
   >
@@ -167,7 +168,7 @@ Supported Deployment Units A deployment unit refers to a Java EE application (an
     aria-label="Search this site…"
     autocomplete="off"
     
-    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.1c3f7e3c36c633fec73beac9b615e3ab.json"
+    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.02f8aa39561ea342361c468546679f8f.json"
     data-offline-search-base-href="/"
     data-offline-search-max-results="10"
   >
@@ -299,12 +300,12 @@ Supported Deployment Units A deployment unit refers to a Java EE application (an
     <li><a href="#GUID-240675E5-E13F-4335-B0B1-E9684DAFB6A9">Update or Redeploy an Application</a></li>
     <li><a href="#GUID-632CF2ED-7A6A-4AEB-B3D9-345FB5736153">Test Application Deployment</a></li>
     <li><a href="#GUID-ECC35452-5C21-4714-B1AA-AAEC6B0BA786">Remove an Application from a Domain</a></li>
-    <li><a href="#GUID-BE65E318-925C-4CEC-9041-76A7214AFA6A">Install a Java EE Library</a>
+    <li><a href="#GUID-BE65E318-925C-4CEC-9041-76A7214AFA6A">Install a Jakarta EE Library</a>
       <ul>
-        <li><a href="#GUID-04280303-0DAE-4C09-AFC4-957C1406C611">Redeploy a Java EE Library</a></li>
+        <li><a href="#GUID-04280303-0DAE-4C09-AFC4-957C1406C611">Redeploy a Jakarta EE Library</a></li>
       </ul>
     </li>
-    <li><a href="#GUID-07822B40-E226-4044-8C07-4CDB6D5D007E">Configure JASPIC for a Web Application</a></li>
+    <li><a href="#GUID-07822B40-E226-4044-8C07-4CDB6D5D007E">Configure Jakarta Authentication for a Web Application</a></li>
     <li><a href="#GUID-4B7B36E0-1FD0-44B2-A4D1-3BAFE2511950">Create an Application Scoped Credential Mapping</a></li>
   </ul>
 </nav>
@@ -336,7 +337,7 @@ Supported Deployment Units A deployment unit refers to a Java EE application (an
 	<p>You can use WebLogic Remote Console to manage the deployment process of applications to WebLogic Server.</p>
 <p>For general information on the application deployment process, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=DEPGD-GUID-F6E8BF0B-FBCF-44D2-A33F-13C4EF2E0031">Understanding WebLogic Server Deployment</a> in <strong>Deploying Applications to Oracle WebLogic Server</strong>.</p>
 <h2 id="SECTION_JCN_YYR_FCC">Supported Deployment Units</h2>
-<p>A deployment unit refers to a Java EE application (an enterprise application or Web application) or a standalone Java EE module (such as an EJB or resource adapter) that has been organized according to the Java EE specification and can be deployed to WebLogic Server.</p>
+<p>A deployment unit refers to a Jakarta EE application (an enterprise application or Web application) or a standalone Jakarta EE module (such as an EJB or resource adapter) that has been organized according to the Jakarta EE specification and can be deployed to WebLogic Server.</p>
 <p>The following deployment units are supported:</p>
 <ul>
 <li>
@@ -346,13 +347,13 @@ Supported Deployment Units A deployment unit refers to a Java EE application (an
 <p>Web Application</p>
 </li>
 <li>
-<p>Enterprise JavaBean</p>
+<p>Jakarta Enterprise Bean (EJB)</p>
 </li>
 <li>
 <p>Web Service</p>
 </li>
 <li>
-<p>Java EE Library</p>
+<p>Jakarta EE Library</p>
 </li>
 <li>
 <p>Optional Package</p>
@@ -365,9 +366,28 @@ Supported Deployment Units A deployment unit refers to a Java EE application (an
 </li>
 </ul>
 <p>For more information on each deployment unit, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=DEPGD-GUID-DC6C0B59-7560-4A6F-964B-201480072A3D">Supported Deployment Units</a> in <strong>Deploying Applications to Oracle WebLogic Server</strong></p>
+
+
+<div class="alert alert-primary" role="alert">
+<h4 class="alert-heading">Note</h4>
+
+    <ul>
+<li>
+<p>WebLogic Server 12.2.1.4.0 supports the Java EE 7 Platform specification.</p>
+</li>
+<li>
+<p>WebLogic Server 14.1.1.0.0 and 14.1.2.0.0 support the Java EE 8 Platform specification (or the functionally equivalent Jakarta EE 8 Platform).</p>
+</li>
+<li>
+<p>WebLogic Server 15.1.1.0.0 supports the Jakarta EE 9.1 Platform specification.</p>
+</li>
+</ul>
+
+
+</div>
 <h2 id="GUID-C9A911B0-1942-4383-BD91-49BC745F21DA">Install an Application</h2>
 <p>An application can be installed as an archived EAR file or as an exploded directory. Installing an application makes its physical file or directory known to WebLogic Server.</p>
-<p>This procedure applies to all of the deployment units listed in <a href="/weblogic-remote-console/administration-server/deploying-applications/#SECTION_JCN_YYR_FCC">Supported Deployment Units</a>, with the exception of Java EE libraries. For Java EE libraries, see <a href="/weblogic-remote-console/administration-server/deploying-applications/#GUID-BE65E318-925C-4CEC-9041-76A7214AFA6A">Install a Java EE Library</a> instead.</p>
+<p>This procedure applies to all of the deployment units listed in <a href="/weblogic-remote-console/administration-server/deploying-applications/#SECTION_JCN_YYR_FCC">Supported Deployment Units</a>, with the exception of Jakarta EE libraries. For Jakarta EE libraries, see <a href="/weblogic-remote-console/administration-server/deploying-applications/#GUID-BE65E318-925C-4CEC-9041-76A7214AFA6A">Install a Jakarta EE Library</a> instead.</p>
 <ol>
 <li>
 <p>In the <strong>Edit Tree</strong>, go to <strong>Deployments</strong>, then <strong>App Deployments</strong>.</p>
@@ -601,9 +621,9 @@ Supported Deployment Units A deployment unit refers to a Java EE application (an
 <p>Select the application that you want to remove and click <strong>Delete</strong>.</p>
 </li>
 </ol>
-<h2 id="GUID-BE65E318-925C-4CEC-9041-76A7214AFA6A">Install a Java EE Library</h2>
-<p>A Java EE library can be a standalone EJB or Web application module, multiple EJB or Web application modules packaged in an enterprise application (EAR), or a single plain JAR file that is registered with the Java EE application container upon deployment. After the library has been installed and started, other deployed modules can reference the library.</p>
-<p>Installing a Java EE library means making its physical file or directory known to WebLogic Server. A Java EE library can be installed as an archived EAR file or as an exploded directory. After you have installed the Java EE library, other deployed modules can start using it.</p>
+<h2 id="GUID-BE65E318-925C-4CEC-9041-76A7214AFA6A">Install a Jakarta EE Library</h2>
+<p>A Jakarta EE library can be a standalone EJB or Web application module, multiple EJB or Web application modules packaged in an enterprise application (EAR), or a single plain JAR file that is registered with the Jakarta EE application container upon deployment. After the library has been installed and started, other deployed modules can reference the library.</p>
+<p>Installing a Jakarta EE library means making its physical file or directory known to WebLogic Server. A Jakarta EE library can be installed as an archived EAR file or as an exploded directory. After you have installed the Jakarta EE library, other deployed modules can start using it.</p>
 <ol>
 <li>
 <p>In the <strong>Edit Tree</strong>, go to <strong>Deployments</strong>, then <strong>Libraries</strong>.</p>
@@ -612,16 +632,16 @@ Supported Deployment Units A deployment unit refers to a Java EE application (an
 <p>Click <strong>New</strong>.</p>
 </li>
 <li>
-<p>Enter a name for the Java EE library.</p>
+<p>Enter a name for the Jakarta EE library.</p>
 </li>
 <li>
-<p>Select the servers and clusters to which you want to deploy the Java EE library. Make sure to target all of the servers and clusters to which modules or applications that will reference the Java EE library are deployed.</p>
+<p>Select the servers and clusters to which you want to deploy the Jakarta EE library. Make sure to target all of the servers and clusters to which modules or applications that will reference the Jakarta EE library are deployed.</p>
 </li>
 <li>
-<p>Make the Java EE library (an archive file or exploded directory) that you want to install known to the Administration Server.</p>
+<p>Make the Jakarta EE library (an archive file or exploded directory) that you want to install known to the Administration Server.</p>
 <ul>
-<li>Enable <strong>Upload</strong> if the Java EE library is on your file system and you need to upload it to the Administration Server. Then, click <strong>Choose File</strong> to browse to the library&rsquo;s location on your system.</li>
-<li>If the Java EE library is already in the file system of the Administration Server, then disable the <strong>Upload</strong> option and enter the file path to the Java EE library.
+<li>Enable <strong>Upload</strong> if the Jakarta EE library is on your file system and you need to upload it to the Administration Server. Then, click <strong>Choose File</strong> to browse to the library&rsquo;s location on your system.</li>
+<li>If the Jakarta EE library is already in the file system of the Administration Server, then disable the <strong>Upload</strong> option and enter the file path to the Jakarta EE library.
 If you specify an exploded directory, WebLogic Server installs all components it finds in and below the specified directory.</li>
 </ul>
 
@@ -629,7 +649,7 @@ If you specify an exploded directory, WebLogic Server installs all components it
 <div class="alert alert-primary" role="alert">
 <h4 class="alert-heading">Note</h4>
 
-    You can install only the following types of archive files (or their corresponding exploded directories) as Java EE libraries: EJB JARs, Web application WARs, EAR files that contain EJB JARs or WARs, or plain JAR files that contain compiled classes.
+    You can install only the following types of archive files (or their corresponding exploded directories) as Jakarta EE libraries: EJB JARs, Web application WARs, EAR files that contain EJB JARs or WARs, or plain JAR files that contain compiled classes.
 
 </div>
 </li>
@@ -641,14 +661,14 @@ If you specify an exploded directory, WebLogic Server installs all components it
 </li>
 </ol>
 <p>Your new library appears under the Libraries node. You can make additional changes to the Java library on this page.</p>
-<h3 id="GUID-04280303-0DAE-4C09-AFC4-957C1406C611">Redeploy a Java EE Library</h3>
-<p>When you update a Java EE library, WebLogic Server redeploys the archive file or exploded directory. Update a library if you have made changes to it and you want to make the changes available to the modules and applications deployed to WebLogic Server that are using the library.</p>
+<h3 id="GUID-04280303-0DAE-4C09-AFC4-957C1406C611">Redeploy a Jakarta EE Library</h3>
+<p>When you update a Jakarta EE library, WebLogic Server redeploys the archive file or exploded directory. Update a library if you have made changes to it and you want to make the changes available to the modules and applications deployed to WebLogic Server that are using the library.</p>
 <ol>
 <li>
 <p>In the <strong>Monitoring Tree</strong>, go to <strong>Deployments</strong>, then <strong>Library Management</strong>.</p>
 </li>
 <li>
-<p>Select the Java EE library that you want to update.</p>
+<p>Select the Jakarta EE library that you want to update.</p>
 </li>
 <li>
 <p>Decide how you want to update the library:</p>
@@ -666,16 +686,17 @@ If you specify an exploded directory, WebLogic Server installs all components it
 <p>Click <strong>Done</strong>.</p>
 </li>
 </ol>
-<h2 id="GUID-07822B40-E226-4044-8C07-4CDB6D5D007E">Configure JASPIC for a Web Application</h2>
-<p>If using JASPIC, you can specify which Authentication Configuration provider applies to a specific Web application.</p>
-<p>The Java Authentication Service Provider Interface for Containers (JASPIC) specification defines a service provider interface (SPI). The JASPIC SPI is used by authentication providers that implement message authentication mechanisms that can be integrated in server Web application message processing.</p>
-<p>You can review the JASPIC specification at <strong><a href="https://www.jcp.org/en/jsr/detail?id=196">JSR 196: Java Authentication Service Provider Interface for Containers</a></strong>.</p>
+<h2 id="GUID-07822B40-E226-4044-8C07-4CDB6D5D007E">Configure Jakarta Authentication for a Web Application</h2>
+<p>If using Jakarta Authentication, you can specify which Authentication Configuration provider applies to a specific Web application.</p>
+<p>The Jakarta Authentication specification defines a service provider interface (SPI). The Jakarta Authentication SPI is used by authentication providers that implement message authentication mechanisms that can be integrated in server Web application message processing.</p>
+<p>Jakarta Authentication was formerly called Java Authentication Service Provider Interface for Containers (JASPIC).</p>
+<p>You can review the Jakarta Authentication specification at <strong><a href="https://jakarta.ee/specifications/authentication/">Jakarta Authentication</a></strong>.</p>
 <ol>
 <li>
-<p>If you haven&rsquo;t done so already, configure JASPIC in the domain.</p>
+<p>If you haven&rsquo;t done so already, configure Jakarta Authentication in the domain.</p>
 <ol>
 <li>
-<p>Ensure JASPIC is enabled in the domain. In the <strong>Edit Tree</strong>, go to <strong>Environment</strong>, then <strong>Domain</strong>. On the <strong>Security</strong> tab, click <strong>Show Advanced Fields</strong> and confirm that <strong>JASPIC Enabled</strong> is turned on.</p>
+<p>Ensure Jakarta Authentication is enabled in the domain. In the <strong>Edit Tree</strong>, go to <strong>Environment</strong>, then <strong>Domain</strong>. On the <strong>Security</strong> tab, click <strong>Show Advanced Fields</strong> and confirm that <strong>JASPIC Enabled</strong> is turned on.</p>
 </li>
 <li>
 <p>Configure an Authentication Configuration provider.</p>

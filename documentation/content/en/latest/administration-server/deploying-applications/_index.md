@@ -1,5 +1,5 @@
 ---
-weight: 148
+weight: 159
 title: Deploying Applications
 ---
 
@@ -11,7 +11,7 @@ For general information on the application deployment process, see [Understandin
 
 ## Supported Deployment Units {#SECTION_JCN_YYR_FCC}
 
-A deployment unit refers to a Java EE application \(an enterprise application or Web application\) or a standalone Java EE module \(such as an EJB or resource adapter\) that has been organized according to the Java EE specification and can be deployed to WebLogic Server.
+A deployment unit refers to a Jakarta EE application \(an enterprise application or Web application\) or a standalone Jakarta EE module \(such as an EJB or resource adapter\) that has been organized according to the Jakarta EE specification and can be deployed to WebLogic Server.
 
 The following deployment units are supported:
 
@@ -19,11 +19,11 @@ The following deployment units are supported:
 
 -   Web Application
 
--   Enterprise JavaBean
+-   Jakarta Enterprise Bean \(EJB\)
 
 -   Web Service
 
--   Java EE Library
+-   Jakarta EE Library
 
 -   Optional Package
 
@@ -34,11 +34,25 @@ The following deployment units are supported:
 
 For more information on each deployment unit, see [Supported Deployment Units](https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=DEPGD-GUID-DC6C0B59-7560-4A6F-964B-201480072A3D) in **Deploying Applications to Oracle WebLogic Server**
 
+{{< alert title="Note" color="primary" >}}
+
+
+
+-   WebLogic Server 12.2.1.4.0 supports the Java EE 7 Platform specification.
+
+-   WebLogic Server 14.1.1.0.0 and 14.1.2.0.0 support the Java EE 8 Platform specification \(or the functionally equivalent Jakarta EE 8 Platform\).
+
+-   WebLogic Server 15.1.1.0.0 supports the Jakarta EE 9.1 Platform specification.
+
+
+{{< /alert >}}
+
+
 ## Install an Application {#GUID-C9A911B0-1942-4383-BD91-49BC745F21DA}
 
 An application can be installed as an archived EAR file or as an exploded directory. Installing an application makes its physical file or directory known to WebLogic Server.
 
-This procedure applies to all of the deployment units listed in [Supported Deployment Units](#SECTION_JCN_YYR_FCC), with the exception of Java EE libraries. For Java EE libraries, see [Install a Java EE Library](#GUID-BE65E318-925C-4CEC-9041-76A7214AFA6A) instead.
+This procedure applies to all of the deployment units listed in [Supported Deployment Units](#SECTION_JCN_YYR_FCC), with the exception of Jakarta EE libraries. For Jakarta EE libraries, see [Install a Jakarta EE Library](#GUID-BE65E318-925C-4CEC-9041-76A7214AFA6A) instead.
 
 1.  In the **Edit Tree**, go to **Deployments**, then **App Deployments**.
 
@@ -241,31 +255,31 @@ To temporarily make a deployed application unavailable to WebLogic Server client
 2.  Select the application that you want to remove and click **Delete**.
 
 
-## Install a Java EE Library {#GUID-BE65E318-925C-4CEC-9041-76A7214AFA6A}
+## Install a Jakarta EE Library {#GUID-BE65E318-925C-4CEC-9041-76A7214AFA6A}
 
-A Java EE library can be a standalone EJB or Web application module, multiple EJB or Web application modules packaged in an enterprise application \(EAR\), or a single plain JAR file that is registered with the Java EE application container upon deployment. After the library has been installed and started, other deployed modules can reference the library.
+A Jakarta EE library can be a standalone EJB or Web application module, multiple EJB or Web application modules packaged in an enterprise application \(EAR\), or a single plain JAR file that is registered with the Jakarta EE application container upon deployment. After the library has been installed and started, other deployed modules can reference the library.
 
-Installing a Java EE library means making its physical file or directory known to WebLogic Server. A Java EE library can be installed as an archived EAR file or as an exploded directory. After you have installed the Java EE library, other deployed modules can start using it.
+Installing a Jakarta EE library means making its physical file or directory known to WebLogic Server. A Jakarta EE library can be installed as an archived EAR file or as an exploded directory. After you have installed the Jakarta EE library, other deployed modules can start using it.
 
 1.  In the **Edit Tree**, go to **Deployments**, then **Libraries**.
 
 2.  Click **New**.
 
-3.  Enter a name for the Java EE library.
+3.  Enter a name for the Jakarta EE library.
 
-4.  Select the servers and clusters to which you want to deploy the Java EE library. Make sure to target all of the servers and clusters to which modules or applications that will reference the Java EE library are deployed.
+4.  Select the servers and clusters to which you want to deploy the Jakarta EE library. Make sure to target all of the servers and clusters to which modules or applications that will reference the Jakarta EE library are deployed.
 
-5.  Make the Java EE library \(an archive file or exploded directory\) that you want to install known to the Administration Server.
+5.  Make the Jakarta EE library \(an archive file or exploded directory\) that you want to install known to the Administration Server.
 
-    -   Enable **Upload** if the Java EE library is on your file system and you need to upload it to the Administration Server. Then, click **Choose File** to browse to the library's location on your system.
-    -   If the Java EE library is already in the file system of the Administration Server, then disable the **Upload** option and enter the file path to the Java EE library.
+    -   Enable **Upload** if the Jakarta EE library is on your file system and you need to upload it to the Administration Server. Then, click **Choose File** to browse to the library's location on your system.
+    -   If the Jakarta EE library is already in the file system of the Administration Server, then disable the **Upload** option and enter the file path to the Jakarta EE library.
     If you specify an exploded directory, WebLogic Server installs all components it finds in and below the specified directory.
 
     {{< alert title="Note" color="primary" >}}
 
     
 
-    You can install only the following types of archive files \(or their corresponding exploded directories\) as Java EE libraries: EJB JARs, Web application WARs, EAR files that contain EJB JARs or WARs, or plain JAR files that contain compiled classes.
+    You can install only the following types of archive files \(or their corresponding exploded directories\) as Jakarta EE libraries: EJB JARs, Web application WARs, EAR files that contain EJB JARs or WARs, or plain JAR files that contain compiled classes.
 
     {{< /alert >}}
 
@@ -277,13 +291,13 @@ Installing a Java EE library means making its physical file or directory known t
 
 Your new library appears under the Libraries node. You can make additional changes to the Java library on this page.
 
-### Redeploy a Java EE Library {#GUID-04280303-0DAE-4C09-AFC4-957C1406C611}
+### Redeploy a Jakarta EE Library {#GUID-04280303-0DAE-4C09-AFC4-957C1406C611}
 
-When you update a Java EE library, WebLogic Server redeploys the archive file or exploded directory. Update a library if you have made changes to it and you want to make the changes available to the modules and applications deployed to WebLogic Server that are using the library.
+When you update a Jakarta EE library, WebLogic Server redeploys the archive file or exploded directory. Update a library if you have made changes to it and you want to make the changes available to the modules and applications deployed to WebLogic Server that are using the library.
 
 1.  In the **Monitoring Tree**, go to **Deployments**, then **Library Management**.
 
-2.  Select the Java EE library that you want to update.
+2.  Select the Jakarta EE library that you want to update.
 
 3.  Decide how you want to update the library:
 
@@ -295,17 +309,19 @@ When you update a Java EE library, WebLogic Server redeploys the archive file or
 4.  Click **Done**.
 
 
-## Configure JASPIC for a Web Application {#GUID-07822B40-E226-4044-8C07-4CDB6D5D007E}
+## Configure Jakarta Authentication for a Web Application {#GUID-07822B40-E226-4044-8C07-4CDB6D5D007E}
 
-If using JASPIC, you can specify which Authentication Configuration provider applies to a specific Web application.
+If using Jakarta Authentication, you can specify which Authentication Configuration provider applies to a specific Web application.
 
-The Java Authentication Service Provider Interface for Containers \(JASPIC\) specification defines a service provider interface \(SPI\). The JASPIC SPI is used by authentication providers that implement message authentication mechanisms that can be integrated in server Web application message processing.
+The Jakarta Authentication specification defines a service provider interface \(SPI\). The Jakarta Authentication SPI is used by authentication providers that implement message authentication mechanisms that can be integrated in server Web application message processing.
 
-You can review the JASPIC specification at **[JSR 196: Java Authentication Service Provider Interface for Containers](https://www.jcp.org/en/jsr/detail?id=196)**.
+Jakarta Authentication was formerly called Java Authentication Service Provider Interface for Containers \(JASPIC\).
 
-1.  If you haven't done so already, configure JASPIC in the domain.
+You can review the Jakarta Authentication specification at **[Jakarta Authentication](https://jakarta.ee/specifications/authentication/)**.
 
-    1.  Ensure JASPIC is enabled in the domain. In the **Edit Tree**, go to **Environment**, then **Domain**. On the **Security** tab, click **Show Advanced Fields** and confirm that **JASPIC Enabled** is turned on.
+1.  If you haven't done so already, configure Jakarta Authentication in the domain.
+
+    1.  Ensure Jakarta Authentication is enabled in the domain. In the **Edit Tree**, go to **Environment**, then **Domain**. On the **Security** tab, click **Show Advanced Fields** and confirm that **JASPIC Enabled** is turned on.
 
     2.  Configure an Authentication Configuration provider.
 

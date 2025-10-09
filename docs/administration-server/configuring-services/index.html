@@ -20,26 +20,26 @@
 
 <title>Configuring Services | WebLogic Remote Console</title>
 <meta name="description" content="Use WebLogic Remote Console to manage services in a WebLogic Server domain.
-Data Sources You can connect WebLogic Server to databases by adding JDBC data sources to your domain. A data source is a Java EE standard method of configuring connectivity to a database.
+Data Sources You can connect WebLogic Server to databases by adding JDBC data sources to your domain. A data source is a Jakarta EE standard method of configuring connectivity to a database.
 Each WebLogic data source contains a pool of database connections. Applications look up the data source on the JNDI tree or in the local application context and then use a database connection from the pool of connections. Data sources and their connection pools provide connection management processes that help keep your system running efficiently.">
 <meta property="og:url" content="https://oracle.github.io/weblogic-remote-console/administration-server/configuring-services/">
   <meta property="og:site_name" content="WebLogic Remote Console">
   <meta property="og:title" content="Configuring Services">
   <meta property="og:description" content="Use WebLogic Remote Console to manage services in a WebLogic Server domain.
-Data Sources You can connect WebLogic Server to databases by adding JDBC data sources to your domain. A data source is a Java EE standard method of configuring connectivity to a database.
+Data Sources You can connect WebLogic Server to databases by adding JDBC data sources to your domain. A data source is a Jakarta EE standard method of configuring connectivity to a database.
 Each WebLogic data source contains a pool of database connections. Applications look up the data source on the JNDI tree or in the local application context and then use a database connection from the pool of connections. Data sources and their connection pools provide connection management processes that help keep your system running efficiently.">
   <meta property="og:locale" content="en">
   <meta property="og:type" content="website">
 
   <meta itemprop="name" content="Configuring Services">
   <meta itemprop="description" content="Use WebLogic Remote Console to manage services in a WebLogic Server domain.
-Data Sources You can connect WebLogic Server to databases by adding JDBC data sources to your domain. A data source is a Java EE standard method of configuring connectivity to a database.
+Data Sources You can connect WebLogic Server to databases by adding JDBC data sources to your domain. A data source is a Jakarta EE standard method of configuring connectivity to a database.
 Each WebLogic data source contains a pool of database connections. Applications look up the data source on the JNDI tree or in the local application context and then use a database connection from the pool of connections. Data sources and their connection pools provide connection management processes that help keep your system running efficiently.">
-  <meta itemprop="wordCount" content="10359">
+  <meta itemprop="wordCount" content="10433">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Configuring Services">
   <meta name="twitter:description" content="Use WebLogic Remote Console to manage services in a WebLogic Server domain.
-Data Sources You can connect WebLogic Server to databases by adding JDBC data sources to your domain. A data source is a Java EE standard method of configuring connectivity to a database.
+Data Sources You can connect WebLogic Server to databases by adding JDBC data sources to your domain. A data source is a Jakarta EE standard method of configuring connectivity to a database.
 Each WebLogic data source contains a pool of database connections. Applications look up the data source on the JNDI tree or in the local application context and then use a database connection from the pool of connections. Data sources and their connection pools provide connection management processes that help keep your system running efficiently.">
 <link rel="preload" href="/weblogic-remote-console/scss/main.min.48c25d0a5a23a1e8cae94d6c5e7622061e5345cf098171b1d6ee41d8e309e6c8.css" as="style" integrity="sha256-SMJdClojoejK6U1sXnYiBh5TRc8JgXGx1u5B2OMJ5sg=" crossorigin="anonymous">
 <link href="/weblogic-remote-console/scss/main.min.48c25d0a5a23a1e8cae94d6c5e7622061e5345cf098171b1d6ee41d8e309e6c8.css" rel="stylesheet" integrity="sha256-SMJdClojoejK6U1sXnYiBh5TRc8JgXGx1u5B2OMJ5sg=" crossorigin="anonymous">
@@ -70,7 +70,8 @@ Each WebLogic data source contains a pool of database connections. Applications 
         <div class="dropdown">
   <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Releases</a>
   <ul class="dropdown-menu">
-    <li><a class="dropdown-item" href="/weblogic-remote-console/overview">Latest (v2.4.17)</a></li>
+    <li><a class="dropdown-item" href="/weblogic-remote-console/overview">Latest (v2.4.18)</a></li>
+    <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.17">v2.4.17</a></li>
     <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.16">v2.4.16</a></li>
     <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.15">v2.4.15</a></li>
     <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.14">v2.4.14</a></li>
@@ -142,7 +143,7 @@ Each WebLogic data source contains a pool of database connections. Applications 
     aria-label="Search this site…"
     autocomplete="off"
     
-    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.1c3f7e3c36c633fec73beac9b615e3ab.json"
+    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.02f8aa39561ea342361c468546679f8f.json"
     data-offline-search-base-href="/"
     data-offline-search-max-results="10"
   >
@@ -167,7 +168,7 @@ Each WebLogic data source contains a pool of database connections. Applications 
     aria-label="Search this site…"
     autocomplete="off"
     
-    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.1c3f7e3c36c633fec73beac9b615e3ab.json"
+    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.02f8aa39561ea342361c468546679f8f.json"
     data-offline-search-base-href="/"
     data-offline-search-max-results="10"
   >
@@ -325,7 +326,7 @@ Each WebLogic data source contains a pool of database connections. Applications 
         <li><a href="#GUID-0A422838-CDA6-4845-BA69-FED12DB72E6E">Target an XML Entity Cache to a Server</a></li>
       </ul>
     </li>
-    <li><a href="#GUID-FACD70A2-6CEF-40A0-9A71-DBC51EF8A869">Configure Access to JavaMail</a></li>
+    <li><a href="#GUID-FACD70A2-6CEF-40A0-9A71-DBC51EF8A869">Configure Access to Jakarta Mail</a></li>
     <li><a href="#GUID-AB51E3F2-F216-40B3-A5C9-F76A11428CA5">Configure Domain JTA Options</a>
       <ul>
         <li><a href="#GUID-B08A882B-F309-4E98-824D-E900606B0C0F">View Transaction Statistics</a></li>
@@ -363,7 +364,7 @@ Each WebLogic data source contains a pool of database connections. Applications 
 </header>
 	<p>Use WebLogic Remote Console to manage services in a WebLogic Server domain.</p>
 <h2 id="GUID-D92E5FE4-548C-49E1-9A77-A61A59039D21">Data Sources</h2>
-<p>You can connect WebLogic Server to databases by adding JDBC data sources to your domain. A data source is a Java EE standard method of configuring connectivity to a database.</p>
+<p>You can connect WebLogic Server to databases by adding JDBC data sources to your domain. A data source is a Jakarta EE standard method of configuring connectivity to a database.</p>
 <p>Each WebLogic data source contains a pool of database connections. Applications look up the data source on the JNDI tree or in the local application context and then use a database connection from the pool of connections. Data sources and their connection pools provide connection management processes that help keep your system running efficiently.</p>
 <p>You can manage the following JDBC data source types from WebLogic Remote Console:</p>
 <ul>
@@ -419,7 +420,7 @@ Each WebLogic data source contains a pool of database connections. Applications 
 <p>Select <strong>Generic Data Source</strong> from the <strong>Data Source Type</strong> drop-down list.</p>
 </li>
 <li>
-<p>From the <strong>Database Type</strong> drop-down list, select the database management system (DBMS) of the database that you want to connect to.</p>
+<p>From the <strong>Database Type</strong> drop-down list, select the database management system (DBMS) of the database that you want to connect to. If your DBMS is not listed, select <strong>Other</strong>.</p>
 </li>
 <li>
 <p>From the <strong>Database Driver</strong> drop-down list, select a JDBC driver.</p>
@@ -809,7 +810,7 @@ For more information, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=
 </ol>
 <h2 id="GUID-C6298217-B758-4694-B409-BC29CD0D6CDB">Messaging</h2>
 <p>WebLogic Server provides an enterprise-class messaging system that fully supports the Java Messaging Service (JMS) specification and which also provides numerous extensions that go beyond the standard JMS APIs.</p>
-<p>It is tightly integrated into the WebLogic Server platform, allowing you to build highly secure Java EE applications that can be easily monitored and administered through WebLogic Remote Console. In addition to fully supporting XA transactions, WebLogic Server messaging also features high availability through its clustering and service migration features while also providing seamless interoperability with other versions of WebLogic Server and third-party messaging vendors.</p>
+<p>It is tightly integrated into the WebLogic Server platform, allowing you to build highly secure Jakarta EE applications that can be easily monitored and administered through WebLogic Remote Console. In addition to fully supporting XA transactions, WebLogic Server messaging also features high availability through its clustering and service migration features while also providing seamless interoperability with other versions of WebLogic Server and third-party messaging vendors.</p>
 <p>WebLogic Server messaging is comprised of these areas:</p>
 <ul>
 <li><strong>JMS Servers</strong>: act as management containers for JMS queue and topic destinations in a JMS module that are targeted to them. A JMS server&rsquo;s primary responsibility for its destinations is to maintain information on which persistent store is used for any persistent messages that arrive on the destinations, and to maintain the states of durable subscribers created on the destinations.</li>
@@ -892,9 +893,9 @@ For more information, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=
 </li>
 </ol>
 <h3 id="GUID-ABB99866-324C-4179-A91C-A97B6D63EC6E">Create a JMS System Module</h3>
-<p>JMS resources are configured and stored as modules similar to standard Java EE modules. Such resources include queues, topics, connection factories, templates, destination keys, quota, distributed queues, distributed topics, foreign servers, and JMS store-and-forward (SAF) parameters.</p>
+<p>JMS resources are configured and stored as modules similar to standard Jakarta EE modules. Such resources include queues, topics, connection factories, templates, destination keys, quota, distributed queues, distributed topics, foreign servers, and JMS store-and-forward (SAF) parameters.</p>
 <p>System modules are globally available for targeting to servers and clusters configured in the domain, and therefore are available to all applications deployed on the same targets and to client applications.</p>
-<p>JMS configuration resources can also be managed as deployable application modules, either with a Java EE application as a packaged module, which is available only to the enclosing application, or as a stand-alone module that provides global access to the resources defined in that module.</p>
+<p>JMS configuration resources can also be managed as deployable application modules, either with a Jakarta EE application as a packaged module, which is available only to the enclosing application, or as a stand-alone module that provides global access to the resources defined in that module.</p>
 <p>For more information, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=JMSAD-GUID-47659F77-3B92-44E1-9A2E-EABD2F6FFB8F">Overview of JMS Modules</a> in <strong>Administering JMS Resources for Oracle WebLogic Server</strong>.</p>
 <ol>
 <li>
@@ -1263,13 +1264,24 @@ JMS SAF users should select <strong>Sending-only</strong> as JMS SAF doesn&rsquo
 </td><td>
 <p>Displays the contents of a JMS message.</p>
 <p><strong>Note</strong>: For larger messages, you will need to export the message to a file to view its full contents. WebLogic Remote Console will indicate when a message has been truncated.</p>
+<ul>
+<li>
+<p>If a message is less than 10,000 characters, WebLogic Remote Console will show the entire message body.</p>
+</li>
+<li>
+<p>If a message is between 10,000 - 200,000 characters, WebLogic Remote Console will show the first 10,000 characters of the message.</p>
+</li>
+<li>
+<p>If a message is more than 200,000 characters, WebLogic Remote Console will not show <em>any</em> of the message body.</p>
+</li>
+</ul>
 </td></tr></tbody>
 </table>
 <p>Table 2. JMS Message Actions. Actions that you can perform on JMS messages.</p>
 <h2 id="GUID-780192AC-812D-48E6-ABC7-162C5A39D227">View Objects in the JNDI Table</h2>
 <p>You can use WebLogic Remote Console to view objects in the Java Naming and Directory Interface (JNDI) table.</p>
-<p>WebLogic Server implements the JNDI of the Java EE platform as a means to provide a standard, unified interface to multiple naming and directory services in an enterprise. See <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=WJNDI-GUID-DED922F8-6F8F-41C3-96DF-3D64B01250CC">Understanding WebLogic JNDI</a> in <strong>Developing JNDI Applications for Oracle WebLogic Server</strong>.</p>
-<p>You can load WebLogic Server Java EE services and components, such as RMI, JMS, EJBs, and JDBC Data Sources, in the JNDI table. Typically, these objects are bound in the JNDI table when you configure their <strong>JNDI Name</strong> attribute and deploy them to the server.</p>
+<p>WebLogic Server implements the JNDI of the Jakarta EE platform as a means to provide a standard, unified interface to multiple naming and directory services in an enterprise. See <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=WJNDI-GUID-DED922F8-6F8F-41C3-96DF-3D64B01250CC">Understanding WebLogic JNDI</a> in <strong>Developing JNDI Applications for Oracle WebLogic Server</strong>.</p>
+<p>You can load WebLogic Server Jakarta EE services and components, such as RMI, JMS, EJBs, and JDBC Data Sources, in the JNDI table. Typically, these objects are bound in the JNDI table when you configure their <strong>JNDI Name</strong> attribute and deploy them to the server.</p>
 <ol>
 <li>
 <p>In the <strong>Monitoring Tree</strong>, go to <strong>Environment</strong>, then <strong>Servers</strong>, then <em>myServer</em>.</p>
@@ -1460,10 +1472,10 @@ JMS SAF users should select <strong>Sending-only</strong> as JMS SAF doesn&rsquo
 <p>Click <strong>Save</strong>.</p>
 </li>
 </ol>
-<h2 id="GUID-FACD70A2-6CEF-40A0-9A71-DBC51EF8A869">Configure Access to JavaMail</h2>
-<p>You can configure a mail server or establish user credentials for an existing mail server. Mail sessions and the JavaMail API do not provide mail server functions. They merely enable applications to send and receive data from an existing mail server.</p>
-<p>JavaMail APIs provide applications and other Java EE modules with access to Internet Message Access Protocol (IMAP) and Simple Mail Transfer Protocol (SMTP) capable mail servers on your network or the internet.</p>
-<p>In the reference implementation of JavaMail, applications must instantiate <code>javax.mail.Session</code> objects, which designate mail hosts, transport and store protocols, and a default mail user for connecting to a mail server. You can use WebLogic Remote Console to create a mail session, which configures a <code>javax.mail.Session</code> object and registers it in the WebLogic Server JNDI table. Applications access the mail session through JNDI instead of instantiating their own <code>javax.mail.Session</code> object.</p>
+<h2 id="GUID-FACD70A2-6CEF-40A0-9A71-DBC51EF8A869">Configure Access to Jakarta Mail</h2>
+<p>You can configure a mail server or establish user credentials for an existing mail server. Mail sessions and the Jakarta Mail API do not provide mail server functions. They merely enable applications to send and receive data from an existing mail server.</p>
+<p>Jakarta Mail APIs provide applications and other Jakarta EE modules with access to Internet Message Access Protocol (IMAP) and Simple Mail Transfer Protocol (SMTP) capable mail servers on your network or the internet.</p>
+<p>In the reference implementation of Jakarta Mail, applications must instantiate <code>jakarta.mail.Session</code> objects, which designate mail hosts, transport and store protocols, and a default mail user for connecting to a mail server. You can use WebLogic Remote Console to create a mail session, which configures a <code>jakarta.mail.Session</code> object and registers it in the WebLogic Server JNDI table. Applications access the mail session through JNDI instead of instantiating their own <code>jakarta.mail.Session</code> object.</p>
 <ol>
 <li>
 <p>In the <strong>Edit Tree</strong>, go to <strong>Services</strong>, then <strong>Mail Sessions</strong>.</p>
@@ -1481,7 +1493,7 @@ Session session = (Session) ic.lookup(&#34;myMailSession&#34;);
 <p>Click <strong>Create</strong>.</p>
 </li>
 <li>
-<p>In the <strong>Session Username</strong> field, specify the user account to use to create an authenticated JavaMail session. Then, in the <strong>Session Password</strong> field, enter the password for the user account.</p>
+<p>In the <strong>Session Username</strong> field, specify the user account to use to create an authenticated Jakarta Mail session. Then, in the <strong>Session Password</strong> field, enter the password for the user account.</p>
 <p>If you do not specify a user account, it is assumed the session is not to be authenticated.</p>
 </li>
 <li>
@@ -1499,7 +1511,7 @@ Session session = (Session) ic.lookup(&#34;myMailSession&#34;);
 <div class="alert alert-primary" role="alert">
 <h4 class="alert-heading">Note</h4>
 
-    Only specify a property if you want to override the default value. If you do not specify any properties, the mail session will use the JavaMail default property values.
+    Only specify a property if you want to override the default value. If you do not specify any properties, the mail session will use the Jakarta Mail default property values.
 
 </div>
 <ol>
@@ -1516,7 +1528,7 @@ Session session = (Session) ic.lookup(&#34;myMailSession&#34;);
 <p>Click <strong>Save</strong>.</p>
 </li>
 </ol>
-<p><a href="/weblogic-remote-console/administration-server/configuring-services/#TABLE_H4B_RWG_QBC">Table 3</a> describes the valid properties and default values, derived from the JavaMail API Design Specification.</p>
+<p><a href="/weblogic-remote-console/administration-server/configuring-services/#TABLE_H4B_RWG_QBC">Table 3</a> describes the valid properties and default values, derived from the Jakarta Mail API Design Specification.</p>
 </li>
 </ol>
 <table id="TABLE_H4B_RWG_QBC"><thead><tr><th>
@@ -1570,12 +1582,12 @@ Session session = (Session) ic.lookup(&#34;myMailSession&#34;);
 </td></tr><tr><td>
 <p><code>mail.debug</code></p>
 </td><td>
-<p>Set to <code>True</code> to enable JavaMail debug output.</p>
+<p>Set to <code>True</code> to enable Jakarta Mail debug output.</p>
 </td><td>
 <p><code>False</code></p>
 </td></tr></tbody>
 </table>
-<p>Table 3. Java Mail Properties. The valid properties and default values, derived from the JavaMail API Design Specification.
+<p>Table 3. Java Mail Properties. The valid properties and default values, derived from the Jakarta Mail API Design Specification.
 
 <div class="alert alert-primary" role="alert">
 <h4 class="alert-heading">Note</h4>

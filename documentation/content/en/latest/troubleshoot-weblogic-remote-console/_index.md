@@ -1,5 +1,5 @@
 ---
-weight: 267
+weight: 278
 title: Troubleshoot Issues with WebLogic Remote Console
 ---
 
@@ -64,7 +64,7 @@ If you want to generate log files for WebLogic Server, see [Log Messages](../adm
 
 ## Known Issues {#GUID-A2824DAE-C040-43E0-A645-041FDFB8936F}
 
-This page describes the known issues associated with WebLogic Remote Console.
+This section describes the known issues associated with WebLogic Remote Console.
 
 ### Limitations {}
 
@@ -114,6 +114,12 @@ If the WebLogic Remote Console log file has unprintable characters and appears c
 Occasionally, when you create an item, its top-level node appears in the Navigation Tree but its child nodes do not appear.
 
 **Workaround**: Reload the page by navigating to another perspective tree and then back to the original perspective. The child nodes should now be visible.
+
+### A 'Failed to start an edit session' Error is Appearing {#section_wqg_sqt_pgc}
+
+If you try to make a configuration change to the domain and receive an <code>Failed to start an edit session</code> error, it might be because another user currently has the configuration lock which blocks other users from overwriting their changes.
+
+If you are an administrator, you can take the configuration lock \(and their pending changes\) from the other user. See [Grab the Edit Lock](../administration-server/domain-configuration#GUID-376C1ED1-E4AF-48B8-9BEC-B57D5BDEB9B5).
 
 ## Cannot connect to the Administration Server {#GUID-B3D14A11-0144-4B31-BFE3-E6AC59AEFCBE}
 

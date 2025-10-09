@@ -32,7 +32,7 @@ NoteStay up-to-date with the latest release of WebLogic Remote Console to get t
   <meta itemprop="name" content="Support Information">
   <meta itemprop="description" content="WebLogic Remote Console offers several avenues to receive support and help.
 NoteStay up-to-date with the latest release of WebLogic Remote Console to get the latest features and fixes. If you experience issues, try upgrading to the latest release, which may address your issue. For more information, see Upgrade Desktop WebLogic Remote Console.Oracle Documentation In addition to the current guide, you can retrieve information on WebLogic Remote Console from within the user interface. Click the Help icon in the Tool Bar or in dialog boxes to reveal descriptions of the fields on your current page.">
-  <meta itemprop="wordCount" content="1402">
+  <meta itemprop="wordCount" content="1464">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Support Information">
   <meta name="twitter:description" content="WebLogic Remote Console offers several avenues to receive support and help.
@@ -66,7 +66,8 @@ NoteStay up-to-date with the latest release of WebLogic Remote Console to get t
         <div class="dropdown">
   <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Releases</a>
   <ul class="dropdown-menu">
-    <li><a class="dropdown-item" href="/weblogic-remote-console/overview">Latest (v2.4.17)</a></li>
+    <li><a class="dropdown-item" href="/weblogic-remote-console/overview">Latest (v2.4.18)</a></li>
+    <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.17">v2.4.17</a></li>
     <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.16">v2.4.16</a></li>
     <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.15">v2.4.15</a></li>
     <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.14">v2.4.14</a></li>
@@ -138,7 +139,7 @@ NoteStay up-to-date with the latest release of WebLogic Remote Console to get t
     aria-label="Search this site…"
     autocomplete="off"
     
-    data-offline-search-index-json-src="/offline-search-index.6acb553d7869483f57e2c80febd06cda.json"
+    data-offline-search-index-json-src="/offline-search-index.fadcaad2f4da1a01d07e57ddac9a5bd8.json"
     data-offline-search-base-href="/"
     data-offline-search-max-results="10"
   >
@@ -163,7 +164,7 @@ NoteStay up-to-date with the latest release of WebLogic Remote Console to get t
     aria-label="Search this site…"
     autocomplete="off"
     
-    data-offline-search-index-json-src="/offline-search-index.6acb553d7869483f57e2c80febd06cda.json"
+    data-offline-search-index-json-src="/offline-search-index.fadcaad2f4da1a01d07e57ddac9a5bd8.json"
     data-offline-search-base-href="/"
     data-offline-search-max-results="10"
   >
@@ -299,6 +300,7 @@ NoteStay up-to-date with the latest release of WebLogic Remote Console to get t
         <li><a href="#why-does-weblogic-remote-console-disagree-with-attributes-that-i-set-at-the-command-line">Why does WebLogic Remote Console disagree with attributes that I set at the command line?</a></li>
         <li><a href="#section_syq_f3k_y2c">Why did the versioning scheme of the WebLogic Remote Console extension change?</a></li>
         <li><a href="#section_utt_w55_bfc">Why are there two versions of the WebLogic Remote Console extension?</a></li>
+        <li><a href="#section_vs2_hzq_4fc">Can I still use Java EE 7/8? I see a lot of Jakarta EE references in the documentation.</a></li>
       </ul>
     </li>
   </ul>
@@ -367,7 +369,6 @@ NoteStay up-to-date with the latest release of WebLogic Remote Console to get t
 <li>Add support for starting and stopping all servers in a cluster simultaneously.</li>
 <li>Add support for validating RDBMS security store configuration.</li>
 <li>Add support for notifying users of required system resource restarts.</li>
-<li>Add support for configuring JDBC data sources with an unlisted (or Other) database type.</li>
 <li>Improve editing of transaction support variable assignments.</li>
 <li>Improve server cloning process to include server children, such as channels.</li>
 </ul>
@@ -392,10 +393,10 @@ NoteStay up-to-date with the latest release of WebLogic Remote Console to get t
 <h3 id="can-i-connect-weblogic-remote-console-to-domains-running-in-kubernetes-with-the-weblogic-kubernetes-operator">Can I connect WebLogic Remote Console to domains running in Kubernetes with the WebLogic Kubernetes Operator?</h3>
 <p>Yes. For details on how to set up access to WebLogic Server domains running on Kubernetes, see <a href="https://oracle.github.io/weblogic-kubernetes-operator/managing-domains/accessing-the-domain/remote-admin-console/">Use the WebLogic Remote Console</a> in the <strong>WebLogic Kubernetes Operator User Guide</strong>.</p>
 <h3 id="which-versions-of-weblogic-server-can-i-use-with-weblogic-remote-console">Which versions of WebLogic Server can I use with WebLogic Remote Console?</h3>
-<p>WebLogic Remote Console is compatible with WebLogic Server 12.2.1.4 and later.</p>
+<p>WebLogic Remote Console is compatible with WebLogic Server 12.2.1.4.0 and later.</p>
 <h3 id="can-i-use-both-weblogic-remote-console-and-weblogic-server-administration-console-to-manage-weblogic-server-domains">Can I use both WebLogic Remote Console and WebLogic Server Administration Console to manage WebLogic Server domains?</h3>
 <p>It depends on the WebLogic Server release that you have installed. The Administration Console was removed in WebLogic Server 14.1.2.0.0 and therefore is not available as of that release.</p>
-<p>However, if you&rsquo;re running WebLogic Server 14.1.1.0 or earlier, then you can continue to use the Administration Console for domain management alongside WebLogic Remote Console. Any changes you make in WebLogic Remote Console are reflected in the Administration Console.</p>
+<p>However, if you&rsquo;re running WebLogic Server 14.1.1.0.0 or earlier, then you can continue to use the Administration Console for domain management alongside WebLogic Remote Console. Any changes you make in WebLogic Remote Console are reflected in the Administration Console.</p>
 <p>As with any combination of system administration tools, avoid using them simultaneously as it can cause configuration conflicts and unexpected behavior.</p>
 <p>To see a full list of the tools that you can use to administer WebLogic Server, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=INTRO-GUID-3CAB0785-3188-402F-9138-50E62444E51E">Overview of WebLogic Server System Administration</a> in <strong>Understanding Oracle WebLogic Server</strong>.</p>
 <h3 id="do-i-need-to-upgrade-my-installation-of-weblogic-remote-console-whenever-i-upgrade-or-patch-weblogic-server">Do I need to upgrade my installation of WebLogic Remote Console whenever I upgrade or patch WebLogic Server?</h3>
@@ -421,6 +422,9 @@ NoteStay up-to-date with the latest release of WebLogic Remote Console to get t
 </li>
 </ul>
 <p>As of WebLogic Server 14.1.2.0.0, the WebLogic Remote Console extension is included in the WebLogic Server installation and updated with each Patch Set Update (PSU). You should not need to install the extension manually.</p>
+<h3 id="section_vs2_hzq_4fc">Can I still use Java EE 7/8? I see a lot of Jakarta EE references in the documentation.</h3>
+<p>Yes, <em>if you are using WebLogic Remote Console with WebLogic Server 12.2.1.4.0</em> (which supports Java EE 7) or <em>WebLogic Server 14.1.1.0.0 and 14.1.2.0.0</em> (which support Java EE 8, and the functionally equivalent Jakarta EE 8).</p>
+<p>If you are using WebLogic Remote Console with WebLogic Server 15.1.1.0.0, then your applications must comply with the Jakarta EE 9.1 specification instead.</p>
 
   <div class="section-index">
     

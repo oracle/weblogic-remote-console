@@ -35,7 +35,7 @@ Desktop WebLogic Remote Console, a desktop application installed on your compute
   <meta itemprop="description" content="WebLogic Remote Console is easy to install and you can quickly start managing your domains.
 WebLogic Remote Console is available in two formats:
 Desktop WebLogic Remote Console, a desktop application installed on your computer. Hosted WebLogic Remote Console, a web application deployed to an Administration Server and accessed through a browser. Generally, the two formats have similar functionality, though the desktop application offers certain conveniences that are not possible when using a browser.">
-  <meta itemprop="wordCount" content="1813">
+  <meta itemprop="wordCount" content="1837">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Get Started">
   <meta name="twitter:description" content="WebLogic Remote Console is easy to install and you can quickly start managing your domains.
@@ -70,7 +70,8 @@ Desktop WebLogic Remote Console, a desktop application installed on your compute
         <div class="dropdown">
   <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Releases</a>
   <ul class="dropdown-menu">
-    <li><a class="dropdown-item" href="/weblogic-remote-console/overview">Latest (v2.4.17)</a></li>
+    <li><a class="dropdown-item" href="/weblogic-remote-console/overview">Latest (v2.4.18)</a></li>
+    <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.17">v2.4.17</a></li>
     <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.16">v2.4.16</a></li>
     <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.15">v2.4.15</a></li>
     <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.14">v2.4.14</a></li>
@@ -142,7 +143,7 @@ Desktop WebLogic Remote Console, a desktop application installed on your compute
     aria-label="Search this site…"
     autocomplete="off"
     
-    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.1c3f7e3c36c633fec73beac9b615e3ab.json"
+    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.02f8aa39561ea342361c468546679f8f.json"
     data-offline-search-base-href="/"
     data-offline-search-max-results="10"
   >
@@ -167,7 +168,7 @@ Desktop WebLogic Remote Console, a desktop application installed on your compute
     aria-label="Search this site…"
     autocomplete="off"
     
-    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.1c3f7e3c36c633fec73beac9b615e3ab.json"
+    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.02f8aa39561ea342361c468546679f8f.json"
     data-offline-search-base-href="/"
     data-offline-search-max-results="10"
   >
@@ -353,23 +354,23 @@ Desktop WebLogic Remote Console, a desktop application installed on your compute
 <p>64 bit only.</p>
 <ul>
 <li>Debian 11 and later</li>
-<li>Fedora 40 and later
+<li>Fedora 41 and later
 <ul>
-<li>Oracle Linux 7 and later</li>
+<li>Oracle Linux 8 and later</li>
 </ul>
 </li>
-<li>Ubuntu 16.04 and later</li>
+<li>Ubuntu 22.04 and later</li>
 </ul>
 </td></tr><tr><td>
 <p>macOS</p>
 </td><td>
-<p>13 (Ventura) or later</p>
-<p><strong>Note</strong>: Intel machines must be 64 bit.</p>
+<p>13 (Ventura) and later</p>
+<p><strong>Note</strong>: Intel machines must be 64 bit. <sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup></p>
 </td></tr><tr><td>
 <p>Windows</p>
 </td><td>
 <p>64 bit only.</p>
-<p>Windows 10 and later.</p>
+<p>Windows 11 and later.</p>
 </td></tr></tbody>
 </table>
 <p>Table 1. Requirements. For the best experience, make sure your environment meets the following requirements.</p>
@@ -487,12 +488,12 @@ Examples:</li>
 <p>Under <code><em>DOMAIN_HOME</em>/</code>, create a folder and name it <code>management-services-ext</code>.</p>
 </li>
 <li>
-<p>Download the latest WebLogic Remote Console extension, <code>console-rest-ext-2.4.17.war</code>, from the <a href="https://github.com/oracle/weblogic-remote-console/releases">WebLogic Remote Console GitHub Repository</a> releases page.</p>
-<p><code>console-rest-ext-jakarta-2.4.17.war</code> is intended for domains running WebLogic Server 15.1.1.0.0 or later; you should not need to install it manually.</p>
+<p>Download the latest WebLogic Remote Console extension, <code>console-rest-ext-2.4.18.war</code>, from the <a href="https://github.com/oracle/weblogic-remote-console/releases">WebLogic Remote Console GitHub Repository</a> releases page.</p>
+<p><code>console-rest-ext-jakarta-2.4.18.war</code> is intended for domains running WebLogic Server 15.1.1.0.0 or later; you should not need to install it manually.</p>
 </li>
 <li>
 <p>Save the extension under <code>management-services-ext</code>.</p>
-<p>You do not need to deploy <code>console-rest-ext-2.4.17.war</code> as an application in your domain.</p>
+<p>You do not need to deploy <code>console-rest-ext-2.4.18.war</code> as an application in your domain.</p>
 </li>
 <li>
 <p>Restart the Administration Server.</p>
@@ -538,7 +539,7 @@ Examples:</li>
 <p><strong>Test data source connections</strong> - Verify that the domain can successfully connect to the configured database.</p>
 </li>
 <li>
-<p><strong>View objects in JNDI structure</strong> - Examine objects such as Java EE services and components such as RMI, JMS, EJBs, and JDBC data sources.</p>
+<p><strong>View objects in JNDI structure</strong> - Examine objects such as Jakarta EE services and components such as RMI, JMS, EJBs, and JDBC data sources.</p>
 </li>
 <li>
 <p><strong>Upload applications or database client data for redeployment</strong> - Update and redeploy applications or database client data with new versions that were not already deployed to the Administration Server.</p>
@@ -615,7 +616,7 @@ For information on the different providers, see <a href="/weblogic-remote-consol
 <li>
 <p><a id="STEP_H13_HCK_DCC"></a><em>For WebLogic Server 14.1.1.0.0 and earlier:</em> Update the WebLogic Remote Console <em>extension</em>.</p>
 <p>In WebLogic Server 14.1.2.0.0 and later, the WebLogic Remote Console extension is included with the initial installation and is updated by subsequent Patch Set Updates (PSU) and should not be updated manually.</p>
-<p>For the best experience, you should keep the versions of WebLogic Remote Console and its extension in sync with each other. That is, when you are running WebLogic Remote Console 2.4.17, you should have <code>console-rest-ext-2.4.17.war</code> installed.</p>
+<p>For the best experience, you should keep the versions of WebLogic Remote Console and its extension in sync with each other. That is, when you are running WebLogic Remote Console 2.4.18, you should have <code>console-rest-ext-2.4.18.war</code> installed.</p>
 <ol>
 <li>
 <p>While connected to the domain, open the <strong>Providers</strong> drawer and beside the provider connection, click the <strong>Get Info</strong> icon to see the <strong>Console Extension Version</strong>. If it matches WebLogic Remote Console version, you can skip the rest of the steps. Otherwise, continue.</p>
@@ -635,6 +636,14 @@ For information on the different providers, see <a href="/weblogic-remote-consol
 </ol>
 </li>
 </ol>
+<div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p>Support for Mac computers with an Intel processor is deprecated in WebLogic Remote Console 2.4.18 and may be removed in a future release.&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>
 
   <div class="section-index">
     

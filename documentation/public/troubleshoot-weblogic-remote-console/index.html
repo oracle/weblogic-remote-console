@@ -35,7 +35,7 @@ Restart all servers in the domain. Confirm that the Administration Server can re
   <meta itemprop="description" content="Learn how to identify and recover from issues in WebLogic Server or WebLogic Remote Console.
 Perform these preliminary troubleshooting steps to get started:
 Restart all servers in the domain. Confirm that the Administration Server can reach your Managed Servers and clusters. See Investigate Server Connection Issues. Check the log files for any errors. See Review Log Files. Review any known issues. See Known Issues. Update to the latest versions of Desktop WebLogic Remote Console and the WebLogic Remote Console extension. See Upgrade Desktop WebLogic Remote Console. Investigate Server Connection Issues If the Administration Server cannot reach a Managed Server or cluster, you may be able to determine the cause using WebLogic Remote Console.">
-  <meta itemprop="wordCount" content="2135">
+  <meta itemprop="wordCount" content="2209">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Troubleshoot Issues with WebLogic Remote Console">
   <meta name="twitter:description" content="Learn how to identify and recover from issues in WebLogic Server or WebLogic Remote Console.
@@ -70,7 +70,8 @@ Restart all servers in the domain. Confirm that the Administration Server can re
         <div class="dropdown">
   <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Releases</a>
   <ul class="dropdown-menu">
-    <li><a class="dropdown-item" href="/weblogic-remote-console/overview">Latest (v2.4.17)</a></li>
+    <li><a class="dropdown-item" href="/weblogic-remote-console/overview">Latest (v2.4.18)</a></li>
+    <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.17">v2.4.17</a></li>
     <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.16">v2.4.16</a></li>
     <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.15">v2.4.15</a></li>
     <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.14">v2.4.14</a></li>
@@ -142,7 +143,7 @@ Restart all servers in the domain. Confirm that the Administration Server can re
     aria-label="Search this site…"
     autocomplete="off"
     
-    data-offline-search-index-json-src="/offline-search-index.6acb553d7869483f57e2c80febd06cda.json"
+    data-offline-search-index-json-src="/offline-search-index.fadcaad2f4da1a01d07e57ddac9a5bd8.json"
     data-offline-search-base-href="/"
     data-offline-search-max-results="10"
   >
@@ -167,7 +168,7 @@ Restart all servers in the domain. Confirm that the Administration Server can re
     aria-label="Search this site…"
     autocomplete="off"
     
-    data-offline-search-index-json-src="/offline-search-index.6acb553d7869483f57e2c80febd06cda.json"
+    data-offline-search-index-json-src="/offline-search-index.fadcaad2f4da1a01d07e57ddac9a5bd8.json"
     data-offline-search-base-href="/"
     data-offline-search-max-results="10"
   >
@@ -298,6 +299,7 @@ Restart all servers in the domain. Confirm that the Administration Server can re
         <li><a href="#using-the-hosted-weblogic-remote-console-across-multiple-browser-tabs-may-cause-strange-behavior">Using the Hosted WebLogic Remote Console Across Multiple Browser Tabs May Cause Strange Behavior</a></li>
         <li><a href="#section_f5d_yk4_nfc">The WebLogic Remote Console Log File Looks Corrupted</a></li>
         <li><a href="#section_f42_zh3_zfc">Children of Newly Created Nodes do not Appear Automatically</a></li>
+        <li><a href="#section_wqg_sqt_pgc">A &lsquo;Failed to start an edit session&rsquo; Error is Appearing</a></li>
       </ul>
     </li>
     <li><a href="#GUID-B3D14A11-0144-4B31-BFE3-E6AC59AEFCBE">Cannot connect to the Administration Server</a></li>
@@ -393,7 +395,7 @@ Log file entries from previous sessions are saved to a new file in the same dire
 
 </div>
 <h2 id="GUID-A2824DAE-C040-43E0-A645-041FDFB8936F">Known Issues</h2>
-<p>This page describes the known issues associated with WebLogic Remote Console.</p>
+<p>This section describes the known issues associated with WebLogic Remote Console.</p>
 <h3 id="limitations">Limitations</h3>
 <p>You cannot:</p>
 <ul>
@@ -421,6 +423,9 @@ Log file entries from previous sessions are saved to a new file in the same dire
 <h3 id="section_f42_zh3_zfc">Children of Newly Created Nodes do not Appear Automatically</h3>
 <p>Occasionally, when you create an item, its top-level node appears in the Navigation Tree but its child nodes do not appear.</p>
 <p><strong>Workaround</strong>: Reload the page by navigating to another perspective tree and then back to the original perspective. The child nodes should now be visible.</p>
+<h3 id="section_wqg_sqt_pgc">A &lsquo;Failed to start an edit session&rsquo; Error is Appearing</h3>
+<p>If you try to make a configuration change to the domain and receive an <code>Failed to start an edit session</code> error, it might be because another user currently has the configuration lock which blocks other users from overwriting their changes.</p>
+<p>If you are an administrator, you can take the configuration lock (and their pending changes) from the other user. See <a href="/administration-server/domain-configuration/#GUID-376C1ED1-E4AF-48B8-9BEC-B57D5BDEB9B5">Grab the Edit Lock</a>.</p>
 <h2 id="GUID-B3D14A11-0144-4B31-BFE3-E6AC59AEFCBE">Cannot connect to the Administration Server</h2>
 <p>WebLogic Remote Console cannot connect to a WebLogic Server Administration Server.</p>
 <p>If you experience issues connecting to an Administration Server when using WebLogic Remote Console, then you may need to update the connection settings between the application and the domain. Use the following methods to identify which setting may be causing the issue.</p>

@@ -50,9 +50,9 @@ Linux
 64 bit only.
 
 -   Debian 11 and later
--   Fedora 40 and later
-    -   Oracle Linux 7 and later
--   Ubuntu 16.04 and later
+-   Fedora 41 and later
+    -   Oracle Linux 8 and later
+-   Ubuntu 22.04 and later
 
 </td></tr><tr><td>
 
@@ -60,9 +60,9 @@ macOS
 
 </td><td>
 
-13 \(Ventura\) or later
+13 \(Ventura\) and later
 
-**Note**: Intel machines must be 64 bit.
+**Note**: Intel machines must be 64 bit. [^1]
 
 </td></tr><tr><td>
 
@@ -72,7 +72,7 @@ Windows
 
 64 bit only.
 
-Windows 10 and later.
+Windows 11 and later.
 
 </td></tr></tbody>
 </table>
@@ -207,13 +207,13 @@ For an overview of the functionality provided by the WebLogic Remote Console ext
 
 1.  Under <code>*DOMAIN\_HOME*/</code>, create a folder and name it <code>management-services-ext</code>.
 
-2.  Download the latest WebLogic Remote Console extension, <code>console-rest-ext-2.4.17.war</code>, from the [WebLogic Remote Console GitHub Repository](https://github.com/oracle/weblogic-remote-console/releases) releases page.
+2.  Download the latest WebLogic Remote Console extension, <code>console-rest-ext-2.4.18.war</code>, from the [WebLogic Remote Console GitHub Repository](https://github.com/oracle/weblogic-remote-console/releases) releases page.
 
-    <code>console-rest-ext-jakarta-2.4.17.war</code> is intended for domains running WebLogic Server 15.1.1.0.0 or later; you should not need to install it manually.
+    <code>console-rest-ext-jakarta-2.4.18.war</code> is intended for domains running WebLogic Server 15.1.1.0.0 or later; you should not need to install it manually.
 
 3.  Save the extension under <code>management-services-ext</code>.
 
-    You do not need to deploy <code>console-rest-ext-2.4.17.war</code> as an application in your domain.
+    You do not need to deploy <code>console-rest-ext-2.4.18.war</code> as an application in your domain.
 
 4.  Restart the Administration Server.
 
@@ -250,7 +250,7 @@ When the WebLogic Remote Console extension is installed, it grants the following
 
 -   **Test data source connections** - Verify that the domain can successfully connect to the configured database.
 
--   **View objects in JNDI structure** - Examine objects such as Java EE services and components such as RMI, JMS, EJBs, and JDBC data sources.
+-   **View objects in JNDI structure** - Examine objects such as Jakarta EE services and components such as RMI, JMS, EJBs, and JDBC data sources.
 
 -   **Upload applications or database client data for redeployment** - Update and redeploy applications or database client data with new versions that were not already deployed to the Administration Server.
 
@@ -311,7 +311,7 @@ If a newer version of Desktop WebLogic Remote Console is available, an alert wil
 
     In WebLogic Server 14.1.2.0.0 and later, the WebLogic Remote Console extension is included with the initial installation and is updated by subsequent Patch Set Updates \(PSU\) and should not be updated manually.
 
-    For the best experience, you should keep the versions of WebLogic Remote Console and its extension in sync with each other. That is, when you are running WebLogic Remote Console 2.4.17, you should have <code>console-rest-ext-2.4.17.war</code> installed.
+    For the best experience, you should keep the versions of WebLogic Remote Console and its extension in sync with each other. That is, when you are running WebLogic Remote Console 2.4.18, you should have <code>console-rest-ext-2.4.18.war</code> installed.
 
     1.  While connected to the domain, open the **Providers** drawer and beside the provider connection, click the **Get Info** icon to see the **Console Extension Version**. If it matches WebLogic Remote Console version, you can skip the rest of the steps. Otherwise, continue.
 
@@ -324,3 +324,4 @@ If a newer version of Desktop WebLogic Remote Console is available, an alert wil
     5.  Restart the Administration Server.
 
 
+[^1]: Support for Mac computers with an Intel processor is deprecated in WebLogic Remote Console 2.4.18 and may be removed in a future release.

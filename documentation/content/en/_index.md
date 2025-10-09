@@ -23,7 +23,7 @@ Use WebLogic Remote Console to simplify the administration of your WebLogic Serv
 
 
 {{% blocks/feature icon="fab fa-github" title="Contributions welcome!" url="https://github.com/oracle/weblogic-remote-console" url_text=" " %}}
-Raise an [Enhancement Request](https://github.com/oracle/weblogic-remote-console/issues) or open a [Pull Request](https://github.com/oracle/weblogic-remote-console/pulls).
+Raise an [Enhancement](https://github.com/oracle/weblogic-remote-console/issues) or [Pull](https://github.com/oracle/weblogic-remote-console/pulls) request.
 {{% /blocks/feature %}}
 
 
@@ -33,9 +33,9 @@ Talk about the console with developers and other users.
 
 {{% blocks/feature icon="fa-solid fa-book-bookmark" title="Learn about Oracle WebLogic Server!" url="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/index.html" url_text=" " %}}
 
-Read our docs - [WebLogic Server documentation](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/index.html)
+Read our docs at [WebLogic Server documentation](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/index.html).
 
-Check our blog - [WebLogic Server Blog](https://blogs.oracle.com/weblogicserver/)
+Check out our blog at [WebLogic Server Blog](https://blogs.oracle.com/weblogicserver/).
 {{% /blocks/feature %}}
 
 {{% /blocks/section %}}

@@ -32,7 +32,7 @@ The Map of the Console is generated from the latest available release of WebLogi
   <meta itemprop="name" content="A Map of the Console">
   <meta itemprop="description" content="Use this page to understand how the MBeans and other components that make up a WebLogic Server domain are organized in WebLogic Remote Console.
 The Map of the Console is generated from the latest available release of WebLogic Server. If you are running an earlier release of WebLogic Server, then you won’t see all of the items listed on this page because WebLogic Remote Console adjusts its user interface to hide features that are not supported by the active Administration Server provider.">
-  <meta itemprop="wordCount" content="137960">
+  <meta itemprop="wordCount" content="145271">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="A Map of the Console">
   <meta name="twitter:description" content="Use this page to understand how the MBeans and other components that make up a WebLogic Server domain are organized in WebLogic Remote Console.
@@ -66,7 +66,8 @@ The Map of the Console is generated from the latest available release of WebLogi
         <div class="dropdown">
   <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Releases</a>
   <ul class="dropdown-menu">
-    <li><a class="dropdown-item" href="/weblogic-remote-console/overview">Latest (v2.4.17)</a></li>
+    <li><a class="dropdown-item" href="/weblogic-remote-console/overview">Latest (v2.4.18)</a></li>
+    <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.17">v2.4.17</a></li>
     <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.16">v2.4.16</a></li>
     <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.15">v2.4.15</a></li>
     <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.14">v2.4.14</a></li>
@@ -138,7 +139,7 @@ The Map of the Console is generated from the latest available release of WebLogi
     aria-label="Search this site…"
     autocomplete="off"
     
-    data-offline-search-index-json-src="/offline-search-index.6acb553d7869483f57e2c80febd06cda.json"
+    data-offline-search-index-json-src="/offline-search-index.fadcaad2f4da1a01d07e57ddac9a5bd8.json"
     data-offline-search-base-href="/"
     data-offline-search-max-results="10"
   >
@@ -163,7 +164,7 @@ The Map of the Console is generated from the latest available release of WebLogi
     aria-label="Search this site…"
     autocomplete="off"
     
-    data-offline-search-index-json-src="/offline-search-index.6acb553d7869483f57e2c80febd06cda.json"
+    data-offline-search-index-json-src="/offline-search-index.fadcaad2f4da1a01d07e57ddac9a5bd8.json"
     data-offline-search-base-href="/"
     data-offline-search-max-results="10"
   >
@@ -388,6 +389,8 @@ The Map of the Console is generated from the latest available release of WebLogi
 </li>
 <li>Migration
 <ul>
+<li><a href="/set-console/get-know-console/bean-map/#MigratableServiceCoordinatorRuntime">Manual Migration</a></li>
+<li><a href="/set-console/get-know-console/bean-map/#MigrationTaskRuntime">Migration Task Runtimes</a></li>
 <li><a href="/set-console/get-know-console/bean-map/#MigrationDataRuntime">Migration Data Runtimes</a></li>
 <li><a href="/set-console/get-know-console/bean-map/#ServiceMigrationDataRuntime">Service Migration Data Runtimes</a></li>
 </ul>
@@ -541,6 +544,15 @@ The Map of the Console is generated from the latest available release of WebLogi
 <li><a href="/set-console/get-know-console/bean-map/#CapacityRuntime">Capacity Runtime</a></li>
 </ul>
 </li>
+<li><a href="/set-console/get-know-console/bean-map/#JDBCOracleDataSourceRuntime">JDBCOracleDataSourceRuntime</a></li>
+<li><a href="/set-console/get-know-console/bean-map/#JDBCDataSourceTaskRuntime">Tasks</a></li>
+<li><a href="/set-console/get-know-console/bean-map/#WorkManagerRuntime">Work Manager Runtimes</a>
+<ul>
+<li><a href="/set-console/get-know-console/bean-map/#CapacityRuntime">Capacity Runtime</a></li>
+</ul>
+</li>
+<li><a href="/set-console/get-know-console/bean-map/#JDBCOracleDataSourceInstanceRuntime">Instances</a></li>
+<li><a href="/set-console/get-know-console/bean-map/#ONSDaemonRuntime">ONS Daemon Runtimes</a></li>
 <li><a href="/set-console/get-know-console/bean-map/#AppClientComponentRuntime">AppClientComponentRuntime</a></li>
 <li><a href="/set-console/get-know-console/bean-map/#WorkManagerRuntime">Work Manager Runtimes</a>
 <ul>
@@ -1506,6 +1518,7 @@ The Map of the Console is generated from the latest available release of WebLogi
 <li><a href="/set-console/get-know-console/bean-map/#ServerFailureTrigger">Server Failure Trigger</a></li>
 <li><a href="/set-console/get-know-console/bean-map/#JTAMigratableTarget">JTA Migratable Target</a></li>
 <li><a href="/set-console/get-know-console/bean-map/#HealthScore">Health Score</a></li>
+<li><a href="/set-console/get-know-console/bean-map/#ExecuteQueue">Execute Queues</a></li>
 </ul>
 </li>
 <li><a href="/set-console/get-know-console/bean-map/#Cluster">Clusters</a>
@@ -1520,6 +1533,7 @@ The Map of the Console is generated from the latest available release of WebLogi
 <li><a href="/set-console/get-know-console/bean-map/#ServerFailureTrigger">Server Failure Trigger</a></li>
 <li><a href="/set-console/get-know-console/bean-map/#JTAMigratableTarget">JTA Migratable Target</a></li>
 <li><a href="/set-console/get-know-console/bean-map/#HealthScore">Health Score</a></li>
+<li><a href="/set-console/get-know-console/bean-map/#ExecuteQueue">Execute Queues</a></li>
 </ul>
 </li>
 <li><a href="/set-console/get-know-console/bean-map/#Machine">Machines</a>
@@ -1656,6 +1670,7 @@ The Map of the Console is generated from the latest available release of WebLogi
 </li>
 <li><a href="/set-console/get-know-console/bean-map/#XMLEntityCache">XML Entity Caches</a></li>
 <li><a href="/set-console/get-know-console/bean-map/#MailSession">Mail Sessions</a></li>
+<li><a href="/set-console/get-know-console/bean-map/#OsgiFramework">Osgi Frameworks</a></li>
 </ul>
 </li>
 <li>Security
@@ -1792,6 +1807,28 @@ The Map of the Console is generated from the latest available release of WebLogi
 <li><a href="/set-console/get-know-console/bean-map/#WLDFThreadDumpAction">Thread Dump Actions</a></li>
 </ul>
 </li>
+<li><a href="/set-console/get-know-console/bean-map/#SNMPAgent">Domain SNMP Agent</a>
+<ul>
+<li><a href="/set-console/get-know-console/bean-map/#SNMPProxy">SNMP Proxies</a></li>
+<li><a href="/set-console/get-know-console/bean-map/#SNMPGaugeMonitor">SNMP Gauge Monitors</a></li>
+<li><a href="/set-console/get-know-console/bean-map/#SNMPStringMonitor">SNMP String Monitors</a></li>
+<li><a href="/set-console/get-know-console/bean-map/#SNMPCounterMonitor">SNMP Counter Monitors</a></li>
+<li><a href="/set-console/get-know-console/bean-map/#SNMPLogFilter">SNMP Log Filters</a></li>
+<li><a href="/set-console/get-know-console/bean-map/#SNMPAttributeChange">SNMP Attribute Changes</a></li>
+<li><a href="/set-console/get-know-console/bean-map/#SNMPTrapDestination">SNMP Trap Destinations</a></li>
+</ul>
+</li>
+<li><a href="/set-console/get-know-console/bean-map/#SNMPAgentDeployment">SNMP Agent Deployments</a>
+<ul>
+<li><a href="/set-console/get-know-console/bean-map/#SNMPProxy">SNMP Proxies</a></li>
+<li><a href="/set-console/get-know-console/bean-map/#SNMPGaugeMonitor">SNMP Gauge Monitors</a></li>
+<li><a href="/set-console/get-know-console/bean-map/#SNMPStringMonitor">SNMP String Monitors</a></li>
+<li><a href="/set-console/get-know-console/bean-map/#SNMPCounterMonitor">SNMP Counter Monitors</a></li>
+<li><a href="/set-console/get-know-console/bean-map/#SNMPLogFilter">SNMP Log Filters</a></li>
+<li><a href="/set-console/get-know-console/bean-map/#SNMPAttributeChange">SNMP Attribute Changes</a></li>
+<li><a href="/set-console/get-know-console/bean-map/#SNMPTrapDestination">SNMP Trap Destinations</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li><a href="/set-console/get-know-console/bean-map/#CustomResource">Custom Resources</a></li>
@@ -1890,6 +1927,24 @@ The Map of the Console is generated from the latest available release of WebLogi
 <li><a href="/set-console/get-know-console/bean-map/#ServerRole">Roles</a></li>
 </ul>
 </li>
+<li>Advanced
+<ul>
+<li><a href="/set-console/get-know-console/bean-map/#AdvancedAdminRoleMapping">Admin</a></li>
+<li><a href="/set-console/get-know-console/bean-map/#AdvancedApplicationRoleMapping">Application</a></li>
+<li><a href="/set-console/get-know-console/bean-map/#AdvancedCOMRoleMapping">COM</a></li>
+<li><a href="/set-console/get-know-console/bean-map/#AdvancedEISRoleMapping">EIS</a></li>
+<li><a href="/set-console/get-know-console/bean-map/#AdvancedEJBRoleMapping">EJB</a></li>
+<li><a href="/set-console/get-know-console/bean-map/#AdvancedJDBCRoleMapping">JDBC</a></li>
+<li><a href="/set-console/get-know-console/bean-map/#AdvancedJMSRoleMapping">JMS</a></li>
+<li><a href="/set-console/get-know-console/bean-map/#AdvancedJMXRoleMapping">JMX</a></li>
+<li><a href="/set-console/get-know-console/bean-map/#AdvancedJNDIRoleMapping">JNDI</a></li>
+<li><a href="/set-console/get-know-console/bean-map/#AdvancedServerRoleMapping">Server</a></li>
+<li><a href="/set-console/get-know-console/bean-map/#AdvancedURLRoleMapping">URL</a></li>
+<li><a href="/set-console/get-know-console/bean-map/#AdvancedWebServiceRoleMapping">Web Service</a></li>
+<li><a href="/set-console/get-know-console/bean-map/#AdvancedWorkContextRoleMapping">Work Context</a></li>
+<li><a href="/set-console/get-know-console/bean-map/#AdvancedAnyRoleMapping">All</a></li>
+</ul>
+</li>
 <li><a href="/set-console/get-know-console/bean-map/#XACMLRoleMapperSecurityData">XACMLRoleMapperSecurityData</a></li>
 <li><a href="/set-console/get-know-console/bean-map/#AppDeploymentRoles">App Deployments</a>
 <ul>
@@ -1953,6 +2008,24 @@ The Map of the Console is generated from the latest available release of WebLogi
 <li><a href="/set-console/get-know-console/bean-map/#ServerRoles">Servers</a>
 <ul>
 <li><a href="/set-console/get-know-console/bean-map/#ServerRole">Roles</a></li>
+</ul>
+</li>
+<li>Advanced
+<ul>
+<li><a href="/set-console/get-know-console/bean-map/#AdvancedAdminRoleMapping">Admin</a></li>
+<li><a href="/set-console/get-know-console/bean-map/#AdvancedApplicationRoleMapping">Application</a></li>
+<li><a href="/set-console/get-know-console/bean-map/#AdvancedCOMRoleMapping">COM</a></li>
+<li><a href="/set-console/get-know-console/bean-map/#AdvancedEISRoleMapping">EIS</a></li>
+<li><a href="/set-console/get-know-console/bean-map/#AdvancedEJBRoleMapping">EJB</a></li>
+<li><a href="/set-console/get-know-console/bean-map/#AdvancedJDBCRoleMapping">JDBC</a></li>
+<li><a href="/set-console/get-know-console/bean-map/#AdvancedJMSRoleMapping">JMS</a></li>
+<li><a href="/set-console/get-know-console/bean-map/#AdvancedJMXRoleMapping">JMX</a></li>
+<li><a href="/set-console/get-know-console/bean-map/#AdvancedJNDIRoleMapping">JNDI</a></li>
+<li><a href="/set-console/get-know-console/bean-map/#AdvancedServerRoleMapping">Server</a></li>
+<li><a href="/set-console/get-know-console/bean-map/#AdvancedURLRoleMapping">URL</a></li>
+<li><a href="/set-console/get-know-console/bean-map/#AdvancedWebServiceRoleMapping">Web Service</a></li>
+<li><a href="/set-console/get-know-console/bean-map/#AdvancedWorkContextRoleMapping">Work Context</a></li>
+<li><a href="/set-console/get-know-console/bean-map/#AdvancedAnyRoleMapping">All</a></li>
 </ul>
 </li>
 </ul>
@@ -2071,6 +2144,24 @@ The Map of the Console is generated from the latest available release of WebLogi
 <li><a href="/set-console/get-know-console/bean-map/#ServerMethodPolicy">unlock</a></li>
 </ul>
 </li>
+<li>Advanced
+<ul>
+<li><a href="/set-console/get-know-console/bean-map/#AdvancedAdminPolicy">Admin</a></li>
+<li><a href="/set-console/get-know-console/bean-map/#AdvancedApplicationPolicy">Application</a></li>
+<li><a href="/set-console/get-know-console/bean-map/#AdvancedCOMPolicy">COM</a></li>
+<li><a href="/set-console/get-know-console/bean-map/#AdvancedEISPolicy">EIS</a></li>
+<li><a href="/set-console/get-know-console/bean-map/#AdvancedEJBPolicy">EJB</a></li>
+<li><a href="/set-console/get-know-console/bean-map/#AdvancedJDBCPolicy">JDBC</a></li>
+<li><a href="/set-console/get-know-console/bean-map/#AdvancedJMSPolicy">JMS</a></li>
+<li><a href="/set-console/get-know-console/bean-map/#AdvancedJMXPolicy">JMX</a></li>
+<li><a href="/set-console/get-know-console/bean-map/#AdvancedJNDIPolicy">JNDI</a></li>
+<li><a href="/set-console/get-know-console/bean-map/#AdvancedServerPolicy">Server</a></li>
+<li><a href="/set-console/get-know-console/bean-map/#AdvancedURLPolicy">URL</a></li>
+<li><a href="/set-console/get-know-console/bean-map/#AdvancedWebServicePolicy">Web Service</a></li>
+<li><a href="/set-console/get-know-console/bean-map/#AdvancedWorkContextPolicy">Work Context</a></li>
+<li><a href="/set-console/get-know-console/bean-map/#AdvancedNonJMXPolicy">All</a></li>
+</ul>
+</li>
 <li><a href="/set-console/get-know-console/bean-map/#XACMLAuthorizerSecurityData">XACMLAuthorizerSecurityData</a></li>
 <li><a href="/set-console/get-know-console/bean-map/#AppDeploymentPolicy">App Deployments</a></li>
 <li><a href="/set-console/get-know-console/bean-map/#CoherenceClusterSystemResourcePolicy">Coherence Cluster System Resources</a>
@@ -2181,6 +2272,24 @@ The Map of the Console is generated from the latest available release of WebLogi
 <li><a href="/set-console/get-know-console/bean-map/#ServerMethodPolicy">shutdown</a></li>
 <li><a href="/set-console/get-know-console/bean-map/#ServerMethodPolicy">lock</a></li>
 <li><a href="/set-console/get-know-console/bean-map/#ServerMethodPolicy">unlock</a></li>
+</ul>
+</li>
+<li>Advanced
+<ul>
+<li><a href="/set-console/get-know-console/bean-map/#AdvancedAdminPolicy">Admin</a></li>
+<li><a href="/set-console/get-know-console/bean-map/#AdvancedApplicationPolicy">Application</a></li>
+<li><a href="/set-console/get-know-console/bean-map/#AdvancedCOMPolicy">COM</a></li>
+<li><a href="/set-console/get-know-console/bean-map/#AdvancedEISPolicy">EIS</a></li>
+<li><a href="/set-console/get-know-console/bean-map/#AdvancedEJBPolicy">EJB</a></li>
+<li><a href="/set-console/get-know-console/bean-map/#AdvancedJDBCPolicy">JDBC</a></li>
+<li><a href="/set-console/get-know-console/bean-map/#AdvancedJMSPolicy">JMS</a></li>
+<li><a href="/set-console/get-know-console/bean-map/#AdvancedJMXPolicy">JMX</a></li>
+<li><a href="/set-console/get-know-console/bean-map/#AdvancedJNDIPolicy">JNDI</a></li>
+<li><a href="/set-console/get-know-console/bean-map/#AdvancedServerPolicy">Server</a></li>
+<li><a href="/set-console/get-know-console/bean-map/#AdvancedURLPolicy">URL</a></li>
+<li><a href="/set-console/get-know-console/bean-map/#AdvancedWebServicePolicy">Web Service</a></li>
+<li><a href="/set-console/get-know-console/bean-map/#AdvancedWorkContextPolicy">Work Context</a></li>
+<li><a href="/set-console/get-know-console/bean-map/#AdvancedNonJMXPolicy">All</a></li>
 </ul>
 </li>
 </ul>
@@ -2607,6 +2716,2148 @@ The Map of the Console is generated from the latest available release of WebLogi
       </tr>
   </tbody>
 </table>
+<p><a id="AdvancedAdminPolicy">&nbsp;</a>
+<p>
+<h2 id="advancedadminpolicy">AdvancedAdminPolicy</h2>
+<p><b>References to this type</b>:</p>
+<ul>
+<li>Security Data -&gt; Realms -&gt; Authorizers -&gt; DefaultAuthorizerSecurityData -&gt; Advanced -&gt; Admin</li>
+<li>Security Data -&gt; Realms -&gt; Authorizers -&gt; XACMLAuthorizerSecurityData -&gt; Advanced -&gt; Admin</li>
+</ul>
+<table>
+  <thead>
+      <tr>
+          <th>Property Name</th>
+          <th>Label</th>
+          <th>Tab Name</th>
+          <th>Description</th>
+          <th>MBean Reference</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Policy</td>
+          <td>Policy</td>
+          <td>Policy</td>
+          <td>The conditions that determine the access control of this resource.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>PolicyStringExpression</td>
+          <td>Policy</td>
+          <td>Advanced</td>
+          <td>The conditions that determine the access control of this resource.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>adm_action</td>
+          <td>Action</td>
+          <td>Advanced</td>
+          <td>The action be requested on the Administrative resource.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>adm_category</td>
+          <td>Category</td>
+          <td>Advanced</td>
+          <td>The category of the Administrative resource</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>adm_realm</td>
+          <td>Realm</td>
+          <td>Advanced</td>
+          <td>The name of the Administrative resource</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>resourceId</td>
+          <td>Resource Id</td>
+          <td>Advanced</td>
+          <td>The security resource id of this resource.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>scope</td>
+          <td>Scope</td>
+          <td></td>
+          <td>The scope of this resource</td>
+          <td></td>
+      </tr>
+  </tbody>
+</table>
+<p><a id="AdvancedAdminRoleMapping">&nbsp;</a>
+<p>
+<h2 id="advancedadminrolemapping">AdvancedAdminRoleMapping</h2>
+<p><b>References to this type</b>:</p>
+<ul>
+<li>Security Data -&gt; Realms -&gt; Role Mappers -&gt; XACMLRoleMapperSecurityData -&gt; Advanced -&gt; Admin</li>
+<li>Security Data -&gt; Realms -&gt; Role Mappers -&gt; DefaultRoleMapperSecurityData -&gt; Advanced -&gt; Admin</li>
+</ul>
+<table>
+  <thead>
+      <tr>
+          <th>Property Name</th>
+          <th>Label</th>
+          <th>Tab Name</th>
+          <th>Description</th>
+          <th>MBean Reference</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Policy</td>
+          <td>Policy</td>
+          <td>Policy</td>
+          <td>The conditions that determine the access control of this resource.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>PolicyStringExpression</td>
+          <td>Policy</td>
+          <td>Advanced</td>
+          <td>The conditions that determine the access control of this resource.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>adm_action</td>
+          <td>Action</td>
+          <td>Advanced</td>
+          <td>The action be requested on the Administrative resource.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>adm_category</td>
+          <td>Category</td>
+          <td>Advanced</td>
+          <td>The category of the Administrative resource</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>adm_realm</td>
+          <td>Realm</td>
+          <td>Advanced</td>
+          <td>The name of the Administrative resource</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>resourceId</td>
+          <td>Resource Id</td>
+          <td>Advanced</td>
+          <td>The security resource id of this resource.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>roleName</td>
+          <td>Role</td>
+          <td>Advanced</td>
+          <td>The role&rsquo;s name</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>scope</td>
+          <td>Scope</td>
+          <td></td>
+          <td>The scope of this resource</td>
+          <td></td>
+      </tr>
+  </tbody>
+</table>
+<p><a id="AdvancedAnyRoleMapping">&nbsp;</a>
+<p>
+<h2 id="advancedanyrolemapping">AdvancedAnyRoleMapping</h2>
+<p><b>References to this type</b>:</p>
+<ul>
+<li>Security Data -&gt; Realms -&gt; Role Mappers -&gt; XACMLRoleMapperSecurityData -&gt; Advanced -&gt; All</li>
+<li>Security Data -&gt; Realms -&gt; Role Mappers -&gt; DefaultRoleMapperSecurityData -&gt; Advanced -&gt; All</li>
+</ul>
+<table>
+  <thead>
+      <tr>
+          <th>Property Name</th>
+          <th>Label</th>
+          <th>Tab Name</th>
+          <th>Description</th>
+          <th>MBean Reference</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Policy</td>
+          <td>Policy</td>
+          <td>Policy</td>
+          <td>The conditions that determine the access control of this resource.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>PolicyStringExpression</td>
+          <td>Policy</td>
+          <td>Advanced</td>
+          <td>The conditions that determine the access control of this resource.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>resourceId</td>
+          <td>Resource Id</td>
+          <td>Advanced</td>
+          <td>The security resource id of this resource.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>roleName</td>
+          <td>Role</td>
+          <td>Advanced</td>
+          <td>The role&rsquo;s name</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>scope</td>
+          <td>Scope</td>
+          <td></td>
+          <td>The scope of this resource</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>type</td>
+          <td>Type</td>
+          <td></td>
+          <td>The type of this resource</td>
+          <td></td>
+      </tr>
+  </tbody>
+</table>
+<p><a id="AdvancedApplicationPolicy">&nbsp;</a>
+<p>
+<h2 id="advancedapplicationpolicy">AdvancedApplicationPolicy</h2>
+<p><b>References to this type</b>:</p>
+<ul>
+<li>Security Data -&gt; Realms -&gt; Authorizers -&gt; DefaultAuthorizerSecurityData -&gt; Advanced -&gt; Application</li>
+<li>Security Data -&gt; Realms -&gt; Authorizers -&gt; XACMLAuthorizerSecurityData -&gt; Advanced -&gt; Application</li>
+</ul>
+<table>
+  <thead>
+      <tr>
+          <th>Property Name</th>
+          <th>Label</th>
+          <th>Tab Name</th>
+          <th>Description</th>
+          <th>MBean Reference</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Policy</td>
+          <td>Policy</td>
+          <td>Policy</td>
+          <td>The conditions that determine the access control of this resource.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>PolicyStringExpression</td>
+          <td>Policy</td>
+          <td>Advanced</td>
+          <td>The conditions that determine the access control of this resource.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>app_application</td>
+          <td>Application</td>
+          <td>Advanced</td>
+          <td>The name of the application in which the resource is deployed, as it appears in the corresponding <code>&lt;display-name&gt; </code> element.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>resourceId</td>
+          <td>Resource Id</td>
+          <td>Advanced</td>
+          <td>The security resource id of this resource.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>scope</td>
+          <td>Scope</td>
+          <td></td>
+          <td>The scope of this resource</td>
+          <td></td>
+      </tr>
+  </tbody>
+</table>
+<p><a id="AdvancedApplicationRoleMapping">&nbsp;</a>
+<p>
+<h2 id="advancedapplicationrolemapping">AdvancedApplicationRoleMapping</h2>
+<p><b>References to this type</b>:</p>
+<ul>
+<li>Security Data -&gt; Realms -&gt; Role Mappers -&gt; DefaultRoleMapperSecurityData -&gt; Advanced -&gt; Application</li>
+<li>Security Data -&gt; Realms -&gt; Role Mappers -&gt; XACMLRoleMapperSecurityData -&gt; Advanced -&gt; Application</li>
+</ul>
+<table>
+  <thead>
+      <tr>
+          <th>Property Name</th>
+          <th>Label</th>
+          <th>Tab Name</th>
+          <th>Description</th>
+          <th>MBean Reference</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Policy</td>
+          <td>Policy</td>
+          <td>Policy</td>
+          <td>The conditions that determine the access control of this resource.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>PolicyStringExpression</td>
+          <td>Policy</td>
+          <td>Advanced</td>
+          <td>The conditions that determine the access control of this resource.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>app_application</td>
+          <td>Application</td>
+          <td>Advanced</td>
+          <td>The name of the application in which the resource is deployed, as it appears in the corresponding <code>&lt;display-name&gt; </code> element.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>resourceId</td>
+          <td>Resource Id</td>
+          <td>Advanced</td>
+          <td>The security resource id of this resource.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>roleName</td>
+          <td>Role</td>
+          <td>Advanced</td>
+          <td>The role&rsquo;s name</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>scope</td>
+          <td>Scope</td>
+          <td></td>
+          <td>The scope of this resource</td>
+          <td></td>
+      </tr>
+  </tbody>
+</table>
+<p><a id="AdvancedCOMPolicy">&nbsp;</a>
+<p>
+<h2 id="advancedcompolicy">AdvancedCOMPolicy</h2>
+<p><b>References to this type</b>:</p>
+<ul>
+<li>Security Data -&gt; Realms -&gt; Authorizers -&gt; DefaultAuthorizerSecurityData -&gt; Advanced -&gt; COM</li>
+<li>Security Data -&gt; Realms -&gt; Authorizers -&gt; XACMLAuthorizerSecurityData -&gt; Advanced -&gt; COM</li>
+</ul>
+<table>
+  <thead>
+      <tr>
+          <th>Property Name</th>
+          <th>Label</th>
+          <th>Tab Name</th>
+          <th>Description</th>
+          <th>MBean Reference</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Policy</td>
+          <td>Policy</td>
+          <td>Policy</td>
+          <td>The conditions that determine the access control of this resource.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>PolicyStringExpression</td>
+          <td>Policy</td>
+          <td>Advanced</td>
+          <td>The conditions that determine the access control of this resource.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>com_application</td>
+          <td>Application</td>
+          <td>Advanced</td>
+          <td>Tthe name of the application in which the resource is deployed, as it appears in the corresponding <code>&lt;display-name&gt;</code> element The <code>&lt;display-name&gt;</code> element is associated with an <code>&lt;application&gt;</code> element in the deployment descriptor, in an <code>.ear</code> file.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>com_class</td>
+          <td>Class</td>
+          <td>Advanced</td>
+          <td>The fully-qualified classname of the Java class to be exported to a COM client.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>resourceId</td>
+          <td>Resource Id</td>
+          <td>Advanced</td>
+          <td>The security resource id of this resource.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>scope</td>
+          <td>Scope</td>
+          <td></td>
+          <td>The scope of this resource</td>
+          <td></td>
+      </tr>
+  </tbody>
+</table>
+<p><a id="AdvancedCOMRoleMapping">&nbsp;</a>
+<p>
+<h2 id="advancedcomrolemapping">AdvancedCOMRoleMapping</h2>
+<p><b>References to this type</b>:</p>
+<ul>
+<li>Security Data -&gt; Realms -&gt; Role Mappers -&gt; XACMLRoleMapperSecurityData -&gt; Advanced -&gt; COM</li>
+<li>Security Data -&gt; Realms -&gt; Role Mappers -&gt; DefaultRoleMapperSecurityData -&gt; Advanced -&gt; COM</li>
+</ul>
+<table>
+  <thead>
+      <tr>
+          <th>Property Name</th>
+          <th>Label</th>
+          <th>Tab Name</th>
+          <th>Description</th>
+          <th>MBean Reference</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Policy</td>
+          <td>Policy</td>
+          <td>Policy</td>
+          <td>The conditions that determine the access control of this resource.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>PolicyStringExpression</td>
+          <td>Policy</td>
+          <td>Advanced</td>
+          <td>The conditions that determine the access control of this resource.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>com_application</td>
+          <td>Application</td>
+          <td>Advanced</td>
+          <td>Tthe name of the application in which the resource is deployed, as it appears in the corresponding <code>&lt;display-name&gt;</code> element The <code>&lt;display-name&gt;</code> element is associated with an <code>&lt;application&gt;</code> element in the deployment descriptor, in an <code>.ear</code> file.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>com_class</td>
+          <td>Class</td>
+          <td>Advanced</td>
+          <td>The fully-qualified classname of the Java class to be exported to a COM client.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>resourceId</td>
+          <td>Resource Id</td>
+          <td>Advanced</td>
+          <td>The security resource id of this resource.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>roleName</td>
+          <td>Role</td>
+          <td>Advanced</td>
+          <td>The role&rsquo;s name</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>scope</td>
+          <td>Scope</td>
+          <td></td>
+          <td>The scope of this resource</td>
+          <td></td>
+      </tr>
+  </tbody>
+</table>
+<p><a id="AdvancedEISPolicy">&nbsp;</a>
+<p>
+<h2 id="advancedeispolicy">AdvancedEISPolicy</h2>
+<p><b>References to this type</b>:</p>
+<ul>
+<li>Security Data -&gt; Realms -&gt; Authorizers -&gt; DefaultAuthorizerSecurityData -&gt; Advanced -&gt; EIS</li>
+<li>Security Data -&gt; Realms -&gt; Authorizers -&gt; XACMLAuthorizerSecurityData -&gt; Advanced -&gt; EIS</li>
+</ul>
+<table>
+  <thead>
+      <tr>
+          <th>Property Name</th>
+          <th>Label</th>
+          <th>Tab Name</th>
+          <th>Description</th>
+          <th>MBean Reference</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Policy</td>
+          <td>Policy</td>
+          <td>Policy</td>
+          <td>The conditions that determine the access control of this resource.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>PolicyStringExpression</td>
+          <td>Policy</td>
+          <td>Advanced</td>
+          <td>The conditions that determine the access control of this resource.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>eis_application</td>
+          <td>Application</td>
+          <td>Advanced</td>
+          <td>The name of the application in which the resource is deployed, as it appears in the corresponding <code>&lt;display-name&gt;</code> element.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>eis_destinationId</td>
+          <td>Destination</td>
+          <td>Advanced</td>
+          <td>The specific outbound destination for the resource as it appears in  the corresponding <code>&lt;jndi-name&gt;</code> element in the deployment descriptor.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>eis_eis</td>
+          <td>EIS</td>
+          <td>Advanced</td>
+          <td>The name of the EIS resource, as it appears in the corresponding <code>&lt;eis-type&gt;</code> element in the deployment descriptor.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>eis_module</td>
+          <td>Module</td>
+          <td>Advanced</td>
+          <td>The name of the module, as it appears in the corresponding <code>&lt;display-name&gt;</code> element.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>resourceId</td>
+          <td>Resource Id</td>
+          <td>Advanced</td>
+          <td>The security resource id of this resource.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>scope</td>
+          <td>Scope</td>
+          <td></td>
+          <td>The scope of this resource</td>
+          <td></td>
+      </tr>
+  </tbody>
+</table>
+<p><a id="AdvancedEISRoleMapping">&nbsp;</a>
+<p>
+<h2 id="advancedeisrolemapping">AdvancedEISRoleMapping</h2>
+<p><b>References to this type</b>:</p>
+<ul>
+<li>Security Data -&gt; Realms -&gt; Role Mappers -&gt; XACMLRoleMapperSecurityData -&gt; Advanced -&gt; EIS</li>
+<li>Security Data -&gt; Realms -&gt; Role Mappers -&gt; DefaultRoleMapperSecurityData -&gt; Advanced -&gt; EIS</li>
+</ul>
+<table>
+  <thead>
+      <tr>
+          <th>Property Name</th>
+          <th>Label</th>
+          <th>Tab Name</th>
+          <th>Description</th>
+          <th>MBean Reference</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Policy</td>
+          <td>Policy</td>
+          <td>Policy</td>
+          <td>The conditions that determine the access control of this resource.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>PolicyStringExpression</td>
+          <td>Policy</td>
+          <td>Advanced</td>
+          <td>The conditions that determine the access control of this resource.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>eis_application</td>
+          <td>Application</td>
+          <td>Advanced</td>
+          <td>The name of the application in which the resource is deployed, as it appears in the corresponding <code>&lt;display-name&gt;</code> element.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>eis_destinationId</td>
+          <td>Destination</td>
+          <td>Advanced</td>
+          <td>The specific outbound destination for the resource as it appears in  the corresponding <code>&lt;jndi-name&gt;</code> element in the deployment descriptor.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>eis_eis</td>
+          <td>EIS</td>
+          <td>Advanced</td>
+          <td>The name of the EIS resource, as it appears in the corresponding <code>&lt;eis-type&gt;</code> element in the deployment descriptor.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>eis_module</td>
+          <td>Module</td>
+          <td>Advanced</td>
+          <td>The name of the module, as it appears in the corresponding <code>&lt;display-name&gt;</code> element.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>resourceId</td>
+          <td>Resource Id</td>
+          <td>Advanced</td>
+          <td>The security resource id of this resource.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>roleName</td>
+          <td>Role</td>
+          <td>Advanced</td>
+          <td>The role&rsquo;s name</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>scope</td>
+          <td>Scope</td>
+          <td></td>
+          <td>The scope of this resource</td>
+          <td></td>
+      </tr>
+  </tbody>
+</table>
+<p><a id="AdvancedEJBPolicy">&nbsp;</a>
+<p>
+<h2 id="advancedejbpolicy">AdvancedEJBPolicy</h2>
+<p><b>References to this type</b>:</p>
+<ul>
+<li>Security Data -&gt; Realms -&gt; Authorizers -&gt; DefaultAuthorizerSecurityData -&gt; Advanced -&gt; EJB</li>
+<li>Security Data -&gt; Realms -&gt; Authorizers -&gt; XACMLAuthorizerSecurityData -&gt; Advanced -&gt; EJB</li>
+</ul>
+<table>
+  <thead>
+      <tr>
+          <th>Property Name</th>
+          <th>Label</th>
+          <th>Tab Name</th>
+          <th>Description</th>
+          <th>MBean Reference</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Policy</td>
+          <td>Policy</td>
+          <td>Policy</td>
+          <td>The conditions that determine the access control of this resource.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>PolicyStringExpression</td>
+          <td>Policy</td>
+          <td>Advanced</td>
+          <td>The conditions that determine the access control of this resource.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>ejb_application</td>
+          <td>Application</td>
+          <td>Advanced</td>
+          <td>The name of the application in which the resource is deployed, as it appears in the corresponding <code>&lt;display-name&gt;</code> element The <code>&lt;display-name&gt;</code> element is associated with an <code>&lt;application&gt;</code> element in the deployment descriptor, in an <code>.ear</code> file.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>ejb_ejb</td>
+          <td>EJB</td>
+          <td>Advanced</td>
+          <td>The name of the EJB, as it appears in the corresponding <code>&lt;ejb-name&gt;</code> element in the deployment descriptor.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>ejb_method</td>
+          <td>Method</td>
+          <td>Advanced</td>
+          <td>The name of the method on the EJB resource, as it appears in the corresponding <code>&lt;method-name&gt;</code> element in the deployment descriptor.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>ejb_methodInterface</td>
+          <td>Method Interface</td>
+          <td>Advanced</td>
+          <td>The EJB interface of the resource, as it appears in the corresponding <code>&lt;method-intf&gt;</code> element in the deployment descriptor.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>ejb_module</td>
+          <td>Module</td>
+          <td>Advanced</td>
+          <td>The name of the module, as it appears in t corresponding <code>&lt;display-name&gt;</code> element.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>ejb_signature</td>
+          <td>Signature</td>
+          <td>Advanced</td>
+          <td>The parameter signature of the target method.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>resourceId</td>
+          <td>Resource Id</td>
+          <td>Advanced</td>
+          <td>The security resource id of this resource.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>scope</td>
+          <td>Scope</td>
+          <td></td>
+          <td>The scope of this resource</td>
+          <td></td>
+      </tr>
+  </tbody>
+</table>
+<p><a id="AdvancedEJBRoleMapping">&nbsp;</a>
+<p>
+<h2 id="advancedejbrolemapping">AdvancedEJBRoleMapping</h2>
+<p><b>References to this type</b>:</p>
+<ul>
+<li>Security Data -&gt; Realms -&gt; Role Mappers -&gt; XACMLRoleMapperSecurityData -&gt; Advanced -&gt; EJB</li>
+<li>Security Data -&gt; Realms -&gt; Role Mappers -&gt; DefaultRoleMapperSecurityData -&gt; Advanced -&gt; EJB</li>
+</ul>
+<table>
+  <thead>
+      <tr>
+          <th>Property Name</th>
+          <th>Label</th>
+          <th>Tab Name</th>
+          <th>Description</th>
+          <th>MBean Reference</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Policy</td>
+          <td>Policy</td>
+          <td>Policy</td>
+          <td>The conditions that determine the access control of this resource.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>PolicyStringExpression</td>
+          <td>Policy</td>
+          <td>Advanced</td>
+          <td>The conditions that determine the access control of this resource.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>ejb_application</td>
+          <td>Application</td>
+          <td>Advanced</td>
+          <td>The name of the application in which the resource is deployed, as it appears in the corresponding <code>&lt;display-name&gt;</code> element The <code>&lt;display-name&gt;</code> element is associated with an <code>&lt;application&gt;</code> element in the deployment descriptor, in an <code>.ear</code> file.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>ejb_ejb</td>
+          <td>EJB</td>
+          <td>Advanced</td>
+          <td>The name of the EJB, as it appears in the corresponding <code>&lt;ejb-name&gt;</code> element in the deployment descriptor.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>ejb_method</td>
+          <td>Method</td>
+          <td>Advanced</td>
+          <td>The name of the method on the EJB resource, as it appears in the corresponding <code>&lt;method-name&gt;</code> element in the deployment descriptor.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>ejb_methodInterface</td>
+          <td>Method Interface</td>
+          <td>Advanced</td>
+          <td>The EJB interface of the resource, as it appears in the corresponding <code>&lt;method-intf&gt;</code> element in the deployment descriptor.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>ejb_module</td>
+          <td>Module</td>
+          <td>Advanced</td>
+          <td>The name of the module, as it appears in t corresponding <code>&lt;display-name&gt;</code> element.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>ejb_signature</td>
+          <td>Signature</td>
+          <td>Advanced</td>
+          <td>The parameter signature of the target method.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>resourceId</td>
+          <td>Resource Id</td>
+          <td>Advanced</td>
+          <td>The security resource id of this resource.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>roleName</td>
+          <td>Role</td>
+          <td>Advanced</td>
+          <td>The role&rsquo;s name</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>scope</td>
+          <td>Scope</td>
+          <td></td>
+          <td>The scope of this resource</td>
+          <td></td>
+      </tr>
+  </tbody>
+</table>
+<p><a id="AdvancedJDBCPolicy">&nbsp;</a>
+<p>
+<h2 id="advancedjdbcpolicy">AdvancedJDBCPolicy</h2>
+<p><b>References to this type</b>:</p>
+<ul>
+<li>Security Data -&gt; Realms -&gt; Authorizers -&gt; XACMLAuthorizerSecurityData -&gt; Advanced -&gt; JDBC</li>
+<li>Security Data -&gt; Realms -&gt; Authorizers -&gt; DefaultAuthorizerSecurityData -&gt; Advanced -&gt; JDBC</li>
+</ul>
+<table>
+  <thead>
+      <tr>
+          <th>Property Name</th>
+          <th>Label</th>
+          <th>Tab Name</th>
+          <th>Description</th>
+          <th>MBean Reference</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Policy</td>
+          <td>Policy</td>
+          <td>Policy</td>
+          <td>The conditions that determine the access control of this resource.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>PolicyStringExpression</td>
+          <td>Policy</td>
+          <td>Advanced</td>
+          <td>The conditions that determine the access control of this resource.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>jdbc_action</td>
+          <td>Action</td>
+          <td>Advanced</td>
+          <td>The name of the action being requested on the resource.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>jdbc_application</td>
+          <td>Application</td>
+          <td>Advanced</td>
+          <td>The name of the application in which the resource is deployed or the name of the system resource.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>jdbc_module</td>
+          <td>Module</td>
+          <td>Advanced</td>
+          <td>The name of the module, as it appears in th corresponding <code>&lt;module&gt;</code> element associated with the <code>weblogic-application.xml</code> deployment descriptor.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>jdbc_resource</td>
+          <td>Resource</td>
+          <td>Advanced</td>
+          <td>The name of the JDBC resource.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>jdbc_resourceType</td>
+          <td>Resource Type</td>
+          <td>Advanced</td>
+          <td>The type of the JDBC resource.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>resourceId</td>
+          <td>Resource Id</td>
+          <td>Advanced</td>
+          <td>The security resource id of this resource.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>scope</td>
+          <td>Scope</td>
+          <td></td>
+          <td>The scope of this resource</td>
+          <td></td>
+      </tr>
+  </tbody>
+</table>
+<p><a id="AdvancedJDBCRoleMapping">&nbsp;</a>
+<p>
+<h2 id="advancedjdbcrolemapping">AdvancedJDBCRoleMapping</h2>
+<p><b>References to this type</b>:</p>
+<ul>
+<li>Security Data -&gt; Realms -&gt; Role Mappers -&gt; XACMLRoleMapperSecurityData -&gt; Advanced -&gt; JDBC</li>
+<li>Security Data -&gt; Realms -&gt; Role Mappers -&gt; DefaultRoleMapperSecurityData -&gt; Advanced -&gt; JDBC</li>
+</ul>
+<table>
+  <thead>
+      <tr>
+          <th>Property Name</th>
+          <th>Label</th>
+          <th>Tab Name</th>
+          <th>Description</th>
+          <th>MBean Reference</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Policy</td>
+          <td>Policy</td>
+          <td>Policy</td>
+          <td>The conditions that determine the access control of this resource.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>PolicyStringExpression</td>
+          <td>Policy</td>
+          <td>Advanced</td>
+          <td>The conditions that determine the access control of this resource.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>jdbc_action</td>
+          <td>Action</td>
+          <td>Advanced</td>
+          <td>The name of the action being requested on the resource.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>jdbc_application</td>
+          <td>Application</td>
+          <td>Advanced</td>
+          <td>The name of the application in which the resource is deployed or the name of the system resource.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>jdbc_module</td>
+          <td>Module</td>
+          <td>Advanced</td>
+          <td>The name of the module, as it appears in th corresponding <code>&lt;module&gt;</code> element associated with the <code>weblogic-application.xml</code> deployment descriptor.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>jdbc_resource</td>
+          <td>Resource</td>
+          <td>Advanced</td>
+          <td>The name of the JDBC resource.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>jdbc_resourceType</td>
+          <td>Resource Type</td>
+          <td>Advanced</td>
+          <td>The type of the JDBC resource.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>resourceId</td>
+          <td>Resource Id</td>
+          <td>Advanced</td>
+          <td>The security resource id of this resource.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>roleName</td>
+          <td>Role</td>
+          <td>Advanced</td>
+          <td>The role&rsquo;s name</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>scope</td>
+          <td>Scope</td>
+          <td></td>
+          <td>The scope of this resource</td>
+          <td></td>
+      </tr>
+  </tbody>
+</table>
+<p><a id="AdvancedJMSPolicy">&nbsp;</a>
+<p>
+<h2 id="advancedjmspolicy">AdvancedJMSPolicy</h2>
+<p><b>References to this type</b>:</p>
+<ul>
+<li>Security Data -&gt; Realms -&gt; Authorizers -&gt; XACMLAuthorizerSecurityData -&gt; Advanced -&gt; JMS</li>
+<li>Security Data -&gt; Realms -&gt; Authorizers -&gt; DefaultAuthorizerSecurityData -&gt; Advanced -&gt; JMS</li>
+</ul>
+<table>
+  <thead>
+      <tr>
+          <th>Property Name</th>
+          <th>Label</th>
+          <th>Tab Name</th>
+          <th>Description</th>
+          <th>MBean Reference</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Policy</td>
+          <td>Policy</td>
+          <td>Policy</td>
+          <td>The conditions that determine the access control of this resource.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>PolicyStringExpression</td>
+          <td>Policy</td>
+          <td>Advanced</td>
+          <td>The conditions that determine the access control of this resource.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>jms_action</td>
+          <td>Action</td>
+          <td>Advanced</td>
+          <td>The name of the action being requested on the resource.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>jms_application</td>
+          <td>Application</td>
+          <td>Advanced</td>
+          <td>The name of the application in which the resource is deployed, or the name of the system resource.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>jms_destinationType</td>
+          <td>Destination Type</td>
+          <td>Advanced</td>
+          <td>The type of the destination resource.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>jms_module</td>
+          <td>Module</td>
+          <td>Advanced</td>
+          <td>The name of the module as it appears in the corresponding <code>&lt;module&gt;</code> element associated with the <code>weblogic-application.xml</code> deployment descriptor.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>jms_resource</td>
+          <td>Resource</td>
+          <td>Advanced</td>
+          <td>The name of the JMS resource.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>resourceId</td>
+          <td>Resource Id</td>
+          <td>Advanced</td>
+          <td>The security resource id of this resource.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>scope</td>
+          <td>Scope</td>
+          <td></td>
+          <td>The scope of this resource</td>
+          <td></td>
+      </tr>
+  </tbody>
+</table>
+<p><a id="AdvancedJMSRoleMapping">&nbsp;</a>
+<p>
+<h2 id="advancedjmsrolemapping">AdvancedJMSRoleMapping</h2>
+<p><b>References to this type</b>:</p>
+<ul>
+<li>Security Data -&gt; Realms -&gt; Role Mappers -&gt; DefaultRoleMapperSecurityData -&gt; Advanced -&gt; JMS</li>
+<li>Security Data -&gt; Realms -&gt; Role Mappers -&gt; XACMLRoleMapperSecurityData -&gt; Advanced -&gt; JMS</li>
+</ul>
+<table>
+  <thead>
+      <tr>
+          <th>Property Name</th>
+          <th>Label</th>
+          <th>Tab Name</th>
+          <th>Description</th>
+          <th>MBean Reference</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Policy</td>
+          <td>Policy</td>
+          <td>Policy</td>
+          <td>The conditions that determine the access control of this resource.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>PolicyStringExpression</td>
+          <td>Policy</td>
+          <td>Advanced</td>
+          <td>The conditions that determine the access control of this resource.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>jms_action</td>
+          <td>Action</td>
+          <td>Advanced</td>
+          <td>The name of the action being requested on the resource.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>jms_application</td>
+          <td>Application</td>
+          <td>Advanced</td>
+          <td>The name of the application in which the resource is deployed, or the name of the system resource.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>jms_destinationType</td>
+          <td>Destination Type</td>
+          <td>Advanced</td>
+          <td>The type of the destination resource.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>jms_module</td>
+          <td>Module</td>
+          <td>Advanced</td>
+          <td>The name of the module as it appears in the corresponding <code>&lt;module&gt;</code> element associated with the <code>weblogic-application.xml</code> deployment descriptor.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>jms_resource</td>
+          <td>Resource</td>
+          <td>Advanced</td>
+          <td>The name of the JMS resource.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>resourceId</td>
+          <td>Resource Id</td>
+          <td>Advanced</td>
+          <td>The security resource id of this resource.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>roleName</td>
+          <td>Role</td>
+          <td>Advanced</td>
+          <td>The role&rsquo;s name</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>scope</td>
+          <td>Scope</td>
+          <td></td>
+          <td>The scope of this resource</td>
+          <td></td>
+      </tr>
+  </tbody>
+</table>
+<p><a id="AdvancedJMXPolicy">&nbsp;</a>
+<p>
+<h2 id="advancedjmxpolicy">AdvancedJMXPolicy</h2>
+<p><b>References to this type</b>:</p>
+<ul>
+<li>Security Data -&gt; Realms -&gt; Authorizers -&gt; DefaultAuthorizerSecurityData -&gt; Advanced -&gt; JMX</li>
+<li>Security Data -&gt; Realms -&gt; Authorizers -&gt; XACMLAuthorizerSecurityData -&gt; Advanced -&gt; JMX</li>
+</ul>
+<table>
+  <thead>
+      <tr>
+          <th>Property Name</th>
+          <th>Label</th>
+          <th>Tab Name</th>
+          <th>Description</th>
+          <th>MBean Reference</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Policy</td>
+          <td>Policy</td>
+          <td>Policy</td>
+          <td>The conditions that determine the access control of this resource.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>PolicyStringExpression</td>
+          <td>Policy</td>
+          <td>Advanced</td>
+          <td>The conditions that determine the access control of this resource.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>jmx_application</td>
+          <td>Application</td>
+          <td>Advanced</td>
+          <td>The name of the application in which the resource is deployed, or the name of the system resource.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>jmx_mbeanType</td>
+          <td>MBean Type</td>
+          <td>Advanced</td>
+          <td>The type of the MBean resource on which access is being requested.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>jmx_operation</td>
+          <td>Operation</td>
+          <td>Advanced</td>
+          <td>he name of the operation being requested on the resource.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>jmx_target</td>
+          <td>Target</td>
+          <td>Advanced</td>
+          <td>The target of the MBean resource on whic access is being requested.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>resourceId</td>
+          <td>Resource Id</td>
+          <td>Advanced</td>
+          <td>The security resource id of this resource.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>scope</td>
+          <td>Scope</td>
+          <td></td>
+          <td>The scope of this resource</td>
+          <td></td>
+      </tr>
+  </tbody>
+</table>
+<p><a id="AdvancedJMXRoleMapping">&nbsp;</a>
+<p>
+<h2 id="advancedjmxrolemapping">AdvancedJMXRoleMapping</h2>
+<p><b>References to this type</b>:</p>
+<ul>
+<li>Security Data -&gt; Realms -&gt; Role Mappers -&gt; XACMLRoleMapperSecurityData -&gt; Advanced -&gt; JMX</li>
+<li>Security Data -&gt; Realms -&gt; Role Mappers -&gt; DefaultRoleMapperSecurityData -&gt; Advanced -&gt; JMX</li>
+</ul>
+<table>
+  <thead>
+      <tr>
+          <th>Property Name</th>
+          <th>Label</th>
+          <th>Tab Name</th>
+          <th>Description</th>
+          <th>MBean Reference</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Policy</td>
+          <td>Policy</td>
+          <td>Policy</td>
+          <td>The conditions that determine the access control of this resource.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>PolicyStringExpression</td>
+          <td>Policy</td>
+          <td>Advanced</td>
+          <td>The conditions that determine the access control of this resource.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>jmx_application</td>
+          <td>Application</td>
+          <td>Advanced</td>
+          <td>The name of the application in which the resource is deployed, or the name of the system resource.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>jmx_mbeanType</td>
+          <td>MBean Type</td>
+          <td>Advanced</td>
+          <td>The type of the MBean resource on which access is being requested.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>jmx_operation</td>
+          <td>Operation</td>
+          <td>Advanced</td>
+          <td>he name of the operation being requested on the resource.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>jmx_target</td>
+          <td>Target</td>
+          <td>Advanced</td>
+          <td>The target of the MBean resource on whic access is being requested.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>resourceId</td>
+          <td>Resource Id</td>
+          <td>Advanced</td>
+          <td>The security resource id of this resource.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>roleName</td>
+          <td>Role</td>
+          <td>Advanced</td>
+          <td>The role&rsquo;s name</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>scope</td>
+          <td>Scope</td>
+          <td></td>
+          <td>The scope of this resource</td>
+          <td></td>
+      </tr>
+  </tbody>
+</table>
+<p><a id="AdvancedJNDIPolicy">&nbsp;</a>
+<p>
+<h2 id="advancedjndipolicy">AdvancedJNDIPolicy</h2>
+<p><b>References to this type</b>:</p>
+<ul>
+<li>Security Data -&gt; Realms -&gt; Authorizers -&gt; DefaultAuthorizerSecurityData -&gt; Advanced -&gt; JNDI</li>
+<li>Security Data -&gt; Realms -&gt; Authorizers -&gt; XACMLAuthorizerSecurityData -&gt; Advanced -&gt; JNDI</li>
+</ul>
+<table>
+  <thead>
+      <tr>
+          <th>Property Name</th>
+          <th>Label</th>
+          <th>Tab Name</th>
+          <th>Description</th>
+          <th>MBean Reference</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Policy</td>
+          <td>Policy</td>
+          <td>Policy</td>
+          <td>The conditions that determine the access control of this resource.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>PolicyStringExpression</td>
+          <td>Policy</td>
+          <td>Advanced</td>
+          <td>The conditions that determine the access control of this resource.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>jndi_action</td>
+          <td>Action</td>
+          <td>Advanced</td>
+          <td>The name of the action being requested on the JNDI resource.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>jndi_application</td>
+          <td>Application</td>
+          <td>Advanced</td>
+          <td>The name of the application in which the resource is deployed, as it appears in the corresponding <code>&lt;display-name&gt;</code> element.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>jndi_path</td>
+          <td>Path</td>
+          <td>Advanced</td>
+          <td>The path in the JNDI tree.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>resourceId</td>
+          <td>Resource Id</td>
+          <td>Advanced</td>
+          <td>The security resource id of this resource.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>scope</td>
+          <td>Scope</td>
+          <td></td>
+          <td>The scope of this resource</td>
+          <td></td>
+      </tr>
+  </tbody>
+</table>
+<p><a id="AdvancedJNDIRoleMapping">&nbsp;</a>
+<p>
+<h2 id="advancedjndirolemapping">AdvancedJNDIRoleMapping</h2>
+<p><b>References to this type</b>:</p>
+<ul>
+<li>Security Data -&gt; Realms -&gt; Role Mappers -&gt; DefaultRoleMapperSecurityData -&gt; Advanced -&gt; JNDI</li>
+<li>Security Data -&gt; Realms -&gt; Role Mappers -&gt; XACMLRoleMapperSecurityData -&gt; Advanced -&gt; JNDI</li>
+</ul>
+<table>
+  <thead>
+      <tr>
+          <th>Property Name</th>
+          <th>Label</th>
+          <th>Tab Name</th>
+          <th>Description</th>
+          <th>MBean Reference</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Policy</td>
+          <td>Policy</td>
+          <td>Policy</td>
+          <td>The conditions that determine the access control of this resource.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>PolicyStringExpression</td>
+          <td>Policy</td>
+          <td>Advanced</td>
+          <td>The conditions that determine the access control of this resource.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>jndi_action</td>
+          <td>Action</td>
+          <td>Advanced</td>
+          <td>The name of the action being requested on the JNDI resource.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>jndi_application</td>
+          <td>Application</td>
+          <td>Advanced</td>
+          <td>The name of the application in which the resource is deployed, as it appears in the corresponding <code>&lt;display-name&gt;</code> element.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>jndi_path</td>
+          <td>Path</td>
+          <td>Advanced</td>
+          <td>The path in the JNDI tree.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>resourceId</td>
+          <td>Resource Id</td>
+          <td>Advanced</td>
+          <td>The security resource id of this resource.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>roleName</td>
+          <td>Role</td>
+          <td>Advanced</td>
+          <td>The role&rsquo;s name</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>scope</td>
+          <td>Scope</td>
+          <td></td>
+          <td>The scope of this resource</td>
+          <td></td>
+      </tr>
+  </tbody>
+</table>
+<p><a id="AdvancedNonJMXPolicy">&nbsp;</a>
+<p>
+<h2 id="advancednonjmxpolicy">AdvancedNonJMXPolicy</h2>
+<p><b>References to this type</b>:</p>
+<ul>
+<li>Security Data -&gt; Realms -&gt; Authorizers -&gt; DefaultAuthorizerSecurityData -&gt; Advanced -&gt; All</li>
+<li>Security Data -&gt; Realms -&gt; Authorizers -&gt; XACMLAuthorizerSecurityData -&gt; Advanced -&gt; All</li>
+</ul>
+<table>
+  <thead>
+      <tr>
+          <th>Property Name</th>
+          <th>Label</th>
+          <th>Tab Name</th>
+          <th>Description</th>
+          <th>MBean Reference</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Policy</td>
+          <td>Policy</td>
+          <td>Policy</td>
+          <td>The conditions that determine the access control of this resource.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>PolicyStringExpression</td>
+          <td>Policy</td>
+          <td>Advanced</td>
+          <td>The conditions that determine the access control of this resource.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>resourceId</td>
+          <td>Resource Id</td>
+          <td>Advanced</td>
+          <td>The security resource id of this resource.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>scope</td>
+          <td>Scope</td>
+          <td></td>
+          <td>The scope of this resource</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>type</td>
+          <td>Type</td>
+          <td></td>
+          <td>The type of this resource</td>
+          <td></td>
+      </tr>
+  </tbody>
+</table>
+<p><a id="AdvancedServerPolicy">&nbsp;</a>
+<p>
+<h2 id="advancedserverpolicy">AdvancedServerPolicy</h2>
+<p><b>References to this type</b>:</p>
+<ul>
+<li>Security Data -&gt; Realms -&gt; Authorizers -&gt; XACMLAuthorizerSecurityData -&gt; Advanced -&gt; Server</li>
+<li>Security Data -&gt; Realms -&gt; Authorizers -&gt; DefaultAuthorizerSecurityData -&gt; Advanced -&gt; Server</li>
+</ul>
+<table>
+  <thead>
+      <tr>
+          <th>Property Name</th>
+          <th>Label</th>
+          <th>Tab Name</th>
+          <th>Description</th>
+          <th>MBean Reference</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Policy</td>
+          <td>Policy</td>
+          <td>Policy</td>
+          <td>The conditions that determine the access control of this resource.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>PolicyStringExpression</td>
+          <td>Policy</td>
+          <td>Advanced</td>
+          <td>The conditions that determine the access control of this resource.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>resourceId</td>
+          <td>Resource Id</td>
+          <td>Advanced</td>
+          <td>The security resource id of this resource.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>scope</td>
+          <td>Scope</td>
+          <td></td>
+          <td>The scope of this resource</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>svr_action</td>
+          <td>Action</td>
+          <td>Advanced</td>
+          <td>The name of the action being requested on the resource.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>svr_application</td>
+          <td>Application</td>
+          <td>Advanced</td>
+          <td>The name of the application in which the resource is deployed, as it appears in the corresponding <code>&lt;display-name&gt;</code> element.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>svr_server</td>
+          <td>Server</td>
+          <td>Advanced</td>
+          <td>The name of the Server resource.</td>
+          <td></td>
+      </tr>
+  </tbody>
+</table>
+<p><a id="AdvancedServerRoleMapping">&nbsp;</a>
+<p>
+<h2 id="advancedserverrolemapping">AdvancedServerRoleMapping</h2>
+<p><b>References to this type</b>:</p>
+<ul>
+<li>Security Data -&gt; Realms -&gt; Role Mappers -&gt; DefaultRoleMapperSecurityData -&gt; Advanced -&gt; Server</li>
+<li>Security Data -&gt; Realms -&gt; Role Mappers -&gt; XACMLRoleMapperSecurityData -&gt; Advanced -&gt; Server</li>
+</ul>
+<table>
+  <thead>
+      <tr>
+          <th>Property Name</th>
+          <th>Label</th>
+          <th>Tab Name</th>
+          <th>Description</th>
+          <th>MBean Reference</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Policy</td>
+          <td>Policy</td>
+          <td>Policy</td>
+          <td>The conditions that determine the access control of this resource.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>PolicyStringExpression</td>
+          <td>Policy</td>
+          <td>Advanced</td>
+          <td>The conditions that determine the access control of this resource.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>resourceId</td>
+          <td>Resource Id</td>
+          <td>Advanced</td>
+          <td>The security resource id of this resource.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>roleName</td>
+          <td>Role</td>
+          <td>Advanced</td>
+          <td>The role&rsquo;s name</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>scope</td>
+          <td>Scope</td>
+          <td></td>
+          <td>The scope of this resource</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>svr_action</td>
+          <td>Action</td>
+          <td>Advanced</td>
+          <td>The name of the action being requested on the resource.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>svr_application</td>
+          <td>Application</td>
+          <td>Advanced</td>
+          <td>The name of the application in which the resource is deployed, as it appears in the corresponding <code>&lt;display-name&gt;</code> element.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>svr_server</td>
+          <td>Server</td>
+          <td>Advanced</td>
+          <td>The name of the Server resource.</td>
+          <td></td>
+      </tr>
+  </tbody>
+</table>
+<p><a id="AdvancedURLPolicy">&nbsp;</a>
+<p>
+<h2 id="advancedurlpolicy">AdvancedURLPolicy</h2>
+<p><b>References to this type</b>:</p>
+<ul>
+<li>Security Data -&gt; Realms -&gt; Authorizers -&gt; DefaultAuthorizerSecurityData -&gt; Advanced -&gt; URL</li>
+<li>Security Data -&gt; Realms -&gt; Authorizers -&gt; XACMLAuthorizerSecurityData -&gt; Advanced -&gt; URL</li>
+</ul>
+<table>
+  <thead>
+      <tr>
+          <th>Property Name</th>
+          <th>Label</th>
+          <th>Tab Name</th>
+          <th>Description</th>
+          <th>MBean Reference</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Policy</td>
+          <td>Policy</td>
+          <td>Policy</td>
+          <td>The conditions that determine the access control of this resource.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>PolicyStringExpression</td>
+          <td>Policy</td>
+          <td>Advanced</td>
+          <td>The conditions that determine the access control of this resource.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>resourceId</td>
+          <td>Resource Id</td>
+          <td>Advanced</td>
+          <td>The security resource id of this resource.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>scope</td>
+          <td>Scope</td>
+          <td></td>
+          <td>The scope of this resource</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>url_application</td>
+          <td>Application</td>
+          <td>Advanced</td>
+          <td>The name of the application in which the resource is deployed, as it appears in the corresponding <code>&lt;display-name&gt;</code> element.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>url_contextPath</td>
+          <td>Context Path</td>
+          <td>Advanced</td>
+          <td>The context path of the Web application</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>url_httpMethod</td>
+          <td>Http Method</td>
+          <td>Advanced</td>
+          <td>The name of the HTTP method on the URL resource, as it appears in the corresponding <code>&lt;http-method&gt;</code> element in the deployment descriptor.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>url_uri</td>
+          <td>URI</td>
+          <td>Advanced</td>
+          <td>The URI of the resource.</td>
+          <td></td>
+      </tr>
+  </tbody>
+</table>
+<p><a id="AdvancedURLRoleMapping">&nbsp;</a>
+<p>
+<h2 id="advancedurlrolemapping">AdvancedURLRoleMapping</h2>
+<p><b>References to this type</b>:</p>
+<ul>
+<li>Security Data -&gt; Realms -&gt; Role Mappers -&gt; DefaultRoleMapperSecurityData -&gt; Advanced -&gt; URL</li>
+<li>Security Data -&gt; Realms -&gt; Role Mappers -&gt; XACMLRoleMapperSecurityData -&gt; Advanced -&gt; URL</li>
+</ul>
+<table>
+  <thead>
+      <tr>
+          <th>Property Name</th>
+          <th>Label</th>
+          <th>Tab Name</th>
+          <th>Description</th>
+          <th>MBean Reference</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Policy</td>
+          <td>Policy</td>
+          <td>Policy</td>
+          <td>The conditions that determine the access control of this resource.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>PolicyStringExpression</td>
+          <td>Policy</td>
+          <td>Advanced</td>
+          <td>The conditions that determine the access control of this resource.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>resourceId</td>
+          <td>Resource Id</td>
+          <td>Advanced</td>
+          <td>The security resource id of this resource.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>roleName</td>
+          <td>Role</td>
+          <td>Advanced</td>
+          <td>The role&rsquo;s name</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>scope</td>
+          <td>Scope</td>
+          <td></td>
+          <td>The scope of this resource</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>url_application</td>
+          <td>Application</td>
+          <td>Advanced</td>
+          <td>The name of the application in which the resource is deployed, as it appears in the corresponding <code>&lt;display-name&gt;</code> element.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>url_contextPath</td>
+          <td>Context Path</td>
+          <td>Advanced</td>
+          <td>The context path of the Web application</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>url_httpMethod</td>
+          <td>Http Method</td>
+          <td>Advanced</td>
+          <td>The name of the HTTP method on the URL resource, as it appears in the corresponding <code>&lt;http-method&gt;</code> element in the deployment descriptor.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>url_uri</td>
+          <td>URI</td>
+          <td>Advanced</td>
+          <td>The URI of the resource.</td>
+          <td></td>
+      </tr>
+  </tbody>
+</table>
+<p><a id="AdvancedWebServicePolicy">&nbsp;</a>
+<p>
+<h2 id="advancedwebservicepolicy">AdvancedWebServicePolicy</h2>
+<p><b>References to this type</b>:</p>
+<ul>
+<li>Security Data -&gt; Realms -&gt; Authorizers -&gt; DefaultAuthorizerSecurityData -&gt; Advanced -&gt; Web Service</li>
+<li>Security Data -&gt; Realms -&gt; Authorizers -&gt; XACMLAuthorizerSecurityData -&gt; Advanced -&gt; Web Service</li>
+</ul>
+<table>
+  <thead>
+      <tr>
+          <th>Property Name</th>
+          <th>Label</th>
+          <th>Tab Name</th>
+          <th>Description</th>
+          <th>MBean Reference</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Policy</td>
+          <td>Policy</td>
+          <td>Policy</td>
+          <td>The conditions that determine the access control of this resource.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>PolicyStringExpression</td>
+          <td>Policy</td>
+          <td>Advanced</td>
+          <td>The conditions that determine the access control of this resource.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>resourceId</td>
+          <td>Resource Id</td>
+          <td>Advanced</td>
+          <td>The security resource id of this resource.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>scope</td>
+          <td>Scope</td>
+          <td></td>
+          <td>The scope of this resource</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>webservices_application</td>
+          <td>Application</td>
+          <td>Advanced</td>
+          <td>The name of the application in which the resource is deployed, as it appears in the corresponding <code>&lt;display-name&gt;</code> element.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>webservices_contextPath</td>
+          <td>Context Path</td>
+          <td>Advanced</td>
+          <td>The context path for the Web application.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>webservices_method</td>
+          <td>Method</td>
+          <td>Advanced</td>
+          <td>The name of the service that is to be invoked.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>webservices_signature</td>
+          <td>Signature</td>
+          <td>Advanced</td>
+          <td>The signature of the target method.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>webservices_webService</td>
+          <td>Web Service</td>
+          <td>Advanced</td>
+          <td>The name of the Web Service.</td>
+          <td></td>
+      </tr>
+  </tbody>
+</table>
+<p><a id="AdvancedWebServiceRoleMapping">&nbsp;</a>
+<p>
+<h2 id="advancedwebservicerolemapping">AdvancedWebServiceRoleMapping</h2>
+<p><b>References to this type</b>:</p>
+<ul>
+<li>Security Data -&gt; Realms -&gt; Role Mappers -&gt; XACMLRoleMapperSecurityData -&gt; Advanced -&gt; Web Service</li>
+<li>Security Data -&gt; Realms -&gt; Role Mappers -&gt; DefaultRoleMapperSecurityData -&gt; Advanced -&gt; Web Service</li>
+</ul>
+<table>
+  <thead>
+      <tr>
+          <th>Property Name</th>
+          <th>Label</th>
+          <th>Tab Name</th>
+          <th>Description</th>
+          <th>MBean Reference</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Policy</td>
+          <td>Policy</td>
+          <td>Policy</td>
+          <td>The conditions that determine the access control of this resource.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>PolicyStringExpression</td>
+          <td>Policy</td>
+          <td>Advanced</td>
+          <td>The conditions that determine the access control of this resource.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>resourceId</td>
+          <td>Resource Id</td>
+          <td>Advanced</td>
+          <td>The security resource id of this resource.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>roleName</td>
+          <td>Role</td>
+          <td>Advanced</td>
+          <td>The role&rsquo;s name</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>scope</td>
+          <td>Scope</td>
+          <td></td>
+          <td>The scope of this resource</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>webservices_application</td>
+          <td>Application</td>
+          <td>Advanced</td>
+          <td>The name of the application in which the resource is deployed, as it appears in the corresponding <code>&lt;display-name&gt;</code> element.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>webservices_contextPath</td>
+          <td>Context Path</td>
+          <td>Advanced</td>
+          <td>The context path for the Web application.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>webservices_method</td>
+          <td>Method</td>
+          <td>Advanced</td>
+          <td>The name of the service that is to be invoked.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>webservices_signature</td>
+          <td>Signature</td>
+          <td>Advanced</td>
+          <td>The signature of the target method.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>webservices_webService</td>
+          <td>Web Service</td>
+          <td>Advanced</td>
+          <td>The name of the Web Service.</td>
+          <td></td>
+      </tr>
+  </tbody>
+</table>
+<p><a id="AdvancedWorkContextPolicy">&nbsp;</a>
+<p>
+<h2 id="advancedworkcontextpolicy">AdvancedWorkContextPolicy</h2>
+<p><b>References to this type</b>:</p>
+<ul>
+<li>Security Data -&gt; Realms -&gt; Authorizers -&gt; XACMLAuthorizerSecurityData -&gt; Advanced -&gt; Work Context</li>
+<li>Security Data -&gt; Realms -&gt; Authorizers -&gt; DefaultAuthorizerSecurityData -&gt; Advanced -&gt; Work Context</li>
+</ul>
+<table>
+  <thead>
+      <tr>
+          <th>Property Name</th>
+          <th>Label</th>
+          <th>Tab Name</th>
+          <th>Description</th>
+          <th>MBean Reference</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Policy</td>
+          <td>Policy</td>
+          <td>Policy</td>
+          <td>The conditions that determine the access control of this resource.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>PolicyStringExpression</td>
+          <td>Policy</td>
+          <td>Advanced</td>
+          <td>The conditions that determine the access control of this resource.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>resourceId</td>
+          <td>Resource Id</td>
+          <td>Advanced</td>
+          <td>The security resource id of this resource.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>scope</td>
+          <td>Scope</td>
+          <td></td>
+          <td>The scope of this resource</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>workcontext_action</td>
+          <td>Action</td>
+          <td>Advanced</td>
+          <td>The name of the action being requested on the WorkContext resource.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>workcontext_path</td>
+          <td>Path</td>
+          <td>Advanced</td>
+          <td>The path to distinquish WorkContext.</td>
+          <td></td>
+      </tr>
+  </tbody>
+</table>
+<p><a id="AdvancedWorkContextRoleMapping">&nbsp;</a>
+<p>
+<h2 id="advancedworkcontextrolemapping">AdvancedWorkContextRoleMapping</h2>
+<p><b>References to this type</b>:</p>
+<ul>
+<li>Security Data -&gt; Realms -&gt; Role Mappers -&gt; XACMLRoleMapperSecurityData -&gt; Advanced -&gt; Work Context</li>
+<li>Security Data -&gt; Realms -&gt; Role Mappers -&gt; DefaultRoleMapperSecurityData -&gt; Advanced -&gt; Work Context</li>
+</ul>
+<table>
+  <thead>
+      <tr>
+          <th>Property Name</th>
+          <th>Label</th>
+          <th>Tab Name</th>
+          <th>Description</th>
+          <th>MBean Reference</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Policy</td>
+          <td>Policy</td>
+          <td>Policy</td>
+          <td>The conditions that determine the access control of this resource.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>PolicyStringExpression</td>
+          <td>Policy</td>
+          <td>Advanced</td>
+          <td>The conditions that determine the access control of this resource.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>resourceId</td>
+          <td>Resource Id</td>
+          <td>Advanced</td>
+          <td>The security resource id of this resource.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>roleName</td>
+          <td>Role</td>
+          <td>Advanced</td>
+          <td>The role&rsquo;s name</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>scope</td>
+          <td>Scope</td>
+          <td></td>
+          <td>The scope of this resource</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>workcontext_action</td>
+          <td>Action</td>
+          <td>Advanced</td>
+          <td>The name of the action being requested on the WorkContext resource.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>workcontext_path</td>
+          <td>Path</td>
+          <td>Advanced</td>
+          <td>The path to distinquish WorkContext.</td>
+          <td></td>
+      </tr>
+  </tbody>
+</table>
 <p><a id="AppClientComponentRuntime">&nbsp;</a>
 <p>
 <h2 id="appclientcomponentruntime">AppClientComponentRuntime</h2>
@@ -2752,7 +5003,7 @@ The Map of the Console is generated from the latest available release of WebLogi
       </tr>
       <tr>
           <td>SecurityDDModel</td>
-          <td>Security DD Model</td>
+          <td>Security Model</td>
           <td>Overview</td>
           <td>The security model that is used to secure a deployed module.</td>
           <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/AppDeploymentMBean.html#SecurityDDModel">More info</a></td>
@@ -3514,23 +5765,24 @@ The Map of the Console is generated from the latest available release of WebLogi
 <li>Monitoring -&gt; Deployments -&gt; Application Runtime Data -&gt; Work Manager Runtimes -&gt; Capacity Runtime</li>
 <li>Monitoring -&gt; Deployments -&gt; Application Runtime Data -&gt; Component Runtimes -&gt; JDBCDataSourceRuntime -&gt; Work Manager Runtimes -&gt; Capacity Runtime</li>
 <li>Monitoring -&gt; Deployments -&gt; Application Runtime Data -&gt; Component Runtimes -&gt; JMSComponentRuntime -&gt; Work Manager Runtimes -&gt; Capacity Runtime</li>
-<li>Monitoring -&gt; Deployments -&gt; Application Runtime Data -&gt; Component Runtimes -&gt; JDBCMultiDataSourceRuntime -&gt; Work Manager Runtimes -&gt; Capacity Runtime</li>
-<li>Monitoring -&gt; Deployments -&gt; Application Runtime Data -&gt; Component Runtimes -&gt; SCAPojoComponentRuntime -&gt; Work Manager Runtimes -&gt; Capacity Runtime</li>
 <li>Monitoring -&gt; Deployments -&gt; Application Runtime Data -&gt; Component Runtimes -&gt; ConnectorComponentRuntime -&gt; Work Manager Runtimes -&gt; Capacity Runtime</li>
-<li>Monitoring -&gt; Services -&gt; Data Sources -&gt; JDBC Data Source Runtime MBeans -&gt; JDBCDataSourceRuntime -&gt; Work Manager Runtimes -&gt; Capacity Runtime</li>
 <li>Monitoring -&gt; Services -&gt; Data Sources -&gt; JDBC Multi Data Source Runtime MBeans -&gt; Work Manager Runtimes -&gt; Capacity Runtime</li>
 <li>Monitoring -&gt; Deployments -&gt; Application Runtime Data -&gt; Component Runtimes -&gt; Work Manager Runtimes -&gt; Capacity Runtime</li>
-<li>Monitoring -&gt; Scheduling -&gt; Work Manager Runtimes -&gt; Capacity Runtime</li>
-<li>Monitoring -&gt; Deployments -&gt; Application Runtime Data -&gt; Component Runtimes -&gt; JDBCReplayStatisticsRuntime -&gt; Work Manager Runtimes -&gt; Capacity Runtime</li>
 <li>Monitoring -&gt; Deployments -&gt; Application Runtime Data -&gt; Component Runtimes -&gt; AppClientComponentRuntime -&gt; Work Manager Runtimes -&gt; Capacity Runtime</li>
 <li>Monitoring -&gt; Services -&gt; Data Sources -&gt; JDBC Data Source Runtime MBeans -&gt; Work Manager Runtimes -&gt; Capacity Runtime</li>
 <li>Monitoring -&gt; Deployments -&gt; Application Runtime Data -&gt; Component Runtimes -&gt; SCASpringComponentRuntime -&gt; Work Manager Runtimes -&gt; Capacity Runtime</li>
 <li>Monitoring -&gt; Deployments -&gt; Application Runtime Data -&gt; Component Runtimes -&gt; ComponentConcurrentRuntime -&gt; Work Manager Runtimes -&gt; Capacity Runtime</li>
 <li>Monitoring -&gt; Deployments -&gt; Application Runtime Data -&gt; Component Runtimes -&gt; WebAppComponentRuntime -&gt; Work Manager Runtimes -&gt; Capacity Runtime</li>
-<li>Monitoring -&gt; Deployments -&gt; Application Runtime Data -&gt; Component Runtimes -&gt; ComponentRuntime -&gt; Work Manager Runtimes -&gt; Capacity Runtime</li>
 <li>Monitoring -&gt; Deployments -&gt; Application Runtime Data -&gt; Component Runtimes -&gt; InterceptionComponentRuntime -&gt; Work Manager Runtimes -&gt; Capacity Runtime</li>
-<li>Monitoring -&gt; Deployments -&gt; Application Runtime Data -&gt; Component Runtimes -&gt; EJBComponentRuntime -&gt; Work Manager Runtimes -&gt; Capacity Runtime</li>
 <li>Monitoring -&gt; Services -&gt; Data Sources -&gt; JDBC Data Source Runtime MBeans -&gt; JDBCOracleDataSourceRuntime -&gt; Work Manager Runtimes -&gt; Capacity Runtime</li>
+<li>Monitoring -&gt; Deployments -&gt; Application Runtime Data -&gt; Component Runtimes -&gt; JDBCOracleDataSourceRuntime -&gt; Work Manager Runtimes -&gt; Capacity Runtime</li>
+<li>Monitoring -&gt; Deployments -&gt; Application Runtime Data -&gt; Component Runtimes -&gt; JDBCMultiDataSourceRuntime -&gt; Work Manager Runtimes -&gt; Capacity Runtime</li>
+<li>Monitoring -&gt; Deployments -&gt; Application Runtime Data -&gt; Component Runtimes -&gt; SCAPojoComponentRuntime -&gt; Work Manager Runtimes -&gt; Capacity Runtime</li>
+<li>Monitoring -&gt; Services -&gt; Data Sources -&gt; JDBC Data Source Runtime MBeans -&gt; JDBCDataSourceRuntime -&gt; Work Manager Runtimes -&gt; Capacity Runtime</li>
+<li>Monitoring -&gt; Scheduling -&gt; Work Manager Runtimes -&gt; Capacity Runtime</li>
+<li>Monitoring -&gt; Deployments -&gt; Application Runtime Data -&gt; Component Runtimes -&gt; JDBCReplayStatisticsRuntime -&gt; Work Manager Runtimes -&gt; Capacity Runtime</li>
+<li>Monitoring -&gt; Deployments -&gt; Application Runtime Data -&gt; Component Runtimes -&gt; ComponentRuntime -&gt; Work Manager Runtimes -&gt; Capacity Runtime</li>
+<li>Monitoring -&gt; Deployments -&gt; Application Runtime Data -&gt; Component Runtimes -&gt; EJBComponentRuntime -&gt; Work Manager Runtimes -&gt; Capacity Runtime</li>
 </ul>
 <table>
   <thead>
@@ -3765,6 +6017,105 @@ The Map of the Console is generated from the latest available release of WebLogi
           <td>OCSP</td>
           <td>For this CA, determines the time tolerance value for handling clock-skew differences between clients and responders, expressed in seconds.</td>
           <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/CertRevocCaMBean.html#OcspTimeTolerance">More info</a></td>
+      </tr>
+  </tbody>
+</table>
+<p><a id="CertificateIssuerPlugin">&nbsp;</a>
+<p>
+<h2 id="certificateissuerplugin">CertificateIssuerPlugin</h2>
+<table>
+  <thead>
+      <tr>
+          <th>Property Name</th>
+          <th>Label</th>
+          <th>Tab Name</th>
+          <th>Description</th>
+          <th>MBean Reference</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>CertificateRequestProperties</td>
+          <td>Certificate Request Properties</td>
+          <td>General</td>
+          <td>Returns the properties to be passed to the issuer when the Certificate Service requests a certificate.</td>
+          <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/CertificateIssuerPluginMBean.html#CertificateRequestProperties">More info</a></td>
+      </tr>
+      <tr>
+          <td>CredentialSet</td>
+          <td>Credential Set</td>
+          <td>General</td>
+          <td>Returns the credential set for this plugin configuration.</td>
+          <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/CertificateIssuerPluginMBean.html#CredentialSet">More info</a></td>
+      </tr>
+      <tr>
+          <td>Deployment</td>
+          <td>Deployment</td>
+          <td>General</td>
+          <td>Returns the plugin deployment for this plugin configuration.</td>
+          <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/CertificateIssuerPluginMBean.html#Deployment">More info</a></td>
+      </tr>
+      <tr>
+          <td>Enabled</td>
+          <td>Enabled</td>
+          <td>General</td>
+          <td>Whether this plugin configuration is enabled or not.</td>
+          <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/CertificateIssuerPluginMBean.html#Enabled">More info</a></td>
+      </tr>
+      <tr>
+          <td>Name</td>
+          <td>Name</td>
+          <td>General</td>
+          <td>The user-specified name of this MBean instance.</td>
+          <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/CertificateIssuerPluginMBean.html#Name">More info</a></td>
+      </tr>
+      <tr>
+          <td>Properties</td>
+          <td>Initialization Properties</td>
+          <td>General</td>
+          <td>Returns the properties.</td>
+          <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/CertificateIssuerPluginMBean.html#Properties">More info</a></td>
+      </tr>
+  </tbody>
+</table>
+<p><a id="CertificateManagementDomainRuntime">&nbsp;</a>
+<p>
+<h2 id="certificatemanagementdomainruntime">CertificateManagementDomainRuntime</h2>
+<p><b>Actions</b>: Refresh Certificates, Roll Domain Certificate Authority</p>
+<table>
+  <thead>
+      <tr>
+          <th>Property Name</th>
+          <th>Label</th>
+          <th>Tab Name</th>
+          <th>Description</th>
+          <th>MBean Reference</th>
+      </tr>
+  </thead>
+  <tbody>
+  </tbody>
+</table>
+<p><a id="CertificateManagementServerRuntime">&nbsp;</a>
+<p>
+<h2 id="certificatemanagementserverruntime">CertificateManagementServerRuntime</h2>
+<p><b>Actions</b>: Refresh Certificates</p>
+<table>
+  <thead>
+      <tr>
+          <th>Property Name</th>
+          <th>Label</th>
+          <th>Tab Name</th>
+          <th>Description</th>
+          <th>MBean Reference</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Server</td>
+          <td>Server</td>
+          <td></td>
+          <td></td>
+          <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/ServerRuntimeMBean.html#Name">More info</a></td>
       </tr>
   </tbody>
 </table>
@@ -4469,6 +6820,13 @@ The Map of the Console is generated from the latest available release of WebLogi
           <td>Replication</td>
           <td>Interval in milliseconds at which Migratable Servers and Cluster Masters prove their liveness via the database.</td>
           <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/ClusterMBean.html#ReplicationTimeoutMillis">More info</a></td>
+      </tr>
+      <tr>
+          <td>SecureClusterBroadcastEnabled</td>
+          <td>Secure Cluster Broadcast Enabled</td>
+          <td>Messaging</td>
+          <td>Servers in a cluster broadcast messages to each other using either unicast or multicast.</td>
+          <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/ClusterMBean.html#SecureClusterBroadcastEnabled">More info</a></td>
       </tr>
       <tr>
           <td>SecureReplicationEnabled</td>
@@ -5192,6 +7550,13 @@ The Map of the Console is generated from the latest available release of WebLogi
           <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/CoherenceKeystoreParamsBean.html#CoherenceIdentityAlias">More info</a></td>
       </tr>
       <tr>
+          <td>CoherenceKeyRefreshPeriod</td>
+          <td>Coherence Key Refresh Period</td>
+          <td>Security</td>
+          <td>The period to use to attempt to refresh keys and certs.</td>
+          <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/CoherenceKeystoreParamsBean.html#CoherenceKeyRefreshPeriod">More info</a></td>
+      </tr>
+      <tr>
           <td>CoherencePrivateKeyPassPhrase</td>
           <td>Private Key Pass Phrase</td>
           <td>Security</td>
@@ -5211,6 +7576,13 @@ The Map of the Console is generated from the latest available release of WebLogi
           <td>CoherencePersistence</td>
           <td>Specifies the default persistence mode.</td>
           <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/CoherencePersistenceParamsBean.html#DefaultPersistenceMode">More info</a></td>
+      </tr>
+      <tr>
+          <td>DiscoveryAddress</td>
+          <td>Discovery Address</td>
+          <td>General</td>
+          <td>Controls whether the discovery address is set.</td>
+          <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/CoherenceClusterParamsBean.html#DiscoveryAddress">More info</a></td>
       </tr>
       <tr>
           <td>Enabled</td>
@@ -7086,6 +9458,50 @@ The Map of the Console is generated from the latest available release of WebLogi
       </tr>
   </tbody>
 </table>
+<p><a id="CredentialSet">&nbsp;</a>
+<p>
+<h2 id="credentialset">CredentialSet</h2>
+<table>
+  <thead>
+      <tr>
+          <th>Property Name</th>
+          <th>Label</th>
+          <th>Tab Name</th>
+          <th>Description</th>
+          <th>MBean Reference</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Name</td>
+          <td>Name</td>
+          <td>ReferencedBy</td>
+          <td>The user-specified name of this MBean instance.</td>
+          <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/CredentialSetMBean.html#Name">More info</a></td>
+      </tr>
+      <tr>
+          <td>Path</td>
+          <td>Path</td>
+          <td>ReferencedBy</td>
+          <td>The path in the navigation tree to the referring object.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>Properties</td>
+          <td>Properties</td>
+          <td>ReferencedBy</td>
+          <td>The names of the properties on the referring object that reference this object.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>Type</td>
+          <td>Type</td>
+          <td>ReferencedBy</td>
+          <td>The type of the referring object.</td>
+          <td></td>
+      </tr>
+  </tbody>
+</table>
 <p><a id="CrossTenantAuthenticator">&nbsp;</a>
 <p>
 <h2 id="crosstenantauthenticator">CrossTenantAuthenticator</h2>
@@ -8040,6 +10456,7 @@ The Map of the Console is generated from the latest available release of WebLogi
 <p><a id="DefaultAuthenticatorSecurityData">&nbsp;</a>
 <p>
 <h2 id="defaultauthenticatorsecuritydata">DefaultAuthenticatorSecurityData</h2>
+<p><b>Actions</b>: Import, Export</p>
 <p><b>References to this type</b>:</p>
 <ul>
 <li>Security Data -&gt; Realms -&gt; Authentication Providers -&gt; DefaultAuthenticatorSecurityData</li>
@@ -8318,6 +10735,7 @@ The Map of the Console is generated from the latest available release of WebLogi
 <p><a id="DefaultAuthorizerSecurityData">&nbsp;</a>
 <p>
 <h2 id="defaultauthorizersecuritydata">DefaultAuthorizerSecurityData</h2>
+<p><b>Actions</b>: Import, Export</p>
 <p><b>References to this type</b>:</p>
 <ul>
 <li>Security Data -&gt; Realms -&gt; Authorizers -&gt; DefaultAuthorizerSecurityData</li>
@@ -8421,6 +10839,7 @@ The Map of the Console is generated from the latest available release of WebLogi
 <p><a id="DefaultCredentialMapperSecurityData">&nbsp;</a>
 <p>
 <h2 id="defaultcredentialmappersecuritydata">DefaultCredentialMapperSecurityData</h2>
+<p><b>Actions</b>: Import, Export</p>
 <p><b>References to this type</b>:</p>
 <ul>
 <li>Security Data -&gt; Realms -&gt; Credential Mappers -&gt; DefaultCredentialMapperSecurityData</li>
@@ -8642,6 +11061,7 @@ The Map of the Console is generated from the latest available release of WebLogi
 <p><a id="DefaultRoleMapperSecurityData">&nbsp;</a>
 <p>
 <h2 id="defaultrolemappersecuritydata">DefaultRoleMapperSecurityData</h2>
+<p><b>Actions</b>: Import, Export</p>
 <p><b>References to this type</b>:</p>
 <ul>
 <li>Security Data -&gt; Realms -&gt; Role Mappers -&gt; DefaultRoleMapperSecurityData</li>
@@ -9211,6 +11631,34 @@ The Map of the Console is generated from the latest available release of WebLogi
           <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/HealthScoreMBean.html#CalculateIntervalSecs">More info</a></td>
       </tr>
       <tr>
+          <td>CertificateAuthorityValidityPeriod</td>
+          <td>Certificate Authority Validity Period</td>
+          <td>Security.CertificateManagement</td>
+          <td>Returns the validity period (certificate lifetime) that the Domain Certificates Issuer should set when generating a new Certificate Authority certificate.</td>
+          <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/CertificateManagementMBean.html#CertificateAuthorityValidityPeriod">More info</a></td>
+      </tr>
+      <tr>
+          <td>CertificateCheckInterval</td>
+          <td>Certificate Check Interval</td>
+          <td>Security.CertificateManagement</td>
+          <td>Returns the certificate check interval &ndash; how often the Certificate Management Service should check for/refresh expiring certificates (in days).</td>
+          <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/CertificateManagementMBean.html#CertificateCheckInterval">More info</a></td>
+      </tr>
+      <tr>
+          <td>CertificateRefreshWindow</td>
+          <td>Certificate Refresh Window</td>
+          <td>Security.CertificateManagement</td>
+          <td>Returns the certificate refresh window.</td>
+          <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/CertificateManagementMBean.html#CertificateRefreshWindow">More info</a></td>
+      </tr>
+      <tr>
+          <td>CertificateValidityPeriod</td>
+          <td>Certificate Validity Period</td>
+          <td>Security.CertificateManagement</td>
+          <td>Returns the validity period (certificate lifetime) that the Domain Certificates Issuer should set when generating a new certificate.</td>
+          <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/CertificateManagementMBean.html#CertificateValidityPeriod">More info</a></td>
+      </tr>
+      <tr>
           <td>ChangeSessionIDOnAuthentication</td>
           <td>Change Session ID On Authentication</td>
           <td>WebApplication</td>
@@ -9638,6 +12086,13 @@ The Map of the Console is generated from the latest available release of WebLogi
           <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/CdiContainerMBean.html#ImplicitBeanDiscoveryEnabled">More info</a></td>
       </tr>
       <tr>
+          <td>IncludeRootCertificateInChain</td>
+          <td>Include Root Certificate In Chain</td>
+          <td>Security.CertificateManagement</td>
+          <td>Whether the Domain Certificates Issuer should include the self-signed root CA in the certificate chain for a generated certificate.</td>
+          <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/CertificateManagementMBean.html#IncludeRootCertificateInChain">More info</a></td>
+      </tr>
+      <tr>
           <td>InitialWindowSize</td>
           <td>Initial Window Size</td>
           <td>WebApplication</td>
@@ -9664,6 +12119,13 @@ The Map of the Console is generated from the latest available release of WebLogi
           <td>WebApplication</td>
           <td>Global property to determine the behavior of the JSP compiler.</td>
           <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/WebAppContainerMBean.html#JSPCompilerBackwardsCompatible">More info</a></td>
+      </tr>
+      <tr>
+          <td>JavaStandardTrustEnabled</td>
+          <td>Java Standard Trust Enabled</td>
+          <td>Security.CertificateManagement</td>
+          <td>Whether or not the domain should trust the Java Standard Trust certificates, in addition to the Domain Certificate Authority certificate(s) and any Provisioned Trust certificates.</td>
+          <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/CertificateManagementMBean.html#JavaStandardTrustEnabled">More info</a></td>
       </tr>
       <tr>
           <td>ListenPortEnabled</td>
@@ -9741,6 +12203,13 @@ The Map of the Console is generated from the latest available release of WebLogi
           <td>WebApplication</td>
           <td>Maximum post time (in seconds) for reading HTTP POST data in a servlet request.</td>
           <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/WebAppContainerMBean.html#MaxPostTimeSecs">More info</a></td>
+      </tr>
+      <tr>
+          <td>MaxRequestParameterCount</td>
+          <td>Maximum Request Parameter Count</td>
+          <td>WebApplication</td>
+          <td>The maximum request parameter count this server allows for reading maximum HTTP POST parameters count in a servlet request.</td>
+          <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/WebAppContainerMBean.html#MaxRequestParameterCount">More info</a></td>
       </tr>
       <tr>
           <td>MaxSingleHeaderSize</td>
@@ -9939,6 +12408,13 @@ The Map of the Console is generated from the latest available release of WebLogi
           <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/RemoteConsoleHelperMBean.html#ProtectedCookieEnabled">More info</a></td>
       </tr>
       <tr>
+          <td>ProvisionedCertificatesIssuerEnabled</td>
+          <td>Provisioned Certificates Issuer Enabled</td>
+          <td>Security.CertificateManagement</td>
+          <td>Returns true or false to indicate whether the Provisioned Certificates Issuer is enabled or not.</td>
+          <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/CertificateManagementMBean.html#ProvisionedCertificatesIssuerEnabled">More info</a></td>
+      </tr>
+      <tr>
           <td>RefreshReplicaAtStartup</td>
           <td>Refresh Replica At Startup</td>
           <td>Security.EmbeddedLDAP</td>
@@ -9979,6 +12455,13 @@ The Map of the Console is generated from the latest available release of WebLogi
           <td>General</td>
           <td>Specifies whether the Administration Server automatically deploys the Remote Console Helper in the current domain.</td>
           <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/DomainMBean.html#RemoteConsoleHelperEnabled">More info</a></td>
+      </tr>
+      <tr>
+          <td>RestrictUserManagementAccessPatterns</td>
+          <td>Restrict User Management Access Patterns</td>
+          <td>WebApplication</td>
+          <td>The Username patterns for the WebLogic Restrict User Management Access Servlet Filter.</td>
+          <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/WebAppContainerMBean.html#RestrictUserManagementAccessPatterns">More info</a></td>
       </tr>
       <tr>
           <td>RotateLogOnStartup</td>
@@ -10058,6 +12541,13 @@ The Map of the Console is generated from the latest available release of WebLogi
           <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/AllowListMBean.html#SerialPropFilePollingInterval">More info</a></td>
       </tr>
       <tr>
+          <td>ServerKeyStores</td>
+          <td>Server Keystores</td>
+          <td>Security.General</td>
+          <td>Gets the domain-wide default value for the per-server <code>KeyStores</code> attribute.</td>
+          <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/DomainMBean.html#ServerKeyStores">More info</a></td>
+      </tr>
+      <tr>
           <td>SessionTimeout</td>
           <td>Remote Console Helper Session Timeout</td>
           <td>General</td>
@@ -10072,11 +12562,32 @@ The Map of the Console is generated from the latest available release of WebLogi
           <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/WebAppContainerMBean.html#ShowArchivedRealPathEnabled">More info</a></td>
       </tr>
       <tr>
+          <td>SinglePurposeCertificatesEnabled</td>
+          <td>Single Purpose Certificates Enabled</td>
+          <td>Security.CertificateManagement</td>
+          <td>Returns the single purpose certificates enabled value: whether the Domain Certificates Issuer should generate separate, single-purpose certificates for different purposes (server authentication, client authentication, signing and encryption), or generate one certificate that supports all those purposes.</td>
+          <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/CertificateManagementMBean.html#SinglePurposeCertificatesEnabled">More info</a></td>
+      </tr>
+      <tr>
           <td>SiteName</td>
           <td>Site Name</td>
           <td>General</td>
           <td>The name of the site this domain is associated with.</td>
           <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/DomainMBean.html#SiteName">More info</a></td>
+      </tr>
+      <tr>
+          <td>SubjectAlternativeNames</td>
+          <td>Subject Alternative Names</td>
+          <td>Security.CertificateManagement</td>
+          <td>A space- or comma-separated list of words representing the Subject Alternative Names that the Domain Certificates Issuer should include when generating a server certificate.</td>
+          <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/CertificateManagementMBean.html#SubjectAlternativeNames">More info</a></td>
+      </tr>
+      <tr>
+          <td>SubjectCommonName</td>
+          <td>Subject Common Name</td>
+          <td>Security.CertificateManagement</td>
+          <td>The name the Domain Certificates Issuer should use for the CN attribute of a certificate&rsquo;s Subject: either the local hostname (<code>hostname</code>) or the server&rsquo;s listen address (<code>listen_address</code>).</td>
+          <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/CertificateManagementMBean.html#SubjectCommonName">More info</a></td>
       </tr>
       <tr>
           <td>SynchronizedSessionTimeoutEnabled</td>
@@ -10241,6 +12752,144 @@ The Map of the Console is generated from the latest available release of WebLogi
       </tr>
   </tbody>
 </table>
+<p><a id="DomainKeystoresDomainRuntime">&nbsp;</a>
+<p>
+<h2 id="domainkeystoresdomainruntime">DomainKeystoresDomainRuntime</h2>
+<p><b>Actions</b>: Import, Import, Delete, Delete, Export Trusted Certificates</p>
+<table>
+  <thead>
+      <tr>
+          <th>Property Name</th>
+          <th>Label</th>
+          <th>Tab Name</th>
+          <th>Description</th>
+          <th>MBean Reference</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Alias</td>
+          <td>Alias</td>
+          <td>DomainCaKeystore</td>
+          <td>The certificate&rsquo;s alias</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>EntryType</td>
+          <td>Entry Type</td>
+          <td>DomainCaKeystore</td>
+          <td>The certificate&rsquo;s type</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>Issuer</td>
+          <td>Issuer</td>
+          <td>DomainCaKeystore</td>
+          <td>The certificate&rsquo;s issuer</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>NotAfter</td>
+          <td>Not After</td>
+          <td>DomainCaKeystore</td>
+          <td>The certificate is not valid after this date.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>NotBefore</td>
+          <td>Not Before</td>
+          <td>DomainCaKeystore</td>
+          <td>The certificate is not valid before this date.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>SerialNumber</td>
+          <td>Serial Number</td>
+          <td>DomainCaKeystore</td>
+          <td>The certificate&rsquo;s serial number</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>Subject</td>
+          <td>Subject</td>
+          <td>DomainCaKeystore</td>
+          <td>The certificate&rsquo;s subject</td>
+          <td></td>
+      </tr>
+  </tbody>
+</table>
+<p><a id="DomainKeystoresServerRuntime">&nbsp;</a>
+<p>
+<h2 id="domainkeystoresserverruntime">DomainKeystoresServerRuntime</h2>
+<table>
+  <thead>
+      <tr>
+          <th>Property Name</th>
+          <th>Label</th>
+          <th>Tab Name</th>
+          <th>Description</th>
+          <th>MBean Reference</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Alias</td>
+          <td>Alias</td>
+          <td>MachineTrustKeystore</td>
+          <td>The certificate&rsquo;s alias</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>EntryType</td>
+          <td>Entry Type</td>
+          <td>MachineTrustKeystore</td>
+          <td>The certificate&rsquo;s type</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>Issuer</td>
+          <td>Issuer</td>
+          <td>MachineTrustKeystore</td>
+          <td>The certificate&rsquo;s issuer</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>NotAfter</td>
+          <td>Not After</td>
+          <td>MachineTrustKeystore</td>
+          <td>The certificate is not valid after this date.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>NotBefore</td>
+          <td>Not Before</td>
+          <td>MachineTrustKeystore</td>
+          <td>The certificate is not valid before this date.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>SerialNumber</td>
+          <td>Serial Number</td>
+          <td>MachineTrustKeystore</td>
+          <td>The certificate&rsquo;s serial number</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>Server</td>
+          <td>Server</td>
+          <td>Aggregate</td>
+          <td></td>
+          <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/ServerRuntimeMBean.html#Name">More info</a></td>
+      </tr>
+      <tr>
+          <td>Subject</td>
+          <td>Subject</td>
+          <td>MachineTrustKeystore</td>
+          <td>The certificate&rsquo;s subject</td>
+          <td></td>
+      </tr>
+  </tbody>
+</table>
 <p><a id="DomainRole">&nbsp;</a>
 <p>
 <h2 id="domainrole">DomainRole</h2>
@@ -10293,6 +12942,7 @@ The Map of the Console is generated from the latest available release of WebLogi
 <p><a id="DomainRuntime">&nbsp;</a>
 <p>
 <h2 id="domainruntime">DomainRuntime</h2>
+<p><b>Actions</b>: Grab Edit Lock</p>
 <p><b>References to this type</b>:</p>
 <ul>
 <li>Monitoring -&gt; Environment -&gt; Domain Runtime</li>
@@ -10311,30 +12961,58 @@ The Map of the Console is generated from the latest available release of WebLogi
       <tr>
           <td>ActivationTime</td>
           <td>Activation Time</td>
-          <td></td>
+          <td>General</td>
           <td>The time when the domain became active.</td>
           <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/DomainRuntimeMBean.html#ActivationTime">More info</a></td>
       </tr>
       <tr>
           <td>Enabled</td>
           <td>Console Enabled</td>
-          <td></td>
+          <td>General</td>
           <td>Is the console enabled?</td>
           <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/ConsoleRuntimeMBean.html#Enabled">More info</a></td>
       </tr>
       <tr>
           <td>Name</td>
           <td>Name</td>
-          <td></td>
+          <td>General</td>
           <td>The user-specified name of this MBean instance.</td>
           <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/DomainRuntimeMBean.html#Name">More info</a></td>
       </tr>
       <tr>
           <td>Type</td>
           <td>Type</td>
-          <td></td>
+          <td>General</td>
           <td>Returns the type of the MBean.</td>
           <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/DomainRuntimeMBean.html#Type">More info</a></td>
+      </tr>
+      <tr>
+          <td>editSession</td>
+          <td>Edit Session</td>
+          <td>ChangeManager</td>
+          <td>The name of the edit session that will be used to manage the configuration.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>hasChanges</td>
+          <td>Has Changes</td>
+          <td>ChangeManager</td>
+          <td>Whether that edit session has changes (in-memory or saved to the <code>pending</code> directory).</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>lockOwner</td>
+          <td>Lock Owner</td>
+          <td>ChangeManager</td>
+          <td>The name of the user who holds the lock.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>locked</td>
+          <td>Locked</td>
+          <td>ChangeManager</td>
+          <td>Whether that edit session is locked.</td>
+          <td></td>
       </tr>
   </tbody>
 </table>
@@ -10740,6 +13418,36 @@ The Map of the Console is generated from the latest available release of WebLogi
           <td>Overview</td>
           <td>The deployment&rsquo;s name.</td>
           <td></td>
+      </tr>
+  </tbody>
+</table>
+<p><a id="EncryptedProperty">&nbsp;</a>
+<p>
+<h2 id="encryptedproperty">EncryptedProperty</h2>
+<table>
+  <thead>
+      <tr>
+          <th>Property Name</th>
+          <th>Label</th>
+          <th>Tab Name</th>
+          <th>Description</th>
+          <th>MBean Reference</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>EncryptedValue</td>
+          <td>Encrypted Value</td>
+          <td>General</td>
+          <td>Returns the value.</td>
+          <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/EncryptedPropertyMBean.html#EncryptedValue">More info</a></td>
+      </tr>
+      <tr>
+          <td>Name</td>
+          <td>Name</td>
+          <td>General</td>
+          <td>The user-specified name of this MBean instance.</td>
+          <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/EncryptedPropertyMBean.html#Name">More info</a></td>
       </tr>
   </tbody>
 </table>
@@ -11368,6 +14076,76 @@ The Map of the Console is generated from the latest available release of WebLogi
           <td>General</td>
           <td>The environment entry&rsquo;s name.</td>
           <td></td>
+      </tr>
+  </tbody>
+</table>
+<p><a id="ExecuteQueue">&nbsp;</a>
+<p>
+<h2 id="executequeue">ExecuteQueue</h2>
+<p><b>References to this type</b>:</p>
+<ul>
+<li>Configuration -&gt; Environment -&gt; Server Templates -&gt; Execute Queues</li>
+<li>Configuration -&gt; Environment -&gt; Servers -&gt; Execute Queues</li>
+</ul>
+<table>
+  <thead>
+      <tr>
+          <th>Property Name</th>
+          <th>Label</th>
+          <th>Tab Name</th>
+          <th>Description</th>
+          <th>MBean Reference</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Name</td>
+          <td>Name</td>
+          <td>General</td>
+          <td>The user-specified name of this MBean instance.</td>
+          <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/ExecuteQueueMBean.html#Name">More info</a></td>
+      </tr>
+      <tr>
+          <td>QueueLength</td>
+          <td>Queue Length</td>
+          <td>General</td>
+          <td>The maximum number of simultaneous requests that this server can hold in the queue.</td>
+          <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/ExecuteQueueMBean.html#QueueLength">More info</a></td>
+      </tr>
+      <tr>
+          <td>QueueLengthThresholdPercent</td>
+          <td>Queue Length Threshold Percent</td>
+          <td>General</td>
+          <td>The percentage of the Queue Length size that can be reached before this server indicates an overflow condition for the queue.</td>
+          <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/ExecuteQueueMBean.html#QueueLengthThresholdPercent">More info</a></td>
+      </tr>
+      <tr>
+          <td>ThreadCount</td>
+          <td>Thread Count</td>
+          <td>General</td>
+          <td>The number of threads assigned to this queue.</td>
+          <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/ExecuteQueueMBean.html#ThreadCount">More info</a></td>
+      </tr>
+      <tr>
+          <td>ThreadsIncrease</td>
+          <td>Threads Increase</td>
+          <td>General</td>
+          <td>Specifies the number of threads to increase the queue length when the queue length theshold is reached.</td>
+          <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/ExecuteQueueMBean.html#ThreadsIncrease">More info</a></td>
+      </tr>
+      <tr>
+          <td>ThreadsMaximum</td>
+          <td>Threads Maximum</td>
+          <td>General</td>
+          <td>The maximum number of threads that this queue is allowed to have; this value prevents WebLogic Server from creating an overly high thread count in the queue in response to continual overflow conditions.</td>
+          <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/ExecuteQueueMBean.html#ThreadsMaximum">More info</a></td>
+      </tr>
+      <tr>
+          <td>ThreadsMinimum</td>
+          <td>Threads Minimum</td>
+          <td>General</td>
+          <td>The minimum number of threads that WebLogic Server will maintain in the queue.</td>
+          <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/ExecuteQueueMBean.html#ThreadsMinimum">More info</a></td>
       </tr>
   </tbody>
 </table>
@@ -13306,8 +16084,15 @@ The Map of the Console is generated from the latest available release of WebLogi
           <td>GlobalTransactionsProtocol</td>
           <td>Global Transactions Protocol</td>
           <td>Transaction</td>
-          <td>Select this option to enable non-XA connections from the data source to participate in global transactions.</td>
+          <td>Determines the transaction protocol (global transaction processing behavior) for the data source.</td>
           <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JDBCDataSourceParamsBean.html#GlobalTransactionsProtocol">More info</a></td>
+      </tr>
+      <tr>
+          <td>HangDetectionMaxTestWaitSeconds</td>
+          <td>Hang Detection Max Test Wait Seconds</td>
+          <td>ConnectionPool.Advanced</td>
+          <td>The amount of time to wait for connection tests to complete before the connection pool determines that a connection test is hung.</td>
+          <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JDBCConnectionPoolParamsBean.html#HangDetectionMaxTestWaitSeconds">More info</a></td>
       </tr>
       <tr>
           <td>HighestNumWaiters</td>
@@ -13520,6 +16305,13 @@ The Map of the Console is generated from the latest available release of WebLogi
           <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JDBCXAParamsBean.html#RecoverOnlyOnce">More info</a></td>
       </tr>
       <tr>
+          <td>RefreshAvailableAfterTestFailure</td>
+          <td>Refresh Available After Test Failure</td>
+          <td>ConnectionPool.Advanced</td>
+          <td>When true, the connection pool will attempt to replace a connection that fails the periodic connection test.</td>
+          <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JDBCConnectionPoolParamsBean.html#RefreshAvailableAfterTestFailure">More info</a></td>
+      </tr>
+      <tr>
           <td>RemoveInfectedConnections</td>
           <td>Remove Infected Connections Enabled</td>
           <td>ConnectionPool.Advanced</td>
@@ -13548,11 +16340,32 @@ The Map of the Console is generated from the latest available release of WebLogi
           <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JDBCConnectionPoolParamsBean.html#SecondsToTrustAnIdlePoolConnection">More info</a></td>
       </tr>
       <tr>
+          <td>ShrinkFactorPercent</td>
+          <td>Shrink Factor Percent</td>
+          <td>ConnectionPool.Advanced</td>
+          <td>The percentage of the number of available connections to shrink from current pool capacity to the maximum of the configured minimum capacity, the current number of in-use connections or the running average (if configured).</td>
+          <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JDBCConnectionPoolParamsBean.html#ShrinkFactorPercent">More info</a></td>
+      </tr>
+      <tr>
           <td>ShrinkFrequencySeconds</td>
           <td>Shrink Frequency</td>
           <td>ConnectionPool.Advanced</td>
           <td>The number of seconds to wait before shrinking a connection pool that has incrementally increased to meet demand.</td>
           <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JDBCConnectionPoolParamsBean.html#ShrinkFrequencySeconds">More info</a></td>
+      </tr>
+      <tr>
+          <td>ShrinkHistorySeconds</td>
+          <td>Shrink History Seconds</td>
+          <td>ConnectionPool.Advanced</td>
+          <td>The amount of time to maintain a running average of the number of in-use connections.</td>
+          <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JDBCConnectionPoolParamsBean.html#ShrinkHistorySeconds">More info</a></td>
+      </tr>
+      <tr>
+          <td>ShrinkSpareCapacityPercent</td>
+          <td>Shrink Spare Capacity Percent</td>
+          <td>ConnectionPool.Advanced</td>
+          <td>Specifies the number of additional number of connections to maintain above the current connection usage or the running average when shrinking.</td>
+          <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JDBCConnectionPoolParamsBean.html#ShrinkSpareCapacityPercent">More info</a></td>
       </tr>
       <tr>
           <td>StatementCacheSize</td>
@@ -13604,6 +16417,13 @@ The Map of the Console is generated from the latest available release of WebLogi
           <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JDBCConnectionPoolParamsBean.html#TestTableName">More info</a></td>
       </tr>
       <tr>
+          <td>TestTimeoutSeconds</td>
+          <td>Test Timeout Seconds</td>
+          <td>ConnectionPool.Advanced</td>
+          <td>The time after which a test statement, or isValid method, currently being executed will time out.</td>
+          <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JDBCConnectionPoolParamsBean.html#TestTimeoutSeconds">More info</a></td>
+      </tr>
+      <tr>
           <td>Type</td>
           <td>Type</td>
           <td>ReferencedBy</td>
@@ -13639,6 +16459,13 @@ The Map of the Console is generated from the latest available release of WebLogi
           <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JDBCConnectionPoolParamsBean.html#WrapTypes">More info</a></td>
       </tr>
       <tr>
+          <td>XADriver</td>
+          <td>XA Driver</td>
+          <td>Transaction</td>
+          <td>Whether this data source&rsquo;s driver supports global transactions.</td>
+          <td></td>
+      </tr>
+      <tr>
           <td>XaRetryDurationSeconds</td>
           <td>XA Retry Duration</td>
           <td>Transaction</td>
@@ -13665,13 +16492,6 @@ The Map of the Console is generated from the latest available release of WebLogi
           <td>Transaction</td>
           <td>The number of seconds to set as the transaction branch timeout.</td>
           <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JDBCXAParamsBean.html#XaTransactionTimeout">More info</a></td>
-      </tr>
-      <tr>
-          <td>isXADriver</td>
-          <td>XA JDBC Driver</td>
-          <td>Transaction</td>
-          <td>whether the JDBC datasource driver is global (XA) or non-global (local).</td>
-          <td></td>
       </tr>
   </tbody>
 </table>
@@ -14046,6 +16866,7 @@ The Map of the Console is generated from the latest available release of WebLogi
 <ul>
 <li>Monitoring -&gt; Deployments -&gt; Application Runtime Data -&gt; Component Runtimes -&gt; JDBCDataSourceRuntime -&gt; Tasks</li>
 <li>Monitoring -&gt; Services -&gt; Data Sources -&gt; JDBC Data Source Runtime MBeans -&gt; JDBCOracleDataSourceRuntime -&gt; Tasks</li>
+<li>Monitoring -&gt; Deployments -&gt; Application Runtime Data -&gt; Component Runtimes -&gt; JDBCOracleDataSourceRuntime -&gt; Tasks</li>
 <li>Monitoring -&gt; Services -&gt; Data Sources -&gt; JDBC Data Source Runtime MBeans -&gt; JDBCDataSourceRuntime -&gt; Tasks</li>
 <li>Monitoring -&gt; Services -&gt; Data Sources -&gt; JDBC Data Source Runtime MBeans -&gt; Tasks</li>
 </ul>
@@ -14294,8 +17115,15 @@ The Map of the Console is generated from the latest available release of WebLogi
           <td>GlobalTransactionsProtocol</td>
           <td>Global Transactions Protocol</td>
           <td>Transaction</td>
-          <td>Select this option to enable non-XA connections from the data source to participate in global transactions.</td>
+          <td>Determines the transaction protocol (global transaction processing behavior) for the data source.</td>
           <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JDBCDataSourceParamsBean.html#GlobalTransactionsProtocol">More info</a></td>
+      </tr>
+      <tr>
+          <td>HangDetectionMaxTestWaitSeconds</td>
+          <td>Hang Detection Max Test Wait Seconds</td>
+          <td>ConnectionPool.Advanced</td>
+          <td>The amount of time to wait for connection tests to complete before the connection pool determines that a connection test is hung.</td>
+          <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JDBCConnectionPoolParamsBean.html#HangDetectionMaxTestWaitSeconds">More info</a></td>
       </tr>
       <tr>
           <td>HighestNumWaiters</td>
@@ -14487,6 +17315,13 @@ The Map of the Console is generated from the latest available release of WebLogi
           <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JDBCXAParamsBean.html#RecoverOnlyOnce">More info</a></td>
       </tr>
       <tr>
+          <td>RefreshAvailableAfterTestFailure</td>
+          <td>Refresh Available After Test Failure</td>
+          <td>ConnectionPool.Advanced</td>
+          <td>When true, the connection pool will attempt to replace a connection that fails the periodic connection test.</td>
+          <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JDBCConnectionPoolParamsBean.html#RefreshAvailableAfterTestFailure">More info</a></td>
+      </tr>
+      <tr>
           <td>RemoveInfectedConnections</td>
           <td>Remove Infected Connections Enabled</td>
           <td>ConnectionPool.Advanced</td>
@@ -14515,11 +17350,32 @@ The Map of the Console is generated from the latest available release of WebLogi
           <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JDBCConnectionPoolParamsBean.html#SecondsToTrustAnIdlePoolConnection">More info</a></td>
       </tr>
       <tr>
+          <td>ShrinkFactorPercent</td>
+          <td>Shrink Factor Percent</td>
+          <td>ConnectionPool.Advanced</td>
+          <td>The percentage of the number of available connections to shrink from current pool capacity to the maximum of the configured minimum capacity, the current number of in-use connections or the running average (if configured).</td>
+          <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JDBCConnectionPoolParamsBean.html#ShrinkFactorPercent">More info</a></td>
+      </tr>
+      <tr>
           <td>ShrinkFrequencySeconds</td>
           <td>Shrink Frequency</td>
           <td>ConnectionPool.Advanced</td>
           <td>The number of seconds to wait before shrinking a connection pool that has incrementally increased to meet demand.</td>
           <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JDBCConnectionPoolParamsBean.html#ShrinkFrequencySeconds">More info</a></td>
+      </tr>
+      <tr>
+          <td>ShrinkHistorySeconds</td>
+          <td>Shrink History Seconds</td>
+          <td>ConnectionPool.Advanced</td>
+          <td>The amount of time to maintain a running average of the number of in-use connections.</td>
+          <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JDBCConnectionPoolParamsBean.html#ShrinkHistorySeconds">More info</a></td>
+      </tr>
+      <tr>
+          <td>ShrinkSpareCapacityPercent</td>
+          <td>Shrink Spare Capacity Percent</td>
+          <td>ConnectionPool.Advanced</td>
+          <td>Specifies the number of additional number of connections to maintain above the current connection usage or the running average when shrinking.</td>
+          <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JDBCConnectionPoolParamsBean.html#ShrinkSpareCapacityPercent">More info</a></td>
       </tr>
       <tr>
           <td>StatementCacheSize</td>
@@ -14571,6 +17427,13 @@ The Map of the Console is generated from the latest available release of WebLogi
           <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JDBCConnectionPoolParamsBean.html#TestTableName">More info</a></td>
       </tr>
       <tr>
+          <td>TestTimeoutSeconds</td>
+          <td>Test Timeout Seconds</td>
+          <td>ConnectionPool.Advanced</td>
+          <td>The time after which a test statement, or isValid method, currently being executed will time out.</td>
+          <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JDBCConnectionPoolParamsBean.html#TestTimeoutSeconds">More info</a></td>
+      </tr>
+      <tr>
           <td>Type</td>
           <td>Type</td>
           <td>ReferencedBy</td>
@@ -14606,6 +17469,13 @@ The Map of the Console is generated from the latest available release of WebLogi
           <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JDBCConnectionPoolParamsBean.html#WrapTypes">More info</a></td>
       </tr>
       <tr>
+          <td>XADriver</td>
+          <td>XA Driver</td>
+          <td>Transaction</td>
+          <td>Whether this data source&rsquo;s driver supports global transactions.</td>
+          <td></td>
+      </tr>
+      <tr>
           <td>XaRetryDurationSeconds</td>
           <td>XA Retry Duration</td>
           <td>Transaction</td>
@@ -14632,13 +17502,6 @@ The Map of the Console is generated from the latest available release of WebLogi
           <td>Transaction</td>
           <td>The number of seconds to set as the transaction branch timeout.</td>
           <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JDBCXAParamsBean.html#XaTransactionTimeout">More info</a></td>
-      </tr>
-      <tr>
-          <td>isXADriver</td>
-          <td>XA JDBC Driver</td>
-          <td>Transaction</td>
-          <td>whether the JDBC datasource driver is global (XA) or non-global (local).</td>
-          <td></td>
       </tr>
   </tbody>
 </table>
@@ -14882,6 +17745,7 @@ The Map of the Console is generated from the latest available release of WebLogi
 <h2 id="jdbcoracledatasourceinstanceruntime">JDBCOracleDataSourceInstanceRuntime</h2>
 <p><b>References to this type</b>:</p>
 <ul>
+<li>Monitoring -&gt; Deployments -&gt; Application Runtime Data -&gt; Component Runtimes -&gt; JDBCOracleDataSourceRuntime -&gt; Instances</li>
 <li>Monitoring -&gt; Services -&gt; Data Sources -&gt; JDBC Data Source Runtime MBeans -&gt; JDBCOracleDataSourceRuntime -&gt; Instances</li>
 </ul>
 <table>
@@ -15000,6 +17864,7 @@ The Map of the Console is generated from the latest available release of WebLogi
 <h2 id="jdbcoracledatasourceruntime">JDBCOracleDataSourceRuntime</h2>
 <p><b>References to this type</b>:</p>
 <ul>
+<li>Monitoring -&gt; Deployments -&gt; Application Runtime Data -&gt; Component Runtimes -&gt; JDBCOracleDataSourceRuntime</li>
 <li>Monitoring -&gt; Services -&gt; Data Sources -&gt; JDBC Data Source Runtime MBeans -&gt; JDBCOracleDataSourceRuntime</li>
 </ul>
 <table>
@@ -16105,8 +18970,15 @@ The Map of the Console is generated from the latest available release of WebLogi
           <td>GlobalTransactionsProtocol</td>
           <td>Global Transactions Protocol</td>
           <td>Transaction</td>
-          <td>Select this option to enable non-XA connections from the data source to participate in global transactions.</td>
+          <td>Determines the transaction protocol (global transaction processing behavior) for the data source.</td>
           <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JDBCDataSourceParamsBean.html#GlobalTransactionsProtocol">More info</a></td>
+      </tr>
+      <tr>
+          <td>HangDetectionMaxTestWaitSeconds</td>
+          <td>Hang Detection Max Test Wait Seconds</td>
+          <td>ConnectionPool.Advanced</td>
+          <td>The amount of time to wait for connection tests to complete before the connection pool determines that a connection test is hung.</td>
+          <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JDBCConnectionPoolParamsBean.html#HangDetectionMaxTestWaitSeconds">More info</a></td>
       </tr>
       <tr>
           <td>HighestNumWaiters</td>
@@ -16298,6 +19170,13 @@ The Map of the Console is generated from the latest available release of WebLogi
           <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JDBCXAParamsBean.html#RecoverOnlyOnce">More info</a></td>
       </tr>
       <tr>
+          <td>RefreshAvailableAfterTestFailure</td>
+          <td>Refresh Available After Test Failure</td>
+          <td>ConnectionPool.Advanced</td>
+          <td>When true, the connection pool will attempt to replace a connection that fails the periodic connection test.</td>
+          <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JDBCConnectionPoolParamsBean.html#RefreshAvailableAfterTestFailure">More info</a></td>
+      </tr>
+      <tr>
           <td>RemoveInfectedConnections</td>
           <td>Remove Infected Connections Enabled</td>
           <td>ConnectionPool.Advanced</td>
@@ -16326,11 +19205,32 @@ The Map of the Console is generated from the latest available release of WebLogi
           <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JDBCConnectionPoolParamsBean.html#SecondsToTrustAnIdlePoolConnection">More info</a></td>
       </tr>
       <tr>
+          <td>ShrinkFactorPercent</td>
+          <td>Shrink Factor Percent</td>
+          <td>ConnectionPool.Advanced</td>
+          <td>The percentage of the number of available connections to shrink from current pool capacity to the maximum of the configured minimum capacity, the current number of in-use connections or the running average (if configured).</td>
+          <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JDBCConnectionPoolParamsBean.html#ShrinkFactorPercent">More info</a></td>
+      </tr>
+      <tr>
           <td>ShrinkFrequencySeconds</td>
           <td>Shrink Frequency</td>
           <td>ConnectionPool.Advanced</td>
           <td>The number of seconds to wait before shrinking a connection pool that has incrementally increased to meet demand.</td>
           <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JDBCConnectionPoolParamsBean.html#ShrinkFrequencySeconds">More info</a></td>
+      </tr>
+      <tr>
+          <td>ShrinkHistorySeconds</td>
+          <td>Shrink History Seconds</td>
+          <td>ConnectionPool.Advanced</td>
+          <td>The amount of time to maintain a running average of the number of in-use connections.</td>
+          <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JDBCConnectionPoolParamsBean.html#ShrinkHistorySeconds">More info</a></td>
+      </tr>
+      <tr>
+          <td>ShrinkSpareCapacityPercent</td>
+          <td>Shrink Spare Capacity Percent</td>
+          <td>ConnectionPool.Advanced</td>
+          <td>Specifies the number of additional number of connections to maintain above the current connection usage or the running average when shrinking.</td>
+          <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JDBCConnectionPoolParamsBean.html#ShrinkSpareCapacityPercent">More info</a></td>
       </tr>
       <tr>
           <td>StatementCacheSize</td>
@@ -16382,6 +19282,13 @@ The Map of the Console is generated from the latest available release of WebLogi
           <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JDBCConnectionPoolParamsBean.html#TestTableName">More info</a></td>
       </tr>
       <tr>
+          <td>TestTimeoutSeconds</td>
+          <td>Test Timeout Seconds</td>
+          <td>ConnectionPool.Advanced</td>
+          <td>The time after which a test statement, or isValid method, currently being executed will time out.</td>
+          <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JDBCConnectionPoolParamsBean.html#TestTimeoutSeconds">More info</a></td>
+      </tr>
+      <tr>
           <td>Type</td>
           <td>Type</td>
           <td>ReferencedBy</td>
@@ -16417,6 +19324,13 @@ The Map of the Console is generated from the latest available release of WebLogi
           <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JDBCConnectionPoolParamsBean.html#WrapTypes">More info</a></td>
       </tr>
       <tr>
+          <td>XADriver</td>
+          <td>XA Driver</td>
+          <td>Transaction</td>
+          <td>Whether this data source&rsquo;s driver supports global transactions.</td>
+          <td></td>
+      </tr>
+      <tr>
           <td>XaRetryDurationSeconds</td>
           <td>XA Retry Duration</td>
           <td>Transaction</td>
@@ -16443,13 +19357,6 @@ The Map of the Console is generated from the latest available release of WebLogi
           <td>Transaction</td>
           <td>The number of seconds to set as the transaction branch timeout.</td>
           <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/JDBCXAParamsBean.html#XaTransactionTimeout">More info</a></td>
-      </tr>
-      <tr>
-          <td>isXADriver</td>
-          <td>XA JDBC Driver</td>
-          <td>Transaction</td>
-          <td>whether the JDBC datasource driver is global (XA) or non-global (local).</td>
-          <td></td>
       </tr>
   </tbody>
 </table>
@@ -17701,7 +20608,7 @@ The Map of the Console is generated from the latest available release of WebLogi
 <p><a id="JMSDestinationRuntime">&nbsp;</a>
 <p>
 <h2 id="jmsdestinationruntime">JMSDestinationRuntime</h2>
-<p><b>Actions</b>: Import, Resume, Pause, Delete, Export, Move</p>
+<p><b>Actions</b>: Import, Resume, Pause, Delete, View, Export, Move</p>
 <p><b>References to this type</b>:</p>
 <ul>
 <li>Monitoring -&gt; Services -&gt; Messaging -&gt; JMS Runtime -&gt; JMS Servers -&gt; Destinations -&gt; JMSDestinationRuntime</li>
@@ -18227,7 +21134,7 @@ The Map of the Console is generated from the latest available release of WebLogi
 <p><a id="JMSDurableSubscriberRuntime">&nbsp;</a>
 <p>
 <h2 id="jmsdurablesubscriberruntime">JMSDurableSubscriberRuntime</h2>
-<p><b>Actions</b>: Import, Delete, Export, Move</p>
+<p><b>Actions</b>: Import, Delete, View, Export, Move</p>
 <p><b>References to this type</b>:</p>
 <ul>
 <li>Monitoring -&gt; Services -&gt; Messaging -&gt; JMS Runtime -&gt; JMS Servers -&gt; Destinations -&gt; JMSTopicRuntime -&gt; Durable Subscribers</li>
@@ -18887,7 +21794,7 @@ The Map of the Console is generated from the latest available release of WebLogi
 <p><a id="JMSQueueRuntime">&nbsp;</a>
 <p>
 <h2 id="jmsqueueruntime">JMSQueueRuntime</h2>
-<p><b>Actions</b>: Import, Delete, Export, Move</p>
+<p><b>Actions</b>: Import, Delete, View, Export, Move</p>
 <p><b>References to this type</b>:</p>
 <ul>
 <li>Monitoring -&gt; Services -&gt; Messaging -&gt; JMS Runtime -&gt; JMS Servers -&gt; Destinations -&gt; JMSQueueRuntime</li>
@@ -23019,7 +25926,7 @@ The Map of the Console is generated from the latest available release of WebLogi
       </tr>
       <tr>
           <td>SecurityDDModel</td>
-          <td>Security DD Model</td>
+          <td>Security Model</td>
           <td>Overview</td>
           <td>The security model that is used to secure a deployed module.</td>
           <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/LibraryMBean.html#SecurityDDModel">More info</a></td>
@@ -24900,6 +27807,62 @@ The Map of the Console is generated from the latest available release of WebLogi
       </tr>
   </tbody>
 </table>
+<p><a id="MigratableServiceCoordinatorRuntime">&nbsp;</a>
+<p>
+<h2 id="migratableservicecoordinatorruntime">MigratableServiceCoordinatorRuntime</h2>
+<p><b>Actions</b>: Migrate JTA, Migrate Singleton Service, Migrate JMS, Migrate Server</p>
+<p><b>References to this type</b>:</p>
+<ul>
+<li>Monitoring -&gt; Environment -&gt; Migration -&gt; Manual Migration</li>
+</ul>
+<table>
+  <thead>
+      <tr>
+          <th>Property Name</th>
+          <th>Label</th>
+          <th>Tab Name</th>
+          <th>Description</th>
+          <th>MBean Reference</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Cluster</td>
+          <td>Cluster</td>
+          <td>Servers</td>
+          <td>Cluster that this migratable target is part of.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>HostingServer</td>
+          <td>Hosting Server</td>
+          <td>JTA</td>
+          <td>Server that is hosting this migratable target.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>Machine</td>
+          <td>Machine</td>
+          <td>Servers</td>
+          <td>Machine that the server is on.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>Name</td>
+          <td>Server</td>
+          <td>Servers</td>
+          <td>Server for migration</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>UserPreferredServer</td>
+          <td>User Preferred Server</td>
+          <td>JTA</td>
+          <td>User Preferred Serve for migrating to.</td>
+          <td></td>
+      </tr>
+  </tbody>
+</table>
 <p><a id="MigratableTarget">&nbsp;</a>
 <p>
 <h2 id="migratabletarget">MigratableTarget</h2>
@@ -25127,6 +28090,131 @@ The Map of the Console is generated from the latest available release of WebLogi
           <td></td>
           <td>Name of the server migrated</td>
           <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/MigrationDataRuntimeMBean.html#Status">More info</a></td>
+      </tr>
+  </tbody>
+</table>
+<p><a id="MigrationTaskRuntime">&nbsp;</a>
+<p>
+<h2 id="migrationtaskruntime">MigrationTaskRuntime</h2>
+<p><b>References to this type</b>:</p>
+<ul>
+<li>Monitoring -&gt; Environment -&gt; Migration -&gt; Migration Task Runtimes</li>
+</ul>
+<table>
+  <thead>
+      <tr>
+          <th>Property Name</th>
+          <th>Label</th>
+          <th>Tab Name</th>
+          <th>Description</th>
+          <th>MBean Reference</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Completed</td>
+          <td>Completed</td>
+          <td></td>
+          <td>Whether this task has completed.</td>
+          <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/MigrationTaskRuntimeMBean.html#Completed">More info</a></td>
+      </tr>
+      <tr>
+          <td>Description</td>
+          <td>Description</td>
+          <td></td>
+          <td>A description of this task.</td>
+          <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/MigrationTaskRuntimeMBean.html#Description">More info</a></td>
+      </tr>
+      <tr>
+          <td>EndTime</td>
+          <td>End Time</td>
+          <td></td>
+          <td>The time this task ended.</td>
+          <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/MigrationTaskRuntimeMBean.html#EndTime">More info</a></td>
+      </tr>
+      <tr>
+          <td>JTA</td>
+          <td>JTA</td>
+          <td></td>
+          <td>Indicates whether the migration task moves a JTA recovery manager.</td>
+          <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/MigrationTaskRuntimeMBean.html#JTA">More info</a></td>
+      </tr>
+      <tr>
+          <td>Name</td>
+          <td>Name</td>
+          <td></td>
+          <td>The name of this configuration.</td>
+          <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/MigrationTaskRuntimeMBean.html#Name">More info</a></td>
+      </tr>
+      <tr>
+          <td>Progress</td>
+          <td>Progress</td>
+          <td></td>
+          <td>How much progress this task has made.</td>
+          <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/MigrationTaskRuntimeMBean.html#Progress">More info</a></td>
+      </tr>
+      <tr>
+          <td>Running</td>
+          <td>Running</td>
+          <td></td>
+          <td>Indicates whether the Task is still running.</td>
+          <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/MigrationTaskRuntimeMBean.html#Running">More info</a></td>
+      </tr>
+      <tr>
+          <td>StartTime</td>
+          <td>Start Time</td>
+          <td></td>
+          <td>The time this task began.</td>
+          <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/MigrationTaskRuntimeMBean.html#StartTime">More info</a></td>
+      </tr>
+      <tr>
+          <td>StatusCode</td>
+          <td>Status Code</td>
+          <td></td>
+          <td>Provides an int describing the status of this Task.</td>
+          <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/MigrationTaskRuntimeMBean.html#StatusCode">More info</a></td>
+      </tr>
+      <tr>
+          <td>SystemTask</td>
+          <td>System Task</td>
+          <td></td>
+          <td>Indicates whether this task was initiated by the server versus a user.</td>
+          <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/MigrationTaskRuntimeMBean.html#SystemTask">More info</a></td>
+      </tr>
+      <tr>
+          <td>TaskError</td>
+          <td>Error</td>
+          <td></td>
+          <td>Returns an exception describing the error, if any, that occurred while performing this task.</td>
+          <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/MigrationTaskRuntimeMBean.html#TaskError">More info</a></td>
+      </tr>
+      <tr>
+          <td>TaskStatus</td>
+          <td>Status</td>
+          <td></td>
+          <td>The status of this task.</td>
+          <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/MigrationTaskRuntimeMBean.html#TaskStatus">More info</a></td>
+      </tr>
+      <tr>
+          <td>Terminal</td>
+          <td>Terminal</td>
+          <td></td>
+          <td>Indicates whether the Task was successful, failed or was canceled.</td>
+          <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/MigrationTaskRuntimeMBean.html#Terminal">More info</a></td>
+      </tr>
+      <tr>
+          <td>Type</td>
+          <td>Type</td>
+          <td></td>
+          <td>Returns the type of the MBean.</td>
+          <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/MigrationTaskRuntimeMBean.html#Type">More info</a></td>
+      </tr>
+      <tr>
+          <td>WaitingForUser</td>
+          <td>Waiting For User</td>
+          <td></td>
+          <td>Indicates whether the Task is waiting for user input.</td>
+          <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/MigrationTaskRuntimeMBean.html#WaitingForUser">More info</a></td>
       </tr>
   </tbody>
 </table>
@@ -25511,6 +28599,20 @@ The Map of the Console is generated from the latest available release of WebLogi
           <td>ChannelSecurity</td>
           <td>The passphrase used to retrieve the server&rsquo;s private key from the keystore.</td>
           <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/NetworkAccessPointMBean.html#CustomPrivateKeyPassPhrase">More info</a></td>
+      </tr>
+      <tr>
+          <td>DomainKeystoresClientCertAlias</td>
+          <td>Domain Keystores Client Certificate Alias</td>
+          <td>ChannelSecurity</td>
+          <td>Gets the alias of the client certificate for this NetworkAccessPoint when SSLMBean.KeyStores is set to &ldquo;DomainKeystores&rdquo;.</td>
+          <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/NetworkAccessPointMBean.html#DomainKeystoresClientCertAlias">More info</a></td>
+      </tr>
+      <tr>
+          <td>DomainKeystoresServerCertAlias</td>
+          <td>Domain Keystores Server Certificate Alias</td>
+          <td>ChannelSecurity</td>
+          <td>Gets the alias of the server certificate for this NetworkAccessPoint when SSLMBean.KeyStores is set to &ldquo;DomainKeystores&rdquo;.</td>
+          <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/NetworkAccessPointMBean.html#DomainKeystoresServerCertAlias">More info</a></td>
       </tr>
       <tr>
           <td>Enabled</td>
@@ -26706,6 +29808,7 @@ The Map of the Console is generated from the latest available release of WebLogi
 <p><b>References to this type</b>:</p>
 <ul>
 <li>Monitoring -&gt; Services -&gt; Data Sources -&gt; JDBC Data Source Runtime MBeans -&gt; JDBCOracleDataSourceRuntime -&gt; ONS Daemon Runtimes</li>
+<li>Monitoring -&gt; Deployments -&gt; Application Runtime Data -&gt; Component Runtimes -&gt; JDBCOracleDataSourceRuntime -&gt; ONS Daemon Runtimes</li>
 </ul>
 <table>
   <thead>
@@ -28643,6 +31746,89 @@ The Map of the Console is generated from the latest available release of WebLogi
       </tr>
   </tbody>
 </table>
+<p><a id="OsgiFramework">&nbsp;</a>
+<p>
+<h2 id="osgiframework">OsgiFramework</h2>
+<p><b>References to this type</b>:</p>
+<ul>
+<li>Configuration -&gt; Services -&gt; Osgi Frameworks</li>
+</ul>
+<table>
+  <thead>
+      <tr>
+          <th>Property Name</th>
+          <th>Label</th>
+          <th>Tab Name</th>
+          <th>Description</th>
+          <th>MBean Reference</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>DeployInstallationBundles</td>
+          <td>Deploy Installation Bundles</td>
+          <td>General</td>
+          <td>Determines if some WebLogic helper bundles will be installed into the framework</td>
+          <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/OsgiFrameworkMBean.html#DeployInstallationBundles">More info</a></td>
+      </tr>
+      <tr>
+          <td>FactoryImplementationClass</td>
+          <td>Factory Implementation Class</td>
+          <td>General</td>
+          <td>The name of the frameworks implementation class for the org.osgi.framework.launch.FrameworkFactory class.</td>
+          <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/OsgiFrameworkMBean.html#FactoryImplementationClass">More info</a></td>
+      </tr>
+      <tr>
+          <td>InitProperties</td>
+          <td>Init Properties</td>
+          <td>InitProperties</td>
+          <td>The properties to be used when initializing the framework.</td>
+          <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/OsgiFrameworkMBean.html#InitProperties">More info</a></td>
+      </tr>
+      <tr>
+          <td>Name</td>
+          <td>Name</td>
+          <td>General</td>
+          <td>The user-specified name of this MBean instance.</td>
+          <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/OsgiFrameworkMBean.html#Name">More info</a></td>
+      </tr>
+      <tr>
+          <td>OrgOsgiFrameworkBootdelegation</td>
+          <td>Boot delegation</td>
+          <td>General</td>
+          <td>The name of the org.osgi.framework.bootdelegation property.</td>
+          <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/OsgiFrameworkMBean.html#OrgOsgiFrameworkBootdelegation">More info</a></td>
+      </tr>
+      <tr>
+          <td>OrgOsgiFrameworkSystemPackagesExtra</td>
+          <td>System Packages Extra</td>
+          <td>General</td>
+          <td>The name of the org.osgi.framework.system.packages.extra property.</td>
+          <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/OsgiFrameworkMBean.html#OrgOsgiFrameworkSystemPackagesExtra">More info</a></td>
+      </tr>
+      <tr>
+          <td>RegisterGlobalDataSources</td>
+          <td>Register Global Data Sources</td>
+          <td>General</td>
+          <td>Returns true if global data sources should be added to the OSGi service registry.</td>
+          <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/OsgiFrameworkMBean.html#RegisterGlobalDataSources">More info</a></td>
+      </tr>
+      <tr>
+          <td>RegisterGlobalWorkManagers</td>
+          <td>Register Global Work Managers</td>
+          <td>General</td>
+          <td>Returns true if global work managers should be added to the OSGi service registry.</td>
+          <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/OsgiFrameworkMBean.html#RegisterGlobalWorkManagers">More info</a></td>
+      </tr>
+      <tr>
+          <td>Targets</td>
+          <td>Targets</td>
+          <td>Targets</td>
+          <td>You must select a target on which an MBean will be deployed from this list of the targets in the current domain on which this item can be deployed.</td>
+          <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/OsgiFrameworkMBean.html#Targets">More info</a></td>
+      </tr>
+  </tbody>
+</table>
 <p><a id="OutboundConnectionPoolGroup">&nbsp;</a>
 <p>
 <h2 id="outboundconnectionpoolgroup">OutboundConnectionPoolGroup</h2>
@@ -28669,6 +31855,27 @@ The Map of the Console is generated from the latest available release of WebLogi
           <td>Name</td>
           <td>Overview</td>
           <td>The outbound connection pool group&rsquo;s name.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>ReauthenticationSupport</td>
+          <td>Reauthentication Support</td>
+          <td>Overview</td>
+          <td>Specifies whether a particular connection factory supports re-authentication of an existing <b>ManagedConnection</b> instance.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>ResAuth</td>
+          <td>Res Auth</td>
+          <td>Overview</td>
+          <td>Specifies whether to use container or application managed security.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>TransactionSupport</td>
+          <td>Transaction Support</td>
+          <td>Overview</td>
+          <td>Specifies the level of transaction support for a particular Connection Factory.</td>
           <td></td>
       </tr>
   </tbody>
@@ -28700,6 +31907,27 @@ The Map of the Console is generated from the latest available release of WebLogi
           <td>Name</td>
           <td>Overview</td>
           <td>The outbound connection pool instance&rsquo;s name.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>ReauthenticationSupport</td>
+          <td>Reauthentication Support</td>
+          <td>Overview</td>
+          <td>Specifies whether a particular connection factory supports re-authentication of an existing <b>ManagedConnection</b> instance.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>ResAuth</td>
+          <td>Res Auth</td>
+          <td>Overview</td>
+          <td>Specifies whether to use container or application managed security.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>TransactionSupport</td>
+          <td>Transaction Support</td>
+          <td>Overview</td>
+          <td>Specifies the level of transaction support for a particular Connection Factory.</td>
           <td></td>
       </tr>
   </tbody>
@@ -29108,6 +32336,57 @@ The Map of the Console is generated from the latest available release of WebLogi
           <td></td>
           <td>Number of update requests issued by this store.</td>
           <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/PersistentStoreRuntimeMBean.html#UpdateCount">More info</a></td>
+      </tr>
+  </tbody>
+</table>
+<p><a id="PluginDeployment">&nbsp;</a>
+<p>
+<h2 id="plugindeployment">PluginDeployment</h2>
+<table>
+  <thead>
+      <tr>
+          <th>Property Name</th>
+          <th>Label</th>
+          <th>Tab Name</th>
+          <th>Description</th>
+          <th>MBean Reference</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>AbsoluteSourcePath</td>
+          <td>Absolute Source Path</td>
+          <td>Overview</td>
+          <td>The fully resolved location of this application&rsquo;s source files on the Administration Server.</td>
+          <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/PluginDeploymentMBean.html#AbsoluteSourcePath">More info</a></td>
+      </tr>
+      <tr>
+          <td>InstallDir</td>
+          <td>Install Dir</td>
+          <td>Overview</td>
+          <td>The path to the plugin&rsquo;s install-root directory, relative to the domain/config/plugins directory.</td>
+          <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/PluginDeploymentMBean.html#InstallDir">More info</a></td>
+      </tr>
+      <tr>
+          <td>Name</td>
+          <td>Name</td>
+          <td>Overview</td>
+          <td>The user-specified name of this MBean instance.</td>
+          <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/PluginDeploymentMBean.html#Name">More info</a></td>
+      </tr>
+      <tr>
+          <td>PluginType</td>
+          <td>Plugin Type</td>
+          <td>Overview</td>
+          <td>Gets the type of the plugin.</td>
+          <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/PluginDeploymentMBean.html#PluginType">More info</a></td>
+      </tr>
+      <tr>
+          <td>SourcePath</td>
+          <td>Source Path</td>
+          <td>Overview</td>
+          <td>The path to the source of the deployable unit on the Administration Server.</td>
+          <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/PluginDeploymentMBean.html#SourcePath">More info</a></td>
       </tr>
   </tbody>
 </table>
@@ -30224,6 +33503,36 @@ The Map of the Console is generated from the latest available release of WebLogi
           <td>General</td>
           <td>The username to use when connecting to the datastore.</td>
           <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/RDBMSSecurityStoreMBean.html#Username">More info</a></td>
+      </tr>
+  </tbody>
+</table>
+<p><a id="RMIForwarding">&nbsp;</a>
+<p>
+<h2 id="rmiforwarding">RMIForwarding</h2>
+<table>
+  <thead>
+      <tr>
+          <th>Property Name</th>
+          <th>Label</th>
+          <th>Tab Name</th>
+          <th>Description</th>
+          <th>MBean Reference</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Name</td>
+          <td>Name</td>
+          <td>General</td>
+          <td>The user-specified name of this MBean instance.</td>
+          <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/RMIForwardingMBean.html#Name">More info</a></td>
+      </tr>
+      <tr>
+          <td>Url</td>
+          <td>Url</td>
+          <td>General</td>
+          <td></td>
+          <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/RMIForwardingMBean.html#Url">More info</a></td>
       </tr>
   </tbody>
 </table>
@@ -32750,6 +36059,7 @@ The Map of the Console is generated from the latest available release of WebLogi
 <p><a id="SAML2CredentialMapperSecurityData">&nbsp;</a>
 <p>
 <h2 id="saml2credentialmappersecuritydata">SAML2CredentialMapperSecurityData</h2>
+<p><b>Actions</b>: Import, Export</p>
 <p><b>References to this type</b>:</p>
 <ul>
 <li>Security Data -&gt; Realms -&gt; Credential Mappers -&gt; SAML2CredentialMapperSecurityData</li>
@@ -32874,6 +36184,7 @@ The Map of the Console is generated from the latest available release of WebLogi
 <p><a id="SAML2IdentityAsserterSecurityData">&nbsp;</a>
 <p>
 <h2 id="saml2identityassertersecuritydata">SAML2IdentityAsserterSecurityData</h2>
+<p><b>Actions</b>: Import, Export</p>
 <p><b>References to this type</b>:</p>
 <ul>
 <li>Security Data -&gt; Realms -&gt; Authentication Providers -&gt; SAML2IdentityAsserterSecurityData</li>
@@ -33260,6 +36571,10 @@ The Map of the Console is generated from the latest available release of WebLogi
 <p><a id="SNMPAgent">&nbsp;</a>
 <p>
 <h2 id="snmpagent">SNMPAgent</h2>
+<p><b>References to this type</b>:</p>
+<ul>
+<li>Configuration -&gt; Diagnostics -&gt; Domain SNMP Agent</li>
+</ul>
 <table>
   <thead>
       <tr>
@@ -33375,6 +36690,138 @@ The Map of the Console is generated from the latest available release of WebLogi
           <td>General</td>
           <td>Specifies whether this SNMP agent sends automatically generated notifications to SNMP managers.</td>
           <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/SNMPAgentMBean.html#SendAutomaticTrapsEnabled">More info</a></td>
+      </tr>
+  </tbody>
+</table>
+<p><a id="SNMPAgentDeployment">&nbsp;</a>
+<p>
+<h2 id="snmpagentdeployment">SNMPAgentDeployment</h2>
+<p><b>References to this type</b>:</p>
+<ul>
+<li>Configuration -&gt; Diagnostics -&gt; SNMP Agent Deployments</li>
+</ul>
+<table>
+  <thead>
+      <tr>
+          <th>Property Name</th>
+          <th>Label</th>
+          <th>Tab Name</th>
+          <th>Description</th>
+          <th>MBean Reference</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>AuthenticationProtocol</td>
+          <td>Authentication Protocol</td>
+          <td>General</td>
+          <td>The protocol that this SNMP agent uses to ensure that only authorized users can request or receive information about your WebLogic Server domain.</td>
+          <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/SNMPAgentDeploymentMBean.html#AuthenticationProtocol">More info</a></td>
+      </tr>
+      <tr>
+          <td>Enabled</td>
+          <td>Enabled</td>
+          <td>General</td>
+          <td>Specifies whether this SNMP agent is enabled.</td>
+          <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/SNMPAgentDeploymentMBean.html#Enabled">More info</a></td>
+      </tr>
+      <tr>
+          <td>InformEnabled</td>
+          <td>Inform Enabled</td>
+          <td>General</td>
+          <td>Configures this SNMP agent to send notifications as an INFORM instead of a TRAP.</td>
+          <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/SNMPAgentDeploymentMBean.html#InformEnabled">More info</a></td>
+      </tr>
+      <tr>
+          <td>InformRetryInterval</td>
+          <td>Inform Retry Interval</td>
+          <td>General</td>
+          <td>The number of milliseconds that this SNMP agent will wait for a response to an INFORM notification.</td>
+          <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/SNMPAgentDeploymentMBean.html#InformRetryInterval">More info</a></td>
+      </tr>
+      <tr>
+          <td>ListenAddress</td>
+          <td>Listen Address</td>
+          <td>General</td>
+          <td>The listen address on which you want this SNMP agent to listen for incoming requests from SNMP managers that use the UDP protocol.</td>
+          <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/SNMPAgentDeploymentMBean.html#ListenAddress">More info</a></td>
+      </tr>
+      <tr>
+          <td>LocalizedKeyCacheInvalidationInterval</td>
+          <td>Localized Key Cache Invalidation Interval</td>
+          <td>General</td>
+          <td>The number of milliseconds after which WebLogic Server invalidates its cache of SNMP security keys.</td>
+          <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/SNMPAgentDeploymentMBean.html#LocalizedKeyCacheInvalidationInterval">More info</a></td>
+      </tr>
+      <tr>
+          <td>MasterAgentXPort</td>
+          <td>Master Agent XPort</td>
+          <td>General</td>
+          <td>The port that this SNMP agent uses to communicate with its subagents.</td>
+          <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/SNMPAgentDeploymentMBean.html#MasterAgentXPort">More info</a></td>
+      </tr>
+      <tr>
+          <td>MaxInformRetryCount</td>
+          <td>Max Inform Retry Count</td>
+          <td>General</td>
+          <td>The maximum number of times that this SNMP agent will resend INFORM notifications for which it has not received a response.</td>
+          <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/SNMPAgentDeploymentMBean.html#MaxInformRetryCount">More info</a></td>
+      </tr>
+      <tr>
+          <td>Name</td>
+          <td>Name</td>
+          <td>General</td>
+          <td>The user-specified name of this MBean instance.</td>
+          <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/SNMPAgentDeploymentMBean.html#Name">More info</a></td>
+      </tr>
+      <tr>
+          <td>PrivacyProtocol</td>
+          <td>Privacy Protocol</td>
+          <td>General</td>
+          <td>The protocol that this SNMP agent uses to encrypt and unencrypt messages.</td>
+          <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/SNMPAgentDeploymentMBean.html#PrivacyProtocol">More info</a></td>
+      </tr>
+      <tr>
+          <td>SNMPAccessForUserMBeansEnabled</td>
+          <td>SNMP Access For User MBeans Enabled</td>
+          <td>General</td>
+          <td>Configures this SNMP agent to provide read-only access to MBean types that you have created and registered (custom MBeans).</td>
+          <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/SNMPAgentDeploymentMBean.html#SNMPAccessForUserMBeansEnabled">More info</a></td>
+      </tr>
+      <tr>
+          <td>SNMPEngineId</td>
+          <td>SNMP Engine Id</td>
+          <td>General</td>
+          <td>An identifier for this SNMP agent that is unique amongst all other SNMP agents in the current WebLogic Server domain.</td>
+          <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/SNMPAgentDeploymentMBean.html#SNMPEngineId">More info</a></td>
+      </tr>
+      <tr>
+          <td>SNMPPort</td>
+          <td>SNMP UDP Port</td>
+          <td>General</td>
+          <td>The port on which you want this SNMP agent to listen for incoming requests from SNMP managers that use the UDP protocol.</td>
+          <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/SNMPAgentDeploymentMBean.html#SNMPPort">More info</a></td>
+      </tr>
+      <tr>
+          <td>SNMPTrapVersion</td>
+          <td>SNMP Trap Version</td>
+          <td>General</td>
+          <td>The SNMP notification version that this SNMP agent generates.</td>
+          <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/SNMPAgentDeploymentMBean.html#SNMPTrapVersion">More info</a></td>
+      </tr>
+      <tr>
+          <td>SendAutomaticTrapsEnabled</td>
+          <td>Send Automatic Traps Enabled</td>
+          <td>General</td>
+          <td>Specifies whether this SNMP agent sends automatically generated notifications to SNMP managers.</td>
+          <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/SNMPAgentDeploymentMBean.html#SendAutomaticTrapsEnabled">More info</a></td>
+      </tr>
+      <tr>
+          <td>Targets</td>
+          <td>Targets</td>
+          <td>Targets</td>
+          <td>You must select a target on which an MBean will be deployed from this list of the targets in the current domain on which this item can be deployed.</td>
+          <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/SNMPAgentDeploymentMBean.html#Targets">More info</a></td>
       </tr>
   </tbody>
 </table>
@@ -33507,6 +36954,11 @@ The Map of the Console is generated from the latest available release of WebLogi
 <p><a id="SNMPAttributeChange">&nbsp;</a>
 <p>
 <h2 id="snmpattributechange">SNMPAttributeChange</h2>
+<p><b>References to this type</b>:</p>
+<ul>
+<li>Configuration -&gt; Diagnostics -&gt; Domain SNMP Agent -&gt; SNMP Attribute Changes</li>
+<li>Configuration -&gt; Diagnostics -&gt; SNMP Agent Deployments -&gt; SNMP Attribute Changes</li>
+</ul>
 <table>
   <thead>
       <tr>
@@ -33558,6 +37010,11 @@ The Map of the Console is generated from the latest available release of WebLogi
 <p><a id="SNMPCounterMonitor">&nbsp;</a>
 <p>
 <h2 id="snmpcountermonitor">SNMPCounterMonitor</h2>
+<p><b>References to this type</b>:</p>
+<ul>
+<li>Configuration -&gt; Diagnostics -&gt; Domain SNMP Agent -&gt; SNMP Counter Monitors</li>
+<li>Configuration -&gt; Diagnostics -&gt; SNMP Agent Deployments -&gt; SNMP Counter Monitors</li>
+</ul>
 <table>
   <thead>
       <tr>
@@ -33637,6 +37094,11 @@ The Map of the Console is generated from the latest available release of WebLogi
 <p><a id="SNMPGaugeMonitor">&nbsp;</a>
 <p>
 <h2 id="snmpgaugemonitor">SNMPGaugeMonitor</h2>
+<p><b>References to this type</b>:</p>
+<ul>
+<li>Configuration -&gt; Diagnostics -&gt; Domain SNMP Agent -&gt; SNMP Gauge Monitors</li>
+<li>Configuration -&gt; Diagnostics -&gt; SNMP Agent Deployments -&gt; SNMP Gauge Monitors</li>
+</ul>
 <table>
   <thead>
       <tr>
@@ -33709,6 +37171,11 @@ The Map of the Console is generated from the latest available release of WebLogi
 <p><a id="SNMPLogFilter">&nbsp;</a>
 <p>
 <h2 id="snmplogfilter">SNMPLogFilter</h2>
+<p><b>References to this type</b>:</p>
+<ul>
+<li>Configuration -&gt; Diagnostics -&gt; SNMP Agent Deployments -&gt; SNMP Log Filters</li>
+<li>Configuration -&gt; Diagnostics -&gt; Domain SNMP Agent -&gt; SNMP Log Filters</li>
+</ul>
 <table>
   <thead>
       <tr>
@@ -33774,6 +37241,11 @@ The Map of the Console is generated from the latest available release of WebLogi
 <p><a id="SNMPProxy">&nbsp;</a>
 <p>
 <h2 id="snmpproxy">SNMPProxy</h2>
+<p><b>References to this type</b>:</p>
+<ul>
+<li>Configuration -&gt; Diagnostics -&gt; Domain SNMP Agent -&gt; SNMP Proxies</li>
+<li>Configuration -&gt; Diagnostics -&gt; SNMP Agent Deployments -&gt; SNMP Proxies</li>
+</ul>
 <table>
   <thead>
       <tr>
@@ -33839,6 +37311,11 @@ The Map of the Console is generated from the latest available release of WebLogi
 <p><a id="SNMPStringMonitor">&nbsp;</a>
 <p>
 <h2 id="snmpstringmonitor">SNMPStringMonitor</h2>
+<p><b>References to this type</b>:</p>
+<ul>
+<li>Configuration -&gt; Diagnostics -&gt; SNMP Agent Deployments -&gt; SNMP String Monitors</li>
+<li>Configuration -&gt; Diagnostics -&gt; Domain SNMP Agent -&gt; SNMP String Monitors</li>
+</ul>
 <table>
   <thead>
       <tr>
@@ -33918,6 +37395,11 @@ The Map of the Console is generated from the latest available release of WebLogi
 <p><a id="SNMPTrapDestination">&nbsp;</a>
 <p>
 <h2 id="snmptrapdestination">SNMPTrapDestination</h2>
+<p><b>References to this type</b>:</p>
+<ul>
+<li>Configuration -&gt; Diagnostics -&gt; Domain SNMP Agent -&gt; SNMP Trap Destinations</li>
+<li>Configuration -&gt; Diagnostics -&gt; SNMP Agent Deployments -&gt; SNMP Trap Destinations</li>
+</ul>
 <table>
   <thead>
       <tr>
@@ -35927,6 +39409,13 @@ The Map of the Console is generated from the latest available release of WebLogi
           <td>Debug.All</td>
           <td>Debug EJB locking</td>
           <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/ServerDebugMBean.html#DebugEjbLocking">More info</a></td>
+      </tr>
+      <tr>
+          <td>DebugEjbMdbAqMessageRecovery</td>
+          <td>DebugEjbMdbAqMessageRecovery</td>
+          <td>Debug.All</td>
+          <td>Debug EJB MDB AQ JMS advanced message recovery processing</td>
+          <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/ServerDebugMBean.html#DebugEjbMdbAqMessageRecovery">More info</a></td>
       </tr>
       <tr>
           <td>DebugEjbMdbConnection</td>
@@ -38204,6 +41693,20 @@ The Map of the Console is generated from the latest available release of WebLogi
           <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/DomainMBean.html#AdministrationPortEnabled">More info</a></td>
       </tr>
       <tr>
+          <td>DomainKeystoresClientCertAlias</td>
+          <td>Domain Keystores Client Certificate Alias</td>
+          <td>Security.SSL</td>
+          <td>Gets the alias of the client certificate for this server when SSLMBean.KeyStores is set to &ldquo;DomainKeystores&rdquo;.</td>
+          <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/SSLMBean.html#DomainKeystoresClientCertAlias">More info</a></td>
+      </tr>
+      <tr>
+          <td>DomainKeystoresServerCertAlias</td>
+          <td>Domain Keystores Server Certificate Alias</td>
+          <td>Security.SSL</td>
+          <td>Gets the alias of the server certificate for this server when SSLMBean.KeyStores is set to &ldquo;DomainKeystores&rdquo;.</td>
+          <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/SSLMBean.html#DomainKeystoresServerCertAlias">More info</a></td>
+      </tr>
+      <tr>
           <td>DomainLogBroadcastFilter</td>
           <td>Domain Log Broadcast Filter</td>
           <td>Logging.General</td>
@@ -38860,6 +42363,13 @@ The Map of the Console is generated from the latest available release of WebLogi
           <td>Protocols.Http</td>
           <td>The maximum post size this server allows for reading HTTP POST and PUT data in a servlet request.</td>
           <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/WebServerMBean.html#MaxPostSize">More info</a></td>
+      </tr>
+      <tr>
+          <td>MaxRequestParameterCount</td>
+          <td>Max Request Parameter Count</td>
+          <td>Protocols.Http</td>
+          <td>Max Request Parameter Count this server allows for reading maximum HTTP POST Parameters count in a servlet request.</td>
+          <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/WebServerMBean.html#MaxRequestParameterCount">More info</a></td>
       </tr>
       <tr>
           <td>MaxRetrySecondsBeforeTLOGFail</td>
@@ -40474,6 +43984,27 @@ The Map of the Console is generated from the latest available release of WebLogi
           <td>Networking</td>
           <td>The URL that clients use to connect to this server&rsquo;s default network channel.</td>
           <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/ServerRuntimeMBean.html#DefaultURL">More info</a></td>
+      </tr>
+      <tr>
+          <td>ExecuteThreadActiveCount</td>
+          <td>Active Execute Threads</td>
+          <td>Threads</td>
+          <td>The number of active execute threads in the pool.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>ExecuteThreadIdleCount</td>
+          <td>Idle ExecuteThreads</td>
+          <td>Threads</td>
+          <td>The number of idle threads in the pool.</td>
+          <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/ThreadPoolRuntimeMBean.html#ExecuteThreadIdleCount">More info</a></td>
+      </tr>
+      <tr>
+          <td>ExecuteThreadTotalCount</td>
+          <td>Total Execute Threads</td>
+          <td>Threads</td>
+          <td>The total number of threads in the pool.</td>
+          <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/ThreadPoolRuntimeMBean.html#ExecuteThreadTotalCount">More info</a></td>
       </tr>
       <tr>
           <td>HealthState</td>
@@ -42118,6 +45649,13 @@ The Map of the Console is generated from the latest available release of WebLogi
           <td>Debug.All</td>
           <td>Debug EJB locking</td>
           <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/ServerDebugMBean.html#DebugEjbLocking">More info</a></td>
+      </tr>
+      <tr>
+          <td>DebugEjbMdbAqMessageRecovery</td>
+          <td>DebugEjbMdbAqMessageRecovery</td>
+          <td>Debug.All</td>
+          <td>Debug EJB MDB AQ JMS advanced message recovery processing</td>
+          <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/ServerDebugMBean.html#DebugEjbMdbAqMessageRecovery">More info</a></td>
       </tr>
       <tr>
           <td>DebugEjbMdbConnection</td>
@@ -44388,6 +47926,20 @@ The Map of the Console is generated from the latest available release of WebLogi
           <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/DomainMBean.html#AdministrationPortEnabled">More info</a></td>
       </tr>
       <tr>
+          <td>DomainKeystoresClientCertAlias</td>
+          <td>Domain Keystores Client Certificate Alias</td>
+          <td>Security.SSL</td>
+          <td>Gets the alias of the client certificate for this server when SSLMBean.KeyStores is set to &ldquo;DomainKeystores&rdquo;.</td>
+          <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/SSLMBean.html#DomainKeystoresClientCertAlias">More info</a></td>
+      </tr>
+      <tr>
+          <td>DomainKeystoresServerCertAlias</td>
+          <td>Domain Keystores Server Certificate Alias</td>
+          <td>Security.SSL</td>
+          <td>Gets the alias of the server certificate for this server when SSLMBean.KeyStores is set to &ldquo;DomainKeystores&rdquo;.</td>
+          <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/SSLMBean.html#DomainKeystoresServerCertAlias">More info</a></td>
+      </tr>
+      <tr>
           <td>DomainLogBroadcastFilter</td>
           <td>Domain Log Broadcast Filter</td>
           <td>Logging.General</td>
@@ -45030,6 +48582,13 @@ The Map of the Console is generated from the latest available release of WebLogi
           <td>Protocols.Http</td>
           <td>The maximum post size this server allows for reading HTTP POST and PUT data in a servlet request.</td>
           <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/WebServerMBean.html#MaxPostSize">More info</a></td>
+      </tr>
+      <tr>
+          <td>MaxRequestParameterCount</td>
+          <td>Max Request Parameter Count</td>
+          <td>Protocols.Http</td>
+          <td>Max Request Parameter Count this server allows for reading maximum HTTP POST Parameters count in a servlet request.</td>
+          <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/WebServerMBean.html#MaxRequestParameterCount">More info</a></td>
       </tr>
       <tr>
           <td>MaxRetrySecondsBeforeTLOGFail</td>
@@ -51349,6 +54908,13 @@ The Map of the Console is generated from the latest available release of WebLogi
           <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/VirtualHostMBean.html#MaxPostTimeSecs">More info</a></td>
       </tr>
       <tr>
+          <td>MaxRequestParameterCount</td>
+          <td>Max Request Parameter Count</td>
+          <td>Http</td>
+          <td>Max Request Parameter Count this server allows for reading maximum HTTP POST Parameters count in a servlet request.</td>
+          <td><a href="https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/mbeans/VirtualHostMBean.html#MaxRequestParameterCount">More info</a></td>
+      </tr>
+      <tr>
           <td>MaxSingleHeaderSize</td>
           <td>Max Single Header Size</td>
           <td>Http</td>
@@ -56524,6 +60090,7 @@ The Map of the Console is generated from the latest available release of WebLogi
 <li>Monitoring -&gt; Services -&gt; Data Sources -&gt; JDBC Data Source Runtime MBeans -&gt; JDBCDataSourceRuntime -&gt; Work Manager Runtimes</li>
 <li>Monitoring -&gt; Deployments -&gt; Application Runtime Data -&gt; Component Runtimes -&gt; JDBCMultiDataSourceRuntime -&gt; Work Manager Runtimes</li>
 <li>Monitoring -&gt; Deployments -&gt; Application Runtime Data -&gt; Component Runtimes -&gt; ComponentConcurrentRuntime -&gt; Work Manager Runtimes</li>
+<li>Monitoring -&gt; Deployments -&gt; Application Runtime Data -&gt; Component Runtimes -&gt; JDBCOracleDataSourceRuntime -&gt; Work Manager Runtimes</li>
 <li>Monitoring -&gt; Deployments -&gt; Application Runtime Data -&gt; Component Runtimes -&gt; Work Manager Runtimes</li>
 <li>Monitoring -&gt; Deployments -&gt; Application Runtime Data -&gt; Component Runtimes -&gt; JDBCDataSourceRuntime -&gt; Work Manager Runtimes</li>
 <li>Monitoring -&gt; Deployments -&gt; Application Runtime Data -&gt; Component Runtimes -&gt; SCASpringComponentRuntime -&gt; Work Manager Runtimes</li>
@@ -58451,6 +62018,7 @@ The Map of the Console is generated from the latest available release of WebLogi
 <p><a id="XACMLAuthorizerSecurityData">&nbsp;</a>
 <p>
 <h2 id="xacmlauthorizersecuritydata">XACMLAuthorizerSecurityData</h2>
+<p><b>Actions</b>: Import, Export</p>
 <p><b>References to this type</b>:</p>
 <ul>
 <li>Security Data -&gt; Realms -&gt; Authorizers -&gt; XACMLAuthorizerSecurityData</li>
@@ -58547,6 +62115,7 @@ The Map of the Console is generated from the latest available release of WebLogi
 <p><a id="XACMLRoleMapperSecurityData">&nbsp;</a>
 <p>
 <h2 id="xacmlrolemappersecuritydata">XACMLRoleMapperSecurityData</h2>
+<p><b>Actions</b>: Import, Export</p>
 <p><b>References to this type</b>:</p>
 <ul>
 <li>Security Data -&gt; Realms -&gt; Role Mappers -&gt; XACMLRoleMapperSecurityData</li>

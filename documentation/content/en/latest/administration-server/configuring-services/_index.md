@@ -1,5 +1,5 @@
 ---
-weight: 181
+weight: 192
 title: Configuring Services
 ---
 
@@ -9,7 +9,7 @@ Use WebLogic Remote Console to manage services in a WebLogic Server domain.
 
 ## Data Sources {#GUID-D92E5FE4-548C-49E1-9A77-A61A59039D21}
 
-You can connect WebLogic Server to databases by adding JDBC data sources to your domain. A data source is a Java EE standard method of configuring connectivity to a database.
+You can connect WebLogic Server to databases by adding JDBC data sources to your domain. A data source is a Jakarta EE standard method of configuring connectivity to a database.
 
 Each WebLogic data source contains a pool of database connections. Applications look up the data source on the JNDI tree or in the local application context and then use a database connection from the pool of connections. Data sources and their connection pools provide connection management processes that help keep your system running efficiently.
 
@@ -67,7 +67,7 @@ If you need a JDBC driver that is not installed with WebLogic Server, you must i
 
 6.  Select **Generic Data Source** from the **Data Source Type** drop-down list.
 
-7.  From the **Database Type** drop-down list, select the database management system \(DBMS\) of the database that you want to connect to.
+7.  From the **Database Type** drop-down list, select the database management system \(DBMS\) of the database that you want to connect to. If your DBMS is not listed, select **Other**.
 
 8.  From the **Database Driver** drop-down list, select a JDBC driver.
 
@@ -447,7 +447,7 @@ The transaction protocol for a JDBC data source determines how connections from 
 
 WebLogic Server provides an enterprise-class messaging system that fully supports the Java Messaging Service \(JMS\) specification and which also provides numerous extensions that go beyond the standard JMS APIs.
 
-It is tightly integrated into the WebLogic Server platform, allowing you to build highly secure Java EE applications that can be easily monitored and administered through WebLogic Remote Console. In addition to fully supporting XA transactions, WebLogic Server messaging also features high availability through its clustering and service migration features while also providing seamless interoperability with other versions of WebLogic Server and third-party messaging vendors.
+It is tightly integrated into the WebLogic Server platform, allowing you to build highly secure Jakarta EE applications that can be easily monitored and administered through WebLogic Remote Console. In addition to fully supporting XA transactions, WebLogic Server messaging also features high availability through its clustering and service migration features while also providing seamless interoperability with other versions of WebLogic Server and third-party messaging vendors.
 
 WebLogic Server messaging is comprised of these areas:
 
@@ -532,11 +532,11 @@ For more information, see [Monitoring JMS Statistics and Managing Messages](http
 
 ### Create a JMS System Module {#GUID-ABB99866-324C-4179-A91C-A97B6D63EC6E}
 
-JMS resources are configured and stored as modules similar to standard Java EE modules. Such resources include queues, topics, connection factories, templates, destination keys, quota, distributed queues, distributed topics, foreign servers, and JMS store-and-forward \(SAF\) parameters.
+JMS resources are configured and stored as modules similar to standard Jakarta EE modules. Such resources include queues, topics, connection factories, templates, destination keys, quota, distributed queues, distributed topics, foreign servers, and JMS store-and-forward \(SAF\) parameters.
 
 System modules are globally available for targeting to servers and clusters configured in the domain, and therefore are available to all applications deployed on the same targets and to client applications.
 
-JMS configuration resources can also be managed as deployable application modules, either with a Java EE application as a packaged module, which is available only to the enclosing application, or as a stand-alone module that provides global access to the resources defined in that module.
+JMS configuration resources can also be managed as deployable application modules, either with a Jakarta EE application as a packaged module, which is available only to the enclosing application, or as a stand-alone module that provides global access to the resources defined in that module.
 
 For more information, see [Overview of JMS Modules](https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=JMSAD-GUID-47659F77-3B92-44E1-9A2E-EABD2F6FFB8F) in **Administering JMS Resources for Oracle WebLogic Server**.
 
@@ -904,6 +904,13 @@ Displays the contents of a JMS message.
 
 **Note**: For larger messages, you will need to export the message to a file to view its full contents. WebLogic Remote Console will indicate when a message has been truncated.
 
+-   If a message is less than 10,000 characters, WebLogic Remote Console will show the entire message body.
+
+-   If a message is between 10,000 - 200,000 characters, WebLogic Remote Console will show the first 10,000 characters of the message.
+
+-   If a message is more than 200,000 characters, WebLogic Remote Console will not show *any* of the message body.
+
+
 </td></tr></tbody>
 </table>
 
@@ -913,9 +920,9 @@ Table 2. JMS Message Actions. Actions that you can perform on JMS messages.
 
 You can use WebLogic Remote Console to view objects in the Java Naming and Directory Interface \(JNDI\) table.
 
-WebLogic Server implements the JNDI of the Java EE platform as a means to provide a standard, unified interface to multiple naming and directory services in an enterprise. See [Understanding WebLogic JNDI](https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=WJNDI-GUID-DED922F8-6F8F-41C3-96DF-3D64B01250CC) in **Developing JNDI Applications for Oracle WebLogic Server**.
+WebLogic Server implements the JNDI of the Jakarta EE platform as a means to provide a standard, unified interface to multiple naming and directory services in an enterprise. See [Understanding WebLogic JNDI](https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=WJNDI-GUID-DED922F8-6F8F-41C3-96DF-3D64B01250CC) in **Developing JNDI Applications for Oracle WebLogic Server**.
 
-You can load WebLogic Server Java EE services and components, such as RMI, JMS, EJBs, and JDBC Data Sources, in the JNDI table. Typically, these objects are bound in the JNDI table when you configure their **JNDI Name** attribute and deploy them to the server.
+You can load WebLogic Server Jakarta EE services and components, such as RMI, JMS, EJBs, and JDBC Data Sources, in the JNDI table. Typically, these objects are bound in the JNDI table when you configure their **JNDI Name** attribute and deploy them to the server.
 
 1.  In the **Monitoring Tree**, go to **Environment**, then **Servers**, then *myServer*.
 
@@ -1072,13 +1079,13 @@ A WebLogic Server instance can only have one XML entity cache associated with it
 5.  Click **Save**.
 
 
-## Configure Access to JavaMail {#GUID-FACD70A2-6CEF-40A0-9A71-DBC51EF8A869}
+## Configure Access to Jakarta Mail {#GUID-FACD70A2-6CEF-40A0-9A71-DBC51EF8A869}
 
-You can configure a mail server or establish user credentials for an existing mail server. Mail sessions and the JavaMail API do not provide mail server functions. They merely enable applications to send and receive data from an existing mail server.
+You can configure a mail server or establish user credentials for an existing mail server. Mail sessions and the Jakarta Mail API do not provide mail server functions. They merely enable applications to send and receive data from an existing mail server.
 
-JavaMail APIs provide applications and other Java EE modules with access to Internet Message Access Protocol \(IMAP\) and Simple Mail Transfer Protocol \(SMTP\) capable mail servers on your network or the internet.
+Jakarta Mail APIs provide applications and other Jakarta EE modules with access to Internet Message Access Protocol \(IMAP\) and Simple Mail Transfer Protocol \(SMTP\) capable mail servers on your network or the internet.
 
-In the reference implementation of JavaMail, applications must instantiate <code>javax.mail.Session</code> objects, which designate mail hosts, transport and store protocols, and a default mail user for connecting to a mail server. You can use WebLogic Remote Console to create a mail session, which configures a <code>javax.mail.Session</code> object and registers it in the WebLogic Server JNDI table. Applications access the mail session through JNDI instead of instantiating their own <code>javax.mail.Session</code> object.
+In the reference implementation of Jakarta Mail, applications must instantiate <code>jakarta.mail.Session</code> objects, which designate mail hosts, transport and store protocols, and a default mail user for connecting to a mail server. You can use WebLogic Remote Console to create a mail session, which configures a <code>jakarta.mail.Session</code> object and registers it in the WebLogic Server JNDI table. Applications access the mail session through JNDI instead of instantiating their own <code>jakarta.mail.Session</code> object.
 
 1.  In the **Edit Tree**, go to **Services**, then **Mail Sessions**.
 
@@ -1095,7 +1102,7 @@ In the reference implementation of JavaMail, applications must instantiate <code
 
 4.  Click **Create**.
 
-5.  In the **Session Username** field, specify the user account to use to create an authenticated JavaMail session. Then, in the **Session Password** field, enter the password for the user account.
+5.  In the **Session Username** field, specify the user account to use to create an authenticated Jakarta Mail session. Then, in the **Session Password** field, enter the password for the user account.
 
     If you do not specify a user account, it is assumed the session is not to be authenticated.
 
@@ -1113,7 +1120,7 @@ In the reference implementation of JavaMail, applications must instantiate <code
 
     
 
-    Only specify a property if you want to override the default value. If you do not specify any properties, the mail session will use the JavaMail default property values.
+    Only specify a property if you want to override the default value. If you do not specify any properties, the mail session will use the Jakarta Mail default property values.
 
     {{< /alert >}}
 
@@ -1126,7 +1133,7 @@ In the reference implementation of JavaMail, applications must instantiate <code
 
     4.  Click **Save**.
 
-    [Table 3](#TABLE_H4B_RWG_QBC) describes the valid properties and default values, derived from the JavaMail API Design Specification.
+    [Table 3](#TABLE_H4B_RWG_QBC) describes the valid properties and default values, derived from the Jakarta Mail API Design Specification.
 
 <table id="TABLE_H4B_RWG_QBC"><thead><tr><th>
 
@@ -1230,7 +1237,7 @@ The default return address. For example, <code>mail.from=master@mydom.com</code>
 
 </td><td>
 
-Set to <code>True</code> to enable JavaMail debug output.
+Set to <code>True</code> to enable Jakarta Mail debug output.
 
 </td><td>
 
@@ -1239,7 +1246,7 @@ Set to <code>True</code> to enable JavaMail debug output.
 </td></tr></tbody>
 </table>
 
-Table 3. Java Mail Properties. The valid properties and default values, derived from the JavaMail API Design Specification.{{< alert title="Note" color="primary" >}}
+Table 3. Java Mail Properties. The valid properties and default values, derived from the Jakarta Mail API Design Specification.{{< alert title="Note" color="primary" >}}
 
     
 
