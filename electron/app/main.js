@@ -100,7 +100,11 @@ let cbe;
       app.setPath('userData', process.env.CONSOLE_USER_DATA_DIR);
     }
     else {
-      app.setPath('userData', `${app.getPath('appData')}/weblogic-remote-console`);
+      const defaultUserDataDir = `${app.getPath('appData')}/weblogic-remote-console`;
+      if (!fs.existsSync(defaultUserDataDir)) {
+        fs.mkdirSync(defaultUserDataDir, { recursive: true });
+      }
+      app.setPath('userData', defaultUserDataDir);
     }
   }
 
