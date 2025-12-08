@@ -77,8 +77,6 @@ weblogic-toolkit-ui/
 upload
 upload/**
 
-wls-remote-console-helper-war/signin/package-lock.json
-wls-remote-console-helper-war/ui/package-lock.json
 /bin/
 
 wlsrc

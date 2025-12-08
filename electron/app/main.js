@@ -94,15 +94,12 @@ let cbe;
 
 (() => {
   function updateUserDataPath() {
-    if (process.env.CONSOLE_USER_DATA_DIR) {
-      if (!fs.existsSync(process.env.CONSOLE_USER_DATA_DIR)) {
-        fs.mkdirSync(process.env.CONSOLE_USER_DATA_DIR, { recursive: true });
-      }
+    if (process.env.CONSOLE_USER_DATA_DIR)
       app.setPath('userData', process.env.CONSOLE_USER_DATA_DIR);
-    }
-    else {
+    else
       app.setPath('userData', `${app.getPath('appData')}/weblogic-remote-console`);
-    }
+    if (!fs.existsSync(app.getPath('userData')))
+      fs.mkdirSync(app.getPath('userData'), { recursive: true });
   }
 
   updateUserDataPath();

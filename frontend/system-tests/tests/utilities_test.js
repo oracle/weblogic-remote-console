@@ -333,7 +333,9 @@ describe.only('Test Suite: utilities_test for Additions/Modification/Deletion/Vi
             await admin.goToNavTreeLevelOneLink(driver,"configuration","Environment");
             await driver.sleep(1200);
             console.log("Enter Element Search for AdminServer");
-            element = driver.findElement(By.xpath("//input[@type='text']"));
+            element = await driver.wait(until.elementLocated(By.xpath("//input[@type='search']")), 10000);
+            await driver.wait(until.elementIsVisible(element), 10000);
+            await driver.wait(until.elementIsEnabled(element), 10000);
             await element.sendKeys("Admin");
             await element.sendKeys(Key.ENTER);
             await driver.sleep(2400);
@@ -381,7 +383,9 @@ describe.only('Test Suite: utilities_test for Additions/Modification/Deletion/Vi
             await admin.goToNavStripImageMenuLink(driver,"configuration");
             await driver.sleep(1200);
             console.log("Enter Element Search for Server");
-            element = driver.findElement(By.xpath("//input[@type='text']"));
+            element = await driver.wait(until.elementLocated(By.xpath("//input[@type='search']")), 10000);
+            await driver.wait(until.elementIsVisible(element), 10000);
+            await driver.wait(until.elementIsEnabled(element), 10000);
             await element.sendKeys("Server");
             await element.sendKeys(Key.ENTER);
             await driver.sleep(8400);

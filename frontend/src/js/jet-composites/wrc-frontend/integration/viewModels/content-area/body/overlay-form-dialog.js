@@ -785,7 +785,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraydataprovider', 'oj
         const isUseCheckBoxesForBooleans = PageDefinitionFormLayouts.hasFormLayoutType(pdjData, 'useCheckBoxesForBooleans');
         const isSingleColumn = PageDefinitionFormLayouts.hasFormLayoutType(pdjData, 'singleColumn');
         const hasFormLayoutSections = PageDefinitionFormLayouts.hasFormLayoutSections(pdjData);
-        const isReadOnly = (self.readonly() && (['configuration','view','security','composite'].indexOf(viewParams.perspective.id) !== -1));
+        const isReadOnly = (self.readonly() && (['configuration','view','composite'].indexOf(viewParams.perspective.id) !== -1));
 
         if (hasFormLayoutSections) {
           formLayout = PageDefinitionFormLayouts.createSectionedFormLayout({name: 'overlay-wlsform', labelWidthPcnt: '45%', maxColumns: '1', isReadOnly: isReadOnly, isSingleColumn: isSingleColumn}, pdjTypes, rdjData, pdjData, populateFormLayout);

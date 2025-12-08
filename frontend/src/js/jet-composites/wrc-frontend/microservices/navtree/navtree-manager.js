@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2020, 2024, Oracle Corporation and/or its affiliates.
+ * Copyright (c) 2020, 2025, Oracle Corporation and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
@@ -157,10 +157,10 @@ define([
                   childrenHaveMutated = true;
                 }
 
-                // if node is not a group only process first 9 children as the list will be ellipsized,
+                // if node is not a group only process first 14 children as the list will be ellipsized,
                 // this will avoid processing large lists
                 if (
-                  (node.children().length < 9 || node.type !== 'group') &&
+                  (node.children().length < 14 || node.type !== 'group') &&
                   node.children()[ix].identifier !== childNode.identifier
                 ) {
                   node.children()[ix] = childNode;
@@ -185,7 +185,7 @@ define([
 
           if (node.children) {
             const childLen = node.children().length;
-            if (childLen > 9 && 'collection' === node.type) {
+            if (childLen > 14 && 'collection' === node.type) {
 
               // Find selected item in the children
               var selectedNode;
@@ -204,7 +204,7 @@ define([
               });
 
               // Shorten the list of children
-              node.children.splice(9);
+              node.children.splice(14);
 
               // Remove extra nodes in the list of children to prevent duplicates
               foundExtraNodes.forEach(extra => {

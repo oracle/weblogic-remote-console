@@ -242,12 +242,12 @@ set -- "$@" -c electron-builder-custom.json
 
 ./gen-messages "$extra"/resources/nls ../frontend/src/resources/nls/frontend*.properties
 
-set -- --$buildarch "$@"
-
 while [ "$1" = -- ]
 do
   shift
 done
+
+set -- --$buildarch "$@"
 
 npx electron-builder -p never "$@"
 
