@@ -11,7 +11,11 @@ WDT model files are simplistic representations of a domain. They are generally w
 
 {{< alert title="Note" color="primary" >}}
 
- WebLogic Remote Console does not validate the data that you insert into WDT model files. It will accept changes or values that are invalid and that will present problems when the model file is used to build or update a domain.
+
+
+WebLogic Remote Console does not validate the data that you insert into WDT model files. It will accept changes or values that are invalid and that will present problems when the model file is used to build or update a domain.
+
+Use the Validate Model tool in WebLogic Deploy Tooling to ensure your model will generate a usable domain. See **Validate Model Tool** in [WebLogic Deploy Tooling](https://oracle.github.io/weblogic-deploy-tooling/) documentation.
 
 {{< /alert >}}
 

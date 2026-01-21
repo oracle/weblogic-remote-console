@@ -35,7 +35,7 @@ If you only want to raise a bug or file an enhancement request, you can stop her
   <meta itemprop="description" content="Contributions from the community to the WebLogic Remote Console project help us build a better experience together. You can contribute by raising a bug or enhancement request or by submitting pull requests to address an issue yourself.
 Open an issue in the WebLogic Remote Console GitHub repository that describes the issue you plan to address or the enhancement request.
 If you only want to raise a bug or file an enhancement request, you can stop here - you’re done! Thank you for helping to improve WebLogic Remote Console.">
-  <meta itemprop="wordCount" content="712">
+  <meta itemprop="wordCount" content="715">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Contribute to WebLogic Remote Console">
   <meta name="twitter:description" content="Contributions from the community to the WebLogic Remote Console project help us build a better experience together. You can contribute by raising a bug or enhancement request or by submitting pull requests to address an issue yourself.
@@ -70,14 +70,13 @@ If you only want to raise a bug or file an enhancement request, you can stop her
         <div class="dropdown">
   <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Releases</a>
   <ul class="dropdown-menu">
-    <li><a class="dropdown-item" href="/weblogic-remote-console/overview">Latest (v2.4.18)</a></li>
+    <li><a class="dropdown-item" href="/weblogic-remote-console/overview">Latest (v2.4.19)</a></li>
+    <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.18">v2.4.18</a></li>
     <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.17">v2.4.17</a></li>
     <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.16">v2.4.16</a></li>
     <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.15">v2.4.15</a></li>
     <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.14">v2.4.14</a></li>
     <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.13">v2.4.13</a></li>
-    <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.12">v2.4.12</a></li>
-    <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.11">v2.4.11</a></li>
     </ul>
 </div></li>
       <li class="td-light-dark-menu nav-item dropdown">
@@ -143,7 +142,7 @@ If you only want to raise a bug or file an enhancement request, you can stop her
     aria-label="Search this site…"
     autocomplete="off"
     
-    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.02f8aa39561ea342361c468546679f8f.json"
+    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.e023d507fa3df5b6368ccefb8fd9c7b8.json"
     data-offline-search-base-href="/"
     data-offline-search-max-results="10"
   >
@@ -168,7 +167,7 @@ If you only want to raise a bug or file an enhancement request, you can stop her
     aria-label="Search this site…"
     autocomplete="off"
     
-    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.02f8aa39561ea342361c468546679f8f.json"
+    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.e023d507fa3df5b6368ccefb8fd9c7b8.json"
     data-offline-search-base-href="/"
     data-offline-search-max-results="10"
   >
@@ -361,15 +360,15 @@ mvn --version
 node -v
 </code></pre></li>
 <li>
-<p>Install the Oracle JET 15.1.0 client libraries.</p>
+<p>Install the Oracle JET 19.0.0 client libraries.</p>
 <ul>
 <li>
 <p>In Windows environments, run:</p>
-<pre tabindex="0"><code>npm install --location=global @oracle/ojet-cli@~15.1.0
+<pre tabindex="0"><code>npm install --location=global @oracle/ojet-cli@~19.0.0
 </code></pre></li>
 <li>
 <p>In Linux or macOS environments, run:</p>
-<pre tabindex="0"><code>sudo npm install --location=global @oracle/ojet-cli@~15.1.0
+<pre tabindex="0"><code>sudo npm install --location=global @oracle/ojet-cli@~19.0.0
 </code></pre></li>
 </ul>
 <p>You can run <code>ojet &ndash;version</code> to verify it installed correctly.</p>
@@ -381,7 +380,7 @@ node -v
 <p>Open a command-line interface and navigate to the home directory of the cloned repository.</p>
 </li>
 <li>
-<p>Run <code>mvn clean install</code>.</p>
+<p><a id="step_lfx_pzz_yhc"></a>Run <code>mvn clean install</code>.</p>
 <p>After the build finishes, confirm that <code>/installer/target/console.zip</code> was created.</p>
 </li>
 <li>
@@ -402,7 +401,7 @@ node -v
 <p>You must have a modern internet browser installed to run WebLogic Remote Console in the browser.</p>
 <ol>
 <li>
-<p>Build WebLogic Remote Console from its source code. Follow the instructions at <a href="/weblogic-remote-console/set-console/contribute-wrc-repository/#GUID-39A8D735-4891-4F9D-87F3-7F216219F8D0">Build from Source</a>.</p>
+<p>Build WebLogic Remote Console from its source code. Follow the instructions at <a href="/weblogic-remote-console/set-console/contribute-wrc-repository/#GUID-39A8D735-4891-4F9D-87F3-7F216219F8D0">Build from Source</a> through step <a href="/weblogic-remote-console/set-console/contribute-wrc-repository/#step_lfx_pzz_yhc">5</a>.</p>
 </li>
 <li>
 <p>Copy <code>/installer/target/console.zip</code> to a new directory and extract its contents.</p>
@@ -441,7 +440,7 @@ node -v
         
       </div><div class="td-footer__center col-12 col-sm-4 py-2 order-sm-2">
         <span class="td-footer__copyright">&copy;
-    2020&ndash;2025
+    2020&ndash;2026
     <span class="td-footer__authors">Oracle | <a href="https://github.com/oracle/weblogic-remote-console/blob/main/LICENSE.txt">UPL 1.0</a></span></span><span class="td-footer__all_rights_reserved">All Rights Reserved</span>
       </div>
     </div>

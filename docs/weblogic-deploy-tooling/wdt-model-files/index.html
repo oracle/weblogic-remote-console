@@ -32,7 +32,7 @@ WDT model files are simplistic representations of a domain. They are generally w
   <meta itemprop="name" content="WDT Model Files">
   <meta itemprop="description" content="WDT metadata model files are descriptions of a WebLogic Server domain configuration. These models are not connected to a running WebLogic Server domain; you make edits to a model file and then use WebLogic Deploy Tooling (WDT) to build or modify live domains.
 WDT model files are simplistic representations of a domain. They are generally written in YAML but WebLogic Remote Console also accepts models in JSON format. For brevity, a WDT model file only describes departures from the default configuration.">
-  <meta itemprop="wordCount" content="1173">
+  <meta itemprop="wordCount" content="1200">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="WDT Model Files">
   <meta name="twitter:description" content="WDT metadata model files are descriptions of a WebLogic Server domain configuration. These models are not connected to a running WebLogic Server domain; you make edits to a model file and then use WebLogic Deploy Tooling (WDT) to build or modify live domains.
@@ -66,14 +66,13 @@ WDT model files are simplistic representations of a domain. They are generally w
         <div class="dropdown">
   <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Releases</a>
   <ul class="dropdown-menu">
-    <li><a class="dropdown-item" href="/weblogic-remote-console/overview">Latest (v2.4.18)</a></li>
+    <li><a class="dropdown-item" href="/weblogic-remote-console/overview">Latest (v2.4.19)</a></li>
+    <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.18">v2.4.18</a></li>
     <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.17">v2.4.17</a></li>
     <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.16">v2.4.16</a></li>
     <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.15">v2.4.15</a></li>
     <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.14">v2.4.14</a></li>
     <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.13">v2.4.13</a></li>
-    <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.12">v2.4.12</a></li>
-    <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.11">v2.4.11</a></li>
     </ul>
 </div></li>
       <li class="td-light-dark-menu nav-item dropdown">
@@ -139,7 +138,7 @@ WDT model files are simplistic representations of a domain. They are generally w
     aria-label="Search this site…"
     autocomplete="off"
     
-    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.02f8aa39561ea342361c468546679f8f.json"
+    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.e023d507fa3df5b6368ccefb8fd9c7b8.json"
     data-offline-search-base-href="/"
     data-offline-search-max-results="10"
   >
@@ -164,7 +163,7 @@ WDT model files are simplistic representations of a domain. They are generally w
     aria-label="Search this site…"
     autocomplete="off"
     
-    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.02f8aa39561ea342361c468546679f8f.json"
+    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.e023d507fa3df5b6368ccefb8fd9c7b8.json"
     data-offline-search-base-href="/"
     data-offline-search-max-results="10"
   >
@@ -328,7 +327,9 @@ WDT model files are simplistic representations of a domain. They are generally w
 <div class="alert alert-primary" role="alert">
 <h4 class="alert-heading">Note</h4>
 
-    WebLogic Remote Console does not validate the data that you insert into WDT model files. It will accept changes or values that are invalid and that will present problems when the model file is used to build or update a domain.
+    <p>WebLogic Remote Console does not validate the data that you insert into WDT model files. It will accept changes or values that are invalid and that will present problems when the model file is used to build or update a domain.</p>
+<p>Use the Validate Model tool in WebLogic Deploy Tooling to ensure your model will generate a usable domain. See <strong>Validate Model Tool</strong> in <a href="https://oracle.github.io/weblogic-deploy-tooling/">WebLogic Deploy Tooling</a> documentation.</p>
+
 
 </div>
 <h2 id="GUID-1416166A-7D57-4D8C-AB68-4D82914E59FB">WDT Model</h2>
@@ -539,7 +540,7 @@ appDeployments:
         
       </div><div class="td-footer__center col-12 col-sm-4 py-2 order-sm-2">
         <span class="td-footer__copyright">&copy;
-    2020&ndash;2025
+    2020&ndash;2026
     <span class="td-footer__authors">Oracle | <a href="https://github.com/oracle/weblogic-remote-console/blob/main/LICENSE.txt">UPL 1.0</a></span></span><span class="td-footer__all_rights_reserved">All Rights Reserved</span>
       </div>
     </div>

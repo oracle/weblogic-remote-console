@@ -45,18 +45,18 @@ If you want to contribute to the WebLogic Remote Console project or just want a 
     node -v
     ```
 
-2.  Install the Oracle JET 15.1.0 client libraries.
+2.  Install the Oracle JET 19.0.0 client libraries.
 
     -   In Windows environments, run:
 
         ```
-        npm install --location=global @oracle/ojet-cli@~15.1.0
+        npm install --location=global @oracle/ojet-cli@~19.0.0
         ```
 
     -   In Linux or macOS environments, run:
 
         ```
-        sudo npm install --location=global @oracle/ojet-cli@~15.1.0
+        sudo npm install --location=global @oracle/ojet-cli@~19.0.0
         ```
 
     You can run <code>ojet --version</code> to verify it installed correctly.
@@ -65,7 +65,7 @@ If you want to contribute to the WebLogic Remote Console project or just want a 
 
 4.  Open a command-line interface and navigate to the home directory of the cloned repository.
 
-5.  Run <code>mvn clean install</code>.
+5.  <a id="step_lfx_pzz_yhc"></a>Run <code>mvn clean install</code>.
 
     After the build finishes, confirm that <code>/installer/target/console.zip</code> was created.
 
@@ -89,7 +89,7 @@ WebLogic Remote Console in development mode is distinct from Hosted WebLogic Rem
 
 You must have a modern internet browser installed to run WebLogic Remote Console in the browser.
 
-1.  Build WebLogic Remote Console from its source code. Follow the instructions at [Build from Source](#GUID-39A8D735-4891-4F9D-87F3-7F216219F8D0).
+1.  Build WebLogic Remote Console from its source code. Follow the instructions at [Build from Source](#GUID-39A8D735-4891-4F9D-87F3-7F216219F8D0) through step [5](#step_lfx_pzz_yhc).
 
 2.  Copy <code>/installer/target/console.zip</code> to a new directory and extract its contents.
 

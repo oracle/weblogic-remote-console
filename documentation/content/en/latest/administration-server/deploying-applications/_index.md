@@ -38,11 +38,13 @@ For more information on each deployment unit, see [Supported Deployment Units](h
 
 
 
--   WebLogic Server 12.2.1.4.0 supports the Java EE 7 Platform specification.
+WebLogic Server
 
--   WebLogic Server 14.1.1.0.0 and 14.1.2.0.0 support the Java EE 8 Platform specification \(or the functionally equivalent Jakarta EE 8 Platform\).
+-   12.2.1.4.0 supports the Java EE 7 Platform specification.
 
--   WebLogic Server 15.1.1.0.0 supports the Jakarta EE 9.1 Platform specification.
+-   14.1.1.0.0 and 14.1.2.0.0 support the Java EE 8 Platform specification \(or the functionally equivalent Jakarta EE 8 Platform specification\).
+
+-   15.1.1.0.0 supports the Jakarta EE 9.1 Platform specification.
 
 
 {{< /alert >}}

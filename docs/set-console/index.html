@@ -35,7 +35,7 @@ Desktop WebLogic Remote Console, a desktop application installed on your compute
   <meta itemprop="description" content="WebLogic Remote Console is easy to install and you can quickly start managing your domains.
 WebLogic Remote Console is available in two formats:
 Desktop WebLogic Remote Console, a desktop application installed on your computer. Hosted WebLogic Remote Console, a web application deployed to an Administration Server and accessed through a browser. Generally, the two formats have similar functionality, though the desktop application offers certain conveniences that are not possible when using a browser.">
-  <meta itemprop="wordCount" content="1837">
+  <meta itemprop="wordCount" content="1956">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Get Started">
   <meta name="twitter:description" content="WebLogic Remote Console is easy to install and you can quickly start managing your domains.
@@ -70,14 +70,13 @@ Desktop WebLogic Remote Console, a desktop application installed on your compute
         <div class="dropdown">
   <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Releases</a>
   <ul class="dropdown-menu">
-    <li><a class="dropdown-item" href="/weblogic-remote-console/overview">Latest (v2.4.18)</a></li>
+    <li><a class="dropdown-item" href="/weblogic-remote-console/overview">Latest (v2.4.19)</a></li>
+    <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.18">v2.4.18</a></li>
     <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.17">v2.4.17</a></li>
     <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.16">v2.4.16</a></li>
     <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.15">v2.4.15</a></li>
     <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.14">v2.4.14</a></li>
     <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.13">v2.4.13</a></li>
-    <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.12">v2.4.12</a></li>
-    <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.11">v2.4.11</a></li>
     </ul>
 </div></li>
       <li class="td-light-dark-menu nav-item dropdown">
@@ -143,7 +142,7 @@ Desktop WebLogic Remote Console, a desktop application installed on your compute
     aria-label="Search this site…"
     autocomplete="off"
     
-    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.02f8aa39561ea342361c468546679f8f.json"
+    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.e023d507fa3df5b6368ccefb8fd9c7b8.json"
     data-offline-search-base-href="/"
     data-offline-search-max-results="10"
   >
@@ -168,7 +167,7 @@ Desktop WebLogic Remote Console, a desktop application installed on your compute
     aria-label="Search this site…"
     autocomplete="off"
     
-    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.02f8aa39561ea342361c468546679f8f.json"
+    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.e023d507fa3df5b6368ccefb8fd9c7b8.json"
     data-offline-search-base-href="/"
     data-offline-search-max-results="10"
   >
@@ -480,20 +479,30 @@ Examples:</li>
 <div class="alert alert-primary" role="alert">
 <h4 class="alert-heading">Note</h4>
 
-    You only need to perform this procedure if you are running WebLogic Server 14.1.1.0.0 or earlier. As of WebLogic Server 14.1.2.0.0, the WebLogic Remote Console extension is automatically installed in your domain and updated with each Patch Set Update (PSU).
+    This procedure is only necessary if you are running WebLogic Server 14.1.1.0.0 or earlier. As of WebLogic Server 14.1.2.0.0, the WebLogic Remote Console extension is automatically included with a WebLogic Server installation and updated with each Patch Set Update (PSU).
 
 </div>
 <ol>
 <li>
+<p>Shut down the Administration Server.</p>
+</li>
+<li>
 <p>Under <code><em>DOMAIN_HOME</em>/</code>, create a folder and name it <code>management-services-ext</code>.</p>
 </li>
 <li>
-<p>Download the latest WebLogic Remote Console extension, <code>console-rest-ext-2.4.18.war</code>, from the <a href="https://github.com/oracle/weblogic-remote-console/releases">WebLogic Remote Console GitHub Repository</a> releases page.</p>
-<p><code>console-rest-ext-jakarta-2.4.18.war</code> is intended for domains running WebLogic Server 15.1.1.0.0 or later; you should not need to install it manually.</p>
+<p>Download the latest WebLogic Remote Console extension, <code>console-rest-ext-2.4.19.war</code>, from the <a href="https://github.com/oracle/weblogic-remote-console/releases">WebLogic Remote Console GitHub Repository</a> releases page.</p>
+
+
+<div class="alert alert-primary" role="alert">
+<h4 class="alert-heading">Note</h4>
+
+    <code>console-rest-ext-jakarta-2.4.19.war</code> is intended for domains running WebLogic Server 15.1.1.0.0 or later; you should not need to install it manually.
+
+</div>
 </li>
 <li>
-<p>Save the extension under <code>management-services-ext</code>.</p>
-<p>You do not need to deploy <code>console-rest-ext-2.4.18.war</code> as an application in your domain.</p>
+<p>Save the extension under <code>management-services-ext/</code>.</p>
+<p>You do not need to deploy the WebLogic Remote Console extension as an application in your domain.</p>
 </li>
 <li>
 <p>Restart the Administration Server.</p>
@@ -502,8 +511,8 @@ Examples:</li>
 <p>In WebLogic Remote Console, disconnect and then reconnect to the Administration Server.</p>
 </li>
 </ol>
-<p>The WebLogic Remote Console extension is updated with WebLogic Remote Console. Whenever you update WebLogic Remote Console, make sure you also update the extension to match.</p>
-<p>If you need to update the WebLogic Remote Console extension separately from the console, follow the instructions outlined in step <a href="/weblogic-remote-console/set-console/#STEP_H13_HCK_DCC">2</a> of <a href="/weblogic-remote-console/set-console/#GUID-281298E0-AEE6-4DEC-ADF1-949780E75D76">Upgrade Desktop WebLogic Remote Console</a>. Note that if you manually install the WebLogic Remote Console extension in domains running WebLogic Server 14.1.2.0.0 or later, under <code><em>DOMAIN_HOME</em>/</code>, it will supersede the version of the extension that is automatically installed and updated.</p>
+<p>New versions of the WebLogic Remote Console extension and WebLogic Remote Console are generally released simultaneously. Whenever you update WebLogic Remote Console, make sure you also update the extension to match.</p>
+<p>If you need to update the WebLogic Remote Console extension separately from the console, follow the instructions outlined in step <a href="/weblogic-remote-console/set-console/#STEP_H13_HCK_DCC">2</a> of <a href="/weblogic-remote-console/set-console/#GUID-281298E0-AEE6-4DEC-ADF1-949780E75D76">Upgrade Desktop WebLogic Remote Console</a>. Note that if you manually install the WebLogic Remote Console extension in <code><em>DOMAIN_HOME</em>/</code> on domains running WebLogic Server 14.1.2.0.0 or later, then it will take precedence over the version of the extension that is automatically included with WebLogic Server installations and updates.</p>
 <h3 id="GUID-6357222A-F7D4-46FC-BC87-22D6D1A6568A">Features of the WebLogic Remote Console Extension</h3>
 <p>The WebLogic Remote Console extension adds many features to WebLogic Remote Console that are useful for the administration of WebLogic Server domains.</p>
 <p>When the WebLogic Remote Console extension is installed, it grants the following capabilities to WebLogic Remote Console:</p>
@@ -605,8 +614,8 @@ For information on the different providers, see <a href="/weblogic-remote-consol
 </li>
 </ol>
 <h2 id="GUID-281298E0-AEE6-4DEC-ADF1-949780E75D76">Upgrade Desktop WebLogic Remote Console</h2>
-<p>Upgrade to the latest version of Desktop WebLogic Remote Console and take advantage of the latest features in both the console and WebLogic Server.</p>
-<p>If a newer version of Desktop WebLogic Remote Console is available, an alert will appear in the menu bar.</p>
+<p>Install the latest version of Desktop WebLogic Remote Console and take advantage of the latest features in both the console and WebLogic Server.</p>
+<p>When a newer version of Desktop WebLogic Remote Console is available, an alert will appear in the menu bar.</p>
 <ol>
 <li>
 <p>In Desktop WebLogic Remote Console, open <strong>Updates Available</strong>, then <strong>Download and install</strong>.</p>
@@ -614,26 +623,61 @@ For information on the different providers, see <a href="/weblogic-remote-consol
 <p>You can also download the update from the <a href="https://github.com/oracle/weblogic-remote-console/releases">WebLogic Remote Console GitHub Repository</a> releases page and apply the update manually.</p>
 </li>
 <li>
-<p><a id="STEP_H13_HCK_DCC"></a><em>For WebLogic Server 14.1.1.0.0 and earlier:</em> Update the WebLogic Remote Console <em>extension</em>.</p>
-<p>In WebLogic Server 14.1.2.0.0 and later, the WebLogic Remote Console extension is included with the initial installation and is updated by subsequent Patch Set Updates (PSU) and should not be updated manually.</p>
-<p>For the best experience, you should keep the versions of WebLogic Remote Console and its extension in sync with each other. That is, when you are running WebLogic Remote Console 2.4.18, you should have <code>console-rest-ext-2.4.18.war</code> installed.</p>
-<ol>
+<p><a id="STEP_H13_HCK_DCC"></a>Update the WebLogic Remote Console <em>extension</em>.</p>
+
+
+<div class="alert alert-primary" role="alert">
+<h4 class="alert-heading">Note</h4>
+
+    <ul>
 <li>
-<p>While connected to the domain, open the <strong>Providers</strong> drawer and beside the provider connection, click the <strong>Get Info</strong> icon to see the <strong>Console Extension Version</strong>. If it matches WebLogic Remote Console version, you can skip the rest of the steps. Otherwise, continue.</p>
+<p>For domains running WebLogic Server <em>14.1.1.0.0 and earlier</em>: You must manually update the extension. Perform the following steps.</p>
 </li>
 <li>
-<p>Go to <code><em>DOMAIN_HOME</em>/management-services-ext</code> and delete the existing WebLogic Remote Console extension.</p>
+<p>For domains running WebLogic Server <em>14.1.2.0.0 and later</em>: You do not need to manually update the extension because it is updated by WebLogic Server Patch Set Updates (PSUs).</p>
+<p>If you choose to manually update the extension anyways, it will take precedence over the version of the extension included with WebLogic Server.</p>
+</li>
+</ul>
+
+
+</div>
+<p>For the best experience, you should keep the versions of WebLogic Remote Console and its extension in sync with each other. That is, when you are running WebLogic Remote Console 2.4.19, you should have <code>console-rest-ext-2.4.19.war</code> installed.</p>
+<ol>
+<li>
+<p>While connected to the domain, open the <strong>Providers</strong> drawer and beside the provider connection, click the <strong>Get Info</strong> icon to see the <strong>Console Extension Version</strong>. If it matches WebLogic Remote Console version, skip the rest of these steps. Otherwise, continue.</p>
+</li>
+<li>
+<p>Shut down the Administration Server.</p>
+</li>
+<li>
+<p>Go to the <code><em>DOMAIN_HOME</em>/management-services-ext/</code> folder and delete the existing WebLogic Remote Console extension. If the <code><em>DOMAIN_HOME</em>/management-services-ext/</code> folder doesn&rsquo;t exist, create it.</p>
 </li>
 <li>
 <p>Download the WebLogic Remote Console extension that matches your WebLogic Remote Console from the <a href="https://github.com/oracle/weblogic-remote-console/releases">WebLogic Remote Console GitHub Repository</a>. It will be within the matching WebLogic Remote Console release section.</p>
+<ul>
+<li>
+<p>For domains running WebLogic Server 14.1.2.0.0 or earlier, download <code>console-rest-ext-2.4.19.war</code></p>
 </li>
 <li>
-<p>Save the extension to <code><em>DOMAIN_HOME</em>/management-services-ext</code>.</p>
+<p>For domains running WebLogic Server 15.1.1.0.0 or later, download <code>console-rest-ext-jakarta-2.4.19.war</code>.</p>
+</li>
+</ul>
+</li>
+<li>
+<p>Save the extension under <code><em>DOMAIN_HOME</em>/management-services-ext/</code>.</p>
 </li>
 <li>
 <p>Restart the Administration Server.</p>
 </li>
 </ol>
+
+
+<div class="alert alert-primary" role="alert">
+<h4 class="alert-heading">Note</h4>
+
+    <em>On domains running 14.1.2.0.0 or later:</em> If you want to revert to using the WebLogic Remote Console extension that&rsquo;s included with WebLogic Server and updated with PSUs, delete the extension under <code><em>DOMAIN_HOME</em>/management-services-ext/</code>.
+
+</div>
 </li>
 </ol>
 <div class="footnotes" role="doc-endnotes">
@@ -682,7 +726,7 @@ For information on the different providers, see <a href="/weblogic-remote-consol
         
       </div><div class="td-footer__center col-12 col-sm-4 py-2 order-sm-2">
         <span class="td-footer__copyright">&copy;
-    2020&ndash;2025
+    2020&ndash;2026
     <span class="td-footer__authors">Oracle | <a href="https://github.com/oracle/weblogic-remote-console/blob/main/LICENSE.txt">UPL 1.0</a></span></span><span class="td-footer__all_rights_reserved">All Rights Reserved</span>
       </div>
     </div>

@@ -85,17 +85,19 @@ params:
     showLightDarkModeMenu: true
 
   # wrc version
-  console_version: 2.4.18
+  console_version: 2.4.19
   # console rest extension version
-  console_rest_ext: console-rest-ext-2.4.18.war
+  console_rest_ext: console-rest-ext-2.4.19.war
 
   # Menu title if your navbar has a versions selector to access old versions of your site.
   # This menu appears only if you have at least one [params.versions] set.
   version_menu: Releases
   url_latest_version: '/weblogic-remote-console/overview'
   versions:
-    - version: Latest (v2.4.18)
+    - version: Latest (v2.4.19)
       url: '/weblogic-remote-console/overview'
+    - version: v2.4.18
+      url: '/weblogic-remote-console/2.4.18'
     - version: v2.4.17
       url: '/weblogic-remote-console/2.4.17'
     - version: v2.4.16
@@ -106,10 +108,6 @@ params:
       url: '/weblogic-remote-console/2.4.14'
     - version: v2.4.13
       url: '/weblogic-remote-console/2.4.13'
-    - version: v2.4.12
-      url: '/weblogic-remote-console/2.4.12'
-    - version: v2.4.11
-      url: '/weblogic-remote-console/2.4.11'
 
   # DO NOT USE: The following versioning flags are used by the original "version-banner" partial from docsy, which is currently overriden by a custom version-banner partial under layouts/partials/ that uses page.Params instead of site.Params.
   #archived_version: false
