@@ -1,0 +1,499 @@
+<!doctype html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel="alternate" type="application/rss&#43;xml" href="https://oracle.github.io/weblogic-remote-console/preview/index.xml">
+<meta name="robots" content="index, follow">
+
+
+<link rel="shortcut icon" href="/weblogic-remote-console/favicons/favicon.ico" >
+<link rel="apple-touch-icon" href="/weblogic-remote-console/favicons/apple-touch-icon-180x180.png" sizes="180x180">
+<link rel="icon" type="image/png" href="/weblogic-remote-console/favicons/favicon-16x16.png" sizes="16x16">
+<link rel="icon" type="image/png" href="/weblogic-remote-console/favicons/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="/weblogic-remote-console/favicons/android-36x36.png" sizes="36x36">
+<link rel="icon" type="image/png" href="/weblogic-remote-console/favicons/android-48x48.png" sizes="48x48">
+<link rel="icon" type="image/png" href="/weblogic-remote-console/favicons/android-72x72.png" sizes="72x72">
+<link rel="icon" type="image/png" href="/weblogic-remote-console/favicons/android-96x96.png" sizes="96x96">
+<link rel="icon" type="image/png" href="/weblogic-remote-console/favicons/android-144x144.png" sizes="144x144">
+<link rel="icon" type="image/png" href="/weblogic-remote-console/favicons/android-192x192.png" sizes="192x192">
+
+<title>Introducing WebLogic Remote Console 3.x! | WebLogic Remote Console</title>
+<meta name="description" content="WebLogic Remote Console 3.0.0 is in technical preview. It is available for testing purposes only.
+WebLogic Remote Console 3.x is a substantial design update that delivers significant usability improvements to WebLogic Remote Console.
+We’ve also made considerable cosmetic updates in 3.0.0. MBeans and their configurations remain in the same places, they just look a little different. You can continue to refer to the documentation for the latest GA release of WebLogic Remote Console for guidance on how to administer your domains.">
+<meta property="og:url" content="https://oracle.github.io/weblogic-remote-console/preview/">
+  <meta property="og:site_name" content="WebLogic Remote Console">
+  <meta property="og:title" content="Introducing WebLogic Remote Console 3.x!">
+  <meta property="og:description" content="WebLogic Remote Console 3.0.0 is in technical preview. It is available for testing purposes only.
+WebLogic Remote Console 3.x is a substantial design update that delivers significant usability improvements to WebLogic Remote Console.
+We’ve also made considerable cosmetic updates in 3.0.0. MBeans and their configurations remain in the same places, they just look a little different. You can continue to refer to the documentation for the latest GA release of WebLogic Remote Console for guidance on how to administer your domains.">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="website">
+
+  <meta itemprop="name" content="Introducing WebLogic Remote Console 3.x!">
+  <meta itemprop="description" content="WebLogic Remote Console 3.0.0 is in technical preview. It is available for testing purposes only.
+WebLogic Remote Console 3.x is a substantial design update that delivers significant usability improvements to WebLogic Remote Console.
+We’ve also made considerable cosmetic updates in 3.0.0. MBeans and their configurations remain in the same places, they just look a little different. You can continue to refer to the documentation for the latest GA release of WebLogic Remote Console for guidance on how to administer your domains.">
+  <meta itemprop="wordCount" content="1483">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Introducing WebLogic Remote Console 3.x!">
+  <meta name="twitter:description" content="WebLogic Remote Console 3.0.0 is in technical preview. It is available for testing purposes only.
+WebLogic Remote Console 3.x is a substantial design update that delivers significant usability improvements to WebLogic Remote Console.
+We’ve also made considerable cosmetic updates in 3.0.0. MBeans and their configurations remain in the same places, they just look a little different. You can continue to refer to the documentation for the latest GA release of WebLogic Remote Console for guidance on how to administer your domains.">
+<link rel="preload" href="/weblogic-remote-console/scss/main.min.48c25d0a5a23a1e8cae94d6c5e7622061e5345cf098171b1d6ee41d8e309e6c8.css" as="style" integrity="sha256-SMJdClojoejK6U1sXnYiBh5TRc8JgXGx1u5B2OMJ5sg=" crossorigin="anonymous">
+<link href="/weblogic-remote-console/scss/main.min.48c25d0a5a23a1e8cae94d6c5e7622061e5345cf098171b1d6ee41d8e309e6c8.css" rel="stylesheet" integrity="sha256-SMJdClojoejK6U1sXnYiBh5TRc8JgXGx1u5B2OMJ5sg=" crossorigin="anonymous">
+<script
+  src="https://code.jquery.com/jquery-3.7.1.min.js"
+  integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+  crossorigin="anonymous"></script>
+<script defer
+  src="https://unpkg.com/lunr@2.3.9/lunr.min.js"
+  integrity="sha384-203J0SNzyqHby3iU6hzvzltrWi/M41wOP5Gu+BiJMz5nwKykbkUx8Kp7iti0Lpli"
+  crossorigin="anonymous"></script>
+
+  </head>
+  <body class="td-section">
+    <header>
+      <nav class="td-navbar js-navbar-scroll" data-bs-theme="dark">
+<div class="container-fluid flex-column flex-md-row">
+  <a class="navbar-brand" href="/weblogic-remote-console/"><span class="navbar-brand__logo navbar-logo"></span><span class="navbar-brand__name">WebLogic Remote Console</span></a>
+  <div class="td-navbar-nav-scroll ms-md-auto" id="main_navbar">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" href="/weblogic-remote-console/overview/"><span>Documentation</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/weblogic-remote-console/set-console/get-know-console/bean-map/"><span>Console Map</span></a>
+      </li>
+      <li class="nav-item dropdown d-none d-lg-block">
+        <div class="dropdown">
+  <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Releases</a>
+  <ul class="dropdown-menu">
+    <li><a class="dropdown-item" href="/weblogic-remote-console/overview">Latest (v2.4.19)</a></li>
+    <li><a class="dropdown-item" href="/weblogic-remote-console/preview">Tech Preview (v3.0.0)</a></li>
+    <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.18">v2.4.18</a></li>
+    <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.17">v2.4.17</a></li>
+    <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.16">v2.4.16</a></li>
+    <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.15">v2.4.15</a></li>
+    <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.14">v2.4.14</a></li>
+    <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.13">v2.4.13</a></li>
+    </ul>
+</div></li>
+      <li class="td-light-dark-menu nav-item dropdown">
+        <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
+  <symbol id="check2" viewBox="0 0 16 16">
+    <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/>
+  </symbol>
+  <symbol id="circle-half" viewBox="0 0 16 16">
+    <path d="M8 15A7 7 0 1 0 8 1v14zm0 1A8 8 0 1 1 8 0a8 8 0 0 1 0 16z"/>
+  </symbol>
+  <symbol id="moon-stars-fill" viewBox="0 0 16 16">
+    <path d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z"/>
+    <path d="M10.794 3.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387a1.734 1.734 0 0 0-1.097 1.097l-.387 1.162a.217.217 0 0 1-.412 0l-.387-1.162A1.734 1.734 0 0 0 9.31 6.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387a1.734 1.734 0 0 0 1.097-1.097l.387-1.162zM13.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.156 1.156 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.156 1.156 0 0 0-.732-.732l-.774-.258a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732L13.863.1z"/>
+  </symbol>
+  <symbol id="sun-fill" viewBox="0 0 16 16">
+    <path d="M8 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13zm8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5zM3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8zm10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0zm-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708z"/>
+  </symbol>
+</svg>
+
+<button class="btn btn-link nav-link dropdown-toggle d-flex align-items-center"
+        id="bd-theme"
+        type="button"
+        aria-expanded="false"
+        data-bs-toggle="dropdown"
+        data-bs-display="static"
+        aria-label="Toggle theme (auto)">
+  <svg class="bi my-1 theme-icon-active"><use href="#circle-half"></use></svg>
+</button>
+<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="bd-theme-text">
+  <li>
+    <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="light" aria-pressed="false">
+      <svg class="bi me-2 opacity-50"><use href="#sun-fill"></use></svg>
+      Light
+      <svg class="bi ms-auto d-none"><use href="#check2"></use></svg>
+    </button>
+  </li>
+  <li>
+    <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="dark" aria-pressed="false">
+      <svg class="bi me-2 opacity-50"><use href="#moon-stars-fill"></use></svg>
+      Dark
+      <svg class="bi ms-auto d-none"><use href="#check2"></use></svg>
+    </button>
+  </li>
+  <li>
+    <button type="button" class="dropdown-item d-flex align-items-center active" data-bs-theme-value="auto" aria-pressed="true">
+      <svg class="bi me-2 opacity-50"><use href="#circle-half"></use></svg>
+      Auto
+      <svg class="bi ms-auto d-none"><use href="#check2"></use></svg>
+    </button>
+  </li>
+</ul>
+
+      </li>
+      </ul>
+  </div>
+  <div class="d-none d-lg-block">
+    <div class="td-search td-search--offline">
+  <div class="td-search__icon"></div>
+  <input
+    type="search"
+    class="td-search__input form-control"
+    placeholder="Search this site…"
+    aria-label="Search this site…"
+    autocomplete="off"
+    
+    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.b05f6f05aeab6e7c3fc8144eff980c5d.json"
+    data-offline-search-base-href="/"
+    data-offline-search-max-results="10"
+  >
+</div>
+  </div>
+</div>
+</nav>
+    </header>
+    <div class="container-fluid td-outer">
+      <div class="td-main">
+        <div class="row flex-xl-nowrap">
+          <aside class="col-12 col-md-3 col-xl-2 td-sidebar d-print-none">
+            <div id="td-sidebar-menu" class="td-sidebar__inner">
+  <div id="content-mobile">
+  <form class="td-sidebar__search d-flex align-items-center">
+    <div class="td-search td-search--offline">
+  <div class="td-search__icon"></div>
+  <input
+    type="search"
+    class="td-search__input form-control"
+    placeholder="Search this site…"
+    aria-label="Search this site…"
+    autocomplete="off"
+    
+    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.b05f6f05aeab6e7c3fc8144eff980c5d.json"
+    data-offline-search-base-href="/"
+    data-offline-search-max-results="10"
+  >
+</div>
+    <button class="btn btn-link td-sidebar__toggle d-md-none p-0 ms-3 fas fa-bars" type="button" data-bs-toggle="collapse" data-bs-target="#td-section-nav" aria-controls="td-section-nav" aria-expanded="false" aria-label="Toggle section navigation">
+    </button>
+  </form>
+  </div>
+  <div id="content-desktop"></div>
+  <nav class="td-sidebar-nav collapse td-sidebar-nav--search-disabled foldable-nav" id="td-section-nav">
+    <ul class="td-sidebar-nav__section pe-md-3 ul-0">
+      <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child active-path" id="m-weblogic-remote-consolepreview-li">
+  <a href="/weblogic-remote-console/preview/" class="align-left ps-0 active td-sidebar-link td-sidebar-link__section tree-root" id="m-weblogic-remote-consolepreview"><span class="td-sidebar-nav-active-item">Introducing WebLogic Remote Console 3.x!</span></a>
+</li>
+    </ul>
+  </nav>
+</div>
+
+          </aside>
+          <aside class="d-none d-xl-block col-xl-2 td-sidebar-toc d-print-none">
+            <div class="td-page-meta ms-2 pb-1 pt-2 mb-0">
+
+</div>
+
+            <div class="td-toc">
+        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#key-differences-between-2x-and-3x">Key Differences Between 2.x and 3.x</a></li>
+    <li><a href="#installing-weblogic-remote-console-300">Installing WebLogic Remote Console 3.0.0</a></li>
+    <li><a href="#connecting-to-a-provider">Connecting to a Provider</a>
+      <ul>
+        <li><a href="#page-icons">Page Icons</a></li>
+        <li><a href="#field-icons">Field Icons</a></li>
+      </ul>
+    </li>
+    <li><a href="#managing-projects">Managing Projects</a></li>
+  </ul>
+</nav>
+      </div>
+    
+            
+
+          </aside>
+          <main class="col-12 col-md-9 col-xl-8 ps-md-5" role="main">
+            
+  
+            <nav aria-label="breadcrumb" class="td-breadcrumbs td-breadcrumbs__single">
+  <ol class="breadcrumb">
+  <li class="breadcrumb-item active" aria-current="page">
+    Introducing WebLogic Remote Console 3.x!</li>
+  </ol>
+</nav>
+            
+<div class="td-content">
+	<h1>Introducing WebLogic Remote Console 3.x!</h1>
+  
+	<header class="article-meta">
+		
+</header>
+	
+
+<div class="alert alert-secondary" role="alert">
+
+
+    <p><i class="fa-solid fa-flask-vial"></i></p>
+<p>WebLogic Remote Console 3.0.0 is in <strong>technical preview</strong>. It is available for testing purposes only.</p>
+
+</div>
+<p>WebLogic Remote Console 3.x is a substantial design update that delivers significant usability improvements to WebLogic Remote Console.</p>
+<p>We&rsquo;ve also made considerable cosmetic updates in 3.0.0. MBeans and their configurations remain in the same places, they just look a little different. You can continue to refer to the <a href="/weblogic-remote-console/overview/">documentation for the latest GA release of WebLogic Remote Console</a> for guidance on how to administer your domains.</p>
+<p>To help you understand what <em>has</em> changed, we&rsquo;ve outlined some of the major functional differences below.</p>
+<h2 id="key-differences-between-2x-and-3x">Key Differences Between 2.x and 3.x</h2>
+<ul>
+<li>
+<p><strong>Enhanced Project management</strong>: Project management has been moved out of the File menu into its own dedicated page where you can add, edit, and delete projects and their constituent providers.</p>
+</li>
+<li>
+<p><strong>Improved Provider management</strong>: The Providers drawer has been re-imagined as a dedicated page where you can see all of the providers (and their details) in a project at a glance. You can add, edit, delete, and sort providers from this page.</p>
+</li>
+<li>
+<p><strong>Changes to Change Management</strong>:</p>
+<ul>
+<li><strong>Improved Shopping Cart</strong>: Pending changes are now visible in a dialog box where you can see where the change was made and the old and new values.</li>
+<li><strong>Change indicators</strong>: Configurations with non-default values are now marked by a green bar to the left of the field. Previously, changes were indicated by a black outline.</li>
+<li><strong>Unsaved changes</strong>: WebLogic Remote Console no longer warns you when you try to leave a page that has unsaved changes. Previously, WebLogic Remote Console would ask you to confirm whether to save or discard your changes before letting you navigate away.</li>
+</ul>
+</li>
+<li>
+<p><strong>Clearer and sharper icons</strong>: Icons throughout WebLogic Remote Console have been updated to more clearly convey their functions. See <a href="/weblogic-remote-console/preview/#page-icons">Page Icons</a> and <a href="/weblogic-remote-console/preview/#field-icons">Field Icons</a>.</p>
+<ul>
+<li><strong>Rearranged tool bar icons</strong>: Tool bar icons have been shifted around to better group functionality and workflow.</li>
+</ul>
+</li>
+<li>
+<p><strong>New-ish Field Settings button</strong>: <i class="fa-solid fa-bullseye"></i> This button allows for more granular editing of field values. It opens a separate dialog box where you can edit values, review lengthy field values, or revert existing values to their default values (that is, &ldquo;unset&rdquo; them). The Field Settings button will be familiar to users who managed WDT model files in WebLogic Remote Console.</p>
+</li>
+<li>
+<p><strong>Consolidated Navigation Tree</strong>: The NavStrip and Navigation Tree have been combined into a single panel, allowing you to switch between perspectives more intuitively.</p>
+</li>
+<li>
+<p><strong>More sophisticated Breadcrumb navigation</strong>: Move up, down, and across nodes of WebLogic Remote Console. Use the breadcrumb trail to not only help you understand your position within the domain, but to move through it.</p>
+<p>Each breadcrumb in the trail is clickable so you can move up levels in the hierarchy, or you can click the dropdown menu beside the final breadcrumb (aka the current page) to jump to its child nodes or to its related pages in different perspectives.</p>
+</li>
+<li>
+<p><strong>Dark Mode!</strong>: <i class="fa-regular fa-sun"></i> / <i class="fa-regular fa-moon"></i></p>
+</li>
+</ul>
+
+
+<div class="alert alert-success" role="alert">
+
+
+    <p>In order to release the best possible product for general availability, we&rsquo;re asking you to try out WebLogic Remote Console 3.0.0 and tell us what you think.</p>
+<p>If you want to give feedback, you can do so by:</p>
+<ul>
+<li>
+<p>Leaving a comment in the <a href="https://join.slack.com/t/oracle-weblogic/shared_invite/zt-1ni1gtjv6-PGC6CQ4uIte3KBdm_67~aQ">#remote-console Slack channel</a>.</p>
+</li>
+<li>
+<p>Opening an issue in the <a href="https://github.com/oracle/weblogic-remote-console">WebLogic Remote Console GitHub repository</a> that describes your issue. Make sure to include your environment details (OS, JDK, WebLogic Server) and any relevant logs.</p>
+</li>
+</ul>
+
+</div>
+<h2 id="installing-weblogic-remote-console-300">Installing WebLogic Remote Console 3.0.0</h2>
+<p>For the duration of the tech preview, WebLogic Remote Console 3.0.0 will only be available by downloading <em>Desktop</em> WebLogic Remote Console from the WebLogic Remote Console GitHub repository.</p>
+<p>The production release of WebLogic Remote Console 3.x will include both <em>Desktop</em> WebLogic Remote Console and <em>Hosted</em> WebLogic Remote Console and will be released concurrently with a future Patch Set Update (PSU) of WebLogic Server.</p>
+<ol>
+<li>
+<p>Make sure your environment meets the system requirements needed to run WebLogic Remote Console. The system requirements for 3.0.0 are the same as the latest GA release of WebLogic Remote Console. See <a href="/weblogic-remote-console/set-console/#GUID-FFC1F9AC-7CE7-4BC1-9D3D-BD59CC228C6B">System Requirements</a>.</p>
+</li>
+<li>
+<p>Go to the <a href="https://github.com/oracle/weblogic-remote-console/releases">WebLogic Remote Console GitHub repository Releases page</a> and from the <strong>Release 3.0.0</strong> section, download the WebLogic Remote Console installer meant for your operating system.</p>
+</li>
+<li>
+<p>If you&rsquo;re jumping from WebLogic Remote Console 2.4.17 or earlier, you should also download the WebLogic Remote Console <em>extension</em> for 3.0.0 and install it manually. (The 2.4.18 and 2.4.19 extensions are compatible with WebLogic Remote Console 3.0.0).</p>
+<ol>
+<li>
+<p>Download the extension from the  <strong>Release 3.0.0</strong> section. If you are running a 15.1.1.0.0 WebLogic Server domain, download <code>console-rest-ext-jakarta-3.0.0.war</code>. Otherwise, download <code>console-rest-ext-3.0.0.war</code>.</p>
+</li>
+<li>
+<p>Shut down the Administration Server.</p>
+</li>
+<li>
+<p>Under <em><code>DOMAIN_HOME/</code></em>, create a folder and name it <code>management-services-ext</code>.</p>
+</li>
+<li>
+<p>Save the extension file, <code>console-rest-ext-3.0.0.war</code> or <code>console-rest-ext-jakarta-3.0.0.war</code>, under <code>management-services-ext/</code>.</p>
+<p>Do not deploy the WebLogic Remote Console extension as an application in your domain.</p>
+</li>
+<li>
+<p>Restart the Administration Server.</p>
+</li>
+</ol>
+</li>
+<li>
+<p>Install WebLogic Remote Console by following the typical process for installing applications on your operating system.</p>
+</li>
+<li>
+<p>Open WebLogic Remote Console and connect to a provider.</p>
+</li>
+</ol>
+
+
+<div class="alert alert-primary" role="alert">
+
+
+    If you want to switch back to using the GA release of WebLogic Remote Console, make sure to uninstall WebLogic Remote Console v3.0.0 <em>and</em> delete <code>DOMAIN_HOME/management-services-ext/console-rest-ext-3.0.0.war</code>.
+
+</div>
+<h2 id="connecting-to-a-provider">Connecting to a Provider</h2>
+<ol>
+<li>Open WebLogic Remote Console.</li>
+<li>Click <strong>Create</strong> and choose a Provider type. See <a href="/weblogic-remote-console/set-console/#GUID-82C1C605-D42E-45EA-AC16-5BA3D5853C96">Provider Types</a>.</li>
+<li>Fill in the necessary connection information. For more detailed steps:
+<ul>
+<li>For an Admin Server Connection Provider, see <a href="/weblogic-remote-console/administration-server/domain-configuration/#GUID-37C3DE03-B1A7-42AA-B596-83D7A9520D33">Connect to an Administration Server</a>.</li>
+<li>For a WDT Model File Provider, see <a href="/weblogic-remote-console/weblogic-deploy-tooling/wdt-model-files/#GUID-1ECF1B50-BE85-413F-8417-34A8E0CC8FB0">Create a WDT Model File</a> or <a href="/weblogic-remote-console/weblogic-deploy-tooling/wdt-model-files/#GUID-EC821453-1C8A-49DD-A2AB-B5BF58B0B00E">Upload a WDT Model File</a>.</li>
+<li>For a WDT Composite Model Provider, see <a href="/weblogic-remote-console/weblogic-deploy-tooling/wdt-composites/#GUID-099438C8-E18F-49E5-8963-DD229B77910A">Create a WDT Composite Model</a>.</li>
+<li>For a Property List Provider, see <a href="/weblogic-remote-console/weblogic-deploy-tooling/property-lists/#GUID-8A4D1F37-7E9A-47B7-BD7D-4EC0B69426FA">Create a Property List</a>.</li>
+</ul>
+</li>
+<li>Click <strong>Done</strong> to save the provider.</li>
+<li>Click <strong>Connect/Activate</strong>.</li>
+</ol>
+<p><a href="/weblogic-remote-console/images/screenshots/admin-server-300.png"><img src="/weblogic-remote-console/images/screenshots/admin-server-300.png" alt="Administration Server in the Edit Tree perspective"></a></p>
+<ul>
+<li>
+<p>If you want to <em>see</em> the current provider&rsquo;s details, click the <strong>Kebab</strong> menu <i class="fa-solid fa-ellipsis-vertical"></i> beside the breadcrumb navigation and then click <strong>Provider Information</strong>. A dialog box with the provider&rsquo;s details will open.</p>
+</li>
+<li>
+<p>If you want to <em>edit</em> a provider&rsquo;s details, click the <strong>Kebab</strong> menu <i class="fa-solid fa-ellipsis-vertical"></i> beside the breadcrumb navigation and then click <strong>Go to Project/Provider Table</strong>. Select the provider you want to edit. After making your changes, click <strong>Save</strong>.</p>
+</li>
+</ul>
+<h3 id="page-icons">Page Icons</h3>
+<table>
+  <thead>
+      <tr>
+          <th>Icon</th>
+          <th>Usage</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><i class="fa-brands fa-github"></i></td>
+          <td>GitHub - Opens the WebLogic Remote Console GitHub repository in your browser.</td>
+      </tr>
+      <tr>
+          <td><i class="fa-solid fa-lightbulb"></i></td>
+          <td>User Tips - Provides tips on WebLogic Remote Console functionality.</td>
+      </tr>
+      <tr>
+          <td><i class="fa-regular fa-sun"></i> / <i class="fa-regular fa-moon"></i></td>
+          <td>Dark/Light mode - Switches between Light and Dark modes.</td>
+      </tr>
+      <tr>
+          <td><i class="fa-regular fa-circle-question"></i></td>
+          <td>User Help - Opens the WebLogic Remote Console user documentation in your browser.</td>
+      </tr>
+      <tr>
+          <td><i class="fa-regular fa-star"></i></td>
+          <td>Add Bookmark - Saves the current page as bookmark so you can quickly refer to it later.</td>
+      </tr>
+      <tr>
+          <td><i class="fa-regular fa-bookmark"></i></td>
+          <td>Page Bookmarks - Opens a dialog box that lists all of your saved pages.</td>
+      </tr>
+      <tr>
+          <td><i class="fa-solid fa-cart-shopping"></i></td>
+          <td>Shopping Cart - Lists any pending changes in the active Administration Server provider. You can choose whether to commit or discard them.</td>
+      </tr>
+      <tr>
+          <td><i class="fa-solid fa-clock-rotate-left"></i></td>
+          <td>Show Pages History - Opens the Pages History dialog box, which lists the pages that you have previously visited in WebLogic Remote Console.</td>
+      </tr>
+      <tr>
+          <td><i class="fa-solid fa-arrow-left"></i> / <i class="fa-solid fa-arrow-right"></i></td>
+          <td>Back/Forward - Browses backward or forward through your previously visited pages in WebLogic Remote Console.</td>
+      </tr>
+      <tr>
+          <td><i class="fa-solid fa-circle-question"></i></td>
+          <td>Inline Field Help - Shows reference information about the attributes present on the current page. Click again to return to the editable fields.</td>
+      </tr>
+      <tr>
+          <td><i class="fa-solid fa-rotate-right"></i></td>
+          <td>Reload - Refreshes any forms or tables on the current page with the latest available data. When Auto Reload Interval is enabled, this icon will bounce continuously.</td>
+      </tr>
+      <tr>
+          <td><i class="fa-solid fa-rotate-right fa-rotate-270"></i></td>
+          <td>Auto-Reload Interval - Sets a time interval (in seconds) for how often WebLogic Remote Console should reload a page to refresh its information. If you select another tab or move to another page, automatic reload stops.To stop auto reload, click the bouncing Reload icon or click Auto Reload Interval and set the interval to 0.</td>
+      </tr>
+  </tbody>
+</table>
+<h3 id="field-icons">Field Icons</h3>
+<table>
+  <thead>
+      <tr>
+          <th>Icon</th>
+          <th>Usage</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><i class="fa-solid fa-bullseye"></i></td>
+          <td>Field Settings - Opens a dialog box where you edit values, review lengthy field values, or revert existing values to their default values (that is, “unset” them).</td>
+      </tr>
+      <tr>
+          <td><strong>|</strong></td>
+          <td>Change Indicator -  Indicates that the current value of the marked field differs from the default value.</td>
+      </tr>
+  </tbody>
+</table>
+<h2 id="managing-projects">Managing Projects</h2>
+<p>You can use projects to organize your providers in a way that makes sense for your workflow.</p>
+<ol>
+<li>
+<p>While in a provider, click the <strong>Kebab</strong> menu <i class="fa-solid fa-ellipsis-vertical"></i> beside the breadcrumb navigation and then click <strong>Go to Project/Provider Table</strong>.</p>
+<p>The <strong>Project/Provider</strong> table lists all provider connections in a project and is your central place for managing providers in the project. For the current project you can also add more providers, edit existing providers, connect to a different provider, re-order providers, and delete providers.</p>
+<p><a href="/weblogic-remote-console/images/screenshots/providers-300.png"><img src="/weblogic-remote-console/images/screenshots/providers-300.png" alt="Projects/Provider table"></a></p>
+<p><strong>Tip</strong>: Use the <strong>Customize Table</strong> menu to control which columns are visible in the <strong>Provider Details</strong> table.</p>
+</li>
+<li>
+<p>In the breadcrumbs trail, click <strong>Projects</strong>.</p>
+<p><a href="/weblogic-remote-console/images/screenshots/projects-300.png"><img src="/weblogic-remote-console/images/screenshots/projects-300.png" alt="Projects"></a></p>
+</li>
+<li>
+<p>Click <strong>Create</strong> to create a new project.</p>
+<p>You can also import or export a project (and its provider connection details) from the <strong>Projects</strong> page.</p>
+</li>
+<li>
+<p>Select the new project and then click <strong>Create</strong> to add a provider to the project.</p>
+</li>
+</ol>
+<p>To switch between projects, return to the <strong>Projects</strong> page by clicking <strong>Projects</strong> in the breadcrumb trail and then selecting a different project.</p>
+<p>To get back to the active <em>provider</em> (or switch to another provider in the project), select the project that contains the active provider, then, in the <strong>Project/Provider</strong> table, select the active provider. Click <strong>Connect/Activate</strong>.</p>
+
+  <div class="section-index">
+    
+    
+    </div>
+</div>
+
+          </main>
+        </div>
+      </div>
+      <footer class="td-footer row d-print-none">
+  <div class="container-fluid">
+    <div class="row mx-md-2">
+      <div class="td-footer__left col-6 col-sm-4 order-sm-1">
+        
+      </div><div class="td-footer__right col-6 col-sm-4 order-sm-3">
+        
+      </div><div class="td-footer__center col-12 col-sm-4 py-2 order-sm-2">
+        <span class="td-footer__copyright">&copy;
+    2020&ndash;2026
+    <span class="td-footer__authors">Oracle | <a href="https://github.com/oracle/weblogic-remote-console/blob/main/LICENSE.txt">UPL 1.0</a></span></span><span class="td-footer__all_rights_reserved">All Rights Reserved</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <script src="/weblogic-remote-console/js/main.min.90902a026ed2aee7ed45d85797f4c790b240ba148ac6f8a6f194cb1981ffecf5.js" integrity="sha256-kJAqAm7SruftRdhXl/THkLJAuhSKxvim8ZTLGYH/7PU=" crossorigin="anonymous"></script>
+<script defer src="/weblogic-remote-console/js/click-to-copy.min.73478a7d4807698aed7e355eb23f9890ca18fea3158604c8471746d046702bad.js" integrity="sha256-c0eKfUgHaYrtfjVesj&#43;YkMoY/qMVhgTIRxdG0EZwK60=" crossorigin="anonymous"></script>
+<script src='/weblogic-remote-console/js/tabpane-persist.js'></script>
+
+  </body>
+</html>

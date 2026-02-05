@@ -11,6 +11,8 @@ Contributions from the community to the WebLogic Remote Console project help us 
 
     If you only want to raise a bug or file an enhancement request, you can stop here - you're done! Thank you for helping to improve WebLogic Remote Console.
 
+    If you're raising a bug, please make sure to include your environment details (OS, JDK, WebLogic Server) and any applicable log reports.
+
 2.  If you want to fix an issue yourself, you must sign the Oracle Contributor Agreement \(OCA\) before you can submit a pull request. For instructions, see the [Oracle Contributor Agreement](https://oca.opensource.oracle.com/). We cannot merge pull requests from contributors who have not signed the OCA.
 
 3.  Fork the WebLogic Remote Console GitHub repository.
@@ -105,4 +107,3 @@ You must have a modern internet browser installed to run WebLogic Remote Console
 To end the session, enter <code>Ctrl+C</code> in the command window.
 
 Unsaved changes made in the browser application do not persist after you close the browser tab. If you accidentally close or refresh the browser tab, you may lose all of your changes. Changes to an Administration Server provider remain in a pending state and can generally be recovered in a new session. Changes to WDT model files, WDT Composite files, and property lists are lost if you do not click **Download File** at the end of your session.
-

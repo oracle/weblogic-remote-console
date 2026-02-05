@@ -2,6 +2,8 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>https://oracle.github.io/weblogic-remote-console/preview/</loc>
+  </url><url>
     <loc>https://oracle.github.io/weblogic-remote-console/2.4.13/preface/</loc>
   </url><url>
     <loc>https://oracle.github.io/weblogic-remote-console/2.4.14/preface/</loc>

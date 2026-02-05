@@ -24,19 +24,21 @@ languages:
       description: A guide for using WebLogic Remote Console to manage WebLogic Server domains.
   # cSpell:disable
 
-# TODO update path to include '/3**' when major version increases to 3.x
+# TODO update paths to include '/3**' when major version increases to 3.x
 
 cascade:
   - type: 'docs'
     target:
-      path: '{/2**,/latest**}'
+      path: '{/2**,/3**,/latest**,/preview**}'
   - params:
-    archived_version: true
-    # param.version is a vestigial attribute from original version-banner partial
-    version: 2
-    exclude_search: true
     target:
-      path: /2**
+      path: '{/2**,/3**}'
+    exclude_search: true
+    archived_version: true
+    # params.version is a vestigial attribute from original version-banner partial
+    version: 2
+    # version: 
+    #   url: '{/:section}'
 
 menus:
   main:
@@ -96,6 +98,8 @@ params:
   versions:
     - version: Latest (v2.4.19)
       url: '/weblogic-remote-console/overview'
+    - version: Tech Preview (v3.0.0)
+      url: '/weblogic-remote-console/preview'
     - version: v2.4.18
       url: '/weblogic-remote-console/2.4.18'
     - version: v2.4.17
