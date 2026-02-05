@@ -1,0 +1,17 @@
+oj-c-input-date-picker:not(.oj-complete) {
+  visibility: hidden;
+}
+
+oj-c-input-date-picker {
+  display: inline-block;
+  max-width: 100%;
+  width: 100%;
+}
+
+oj-c-input-date-picker.in-form-layout {
+  display: block;
+}
+
+oj-c-input-date-picker[hidden] {
+  display: none;
+}

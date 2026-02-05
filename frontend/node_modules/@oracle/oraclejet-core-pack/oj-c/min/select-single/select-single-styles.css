@@ -1,0 +1,26 @@
+/* This file is where css selectors for the component go.
+   There will be hard coded properties and properties controlled by variables, for example
+
+   oj-c-select-single .oj-c-select-single-value-text {
+   color: var(--oj-c-select-single-value-text-color);
+   display: inline-block;
+	 }
+*/
+
+oj-c-select-single:not(.oj-complete) {
+  visibility: hidden;
+}
+
+oj-c-select-single {
+  display: inline-block;
+  max-width: 100%;
+  width: 100%;
+}
+
+oj-c-select-single.in-form-layout {
+  display: block;
+}
+
+oj-c-select-single[hidden] {
+  display: none;
+}

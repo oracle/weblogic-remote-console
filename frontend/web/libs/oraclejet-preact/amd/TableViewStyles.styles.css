@@ -1,0 +1,14 @@
+.TableViewStyles_tableViewStyles_base__1cet5nj0 {
+  align-items: stretch;
+  background-color: var(--oj-current-bg-color);
+  box-sizing: border-box;
+  clear: both;
+  display: inline-flex;
+  position: relative;
+}
+.TableViewStyles_tableViewStyles_internalScroller__1cet5nj1 {
+  overflow: clip;
+}
+.TableViewStyles_tableViewStyles_externalScroller__1cet5nj2 {
+  overflow: visible;
+}

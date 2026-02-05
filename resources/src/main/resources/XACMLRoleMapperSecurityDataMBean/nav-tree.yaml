@@ -5,10 +5,12 @@ contents:
 - child: AppDeployments
 - child: CoherenceClusterSystemResources
 - label: Domain
+  description: Role mappings for domain-level operations
   type: group
   contents:
   - child: Domain.Roles
 - label: Global
+  description: Global role mapping support in this authorizer
   type: group
   contents:
    - child: Global.Roles
@@ -16,6 +18,7 @@ contents:
 - child: JMSSystemResources
 - child: Servers
 - label: Advanced
+  description: Advanced role mappings and configuration support for this authorizer
   type: group
   contents:
   - child: AdvancedAdminRoleMappings

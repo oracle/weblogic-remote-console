@@ -1,5 +1,9 @@
-# Copyright (c) 2024, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2024, 2025, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 introductionHTML: Create a custom health score configuration for this server or server template.
+
+presentation:
+  singleColumn: true
+
 properties: []

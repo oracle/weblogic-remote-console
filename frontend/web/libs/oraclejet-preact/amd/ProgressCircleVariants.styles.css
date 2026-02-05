@@ -1,0 +1,18 @@
+.ProgressCircleVariants_multiVariantStyles_size_sm__18za6ef0 {
+  --size__lborgv0: var(--sizes-sm-size__lborgv2);
+  --trackWidth__lborgv1: var(--sizes-sm-trackWidth__lborgv3);
+}
+.ProgressCircleVariants_multiVariantStyles_size_md__18za6ef1 {
+  --size__lborgv0: var(--sizes-md-size__lborgv4);
+  --trackWidth__lborgv1: var(--sizes-md-trackWidth__lborgv5);
+}
+.ProgressCircleVariants_multiVariantStyles_size_lg__18za6ef2 {
+  --size__lborgv0: var(--sizes-lg-size__lborgv6);
+  --trackWidth__lborgv1: var(--sizes-lg-trackWidth__lborgv7);
+}
+.ProgressCircleVariants_multiVariantStyles_type_indeterminate__18za6ef3 {
+  animation-name: ProgressCircleStyles_circleRotation__o65man0;
+  animation-duration: 1s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}

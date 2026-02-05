@@ -1,0 +1,9 @@
+/**
+ * @license
+ * Copyright (c) 2014, 2025, Oracle and/or its affiliates.
+ * Licensed under The Universal Permissive License (UPL), Version 1.0
+ * as shown at https://oss.oracle.com/licenses/upl/
+ * @ignore
+ */
+define(["exports","preact/jsx-runtime","ojs/ojvcomponent","preact","ojs/ojtranslation"],function(e,r,a,s,t){"use strict";var o=function(e,r,a,s){var t,o=arguments.length,n=o<3?r:null===s?s=Object.getOwnPropertyDescriptor(r,a):s;if("object"==typeof Reflect&&"function"==typeof Reflect.decorate)n=Reflect.decorate(e,r,a,s);else for(var l=e.length-1;l>=0;l--)(t=e[l])&&(n=(o<3?t(n):o>3?t(r,a,n):t(r,a))||n);return o>3&&n&&Object.defineProperty(r,a,n),n};e.ProgressBar=class extends s.Component{render(e){return-1===e.value?this._renderIndeterminateBar(e):this._renderDeterminateBar(e)}_renderDeterminateBar(e){let s=e.max,t=e.value;s<0&&(s=0),t<0&&(t=0);const o=0===s?0:t>s?1:t/s;return r.jsx(a.Root,{class:"oj-progress-bar",role:"progressbar","aria-valuemin":0,"aria-valuemax":s,"aria-valuenow":t,children:r.jsx("div",{class:"oj-progress-bar-track",children:r.jsx("div",{class:"oj-progress-bar-value",style:{width:100*o+"%"}})})})}_renderIndeterminateBar(e){return r.jsx(a.Root,{class:"oj-progress-bar",role:"progressbar","aria-valuetext":t.getTranslatedString("oj-ojProgressbar.ariaIndeterminateProgressText"),children:r.jsx("div",{class:"oj-progress-bar-track",children:r.jsx("div",{class:"oj-progress-bar-value oj-progress-bar-indeterminate"})})})}},e.ProgressBar.defaultProps={max:100,value:0},e.ProgressBar._metadata={properties:{max:{type:"number"},value:{type:"number"}}},e.ProgressBar=o([a.customElement("oj-progress-bar")],e.ProgressBar),Object.defineProperty(e,"__esModule",{value:!0})});
+//# sourceMappingURL=ojprogress-bar.js.map

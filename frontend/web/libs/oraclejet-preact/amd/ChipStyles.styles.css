@@ -1,0 +1,56 @@
+.ChipStyles_base__uqewtf0 {
+  background-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-surface-info-low);
+  color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-info);
+  display: inline-block;
+  padding-top: calc(2 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  padding-right: calc(2 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  padding-bottom: calc(2 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  padding-left: calc(2 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  box-sizing: border-box;
+  border-top-left-radius: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-border-radius-lg);
+  border-top-right-radius: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-border-radius-lg);
+  border-bottom-right-radius: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-border-radius-lg);
+  border-bottom-left-radius: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-border-radius-lg);
+  height: calc(8 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  min-width: calc(8 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  line-height: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-body-sm-line-height);
+  font-size: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-body-sm-font-size);
+  font-weight: 600;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  text-align: center;
+  cursor: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-cursor-clickable);
+}
+.ChipStyles_base__uqewtf0:focus-visible {
+  outline-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-border-keyboard-focus);
+  outline-style: dotted;
+  outline-width: 1px;
+  outline-offset: 1px;
+}
+.ChipStyles_base__uqewtf0 > * {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+.ChipStyles_multiVariantStyles_disabled_isDisabled__uqewtf1 {
+  background-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-surface-disabled);
+  color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-disabled);
+  cursor: auto;
+}
+.ChipStyles_multiVariantStyles_hover_isHover__uqewtf3 {
+  background-image: linear-gradient(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-overlay-hover), var(--oj-c-EXPERIMENTAL-DO-NOT-USE-overlay-hover));
+  color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-info);
+}
+.ChipStyles_multiVariantStyles_active_isActive__uqewtf7 {
+  background-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-surface-info-strong);
+  color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-inverse);
+}
+@media (hover: hover) {
+  .ChipStyles_multiVariantStyles_pseudoHover_isPseudoHover__uqewtf5:hover:not(:active) {
+    background-image: linear-gradient(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-overlay-hover), var(--oj-c-EXPERIMENTAL-DO-NOT-USE-overlay-hover));
+    color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-info);
+  }
+}

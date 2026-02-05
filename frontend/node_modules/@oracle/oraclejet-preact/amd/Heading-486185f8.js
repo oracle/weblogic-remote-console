@@ -1,0 +1,2 @@
+define(['exports', 'preact/jsx-runtime', './UNSAFE_Heading/themes/HeadingStyles.css'], (function(e,s,i){"use strict";const n={h1:"2xl",h2:"xl",h3:"lg",h4:"md",h5:"sm",h6:"xs"};e.Heading=function({children:e,as:t,size:h,id:a,variant:r="primary"}){const l=t;h=h??n[l];const c=i.multiVariantStyles({size:h,variant:r});return s.jsx(l,{className:c,id:a,children:e})},e.headingElementTypes=["h1","h2","h3","h4","h5","h6"],e.sizeOptions=["xs","sm","md","lg","xl","2xl","inherit"]}));
+//# sourceMappingURL=Heading-486185f8.js.map

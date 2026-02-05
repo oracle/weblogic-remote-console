@@ -1,0 +1,790 @@
+{
+  "name": "table",
+  "version": "19.0.1",
+  "jetVersion": "^19.0.1",
+  "pack": "oj-c",
+  "type": "composite",
+  "dependencyScope": "runtime",
+  "license": "https://opensource.org/licenses/UPL",
+  "implements": [
+    "CTableElement"
+  ],
+  "displayName": "Table",
+  "description": "A table displays data items in a tabular format with highly interactive features.",
+  "help": "oj-c.Table.html",
+  "main": "oj-c/table",
+  "status": [
+    {
+      "type": "candidate",
+      "since": "17.1.0"
+    }
+  ],
+  "extension": {
+    "catalog": {
+      "category": "Collections"
+    },
+    "vbdt": {
+      "module": "oj-c/table",
+      "defaultColumns": 12,
+      "minColumns": 2
+    },
+    "oracle": {
+      "uxSpecs": [
+        "table"
+      ],
+      "icon": "oj-ux-ico-tables-basic"
+    },
+    "webelement": {
+      "package": "@oracle/oraclejet-core-pack",
+      "version": "19.0.1",
+      "docUrl": "https://www.oracle.com/webfolder/technetwork/jet/cpwdtsdoc/classes/TableWebElement.html",
+      "export": "findTable",
+      "main": "@oracle/oraclejet-core-pack/webdriver"
+    }
+  },
+  "propertyLayout": [
+    {
+      "propertyGroup": "common",
+      "items": [
+        "selectionMode.row",
+        "selectionMode.column",
+        "horizontalGridVisible",
+        "verticalGridVisible"
+      ]
+    },
+    {
+      "propertyGroup": "data",
+      "items": [
+        "data",
+        "columns",
+        "selected.row",
+        "selected.column"
+      ]
+    }
+  ],
+  "since": "17.1.0",
+  "properties": {
+    "layout": {
+      "type": "string",
+      "propertyEditorValues": {
+        "contents": {
+          "description": "When specified, the initial column sizes are determined by the contents of the data. Does not require an overall width set on the Table. Can have performance issues when large numbers of columns and/or rows are initially rendered.",
+          "displayName": "Contents"
+        },
+        "fixed": {
+          "description": "When specified, the initial column sizes are determined by column weights. Requires an overall width set on the Table (width='100%', width='200rem', etc.) Very performant when rendering large numbers of columns and/or rows.",
+          "displayName": "Fixed"
+        }
+      },
+      "description": "The column sizing method used for the Table's columns.",
+      "displayName": "Layout",
+      "help": "#layout",
+      "enumValues": [
+        "fixed",
+        "contents"
+      ],
+      "value": "contents"
+    },
+    "data": {
+      "type": "DataProvider",
+      "description": "The data provider for Table.",
+      "displayName": "Data",
+      "help": "#data"
+    },
+    "columns": {
+      "type": "object",
+      "description": "The set of columns that can be displayed in the Table.",
+      "displayName": "Columns",
+      "help": "#columns",
+      "extension": {
+        "vbdt": {
+          "keyedProperties": {
+            "keys": {
+              "type": "string"
+            },
+            "values": {
+              "type": "object",
+              "properties": {
+                "field": {
+                  "type": "string|number",
+                  "displayName": "Field",
+                  "description": "Specifies the field attribute of the row item data that is mapped to the column."
+                },
+                "headerText": {
+                  "type": "string",
+                  "displayName": "Header Text",
+                  "description": "Text to display in the header cell of the column."
+                },
+                "footerText": {
+                  "type": "string",
+                  "displayName": "Footer Text",
+                  "description": "Text to display in the footer cell of the column"
+                },
+                "template": {
+                  "type": "string",
+                  "description": "The name of the slot used to specify the template for rendering data cells in the column. See the Help documentation for more information.",
+                  "displayName": "Template",
+                  "dynamicSlotDef": "CellTemplateContext"
+                },
+                "headerTemplate": {
+                  "type": "string",
+                  "description": "The name of the slot used to specify the template for rendering the header cell in the column. See the Help documentation for more information.",
+                  "displayName": "Header Template",
+                  "dynamicSlotDef": "HeaderTemplateContext"
+                },
+                "footerTemplate": {
+                  "type": "string",
+                  "description": "The name of the slot used to specify the template for rendering the footer cell in the column. See the Help documentation for more information.",
+                  "displayName": "Footer Template",
+                  "dynamicSlotDef": "FooterTemplateContext"
+                },
+                "maxWidth": {
+                  "type": "number",
+                  "description": "The maximum width in pixels of the column. See the Help documentation for more information.",
+                  "displayName": "Max Width"
+                },
+                "minWidth": {
+                  "type": "number",
+                  "description": "The minimum width in pixels of the column. See the Help documentation for more information.",
+                  "displayName": "Min Width"
+                },
+                "weight": {
+                  "type": "number",
+                  "description": "Specifies the relative sizing weight of the column. See the Help documentation for more information.",
+                  "displayName": "Weight"
+                },
+                "padding": {
+                  "type": "string|object|function",
+                  "description": "Specifies padding for data cells in this column.",
+                  "displayName": "Padding",
+                  "propertyEditorValues": {
+                    "disabled": {},
+                    "enabled": {}
+                  }
+                },
+                "headerPadding": {
+                  "type": "string|object",
+                  "description": "Specifies padding for the header cell in this column.",
+                  "displayName": "Header Padding",
+                  "propertyEditorValues": {
+                    "disabled": {},
+                    "enabled": {}
+                  }
+                },
+                "footerPadding": {
+                  "type": "string|object",
+                  "description": "Specifies padding for the footer cell in this column.",
+                  "displayName": "Footer Padding",
+                  "propertyEditorValues": {
+                    "disabled": {},
+                    "enabled": {}
+                  }
+                },
+                "tooltip": {
+                  "type": "string|function",
+                  "description": "Specifies whether default tooltips are enabled for data cells in this column.",
+                  "displayName": "Tooltip",
+                  "propertyEditorValues": {
+                    "disabled": {},
+                    "enabled": {}
+                  }
+                },
+                "headerTooltip": {
+                  "type": "string",
+                  "description": "Specifies whether the default tooltip is enabled for the header cell in this column.",
+                  "displayName": "Header Tooltip",
+                  "enumValues": [
+                    "disabled",
+                    "enabled"
+                  ]
+                },
+                "footerTooltip": {
+                  "type": "string",
+                  "description": "Specifies whether the default tooltip is enabled for the footer cell in this column.",
+                  "displayName": "Footer Tooltip",
+                  "enumValues": [
+                    "disabled",
+                    "enabled"
+                  ]
+                },
+                "sticky": {
+                  "type": "string",
+                  "description": "Whether this column should be prevented from scrolling out of view.",
+                  "displayName": "Sticky",
+                  "enumValues": [
+                    "disabled",
+                    "enabled"
+                  ]
+                },
+                "horizontalAlignment": {
+                  "type": "string",
+                  "description": "The horizontal alignment of the column.",
+                  "displayName": "Horizontal Alignment",
+                  "enumValues": [
+                    "center",
+                    "end",
+                    "start",
+                    "left",
+                    "right"
+                  ]
+                },
+                "resizable": {
+                  "type": "string",
+                  "description": "Enable or disable width resizing along the column end headers.",
+                  "displayName": "Resizable",
+                  "enumValues": [
+                    "disabled",
+                    "enabled"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "row": {
+      "type": "object",
+      "description": "A subset of attributes for controlling certain behaviors on a per row basis.",
+      "displayName": "Row",
+      "help": "#row",
+      "properties": {
+        "accessibleRowHeader": {
+          "type": "string|Array<string>|function",
+          "description": "The column key(s) to be used as the accessible row header(s) for assistive technologies. See the Help documentation for more information.",
+          "displayName": "Accessible Row Header",
+          "help": "#row.accessibleRowHeader"
+        }
+      }
+    },
+    "horizontalGridVisible": {
+      "type": "string",
+      "propertyEditorValues": {
+        "enabled": {
+          "description": "Display horizontal gridlines",
+          "displayName": "Enabled"
+        },
+        "disabled": {
+          "description": "Do not display horizontal gridlines",
+          "displayName": "Disabled"
+        }
+      },
+      "description": "Controls the display of the Table's horizontal gridlines.",
+      "displayName": "Horizontal Grid Visible",
+      "help": "#horizontalGridVisible",
+      "enumValues": [
+        "disabled",
+        "enabled"
+      ],
+      "value": "enabled"
+    },
+    "verticalGridVisible": {
+      "type": "string",
+      "propertyEditorValues": {
+        "enabled": {
+          "description": "Display vertical gridlines",
+          "displayName": "Enabled"
+        },
+        "disabled": {
+          "description": "Do not display vertical gridlines",
+          "displayName": "Disabled"
+        }
+      },
+      "description": "Controls the display of the Table's vertical gridlines.",
+      "displayName": "Vertical Grid Visible",
+      "help": "#verticalGridVisible",
+      "enumValues": [
+        "disabled",
+        "enabled"
+      ],
+      "value": "disabled"
+    },
+    "selected": {
+      "type": "object",
+      "description": "The selected rows and/or columns. See the Help documentation for more information.",
+      "displayName": "Selected",
+      "help": "#selected",
+      "properties": {
+        "column": {
+          "type": "object",
+          "description": "The selected columns. See the Help documentation for more information.",
+          "displayName": "Selected Columns",
+          "help": "#selected.column"
+        },
+        "row": {
+          "type": "object",
+          "description": "The selected rows. See the Help documentation for more information.",
+          "displayName": "Selected Rows",
+          "help": "#selected.row"
+        }
+      },
+      "writeback": true
+    },
+    "selectionMode": {
+      "type": "object",
+      "description": "Specifies whether row and/or column selection gestures are enabled on the Table, and the cardinality of each (single/multiple/multipleToggle/none).",
+      "displayName": "Selection Mode",
+      "help": "#selectionMode",
+      "properties": {
+        "column": {
+          "type": "string",
+          "propertyEditorValues": {
+            "none": {
+              "description": "Column selection gestures are disabled.",
+              "displayName": "None"
+            },
+            "single": {
+              "description": "A maximum of 1 column can be selected via user gestures.",
+              "displayName": "Single"
+            },
+            "multiple": {
+              "description": "Any number of columns can be selected via user gestures.",
+              "displayName": "Multiple"
+            }
+          },
+          "description": "Specifies whether column selection gestures are enabled on the Table.",
+          "displayName": "Column Selection Mode",
+          "help": "#selectionMode.column",
+          "enumValues": [
+            "none",
+            "multiple",
+            "single"
+          ],
+          "value": "none"
+        },
+        "row": {
+          "type": "string",
+          "propertyEditorValues": {
+            "none": {
+              "description": "Row selection gestures are disabled.",
+              "displayName": "None"
+            },
+            "single": {
+              "description": "A maximum of 1 row can be selected via user gestures.",
+              "displayName": "Single"
+            },
+            "multiple": {
+              "description": "Any number of rows can be selected via user gestures. Performing a selection gesture may affect the selection state of previously selected rows depending on render context as well as the use of modifier keys.",
+              "displayName": "Multiple"
+            },
+            "multipleToggle": {
+              "description": "Any number of rows can be selected via user gestures. Performing a selection gesture will not affect the selection state of previously selected rows regardless of rendering context or the use of modifier keys.",
+              "displayName": "Multiple Toggle"
+            }
+          },
+          "description": "Specifies whether row selection gestures are enabled on the Table.",
+          "displayName": "Row Selection Mode",
+          "help": "#selectionMode.row",
+          "enumValues": [
+            "none",
+            "multiple",
+            "single",
+            "multipleToggle"
+          ],
+          "value": "none"
+        }
+      }
+    },
+    "selectAllControl": {
+      "type": "string",
+      "propertyEditorValues": {
+        "hidden": {
+          "description": "Do not display the select all control",
+          "displayName": "Hidden"
+        },
+        "visible": {
+          "description": "Display the select all control",
+          "displayName": "Visible"
+        }
+      },
+      "description": "Controls the display of the Table's select all control when multiple or multipleToggle row selection is enabled.",
+      "displayName": "Select All Control",
+      "help": "#selectAllControl",
+      "enumValues": [
+        "hidden",
+        "visible"
+      ],
+      "value": "visible"
+    },
+    "columnOrder": {
+      "type": "Array<string>",
+      "description": "Display and order of columns. See the Help documentation for more information.",
+      "displayName": "Column Order",
+      "help": "#columnOrder",
+      "writeback": true
+    },
+    "currentCellOverride": {
+      "type": "object",
+      "description": "The cell override to apply to the current cell of the Table. In order for this property to be honored, a new object instance must be set.",
+      "displayName": "Current Cell Override",
+      "help": "#currentCellOverride"
+    },
+    "currentCell": {
+      "type": "object",
+      "description": "The cell currently being used as the target for keyboard gestures made on the Table.",
+      "displayName": "Current Cell",
+      "help": "#currentCell",
+      "readOnly": true,
+      "writeback": true
+    },
+    "columnWidths": {
+      "type": "object",
+      "description": "The desired widths of table columns. A record mapping column keys to numbers representing pixel widths for each column.",
+      "displayName": "Column Widths",
+      "help": "#columnWidths",
+      "extension": {
+        "vbdt": {
+          "keyedProperties": {
+            "keys": {
+              "type": "string"
+            },
+            "values": {
+              "type": "number"
+            }
+          }
+        }
+      },
+      "writeback": true
+    },
+    "scrollPolicyOptions": {
+      "type": "object",
+      "description": "Options related to the Table's fetching and scrolling behaviors.",
+      "displayName": "Scroll Policy Options",
+      "help": "#scrollPolicyOptions",
+      "properties": {
+        "fetchSize": {
+          "type": "number",
+          "description": "The number of records the Table will request during each data fetch.",
+          "displayName": "Fetch Size",
+          "help": "#scrollPolicyOptions.fetchSize",
+          "value": 25
+        }
+      }
+    },
+    "columnResizeBehavior": {
+      "type": "string",
+      "description": "The column resize behavior this Table will utilize when column resizing is enabled on a given column.",
+      "displayName": "Column Resize Behavior",
+      "help": "#columnResizeBehavior",
+      "propertyEditorValues": {
+        "add": {
+          "description": "Column resize gestures only affect the width of the column on the start side of the divider.",
+          "displayName": "add"
+        },
+        "redistribute": {
+          "description": "Column resize gestures affect the widths of columns on each side of the divider.",
+          "displayName": "redistribute"
+        }
+      },
+      "enumValues": [
+        "add",
+        "redistribute"
+      ],
+      "value": "redistribute"
+    }
+  },
+  "slots": {
+    "cellTemplate": {
+      "description": "Named slot for the table's global cell template. See the Help documentation for more information.",
+      "displayName": "Cell Template",
+      "help": "#cellTemplate",
+      "data": {
+        "columnKey": {
+          "type": "string"
+        },
+        "item": {
+          "type": "object",
+          "properties": {
+            "data": {
+              "type": "any"
+            },
+            "metadata": {
+              "type": "object",
+              "properties": {
+                "indexFromParent": {
+                  "type": "number"
+                },
+                "isLeaf": {
+                  "type": "boolean"
+                },
+                "key": {
+                  "type": "string|number"
+                },
+                "message": {
+                  "type": "object",
+                  "properties": {
+                    "detail": {
+                      "type": "string"
+                    },
+                    "severity": {
+                      "type": "string|number"
+                    },
+                    "summary": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "parentKey": {
+                  "type": "string|number"
+                },
+                "suggestion": {
+                  "type": "object"
+                },
+                "treeDepth": {
+                  "type": "number"
+                }
+              }
+            }
+          }
+        },
+        "data": {
+          "type": "any"
+        },
+        "isTabbable": {
+          "type": "boolean"
+        }
+      }
+    },
+    "headerTemplate": {
+      "description": "Named slot for the table's global header template. See the Help documentation for more information.",
+      "displayName": "Header Template",
+      "help": "#headerTemplate",
+      "data": {
+        "key": {
+          "type": "string"
+        },
+        "headerText": {
+          "type": "string"
+        },
+        "isTabbable": {
+          "type": "boolean"
+        }
+      }
+    },
+    "footerTemplate": {
+      "description": "Named slot for the Table's global footer template. See the Help documentation for more information.",
+      "displayName": "Footer Template",
+      "help": "#footerTemplate",
+      "data": {
+        "key": {
+          "type": "string"
+        },
+        "footerText": {
+          "type": "string"
+        },
+        "isTabbable": {
+          "type": "boolean"
+        }
+      }
+    },
+    "noData": {
+      "description": "The template for rendering content when the table has an empty data set. See the Help documentation for more information.",
+      "displayName": "No Data",
+      "help": "#noData",
+      "templateSlotAlias": "noDataTemplate",
+      "data": {
+        "isTabbable": {
+          "type": "boolean"
+        }
+      }
+    }
+  },
+  "dynamicSlots": {
+    "CellTemplateContext": {
+      "description": "A set of dynamic templates for rendering the table content.",
+      "displayName": "Dynamic Template Slots",
+      "help": "#dynamicTemplates",
+      "data": {
+        "columnKey": {
+          "type": "string"
+        },
+        "item": {
+          "type": "object",
+          "properties": {
+            "data": {
+              "type": "any"
+            },
+            "metadata": {
+              "type": "object",
+              "properties": {
+                "indexFromParent": {
+                  "type": "number"
+                },
+                "isLeaf": {
+                  "type": "boolean"
+                },
+                "key": {
+                  "type": "string|number"
+                },
+                "message": {
+                  "type": "object",
+                  "properties": {
+                    "detail": {
+                      "type": "string"
+                    },
+                    "severity": {
+                      "type": "string|number"
+                    },
+                    "summary": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "parentKey": {
+                  "type": "string|number"
+                },
+                "suggestion": {
+                  "type": "object"
+                },
+                "treeDepth": {
+                  "type": "number"
+                }
+              }
+            }
+          }
+        },
+        "data": {
+          "type": "any"
+        },
+        "isTabbable": {
+          "type": "boolean"
+        }
+      }
+    },
+    "HeaderTemplateContext": {
+      "description": "A set of dynamic templates for rendering the table content.",
+      "displayName": "Dynamic Template Slots",
+      "help": "#dynamicTemplates",
+      "data": {
+        "key": {
+          "type": "string"
+        },
+        "headerText": {
+          "type": "string"
+        },
+        "isTabbable": {
+          "type": "boolean"
+        }
+      }
+    },
+    "FooterTemplateContext": {
+      "description": "A set of dynamic templates for rendering the table content.",
+      "displayName": "Dynamic Template Slots",
+      "help": "#dynamicTemplates",
+      "data": {
+        "key": {
+          "type": "string"
+        },
+        "footerText": {
+          "type": "string"
+        },
+        "isTabbable": {
+          "type": "boolean"
+        }
+      }
+    }
+  },
+  "events": {
+    "ojRowAction": {
+      "bubbles": true,
+      "description": "Triggered when a user performs an action gesture on a row. See the Help documentation for more information.",
+      "displayName": "On OjRowAction",
+      "help": "#event:ojRowAction",
+      "detail": {
+        "context": {
+          "type": "object",
+          "properties": {
+            "item": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "any"
+                },
+                "metadata": {
+                  "type": "object",
+                  "properties": {
+                    "indexFromParent": {
+                      "type": "number"
+                    },
+                    "isLeaf": {
+                      "type": "boolean"
+                    },
+                    "key": {
+                      "type": "string|number"
+                    },
+                    "message": {
+                      "type": "object",
+                      "properties": {
+                        "detail": {
+                          "type": "string"
+                        },
+                        "severity": {
+                          "type": "string|number"
+                        },
+                        "summary": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "parentKey": {
+                      "type": "string|number"
+                    },
+                    "suggestion": {
+                      "type": "object"
+                    },
+                    "treeDepth": {
+                      "type": "number"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "methods": {
+    "setProperty": {
+      "description": "Sets a property or a single subproperty for complex properties and notifies the component of the change, triggering a corresponding event.",
+      "help": "#setProperty",
+      "params": [
+        {
+          "name": "property",
+          "description": "The property name to set. Supports dot notation for subproperty access.",
+          "type": "string"
+        },
+        {
+          "name": "value",
+          "description": "The new value to set the property to.",
+          "type": "any"
+        }
+      ],
+      "return": "void"
+    },
+    "getProperty": {
+      "description": "Retrieves the value of a property or a subproperty.",
+      "help": "#getProperty",
+      "params": [
+        {
+          "name": "property",
+          "description": "The property name to get. Supports dot notation for subproperty access.",
+          "type": "string"
+        }
+      ],
+      "return": "any"
+    },
+    "setProperties": {
+      "description": "Performs a batch set of properties.",
+      "help": "#setProperties",
+      "params": [
+        {
+          "name": "properties",
+          "description": "An object containing the property and value pairs to set.",
+          "type": "object"
+        }
+      ],
+      "return": "void"
+    }
+  }
+}

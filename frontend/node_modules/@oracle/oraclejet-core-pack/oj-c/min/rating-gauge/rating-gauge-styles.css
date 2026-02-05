@@ -1,0 +1,12 @@
+oj-c-rating-gauge:not(.oj-complete) {
+    visibility: hidden;
+}
+
+oj-c-rating-gauge[hidden] {
+    display: none;
+}
+
+oj-c-rating-gauge {
+    display: block;
+    line-height: 0;
+}

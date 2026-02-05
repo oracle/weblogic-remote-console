@@ -1,0 +1,13 @@
+.MessageToastBaseTheme_baseTheme__1b8krg70 {
+  --backgroundColor__zw7y740: rgb(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-surface-info-low));
+  --maxWidthLg__zw7y741: calc(150 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --maxWidthMd__zw7y742: calc(100vw - calc(12 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem)));
+  --maxWidthSm__zw7y743: calc(100vw - calc(8 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem)));
+  --startIconColor__zw7y744: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-primary);
+  --startIconSize__zw7y745: calc(6 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --summaryTextColor__zw7y746: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-primary);
+  --summaryTextWeight__zw7y747: normal;
+  --summaryTextSize__zw7y748: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-body-md-font-size);
+  --summaryLineHeight__zw7y749: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-body-md-line-height);
+  --detailTextColor__zw7y74a: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-secondary);
+}

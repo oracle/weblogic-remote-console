@@ -35,7 +35,7 @@ esac
 
 mkdir -p $DISTDIR
 
-./gen-messages $DISTDIR/resources/nls ../frontend/src/resources/nls/frontend*.properties
+./gen-messages $DISTDIR/resources/nls ../frontend/nls/frontend*.properties
 
 if [ ! -r $DISTDIR/customjre ]
 then

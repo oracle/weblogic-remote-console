@@ -1,0 +1,12 @@
+oj-c-selection-card:not(.oj-complete){
+  visibility: hidden;
+}
+
+oj-c-selection-card {
+  display: inline-flex;
+}
+
+oj-c-selection-card[hidden]
+{
+  display: none;
+}

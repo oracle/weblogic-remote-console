@@ -1,0 +1,154 @@
+{
+  "name": "progress-bar",
+  "version": "19.0.1",
+  "jetVersion": "^19.0.1",
+  "pack": "oj-c",
+  "type": "composite",
+  "dependencyScope": "runtime",
+  "license": "https://opensource.org/licenses/UPL",
+  "implements": [
+    "CProgressBarElement"
+  ],
+  "description": "A progress bar allows the user to visualize the progression of an extended computer operation.",
+  "displayName": "Progress Bar",
+  "help": "oj-c.ProgressBar.html",
+  "main": "oj-c/progress-bar",
+  "status": [
+    {
+      "type": "supersedes",
+      "since": "15.0.0",
+      "value": [
+        "oj-progress-bar"
+      ]
+    }
+  ],
+  "extension": {
+    "catalog": {
+      "category": "Controls"
+    },
+    "vbdt": {
+      "module": "oj-c/progress-bar"
+    },
+    "oracle": {
+      "icon": "oj-ux-ico-progress-linear",
+      "uxSpecs": [
+        "progress-bar"
+      ]
+    },
+    "webelement": {
+      "package": "@oracle/oraclejet-core-pack",
+      "version": "19.0.1",
+      "docUrl": "https://www.oracle.com/webfolder/technetwork/jet/cpwdtsdoc/classes/ProgressBarWebElement.html",
+      "export": "findProgressBar",
+      "main": "@oracle/oraclejet-core-pack/webdriver"
+    }
+  },
+  "propertyLayout": [
+    {
+      "propertyGroup": "common",
+      "items": [
+        "max"
+      ]
+    },
+    {
+      "propertyGroup": "data",
+      "items": [
+        "value"
+      ]
+    }
+  ],
+  "since": "13.0.0",
+  "requirements": [
+    {
+      "type": "anyOf",
+      "label": "accessibility",
+      "properties": [
+        "aria-label",
+        "aria-labelledby"
+      ]
+    }
+  ],
+  "properties": {
+    "max": {
+      "type": "number",
+      "description": "The maximum allowed value.",
+      "displayName": "Max",
+      "help": "#max",
+      "minimum": 0,
+      "value": 100
+    },
+    "value": {
+      "type": "number",
+      "description": "The value of the Progress Bar.",
+      "displayName": "Value",
+      "eventGroup": "common",
+      "help": "value",
+      "minimum": -1,
+      "value": 0
+    },
+    "edge": {
+      "type": "string",
+      "description": "Specifies whether the progress bar is on the top edge of a container",
+      "displayName": "edge",
+      "help": "#edge",
+      "propertyEditorValues": {
+        "none": {
+          "description": "Not attached progress bar (default, if unspecified)",
+          "displayName": "Not Attached Progress Bar"
+        },
+        "top": {
+          "description": "Progress Bar at Top Edge of container",
+          "displayName": "Progress Bar Top Edge Container"
+        }
+      },
+      "enumValues": [
+        "none",
+        "top"
+      ],
+      "value": "none"
+    }
+  },
+  "methods": {
+    "setProperty": {
+      "description": "Sets a property or a single subproperty for complex properties and notifies the component of the change, triggering a corresponding event.",
+      "help": "#setProperty",
+      "params": [
+        {
+          "name": "property",
+          "description": "The property name to set. Supports dot notation for subproperty access.",
+          "type": "string"
+        },
+        {
+          "name": "value",
+          "description": "The new value to set the property to.",
+          "type": "any"
+        }
+      ],
+      "return": "void"
+    },
+    "getProperty": {
+      "description": "Retrieves the value of a property or a subproperty.",
+      "help": "#getProperty",
+      "params": [
+        {
+          "name": "property",
+          "description": "The property name to get. Supports dot notation for subproperty access.",
+          "type": "string"
+        }
+      ],
+      "return": "any"
+    },
+    "setProperties": {
+      "description": "Performs a batch set of properties.",
+      "help": "#setProperties",
+      "params": [
+        {
+          "name": "properties",
+          "description": "An object containing the property and value pairs to set.",
+          "type": "object"
+        }
+      ],
+      "return": "void"
+    }
+  }
+}

@@ -1,0 +1,264 @@
+{
+  "name": "tab-bar",
+  "version": "19.0.1",
+  "jetVersion": "^19.0.1",
+  "pack": "oj-c",
+  "type": "composite",
+  "dependencyScope": "runtime",
+  "license": "https://opensource.org/licenses/UPL",
+  "implements": [
+    "CTabBarElement"
+  ],
+  "description": "A tab bar allows navigation between different content sections.",
+  "displayName": "Tab Bar",
+  "help": "oj-c.TabBar.html",
+  "main": "oj-c/tab-bar",
+  "status": [
+    {
+      "type": "supersedes",
+      "since": "19.0.0",
+      "value": [
+        "oj-tab-bar"
+      ]
+    }
+  ],
+  "since": "17.0.0",
+  "properties": {
+    "data": {
+      "type": "Array<object>|DataProvider",
+      "description": "An array of tabs",
+      "displayName": "data",
+      "help": "data",
+      "value": []
+    },
+    "selection": {
+      "type": "string|number",
+      "description": "The key of the selected tab",
+      "displayName": "Selected Tab",
+      "help": "#selection",
+      "writeback": true
+    },
+    "reorderable": {
+      "type": "string",
+      "description": "The reorderable configuration for tabs.",
+      "displayName": "reorderable",
+      "propertyEditorValues": {
+        "enabled": {
+          "description": "Enables reordering of items in tabbar.",
+          "displayName": "Enabled"
+        },
+        "disabled": {
+          "description": "Disables reordering of items in tabbar.",
+          "displayName": "Disabled"
+        }
+      },
+      "enumValues": [
+        "disabled",
+        "enabled"
+      ],
+      "value": "disabled"
+    },
+    "overflow": {
+      "type": "string",
+      "description": "Specifies the overflow behavior.",
+      "displayName": "Layout",
+      "enumValues": [
+        "hidden",
+        "popup",
+        "conveyor"
+      ],
+      "value": "hidden"
+    },
+    "display": {
+      "type": "string",
+      "description": "The display configuration for tabs.",
+      "displayName": "Tabs Display",
+      "propertyEditorValues": {
+        "standard": {
+          "description": "Label and icon are shown for all tabs.",
+          "displayName": "Standard"
+        },
+        "icons": {
+          "description": "Only icons are shown for all tabs.",
+          "displayName": "Icons"
+        },
+        "stacked": {
+          "description": "Stacks the badge over the icon and icon over the label when applicable.",
+          "displayName": "Stacked"
+        }
+      },
+      "enumValues": [
+        "standard",
+        "icons",
+        "stacked"
+      ],
+      "value": "standard"
+    },
+    "layout": {
+      "type": "string",
+      "description": "The layout configuration for tabs.",
+      "displayName": "Layout",
+      "propertyEditorValues": {
+        "stretch": {
+          "description": "Stretches the tab bar items to occupy available space ",
+          "displayName": "Stretch"
+        },
+        "condense": {
+          "description": "Condenses the space occupied by tab bar items",
+          "displayName": "Condense"
+        }
+      },
+      "enumValues": [
+        "stretch",
+        "condense"
+      ],
+      "value": "stretch"
+    },
+    "edge": {
+      "type": "string",
+      "description": "The edge configuration for tabs.",
+      "displayName": "Edge",
+      "enumValues": [
+        "top",
+        "bottom"
+      ],
+      "value": "top"
+    },
+    "truncation": {
+      "type": "string",
+      "description": "The truncation configuration for tab labels.",
+      "displayName": "Truncation",
+      "enumValues": [
+        "none",
+        "progressive"
+      ],
+      "value": "none"
+    },
+    "contextMenuConfig": {
+      "type": "object",
+      "description": "Specifies a context menu configuration.",
+      "displayName": "Context Menu Config",
+      "help": "#contextMenuConfig",
+      "properties": {
+        "items": {
+          "type": "function"
+        },
+        "accessibleLabel": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "events": {
+    "ojBeforeSelect": {
+      "cancelable": true,
+      "description": "Triggered before a tab is selected.",
+      "displayName": "Before Select",
+      "help": "#event:beforeSelect",
+      "detail": {
+        "accept": {
+          "description": "This method can be called with an application-created Promise to cancel this event asynchronously.  The Promise should be resolved or rejected to accept or cancel the event, respectively.",
+          "type": "function"
+        },
+        "key": {
+          "type": "string|number"
+        }
+      }
+    },
+    "ojRemove": {
+      "description": "Triggered when user performs a remove gesture on a tab.",
+      "displayName": "Remove",
+      "help": "#event:remove",
+      "detail": {
+        "key": {
+          "type": "string|number"
+        }
+      }
+    },
+    "ojReorder": {
+      "description": "Triggered when user performs a reorder gesture on a tab.",
+      "displayName": "Reorder",
+      "help": "#event:reorder",
+      "detail": {
+        "reorderedKeys": {
+          "type": "Array<string|number>"
+        }
+      }
+    },
+    "ojSelectionAction": {
+      "description": "Triggered when user performs an action gesture on a tab.",
+      "displayName": "Selection Action",
+      "help": "#event:selectionAction",
+      "detail": {
+        "previousValue": {
+          "type": "string|number"
+        },
+        "value": {
+          "type": "string|number"
+        }
+      }
+    }
+  },
+  "methods": {
+    "_doReorderHelper": {
+      "description": "This is a private method that should only be called by the webelement API.",
+      "params": [
+        {
+          "name": "tabBarKeys",
+          "type": "Array<string|number>"
+        }
+      ],
+      "return": "void"
+    },
+    "setProperty": {
+      "description": "Sets a property or a single subproperty for complex properties and notifies the component of the change, triggering a corresponding event.",
+      "help": "#setProperty",
+      "params": [
+        {
+          "name": "property",
+          "description": "The property name to set. Supports dot notation for subproperty access.",
+          "type": "string"
+        },
+        {
+          "name": "value",
+          "description": "The new value to set the property to.",
+          "type": "any"
+        }
+      ],
+      "return": "void"
+    },
+    "getProperty": {
+      "description": "Retrieves the value of a property or a subproperty.",
+      "help": "#getProperty",
+      "params": [
+        {
+          "name": "property",
+          "description": "The property name to get. Supports dot notation for subproperty access.",
+          "type": "string"
+        }
+      ],
+      "return": "any"
+    },
+    "setProperties": {
+      "description": "Performs a batch set of properties.",
+      "help": "#setProperties",
+      "params": [
+        {
+          "name": "properties",
+          "description": "An object containing the property and value pairs to set.",
+          "type": "object"
+        }
+      ],
+      "return": "void"
+    }
+  },
+  "extension": {
+    "webelement": {
+      "package": "@oracle/oraclejet-core-pack",
+      "version": "19.0.1",
+      "docUrl": "https://www.oracle.com/webfolder/technetwork/jet/cpwdtsdoc/classes/TabBarWebElement.html",
+      "export": "findTabBar",
+      "main": "@oracle/oraclejet-core-pack/webdriver"
+    }
+  }
+}

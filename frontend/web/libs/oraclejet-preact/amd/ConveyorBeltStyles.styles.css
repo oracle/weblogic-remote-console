@@ -1,0 +1,89 @@
+.ConveyorBeltStyles_conveyorStyle__1u3kg3i2 {
+  background-color: transparent;
+  position: relative;
+  display: var(--displayVar__1u3kg3i1);
+  flex: 1 1 100%;
+  align-items: center;
+  overflow: hidden;
+  height: 100%;
+}
+.ConveyorBeltStyles_conveyorStyle__1u3kg3i2:focus {
+  outline-style: dotted;
+  outline-width: 1px;
+  outline-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-border-keyboard-focus);
+  outline-offset: -1px;
+}
+.ConveyorBeltStyles_endButtonClipPath__1u3kg3i3 {
+  clip-path: inset(0rem var(--oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-sizes-sm-height) 0rem 0rem);
+}
+.ConveyorBeltStyles_startButtonClipPath__1u3kg3i4 {
+  clip-path: inset(0rem 0rem 0rem var(--oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-sizes-sm-height));
+}
+.ConveyorBeltStyles_topButtonClipPath__1u3kg3i5 {
+  clip-path: inset(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-sizes-sm-height) 0rem 0rem 0rem);
+}
+.ConveyorBeltStyles_bottomButtonClipPath__1u3kg3i6 {
+  clip-path: inset(0rem  0rem var(--oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-sizes-sm-height) 0rem);
+}
+.ConveyorBeltStyles_bothHorizontalButtonClipPath__1u3kg3i7 {
+  clip-path: inset(0rem var(--oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-sizes-sm-height) 0rem var(--oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-sizes-sm-height));
+}
+.ConveyorBeltStyles_bothVerticalButtonClipPath__1u3kg3i8 {
+  clip-path: inset(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-sizes-sm-height) 0rem var(--oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-sizes-sm-height) 0rem);
+}
+.ConveyorBeltStyles_buttonContainer__1u3kg3i9 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  flex: 0 0 auto;
+  z-index: 1;
+}
+.ConveyorBeltStyles_overflowContainer__1u3kg3ia {
+  display: flex;
+  align-items: center;
+  flex: 1 1 auto;
+  scroll-behavior: smooth;
+  scroll-snap-type: x mandatory;
+  height: 100%;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.ConveyorBeltStyles_overflowContainer__1u3kg3ia::-webkit-scrollbar {
+  display: none;
+}
+.ConveyorBeltStyles_contentContainer__1u3kg3ib {
+  display: flex;
+  align-items: center;
+  flex: 1 0 auto;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  position: relative;
+}
+.ConveyorBeltStyles_startButton__1u3kg3ic {
+  height: 100%;
+  position: absolute;
+  left: calc(var(--boxShadow-width__114pbvl0) * -1);
+  box-shadow: rgba(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-boxshadow-shadowcolor), 0.2) var(--boxShadow-width__114pbvl0) 0px var(--boxShadow-width__114pbvl0) calc(var(--boxShadow-width__114pbvl0) * -1);
+}
+.ConveyorBeltStyles_endButton__1u3kg3id {
+  height: 100%;
+  position: absolute;
+  right: calc(var(--boxShadow-width__114pbvl0) * -1);
+  box-shadow: rgba(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-boxshadow-shadowcolor), 0.2) calc(var(--boxShadow-width__114pbvl0) * -1) 0px var(--boxShadow-width__114pbvl0) calc(var(--boxShadow-width__114pbvl0) * -1);
+}
+.ConveyorBeltStyles_topButton__1u3kg3ie {
+  width: 100%;
+  position: absolute;
+  top: calc(var(--boxShadow-width__114pbvl0) * -1);
+  box-shadow: 0px var(--boxShadow-width__114pbvl0) var(--boxShadow-width__114pbvl0) calc(var(--boxShadow-width__114pbvl0) * -1) rgba(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-boxshadow-shadowcolor), .2);
+}
+.ConveyorBeltStyles_bottomButton__1u3kg3if {
+  width: 100%;
+  position: absolute;
+  bottom: calc(var(--boxShadow-width__114pbvl0) * -1);
+  box-shadow: 0px calc(var(--boxShadow-width__114pbvl0) * -1) var(--boxShadow-width__114pbvl0) calc(var(--boxShadow-width__114pbvl0) * -1) rgba(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-boxshadow-shadowcolor), .2);
+}
+.ConveyorBeltStyles_conveyorBeltItemStyle__1u3kg3ig {
+  width: 100%;
+}

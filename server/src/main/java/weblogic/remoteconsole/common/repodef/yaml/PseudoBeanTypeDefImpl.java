@@ -117,7 +117,7 @@ public class PseudoBeanTypeDefImpl extends YamlBasedBeanTypeDefImpl {
   }
 
   @Override
-  LocalizableString getDescriptionHTML() {
+  public LocalizableString getDescriptionHTML() {
     return getBaseTypeDefImpl().getDescriptionHTML();
   }
 

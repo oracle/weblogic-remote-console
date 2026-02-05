@@ -75,7 +75,7 @@ public class NormalBeanTypeDefImpl extends YamlBasedBeanTypeDefImpl {
   }
 
   @Override
-  LocalizableString getDescriptionHTML() {
+  public LocalizableString getDescriptionHTML() {
     return descriptionHTML;
   }
 

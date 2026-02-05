@@ -1,0 +1,248 @@
+{
+  "name": "avatar",
+  "version": "19.0.1",
+  "jetVersion": "^19.0.1",
+  "pack": "oj-c",
+  "type": "composite",
+  "dependencyScope": "runtime",
+  "license": "https://opensource.org/licenses/UPL",
+  "implements": [
+    "CAvatarElement"
+  ],
+  "description": "An avatar represents a person or entity as initials or an image.",
+  "displayName": "Avatar",
+  "help": "oj-c.Avatar.html",
+  "main": "oj-c/avatar",
+  "status": [
+    {
+      "type": "supersedes",
+      "since": "15.0.0",
+      "value": [
+        "oj-avatar"
+      ]
+    }
+  ],
+  "extension": {
+    "catalog": {
+      "category": "Controls"
+    },
+    "vbdt": {
+      "module": "oj-c/avatar"
+    },
+    "oracle": {
+      "icon": "oj-ux-ico-avatar",
+      "uxSpecs": [
+        "avatar"
+      ]
+    },
+    "webelement": {
+      "package": "@oracle/oraclejet-core-pack",
+      "version": "19.0.1",
+      "docUrl": "https://www.oracle.com/webfolder/technetwork/jet/cpwdtsdoc/classes/AvatarWebElement.html",
+      "export": "findAvatar",
+      "main": "@oracle/oraclejet-core-pack/webdriver"
+    }
+  },
+  "propertyLayout": [
+    {
+      "propertyGroup": "common",
+      "items": [
+        "size",
+        "background"
+      ]
+    }
+  ],
+  "since": "13.0.0",
+  "properties": {
+    "background": {
+      "type": "string",
+      "description": "Specifies the background of the avatar.",
+      "displayName": "Background",
+      "help": "#background",
+      "propertyEditorValues": {
+        "neutral": {
+          "description": "Neutral background (default, if unspecified)",
+          "displayName": "Neutral"
+        },
+        "orange": {
+          "description": "Orange background",
+          "displayName": "Orange"
+        },
+        "green": {
+          "description": "Green background",
+          "displayName": "Green"
+        },
+        "teal": {
+          "description": "Teal background",
+          "displayName": "Teal"
+        },
+        "blue": {
+          "description": "Blue background",
+          "displayName": "Blue"
+        },
+        "slate": {
+          "description": "Slate background",
+          "displayName": "Slate"
+        },
+        "pink": {
+          "description": "Pink background",
+          "displayName": "Pink"
+        },
+        "purple": {
+          "description": "Purple background",
+          "displayName": "Purple"
+        },
+        "lilac": {
+          "description": "Lilac background",
+          "displayName": "Lilac"
+        },
+        "gray": {
+          "description": "Gray background",
+          "displayName": "Gray"
+        }
+      },
+      "enumValues": [
+        "blue",
+        "gray",
+        "green",
+        "orange",
+        "pink",
+        "purple",
+        "teal",
+        "neutral",
+        "slate",
+        "lilac"
+      ],
+      "value": "neutral"
+    },
+    "initials": {
+      "type": "string|null",
+      "description": "Specifies the initials of the avatar.",
+      "displayName": "Initials",
+      "help": "#initials",
+      "translatable": true
+    },
+    "size": {
+      "type": "string",
+      "description": "Specifies the size of the avatar.",
+      "displayName": "Size",
+      "help": "#size",
+      "propertyEditorValues": {
+        "2xs": {
+          "description": "extra, extra small avatar",
+          "displayName": "Extra Extra Small"
+        },
+        "xs": {
+          "description": "extra small avatar",
+          "displayName": "Extra Small"
+        },
+        "sm": {
+          "description": "small avatar",
+          "displayName": "Small"
+        },
+        "md": {
+          "description": "medium avatar (default, if unspecified)",
+          "displayName": "Medium"
+        },
+        "lg": {
+          "description": "large avatar",
+          "displayName": "Large"
+        },
+        "xl": {
+          "description": "extra large avatar",
+          "displayName": "Extra Large"
+        },
+        "2xl": {
+          "description": "extra, extra large avatar",
+          "displayName": "Extra Extra Large"
+        }
+      },
+      "enumValues": [
+        "sm",
+        "md",
+        "lg",
+        "xs",
+        "2xs",
+        "xl",
+        "2xl"
+      ],
+      "value": "md"
+    },
+    "src": {
+      "type": "string|null",
+      "description": "Specifies the source for the image of the avatar.",
+      "displayName": "Src",
+      "help": "#src"
+    },
+    "iconClass": {
+      "type": "string",
+      "description": "The icon class to be displayed.",
+      "displayName": "Icon Class",
+      "help": "#iconClass"
+    },
+    "shape": {
+      "type": "string",
+      "description": "Specifies the shape of the avatar.",
+      "displayName": "Shape",
+      "help": "#shape",
+      "propertyEditorValues": {
+        "square": {
+          "description": "square avatar (default, if unspecified)",
+          "displayName": "Square Avatar"
+        },
+        "circle": {
+          "description": "circular avatar",
+          "displayName": "Circular Avatar"
+        }
+      },
+      "enumValues": [
+        "square",
+        "circle"
+      ],
+      "value": "square"
+    }
+  },
+  "methods": {
+    "setProperty": {
+      "description": "Sets a property or a single subproperty for complex properties and notifies the component of the change, triggering a corresponding event.",
+      "help": "#setProperty",
+      "params": [
+        {
+          "name": "property",
+          "description": "The property name to set. Supports dot notation for subproperty access.",
+          "type": "string"
+        },
+        {
+          "name": "value",
+          "description": "The new value to set the property to.",
+          "type": "any"
+        }
+      ],
+      "return": "void"
+    },
+    "getProperty": {
+      "description": "Retrieves the value of a property or a subproperty.",
+      "help": "#getProperty",
+      "params": [
+        {
+          "name": "property",
+          "description": "The property name to get. Supports dot notation for subproperty access.",
+          "type": "string"
+        }
+      ],
+      "return": "any"
+    },
+    "setProperties": {
+      "description": "Performs a batch set of properties.",
+      "help": "#setProperties",
+      "params": [
+        {
+          "name": "properties",
+          "description": "An object containing the property and value pairs to set.",
+          "type": "object"
+        }
+      ],
+      "return": "void"
+    }
+  }
+}

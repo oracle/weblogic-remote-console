@@ -1,0 +1,35 @@
+@keyframes TextFieldStyles_placeholderAnimation__952vaf0 {
+  from {
+    opacity: 0.001;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.TextFieldStyles_textFieldContainerBase__952vaf1 {
+  position: relative;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  transition-property: border-color;
+  transition-duration: .1s;
+  transition-timing-function: linear;
+}
+.TextFieldStyles_textFieldEndContent__952vaf2 {
+  padding-inline-end: calc(2 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+}
+.TextFieldStyles_textFieldBase__952vaf3 {
+  display: inline-block;
+  line-height: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-body-md-line-height);
+  max-width: 100%;
+  width: 100%;
+  box-sizing: border-box;
+}
+.TextFieldStyles_textFieldEmbedded__952vaf4 {
+  height: 100%;
+}
+.TextFieldStyles_formControlBase__952vaf5 {
+  vertical-align: top;
+}

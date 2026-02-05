@@ -1,0 +1,11 @@
+oj-c-collapsible:not(.oj-complete) {
+  visibility: hidden;
+}
+
+oj-c-collapsible {
+  display: block;
+}
+
+oj-c-collapsible[hidden] {
+  display: none;
+}

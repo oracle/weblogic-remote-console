@@ -1,0 +1,13 @@
+.CollapsibleVariants_multiVariantStyles_disabled_isDisabled__z4ex2d0 {
+  cursor: auto;
+  color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-disabled);
+}
+.CollapsibleVariants_multiVariantStyles_divider_hasDivider__z4ex2d2 {
+  padding-bottom: calc(2 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+}
+.CollapsibleVariants_multiVariantStyles_focused_isFocused__z4ex2d4 {
+  outline-style: dotted;
+  outline-offset: 0px;
+  outline-width: 1px;
+  outline-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-border-keyboard-focus);
+}

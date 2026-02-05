@@ -1,0 +1,34 @@
+.RatingGaugeBaseTheme_baseTheme__1u6vk8m0 {
+  --colorSelected__1kgzocs0: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-primary);
+  --borderColorSelected__1kgzocs1: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-primary);
+  --colorUnselected__1kgzocs2: transparent;
+  --borderColorUnselected__1kgzocs3: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-primary);
+  --colorSelectedDisabled__1kgzocs4: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-disabled);
+  --borderColorSelectedDisabled__1kgzocs5: transparent;
+  --colorUnselectedDisabled__1kgzocs6: rgba(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-190), 0.12);
+  --borderColorUnselectedDisabled__1kgzocs7: transparent;
+  --colorSelectedReadonly__1kgzocs8: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-primary);
+  --borderColorSelectedReadonly__1kgzocs9: transparent;
+  --colorUnselectedReadonly__1kgzocsa: rgba(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-170), 0.15);
+  --borderColorUnselectedReadonly__1kgzocsb: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-border-enabled);
+  --size__1kgzocsc: ;
+  --margin__1kgzocsd: ;
+  --sizes-sm__1kgzocse: calc(4 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --sizes-md__1kgzocsf: calc(5 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --sizes-lg__1kgzocsg: calc(9 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --colors-gold-colorSelected__1kgzocsh: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-surface-warning-strong);
+  --colors-gold-bordorColorSelected__1kgzocsi: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-border-warning);
+  --colors-gold-colorSelectedReadonly__1kgzocsj: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-surface-warning-strong);
+  --colors-gold-borderColorUnselected__1kgzocsk: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-border-warning);
+  --colors-gold-borderColorUnselectedReadonly__1kgzocsl: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-border-enabled);
+  --colors-gold-borderColorSelectedReadonly__1kgzocsm: transparent;
+  --colors-success-colorSelected__1kgzocsn: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-dvt-threshold-success);
+  --colors-success-bordorColorSelected__1kgzocso: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-dvt-threshold-success);
+  --colors-success-colorSelectedReadonly__1kgzocsp: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-dvt-threshold-success);
+  --colors-warning-colorSelected__1kgzocsq: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-dvt-threshold-warning);
+  --colors-warning-bordorColorSelected__1kgzocsr: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-dvt-threshold-warning);
+  --colors-warning-colorSelectedReadonly__1kgzocss: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-dvt-threshold-warning);
+  --colors-danger-colorSelected__1kgzocst: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-dvt-threshold-danger);
+  --colors-danger-bordorColorSelected__1kgzocsu: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-dvt-threshold-danger);
+  --colors-danger-colorSelectedReadonly__1kgzocsv: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-dvt-threshold-danger);
+}

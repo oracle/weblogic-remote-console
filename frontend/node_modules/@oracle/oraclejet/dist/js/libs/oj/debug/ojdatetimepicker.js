@@ -1,0 +1,16909 @@
+/**
+ * @license
+ * Copyright (c) 2014, 2025, Oracle and/or its affiliates.
+ * Licensed under The Universal Permissive License (UPL), Version 1.0
+ * as shown at https://oss.oracle.com/licenses/upl/
+ * @ignore
+ */
+define(['ojs/ojcore', 'jquery', 'ojs/ojeditablevalue', 'ojs/ojinputtext', 'ojs/ojconverterutils', 'ojs/ojanimation', 'ojs/ojpopup', 'ojs/ojbutton', 'ojs/ojcore-base', 'ojs/ojconfig', 'hammerjs', 'ojs/ojcomponentcore', 'ojs/ojconverterutils-i18n', 'ojs/ojvalidator-datetimerange', 'ojs/ojvalidator-daterestriction', 'ojs/ojconverter-datetime', 'ojs/ojlocaledata', 'ojs/ojlogger', 'ojs/ojthemeutils', 'ojs/ojcontext', 'ojs/ojfocusutils', 'ojs/ojdomutils', 'ojs/ojlabelledbyutils', 'ojs/ojpopupcore'], function (ojcore, $, ojeditablevalue, ojinputtext, ojconverterutils, ojanimation, ojpopup, ojbutton, oj, Config, Hammer, ojcomponentcore, ojconverterutilsI18n, DateTimeRangeValidator, DateRestrictionValidator, ojconverterDatetime, LocaleData, Logger, ThemeUtils, Context, FocusUtils, DomUtils, LabeledByUtils, ojpopupcore) { 'use strict';
+
+  $ = $ && Object.prototype.hasOwnProperty.call($, 'default') ? $['default'] : $;
+  oj = oj && Object.prototype.hasOwnProperty.call(oj, 'default') ? oj['default'] : oj;
+  DateTimeRangeValidator = DateTimeRangeValidator && Object.prototype.hasOwnProperty.call(DateTimeRangeValidator, 'default') ? DateTimeRangeValidator['default'] : DateTimeRangeValidator;
+  DateRestrictionValidator = DateRestrictionValidator && Object.prototype.hasOwnProperty.call(DateRestrictionValidator, 'default') ? DateRestrictionValidator['default'] : DateRestrictionValidator;
+  Context = Context && Object.prototype.hasOwnProperty.call(Context, 'default') ? Context['default'] : Context;
+  FocusUtils = FocusUtils && Object.prototype.hasOwnProperty.call(FocusUtils, 'default') ? FocusUtils['default'] : FocusUtils;
+  LabeledByUtils = LabeledByUtils && Object.prototype.hasOwnProperty.call(LabeledByUtils, 'default') ? LabeledByUtils['default'] : LabeledByUtils;
+
+  (function () {
+    var bindingMeta = {
+      properties: {
+        readonly: {
+          binding: { consume: { name: 'readonly' } }
+        },
+        readonlyUserAssistanceShown: {
+          binding: { consume: { name: 'readonlyUserAssistanceShown' } }
+        },
+        userAssistanceDensity: {
+          binding: { consume: { name: 'userAssistanceDensity' } }
+        },
+        labelEdge: {
+          binding: { consume: { name: 'labelEdge' } }
+        }
+      }
+    };
+var __oj_input_time_metadata = 
+{
+  "properties": {
+    "asyncValidators": {
+      "type": "Array<Object>",
+      "value": []
+    },
+    "autocomplete": {
+      "type": "string",
+      "value": "off",
+      "extension": {
+        "_COPY_TO_INNER_ELEM": true
+      }
+    },
+    "autofocus": {
+      "type": "boolean",
+      "value": false,
+      "extension": {
+        "_COPY_TO_INNER_ELEM": true
+      }
+    },
+    "converter": {
+      "type": "object"
+    },
+    "describedBy": {
+      "type": "string"
+    },
+    "disabled": {
+      "type": "boolean",
+      "value": false
+    },
+    "displayOptions": {
+      "type": "object",
+      "properties": {
+        "converterHint": {
+          "type": "Array<string>|string"
+        },
+        "helpInstruction": {
+          "type": "Array<string>|string",
+          "value": [
+            "notewindow"
+          ]
+        },
+        "messages": {
+          "type": "Array<string>|string"
+        },
+        "validatorHint": {
+          "type": "Array<string>|string"
+        }
+      }
+    },
+    "help": {
+      "type": "object",
+      "properties": {
+        "instruction": {
+          "type": "string",
+          "value": ""
+        }
+      }
+    },
+    "helpHints": {
+      "type": "object",
+      "properties": {
+        "definition": {
+          "type": "string",
+          "value": ""
+        },
+        "source": {
+          "type": "string",
+          "value": ""
+        }
+      }
+    },
+    "keyboardEdit": {
+      "type": "string",
+      "enumValues": [
+        "disabled",
+        "enabled"
+      ],
+      "value": "enabled"
+    },
+    "labelEdge": {
+      "type": "string",
+      "enumValues": [
+        "inside",
+        "none",
+        "provided"
+      ]
+    },
+    "labelHint": {
+      "type": "string",
+      "value": ""
+    },
+    "labelledBy": {
+      "type": "string"
+    },
+    "max": {
+      "type": "string"
+    },
+    "messagesCustom": {
+      "type": "Array<Object>",
+      "writeback": true,
+      "value": []
+    },
+    "min": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string",
+      "value": "",
+      "extension": {
+        "_COPY_TO_INNER_ELEM": true
+      }
+    },
+    "pickerAttributes": {
+      "type": "object",
+      "properties": {
+        "class": {
+          "type": "string"
+        },
+        "style": {
+          "type": "string"
+        }
+      }
+    },
+    "placeholder": {
+      "type": "string"
+    },
+    "rawValue": {
+      "type": "string",
+      "writeback": true,
+      "readOnly": true
+    },
+    "readonly": {
+      "type": "boolean",
+      "value": false
+    },
+    "readonlyUserAssistanceShown": {
+      "type": "string",
+      "enumValues": [
+        "confirmationAndInfoMessages",
+        "none"
+      ],
+      "value": "none"
+    },
+    "renderMode": {
+      "type": "string",
+      "enumValues": [
+        "jet",
+        "native"
+      ],
+      "value": "jet"
+    },
+    "required": {
+      "type": "boolean",
+      "value": false
+    },
+    "timePicker": {
+      "type": "object",
+      "properties": {
+        "footerLayout": {
+          "type": "string",
+          "enumValues": [
+            "",
+            "now"
+          ],
+          "value": ""
+        },
+        "showOn": {
+          "type": "string",
+          "enumValues": [
+            "focus",
+            "image",
+            "userFocus"
+          ],
+          "value": "image"
+        },
+        "timeIncrement": {
+          "type": "string",
+          "value": "00:05:00:00"
+        }
+      }
+    },
+    "translations": {
+      "type": "object",
+      "value": {},
+      "properties": {
+        "accessibleMaxLengthExceeded": {
+          "type": "string"
+        },
+        "accessibleMaxLengthRemaining": {
+          "type": "string"
+        },
+        "ampmWheelLabel": {
+          "type": "string"
+        },
+        "cancelText": {
+          "type": "string"
+        },
+        "currentTimeText": {
+          "type": "string"
+        },
+        "dateTimeRange": {
+          "type": "object",
+          "properties": {
+            "hint": {
+              "type": "object",
+              "properties": {
+                "inRange": {
+                  "type": "string"
+                },
+                "max": {
+                  "type": "string"
+                },
+                "min": {
+                  "type": "string"
+                }
+              }
+            },
+            "messageDetail": {
+              "type": "object",
+              "properties": {
+                "rangeOverflow": {
+                  "type": "string"
+                },
+                "rangeUnderflow": {
+                  "type": "string"
+                }
+              }
+            },
+            "messageSummary": {
+              "type": "object",
+              "properties": {
+                "rangeOverflow": {
+                  "type": "string"
+                },
+                "rangeUnderflow": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "hourWheelLabel": {
+          "type": "string"
+        },
+        "minuteWheelLabel": {
+          "type": "string"
+        },
+        "okText": {
+          "type": "string"
+        },
+        "regexp": {
+          "type": "object",
+          "properties": {
+            "messageDetail": {
+              "type": "string"
+            },
+            "messageSummary": {
+              "type": "string"
+            }
+          }
+        },
+        "required": {
+          "type": "object",
+          "properties": {
+            "hint": {
+              "type": "string"
+            },
+            "messageDetail": {
+              "type": "string"
+            },
+            "messageSummary": {
+              "type": "string"
+            }
+          }
+        },
+        "tooltipTime": {
+          "type": "string"
+        },
+        "tooltipTimeDisabled": {
+          "type": "string"
+        }
+      }
+    },
+    "userAssistanceDensity": {
+      "type": "string",
+      "enumValues": [
+        "compact",
+        "efficient",
+        "reflow"
+      ],
+      "value": "reflow"
+    },
+    "valid": {
+      "type": "string",
+      "writeback": true,
+      "enumValues": [
+        "invalidHidden",
+        "invalidShown",
+        "pending",
+        "valid"
+      ],
+      "readOnly": true
+    },
+    "validators": {
+      "type": "Array<Object>",
+      "value": []
+    },
+    "value": {
+      "type": "string",
+      "writeback": true
+    }
+  },
+  "methods": {
+    "getProperty": {},
+    "hide": {},
+    "refresh": {},
+    "reset": {},
+    "setProperties": {},
+    "setProperty": {},
+    "show": {},
+    "showMessages": {},
+    "validate": {},
+    "getNodeBySubId": {},
+    "getSubIdByNode": {}
+  },
+  "events": {
+    "ojAnimateEnd": {},
+    "ojAnimateStart": {}
+  },
+  "extension": {}
+};
+    __oj_input_time_metadata.extension._WIDGET_NAME = 'ojInputTime';
+    __oj_input_time_metadata.extension._INNER_ELEM = 'input';
+    __oj_input_time_metadata.extension._GLOBAL_TRANSFER_ATTRS = [
+      'accesskey',
+      'aria-label',
+      'tabindex'
+    ];
+    __oj_input_time_metadata.extension._ALIASED_PROPS = { readonly: 'readOnly' };
+    oj.CustomElementBridge.register('oj-input-time', {
+      metadata: oj.CollectionUtils.mergeDeep(__oj_input_time_metadata, bindingMeta)
+    });
+
+var __oj_input_date_metadata = 
+{
+  "properties": {
+    "asyncValidators": {
+      "type": "Array<Object>",
+      "value": []
+    },
+    "autocomplete": {
+      "type": "string",
+      "value": "off",
+      "extension": {
+        "_COPY_TO_INNER_ELEM": true
+      }
+    },
+    "autofocus": {
+      "type": "boolean",
+      "value": false,
+      "extension": {
+        "_COPY_TO_INNER_ELEM": true
+      }
+    },
+    "converter": {
+      "type": "object"
+    },
+    "datePicker": {
+      "type": "object",
+      "properties": {
+        "changeMonth": {
+          "type": "string",
+          "enumValues": [
+            "none",
+            "select"
+          ],
+          "value": "select"
+        },
+        "changeYear": {
+          "type": "string",
+          "enumValues": [
+            "none",
+            "select"
+          ],
+          "value": "select"
+        },
+        "currentMonthPos": {
+          "type": "number",
+          "value": 0
+        },
+        "daysOutsideMonth": {
+          "type": "string",
+          "enumValues": [
+            "hidden",
+            "selectable",
+            "visible"
+          ],
+          "value": "hidden"
+        },
+        "footerLayout": {
+          "type": "string",
+          "enumValues": [
+            "",
+            "today"
+          ],
+          "value": "today"
+        },
+        "numberOfMonths": {
+          "type": "number",
+          "value": 1
+        },
+        "showOn": {
+          "type": "string",
+          "enumValues": [
+            "focus",
+            "image",
+            "userFocus"
+          ],
+          "value": "image"
+        },
+        "stepBigMonths": {
+          "type": "number",
+          "value": 12
+        },
+        "stepMonths": {
+          "type": "string|number",
+          "value": "numberOfMonths"
+        },
+        "weekDisplay": {
+          "type": "string",
+          "enumValues": [
+            "none",
+            "number"
+          ],
+          "value": "none"
+        },
+        "yearRange": {
+          "type": "string",
+          "value": "c-10:c+10"
+        }
+      }
+    },
+    "dayFormatter": {
+      "type": "function"
+    },
+    "dayMetaData": {
+      "type": "object"
+    },
+    "describedBy": {
+      "type": "string"
+    },
+    "disabled": {
+      "type": "boolean",
+      "value": false
+    },
+    "displayOptions": {
+      "type": "object",
+      "properties": {
+        "converterHint": {
+          "type": "Array<string>|string"
+        },
+        "helpInstruction": {
+          "type": "Array<string>|string",
+          "value": [
+            "notewindow"
+          ]
+        },
+        "messages": {
+          "type": "Array<string>|string"
+        },
+        "validatorHint": {
+          "type": "Array<string>|string"
+        }
+      }
+    },
+    "help": {
+      "type": "object",
+      "properties": {
+        "instruction": {
+          "type": "string",
+          "value": ""
+        }
+      }
+    },
+    "helpHints": {
+      "type": "object",
+      "properties": {
+        "definition": {
+          "type": "string",
+          "value": ""
+        },
+        "source": {
+          "type": "string",
+          "value": ""
+        }
+      }
+    },
+    "keyboardEdit": {
+      "type": "string",
+      "enumValues": [
+        "disabled",
+        "enabled"
+      ],
+      "value": "enabled"
+    },
+    "labelEdge": {
+      "type": "string",
+      "enumValues": [
+        "inside",
+        "none",
+        "provided"
+      ]
+    },
+    "labelHint": {
+      "type": "string",
+      "value": ""
+    },
+    "labelledBy": {
+      "type": "string"
+    },
+    "max": {
+      "type": "string"
+    },
+    "messagesCustom": {
+      "type": "Array<Object>",
+      "writeback": true,
+      "value": []
+    },
+    "min": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string",
+      "value": "",
+      "extension": {
+        "_COPY_TO_INNER_ELEM": true
+      }
+    },
+    "pickerAttributes": {
+      "type": "object",
+      "properties": {
+        "class": {
+          "type": "string"
+        },
+        "style": {
+          "type": "string"
+        }
+      }
+    },
+    "placeholder": {
+      "type": "string"
+    },
+    "rawValue": {
+      "type": "string",
+      "writeback": true,
+      "readOnly": true
+    },
+    "readonly": {
+      "type": "boolean",
+      "value": false
+    },
+    "readonlyUserAssistanceShown": {
+      "type": "string",
+      "enumValues": [
+        "confirmationAndInfoMessages",
+        "none"
+      ],
+      "value": "none"
+    },
+    "renderMode": {
+      "type": "string",
+      "enumValues": [
+        "jet",
+        "native"
+      ],
+      "value": "jet"
+    },
+    "required": {
+      "type": "boolean",
+      "value": false
+    },
+    "todayTimeZone": {
+      "type": "string"
+    },
+    "translations": {
+      "type": "object",
+      "value": {},
+      "properties": {
+        "accessibleMaxLengthExceeded": {
+          "type": "string"
+        },
+        "accessibleMaxLengthRemaining": {
+          "type": "string"
+        },
+        "currentText": {
+          "type": "string"
+        },
+        "dateRestriction": {
+          "type": "object",
+          "properties": {
+            "hint": {
+              "type": "string"
+            },
+            "messageDetail": {
+              "type": "string"
+            },
+            "messageSummary": {
+              "type": "string"
+            }
+          }
+        },
+        "dateTimeRange": {
+          "type": "object",
+          "properties": {
+            "hint": {
+              "type": "object",
+              "properties": {
+                "inRange": {
+                  "type": "string"
+                },
+                "max": {
+                  "type": "string"
+                },
+                "min": {
+                  "type": "string"
+                }
+              }
+            },
+            "messageDetail": {
+              "type": "object",
+              "properties": {
+                "rangeOverflow": {
+                  "type": "string"
+                },
+                "rangeUnderflow": {
+                  "type": "string"
+                }
+              }
+            },
+            "messageSummary": {
+              "type": "object",
+              "properties": {
+                "rangeOverflow": {
+                  "type": "string"
+                },
+                "rangeUnderflow": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "nextText": {
+          "type": "string"
+        },
+        "prevText": {
+          "type": "string"
+        },
+        "regexp": {
+          "type": "object",
+          "properties": {
+            "messageDetail": {
+              "type": "string"
+            },
+            "messageSummary": {
+              "type": "string"
+            }
+          }
+        },
+        "required": {
+          "type": "object",
+          "properties": {
+            "hint": {
+              "type": "string"
+            },
+            "messageDetail": {
+              "type": "string"
+            },
+            "messageSummary": {
+              "type": "string"
+            }
+          }
+        },
+        "tooltipCalendar": {
+          "type": "string"
+        },
+        "tooltipCalendarDisabled": {
+          "type": "string"
+        },
+        "tooltipCalendarTime": {
+          "type": "string"
+        },
+        "tooltipCalendarTimeDisabled": {
+          "type": "string"
+        },
+        "weekHeader": {
+          "type": "string"
+        }
+      }
+    },
+    "twoDigitYearStart": {
+      "type": "number"
+    },
+    "userAssistanceDensity": {
+      "type": "string",
+      "enumValues": [
+        "compact",
+        "efficient",
+        "reflow"
+      ],
+      "value": "reflow"
+    },
+    "valid": {
+      "type": "string",
+      "writeback": true,
+      "enumValues": [
+        "invalidHidden",
+        "invalidShown",
+        "pending",
+        "valid"
+      ],
+      "readOnly": true
+    },
+    "validators": {
+      "type": "Array<Object>",
+      "value": []
+    },
+    "value": {
+      "type": "string",
+      "writeback": true
+    }
+  },
+  "methods": {
+    "getProperty": {},
+    "hide": {},
+    "refresh": {},
+    "reset": {},
+    "setProperties": {},
+    "setProperty": {},
+    "show": {},
+    "showMessages": {},
+    "validate": {},
+    "getNodeBySubId": {},
+    "getSubIdByNode": {}
+  },
+  "events": {
+    "ojAnimateEnd": {},
+    "ojAnimateStart": {}
+  },
+  "extension": {}
+};
+    /* global __oj_input_date_metadata:false */
+    __oj_input_date_metadata.extension._WIDGET_NAME = 'ojInputDate';
+    __oj_input_date_metadata.extension._INNER_ELEM = 'input';
+    __oj_input_date_metadata.extension._GLOBAL_TRANSFER_ATTRS = [
+      'accesskey',
+      'aria-label',
+      'tabindex'
+    ];
+    __oj_input_date_metadata.extension._ALIASED_PROPS = { readonly: 'readOnly' };
+    oj.CollectionUtils.mergeDeep(__oj_input_date_metadata, bindingMeta);
+
+    oj.CustomElementBridge.register('oj-input-date', { metadata: __oj_input_date_metadata });
+
+    var ojDatePickerMeta = Object.assign({}, __oj_input_date_metadata);
+    ojDatePickerMeta.extension._INNER_ELEM = 'div';
+    oj.CustomElementBridge.register('oj-date-picker', { metadata: ojDatePickerMeta });
+
+var __oj_input_date_time_metadata = 
+{
+  "properties": {
+    "asyncValidators": {
+      "type": "Array<Object>",
+      "value": []
+    },
+    "autocomplete": {
+      "type": "string",
+      "value": "off",
+      "extension": {
+        "_COPY_TO_INNER_ELEM": true
+      }
+    },
+    "autofocus": {
+      "type": "boolean",
+      "value": false,
+      "extension": {
+        "_COPY_TO_INNER_ELEM": true
+      }
+    },
+    "converter": {
+      "type": "object"
+    },
+    "datePicker": {
+      "type": "object",
+      "properties": {
+        "changeMonth": {
+          "type": "string",
+          "enumValues": [
+            "none",
+            "select"
+          ],
+          "value": "select"
+        },
+        "changeYear": {
+          "type": "string",
+          "enumValues": [
+            "none",
+            "select"
+          ],
+          "value": "select"
+        },
+        "currentMonthPos": {
+          "type": "number",
+          "value": 0
+        },
+        "daysOutsideMonth": {
+          "type": "string",
+          "enumValues": [
+            "hidden",
+            "selectable",
+            "visible"
+          ],
+          "value": "hidden"
+        },
+        "footerLayout": {
+          "type": "string",
+          "enumValues": [
+            "",
+            "today"
+          ],
+          "value": "today"
+        },
+        "numberOfMonths": {
+          "type": "number",
+          "value": 1
+        },
+        "showOn": {
+          "type": "string",
+          "enumValues": [
+            "focus",
+            "image",
+            "userFocus"
+          ],
+          "value": "image"
+        },
+        "stepBigMonths": {
+          "type": "number",
+          "value": 12
+        },
+        "stepMonths": {
+          "type": "string|number",
+          "value": "numberOfMonths"
+        },
+        "weekDisplay": {
+          "type": "string",
+          "enumValues": [
+            "none",
+            "number"
+          ],
+          "value": "none"
+        },
+        "yearRange": {
+          "type": "string",
+          "value": "c-10:c+10"
+        }
+      }
+    },
+    "dayFormatter": {
+      "type": "function"
+    },
+    "dayMetaData": {
+      "type": "object"
+    },
+    "describedBy": {
+      "type": "string"
+    },
+    "disabled": {
+      "type": "boolean",
+      "value": false
+    },
+    "displayOptions": {
+      "type": "object",
+      "properties": {
+        "converterHint": {
+          "type": "Array<string>|string"
+        },
+        "helpInstruction": {
+          "type": "Array<string>|string",
+          "value": [
+            "notewindow"
+          ]
+        },
+        "messages": {
+          "type": "Array<string>|string"
+        },
+        "validatorHint": {
+          "type": "Array<string>|string"
+        }
+      }
+    },
+    "help": {
+      "type": "object",
+      "properties": {
+        "instruction": {
+          "type": "string",
+          "value": ""
+        }
+      }
+    },
+    "helpHints": {
+      "type": "object",
+      "properties": {
+        "definition": {
+          "type": "string",
+          "value": ""
+        },
+        "source": {
+          "type": "string",
+          "value": ""
+        }
+      }
+    },
+    "keyboardEdit": {
+      "type": "string",
+      "enumValues": [
+        "disabled",
+        "enabled"
+      ],
+      "value": "enabled"
+    },
+    "labelEdge": {
+      "type": "string",
+      "enumValues": [
+        "inside",
+        "none",
+        "provided"
+      ]
+    },
+    "labelHint": {
+      "type": "string",
+      "value": ""
+    },
+    "labelledBy": {
+      "type": "string"
+    },
+    "max": {
+      "type": "string"
+    },
+    "messagesCustom": {
+      "type": "Array<Object>",
+      "writeback": true,
+      "value": []
+    },
+    "min": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string",
+      "value": "",
+      "extension": {
+        "_COPY_TO_INNER_ELEM": true
+      }
+    },
+    "pickerAttributes": {
+      "type": "object",
+      "properties": {
+        "class": {
+          "type": "string"
+        },
+        "style": {
+          "type": "string"
+        }
+      }
+    },
+    "placeholder": {
+      "type": "string"
+    },
+    "rawValue": {
+      "type": "string",
+      "writeback": true,
+      "readOnly": true
+    },
+    "readonly": {
+      "type": "boolean",
+      "value": false
+    },
+    "readonlyUserAssistanceShown": {
+      "type": "string",
+      "enumValues": [
+        "confirmationAndInfoMessages",
+        "none"
+      ],
+      "value": "none"
+    },
+    "renderMode": {
+      "type": "string",
+      "enumValues": [
+        "jet",
+        "native"
+      ],
+      "value": "jet"
+    },
+    "required": {
+      "type": "boolean",
+      "value": false
+    },
+    "timePicker": {
+      "type": "object",
+      "properties": {
+        "footerLayout": {
+          "type": "string",
+          "enumValues": [
+            "",
+            "now"
+          ],
+          "value": ""
+        },
+        "showOn": {
+          "type": "string",
+          "enumValues": [
+            "focus",
+            "image",
+            "userFocus"
+          ],
+          "value": "focus"
+        },
+        "timeIncrement": {
+          "type": "string",
+          "value": "00:05:00:00"
+        }
+      }
+    },
+    "translations": {
+      "type": "object",
+      "value": {},
+      "properties": {
+        "accessibleMaxLengthExceeded": {
+          "type": "string"
+        },
+        "accessibleMaxLengthRemaining": {
+          "type": "string"
+        },
+        "cancel": {
+          "type": "string"
+        },
+        "currentText": {
+          "type": "string"
+        },
+        "dateRestriction": {
+          "type": "object",
+          "properties": {
+            "hint": {
+              "type": "string"
+            },
+            "messageDetail": {
+              "type": "string"
+            },
+            "messageSummary": {
+              "type": "string"
+            }
+          }
+        },
+        "dateTimeRange": {
+          "type": "object",
+          "properties": {
+            "hint": {
+              "type": "object",
+              "properties": {
+                "inRange": {
+                  "type": "string"
+                },
+                "max": {
+                  "type": "string"
+                },
+                "min": {
+                  "type": "string"
+                }
+              }
+            },
+            "messageDetail": {
+              "type": "object",
+              "properties": {
+                "rangeOverflow": {
+                  "type": "string"
+                },
+                "rangeUnderflow": {
+                  "type": "string"
+                }
+              }
+            },
+            "messageSummary": {
+              "type": "object",
+              "properties": {
+                "rangeOverflow": {
+                  "type": "string"
+                },
+                "rangeUnderflow": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "done": {
+          "type": "string"
+        },
+        "nextText": {
+          "type": "string"
+        },
+        "prevText": {
+          "type": "string"
+        },
+        "regexp": {
+          "type": "object",
+          "properties": {
+            "messageDetail": {
+              "type": "string"
+            },
+            "messageSummary": {
+              "type": "string"
+            }
+          }
+        },
+        "required": {
+          "type": "object",
+          "properties": {
+            "hint": {
+              "type": "string"
+            },
+            "messageDetail": {
+              "type": "string"
+            },
+            "messageSummary": {
+              "type": "string"
+            }
+          }
+        },
+        "time": {
+          "type": "string"
+        },
+        "tooltipCalendar": {
+          "type": "string"
+        },
+        "tooltipCalendarDisabled": {
+          "type": "string"
+        },
+        "tooltipCalendarTime": {
+          "type": "string"
+        },
+        "tooltipCalendarTimeDisabled": {
+          "type": "string"
+        },
+        "weekHeader": {
+          "type": "string"
+        }
+      }
+    },
+    "userAssistanceDensity": {
+      "type": "string",
+      "enumValues": [
+        "compact",
+        "efficient",
+        "reflow"
+      ],
+      "value": "reflow"
+    },
+    "valid": {
+      "type": "string",
+      "writeback": true,
+      "enumValues": [
+        "invalidHidden",
+        "invalidShown",
+        "pending",
+        "valid"
+      ],
+      "readOnly": true
+    },
+    "validators": {
+      "type": "Array<Object>",
+      "value": []
+    },
+    "value": {
+      "type": "string",
+      "writeback": true
+    }
+  },
+  "methods": {
+    "getProperty": {},
+    "hide": {},
+    "hideTimePicker": {},
+    "refresh": {},
+    "reset": {},
+    "setProperties": {},
+    "setProperty": {},
+    "show": {},
+    "showMessages": {},
+    "showTimePicker": {},
+    "validate": {},
+    "getNodeBySubId": {},
+    "getSubIdByNode": {}
+  },
+  "events": {
+    "ojAnimateEnd": {},
+    "ojAnimateStart": {}
+  },
+  "extension": {}
+};
+    /* global __oj_input_date_time_metadata:false */
+    __oj_input_date_time_metadata.extension._WIDGET_NAME = 'ojInputDateTime';
+    __oj_input_date_time_metadata.extension._INNER_ELEM = 'input';
+    __oj_input_date_time_metadata.extension._GLOBAL_TRANSFER_ATTRS = [
+      'accesskey',
+      'aria-label',
+      'tabindex'
+    ];
+    __oj_input_date_time_metadata.extension._ALIASED_PROPS = { readonly: 'readOnly' };
+    oj.CollectionUtils.mergeDeep(__oj_input_date_time_metadata, bindingMeta);
+
+    oj.CustomElementBridge.register('oj-input-date-time', {
+      metadata: __oj_input_date_time_metadata
+    });
+
+    var ojDateTimePickerMeta = Object.assign({}, __oj_input_date_time_metadata);
+    ojDateTimePickerMeta.extension._INNER_ELEM = 'div';
+    oj.CustomElementBridge.register('oj-date-time-picker', { metadata: ojDateTimePickerMeta });
+  })();
+
+  /**
+   * @private
+   */
+  var _sDefaultDateConverter;
+
+  /**
+   * @private
+   */
+  function _isLargeScreen() {
+    return Config.getDeviceRenderMode() !== 'phone';
+  }
+
+  /**
+   * @private
+   */
+  function _getNativePickerDate(converter, isoString) {
+    // eslint-disable-next-line no-param-reassign
+    isoString = converter.parse(isoString);
+    var date = new Date();
+    var valueParams;
+    try {
+      valueParams = ojconverterutilsI18n.IntlConverterUtils._dateTime(
+        isoString,
+        ['date', 'fullYear', 'month', 'hours', 'minutes', 'seconds'],
+        true
+      );
+    } catch (e) {
+      Logger.info(
+        'The value of the InputDateTime element should be an ISOString, please use a valid ISOString'
+      );
+      date.setHours(0);
+      date.setMinutes(0);
+      date.setSeconds(0);
+      date.setMilliseconds(0);
+      return date;
+    }
+    date.setFullYear(valueParams.fullYear);
+    date.setDate(valueParams.date);
+    date.setMonth(valueParams.month);
+    date.setHours(valueParams.hours);
+    date.setMinutes(valueParams.minutes);
+    date.setSeconds(valueParams.seconds);
+    date.setMilliseconds(0);
+
+    return date;
+  }
+
+  /**
+   * Placed here to avoid duplicate code for ojdatepicker + ojtimepicker
+   *
+   * Used for EditableValueUtils.initializeOptionsFromDom
+   *
+   * @ignore
+   */
+  function coerceIsoString(value) {
+    // reason for coersion is if one refreshes the page; then the input element's value might be the formatted string
+    // thought about setting element's value to parsed value on destroy but goes against what destroy is suppose to do
+
+    // TODO: need to handle this when this.options.converter is null or a promise
+    if (this.options.converter && this.options.converter.parse) {
+      return this.options.converter.parse(value);
+    }
+
+    return value;
+  }
+
+  /**
+   * Placed here to avoid duplicate code for ojdatepicker + ojtimepicker
+   * @static
+   * @ignore
+   */
+  function getImplicitDateTimeRangeValidator(options, converter, defaultStyleClass) {
+    var translationKeys = {
+      'oj-inputdatetime': 'datetime',
+      'oj-inputtime': 'time',
+      'oj-inputdate': 'date'
+    };
+    var dateTimeRangeTranslations = options.translations.dateTimeRange || {};
+    var translations = [
+      { category: 'hint', entries: ['min', 'max', 'inRange'] },
+      { category: 'messageDetail', entries: ['rangeUnderflow', 'rangeOverflow'] },
+      { category: 'messageSummary', entries: ['rangeUnderflow', 'rangeOverflow'] }
+    ];
+
+    var dateTimeRangeOptions = {
+      min: options.min,
+      max: options.max,
+      converter: converter,
+      translationKey: translationKeys[defaultStyleClass]
+    };
+
+    // note the translations are defined in ojtranslations.js, but it is possible to set it to null, so for sanity
+    if (!$.isEmptyObject(dateTimeRangeTranslations)) {
+      for (var i = 0, j = translations.length; i < j; i++) {
+        var category = dateTimeRangeTranslations[translations[i].category];
+
+        if (category) {
+          var translatedContent = {};
+          var entries = translations[i].entries;
+
+          for (var k = 0, l = entries.length; k < l; k++) {
+            translatedContent[entries[k]] = category[entries[k]];
+          }
+
+          dateTimeRangeOptions[translations[i].category] = translatedContent;
+        }
+      }
+    }
+    return new DateTimeRangeValidator(dateTimeRangeOptions);
+  }
+
+  /**
+   * Placed here to avoid duplicate code for ojdatepicker + ojtimepicker
+   *
+   * @ignore
+   */
+  function getImplicitDateRestrictionValidator(options, converter) {
+    var dateRestrictionOptions = {
+      dayFormatter: options.dayFormatter,
+      converter: converter
+    };
+
+    $.extend(dateRestrictionOptions, options.translations.dateRestriction || {});
+    return new DateRestrictionValidator(dateRestrictionOptions);
+  }
+
+  /**
+   * Shared for ojInputDate + ojInputTime
+   *
+   * @ignore
+   */
+  function disableEnableSpan(children, val) {
+    for (var i = 0; i < children.length; i++) {
+      var child = children[i];
+      if (child.tagName === 'SPAN') {
+        if (val) {
+          child.classList.add('oj-disabled');
+          child.classList.remove('oj-enabled');
+          child.classList.remove('oj-default');
+        } else {
+          child.classList.remove('oj-disabled');
+          child.classList.add('oj-enabled');
+          child.classList.add('oj-default');
+        }
+      }
+    }
+  }
+
+  /**
+   * For dayMetaData
+   *
+   * @ignore
+   */
+  function _getMetaData(dayMetaData, position, params) {
+    if (!dayMetaData || position === params.length) {
+      return dayMetaData;
+    }
+
+    var nextPos = position + 1;
+    return (
+      _getMetaData(dayMetaData[params[position]], nextPos, params) ||
+      _getMetaData(dayMetaData['*'], nextPos, params)
+    );
+  }
+
+  /**
+   * For default converter
+   * @static
+   * @ignore
+   */
+  function _getDateDefaultConverter() {
+    // If user preferences are applied, this will have those options merged in
+    // because we merge in user preferences when dateFormat: 'short'
+    return new ojconverterDatetime.IntlDateTimeConverter({ formatType: 'date', dateFormat: 'short' });
+  }
+
+  /**
+   * Returns true if the os is ios and the browser is Safari. If this is true,
+   * then the user could be using voiceover.  We only support Safari on iOS.
+   * This is used in the fix for JET-66606.
+   * @static
+   * @ignore
+   */
+  function _isSafariOnIos() {
+    const isIos = oj.AgentUtils.getAgentInfo().os === oj.AgentUtils.OS.IOS;
+    const isSafari = oj.AgentUtils.getAgentInfo().browser === oj.AgentUtils.BROWSER.SAFARI;
+    return isSafari && isIos;
+  }
+
+  /**
+   * @static
+   * @private
+   */
+  function _getConverterTimezone(converter) {
+    const converterOptions =
+      converter && converter.resolvedOptions ? converter.resolvedOptions() : null;
+    return converterOptions && converterOptions.timeZone ? converterOptions.timeZone : null;
+  }
+
+  /**
+   * This takes an isoDate and returns the iso date that is local to the place of the timezone,
+   * but without the timezone.
+   * This is useful when you want to show a date of the place in the timezone, like right now
+   * in Hong Kong it may be 1/12/2021 2AM.
+   * @static
+   * @private
+   */
+  function _convertIsoStrFormatLocalWithTimezone(isoDate, converterTimeZone) {
+    // Set up a temporary converter to return an ISO string in converterOptions.timeZone timezone
+    const _localTZConverter = new ojconverterDatetime.IntlDateTimeConverter({
+      timeZone: converterTimeZone,
+      isoStrFormat: 'local'
+    });
+    return _localTZConverter.parse(isoDate);
+  }
+
+  /**
+   * This is needed only for zoom % 400 or above. Without if condition, it makes the page move when
+   * we change date with no zoom.
+   * @private
+   */
+  function _scrollIntoViewFor400PercentZoom(elem) {
+    if (window.devicePixelRatio >= 4) {
+      elem.scrollIntoView();
+    }
+  }
+
+  /**
+   * Bind hover events for datepicker elements.
+   * Done via delegate so the binding only occurs once in the lifetime of the parent div.
+   * Global instActive, set by _updateDatepicker allows the handlers to find their way back to the active picker.
+   *
+   * @ignore
+   */
+  function bindHover(dpDiv) {
+    var selector =
+      '.oj-datepicker-prev-icon, .oj-datepicker-prev-icon' +
+      ' .oj-clickable-icon-nocontext.oj-component-icon, .oj-datepicker-next-icon,' +
+      ' .oj-datepicker-next-icon .oj-clickable-icon-nocontext.oj-component-icon,' +
+      ' .oj-datepicker-calendar td a';
+    return dpDiv
+      .delegate(selector, 'mouseout', function () {
+        this.classList.remove('oj-hover');
+      })
+      .delegate(selector, 'mouseover', function () {
+        this.classList.add('oj-hover');
+      })
+      .delegate(selector, 'focus', function () {
+        this.classList.add('oj-focus');
+      })
+      .delegate(selector, 'blur', function () {
+        this.classList.remove('oj-focus');
+      });
+  }
+
+  /**
+   * Binds active state listener that set appropriate style classes. Used in
+   * ojInputDate/ojInputDateTime/ojInputTime
+   *
+   * @ignore
+   */
+  function bindActive(dateTime) {
+    var triggerRootContainer;
+    if (dateTime._isInLine) {
+      triggerRootContainer = dateTime.element[0].parentNode;
+    } else {
+      triggerRootContainer = dateTime.element[0].parentNode.parentNode;
+    }
+
+    // There are few issues in mobile using hover and active marker classes (iOS and Android, more
+    // evident on iOS). Some fix is needed in _activeable(), tracking .
+    dateTime._AddActiveable($(triggerRootContainer));
+  }
+
+  /**
+   * returns if the native picker is supported - depends on renderMode set to 'native'
+   * and cordova plugin configured.
+   *
+   * @ignore
+   */
+  function isPickerNative(dateTime) {
+    // use bracket notation to avoid closure compiler renaming the variables
+    return dateTime.options.renderMode === 'native' && window.cordova && window.datePicker;
+  }
+
+  // to display the suffix for the year
+  var yearDisplay;
+
+  function formatYear(year, month) {
+    // JET-60050, do not format year 0,
+    // else we get a javascript error when the TimeZone from user preferences are merged in to the year converter.
+    if (year === 0) {
+      return 0;
+    }
+    if (!yearDisplay) {
+      yearDisplay = new ojconverterDatetime.IntlDateTimeConverter({ year: 'numeric' });
+    }
+    return yearDisplay.format(ojconverterutilsI18n.IntlConverterUtils.dateToLocalIso(toJSDateFullYear(year, month, 1)));
+  }
+
+  /**
+   * This function can add and subtract years/months/days duration to an object with year, month (0-based), and day.
+   * month is 0-based since it is what js Date does, and legacy datepicker code uses javascript's Date, so to avoid confusion, we keep it 0-based.
+   * You can only add/subtract one duration type (years, months, days) at a time.
+   * Note: When adding/subtracting years or months, the end of the month is constrained. Examples:
+   * e.g. if adding 1 month: 1/31/2024 -> 2/29/2024
+   * e.g. if adding 1 year: 2/29/2024 -> 2/28/2025
+   * This code is similar to the code in Preact.
+   * @ignore
+   */
+  function addToCalendarDate(calendarDate, duration) {
+    // Destructure the duration object
+    const { years = 0, months = 0, days = 0 } = duration;
+
+    const LOWEST_YEAR_SUPPORTED = 1; // the lowest year we support
+    const TWO_DIGIT_YEAR_BROWSER_OFFSET = new Date(0, 1, 2).getFullYear();
+
+    const newYear = calendarDate.year + years;
+    let jsDateOnFirstOfMonth;
+
+    if (newYear < 100) {
+      const cappedYear = newYear < LOWEST_YEAR_SUPPORTED ? LOWEST_YEAR_SUPPORTED : newYear;
+      jsDateOnFirstOfMonth = new Date(cappedYear, calendarDate.month + months, 1);
+      const diff = jsDateOnFirstOfMonth.getFullYear() - (TWO_DIGIT_YEAR_BROWSER_OFFSET + cappedYear);
+      jsDateOnFirstOfMonth.setFullYear(cappedYear + diff);
+    } else {
+      // javascript's Date automatically adjusts year/month/day if there is overflow as long as the year is >= 100.
+      jsDateOnFirstOfMonth = new Date(newYear, calendarDate.month + months, 1);
+    }
+
+    const adjYear = jsDateOnFirstOfMonth.getFullYear();
+    if (adjYear < LOWEST_YEAR_SUPPORTED) {
+      // return the input unchanged.
+      return calendarDate;
+    }
+
+    const adjMonth = jsDateOnFirstOfMonth.getMonth();
+    const adjDay = Math.min(calendarDate.day, getDaysInMonth(adjYear, adjMonth));
+
+    const adjustedJsDate = new Date(adjYear, adjMonth, adjDay + days);
+    if (adjYear < 100) {
+      const diff = adjustedJsDate.getFullYear() - (TWO_DIGIT_YEAR_BROWSER_OFFSET + adjYear);
+      adjustedJsDate.setFullYear(adjYear + diff);
+    }
+
+    const adjYear2 = adjustedJsDate.getFullYear();
+    if (adjYear2 < LOWEST_YEAR_SUPPORTED) {
+      // return the input unchanged.
+      return calendarDate;
+    }
+
+    // return the adjusted date.
+    return {
+      year: adjustedJsDate.getFullYear(),
+      month: adjustedJsDate.getMonth(),
+      day: adjustedJsDate.getDate()
+    };
+  }
+
+  /**
+   * Find the number of days in a given month.
+   * @ignore
+   */
+  function getDaysInMonth(y, m) {
+    const isLeapYear = (year) => {
+      if (year % 400 === 0) {
+        return true;
+      } else if (year % 100 === 0) {
+        return false;
+      } else if (year % 4 === 0) {
+        return true;
+      }
+      return false;
+    };
+    switch (m) {
+      case 0:
+      case 2:
+      case 4:
+      case 6:
+      case 7:
+      case 9:
+      case 11:
+        return 31;
+      case 1:
+        if (isLeapYear(y)) {
+          return 29;
+        }
+        return 28;
+      default:
+        return 30;
+    }
+  }
+
+  /**
+   * Create a javascript Date object with the year, month, day.
+   * new Date does not handle when year < 100. This function works around that
+   * limitation by calling setFullYear if the year < 100.
+   * @ignore
+   */
+  function toJSDateFullYear(year, month, day) {
+    const date = new Date(year, month, day);
+    if (year < 100) {
+      // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date#interpretation_of_two-digit_years
+      date.setFullYear(year);
+    }
+    return date;
+  }
+
+  /**
+   * @ojcomponent oj.ojDatePicker
+   * @augments oj.ojInputDate
+   * @since 4.0.0
+   *
+   * @ojtsimport {module: "ojmessaging", type:"AMD", importName: "Message"}
+   * @ojshortdesc A date picker is an inline element for picking a date value.
+   * @ojdisplayname Inline Date Picker
+   * @ojrole combobox
+   *
+   * @ojpropertylayout {propertyGroup: "common", items: ["labelHint", "required", "disabled", "readonly", "min", "max"]}
+   * @ojpropertylayout {propertyGroup: "data", items: ["value"]}
+   * @ojvbdefaultcolumns 4
+   * @ojvbmincolumns 4
+   *
+   * @ojoracleicon 'oj-ux-ico-calendar'
+   * @ojuxspecs ['date-picker']
+   *
+   * @ojdeprecated [
+   *   {
+   *     "type": "maintenance",
+   *     "since": "17.1.0",
+   *     "value": ["oj-c-date-picker"]
+   *   }
+   * ]
+   *
+   * @classdesc
+   * <h3 id="inputDateOverview-section">
+   *   JET DatePicker (Inline mode)
+   *   <a class="bookmarkable-link" title="Bookmarkable Link" href="#inputDateOverview-section"></a>
+   * </h3>
+   * <p>Description:</p>
+   * <p>A JET DatePicker (Inline mode) provides basic support for datepicker selection. This will render the date picker as an inline element. Other behaviors of this element is similar to JET InputDate</p>
+   *
+   * <pre class="prettyprint"><code>&lt;oj-date-picker>&lt;/oj-date-picker></code></pre>
+   *
+   * <h3 id="touch-section">
+   *   Touch End User Information
+   *   <a class="bookmarkable-link" title="Bookmarkable Link" href="#touch-section"></a>
+   * </h3>
+   *
+   * {@ojinclude "name":"touchDoc"}
+   *
+   * <h3 id="keyboard-section">
+   *   Keyboard End User Information
+   *   <a class="bookmarkable-link" title="Bookmarkable Link" href="#keyboard-section"></a>
+   * </h3>
+   *
+   * {@ojinclude "name":"keyboardDoc"}
+   *
+   * <h3 id="migration-section">
+   *   Migration
+   *   <a class="bookmarkable-link" title="Bookmarkable Link" href="#migration-section"></a>
+   * </h3>
+   * <p>
+   * To migrate from oj-date-picker to oj-c-date-picker, you need to revise the import statement
+   * and references to oj-c-date-picker in your app. Please note the changes between the two components below.
+   * </p>
+   * <h5>converter attribute</h5>
+   * <p>
+   * The only reason an application would use a converter for a datepicker is if they want the highlighted today to be the today
+   * in a timezone different than the user's timezone. In that case, use oj-c-date-picker's today-time-zone attribute. You can
+   * do this by using your converter's resolvedOptions to get the timezone.
+   * </p>
+   * <h5>date-picker.change-month and date-picker.change-year attributes</h5>
+   * <p>
+   * The Redwood UX spec allows to either have both month and year navigation enabled or neither.
+   * You cannot change month and not change year, for example.
+   * Set month-and-year-picker to 'on' (the default) to enable changing the month and year, or 'off' to disable changing them.
+   * Setting the attribute to 'off' will render the month and year as text.
+   * </p>
+   * <h5>date-picker.days-outside-month attribute</h5>
+   * <p>
+   * date-picker.days-outside-month has changed to days-outside-month.
+   * </p>
+   * <h5>date-picker.week-display attribute</h5>
+   * <p>
+   * date-picker.week-display has changed to week-display.
+   * </p>
+   * <h5>day-formatter attribute</h5>
+   * <p>
+   * The day-formatter function signature has changed in oj-c-date-picker.
+   * oj-c-date-picker's day-formatter's input type is {month: IsoMonth; day: IsoDay; year: number;}.
+   * To migrate, change 'fullYear' to 'year'. Change 'date' to 'day'.
+   * oj-c-date-picker's day-formatter's return type is {state: 'disabled' | 'restricted' | 'enabled';};
+   * If your function returned {disabled: true}, return {state: 'disabled'} instead.
+   * If your function returned null, return {state: 'enabled'} instead.
+   * </p>
+   *
+   * <h5>value attribute</h5>
+   * <h6>Date-only ISO string</h6>
+   * <p>
+   * In oj-date-picker the value should be a date-only ISO string but it was not enforced.
+   * For oj-c-date-picker the value must be a date-only ISO
+   * string or the component will not render. A date-only ISO string looks like "2023-04-26"; it has no time.
+   * </p>
+   *
+   * <p>
+   * If the value is not a date-only ISO string, then you will need to transform it to a date-only ISO string to use
+   * with oj-c-date-picker.
+   * For example, you can use the utility method: <code>IntlConverterUtils.dateToLocalIsoDateString(new Date(2023, 1, 1))</code>.
+   * </p>
+   */
+
+  /**
+   * @ojcomponent oj.ojInputDate
+   * @augments oj.inputBase
+   * @ojsignature [{
+   *                target: "Type",
+   *                value: "class ojInputDate<SP extends ojInputDateSettableProperties = ojInputDateSettableProperties> extends inputBase<string, SP>"
+   *               },
+   *               {
+   *                target: "Type",
+   *                value: "ojInputDateSettableProperties extends inputBaseSettableProperties<string>",
+   *                for: "SettableProperties"
+   *               }
+   *              ]
+   * @since 0.6.0
+   *
+   * @ojshortdesc An input date allows the user to enter or select a date value.
+   * @ojrole combobox
+   * @ojtsimport {module: "ojvalidationfactory-base", type: "AMD", imported:["Validation"]}
+   * @ojtsimport {module: "ojconverter", type: "AMD", importName: "Converter"}
+   * @ojtsimport {module: "ojvalidator", type: "AMD", importName: "Validator"}
+   * @ojtsimport {module: "ojvalidator-async", type: "AMD", importName: "AsyncValidator"}
+   * @ojtsimport {module: "ojconverter-datetime", type: "AMD",  imported: ["IntlDateTimeConverter", "DateTimeConverter"]}
+   * @ojtsimport {module: "ojvalidator-daterestriction", type: "AMD", importName: "DateRestrictionValidator"}
+   * @ojtsimport {module: "ojvalidator-datetimerange", type: "AMD", importName: "DateTimeRangeValidator"}
+   * @ojtsimport {module: "ojvalidator-length", type: "AMD", importName: "LengthValidator"}
+   * @ojtsimport {module: "ojvalidator-regexp", type: "AMD", importName: "RegExpValidator"}
+   * @ojtsimport {module: "ojvalidator-required", type: "AMD", importName: "RequiredValidator"}
+   *
+   * @ojpropertylayout {propertyGroup: "common", items: ["labelHint", "placeholder", "required", "disabled", "readonly", "min", "max", "converter"]}
+   * @ojpropertylayout {propertyGroup: "data", items: ["value"]}
+   * @ojvbdefaultcolumns 6
+   * @ojvbmincolumns 2
+   *
+   * @ojoracleicon 'oj-ux-ico-calendar'
+   * @ojuxspecs ['input-date']
+   *
+   * @ojdeprecated [
+   *   {
+   *     "type": "maintenance",
+   *     "since": "17.1.0",
+   *     "value": ["oj-c-input-date-picker"]
+   *   }
+   * ]
+   *
+   * @classdesc
+   * <h3 id="inputDateOverview-section">
+   *   JET InputDate
+   *   <a class="bookmarkable-link" title="Bookmarkable Link" href="#inputDateOverview-section"></a>
+   * </h3>
+   * <p>Description:</p>
+   * <p>A JET InputDate provides basic support for datepicker selection.</p>
+   *
+   * <pre class="prettyprint"><code>&lt;oj-input-date>&lt;/oj-input-date></code></pre>
+   *
+   * {@ojinclude "name":"validationAndMessagingDoc"}
+   *
+   * <h3 id="touch-section">
+   *   Touch End User Information
+   *   <a class="bookmarkable-link" title="Bookmarkable Link" href="#touch-section"></a>
+   * </h3>
+   *
+   * {@ojinclude "name":"touchDoc"}
+   *
+   * <h3 id="keyboard-section">
+   *   Keyboard End User Information
+   *   <a class="bookmarkable-link" title="Bookmarkable Link" href="#keyboard-section"></a>
+   * </h3>
+   *
+   * {@ojinclude "name":"keyboardDoc"}
+   *
+   * <h3 id="a11y-section">
+   *   Accessibility
+   *   <a class="bookmarkable-link" title="Bookmarkable Link" href="#a11y-section"></a>
+   * </h3>
+   * <p>
+   * {@ojinclude "name":"accessibilityLabelEditableValue"}
+   * {@ojinclude "name":"accessibilityPlaceholderEditableValue"}
+   * {@ojinclude "name":"accessibilityDisabledEditableValue"}
+   * </p>
+   * <h3 id="migration-section">
+   *   Migration
+   *   <a class="bookmarkable-link" title="Bookmarkable Link" href="#migration-section"></a>
+   * </h3>
+   * <p>
+   * To migrate from oj-input-date to oj-c-input-date-picker, you need to revise the import statement and references
+   * to oj-c-input-date-picker in your app. Please note the changes between the components below.
+   * </p>
+   *
+   * <h5>Text Field</h5>
+   * <p>
+   * The oj-c-input-date-picker has segments representing the month, day, and year fields of a calendar date instead of
+   * a text field. A user can individually edit, step, or spin the values of the month, day, and year fields of a calendar date
+   * using these segments.
+   * </p>
+   *
+   * <p>
+   * If the text field is preferred, you could look into oj-c-input-date-text and see if that fits your needs. But please note that
+   * the oj-c-input-date-text does not include the date picker.
+   * </p>
+   *
+   * <h5>Global attributes</h5>
+   * <p>
+   * The following global attributes are no longer supported:
+   * <ul>
+   * <li>accesskey - not considered accessible</li>
+   * <li>tabindex - not considered accessible</li>
+   * <li>
+   * aria-label - use label-hint instead. If you do not want a visible label set label-edge="none".
+   * </li>
+   * </ul>
+   * </p>
+   *
+   * <h5>Converter attribute</h5>
+   * <p>
+   * The converter is not supported by the oj-c-input-date-picker component as it shows the calendar date as month, day, and year fields.
+   * If you were using the converter to override the timezone for today's date, you should use the <code>today-time-zone</code> attribute
+   * of the oj-c-input-date-picker. The only reason an application would set the today-time-zone property is if they want today's date to
+   * be computed in a different timezone than the user's system's timezone, like if the user has a preferred timezone that is not
+   * where they are physically working.
+   * </p>
+   *
+   * <p>
+   * If you need to use a converter to format how the date is displayed, you could look into oj-c-input-date-text and see if that fits
+   * your needs. But please note that the oj-c-input-date-text does not include the date picker. There are also a few changes to the
+   * converter attribute of the oj-c-input-date-text that are listed below.
+   * </p>
+   *
+   * <p>
+   * The converter is no longer applied when the value is <code>null</code>, <code>undefined</code>, or <code>''</code>.
+   * When the field is empty, the value gets normalized to <code>null</code>, so the converter does not run on an empty field.
+   * <p>
+   *
+   * <p>
+   * The converter attribute for oj-c-input-date-text takes an instance of LocalDateConverter,
+   * an object that has {format: (value: DateISOString) => string, parse: (value: string) => DateISOString}, null or undefined.
+   * oj-c-input-date-text's converter attribute does not take an IntlDateTimeConverter instance since its format/parse functions return string|null,
+   * not just string.
+   * </p>
+   *
+   * <p>
+   * The oj-c-input-date-text uses <a href="LocalDateConverter.html" target="_blank">LocalDateConverter</a> with lenient parsing as its default converter,
+   * whereas oj-input-date uses IntlDateTimeConverter as its default converter.
+   * The LocalDateConverter does not have any options related to time or timezone.
+   * </p>
+   *
+   * <p>
+   * LocalDateConverter supports dateStyle: 'short'|'medium'|'long'|'full'. Currently, you cannot customize day, year, or month separately for
+   * LocalDateConverter, so you cannot format partial dates with the LocalDateConverter.
+   * </p>
+   *
+   * <h5>DatePicker attributes</h5>
+   * <h6>date-picker.change-month and date-picker.change-year</h6>
+   * <p>
+   * The Redwood UX spec allows to either have both month and year navigation enabled or neither.
+   * You cannot change month and not change year, for example.
+   * Set month-and-year-picker to 'on' (the default) to enable changing the month and year, or 'off' to disable changing them.
+   * Setting the attribute to 'off' will render the month and year as text.
+   * </p>
+   *
+   * <h6>date-picker.days-outside-month</h6>
+   * <p>
+   * The date-picker.days-outside-month attribute is changed to days-outside-month.
+   * </p>
+   *
+   * <h6>date-picker.week-display</h6>
+   * <p>
+   * The date-picker.week-display attribute has changed to week-display.
+   * </p>
+   *
+   * <h5>DayFormatter attribute</h5>
+   * <p>
+   * The day-formatter function signature is changed in oj-c-input-date-picker. The oj-c-input-date-picker's day-formatter's input type
+   * is <code>{month: IsoMonth; day: IsoDay; year: number;}</code>. To migrate, change 'fullYear' to 'year' and change 'date' to 'day'.
+   * The oj-c-input-date-picker's day-formatter's return type is <code>{ state: 'disabled' | 'restricted' | 'enabled' }</code>.
+   * If your function returned <code>{ disabled: true }</code>, return <code>{ state: 'disabled' }</code> instead.
+   * If your function returned <code>null</code>, return <code>{ state: 'enabled' }</code> instead.
+   *
+   * <h5>LabelEdge attribute</h5>
+   * <p>
+   * The enum values for the label-edge attribute have been changed from 'inside', 'provided', and 'none' to 'start', 'inside', 'top', and 'none'.
+   * If you are using this component in a form layout and would like the form layout to drive the label edge of this component, leave this attribute
+   * unset. The application no longer has to specify 'provided' for this attribute. If you want to override how the label is positioned, set this
+   * attribute to the corresponding value.
+   * </p>
+   *
+   * <h5>MessagesCustom attribute</h5>
+   * <p>
+   * The type of the <code class="prettyprint">severity</code> property of the messages in the
+   * array has changed from
+   * <code class="prettyprint">Message.SEVERITY_TYPE | Message.SEVERITY_LEVEL</code>,
+   * essentially <code class="prettyprint">string | number</code>, to simply
+   * <code class="prettyprint">'error' | 'confirmation' | 'info' | 'warning'</code>.  These
+   * values are the same as the previously supported string values.
+   * The application can no longer specify severity as a number, including hardcoded numbers,
+   * one of the <code class="prettyprint">Message.SEVERITY_LEVEL</code> constants, or the value
+   * returned from a call to the <code class="prettyprint">Message.getSeverityLevel</code> method.
+   * </p>
+   *
+   * <h5>Raw Value</h5>
+   * <p>
+   * The oj-c-input-date-picker's raw-value attribute is an Object of type <code>CalendarDate</code>, that is,
+   * <code>{ year?: number, month?: number, day?: number }</code>, so if you have code that handles raw-value or
+   * onRawValueChanged it will need to be updated.
+   * </p>
+   *
+   * <p>
+   * If you are migrating to oj-c-input-date-text instead, its raw-value is the same as the oj-input-date (both strings) and
+   * there are no steps needed to migrate.
+   * </p>
+   *
+   * <h5>TextAlign attribute</h5>
+   * <p>
+   * The usage of the style classes: oj-form-control-text-align-right, oj-form-control-text-align-start, and oj-form-control-text-align-end is now
+   * replaced with this attribute. The value of this attribute maps to these style classes as shown below:
+   * <ul>
+   * <li>
+   * .oj-form-control-text-align-right maps to 'right'
+   * </li>
+   * <li>
+   * .oj-form-control-text-align-start maps to 'start'
+   * </li>
+   * <li>
+   * .oj-form-control-text-align-end maps to 'end'
+   * </li>
+   * </ul>
+   * </p>
+   *
+   * <h5>MaxWidth attribute</h5>
+   * <p>
+   * The usage of the style classes: oj-form-control-max-width-sm and oj-form-control-max-width-md is now
+   * replaced with this attribute. The value of this attribute maps to these style classes as shown below:
+   * <ul>
+   * <li>
+   * .oj-form-control-max-width-sm maps to 'sm'
+   * </li>
+   * <li>
+   * .oj-form-control-max-width-md maps to 'md'
+   * </li>
+   * </ul>
+   * </p>
+   *
+   * <h5>Width attribute</h5>
+   * <p>
+   * The usage of the style classes: oj-form-control-width-sm and oj-form-control-width-md is now
+   * replaced with this attribute. The value of this attribute maps to these style classes as shown below:
+   * <ul>
+   * <li>
+   * .oj-form-control-width-sm maps to 'sm'
+   * </li>
+   * <li>
+   * .oj-form-control-width-md maps to 'md'
+   * </li>
+   * </ul>
+   * </p>
+   *
+   * <h5>Translations attribute</h5>
+   * <h6>translations.date-restriction.message-detail</h6>
+   * <p>
+   * In oj-c-input-date-picker, this attribute is changed to date-restriction-message-detail. Also, the oj-c-input-date-picker's
+   * date-restriction-message-detail attribute takes a function that returns a string instead of a string. The function receives
+   * an object of type <code>{ state: 'disabled' | 'restricted', value: string }</code> for input. If you were using tokens in
+   * the translation string of the oj-input-date, you need to replace it with the values from the input object of this function.
+   * </p>
+   *
+   * <p>
+   * If you are migrating to oj-c-input-date-text instead, it does not support this attribute.
+   * </p>
+   *
+   * <h6>translations.date-time-range.message-detail.range-overflow</h6>
+   * <p>
+   * In oj-c-input-date-picker, this attribute is changed to date-range-overflow-message-detail. Also, the oj-c-input-date-picker's
+   * date-range-overflow-message-detail attribute takes a function that returns a string instead of a string. The function receives
+   * an object of type <code>{ max: string, value: string }</code> for input. If you were using tokens in the
+   * translation string of the oj-input-date, you need to replace it with the values from the input object of this function.
+   * </p>
+   *
+   * <p>
+   * If you are migrating to oj-c-input-date-text instead, its date-range-overflow-message-detail attribute takes a string similar to
+   * oj-input-date.
+   * </p>
+   *
+   * <h6>translations.date-time-range.message-detail.range-underflow</h6>
+   * <p>
+   * In oj-c-input-date-picker, this attribute is changed to date-range-underflow-message-detail. Also, the oj-c-input-date-picker's
+   * date-range-underflow-message-detail attribute takes a function that returns a string instead of a string. The function receives
+   * an object of type <code>{ min: string, value: string }</code> for input. If you were using tokens in the
+   * translation string of the oj-input-date, you need to replace it with the values from the input object of this function.
+   * </p>
+   *
+   * <p>
+   * If you are migrating to oj-c-input-date-text instead, its date-range-underflow-message-detail attribute takes a string similar to
+   * oj-input-date.
+   * </p>
+   *
+   * <h6>translations.required.message-detail</h6>
+   * <p>
+   * In oj-c-input-date-picker, this attribute is changed to required-message-detail.
+   * </p>
+   *
+   * <h5>Validators</h5>
+   * <p>
+   * Only the required validator is run for an empty field, and only if required is true. The component's other validators
+   * are no longer run when the field is empty.
+   * If you created your own validator to check that the field was filled in, it will not run if the
+   * field is empty. Set the required attribute to true instead which conforms to the Redwood UX design.
+   * </p>
+   *
+   * <h5>Value attribute</h5>
+   * <h6>Clearing the field</h6>
+   * <p>
+   * Clearing the field and committing the value will now set the value attribute to <code>null</code>
+   * instead of <code>''</code>.
+   * </p>
+   *
+   * <h6>Date-only ISO string</h6>
+   * <p>
+   * In oj-input-date the value should be a date-only ISO string but it was not enforced. It was coerced to a date-only
+   * ISO string once the user interacted with the component. For oj-c-input-date-picker the value must be a date-only ISO
+   * string or the component will not render. A date-only ISO string looks like "2023-04-26"; it has no time.
+   * </p>
+   *
+   * <p>
+   * If the value is not a date-only ISO string, then you will need to transform it to a date-only ISO string to use
+   * with oj-c-input-date-picker.
+   * For example, you can use the utility method: <code>IntlConverterUtils.dateToLocalIsoDateString(new Date(2023, 1, 1))</code>.
+   * </p>
+   *
+   * <h5>Refresh method</h5>
+   * <p>
+   * The refresh method is no longer supported. The application should no longer need to use this method. If the application
+   * wants to reset the component (remove messages and reset the value of the component), please use the reset method.
+   * </p>
+   *
+   * <h5>Animation Events</h5>
+   * <p>
+   * ojAnimateStart and ojAnimateEnd events are no longer supported.
+   * </p>
+   *
+   * <h5>Custom Label</h5>
+   * <p>
+   * Adding a custom &lt;oj-label> for the form component is no longer supported. The application should use the
+   * label-hint attribute to add a label for the form component.
+   * </p>
+   * <p>
+   * The application should no longer need to use an &lt;oj-label-value> component to layout the form component. The application
+   * can use the label-edge attribute and label-start-width attribute to customize the label position and label width (only when using start label).
+   * </p>
+   *
+   * <h5>LabelledBy attribute</h5>
+   * <p>
+   * The labelled-by attribute was programmatically set on the component by &lt;oj-label> in order to make it easy for the form
+   * component to find its matching label. However, adding a custom &lt;oj-label> for the form component is no longer supported and
+   * this attribute is not carried forward to the core pack component. The application should use the label-hint attribute
+   * to add a label for the form component.
+   * </p>
+   *
+   * <h5>DescribedBy attribute</h5>
+   * <p>
+   * The described-by attribute is not meant to be set by an application developer directly as stated in the attribute documentation.
+   * This attribute is not carried forward to the core pack component.
+   * </p>
+   *
+   * <h5>Formatted messages</h5>
+   * <p>
+   * Formatting messages using HTML tags is not supported in the core pack component.
+   * </p>
+   */
+  // --------------------------------------------------- oj.ojInputDate Styling Start ------------------------------------------------------------
+  /**
+   * @classdesc The following CSS classes can be applied by the page author as needed.<br/>
+   * The form control style classes can be applied to the component, or an ancestor element. <br/>
+   * When applied to an ancestor element, all form components that support the style classes will be affected.
+   */
+  // ---------------- oj-form-control-full-width --------------
+  /**
+   * Changes the max-width to 100% so that form components will occupy all the available horizontal space.
+   * @ojstyleclass oj-form-control-full-width
+   * @ojdisplayname Full Width
+   * @memberof oj.ojInputDate
+   * @ojtsexample
+   * &lt;oj-input-date class="oj-form-control-full-width">
+   * &lt;/oj-input-date>
+   */
+
+  // ---------------- oj-form-control max-width --------------
+  /**
+   * In the Redwood theme the default max width of a text field is 100%.
+   * These max width convenience classes are available to create a medium or small field.<br>
+   * The class is applied to the root element.
+   * @ojstyleset form-control-max-width
+   * @ojdisplayname Max Width
+   * @ojstylesetitems ["form-control-max-width.oj-form-control-max-width-sm", "form-control-max-width.oj-form-control-max-width-md"]
+   * @ojstylerelation exclusive
+   * @memberof oj.ojInputDate
+   * @ojunsupportedthemes ['Alta']
+   * @ojtsexample
+   * &lt;oj-input-date class="oj-form-control-max-width-md">&lt;/oj-input-date>
+   */
+  /**
+   * @ojstyleclass form-control-max-width.oj-form-control-max-width-sm
+   * @ojshortdesc Sets the max width for a small field
+   * @ojdisplayname Small
+   * @memberof! oj.ojInputDate
+   */
+  /**
+   * @ojstyleclass form-control-max-width.oj-form-control-max-width-md
+   * @ojshortdesc Sets the max width for a medium field
+   * @ojdisplayname Medium
+   * @memberof! oj.ojInputDate
+   */
+
+  // ---------------- oj-form-control width --------------
+  /**
+   * In the Redwood theme the default width of a text field is 100%.
+   * These width convenience classes are available to create a medium or small field.<br>
+   * The class is applied to the root element.
+   * @ojstyleset form-control-width
+   * @ojdisplayname Width
+   * @ojstylesetitems ["form-control-width.oj-form-control-width-sm", "form-control-width.oj-form-control-width-md"]
+   * @ojstylerelation exclusive
+   * @memberof oj.ojInputDate
+   * @ojunsupportedthemes ['Alta']
+   * @ojtsexample
+   * &lt;oj-input-date class="oj-form-control-width-md">&lt;/oj-input-date>
+   */
+  /**
+   * @ojstyleclass form-control-width.oj-form-control-width-sm
+   * @ojshortdesc Sets the width for a small field
+   * @ojdisplayname Small
+   * @memberof! oj.ojInputDate
+   */
+  /**
+   * @ojstyleclass form-control-width.oj-form-control-width-md
+   * @ojshortdesc Sets the width for a medium field
+   * @ojdisplayname Medium
+   * @memberof! oj.ojInputDate
+   */
+
+  // ---------------- oj-form-control-text-align- --------------
+  /**
+   * Classes that help align text of the element.
+   * @ojstyleset text-align
+   * @ojdisplayname Text Alignment
+   * @ojstylesetitems ["text-align.oj-form-control-text-align-right", "text-align.oj-form-control-text-align-start", "text-align.oj-form-control-text-align-end"]
+   * @ojstylerelation exclusive
+   * @memberof oj.ojInputDate
+   * @ojtsexample
+   * &lt;oj-input-date class="oj-form-control-text-align-right">
+   * &lt;/oj-input-date>
+   */
+  /**
+   * @ojstyleclass text-align.oj-form-control-text-align-right
+   * @ojshortdesc Aligns the text to the right regardless of the reading direction. This is normally used for right aligning numbers.
+   * @ojdisplayname Align-Right
+   * @memberof! oj.ojInputDate
+   */
+  /**
+   * @ojstyleclass text-align.oj-form-control-text-align-start
+   * @ojshortdesc Aligns the text to the left in LTR and to the right in RTL.
+   * @ojdisplayname Align-Start
+   * @memberof! oj.ojInputDate
+   */
+  /**
+   * @ojstyleclass text-align.oj-form-control-text-align-end
+   * @ojshortdesc Aligns the text to the right in LTR and to the left in RTL.
+   * @ojdisplayname Align-End
+   * @memberof! oj.ojInputDate
+   */
+  /**
+   * @ojstylevariableset oj-date-picker-css-set1
+   * @ojstylevariable oj-date-picker-cell-font-size {description: "Date picker cell font size", formats: ["length"], help: "#css-variables"}
+   * @ojstylevariable oj-date-picker-cell-border-color-today {description: "Date picker today cell border color", formats: ["color"], help: "#css-variables"}
+   * @memberof oj.ojDatePicker
+   */
+  // --------------------------------------------------- oj.ojInputDate Styling end ------------------------------------------------------------
+  oj.__registerWidget('oj.ojInputDate', $.oj.inputBase, {
+    widgetEventPrefix: 'oj',
+
+    // -------------------------------From base---------------------------------------------------//
+    _CLASS_NAMES: 'oj-inputdatetime-input',
+    _WIDGET_CLASS_NAMES: 'oj-inputdatetime-date-only oj-component oj-inputdatetime',
+    _ELEMENT_TRIGGER_WRAPPER_CLASS_NAMES: '',
+    _INPUT_HELPER_KEY: 'inputHelp',
+    _ATTR_CHECK: [{ attr: 'type', setMandatory: 'text' }],
+    _GET_INIT_OPTIONS_PROPS_FOR_WIDGET: [
+      { attribute: 'disabled', validateOption: true },
+      { attribute: 'pattern' },
+      { attribute: 'title' },
+      { attribute: 'placeholder' },
+      { attribute: 'value', coerceDomValue: coerceIsoString },
+      { attribute: 'required', coerceDomValue: true, validateOption: true },
+      { attribute: 'readonly', option: 'readOnly', validateOption: true },
+      { attribute: 'min', coerceDomValue: coerceIsoString },
+      { attribute: 'max', coerceDomValue: coerceIsoString }
+    ],
+    // -------------------------------End from base-----------------------------------------------//
+
+    _TRIGGER_CLASS: 'oj-inputdatetime-input-trigger',
+    _TRIGGER_CALENDAR_CLASS: 'oj-inputdatetime-calendar-icon',
+
+    _CURRENT_CLASS: 'oj-datepicker-current-day',
+    _DAYOVER_CLASS: 'oj-datepicker-days-cell-over',
+    _UNSELECTABLE_CLASS: 'oj-datepicker-unselectable',
+
+    _DATEPICKER_DIALOG_DESCRIPTION_ID: 'oj-datepicker-dialog-desc',
+    _DATEPICKER_DESCRIPTION_ID: 'oj-datepicker-desc',
+    _CALENDAR_DESCRIPTION_ID: 'oj-datepicker-calendar',
+    _MAIN_DIV_ID: 'oj-datepicker-div',
+
+    _INLINE_CLASS: 'oj-datepicker-inline',
+    _INPUT_CONTAINER_CLASS: ' oj-inputdatetime-input-container oj-text-field-container',
+    _INLINE_WIDGET_CLASS: ' oj-inputdatetime-inline',
+
+    _ON_CLOSE_REASON_SELECTION: 'selection', // A selection was made
+    _ON_CLOSE_REASON_CANCELLED: 'cancelled', // Selection not made
+    _ON_CLOSE_REASON_TAB: 'tab', // Tab key
+    _ON_CLOSE_REASON_CLOSE: 'close', // Disable or other closes
+
+    _KEYBOARD_EDIT_OPTION_ENABLED: 'enabled',
+    _KEYBOARD_EDIT_OPTION_DISABLED: 'disabled',
+
+    _INPUTDATE_CLEAR_ICON_LABEL_KEY: 'accessibleClearIconAltText',
+
+    options: {
+      /**
+       * <p>
+       * Note that Jet framework prohibits setting subset of properties which are object types.<br/><br/>
+       * For example myInputDate.datePicker = {footerLayout: "today"}; is prohibited as it will
+       * wipe out all other sub-properties for "datePicker" object.<br/><br/> If one wishes to do this [by above syntax or knockout] one
+       * will have to get the "datePicker" object, modify the necessary sub-property and pass it to above syntax.<br/><br/>
+       * Default values for the datePicker sub-properties can also be overridden with the theming variable
+       * <code class="prettyprint">$inputDateTimeDatePickerOptionDefault</code>, which is merged with other defaults.<br/><br/>
+       * Note that all of the datePicker sub-properties except showOn are not available when renderMode is 'native'.<br/><br/>
+       *
+       * @memberof oj.ojInputDate
+       * @ojfragment datePickerCommonDatePicker
+       */
+      /**
+       * {@ojinclude "name":"datePickerCommonDatePicker"}
+       *
+       * @expose
+       * @instance
+       * @memberof oj.ojDatePicker
+       * @name datePicker
+       * @type {Object}
+       * @ojshortdesc An object whose properties describe the appearance and behavior of the date picker. See the Help documentation for more information.
+       * @ojtsignore tsdefonly
+       *
+       * @example <caption>Override defaults in the theme (SCSS) :</caption>
+       * $inputDateTimeDatePickerOptionDefault: (footerLayout: 'today', weekDisplay: 'number') !default;
+       *
+       * @example <caption>Initialize the component, overriding some date-picker attributes and leaving the others intact:</caption>
+       * &lt;!-- Using dot notation -->
+       * &lt;oj-date-picker date-picker.some-key='some value' date-picker.some-other-key='some other value'>&lt;/oj-date-picker>
+       *
+       * &lt;!-- Using JSON notation -->
+       * &lt;oj-date-picker date-picker='{"someKey":"some value", "someOtherKey":"some other value"}'>&lt;/oj-date-picker>
+       *
+       * @example <caption>Get or set the <code class="prettyprint">datePicker</code> property after initialization:</caption>
+       * // Get one
+       * var value = myComponent.datePicker.someKey;
+       *
+       * // Set one, leaving the others intact. Use the setProperty API for
+       * // subproperties so that a property change event is fired.
+       * myComponent.setProperty('datePicker.someKey', 'some value');
+       *
+       * // Get all
+       * var values = myComponent.datePicker;
+       *
+       * // Set all.  Must list every datePicker key, as those not listed are lost.
+       * myComponent.datePicker = {
+       *     someKey: 'some value',
+       *     someOtherKey: 'some other value'
+       * };
+       *
+       */
+      /**
+       * {@ojinclude "name":"datePickerCommonDatePicker"}
+       *
+       * @expose
+       * @instance
+       * @memberof! oj.ojInputDate
+       * @type {Object}
+       * @ojshortdesc An object whose properties describe the appearance and behavior of the date picker. See the Help documentation for more information.
+       *
+       * @example <caption>Override defaults in the theme (SCSS) :</caption>
+       * $inputDateTimeDatePickerOptionDefault: (footerLayout: 'today', weekDisplay: 'number') !default;
+       *
+       * @example <caption>Initialize the component, overriding some date-picker attributes and leaving the others intact:</caption>
+       * &lt;!-- Using dot notation -->
+       * &lt;oj-input-date date-picker.some-key='some value' date-picker.some-other-key='some other value'>&lt;/oj-input-date>
+       *
+       * &lt;!-- Using JSON notation -->
+       * &lt;oj-input-date date-picker='{"someKey":"some value", "someOtherKey":"some other value"}'>&lt;/oj-input-date>
+       *
+       * @example <caption>Get or set the <code class="prettyprint">datePicker</code> property after initialization:</caption>
+       * // Get one
+       * var value = myComponent.datePicker.someKey;
+       *
+       * // Set one, leaving the others intact. Use the setProperty API for
+       * // subproperties so that a property change event is fired.
+       * myComponent.setProperty('datePicker.someKey', 'some value');
+       *
+       * // Get all
+       * var values = myComponent.datePicker;
+       *
+       * // Set all.  Must list every datePicker key, as those not listed are lost.
+       * myComponent.datePicker = {
+       *     someKey: 'some value',
+       *     someOtherKey: 'some other value'
+       * };
+       *
+       */
+      datePicker: {
+        /**
+         * Will dictate what content is shown within the footer of the calendar.
+         *
+         * <p>See the <a href="#datePicker">date-picker</a> attribute for usage examples.
+         *
+         * @expose
+         * @name datePicker.footerLayout
+         * @ojshortdesc Specifies what content is shown within the footer of the calendar.
+         * @memberof! oj.ojInputDate
+         * @instance
+         * @type {string}
+         * @ojvalue {string} '' Do not show anything
+         * @ojvalue {string} 'today' Show the today button. When user clicks on the Today button, it will highlight the current day in the calendar.
+         * @default "today"
+         * @ojdeprecated {since: "8.2.0", description: "This attribute is deprecated and should not be used as it will be ignored in new UX design."}
+         * @ojsignature { target: "Type", value: "?string"}
+         */
+        footerLayout: '',
+
+        /**
+         * Whether the month should be rendered as a button to allow selection instead of text.
+         *
+         * <p>See the <a href="#datePicker">date-picker</a> attribute for usage examples.
+         *
+         * @expose
+         * @name datePicker.changeMonth
+         * @ojshortdesc Specifies whether the month should be rendered as a button to allow selection, instead of as text.
+         * @memberof! oj.ojInputDate
+         * @instance
+         * @type {string}
+         * @ojvalue {string} 'select' month is rendered as a button
+         * @ojvalue {string} 'none' month is rendered as text
+         * @default "select"
+         * @ojsignature { target: "Type", value: "?string"}
+         */
+        changeMonth: 'select',
+
+        /**
+         * Whether the year should be rendered as a button to allow selection instead of text.
+         *
+         * <p>See the <a href="#datePicker">date-picker</a> attribute for usage examples.
+         *
+         * @expose
+         * @name datePicker.changeYear
+         * @ojshortdesc Specifies whether the year should be rendered as a button to allow selection, instead of as text.
+         * @memberof! oj.ojInputDate
+         * @instance
+         * @type {string}
+         * @ojvalue {string} 'select' year is rendered as a button
+         * @ojvalue {string} 'none' year is rendered as text
+         * @default "select"
+         * @ojsignature { target: "Type", value: "?string"}
+         */
+        changeYear: 'select',
+
+        /**
+         * The position in multipe months at which to show the current month (starting at 0).
+         *
+         * <p>See the <a href="#datePicker">date-picker</a> attribute for usage examples.
+         *
+         * @expose
+         * @name datePicker.currentMonthPos
+         * @ojshortdesc Specifies the position in multiple months at which to show the current month (starting at 0).
+         * @memberof! oj.ojInputDate
+         * @ojdeprecated {since: '17.0.0', description: 'This is required when date-picker.number-of-months > 1, which is now deprecated, so this is no longer needed.'}
+         * @instance
+         * @type {number}
+         * @default 0
+         * @ojmin 0
+         * @ojmax 12
+         * @ojsignature { target: "Type", value: "?number"}
+         */
+        currentMonthPos: 0,
+
+        /**
+         * Dictates the behavior of days outside the current viewing month.
+         *
+         * <p>See the <a href="#datePicker">date-picker</a> attribute for usage examples.
+         *
+         * @expose
+         * @name datePicker.daysOutsideMonth
+         * @ojshortdesc Specifies the behavior of days outside the current viewing month.
+         * @memberof! oj.ojInputDate
+         * @instance
+         * @type {string}
+         * @ojvalue {string} 'hidden' Days outside the current viewing month will be hidden
+         * @ojvalue {string} 'visible' Days outside the current viewing month will be visible
+         * @ojvalue {string} 'selectable' Days outside the current viewing month will be visible + selectable
+         * @default "hidden"
+         * @ojsignature { target: "Type", value: "?string"}
+         * @ojdeprecated {since: "17.0.0", target: "propertyValue", for: "visible",
+                          description: "The Redwood UX specification does not support visible."}
+         */
+        daysOutsideMonth: 'hidden',
+
+        /**
+         * The number of months to show at once. Note that if one is using a
+         * numberOfMonths > 4 then one should define a CSS rule for the width of
+         * each of the months. For example if numberOfMonths is set to 6 then one
+         * should define a CSS rule .oj-datepicker-multi-6 .oj-datepicker-group
+         * providing the width each month should take in percentage.
+         *
+         * <p>See the <a href="#datePicker">date-picker</a> attribute for usage examples.
+         *
+         * @expose
+         * @name datePicker.numberOfMonths
+         * @ojshortdesc Specifies the number of months to show at once. See the Help documentation for more information.
+         * @memberof! oj.ojInputDate
+         * @ojdeprecated {since: '17.0.0', description: 'This is not supported in the Redwood UX specification for Date Picker.  See the Range Picker UX specification.'}
+         * @instance
+         * @type {number}
+         * @default 1
+         * @ojmin 1
+         * @ojsignature { target: "Type", value: "?number"}
+         */
+        numberOfMonths: 1,
+
+        /**
+         * When the datepicker should be shown.
+         *
+         * <p>See the <a href="#datePicker">date-picker</a> attribute for usage examples.
+         *
+         * @expose
+         * @name datePicker.showOn
+         * @ojshortdesc Specifies when the date picker should be shown.
+         * @memberof! oj.ojInputDate
+         * @instance
+         * @type {string=}
+         * @ojvalue {string} 'focus' when the element receives focus or when the trigger calendar image is
+         *   clicked. When the picker is closed, the field regains focus and is editable.
+         * @ojvalue {string} 'userFocus' when the element receives focus from a user action (such as tab key press)
+         *   or the calendar image is clicked.  Programmatic calls to .focus() do not show the picker.
+         * @ojvalue {string} 'image' when the trigger calendar image is clicked.
+         * Keyboard users must use the Up or Down Arrow key to open the datepicker when show-on is 'image'.
+         * @default "image"
+         * @ojsignature { target: "Type", value: "?string"}
+         * @ojdeprecated {since: '17.0.0', description: 'This is not supported in the Redwood UX specification.'}
+         */
+        showOn: 'image',
+
+        /**
+         * How the prev + next will step back/forward the months. The following are the valid values:
+         *
+         * <ul>
+         * <li>
+         * <code class="prettyprint">"numberOfMonths"</code> - When set to this string, will use numberOfMonths property value as value.
+         * </li>
+         * <li>
+         * <code class="prettyprint"> &lt;number&gt;</code> - Number of months to step back/forward.
+         * </li>
+         * </ul>
+         *
+         * <p>See the <a href="#datePicker">date-picker</a> attribute for usage examples.
+         *
+         * @expose
+         * @name datePicker.stepMonths
+         * @ojshortdesc Specifies how the prev and next keys will step backwards and forwards through the months. See the Help documentation for more information.
+         * @memberof! oj.ojInputDate
+         * @instance
+         * @type {string|number}
+         * @default "numberOfMonths"
+         * @ojsignature { target: "Type", value: "?'numberOfMonths'|number"}
+         * @ojdeprecated {since: '17.0.0', description: 'This is not in the Redwood UX specification.'}
+         */
+        stepMonths: 'numberOfMonths',
+
+        /**
+         * Number of months to step back/forward for the (Alt + Page up) + (Alt + Page down) key strokes.
+         *
+         * <p>See the <a href="#datePicker">date-picker</a> attribute for usage examples.
+         *
+         * @expose
+         * @name datePicker.stepBigMonths
+         * @ojshortdesc Specifies the number of months to step backwards and forwards for the Ctrl+Alt+Page Up and Ctrl+Alt+Page Down keystrokes.
+         * @memberof! oj.ojInputDate
+         * @instance
+         * @type {number}
+         * @default 12
+         * @ojsignature { target: "Type", value: "?number"}
+         * @ojdeprecated {since: '17.0.0', description: 'This is not in the Redwood UX specification.'}
+         */
+        stepBigMonths: 12,
+
+        /**
+         * Whether week of the year will be shown in the datepickeer.
+         * The default calculation follows the ISO 8601 definition:
+         * the week starts on Monday, the first week of the year contains the first Thursday of the year.
+         * This means that some days from one year may be placed into weeks 'belonging' to another year.
+         * <p>See the <a href="#datePicker">date-picker</a> attribute for usage examples.
+         *
+         * @expose
+         * @name datePicker.weekDisplay
+         * @ojshortdesc Specifies whether the week of the year will be shown.
+         * @memberof! oj.ojInputDate
+         * @instance
+         * @type {string}
+         * @ojvalue {string} 'number' Will show the week of the year as a number
+         * @ojvalue {string} 'none' The week of the year column will not be shown
+         * @default "none"
+         * @ojsignature { target: "Type", value: "?string"}
+         */
+        weekDisplay: 'none', // "number" to show week of the year, "none" to not show it
+
+        /**
+         * The range of years displayed in the year drop-down: either relative to
+         * today's year ("-nn:+nn"), relative to the currently selected year
+         * ("c-nn:c+nn"), absolute ("nnnn:nnnn"), or combinations of these formats
+         * ("nnnn:-nn").
+         *
+         * <p>See the <a href="#datePicker">date-picker</a> attribute for usage examples.
+         *
+         * @expose
+         * @name datePicker.yearRange
+         * @ojshortdesc Specifies the range of years displayed in the year drop-down. See the Help documentation for more information.
+         * @memberof! oj.ojInputDate
+         * @instance
+         * @type {string}
+         * @default "c-10:c+10"
+         * @ojsignature { target: "Type", value: "?string"}
+         * @ojdeprecated {since: '17.0.0', description: "This is not in the Redwood UX specification. The 'min' and 'max' properties should be used instead."}
+         */
+        yearRange: 'c-10:c+10' // Range of years to display in drop-down,
+        // either relative to today's year (-nn:+nn), relative to currently displayed year
+        // (c-nn:c+nn), absolute (nnnn:nnnn), or a combination of the above (nnnn:-n)
+      },
+
+      /**
+       * A datetime converter instance or one that duck types {@link oj.DateTimeConverter}.
+       *
+       * <p>If the timezone option is provided in the converter, the Today button will highlight the current day based on the timezone specified in the converter.
+       * Otherwise the Today button will highlight the current day in the user's system timezone.</p>
+       * <p>The default converter leniently parses 2-digit years, by starting with year 1950. For example, if the user types in 99,
+       * the year will parse to 1999. IntlDateTimeConverter has a "two-digit-year-start" option. If it is set to 2000 and the user
+       * types in 99, it will be 2099. If it is set to 1, and the user types in 99, it will stay 99.</p>
+       * {@ojinclude "name":"inputBaseConverterOptionDoc"}
+       *
+       * @expose
+       * @instance
+       * @memberof! oj.ojDatePicker
+       * @name converter
+       * @type {Object}
+       * @ojshortdesc An object that converts the value. See the Help documentation for more information.
+       * @ojsignature  [{ target: "Type",
+       *    value: "oj.Converter<any>",
+       *    jsdocOverride: true},
+       *    {target: "Type",
+       *    value: "Promise<oj.Converter<any>>|oj.Converter<any>|
+       *            oj.Validation.RegisteredConverter",
+       *    consumedBy: 'tsdep'}]
+       * @ojdeprecated {since: '8.0.0', target: 'memberType', value: ['oj.Validation.RegisteredConverter'],
+       *                description: 'Defining a converter with an object literal with converter type and its options
+       *                  (aka JSON format) has been deprecated and does nothing. If needed, you can make the JSON format
+       *                  work again by importing the deprecated ojvalidation-datetime module.'}
+       * @ojdeprecated {since: '17.0.0', target: 'memberType', value: ['Promise<oj.Converter<any>>'],
+       *                description: 'Defining a Promise to a Converter instance has been deprecated. The application should resolve the Promise and then update the converter attribute with the resolved converter instance.'}
+       * @ojdeprecated {since: '18.0.0', value: [''],
+       *                description: 'To highlight the today cell in a different timezone use the new today-time-zone property instead.'}
+       * @default new DateTimeConverter({ formatType: 'date', dateFormat: 'short' })
+       */
+
+      /**
+       * A datetime converter instance or one that duck types {@link oj.DateTimeConverter}.
+       *
+       * <p>The default options for converter vary by theme. To use different options, create a custom converter and
+       * set it in this property. For example:
+       * <pre class="prettyprint"><code>inputDate.converter = new DateTimeConverter.IntlDateTimeConverter({ formatType: 'date', dateFormat: 'short' });</code></pre>
+       * <p>If the timezone option is provided in the converter, the Today button will highlight the current day based on the timezone specified in the converter.
+       * {@ojinclude "name":"inputBaseConverterOptionDoc"}
+       * <p>
+       * The hint exposed by the converter is shown inline by default in the Redwood theme when
+       * the field has focus.
+       * You can turn off showing converter hints by using the
+       * 'converterHint' property set to 'none' on the <code class="prettyprint">display-options</code>
+       * attribute.
+       * </p>
+       * <p>
+       * In the Redwood theme, only one hint shows at a time, so the precedence rules are:
+       * help.instruction shows; if no help.instruction then validator hints show;
+       * if none, then help-hints.definition shows; if none, then converter hint shows.
+       * help-hints.source always shows along with the other help or hint.
+       * </p>
+       *
+       * @name converter
+       * @expose
+       * @instance
+       * @memberof! oj.ojInputDate
+       * @type {Object}
+       * @ojshortdesc An object that converts the value. See the Help documentation for more information.
+       * @ojsignature  [{ target: "Type",
+       *    value: "oj.Converter<any>",
+       *    jsdocOverride: true},
+       *    {target: "Type",
+       *    value: "Promise<oj.Converter<any>>|oj.Converter<any>|
+       *            oj.Validation.RegisteredConverter",
+       *    consumedBy: 'tsdep'}]
+       * @ojdeprecated {since: '8.0.0', target: 'memberType', value: ['oj.Validation.RegisteredConverter'],
+       *                description: 'Defining a converter with an object literal with converter type and its options
+       *                  (aka JSON format) has been deprecated and does nothing. If needed, you can make the JSON format
+       *                  work again by importing the deprecated ojvalidation-datetime module.'}
+       * @ojdeprecated {since: '17.0.0', target: 'memberType', value: ['Promise<oj.Converter<any>>'],
+       *                description: 'Defining a Promise to a Converter instance has been deprecated. The application should resolve the Promise and then update the converter attribute with the resolved converter instance.'}
+       * @ojdeprecated {since: '18.0.0', value: [''],
+       *                description: 'It is recommended to either use oj-c-input-date-picker which has a picker but no formatting support,
+       *                  or use oj-c-input-date-text for formatting but has no picker. The property is being deprecated because
+       *                  the oj-input-date component has an implicit date converter that formats dates in the required
+       *                  short format with a four-digit year. Additionally, the new today-time-zone property allows
+       *                  applications to highlight the today cell in a different timezone. Along with the new
+       *                  two-digit-start-year property, which allows applications to specify the earliest date of
+       *                  a 100-year period within which the two-digit year will be interpreted, the explicit converter
+       *                  is unnecessary.'}
+       * @default new DateTimeConverter({ formatType: 'date', dateFormat: 'short' })
+       */
+      converter: undefined,
+      /**
+       * The oj-label sets the described-by attribute programmatically on the form component.
+       * This attribute is not meant to be set by an application developer directly.
+       * The described-by is copied to the aria-describedby
+       * attribute on the component's inner dom element, and it is needed
+       * for accessibility.
+       * @example <caption>Initialize component with the <code class="prettyprint">described-by</code> attribute specified:</caption>
+       * &lt;oj-some-element described-by="someId">&lt;/oj-some-element>
+       *
+       * @example <caption>Get or set the <code class="prettyprint">describedBy</code> property after initialization:</caption>
+       * // getter
+       * var descById = myComp.describedBy;
+       *
+       * // setter
+       * myComp.describedBy = "someId";
+       *
+       * @ojshortdesc The form component's oj-label automatically sets described-by
+       * to make it accessible. It is not meant to be set by application developer.
+       * @expose
+       * @type {?string}
+       * @public
+       * @instance
+       * @memberof oj.ojDatePicker
+       * @name describedBy
+       * @ojdeprecated {since: '17.0.0', description: 'The oj-date-picker is used internally by the input date component and is not meant to display messages, be labelled, or be in a form layout by itself. Per the Redwood UX specification, the oj-date-picker is not intended to be a form component.'}
+       * @since 4.0.0
+       */
+      /**
+       * Whether the component is disabled. The default is false.
+       *
+       * @ojshortdesc Specifies whether the component is disabled. The default is false.
+       * @expose
+       * @type {boolean}
+       * @default false
+       * @public
+       * @instance
+       * @memberof oj.ojDatePicker
+       * @name disabled
+       * @ojdeprecated {since: '17.0.0', description: "Disabled is not supported by the Date Picker UX specification, use readonly property instead."}
+       * @since 0.7.0
+       */
+      /**
+       * Form component help information.
+       * @expose
+       * @memberof oj.ojDatePicker
+       * @name help
+       * @ojdeprecated {since: '17.0.0', description: "The oj-date-picker is used internally by the input date component and is not meant to display messages, be labelled, or be in a form layout by itself. Per the Redwood UX specification, the oj-date-picker is not intended to be a form component."}
+       * @instance
+       * @public
+       * @type {Object}
+       * @since 0.7.0
+       */
+      /**
+       * <p>
+       * The helpHints object contains a definition property and a source property.
+       * </p>
+       * <ul>
+       * <li><code class="prettyprint">definition</code> - hint for help definition text.</li>
+       * <li><code class="prettyprint">source</code> - hint for help source URL.</li>
+       * </ul>
+       *
+       * @ojshortdesc Represents hints for an oj-form-layout element to render help information on the label of the editable component.
+       * @expose
+       * @access public
+       * @memberof oj.ojDatePicker
+       * @name helpHints
+       * @ojdeprecated {since: '17.0.0', description: "The oj-date-picker is used internally by the input date component and is not meant to display messages, be labelled, or be in a form layout by itself. Per the Redwood UX specification, the oj-date-picker is not intended to be a form component."}
+       * @ojtranslatable
+       * @instance
+       * @type {Object}
+       * @since 4.1.0
+       */
+      /**
+       * A type of user assistance text. User assistance text is used to provide
+       * guidance to help the user understand what data to enter or select. help-hints could
+       * come from a help system.
+       * <p>In the Redwood theme for clarity only one user assistance text shows to the user.
+       * The precedence rules are:
+       * <ul>
+       * <li>help.instruction shows;</li>
+       * <li>if no help.instruction, then validator hint shows;</li>
+       * <li>if no help.instruction or validator hint, then help-hints.definition shows;</li>
+       * <li>if no help.instruction, validator hint, or help-hints.definition, then converter hint shows.</li>
+       * <li>help-hints.source always shows along side the above.</li>
+       * </ul>
+       * </p>
+       * <p>
+       * In the Redwood theme, by default all user assistance text shows inline.
+       * For input components, it shows when the field takes focus. In other components it
+       * shows all the time. See the user-assistance-density property for other ways the user
+       * assistance text can render.
+       * </p>
+       * <p>No formatted text is available for help definition attribute.</p>
+       *
+       * <p>See the <a href="#helpHints">help-hints</a> attribute for usage examples.</p>
+       *
+       * @ojshortdesc Hint for help definition text associated with the label.
+       * @expose
+       * @name helpHints.definition
+       * @memberof! oj.ojDatePicker
+       * @ojdeprecated {since: '17.0.0', description: "The oj-date-picker is used internally by the input date component and is not meant to display messages, be labelled, or be in a form layout by itself. Per the Redwood UX specification, the oj-date-picker is not intended to be a form component."}
+       * @instance
+       * @type {string}
+       * @ojsignature {target:"Type", value: "?"}
+       * @default ""
+       * @since 4.1.0
+       */
+      /**
+       * Help source URL associated with the component.
+       * <p>In the Redwood theme, the help-hints.source will show as a link inline to the field.
+       * For input components, it shows when the field takes focus. For other components,
+       * it shows all the time.
+       * </p>
+       * <p>
+       * For security reasons we only support urls with protocol 'http:' or 'https:'.
+       * If the url doesn't comply we ignore it and throw an error.
+       * Pass in an encoded URL since we do not encode the URL.</p>
+       *
+       * <p>See the <a href="#helpHints">help-hints</a> attribute for usage examples.</p>
+       *
+       * @ojshortdesc Help source URL associated with the component.
+       * @expose
+       * @name helpHints.source
+       * @memberof! oj.ojDatePicker
+       * @ojdeprecated {since: '17.0.0', description: "The oj-date-picker is used internally by the input date component and is not meant to display messages, be labelled, or be in a form layout by itself. Per the Redwood UX specification, the oj-date-picker is not intended to be a form component."}
+       * @instance
+       * @type {string}
+       * @ojsignature {target:"Type", value: "?"}
+       * @default ""
+       * @since 4.1.0
+       */
+      /**
+       * A type of user assistance text. User assistance text is used to provide
+       * guidance to help the user understand what data to enter or select.
+       * <p> In the Redwood theme for clarity only one user assistance text shows to the user.
+       *  The precedence rules are:
+       * <ul>
+       * <li>help.instruction shows;</li>
+       * <li>if no help.instruction, then validator hint shows;</li>
+       * <li>if no help.instruction or validator hint, then help-hints.definition shows;</li>
+       * <li>if no help.instruction, validator hint, or help-hints.definition, then converter hint shows.</li>
+       * <li>help-hints.source always shows along side the above.</li>
+       * </ul>
+       * </p>
+       * <p>In the Redwood theme, by default all user assistance text shows inline.
+       * For input components, it shows when the field takes focus. In other components
+       * it shows all the time. See the user-assistance-density property for other ways
+       * the user assistance text can render.
+       * <p>
+       *  How is help.instruction better than the html 'title' attribute?
+       * The html 'title' attribute only shows up as a tooltip on mouse over, not on keyboard and not in a mobile
+       * device. So the html 'title' would only be for text that is not important enough to show all users, or
+       * for text that you show the users in another way as well, like in the label.
+       * Also you cannot theme the native browser's title window like you can the JET
+       * notewindow, so low vision users may have a hard time seeing the 'title' window.
+       * For these reasons, the JET EditableValue components do not use the HTML's 'title'
+       * attribute and instead use the help.instruction attribute.
+       * </p>
+       *
+       * <p>
+       * To include formatted text in the help.instruction, format the string using html tags.
+       * The allowed html tags are: span, b, i, em, br, hr, li, ol, ul, p, small, pre.
+       * For example the
+       * help.instruction might look like:
+       * <pre class="prettyprint"><code>&lt;oj-some-element help.instruction="&lt;html>Enter &lt;b>at least&lt;/b> 6 characters&lt;/html>">&lt;/oj-some-element></code></pre>
+       * If you use formatted text, it should be accessible
+       * and make sense to the user if formatting wasn't there.
+       *
+       * @ojshortdesc Represents advisory information for the component, such as would be appropriate for a tooltip.
+       * @expose
+       * @access public
+       * @instance
+       * @name help.instruction
+       * @ojtranslatable
+       * @default ""
+       * @memberof! oj.ojDatePicker
+       * @ojdeprecated {since: '17.0.0', description: "The oj-date-picker is used internally by the input date component and is not meant to display messages, be labelled, or be in a form layout by itself. Per the Redwood UX specification, the oj-date-picker is not intended to be a form component."}
+       * @type {string=}
+       * @since 4.0.0
+       */
+      /**
+       * Represents a hint for rendering a label on the component.
+       * <p>This is used in combination with the <a href="#labelEdge">label-edge</a> attribute to control how the label should be rendered.</p>
+       *
+       * <p>
+       * When label-edge is "provided", it gives a hint to oj-form-layout parent element to create an oj-label element for the component.
+       * When the <code class="prettyprint">label-hint</code> attribute changes, oj-form-layout element refreshes to
+       * display the updated label information.
+       * </p>
+       * <p>
+       * When label-edge is "inside", it gives a hint to the component itself to render a label.
+       * </p>
+       * <p>
+       * When label-edge is "none", and if the component has no labelled-by, aria-label, or aria-labelledby attribute, the label-hint value will be used as the aria-label.
+       * </p>
+       *
+       * @ojshortdesc Represents a hint for oj-form-layout element to render a label on the editable component.
+       * @expose
+       * @access public
+       * @instance
+       * @name labelHint
+       * @ojtranslatable
+       * @default ""
+       * @memberof! oj.ojDatePicker
+       * @ojdeprecated {since: '17.0.0', description: "The oj-date-picker is used internally by the input date component and is not meant to display messages, be labelled, or be in a form layout by itself. Per the Redwood UX specification, the oj-date-picker is not intended to be a form component."}
+       * @type {string}
+       * @since 4.1.0
+       */
+      /**
+       * Specifies how the label of the component is created when the <code class="prettyprint">label-hint</code> attribute is set on the component.
+       * <p>The default value varies by theme, and it works well for the theme in most cases.
+       *  If the component is in an oj-form-layout, the label-edge attribute could come from the oj-form-layout's label-edge attribute.
+       * The oj-form-layout component uses the <a href="MetadataTypes.html#PropertyBinding">MetadataTypes.PropertyBinding</a>
+       * <code class="prettyprint">provide</code> property to provide and uses the <a href="MetadataTypes.html#ProvideProperty">MetadataTypes.ProvideProperty</a>
+       * <code class="prettyprint">transform</code> property to transform its <code class="prettyprint">label-edge</code>
+       * attribute to any descendent components that are configured to consume it.
+       * For example, if the oj-form-layout's label-edge attribute is set to "top" or "start", and a descendent form component does
+       * not have its label-edge attribute set, the form component's label-edge will be the transformed value "provided".</p>
+       * @ojshortdesc Defines how the label of a component is created. See the Help documentation for more information.
+       * @access public
+       * @expose
+       * @name labelEdge
+       * @instance
+       * @type {string}
+       * @ojsignature {target: "Type", value: "'inside'|'none'|'provided'",  jsdocOverride: true}
+       * @memberof! oj.ojDatePicker
+       * @ojdeprecated {since: '17.0.0', description: "The oj-date-picker is used internally by the input date component and is not meant to display messages, be labelled, or be in a form layout by itself. Per the Redwood UX specification, the oj-date-picker is not intended to be a form component."}
+       * @ojvalue {string} "inside" The component creates the label using the <code class="prettyprint">label-hint</code> attribute.
+       * <p>For text input components (such as oj-input-text), the label floats over the input element but moves up on focus or when the component has a value.</p>
+       * <p>For non-text input components (such as oj-checkboxset), the label is created at the top of the component and doesn't move.</p>
+       * @ojvalue {string} "none" The component will not have a label, regardless of whether it's in an oj-form-layout or not.
+       * <p>If the component has a <code class="prettyprint">label-hint</code> attribute but no labelled-by, aria-label, or aria-labelledby attribute, the label-hint value will be used as the aria-label.</p>
+       * <p>Note that if the component already has an external label, "none" should not be specified and "provided" should be used instead.
+       * Otherwise it may end up with conflicting label information.</p>
+       * @ojvalue {string} "provided" Label is provided by the parent if the parent is an oj-form-layout.
+       * <p>oj-form-layout provides the label using the label-hint from the form control and the <a href="oj.ojFormLayout.html#labelEdge">label-edge</a> from oj-form-layout.</p>
+       * <p>If there is no oj-form-layout, use an oj-label.</p>
+       * @since 8.0.0
+       */
+      /**
+       * <p>
+       * Specifies the density of the form component's user assistance presentation.
+       * It can be shown inline with reserved rows to prevent reflow if
+       * a user assistance text shows up, inline without reserved rows that would reflow if
+       * a user assistance text shows up,
+       * or it can be shown compactly in a popup instead.</p>
+       * <p>
+       * The default value is 'reflow' when the form component is not a descendent of an oj-form-layout
+       * component. When the form component is a descendent of an oj-form-layout, the default value comes from the
+       * oj-form-layout's <code class="prettyprint">user-assistance-density</code> attribute value.
+       * </p>
+       * <p>
+       * The oj-form-layout component uses the
+       * <a href="MetadataTypes.html#PropertyBinding">MetadataTypes.PropertyBinding</a>
+       * <code class="prettyprint">provide</code> property to provide its
+       * <code class="prettyprint">user-assistance-density</code>
+       * attribute value to be consumed by descendent components.
+       * The form components are configured to consume the
+       * <code class="prettyprint">user-assistance-density</code> property if an
+       * ancestor provides it and it is not explicitly set on the form component.
+       * Example, oj-form-layout defaults user-assistance-density='efficient', so all its
+       * form components descendents will have user-assistance-density='efficient' by default.
+       * </p>
+       * @ojshortdesc Specifies the density of the form component's user assistance presentation.
+       * @access public
+       * @expose
+       * @name userAssistanceDensity
+       * @ojunsupportedthemes ["Alta"]
+       * @default "reflow"
+       * @instance
+       * @type {string}
+       * @ojsignature {target: "Type", value: "'reflow'|'efficient'|'compact'",  jsdocOverride: true}
+       * @memberof oj.ojDatePicker
+       * @ojdeprecated {since: '17.0.0', description: "The oj-date-picker is used internally by the input date component and is not meant to display messages, be labelled, or be in a form layout by itself. Per the Redwood UX specification, the oj-date-picker is not intended to be a form component."}
+       * @ojvalue {string} "reflow" Messages, help, hints, and required are all shown inline under the field with no reserved space.
+       * @ojvalue {string} "efficient" Messages, help, hints, and required are all shown inline under the field with reserved space.
+       * @ojvalue {string} "compact" Messages, help, hints, and required will not be shown inline; they will show in a mode that keeps the screen more compact, like
+       * a popup for the messages, and a required icon to indicate Required.
+       * @since 9.0.0
+       */
+      /**
+       * List of messages an app would add to the component when it has business/custom validation
+       * errors that it wants the component to show. This allows the app to perform further validation
+       * before sending data to the server. When this option is set the message shows to the
+       * user right away. To clear the custom message, set <code class="prettyprint">messagesCustom</code>
+       * back to an empty array.<br/>
+       * <p>Each message in the array is an object that duck types oj.Message.
+       * See {@link Message} for details.
+       * message detail text can include formatted HTML text, whereas
+       * hints and message summary text cannot. If you use formatted text, it should be accessible
+       * and make sense to the user if formatting wasn't there.
+       * The allowed html tags are: span, b, i, em, br, hr, li, ol, ul, p, small, pre.
+       * To format the message detail, you could do this:
+       * <pre class="prettyprint"><code>&lt;html>Enter &lt;b>at least&lt;/b> 6 characters&lt;/html></code></pre>
+       * </p>
+       * <p>
+       * See the <a href="#validation-section">Validation and Messages</a> section
+       * for details on when the component clears <code class="prettyprint">messagesCustom</code>;
+       * for example, when full validation is run.
+       * </p>
+       * <p>In the Redwood theme, the Message summary is not displayed to the user, so make sure to have a Message detail
+       * set in your Message object.
+       * </p>
+       *
+       * @ojshortdesc A list of messages added by an application to the component. See the Help documentation for more information.
+       * @expose
+       * @name messagesCustom
+       * @access public
+       * @instance
+       * @memberof oj.ojDatePicker
+       * @ojdeprecated {since: '17.0.0', description: "The oj-date-picker is used internally by the input date component and is not meant to display messages, be labelled, or be in a form layout by itself. Per the Redwood UX specification, the oj-date-picker is not intended to be a form component."}
+       * @default []
+       * @type {Array.<Object>}
+       * @ojsignature {target: "Type", value: "Array<oj.Message>"}
+       * @since 0.7.0
+       * @ojwriteback
+       */
+      /**
+       * <p>
+       * The oj-label sets the labelledBy property programmatically on the form component
+       * to make it easy for the form component to find its oj-label component (a
+       * document.getElementById call.)
+       * </p>
+       * <p>
+       * The application developer should use the 'for'/'id api
+       * to link the oj-label with the form component;
+       * the 'for' on the oj-label to point to the 'id' on the input form component.
+       * This is the most performant way for the oj-label to find its form component.
+       * </p>
+       *
+       * @expose
+       * @ojshortdesc The oj-label sets the labelledBy property programmatically on the form component. See the Help documentation for more information.
+       * @type {string|null}
+       * @default null
+       * @public
+       * @instance
+       * @since 7.0.0
+       * @memberof oj.ojDatePicker
+       * @name labelledBy
+       * @ojdeprecated {since: '17.0.0', description: "The oj-date-picker is used internally by the input date component and is not meant to display messages, be labelled, or be in a form layout by itself. Per the Redwood UX specification, the oj-date-picker is not intended to be a form component."}
+       */
+      /**
+       * <p>
+       * The oj-label sets the labelledBy property programmatically on the form component
+       * to make it easy for the form component to find its oj-label component (a
+       * document.getElementById call.)
+       * </p>
+       * <p>
+       * The application developer should use the 'for'/'id api
+       * to link the oj-label with the form component;
+       * the 'for' on the oj-label to point to the 'id' on the input form component.
+       * This is the most performant way for the oj-label to find its form component.
+       * </p>
+       *
+       * @example <caption>Initialize component with <code class="prettyprint">for</code> attribute:</caption>
+       * &lt;oj-label for="textId">Name:&lt;/oj-label>
+       * &lt;oj-input-text id="textId">
+       * &lt;/oj-input-text>
+       * // ojLabel then writes the labelled-by attribute on the oj-input-text.
+       * &lt;oj-label id="labelId" for="textId">Name:&lt;/oj-label>
+       * &lt;oj-input-text id="textId" labelled-by"labelId">
+       * &lt;/oj-input-text>
+       *
+       * @example <caption>Get or set the <code class="prettyprint">labelledBy</code> property after initialization:</caption>
+       * // getter
+       * var labelledBy = myComp.labelledBy;
+       *
+       * // setter
+       * myComp.labelledBy = "labelId";
+       *
+       * @name labelledBy
+       * @expose
+       * @ojshortdesc The oj-label sets the labelledBy property programmatically on the form component. See the Help documentation for more information.
+       * @type {string|null}
+       * @default null
+       * @public
+       * @instance
+       * @since 7.0.0
+       * @memberof oj.ojInputDate
+       * @ojdeprecated {since: '17.0.0', description: 'This is an internal API and is not supported in the Redwood UX specification.'}
+       */
+      /**
+       * The placeholder text to set on the element.
+       *
+       * @example <caption>Initialize the component with the <code class="prettyprint">placeholder</code> attribute:</caption>
+       * &lt;oj-some-element placeholder="User Name">&lt;/oj-some-element>
+       *
+       * @example <caption>Get or set the <code class="prettyprint">placeholder</code> property after initialization:</caption>
+       * // getter
+       * var myPh = myComp.placeholder;
+       *
+       * // setter
+       * myComp.placeholder = myPlaceholder;
+       *
+       * If the attribute is not set and if a converter is set then the
+       * converter hint is used. See displayOptions for details.
+       *
+       *
+       * @expose
+       * @access public
+       * @instance
+       * @memberof! oj.ojDatePicker
+       * @name placeholder
+       * @ojdeprecated {since: '17.0.0', description: "oj-date-picker doesn't have a text input, so this was never needed."}
+       * @type {string}
+       * @ojtranslatable
+       */
+      /**
+       * readonlyUserAssistanceShown is private - messagesCustom is a deprecated UI for this component so readonlyUserAssistanceShown serves no purpose.
+       *
+       * Specifies which user assistance types should be shown when the component is readonly.
+       *
+       * @private
+       * @name readonlyUserAssistanceShown
+       * @instance
+       * @memberof oj.ojDatePicker
+       * @default 'none'
+       * @type {string}
+       * @ojvalue {string} 'none' no user assistance is shown when the component is readonly
+       * @ojvalue {string} 'confirmationAndInfoMessages' messagesCustom messages of severity 'confirmation' and 'info' are shown when the component is readonly. Other severities will be filtered out and an info log message will be logged to the console.
+       * @since 17.1.0
+       */
+      /**
+       * The placeholder text to set on the element.
+       *
+       * @example <caption>Initialize the component with the <code class="prettyprint">placeholder</code> attribute:</caption>
+       * &lt;oj-some-element placeholder="User Name">&lt;/oj-some-element>
+       *
+       * @example <caption>Get or set the <code class="prettyprint">placeholder</code> property after initialization:</caption>
+       * // getter
+       * var myPh = myComp.placeholder;
+       *
+       * // setter
+       * myComp.placeholder = myPlaceholder;
+       *
+       * If the attribute is not set and if a converter is set then the
+       * converter hint is used. See displayOptions for details.
+       *
+       *
+       * @expose
+       * @access public
+       * @instance
+       * @memberof! oj.ojInputDate
+       * @name placeholder
+       * @type {string}
+       * @ojtranslatable
+       * @ojdeprecated {since: '17.0.0', description: "The date field contains mask segments instead of a general input, so placeholder is not supported."}
+       */
+      /**
+       * <p>
+       * This property set to <code class="prettyprint">false</code> implies that a value is not required to be provided by the user.
+       * This is the default.
+       * This property set to <code class="prettyprint">true</code> implies that a value is required to be provided by the user.
+       * </p>
+       * <p>
+       * In the Redwood theme, by default, a Required text is rendered inline when the field is empty.
+       * If user-assistance-density is 'compact', it will show on the label as an icon.
+       * </p>
+       * <p>The Required error text is based on Redwood UX designs, and it is not recommended that
+       * it be changed.
+       * To override the required error message,
+       * use the <code class="prettyprint">translations.required</code> attribute.
+       * The component's label text is passed in as a token {label} and can be used in the message detail.
+       * </p>
+       * <p>When required is set to true, an implicit
+       * required validator is created, i.e.,
+       * <code class="prettyprint">new RequiredValidator()</code>. The required validator is the only
+       * validator to run during initial render, and its error is not shown to the user at this time;
+       * this is called deferred validation. The required validator also runs during normal validation;
+       * this is when the errors are shown to the user.
+       * See the <a href="#validation-section">Validation and Messaging</a> section for details.
+       * </p>
+       * <p>
+       * When the <code class="prettyprint">required</code> property changes due to programmatic intervention,
+       * the component may clear component messages and run validation, based on the current state it's in. </br>
+       *
+       * <h4>Running Validation when required property changes</h4>
+       * <ul>
+       * <li>if component is valid when required is set to true, then it runs deferred validation on
+       * the value property. If the field is empty, the valid state is invalidHidden. No errors are
+       * shown to the user.
+       * </li>
+       * <li>if component is invalid and has deferred messages when required is set to false, then
+       * component messages are cleared (messages-custom messages are not cleared)
+       * but no deferred validation is run because required is false.
+       * </li>
+       * <li>if component is invalid and currently showing invalid messages when required is set, then
+       * component messages are cleared and normal validation is run using the current display value.
+       * <ul>
+       *   <li>if there are validation errors, then <code class="prettyprint">value</code>
+       *   property is not updated and the error is shown.
+       *   </li>
+       *   <li>if no errors result from the validation, the <code class="prettyprint">value</code>
+       *   property is updated; page author can listen to the <code class="prettyprint">valueChanged</code>
+       *   event on the component to clear custom errors.</li>
+       * </ul>
+       * </li>
+       * </ul>
+       *
+       * <h4>Clearing Messages when required property changes</h4>
+       * <ul>
+       * <li>Only messages created by the component, like validation messages, are cleared when the required property changes.</li>
+       * <li><code class="prettyprint">messagesCustom</code> property is not cleared.</li>
+       * </ul>
+       *
+       * </p>
+       *
+       * @expose
+       * @access public
+       * @instance
+       * @memberof oj.ojDatePicker
+       * @ojdeprecated {since: '17.0.0', description: "The oj-date-picker is used internally by the input date component and is not meant to display messages, be labelled, or be in a form layout by itself. Per the Redwood UX specification, the oj-date-picker is not intended to be a form component."}
+       * @name required
+       * @ojshortdesc Specifies whether the component is required or optional. See the Help documentation for more information.
+       * @type {boolean}
+       * @default false
+       * @since 0.7.0
+       * @see #translations
+       */
+      /**
+       * List of validators, synchronous or asynchronous,
+       * used by component along with asynchronous validators from the deprecated async-validators option
+       * and the implicit component validators when performing validation. Each item is either an
+       * instance that duck types {@link oj.Validator} or {@link oj.AsyncValidator}.
+       * <p>
+       * Implicit validators are created by the element when certain attributes are present.
+       * For example, if the <code class="prettyprint">required</code> attribute
+       * is set, an implicit {@link oj.RequiredValidator} is created.
+       * At runtime when the component runs validation, it
+       * combines all the implicit validators with all the validators
+       * specified through this <code class="prettyprint">validators</code> attribute
+       * and the <code class="prettyprint">async-validators</code> attribute, and
+       * runs all of them.
+       * </p>
+       * <p>
+       * Hints exposed by validators are shown inline by default in the Redwood theme when the
+       * field has focus.
+       * In the Alta theme, validator hints are shown in a notewindow on focus,
+       * or as determined by the
+       * 'validatorHint' property set on the <code class="prettyprint">display-options</code>
+       * attribute.
+       * In either theme, you can turn off showing validator hints by using the
+       * 'validatorHint' property set to 'none' on the <code class="prettyprint">display-options</code>
+       * attribute.
+       * </p>
+       * <p>
+       * In the Redwood theme, only one hint shows at a time, so the precedence rules are:
+       * help.instruction shows; if no help.instruction then validator hints show;
+       * if none, then help-hints.definition shows; if none, then converter hint shows.
+       * help-hints.source always shows along with the other help or hint.
+       * </p>
+       *
+       * <p>
+       * When <code class="prettyprint">validators</code> property changes due to programmatic
+       * intervention, the component may decide to clear messages and run validation, based on the
+       * current state it is in. </br>
+       *
+       * <h4>Steps Performed Always</h4>
+       * <ul>
+       * <li>The cached list of validator instances are cleared and new validator hints is pushed to
+       * messaging. E.g., notewindow displays the new hint(s).
+       * </li>
+       * </ul>
+       *
+       * <h4>Running Validation</h4>
+       * <ul>
+       * <li>if component is valid when validators changes, component does nothing other than the
+       * steps it always performs.</li>
+       * <li>if component is invalid and is showing messages when
+       * <code class="prettyprint">validators</code> or
+       * <code class="prettyprint">async-validators</code> changes then all component messages
+       *  are cleared and full validation run using the display value on the component.
+       * <ul>
+       *   <li>if there are validation errors, then <code class="prettyprint">value</code>
+       *   property is not updated and the error is shown.
+       *   </li>
+       *   <li>if no errors result from the validation, the <code class="prettyprint">value</code>
+       *   property is updated; page author can listen to the <code class="prettyprint">valueChanged</code>
+       *   event to clear custom errors.</li>
+       * </ul>
+       * </li>
+       * <li>if component is invalid and has deferred messages when validators changes, it does
+       * nothing other than the steps it performs always.</li>
+       * </ul>
+       * </p>
+       *
+       * <h4>Clearing Messages</h4>
+       * <ul>
+       * <li>Only messages created by the component are cleared.</li>
+       * <li><code class="prettyprint">messagesCustom</code> property is not cleared.</li>
+       * </ul>
+       * </p>
+       *
+       * @expose
+       * @access public
+       * @instance
+       * @default []
+       * @memberof oj.ojDatePicker
+       * @name validators
+       * @ojshortdesc Specifies a list of synchronous validators for performing validation by the element. See the Help documentation for more information.
+       * @ojsignature  [{ target: "Type",
+       *       value: "Array<oj.Validator<string>|oj.AsyncValidator<string>>|null",
+       *       jsdocOverride: true},
+       * { target: "Type",
+       *       value: "Array<oj.Validator<string>|oj.AsyncValidator<string>|
+       *       oj.Validation.RegisteredValidator>|null",
+       *       consumedBy: 'tsdep'}]
+       * @ojdeprecated {since: '8.0.0', target: 'memberType', value: ['oj.Validation.RegisteredValidator'],
+       *                description: 'Defining a validator with an object literal with validator type and
+       *                  its options (aka JSON format) has been deprecated and does nothing. If needed, you can
+       *                  make the JSON format work again by importing the deprecated ojvalidation module you need,
+       *                  like ojvalidation-base.'}
+       * @ojdeprecated {since: '17.0.0', value: [''], description: "The oj-date-picker is used internally by the input date component and is not meant to display messages, be labelled, or be in a form layout by itself. Per the Redwood UX specification, the oj-date-picker is not intended to be a form component."}
+       * @type {Array.<Object>}
+       */
+
+      /**
+       * Determines if keyboard entry of the text is allowed.
+       * When the datepicker is inline, the only supported value is "disabled".
+       *
+       * @expose
+       * @instance
+       * @memberof! oj.ojDatePicker
+       * @name keyboardEdit
+       * @ojtsnarrowedtype
+       * @type {string}
+       * @ojvalue {string} "disabled" Changing the date can only be done with the picker.
+       * @default "disabled"
+       * @ojdeprecated {since: '17.0.0', description: "This was never intended for oj-date-picker."}
+       */
+      /**
+       * <p>
+       * The current valid state of the component. It is evaluated on initial render.
+       * It is re-evaluated
+       * <ul>
+       *   <li>after each validator (validators or async-validators) is run (full or deferred)</li>
+       *   <li>when messagesCustom is updated,
+       *   since messagesCustom can be added by the app developer any time.</li>
+       *   <li>when showMessages() is called. Since showMessages() moves the
+       *   hidden messages into messages shown,
+       *   if the valid state was "invalidHidden" then it would become "invalidShown".</li>
+       *   <li>when the required property has changed. If a component is empty and has required
+       *   set, the valid state may be "invalidHidden" (if no invalid messages are being shown as well).
+       *   If required property is removed, the valid state would change to "valid".</li>
+       * </ul>
+       * </p>
+       * <p>
+       *  Note: New valid states may be added to the list of valid values in future releases.
+       *  Any new values will start with "invalid"
+       *  if it is an invalid state, "pending" if it is pending state,
+       *  and "valid" if it is a valid state.
+       * </p>
+       * @ojshortdesc The validity state of the component
+       * @expose
+       * @access public
+       * @instance
+       * @type {string}
+       * @name valid
+       * @ojvalue {string} "valid" The component is valid
+       * @ojvalue {string} "pending" The component is waiting for the validation state to be determined.
+       * The "pending" state is set at the start of the convert/validate process.
+       * @ojvalue {string} "invalidHidden" The component has invalid messages hidden
+       *    and no invalid messages showing. An invalid message is one with severity "error" or higher.
+       * @ojvalue {string} "invalidShown" The component has invalid messages showing.
+       *  An invalid message is one with severity "error" or higher.
+       * @ojwriteback
+       * @readonly
+       * @memberof oj.ojDatePicker
+       * @ojdeprecated {since: '17.0.0', description: "The oj-date-picker is used internally by the input date component and is not meant to be validated, display messages, be labelled, or be in a form layout by itself. Per the Redwood UX specification, the oj-date-picker is not intended to be a form component."}
+       * @since 4.2.0
+       *
+       */
+      /**
+       * Form component display options.
+       * @expose
+       * @memberof oj.ojDatePicker
+       * @name displayOptions
+       * @ojdeprecated {since: '17.0.0', description: "The oj-date-picker is used internally by the input date component and is not meant to display messages, be labelled, or be in a form layout by itself. Per the Redwood UX specification, the oj-date-picker is not intended to be a form component."}
+       * @instance
+       * @public
+       * @type {Object}
+       * @since 0.7.0
+       */
+      /**
+       * Display options for auxiliary converter hint text. The supported attribute values are theme dependent.
+       * <p>
+       * In the Redwood theme, this attribute determines whether or not the converter hint should be displayed.
+       * The supported values are 'display' and 'none'.
+       * If you don't want to show the converter hint, set display-options.converter-hint to 'none'.
+       * It defaults to 'display'.
+       * To control where the hints display, e.g., inline or in a notewindow,
+       * then use the <a href="#userAssistanceDensity">user-assistance-density</a>
+       * attribute.
+       * </p>
+       *
+       * @access public
+       * @ojsharedmembers
+       * @expose
+       * @name displayOptions.converterHint
+       * @ojshortdesc Display options for auxiliary converter hint text that determines whether it should be displayed.
+       * @instance
+       * @type {(Array<string> | string)=}
+       * @ojsignature [{target: "Type", value: "'display'|'none'", jsdocOverride: true},
+       *               {target: "Type", value: "Array<'placeholder'|'notewindow'|'none'>|'placeholder'|'notewindow'|'display'|'none'", consumedBy: 'tsdep'}]
+       * @ojdeprecated {since: "9.1.0", target: "memberType", value: ["Array<'placeholder'|'notewindow'|'none'>", "'placeholder'", "'notewindow'"],
+       *                description: "These types are no longer supported. They are used for the Alta theme only. The Redwood theme uses 'display'|'none' and the user-assistance-density attribute."}
+       * @ojdeprecated {since: '17.0.0', value: [''], description: "The oj-date-picker is used internally by the input date component and is not meant to be validated, display messages, be labelled, or be in a form layout by itself. Per the Redwood UX specification, the oj-date-picker is not intended to be a form component."}
+       * @memberof! oj.ojDatePicker
+       * @since 0.7
+       */
+      /**
+       * Display options for auxiliary message text. The supported attribute values are theme dependent.
+       * <p>
+       * In the Redwood theme, this attribute determines whether or not the messages should be displayed.
+       * The supported values are 'display' and 'none'.
+       * If you don't want to show messages, set display-options.messages to 'none'.
+       * It defaults to 'display'.
+       * To control where the messages display, e.g., inline or in a notewindow,
+       * then use the <a href="#userAssistanceDensity">user-assistance-density</a>
+       * attribute.
+       * </p>
+       *
+       * @ojshortdesc Display options for auxiliary message text that determines whether it should be displayed.
+       * @access public
+       * @ojsharedmembers
+       * @expose
+       * @name displayOptions.messages
+       * @instance
+       * @type {(Array<string> | string)=}
+       * @ojsignature [{target: "Type", value: "'display'|'none'", jsdocOverride: true},
+       *               {target: "Type", value: "Array<'inline'|'notewindow'|'none'>|'inline'|'notewindow'|'display'|'none'", consumedBy: 'tsdep'}]
+       * @ojdeprecated {since: "9.1.0", target: "memberType", value: ["Array<'inline'|'notewindow'|'none'>", "'inline'", "'notewindow'"],
+       *                description: "These types are no longer supported. They are used for the Alta theme only. The Redwood theme uses 'display'|'none' and the user-assistance-density attribute."}
+       * @ojdeprecated {since: '17.0.0', value: [''], description: "The oj-date-picker is used internally by the input date component and is not meant to be validated, display messages, be labelled, or be in a form layout by itself. Per the Redwood UX specification, the oj-date-picker is not intended to be a form component."}
+       * @memberof! oj.ojDatePicker
+       * @since 0.7
+       */
+      /**
+       * Display options for auxiliary validator hint text. The supported attribute values are theme dependent.
+       * <p>
+       * In the Redwood theme, this attribute determines whether or not the validator hint should be displayed.
+       * The supported values are 'display' and 'none'.
+       * If you don't want to show the validator hint, set display-options.validator-hint to 'none'.
+       * It defaults to 'display'.
+       * To control where the hints display, e.g., inline or in a notewindow,
+       * then use the <a href="#userAssistanceDensity">user-assistance-density</a>
+       * attribute.
+       * </p>
+       *
+       * @ojshortdesc Display options for auxiliary validator hint text that determines whether it should be displayed.
+       * @access public
+       * @ojsharedmembers
+       * @expose
+       * @name displayOptions.validatorHint
+       * @instance
+       * @type {(Array<string> | string)=}
+       * @ojsignature [{target: "Type", value: "'display'|'none'", jsdocOverride: true},
+       *               {target: "Type", value: "Array<'notewindow'|'none'>|'notewindow'|'display'|'none'",  consumedBy: 'tsdep'}]
+       * @ojdeprecated {since: "9.1.0", target: "memberType", value: ["Array<'notewindow'|'none'>", "'notewindow'"],
+       *                description: "These types are no longer supported. They are used for the Alta theme only. The Redwood theme uses 'display'|'none' and the user-assistance-density attribute."}
+       * @ojdeprecated {since: '17.0.0', value: [''], description: "The oj-date-picker is used internally by the input date component and is not meant to be validated, display messages, be labelled, or be in a form layout by itself. Per the Redwood UX specification, the oj-date-picker is not intended to be a form component."}
+       * @memberof! oj.ojDatePicker
+       * @since 0.7
+       */
+      /**
+       * Display options for auxiliary content that determines whether or not it should be displayed.
+       *
+       * <p>
+       * In the Redwood theme, the sub-properties of the display-options configure whether or not the
+       * types of information is shown. The values of these sub-properties are either
+       * 'display' or 'none'.
+       * </p>
+       * <p>
+       * When display-options changes due to programmatic intervention, the component updates its
+       * display to reflect the updated choices. For example, if you don't want to show the converter
+       * hint, set the display-options.converter-hint to 'none'.
+       * </p>
+       * <p>
+       * A side note: help.instruction and message detail text can include formatted HTML text, whereas
+       * hints and message summary text cannot. If you use formatted text, it should be accessible
+       * and make sense to the user if formatting wasn't there.
+       * The allowed html tags are: span, b, i, em, br, hr, li, ol, ul, p, small, pre.
+       * To format the help.instruction, you could do this:
+       * <pre class="prettyprint"><code>&lt;html>Enter &lt;b>at least&lt;/b> 6 characters&lt;/html></code></pre>
+       * </p>
+       * @ojshortdesc Display options for auxiliary content that determines whether or not it should be displayed.
+       * @expose
+       * @member
+       * @name displayOptions
+       * @ojsharedmembers
+       * @access public
+       * @instance
+       * @type {Object=}
+       * @memberof oj.ojInputDate
+       * @since 0.7
+       */
+      /**
+       * Display options for auxiliary converter hint text. The supported attribute values are theme dependent.
+       * <p>
+       * In the Redwood theme, this attribute determines whether or not the converter hint should be displayed.
+       * The supported values are 'display' and 'none'.
+       * If you don't want to show the converter hint, set display-options.converter-hint to 'none'.
+       * It defaults to 'display'.
+       * To control where the hints display, e.g., inline or in a notewindow,
+       * then use the <a href="#userAssistanceDensity">user-assistance-density</a>
+       * attribute.
+       * </p>
+       *
+       * @access public
+       * @ojsharedmembers
+       * @expose
+       * @name displayOptions.converterHint
+       * @ojshortdesc Display options for auxiliary converter hint text that determines whether it should be displayed.
+       * @instance
+       * @type {(Array<string> | string)=}
+       * @ojsignature [{target: "Type", value: "'display'|'none'", jsdocOverride: true},
+       *               {target: "Type", value: "Array<'placeholder'|'notewindow'|'none'>|'placeholder'|'notewindow'|'display'|'none'", consumedBy: 'tsdep'}]
+       * @ojdeprecated {since: "9.1.0", target: "memberType", value: ["Array<'placeholder'|'notewindow'|'none'>", "'placeholder'", "'notewindow'"],
+       *                description: "These types are no longer supported. They are used for the Alta theme only. The Redwood theme uses 'display'|'none' and the user-assistance-density attribute."}
+       * @ojdeprecated {since: '17.0.0', value: [''], description: "Please use help-hints instead."}
+       * @memberof! oj.ojInputDate
+       * @since 0.7
+       */
+      /**
+       * Display options for auxiliary help instruction text that determines where it should be displayed
+       * in relation to the component.
+       * @ojshortdesc Display options for auxiliary help instruction text that determines whether it should be displayed.
+       * @access public
+       * @ojsharedmembers
+       * @expose
+       * @name displayOptions.helpInstruction
+       * @instance
+       * @type {(Array<string> | string)=}
+       * @ojsignature {target: "Type", value: "Array<'notewindow'|'none'>|'notewindow'|'none'", jsdocOverride: true}
+       * @memberof! oj.ojInputDate
+       * @ojdeprecated [{since: '9.0.0', description: 'If you want none, remove help-instruction attribute.'}]
+       * @default ['notewindow']
+       * @since 0.7
+       */
+      /**
+       * Display options for auxiliary message text. The supported attribute values are theme dependent.
+       * <p>
+       * In the Redwood theme, this attribute determines whether or not the messages should be displayed.
+       * The supported values are 'display' and 'none'.
+       * If you don't want to show messages, set display-options.messages to 'none'.
+       * It defaults to 'display'.
+       * To control where the messages display, e.g., inline or in a notewindow,
+       * then use the <a href="#userAssistanceDensity">user-assistance-density</a>
+       * attribute.
+       * </p>
+       *
+       * @ojshortdesc Display options for auxiliary message text that determines whether it should be displayed.
+       * @access public
+       * @ojsharedmembers
+       * @expose
+       * @name displayOptions.messages
+       * @instance
+       * @type {(Array<string> | string)=}
+       * @ojsignature [{target: "Type", value: "'display'|'none'", jsdocOverride: true},
+       *               {target: "Type", value: "Array<'inline'|'notewindow'|'none'>|'inline'|'notewindow'|'display'|'none'", consumedBy: 'tsdep'}]
+       * @ojdeprecated {since: "9.1.0", target: "memberType", value: ["Array<'inline'|'notewindow'|'none'>", "'inline'", "'notewindow'"],
+       *                description: "These types are no longer supported. They are used for the Alta theme only. The Redwood theme uses 'display'|'none' and the user-assistance-density attribute."}
+       * @memberof! oj.ojInputDate
+       * @since 0.7
+       */
+      /**
+       * Display options for auxiliary validator hint text. The supported attribute values are theme dependent.
+       * <p>
+       * In the Redwood theme, this attribute determines whether or not the validator hint should be displayed.
+       * The supported values are 'display' and 'none'.
+       * If you don't want to show the validator hint, set display-options.validator-hint to 'none'.
+       * It defaults to 'display'.
+       * To control where the hints display, e.g., inline or in a notewindow,
+       * then use the <a href="#userAssistanceDensity">user-assistance-density</a>
+       * attribute.
+       * </p>
+       *
+       * @ojshortdesc Display options for auxiliary validator hint text that determines whether it should be displayed.
+       * @access public
+       * @ojsharedmembers
+       * @expose
+       * @name displayOptions.validatorHint
+       * @instance
+       * @type {(Array<string> | string)=}
+       * @ojsignature [{target: "Type", value: "'display'|'none'", jsdocOverride: true},
+       *               {target: "Type", value: "Array<'notewindow'|'none'>|'notewindow'|'display'|'none'",  consumedBy: 'tsdep'}]
+       * @ojdeprecated {since: "9.1.0", target: "memberType", value: ["Array<'notewindow'|'none'>", "'notewindow'"],
+       *                description: "These types are no longer supported. They are used for the Alta theme only. The Redwood theme uses 'display'|'none' and the user-assistance-density attribute."}
+       * @memberof! oj.ojInputDate
+       * @since 0.7
+       */
+      /**
+       * Determines if keyboard entry of the text is allowed.
+       * When disabled the picker must be used to select a date.
+       *
+       * Themes can override the default value.
+       *
+       * @expose
+       * @instance
+       * @memberof! oj.ojInputDate
+       * @ojshortdesc Determines if keyboard entry of the text is allowed. When disabled, the picker must be used to select the date. See the Help documentation for more information.
+       * @type {string}
+       * @ojvalue {string} "enabled"  Allow keyboard entry of the date.
+       * @ojvalue {string} "disabled" Changing the date can only be done with the picker.
+       * @default "enabled"
+       *
+       * @example <caption>Initialize the InputDate with the <code class="prettyprint">keyboard-edit</code> attribute specified:</caption>
+       * &lt;oj-input-date keyboard-edit='disabled'>&lt;/oj-input-date>
+       *
+       * @example <caption>Get or set the <code class="prettyprint">keyboardEdit</code> property after initialization:</caption>
+       * // getter
+       * var keyboardEdit = myInputDate.keyboardEdit;
+       *
+       * // setter
+       * myInputDate.keyboardEdit = 'disabled';
+       *
+       * @example <caption>Set the default in the theme (SCSS)</caption>
+       * $inputDateTimeKeyboardEditOptionDefault: disabled !default;
+       * @ojdeprecated {since: '17.0.0', description: 'This is not supported in the Redwood UX specification.'}
+       */
+      keyboardEdit: 'enabled',
+      /**
+       * @name autocomplete
+       * @ojshortdesc Dictates component's autocomplete state.
+       * @expose
+       * @type {"on"|"off"|string=}
+       * @default "on"
+       * @instance
+       * @ignore
+       * @since 4.0.0
+       * @memberof! oj.ojDatePicker
+       * @ojextension {_COPY_TO_INNER_ELEM: true}
+       */
+      /**
+       * Dictates component's autocomplete state.
+       * This attribute indicates whether the value of the control can be automatically
+       * completed by the browser. The common values are "on" and "off".
+       * <p>Since this attribute passes through to the input element
+       * unchanged, you can look at the html specs for detailed information for how browsers behave
+       * and what values besides "on" and "off" you can set. The html spec says the default is "on",
+       * so when autocomplete is not explicitly set, the browsers treat it as "on".
+       * </p>
+       * @see {@link https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input}
+       * @see {@link https://caniuse.com/#feat=input-autocomplete-onoff}
+       * @see {@link https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#autofilling-form-controls:-the-autocomplete-attribute}
+       *
+       * @example <caption>Initialize component with <code class="prettyprint">autocomplete</code> attribute:</caption>
+       * &lt;oj-some-element autocomplete="on">&lt;/oj-some-element>
+       *
+       * @example <caption>Get or set the <code class="prettyprint">autocomplete</code> property after initialization:</caption>
+       * // getter
+       * var ro = myComp.autocomplete;
+       *
+       * // setter
+       * myComp.autocomplete = "on";
+       * @name autocomplete
+       * @ojshortdesc Specifies a component's autocomplete state. See the Help documentation for more information.
+       * @expose
+       * @type {"on"|"off"|string=}
+       * @default "off"
+       * @instance
+       * @since 4.0.0
+       * @memberof oj.ojInputDate
+       * @ojextension {_COPY_TO_INNER_ELEM: true}
+       * @ojdeprecated {since: '17.0.0', description: 'The date field contains mask segments instead of a general input, so autocomplete is not supported.'}
+       */
+      autocomplete: 'off',
+      /**
+       * Autofocus is a Boolean that reflects the autofocus attribute, If it is set to true
+       * then the associated component  will get input focus when the page is loaded.
+       * Setting this property doesn't set the focus to the component:
+       * it tells the browser to focus to it when the element is inserted in the document.
+       *
+       * @example <caption>Initialize component with <code class="prettyprint">autofocus</code> attribute:</caption>
+       * &lt;oj-some-element autofocus>&lt;/oj-some-element>
+       *
+       * @example <caption>Get or set the <code class="prettyprint">autofocus</code> property after initialization:</caption>
+       * // getter
+       * var ro = myComp.autofocus;
+       *
+       * // setter
+       * myComp.autofocus = false;
+       *
+       * @expose
+       * @type {boolean}
+       * @alias autofocus
+       * @default false
+       * @instance
+       * @since 4.0.0
+       * @memberof oj.ojInputDate
+       * @name autofocus
+       * @ojshortdesc Specifies whether the component will get input focus when the page is loaded. See the Help documentation for more information.
+       * @ojextension {_COPY_TO_INNER_ELEM: true}
+       * @ojdeprecated {since: '17.0.0', description: 'This is not recommended for accessibility reasons.'}
+       */
+      /**
+       * The maximum selectable date, in ISO string format.
+       * <p>
+       * For ojDatePicker, this should be a local
+       * date and not contain a time portion in the ISO string so it can be compared with the value
+       * the user selects. value becomes a local date once the user interacts with the component.
+       * When set to null, there is no minimum.
+       * </p>
+       *
+       * @expose
+       * @instance
+       * @memberof! oj.ojDatePicker
+       * @name max
+       * @type {string|null}
+       * @ojformat date
+       * @default null
+       *
+       * @example <caption>Initialize the InputDate with the <code class="prettyprint">max</code> attribute specified:</caption>
+       * &lt;oj-date-picker max='2018-09-25'>&lt;/oj-date-picker>
+       *
+       * @example <caption>Get or set the <code class="prettyprint">max</code> property after initialization:</caption>
+       * // getter
+       * var maxValue = myInputDate.max;
+       *
+       * // setter
+       * myInputDate.max = '2018-09-25';
+       */
+      /**
+       * The maximum selectable date, in ISO string format. When set to null, there
+       * is no maximum. Since the value becomes a local date with no time once the
+       * user interacts with the component, min/max should be a local date with no time
+       * so they can be compared.
+       *
+       * @expose
+       * @instance
+       * @memberof! oj.ojInputDate
+       * @type {string|null}
+       * @ojformat date
+       * @default null
+       *
+       * @example <caption>Initialize the InputDate with the <code class="prettyprint">max</code> attribute specified:</caption>
+       * &lt;oj-input-date max='2018-09-25'>&lt;/oj-input-date>
+       *
+       * @example <caption>Get or set the <code class="prettyprint">max</code> property after initialization:</caption>
+       * // getter
+       * var maxValue = myInputDate.max;
+       *
+       * // setter
+       * myInputDate.max = '2018-09-25';
+       */
+      max: undefined,
+
+      /**
+       * The minimum selectable date, in ISO string format.
+       * <p> For ojDatePicker, this should be a local
+       * date and not contain a time portion in the ISO string so it can be compared with the value
+       * the user selects. value becomes a local date once the user interacts with the component.
+       * When set to null, there is no minimum.
+       * </p>
+       *
+       * @expose
+       * @instance
+       * @memberof! oj.ojDatePicker
+       * @name min
+       * @type {string|null}
+       * @ojformat date
+       * @default null
+       *
+       * @example <caption>Initialize the InputDate with the <code class="prettyprint">min</code> attribute specified:</caption>
+       * &lt;oj-date-picker min='2014-08-25'>&lt;/oj-date-picker>
+       *
+       * @example <caption>Get or set the <code class="prettyprint">min</code> property after initialization:</caption>
+       * // getter
+       * var minValue = myInputDate.min;
+       *
+       * // setter
+       * myInputDate.min = '2014-08-25';
+       */
+      /**
+       * The minimum selectable date, in ISO string format.
+       * <p>
+       * For oj-input-date, this should be a local
+       * date and not contain a time portion in the ISO string so it can be compared with the value
+       * the user selects. value becomes a local date once the user interacts with the component.
+       * When set to null, there is no minimum.
+       * </p>
+       *
+       * @expose
+       * @instance
+       * @memberof! oj.ojInputDate
+       * @type {string|null}
+       * @ojformat date
+       * @default null
+       *
+       * @example <caption>Initialize the InputDate with the <code class="prettyprint">min</code> attribute specified:</caption>
+       * &lt;oj-input-date min='2014-08-25'>&lt;/oj-input-date>
+       *
+       * @example <caption>Get or set the <code class="prettyprint">min</code> property after initialization:</caption>
+       * // getter
+       * var minValue = myInputDate.min;
+       *
+       * // setter
+       * myInputDate.min = '2014-08-25';
+       */
+      min: undefined,
+
+      /**
+       * <p>Attributes specified here will be set on the picker DOM element when it's launched.
+       * <p>The supported attribute is <code class="prettyprint">class</code>, which is appended to the picker's class, if any.
+       * Note: 1) pickerAttributes is not applied in the native theme.
+       * 2) setting this property after element creation has no effect.
+       *
+       * @property {string=} style
+       * @property {string=} class
+       *
+       * @example <caption>Initialize the datePicker specifying the class attribute to be set on the picker DOM element:</caption>
+       * myDatePicker.pickerAttributes = {
+       *   "class": "my-class"
+       * };
+       *
+       * @example <caption>Get the <code class="prettyprint">pickerAttributes</code> property, after initialization:</caption>
+       * // getter
+       * var attrs = myDatePicker.pickerAttributes;
+       *
+       * @name pickerAttributes
+       * @expose
+       * @memberof! oj.ojDatePicker
+       * @ojshortdesc Specifies attributes to be set on the picker DOM element when it is launched. See the Help documentation for more information.
+       * @instance
+       * @ojdeprecated {target: "property", for: "style", since: "7.0.0", description: "Style property of pickerAttribute violates the recommended <a href='https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy'>Content Security Policy</a> for JET which disallows <a href='https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/style-src'>inline styles</a>. Use class property instead. As of 11.0.0 this property is ignored and an error is logged."}
+       * @ojdeprecated {target: "property", for: "class", since: "17.0.0", description: "We are recommending not to change the Class property of pickerAttribute as it leads to an inconsistent UI."}
+       * @ojdeprecated {since: '17.0.0', description: "Changing the Class or Style property is not recommended, as it leads to an inconsistent UI."}
+       * @type {?Object}
+       * @default null
+       */
+      /**
+       * <p>Attributes specified here will be set on the picker DOM element when it's launched.
+       * <p>The supported attribute is <code class="prettyprint">class</code>, which is appended to the picker's class, if any.
+       * Note: 1) pickerAttributes is not applied in the native theme.
+       * 2) setting this property after element creation has no effect.
+       *
+       * @property {string=} style
+       * @property {string=} class
+       *
+       * @example <caption>Initialize the inputDate specifying the class attribute to be set on the picker DOM element:</caption>
+       * myInputDate.pickerAttributes = {
+       *   "class": "my-class"
+       * };
+       *
+       * @example <caption>Get the <code class="prettyprint">pickerAttributes</code> property, after initialization:</caption>
+       * // getter
+       * var inputDate = myInputDate.pickerAttributes;
+       *
+       * @expose
+       * @memberof! oj.ojInputDate
+       * @ojshortdesc Specifies attributes to be set on the picker DOM element when it is launched. See the Help documentation for more information.
+       * @instance
+       * @ojdeprecated {target: "property", for: "style", since: "7.0.0", description: "Style property of pickerAttribute violates the recommended <a href='https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy'>Content Security Policy</a> for JET which disallows <a href='https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/style-src'>inline styles</a>. Use class property instead. As of 11.0.0 this attribute is ignored and an error is logged."}
+       * @ojdeprecated {target: "property", for: "class", since: "17.0.0", description: "We are recommending not to change the Class property of pickerAttribute as it leads to an inconsistent UI."}
+       * @ojdeprecated {since: '17.0.0', description: "Changing the Class or Style property is not recommended, as it leads to an inconsistent UI."}
+       * @type {?Object}
+       * @default null
+       */
+      pickerAttributes: null,
+      /**
+       * <p>The  <code class="prettyprint">rawValue</code> is the read-only property for retrieving
+       * the current value from the input field in string form.
+       * <p>
+       * The <code class="prettyprint">rawValue</code> updates on the 'input' javascript event,
+       * so the <code class="prettyprint">rawValue</code> changes as the value of the input is changed.
+       * If the user types in '1,200' into the field, the rawValue will be '1', then '1,', then '1,2',
+       * ..., and finally '1,200'. Then when the user blurs or presses
+       * Enter the <code class="prettyprint">value</code> property gets converted and validated
+       * (if there are validators) and then gets updated if valid.
+       * </p>
+       * <p>This is a read-only attribute so page authors cannot set or change it directly.</p>
+       * @expose
+       * @access public
+       * @instance
+       * @memberof! oj.ojDatePicker
+       * @ojshortdesc Read-only property used for retrieving the current value from the input field in string form. See the Help documentation for more information.
+       * @ojdeprecated {since: '11.0.0', description: 'This property is deprecated because it was incorrectly exposed on oj-date-picker and not fully implemented.'}
+       * @type {string}
+       * @ojsignature {target: "Type", value: "string"}
+       * @since 1.2.0
+       * @readonly
+       * @ojwriteback
+       */
+      rawValue: undefined,
+      /**
+       * Allows applications to specify whether to render date picker in JET or
+       * render as a native picker control. In inline mode, the only value supported is "jet"</br>
+       *
+       * Note that the native renderMode will attempt to load a Cordova plugin that
+       * will launch the native picker. If the plugin is not found, the default JET
+       * picker will be used.</br>
+       *  With native renderMode, the functionality that is sacrificed compared to jet renderMode are:
+       *    <ul>
+       *      <li>Date picker cannot be themed</li>
+       *      <li>Accessibility is limited to what the native picker supports</li>
+       *      <li>pickerAttributes is not applied</li>
+       *      <li>Sub-IDs are not available</li>
+       *      <li>hide() function is no-op</li>
+       *      <li>translations sub properties pertaining to the picker is not available</li>
+       *      <li>All of the 'datepicker' sub-properties except 'showOn' are not available</li>
+       *    </ul>
+       *
+       * @expose
+       * @memberof! oj.ojDatePicker
+       * @instance
+       * @name renderMode
+       * @ojshortdesc Specifies whether to render the date picker in JET, or as a native picker control. See the Help documentation for more information.
+       * @ojtsnarrowedtype
+       * @type {string}
+       * @ojvalue {string} 'jet' Applications get full JET functionality.
+       * @ojvalue {string} 'native' Applications get the functionality of the native picker. Native picker is
+       *  not available when the picker is inline, defaults to 'jet' instead.</br></br>
+       * @default "jet"
+       *
+       * @ojdeprecated {since: '8.0.0', description: 'Support for "native" mode rendering is deprecated because JET promotes a consistent Oracle UX based upon the Redwood design system. As a result, the theme variable "$inputDateTimeRenderModeOptionDefault" is also deprecated.'}
+       *
+       * @example <caption>Initialize the InputDate with the <code class="prettyprint">render-mode</code> attribute specified:</caption>
+       * &lt;oj-date-picker render-mode='jet'>&lt;/oj-date-picker>
+       *
+       * @example <caption>Get or set the <code class="prettyprint">renderMode</code> property after initialization:</caption>
+       * // getter
+       * var renderMode = myInputDate.renderMode;
+       *
+       * // setter
+       * myInputDate.renderMode = 'jet';
+       *
+       * @example <caption>Set the default in the theme (SCSS)</caption>
+       * $inputDateTimeRenderModeOptionDefault: native !default;
+       */
+      /**
+       * Allows applications to specify whether to render date picker in JET or
+       * as a native picker control.</br>
+       *
+       * Note that the native renderMode will attempt to load a Cordova plugin that
+       * will launch the native picker. If the plugin is not found, the default JET
+       * picker will be used.</br>
+       *  With native renderMode, the functionality that is sacrificed compared to jet renderMode are:
+       *    <ul>
+       *      <li>Date picker cannot be themed</li>
+       *      <li>Accessibility is limited to what the native picker supports</li>
+       *      <li>pickerAttributes is not applied</li>
+       *      <li>Sub-IDs are not available</li>
+       *      <li>hide() function is no-op</li>
+       *      <li>translations sub properties pertaining to the picker is not available</li>
+       *      <li>All of the 'datepicker' sub-properties except 'showOn' are not available</li>
+       *    </ul>
+       *
+       * @expose
+       * @memberof! oj.ojInputDate
+       * @ojshortdesc Specifies whether to render the date picker in JET, or as a native picker control. See the Help documentation for more information.
+       * @instance
+       * @type {string}
+       * @ojvalue {string} 'jet' Applications get full JET functionality.
+       * @ojvalue {string} 'native' Applications get the functionality of the native picker. Native picker is
+       *  not available when the picker is inline, defaults to 'jet' instead.</br></br>
+       * @default "jet"
+       *
+       * @ojdeprecated {since: '8.0.0', description: 'Support for "native" mode rendering is deprecated because JET promotes a consistent Oracle UX based upon the Redwood design system. As a result, the theme variable "$inputDateTimeRenderModeOptionDefault" is also deprecated.'}
+       *
+       * @example <caption>Initialize the InputDate with the <code class="prettyprint">render-mode</code> attribute specified:</caption>
+       * &lt;oj-input-date render-mode='native'>&lt;/oj-input-date>
+       *
+       * @example <caption>Get or set the <code class="prettyprint">renderMode</code> property after initialization:</caption>
+       * // getter
+       * var renderMode = myInputDate.renderMode;
+       *
+       * // setter
+       * myInputDate.renderMode = 'native';
+       *
+       * @example <caption>Set the default in the theme (SCSS)</caption>
+       * $inputDateTimeRenderModeOptionDefault: native !default;
+       */
+      renderMode: 'jet',
+      /**
+       * Additional info to be used when rendering the day
+       *
+       * This should be a JavaScript Function reference which accepts as its argument the following JSON format
+       * {fullYear: Date.getFullYear(), month: Date.getMonth()+1, date: Date.getDate()}
+       *
+       * and returns null or JSON data of
+       * {disabled: true|false}
+       * <br/><br/>
+       * <p><b>Deprecated in 17.0.0:</b> We no longer support className or tooltip in the JSON data
+       * return value, as this does not match the Redwood UX specification. 'all' as the function
+       * return has no effect, so it too is deprecated.</p>
+       *
+       * @expose
+       * @instance
+       * @memberof! oj.ojInputDate
+       * @type {Function}
+       * @ojshortdesc Specifies a callback function used when rendering the day. See the Help documentation for more information.
+       * @ojsignature {target: "Type", value: "(param: oj.ojInputDate.DayFormatterInput)=> (null|'all'|oj.ojInputDate.DayFormatterOutput)"}
+       * @default null
+       */
+      dayFormatter: null,
+      /**
+       * <p>The today-time-zone attribute is used to compute today's date. It defaults to the user's system timezone.</p>
+       * <p>
+       * The only reason an application would set this property would be if they want the highlighted today cell to be in a different timezone
+       * than the user's system's timezone - for example, if the user has a preferred timezone that is not where they are physically working.
+       * For this use case, this property should be used instead of the converter property.
+       * </p>
+       * <p>If set, this property will take precedence over the converter timezone.</p>
+       *
+       * @expose
+       * @access public
+       * @instance
+       * @memberof oj.ojInputDate
+       * @type {string}
+       * @ojsignature {target: "Type", value: "string"}
+       * @ojshortdesc The today-time-zone attribute is used to compute today's date. It defaults to the user's system timezone.
+       */
+      todayTimeZone: undefined,
+      /**
+       * <p>
+       * The two-digit-year-start attribute defines the starting point of a 100-year period for interpreting two digit years.
+       * This property should be used instead of the converter property for this specific use case.
+       * </p>
+       * <p>
+       * During parsing, two digit years will be placed in the range from two-digit-year-start to two-digit-year-start + 100 years.
+       * The default value is 1950.
+       * </p>
+       * <p style='padding-left: 5px;'>
+       * Example: if two-digit-year-start is 1950, 10 is parsed as 2010<br/><br/>
+       * Example: if two-digit-year-start is 1900, 10 is parsed as 1910<br/><br/>
+       * Example: if two-digit-year-start is 1, 10 is parsed as 10
+       * </p>
+       * <p>
+       * This attribute ensures that when a user types in a two digit year, it is correctly interpreted within the specified 100-year range.
+       * </p>
+       *
+       * @expose
+       * @access public
+       * @instance
+       * @memberof oj.ojInputDate
+       * @type {number}
+       * @ojsignature {target: "Type", value: "number"}
+       * @ojshortdesc The two-digit-year-start attribute defines the starting point of a 100-year period for interpreting two digit years.
+       */
+      twoDigitYearStart: undefined
+      /**
+       * @ignore
+       * @name twoDigitYearStart
+       * @instance
+       * @memberof oj.ojDatePicker
+       */
+      /**
+       * Additional info to be used when rendering the day
+       *
+       * This should be in the following JSON format with the year, month, day based on Date.getFullYear(), Date.getMonth()+1, and Date.getDate():
+       * {year: {month: {day: {disabled: true|false, className: "additionalCSS", tooltip: 'Stuff to display'}}}
+       *
+       * There also exists a special '*' character which represents ALL within that field [i.e. * within year, represents for ALL year].
+       *
+       * Note that this property will override the value of the dayFormatter property. Setting both dayFormatter and dayMetaData properties is not supported.
+       *
+       * @expose
+       * @name dayMetaData
+       * @instance
+       * @memberof oj.ojInputDate
+       * @type {object}
+       * @ojshortdesc Specifies additional information to be used when rendering the day. See the Help documentation for more information.
+       * @default null
+       * @ojsignature [{target: "Type",
+       *                value: "{[key:string]: {[key:string]: {[key:string]: {disabled?: boolean, className?: string, tooltip?: string}}}}"}
+       *              ]
+       * @ojdeprecated {since: '17.0.0', description: "Use dayFormatter instead, as it is more flexible."}
+       * @example
+       * {2013: {11: {25: {disabled: true, className: 'holiday', tooltip: 'Stuff to display'}, 5: {disabled: true}}}}}
+       */
+
+      // DOCLETS
+      /**
+       * List of validators, synchronous or asynchronous,
+       * used by component along with asynchronous validators from the deprecated async-validators option
+       * and the implicit component validators when performing validation. Each item is either an
+       * instance that duck types {@link oj.Validator} or {@link oj.AsyncValidator}.
+       *
+       * <p>
+       * Implicit validators are created by the element when certain attributes are present.
+       * For example, if the <code class="prettyprint">required</code>
+       * attribute is set, an implicit {@link oj.RequiredValidator} is created. If the
+       * <code class="prettyprint">min</code> and/or <code class="prettyprint">max</code> attribute
+       * is set, an implicit {@link oj.DateTimeRangeValidator} is created. If the
+       * <code class="prettyprint">dayFormatter</code> attribute is set,
+       * an implicit {@link oj.DateRestrictionValidator} is created.
+       * At runtime when the component runs validation, it
+       * combines all the implicit validators with all the validators
+       * specified through this <code class="prettyprint">validators</code> attribute, and runs
+       * all of them.
+       * </p>
+       * <p>
+       * Hints exposed by validators are shown inline by default in the Redwood theme when the
+       * field has focus.
+       * You can turn off showing validator hints by using the 'validatorHint' property set to 'none'
+       * on the <code class="prettyprint">display-options</code> attribute.
+       * </p>
+       *
+       * <p>
+       * When <code class="prettyprint">validators</code> property changes due to programmatic
+       * intervention, the element may decide to clear messages and run validation, based on the
+       * current state it is in. </br>
+       *
+       * <h4>Steps Performed Always</h4>
+       * <ul>
+       * <li>The cached list of validator instances are cleared and new validator hints is pushed to
+       * messaging. E.g., notewindow displays the new hint(s).
+       * </li>
+       * </ul>
+       *
+       * <h4>Running Validation</h4>
+       * <ul>
+       * <li>if element is valid when validators changes, element does nothing other than the
+       * steps it always performs.</li>
+       * <li>if element is invalid and is showing messages when
+       * <code class="prettyprint">validators</code> changes then all element messages are cleared
+       * and full validation run using the display value on the element.
+       * <ul>
+       *   <li>if there are validation errors, then <code class="prettyprint">value</code>
+       *   property is not updated and the error is shown.
+       *   </li>
+       *   <li>if no errors result from the validation, the <code class="prettyprint">value</code>
+       *   property is updated; page author can listen to the <code class="prettyprint">valueChanged</code>
+       *   event to clear custom errors.</li>
+       * </ul>
+       * </li>
+       * <li>if element is invalid and has deferred messages when validators changes, it does
+       * nothing other than the steps it performs always.</li>
+       * </ul>
+       * </p>
+       *
+       * <h4>Clearing Messages</h4>
+       * <ul>
+       * <li>Only messages created by the element are cleared.</li>
+       * <li><code class="prettyprint">messagesCustom</code> property is not cleared.</li>
+       * </ul>
+       * </p>
+       *
+       *
+       * @example <caption>Initialize the element with validator instance:</caption>
+       * var dateTimeRange = new DateTimeRangeValidator({
+       *       max: '2014-09-10',
+       *       min: '2014-09-01'
+       *     });
+       * myInputDate.validators = [dateTimeRange];
+       *
+       *
+       * @example <caption>Initialize the element with multiple validator instances:</caption>
+       * var validator1 = new MyCustomValidator({'foo': 'A'});
+       * var validator2 = new MyCustomValidator({'foo': 'B'});
+       * // myInputElement is InputText, InputNumber, Select, etc.
+       * myInputElement.value = 10;
+       * myInputElement.validators = [validator1, validator2];
+       *
+       * @expose
+       * @name validators
+       * @ojshortdesc A list of validators used by the element, along with any implicit component validators, when performing validation. See the Help documentation for more information.
+       * @instance
+       * @memberof oj.ojInputDate
+       * @ojsignature  [{ target: "Type",
+       *       value: "Array<oj.Validator<string>|oj.AsyncValidator<string>>|
+       *       null",
+       *       jsdocOverride: true},
+       *      { target: "Type",
+       *       value: "Array<oj.Validator<string>|oj.AsyncValidator<string>|
+       *       oj.Validation.RegisteredValidator>|
+       *       null",
+       *       consumedBy: 'tsdep'}]
+       * @ojdeprecated {since: '8.0.0', target: 'memberType', value: ['oj.Validation.RegisteredValidator'],
+       *                description: 'Defining a validator with an object literal with validator type and
+       *                  its options (aka JSON format) has been deprecated and does nothing. If needed, you can
+       *                  make the JSON format work again by importing the deprecated ojvalidation-datetime module.'}
+       * @type {Array.<Object>}
+       * @default []
+       */
+
+      /**
+       * The value of the DatePicker element which must be an ISOString.
+       * <p>
+       * The value should be a local date (no time) ISOString
+       * like '2021-03-14'. If value is zulu to begin with, then the timezone specified
+       * on the converter, if there is one, or the local timezone of the browser is used to figure out the day.
+       * </p>
+       * <p>
+       * For clarity and simplicity, supply the local date for initial rendering.
+       * If needed, use IntlConverterUtils.dateToLocalIsoDateString to convert a Date to
+       * a local ISO string that contains only the date to set as the initial value.
+       * For example, IntlConverterUtils.dateToLocalIsoDateString(new Date(2014, 1, 1)));
+       * </p>
+       * @example <caption>Initialize the element with the <code class="prettyprint">value</code> attribute:</caption>
+       * &lt;oj-date-picker value='2014-09-10' /&gt;
+       * @example <caption>Initialize the element with the <code class="prettyprint">value</code> property specified programmatically
+       * using oj.IntlConverterUtils.dateToLocalIso :</caption>
+       * myInputDate.value = oj.IntlConverterUtils.dateToLocalIso(new Date());<br/>
+       * @example <caption>Get or set the <code class="prettyprint">value</code> property, after initialization:</caption>
+       * // Getter: returns Today's date in ISOString
+       * myInputDate.value;
+       * // Setter: sets it to a different date
+       * myInputDate.value = "2013-12-01";
+       *
+       * @expose
+       * @name value
+       * @instance
+       * @memberof oj.ojDatePicker
+       * @ojshortdesc The value of the date picker element, which must be an ISOString. See the Help documentation for more information.
+       * @type {string}
+       * @ojformat date
+       * @ojwriteback
+       * @ojeventgroup common
+       */
+      /**
+       * The value of the InputDate element which must be an ISOString.
+       * <p> The value should be a local date (no time) ISOString
+       * like '2021-03-14'. If value is zulu to begin with, then the todayTimeZone or the local timezone of the browser is used to
+       * figure out the day.
+       * Once the user interacts with the component, the time portion is lost
+       * and the value becomes a local date, no longer a zulu datetime.
+       * </p>
+       * <p>
+       * For clarity and simplicity, supply the local date for initial rendering.
+       * If needed, use IntlConverterUtils.dateToLocalIsoDateString to convert a Date to
+       * a local ISO string that contains only the date to set as the initial value.
+       * For example, IntlConverterUtils.dateToLocalIsoDateString(new Date(2014, 1, 1)));
+       * </p>
+       *
+       *
+       * @example <caption>Initialize the element with the <code class="prettyprint">value</code> attribute:</caption>
+       * &lt;oj-input-date value='2014-09-10' /&gt;
+       * @example <caption>Initialize the element with the <code class="prettyprint">value</code> property specified programmatically
+       * using oj.IntlConverterUtils.dateToLocalIsoDateString :</caption>
+       * myInputDate.value = oj.IntlConverterUtils.dateToLocalIsoDateString(new Date());<br/>
+       * @example <caption>Get or set the <code class="prettyprint">value</code> property, after initialization:</caption>
+       * // Getter: returns Today's date in ISOString
+       * myInputDate.value;
+       * // Setter: sets it to a different date
+       * myInputDate.value = "2013-12-01";
+       *
+       * @expose
+       * @name value
+       * @instance
+       * @memberof! oj.ojInputDate
+       * @ojshortdesc The value of the input date element, which must be an ISOString. See the Help documentation for more information.
+       * @type {string}
+       * @ojformat date
+       * @ojwriteback
+       * @ojeventgroup common
+       */
+
+      // Events
+    },
+
+    /**
+     * @ignore
+     * @protected
+     * @memberof oj.ojInputDate
+     */
+    _InitBase: function () {
+      this._triggerNode = null;
+      this._inputContainer = null;
+      this._redirectFocusToInputContainer = false;
+      this._hasTouch = false;
+
+      // only case is when of showOn of focus and one hides the element [need to avoid showing]
+      this._ignoreDatePickerShow = false;
+
+      // need this flag to keep track of native picker opened, there is no callback on native API
+      //  to find out otherwise.
+      this._nativePickerShowing = false;
+      this._maxRows = 4;
+
+      this._currentDay = 0;
+      this._drawMonth = 0;
+      this._currentMonth = 0;
+      this._drawYear = 0;
+      this._currentYear = 0;
+
+      this._datePickerDefaultValidators = {};
+      this._nativePickerConverter = null;
+
+      this._labelValueWrapper = null;
+      this._isMobile = Config.getDeviceRenderMode() === 'phone';
+
+      var nodeName = this.element[0].nodeName.toLowerCase();
+      this._isInLine = nodeName === 'div' || nodeName === 'span';
+
+      if (this._isInLine) {
+        this._createDpDiv();
+        // if inline then there is no input element, so reset _CLASS_NAMES
+        // TODO:Jmw trying to understand what to do in the case of inline. If it is dateTime inline, then I don't wrap the date part.
+        // But if it is just date inline, I should... but the use case is probably not frequent.
+        this._WIDGET_CLASS_NAMES += this._INLINE_WIDGET_CLASS;
+        this._CLASS_NAMES = '';
+      } else {
+        // append input container class to be applied to the root node as well, since not inline
+        // [note the special case where input container class will NOT be on the widget node is when
+        // ojInputDateTime is of inline and ojInputTime places container around the input element]
+        // jmw. this is now different. It's no longer on the widget. I add a new wrapper dom.
+        // Ji will need to help me with this probably.
+        // One thing I know I'm not doing is wrapping the calendar if only date. hmm...
+        this._ELEMENT_TRIGGER_WRAPPER_CLASS_NAMES += this._INPUT_CONTAINER_CLASS;
+
+        if (this.options.readOnly !== true) {
+          this._createDpDiv();
+          this._createPopupDpDiv();
+        }
+        // add gap between field and dropdown
+        var dropdownVerticalOffset =
+          ThemeUtils.getCachedCSSVarValues(['--oj-private-core-global-dropdown-offset'])[0] || '0';
+        this._dropdownVerticalOffset = parseInt(dropdownVerticalOffset, 10);
+      }
+    },
+
+    /**
+     * Don't render the readonly-div for the oj-date-picker.
+     * @ignore
+     * @override
+     * @protected
+     * @memberof oj.ojInputDate
+     * @return {boolean}
+     */
+    _UseReadonlyDiv: function () {
+      if (this._isInLine) {
+        return false;
+      }
+      return this._superApply(arguments);
+    },
+
+    /**
+     * Return value for oj-date-picker.
+     * @ignore
+     * @override
+     * @protected
+     * @memberof oj.ojInputDate
+     * @return {string|null|undefined}
+     */
+    _GetDisplayValue: function () {
+      if (this._isInLine) {
+        return this.options.value;
+      }
+      return this._superApply(arguments);
+    },
+
+    _createDpDiv: function () {
+      var dpDiv = document.createElement('div');
+      dpDiv.className = 'oj-datepicker-popup';
+      dpDiv.setAttribute('data-oj-dropdownnofocuschange', '');
+      dpDiv.style.display = 'none';
+      var childDiv = document.createElement('div');
+      childDiv.id = this._GetSubId(this._MAIN_DIV_ID);
+      childDiv.setAttribute('role', 'region');
+      childDiv.setAttribute('aria-describedby', this._GetSubId(this._DATEPICKER_DESCRIPTION_ID));
+      childDiv.className = 'oj-datepicker-content';
+      childDiv.setAttribute('data-oj-dropdownnofocuschange', '');
+      dpDiv.appendChild(childDiv);
+      this._dpDiv = bindHover($(dpDiv));
+      // Append the dpDiv to the CE wrapper and for widgets simply to the body
+      if (this._IsCustomElement()) {
+        this._dpDiv.appendTo(this.OuterWrapper); // @HTMLUpdateOK
+      } else {
+        this._dpDiv.appendTo(document.body); // @HTMLUpdateOK
+      }
+    },
+
+    _createPopupDpDiv: function () {
+      var self = this;
+      var animation = { open: null, close: null };
+      this._popUpDpDiv = this._dpDiv
+        .ojPopup({
+          initialFocus: 'none',
+          role: 'dialog',
+          modality: _isLargeScreen() ? 'modeless' : 'modal',
+          open: function () {
+            self._popUpDpDiv.attr(
+              'aria-describedby',
+              self._GetSubId(self._DATEPICKER_DIALOG_DESCRIPTION_ID)
+            );
+            if (self.options.datePicker.showOn === 'image') {
+              self._dpDiv.find('.oj-datepicker-calendar').focus();
+            }
+          },
+          close: function () {
+            self.element.attr({ 'aria-expanded': 'false', 'aria-controls': null });
+          },
+          animation: animation
+        })
+        .attr('data-oj-internal', ''); // mark internal component, used in Components.getComponentElementByNode;
+
+      // JET-69008 ACC,DATE PICKER POPUP,OATB (Axe-Core Best Practice) RULE ERROR
+      // The dialog elements need to have an accessible label. So, we add an aria-label to the popup element.
+      const label = this.getTranslatedString(
+        this.widgetName === 'ojInputDateTime' ? 'dateTimePicker' : 'datePicker'
+      );
+      this._popUpDpDiv.attr('aria-label', label);
+
+      this.element.attr('data-oj-popup-' + this._popUpDpDiv.attr('id') + '-parent', ''); // mark parent of pop up @HTMLUpdateOK
+
+      // JET-57860 - Date Picker Pop Up - Last Day not visible in landscape
+      // When rendering as a sheet on small devices, we need to let the picker
+      // overflow and scroll when there is not enough space to show all the elements.
+      // Add a different class when the picker is opened as a sheet.
+      if (!_isLargeScreen()) {
+        this._popUpDpDiv.addClass('oj-datepicker-sheet');
+      }
+      var pickerAttrs = this.options.pickerAttributes;
+      if (pickerAttrs) {
+        ojeditablevalue.EditableValueUtils.setPickerAttributes(this._popUpDpDiv.ojPopup('widget'), pickerAttrs);
+      }
+
+      // JET-64260 - focus dropped on mouse down in edges of calendar popup
+      // The elements rendering empty space in the dropdown are flagged with a special attribute.
+      // When one of those elements is clicked, prevent the browser from transferring focus.
+      var popupDiv = this._popUpDpDiv[0];
+      popupDiv.addEventListener(
+        'mousedown',
+        (event) => {
+          // Stop propagation of the event because it will bubble to the body from the reparented
+          // popup, not to the launcher component.  It's possible that there's a listener on the
+          // body for other purposes, like closing a modal popup, which would not be appropriate
+          // while the user is interacting with the dropdown.
+          event.stopPropagation();
+
+          if (event.target.hasAttribute('data-oj-dropdownnofocuschange')) {
+            event.preventDefault();
+          }
+        },
+        false
+      );
+    },
+
+    /**
+     * @ignore
+     * @protected
+     * @memberof oj.ojInputDate
+     */
+    _GetDefaultConverter: function () {
+      if (this._dateDefaultConverter == null) {
+        this._dateDefaultConverter = _getDateDefaultConverter();
+      }
+      return this._dateDefaultConverter;
+    },
+
+    /**
+     * @ignore
+     * @protected
+     * @memberof oj.ojInputDate
+     */
+    _CreateConverters: function () {
+      var converter = this._GetConverter();
+      if (converter instanceof Promise) {
+        var self = this;
+        this._resolveDateConverterBusyState = this._SetConverterBusyState('date');
+        this._dateConverterPromise = converter.then(function (ci) {
+          self._createNativeDatePickerConverter(ci);
+        });
+      } else {
+        this._createNativeDatePickerConverter(converter);
+      }
+    },
+
+    /**
+     * @protected
+     * @override
+     * @instance
+     * @memberof! oj.ojInputDate
+     */
+    _ComponentCreate: function () {
+      // verify that the options are set correctly. If they are not an error is thrown
+      // and the component will not render.
+      ojconverterutilsI18n.IntlConverterUtils._verifyValueMinMax(this.options.value, this.options.min, this.options.max);
+
+      // Create all the default converters we need first
+      this._CreateConverters();
+
+      this._InitBase();
+
+      var retVal = this._super();
+
+      if (this.options.dayMetaData) {
+        this.options.dayFormatter = (function (value) {
+          return function (dateInfo) {
+            return _getMetaData(value, 0, [dateInfo.fullYear, dateInfo.month, dateInfo.date]);
+          };
+        })(this.options.dayMetaData);
+      }
+
+      // Need to set the currentDay, currentMonth, currentYear to either the value or the default of today's Date
+      // Note that these are days indicator for the datepicker, so it is correct in using today's date even if value
+      // hasn't been set
+      this._setCurrentDate(this._getDateIso(), true);
+
+      // jmw. Add a wrapper around the element and the trigger. This is needed so that we can
+      // add inline messages to the root dom node. We want the input+trigger to be one child and
+      // the inline messages to be another child of the root dom node. This way the inline
+      // messages can be stacked after the main component, and will grow or shrink in size the same
+      // as the main component.
+      // doing this in InputBase now.
+
+      if (this._isInLine) {
+        this.element.append(this._dpDiv); // @HTMLUpdateOK dpDiv is generated internally
+        this.element.addClass(this._INLINE_CLASS); // by applying the inline class it places margin bottom, to separate in case ojInputTime exists
+        this.element.addClass('oj-form-control-container'); // add container class to allow inside label
+
+        // Set display:block in place of inst._dpDiv.show() which won't work on disconnected elements
+        // http://bugs.jqueryui.com/ticket/7552 - A Datepicker created on a detached div has zero height
+        this._dpDiv.css('display', 'block');
+
+        // For this to be accessible, the root dom element needs role/aria-labelledby.
+        const rootDomElem = this.widget();
+        rootDomElem[0].setAttribute('role', 'group');
+        this._labelledByUpdatedForSet(rootDomElem[0].id, null, this.options.labelledBy, rootDomElem);
+      } else {
+        this._processReadOnlyKeyboardEdit();
+        if (this.options.readOnly !== true) {
+          this._attachTrigger();
+        }
+      }
+
+      // We need to override focus on the component and the inner input element.
+      // calling focus on the component will call focus on the inner input element
+      // passing in true to indicate that we want to show the popup of showOn is set
+      // to 'focus'. If this isn't a custom element, we don't want to override the
+      // focus functions.
+      // Also, when readonly is true, we just want to focus on the readonly element,
+      // as the popup isn't an issue.
+      if (this._IsCustomElement()) {
+        let comp = this._getRootElement();
+        // We need the input element here regardless of readonly state.
+        let inputElem = this._GetContentElement()[0];
+        // This gets called when someone calls the component's focus method.
+        // We are overriding the inputElem's focus, see inputElem.focus = function code below,
+        // and this code goes along with that.
+        comp.focus = () => {
+          // focusElem is either the readonly div or the input
+          const focusElem = this.GetFocusElement();
+          // we only want to call .focus(true) if it's the input elem that we added
+          // the custom focus callback on.
+          if (focusElem === inputElem) {
+            inputElem.focus(true); // true means we want to show the datepicker on focus.
+          } else {
+            focusElem.focus();
+          }
+        };
+
+        let proto = Object.getPrototypeOf(inputElem);
+
+        // Override inputElem's focus method.
+        // This will get called if any programmatic focus is called.
+        inputElem.focus = function (showDropDown) {
+          if (!this._closeInProgress) {
+            const showOn = this.options.datePicker.showOn;
+            if (showOn === 'focus') {
+              this._ignoreDatePickerShow = !showDropDown;
+            } else if (showOn === 'userFocus') {
+              this._ignoreDatePickerShow = true;
+            }
+          }
+          proto.focus.call(inputElem);
+        }.bind(this);
+      }
+
+      // attach active state change handlers
+      bindActive(this);
+      return retVal;
+    },
+
+    _SetConverterBusyState: function (type) {
+      var domElem = this.element[0];
+      var busyContext = Context.getContext(domElem).getBusyContext();
+      var description = 'The page is waiting for async ' + type + ' converter loading ';
+
+      if (domElem && domElem.id) {
+        description += 'for "' + domElem.id + '" ';
+      }
+      description += 'to finish.';
+
+      return busyContext.addBusyState({ description: description });
+    },
+
+    /**
+     * @protected
+     * @instance
+     * @memberof! oj.ojInputDate
+     */
+    _IsDisabled: function () {
+      return this.options.disabled || !this._converterCached;
+    },
+
+    /**
+     * @protected
+     * @override
+     * @instance
+     * @memberof! oj.ojInputDate
+     */
+    _AfterCreate: function () {
+      var ret = this._superApply(arguments);
+      var LId;
+
+      // TODO: we should render as much as we can without a converter,
+      // then do all the converter work in _AfterCreateConverterCached.
+      this._disableEnable(this._IsDisabled());
+
+      if (!this._IsCustomElement()) {
+        var label = this.$label;
+        if (this._inputContainer && label && label.length === 1) {
+          LId = label.attr('id');
+
+          // The label should always have a generated ID, so no need to check here.
+          this._inputContainer.attr('aria-labelledby', LId);
+        }
+      }
+
+      return ret;
+    },
+
+    /**
+     * Do things here for creating the component where you need the converter, since
+     * getting the converter can be asynchronous. We get the converter before calling
+     * this method, so it is there. NOTE: For inline datepicker, we should render as
+     * much as we can in ComponentCreate, and show the converted value, for instance,
+     * in this section.
+     *
+     * @protected
+     * @override
+     * @instance
+     * @memberof! oj.ojInputDate
+     */
+    _AfterCreateConverterCached: function () {
+      var ret = this._super();
+
+      // Set a flag to indicate the converter has been cached.
+      this._converterCached = true;
+
+      var doFinishCreate = function () {
+        this._disableEnable(this._IsDisabled());
+        if (this._resolveDateConverterBusyState) {
+          this._resolveDateConverterBusyState();
+          delete this._resolveDateConverterBusyState;
+        }
+        if (this.options.readOnly !== true) {
+          this._attachClearIcon();
+        }
+      }.bind(this);
+
+      if (this._dateConverterPromise) {
+        var self = this;
+        this._dateConverterPromise.then(function () {
+          doFinishCreate();
+          delete self._dateConverterPromise;
+        });
+      } else {
+        doFinishCreate();
+      }
+
+      return ret;
+    },
+
+    /**
+     * @ignore
+     * @private
+     * @memberof oj.ojInputDate
+     */
+    _setValidatorOption: function (validatorType, validatorOrPromise) {
+      var self = this;
+      var afterValidatorCreated = function (validator) {
+        self._datePickerDefaultValidators[validatorType] = validator;
+        self._AfterSetOptionValidators();
+      };
+
+      if (validatorOrPromise instanceof Promise) {
+        validatorOrPromise.then(function (validator) {
+          afterValidatorCreated(validator);
+        });
+      } else {
+        afterValidatorCreated(validatorOrPromise);
+      }
+    },
+
+    /**
+     * @ignore
+     * @protected
+     * @override
+     * @memberof oj.ojInputDate
+     */
+    _setOption: function (key, value, flags) {
+      var retVal = null;
+
+      // When a null, undefined, or "" value is passed in set to null for consistency
+      // note that if they pass in 0 it will also set it null
+      if (key === 'value') {
+        if (!value) {
+          // eslint-disable-next-line no-param-reassign
+          value = null;
+        }
+
+        retVal = this._super(key, value, flags);
+        this._setCurrentDate(value);
+
+        if (this._datepickerShowing()) {
+          // _setOption is called after user picks a date from picker, we dont want to bring
+          //  focus to input element if the picker is showing still for the non-inline case. For the
+          //  case of inline date picker, if there is a time field and already focussed (brought in when
+          //  the picker was hidden), we want to update the date picker, but not set focus on it.
+          var focusOnCalendar = !(this._isInLine && !this._dpDiv[0].contains(document.activeElement));
+          this._updateDatepicker(focusOnCalendar);
+        }
+
+        return retVal;
+      }
+
+      if (key === 'dayMetaData') {
+        // need to invoke w/ dayFormatter and return for the case where user invoke myInputDate.dayMetaData = {};
+        // since that doesn't trigger ComponentBinding
+
+        this.option(
+          'dayFormatter',
+          function (dateInfo) {
+            return _getMetaData(value, 0, [dateInfo.fullYear, dateInfo.month, dateInfo.date]);
+          },
+          flags
+        );
+        return undefined; // avoid setting in this.options and etc
+      }
+
+      retVal = this._super(key, value, flags);
+
+      if (key === 'disabled') {
+        this._disableEnable(value);
+      } else if (key === 'max' || key === 'min') {
+        // since validators are immutable, they will contain min + max as local values. B/c of this will need to recreate
+        this._setValidatorOption(
+          'dateTimeRange',
+          this._createDateTimeRangeValidator(this._GetConverter())
+        );
+      } else if (key === 'readOnly') {
+        // Set up datepicker div and popup if necessary
+        if (!this._isInLine && !value && this._dpDiv == null) {
+          this._createDpDiv();
+          this._createPopupDpDiv();
+          this._attachTrigger();
+          this._registerSwipeHandler();
+          this._AppendInputHelper();
+          this._setupResizePopupBind();
+        }
+        this._disableEnable(this._IsDisabled());
+        this._processReadOnlyKeyboardEdit();
+
+        if (value) {
+          this._hide(this._ON_CLOSE_REASON_CLOSE);
+        }
+        this._AfterSetOptionDisabledReadOnly('readOnly', ojeditablevalue.EditableValueUtils.readOnlyOptionOptions);
+      } else if (key === 'keyboardEdit') {
+        this._processReadOnlyKeyboardEdit();
+      } else if (key === 'dayFormatter') {
+        // since validators are immutable, they will contain dayFormatter as local values. B/c of this will need to recreate
+        this._setValidatorOption(
+          'dateRestriction',
+          this._createDateRestrictionValidator(this._GetConverter())
+        );
+      } else if (key === 'converter') {
+        this._nativePickerConverter = null;
+        this._localTZConverter = null;
+      }
+
+      if (key === 'datePicker' && flags.subkey === 'currentMonthPos') {
+        // need to reset up the drawMonth + drawYear
+        this._setCurrentDate(this._getDateIso());
+      }
+
+      var updateDatePicker = {
+        max: true,
+        min: true,
+        dayFormatter: true,
+        datePicker: true,
+        translations: true
+      };
+
+      if (this._datepickerShowing() && key in updateDatePicker) {
+        this._updateDatepicker();
+      }
+
+      return retVal;
+    },
+
+    /**
+     * Performs post processing after _SetOption() calls _superApply(). Different options, when changed, perform
+     * different tasks.
+     *
+     * @param {string} option
+     * @param {Object=} flags
+     * @protected
+     * @memberof oj.ojInputDate
+     * @instance
+     */
+    _AfterSetOption: function (option, flags) {
+      this._super(option, flags);
+
+      switch (option) {
+        case 'disabled':
+        case 'readOnly':
+        case 'value':
+          this._attachClearIcon();
+          break;
+
+        default:
+          break;
+      }
+    },
+
+    /**
+     * @ignore
+     */
+    _processReadOnlyKeyboardEdit: function () {
+      var readonly = this.options.readOnly || this._isKeyboardEditDisabled();
+
+      this.element.prop('readOnly', !!readonly);
+    },
+
+    /**
+     * @ignore
+     * @return {boolean}
+     */
+    _isKeyboardEditDisabled: function () {
+      return this.options.keyboardEdit === this._KEYBOARD_EDIT_OPTION_DISABLED;
+    },
+
+    /**
+     * Need to override due to usage of display: inline-table [as otherwise for webkit the hidden content takes up
+     * descent amount of space]
+     *
+     * @protected
+     * @instance
+     * @memberof oj.ojInputDate
+     */
+    _AppendInputHelperParent: function () {
+      return this._triggerNode;
+    },
+
+    /**
+     * Sets up the labelledBy changes when labelledBy option changes.
+     * This is overridden for the datepicker and datetimepicker since
+     * the way you link up label to the component is like the 'set' components.
+     * aria-labelledby.
+     *
+     * @protected
+     * @override
+     * @memberof oj.ojInputDate
+     * @instance
+     */
+    _setLabelledByForInputBase: function (oldValue, labelledBy) {
+      if (!this._isInLine) {
+        this._super(oldValue, labelledBy);
+      } else {
+        const rootDomElem = this.widget();
+        this._labelledByUpdatedForSet(rootDomElem[0].id, oldValue, labelledBy, rootDomElem);
+      }
+    },
+
+    /**
+     * Sets up the labelledBy links on iniit.
+     * This is overridden for the datepicker and datetimepicker since
+     * the way you link up label to the component is like the 'set' components.
+     * aria-labelledby.
+     *
+     * @protected
+     * @override
+     * @memberof oj.ojInputDate
+     * @instance
+     */
+    _initLabelledByForInputBase: function (labelledBy) {
+      if (!this._isInLine) {
+        this._super(labelledBy);
+      } else {
+        // TODO: What about readonly?
+        const rootDomElem = this.widget();
+        this._labelledByUpdatedForSet(rootDomElem[0].id, null, labelledBy, rootDomElem);
+      }
+    },
+
+    /**
+     * @ignore
+     * @protected
+     * @override
+     */
+    _destroy: function () {
+      this._cleanUpDateResources();
+      var retVal = this._super();
+      return retVal;
+    },
+
+    _datepickerShowing: function () {
+      return (
+        this._isInLine ||
+        (this._popUpDpDiv &&
+          ojcomponentcore.isComponentInitialized(this._popUpDpDiv, 'ojPopup') &&
+          this._popUpDpDiv.ojPopup('isOpen')) ||
+        this._nativePickerShowing
+      );
+    },
+    /**
+     * @ignore
+     * @protected
+     * @override
+     */
+    _SetupResources: function () {
+      if (!this._isInLine) {
+        if (this.options.readOnly !== true) {
+          this._setupResizePopupBind();
+        }
+      }
+
+      if (this._dpDiv && (this._isInLine || this.options.readOnly !== true)) {
+        this._registerSwipeHandler();
+      }
+
+      return this._super();
+    },
+
+    /**
+     *
+     * @protected
+     * @override
+     * @instance
+     * @memberof! oj.ojInputDate
+     */
+    _SetLoading: function () {
+      this._super();
+      this.element.prop('readOnly', true);
+      this._hide(this._ON_CLOSE_REASON_CLOSE);
+    },
+
+    /**
+     *
+     * @protected
+     * @override
+     * @instance
+     * @memberof! oj.ojInputDate
+     */
+    _ClearLoading: function () {
+      this._super();
+      this._processReadOnlyKeyboardEdit();
+    },
+
+    _setupResizePopupBind: function () {
+      this._resizePopupBind = function () {
+        if (ojcomponentcore.isComponentInitialized(this._popUpDpDiv, 'ojPopup')) {
+          this._popUpDpDiv.ojPopup('option', 'modality', _isLargeScreen() ? 'modeless' : 'modal');
+        }
+      }.bind(this);
+      window.addEventListener('resize', this._resizePopupBind, false);
+    },
+
+    /**
+     * @ignore
+     * @protected
+     * @override
+     */
+    _ReleaseResources: function () {
+      // for non custom element, this is done as first step in destroy
+      if (this._IsCustomElement()) {
+        this._cleanUpListeners();
+
+        this._unregisterSwipeHandler();
+      }
+      return this._super();
+    },
+
+    /**
+     * @ignore
+     * @private
+     */
+    _cleanUpDateResources: function () {
+      var triggerRootContainer;
+      if (this._isInLine) {
+        triggerRootContainer = this.element[0].parentNode;
+      } else {
+        triggerRootContainer = this.element[0].parentNode.parentNode.parentNode;
+      }
+      this._RemoveActiveable($(triggerRootContainer));
+
+      this.element.off('focus');
+
+      this.element[0].removeEventListener('touchstart', this._datepickerTouchStartListener, {
+        passive: false
+      });
+      delete this._datepickerTouchStartListener;
+
+      this._wrapper[0].removeEventListener('touchstart', this._datepickerWrapperTouchStartListener, {
+        passive: true
+      });
+      delete this._datepickerWrapperTouchStartListener;
+
+      if (this._triggerNode) {
+        this._triggerNode.remove();
+      }
+
+      if (this._isInLine) {
+        // need to remove disabled + readOnly b/c they are set by super classes and datepicker is special in that this.element
+        // can be a div element for inline mode
+        this.element.removeProp('disabled');
+        this.element.removeProp('readonly');
+      }
+
+      this._cleanUpListeners();
+
+      if (this._animationResolve) {
+        this._animationResolve();
+        this._animationResolve = null;
+      }
+      if (this._popUpDpDiv && ojcomponentcore.isComponentInitialized(this._popUpDpDiv, 'ojPopup')) {
+        this._popUpDpDiv.ojPopup('destroy');
+      }
+
+      if (this._dpDiv) {
+        this._dpDiv.remove();
+      }
+    },
+    /**
+     * @ignore
+     * @private
+     */
+    _cleanUpListeners: function () {
+      if (this._resizePopupBind) {
+        window.removeEventListener('resize', this._resizePopupBind);
+      }
+    },
+    /**
+     * Per guidance from Curt and Don, changing this to be similar to oj-combobox where the container
+     * has a role of presentation and the input has a role of combobox.
+     * @protected
+     * @override
+     * @ignore
+     * @return {Element}
+     */
+    _CreateContainerWrapper: function () {
+      this._inputContainer = $(this._superApply(arguments));
+      this._inputContainer.attr({ role: 'presentation', tabindex: '-1' });
+
+      // Having role be combobox on the input element will make the screen reader tell the user
+      // that there is a dialog and to open it they can use the Up or Down Arrow key.
+      // This is useful when the show-on attribute is set to 'image' because in that mode the
+      // datepicker does not show up automatically
+      // only way to open the datepicker with a keyboard is to use the Up or Down Arrow.
+      // It is also useful when the user closes the datepicker with the Esc key and then wants to reopen
+      // the datepicker with the keyboard.
+      this.element.attr({ role: 'combobox', 'aria-haspopup': 'dialog', 'aria-expanded': 'false' });
+      return this._inputContainer[0];
+    },
+    /**
+     * Override to update _labelValueWrapper
+     *
+     * @protected
+     * @instance
+     * @ignore
+     * @return {Element}
+     */
+    // eslint-disable-next-line no-unused-vars
+    _CreateMiddleWrapper: function (element) {
+      var wrapper;
+
+      if (!this._isInLine) {
+        wrapper = this._superApply(arguments);
+        this._labelValueWrapper = wrapper;
+      } else {
+        this._labelValueWrapper = this.element[0];
+      }
+
+      return wrapper;
+    },
+
+    /**
+     * Returns if the element is a text field element or not.
+     * @instance
+     * @protected
+     * @ignore
+     * @return {boolean}
+     */
+    _IsTextFieldComponent: function () {
+      if (!this._isInLine) {
+        return true;
+      }
+      return false;
+    },
+
+    /**
+     * Returns the components wrapper under which label needs to be inserted in the inside strategy
+     * @instance
+     * @protected
+     * @ignore
+     * @return {Element|undefined}
+     */
+    _GetContentWrapper: function () {
+      if (this._IsCustomElement() && !this._isInLine) {
+        return this._getRootElement().querySelector('.oj-text-field-middle');
+      }
+      return undefined;
+    },
+
+    /**
+     * When input element has focus
+     * @private
+     */
+    _onElementFocus: function () {
+      if (this._redirectFocusToInputContainer) {
+        this._redirectFocusToInputContainer = false;
+        this._inputContainer.focus();
+      } else if (this._showOnIsFocusOrUserFocus()) {
+        this.show();
+      } else if (this._datepickerShowing()) {
+        this._hide(this._ON_CLOSE_REASON_CLOSE);
+      }
+    },
+
+    _showOnIsFocusOrUserFocus: function () {
+      var showOn = this.options.datePicker.showOn;
+
+      return showOn === 'focus' || showOn === 'userFocus';
+    },
+
+    /**
+     * When input element is touched
+     *
+     * @ignore
+     * @protected
+     */
+    _OnElementTouchStart: function (event) {
+      // prevents the mousedown, mouseup and click from being generated on modal glass
+      // which will close the popup.
+      event.preventDefault();
+
+      // If the focus is already on the text box and can't edit with keyboard
+      // and show on is focus then reopen the picker.
+      if (this._showOnIsFocusOrUserFocus()) {
+        if (this._datepickerShowing()) {
+          this._ignoreDatePickerShow = true;
+          this._hide(this._ON_CLOSE_REASON_CLOSE);
+        } else {
+          this._redirectFocusToInputContainer = true;
+          this._inputContainer.find('input')[0].focus(true);
+        }
+      } else {
+        // JET-63922 in oj-input-date on element touch, focus should be set on input field.
+        this._redirectFocusToInputContainer = false;
+        this._inputContainer.find('input')[0].focus();
+      }
+    },
+
+    /**
+     * Render or remove the clear icon
+     * We don't render the clear icon for non-mobile or required fields.
+     * @ignore
+     * @private
+     * @memberof oj.ojInputDate
+     * @instance
+     */
+    _attachClearIcon: function () {
+      if (this._isMobile && !this.options.required) {
+        var contentWrapper = this._GetContentWrapper();
+        // content wrapper is undefined when the component is inline or is not a
+        // custom element, so we don't need a clear icon in that case.
+        if (contentWrapper) {
+          var wrapperElem = contentWrapper.parentElement;
+          var clearIconBtn = wrapperElem.querySelector('a.oj-inputdatetime-clear-icon-btn');
+
+          if (this.options.disabled || this.options.readOnly) {
+            // remove the icon if it is there
+            if (clearIconBtn) {
+              wrapperElem.removeChild(clearIconBtn);
+            }
+
+            // if the clearIcon is not rendered, we shouldn't have this class
+            wrapperElem.classList.remove('oj-inputdatetime-clearicon-mobile');
+          } else {
+            // Only add the clear icon for mobile
+            if (clearIconBtn === null) {
+              var clearIcon;
+              clearIconBtn = document.createElement('a');
+              clearIconBtn.className =
+                'oj-inputdatetime-clear-icon-btn oj-component-icon oj-clickable-icon-nocontext';
+              clearIconBtn.setAttribute('tabindex', '-1');
+              clearIconBtn.setAttribute('role', 'button');
+              clearIconBtn.setAttribute(
+                'aria-label',
+                this.getTranslatedString(this._INPUTDATE_CLEAR_ICON_LABEL_KEY)
+              );
+
+              clearIconBtn.setAttribute('target', '_blank');
+              clearIcon = document.createElement('span');
+              clearIcon.className = 'oj-inputdatetime-clear-icon';
+
+              clearIconBtn.appendChild(clearIcon);
+              wrapperElem.insertBefore(clearIconBtn, this._labelValueWrapper.nextElementSibling); // @HTMLUpdateOK
+
+              clearIconBtn.addEventListener(
+                this._CLICK_HANDLER_KEY,
+                this._onClearIconClickHandler.bind(this)
+              );
+            }
+
+            // clear icon is only rendered for mobile at this time.
+            // For mobile, we render oj-form-control-empty-clearicon if the input doesn't
+            // have a value, as we always want the clear icon hidden for this case.
+            wrapperElem.classList.add('oj-inputdatetime-clearicon-mobile');
+
+            var val = this._GetDisplayValue();
+
+            if (val && val !== '') {
+              wrapperElem.classList.remove('oj-form-control-empty-clearicon');
+            } else {
+              wrapperElem.classList.add('oj-form-control-empty-clearicon');
+            }
+          }
+        }
+      }
+    },
+    /**
+     * This function will create the necessary calendar trigger container [i.e. image to launch the calendar]
+     * and perform any attachment to events.
+     * Since the user cannot tab to this icon, it does not need the aria attributes on it.
+     * However, for iOS Safari, VoiceOver still navigates to this icon, so we need to add aria
+     * attributes for this case (JET-66606).
+     * If showOn is image, then a keyboard or screenreader user would use the up or down arrow key
+     * on the input to open the picker.
+     *
+     * @private
+     */
+    _attachTrigger: function () {
+      var showOn = this.options.datePicker.showOn;
+      var triggerContainer = document.createElement('span');
+      triggerContainer.className = this._TRIGGER_CLASS;
+
+      const calendarTitle = this._GetCalendarTitle();
+      // We want a voiceover user to be able to get to the trigger and hear the description.
+      if (_isSafariOnIos()) {
+        triggerContainer.setAttribute('aria-label', calendarTitle);
+        triggerContainer.setAttribute('role', 'button');
+        triggerContainer.setAttribute('aria-haspopup', 'dialog');
+      }
+      // pop-up date picker when button clicked
+      var triggerCalendar = document.createElement('span');
+      triggerCalendar.setAttribute('title', calendarTitle);
+      triggerCalendar.className =
+        this._TRIGGER_CALENDAR_CLASS + ' oj-clickable-icon-nocontext oj-component-icon';
+
+      triggerContainer.appendChild(triggerCalendar); // @HTMLUpdateOK
+
+      this.element.on('focus', $.proxy(this._onElementFocus, this));
+
+      this._datepickerTouchStartListener = $.proxy(this._OnElementTouchStart, this);
+      this.element[0].addEventListener('touchstart', this._datepickerTouchStartListener, {
+        passive: false
+      });
+
+      var self = this;
+
+      this._datepickerWrapperTouchStartListener = function () {
+        self._hasTouch = true;
+      };
+      this._wrapper[0].addEventListener('touchstart', this._datepickerWrapperTouchStartListener, {
+        passive: true
+      });
+
+      if (showOn === 'image') {
+        // we need to show the icon that we hid by display:none in the mobile themes
+        triggerCalendar.style.display = 'block';
+
+        // In iOS theme, we defaulted to use border radius given that showOn=focus is default and
+        //  we will not have trigger icon. For showOn=image case, we will show the icon, so
+        //  we need to remove the border radius. iOS is the only case we use border radius, so this
+        //  setting for all cases is fine.
+        if (this._IsRTL()) {
+          this.element.css('border-top-left-radius', 0);
+          this.element.css('border-bottom-left-radius', 0);
+        } else {
+          this.element.css('border-top-right-radius', 0);
+          this.element.css('border-bottom-right-radius', 0);
+        }
+      }
+
+      triggerCalendar.addEventListener('click', function (event) {
+        if (self._datepickerShowing()) {
+          self._hide(self._ON_CLOSE_REASON_CLOSE);
+        } else {
+          self.show();
+          self._dpDiv.find('.oj-datepicker-calendar').focus();
+          _scrollIntoViewFor400PercentZoom(self._dpDiv[0]);
+        }
+        event.preventDefault();
+        event.stopPropagation();
+      });
+
+      var $triggerCalendar = $(triggerCalendar);
+      this._AddHoverable($triggerCalendar);
+      this._AddActiveable($triggerCalendar);
+
+      this._triggerIcon = $triggerCalendar;
+      this._triggerNode = $(triggerContainer);
+      // prettier-ignore
+      this._labelValueWrapper.parentNode.insertBefore( // @HTMLUpdateOK
+        triggerContainer,
+        this._labelValueWrapper.nextElementSibling
+      );
+    },
+
+    // This handler is when an user keys down with the calendar having focus
+    _doCalendarKeyDown: function (event) {
+      var handled = false;
+      var kc = $.ui.keyCode;
+      var isRTL = this._IsRTL();
+
+      if (this._datepickerShowing()) {
+        switch (event.keyCode) {
+          case 84: // t character
+            if (event.altKey && event.ctrlKey) {
+              this._dpDiv.find('.oj-datepicker-current').focus();
+              handled = true;
+            }
+            break;
+          case kc.TAB:
+            // Tab key is used to navigate to different buttons/links in the
+            // datepicker to make them accessible.  It shouldn't be used to hide
+            // the datepicker.
+            break;
+          case kc.SPACE:
+          case kc.ENTER:
+            var sel = $('td.' + this._DAYOVER_CLASS, this._dpDiv);
+            if (sel[0]) {
+              this._selectDay(this._currentMonth, this._currentYear, sel[0], event);
+            }
+            // need to return false so preventing default + stop propagation here
+            event.preventDefault();
+            event.stopPropagation();
+            return false;
+          case kc.ESCAPE:
+            this._hide(this._ON_CLOSE_REASON_CANCELLED);
+            // JET-43662 - date picker inside popup is not getting closed on esc key press
+            // The ESC key is handled only when the picker is not inline. When in inline
+            // mode, we need to allow the event to bubble up as we are not doing anything here.
+            if (!this._isInLine) {
+              handled = true;
+            }
+            break; // hide on escape
+          case kc.PAGE_UP:
+            if (event.ctrlKey && event.altKey) {
+              this._adjustDate(-this.options.datePicker.stepBigMonths, 'M', true);
+            } else if (event.altKey) {
+              this._adjustDate(-1, 'Y', true);
+            } else {
+              this._adjustDate(-this._getStepMonths(), 'M', true);
+            }
+            handled = true;
+            break; // previous month/year on page up/+ ctrl
+          case kc.PAGE_DOWN:
+            if (event.ctrlKey && event.altKey) {
+              this._adjustDate(+this.options.datePicker.stepBigMonths, 'M', true);
+            } else if (event.altKey) {
+              this._adjustDate(1, 'Y', true);
+            } else {
+              this._adjustDate(+this._getStepMonths(), 'M', true);
+            }
+            handled = true;
+            break; // next month/year on page down/+ ctrl
+          case kc.END:
+            this._currentDay = getDaysInMonth(this._currentYear, this._currentMonth);
+            this._changeCurrentDay();
+
+            handled = true;
+            break;
+          case kc.HOME:
+            this._currentDay = 1;
+            this._changeCurrentDay();
+
+            handled = true;
+            break;
+          case kc.LEFT:
+            // next month/year on alt +left on Mac
+            if ((event.originalEvent && event.originalEvent.altKey) || event.altKey) {
+              this._adjustDate(
+                event.ctrlKey ? -this.options.datePicker.stepBigMonths : -this._getStepMonths(),
+                'M',
+                true
+              );
+            } else {
+              this._adjustDate(isRTL ? +1 : -1, 'D', true);
+              // -1 day on ctrl or command +left
+            }
+
+            handled = true;
+            break;
+          case kc.UP:
+            this._adjustDate(-7, 'D', true);
+            handled = true;
+            break; // -1 week on ctrl or command +up
+          case kc.RIGHT:
+            // next month/year on alt +right
+            if ((event.originalEvent && event.originalEvent.altKey) || event.altKey) {
+              this._adjustDate(
+                event.ctrlKey ? +this.options.datePicker.stepBigMonths : +this._getStepMonths(),
+                'M',
+                true
+              );
+            } else {
+              this._adjustDate(isRTL ? -1 : +1, 'D', true);
+              // +1 day on ctrl or command +right
+            }
+
+            handled = true;
+            break;
+          case kc.DOWN:
+            this._adjustDate(+7, 'D', true);
+            handled = true;
+            break; // +1 week on ctrl or command +down
+          default:
+        }
+      }
+      // Removed Ctrl-HOME keyboard logic because it is impossible if the calendar is not showing
+
+      if (handled) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+      return undefined;
+    },
+
+    _changeCurrentDay: function () {
+      var cOver = $('.' + this._DAYOVER_CLASS, this._dpDiv);
+      var cDay = this._currentDay + '';
+
+      if (cOver.length === 1) {
+        cOver.removeClass(this._DAYOVER_CLASS);
+      }
+      var datePickerCalendar;
+      if (this._isMultiMonth()) {
+        datePickerCalendar = $('table.oj-datepicker-calendar.oj-focus', this._dpDiv);
+      } else {
+        datePickerCalendar = $('table.oj-datepicker-calendar', this._dpDiv);
+      }
+      cOver = $('a.oj-enabled:contains(' + this._currentDay + ')', datePickerCalendar).filter(
+        function () {
+          return $(this).text() === cDay;
+        }
+      );
+      if (cOver.length === 0) {
+        cOver = $('span.oj-disabled:contains(' + this._currentDay + ')', datePickerCalendar).filter(
+          function () {
+            return $(this).text() === cDay;
+          }
+        );
+      }
+      if (cOver.length === 1) {
+        var cParent = cOver.parent();
+        datePickerCalendar.addClass('oj-focus-highlight');
+        datePickerCalendar.attr('aria-activedescendant', cParent.attr('id') + '');
+        cParent.addClass(this._DAYOVER_CLASS);
+        _scrollIntoViewFor400PercentZoom(cParent[0]);
+      }
+    },
+
+    // This handler is when an user keys down with the Month View having focus
+    // TODO, during month/year work apparently CalendarKeyDown was copied + pasted for month/year. try to clean up code
+    _doMonthViewKeyDown: function (event) {
+      var handled = false;
+      var kc = $.ui.keyCode;
+      var isRTL = this._IsRTL();
+
+      if (this._datepickerShowing()) {
+        switch (event.keyCode) {
+          case 84: // t character
+            if (event.altKey && event.ctrlKey) {
+              this._dpDiv.find('.oj-datepicker-current').focus();
+              handled = true;
+            }
+            break;
+          case kc.SPACE:
+          case kc.ENTER:
+            var sel = $('td.' + this._DAYOVER_CLASS, this._dpDiv);
+            if (sel[0]) {
+              this._selectMonthYear(sel[0], 'M');
+            }
+            // need to return false so preventing default + stop propagation here
+            event.preventDefault();
+            event.stopPropagation();
+            return false;
+          case kc.ESCAPE:
+            this.hide();
+            // JET-43662 - date picker inside popup is not getting closed on esc key press
+            // The ESC key is handled only when the picker is not inline. When in inline
+            // mode, we need to allow the event to bubble up as we are not doing anything here.
+            if (!this._isInLine) {
+              handled = true;
+            }
+            break; // hide on escape
+          case kc.PAGE_UP:
+            if (event.ctrlKey && event.altKey) {
+              this._adjustDate(-this.options.datePicker.stepBigMonths, 'M', true, 'month');
+            } else if (event.altKey) {
+              this._adjustDate(-1, 'Y', true, 'month');
+            } else {
+              this._adjustDate(-this._getStepMonths(), 'M', true, 'month');
+            }
+            handled = true;
+            break; // previous month/year on page up/+ ctrl
+          case kc.PAGE_DOWN:
+            if (event.ctrlKey && event.altKey) {
+              this._adjustDate(+this.options.datePicker.stepBigMonths, 'M', true, 'month');
+            } else if (event.altKey) {
+              this._adjustDate(1, 'Y', true, 'month');
+            } else {
+              this._adjustDate(+this._getStepMonths(), 'M', true, 'month');
+            }
+            handled = true;
+            break; // next month/year on page down/+ ctrl
+          case kc.END:
+            this._currentMonth = 11;
+            this._updateDatepicker(true, 'month');
+            handled = true;
+            break;
+          case kc.HOME:
+            this._currentMonth = 0;
+            this._updateDatepicker(true, 'month');
+            handled = true;
+            break;
+          case kc.LEFT:
+            this._adjustDate(isRTL ? +1 : -1, 'M', true, 'month');
+            handled = true;
+            break;
+          case kc.UP:
+            this._adjustDate(-3, 'M', true, 'month');
+            handled = true;
+            break; // -1 week on ctrl or command +up
+          case kc.RIGHT:
+            this._adjustDate(isRTL ? -1 : +1, 'M', true, 'month');
+            handled = true;
+            break;
+          case kc.DOWN:
+            this._adjustDate(+3, 'M', true, 'month');
+            handled = true;
+            break; // +1 week on ctrl or command +down
+          default:
+        }
+      }
+      // Removed Ctrl-HOME keyboard logic because it is impossible if the calendar is not showing
+
+      if (handled) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+      return undefined;
+    },
+
+    // This handler is when an user keys down with the Year View having focus
+    _doYearViewKeyDown: function (event) {
+      var handled = false;
+      var kc = $.ui.keyCode;
+      var isRTL = this._IsRTL();
+
+      if (this._datepickerShowing()) {
+        switch (event.keyCode) {
+          case 84: // t character
+            if (event.altKey && event.ctrlKey) {
+              this._dpDiv.find('.oj-datepicker-current').focus();
+              handled = true;
+            }
+            break;
+          case kc.SPACE:
+          case kc.ENTER:
+            var sel = $('td.' + this._DAYOVER_CLASS, this._dpDiv);
+            if (sel[0]) {
+              this._selectMonthYear(sel[0], 'Y');
+            }
+            // need to return false so preventing default + stop propagation here
+            event.preventDefault();
+            event.stopPropagation();
+            return false;
+          case kc.ESCAPE:
+            this.hide();
+            // JET-43662 - date picker inside popup is not getting closed on esc key press
+            // The ESC key is handled only when the picker is not inline. When in inline
+            // mode, we need to allow the event to bubble up as we are not doing anything here.
+            if (!this._isInLine) {
+              handled = true;
+            }
+            break; // hide on escape
+          case kc.PAGE_UP:
+            if (event.altKey) {
+              this._adjustDate(-1, 'Y', true, 'year');
+            }
+            handled = true;
+            break; // previous month/year on page up/+ ctrl
+          case kc.PAGE_DOWN:
+            if (event.altKey) {
+              this._adjustDate(1, 'Y', true, 'year');
+            }
+            handled = true;
+            break; // next month/year on page down/+ ctrl
+          case kc.END:
+            this._currentYear = Math.floor(this._currentYear / 10) * 10 + 9;
+            this._updateDatepicker(true, 'year');
+            handled = true;
+            break;
+          case kc.HOME:
+            this._currentYear = Math.floor(this._currentYear / 10) * 10;
+            this._updateDatepicker(true, 'year');
+            handled = true;
+            break;
+          case kc.LEFT:
+            this._adjustDate(isRTL ? +1 : -1, 'Y', true, 'year');
+            handled = true;
+            break;
+          case kc.UP:
+            this._adjustDate(-3, 'Y', true, 'year');
+            handled = true;
+            break; // -1 week on ctrl or command +up
+          case kc.RIGHT:
+            this._adjustDate(isRTL ? -1 : +1, 'Y', true, 'year');
+            handled = true;
+            break;
+          case kc.DOWN:
+            this._adjustDate(+3, 'Y', true, 'year');
+            handled = true;
+            break; // +1 week on ctrl or command +down
+          default:
+        }
+      }
+      // Removed Ctrl-HOME keyboard logic because it is impossible if the calendar is not showing
+
+      if (handled) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+      return undefined;
+    },
+
+    /**
+     * @returns {jQuery} returns the content element of the datepicker
+     *
+     * @private
+     */
+    _getDatepickerContent: function () {
+      return this._dpDiv ? $(this._dpDiv.find('.oj-datepicker-content')[0]) : $();
+    },
+
+    /**
+     * Function to whether it is a datetimepicker with the switcher
+     *
+     * @private
+     */
+    _isDateTimeSwitcher: function () {
+      return this._dateTimeSwitcherActive;
+    },
+
+    /**
+     * Thie function will update the calendar display
+     *
+     * @private
+     * @param {boolean=} focusOnCalendar - Whether to put focus in the calendar.
+     * @param {string=} view - The view to update to. Default is 'day'.
+     * @param {string=} navigation - Type of navigation to animate.
+     */
+    _updateDatepicker: function (focusOnCalendar, view, navigation) {
+      this._maxRows = 4; // Reset the max number of rows being displayed (see #7043)
+      var generatedHtmlContent;
+
+      if (view === 'year') {
+        generatedHtmlContent = this._generateViewHTML('Y');
+      } else if (view === 'month') {
+        generatedHtmlContent = this._generateViewHTML('M');
+      } else {
+        generatedHtmlContent = this._generateViewHTML('D');
+      }
+
+      generatedHtmlContent.html =
+        '<div data-oj-dropdownnofocuschange ' +
+        (this._isDateTimeSwitcher() ? '' : " class='oj-datepicker-wrapper'") +
+        '>' +
+        generatedHtmlContent.html +
+        '</div>';
+
+      this._currentView = view;
+      var dpContentDiv = this._getDatepickerContent();
+
+      if (navigation) {
+        var oldChild = dpContentDiv.children().first();
+        oldChild.css({ position: 'absolute', left: 0, top: 0 });
+
+        dpContentDiv.prepend(generatedHtmlContent.html); // @HTMLUpdateOK
+        var newChild = dpContentDiv.children().first();
+        var direction = navigation === 'previous' ? 'end' : 'start';
+
+        if (!this._animationResolve) {
+          var busyContext = Context.getContext(this.element[0]).getBusyContext();
+          this._animationResolve = busyContext.addBusyState({
+            description: "The datepicker id='" + this.element.attr('id') + "' is animating."
+          });
+        }
+        // eslint-disable-next-line no-undef
+        oj.AnimationUtils.startAnimation(newChild[0], 'open', {
+          effect: 'slideIn',
+          direction: direction
+        });
+        // eslint-disable-next-line no-undef
+        var promise = oj.AnimationUtils.startAnimation(oldChild[0], 'close', {
+          effect: 'slideOut',
+          direction: direction,
+          persist: 'all'
+        });
+        var self = this;
+        promise.then(function () {
+          if (oldChild) {
+            oldChild.remove();
+          }
+
+          self._setupNewView(focusOnCalendar, view, generatedHtmlContent.dayOverId);
+          self._animationResolve();
+          self._animationResolve = null;
+          _scrollIntoViewFor400PercentZoom(self._dpDiv[0]);
+        });
+      } else {
+        dpContentDiv.empty().append(generatedHtmlContent.html); // @HTMLUpdateOK
+        this._setupNewView(focusOnCalendar, view, generatedHtmlContent.dayOverId);
+        _scrollIntoViewFor400PercentZoom(this._dpDiv[0]);
+      }
+      let selectors =
+        '.oj-datepicker-prev-icon.oj-enabled, .oj-datepicker-next-icon.oj-enabled,' +
+        '.oj-datepicker-current, .oj-datepicker-month, .oj-datepicker-year, .oj-datepicker-calendar td a';
+      this._dpDiv.find(selectors).click((e) => {
+        e.preventDefault();
+      });
+    },
+
+    _setupNewView: function (focusOnCalendar, view, dayOverId) {
+      this._attachHandlers();
+
+      if (dayOverId) {
+        this._dpDiv.find('.oj-datepicker-calendar').attr('aria-activedescendant', dayOverId);
+      }
+
+      var numMonths = this._getNumberOfMonths();
+      var cols = numMonths[1];
+      var width = 275;
+
+      this._dpDiv
+        .removeClass('oj-datepicker-multi-2 oj-datepicker-multi-3 oj-datepicker-multi-4')
+        .width('');
+      if (view === 'year' || view === 'month') {
+        this._dpDiv.removeClass('oj-datepicker-multi');
+      } else {
+        numMonths = this._getNumberOfMonths();
+        cols = numMonths[1];
+
+        if (cols > 1) {
+          // Try to determine the width dynamically
+          var calendar = this._dpDiv.find('.oj-datepicker-calendar');
+          var daySelectors = calendar.find('tbody a');
+          var cellWidth = parseFloat(daySelectors.css('width'));
+          var padding = parseFloat(calendar.css('margin-left'));
+          if (!isNaN(cellWidth) && !isNaN(padding)) {
+            width =
+              cellWidth * (this.options.datePicker.weekDisplay === 'number' ? 8 : 7) + padding * 2;
+          }
+
+          this._dpDiv
+            .addClass('oj-datepicker-multi-' + cols)
+            .css('width', width * cols + (this._isInLine ? 2 : 0) + 'px');
+        }
+        this._dpDiv[(numMonths[0] !== 1 || numMonths[1] !== 1 ? 'add' : 'remove') + 'Class'](
+          'oj-datepicker-multi'
+        );
+      }
+
+      // #6694 - don't focus the input if it's already focused
+      // this breaks the change event in IE
+      if (this._datepickerShowing() && this.element.is(':visible') && !this.element.is(':disabled')) {
+        if (!focusOnCalendar) {
+          if (!this._isInLine && this.element[0] !== document.activeElement) {
+            this.element.focus();
+          }
+        } else {
+          this._placeFocusOnCalendar();
+        }
+      }
+    },
+
+    _placeFocusOnCalendar: function () {
+      var calendar = this._dpDiv.find('.oj-datepicker-calendar');
+      if (calendar[0] && calendar[0] !== document.activeElement) {
+        calendar[0].focus();
+      }
+    },
+
+    /**
+     * Adjust one of the date sub-fields.
+     *
+     * @private
+     * @param {number} offset
+     * @param {string} period
+     * @param {boolean=} focusOnCalendar - Whether to put focus in the calendar.
+     * @param {string=} view - The view to update to. Default is 'day'.
+     * @param {string=} navigation - Type of navigation to animate.
+     */
+    _adjustDate: function (offset, period, focusOnCalendar, view, navigation) {
+      if (this._IsDisabled()) {
+        return;
+      }
+
+      this._adjustInstDate(
+        offset + (period === 'M' ? this.options.datePicker.currentMonthPos : 0), // undo positioning
+        period
+      );
+      this._updateDatepicker(focusOnCalendar, view, navigation);
+    },
+
+    /**
+     * Returns current date based on converter's timezone or browser's locale.
+     *
+     * @private
+     */
+    _getCurrentDate: function (converter = this._GetConverter()) {
+      const date = new Date();
+      const timeZone = _getConverterTimezone(converter);
+
+      if (timeZone) {
+        // toISOString,
+        // A string representing the given date in the ISO 8601 format according to universal time
+        // so this will always end in a Z.
+        const isoZuluOfCurrentDate = date.toISOString();
+        const localToTheTimezonePlaceWithNoTimezone = _convertIsoStrFormatLocalWithTimezone(
+          isoZuluOfCurrentDate,
+          timeZone
+        );
+        return ojconverterutilsI18n.IntlConverterUtils.isoToLocalDate(localToTheTimezonePlaceWithNoTimezone);
+      }
+      return date;
+    },
+
+    /**
+     * Retrieve the component's value in iso format in timezone local time.
+     * If value is null, then it uses the current date as the value and
+     * converts that to iso format in timezone local time.
+     *
+     * @private
+     */
+    _calculateValueDateIso: function (converter) {
+      // dateIso: this.options.value if it exists
+      // or currentDate from the perspective of the local system's timezone but with no timezone info, if any,
+      // with no time portion filtered back through IntlConverterUtils.dateToLocalIso()
+      const dateIso = this._getDateIso();
+      const timeZone = _getConverterTimezone(converter);
+      return timeZone ? _convertIsoStrFormatLocalWithTimezone(dateIso, timeZone) : dateIso;
+    },
+
+    /**
+     * Action for current link. Note that this is of today relative to client's locale so this is ok.
+     * If the todayTimeZone option is provided then Today's button will highlight the current day based on the timezone specified.
+     *
+     * @private
+     */
+    _gotoToday: function () {
+      let date = this._getCurrentDate();
+      this._currentDay = date.getDate();
+      this._currentMonth = date.getMonth();
+      this._drawMonth = this._currentMonth;
+      this._currentYear = date.getFullYear();
+      this._drawYear = this._currentYear;
+
+      this._adjustDate(null, null, true, 'day');
+    },
+
+    /**
+     * Action for selecting a new month/year.
+     *
+     * @private
+     * @param {Object} select
+     * @param {string} period
+     */
+    _selectMonthYear: function (select, period) {
+      var selected;
+      // TODO: Is value really needed? Does converterUtils._dateTime have side effects?
+      // eslint-disable-next-line no-unused-vars
+      var value = this._getDateIso();
+      var yearAttr = select.getAttribute('data-year');
+      var subId = '';
+
+      if (yearAttr) {
+        selected = parseInt(yearAttr, 10);
+        this._currentYear = selected;
+        this._drawYear = selected;
+        subId = selected + '_';
+      }
+
+      if (period === 'M') {
+        selected = parseInt(select.getAttribute('data-month'), 10);
+        this._currentMonth = selected;
+        this._drawMonth = selected;
+        subId = selected + '_';
+        value = this._validateDatetime(value, {
+          fullYear: this._currentYear,
+          month: this._currentMonth
+        });
+      } else {
+        value = this._validateDatetime(value, { fullYear: this._currentYear });
+      }
+
+      // Take care of accessibility. Note that this is using an INTERNAL converter to display only the year portion [no timezone]
+      // so is okay
+      // prettier-ignore
+      $('#' + this._GetSubId(subId + this._CALENDAR_DESCRIPTION_ID)).html( // @HTMLUpdateOK
+        this._EscapeXSS(this.options.monthWide[this._drawMonth]) +
+        ' ' +
+        formatYear(this._drawYear, this._drawMonth)
+      );
+
+      this._adjustDate(0, 0, true, period === 'M' ? 'day' : this._toYearFromView);
+    },
+
+    // Action for selecting a day.
+    // eslint-disable-next-line no-unused-vars
+    _selectDay: function (month, year, td, event) {
+      if ($(td).hasClass(this._UNSELECTABLE_CLASS) || this._IsDisabled()) {
+        return;
+      }
+
+      if (!this._isDateTimeSwitcher()) {
+        this._hide(this._ON_CLOSE_REASON_SELECTION);
+      }
+
+      this._currentDay = $('a', td).html(); // @HTMLUpdateOK
+      this._currentMonth = month;
+      this._currentYear = year;
+
+      var converterUtils = ojconverterutilsI18n.IntlConverterUtils;
+      var value = this.options.value;
+      var tempDate = toJSDateFullYear(this._currentYear, this._currentMonth, this._currentDay);
+
+      if (value) {
+        // need to preserve the time portion when of ojInputDateTime, so update only year, month, and date
+        try {
+          // After this method call the value is a local datetime. no offset, no zulu. It will get converted
+          // back in the switchDone method when the user clicks the Done button or closes the picker.
+          value = converterUtils._dateTime(value, {
+            fullYear: tempDate.getFullYear(),
+            month: tempDate.getMonth(),
+            date: tempDate.getDate()
+          });
+        } catch (e) {
+          Logger.info(
+            'The value of the InputDateTime element should be an ISOString, please use a valid ISOString'
+          );
+          value = converterUtils.dateToLocalIso(tempDate);
+        }
+      } else {
+        // per discussion when date doesn't exist use local isostring
+        value = converterUtils.dateToLocalIso(tempDate);
+      }
+
+      this._setDisplayAndValue(value, {});
+      // remove this class, since we have a value now.
+      // Only do this for oj-input-date, since oj-input-date-time doesn't
+      // update its value until done is pressed.
+      if (this.OuterWrapper.tagName === 'OJ-INPUT-DATE') {
+        let contentWrapper = this._GetContentWrapper();
+        if (contentWrapper) {
+          contentWrapper.parentElement.classList.remove('oj-form-control-empty-clearicon');
+        }
+      }
+
+      if (this._isDateTimeSwitcher()) {
+        this._placeFocusOnCalendar();
+      }
+    },
+
+    _setDisplayAndValue: function (isoString, event) {
+      if (!this._isDateTimeSwitcher()) {
+        var formatted = this._GetConverter().format(isoString);
+        this._SetDisplayValue(formatted); // need to set the display value, since _SetValue doesn't trigger it per discussion
+        // need to use formatted value as otherwise it doesn't go through framework's cycle
+        // in updates
+        this._SetValue(formatted, event); // TEMP TILL FIXED PASS IN formatted
+      } else {
+        this._switcherDateValue = isoString;
+        this._setCurrentDate(isoString);
+
+        if (this._datepickerShowing()) {
+          // If the date picker is inline, and it doesn't contain the focus, then we don't need
+          // to restore it.
+          var focusOnCalendar = !(this._isInLine && !this._dpDiv[0].contains(document.activeElement));
+          this._updateDatepicker(focusOnCalendar);
+        }
+      }
+    },
+
+    /**
+     * Get the default isostring date
+     *
+     * @ignore
+     * @private
+     */
+    _getDefaultIsoDate: function () {
+      return ojconverterutilsI18n.IntlConverterUtils.dateToLocalIso(this._getTodayDate());
+    },
+
+    /**
+     * Updates the internal current + draw values.
+     * This function gets called in various scenarios:
+     * e.g., on initial render, when a user clicks a date,
+     * and when the value is programatically changed.
+     * This function determines what the current date is
+     * and what the draw variables are, which can then be used to update the display.
+     *
+     * @private
+     * @param {string} isoDate
+     * @param {boolean} initialRender when true we set this._drawMonth to the new date
+     * on initial render, so that the multiple month datepicker
+     * will render with the value's month as the first month.
+     */
+    _setCurrentDate: function (isoDate, initialRender) {
+      var newDate;
+      newDate = this._validateDatetime(
+        isoDate || this._getDefaultIsoDate(),
+        ['fullYear', 'month', 'date'],
+        true
+      );
+      this._currentDay = newDate.date;
+      this._currentMonth = newDate.month;
+      // If we are only showing one month, then update the _drawMonth.
+      // If we are showing multiple months, then update _drawMonth
+      // on initial render so that the first month drawn is the component's value month.
+      // We update _drawMonth only on initial render so that when the user selects a day
+      // that isn't the first month drawn, the multi-month datepicker will not shift months to
+      // make the selected day the first month. Or if the value is programatically changed
+      // then the multi-month calendar will not shift.
+      if (!this._isMultiMonth() || initialRender) {
+        this._drawMonth = newDate.month;
+      }
+
+      this._currentYear = newDate.fullYear;
+      // if we have a multi-month calendar, and the _drawMonth is greater than the newDate.month
+      // we need to adjust the _drawYear to be the previous year otherwise we will be ahead by
+      // one year and not be displaying the correct newDate.month
+      if (this._currentMonth < this._drawMonth) {
+        this._drawYear = this._currentYear - 1;
+      } else {
+        this._drawYear = this._currentYear;
+      }
+      this._adjustInstDate();
+    },
+
+    _getStepMonths: function () {
+      var stepMonths = this.options.datePicker.stepMonths;
+      return $.isNumeric(stepMonths) ? stepMonths : this.options.datePicker.numberOfMonths;
+    },
+
+    // Check if an event is a button activation event
+    _isButtonActivated: function (evt) {
+      // We are using <a role='button'> for the buttons.  They fire click event
+      // on Enter keydown.  We just need to check for Space/Enter key here.
+
+      return (
+        !this._IsDisabled() &&
+        (evt.type === 'click' ||
+          (evt.type === 'keydown' && (evt.keyCode === 32 || evt.keyCode === 13)))
+      );
+    },
+
+    _gotoPrev: function (stepMonths) {
+      // This will keep the user from pressing Enter on the previous key
+      // over and over while the month is animating out. This flag tells us
+      // that it is still animating.
+      if (this._animationResolve != null) {
+        return;
+      }
+      if (this._currentView === 'year') {
+        this._adjustDate(-10, 'Y', true, 'year', 'previous');
+      } else if (this._currentView === 'month') {
+        this._adjustDate(-1, 'Y', true, 'month', 'previous');
+      } else {
+        this._adjustDate(-stepMonths, 'M', true, 'day', 'previous');
+      }
+    },
+
+    _gotoNext: function (stepMonths) {
+      // This will keep the user from pressing Enter on the previous key
+      // over and over while the month is animating out. This flag tells us
+      // that it is still animating.
+      if (this._animationResolve != null) {
+        return;
+      }
+      if (this._currentView === 'year') {
+        this._adjustDate(+10, 'Y', true, 'year', 'next');
+      } else if (this._currentView === 'month') {
+        this._adjustDate(+1, 'Y', true, 'month', 'next');
+      } else {
+        this._adjustDate(+stepMonths, 'M', true, 'day', 'next');
+      }
+    },
+
+    /**
+     * Attach the onxxx handlers.  These are declared statically so
+     * they work with static code transformers like Caja.
+     *
+     * @private
+     */
+    _attachHandlers: function () {
+      var stepMonths = this._getStepMonths();
+      var self = this;
+      /**
+       * Determines the return value for the keydown event
+       * @param {Event} evt keydown event object
+       * @returns {boolean} false if event should be default prevented and
+       *                    propagation stopped, true otherwise.
+       * @ignore
+       */
+      var keyDownReturnValue = function (evt) {
+        if (evt.type === 'keydown') {
+          const kc = $.ui.keyCode;
+          switch (evt.keyCode) {
+            case kc.TAB:
+              // we need to simply allow the default behavior
+              return true;
+            case kc.ESCAPE:
+              // we need to allow default behavior as ESC is used
+              // for dismissing popups.
+              // We need to close the dropdown on ESCAPE when datepicker
+              // is used in a popup.
+              // No need to check for isInline as _hide does that.
+              self._hide(self._ON_CLOSE_REASON_CLOSE);
+              return true;
+            default:
+            // default no-op
+          }
+        }
+        return false;
+      };
+
+      this._dpDiv.find('[data-handler]').map(function () {
+        var handler = {
+          /** @expose */
+          prev: function (evt) {
+            if (self._isButtonActivated(evt)) {
+              self._gotoPrev(stepMonths);
+            }
+            return keyDownReturnValue(evt);
+          },
+          /** @expose */
+          next: function (evt) {
+            if (self._isButtonActivated(evt)) {
+              self._gotoNext(stepMonths);
+            }
+            return keyDownReturnValue(evt);
+          },
+          /** @expose */
+          today: function (evt) {
+            if (self._isButtonActivated(evt)) {
+              self._gotoToday();
+            }
+            return keyDownReturnValue(evt);
+          },
+          /** @expose */
+          selectDay: function (evt) {
+            if (self._isButtonActivated(evt)) {
+              self._selectDay(
+                +this.getAttribute('data-month'),
+                +this.getAttribute('data-year'),
+                this,
+                evt
+              );
+            }
+            return keyDownReturnValue(evt);
+          },
+          /** @expose */
+          selectMonth: function (evt) {
+            if (self._isButtonActivated(evt)) {
+              self._selectMonthYear(this, 'M');
+            }
+            return keyDownReturnValue(evt);
+          },
+          /** @expose */
+          selectYear: function (evt) {
+            if (self._isButtonActivated(evt)) {
+              self._selectMonthYear(this, 'Y');
+            }
+            return keyDownReturnValue(evt);
+          },
+          /** @expose */
+          calendarKey: function (evt) {
+            if (self._currentView === 'year') {
+              self._doYearViewKeyDown(evt);
+            } else if (self._currentView === 'month') {
+              self._doMonthViewKeyDown(evt);
+            } else {
+              self._doCalendarKeyDown(evt);
+            }
+          },
+          /** @expose */
+          selectMonthHeader: function (evt) {
+            if (self._isButtonActivated(evt)) {
+              if (self._currentView === 'month') {
+                self._updateDatepicker(true, 'day');
+              } else {
+                self._updateDatepicker(true, 'month');
+              }
+            }
+            return keyDownReturnValue(evt);
+          },
+          /** @expose */
+          selectYearHeader: function (evt) {
+            if (self._isButtonActivated(evt)) {
+              if (self._currentView === 'year') {
+                self._updateDatepicker(true, 'day');
+              } else {
+                // Remember where we are navigating to the Year view from
+                self._toYearFromView = self._currentView;
+                self._updateDatepicker(true, 'year');
+              }
+            }
+            return keyDownReturnValue(evt);
+          }
+        };
+        $(this).bind(this.getAttribute('data-event'), handler[this.getAttribute('data-handler')]);
+        return undefined;
+      });
+
+      // Only show the day focus if the user starts using keyboard
+      this._dpDiv.find('.oj-datepicker-calendar').map(function () {
+        DomUtils.makeFocusable({
+          element: $(this),
+          applyHighlight: true
+        });
+        return undefined;
+      });
+
+      // Avoid problem with hover/active state on header/footer not going away on touch devices
+      var buttons = this._dpDiv.find('.oj-datepicker-header a, .oj-datepicker-buttonpane a');
+      this._AddHoverable(buttons);
+      this._AddActiveable(buttons);
+    },
+
+    _registerSwipeHandler: function () {
+      if (DomUtils.isTouchSupported()) {
+        var self = this;
+        var stepMonths = this._getStepMonths();
+        var rtl = this._IsRTL();
+        var options = {
+          recognizers: [[Hammer.Swipe, { direction: Hammer.DIRECTION_HORIZONTAL }]]
+        };
+
+        this._dpDiv
+          .ojHammer(options)
+          .on(rtl ? 'swiperight' : 'swipeleft', function () {
+            self._gotoNext(stepMonths);
+            return false;
+          })
+          .on(rtl ? 'swipeleft' : 'swiperight', function () {
+            self._gotoPrev(stepMonths);
+            return false;
+          });
+      }
+    },
+
+    _unregisterSwipeHandler: function () {
+      if (this._dpDiv) {
+        this._dpDiv.off('swiperight swipeleft').ojHammer('destroy');
+      }
+    },
+
+    /**
+     * If min or max lacks date portion and value contains it, then min + max should use
+     * value's date portion
+     *
+     * @private
+     */
+    _getMinMaxDateIso: function (minOrMax) {
+      var minMaxDateIso = this.options[minOrMax];
+      if (minMaxDateIso) {
+        var dateIso = this._getDateIso();
+        minMaxDateIso = ojconverterutilsI18n.IntlConverterUtils._minMaxIsoString(minMaxDateIso, dateIso);
+      }
+
+      return minMaxDateIso;
+    },
+
+    /**
+     * Generate the HTML for the header of the date picker.
+     *
+     * @private
+     */
+    _generateHeader: function (drawMonth, drawYear, monthControl, enablePrev, enableNext) {
+      var prevText = this._EscapeXSS(this.getTranslatedString('prevText'));
+
+      var prev = enablePrev
+        ? "<a role='button' href='#'" +
+          " class='oj-datepicker-prev-icon oj-enabled oj-default oj-component-icon" +
+          " oj-clickable-icon-nocontext'" +
+          " data-handler='prev' data-event='click keydown'" +
+          " aria-label='" +
+          prevText +
+          "'></a>"
+        : "<a class='oj-datepicker-prev-icon oj-disabled oj-component-icon" +
+          " oj-clickable-icon-nocontext' title='" +
+          prevText +
+          "'></a>";
+
+      var nextText = this._EscapeXSS(this.getTranslatedString('nextText'));
+
+      var next = enableNext
+        ? "<a role='button' href='#'" +
+          " class='oj-datepicker-next-icon oj-enabled oj-default oj-component-icon" +
+          " oj-clickable-icon-nocontext' data-handler='next' data-event='click keydown'" +
+          " aria-label='" +
+          nextText +
+          "'></a>"
+        : "<a class='oj-datepicker-next-icon oj-disabled oj-component-icon" +
+          " oj-clickable-icon-nocontext' title='" +
+          nextText +
+          "'></a>";
+
+      var header =
+        "<div class='oj-datepicker-header" +
+        (this._IsDisabled() ? ' oj-disabled ' : ' oj-enabled oj-default ') +
+        "' data-oj-dropdownnofocuschange >";
+
+      if (/all|left/.test(monthControl)) {
+        header += prev;
+      }
+
+      header += this._generateMonthYearHeader(drawMonth, drawYear);
+
+      if (/all|right/.test(monthControl)) {
+        header += next;
+      }
+
+      header += '</div>';
+
+      return header;
+    },
+
+    /**
+     * Generate the HTML for the footer of the date picker.
+     *
+     * @protected
+     * @ignore
+     */
+    _generateFooter: function (footerLayoutDisplay, gotoDate) {
+      var footerLayout = '';
+      var currentText = this._EscapeXSS(this.getTranslatedString('currentText'));
+      var todayControl =
+        "<a role='button' href='#'" +
+        " class='oj-datepicker-current oj-priority-secondary " +
+        (this._IsDisabled() ? "oj-disabled' disabled" : "oj-enabled'") +
+        " data-handler='today' data-event='click keydown'>" +
+        currentText +
+        '</a>';
+
+      if (footerLayoutDisplay.length > 1) {
+        // keep the code for future multiple buttons
+        var todayIndex = footerLayoutDisplay.indexOf('today');
+        var loop = 0;
+        var footerLayoutButtons = [
+          {
+            index: todayIndex,
+            content: this._isInRange(gotoDate) ? todayControl : ''
+          }
+        ];
+
+        // rather than using several if + else statements, sort the content to add by index of the strings
+        footerLayoutButtons.sort(function (a, b) {
+          return a.index - b.index;
+        });
+
+        // continue to loop until the index > -1 [contains the string]
+        while (loop < footerLayoutButtons.length && footerLayoutButtons[loop].index < 0) {
+          loop += 1;
+        }
+
+        while (loop < footerLayoutButtons.length) {
+          footerLayout += footerLayoutButtons[loop].content;
+          loop += 1;
+        }
+
+        if (footerLayout.length > 0) {
+          footerLayout = "<div class='oj-datepicker-buttonpane'>" + footerLayout + '</div>';
+        }
+      }
+
+      return footerLayout;
+    },
+
+    _isMultiMonth: function () {
+      var numMonths = this._getNumberOfMonths();
+      return numMonths[0] !== 1 || numMonths[1] !== 1;
+    },
+
+    /**
+     * Generate the HTML for the current state of the date picker. Might be ugly in passing so many parameters, but
+     * during the month+year feature apparently the code was duplicated with copy+paste so though not pretty at least
+     * helps to manage main variables and etc
+     *
+     * @param {string} view - 'Y', 'M', or 'D' like in other areas of the code
+     * @private
+     */
+    _generateViewHTML: function (view) {
+      var converterUtils = ojconverterutilsI18n.IntlConverterUtils;
+      var dateParams = ['date', 'month', 'fullYear'];
+      var converter = this._GetConverter();
+      var tempDate = this._getCurrentDate(converter);
+      var today = toJSDateFullYear(tempDate.getFullYear(), tempDate.getMonth(), tempDate.getDate()); // clear time
+      var isRTL = this._IsRTL();
+      var footerLayoutDisplay = this.options.datePicker.footerLayout;
+      var numMonths = this._getNumberOfMonths();
+      var currentMonthPos = this.options.datePicker.currentMonthPos;
+      var isMultiMonth = this._isMultiMonth();
+      var minDateIso = this._getMinMaxDateIso('min');
+      var minDateParams;
+      var maxDateIso = this._getMinMaxDateIso('max');
+      var maxDateParams;
+      var drawMonth = this._drawMonth - currentMonthPos;
+      var drawYear = this._drawYear;
+      var compareDate = toJSDateFullYear(this._currentYear, this._currentMonth, this._currentDay);
+      var valueDateIso = this._calculateValueDateIso(converter);
+
+      var valueDateParams = this._validateDatetime(valueDateIso, dateParams, true);
+      var selectedYear = valueDateParams.fullYear;
+      var selectedDay = valueDateParams.date;
+      var selectedMonth = valueDateParams.month;
+      var valueDate = toJSDateFullYear(selectedYear, selectedMonth, selectedDay);
+      var wDisabled = this._IsDisabled();
+      var weekText = this._EscapeXSS(this.getTranslatedString('weekText'));
+
+      if (minDateIso) {
+        // convert it to the correct timezone for comparison, since need to display the month, date, year as displayed in isoString
+        if (!(converter instanceof Promise)) {
+          // TODO: need to fix this for when converters return Promises.
+          // All this does is check that the parsed minDateIso is an isoString.
+          // I'm not sure this is necessary. It is necessary to get it in the
+          // same format as the value.
+          minDateIso = converter.parse(minDateIso);
+          minDateParams = this._validateDatetime(minDateIso, dateParams, true);
+        }
+      }
+      if (maxDateIso) {
+        // TODO: need to fix this for when converters return Promises
+        // I'm not sure this is necessary to validate this.
+        if (!(converter instanceof Promise)) {
+          maxDateIso = converter.parse(maxDateIso);
+          maxDateParams = this._validateDatetime(maxDateIso, dateParams, true);
+        }
+      }
+      try {
+        valueDateIso = converterUtils._clearTime(valueDateIso);
+      } catch (e) {
+        Logger.info(
+          'The value of the InputDateTime element should be an ISOString, please use a valid ISOString'
+        );
+        valueDateIso = converterUtils._clearTime(this._getDefaultIsoDate());
+      }
+
+      // So per discussion calendar will display the year, month, date based on how represented in the isoString
+      // meaning 2013-12-01T20:00:00-08:00 and 2013-12-01T20:00:00-04:00 will both display the same content as no
+      // conversion will take place. In order to achieve this it will rip out the necessary info by string parsing
+      // and in regards to isoString date comparison (i.e. whether one is before the other, will need to use converter's
+      // compareISODates passing the MODIFIED printDate isoString)
+      if (drawMonth < 0) {
+        drawMonth += 12;
+        drawYear -= 1;
+      }
+
+      if (minDateParams) {
+        var minDraw = toJSDateFullYear(
+          minDateParams.fullYear,
+          minDateParams.month,
+          minDateParams.date
+        );
+
+        // tech shouldn't this error out? [previous existing jquery logic so keep, maybe a reason]
+        if (maxDateParams && ojconverterutilsI18n.IntlConverterUtils._compareISODates(maxDateIso, minDateIso) < 0) {
+          Logger.warn(`min property is greater than max property, and should be fixed.
+         For now min is set to equal max.`);
+          minDraw = toJSDateFullYear(maxDateParams.fullYear, maxDateParams.month, maxDateParams.date);
+        }
+        while (toJSDateFullYear(drawYear, drawMonth, getDaysInMonth(drawYear, drawMonth)) < minDraw) {
+          drawMonth += 1;
+          if (drawMonth > 11) {
+            drawMonth = 0;
+            drawYear += 1;
+          }
+        }
+      }
+
+      if (maxDateParams) {
+        var maxDraw = toJSDateFullYear(
+          maxDateParams.fullYear,
+          maxDateParams.month - numMonths[0] * numMonths[1] + 1,
+          maxDateParams.date
+        );
+
+        // tech shouldn't this error out? [previous existing jquery logic so keep, maybe a reason]
+        if (minDateParams && ojconverterutilsI18n.IntlConverterUtils._compareISODates(maxDateIso, minDateIso) < 0) {
+          Logger.warn(`max property is less than min property, and should be fixed.
+        For now max is set to equal min.`);
+          maxDraw = toJSDateFullYear(minDateParams.fullYear, minDateParams.month, minDateParams.date);
+        }
+        while (toJSDateFullYear(drawYear, drawMonth, 1) > maxDraw) {
+          drawMonth -= 1;
+          if (drawMonth < 0) {
+            drawMonth = 11;
+            drawYear -= 1;
+          }
+        }
+      }
+      this._drawMonth = drawMonth;
+      this._drawYear = drawYear;
+
+      var footerLayout = this._generateFooter(footerLayoutDisplay, today);
+
+      var weekDisplay = this.options.datePicker.weekDisplay;
+
+      var result;
+
+      if (view === 'D') {
+        result = this._generateDayHTMLContent(
+          converterUtils,
+          footerLayout,
+          weekDisplay,
+          today,
+          isRTL,
+          numMonths,
+          isMultiMonth,
+          minDateParams,
+          maxDateParams,
+          drawMonth,
+          drawYear,
+          compareDate,
+          valueDateParams,
+          selectedYear,
+          selectedDay,
+          selectedMonth,
+          valueDate,
+          wDisabled,
+          weekText
+        );
+      } else if (view === 'M') {
+        result = this._generateMonthHTMLContent(
+          footerLayout,
+          minDateParams,
+          maxDateParams,
+          drawMonth,
+          drawYear,
+          valueDate,
+          wDisabled
+        );
+      } else {
+        result = this._generateYearHTMLContent(
+          converterUtils,
+          footerLayout,
+          minDateParams,
+          maxDateParams,
+          drawMonth,
+          drawYear,
+          valueDate,
+          wDisabled
+        );
+      }
+
+      return result;
+    },
+
+    /**
+     * @private
+     */
+    _generateDayHTMLContent: function (
+      converterUtils,
+      footerLayout,
+      weekDisplay,
+      today,
+      isRTL,
+      numMonths,
+      isMultiMonth,
+      minDateParams,
+      maxDateParams,
+      drawMonth,
+      drawYear,
+      compareDate,
+      valueDateParams,
+      selectedYear,
+      selectedDay,
+      selectedMonth,
+      valueDate,
+      wDisabled,
+      weekText
+    ) {
+      var dayNames = this.options.dayWide;
+      var dayNamesMin = this.options.dayNarrow;
+      // firstDay is locale dependent. en-US the first day is a Sunday. en-GB it is a Monday.
+      var firstDay = this.options.firstDayOfWeek;
+      var dow;
+      var dayOverId = '';
+      var dayFormatter = this.options.dayFormatter;
+      var currMetaData = null;
+
+      var enablePrev = this._canAdjustMonth(-1, drawYear, drawMonth) && !wDisabled;
+      var enableNext = this._canAdjustMonth(+1, drawYear, drawMonth) && !wDisabled;
+
+      var daysOutsideMonth = this.options.datePicker.daysOutsideMonth;
+      var html = '';
+
+      var monthControl = 'all';
+      for (var row = 0; row < numMonths[0]; row++) {
+        var group = '';
+        this._maxRows = 3;
+        for (var col = 0; col < numMonths[1]; col++) {
+          monthControl = row === 0 ? 'all' : '';
+          var calender = '';
+          if (isMultiMonth) {
+            calender += "<div class='oj-datepicker-group";
+            if (numMonths[1] > 1) {
+              switch (col) {
+                case 0:
+                  calender += ' oj-datepicker-group-first';
+                  if (row === 0) {
+                    if (isRTL) {
+                      monthControl = 'right';
+                    } else {
+                      monthControl = 'left';
+                    }
+                  } else {
+                    monthControl = '';
+                  }
+                  break;
+                case numMonths[1] - 1:
+                  calender += ' oj-datepicker-group-last';
+                  if (row === 0) {
+                    if (isRTL) {
+                      monthControl = 'left';
+                    } else {
+                      monthControl = 'right';
+                    }
+                  } else {
+                    monthControl = '';
+                  }
+                  break;
+                default:
+                  calender += ' oj-datepicker-group-middle';
+                  monthControl = '';
+                  break;
+              }
+            }
+            calender += "'>";
+          }
+
+          calender += this._generateHeader(drawMonth, drawYear, monthControl, enablePrev, enableNext);
+
+          calender +=
+            "<table class='oj-datepicker-calendar" +
+            (weekDisplay === 'number' ? ' oj-datepicker-weekdisplay' : '') +
+            (wDisabled ? ' oj-disabled ' : ' oj-enabled oj-default ') +
+            "' tabindex=-1 data-handler='calendarKey' data-event='keydown'" +
+            " aria-readonly='true' role='grid' " +
+            "aria-labelledby='" +
+            this._GetSubId(drawYear + '_' + drawMonth + '_' + this._CALENDAR_DESCRIPTION_ID) +
+            "'><thead role='presentation'>" +
+            "<tr role='row'>";
+
+          var thead =
+            weekDisplay === 'number'
+              ? "<th class='oj-datepicker-week-col'>" +
+                this._EscapeXSS(this.getTranslatedString('weekHeader')) +
+                '</th>'
+              : '';
+          // Render the days of the week header
+          // ----------------------------------
+          for (dow = 0; dow < 7; dow++) {
+            // days of the week
+            var day = (dow + parseInt(firstDay, 10)) % 7;
+            thead +=
+              "<th role='columnheader' aria-label='" +
+              dayNames[day] +
+              "'" +
+              ((dow + firstDay + 6) % 7 >= 5 ? " class='oj-datepicker-week-end'" : '') +
+              '>' +
+              "<span title='" +
+              dayNames[day] +
+              "' aria-hidden = 'true'>" +
+              dayNamesMin[day] +
+              '</span></th>';
+          }
+
+          calender += thead + "</tr></thead><tbody role='presentation'>";
+          var daysInMonth = getDaysInMonth(drawYear, drawMonth);
+          // This changes the selectedDay to make sure it is within the days in the month.
+          // If the app developer chooses the correct day
+          if (drawYear === selectedYear && drawMonth === selectedMonth) {
+            // eslint-disable-next-line no-param-reassign
+            selectedDay = Math.min(selectedDay, daysInMonth);
+          }
+
+          // You need leadDays to figure out the number of rows in the month. Also, leadDays are the
+          // days in the day view that are in the previous month. Even if we do not render the
+          // day number (e.g., daysOutsideMonth is 'hidden'), we need to provide an empty cell
+          // for the lead days.
+          var leadDays = (this._getFirstDayOfMonth(drawYear, drawMonth) - firstDay + 7) % 7;
+          var curRows = Math.ceil((leadDays + daysInMonth) / 7); // calculate the number of rows to generate
+          var numRows = isMultiMonth && this._maxRows > curRows ? this._maxRows : curRows; // If multiple months, use the higher number of rows (see #7043)
+          this._maxRows = numRows;
+          // The printDate is the first day of in the calendar we are going to render. If the first day of the month
+          // is a Wednesday, then printDate will be the first day of the week before that Wednesday, so it would
+          // be the last days of the previous month. Whether or not we render the day number is determined
+          // by the daysOutsideMonth component option.
+          // The printDate uses leadDays, and leadDays uses firstDay and firstDay is based on the locale's region.
+          // So the printDate would be the first Sunday for en-US, and the first Monday for en-GB
+          // anywhere we are adjusting days we need to call addToCalendarDate.
+          // new Date does not adjust for years < 100.
+          const calendarDate = addToCalendarDate(
+            { year: drawYear, month: drawMonth, day: 1 },
+            { years: 0, months: 0, days: 0 - leadDays }
+          );
+          var printDate = toJSDateFullYear(calendarDate.year, calendarDate.month, calendarDate.day);
+
+          let mondayDateForWeekDisplay;
+          for (var dRow = 0; dRow < numRows; dRow++) {
+            // create date picker rows
+            calender += "<tr role='row'>";
+            var calculatedWeek = ' ';
+            // Figure out the week number if the weekDisplay option is not none.
+            if (weekDisplay !== 'none') {
+              try {
+                // The week number calculation follows the ISO 8601 definition:
+                // the week starts on Monday, the first week of the year contains
+                // the first Thursday of the year.
+                // This means that some days from one year may be placed into weeks
+                // 'belonging' to another year.
+                if (!mondayDateForWeekDisplay) {
+                  mondayDateForWeekDisplay = toJSDateFullYear(
+                    printDate.getFullYear(),
+                    printDate.getMonth(),
+                    printDate.getDate()
+                  );
+                  const dayNumber = mondayDateForWeekDisplay.getUTCDay();
+
+                  // For ISO week, we set the start of the week to Monday.
+                  // This calculation assumes dayNumber is 0 (Sunday), 1 (Monday), or 6 (Saturday), which
+                  // are the first day of week values from the locales we support.
+                  if (dayNumber !== 1) {
+                    mondayDateForWeekDisplay.setUTCDate(
+                      mondayDateForWeekDisplay.getUTCDate() + (dayNumber === 0 ? 1 : 2)
+                    );
+                  }
+                }
+                const mondayLocalIso = converterUtils.dateToLocalIso(mondayDateForWeekDisplay);
+                calculatedWeek = this._calculateWeek(mondayLocalIso);
+              } catch (e) {
+                Logger.info(`The value of the InputDateTime element should be an ISOString,
+               please use a valid ISOString`);
+              }
+            }
+
+            // Render the week number if the weekDisplay option is not none.
+            // -------------------------------------------------------------
+            var tbody =
+              weekDisplay === 'none'
+                ? ''
+                : "<td class='oj-datepicker-week-col' role='rowheader' aria-label='" +
+                  weekText +
+                  ' ' +
+                  calculatedWeek +
+                  "'>" +
+                  calculatedWeek +
+                  '</td>';
+            // Render the week
+            // ---------------
+            for (dow = 0; dow < 7; dow++) {
+              // create date picker days
+              var otherMonth = printDate.getMonth() !== drawMonth;
+              var selected = printDate.getTime() === valueDate.getTime();
+              var rowCellId = 'oj-dp-' + this.uuid + '-' + dRow + '-' + dow + '-' + row + '-' + col;
+              var dayOverClass =
+                printDate.getTime() === compareDate.getTime() && drawMonth === this._currentMonth;
+              var dayOverClassStr;
+              if (dayOverClass) {
+                dayOverId = rowCellId;
+                dayOverClassStr = ' ' + this._DAYOVER_CLASS;
+              } else {
+                dayOverClassStr = '';
+              }
+
+              var daySettings = [true, ''];
+              var pYear = printDate.getFullYear();
+              var pMonth = printDate.getMonth();
+              var pDate = printDate.getDate();
+
+              if (dayFormatter) {
+                currMetaData = dayFormatter({ fullYear: pYear, month: pMonth + 1, date: pDate }); // request to start from 1 rather than 0
+                if (currMetaData) {
+                  // has content
+                  daySettings = [!currMetaData.disabled, currMetaData.className || ''];
+                  if (currMetaData.tooltip) {
+                    daySettings.push(currMetaData.tooltip);
+                  }
+                }
+              }
+              // selectedDate is a boolean. Is the component's value the day about to be rendered.
+              // The value is a date-only iso string,
+              // and it is broken apart into parts, and then a date is created, and the time portion
+              // is cleared out, so then it can be compared with the print date. Possibly this can
+              // be done in a simpler manner.
+              var selectedDate = printDate.getTime() === valueDate.getTime();
+
+              var unselectable =
+                (otherMonth && daysOutsideMonth !== 'selectable') ||
+                !daySettings[0] ||
+                this._outSideMinMaxRange(printDate, minDateParams, maxDateParams);
+
+              // Render a day cell. printDate.getDate() is the day number.
+              // ---------------------------------------------------------
+              tbody +=
+                "<td role='gridcell' aria-disabled='" +
+                !!unselectable +
+                "' aria-selected='" +
+                selected +
+                "' id='" +
+                rowCellId +
+                "' " +
+                "class='" +
+                ((dow + firstDay + 6) % 7 >= 5 ? ' oj-datepicker-week-end' : '') + // highlight weekends
+                (otherMonth ? ' oj-datepicker-other-month' : '') + // highlight days from other months
+                dayOverClassStr + // highlight selected day
+                (unselectable || wDisabled
+                  ? ' ' + this._UNSELECTABLE_CLASS + ' oj-disabled'
+                  : ' oj-enabled ') + // highlight unselectable days
+                (otherMonth && daysOutsideMonth === 'hidden'
+                  ? ''
+                  : ' ' +
+                    daySettings[1] + // highlight custom dates
+                    (selected ? ' ' + this._CURRENT_CLASS : '') + // highlight selected day
+                    (printDate.getTime() === today.getTime() ? ' oj-datepicker-today' : '')) +
+                "'" + // highlight today (if different)
+                ((!otherMonth || daysOutsideMonth !== 'hidden') && daySettings[2]
+                  ? " title='" + daySettings[2].replace(/'/g, '&#39;') + "'"
+                  : '') + // cell title
+                (unselectable
+                  ? ''
+                  : " data-handler='selectDay' data-event='click' data-month='" +
+                    printDate.getMonth() +
+                    "' data-year='" +
+                    printDate.getFullYear() +
+                    "'") +
+                '>' + // actions
+                // eslint-disable-next-line no-nested-ternary
+                (otherMonth && daysOutsideMonth === 'hidden'
+                  ? '&#xa0;' // display for other months
+                  : unselectable || wDisabled
+                  ? "<span class='oj-disabled'>" + printDate.getDate() + '</span>'
+                  : "<a role='button' class='oj-enabled" +
+                    (selectedDate ? ' oj-selected' : '') + // highlight selected day
+                    (otherMonth ? ' oj-priority-secondary' : '') + // distinguish dates from other months
+                    "' " +
+                    (dayOverClass ? '' : "tabindex='-1' ") +
+                    (daySettings[2] ? " title='" + daySettings[2].replace(/'/g, '&#39;') + "'" : '') + // cell title
+                    " href='#'>" +
+                    printDate.getDate() +
+                    '</a>') +
+                '</td>'; // display selectable date
+              printDate.setDate(printDate.getDate() + 1);
+              if (weekDisplay !== 'none') {
+                mondayDateForWeekDisplay.setDate(mondayDateForWeekDisplay.getDate() + 1);
+              }
+            }
+            calender += tbody + '</tr>';
+          }
+          // eslint-disable-next-line no-param-reassign
+          drawMonth += 1;
+          if (drawMonth > 11) {
+            // eslint-disable-next-line no-param-reassign
+            drawMonth = 0;
+            // eslint-disable-next-line no-param-reassign
+            drawYear += 1;
+          }
+          calender += '</tbody></table>';
+          if (isMultiMonth) {
+            calender += '</div>';
+            if (numMonths[0] > 0 && col === numMonths[1] - 1) {
+              calender += "<div class='oj-datepicker-row-break'></div>";
+            }
+          }
+
+          group += calender;
+        }
+        html += group;
+      }
+      html += footerLayout;
+      return { html: html, dayOverId: dayOverId };
+    },
+
+    /**
+     * Generate the month and year header.
+     *
+     * @private
+     */
+    _generateMonthYearHeader: function (drawMonth, drawYear) {
+      var changeMonth = this.options.datePicker.changeMonth;
+      var changeYear = this.options.datePicker.changeYear;
+      var positionOfMonthToYear = this._isMonthPriorToYear() ? 'before' : 'after';
+      var html = "<div class='oj-datepicker-title'>";
+      var monthHtml = '';
+      var monthNames = this.options.monthWide;
+      var wDisabled = this._IsDisabled();
+      var subId = drawYear + '_' + drawMonth + '_';
+
+      // month selection
+      if (monthNames) {
+        if (changeMonth === 'none') {
+          monthHtml += "<span class='oj-datepicker-month'>" + monthNames[drawMonth] + '</span>';
+        } else {
+          monthHtml +=
+            "<a role='button' href='#'" +
+            " data-handler='selectMonthHeader' data-event='click keydown'" +
+            " class='oj-datepicker-month " +
+            (wDisabled ? "oj-disabled' disabled" : "oj-enabled'") +
+            '>';
+          monthHtml += monthNames[drawMonth] + '</a>';
+        }
+
+        if (positionOfMonthToYear === 'before') {
+          html +=
+            monthHtml + (!(changeMonth === 'select' && changeYear === 'select') ? '&#xa0;' : '');
+        }
+      }
+
+      // year selection
+      if (!this.yearshtml) {
+        this.yearshtml = '';
+        if (changeYear === 'none') {
+          html += "<span class='oj-datepicker-year'>" + formatYear(drawYear, drawMonth) + '</span>';
+        } else {
+          html +=
+            "<a role='button' href='#'" +
+            " data-handler='selectYearHeader' data-event='click keydown'" +
+            " class='oj-datepicker-year " +
+            (wDisabled ? "oj-disabled' disabled" : "oj-enabled'") +
+            '>';
+          html += formatYear(drawYear, drawMonth) + '</a>';
+          this.yearshtml = null;
+        }
+      }
+
+      if (monthNames) {
+        if (positionOfMonthToYear === 'after') {
+          html +=
+            (!(changeMonth === 'select' && changeYear === 'select') ? '&#xa0;' : '') + monthHtml;
+        }
+      }
+
+      // we only need the description spans rendered once, as they don't change for each month instance.
+      var needsDescSpans = this._drawYear === drawYear && this._drawMonth === drawMonth;
+
+      if (needsDescSpans) {
+        html +=
+          "<span aria-hidden='true' class='oj-helper-hidden-accessible' id='" +
+          this._GetSubId(this._DATEPICKER_DIALOG_DESCRIPTION_ID) +
+          "'>";
+        html += this._EscapeXSS(this.getTranslatedString('picker')) + '</span>';
+      }
+
+      html +=
+        "<span aria-hidden='true' class='oj-helper-hidden-accessible' id='" +
+        this._GetSubId(subId + this._CALENDAR_DESCRIPTION_ID) +
+        "'>";
+      html +=
+        (monthNames ? monthNames[drawMonth] + ' ' : '') + formatYear(drawYear, drawMonth) + '</span>';
+
+      if (needsDescSpans) {
+        html +=
+          "<span aria-hidden='true' class='oj-helper-hidden-accessible' id='" +
+          this._GetSubId(this._DATEPICKER_DESCRIPTION_ID) +
+          "'>" +
+          this._EscapeXSS(this.getTranslatedString('datePicker')) +
+          '</span>';
+      }
+
+      html += '</div>'; // Close datepicker_header
+      return html;
+    },
+
+    /**
+     * Adjust one of the date sub-fields.
+     *
+     * @private
+     */
+    _adjustInstDate: function (offset, period) {
+      const calendarDate = addToCalendarDate(
+        { year: this._drawYear, month: this._drawMonth, day: this._currentDay },
+        {
+          years: period === 'Y' ? offset : 0,
+          months: period === 'M' ? offset : 0,
+          days: period === 'D' ? offset : 0
+        }
+      );
+
+      this._currentDay = calendarDate.day;
+      this._currentMonth = calendarDate.month;
+      this._drawMonth = this._currentMonth;
+      this._currentYear = calendarDate.year;
+      this._drawYear = this._currentYear;
+    },
+
+    /**
+     * Generate the HTML for the month view of the date picker.
+     *
+     * @private
+     */
+    _generateMonthHTMLContent: function (
+      footerLayout,
+      minDateParams,
+      maxDateParams,
+      drawMonth,
+      drawYear,
+      valueDate,
+      wDisabled
+    ) {
+      var monthNamesShort = this.options.monthAbbreviated;
+      var dayOverId = '';
+
+      var enablePrev = this._canAdjustYear(-1, drawYear) && !wDisabled;
+      var enableNext = this._canAdjustYear(+1, drawYear) && !wDisabled;
+
+      var html = '';
+
+      this._maxRows = 3;
+
+      var calender = '';
+
+      calender += this._generateHeader(drawMonth, drawYear, 'all', enablePrev, enableNext);
+
+      calender +=
+        "<table class='oj-datepicker-calendar oj-datepicker-monthview" +
+        (wDisabled ? ' oj-disabled ' : ' oj-enabled oj-default ') +
+        "' tabindex=-1 data-handler='calendarKey' data-event='keydown'" +
+        " aria-readonly='true' role='grid' " +
+        "aria-labelledby='" +
+        this._GetSubId(drawYear + '_' + drawMonth + '_' + this._CALENDAR_DESCRIPTION_ID) +
+        "'>";
+
+      calender += "<tbody role='presentation'>";
+      var printDate = toJSDateFullYear(drawYear, 0, 1);
+      for (var dRow = 0; dRow < 3; dRow++) {
+        // create date picker rows
+        calender += "<tr role='row'>";
+
+        var tbody = '';
+        for (var dow = 0; dow < 4; dow++) {
+          var month = dRow * 4 + dow;
+          // create date picker days
+          var selected = printDate.getMonth() === valueDate.getMonth();
+          var rowCellId = 'oj-dp-' + this.uuid + '-' + dRow + '-' + dow + '-' + 0 + '-' + 0;
+          var dayOverClass = month === this._currentMonth;
+          var dayOverClassStr;
+          if (dayOverClass) {
+            dayOverId = rowCellId;
+            dayOverClassStr = ' ' + this._DAYOVER_CLASS;
+          } else {
+            dayOverClassStr = '';
+          }
+
+          var selectedDate = printDate.getMonth() === valueDate.getMonth();
+          var inMinYear = minDateParams && minDateParams.fullYear === drawYear;
+          var inMaxYear = maxDateParams && maxDateParams.fullYear === drawYear;
+
+          var unselectable = !(
+            (!inMinYear || month >= minDateParams.month) &&
+            (!inMaxYear || month <= maxDateParams.month)
+          );
+
+          tbody +=
+            "<td role='gridcell' aria-disabled='" +
+            !!unselectable +
+            "' aria-selected='" +
+            selected +
+            "' id='" +
+            rowCellId +
+            "' " +
+            "class='" +
+            dayOverClassStr + // highlight selected day
+            (unselectable || wDisabled
+              ? ' ' + this._UNSELECTABLE_CLASS + ' oj-disabled'
+              : ' oj-enabled ') + // highlight unselectable days
+            (selected ? ' ' + this._CURRENT_CLASS : '') +
+            "'" + // highlight selected day
+            (unselectable
+              ? ''
+              : " data-handler='selectMonth' data-event='click' data-month='" +
+                printDate.getMonth() +
+                "' data-year='" +
+                printDate.getFullYear() +
+                "'") +
+            '>' + // actions
+            (unselectable || wDisabled
+              ? "<span class='oj-disabled'>" + monthNamesShort[month] + '</span>'
+              : "<a role='button' class='oj-enabled" +
+                (selectedDate ? ' oj-selected' : '') + // highlight selected day
+                "' " +
+                (dayOverClass ? '' : "tabindex='-1' ") +
+                " href='#'>" +
+                monthNamesShort[month] +
+                '</a>') +
+            '</td>'; // display selectable date
+          printDate.setMonth(printDate.getMonth() + 1);
+        }
+        calender += tbody + '</tr>';
+      }
+      calender += '</tbody></table>';
+
+      html += calender;
+
+      html += footerLayout;
+      return { html: html, dayOverId: dayOverId };
+    },
+
+    /**
+     * Generate the HTML for the current state of the date picker.
+     *
+     * @private
+     */
+    _generateYearHTMLContent: function (
+      converterUtils,
+      footerLayout,
+      minDateParams,
+      maxDateParams,
+      drawMonth,
+      drawYear,
+      valueDate,
+      wDisabled
+    ) {
+      var dayOverId = '';
+
+      var enablePrev = this._canAdjustDecade(-1, drawYear) && !wDisabled;
+      var enableNext = this._canAdjustDecade(+1, drawYear) && !wDisabled;
+
+      var html = '';
+
+      this._maxRows = 3;
+
+      var calender = '';
+
+      calender += this._generateHeader(drawMonth, drawYear, 'all', enablePrev, enableNext);
+
+      calender +=
+        "<table class='oj-datepicker-calendar oj-datepicker-yearview" +
+        (wDisabled ? ' oj-disabled ' : ' oj-enabled oj-default ') +
+        "' tabindex=-1 data-handler='calendarKey' data-event='keydown' aria-readonly='true' role='grid' " +
+        "aria-labelledby='" +
+        this._GetSubId(drawYear + '_' + drawMonth + '_' + this._CALENDAR_DESCRIPTION_ID) +
+        "'>";
+
+      calender += "<tbody role='presentation'>";
+
+      var yearRange = this._getYearRange(drawYear, minDateParams, maxDateParams);
+      var baseYear = Math.floor(drawYear / 10) * 10;
+      var printDate = toJSDateFullYear(baseYear, drawMonth, 1);
+      for (var dRow = 0; dRow < 3; dRow++) {
+        // create date picker rows
+        calender += "<tr role='row'>";
+
+        var tbody = '';
+        for (var dow = 0; dow < 4; dow++) {
+          if (dRow === 4 && dow === 1) {
+            break;
+          }
+
+          var year = baseYear + dRow * 4 + dow;
+          // create date picker days
+          var selected = printDate.getFullYear() === valueDate.getFullYear();
+          var rowCellId = 'oj-dp-' + this.uuid + '-' + dRow + '-' + dow + '-' + 0 + '-' + 0;
+          var dayOverClass = year === this._currentYear;
+          var dayOverClassStr;
+          if (dayOverClass) {
+            dayOverId = rowCellId;
+            dayOverClassStr = ' ' + this._DAYOVER_CLASS;
+          } else {
+            dayOverClassStr = '';
+          }
+
+          var selectedDate = printDate.getFullYear() === valueDate.getFullYear();
+          var yearText = formatYear(year, drawMonth);
+
+          var unselectable = year < yearRange.startYear || year > yearRange.endYear;
+
+          tbody +=
+            "<td role='gridcell' aria-disabled='" +
+            !!unselectable +
+            "' aria-selected='" +
+            selected +
+            "' id='" +
+            rowCellId +
+            "' " +
+            "class='" +
+            dayOverClassStr + // highlight selected day
+            (unselectable || wDisabled
+              ? ' ' + this._UNSELECTABLE_CLASS + ' oj-disabled'
+              : ' oj-enabled ') + // highlight unselectable days
+            (selected ? ' ' + this._CURRENT_CLASS : '') +
+            "'" + // highlight selected day
+            (unselectable
+              ? ''
+              : " data-handler='selectYear' data-event='click' data-month='" +
+                printDate.getMonth() +
+                "' data-year='" +
+                printDate.getFullYear() +
+                "'") +
+            '>' + // actions
+            (unselectable || wDisabled
+              ? "<span class='oj-disabled'>" + yearText + '</span>'
+              : "<a role='button' class='oj-enabled" +
+                (selectedDate ? ' oj-selected' : '') + // highlight selected day
+                "' " +
+                (dayOverClass ? '' : "tabindex='-1' ") +
+                " href='#'>" +
+                yearText +
+                '</a>') +
+            '</td>'; // display selectable date
+          printDate.setFullYear(printDate.getFullYear() + 1);
+        }
+        calender += tbody + '</tr>';
+      }
+      calender += '</tbody></table>';
+
+      html += calender;
+
+      html += footerLayout;
+      return { html: html, dayOverId: dayOverId };
+    },
+
+    /**
+     * Retrieves whether month is displayed prior to year. This function is
+     * deprecated in LocaleData.js so we need to duplicate it here.
+     * @return {boolean} whether month is prior to year
+     * @method isMonthPriorToYear
+     * @private
+     */
+    _isMonthPriorToYear: function () {
+      var options = { dateStyle: 'long' };
+      var locale = Config.getLocale();
+      var d = new Date();
+      var intlFormatter = new Intl.DateTimeFormat(locale, options);
+      var parts = intlFormatter.formatToParts(d);
+      var monthIndex = parts.findIndex((obj) => obj.type === 'month');
+      var yearIndex = parts.findIndex((obj) => obj.type === 'year');
+      return monthIndex < yearIndex;
+    },
+
+    /**
+     * Returns the current week in the year when provided a date.
+     * NOTE: This function is deprecated in IntlDateTimeConverter.
+     * This is copied from OraDateTimeConverter.
+     * @method _calculateWeek
+     * @private
+     * @param {string} mondayDate - iso 8601 string. It may be in extended or
+     * non-extended form. http://en.wikipedia.org/wiki/ISO_8601. It needs to be a Monday.
+     * @return {number}. The current week in the year when provided a date.
+     */
+    _calculateWeek: function (date) {
+      // We pass in a Monday as our date, so we can assume this date is a Monday in this function.
+      var d = ojconverterutilsI18n.OraI18nUtils._IsoStrParts(date);
+      var time;
+      var checkDate = toJSDateFullYear(d[0], d[1] - 1, d[2]);
+
+      // Find Thursday of this week starting on Monday
+      // if getUTCDay() returns 0 (Sunday), we use 7 for the calculation, but our code passes in a Monday, so getUTCDay() will be 1.
+      checkDate.setUTCDate(checkDate.getUTCDate() + 4 - (checkDate.getUTCDay() || 7));
+      time = checkDate.getTime();
+      checkDate.setUTCMonth(0); // Compare with Jan 1
+      checkDate.setUTCDate(1);
+      return Math.floor(Math.round((time - checkDate) / 86400000) / 7) + 1;
+    },
+
+    /**
+     * Determine the selectable years.
+     *
+     * @private
+     */
+    _getYearRange: function (drawYear, minDateParams, maxDateParams) {
+      var years = this.options.datePicker.yearRange.split(':');
+      var thisYear = new Date().getFullYear();
+
+      function determineYear(value) {
+        var parsedYear;
+        if (value.match(/c[+-].*/)) {
+          parsedYear = drawYear + parseInt(value.substring(1), 10);
+        } else if (value.match(/[+-].*/)) {
+          parsedYear = thisYear + parseInt(value, 10);
+        } else {
+          parsedYear = parseInt(value, 10);
+        }
+
+        return isNaN(parsedYear) ? thisYear : parsedYear;
+      }
+      var year = determineYear(years[0]);
+      var endYear = Math.max(year, determineYear(years[1] || ''));
+      year = minDateParams ? Math.max(year, minDateParams.fullYear) : year;
+      endYear = maxDateParams ? Math.min(endYear, maxDateParams.fullYear) : endYear;
+
+      return { startYear: year, endYear: endYear };
+    },
+
+    /**
+     * Determine the number of months to show.
+     *
+     * @private
+     */
+    _getNumberOfMonths: function () {
+      var numMonths = this.options.datePicker.numberOfMonths;
+      numMonths = typeof numMonths === 'string' ? parseInt(numMonths, 10) : numMonths;
+      if (numMonths == null) {
+        return [1, 1];
+      } else if (typeof numMonths === 'number') {
+        return [1, numMonths];
+      }
+      return numMonths;
+    },
+
+    /**
+     * Find the day of the week of the first of a month.
+     * Returns the day of the week for the specified date according to local time,
+     * where 0 represents Sunday, and 6 represents Saturday.
+     * For example, Jan 1, 2021 is a Friday no matter what timezone in the world your system is in, and it returns 5.
+     * @return {number} 0-6
+     * @private
+     */
+    _getFirstDayOfMonth: function (year, month) {
+      return toJSDateFullYear(year, month, 1).getDay();
+    },
+
+    /**
+     * Determines if we should allow a "next/prev" month display change.
+     *
+     * @private
+     */
+    _canAdjustMonth: function (offset, curYear, curMonth) {
+      const numMonths = this._getNumberOfMonths();
+      const calendarDate = addToCalendarDate(
+        { year: curYear, month: curMonth, day: 1 },
+        { years: 0, months: offset < 0 ? offset : numMonths[0] * numMonths[1], days: 0 }
+      );
+
+      if (offset < 0) {
+        calendarDate.day = getDaysInMonth(calendarDate.year, calendarDate.month);
+      }
+      return this._isInRange(
+        toJSDateFullYear(calendarDate.year, calendarDate.month, calendarDate.day)
+      );
+    },
+
+    /**
+     * Determines if we should allow a "next/prev" year display change.
+     *
+     * @private
+     */
+    _canAdjustYear: function (offset, curYear) {
+      let calendarDate;
+
+      if (offset < 0) {
+        calendarDate = addToCalendarDate(
+          { year: curYear, month: 11, day: 1 }, // Month is 0-based (11 = December)
+          { years: offset, months: 0, days: 0 }
+        );
+        calendarDate.day = getDaysInMonth(calendarDate.year, calendarDate.month);
+      } else {
+        calendarDate = addToCalendarDate(
+          { year: curYear, month: 0, day: 1 }, // Month is 0-based (0 = January)
+          { years: offset, months: 0, days: 0 }
+        );
+      }
+      return this._isInRange(
+        toJSDateFullYear(calendarDate.year, calendarDate.month, calendarDate.day)
+      );
+    },
+
+    /**
+     * Determines if we should allow a "next/prev" decade display change.
+     *
+     * @private
+     */
+    _canAdjustDecade: function (offset, curYear) {
+      const baseYear = Math.floor(curYear / 10) * 10;
+      let calendarDate;
+
+      if (offset < 0) {
+        calendarDate = addToCalendarDate(
+          { year: baseYear + 9, month: 11, day: 1 }, // Month is 0-based (11 = December)
+          { years: offset * 10, months: 0, days: 0 }
+        );
+        calendarDate.day = getDaysInMonth(calendarDate.year, calendarDate.month);
+      } else {
+        calendarDate = addToCalendarDate(
+          { year: baseYear, month: 0, day: 1 }, // Month is 0-based (0 = January)
+          { years: offset * 10, months: 0, days: 0 }
+        );
+      }
+      return this._isInRange(
+        toJSDateFullYear(calendarDate.year, calendarDate.month, calendarDate.day)
+      );
+    },
+
+    /**
+     * Returns a boolean of whether the print date is outside the min + max range, ignoring time since if of
+     * ojInputDateTime should allow selection of date and restrict based on ojInputTime.
+     *
+     * @private
+     */
+    _outSideMinMaxRange: function (printDate, minDateParams, maxDateParams) {
+      var minDate = minDateParams
+        ? toJSDateFullYear(minDateParams.fullYear, minDateParams.month, minDateParams.date)
+        : null;
+      var maxDate = maxDateParams
+        ? toJSDateFullYear(maxDateParams.fullYear, maxDateParams.month, maxDateParams.date)
+        : null;
+
+      return (minDate !== null && printDate < minDate) || (maxDate !== null && printDate > maxDate);
+    },
+
+    /**
+     * Is the given date in the accepted range?
+     *
+     * @param {Object} date constructed using local; however need to compare with min + max using their timezone
+     * @private
+     */
+    _isInRange: function (date) {
+      var converter = this._GetConverter();
+      var minDate;
+      var maxDate;
+      var minDateIso = this._getMinMaxDateIso('min');
+      var minYear = null;
+      var maxDateIso = this._getMinMaxDateIso('max');
+      var maxYear = null;
+      var years = this.options.datePicker.yearRange;
+
+      if (years) {
+        var yearSplit = years.split(':');
+        var currentYear = new Date().getFullYear();
+        minYear = parseInt(yearSplit[0], 10);
+        maxYear = parseInt(yearSplit[1], 10);
+        if (yearSplit[0].match(/[+-].*/)) {
+          minYear += currentYear;
+        }
+        if (yearSplit[1].match(/[+-].*/)) {
+          maxYear += currentYear;
+        }
+      }
+
+      if (minDateIso) {
+        // need to convert it to the same timezone as the value, since the calendar and etc
+        // all work by using string manipulation of the isoString
+        minDateIso = converter.parse(minDateIso);
+        var minDateParams = this._validateDatetime(minDateIso, ['fullYear', 'month', 'date'], true);
+        minDate = toJSDateFullYear(minDateParams.fullYear, minDateParams.month, minDateParams.date);
+      }
+      if (maxDateIso) {
+        maxDateIso = converter.parse(maxDateIso);
+        var maxDateParams = this._validateDatetime(maxDateIso, ['fullYear', 'month', 'date'], true);
+        maxDate = toJSDateFullYear(maxDateParams.fullYear, maxDateParams.month, maxDateParams.date);
+      }
+
+      return (
+        (!minDate || date.getTime() >= minDate.getTime()) &&
+        (!maxDate || date.getTime() <= maxDate.getTime()) &&
+        (!minYear || date.getFullYear() >= minYear) &&
+        (!maxYear || date.getFullYear() <= maxYear)
+      );
+    },
+
+    /**
+     * @protected
+     * @override
+     * @instance
+     * @ignore
+     * @memberof! oj.ojInputDate
+     */
+    _GetCalendarTitle: function () {
+      return this._EscapeXSS(
+        this.getTranslatedString('tooltipCalendar' + (this._IsDisabled() ? 'Disabled' : ''))
+      );
+    },
+
+    /**
+     * To disable or enable the widget
+     *
+     * @private
+     * @instance
+     */
+    _disableEnable: function (val) {
+      if (this._triggerNode) {
+        disableEnableSpan(this._triggerNode[0].children, val);
+        const calendarTitle = this._GetCalendarTitle();
+        this._triggerNode.find('.' + this._TRIGGER_CALENDAR_CLASS).attr('title', calendarTitle);
+        if (_isSafariOnIos()) {
+          this._triggerNode.attr('aria-label', calendarTitle);
+        }
+      }
+
+      if (val) {
+        this._hide(this._ON_CLOSE_REASON_CLOSE);
+      }
+
+      // need to update the look, note that if it is displaying the datepicker dropdown it would be hidden in _setOption function
+      if (this._isInLine) {
+        this._updateDatepicker();
+      }
+    },
+
+    /**
+     * Invoke super only if it is not inline
+     *
+     * @ignore
+     * @protected
+     * @override
+     * @instance
+     * @memberof! oj.ojInputDate
+     */
+    _AppendInputHelper: function () {
+      if (!this._isInLine && this.options.readOnly !== true) {
+        this._superApply(arguments);
+      }
+    },
+
+    /**
+     * Invoked when the input event happens
+     *
+     * @ignore
+     * @protected
+     * @memberof! oj.ojInputDate
+     * @param {Event} event
+     */
+    _onInputHandler: function (event) {
+      this._super(event);
+      var inputNode = event.target;
+      let contentWrapper = this._GetContentWrapper();
+
+      if (contentWrapper && this._isMobile) {
+        if (inputNode.value !== '') {
+          contentWrapper.parentElement.classList.remove('oj-form-control-empty-clearicon');
+        } else {
+          contentWrapper.parentElement.classList.add('oj-form-control-empty-clearicon');
+        }
+      }
+    },
+
+    /**
+     * The handler clears the value of the input element and sets the focus on the input container
+     * since this is only used for mobile.
+     *
+     * @ignore
+     * @private
+     * @memberof! oj.ojInputDate
+     * @param {Event} event
+     */
+    _onClearIconClickHandler: function (event) {
+      var elem = this.element[0];
+
+      elem.value = '';
+      // we need to update the raw value to keep it in sync
+      this._SetRawValue('', event);
+      elem.focus();
+      let contentWrapper = this._GetContentWrapper();
+      if (contentWrapper) {
+        contentWrapper.parentElement.classList.add('oj-form-control-empty-clearicon');
+      }
+    },
+
+    /**
+     * This handler will set the value from the input text element.
+     *
+     * @ignore
+     * @protected
+     * @override
+     * @param {Event} event
+     * @instance
+     * @memberof! oj.ojInputDate
+     */
+    // eslint-disable-next-line no-unused-vars
+    _onBlurHandler: function (event) {
+      if (this._isInLine) {
+        return;
+      }
+
+      this._superApply(arguments);
+    },
+
+    /**
+     * This handler will be invoked when keydown is triggered for this.element. When is of inline ignore the keydowns
+     *
+     * @ignore
+     * @protected
+     * @override
+     * @param {Event} event
+     * @instance
+     * @memberof! oj.ojInputDate
+     */
+    _onKeyDownHandler: function (event) {
+      if (this._isInLine) {
+        return undefined;
+      }
+
+      this._superApply(arguments);
+
+      var kc = $.ui.keyCode;
+      var handled = false;
+
+      if (this._datepickerShowing()) {
+        switch (event.keyCode) {
+          case kc.TAB:
+            this._hide(this._ON_CLOSE_REASON_TAB);
+            break;
+          case kc.ESCAPE:
+            this._hide(this._ON_CLOSE_REASON_CANCELLED);
+            handled = true;
+            break;
+          case kc.UP:
+          case kc.DOWN:
+            // when entering the datepicker via the up/down arrows, we should put the focus on the
+            // current day, which will be the only tabbable stop.  This also helps an IE11 bug that
+            // wasn't allowing tabbing to different elements in the popup ().
+            // This also fixes an unreported issue of needing to tab an extra time before it tabs to
+            // the next tab stop (all browsers).
+            var datePickerCalElem = this._dpDiv.find('.oj-datepicker-calendar')[0];
+            var tabStop = FocusUtils.focusFirstTabStop(datePickerCalElem);
+            // if we don't find a tab stop, we'll focus on the whole calendar like before.
+            if (!tabStop) {
+              datePickerCalElem.focus();
+            }
+
+            handled = true;
+            break;
+          default:
+        }
+      } else {
+        switch (event.keyCode) {
+          case kc.UP:
+          case kc.DOWN:
+            this._SetValue(this._GetDisplayValue(), event);
+            this.show();
+            handled = true;
+            break;
+          default:
+        }
+      }
+
+      if (handled) {
+        event.preventDefault();
+        event.stopPropagation();
+        return false;
+      }
+      return undefined;
+    },
+
+    /**
+     * Ignore for when of inline, since then this.element would be of div and has a funky nature
+     *
+     * @param {String} displayValue of the new string to be displayed
+     *
+     * @memberof! oj.ojInputDate
+     * @instance
+     * @protected
+     * @override
+     */
+    // eslint-disable-next-line no-unused-vars
+    _SetDisplayValue: function (displayValue) {
+      if (!this._isInLine) {
+        this._superApply(arguments);
+      }
+
+      this._setCurrentDate(this._getDateIso());
+
+      // so this is a change in behavior from original design. Previously it was decided that app developer
+      // would have to invoke refresh to render the calendar after setting the new value programatically; however now it is
+      // required to hook it in when _SetDisplayValue is invoked [can't use _SetValue b/c that function is not invoked
+      // when developer invokes ("option", "value", oj.IntlConverterUtils.dateToLocalIso(new Date()))
+      if (this._datepickerShowing()) {
+        // _SetDisplayValue is called after user picks a date from picker, we dont want to bring
+        //  focus to input element if the picker is showing still for the non-inline case.
+        // If the date picker is inline, and it doesn't contain the focus, then we don't need
+        // to restore it.
+        var focusOnCalendar = !(this._isInLine && !this._dpDiv[0].contains(document.activeElement));
+        this._updateDatepicker(focusOnCalendar);
+      }
+    },
+
+    /**
+     * This method also updates the messaging strategies as hints associated with validators could
+     * have changed.
+     *
+     * @memberof oj.ojInputDate
+     * @instance
+     * @protected
+     */
+    _ResetAllValidators: function () {
+      this._datePickerDefaultValidators = {};
+
+      this._superApply(arguments);
+    },
+
+    /**
+     * Need to override since apparently we allow users to set the converter to null, undefined, and etc and when
+     * they do we use the default converter
+     *
+     * @return {Object} a converter instance or null
+     *
+     * @memberof! oj.ojInputDate
+     * @instance
+     * @protected
+     * @override
+     */
+    _GetConverter: function () {
+      // If the converter option is set, then call super, which gets the converter
+      // instance we previously got and saved,
+      // or we get the instance of the converter, like for the old json syntax, and then
+      // we save it.
+      // NOTE: every time we get the converter option, it calls the dynamic getter in the default
+      // options, and only when the converter has been overridden does it stop. So we need to
+      // be sure to cache it in the createDynamicPropertyGetter code in setDefaultOptions.
+      if (this.options.converter) {
+        const resolvedOptions = this.options.converter.resolvedOptions?.();
+        const { todayTimeZone, twoDigitYearStart } = this.options;
+        const overrides = {};
+
+        if (todayTimeZone && resolvedOptions && todayTimeZone !== resolvedOptions.timeZone) {
+          // if todayTimeZone is defined and is not equal to the converter's timeZone,
+          // we will create a new converter and override the existing converter's timeZone option
+          overrides.timeZone = todayTimeZone;
+        }
+
+        if (
+          twoDigitYearStart &&
+          resolvedOptions &&
+          twoDigitYearStart !== resolvedOptions.twoDigitYearStart
+        ) {
+          // if twoDigitYearStart is defined and is not equal to the converter's twoDigitYearStart,
+          // we will create a new converter and override the existing converter's twoDigitYearStart option
+          overrides.twoDigitYearStart = twoDigitYearStart;
+        }
+
+        if (Object.keys(overrides).length) {
+          const options = {};
+          $.extend(options, resolvedOptions, overrides);
+          const overrideConverter = new ojconverterDatetime.IntlDateTimeConverter(options);
+          this.option('converter', overrideConverter, {
+            _context: {
+              writeback: true,
+              internalSet: true
+            }
+          });
+        }
+
+        return this._superApply(arguments);
+      }
+      // set the default converter when the app dev sets converter to null
+      var defaultConverter = this._GetDefaultConverter();
+      this.option('converter', defaultConverter, {
+        _context: {
+          writeback: true,
+          internalSet: true
+        }
+      });
+      return defaultConverter;
+    },
+
+    /**
+     * @ignore
+     * @protected
+     * @override
+     * @instance
+     * @memberof! oj.ojInputDate
+     */
+    _GetElementValue: function () {
+      return this.options.value || '';
+    },
+
+    /**
+     * @protected
+     * @override
+     * @instance
+     * @memberof! oj.ojInputDate
+     * @return {string}
+     */
+    _GetDefaultStyleClass: function () {
+      return 'oj-inputdate';
+    },
+
+    /**
+     * Sets up the default dateTimeRange and dateRestriction validators.
+     *
+     * @ignore
+     * @protected
+     * @override
+     * @instance
+     * @memberof! oj.ojInputDate
+     */
+    _GetImplicitValidators: function () {
+      var ret = this._superApply(arguments);
+
+      if (this.options.min != null || this.options.max != null) {
+        var rangeValidator = getImplicitDateTimeRangeValidator(
+          this.options,
+          this._GetConverter(),
+          this._GetDefaultStyleClass()
+        );
+        this._datePickerDefaultValidators.dateTimeRange = rangeValidator;
+      }
+
+      if (this.options.dayFormatter != null) {
+        var resValidator = getImplicitDateRestrictionValidator(this.options, this._GetConverter());
+        this._datePickerDefaultValidators.dateRestriction = resValidator;
+      }
+      return Object.assign(this._datePickerDefaultValidators, ret);
+    },
+
+    /**
+     * Notifies the component that its subtree has been removed from the document programmatically after the component has
+     * been created
+     * @memberof! oj.ojInputDate
+     * @instance
+     * @protected
+     */
+    _NotifyDetached: function () {
+      this._hide(this._ON_CLOSE_REASON_CLOSE);
+
+      // hide sets focus to the input, so we want to call super after hide. If we didn't, then
+      // the messaging popup will reopen and we don't want that.
+      this._superApply(arguments);
+    },
+
+    /**
+     * Notifies the component that its subtree has been made hidden programmatically after the component has
+     * been created
+     * @memberof! oj.ojInputDate
+     * @instance
+     * @protected
+     */
+    _NotifyHidden: function () {
+      this._hide(this._ON_CLOSE_REASON_CLOSE);
+
+      // hide sets focus to the input, so we want to call super after hide. If we didn't, then
+      // the messaging popup will reopen and we don't want that.
+      this._superApply(arguments);
+    },
+
+    _createDateTimeRangeValidator: function (converter) {
+      var options = this.options;
+      var defaultStyleClass = this._GetDefaultStyleClass();
+      var createValidator = function (resolvedConverter) {
+        this._dateTimeRangeValidator = getImplicitDateTimeRangeValidator(
+          options,
+          resolvedConverter,
+          defaultStyleClass
+        );
+        return this._dateTimeRangeValidator;
+      }.bind(this);
+
+      if (converter instanceof Promise) {
+        return converter.then(function (resolvedConverter) {
+          return createValidator(resolvedConverter);
+        });
+      }
+
+      return createValidator(converter);
+    },
+
+    _getDateTimeRangeValidator: function () {
+      return this._dateTimeRangeValidator;
+    },
+
+    _createDateRestrictionValidator: function (converter) {
+      var createValidator = function (resolvedConverter) {
+        this._dateRestrictionValidator = getImplicitDateRestrictionValidator(
+          this.options,
+          resolvedConverter
+        );
+        return this._dateRestrictionValidator;
+      }.bind(this);
+
+      if (converter instanceof Promise) {
+        return converter.then(function (resolvedConverter) {
+          return createValidator(resolvedConverter);
+        });
+      }
+
+      return createValidator(converter);
+    },
+
+    _getDateRestrictionValidator: function () {
+      return this._dateRestrictionValidator;
+    },
+
+    _getValidator: function (key) {
+      var validator = null;
+
+      if (key === 'min' || key === 'max') {
+        validator = this._getDateTimeRangeValidator();
+      } else if (key === 'dayFormatter') {
+        validator = this._getDateRestrictionValidator();
+      }
+
+      return validator;
+    },
+
+    /**
+     * Gets today's date w/o time
+     *
+     * @private
+     * @return {Object} date
+     */
+    _getTodayDate: function () {
+      var date = this._getCurrentDate();
+      date.setHours(0);
+      date.setMinutes(0);
+      date.setSeconds(0);
+      date.setMilliseconds(0);
+      return date;
+    },
+
+    /**
+     * Retrieve the default date shown on opening.
+     *
+     * @private
+     */
+    _getDateIso: function () {
+      var value;
+      if (this._isDateTimeSwitcher() && this._switcherDateValue) {
+        value = this._switcherDateValue;
+      } else {
+        value = this.options.value || this._getDefaultIsoDate();
+      }
+      return value;
+    },
+
+    // @inheritdoc
+    getNodeBySubId: function (locator) {
+      var node = null;
+      var subId = locator && locator.subId;
+      var dpDiv = this._dpDiv;
+      var dpContentDiv = this._getDatepickerContent();
+
+      if (subId) {
+        switch (subId) {
+          case 'oj-datepicker-content':
+            node = dpContentDiv[0];
+            break;
+          case 'oj-inputdatetime-calendar-icon':
+            node = $('.oj-inputdatetime-calendar-icon', this._triggerNode)[0];
+            break;
+          case 'oj-datepicker-prev-icon':
+            node = $('.oj-datepicker-prev-icon', dpDiv)[0];
+            break;
+          case 'oj-datepicker-next-icon':
+            node = $('.oj-datepicker-next-icon', dpDiv)[0];
+            break;
+          case 'oj-datepicker-month':
+            node = $('.oj-datepicker-month', dpDiv)[0];
+            break;
+          case 'oj-datepicker-year':
+            node = $('.oj-datepicker-year', dpDiv)[0];
+            break;
+          case 'oj-datepicker-current':
+            node = $('.oj-datepicker-current', dpDiv)[0];
+            break;
+          case 'oj-inputdatetime-date-input':
+            node = this._isInLine ? null : this.element[0];
+            break;
+          default:
+            node = null;
+        }
+      }
+
+      // Non-null locators have to be handled by the component subclasses
+      return node || this._superApply(arguments);
+    },
+
+    // @inheritdoc
+    getSubIdByNode: function (node) {
+      var dpDiv = this._dpDiv;
+      var subId = null;
+      var checks = [
+        { selector: '.oj-inputdatetime-calendar-icon', ele: this._triggerNode },
+        { selector: '.oj-datepicker-prev-icon', ele: dpDiv },
+        { selector: '.oj-datepicker-next-icon', ele: dpDiv },
+        { selector: '.oj-datepicker-month', ele: dpDiv },
+        { selector: '.oj-datepicker-year', ele: dpDiv },
+        { selector: '.oj-datepicker-current', ele: dpDiv }
+      ];
+
+      if (node === dpDiv[0]) {
+        return 'oj-datepicker-content';
+      }
+      if (!this._isInLine && node === this.element[0]) {
+        return 'oj-inputdatetime-date-input';
+      }
+
+      for (var i = 0, j = checks.length; i < j; i++) {
+        var map = checks[i];
+        var entry = $(map.selector, map.ele);
+
+        if (entry.length === 1 && entry[0] === node) {
+          subId = map.selector.substr(1);
+          break;
+        }
+      }
+
+      return subId || this._superApply(arguments);
+    },
+
+    /**
+     * Hides the datepicker. Note that this function is a no-op when renderMode is 'native'.
+     *
+     * @expose
+     * @memberof oj.ojInputDate
+     * @instance
+     * @return {void}
+     * @ojdeprecated {since: '17.0.0', description: 'This is not supported in the Redwood UX specification.'}
+     */
+    hide: function () {
+      return this._hide(this._ON_CLOSE_REASON_CLOSE);
+    },
+
+    /**
+     * Hides the datepicker
+     *
+     * @param {string} reason - the reason that the popup is being hidden ("selection", "cancelled", "tab")
+     *
+     * @protected
+     * @ignore
+     */
+    _hide: function (reason) {
+      if (!isPickerNative(this) && this._datepickerShowing() && !this._isInLine) {
+        this._popUpDpDiv.ojPopup('close');
+        this._onClose(reason);
+      }
+
+      return this;
+    },
+
+    /**
+     * Sets focus to the right place after the picker is closed
+     *
+     * @param {string} reason - the reason that the popup is being hidden ("selection", "cancelled", "tab")
+     *
+     * @protected
+     * @ignore
+     */
+    // eslint-disable-next-line no-unused-vars
+    _onClose: function (reason) {
+      this._closeInProgress = true;
+      try {
+        const showOnIsFocusOrUserFocus = this._showOnIsFocusOrUserFocus();
+        if (this._hasTouch && showOnIsFocusOrUserFocus) {
+          this._inputContainer.focus();
+        } else {
+          if (showOnIsFocusOrUserFocus) {
+            this._ignoreDatePickerShow = true;
+          }
+          // this._ignoreDatePickerShow flag is checked in show() and reset there as well.
+          // We don't want the focus show the picker in this case.
+          this.element.focus();
+        }
+      } finally {
+        this._ignoreDatePickerShow = false; // in case show() isn't called when this.element.focus() is called.
+        this._closeInProgress = false;
+      }
+    },
+
+    /**
+     * Resets the component by clearing all messages and messages attributes -
+     * <code class="prettyprint">messagesCustom</code> -
+     * and updates the component's display value using the attribute value. User entered values will be
+     * erased when this method is called.
+     *
+     * @example <caption>Reset component</caption>
+     * myComp.reset(); <br/>
+     *
+     * @name reset
+     * @method
+     * @access public
+     * @instance
+     * @expose
+     * @return {void}
+     * @memberof oj.ojDatePicker
+     * @ojshortdesc Resets the component by clearing all messages and messages attributes, and updates the component's display value using the attribute value.
+     * @since 0.7.0
+     * @ojdeprecated {since: '17.0.0', description: 'This is not supported in the Redwood UX specification.'}
+     */
+
+    /**
+     * Takes all deferred messages and shows them.
+     * It then updates the valid property; e.g.,
+     * if the valid state was "invalidHidden"
+     * before showMessages(), the valid state will become "invalidShown" after showMessages().
+     * <p>
+     * If there were no deferred messages this method simply returns.
+     * </p>
+     *
+     * @example <caption>Display all messages including deferred ones.</caption>
+     * myComp.showMessages();
+     *
+     * @name showMessages
+     * @method
+     * @access public
+     * @instance
+     * @return {void}
+     * @expose
+     * @memberof oj.ojDatePicker
+     * @ojshortdesc Takes all deferred messages and shows them.
+     * @since 0.7.0
+     * @ojdeprecated {since: '17.0.0', description: 'This is not supported in the Redwood UX specification.'}
+     */
+
+    /**
+     * Validates the component's display value using all validators registered on
+     * the component and updates the <code class="prettyprint">value</code> option by performing the
+     * following steps.
+     *
+     * <p>
+     * <ol>
+     * <li>All messages are cleared, including custom messages added by the app. </li>
+     * <li>If there is a parse error then the messages are shown.</li>
+     * <li>If there are no validators setup for the component the <code class="prettyprint">value</code>
+     * option is updated using the display value. Otherwise all
+     * validators are run in sequence using the parsed value from the previous step. The implicit
+     * required validator is run first if the component is marked required. When a validation error is
+     * encountered it is remembered and the next validator in the sequence is run. </li>
+     * <li>At the end of validation if there are errors, the messages are shown.
+     * If there were no errors, then the
+     * <code class="prettyprint">value</code> option is updated.</li>
+     * </ol>
+     *
+     * @example <caption>Validate component using its current value.</caption>
+     * // validate display value and shows messages if there are any to be shown.
+     * myComp.validate();
+     * @example <caption>Validate component and use the Promise's resolved state.</caption>
+     * myComp.validate().then(
+     *  function(result) {
+     *    if(result === "valid")
+     *    {
+     *      submitForm();
+     *    }
+     *  });
+     * @return {Promise.<string>} Promise resolves to "valid" if the component passed all validations.
+     * The Promise resolves to "invalid" if there were validation errors.
+     * @ojsignature {target: "Type", value: "Promise<'valid'|'invalid'>", for : "returns"}
+     *
+     * @name validate
+     * @method
+     * @access public
+     * @expose
+     * @memberof oj.ojDatePicker
+     * @ojshortdesc Validates the component's display value using all validators registered on the component. If there are no validation errors. then the value is updated. See the Help documentation for more information.
+     * @instance
+     * @since 4.0.0
+     * @ojdeprecated {since: '17.0.0', description: 'This is not supported in the Redwood UX specification.'}
+     */
+
+    /**
+     * Refreshes the element. Usually called after dom changes have been made.
+     * @expose
+     * @memberof oj.ojInputDate
+     * @instance
+     * @return {void}
+     * @ojdeprecated {since: '17.0.0', description: 'This is not supported in Core Pack components.'}
+     */
+    refresh: function () {
+      if (this._triggerNode) {
+        const calendarTitle = this._GetCalendarTitle();
+
+        this._triggerNode.find('.' + this._TRIGGER_CALENDAR_CLASS).attr('title', calendarTitle);
+        if (_isSafariOnIos()) {
+          this._triggerNode.attr('aria-label', calendarTitle);
+        }
+      }
+      return this._superApply(arguments) || this;
+    },
+
+    /**
+     * Shows the datepicker
+     *
+     * @expose
+     * @memberof oj.ojInputDate
+     * @instance
+     * @return {void}
+     * @ojdeprecated {since: '17.0.0', description: 'This is not supported in the Redwood UX specification.'}
+     */
+    show: function () {
+      if (this._datepickerShowing() || this._IsDisabled() || this.options.readOnly) {
+        return;
+      }
+
+      if (this._ignoreDatePickerShow) {
+        // set within hide or elsewhere and focus is placed back on this.element
+        this._ignoreDatePickerShow = false;
+        return;
+      }
+
+      if (isPickerNative(this)) {
+        // our html picker is inside popup, which will take care of removing focus from input element,
+        //  for native case we do it explicitly
+        this.element.blur();
+
+        // picker expects the fields like 'date' and 'mode' to retain its names. Use bracket notation
+        //  to avoid closure compiler from renaming them
+        var pickerOptions = {};
+        pickerOptions.date = _getNativePickerDate(
+          this._getNativeDatePickerConverter(),
+          this._getDateIso()
+        );
+        pickerOptions.mode = 'date';
+
+        this._ShowNativeDatePicker(pickerOptions);
+      } else {
+        this._ShowHTMLDatePicker();
+      }
+    },
+
+    _createNativeDatePickerConverter: function (inputConverter) {
+      if (this._nativePickerConverter === null) {
+        var self = this;
+        var resolvedOptions = inputConverter.resolvedOptions();
+        var options = {};
+        $.extend(options, resolvedOptions, { isoStrFormat: 'offset' });
+
+        self._nativePickerConverter = new ojconverterDatetime.IntlDateTimeConverter(options);
+      }
+    },
+
+    // If the inputConverter is not one with isoStrFormat offset, then create a new converter
+    // based on the options of the inputConverter but with isoStrFormat: 'offset'.
+    _createOffsetConverter: function (inputConverter) {
+      var resolvedOptions = inputConverter.resolvedOptions();
+      const isoStrFormat = resolvedOptions.isoStrFormat;
+      if (isoStrFormat === 'offset') return inputConverter;
+      var options = {};
+      $.extend(options, resolvedOptions, { isoStrFormat: 'offset' });
+      return new ojconverterDatetime.IntlDateTimeConverter(options);
+    },
+
+    // Call this function if you need to substitute the day, month, year, time, etc, of the date time iso
+    // string. You cannot substitute in a day or time to a zulu iso string.
+    // If the value is 'zulu', then the converter uses 'offset' isoStrFormat.
+    // Substituting the day into a zulu date might be a different day in the timezone and then the formatted
+    // date will be a different day than what the user selected. (See JET-54551)
+    // So if it is zulu we change it to offset.
+    // This is what a zulu and offset format looks like
+    // zulu: 2013-12-13T04:00:00Z
+    // offset: 2013-12-01T20:00:00-08:00
+    _parseValueToSubstituteDateOrTimePiece: function (converter, dateTimeIso) {
+      let parsedValue;
+      if (dateTimeIso && ojconverterutilsI18n.IntlConverterUtils._getISOStrFormatType(dateTimeIso) === 'zulu') {
+        const offsetConverter = this._createOffsetConverter(converter);
+        parsedValue = offsetConverter.parse(dateTimeIso);
+      } else {
+        parsedValue = converter.parse(dateTimeIso);
+      }
+      return parsedValue;
+    },
+
+    /**
+     * TODO: Technically i think should be used for the calendar, but later since late in release
+     * @ignore
+     */
+    _getNativeDatePickerConverter: function () {
+      if (this._nativePickerConverter === null) {
+        var resolvedOptions = this._GetConverter().resolvedOptions();
+        var options = {};
+        $.extend(options, resolvedOptions, { isoStrFormat: 'offset' });
+
+        this._nativePickerConverter = new ojconverterDatetime.IntlDateTimeConverter(options);
+      }
+
+      return this._nativePickerConverter;
+    },
+
+    /**
+     * Shows the native datepicker
+     *
+     * @protected
+     * @memberof! oj.ojInputDate
+     * @instance
+     */
+    _ShowNativeDatePicker: function (pickerOptions) {
+      var minDate = this._getMinMaxDateIso('min');
+      var maxDate = this._getMinMaxDateIso('max');
+      var conv = this._getNativeDatePickerConverter();
+
+      if (minDate) {
+        // eslint-disable-next-line no-param-reassign
+        pickerOptions.minDate = _getNativePickerDate(conv, minDate).valueOf();
+      }
+
+      if (maxDate) {
+        // eslint-disable-next-line no-param-reassign
+        pickerOptions.maxDate = _getNativePickerDate(conv, maxDate).valueOf();
+      }
+
+      var self = this;
+
+      // onError is called only for Android for cases where picker is cancelled, or if there were
+      //  to be any error at the native picker end
+      function onError(error) {
+        self._nativePickerShowing = false;
+
+        // if user cancels the picker dialog, we just bring the focus back
+        // closure compiler renames 'startsWith', using bracket notation hence
+        if (error.startsWith('cancel')) {
+          self._onClose(self._ON_CLOSE_REASON_CANCELLED);
+        } else {
+          Logger.error('Error: native date or time picker failed: ' + error);
+        }
+      }
+
+      self._nativePickerShowing = true;
+
+      window.datePicker.show(pickerOptions, $.proxy(this._OnDatePicked, this), onError);
+    },
+
+    /**
+     * callback upon picking date from native picker
+     *
+     * @protected
+     * @memberof! oj.ojInputDate
+     * @instance
+     */
+    _OnDatePicked: function (date) {
+      this._nativePickerShowing = false;
+
+      // for iOS and windows, from the current implementation of the native datepicker plugin,
+      //  for case when the picker is cancelled, this callback gets called without the parameter
+      if (date) {
+        // Explicitly setting timezone is supported only in iOS, and we do not have a need to do
+        //  so at this time, so not exposing this feature for now.
+        // The native date picker will preserve the timezone set on the supplied date upon returning,
+        // however the returned value has its time part reset to 00:00 when in 'date' mode
+        //  - need to copy time over hence
+        var isoString = this._validateDatetime(this._getDateIso(), {
+          month: date.getMonth(),
+          date: date.getDate(),
+          fullYear: date.getFullYear()
+        });
+        // TODO: Why is this format needed? It should work fine without it.
+        var formattedTime = this._GetConverter().format(isoString);
+
+        // _SetValue will inturn call _SetDisplayValue
+        this._SetValue(formattedTime, {});
+      }
+
+      this._onClose(this._ON_CLOSE_REASON_SELECTION);
+    },
+    /**
+     * @protected
+     * @param {string} isoString isoString that may not be a complete isoString
+     * @param {Array|Object} actionParam list of option parameters
+     * @param {boolean=} doParseValue whether one should parseInt the value during the get request
+     * @returns {string} returns a valid isoString or a default isostring
+     * @since 6.1
+     * @ignore
+     * @memberof oj.ojInputDate
+     */
+    _validateDatetime: function (isoString, actionParam, doParseValue) {
+      var valueParams;
+      try {
+        valueParams = ojconverterutilsI18n.IntlConverterUtils._dateTime(isoString, actionParam, doParseValue);
+      } catch (e) {
+        Logger.info(
+          'The value of the InputDate element should be an ISOString, please use a valid ISOString'
+        );
+        valueParams = ojconverterutilsI18n.IntlConverterUtils._dateTime(
+          this._getDefaultIsoDate(),
+          actionParam,
+          doParseValue
+        );
+      }
+      return valueParams;
+    },
+
+    /**
+     * @memberof oj.ojInputDate
+     * @instance
+     * @private
+     */
+    _labelledByUpdatedForSet: LabeledByUtils._labelledByUpdatedForSet,
+
+    /**
+     * Shows the HTML datepicker
+     *
+     * @ignore
+     * @protected
+     * @memberof oj.ojInputDate
+     */
+    _ShowHTMLDatePicker: function () {
+      var rtl = this._IsRTL();
+
+      var converter = this._GetConverter();
+      if (!(converter instanceof Promise)) {
+        // switcherPrevValue is used as the base value where the new day, month and/or year is substituted into
+        // when the user selects a new day, month, and/or year. (See the switchDone method for details)
+        // switcherPrevValue can't be zulu, because if it is zulu,
+        // then substituting the day into a zulu date might be a different day in the timezone and then the formatted
+        // date will be a different day than what the user selected. (See JET-54551)
+        // So if it is zulu we change it to offset.
+        // This is what a zulu and offset format looks like
+        // zulu: 2013-12-13T04:00:00Z
+        // offset: 2013-12-01T20:00:00-08:00
+        const dateIso = this.options.value ? this._getDateIso() : '';
+        this._switcherPrevValue = this._parseValueToSubstituteDateOrTimePiece(converter, dateIso);
+      } else {
+        this._switcherPrevValue = this._getDateIso();
+      }
+      this._switcherPrevDay = this._currentDay;
+      this._switcherPrevMonth = this._currentMonth;
+      this._switcherPrevYear = this._currentYear;
+
+      // to avoid flashes on Firefox
+      this._getDatepickerContent().empty();
+      this._updateDatepicker();
+
+      if (!_isLargeScreen()) {
+        const defPosition = {
+          my: { horizontal: 'center', vertical: 'bottom' },
+          at: { horizontal: 'center', vertical: 'bottom' },
+          of: window,
+          collision: 'flipfit'
+        };
+        this._popUpDpDiv.ojPopup('open', this._labelValueWrapper.parentNode, defPosition);
+
+        // if we don't have a large screen, the popup will be modal so
+        // we need to give it the focus
+        this._dpDiv.find('.oj-datepicker-calendar').focus();
+      } else {
+        const defPosition = {
+          my: 'start top',
+          at: 'start bottom',
+          of: this._labelValueWrapper.parentNode,
+          collision: 'flipfit',
+          offset: { x: 0, y: this._dropdownVerticalOffset }
+        };
+        const position = this._getDropdownPosition(defPosition, rtl);
+        this._popUpDpDiv.ojPopup('open', this._labelValueWrapper.parentNode, position);
+      }
+      this.element.attr({ 'aria-expanded': 'true', 'aria-controls': this._popUpDpDiv.attr('id') });
+
+      return this;
+    },
+    /**
+     * Retrieve the dropdown position. It is different for largeScreens.
+     * Also, the UX shows a gap between input and picker.
+     *
+     * @private
+     */
+    _getDropdownPosition: function (defPosition, isRtl) {
+      let position = ojpopupcore.PositionUtils.normalizeHorizontalAlignment(defPosition, isRtl);
+      // need to coerce to Jet and then JqUi in order for vertical offset to work
+      position = ojpopupcore.PositionUtils.coerceToJet(position);
+      position = ojpopupcore.PositionUtils.coerceToJqUi(position);
+      // set the position.of again to be the element, because coerceToJet will change it to a
+      // string selector, which can then result in an error being thrown from jqueryui
+      // position.js getDimensions(elem) method if the element has been removed from the DOM
+      position.of = defPosition.of;
+      return position;
+    }
+  });
+
+  // Add custom getters for properties
+  ojcomponentcore.setDefaultOptions({
+    ojInputDate: {
+      converter: ojcomponentcore.createDynamicPropertyGetter(function () {
+        if (_sDefaultDateConverter == null) {
+          _sDefaultDateConverter = _getDateDefaultConverter();
+        }
+        return _sDefaultDateConverter;
+      }),
+
+      firstDayOfWeek: ojcomponentcore.createDynamicPropertyGetter(function () {
+        return LocaleData.getFirstDayOfWeek();
+      }),
+
+      dayWide: ojcomponentcore.createDynamicPropertyGetter(function () {
+        return LocaleData.getDayNames('wide');
+      }),
+
+      dayNarrow: ojcomponentcore.createDynamicPropertyGetter(function () {
+        return LocaleData.getDayNames('narrow');
+      }),
+
+      monthWide: ojcomponentcore.createDynamicPropertyGetter(function () {
+        return LocaleData.getMonthNames('wide');
+      }),
+
+      monthAbbreviated: ojcomponentcore.createDynamicPropertyGetter(function () {
+        return LocaleData.getMonthNames('abbreviated');
+      }),
+
+      datePicker: ojcomponentcore.createDynamicPropertyGetter(function () {
+        return (ThemeUtils.parseJSONFromFontFamily('oj-inputdatetime-option-defaults') || {}).datePicker;
+      }),
+
+      renderMode: ojcomponentcore.createDynamicPropertyGetter(function () {
+        return (ThemeUtils.parseJSONFromFontFamily('oj-inputdatetime-option-defaults') || {}).renderMode;
+      }),
+
+      keyboardEdit: ojcomponentcore.createDynamicPropertyGetter(function () {
+        return (ThemeUtils.parseJSONFromFontFamily('oj-inputdatetime-option-defaults') || {}).keyboardEdit;
+      })
+    }
+  });
+
+  // Fragments:
+
+  /**
+   * <table class="keyboard-table">
+   *   <thead>
+   *     <tr>
+   *       <th>Target</th>
+   *       <th>Gesture</th>
+   *       <th>Action</th>
+   *     </tr>
+   *   </thead>
+   *   <tbody>
+   *     <tr>
+   *       <td>Input element and calendar trigger icon</td>
+   *       <td><kbd>Tap</kbd></td>
+   *       <td>When not inline, shows the grid and moves the focus into the expanded date grid</td>
+   *     </tr>
+   *     <tr>
+   *       <td>Input element with picker open</td>
+   *       <td><kbd>Tap</kbd></td>
+   *       <td>Set focus to the input. If hints, title or messages exist in a notewindow,
+   *        pop up the notewindow.</td>
+   *     </tr>
+   *     <tr>
+   *       <td>Picker</td>
+   *       <td><kbd>Swipe Left</kbd></td>
+   *       <td>Switch to next month (or previous month on RTL page).</td>
+   *     </tr>
+   *     <tr>
+   *       <td>Picker</td>
+   *       <td><kbd>Swipe Right</kbd></td>
+   *       <td>Switch to previous month (or next month on RTL page).</td>
+   *     </tr>
+   *   </tbody>
+   * </table>
+   *
+   * @ojfragment touchDoc - Used in touch gesture section of classdesc, and standalone gesture doc
+   * @memberof oj.ojInputDate
+   */
+
+  /**
+   * <table class="keyboard-table">
+   *   <thead>
+   *     <tr>
+   *       <th>Target</th>
+   *       <th>Gesture</th>
+   *       <th>Action</th>
+   *     </tr>
+   *   </thead>
+   *   <tbody>
+   *     <tr>
+   *       <td>Picker</td>
+   *       <td><kbd>Swipe Left</kbd></td>
+   *       <td>Switch to next month (or previous month on RTL page).</td>
+   *     </tr>
+   *     <tr>
+   *       <td>Picker</td>
+   *       <td><kbd>Swipe Right</kbd></td>
+   *       <td>Switch to previous month (or next month on RTL page).</td>
+   *     </tr>
+   *   </tbody>
+   * </table>
+   *
+   * @ojfragment touchDoc - Used in touch gesture section of classdesc, and standalone gesture doc
+   * @memberof oj.ojDatePicker
+   */
+
+  /**
+   * <table class="keyboard-table">
+   *   <thead>
+   *     <tr>
+   *       <th>Target</th>
+   *       <th>Key</th>
+   *       <th>Action</th>
+   *     </tr>
+   *   </thead>
+   *   <tbody>
+   *     <tr>
+   *       <td>Input element</td>
+   *       <td><kbd>DownArrow or UpArrow</kbd></td>
+   *       <td>Shows the calender grid and moves the focus into the expanded grid.</td>
+   *     </tr>
+   *     <tr>
+   *       <td>Input element</td>
+   *       <td><kbd>Esc</kbd></td>
+   *       <td>Close the grid.</tr>
+   *     </tr>
+   *     <tr>
+   *       <td>Input element</td>
+   *       <td><kbd>Tab In</kbd></td>
+   *       <td>Set focus to the input. If hints, title or messages exist in a notewindow,
+   *        pop up the notewindow.</td>
+   *     </tr>
+   *     <tr>
+   *       <td>Picker</td>
+   *       <td><kbd>Enter</kbd></td>
+   *       <td>Select the currently focused day</td>
+   *     </tr>
+   *     <tr>
+   *       <td>Picker</td>
+   *       <td><kbd>UpArrow</kbd></td>
+   *       <td>Move up in the grid.</tr>
+   *     </tr>
+   *     <tr>
+   *       <td>Picker</td>
+   *       <td><kbd>DownArrow</kbd></td>
+   *       <td>Move down in the grid.</tr>
+   *     </tr>
+   *     <tr>
+   *       <td>Picker</td>
+   *       <td><kbd>RightArrow</kbd></td>
+   *       <td>Move right in the grid.</tr>
+   *     </tr>
+   *     <tr>
+   *       <td>Picker</td>
+   *       <td><kbd>LeftArrow</kbd></td>
+   *       <td>Move left in the grid.</tr>
+   *     </tr>
+   *     <tr>
+   *       <td>Picker</td>
+   *       <td><kbd>Esc</kbd></td>
+   *       <td>Close the grid.</tr>
+   *     </tr>
+   *     <tr>
+   *       <td>Picker</td>
+   *       <td><kbd>Home</kbd></td>
+   *       <td>Move focus to first day of the month.</tr>
+   *     </tr>
+   *     <tr>
+   *       <td>Picker</td>
+   *       <td><kbd>End</kbd></td>
+   *       <td>Move focus to last day of the month.</tr>
+   *     </tr>
+   *     <tr>
+   *       <td>Picker</td>
+   *       <td><kbd>PageUp</kbd></td>
+   *       <td>Switch to previous month.</tr>
+   *     </tr>
+   *     <tr>
+   *       <td>Picker</td>
+   *       <td><kbd>PageDown</kbd></td>
+   *       <td>Switch to next month.</tr>
+   *     </tr>
+   *     <tr>
+   *       <td>Picker</td>
+   *       <td><kbd>Alt + PageUp</kbd></td>
+   *       <td>Switch to previous year.</tr>
+   *     </tr>
+   *     <tr>
+   *       <td>Picker</td>
+   *       <td><kbd>Alt + PageDown</kbd></td>
+   *       <td>Switch to next year.</tr>
+   *     </tr>
+   *     <tr>
+   *       <td>Picker</td>
+   *       <td><kbd>Ctrl + Alt + PageUp</kbd></td>
+   *       <td>Switch to previous by stepBigMonths.</tr>
+   *     </tr>
+   *     <tr>
+   *       <td>Picker</td>
+   *       <td><kbd>Ctrl + Alt + PageDown</kbd></td>
+   *       <td>Switch to next by stepBigMonths.</tr>
+   *     </tr>
+   *     <tr>
+   *       <td>Picker</td>
+   *       <td><kbd>Ctrl + Alt + T</kbd></td>
+   *       <td>Places focus on Today button if it exists.</tr>
+   *     </tr>
+   *   </tbody>
+   * </table>
+   *
+   * @ojfragment keyboardDoc - Used in keyboard section of classdesc, and standalone gesture doc
+   * @memberof oj.ojInputDate
+   */
+
+  /**
+   * <table class="keyboard-table">
+   *   <thead>
+   *     <tr>
+   *       <th>Target</th>
+   *       <th>Key</th>
+   *       <th>Action</th>
+   *     </tr>
+   *   </thead>
+   *   <tbody>
+   *     <tr>
+   *       <td>Picker</td>
+   *       <td><kbd>Enter</kbd></td>
+   *       <td>Select the currently focused day</td>
+   *     </tr>
+   *     <tr>
+   *       <td>Picker</td>
+   *       <td><kbd>UpArrow</kbd></td>
+   *       <td>Move up in the grid.</tr>
+   *     </tr>
+   *     <tr>
+   *       <td>Picker</td>
+   *       <td><kbd>DownArrow</kbd></td>
+   *       <td>Move down in the grid.</tr>
+   *     </tr>
+   *     <tr>
+   *       <td>Picker</td>
+   *       <td><kbd>RightArrow</kbd></td>
+   *       <td>Move right in the grid.</tr>
+   *     </tr>
+   *     <tr>
+   *       <td>Picker</td>
+   *       <td><kbd>LeftArrow</kbd></td>
+   *       <td>Move left in the grid.</tr>
+   *     </tr>
+   *     <tr>
+   *       <td>Picker</td>
+   *       <td><kbd>Esc</kbd></td>
+   *       <td>Close the grid.</tr>
+   *     </tr>
+   *     <tr>
+   *       <td>Picker</td>
+   *       <td><kbd>Home</kbd></td>
+   *       <td>Move focus to first day of the month.</tr>
+   *     </tr>
+   *     <tr>
+   *       <td>Picker</td>
+   *       <td><kbd>End</kbd></td>
+   *       <td>Move focus to last day of the month.</tr>
+   *     </tr>
+   *     <tr>
+   *       <td>Picker</td>
+   *       <td><kbd>PageUp</kbd></td>
+   *       <td>Switch to previous month.</tr>
+   *     </tr>
+   *     <tr>
+   *       <td>Picker</td>
+   *       <td><kbd>PageDown</kbd></td>
+   *       <td>Switch to next month.</tr>
+   *     </tr>
+   *     <tr>
+   *       <td>Picker</td>
+   *       <td><kbd>Alt + PageUp</kbd></td>
+   *       <td>Switch to previous year.</tr>
+   *     </tr>
+   *     <tr>
+   *       <td>Picker</td>
+   *       <td><kbd>Alt + PageDown</kbd></td>
+   *       <td>Switch to next year.</tr>
+   *     </tr>
+   *     <tr>
+   *       <td>Picker</td>
+   *       <td><kbd>Ctrl + Alt + PageUp</kbd></td>
+   *       <td>Switch to previous by stepBigMonths.</tr>
+   *     </tr>
+   *     <tr>
+   *       <td>Picker</td>
+   *       <td><kbd>Ctrl + Alt + PageDown</kbd></td>
+   *       <td>Switch to next by stepBigMonths.</tr>
+   *     </tr>
+   *     <tr>
+   *       <td>Picker</td>
+   *       <td><kbd>Ctrl + Alt + T</kbd></td>
+   *       <td>Places focus on Today button if it exists.</tr>
+   *     </tr>
+   *   </tbody>
+   * </table>
+   *
+   * @ojfragment keyboardDoc - Used in keyboard section of classdesc, and standalone gesture doc
+   * @memberof oj.ojDatePicker
+   */
+
+  // ////////////////     SUB-IDS     //////////////////
+
+  /**
+   * <p>Sub-ID for the InputDate and InputDateTime input element. Note that if element is inline for
+   * InputDate it would return null whereas InputDateTime would return the input element of the internally created
+   * InputTime element.
+   *
+   * @ojsubid oj-inputdatetime-date-input
+   * @memberof oj.ojInputDate
+   *
+   * @example <caption>Get the node for the input element:</caption>
+   * var node = myInputDate.getNodeBySubId( {'subId': 'oj-inputdatetime-date-input'} );
+   */
+
+  /**
+   * <p>Sub-ID for the calendar drop down node.
+   *
+   * @ojsubid oj-datepicker-content
+   * @memberof oj.ojInputDate
+   *
+   * @example <caption>Get the calendar drop down node:</caption>
+   * // myInputElement is InputDate or InputDateTime.
+   * var node = myInputElement.getNodeBySubId( {'subId': 'oj-datepicker-content'} );
+   */
+
+  /**
+   * <p>Sub-ID for the calendar icon that triggers the calendar drop down.
+   *
+   * @ojsubid oj-inputdatetime-calendar-icon
+   * @memberof oj.ojInputDate
+   *
+   * @example <caption>Get the calendar icon that triggers the calendar drop down:</caption>
+   * // myInputElement is InputDate or InputDateTime.
+   * var node = myInputElement.getNodeBySubId( {'subId': 'oj-inputdatetime-calendar-icon'} );
+   */
+
+  /**
+   * <p>Sub-ID for the previous month icon.
+   *
+   * @ojsubid oj-datepicker-prev-icon
+   * @memberof oj.ojInputDate
+   *
+   * @example <caption>Get the previous month icon:</caption>
+   * // myInputElement is InputDate or InputDateTime.
+   * var node = myInputElement.getNodeBySubId( {'subId': 'oj-datepicker-prev-icon'} );
+   */
+
+  /**
+   * <p>Sub-ID for the next month icon.
+   *
+   * @ojsubid oj-datepicker-next-icon
+   * @memberof oj.ojInputDate
+   *
+   * @example <caption>Get the next month icon:</caption>
+   * // myInputElement is InputDate or InputDateTime.
+   * var node = myInputElement.getNodeBySubId( {'subId': 'oj-datepicker-next-icon'} );
+   */
+
+  /**
+   * <p>Sub-ID for the month span or select element.
+   *
+   * @ojsubid oj-datepicker-month
+   * @memberof oj.ojInputDate
+   *
+   * @example <caption>Get the month span or select element:</caption>
+   * // myInputElement is InputDate or InputDateTime.
+   * var node = myInputElement.getNodeBySubId( {'subId': 'oj-datepicker-month'} );
+   */
+
+  /**
+   * <p>Sub-ID for the year span or select element.
+   *
+   * @ojsubid oj-datepicker-year
+   * @memberof oj.ojInputDate
+   *
+   * @example <caption>Get the year span or select element:</caption>
+   * // myInputElement is InputDate or InputDateTime.
+   * var node = myInputElement.getNodeBySubId( {'subId': 'oj-datepicker-year'} );
+   */
+
+  /**
+   * <p>Sub-ID for the current/today button for button bar.
+   *
+   * @ojsubid oj-datepicker-current
+   * @memberof oj.ojInputDate
+   *
+   * @example <caption>Get the current/today button for button bar:</caption>
+   * // myInputElement is InputDate or InputDateTime.
+   * var node = myInputElement.getNodeBySubId( {'subId': 'oj-datepicker-current'} );
+   */
+
+  /**
+   * Input type for the dayFormatter callback function
+   * @typedef {object} oj.ojInputDate.DayFormatterInput
+   * @property {number} fullYear
+   * @property {number} month
+   * @property {number} date
+   */
+  /**
+   * Output type for the dayFormatter callback function
+   * @typedef {object} oj.ojInputDate.DayFormatterOutput
+   * @property {boolean=} disabled
+   * @property {string=} className
+   * @property {string=} tooltip
+   */
+
+  /**
+   * @ignore
+   * @constructor
+   * @protected
+   * @param {TimePickerModel} parentModel parent picker model
+   * @param {Object} properties initial property values
+   */
+  // eslint-disable-next-line no-unused-vars
+  function WheelModel(parentModel, properties) {
+    var SPIN_TIMES = [150, 100, 50, 25, 16]; // Note: No transitions for faster spins
+
+    var _value = 0;
+    var _parentModel = parentModel;
+
+    var _position = 0;
+    var _currentPosition = 0;
+
+    var _displayRange = 1;
+    var _valueRange = 1;
+    var _increment = 1;
+    var _wheelSize;
+    var _keyboardValue = '';
+    var _min;
+    var _max;
+    var _wrapped;
+
+    var _valueMultiplier;
+    var _valueUpperMultiplier;
+    var _displayMultiplier = 1;
+    var _displayUpperMultiplier;
+
+    var _spinning = false;
+
+    var self = this;
+
+    defineProperties();
+    defineMethods();
+    setProperties();
+
+    function defineProperties() {
+      Object.defineProperty(self, 'position', {
+        enumerable: true,
+        get: function () {
+          return _position;
+        },
+        set: function (position) {
+          var val = mod(position, _wheelSize) * _increment;
+          if (val >= _min && val < _max && position !== _position) {
+            self.value += (position - _position) * _increment;
+          }
+        }
+      });
+
+      Object.defineProperty(self, 'value', {
+        enumerable: true,
+        get: function () {
+          return _value;
+        },
+        set: function (value) {
+          var roundedValue = Math.round(value / _increment) * _increment;
+
+          if (validValue(roundedValue) && _value !== roundedValue) {
+            _value = mod(roundedValue, _valueRange);
+            setPosition();
+            if (self.linked) {
+              if (_valueRange === 2) {
+                // Don't spin the linked wheel when changing am/pm.  Just set the
+                // model value and update the DOM structure since we don't want the
+                // hour wheel to spin back to the same number.
+                _parentModel.disableSpin = true;
+              }
+              _parentModel.value = wheelValueToParentValue(_parentModel.value, _value);
+              _parentModel.disableSpin = false;
+            }
+          }
+        }
+      });
+
+      Object.defineProperty(self, 'increment', {
+        enumerable: true,
+        get: function () {
+          return _increment;
+        },
+        set: function (increment) {
+          if (_increment !== increment) {
+            _increment = increment;
+            refreshSettings();
+          }
+        }
+      });
+
+      Object.defineProperty(self, 'valueMultiplier', {
+        enumerable: true,
+        get: function () {
+          return _valueMultiplier;
+        },
+        set: function (valueMultiplier) {
+          if (_valueMultiplier !== valueMultiplier) {
+            _valueMultiplier = valueMultiplier;
+            refreshSettings();
+          }
+        }
+      });
+
+      Object.defineProperty(self, 'valueRange', {
+        enumerable: true,
+        get: function () {
+          return _valueRange;
+        },
+        set: function (valueRange) {
+          if (_valueRange !== valueRange) {
+            _valueRange = valueRange;
+            refreshSettings();
+          }
+        }
+      });
+
+      Object.defineProperty(self, 'displayMultiplier', {
+        enumerable: true,
+        get: function () {
+          return _displayMultiplier;
+        },
+        set: function (displayMultiplier) {
+          if (_displayMultiplier !== displayMultiplier) {
+            _displayMultiplier = displayMultiplier;
+            refreshSettings();
+          }
+        }
+      });
+
+      Object.defineProperty(self, 'displayRange', {
+        enumerable: true,
+        get: function () {
+          return _displayRange;
+        },
+        set: function (displayRange) {
+          if (_displayRange !== displayRange) {
+            _displayRange = displayRange;
+            refreshSettings();
+          }
+        }
+      });
+
+      Object.defineProperty(self, 'keyboardValue', {
+        enumerable: true,
+        get: function () {
+          return _keyboardValue;
+        },
+        set: function (keyboardValue) {
+          _keyboardValue = keyboardValue;
+          if (self.parser && _keyboardValue) {
+            var value = self.parser(_keyboardValue);
+            if (value >= 0) {
+              value = displayValueToWheelValue(_value, value);
+              if (_min <= value && value < _max) {
+                self.value = value;
+              }
+            }
+
+            // Clear _keyboardValue when the user has typed in 2 digits or after
+            // 1 second, so that a new value can be accepted.
+            if (_keyboardValue.length >= 2) {
+              _keyboardValue = '';
+            } else {
+              setTimeout(function () {
+                _keyboardValue = '';
+              }, 1000);
+            }
+          }
+        }
+      });
+    }
+
+    function defineMethods() {
+      self.getText = function (position) {
+        var text;
+        var pos = mod(_currentPosition, _wheelSize) + position;
+        var haveText = _wrapped || (pos >= 0 && pos < _wheelSize);
+        if (self.formatter && haveText) {
+          var val = positionToDisplayValue(_currentPosition + position);
+          text = self.formatter(val);
+        }
+        return text;
+      };
+
+      self.isDisabled = function (position) {
+        var value = mod(_currentPosition + position, _wheelSize) * _increment;
+        if (_min !== 0 && value < _min) {
+          return true;
+        }
+        if (_max !== _valueRange && value >= _max) {
+          return true;
+        }
+        return false;
+      };
+
+      /*
+       *
+       * called by wheel on blur
+       */
+      self.update = function () {
+        _parentModel.value = wheelValueToParentValue(_parentModel.value, _value);
+      };
+
+      self.refresh = refresh;
+      self.setProperties = setProperties;
+    }
+
+    function setProperties() {
+      if (properties) {
+        var keys = Object.keys(properties);
+        for (var i = 0; i < keys.length; i++) {
+          var key = keys[i];
+          self[key] = properties[key];
+        }
+      }
+    }
+
+    function refresh() {
+      var needRefresh = false;
+      var parentValue = _parentModel.value;
+      self.value = parentValueToWheelValue(parentValue);
+
+      var parentMax = _parentModel.max;
+      var newMax;
+      if (parentValueUpperPart(parentValue) === parentValueUpperPart(parentMax)) {
+        newMax = parentValueToWheelValue(parentMax) + 1;
+      } else {
+        newMax = _valueRange;
+      }
+      if (_max !== newMax) {
+        needRefresh = true;
+        _max = newMax;
+      }
+
+      var parentMin = _parentModel.min;
+      var newMin;
+      if (parentValueUpperPart(parentValue) === parentValueUpperPart(parentMin)) {
+        newMin = parentValueToWheelValue(parentMin);
+      } else {
+        newMin = 0;
+      }
+      if (_min !== newMin) {
+        needRefresh = true;
+        _min = newMin;
+      }
+
+      var parentIncrement = _parentModel.increment;
+      var inc = gcd(parentIncrement, _valueUpperMultiplier); // For example 60 for minutes
+
+      // If increment is a multiple of 60 then min and max are 0;
+      if (inc === _valueUpperMultiplier) {
+        _min = 0;
+        _max = 1;
+        needRefresh = true;
+      } else if (self.linked && parentIncrement > _valueMultiplier) {
+        inc = parentIncrement;
+      } else if (mod(inc, _valueMultiplier) === 0) {
+        inc /= _valueMultiplier;
+      } else {
+        inc = 1;
+      }
+      if (_increment !== inc) {
+        _increment = inc;
+        needRefresh = true;
+      }
+
+      _wheelSize = Math.floor(_valueRange / _increment);
+      _wrapped = _wheelSize > 4;
+
+      if (self.wheel && needRefresh) {
+        self.wheel.ojRefresh();
+      }
+    }
+
+    function setPosition() {
+      var newPos = mod(wheelValueToPosition(_value), _wheelSize);
+      var oldPos = mod(self.position, _wheelSize);
+      var diff = newPos - oldPos;
+      if (_wrapped) {
+        if (newPos > oldPos) {
+          if (oldPos + _wheelSize - newPos < Math.abs(diff)) {
+            diff = newPos - oldPos - _wheelSize;
+          }
+        } else if (newPos + _wheelSize - oldPos < Math.abs(diff)) {
+          diff = newPos + _wheelSize - oldPos;
+        }
+      }
+      if (diff !== 0) {
+        _position += diff;
+
+        if (self.wheel) {
+          if (!_spinning) {
+            _spinning = true;
+            spinWheel.call(self);
+          }
+        } else {
+          _currentPosition = _position;
+        }
+      }
+    }
+
+    /*
+     * recalculates dependent values after settings change
+     */
+    function refreshSettings() {
+      _valueUpperMultiplier = _valueMultiplier * _valueRange;
+      _displayUpperMultiplier = _displayMultiplier * _displayRange;
+    }
+
+    function spinWheel() {
+      if (!self.wheel) {
+        // wheel destroyed already
+        return;
+      }
+      SPIN_TIMES.forEach(function (time) {
+        self.wheel.classList.remove('oj-timepicker-wheel-spin-' + time);
+      });
+
+      var dist = Math.abs(_position - _currentPosition);
+      if (dist === 0) {
+        _spinning = false;
+        return;
+      }
+
+      var delay;
+
+      dist -= 1;
+      dist = Math.min(dist, SPIN_TIMES.length - 1);
+      delay = SPIN_TIMES[dist];
+      self.wheel.classList.add('oj-timepicker-wheel-spin-' + SPIN_TIMES[dist]);
+
+      if (_position > _currentPosition) {
+        _currentPosition += 1;
+        self.wheel.ojSpinUp();
+      }
+      if (_position < _currentPosition) {
+        _currentPosition -= 1;
+        self.wheel.ojSpinDown();
+      }
+      if (delay) {
+        if (_parentModel.disableSpin) {
+          // Calling spinWheel without delay will update the DOM structure
+          // without visually spinning the wheel.
+          spinWheel.call(self);
+        } else {
+          setTimeout(spinWheel.bind(self), delay); // @HTMLUpdateOK
+        }
+      }
+    }
+
+    function validValue(value) {
+      if (_wrapped) {
+        return true;
+      }
+
+      return _min <= value && value < _max;
+    }
+
+    function mod(val1, val2) {
+      // Make modulus out of remainder.  The fancy stuff deals with neg values.
+      return ((val1 % val2) + val2) % val2;
+    }
+
+    function gcd(a, b) {
+      if (b === 0) {
+        return a;
+      }
+      return gcd(b, a % b);
+    }
+
+    function positionToDisplayValue(position) {
+      return wheelValueToDisplayValue(positionToWheelValue(position));
+    }
+
+    function wheelValueToPosition(value) {
+      return Math.floor(value / _increment);
+    }
+
+    function wheelValueToParentValue(parentValue, value) {
+      return (
+        Math.floor(parentValue / _valueUpperMultiplier) * _valueUpperMultiplier +
+        mod(value, _valueRange) * _valueMultiplier +
+        mod(parentValue, _valueMultiplier)
+      );
+    }
+
+    function parentValueToWheelValue(value) {
+      return mod(Math.floor(value / _valueMultiplier), _valueRange);
+    }
+
+    function parentValueUpperPart(value) {
+      return Math.floor(value / _valueUpperMultiplier);
+    }
+
+    function positionToWheelValue(position) {
+      return mod(mod(position, _wheelSize) * _increment, _valueRange);
+    }
+
+    function wheelValueToDisplayValue(value) {
+      return mod(Math.floor(value / _displayMultiplier), _displayRange);
+    }
+
+    function displayValueToWheelValue(wheelValue, displayValue) {
+      return (
+        Math.floor(wheelValue / _displayUpperMultiplier) * _displayUpperMultiplier +
+        mod(displayValue, _displayRange) * _displayMultiplier +
+        mod(wheelValue, _displayMultiplier)
+      );
+    }
+  }
+
+  /**
+   * @ignore
+   * @protected
+   * @constructor
+   */
+  // eslint-disable-next-line no-unused-vars
+  function TimePickerModel(properties) {
+    /** @const */
+    var ISO_TIME = /^.*T(\d{2})(?::?(\d{2}).*$)/;
+    /** @const */
+    var MIN_TIME = 0;
+    /** @const */
+    var MAX_TIME = 60 * 24;
+    /** @const */
+    var HOURS12 = 12 * 60;
+
+    var FORMAT_MAP = {
+      h: hFormat,
+      hh: hhFormat,
+      H: HFormat,
+      HH: HHFormat,
+      k: kFormat,
+      kk: kkFormat,
+      K: KFormat,
+      KK: KKFormat,
+      mm: mmFormat
+    };
+    var PARSER_MAP = {
+      h: hour12Parser,
+      hh: hour12Parser,
+      H: numberParser,
+      HH: numberParser,
+      k: hour24Parser,
+      kk: hour24Parser,
+      K: numberParser,
+      KK: numberParser,
+      mm: numberParser
+    };
+
+    var _value = 0;
+
+    var _increment;
+    var _min = MIN_TIME;
+    var _minValue = MIN_TIME;
+    var _max = MAX_TIME;
+    var _maxValue = MAX_TIME;
+
+    var _format;
+    var _12Hour;
+    var _grouped = 'auto';
+    var _wheelOrder = '';
+    var _ampmStrings = ['AM', 'PM'];
+
+    var _minuteModel = new WheelModel(this, {
+      valueRange: 60,
+      displayRange: 60,
+      valueMultiplier: 1,
+      displayMultiplier: 1
+    });
+    var _hourModel = new WheelModel(this, {
+      valueMultiplier: 60,
+      displayMultiplier: 1
+    });
+    var _ampmModel = new WheelModel(this, {
+      valueRange: 2,
+      displayRange: 2,
+      formatter: ampmFormat,
+      parser: ampmParser,
+      valueMultiplier: HOURS12,
+      displayMultiplier: 1
+    });
+    var _models = [_minuteModel, _hourModel, _ampmModel];
+
+    var _settingProps = false;
+
+    //  /** type {TimePickerModel} */
+    var self = this;
+
+    defineProperties();
+    defineMethods();
+    setProperties();
+
+    function defineProperties() {
+      _settingProps = true;
+
+      Object.defineProperty(self, 'increment', {
+        enumerable: true,
+        get: function () {
+          return _increment;
+        },
+        set: function (increment) {
+          _increment = Math.floor(increment);
+          refreshSettings();
+        }
+      });
+      self.increment = 1;
+
+      Object.defineProperty(self, 'grouped', {
+        enumerable: true,
+        get: function () {
+          return _grouped;
+        },
+        set: function (grouped) {
+          switch (grouped) {
+            case 'auto':
+            case 'all':
+            case 'none':
+            case 'hoursMinutes':
+            case 'hoursMeridiem':
+              _grouped = grouped;
+              break;
+            default:
+              throw new Error('invalid grouped value: ' + grouped);
+          }
+
+          refreshSettings();
+        }
+      });
+
+      Object.defineProperty(self, 'min', {
+        enumerable: true,
+        get: function () {
+          return _min;
+        },
+        set: function (min) {
+          _min = Math.floor(min);
+          refreshSettings();
+        }
+      });
+
+      Object.defineProperty(self, 'isoMin', {
+        enumerable: true,
+        get: function () {
+          return minutesToIso(_min);
+        },
+        set: function (iso) {
+          var newMin = isoToMinutes(iso);
+          if (!isNaN(newMin)) {
+            self.min = newMin;
+          } else {
+            Logger.error('Invalid ISO min time: %s', iso);
+          }
+        }
+      });
+
+      Object.defineProperty(self, 'max', {
+        enumerable: true,
+        get: function () {
+          return _max - 1;
+        },
+        set: function (max) {
+          _max = Math.floor(max) + 1;
+          refreshSettings();
+        }
+      });
+
+      Object.defineProperty(self, 'isoMax', {
+        enumerable: true,
+        get: function () {
+          return minutesToIso(_max);
+        },
+        set: function (iso) {
+          var newMax = isoToMinutes(iso);
+          if (!isNaN(newMax)) {
+            self.max = newMax;
+          } else {
+            Logger.error('Invalid ISO max time: %s', iso);
+          }
+        }
+      });
+
+      Object.defineProperty(self, 'value', {
+        enumerable: true,
+        get: function () {
+          return _value;
+        },
+        set: function (value) {
+          _value = Math.floor(value);
+          refreshSettings();
+        }
+      });
+
+      Object.defineProperty(self, 'isoValue', {
+        enumerable: true,
+        get: function () {
+          return minutesToIso(_value);
+        },
+        set: function (iso) {
+          var newValue = isoToMinutes(iso);
+          if (!isNaN(newValue)) {
+            self.value = newValue;
+          } else {
+            Logger.error('Invalid ISO value time: %s', iso);
+          }
+        }
+      });
+
+      Object.defineProperty(self, 'format', {
+        enumerable: true,
+        get: function () {
+          return _format;
+        },
+        set: function (format) {
+          _format = format;
+          // remove stuff between quotes.
+          // remove anything that is not h, H, k, K, m or a
+          var normalizedFormat = format.replace(/'[^']*'/g, '').replace(/[^hHkKma]*/g, '');
+
+          var matches = normalizedFormat.match(/([hHkK]+)/);
+          var hourCode = matches[1];
+          _hourModel.formatter = FORMAT_MAP[hourCode];
+          _hourModel.parser = PARSER_MAP[hourCode];
+
+          matches = normalizedFormat.match(/(m+)/);
+          var minuteCode = matches[1];
+          _minuteModel.formatter = FORMAT_MAP[minuteCode];
+          _minuteModel.parser = PARSER_MAP[minuteCode];
+
+          _12Hour = _wheelOrder.indexOf('a') >= 0;
+          refreshSettings();
+        }
+      });
+
+      Object.defineProperty(self, 'wheelOrder', {
+        enumerable: true,
+        get: function () {
+          return _wheelOrder;
+        },
+        set: function (wheelOrder) {
+          _wheelOrder = wheelOrder;
+        }
+      });
+
+      Object.defineProperty(self, 'ampmStrings', {
+        enumerable: true,
+        get: function () {
+          return _ampmStrings;
+        },
+        set: function (ampmStrings) {
+          _ampmStrings = ampmStrings;
+        }
+      });
+
+      _settingProps = false;
+    }
+
+    function defineMethods() {
+      self.setProperties = setProperties;
+    }
+
+    function setProperties() {
+      try {
+        _settingProps = true;
+        if (properties) {
+          var keys = Object.key(properties);
+          for (var i = 0; i < keys.length; i++) {
+            var key = keys[i];
+            self[key] = properties[key];
+          }
+        }
+      } finally {
+        _settingProps = false;
+        refreshSettings();
+      }
+    }
+
+    /*
+     * recalculates dependent values after settings change
+     */
+    function refreshSettings() {
+      if (!_settingProps) {
+        _minValue = Math.ceil(_min / _increment) * _increment;
+        _maxValue = Math.ceil((_max - 1) / _increment) * _increment;
+
+        if (_maxValue < _minValue) {
+          throw new Error(
+            'Invalid min and max settings with current increment: ' + _min + ' ' + _max + +_increment
+          );
+        }
+
+        if (_value < _minValue) {
+          _value = _minValue;
+        }
+
+        if (_value > _maxValue) {
+          _value = _maxValue;
+        }
+
+        _value = Math.round(_value / _increment) * _increment;
+
+        var grouped;
+        var divisor;
+        if (_12Hour) {
+          _hourModel.displayRange = 12;
+
+          grouped = _grouped;
+          if (grouped === 'auto') {
+            // If the increment is a divisor or multiple of 60
+            // Then use hoursMeridiem grouping
+            divisor = gcd(_increment, 60);
+            if (divisor === _increment || divisor === 60) {
+              grouped = 'hoursMeridiem';
+            } else {
+              divisor = gcd(_increment, HOURS12);
+              grouped = 'all';
+            }
+          }
+
+          switch (grouped) {
+            case 'all':
+              _minuteModel.displayMultiplier = 1;
+              _minuteModel.valueMultiplier = 1;
+              _minuteModel.valueRange = 24 * 60;
+              _minuteModel.linked = true;
+
+              _hourModel.displayMultiplier = 60;
+              _hourModel.valueMultiplier = 1;
+              _hourModel.valueRange = 24 * 60;
+              _hourModel.linked = true;
+
+              _ampmModel.displayMultiplier = 1;
+              _ampmModel.valueMultiplier = 60 * 12;
+              _ampmModel.valueRange = 2;
+              _ampmModel.linked = true;
+              break;
+
+            // case "none":
+            //  _minuteModel["displayMultiplier"] = 1;
+            //  _minuteModel["valueMultiplier"] = 1;
+            //  _minuteModel["valueRange"] = 60;
+            //  _minuteModel["linked"] = false;
+
+            //  _hourModel["displayMultiplier"] = 1;
+            //  _hourModel["valueMultiplier"] = 60;
+            //  _hourModel["valueRange"] = 12;
+            //  _hourModel["linked"] = false;
+
+            //  _ampmModel["displayMultiplier"] = 1;
+            //  _ampmModel["valueMultiplier"] = 60 * 12;
+            //  _ampmModel["valueRange"] = 2;
+            //  _ampmModel["linked"] = false;
+            //  break;
+
+            // case "hoursMinutes":
+            //  _minuteModel["displayMultiplier"] = 1;
+            //  _minuteModel["valueMultiplier"] = 1;
+            //  _minuteModel["valueRange"] = HOURS12;
+            //  _minuteModel["linked"] = true;
+
+            //  _hourModel["displayMultiplier"] = 60;
+            //  _hourModel["valueMultiplier"] = 1;
+            //  _hourModel["valueRange"] = HOURS12;
+            //  _hourModel["linked"] = true;
+
+            //  _ampmModel["displayMultiplier"] = 1;
+            //  _ampmModel["valueMultiplier"] = 60 * 12;
+            //  _ampmModel["valueRange"] = 2;
+            //  _ampmModel["linked"] = false;
+            //  break;
+
+            case 'hoursMeridiem':
+              _minuteModel.displayMultiplier = 1;
+              _minuteModel.valueMultiplier = 1;
+              _minuteModel.valueRange = 60;
+              _minuteModel.linked = false;
+
+              _hourModel.displayMultiplier = 1;
+              _hourModel.valueMultiplier = 60;
+              _hourModel.valueRange = 24;
+              _hourModel.linked = true;
+
+              _ampmModel.displayMultiplier = 1;
+              _ampmModel.valueMultiplier = 60 * 12;
+              _ampmModel.valueRange = 2;
+              _ampmModel.linked = true;
+              break;
+            default:
+              break;
+          }
+        } else {
+          // 24 hour
+          _hourModel.displayRange = 24;
+
+          grouped = _grouped;
+          if (grouped === 'auto') {
+            // If the increment is a divisor or multiple of 60
+            // Then no grouping
+            divisor = gcd(_increment, 60);
+            if (divisor === _increment || divisor === 60) {
+              grouped = 'none';
+            } else {
+              grouped = 'all';
+            }
+          }
+
+          switch (grouped) {
+            case 'none':
+            case 'hoursMeridiem':
+              _minuteModel.displayMultiplier = 1;
+              _minuteModel.valueMultiplier = 1;
+              _minuteModel.valueRange = 60;
+              _minuteModel.linked = false;
+
+              _hourModel.displayMultiplier = 1;
+              _hourModel.valueMultiplier = 60;
+              _hourModel.valueRange = 24;
+              _hourModel.linked = false;
+              break;
+
+            case 'all':
+            case 'hoursMinutes':
+              _minuteModel.displayMultiplier = 1;
+              _minuteModel.valueMultiplier = 1;
+              _minuteModel.valueRange = 24 * 60;
+              _minuteModel.linked = true;
+
+              _hourModel.displayMultiplier = 60;
+              _hourModel.valueMultiplier = 1;
+              _hourModel.valueRange = 24 * 60;
+              _hourModel.linked = true;
+              break;
+            default:
+              break;
+          }
+        }
+
+        for (var i = 0; i < _models.length; i++) {
+          _models[i].refresh();
+        }
+      }
+    }
+
+    function isoToMinutes(isoString) {
+      var hours = 0;
+      var minutes = 0;
+      var matches = ISO_TIME.exec(isoString);
+
+      // if there is no RegEx match for the time portion, default to midnight
+      if (matches) {
+        hours = parseInt(matches[1], 10);
+        minutes = parseInt(matches[2], 10);
+      }
+
+      return hours * 60 + minutes;
+    }
+    function minutesToIso(minutes) {
+      // eslint-disable-next-line no-param-reassign
+      minutes = Math.floor(minutes);
+      var hours = Math.floor(minutes / 60);
+      // eslint-disable-next-line no-param-reassign
+      minutes %= 60;
+      return 'T' + HHFormat(hours) + ':' + mmFormat(minutes);
+    }
+
+    function hFormat(value) {
+      if (value === 0) {
+        return '12';
+      }
+
+      return '' + value;
+    }
+
+    function hhFormat(value) {
+      if (value === 0) {
+        return '12';
+      }
+
+      // eslint-disable-next-line no-param-reassign
+      value = '0' + value;
+      return value.slice(-2);
+    }
+
+    function HFormat(value) {
+      return '' + value;
+    }
+
+    function HHFormat(value) {
+      // eslint-disable-next-line no-param-reassign
+      value = '0' + value;
+      return value.slice(-2);
+    }
+
+    function kFormat(value) {
+      if (value === 0) {
+        return '24';
+      }
+      return '' + value;
+    }
+
+    function kkFormat(value) {
+      if (value === 0) {
+        return '24';
+      }
+      // eslint-disable-next-line no-param-reassign
+      value = '0' + value;
+      return value.slice(-2);
+    }
+
+    function KFormat(value) {
+      return '' + value;
+    }
+
+    function KKFormat(value) {
+      // eslint-disable-next-line no-param-reassign
+      value = '0' + value;
+      return value.slice(-2);
+    }
+
+    function mmFormat(value) {
+      // eslint-disable-next-line no-param-reassign
+      value = '0' + value;
+      return value.slice(-2);
+    }
+
+    function ampmFormat(value) {
+      return _ampmStrings[value];
+    }
+
+    function numberParser(value) {
+      if (value.match(/^\d+$/)) {
+        return parseInt(value, 10);
+      }
+      return -1;
+    }
+
+    function hour12Parser(value) {
+      if (value.match(/^\d+$/)) {
+        var hour = parseInt(value, 10);
+        if (hour === 0) {
+          hour = -1;
+        }
+        if (hour === 24) {
+          hour = 0;
+        }
+
+        return hour;
+      }
+      return -1;
+    }
+
+    function hour24Parser(value) {
+      if (value.match(/^\d+$/)) {
+        var hour = parseInt(value, 10);
+        if (hour === 0) {
+          hour = -1;
+        }
+        if (hour === 24) {
+          hour = 0;
+        }
+
+        return hour;
+      }
+      return -1;
+    }
+
+    function ampmParser(value) {
+      // eslint-disable-next-line no-param-reassign
+      value = value.toLowerCase().charAt();
+      if (value === 'a') {
+        return 0;
+      } else if (value === 'p') {
+        return 1;
+      }
+      return -1;
+    }
+
+    self.getWheelModel = function (type) {
+      switch (type) {
+        case 'hour':
+          return _hourModel;
+
+        case 'minute':
+          return _minuteModel;
+
+        case 'ampm':
+          return _12Hour ? _ampmModel : null;
+
+        default:
+          return undefined;
+      }
+    };
+
+    // eslint-disable-next-line no-unused-vars
+    function mod(val1, val2) {
+      // Make modulus out of remainder.  The fancy stuff deals with neg values.
+      return ((val1 % val2) + val2) % val2;
+    }
+
+    function gcd(a, b) {
+      if (b === 0) {
+        return a;
+      }
+      return gcd(b, a % b);
+    }
+  }
+
+  // eslint-disable-next-line no-unused-vars
+  function createWheelItem(model, position, isMeridian) {
+    var _item;
+    var _position;
+    var _disabled = false;
+
+    function updatePosition(newPosition) {
+      _item.classList.remove('oj-timepicker-wheel-item-position' + _position);
+      _item.classList.add('oj-timepicker-wheel-item-position' + newPosition);
+      _position = newPosition;
+      return Promise.resolve();
+    }
+
+    function itemFocusHandler() {
+      _item.parentNode.focus();
+    }
+
+    var text = model.getText(position);
+    if (text) {
+      _item = document.createElement('div');
+      _item.classList.add('oj-timepicker-wheel-item');
+      _item.classList.add('oj-timepicker-wheel-item-position' + position);
+      _position = position;
+      if (model.isDisabled(position)) {
+        _disabled = true;
+        _item.classList.add('oj-disabled');
+      }
+
+      _item.ojUpdatePosition = updatePosition;
+
+      var content = document.createElement('div');
+      content.textContent = text;
+      content.classList.add('oj-timepicker-wheel-item-content');
+
+      if (isMeridian) {
+        // need to add title attr for hover for long am/pm translations
+        content.setAttribute('title', text);
+      }
+
+      _item.appendChild(content); // @HTMLUpdateOK content is generated internally with content being nunmber so ok
+
+      Object.defineProperty(_item, 'ojDisabled', {
+        enumerable: true,
+        get: function () {
+          return _disabled;
+        },
+        set: function (disabled) {
+          if (disabled !== _disabled) {
+            $(_item).toggleClass('oj-disabled');
+            _disabled = disabled;
+          }
+        }
+      });
+
+      // The item div and its content div can get focus from mouse click on IE,
+      // which doesn't happen on other browsers.  Add a focus handler so that
+      // focus can be redirected to the wheel.
+      _item.addEventListener('focus', itemFocusHandler, false);
+      content.addEventListener('focus', itemFocusHandler, false);
+    }
+
+    return _item;
+  }
+
+  function createWheel(model, isNumber, classList) {
+    var CURRENT_POSITION = 7;
+    var PAN_SPIN_THRESHOLD = 2;
+    var TAP_THRESHOLDS = [0.152, 0.362, 0.638, 0.848];
+    var MOMENTUM_FACTOR = 0.007;
+
+    var KEYCODE_BACKSPACE = 8;
+    var KEYCODE_UP = 38;
+    var KEYCODE_DOWN = 40;
+
+    var _model = model;
+    var _wheel;
+    var _items = [];
+    var _panStartY;
+    var _panLastSpinY;
+    var _panLastZone;
+    var _momentum;
+    var _isMeridian = !isNumber && classList === 'oj-timepicker-meridian';
+
+    createDom();
+    var $wheel = $(_wheel);
+
+    defineMethods();
+    defineEvents();
+    refresh();
+
+    return _wheel;
+
+    function createDom() {
+      _wheel = document.createElement('div');
+      _wheel.classList.add('oj-timepicker-wheel');
+      if (classList) {
+        _wheel.classList.add(classList);
+      }
+      _wheel.setAttribute('id', '_ojWheel' + createWheel.counter);
+      createWheel.counter += 1;
+      _wheel.setAttribute('tabIndex', '0');
+      _wheel.setAttribute('role', 'spinbutton');
+      _model.wheel = _wheel;
+    }
+
+    function defineMethods() {
+      _wheel.ojSpinUp = spinUp;
+      _wheel.ojSpinDown = spinDown;
+      _wheel.ojRefresh = refresh;
+      _wheel.ojDestroy = destroy;
+      _wheel.ojLinked = function () {
+        return _model.linked;
+      };
+    }
+
+    function defineEvents() {
+      var hammerOptions = {
+        recognizers: [
+          [Hammer.Pan, { direction: Hammer.DIRECTION_VERTICAL }],
+          [Hammer.Tap],
+          [Hammer.Swipe, { direction: Hammer.DIRECTION_VERTICAL }]
+        ]
+      };
+
+      $wheel
+        .ojHammer(hammerOptions)
+        .on('tap', tapHandler)
+        .on('swipeup', swipeUpHandler)
+        .on('swipedown', swipeDownHandler)
+        .on('panstart', panStartHandler)
+        .on('panend pancancel', panEndHandler)
+        .on('panup pandown', panHandler);
+
+      _wheel.addEventListener('wheel', wheelHandler, { passive: false });
+      _wheel.addEventListener('keydown', keydownHandler, false);
+      _wheel.addEventListener('focus', focusHandler, false);
+      _wheel.addEventListener('blur', blurHandler, false);
+    }
+
+    function destroy() {
+      $wheel
+        .ojHammer()
+        .off('tap', tapHandler)
+        .off('swipeup', swipeUpHandler)
+        .off('swipedown', swipeDownHandler)
+        .off('panstart', panStartHandler)
+        .off('panend pancancel', panEndHandler)
+        .off('panup pandown', panHandler);
+      $wheel.ojHammer('destroy');
+    }
+
+    function spinUp() {
+      var next = _items[CURRENT_POSITION + 1];
+      if (next) {
+        spin(1);
+        var oldItem = _items.shift();
+        if (oldItem) {
+          _wheel.removeChild(oldItem);
+        }
+        var newItem = createWheelItem(_model, CURRENT_POSITION, _isMeridian);
+        if (newItem) {
+          _wheel.appendChild(newItem); // @HTMLUpdateOK newItem is generated internally using number so ok
+        }
+        _items.push(newItem);
+      }
+    }
+
+    function spinDown() {
+      var prev = _items[CURRENT_POSITION - 1];
+      if (prev) {
+        spin(-1);
+        var oldItem = _items.pop();
+        if (oldItem) {
+          _wheel.removeChild(oldItem);
+        }
+        var newItem = createWheelItem(_model, -CURRENT_POSITION, _isMeridian);
+        if (newItem) {
+          _wheel.insertBefore(newItem, _items[0]); // @HTMLUpdateOK newItem is generated internally using number so ok
+        }
+        _items.unshift(newItem);
+      }
+    }
+
+    function spin(direction) {
+      for (var i = 0; i < _items.length; i++) {
+        var item = _items[i];
+        if (item) {
+          item.ojUpdatePosition(i - CURRENT_POSITION - direction);
+        }
+      }
+
+      // Set the current value on the wheel for accessibility
+      _updateAriaValue(_model.getText(0));
+    }
+
+    function refresh() {
+      _items.forEach(function (item) {
+        if (item) {
+          _wheel.removeChild(item);
+        }
+      });
+      _items = [];
+
+      for (var offset = -CURRENT_POSITION; offset <= CURRENT_POSITION; offset++) {
+        var item = createWheelItem(_model, offset, _isMeridian);
+        if (item) {
+          _wheel.appendChild(item); // @HTMLUpdateOK item is generated internally using number so ok
+        }
+
+        _items.push(item);
+      }
+
+      // Set the current value on the wheel for accessibility
+      _updateAriaValue(_model.getText(0));
+    }
+
+    function _updateAriaValue(value) {
+      // If the value is non-numeric, use aria-valuetext and remove aria-valuenow
+      // otherwise use aria-valuenow and remove aria-valuetext
+      if (isNaN(value)) {
+        _wheel.removeAttribute('aria-valuenow');
+        _wheel.setAttribute('aria-valuetext', value);
+      } else {
+        _wheel.removeAttribute('aria-valuetext');
+        _wheel.setAttribute('aria-valuenow', value);
+      }
+    }
+
+    function keydownHandler(event) {
+      var keyCode = event.keyCode;
+
+      switch (keyCode) {
+        case KEYCODE_UP:
+          _model.position += 1;
+          event.preventDefault();
+          break;
+        case KEYCODE_DOWN:
+          _model.position -= 1;
+          event.preventDefault();
+          break;
+        case KEYCODE_BACKSPACE:
+          _model.keyboardValue = _model.keyboardValue.slice(0, -1);
+          event.preventDefault();
+          break;
+
+        default:
+          if (
+            (keyCode > 47 && keyCode < 58) || // number keys
+            (keyCode > 95 && keyCode < 112) || // numpad keys
+            (!isNumber && keyCode > 64 && keyCode < 91)
+          ) {
+            // letter keys
+            _model.keyboardValue += event.key;
+          }
+          break;
+      }
+    }
+
+    function tapHandler(event) {
+      // fix for JET-67768 which is event.gesture is sometimes undefined.
+      // Some OCI  apps have the uikit package which also handles events by creating a new event that does not have the 'gesture' property.
+      // As a result, the tapHandler is called once from our code, and a second time from uikit.
+      // If the event does not have gesture, we ignore it.
+      if (event.gesture === undefined) {
+        return;
+      }
+      _wheel.focus();
+      var tapY = event.gesture.center.y;
+      var wheelTop = _wheel.getBoundingClientRect().top;
+      var wheelHeight = $wheel.height();
+      var tapFraction = (tapY - wheelTop) / wheelHeight;
+      var tapZone = 0;
+
+      while (tapZone < 4 && tapFraction > TAP_THRESHOLDS[tapZone]) {
+        tapZone += 1;
+      }
+
+      if (tapZone !== 2) {
+        _model.position += tapZone - 2;
+      }
+    }
+
+    function swipeUpHandler(event) {
+      _wheel.focus();
+      var velocity = event.gesture.velocityY;
+      var extraPixels = (velocity * velocity) / MOMENTUM_FACTOR;
+      _momentum = Math.floor((extraPixels / $wheel.height()) * 5);
+      event.preventDefault();
+    }
+
+    function swipeDownHandler(event) {
+      _wheel.focus();
+      var velocity = event.gesture.velocityY;
+      var extraPixels = (velocity * velocity) / MOMENTUM_FACTOR;
+      _momentum = -Math.floor((extraPixels / $wheel.height()) * 5);
+      event.preventDefault();
+    }
+
+    function panStartHandler(event) {
+      // fix for JET-67768 which is event.gesture can be undefined if an outside package, i.e., uikit, creates their own events.
+      if (event.gesture === undefined) {
+        return;
+      }
+      _wheel.focus();
+      _panLastSpinY = event.gesture.center.y;
+      _panStartY = _panLastSpinY;
+      _panLastZone = 0;
+      _momentum = 0;
+    }
+
+    function panEndHandler() {
+      _wheel.focus();
+      if (_momentum) {
+        _model.position += _momentum;
+      }
+
+      _panStartY = null;
+      _panLastSpinY = null;
+      _panLastZone = null;
+    }
+
+    function panHandler(event) {
+      // fix for JET-67768 which is event.gesture can be undefined if an outside package, i.e., uikit, creates their own events.
+      if (event.gesture === undefined) {
+        return;
+      }
+      _wheel.focus();
+      var panY = event.gesture.center.y;
+      var newZone = Math.round(((_panStartY - panY) / $wheel.height()) * 5);
+      if (newZone !== _panLastZone && Math.abs(_panLastSpinY - panY) > PAN_SPIN_THRESHOLD) {
+        _panLastSpinY = panY;
+        _model.position += newZone - _panLastZone;
+        _panLastZone = newZone;
+      }
+      event.preventDefault();
+    }
+
+    function wheelHandler(event) {
+      if (event.deltaY) {
+        event.currentTarget.focus();
+        event.preventDefault();
+      }
+      if (event.deltaY < 0) {
+        _model.position += 1;
+      }
+      if (event.deltaY > 0) {
+        _model.position -= 1;
+      }
+    }
+
+    function focusHandler() {
+      _model.keyboardValue = '';
+      _wheel.classList.add('oj-focus');
+    }
+
+    function blurHandler() {
+      _wheel.classList.remove('oj-focus');
+      _model.update();
+    }
+  }
+
+  createWheel.counter = 0;
+
+  /**
+   * @protected
+   * @ignore
+   */
+  // eslint-disable-next-line no-unused-vars
+  function createWheelGroup(timePickerModel) {
+    var KEYCODE_LEFT = 37;
+    var KEYCODE_RIGHT = 39;
+
+    var _group;
+    var _wheels = [];
+
+    createDom();
+    defineMethods();
+    defineEvents();
+    refresh();
+
+    return _group;
+
+    /**
+     * @protected
+     * @ignore
+     */
+    function createDom() {
+      _group = document.createElement('div');
+      _group.classList.add('oj-timepicker-wheel-group');
+      _group.setAttribute('data-oj-dropdownnofocuschange', '');
+    }
+
+    /**
+     * @protected
+     * @ignore
+     */
+    function defineMethods() {
+      _group.ojRefresh = refresh;
+    }
+
+    /**
+     * @protected
+     * @ignore
+     */
+    function defineEvents() {
+      _group.addEventListener('keydown', keydownHandler, false);
+    }
+
+    /**
+     * @protected
+     * @ignore
+     */
+    function keydownHandler(event) {
+      var wheel = event.target;
+      var keyCode = event.keyCode;
+
+      switch (keyCode) {
+        case KEYCODE_LEFT:
+          $(wheel).prev().focus();
+          break;
+        case KEYCODE_RIGHT:
+          $(wheel).next().focus();
+          break;
+
+        default:
+          break;
+      }
+    }
+
+    /**
+     * @protected
+     * @ignore
+     */
+    function focusHandler(event) {
+      var wheel = event.target;
+      if (wheel.ojLinked()) {
+        for (var i = 0; i < _wheels.length; i++) {
+          if (_wheels[i].ojLinked()) {
+            _wheels[i].classList.add('oj-active');
+          }
+        }
+      } else {
+        wheel.classList.add('oj-active');
+      }
+    }
+
+    /**
+     * @protected
+     * @ignore
+     */
+    function blurHandler() {
+      for (var i = 0; i < _wheels.length; i++) {
+        _wheels[i].classList.remove('oj-active');
+      }
+    }
+
+    /**
+     * @protected
+     * @ignore
+     */
+    function refresh() {
+      var wheel = _group.firstChild;
+      while (wheel) {
+        wheel.ojDestroy();
+        _group.removeChild(wheel);
+        wheel = _group.firstChild;
+      }
+      _wheels = [];
+
+      createWheels();
+    }
+
+    /**
+     * @protected
+     * @ignore
+     */
+    function createWheels() {
+      var wheelOrder = timePickerModel.wheelOrder;
+
+      var hourModel = timePickerModel.getWheelModel('hour');
+      var hourWheel = createWheel(hourModel, true, 'oj-timepicker-hour');
+      var minuteModel = timePickerModel.getWheelModel('minute');
+      var minuteWheel = createWheel(minuteModel, true, 'oj-timepicker-minute');
+
+      var ampmModel;
+      var ampmWheel;
+      if (wheelOrder.indexOf('a') >= 0) {
+        ampmModel = timePickerModel.getWheelModel('ampm');
+        ampmWheel = createWheel(ampmModel, false, 'oj-timepicker-meridian');
+      }
+
+      var codes = wheelOrder.split('');
+      var i;
+      for (i = 0; i < codes.length; i++) {
+        switch (codes[i]) {
+          case 'h':
+            _wheels.push(hourWheel);
+            break;
+          case 'm':
+            _wheels.push(minuteWheel);
+            break;
+          case 'a':
+            _wheels.push(ampmWheel);
+            break;
+          default:
+            Logger.error('Unknown wheelOrder code: %s', codes[i]);
+            break;
+        }
+      }
+
+      for (i = 0; i < _wheels.length; i++) {
+        var wheel = _wheels[i];
+        wheel.addEventListener('focus', focusHandler, false);
+        wheel.addEventListener('blur', blurHandler, false);
+        _group.appendChild(wheel); // @HTMLUpdateOK wheel is generated internally using number so ok
+      }
+    }
+  }
+
+  /**
+   *
+   * @private
+   */
+  var _defaultOptions = ThemeUtils.parseJSONFromFontFamily('oj-inputdatetime-option-defaults') || {};
+  var _showPickerOnDesktop = _defaultOptions.showPickerOnDesktop || 'disabled';
+  var _sDefaultTimeConverter;
+  /**
+   * Helper function to split the timeIncrement into its constituents and returns the split object.
+   * Used in ojInputTime and ojInputDateTime
+   *
+   * @ignore
+   */
+  function splitTimeIncrement(timeIncrement) {
+    var splitIncrement = timeIncrement.split(':');
+
+    if (splitIncrement.length !== 4) {
+      throw new Error('timeIncrement value should be in the format of hh:mm:ss:SSS');
+    }
+
+    var increments = {
+      hourIncr: parseInt(splitIncrement[0].substring(0), 10),
+      minuteIncr: parseInt(splitIncrement[1], 10),
+      secondIncr: parseInt(splitIncrement[2], 10),
+      millisecondIncr: parseInt(splitIncrement[3], 10)
+    };
+
+    var sum = 0;
+    var keys = Object.keys(increments);
+    for (var i = 0; i < keys.length; i++) {
+      var key = keys[i];
+      sum += increments[key];
+    }
+
+    if (sum === 0) {
+      throw new Error('timeIncrement must have a non 00:00:00:000 value');
+    }
+
+    return increments;
+  }
+
+  /**
+   * Helper function to create a timepicker converter
+   *
+   * @ignore
+   * @param {Object} converter
+   * @param {Object=} addOpts
+   * @return {Object}
+   */
+  function _getTimePickerConverter(converter, addOpts) {
+    var resolvedOptions = converter.resolvedOptions();
+    var options = {};
+    var params = [
+      'hour',
+      'hour12',
+      'minute',
+      'second',
+      'millisecond',
+      'timeFormat',
+      'timeZone',
+      'timeZoneName',
+      'isoStrFormat',
+      'dst'
+    ];
+
+    for (var i = 0, j = params.length; i < j; i++) {
+      if (params[i] in resolvedOptions) {
+        if (params[i] === 'timeFormat') {
+          // special case for timeFormat, formatType of time must be added
+          options.formatType = 'time';
+        }
+        options[params[i]] = resolvedOptions[params[i]];
+      }
+    }
+
+    var testEmpty = {};
+    $.extend(testEmpty, options);
+    delete testEmpty.isoStrFormat; // since below two are provided even with only date portion
+    delete testEmpty.dst;
+
+    if ($.isEmptyObject(testEmpty)) {
+      throw new Error('Empty object for creating a time picker converter');
+    }
+
+    $.extend(options, addOpts || {});
+    return new ojconverterDatetime.IntlDateTimeConverter(options);
+  }
+
+  /**
+   * For default converter
+   * @static
+   * @ignore
+   */
+  function _getTimeDefaultConverter() {
+    return new ojconverterDatetime.IntlDateTimeConverter({ formatType: 'time', timeFormat: 'short' });
+  }
+
+  /**
+   * @ojcomponent oj.ojInputTime
+   * @augments oj.inputBase
+   * @ojsignature [{
+   *                target: "Type",
+   *                value: "class ojInputTime extends inputBase<string, ojInputTimeSettableProperties>"
+   *               },
+   *               {
+   *                target: "Type",
+   *                value: "ojInputTimeSettableProperties extends inputBaseSettableProperties<string>",
+   *                for: "SettableProperties"
+   *               }
+   *              ]
+   * @since 0.6.0
+   *
+   * @ojshortdesc An input time allows the user to enter or select a time value.
+   * @ojrole combobox
+   * @ojtsimport {module: "ojvalidator", type: "AMD", importName: "Validator"}
+   * @ojtsimport {module: "ojvalidator-async", type: "AMD", importName: "AsyncValidator"}
+   * @ojtsimport {module: "ojconverter-datetime", type: "AMD",  imported: ["IntlDateTimeConverter", "DateTimeConverter"]}
+   * @ojtsimport {module: "ojvalidator-daterestriction", type: "AMD", importName: "DateRestrictionValidator"}
+   * @ojtsimport {module: "ojvalidator-datetimerange", type: "AMD", importName: "DateTimeRangeValidator"}
+   * @ojtsimport {module: "ojvalidator-length", type: "AMD", importName: "LengthValidator"}
+   * @ojtsimport {module: "ojvalidator-regexp", type: "AMD", importName: "RegExpValidator"}
+   * @ojtsimport {module: "ojvalidator-required", type: "AMD", importName: "RequiredValidator"}
+   *
+   * @ojpropertylayout {propertyGroup: "common", items: ["labelHint", "placeholder", "required", "disabled", "readonly", "min", "max", "converter"]}
+   * @ojpropertylayout {propertyGroup: "data", items: ["value"]}
+   * @ojvbdefaultcolumns 6
+   * @ojvbmincolumns 2
+   *
+   * @ojoracleicon 'oj-ux-ico-clock'
+   * @ojuxspecs ['input-time']
+   *
+   * @classdesc
+   * <h3 id="inputTimeOverview-section">
+   *   JET InputTime
+   *   <a class="bookmarkable-link" title="Bookmarkable Link" href="#inputTimeOverview-section"></a>
+   * </h3>
+   * <p>Description:</p>
+   * <p>A JET InputTime provides a simple time selection drop down. The time format is based on the converter and default converter uses the locale to determine the
+   *    time format. If the <code>lang</code> attribute is specified in the html tag then the converter picks locale based on the <code>lang</code> attribute. If there is
+   *    no <code>lang</code> attribute specified then the locale is based on the browser language setting. Default value for locale is "en". For example, if locale is "en-US",
+   *    the default for time is 12-hour format and if locale is "fr", the default for time is 24-hour format.</p>
+   *
+   * <pre class="prettyprint"><code>&lt;oj-input-time>&lt;/oj-input-time></code></pre>
+   *
+   * {@ojinclude "name":"validationAndMessagingDoc"}
+   *
+   * <h3 id="touch-section">
+   *   Touch End User Information
+   *   <a class="bookmarkable-link" title="Bookmarkable Link" href="#touch-section"></a>
+   * </h3>
+   *
+   * {@ojinclude "name":"touchDoc"}
+   *
+   * <h3 id="keyboard-section">
+   *   Keyboard End User Information
+   *   <a class="bookmarkable-link" title="Bookmarkable Link" href="#keyboard-section"></a>
+   * </h3>
+   *
+   * {@ojinclude "name":"keyboardDoc"}
+   *
+   * <h3 id="a11y-section">
+   *   Accessibility
+   *   <a class="bookmarkable-link" title="Bookmarkable Link" href="#a11y-section"></a>
+   * </h3>
+   * <p>
+   * {@ojinclude "name":"accessibilityLabelEditableValue"}
+   * {@ojinclude "name":"accessibilityPlaceholderEditableValue"}
+   * {@ojinclude "name":"accessibilityDisabledEditableValue"}
+   * </p>
+   * <h3 id="migration-section">
+   *   Migration
+   *   <a class="bookmarkable-link" title="Bookmarkable Link" href="#migration-section"></a>
+   * </h3>
+   * <p>
+   * To migrate from oj-input-time to oj-c-input-time-mask, you need to revise the import statement and references
+   * to oj-c-input-time-mask in your app. Please note the changes between the components below.
+   * </p>
+   *
+   * <h5>Text Field</h5>
+   * <p>
+   * The oj-c-input-time-mask has segments representing the hour, minute,
+   * (and optionally the second, millisecond and dayPeriod) fields of the time
+   * instead of a text field. A user can individually edit, step, or spin the values of the time fields
+   * using these segments.
+   * </p>
+   *
+   * <h5>Global attributes</h5>
+   * <p>
+   * The following global attributes are no longer supported:
+   * <ul>
+   * <li>accesskey - not considered accessible</li>
+   * <li>tabindex - not considered accessible</li>
+   * <li>
+   * aria-label - use label-hint instead. If you do not want a visible label set label-edge="none".
+   * </li>
+   * </ul>
+   * </p>
+   *
+   * <h5>Converter attribute</h5>
+   * <p>
+   * The converter is not supported by the oj-c-input-time-mask component. oj-c-input-time-mask shows the time in segments,
+   * and the segments are in the format of the locale. oj-c-input-time-mask has properties to configure the time format.
+   * </p>
+   * <h6>hour12 property</h6>
+   * <p>
+   * If you use the converter's hour12 property, then set oj-c-input-time-mask's hourClock property.
+   * If hour12: false, set hourClock to '24'. If hour12: true, set hourClock to '12'.
+   * </p>
+   * <h6>second</h6>
+   * <p>
+   * If you use the converter's timeFormat: 'medium' or second property, then set oj-c-input-time-mask's granularity property to 'second'.
+   * </p>
+   * <h6>millisecond</h6>
+   * <p>
+   * If you use the converter's millisecond property, then set oj-c-input-time-mask's granularity property to 'millisecond'.
+   * </p>
+   *
+   * <h5>LabelEdge attribute</h5>
+   * <p>
+   * The enum values for the label-edge attribute have been changed from 'inside', 'provided', and 'none' to 'start', 'inside', 'top', and 'none'.
+   * If you are using this component in a form layout and would like the form layout to drive the label edge of this component, leave this attribute
+   * unset. The application no longer has to specify 'provided' for this attribute. If you want to override how the label is positioned, set this
+   * attribute to the corresponding value.
+   * </p>
+   *
+   * <h5>MessagesCustom attribute</h5>
+   * <p>
+   * The type of the <code class="prettyprint">severity</code> property of the messages in the
+   * array has changed from
+   * <code class="prettyprint">Message.SEVERITY_TYPE | Message.SEVERITY_LEVEL</code>,
+   * essentially <code class="prettyprint">string | number</code>, to simply
+   * <code class="prettyprint">'error' | 'confirmation' | 'info' | 'warning'</code>.  These
+   * values are the same as the previously supported string values.
+   * The application can no longer specify severity as a number, including hardcoded numbers,
+   * one of the <code class="prettyprint">Message.SEVERITY_LEVEL</code> constants, or the value
+   * returned from a call to the <code class="prettyprint">Message.getSeverityLevel</code> method.
+   * </p>
+   *
+   * <h5>Min and Max attributes</h5>
+   * <p>For oj-c-input-time-mask the min and max attributes must be a local time-only ISO string.
+   * </p>
+   * <p>If you are using oj-input-time with a min and/or max attribute that is not a local time-only ISO string,
+   * then you must convert it into a local time-only ISO
+   * string before passing it to oj-c-input-time-mask.
+   * </p>
+   *
+   * <h5>Raw Value</h5>
+   * <p>
+   * The oj-c-input-time-mask's raw-value attribute is an Object of type <code>Time</code>.
+   * <code>{ hour?: number, minute?: number, second?: number, millisecond?: number }</code>. If you have code that handles raw-value or
+   * onRawValueChanged it will need to be updated.
+   * </p>
+   *
+   *
+   * <h5>TextAlign attribute</h5>
+   * <p>
+   * The usage of the style classes: oj-form-control-text-align-right, oj-form-control-text-align-start, and oj-form-control-text-align-end is now
+   * replaced with this attribute. The value of this attribute maps to these style classes as shown below:
+   * <ul>
+   * <li>
+   * .oj-form-control-text-align-right maps to 'right'
+   * </li>
+   * <li>
+   * .oj-form-control-text-align-start maps to 'start'
+   * </li>
+   * <li>
+   * .oj-form-control-text-align-end maps to 'end'
+   * </li>
+   * </ul>
+   * </p>
+   *
+   * <h5>MaxWidth attribute</h5>
+   * <p>
+   * The usage of the style classes: oj-form-control-max-width-sm and oj-form-control-max-width-md is now
+   * replaced with this attribute. The value of this attribute maps to these style classes as shown below:
+   * <ul>
+   * <li>
+   * .oj-form-control-max-width-sm maps to 'sm'
+   * </li>
+   * <li>
+   * .oj-form-control-max-width-md maps to 'md'
+   * </li>
+   * </ul>
+   * </p>
+   *
+   * <h5>Width attribute</h5>
+   * <p>
+   * The usage of the style classes: oj-form-control-width-sm and oj-form-control-width-md is now
+   * replaced with this attribute. The value of this attribute maps to these style classes as shown below:
+   * <ul>
+   * <li>
+   * .oj-form-control-width-sm maps to 'sm'
+   * </li>
+   * <li>
+   * .oj-form-control-width-md maps to 'md'
+   * </li>
+   * </ul>
+   * </p>
+   *
+   * <h5>Translations attribute</h5>
+   *
+   * <h6>translations.date-time-range.message-detail.range-overflow</h6>
+   * <p>
+   * In oj-c-input-time-mask, this attribute is changed to time-range-overflow-message-detail. Also, the oj-c-input-time-mask's
+   * time-range-overflow-message-detail attribute takes a function that returns a string instead of a string. The function receives
+   * an object of type <code>{ max: string, value: string }</code> for input. If you were using tokens in the
+   * translation string of the oj-input-time, you need to replace it with the values from the input object of this function.
+   * </p>
+   *
+   *
+   * <h6>translations.date-time-range.message-detail.range-underflow</h6>
+   * <p>
+   * In oj-c-input-time-mask, this attribute is changed to time-range-underflow-message-detail. Also, the oj-c-input-time-mask's
+   * time-range-underflow-message-detail attribute takes a function that returns a string instead of a string. The function receives
+   * an object of type <code>{ min: string, value: string }</code> for input. If you were using tokens in the
+   * translation string of the oj-input-time, you need to replace it with the values from the input object of this function.
+   * </p>
+   *
+   * <h6>translations.required.message-detail</h6>
+   * <p>
+   * In oj-c-input-time-mask, this attribute is changed to required-message-detail.
+   * </p>
+   *
+   * <h5>Validators</h5>
+   * <p>
+   * Only the required validator is run for an empty field, and only if required is true. The component's other validators
+   * are no longer run when the field is empty.
+   * If you created your own validator to check that the field was filled in, it will not run if the
+   * field is empty. Set the required attribute to true instead which conforms to the Redwood UX design.
+   * </p>
+   *
+   * <h5>Value attribute</h5>
+   * <h6>Clearing the field</h6>
+   * <p>
+   * Clearing the field and committing the value will now set the value attribute to <code>null</code>
+   * instead of <code>''</code>.
+   * </p>
+   *
+   * <h6>Local time-only ISO string</h6>
+   * <p>
+   * oj-input-time's value can be timezone aware, and oj-c-input-time-mask's value is not timezone aware.
+   * </p>
+   * <p>
+   * oj-input-time's initial value may contain a date, but once the user interacts with the
+   * field the parsed value is a time-only ISO string.
+   * Depending upon the converter's configuration, the value will be a local time-only ISO string like 'T21:00:00'
+   * or a timezone-aware time-only ISO string like 'T21:00:00-07:00' or zulu like 'T04:00:00Z'.
+   * </p>
+   * <p>For oj-c-input-time-mask the value must be a local time-only ISO string.
+   * </p>
+   * <p>If you are using oj-input-time with a value that is not a local time-only ISO string,
+   * then you must convert it into a local time-only ISO
+   * string before passing it to oj-c-input-time-mask.
+   * </p>
+   *
+   * <h5>Refresh method</h5>
+   * <p>
+   * The refresh method is no longer supported. The application should no longer need to use this method. If the application
+   * wants to reset the component (remove messages and reset the value of the component), please use the reset method.
+   * </p>
+   *
+   * <h5>Animation Events</h5>
+   * <p>
+   * ojAnimateStart and ojAnimateEnd events are no longer supported.
+   * </p>
+   *
+   * <h5>Custom Label</h5>
+   * <p>
+   * Adding a custom &lt;oj-label> for the form component is no longer supported. The application should use the
+   * label-hint attribute to add a label for the form component.
+   * </p>
+   * <p>
+   * The application should no longer need to use an &lt;oj-label-value> component to layout the form component. The application
+   * can use the label-edge attribute and label-start-width attribute to customize the label position and label width (only when using start label).
+   * </p>
+   *
+   *
+   * <h5>DescribedBy attribute</h5>
+   * <p>
+   * The described-by attribute is not meant to be set by an application developer directly as stated in the attribute documentation.
+   * This attribute is not carried forward to the core pack component.
+   * </p>
+   *
+   * <h5>Formatted messages</h5>
+   * <p>
+   * Formatting messages using HTML tags is not supported in the core pack component.
+   * </p>
+   */
+  // --------------------------------------------------- oj.ojInputTime Styling Start ------------------------------------------------------------
+  /**
+   * @classdesc The following CSS classes can be applied by the page author as needed.<br/>
+   * The form control style classes can be applied to the component, or an ancestor element. <br/>
+   * When applied to an ancestor element, all form components that support the style classes will be affected.
+   */
+  // ---------------- oj-form-control-full-width --------------
+  /**
+   * Changes the max-width to 100% so that form components will occupy all the available horizontal space.
+   * @ojstyleclass oj-form-control-full-width
+   * @ojdisplayname Full Width
+   * @memberof oj.ojInputTime
+   * @ojtsexample
+   * &lt;oj-input-time class="oj-form-control-full-width">
+   * &lt;/oj-input-time>
+   */
+
+  // ---------------- oj-form-control max-width --------------
+  /**
+   * In the Redwood theme the default max width of a text field is 100%.
+   * These max width convenience classes are available to create a medium or small field.<br>
+   * The class is applied to the root element.
+   * @ojstyleset form-control-max-width
+   * @ojdisplayname Max Width
+   * @ojstylesetitems ["form-control-max-width.oj-form-control-max-width-sm", "form-control-max-width.oj-form-control-max-width-md"]
+   * @ojstylerelation exclusive
+   * @memberof oj.ojInputTime
+   * @ojunsupportedthemes ['Alta']
+   * @ojtsexample
+   * &lt;oj-input-time class="oj-form-control-max-width-md">&lt;/oj-input-time>
+   */
+  /**
+   * @ojstyleclass form-control-max-width.oj-form-control-max-width-sm
+   * @ojshortdesc Sets the max width for a small field
+   * @ojdisplayname Small
+   * @memberof! oj.ojInputTime
+   */
+  /**
+   * @ojstyleclass form-control-max-width.oj-form-control-max-width-md
+   * @ojshortdesc Sets the max width for a medium field
+   * @ojdisplayname Medium
+   * @memberof! oj.ojInputTime
+   */
+
+  // ---------------- oj-form-control width --------------
+  /**
+   * In the Redwood theme the default width of a text field is 100%.
+   * These width convenience classes are available to create a medium or small field.<br>
+   * The class is applied to the root element.
+   * @ojstyleset form-control-width
+   * @ojdisplayname Width
+   * @ojstylesetitems ["form-control-width.oj-form-control-width-sm", "form-control-width.oj-form-control-width-md"]
+   * @ojstylerelation exclusive
+   * @memberof oj.ojInputTime
+   * @ojunsupportedthemes ['Alta']
+   * @ojtsexample
+   * &lt;oj-input-time class="oj-form-control-width-md">&lt;/oj-input-time>
+   */
+  /**
+   * @ojstyleclass form-control-width.oj-form-control-width-sm
+   * @ojshortdesc Sets the width for a small field
+   * @ojdisplayname Small
+   * @memberof! oj.ojInputTime
+   */
+  /**
+   * @ojstyleclass form-control-width.oj-form-control-width-md
+   * @ojshortdesc Sets the width for a medium field
+   * @ojdisplayname Medium
+   * @memberof! oj.ojInputTime
+   */
+
+  // ---------------- oj-form-control-text-align- --------------
+  /**
+   * Classes that help align text of the element.
+   * @ojstyleset text-align
+   * @ojdisplayname Text Alignment
+   * @ojstylesetitems ["text-align.oj-form-control-text-align-right", "text-align.oj-form-control-text-align-start", "text-align.oj-form-control-text-align-end"]
+   * @ojstylerelation exclusive
+   * @memberof oj.ojInputTime
+   * @ojtsexample
+   * &lt;oj-input-time class="oj-form-control-text-align-right">
+   * &lt;/oj-input-time>
+   */
+  /**
+   * @ojstyleclass text-align.oj-form-control-text-align-right
+   * @ojshortdesc Aligns the text to the right regardless of the reading direction. This is normally used for right aligning numbers.
+   * @ojdisplayname Align-Right
+   * @memberof! oj.ojInputTime
+   */
+  /**
+   * @ojstyleclass text-align.oj-form-control-text-align-start
+   * @ojshortdesc Aligns the text to the left in LTR and to the right in RTL.
+   * @ojdisplayname Align-Start
+   * @memberof! oj.ojInputTime
+   */
+  /**
+   * @ojstyleclass text-align.oj-form-control-text-align-end
+   * @ojshortdesc Aligns the text to the right in LTR and to the left in RTL.
+   * @ojdisplayname Align-End
+   * @memberof! oj.ojInputTime
+   */
+  // --------------------------------------------------- oj.ojInputTime Styling end ------------------------------------------------------------
+  oj.__registerWidget('oj.ojInputTime', $.oj.inputBase, {
+    widgetEventPrefix: 'oj',
+
+    // -------------------------------------From base---------------------------------------------------//
+    _CLASS_NAMES: 'oj-inputdatetime-input',
+    _WIDGET_CLASS_NAMES: 'oj-inputdatetime-time-only oj-component oj-inputdatetime oj-text-field',
+    _INPUT_CONTAINER_CLASS: 'oj-inputdatetime-input-container oj-text-field-container',
+    _ELEMENT_TRIGGER_WRAPPER_CLASS_NAMES: '',
+    _INPUT_HELPER_KEY: 'inputHelp',
+    _ATTR_CHECK: [{ attr: 'type', setMandatory: 'text' }],
+    _GET_INIT_OPTIONS_PROPS_FOR_WIDGET: [
+      { attribute: 'disabled', validateOption: true },
+      { attribute: 'pattern' },
+      { attribute: 'title' },
+      { attribute: 'placeholder' },
+      { attribute: 'value', coerceDomValue: coerceIsoString },
+      { attribute: 'required', coerceDomValue: true, validateOption: true },
+      { attribute: 'readonly', option: 'readOnly', validateOption: true },
+      { attribute: 'min', coerceDomValue: coerceIsoString },
+      { attribute: 'max', coerceDomValue: coerceIsoString }
+    ],
+    // -------------------------------------End from base-----------------------------------------------//
+
+    _TIME_PICKER_ID: 'ojInputTime',
+    _TRIGGER_CLASS: 'oj-inputdatetime-input-trigger',
+    _TRIGGER_TIME_CLASS: 'oj-inputdatetime-time-icon',
+
+    _ON_CLOSE_REASON_SELECTION: 'selection', // A selection was made
+    _ON_CLOSE_REASON_CANCELLED: 'cancelled', // Selection not made
+    _ON_CLOSE_REASON_TAB: 'tab', // Tab key
+    _ON_CLOSE_REASON_CLOSE: 'close', // Disable or other closes
+
+    _KEYBOARD_EDIT_OPTION_ENABLED: 'enabled',
+    _KEYBOARD_EDIT_OPTION_DISABLED: 'disabled',
+
+    _INPUTTIME_CLEAR_ICON_LABEL_KEY: 'accessibleClearIconAltText',
+
+    options: {
+      /**
+       * Dictates component's autocomplete state.
+       * This attribute indicates whether the value of the control can be automatically
+       * completed by the browser. The common values are "on" and "off".
+       * <p>Since this attribute passes through to the input element
+       * unchanged, you can look at the html specs for detailed information for how browsers behave
+       * and what values besides "on" and "off" you can set. The html spec says the default is "on",
+       * so when autocomplete is not explicitly set, the browsers treat it as "on".
+       * </p>
+       * @see {@link https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input}
+       * @see {@link https://caniuse.com/#feat=input-autocomplete-onoff}
+       * @see {@link https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#autofilling-form-controls:-the-autocomplete-attribute}
+       *
+       * @example <caption>Initialize component with <code class="prettyprint">autocomplete</code> attribute:</caption>
+       * &lt;oj-some-element autocomplete="on">&lt;/oj-some-element>
+       *
+       * @example <caption>Get or set the <code class="prettyprint">autocomplete</code> property after initialization:</caption>
+       * // getter
+       * var ro = myComp.autocomplete;
+       *
+       * // setter
+       * myComp.autocomplete = "on";
+       * @name autocomplete
+       * @ojshortdesc Specifies a component's autocomplete state. See the Help documentation for more information.
+       * @expose
+       * @type {"on"|"off"|string=}
+       * @default "off"
+       * @instance
+       * @since 4.0.0
+       * @memberof oj.ojInputTime
+       * @ojextension {_COPY_TO_INNER_ELEM: true}
+       * @ojdeprecated {since: '19.0.0', description: 'The time field in corepack contains mask segments instead of a general input, so autocomplete is not supported.'}
+       */
+      autocomplete: 'off',
+      /**
+       * Autofocus is a Boolean that reflects the autofocus attribute, If it is set to true
+       * then the associated component  will get input focus when the page is loaded.
+       * Setting this property doesn't set the focus to the component:
+       * it tells the browser to focus to it when the element is inserted in the document.
+       *
+       * @example <caption>Initialize component with <code class="prettyprint">autofocus</code> attribute:</caption>
+       * &lt;oj-some-element autofocus>&lt;/oj-some-element>
+       *
+       * @example <caption>Get or set the <code class="prettyprint">autofocus</code> property after initialization:</caption>
+       * // getter
+       * var ro = myComp.autofocus;
+       *
+       * // setter
+       * myComp.autofocus = false;
+       *
+       * @expose
+       * @type {boolean}
+       * @alias autofocus
+       * @default false
+       * @instance
+       * @since 4.0.0
+       * @memberof oj.ojInputTime
+       * @name autofocus
+       * @ojshortdesc Specifies whether the component will get input focus when the page is loaded. See the Help documentation for more information.
+       * @ojextension {_COPY_TO_INNER_ELEM: true}
+       * @ojdeprecated {since: '19.0.0', description: 'This is not recommended for accessibility reasons.'}
+       */
+      /**
+       * A datetime converter instance or one that duck types {@link oj.DateTimeConverter}.
+       * <p>If the timezone option is provided in the converter, the Now button will highlight the current time based on the timezone specified in the converter.
+       * <p>
+       * The hint exposed by the converter is shown inline by default in the Redwood theme when
+       * the field has focus.
+       * You can turn off showing converter hints by using the 'converterHint' property set to 'none'
+       * on the <code class="prettyprint">display-options</code> attribute.
+       * </p>
+       * <p>
+       * In the Redwood theme, only one hint shows at a time, so the precedence rules are:
+       * help.instruction shows; if no help.instruction then validator hints show;
+       * if none, then help-hints.definition shows; if none, then converter hint shows.
+       * help-hints.source always shows along with the other help or hint.
+       * </p>
+       * {@ojinclude "name":"inputBaseConverterOptionDoc"}
+       * @expose
+       * @memberof! oj.ojInputTime
+       * @instance
+       * @type {Object}
+       * @ojshortdesc An object that converts the time value. See the Help documentation for more information.
+       * @ojsignature  [{ target: "Type",
+       *    value: "oj.Converter<any>",
+       *    jsdocOverride: true},
+       *    {target: "Type",
+       *    value: "Promise<oj.Converter<any>>|oj.Converter<any>|
+       *            oj.Validation.RegisteredConverter",
+       *    consumedBy: 'tsdep'}]
+       * @ojdeprecated {since: '8.0.0', target: 'memberType', value: ['oj.Validation.RegisteredConverter'],
+       *                description: 'Defining a converter with an object literal with converter type and its options
+       *                  (aka JSON format) has been deprecated and does nothing. If needed, you can make the JSON format
+       *                  work again by importing the deprecated ojvalidation-datetime module.'}
+       * @ojdeprecated {since: '17.0.0', target: 'memberType', value: ['Promise<oj.Converter<any>>'],
+       *                description: 'Defining a Promise to a Converter instance has been deprecated. The application should resolve the promise and then update the converter attribute with the resolved converter instance.'}
+       * @default new DateTimeConverter({ formatType: 'time', timeFormat: 'short' })
+       */
+      converter: undefined,
+      /**
+       * Display options for auxiliary content that determines whether or not it should be displayed.
+       *
+       * <p>
+       * In the Redwood theme, the sub-properties of the display-options configure whether or not the
+       * types of information is shown. The values of these sub-properties are either
+       * 'display' or 'none'.
+       * </p>
+       * <p>
+       * When display-options changes due to programmatic intervention, the component updates its
+       * display to reflect the updated choices. For example, if you don't want to show the converter
+       * hint, set the display-options.converter-hint to 'none'.
+       * </p>
+       * <p>
+       * A side note: help.instruction and message detail text can include formatted HTML text, whereas
+       * hints and message summary text cannot. If you use formatted text, it should be accessible
+       * and make sense to the user if formatting wasn't there.
+       * The allowed html tags are: span, b, i, em, br, hr, li, ol, ul, p, small, pre.
+       * To format the help.instruction, you could do this:
+       * <pre class="prettyprint"><code>&lt;html>Enter &lt;b>at least&lt;/b> 6 characters&lt;/html></code></pre>
+       * </p>
+       * @ojshortdesc Display options for auxiliary content that determines whether or not it should be displayed.
+       * @expose
+       * @member
+       * @name displayOptions
+       * @ojsharedmembers
+       * @access public
+       * @instance
+       * @type {Object=}
+       * @memberof oj.ojInputTime
+       * @since 0.7
+       */
+      /**
+       * Display options for auxiliary converter hint text. The supported attribute values are theme dependent.
+       * <p>
+       * In the Redwood theme, this attribute determines whether or not the converter hint should be displayed.
+       * The supported values are 'display' and 'none'.
+       * If you don't want to show the converter hint, set display-options.converter-hint to 'none'.
+       * It defaults to 'display'.
+       * To control where the hints display, e.g., inline or in a notewindow,
+       * then use the <a href="#userAssistanceDensity">user-assistance-density</a>
+       * attribute.
+       * </p>
+       *
+       * @access public
+       * @ojsharedmembers
+       * @expose
+       * @name displayOptions.converterHint
+       * @ojshortdesc Display options for auxiliary converter hint text that determines whether it should be displayed.
+       * @instance
+       * @type {(Array<string> | string)=}
+       * @ojsignature [{target: "Type", value: "'display'|'none'", jsdocOverride: true},
+       *               {target: "Type", value: "Array<'placeholder'|'notewindow'|'none'>|'placeholder'|'notewindow'|'display'|'none'", consumedBy: 'tsdep'}]
+       * @ojdeprecated {since: "9.1.0", target: "memberType", value: ["Array<'placeholder'|'notewindow'|'none'>", "'placeholder'", "'notewindow'"],
+       *                description: "These types are no longer supported. They are used for the Alta theme only. The Redwood theme uses 'display'|'none' and the user-assistance-density attribute."}
+       * @ojdeprecated {since: '19.0.0', value: [''], description: "Please use help-hints instead."}
+       * @memberof! oj.ojInputTime
+       * @since 0.7
+       */
+      /**
+       * Display options for auxiliary help instruction text that determines where it should be displayed
+       * in relation to the component.
+       * @ojshortdesc Display options for auxiliary help instruction text that determines whether it should be displayed.
+       * @access public
+       * @ojsharedmembers
+       * @expose
+       * @name displayOptions.helpInstruction
+       * @instance
+       * @type {(Array<string> | string)=}
+       * @ojsignature {target: "Type", value: "Array<'notewindow'|'none'>|'notewindow'|'none'", jsdocOverride: true}
+       * @memberof! oj.ojInputTime
+       * @ojdeprecated [{since: '9.0.0', description: 'If you want none, remove help-instruction attribute.'}]
+       * @default ['notewindow']
+       * @since 0.7
+       */
+      /**
+       * Display options for auxiliary message text. The supported attribute values are theme dependent.
+       * <p>
+       * In the Redwood theme, this attribute determines whether or not the messages should be displayed.
+       * The supported values are 'display' and 'none'.
+       * If you don't want to show messages, set display-options.messages to 'none'.
+       * It defaults to 'display'.
+       * To control where the messages display, e.g., inline or in a notewindow,
+       * then use the <a href="#userAssistanceDensity">user-assistance-density</a>
+       * attribute.
+       * </p>
+       *
+       * @ojshortdesc Display options for auxiliary message text that determines whether it should be displayed.
+       * @access public
+       * @ojsharedmembers
+       * @expose
+       * @name displayOptions.messages
+       * @instance
+       * @type {(Array<string> | string)=}
+       * @ojsignature [{target: "Type", value: "'display'|'none'", jsdocOverride: true},
+       *               {target: "Type", value: "Array<'inline'|'notewindow'|'none'>|'inline'|'notewindow'|'display'|'none'", consumedBy: 'tsdep'}]
+       * @ojdeprecated {since: "9.1.0", target: "memberType", value: ["Array<'inline'|'notewindow'|'none'>", "'inline'", "'notewindow'"],
+       *                description: "These types are no longer supported. They are used for the Alta theme only. The Redwood theme uses 'display'|'none' and the user-assistance-density attribute."}
+       * @memberof! oj.ojInputTime
+       * @since 0.7
+       */
+      /**
+       * Display options for auxiliary validator hint text. The supported attribute values are theme dependent.
+       * <p>
+       * In the Redwood theme, this attribute determines whether or not the validator hint should be displayed.
+       * The supported values are 'display' and 'none'.
+       * If you don't want to show the validator hint, set display-options.validator-hint to 'none'.
+       * It defaults to 'display'.
+       * To control where the hints display, e.g., inline or in a notewindow,
+       * then use the <a href="#userAssistanceDensity">user-assistance-density</a>
+       * attribute.
+       * </p>
+       *
+       * @ojshortdesc Display options for auxiliary validator hint text that determines whether it should be displayed.
+       * @access public
+       * @ojsharedmembers
+       * @expose
+       * @name displayOptions.validatorHint
+       * @instance
+       * @type {(Array<string> | string)=}
+       * @ojsignature [{target: "Type", value: "'display'|'none'", jsdocOverride: true},
+       *               {target: "Type", value: "Array<'notewindow'|'none'>|'notewindow'|'display'|'none'",  consumedBy: 'tsdep'}]
+       * @ojdeprecated {since: "9.1.0", target: "memberType", value: ["Array<'notewindow'|'none'>", "'notewindow'"],
+       *                description: "These types are no longer supported. They are used for the Alta theme only. The Redwood theme uses 'display'|'none' and the user-assistance-density attribute."}
+       * @memberof! oj.ojInputTime
+       * @since 0.7
+       */
+      /**
+       * Determines if keyboard entry of the text is allowed.
+       * When disabled the picker must be used to select a time.
+       *
+       * Themes can override the default value.
+       *
+       * @expose
+       * @instance
+       * @memberof! oj.ojInputTime
+       * @ojshortdesc Specifies whether keyboard entry of text is allowed. See the Help documentation for more information.
+       * @type {string}
+       * @ojvalue {string} "enabled"  Allow keyboard entry of the time.
+       * @ojvalue {string} "disabled" Changing the time can only be done with the picker.
+       * @default "enabled"
+       *
+       * @example <caption>Initialize the InputTime with the <code class="prettyprint">keyboard-edit</code> attribute specified:</caption>
+       * &lt;oj-input-time keyboard-edit='disabled'>&lt;/oj-input-time>
+       *
+       * @example <caption>Get or set the <code class="prettyprint">keyboardEdit</code> property after initialization:</caption>
+       * // getter
+       * var keyboardEdit = myInputTime.keyboardEdit;
+       *
+       * // setter
+       * myInputTime.keyboardEdit = 'disabled';
+       *
+       * @example <caption>Set the default in the theme (SCSS)</caption>
+       * $inputDateTimeKeyboardEditOptionDefault: disabled !default;
+       * @ojdeprecated {since: '19.0.0', description: 'This is not supported in the Redwood UX specification.'}
+       */
+      keyboardEdit: 'enabled',
+      /**
+       * <p>
+       * The oj-label sets the labelledBy property programmatically on the form component
+       * to make it easy for the form component to find its oj-label component (a
+       * document.getElementById call.)
+       * </p>
+       * <p>
+       * The application developer should use the 'for'/'id api
+       * to link the oj-label with the form component;
+       * the 'for' on the oj-label to point to the 'id' on the input form component.
+       * This is the most performant way for the oj-label to find its form component.
+       * </p>
+       *
+       * @example <caption>Initialize component with <code class="prettyprint">for</code> attribute:</caption>
+       * &lt;oj-label for="textId">Name:&lt;/oj-label>
+       * &lt;oj-input-text id="textId">
+       * &lt;/oj-input-text>
+       * // ojLabel then writes the labelled-by attribute on the oj-input-text.
+       * &lt;oj-label id="labelId" for="textId">Name:&lt;/oj-label>
+       * &lt;oj-input-text id="textId" labelled-by"labelId">
+       * &lt;/oj-input-text>
+       *
+       * @example <caption>Get or set the <code class="prettyprint">labelledBy</code> property after initialization:</caption>
+       * // getter
+       * var labelledBy = myComp.labelledBy;
+       *
+       * // setter
+       * myComp.labelledBy = "labelId";
+       *
+       * @name labelledBy
+       * @expose
+       * @ojshortdesc The oj-label sets the labelledBy property programmatically on the form component. See the Help documentation for more information.
+       * @type {string|null}
+       * @default null
+       * @public
+       * @instance
+       * @since 7.0.0
+       * @memberof oj.ojInputTime
+       * @ojdeprecated {since: '19.0.0', description: 'This is an internal API and is not supported in the Redwood UX specification.'}
+       */
+      /**
+       * The maximum selectable time, in ISO string format. When set to null, there is no maximum.
+       * min and max must be in the same ISO string format as value (local,
+       * zulu, or offset)
+       *
+       * @expose
+       * @instance
+       * @memberof! oj.ojInputTime
+       * @type {string|null}
+       * @ojformat time
+       * @default null
+       *
+       * @example <caption>Initialize the InputTime with the <code class="prettyprint">max</code> attribute specified:</caption>
+       * &lt;oj-input-time max='T13:30:00.000-08:00'>&lt;/oj-input-time>
+       *
+       * @example <caption>Get or set the <code class="prettyprint">max</code> property after initialization:</caption>
+       * // getter
+       * var maxValue = myInputTime.max;
+       *
+       * // setter
+       * myInputTime.max = 'T13:30:00.000-08:00';
+       */
+      max: undefined,
+
+      /**
+       * The minimum selectable time, in ISO string format. When set to null, there is no minimum.
+       * min and max must be in the same ISO string format as value (local,
+       * zulu, or offset)
+       *
+       * @expose
+       * @instance
+       * @memberof! oj.ojInputTime
+       * @type {string|null}
+       * @ojformat time
+       * @default null
+       *
+       * @example <caption>Initialize the InputTime with the <code class="prettyprint">min</code> attribute specified:</caption>
+       * &lt;oj-input-time min='T08:00:00.000-08:00'>&lt;/oj-input-time>
+       *
+       * @example <caption>Get or set the <code class="prettyprint">min</code> property after initialization:</caption>
+       * // getter
+       * var minValue = myInputTime.min;
+       *
+       * // setter
+       * myInputTime.min = 'T08:00:00.000-08:00';
+       */
+      min: undefined,
+
+      /**
+       * JSON data passed when the widget is of ojInputDateTime
+       *
+       * {
+       *  widget : dateTimePickerInstance,
+       *  inline: true|false
+       * }
+       *
+       * @expose
+       * @memberof! oj.ojInputTime
+       * @instance
+       * @private
+       */
+      datePickerComp: null,
+
+      /**
+       * <p>Attributes specified here will be set on the picker DOM element when it's launched.
+       * <p>The supported attribute is <code class="prettyprint">class</code>, which is appended to the picker's class, if any.
+       * Note: 1) pickerAttributes is not applied in the native theme.
+       * 2) setting this property after element creation has no effect.
+       *
+       * @property {string=} style <span class="important">Deprecated: this property is deprecated since 7.0.0 and will be removed in the future.
+       *                                                   Please use the "class" property to set a CSS class instead. As of 11.0.0 this property is ignored and an error is logged.</span>
+       * @property {string=} class
+       *
+       * @example <caption>Initialize the inputTime specifying the class attribute to be set on the picker DOM element:</caption>
+       * myInputTime.pickerAttributes = {
+       *   "class": "my-class"
+       * };
+       *
+       * @example <caption>Get the <code class="prettyprint">pickerAttributes</code> property, after initialization:</caption>
+       * // getter
+       * var pickerAttrs = myInputTime.pickerAttributes;
+       *
+       * @expose
+       * @memberof! oj.ojInputTime
+       * @ojshortdesc Specifies attributes to be set on the picker DOM element when it is launched. See the Help documentation for more information.
+       * @ojdeprecated {target: "property", for: "style", since: "7.0.0", description: "Style property of pickerAttribute is deprecated as it violates the recommended <a href='https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy'>Content Security Policy</a> for JET which disallows <a href='https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/style-src'>inline styles</a>. Use class property instead."}
+       * @ojdeprecated {target: "property", for: "class", since: "19.0.0", description: "We are recommending not to change the Class property of pickerAttribute as it leads to an inconsistent UI."}
+       * @ojdeprecated {since: '19.0.0', description: "Changing the Class or Style property is not recommended, as it leads to an inconsistent UI."}
+       * @instance
+       * @type {?Object}
+       * @default null
+       */
+      pickerAttributes: null,
+
+      /**
+       * Allows applications to specify whether to render time picker in JET or
+       * as a native picker control.</br>
+       *
+       *  Note that the native renderMode will attempt to load a Cordova plugin that
+       *  will launch the native picker. If the plugin is not found, the default JET
+       *  picker will be used.</br>
+       *  With native renderMode, the functionality that is sacrificed compared to jet renderMode are:
+       *    <ul>
+       *      <li>Time picker cannot be themed</li>
+       *      <li>Accessibility is limited to what the native picker supports</li>
+       *      <li>pickerAttributes is not applied</li>
+       *      <li>Sub-IDs are not available</li>
+       *      <li>hide() function is no-op</li>
+       *      <li>translations sub properties pertaining to the picker is not available</li>
+       *      <li>'timePicker.timeIncrement' property is limited to iOS and will only take a precision of minutes</li>
+       *    </ul>
+       *
+       * @expose
+       * @memberof! oj.ojInputTime
+       * @ojshortdesc Specifies whether to render the time picker in JET, or as a native picker control. See the Help documentation for more information.
+       * @instance
+       * @type {string}
+       * @ojvalue {string} 'jet' Applications get full JET functionality.
+       * @ojvalue {string} 'native' Applications get the functionality of the native picker.</br></br>
+       * @default "jet"
+       *
+       * @ojdeprecated {since: '8.0.0', description: 'Support for "native" mode rendering is deprecated because JET promotes a consistent Oracle UX based upon the Redwood design system. As a result, the theme variable "$inputDateTimeRenderModeOptionDefault" is also deprecated.'}
+       *
+       * @example <caption>Initialize the InputTime with the <code class="prettyprint">render-mode</code> attribute specified:</caption>
+       * &lt;oj-input-time render-mode='native'>&lt;/oj-input-time>
+       *
+       * @example <caption>Get or set the <code class="prettyprint">renderMode</code> property after initialization:</caption>
+       * // getter
+       * var renderMode = myInputTime.renderMode;
+       *
+       * // setter
+       * myInputTime.renderMode = 'native';
+       *
+       * @example <caption>Set the default in the theme (SCSS)</caption>
+       * $inputDateTimeRenderModeOptionDefault: native !default;
+       */
+      renderMode: 'jet',
+      /**
+       * The placeholder text to set on the element.
+       *
+       * @example <caption>Initialize the component with the <code class="prettyprint">placeholder</code> attribute:</caption>
+       * &lt;oj-some-element placeholder="User Name">&lt;/oj-some-element>
+       *
+       * @example <caption>Get or set the <code class="prettyprint">placeholder</code> property after initialization:</caption>
+       * // getter
+       * var myPh = myComp.placeholder;
+       *
+       * // setter
+       * myComp.placeholder = myPlaceholder;
+       *
+       * If the attribute is not set and if a converter is set then the
+       * converter hint is used. See displayOptions for details.
+       *
+       *
+       * @expose
+       * @access public
+       * @instance
+       * @memberof! oj.ojInputTime
+       * @name placeholder
+       * @type {string}
+       * @ojtranslatable
+       * @ojdeprecated {since: '19.0.0', description: "The time field in corepack contains mask segments instead of a general input, so placeholder is not supported."}
+       */
+
+      /**
+       * Note that Jet framework prohibits setting subset of properties which are object types.<br/><br/>
+       * For example myInputTime.timePicker = {timeIncrement: "00:30:00:00"}; is prohibited as it will
+       * wipe out all other sub-properties for "timePicker" object.<br/><br/> If one wishes to do this [by above syntax or knockout] one
+       * will have to get the "timePicker" object, modify the necessary sub-property and pass it to above syntax.<br/><br/>
+       * Note that when renderMode is 'native', the only timePicker sub-properties available are showOn and, to a limited extent, timeIncrement.<br/><br/>
+       *
+       * @expose
+       * @instance
+       * @memberof! oj.ojInputTime
+       * @ojshortdesc An object whose properties describe the appearance and behavior of the time picker. See the Help documentation for more information.
+       * @type {Object}
+       *
+       * @example <caption>Initialize the component, overriding some time-picker attributes and leaving the others intact:</caption>
+       * &lt;!-- Using dot notation -->
+       * &lt;oj-input-time time-picker.time-increment='00:10:00:00'>&lt;/oj-input-time>
+       *
+       * &lt;!-- Using JSON notation -->
+       * &lt;oj-input-time time-picker='{"timeIncrement":"00:10:00:00"}'>&lt;/oj-input-time>
+       *
+       * @example <caption>Get or set the <code class="prettyprint">timePicker</code> property after initialization:</caption>
+       * // Get one
+       * var value = myComponent.timePicker.showOn;
+       *
+       * // Set one, leaving the others intact. Use the setProperty API for
+       * // subproperties so that a property change event is fired.
+       * myComponent.setProperty('timePicker.showOn', 'image');
+       *
+       * // Get all
+       * var values = myComponent.timePicker;
+       *
+       * // Set all.  Must list every timePicker key, as those not listed are lost.
+       * myComponent.timePicker = {
+       *     timeIncrement: '00:10:00:00',
+       *     showOn: 'image',
+       *     footerLayout: 'now'
+       * };
+       * @ojdeprecated {since: '19.0.0', description: "The time field does not have a picker."}
+       */
+      timePicker: {
+        /**
+         * Will dictate what content is shown within the footer of the wheel timepicker.
+         *
+         * <p>See the <a href="#timePicker">time-picker</a> attribute for usage examples.
+         *
+         * @expose
+         * @name timePicker.footerLayout
+         * @ojshortdesc Specifies what content is shown within the footer of the wheel time picker.
+         * @memberof! oj.ojInputTime
+         * @instance
+         * @type {string}
+         * @ojvalue {string} '' Do not show anything
+         * @ojvalue {string} 'now' Show the now button. When user clicks on the Now button, it will highlight the current time in the timepicker.
+         * @ojdeprecated {since: "8.2.0", description: "This attribute is deprecated and should not be used as it will be ignored in new UX design."}
+         * @default ""
+         */
+        footerLayout: '',
+
+        /**
+         * Time increment to be used for InputTime, the format is hh:mm:ss:SS. <br/><br/>
+         * Note that when renderMode is 'native', timeIncrement property is limited to iOS and will only take a precision of minutes.<br/><br/>
+         *
+         * <p>See the <a href="#timePicker">time-picker</a> attribute for usage examples.
+         *
+         * @expose
+         * @name timePicker.timeIncrement
+         * @ojshortdesc Specifies the time increment used for InputTime. See the Help documentation for more information.
+         * @memberof! oj.ojInputTime
+         * @instance
+         * @type {string=}
+         * @default "00:05:00:00"
+         * @ojdeprecated {since: "19.0.0", description: "The time field in corepack contains a mask and not a picker."}
+         */
+        timeIncrement: '00:05:00:00',
+
+        /**
+         * When the timepicker should be shown.
+         *
+         * <p>See the <a href="#timePicker">time-picker</a> attribute for usage examples.
+         *
+         * @expose
+         * @name timePicker.showOn
+         * @ojshortdesc Specifies when the time picker should be shown.
+         * @memberof! oj.ojInputTime
+         * @instance
+         * @type {string=}
+         * @ojvalue {string} 'focus' when the element receives focus or when the trigger clock image is clicked. When the picker is closed, the field regains focus and is editable.
+         * @ojvalue {string} 'userFocus' when the element receives focus from a user action (such as tab key press)
+         *   or the calendar image is clicked.  Programmatic calls to .focus() do not show the picker.
+         * @ojvalue {string} 'image' when the trigger clock image is clicked
+         * @default "image"
+         * @ojdeprecated {since: "19.0.0", description: "This is not supported in the Redwood UX specification."}
+         */
+        showOn: 'image'
+      }
+
+      // DOCLETS
+      /**
+       * List of validators, synchronous or asynchronous,
+       * used by component along with asynchronous validators from the deprecated async-validators option
+       * and the implicit component validators when performing validation. Each item is either an
+       * instance that duck types {@link oj.Validator} or {@link oj.AsyncValidator}.
+       * <p>
+       * Implicit validators are created by the element when certain attributes are present.
+       * For example, if the <code class="prettyprint">required</code>
+       * attribute is set, an implicit {@link oj.RequiredValidator} is created. If the
+       * <code class="prettyprint">min</code> and/or <code class="prettyprint">max</code> attribute
+       * is set, an implicit {@link oj.DateTimeRangeValidator} may be created.
+       * At runtime when the component runs validation, it
+       * combines all the implicit validators with all the validators
+       * specified through this <code class="prettyprint">validators</code> attribute, and runs
+       * all of them.
+       * </p>
+       * <p>
+       * Hints exposed by validators are shown inline by default in the Redwood theme when the
+       * field has focus.
+       * You can turn off showing validator hints by using the 'validatorHint' property set to 'none'
+       * on the <code class="prettyprint">display-options</code> attribute.
+       * </p>
+       *
+       * <p>
+       * When <code class="prettyprint">validators</code> property changes due to programmatic
+       * intervention, the element may decide to clear messages and run validation, based on the
+       * current state it is in. </br>
+       *
+       * <h4>Steps Performed Always</h4>
+       * <ul>
+       * <li>The cached list of validator instances are cleared and new validator hints is pushed to
+       * messaging. E.g., notewindow displays the new hint(s).
+       * </li>
+       * </ul>
+       *
+       * <h4>Running Validation</h4>
+       * <ul>
+       * <li>if element is valid when validators changes, element does nothing other than the
+       * steps it always performs.</li>
+       * <li>if element is invalid and is showing messages when
+       * <code class="prettyprint">validators</code> changes then all element messages are cleared
+       * and full validation run using the display value on the element.
+       * <ul>
+       *   <li>if there are validation errors, then <code class="prettyprint">value</code>
+       *   property is not updated and the error is shown.
+       *   </li>
+       *   <li>if no errors result from the validation, the <code class="prettyprint">value</code>
+       *   property is updated; page author can listen to the <code class="prettyprint">valueChanged</code>
+       *   event to clear custom errors.</li>
+       * </ul>
+       * </li>
+       * <li>if element is invalid and has deferred messages when validators changes, it does
+       * nothing other than the steps it performs always.</li>
+       * </ul>
+       * </p>
+       *
+       * <h4>Clearing Messages</h4>
+       * <ul>
+       * <li>Only messages created by the element are cleared.</li>
+       * <li><code class="prettyprint">messagesCustom</code> property is not cleared.</li>
+       * </ul>
+       * </p>
+       *
+
+       *
+       * @example <caption>Initialize the element with validator instance:</caption>
+       * var dateTimeRange = new DateTimeRangeValidator({
+       *       max: 'T14:30:00',
+       *       min: 'T02:30:00'
+       *     });
+       * myInputTime.validators = [dateTimeRange];
+       *
+       *
+       *
+       * @example <caption>Initialize the element with multiple validator instances:</caption>
+       * var validator1 = new MyCustomValidator({'foo': 'A'});
+       * var validator2 = new MyCustomValidator({'foo': 'B'});
+       * myInputTime.value = 10;
+       * myInputTime.validators = [validator1, validator2];
+       *
+       * @expose
+       * @name validators
+       * @ojshortdesc A list of validators used by the element, along with any implicit component validators, when performing validation. See the Help documentation for more information.
+       * @instance
+       * @memberof oj.ojInputTime
+       * @ojsignature  [{ target: "Type",
+       *       value: "Array<oj.Validator<string>|oj.AsyncValidator<string>>|
+       *       null",
+       *       jsdocOverride: true},
+       *      { target: "Type",
+       *       value: "Array<oj.Validator<string>|oj.AsyncValidator<string>|
+       *       oj.Validation.RegisteredValidator>|
+       *       null",
+       *       consumedBy: 'tsdep'}]
+       * @ojdeprecated {since: '8.0.0', target: 'memberType', value: ['oj.Validation.RegisteredValidator'],
+       *                description: 'Defining a validator with an object literal with validator type and
+       *                  its options (aka JSON format) has been deprecated and does nothing. If needed, you can
+       *                  make the JSON format work again by importing the deprecated ojvalidation-datetime module.'}
+       * @type {Array.<Object>}
+       * @default []
+       */
+
+      /**
+       * The value of the InputTime which must be an ISOString.
+       * <p>
+       * If the converter's timeZone option is
+       * not set and the value is a zulu or offset (not local) ISOString,
+       * the timeZone will default to the user's system's timeZone.
+       * </p>
+       *
+       * @example <caption>Initialize the element with the <code class="prettyprint">value</code> attribute:</caption>
+       * &lt;oj-input-time value='T10:30:00.000'&gt;&lt;/oj-input-time&gt;
+       * @example <caption>Initialize the element with the <code class="prettyprint">value</code> property specified programmatically
+       * using oj.IntlConverterUtils.dateToLocalIso :</caption>
+       * myInputTime.value = oj.IntlConverterUtils.dateToLocalIso(new Date());<br/>
+       * @example <caption>Get or set the <code class="prettyprint">value</code> property, after initialization:</caption>
+       * // Getter: returns Today's date in ISOString
+       * myInputTime.value;
+       * // Setter: sets it to a different date
+       * myInputTime.value = "T20:00:00-08:00";
+       *
+       * @expose
+       * @name value
+       * @type {string}
+       * @ojformat time
+       * @instance
+       * @ojwriteback
+       * @memberof! oj.ojInputTime
+       * @ojshortdesc The value of the input time element, which must be an ISOString. See the Help documentation for more information.
+       * @ojeventgroup common
+       */
+
+      // Events
+    },
+
+    /**
+     * @protected
+     * @override
+     * @instance
+     * @memberof! oj.ojInputTime
+     */
+    _InitOptions: function (originalDefaults, constructorOptions) {
+      this._super(originalDefaults, constructorOptions);
+      // when it is of ojInputDateTime component, do not initialize values from dom node since it's an empty input node if inline or
+      // if not inline the values should be taken care of by ojInputDateTime. Note that option values would have been passed by
+      // ojInputDateTime
+      if (this.options.datePickerComp === null && !this._IsCustomElement()) {
+        ojeditablevalue.EditableValueUtils.initializeOptionsFromDom(
+          this._GET_INIT_OPTIONS_PROPS_FOR_WIDGET,
+          constructorOptions,
+          this
+        );
+      }
+    },
+
+    _getPrependNode: function () {
+      const independentPrependNode = this._IsCustomElement() ? $(this.OuterWrapper) : $('body');
+      return this._isIndependentInput()
+        ? independentPrependNode
+        : $('.oj-popup-content', this._datePickerComp.widget._popUpDpDiv.ojPopup('widget'));
+    },
+
+    /**
+     * @ignore
+     */
+    _InitBase: function () {
+      this._timePickerDefaultValidators = {};
+      this._datePickerComp = this.options.datePickerComp;
+      this._inputContainer = null;
+      this._redirectFocusToInputContainer = false;
+      this._isMobile = false;
+
+      // only case is when of showOn of focus and one hides the element [need to avoid showing]
+      this._ignoreTimePickerShow = false;
+
+      // need this flag to keep track of native picker opened, there is no callback on native API
+      //  to find out otherwise.
+      this._nativePickerShowing = false;
+
+      if (this.options.readOnly !== true) {
+        this._createWheelPicker();
+      }
+      // I want to wrap the inputTime if it is all by itself, or if it is
+      // part of the inline inputDateTime component which is the inline date stacked on top of an
+      // inputTime. The inline error messages will go under the inputTime part. TODO: how?
+      // right now the destroy fails because I am whacking away something.. the dom.
+      if (this._isIndependentInput()) {
+        this._ELEMENT_TRIGGER_WRAPPER_CLASS_NAMES += this._INPUT_CONTAINER_CLASS;
+      }
+    },
+
+    /**
+     * Don't render the readonly-div for the oj-date-time-picker. Just
+     * use an input since the time portion is short an input is ok.
+     * @ignore
+     * @override
+     * @protected
+     * @memberof! oj.ojInputTime
+     * @return {boolean}
+     */
+    _UseReadonlyDiv: function () {
+      if (this._isContainedInDateTimePicker() && this._isDatePickerInline()) {
+        return false;
+      }
+      return this._superApply(arguments);
+    },
+
+    _createWheelPicker: function () {
+      var pickerAttrs = this.options.pickerAttributes;
+
+      var wheelPicker = document.createElement('div');
+      wheelPicker.className = 'oj-timepicker-popup';
+      wheelPicker.setAttribute('data-oj-dropdownnofocuschange', '');
+      wheelPicker.style.display = 'none';
+      var div = document.createElement('div');
+      div.id = this._GetSubId(this._TIME_PICKER_ID);
+      var cssClasses = 'oj-timepicker-content';
+      // JET-51605 - done and cancel buttons are not accessible when trying to input time
+      // setting the oj-timepicker-mobile-content makes the wheel picker 100vh. But we do not
+      // want this for oj-input-date-time as the popup includes the buttons to set the selected
+      // time as well as to switch to the date picker. These controls are outside the wheel picker
+      // so setting this to 100vh completely hides this. So, set the css style classes based on
+      // where this timepicker is being used.
+      if (Config.getDeviceRenderMode() === 'phone') {
+        const mobileCSSStlyeClass = this._isContainedInDateTimePicker()
+          ? ' oj-timepicker-datetime-mobile-content'
+          : ' oj-timepicker-mobile-content';
+        cssClasses += mobileCSSStlyeClass;
+      }
+      div.className = cssClasses;
+      div.setAttribute('data-oj-dropdownnofocuschange', '');
+      wheelPicker.appendChild(div);
+      this._wheelPicker = $(wheelPicker);
+      var prependNode = this._getPrependNode()[0];
+      prependNode.insertBefore(wheelPicker, prependNode.firstElementChild); // @HTMLUpdateOK
+
+      if (this._isIndependentInput()) {
+        // DISABLE FOR NOW, as animation is coming quite clunky (not sure if the css of popup or of animation)
+        // var animation = _isLargeScreen ? {"open": null, "close": null} : {"close": null};
+        var animation = { open: null, close: null };
+
+        this._popUpWheelPicker = this._wheelPicker
+          .ojPopup({
+            initialFocus: 'none',
+            role: 'dialog',
+            chrome: 'default',
+            modality: _isLargeScreen ? 'modeless' : 'modal',
+            open: function () {},
+            beforeClose: function () {},
+            animateStart: function (event, ui) {
+              if (ui.action === 'open') {
+                event.preventDefault();
+                // eslint-disable-next-line no-undef
+                AnimationUtils.slideIn(ui.element, {
+                  offsetY: ui.element.offsetHeight + 'px'
+                }).then(ui.endCallback);
+              }
+            },
+            animation: animation
+          })
+          .attr('data-oj-internal', ''); // mark internal component, used in Components.getComponentElementByNode;
+        this.element.attr('data-oj-popup-' + this._popUpWheelPicker.attr('id') + '-parent', ''); // mark parent of pop up @HTMLUpdateOK
+
+        if (pickerAttrs) {
+          ojeditablevalue.EditableValueUtils.setPickerAttributes(
+            this._popUpWheelPicker.ojPopup('widget'),
+            pickerAttrs
+          );
+        }
+      }
+    },
+
+    _timepickerShowing: function () {
+      var picker;
+      if (this._isIndependentInput()) {
+        picker = this._popUpWheelPicker;
+        return (
+          (picker && ojcomponentcore.isComponentInitialized(picker, 'ojPopup') && picker.ojPopup('isOpen')) ||
+          this._nativePickerShowing
+        );
+      }
+
+      var widget = this._datePickerComp.widget;
+      picker = widget._popUpDpDiv;
+      return (
+        (widget._isShowingDatePickerSwitcher() &&
+          picker &&
+          ojcomponentcore.isComponentInitialized(picker, 'ojPopup') &&
+          picker.ojPopup('isOpen')) ||
+        this._nativePickerShowing
+      );
+    },
+
+    /**
+     * @ignore
+     * @protected
+     * @memberof oj.ojInputTime
+     */
+    _GetDefaultConverter: function () {
+      if (this._timeDefaultConverter == null) {
+        this._timeDefaultConverter = _getTimeDefaultConverter();
+      }
+      return this._timeDefaultConverter;
+    },
+
+    /**
+     * @ignore
+     * @protected
+     * @memberof oj.ojInputTime
+     */
+    _CreateConverters: function () {
+      var createWorkerConverters = function (ci) {
+        this._createOffsetConverter(ci);
+      }.bind(this);
+
+      var converter = this._GetConverter();
+      if (converter instanceof Promise) {
+        this._resolveConverterBusyState = this._SetConverterBusyState('time');
+        this._converterPromise = converter.then(function (ci) {
+          createWorkerConverters(ci);
+        });
+      } else {
+        // If the main converter is synchronous, this should return null
+        createWorkerConverters(converter);
+      }
+    },
+
+    /**
+     * @protected
+     * @override
+     * @instance
+     * @memberof! oj.ojInputTime
+     */
+    _ComponentCreate: function () {
+      ojconverterutilsI18n.IntlConverterUtils._verifyValueMinMax(this.options.value, this.options.min, this.options.max);
+      // Create all the default converters we need first
+      this._CreateConverters();
+
+      this._InitBase();
+
+      var ret = this._superApply(arguments);
+
+      if (this._isContainedInDateTimePicker() && !this._isDatePickerInline()) {
+        // set to nothing since then of not inline and don't want to place two component classes to
+        // the same input element
+        this._CLASS_NAMES = '';
+      } else {
+        // active state handler, only in case time picker is independent
+        bindActive(this);
+      }
+
+      // We need to override focus on the component and the inner input element.
+      // calling focus on the component will call focus on the inner input element
+      // passing in true to indicate that we want to show the popup of showOn is set
+      // to 'focus'.  If this isn't a custom element, we don't want to override the
+      // focus functions.
+      // Also, when readonly is true, we just want to focus on the readonly element,
+      // as the popup isn't an issue.
+      if (this._IsCustomElement()) {
+        let comp = this._getRootElement();
+        // We need the input element here regardless of readonly state.
+        let inputElem = this._GetContentElement()[0];
+        comp.focus = () => {
+          if (this.options.readOnly === true) {
+            this.GetFocusElement().focus(); // This should be the readonly focus element.
+          } else {
+            inputElem.focus(true);
+          }
+        };
+
+        let proto = Object.getPrototypeOf(inputElem);
+        inputElem.focus = function (showDropDown) {
+          const showOn = this.options.timePicker.showOn;
+          if (!this._closeInProgress) {
+            if (showOn === 'focus') {
+              this._ignoreTimePickerShow = !showDropDown;
+            } else if (showOn === 'userFocus') {
+              this._ignoreTimePickerShow = true;
+            }
+          }
+          proto.focus.call(inputElem);
+        }.bind(this);
+      }
+
+      this._processReadOnlyKeyboardEdit();
+
+      return ret;
+    },
+    _SetConverterBusyState: function (type) {
+      var domElem = this.element[0];
+      var busyContext = Context.getContext(domElem).getBusyContext();
+      var description = 'The page is waiting for async ' + type + ' converter loading ';
+
+      if (domElem && domElem.id) {
+        description += 'for "' + domElem.id + '" ';
+      }
+      description += 'to finish.';
+
+      return busyContext.addBusyState({ description: description });
+    },
+
+    /**
+     * @protected
+     * @override
+     * @instance
+     * @memberof! oj.ojInputTime
+     */
+    _AfterCreate: function () {
+      var ret = this._superApply(arguments);
+
+      return ret;
+    },
+
+    /**
+     * Do things here for creating the component where you need the converter, since
+     * getting the converter can be asynchronous. We get the converter before calling
+     * this method, so it is there.
+     *
+     * @protected
+     * @override
+     * @instance
+     * @memberof! oj.ojInputTime
+     */
+    _AfterCreateConverterCached: function () {
+      var ret = this._super();
+
+      var doFinishCreate = function () {
+        if (this.options.readOnly !== true) {
+          if (this._isIndependentInput()) {
+            this._attachTrigger();
+            this._attachClearIcon();
+          }
+        }
+
+        if (this._isIndependentInput()) {
+          if (this.options.readOnly !== true) {
+            disableEnableSpan(this._triggerNode[0].children, this.options.disabled);
+          }
+
+          var LId;
+          if (!this._IsCustomElement()) {
+            var label = this.$label;
+            if (this._inputContainer && label && label.length === 1) {
+              LId = label.attr('id');
+
+              // The label should always have a generated ID, so no need to check here.
+              this._inputContainer.attr('aria-labelledby', LId);
+            }
+          }
+        }
+
+        if (this._resolveConverterBusyState) {
+          this._resolveConverterBusyState();
+          delete this._resolveConverterBusyState;
+        }
+      }.bind(this);
+
+      if (this._converterPromise) {
+        var self = this;
+        this._converterPromise.then(function () {
+          doFinishCreate();
+          delete self._converterPromise;
+        });
+      } else {
+        doFinishCreate();
+      }
+
+      return ret;
+    },
+
+    _createDateTimeRangeValidator: function (converter) {
+      var options = this.options;
+      var defaultStyleClass = this._GetDefaultStyleClass();
+      var createValidator = function (resolvedConverter) {
+        var validator = getImplicitDateTimeRangeValidator(
+          options,
+          resolvedConverter,
+          defaultStyleClass
+        );
+
+        if (validator instanceof Promise) {
+          var self = this;
+          return validator.then(function (vi) {
+            self._dateTimeRangeValidator = vi;
+            return vi;
+          });
+        }
+
+        this._dateTimeRangeValidator = validator;
+        return validator;
+      }.bind(this);
+
+      if (converter instanceof Promise) {
+        return converter.then(function (resolvedConverter) {
+          return createValidator(resolvedConverter);
+        });
+      }
+
+      return createValidator(converter);
+    },
+
+    _getDateTimeRangeValidator: function () {
+      return this._dateTimeRangeValidator;
+    },
+
+    /**
+     * @ignore
+     * @private
+     * @memberof oj.ojInputTime
+     */
+    _setValidatorOption: function (validatorType, validatorOrPromise) {
+      var self = this;
+      var afterValidatorCreated = function (validator) {
+        self._timePickerDefaultValidators[validatorType] = validator;
+        self._AfterSetOptionValidators();
+      };
+
+      if (validatorOrPromise instanceof Promise) {
+        validatorOrPromise.then(function (validator) {
+          afterValidatorCreated(validator);
+        });
+      } else {
+        afterValidatorCreated(validatorOrPromise);
+      }
+    },
+
+    /**
+     * @ignore
+     * @protected
+     * @override
+     */
+    _setOption: function (key, value, flags) {
+      var retVal = null;
+      var footer;
+
+      // When a null, undefined, or "" value is passed in set to null for consistency
+      // note that if they pass in 0 it will also set it null
+      if (key === 'value') {
+        if (!value) {
+          // eslint-disable-next-line no-param-reassign
+          value = null;
+        }
+
+        retVal = this._super(key, value, flags);
+
+        this._createWheelPickerDom(true);
+
+        return retVal;
+      } else if (key === 'timePicker' && value.footerLayout === undefined) {
+        // set options on the timePicker wipe out the footerLayout settings
+        // save footerLayout and restore after superApply
+        footer = this.options.timePicker.footerLayout;
+      }
+
+      retVal = this._superApply(arguments);
+
+      // restore footerLayout
+      if (footer) {
+        this.options.timePicker.footerLayout = footer;
+      }
+
+      if (key === 'disabled' && this._isIndependentInput()) {
+        if (value) {
+          this._hide(this._ON_CLOSE_REASON_CLOSE);
+        }
+        // readonly component has no _triggerNode
+        if (this._triggerNode) {
+          this._triggerNode.find('.' + this._TRIGGER_TIME_CLASS).attr('title', this._getTimeTitle());
+          disableEnableSpan(this._triggerNode[0].children, value);
+        }
+      } else if ((key === 'max' || key === 'min') && !this._isContainedInDateTimePicker()) {
+        // since validators are immutable, they will contain min + max as local values. B/c of this will need to recreate
+
+        this._setValidatorOption(
+          'dateTimeRange',
+          this._createDateTimeRangeValidator(this._GetConverter())
+        );
+      } else if (key === 'readOnly') {
+        this._processReadOnlyKeyboardEdit();
+
+        if (value) {
+          this._hide(this._ON_CLOSE_REASON_CLOSE);
+        } else if (this._wheelPicker == null) {
+          this._createWheelPicker();
+          if (this._isIndependentInput()) {
+            this._attachTrigger();
+            disableEnableSpan(this._triggerNode[0].children, this.options.disabled);
+          }
+          this._setupResizePopupBind();
+        }
+        this._AfterSetOptionDisabledReadOnly('readOnly', ojeditablevalue.EditableValueUtils.readOnlyOptionOptions);
+      } else if (key === 'keyboardEdit') {
+        this._processReadOnlyKeyboardEdit();
+      }
+
+      var redrawTimePicker = { max: true, min: true, converter: true, timePicker: true };
+      if (key in redrawTimePicker) {
+        this._createWheelPickerDom();
+      }
+
+      return retVal;
+    },
+
+    /**
+     * Performs post processing after _SetOption() calls _superApply(). Different options, when changed, perform
+     * different tasks.
+     *
+     * @param {string} option
+     * @param {Object=} flags
+     * @protected
+     * @memberof oj.ojInputTime
+     * @instance
+     */
+    _AfterSetOption: function (option, flags) {
+      this._super(option, flags);
+
+      switch (option) {
+        case 'disabled':
+        case 'readOnly':
+        case 'value':
+          this._attachClearIcon();
+          break;
+
+        default:
+          break;
+      }
+    },
+
+    /**
+     * @ignore
+     * @protected
+     * @override
+     */
+    _destroy: function () {
+      this._cleanUpTimeResources();
+      var retVal = this._super();
+      return retVal;
+    },
+    /**
+     * @ignore
+     * @private
+     * @override
+     */
+    _clearWheelModels: function () {
+      var timePickerModel = this._timePickerModel;
+      if (!timePickerModel) return;
+      var model = timePickerModel.getWheelModel('hour');
+      if (model) model.wheel = undefined;
+      model = timePickerModel.getWheelModel('minute');
+      if (model) model.wheel = undefined;
+      model = timePickerModel.getWheelModel('ampm');
+      if (model) model.wheel = undefined;
+    },
+    /**
+     * @ignore
+     * @protected
+     * @override
+     */
+    _destroyHammer: function () {
+      if (this._wheelGroup && this._wheelGroup.length) {
+        var group = this._wheelGroup[0];
+        var wheel;
+        var children = group.children;
+        for (var index = 0; index < children.length; index++) {
+          wheel = children[index];
+          // This calls Wheel#destroy() and this calls off on each
+          // event listener and destroys Hammer.
+          wheel.ojDestroy();
+        }
+      }
+    },
+    /**
+     * @ignore
+     * @protected
+     * @override
+     */
+    _SetupResources: function () {
+      if (this.options.readOnly !== true) {
+        this._setupResizePopupBind();
+      }
+      return this._super();
+    },
+
+    _setupResizePopupBind: function () {
+      this._resizePopupBind = function () {
+        $('.oj-timepicker-content', this._wheelPicker)[_isLargeScreen ? 'removeClass' : 'addClass'](
+          'oj-timepicker-fixedheight'
+        );
+        if (this._isIndependentInput() && ojcomponentcore.isComponentInitialized(this._popUpWheelPicker, 'ojPopup')) {
+          this._popUpWheelPicker.ojPopup('option', 'modality', _isLargeScreen ? 'modeless' : 'modal');
+        }
+      }.bind(this);
+      window.addEventListener('resize', this._resizePopupBind, false);
+    },
+
+    /**
+     * @ignore
+     * @protected
+     * @override
+     */
+    _ReleaseResources: function () {
+      // Since destroy calls _ReleaseResources, we do here for both CustomElement and non CustomElement
+      // instead of doing it here for CustomElement and in destroy which is only for non CustomElements.
+      this._removeResizePopupBind();
+      // Note: We do not have a symmetrical 'createHammer' call in SetupResources.
+      // We create the timepicker wheels that have the Hammer events
+      // when the user clicks on the timepicker icon, or when
+      // the component's options change.
+      this._destroyHammer();
+      return this._super();
+    },
+
+    /**
+     * @ignore
+     * @private
+     */
+    _cleanUpTimeResources: function () {
+      if (this._isIndependentInput()) {
+        this.element.off('focus');
+        this.element[0].removeEventListener('touchstart', this._timepickerTouchStartListener, {
+          passive: false
+        });
+        delete this._timepickerTouchStartListener;
+        this._wrapper[0].removeEventListener(
+          'touchstart',
+          this._timepickerWrapperTouchStartListener,
+          { passive: true }
+        );
+        delete this._timepickerWrapperTouchStartListener;
+      }
+
+      if (this._triggerNode) {
+        this._triggerNode.remove();
+      }
+
+      if (this._wheelPicker) {
+        this._wheelPicker.remove();
+        this._clearWheelModels();
+      }
+
+      if (
+        this._isIndependentInput() &&
+        this._popUpWheelPicker &&
+        ojcomponentcore.isComponentInitialized(this._popUpWheelPicker, 'ojPopup')
+      ) {
+        this._popUpWheelPicker.ojPopup('destroy');
+      }
+    },
+    /**
+     * @ignore
+     * @private
+     */
+    _removeResizePopupBind: function () {
+      if (this._resizePopupBind) {
+        window.removeEventListener('resize', this._resizePopupBind);
+      }
+    },
+    /**
+     * @ignore
+     */
+    _processReadOnlyKeyboardEdit: function () {
+      if (this._isIndependentInput()) {
+        var readonly = this.options.readOnly || this._isKeyboardEditDisabled();
+        this.element.prop('readOnly', !!readonly);
+      }
+    },
+
+    /**
+     * @ignore
+     * @return {boolean}
+     */
+    _isKeyboardEditDisabled: function () {
+      return this.options.keyboardEdit === this._KEYBOARD_EDIT_OPTION_DISABLED;
+    },
+
+    /**
+     * Invoke super only if it is standlone or if it is part of ojInputDateTime and ojInputDateTime is inline.
+     * And only if the timepicker is supported, which it isn't in Redwood
+     *
+     * @ignore
+     * @protected
+     * @override
+     */
+    _AppendInputHelper: function () {
+      if (this._isIndependentInput() && this._isTimePickerSupported()) {
+        this._superApply(arguments);
+      }
+    },
+
+    /**
+     * Only time to have ojInputTime handle the display of timepicker by keyDown is when datePickerComp reference is null or
+     * when it is not null and is inline
+     *
+     * @ignore
+     * @protected
+     * @override
+     * @param {Event} event
+     */
+    _onKeyDownHandler: function (event) {
+      if (this._isIndependentInput()) {
+        this._superApply(arguments);
+
+        var kc = $.ui.keyCode;
+        var handled = false;
+
+        if (this._timepickerShowing()) {
+          switch (event.keyCode) {
+            case kc.TAB:
+              this._hide(this._ON_CLOSE_REASON_TAB);
+              break;
+            case kc.ESCAPE:
+              this._hide(this._ON_CLOSE_REASON_CANCELLED);
+              handled = true;
+              break;
+            case kc.UP:
+            case kc.DOWN:
+              this._wheelGroup.children().first().focus();
+              handled = true;
+              break;
+            default:
+          }
+        } else {
+          switch (event.keyCode) {
+            case kc.UP:
+            case kc.DOWN:
+              var parsedValue = this._GetConverter().parse(this._GetDisplayValue());
+              this._SetValue(parsedValue, event);
+              if (this._isTimePickerSupported()) {
+                this.show();
+              }
+              handled = true;
+              break;
+            default:
+          }
+        }
+
+        if (handled || event.keyCode === kc.ENTER) {
+          event.preventDefault();
+          event.stopPropagation();
+          return false;
+        }
+      }
+      return undefined;
+    },
+
+    _getTimeTitle: function () {
+      return this._EscapeXSS(
+        this.getTranslatedString('tooltipTime' + (this.options.disabled ? 'Disabled' : ''))
+      );
+    },
+
+    /**
+     * Per guidance from Curt and Don, changing this to be similar to oj-combobox where the container
+     * has a role of presentation and the input has a role of combobox.
+     * @protected
+     * @override
+     * @ignore
+     * @return {Element}
+     */
+    _CreateContainerWrapper: function () {
+      this._inputContainer = $(this._superApply(arguments));
+      this._inputContainer.attr({ role: 'presentation', tabindex: '-1' });
+      if (this._isTimePickerSupported()) {
+        // ideally this would have aria-expanded and aria-controls like input-date and input-date-time do
+        // but since this code is only for the alta theme that has been deprecated since v10, we are not going to modify it.
+        this.element.attr({ role: 'combobox', 'aria-haspopup': 'true' });
+      }
+      return this._inputContainer[0];
+    },
+
+    /**
+     * Returns if the element is a text field element or not.
+     * @instance
+     * @protected
+     * @ignore
+     * @return {boolean}
+     */
+    _IsTextFieldComponent: function () {
+      if (!this._isInLine) {
+        return true;
+      }
+      return false;
+    },
+
+    /**
+     * Returns the components wrapper under which label needs to be inserted in the inside strategy
+     * @instance
+     * @protected
+     * @ignore
+     * @return {Element|undefined}
+     */
+    _GetContentWrapper: function () {
+      if (this._IsCustomElement()) {
+        return this._getRootElement().querySelector('.oj-text-field-middle');
+      }
+      return undefined;
+    },
+
+    /**
+     * When input element has focus
+     * @private
+     */
+    _onElementFocus: function () {
+      if (this._redirectFocusToInputContainer) {
+        this._redirectFocusToInputContainer = false;
+        if (!isPickerNative(this)) {
+          this._wheelGroup.children().first().focus();
+        } else {
+          this._inputContainer.focus();
+        }
+      } else if (this._showOnIsFocusOrUserFocus()) {
+        // pop-up time picker when focus placed on the input box, if supported
+        if (this._isTimePickerSupported()) {
+          this.show();
+        }
+      } else if (this._timepickerShowing()) {
+        this._hide(this._ON_CLOSE_REASON_CLOSE);
+      }
+    },
+
+    _showOnIsFocusOrUserFocus: function () {
+      var showOn = this.options.timePicker.showOn;
+
+      return showOn === 'focus' || showOn === 'userFocus';
+    },
+
+    /**
+     * When input element is touched
+     *
+     * @ignore
+     * @protected
+     */
+    _OnElementTouchStart: function (event) {
+      // prevents the mousedown, mouseup and click from being generated on modal glass
+      // which will close the popup.
+      event.preventDefault();
+
+      // If the focus is already on the text box and can't edit with keyboard
+      // and show on is focus then reopen the picker.
+      if (this._showOnIsFocusOrUserFocus()) {
+        if (this._timepickerShowing()) {
+          this._ignoreTimePickerShow = true;
+          this._hide(this._ON_CLOSE_REASON_CLOSE);
+        } else {
+          var inputActive = this.element[0] === document.activeElement;
+          if (this._isTimePickerSupported()) {
+            this.show();
+            this._redirectFocusToInputContainer = true;
+          }
+
+          // Don't change focus on wheel picker since it should have acquired focus
+          if (isPickerNative(this)) {
+            if (inputActive) {
+              this._inputContainer.focus();
+            }
+          }
+        }
+      } else {
+        // JET-63922 in oj-input-time on element touch, focus should be set on input field.
+        this._redirectFocusToInputContainer = false;
+        this._inputContainer.find('input')[0].focus();
+      }
+    },
+
+    /**
+     * Render or remove the clear icon
+     * @ignore
+     * @private
+     * @memberof oj.ojInputTime
+     * @instance
+     */
+    _attachClearIcon: function () {
+      var labelValueWrapper = this.element[0].parentNode;
+      let wrapperElem = labelValueWrapper.parentNode;
+      var clearIconBtn = wrapperElem.querySelector('a.oj-inputdatetime-clear-icon-btn');
+
+      let isMobile = Config.getDeviceRenderMode() === 'phone';
+
+      if (!isMobile || this.options.disabled || this.options.readOnly || this.options.required) {
+        // remove the icon if it is there
+        if (clearIconBtn) {
+          wrapperElem.removeChild(clearIconBtn);
+        }
+
+        // if the clearIcon is not rendered, we shouldn't have this class
+        wrapperElem.classList.remove('oj-inputdatetime-clearicon-mobile');
+      } else {
+        // Only add the clear icon for mobile
+        if (clearIconBtn === null) {
+          var clearIcon;
+          clearIconBtn = document.createElement('a');
+          clearIconBtn.className =
+            'oj-inputdatetime-clear-icon-btn oj-component-icon oj-clickable-icon-nocontext';
+          clearIconBtn.setAttribute('tabindex', '-1');
+          clearIconBtn.setAttribute(
+            'aria-label',
+            this.getTranslatedString(this._INPUTTIME_CLEAR_ICON_LABEL_KEY)
+          );
+
+          clearIconBtn.setAttribute('target', '_blank');
+          clearIcon = document.createElement('span');
+          clearIcon.className = 'oj-inputdatetime-clear-icon';
+
+          clearIconBtn.appendChild(clearIcon);
+          wrapperElem.insertBefore(clearIconBtn, labelValueWrapper.nextElementSibling); // @HTMLUpdateOK
+
+          clearIconBtn.addEventListener(
+            this._CLICK_HANDLER_KEY,
+            this._onClearIconClickHandler.bind(this)
+          );
+        }
+
+        // clear icon is only rendered for mobile at this time.
+        // For mobile, we render oj-form-control-empty-clearicon if the input doesn't
+        // have a value, as we always want the clear icon hidden for this case.
+        wrapperElem.classList.add('oj-inputdatetime-clearicon-mobile');
+
+        var val;
+
+        // if the component is not fully rendered, then we need to use the value option's value
+        // instead of the input element's value
+        if (wrapperElem.classList.contains('oj-complete')) {
+          val = this.element[0].value;
+        } else {
+          val = this.options.value;
+        }
+
+        if (val && val !== '') {
+          wrapperElem.classList.remove('oj-form-control-empty-clearicon');
+        } else {
+          wrapperElem.classList.add('oj-form-control-empty-clearicon');
+        }
+      }
+    },
+    /**
+     * This function will create the necessary time trigger container [i.e. image to launch the time drop down]
+     * and perform any attachment to events
+     *
+     * @private
+     */
+    _attachTrigger: function () {
+      var showOn = this.options.timePicker.showOn;
+      var triggerContainer = document.createElement('span');
+      triggerContainer.className = this._TRIGGER_CLASS;
+      var triggerTime = document.createElement('span');
+      triggerTime.setAttribute('title', this._getTimeTitle());
+      triggerTime.className =
+        this._TRIGGER_TIME_CLASS + ' oj-clickable-icon-nocontext oj-component-icon';
+
+      var self = this;
+
+      this.element.on('focus', $.proxy(this._onElementFocus, this));
+
+      this._timepickerTouchStartListener = $.proxy(this._OnElementTouchStart, this);
+      this.element[0].addEventListener('touchstart', this._timepickerTouchStartListener, {
+        passive: false
+      });
+
+      var wrapper = this._wrapper;
+      this._timepickerWrapperTouchStartListener = function () {
+        self._isMobile = true;
+      };
+      wrapper[0].addEventListener('touchstart', this._timepickerWrapperTouchStartListener, {
+        passive: true
+      });
+
+      if (showOn === 'image') {
+        // we need to show the icon that we hid by display:none in the mobile themes
+        triggerTime.style.display = 'block';
+
+        // In iOS theme, we defaulted to use border radius given that showOn=focus is default and
+        //  we will not have trigger icon. For showOn=image case, we will show the icon, so
+        //  we need to remove the border radius. iOS is the only case we use border radius, so this
+        //  setting for all cases is fine.
+        if (this._IsRTL()) {
+          this.element.css('border-top-left-radius', 0);
+          this.element.css('border-bottom-left-radius', 0);
+        } else {
+          this.element.css('border-top-right-radius', 0);
+          this.element.css('border-bottom-right-radius', 0);
+        }
+      }
+
+      // do not attach time picker icon if not independent input mode and native picker is in use
+      //  - this is because the native pickers let pick both date and time, showing one icon is
+      //  sufficient and less clutter hence
+      if (!isPickerNative(this)) {
+        triggerContainer.appendChild(triggerTime); // @HTMLUpdateOK
+
+        triggerTime.addEventListener('click', function () {
+          if (self._timepickerShowing()) {
+            self._hide(self._ON_CLOSE_REASON_CLOSE);
+          } else if (self._isTimePickerSupported()) {
+            self.show();
+            self._wheelGroup.children().first().focus();
+          }
+        });
+
+        var $triggerTime = $(triggerTime);
+        this._AddHoverable($triggerTime);
+        this._AddActiveable($triggerTime);
+
+        this._triggerIcon = $triggerTime;
+      }
+
+      this._triggerNode = $(triggerContainer);
+
+      var _labelValueWrapper = this.element[0].parentNode;
+      if (this._isTimePickerSupported()) {
+        // prettier-ignore
+        _labelValueWrapper.parentNode.insertBefore( // @HTMLUpdateOK
+          triggerContainer,
+          _labelValueWrapper.nextElementSibling
+        );
+      }
+    },
+
+    _getValue: function () {
+      // need to use ojInputDateTime's value when created internally [i.e. for min + max and etc].
+      return this._isContainedInDateTimePicker()
+        ? this._datePickerComp.widget.getValueForInputTime()
+        : this.options.value;
+    },
+
+    /**
+     * Invoked when the input event happens
+     *
+     * @ignore
+     * @protected
+     * @memberof! oj.ojInputTime
+     * @param {Event} event
+     */
+    _onInputHandler: function (event) {
+      this._super(event);
+      var inputNode = event.target;
+      let contentWrapper = this._GetContentWrapper();
+
+      if (contentWrapper && this._isMobile) {
+        if (inputNode.value !== '') {
+          contentWrapper.parentElement.classList.remove('oj-form-control-empty-clearicon');
+        } else {
+          contentWrapper.parentElement.classList.add('oj-form-control-empty-clearicon');
+        }
+      }
+    },
+
+    /**
+     * The handler clears the value of the input element and sets the focus on the input container
+     * since this is only used for mobile.
+     *
+     * @ignore
+     * @private
+     * @memberof! oj.ojInputTime
+     * @param {Event} event
+     */
+    _onClearIconClickHandler: function (event) {
+      var elem = this.element[0];
+
+      elem.value = '';
+      // we need to update the raw value to keep it in sync
+      this._SetRawValue('', event);
+      elem.focus();
+      let contentWrapper = this._GetContentWrapper();
+      if (contentWrapper) {
+        contentWrapper.parentElement.classList.add('oj-form-control-empty-clearicon');
+      }
+    },
+
+    /**
+     * Invoked when blur is triggered of the this.element
+     *
+     * @ignore
+     * @protected
+     * @param {Event} event
+     */
+    // eslint-disable-next-line no-unused-vars
+    _onBlurHandler: function (event) {
+      if (this._isIndependentInput()) {
+        this._superApply(arguments);
+      }
+    },
+
+    /**
+     * Shows the timepicker
+     *
+     * @expose
+     * @instance
+     * @return {void}
+     * @memberof! oj.ojInputTime
+     * @ojdeprecated {since: '19.0.0', description: 'This is not supported in the Redwood UX specification.'}
+     */
+    show: function () {
+      if (this._timepickerShowing() || this.options.disabled || this.options.readOnly) {
+        return;
+      }
+
+      if (this._ignoreTimePickerShow) {
+        // set within hide or elsewhere and focus is placed back on this.element
+        this._ignoreTimePickerShow = false;
+        return;
+      }
+
+      if (isPickerNative(this)) {
+        // our html picker is inside popup, which will take care of removing focus from input element,
+        //  for native case we do it explicitly
+        this.element.blur();
+        this._showNativeTimePicker();
+      } else {
+        this._showWheelPicker();
+      }
+    },
+
+    _createOffsetConverter: function (converter) {
+      this._offsetConverter = _getTimePickerConverter(converter, { isoStrFormat: 'offset' });
+    },
+
+    _getOffsetConverter: function () {
+      return this._offsetConverter;
+    },
+
+    /**
+     * Shows the native time picker
+     *
+     * @private
+     */
+    _showNativeTimePicker: function () {
+      // picker expects the fields like 'date' and 'mode' to retain its names. Use bracket notation
+      //  to avoid closure compiler from renaming them
+      var pickerOptions = {};
+      var converter = this._getOffsetConverter();
+      var date = _getNativePickerDate(converter, this._getIsoDateValue(converter));
+
+      pickerOptions.date = date;
+      pickerOptions.mode = 'time';
+
+      var splitIncrements = splitTimeIncrement(this.options.timePicker.timeIncrement);
+
+      // native picker supports only minute interval and only on iOS, we consider
+      //  minute interval only when hours is not specified
+      pickerOptions.minuteInterval = splitIncrements.hourIncr === 0 ? splitIncrements.minuteIncr : 1;
+
+      // if part of datetime, then get the min/max from the date component
+      var minDate = this._isContainedInDateTimePicker()
+        ? this._datePickerComp.widget.options.min
+        : this.options.min;
+      var maxDate = this._isContainedInDateTimePicker()
+        ? this._datePickerComp.widget.options.max
+        : this.options.max;
+
+      if (minDate) {
+        // get a correctly formatted ISO date string
+        var minDateProcessed = _getNativePickerDate(
+          converter,
+          ojconverterutilsI18n.IntlConverterUtils._minMaxIsoString(minDate, this._getIsoDateValue(converter))
+        );
+        pickerOptions.minDate = minDateProcessed.valueOf();
+      }
+
+      if (maxDate) {
+        // get a correctly formatted ISO date string
+        var maxDateProcessed = _getNativePickerDate(
+          converter,
+          ojconverterutilsI18n.IntlConverterUtils._minMaxIsoString(maxDate, this._getIsoDateValue(converter))
+        );
+        pickerOptions.maxDate = maxDateProcessed.valueOf();
+      }
+
+      var self = this;
+
+      function onTimePicked(cbDate) {
+        self._nativePickerShowing = false;
+
+        // for iOS and windows, from the current implementation of the native datepicker plugin,
+        //  for case when the picker is cancelled, this callback gets called without the parameter
+        if (cbDate) {
+          var cbConverter = self._getOffsetConverter();
+          // The time picker displays the time portion as is supplied, regardless of device timezone.
+          //  Explicitly setting timezone is supported only in iOS, and we do not have a need to do
+          //  so at this time, so not exposing this feature for now.
+          //  The value returned after pick will have the supplied timezone preserved, however, the
+          //  date portion will be reset to current date when in 'time' mode. This will not impact us
+          //  because we extract only the time portion to be set on the component.
+          var isoString = ojconverterutilsI18n.IntlConverterUtils._dateTime(self._getIsoDateValue(cbConverter), {
+            hours: cbDate.getHours(),
+            minutes: cbDate.getMinutes(),
+            seconds: cbDate.getSeconds()
+          });
+          var formattedTime = self._GetConverter().format(isoString);
+          // _SetValue will inturn call _SetDisplayValue
+          self._SetValue(formattedTime, {});
+        }
+
+        self._onClose(self._ON_CLOSE_REASON_SELECTION);
+      }
+
+      // onError is called only for Android for cases where picker is cancelled, or if there were
+      //  to be any error at the native picker end
+      function onError(error) {
+        self._nativePickerShowing = false;
+
+        // if user cancels the picker dialog, we just bring the focus back
+        // closure compiler renames 'startsWith', using bracket notation hence
+        if (error.startsWith('cancel')) {
+          self._onClose(self._ON_CLOSE_REASON_CANCELLED);
+        } else {
+          Logger.error('Error: native time picker failed: ' + error);
+        }
+      }
+
+      this._nativePickerShowing = true;
+
+      window.datePicker.show(pickerOptions, onTimePicked, onError);
+    },
+
+    /**
+     * Hides the timepicker. Note that this function is a no-op when renderMode is 'native'.
+     *
+     * @expose
+     * @instance
+     * @memberof! oj.ojInputTime
+     * @ojdeprecated {since: '19.0.0', description: 'This is not supported in the Redwood UX specification.'}
+     * @return {void}
+     */
+    hide: function () {
+      return this._hide(this._ON_CLOSE_REASON_CLOSE);
+    },
+
+    /**
+     * Hides the timepicker
+     *
+     * @param {string} reason - the reason that the popup is being hidden ("selection", "cancelled", "tab")
+     *
+     * @ignore
+     * @expose
+     * @memberof! oj.ojInputTime
+     * @instance
+     */
+    _hide: function (reason) {
+      if (!isPickerNative(this) && this._timepickerShowing()) {
+        this._popUpWheelPicker.ojPopup('close');
+
+        this._onClose(reason);
+      }
+
+      return this;
+    },
+
+    /**
+     * Sets focus to the right place after the picker is closed
+     *
+     * @param {string} reason - the reason that the popup is being hidden ("selection", "cancelled", "tab", "close")
+     * @ignore
+     */
+    // eslint-disable-next-line no-unused-vars
+    _onClose: function (reason) {
+      this._closeInProgress = true;
+      try {
+        const showOnIsFocusOrUserFocus = this._showOnIsFocusOrUserFocus();
+        if (this._isMobile && showOnIsFocusOrUserFocus) {
+          var inputContainer = this._isIndependentInput()
+            ? this._inputContainer
+            : this._datePickerComp.widget._inputContainer;
+          inputContainer.focus();
+        } else {
+          if (showOnIsFocusOrUserFocus) {
+            if (!this._isIndependentInput()) {
+              this._datePickerComp.widget._ignoreDatePickerShow = true;
+            } else {
+              this._ignoreTimePickerShow = true;
+            }
+          }
+          // this._ignoreTimePickerShow flag is checked in show() and reset there as well.
+          // We don't want the focus show the picker in this case.
+          this.element.focus();
+        }
+      } finally {
+        this._ignoreTimePickerShow = false; // in case show() isn't called when this.element.focus() is called.
+        this._closeInProgress = false;
+      }
+    },
+
+    /**
+     * Refreshes the element. Usually called after dom changes have been made.
+     * @expose
+     * @instance
+     * @memberof oj.ojInputTime
+     * @return {void}
+     * @ojdeprecated {since: '19.0.0', description: 'This is not supported in Core Pack components.'}
+     */
+    refresh: function () {
+      if (this._triggerNode) {
+        this._triggerNode.find('.' + this._TRIGGER_TIME_CLASS).attr('title', this._getTimeTitle());
+      }
+      return this._superApply(arguments) || this;
+    },
+
+    /**
+     * @ignore
+     * @protected
+     * @override
+     * @instance
+     * @memberof! oj.ojInputTime
+     */
+    _SetDisplayValue: function (displayValue) {
+      // When not part of datePickerComp or of inline should update input element
+      if (this._isIndependentInput()) {
+        this._superApply(arguments);
+      }
+      // remove this class, since we have a value now.
+      let elem = this.element[0];
+      if (elem) {
+        if (displayValue) {
+          elem.parentElement.parentElement.classList.remove('oj-form-control-empty-clearicon');
+        } else {
+          elem.parentElement.parentElement.classList.add('oj-form-control-empty-clearicon');
+        }
+      }
+
+      // so this is a change in behavior from original design. Previously it was decided that app developer
+      // would have to invoke refresh to render the calendar after setting the new value programatically; however now it is
+      // required to hook it in when _SetDisplayValue is invoked [can't use _SetValue b/c that function is not invoked
+      // when developer invokes ("option", "value", "..")
+      if (this._timepickerShowing()) {
+        this._createWheelPickerDom(true);
+      }
+    },
+
+    /**
+     * @ignore
+     * @protected
+     * @override
+     * @instance
+     * @memberof! oj.ojInputTime
+     */
+    _SetValue: function (newValue, event, options) {
+      var ret = false;
+
+      if (this._isContainedInDateTimePicker()) {
+        // never update the model if part of ojInputDateTime. Have ojInputDateTime update the model's value [otherwise 2 updates]
+        // this is mainly for check of whether the format is correct [i.e when ojInputDateTime is inline], since the value
+        // is always picked from the ojInputDateTime component
+
+        try {
+          // originally this._super call was invoked above, but the the timepicker wheel is now redrawing
+          // before the below timeselected is propagated to the datetimepicker (which has the complete value that must be
+          // used and because of that kicked it down)
+
+          // if the operation is an enter key in the input field (not in the picker), the newValue is not just time, it is date+time. So we
+          // need to deal differently
+          var converter;
+          var datePickerCompWidget = this._datePickerComp.widget;
+          if (
+            event &&
+            event.target &&
+            event.target === this.element[0] &&
+            !this._isDatePickerInline()
+          ) {
+            converter = datePickerCompWidget._GetConverter();
+          } else {
+            converter = this._GetConverter();
+          }
+          var date = new Date();
+          var converterUtils = ojconverterutilsI18n.IntlConverterUtils;
+          var dateTimeValue =
+            datePickerCompWidget.getValueForInputTime() || converterUtils.dateToLocalIso(date);
+          var isoValue = newValue;
+          // check if time is an isostring and if it is not an isostring then parse it.
+          try {
+            // This function will throw an error if it is not an isostring.
+            converterUtils._dateTime(newValue, {
+              month: date.getMonth(),
+              date: date.getDate(),
+              fullYear: date.getFullYear(),
+              hours: date.getHours(),
+              minutes: date.getMinutes(),
+              seconds: date.getSeconds()
+            });
+          } catch (e) {
+            isoValue = converter.parse(newValue);
+          }
+          var isoDateString = converterUtils._copyTimeOver(isoValue, dateTimeValue);
+          var parsedNewValue = converter.parse(isoDateString);
+
+          if (
+            parsedNewValue &&
+            ojconverterutilsI18n.IntlConverterUtils._compareISODates(dateTimeValue, parsedNewValue) === 0
+          ) {
+            // need to kick out if _SetValue happened due to Blur w/o changing of value
+            return false;
+          }
+
+          datePickerCompWidget.timeSelected(parsedNewValue, event);
+          if (this._isDatePickerInline()) {
+            // need to update the input element, reason one can't when of the same input is
+            // b/c the wheelpicker apparently doesn't update minute for some odd reason
+            ret = this._super(newValue, null, options);
+          }
+        } catch (e) {
+          ret = this._super(newValue, null, options);
+        }
+      } else {
+        ret = this._superApply(arguments);
+      }
+
+      return ret;
+    },
+
+    /**
+     * Whether the this.element should be wrapped. Function so that additional conditions can be placed
+     *
+     * @ignore
+     * @protected
+     * @override
+     * @return {boolean}
+     */
+    _DoWrapElement: function () {
+      return this._isIndependentInput();
+    },
+
+    /**
+     * Whether the input element of ojInputTime is shared or not [i.e. not part of ojInputDateTime or if it has
+     * been created by ojInputDateTime that is inline
+     *
+     * @ignore
+     * @return {boolean}
+     */
+    _isIndependentInput: function () {
+      return !this._isContainedInDateTimePicker() || this._isDatePickerInline();
+    },
+
+    /**
+     * @protected
+     * @override
+     * @return {string}
+     * @instance
+     * @memberof! oj.ojInputTime
+     */
+    _GetDefaultStyleClass: function () {
+      return 'oj-inputtime';
+    },
+
+    /**
+     * @ignore
+     * @protected
+     * @override
+     * @instance
+     * @memberof! oj.ojInputTime
+     */
+    _GetElementValue: function () {
+      return this.options.value || '';
+    },
+
+    /**
+     * Sets up the default dateTimeRange and dateRestriction validators.
+     *
+     * @ignore
+     * @protected
+     * @override
+     * @instance
+     * @memberof! oj.ojInputTime
+     */
+    _GetImplicitValidators: function () {
+      var ret = this._superApply(arguments);
+
+      if (
+        (this.options.min != null || this.options.max != null) &&
+        !this._isContainedInDateTimePicker()
+      ) {
+        var validator = getImplicitDateTimeRangeValidator(
+          this.options,
+          this._GetConverter(),
+          this._GetDefaultStyleClass()
+        );
+        // need to alter how the default validators work as validators are now immutable and to create the implicit validator only
+        // if independent input [i.e. otherwise have ojInputDateTime take care of it]
+        this._timePickerDefaultValidators.dateTimeRange = validator;
+      }
+      return Object.assign(this._timePickerDefaultValidators, ret);
+    },
+
+    /**
+     * This method also updates the messaging strategies as hints associated with validators could
+     * have changed.
+     *
+     * @memberof oj.ojInputTime
+     * @instance
+     * @protected
+     */
+    _ResetAllValidators: function () {
+      this._timePickerDefaultValidators = {};
+
+      this._superApply(arguments);
+    },
+
+    /**
+     * Need to override since apparently we allow users to set the converter to null, undefined, and etc and when
+     * they do we use the default converter
+     *
+     * @return {Object} a converter instance or null
+     *
+     * @memberof! oj.ojInputTime
+     * @instance
+     * @protected
+     * @override
+     */
+    _GetConverter: function () {
+      if (this.options.converter) {
+        return this._superApply(arguments);
+      }
+      // set the default converter when the app dev sets converter to null
+      var defaultConverter = this._GetDefaultConverter();
+      this.option('converter', defaultConverter, {
+        _context: {
+          writeback: true,
+          internalSet: true
+        }
+      });
+      return defaultConverter;
+    },
+
+    /**
+     * Whether ojInputTime has been created by ojInputDateTime
+     *
+     * @private
+     */
+    _isContainedInDateTimePicker: function () {
+      return this._datePickerComp !== null;
+    },
+
+    /**
+     * Helper function to determine whether the provided datePickerComp is inline or not
+     *
+     * @private
+     */
+    _isDatePickerInline: function () {
+      return this._datePickerComp.inline;
+    },
+
+    /**
+     * Notifies the component that its subtree has been removed from the document programmatically after the component has
+     * been created
+     * @memberof! oj.ojInputTime
+     * @instance
+     * @protected
+     */
+    _NotifyDetached: function () {
+      this._hide(this._ON_CLOSE_REASON_CLOSE);
+      // hide sets focus to the input, so we want to call super after hide. If we didn't, then
+      // the messaging popup will reopen and we don't want that.
+      this._superApply(arguments);
+    },
+
+    /**
+     * Notifies the component that its subtree has been made hidden programmatically after the component has
+     * been created
+     * @memberof! oj.ojInputTime
+     * @instance
+     * @protected
+     */
+    _NotifyHidden: function () {
+      this._hide(this._ON_CLOSE_REASON_CLOSE);
+      // hide sets focus to the input, so we want to call super after hide. If we didn't, then
+      // the messaging popup will reopen and we don't want that.
+      this._superApply(arguments);
+    },
+
+    /**
+     * Generate the HTML for the header of the time picker.
+     *
+     * @private
+     */
+    _generateHeader: function () {
+      var cancelText = this._EscapeXSS(this.getTranslatedString('cancelText'));
+      var cancelButton =
+        "<a role='button' href='#'" +
+        " class='oj-enabled oj-default oj-timepicker-cancel-button'" +
+        " aria-label='" +
+        cancelText +
+        "'>" +
+        cancelText +
+        '</a>';
+
+      var okText = this._EscapeXSS(this.getTranslatedString('okText'));
+      var okButton =
+        "<a role='button' href='#'" +
+        " class='oj-enabled oj-default oj-timepicker-ok-button' aria-label='" +
+        okText +
+        "'>" +
+        okText +
+        '</a>';
+
+      var header =
+        "<div class='oj-timepicker-header" +
+        (this.options.disabled ? ' oj-disabled ' : ' oj-enabled oj-default ') +
+        "'>";
+
+      header += cancelButton;
+      header += okButton;
+
+      header += '</div>';
+      return header;
+    },
+
+    /**
+     * Generate the HTML for the footer of the time picker.
+     *
+     * @private
+     */
+    _generateFooter: function (footerLayoutDisplay, gotoTime) {
+      var footerLayout = '';
+      var currentText = this._EscapeXSS(this.getTranslatedString('currentTimeText'));
+      var nowControl =
+        "<a role='button' href='#' class='oj-timepicker-now oj-priority-secondary oj-enabled'" +
+        '>' +
+        currentText +
+        '</a>';
+
+      if (footerLayoutDisplay && footerLayoutDisplay.length > 1) {
+        // keep the code for future multiple buttons
+        var nowIndex = footerLayoutDisplay.indexOf('now');
+        var loop = 0;
+        var footerLayoutButtons = [{ index: nowIndex, content: gotoTime ? nowControl : '' }];
+
+        // rather than using several if + else statements, sort the content to add by index of the strings
+        footerLayoutButtons.sort(function (a, b) {
+          return a.index - b.index;
+        });
+
+        // continue to loop until the index > -1 [contains the string]
+        while (loop < footerLayoutButtons.length && footerLayoutButtons[loop].index < 0) {
+          loop += 1;
+        }
+
+        while (loop < footerLayoutButtons.length) {
+          footerLayout += footerLayoutButtons[loop].content;
+          loop += 1;
+        }
+
+        if (footerLayout.length > 0) {
+          footerLayout = "<div class='oj-timepicker-footer'>" + footerLayout + '</div>';
+        }
+      }
+      return footerLayout;
+    },
+    /**
+     * This should be called instead of the one in IntlDateTimeConverter/OraDateTimeConverter
+     * because we want to keep the api in those clean.
+     * Returns a positioning object with keys 'h', 'm', 'a' and their positions.
+     * @private
+     */
+    _getTimePositioning: function (ptrn) {
+      let pattern = ptrn.replace(/'[^']*'/g, '').replace(/[^hHkKma]*/g, '');
+      pattern = pattern.replace(/(h|H|k|K)+/, 'h').replace(/m+/, 'm');
+      const localeElements = LocaleData.__getBundle();
+      const mainNodeKey = ojconverterutilsI18n.OraI18nUtils.getLocaleElementsMainNodeKey(localeElements);
+      const lang = mainNodeKey.split('-')[0]; // same as TimeZoneUtils#_getBCP47Lang(mainNodeKey);
+      const isRTL = lang === 'ar' || lang === 'he';
+      let positioning = {};
+      let i = 0;
+      let c;
+      let len = pattern.length;
+      for (i = 0; i < len; i++) {
+        c = pattern.charAt(i);
+        positioning[c] = i;
+      }
+      if (isRTL) {
+        // for RTL locales reverse h and m
+        i = positioning.h;
+        positioning.h = positioning.m;
+        positioning.m = i;
+      }
+      return positioning;
+    },
+
+    /**
+     * Get the ISO string for the min or max date limit if applicable
+     *
+     * @private
+     */
+    _getIsoDateLimit: function (converter, optionName, valueDate) {
+      // Fetch option from correct picker
+      var dateIso = this._isContainedInDateTimePicker()
+        ? this._datePickerComp.widget.options[optionName]
+        : this.options[optionName];
+      // Fill in date from value
+      dateIso = dateIso ? ojconverterutilsI18n.IntlConverterUtils._minMaxIsoString(dateIso, this._getValue()) : dateIso;
+      // Move to the converter's timezone
+      dateIso = dateIso ? converter.parse(dateIso) : dateIso;
+      // If the dates don't match, then min or max doesn't apply to this value
+      var date = dateIso ? ojconverterutilsI18n.IntlConverterUtils._clearTime(dateIso) : null;
+      if (
+        valueDate &&
+        date &&
+        valueDate.substring(0, valueDate.indexOf('T')) !== date.substring(0, date.indexOf('T'))
+      ) {
+        dateIso = null;
+      }
+
+      return dateIso;
+    },
+
+    /**
+     * Get the ISO string for the current value
+     *
+     * @private
+     */
+    _getIsoDateValue: function (converter) {
+      var processDateIso = this._getValue();
+      if (!processDateIso) {
+        processDateIso = new Date();
+        processDateIso.setHours(0);
+        processDateIso.setMinutes(0);
+        processDateIso.setSeconds(0);
+        processDateIso.setMilliseconds(0);
+        processDateIso = ojconverterutilsI18n.IntlConverterUtils.dateToLocalIso(processDateIso);
+      }
+      processDateIso = converter.parse(processDateIso);
+
+      return processDateIso;
+    },
+
+    /**
+     * Get the local strings for AM/PM representation
+     *
+     * @private
+     */
+    _getAmPmStrings: function () {
+      var converter = new ojconverterDatetime.IntlDateTimeConverter({ pattern: 'hh:a' });
+      var am = converter.format('2016-01-01T01:00:00').split(':');
+      var pm = converter.format('2016-01-01T15:00:00').split(':');
+      return [am[1], pm[1]];
+    },
+
+    /**
+     * @private
+     * @param {jQuery} wheelPicker popup root node
+     * @return {jQuery} returns the timepicker content node relative to the root node
+     */
+    _getWheelPickerContent: function (wheelPicker) {
+      if (!wheelPicker) {
+        return null;
+      }
+
+      var wheelPickerContent = $(wheelPicker.find('.oj-timepicker-content')[0]);
+      return wheelPickerContent;
+    },
+
+    /**
+     * Create the wheel timepicker DOM
+     *
+     * @private
+     */
+    _createWheelPickerDom: function (keepHeaderFooter) {
+      // No need to do anything if there is no _wheelPicker, which only happens when the component is readonly.
+      if (this._wheelPicker == null) {
+        return;
+      }
+
+      if (!keepHeaderFooter) {
+        this._detachWheelHandler();
+      }
+
+      var wheelPicker = this._wheelPicker;
+      var wheelPickerContent = this._getWheelPickerContent(wheelPicker);
+      this._destroyHammer();
+      if (keepHeaderFooter) {
+        $('.oj-timepicker-wheel-group', wheelPickerContent).remove();
+      } else {
+        wheelPickerContent.empty();
+      }
+
+      var converter = this._GetConverter();
+      var resolvedOption = converter.resolvedOptions();
+      var options = $.extend({}, resolvedOption);
+      if (options.isoStrFormat === 'zulu') {
+        options.isoStrFormat = 'offset';
+        converter = new ojconverterDatetime.IntlDateTimeConverter(options);
+        options = converter.resolvedOptions();
+      }
+
+      var converterUtils = ojconverterutilsI18n.IntlConverterUtils;
+      var value = this._getValue();
+      var date = new Date();
+      var valueDate;
+      if (!value) {
+        value = ojconverterutilsI18n.IntlConverterUtils.dateToLocalIso(date);
+      }
+      try {
+        value = converter.parse(value); // Convert to proper timezone
+        valueDate = converterUtils._clearTime(value);
+      } catch (e) {
+        Logger.info('The value of the InputTime element must be an ISOString, please use a valid ISOString');
+        value = ojconverterutilsI18n.IntlConverterUtils.dateToLocalIso(date);
+        valueDate = converterUtils._clearTime(value);
+      }
+      var minDateIso = this._getIsoDateLimit(converter, 'min', valueDate);
+      var maxDateIso = this._getIsoDateLimit(converter, 'max', valueDate);
+
+      var footerLayoutDisplay = this.options.timePicker.footerLayout;
+
+      var timePickerModel = new TimePickerModel(null);
+      this._timePickerModel = timePickerModel;
+      var wheelPos = ['', '', '', ''];
+      var pattern = resolvedOption.pattern || resolvedOption.patternFromOptions;
+      if (pattern === undefined) {
+        // pattern could be undefined if they did not override resolvedOptions
+        // in their custom converter. This is a bug in the app code,
+        // but for backward compatability do not fail. Use a new
+        // converter to get resolvedOptions. (We were being kludgy and
+        // using timeDefaultConverter.getTimePositioning(converter.resolvedOptions())
+        // in this case, letting them get away with no resolvedOptions method.)
+        let newConverter = new ojconverterDatetime.IntlDateTimeConverter(resolvedOption);
+        let newOptions = newConverter.resolvedOptions();
+        pattern = newOptions.pattern || newOptions.patternFromOptions;
+        Logger.warning(`time component's converter.resolvedOptions has no pattern or patternFromOptions
+        property. The most likely cause is the component's converter does not
+        override the resolvedOptions method like it should.`);
+      }
+      var timePositions = this._getTimePositioning(pattern);
+      var positions = Object.keys(timePositions);
+      for (var i = 0; i < positions.length; i++) {
+        var position = positions[i];
+        wheelPos[timePositions[position]] = position;
+      }
+      timePickerModel.wheelOrder = wheelPos
+        .filter(function (val) {
+          return !!val;
+        })
+        .join('');
+      timePickerModel.format = pattern;
+      timePickerModel.ampmStrings = this._getAmPmStrings();
+
+      // set increment before setting value so that positions will be calculated correctly
+      var timeIncrement = this.options.timePicker.timeIncrement;
+      if (timeIncrement) {
+        var splitIncrements = splitTimeIncrement(timeIncrement);
+        timePickerModel.increment = splitIncrements.hourIncr * 60 + splitIncrements.minuteIncr;
+      }
+
+      // set value
+      // TODO: If the app dev provides a value that is not an iso string, we are showing
+      // an error under the field on initial render, and we plan to throw an error instead
+      // so the component will not render. When we do this we can remove this catch block.
+      try {
+        timePickerModel.isoValue = this._getIsoDateValue(converter);
+      } catch (e) {
+        var timeDefaultConverter = $.oj.ojInputTime.prototype.options.converter;
+        timePickerModel.isoValue = timeDefaultConverter.parse(value);
+        Logger.info('The value of the InputTime element must be an ISOString, please use a valid ISOString');
+      }
+
+      // set min and max values
+      if (minDateIso) {
+        timePickerModel.isoMin = minDateIso;
+      }
+
+      if (maxDateIso) {
+        timePickerModel.isoMax = maxDateIso;
+      }
+
+      // add header, wheel group and footer
+      if (
+        this._isIndependentInput() &&
+        (!keepHeaderFooter || $('.oj-timepicker-header', wheelPickerContent).length === 0)
+      ) {
+        wheelPickerContent.append($(this._generateHeader(wheelPicker))); // @HTMLUpdateOK header is generated internally so ok
+      }
+      this._wheelGroup = $(createWheelGroup(timePickerModel));
+
+      if (this._isIndependentInput()) {
+        this._wheelGroup.insertAfter($('.oj-timepicker-header', wheelPickerContent)); // @HTMLUpdateOK wheelGroup is created internally using numbers so ok
+      } else {
+        wheelPickerContent.append(this._wheelGroup); // @HTMLUpdateOK wheelGroup is created internally using numbers so ok
+      }
+
+      if (!keepHeaderFooter || $('.oj-timepicker-footer', wheelPickerContent).length === 0) {
+        wheelPickerContent.append($(this._generateFooter(footerLayoutDisplay, date))); // @HTMLUpdateOK footer is generated internally so ok
+      }
+
+      // add aria labels to wheels for accessibility
+      wheelPickerContent
+        .find('.oj-timepicker-hour')
+        .attr('aria-label', this.getTranslatedString('hourWheelLabel'));
+      wheelPickerContent
+        .find('.oj-timepicker-minute')
+        .attr('aria-label', this.getTranslatedString('minuteWheelLabel'));
+      wheelPickerContent
+        .find('.oj-timepicker-meridian')
+        .attr('aria-label', this.getTranslatedString('ampmWheelLabel'));
+
+      if (!keepHeaderFooter) {
+        this._attachWheelHandler();
+      }
+    },
+
+    /**
+     * Detach wheel handlers
+     *
+     * @private
+     */
+    _detachWheelHandler: function () {
+      this._wheelPicker.find('.oj-timepicker-now').off('click');
+
+      if (this._isIndependentInput()) {
+        this._wheelPicker.find('.oj-timepicker-cancel-button').off('click');
+        this._wheelPicker.find('.oj-timepicker-ok-button').off('click');
+      } else {
+        this._wheelPicker.find('.oj-timepicker-wheel').off('blur');
+        return;
+      }
+
+      this._wheelPicker.off('keydown');
+    },
+
+    /**
+     * Attaches wheel handlers
+     *
+     * NOTE: Timepicker wheel was written to redraw the whole content on basically every action, b/c of this it causes random
+     * behavior. In order to stabilize it, will minimize the creation of header + footer in the _createWheelPickerDom
+     * function and to off before on the handler for the handlers (before would fire multiple times).
+     * @private
+     */
+    _attachWheelHandler: function () {
+      var self = this;
+      // now control
+
+      this._wheelPicker.find('.oj-timepicker-now').on('click', function (event) {
+        var value;
+        var date = new Date();
+        var converter = self._GetConverter();
+        var converterOptions = converter.resolvedOptions();
+        if (converterOptions.timeZone !== undefined && converterOptions.isoStrFormat !== 'local') {
+          value = date.toISOString();
+        } else {
+          value = ojconverterutilsI18n.IntlConverterUtils.dateToLocalIso(date);
+        }
+        value = converter.parse(value);
+        self._timePickerModel.isoValue = value;
+        if (!self._isIndependentInput()) {
+          // when is not an independent component (i.e. part of switcher)
+          // need to set the value to have datetimepicker handle the value
+          self._SetValue(self._timePickerModel.isoValue, event);
+        }
+
+        event.preventDefault();
+      });
+
+      if (this._isIndependentInput()) {
+        this._wheelPicker.find('.oj-timepicker-cancel-button').on('click', function (event) {
+          event.preventDefault();
+          self._hide(self._ON_CLOSE_REASON_CANCELLED);
+        });
+
+        this._wheelPicker.find('.oj-timepicker-ok-button').on('click', function (event) {
+          self._hide(self._ON_CLOSE_REASON_SELECTION);
+          self._SetValue(self._timePickerModel.isoValue, event);
+          event.preventDefault();
+        });
+      } else {
+        this._wheelPicker.find('.oj-timepicker-wheel').on('blur', function (event) {
+          self._SetValue(self._timePickerModel.isoValue, event);
+        });
+
+        // need to hide the datePickerComp prior to showing timepicker
+        this._datePickerComp.widget._togglePicker();
+        // set focus on the 1st child
+        this._wheelGroup.children().first().focus();
+        return;
+      }
+
+      this._wheelPicker.on('keydown', function (event) {
+        if (event.keyCode === $.ui.keyCode.ESCAPE) {
+          event.preventDefault();
+          self._hide(self._ON_CLOSE_REASON_CANCELLED);
+        }
+      });
+    },
+    /**
+     * Does the theme supports the timepicker
+     *
+     * @private
+     */
+    _isTimePickerSupported: function () {
+      return (
+        _showPickerOnDesktop === 'enabled' ||
+        (_showPickerOnDesktop === 'disabled' && Config.getDeviceRenderMode() !== 'others')
+      );
+    },
+    /**
+     * Shows the wheel timepicker
+     *
+     * @private
+     */
+    _showWheelPicker: function () {
+      this._createWheelPickerDom();
+
+      var popUpWheelPicker = this._popUpWheelPicker;
+      if (!popUpWheelPicker) return;
+
+      // ojPopup open must be passed the input container (this.element.parent)
+      // as the launcher so that any event within the container won't auto-dismiss
+      // the dialog.
+      if (!_isLargeScreen) {
+        popUpWheelPicker.ojPopup('open', this.element[0].parentNode.parentNode, {
+          my: { horizontal: 'center', vertical: 'bottom' },
+          at: { horizontal: 'center', vertical: 'bottom' },
+          of: window,
+          collision: 'flipfit'
+        });
+
+        // if we don't have a large screen, the popup will be modal so
+        // we need to give it the focus
+        this._wheelGroup.children().first().focus();
+      } else {
+        var position = ojpopupcore.PositionUtils.normalizeHorizontalAlignment(
+          {
+            my: 'start top',
+            at: 'start bottom',
+            of: this.element,
+            collision: 'flipfit'
+          },
+          this._IsRTL()
+        );
+        popUpWheelPicker.ojPopup('open', this.element[0].parentNode.parentNode, position);
+      }
+    },
+
+    // @inheritdoc
+    getNodeBySubId: function (locator) {
+      var node = null;
+      var subId = locator && locator.subId;
+      var wheelPicker = this._wheelPicker;
+      var wheelPickerContent = this._getWheelPickerContent(wheelPicker);
+
+      if (subId) {
+        switch (subId) {
+          case 'oj-inputdatetime-time-icon':
+            node = $('.oj-inputdatetime-time-icon', this._triggerNode)[0];
+            break;
+
+          case 'oj-inputdatetime-time-input':
+            node = this.element[0];
+            break;
+
+          case 'oj-timepicker-content':
+            node = wheelPickerContent ? wheelPickerContent[0] : null;
+            break;
+
+          case 'oj-timepicker-cancel-button':
+            node = $('.oj-timepicker-cancel-button', wheelPicker)[0];
+            break;
+
+          case 'oj-timepicker-ok-button':
+            node = $('.oj-timepicker-ok-button', wheelPicker)[0];
+            break;
+
+          case 'oj-timepicker-hour':
+            node = $('.oj-timepicker-hour', wheelPicker)[0];
+            break;
+
+          case 'oj-timepicker-minute':
+            node = $('.oj-timepicker-minute', wheelPicker)[0];
+            break;
+
+          case 'oj-timepicker-meridian':
+            node = $('.oj-timepicker-meridian', wheelPicker)[0];
+            break;
+
+          case 'oj-timepicker-now':
+            node = $('.oj-timepicker-now', wheelPicker)[0];
+            break;
+
+          default:
+            node = null;
+        }
+      }
+
+      return node || this._superApply(arguments);
+    },
+
+    // @inheritdoc
+    getSubIdByNode: function (node) {
+      var timeIcon = $('.oj-inputdatetime-time-icon', this._triggerNode);
+      var subId = null;
+      var wheelPicker = this._wheelPicker;
+      var wheelPickerContent = this._getWheelPickerContent(wheelPicker);
+      var checks = [
+        { selector: '.oj-timepicker-cancel-button', ele: wheelPicker },
+        { selector: '.oj-timepicker-ok-button', ele: wheelPicker },
+        { selector: '.oj-timepicker-hour', ele: wheelPicker },
+        { selector: '.oj-timepicker-minute', ele: wheelPicker },
+        { selector: '.oj-timepicker-meridian', ele: wheelPicker },
+        { selector: '.oj-timepicker-now', ele: wheelPicker }
+      ];
+
+      if (node === timeIcon[0]) {
+        subId = 'oj-inputdatetime-time-icon';
+      } else if (node === this.element[0]) {
+        subId = 'oj-inputdatetime-time-input';
+      } else if (wheelPickerContent && node === wheelPickerContent[0]) {
+        subId = 'oj-timepicker-content';
+      } else {
+        for (var i = 0; i < checks.length; i++) {
+          var map = checks[i];
+          var entry = $(map.selector, map.ele);
+
+          if (entry.length === 1 && entry[0] === node) {
+            subId = map.selector.substr(1);
+            break;
+          }
+        }
+      }
+
+      return subId || this._superApply(arguments);
+    },
+
+    /**
+     * Returns the root node
+     *
+     * @expose
+     * @instance
+     * @memberof! oj.ojInputTime
+     * @ignore
+     */
+    widget: function () {
+      return this._isIndependentInput() ? this._super() : this._datePickerComp.widget.widget();
+    }
+  });
+
+  // Add custom getters for properties
+  ojcomponentcore.setDefaultOptions({
+    ojInputTime: {
+      converter: ojcomponentcore.createDynamicPropertyGetter(function () {
+        if (_sDefaultTimeConverter == null) {
+          _sDefaultTimeConverter = _getTimeDefaultConverter();
+        }
+        return _sDefaultTimeConverter;
+      }),
+      renderMode: ojcomponentcore.createDynamicPropertyGetter(function () {
+        return (ThemeUtils.parseJSONFromFontFamily('oj-inputdatetime-option-defaults') || {}).renderMode;
+      }),
+      keyboardEdit: ojcomponentcore.createDynamicPropertyGetter(function () {
+        return (ThemeUtils.parseJSONFromFontFamily('oj-inputdatetime-option-defaults') || {}).keyboardEdit;
+      }),
+
+      timePicker: ojcomponentcore.createDynamicPropertyGetter(function () {
+        return (ThemeUtils.parseJSONFromFontFamily('oj-inputdatetime-option-defaults') || {}).timePicker;
+      })
+    }
+  });
+
+  // Fragments:
+
+  /**
+   * <table class="keyboard-table">
+   *   <thead>
+   *     <tr>
+   *       <th>Target</th>
+   *       <th>Gesture</th>
+   *       <th>Action</th>
+   *     </tr>
+   *   </thead>
+   *   <tbody>
+   *     <tr>
+   *       <td>Input element and time trigger icon</td>
+   *       <td><kbd>Tap</kbd></td>
+   *       <td>Shows the time picker and moves the focus into the expanded time picker</td>
+   *     </tr>
+   *     <tr>
+   *       <td>Input element with picker open</td>
+   *       <td><kbd>Tap</kbd></td>
+   *       <td>Set focus to the input. If hints, title or messages exist in a notewindow,
+   *        pop up the notewindow.</td>
+   *     </tr>
+   *   </tbody>
+   * </table>
+   *
+   * @ojfragment touchDoc - Used in touch gesture section of classdesc, and standalone gesture doc
+   * @memberof oj.ojInputTime
+   */
+
+  /**
+   * <table class="keyboard-table">
+   *   <thead>
+   *     <tr>
+   *       <th>Target</th>
+   *       <th>Key</th>
+   *       <th>Action</th>
+   *     </tr>
+   *   </thead>
+   *   <tbody>
+   *     <tr>
+   *       <td>Input element</td>
+   *       <td><kbd>DownArrow or UpArrow</kbd></td>
+   *       <td>Shows the time picker and moves the focus into the expanded time picker</td>
+   *     </tr>
+   *     <tr>
+   *       <td>Input element</td>
+   *       <td><kbd>Tab In</kbd></td>
+   *       <td>Set focus to the input. If hints, title or messages exist in a notewindow,
+   *        pop up the notewindow.</td>
+   *     </tr>
+   *   </tbody>
+   * </table>
+   *
+   * @ojfragment keyboardDoc - Used in keyboard section of classdesc, and standalone gesture doc
+   * @memberof oj.ojInputTime
+   */
+  // ////////////////     SUB-IDS     //////////////////
+
+  /**
+   * <p>Sub-ID for the InputTime component's input element.</p>
+   *
+   * @ojsubid oj-inputdatetime-time-input
+   * @memberof oj.ojInputTime
+   * @instance
+   *
+   * @example <caption>Get the node for the input element:</caption>
+   * var node = myInputTime.getNodeBySubId( {'subId': 'oj-inputdatetime-time-input'} );
+   */
+
+  /**
+   * <p>Sub-ID for the time icon that triggers the time drop down display.</p>
+   *
+   * @ojsubid oj-inputdatetime-time-icon
+   * @memberof oj.ojInputTime
+   * @instance
+   *
+   * @example <caption>Get the time icon that triggers the time drop down display:</caption>
+   * var node = myInputTime.getNodeBySubId( {'subId': 'oj-inputdatetime-time-icon'} );
+   */
+
+  /**
+   * <p>Sub-ID for the time wheel picker drop down node.
+   *
+   * @ojsubid oj-timepicker-content
+   * @memberof oj.ojInputTime
+   * @instance
+   *
+   * @example <caption>Get the time wheel picker drop down node:</caption>
+   * var node = myInputTime.getNodeBySubId( {'subId': 'oj-timepicker-content'} );
+   */
+
+  /**
+   * <p>Sub-ID for the cancel button.
+   *
+   * @ojsubid oj-timepicker-cancel-button
+   * @memberof oj.ojInputTime
+   * @instance
+   *
+   * @example <caption>Get the cancel button:</caption>
+   * var node = myInputTime.getNodeBySubId( {'subId': 'oj-timepicker-cancel-button'} );
+   */
+
+  /**
+   * <p>Sub-ID for the OK button.
+   *
+   * @ojsubid oj-timepicker-ok-button
+   * @memberof oj.ojInputTime
+   * @instance
+   *
+   * @example <caption>Get the OK button:</caption>
+   * var node = myInputTime.getNodeBySubId( {'subId': 'oj-timepicker-ok-button'} );
+   */
+
+  /**
+   * <p>Sub-ID for the hour picker.
+   *
+   * @ojsubid oj-timepicker-hour
+   * @memberof oj.ojInputTime
+   * @instance
+   *
+   * @example <caption>Get the hour picker:</caption>
+   * var node = myInputTime.getNodeBySubId( {'subId': 'oj-timepicker-hour'} );
+   */
+
+  /**
+   * <p>Sub-ID for the minute picker.
+   *
+   * @ojsubid oj-timepicker-minute
+   * @memberof oj.ojInputTime
+   * @instance
+   *
+   * @example <caption>Get the minute picker:</caption>
+   * var node = myInputTime.getNodeBySubId( {'subId': 'oj-timepicker-minute'} );
+   */
+
+  /**
+   * <p>Sub-ID for the meridian picker.
+   *
+   * @ojsubid oj-timepicker-meridian
+   * @memberof oj.ojInputTime
+   * @instance
+   *
+   * @example <caption>Get the meridian picker:</caption>
+   * var node = myInputTime.getNodeBySubId( {'subId': 'oj-timepicker-meridian'} );
+   */
+
+  /**
+   * <p>Sub-ID for the now button for button bar.
+   *
+   * @ojsubid oj-timepicker-now
+   * @memberof oj.ojInputTime
+   * @instance
+   *
+   * @example <caption>Get the now/now button for button bar:</caption>
+   * var node = myInputTime.getNodeBySubId( {'subId': 'oj-timepicker-now'} );
+   */
+
+  var _sDefaultDateTimeConverter;
+
+  /**
+   * For default converter
+   * @static
+   * @ignore
+   */
+  function _getDateTimeDefaultConverter() {
+    return new ojconverterDatetime.IntlDateTimeConverter({
+      formatType: 'datetime',
+      dateFormat: 'short',
+      timeFormat: 'short'
+    });
+  }
+
+  /**
+   * @ojcomponent oj.ojDateTimePicker
+   * @augments oj.ojInputDateTime
+   * @since 4.0.0
+   *
+   * @ojshortdesc A date time picker is an inline element for picking a date and time value.
+   * @ojdisplayname Inline Date Time Picker
+   * @ojrole combobox
+   * @ojtsimport {module: "ojconverter-datetime", type: "AMD", importName: "DateTimeConverter"}
+   * @ojtsimport {module: "ojconverter-datetime", type: "AMD", importName: "IntlDateTimeConverter"}
+   *
+   * @ojpropertylayout {propertyGroup: "common", items: ["labelHint", "required", "disabled", "readonly", "min", "max"]}
+   * @ojpropertylayout {propertyGroup: "data", items: ["value"]}
+   * @ojvbdefaultcolumns 4
+   * @ojvbmincolumns 4
+   *
+   * @ojoracleicon 'oj-ux-ico-calendar-clock'
+   * @ojuxspecs ['input-date-and-time']
+   *
+   * @classdesc
+   * <h3 id="inputDateTimeOverview-section">
+   *   JET DateTimePicker (Inline mode)
+   *   <a class="bookmarkable-link" title="Bookmarkable Link" href="#inputDateTimeOverview-section"></a>
+   * </h3>
+   * <p>Description:</p>
+   * <p>A JET DateTimePicker extends from DatePicker providing additionally time selection drop down. This behaves similar to JET InputDateTime element
+   *    except for the fact that the date picker is rendered inline here. The time format is based on the converter and default converter uses the locale to determine the
+   *    time format. If the <code>lang</code> attribute is specified in the html tag then the converter picks locale based on the <code>lang</code> attribute. If there is
+   *    no <code>lang</code> attribute specified then the locale is based on the browser language setting. Default value for locale is "en". For example, If locale is "en-US",
+   *    the default for time is 12-hour format and if locale is "fr", the default for time is 24-hour format.</p>
+   *
+   * <pre class="prettyprint"><code>&lt;oj-date-time-picker>&lt;/oj-date-time-picker></code></pre>
+   * {@ojinclude "name":"validationAndMessagingDoc"}
+   * <h3 id="touch-section">
+   *   Touch End User Information
+   *   <a class="bookmarkable-link" title="Bookmarkable Link" href="#touch-section"></a>
+   * </h3>
+   *
+   * {@ojinclude "name":"touchDoc"}
+   *
+   * <h3 id="keyboard-section">
+   *   Keyboard End User Information
+   *   <a class="bookmarkable-link" title="Bookmarkable Link" href="#keyboard-section"></a>
+   * </h3>
+   *
+   * {@ojinclude "name":"keyboardDoc"}
+   *
+   * <h3 id="a11y-section">
+   *   Accessibility
+   *   <a class="bookmarkable-link" title="Bookmarkable Link" href="#a11y-section"></a>
+   * </h3>
+   * <h3 id="label-section">
+   *   Label and DateTimePicker
+   *   <a class="bookmarkable-link" title="Bookmarkable Link" href="#label-section"></a>
+   * </h3>
+   * <p>
+   * {@ojinclude "name":"accessibilityLabelEditableValue"}
+   * {@ojinclude "name":"accessibilityLabelEditableValue"}
+   * </p>
+   * <p>
+   * The element will decorate its associated label with required and help
+   * information, if the <code>required</code> and <code>help</code> attributes are set.
+   * </p>
+   * @ojdeprecated {since: '17.0.0', value: ['oj-date-picker', 'oj-input-date', 'oj-input-time'], description: 'The use of oj-date-time-picker is a Redwood anti-pattern.'}
+   */
+  /**
+   * @ojcomponent oj.ojInputDateTime
+   * @augments oj.ojInputDate
+   * @since 0.6.0
+   *
+   * @ojshortdesc An input date time allows the user to enter or select a date and time value.
+   * @ojrole combobox
+   * @ojsignature [{
+   *                target: "Type",
+   *                value: "class ojInputDateTime<SP extends ojInputDateTimeSettableProperties = ojInputDateTimeSettableProperties> extends ojInputDate<SP>"
+   *               }
+   *              ]
+   * @ojtsimport {module: "ojvalidator", type: "AMD", importName: "Validator"}
+   * @ojtsimport {module: "ojvalidator-async", type: "AMD", importName: "AsyncValidator"}
+   * @ojtsimport {module: "ojconverter-datetime", type: "AMD",  imported: ["IntlDateTimeConverter", "DateTimeConverter"]}
+   * @ojtsimport {module: "ojvalidator-daterestriction", type: "AMD", importName: "DateRestrictionValidator"}
+   * @ojtsimport {module: "ojvalidator-datetimerange", type: "AMD", importName: "DateTimeRangeValidator"}
+   * @ojtsimport {module: "ojvalidator-length", type: "AMD", importName: "LengthValidator"}
+   * @ojtsimport {module: "ojvalidator-numberrange", type: "AMD", importName: "NumberRangeValidator"}
+   * @ojtsimport {module: "ojvalidator-regexp", type: "AMD", importName: "RegExpValidator"}
+   * @ojtsimport {module: "ojvalidator-required", type: "AMD", importName: "RequiredValidator"}
+   *
+   * @ojpropertylayout {propertyGroup: "common", items: ["labelHint", "placeholder", "required", "disabled", "readonly", "min", "max", "converter"]}
+   * @ojpropertylayout {propertyGroup: "data", items: ["value"]}
+   * @ojvbdefaultcolumns 6
+   * @ojvbmincolumns 2
+   *
+   * @ojoracleicon 'oj-ux-ico-calendar-clock'
+   * @ojuxspecs ['input-date-and-time']
+   *
+   * @classdesc
+   * <h3 id="inputDateTimeOverview-section">
+   *   JET InputDateTime
+   *   <a class="bookmarkable-link" title="Bookmarkable Link" href="#inputDateTimeOverview-section"></a>
+   * </h3>
+   * <p>Description:</p>
+   * <p>A JET InputDateTime extends from InputDate providing additionally time selection drop down. The time format is based on the converter and default converter uses the locale to determine the
+   *    time format. If the <code>lang</code> attribute is specified in the html tag then the converter picks locale based on the <code>lang</code> attribute. If there is
+   *    no <code>lang</code> attribute specified then the locale is based on the browser language setting. Default value for locale is "en". For example, if locale is "en-US",
+   *    the default for time is 12-hour format and if locale is "fr", the default for time is 24-hour format.</p>
+   *
+   * <pre class="prettyprint"><code>&lt;oj-input-date-time>&lt;/oj-input-date-time></code></pre>
+   *
+   * {@ojinclude "name":"validationAndMessagingDoc"}
+   *
+   * <h3 id="touch-section">
+   *   Touch End User Information
+   *   <a class="bookmarkable-link" title="Bookmarkable Link" href="#touch-section"></a>
+   * </h3>
+   *
+   * {@ojinclude "name":"touchDoc"}
+   *
+   * <h3 id="keyboard-section">
+   *   Keyboard End User Information
+   *   <a class="bookmarkable-link" title="Bookmarkable Link" href="#keyboard-section"></a>
+   * </h3>
+   *
+   * {@ojinclude "name":"keyboardDoc"}
+   *
+   * <h3 id="a11y-section">
+   *   Accessibility
+   *   <a class="bookmarkable-link" title="Bookmarkable Link" href="#a11y-section"></a>
+   * </h3>
+   * <p>
+   * {@ojinclude "name":"accessibilityLabelEditableValue"}
+   * {@ojinclude "name":"accessibilityPlaceholderEditableValue"}
+   * {@ojinclude "name":"accessibilityDisabledEditableValue"}
+   * </p>
+   * <h3 id="label-section">
+   *   Label and InputDateTime
+   *   <a class="bookmarkable-link" title="Bookmarkable Link" href="#label-section"></a>
+   * </h3>
+   * <p>
+   * The element will decorate its associated label with required and help
+   * information, if the <code>required</code> and <code>help</code> attributes are set.
+   * </p>
+   */
+  // --------------------------------------------------- oj.ojInputDateTime Styling Start ------------------------------------------------------------
+  /**
+   * @classdesc The following CSS classes can be applied by the page author as needed.<br/>
+   * The form control style classes can be applied to the component, or an ancestor element. <br/>
+   * When applied to an ancestor element, all form components that support the style classes will be affected.
+   */
+  // ---------------- oj-form-control-full-width --------------
+  /**
+   * Changes the max-width to 100% so that form components will occupy all the available horizontal space.
+   * @ojstyleclass oj-form-control-full-width
+   * @ojdisplayname Full Width
+   * @memberof oj.ojInputDateTime
+   * @ojtsexample
+   * &lt;oj-input-date-time class="oj-form-control-full-width">
+   * &lt;/oj-input-date-time>
+   */
+
+  // ---------------- oj-form-control max-width --------------
+  /**
+   * In the Redwood theme the default max width of a text field is 100%.
+   * These max width convenience classes are available to create a medium or small field.<br>
+   * The class is applied to the root element.
+   * @ojstyleset form-control-max-width
+   * @ojdisplayname Max Width
+   * @ojstylesetitems ["form-control-max-width.oj-form-control-max-width-sm", "form-control-max-width.oj-form-control-max-width-md"]
+   * @ojstylerelation exclusive
+   * @memberof oj.ojInputDateTime
+   * @ojunsupportedthemes ['Alta']
+   * @ojtsexample
+   * &lt;oj-input-date-time class="oj-form-control-max-width-md">&lt;/oj-input-date-time>
+   */
+  /**
+   * @ojstyleclass form-control-max-width.oj-form-control-max-width-sm
+   * @ojshortdesc Sets the max width for a small field
+   * @ojdisplayname Small
+   * @memberof! oj.ojInputDateTime
+   */
+  /**
+   * @ojstyleclass form-control-max-width.oj-form-control-max-width-md
+   * @ojshortdesc Sets the max width for a medium field
+   * @ojdisplayname Medium
+   * @memberof! oj.ojInputDateTime
+   */
+
+  // ---------------- oj-form-control width --------------
+  /**
+   * In the Redwood theme the default width of a text field is 100%.
+   * These width convenience classes are available to create a medium or small field.<br>
+   * The class is applied to the root element.
+   * @ojstyleset form-control-width
+   * @ojdisplayname Width
+   * @ojstylesetitems ["form-control-width.oj-form-control-width-sm", "form-control-width.oj-form-control-width-md"]
+   * @ojstylerelation exclusive
+   * @memberof oj.ojInputDateTime
+   * @ojunsupportedthemes ['Alta']
+   * @ojtsexample
+   * &lt;oj-input-date-time class="oj-form-control-width-md">&lt;/oj-input-date-time>
+   */
+  /**
+   * @ojstyleclass form-control-width.oj-form-control-width-sm
+   * @ojshortdesc Sets the width for a small field
+   * @ojdisplayname Small
+   * @memberof! oj.ojInputDateTime
+   */
+  /**
+   * @ojstyleclass form-control-width.oj-form-control-width-md
+   * @ojshortdesc Sets the width for a medium field
+   * @ojdisplayname Medium
+   * @memberof! oj.ojInputDateTime
+   */
+
+  // ---------------- oj-form-control-text-align- --------------
+  /**
+   * Classes that help align text of the element.
+   * @ojstyleset text-align
+   * @ojdisplayname Text Alignment
+   * @ojstylesetitems ["text-align.oj-form-control-text-align-right", "text-align.oj-form-control-text-align-start", "text-align.oj-form-control-text-align-end"]
+   * @ojstylerelation exclusive
+   * @memberof oj.ojInputDateTime
+   * @ojtsexample
+   * &lt;oj-input-date-time class="oj-form-control-text-align-right">
+   * &lt;/oj-input-date-time>
+   */
+  /**
+   * @ojstyleclass text-align.oj-form-control-text-align-right
+   * @ojshortdesc Aligns the text to the right regardless of the reading direction. This is normally used for right aligning numbers.
+   * @ojdisplayname Align-Right
+   * @memberof! oj.ojInputDateTime
+   */
+  /**
+   * @ojstyleclass text-align.oj-form-control-text-align-start
+   * @ojshortdesc Aligns the text to the left in LTR and to the right in RTL.
+   * @ojdisplayname Align-Start
+   * @memberof! oj.ojInputDateTime
+   */
+  /**
+   * @ojstyleclass text-align.oj-form-control-text-align-end
+   * @ojshortdesc Aligns the text to the right in LTR and to the left in RTL.
+   * @ojdisplayname Align-End
+   * @memberof! oj.ojInputDateTime
+   */
+  // --------------------------------------------------- oj.ojInputDateTime Styling end ------------------------------------------------------------
+
+  oj.__registerWidget('oj.ojInputDateTime', $.oj.ojInputDate, {
+    widgetEventPrefix: 'oj',
+
+    // -------------------------------From base---------------------------------------------------//
+    _WIDGET_CLASS_NAMES: 'oj-inputdatetime-date-time oj-component oj-inputdatetime',
+    _INPUT_HELPER_KEY: 'inputHelpBoth',
+    // -------------------------------End from base-----------------------------------------------//
+    _TRIGGER_CALENDAR_CLASS: 'oj-inputdatetime-calendar-clock-icon',
+
+    options: {
+      /**
+       * A datetime converter instance or one that duck types {@link oj.DateTimeConverter}.
+
+       * <p>The default options for converter vary by theme. To use different value for options, create a custom converter and
+       * set it in this property. For example:
+       * <pre class="prettyprint"><code>inputDateTime.converter = new DateTimeConverter.IntlDateTimeConverter({formatType: 'datetime',dateFormat: 'short',timeFormat: 'short'});</code></pre>
+       * <p>If the timezone option is provided in the converter, the Today button will highlight the current day based on the timezone specified in the converter.
+      * <p>
+      * The hint exposed by the converter is shown inline by default in the Redwood theme when
+      * the field has focus.
+      * You can turn off showing converter hints by using the 'converterHint' property set to 'none'
+      * on the <code class="prettyprint">display-options</code> attribute.
+      * </p>
+      * <p>
+      * In the Redwood theme, only one hint shows at a time, so the precedence rules are:
+      * help.instruction shows; if no help.instruction then validator hints show;
+      * if none, then help-hints.definition shows; if none, then converter hint shows.
+      * help-hints.source always shows along with the other help or hint.
+      * </p>
+       * {@ojinclude "name":"inputBaseConverterOptionDoc"}
+       * @expose
+       * @instance
+       * @memberof! oj.ojDateTimePicker
+       * @name converter
+       * @type {Object}
+       * @ojshortdesc An object that converts the datetime value. See the Help documentation for more information.
+       * @ojsignature  [{ target: "Type",
+       *    value: "oj.Converter<any>",
+       *    jsdocOverride: true},
+       *    {target: "Type",
+       *    value: "Promise<oj.Converter<any>>|oj.Converter<any>|
+       *            oj.Validation.RegisteredConverter",
+       *    consumedBy: 'tsdep'}]
+       * @ojdeprecated {since: '8.0.0', target: 'memberType', value: ['oj.Validation.RegisteredConverter'],
+       *                description: 'Defining a converter with an object literal with converter type and its options
+       *                  (aka JSON format) has been deprecated and does nothing. If needed, you can make the JSON format
+       *                  work again by importing the deprecated ojvalidation-datetime module.'}
+       * @ojdeprecated {since: '17.0.0', target: 'memberType', value: ['Promise<oj.Converter<any>>'],
+       *                description: 'Defining a Promise to a Converter instance has been deprecated. The application should resolve the Promise and then update the converter attribute with the resolved converter instance.'}
+       * @ojdeprecated {since: '17.0.0', description: 'This property has been deprecated.'}
+       * @default new DateTimeConverter({ formatType: 'datetime', dateFormat: 'short', timeFormat: 'short' })
+       */
+      /**
+       * A datetime converter instance or one that duck types {@link oj.DateTimeConverter}.
+
+       * <p>The default options for converter vary by theme. To use different value for options, create a custom converter and
+       * set it in this property. For example:
+       * <pre class="prettyprint"><code>inputDateTime.converter = new DateTimeConverter.IntlDateTimeConverter({formatType: 'datetime',dateFormat: 'short',timeFormat: 'short'});</code></pre>
+       * <p>If the timezone option is provided in the converter, the Today button will highlight the current day based on the timezone specified in the converter.
+      * <p>
+      * The hint exposed by the converter is shown inline by default in the Redwood theme when
+      * the field has focus.
+      * You can turn off showing converter hints by using the 'converterHint' property set to 'none'
+      * on the <code class="prettyprint">display-options</code> attribute.
+      * </p>
+      * <p>
+      * In the Redwood theme, only one hint shows at a time, so the precedence rules are:
+      * help.instruction shows; if no help.instruction then validator hints show;
+      * if none, then help-hints.definition shows; if none, then converter hint shows.
+      * help-hints.source always shows along with the other help or hint.
+      * </p>
+       * {@ojinclude "name":"inputBaseConverterOptionDoc"}
+       * @expose
+       * @instance
+       * @memberof! oj.ojInputDateTime
+       * @type {Object}
+       * @ojshortdesc An object that converts the datetime value. See the Help documentation for more information.
+       * @ojsignature  [{ target: "Type",
+       *    value: "oj.Converter<any>",
+       *    jsdocOverride: true},
+       *    {target: "Type",
+       *    value: "Promise<oj.Converter<any>>|oj.Converter<any>|
+       *            oj.Validation.RegisteredConverter",
+       *    consumedBy: 'tsdep'}]
+       * @ojdeprecated {since: '8.0.0', target: 'memberType', value: ['oj.Validation.RegisteredConverter'],
+       *                description: 'Defining a converter with an object literal with converter type and its options
+       *                  (aka JSON format) has been deprecated and does nothing. If needed, you can make the JSON format
+       *                  work again by importing the deprecated ojvalidation-datetime module.'}
+       * @ojdeprecated {since: '17.0.0', target: 'memberType', value: ['Promise<oj.Converter<any>>'],
+       *                description: 'Defining a Promise to a Converter instance has been deprecated. The application should resolve the Promise and then update the converter attribute with the resolved converter instance.'}
+       * @default new DateTimeConverter({ formatType: 'datetime', dateFormat: 'short', timeFormat: 'short' })
+       */
+      converter: undefined,
+      /**
+       * @ignore
+       * @name todayTimeZone
+       * @instance
+       * @memberof oj.ojInputDateTime
+       */
+      /**
+       * @ignore
+       * @name twoDigitYearStart
+       * @instance
+       * @memberof oj.ojInputDateTime
+       */
+      /**
+       * The oj-label sets the described-by attribute programmatically on the form component.
+       * This attribute is not meant to be set by an application developer directly.
+       * The described-by is copied to the aria-describedby
+       * attribute on the component's inner dom element, and it is needed
+       * for accessibility.
+       * @example <caption>Initialize component with the <code class="prettyprint">described-by</code> attribute specified:</caption>
+       * &lt;oj-some-element described-by="someId">&lt;/oj-some-element>
+       *
+       * @example <caption>Get or set the <code class="prettyprint">describedBy</code> property after initialization:</caption>
+       * // getter
+       * var descById = myComp.describedBy;
+       *
+       * // setter
+       * myComp.describedBy = "someId";
+       *
+       * @ojshortdesc The form component's oj-label automatically sets described-by
+       * to make it accessible. It is not meant to be set by application developer.
+       * @expose
+       * @type {?string}
+       * @public
+       * @instance
+       * @memberof oj.ojDateTimePicker
+       * @name describedBy
+       * @ojdeprecated {since: '17.0.0', description: 'The oj-date-time-picker is used internally by the oj-input-date-time component and is not meant to display messages, be labelled, or be in a form layout by itself. Per the Redwood UX specification, the oj-date-time-picker is not intended to be a form component.'}
+       * @since 4.0.0
+       */
+      /**
+       * Whether the component is disabled. The default is false.
+       *
+       * @ojshortdesc Specifies whether the component is disabled. The default is false.
+       * @expose
+       * @type {boolean}
+       * @default false
+       * @public
+       * @instance
+       * @memberof oj.ojDateTimePicker
+       * @name disabled
+       * @ojdeprecated {since: '17.0.0', description: "Disabled is not supported by the Date Picker UX specification, use readonly property instead."}
+       * @since 0.7.0
+       */
+      /**
+       * Form component help information.
+       * @expose
+       * @memberof oj.ojDateTimePicker
+       * @name help
+       * @ojdeprecated {since: '17.0.0', description: "The oj-date-time-picker is used internally by the oj-input-date-time component and is not meant to display messages, be labelled, or be in a form layout by itself. Per the Redwood UX specification, the oj-date-time-picker is not intended to be a form component."}
+       * @instance
+       * @public
+       * @type {Object}
+       * @since 0.7.0
+       */
+      /**
+       * <p>
+       * The helpHints object contains a definition property and a source property.
+       * </p>
+       * <ul>
+       * <li><code class="prettyprint">definition</code> - hint for help definition text.</li>
+       * <li><code class="prettyprint">source</code> - hint for help source URL.</li>
+       * </ul>
+       *
+       * @ojshortdesc Represents hints for an oj-form-layout element to render help information on the label of the editable component.
+       * @expose
+       * @access public
+       * @memberof oj.ojDateTimePicker
+       * @name helpHints
+       * @ojdeprecated {since: '17.0.0', description: "The oj-date-time-picker is used internally by the oj-input-date-time component and is not meant to display messages, be labelled, or be in a form layout by itself. Per the Redwood UX specification, the oj-date-time-picker is not intended to be a form component."}
+       * @ojtranslatable
+       * @instance
+       * @type {Object}
+       * @since 4.1.0
+       */
+      /**
+       * A type of user assistance text. User assistance text is used to provide
+       * guidance to help the user understand what data to enter or select. help-hints could
+       * come from a help system.
+       * <p>In the Redwood theme for clarity only one user assistance text shows to the user.
+       * The precedence rules are:
+       * <ul>
+       * <li>help.instruction shows;</li>
+       * <li>if no help.instruction, then validator hint shows;</li>
+       * <li>if no help.instruction or validator hint, then help-hints.definition shows;</li>
+       * <li>if no help.instruction, validator hint, or help-hints.definition, then converter hint shows.</li>
+       * <li>help-hints.source always shows along side the above.</li>
+       * </ul>
+       * </p>
+       * <p>
+       * In the Redwood theme, by default all user assistance text shows inline.
+       * For input components, it shows when the field takes focus. In other components it
+       * shows all the time. See the user-assistance-density property for other ways the user
+       * assistance text can render.
+       * </p>
+       * <p>No formatted text is available for help definition attribute.</p>
+       *
+       * <p>See the <a href="#helpHints">help-hints</a> attribute for usage examples.</p>
+       *
+       * @ojshortdesc Hint for help definition text associated with the label.
+       * @expose
+       * @name helpHints.definition
+       * @memberof! oj.ojDateTimePicker
+       * @ojdeprecated {since: '17.0.0', description: "The oj-date-time-picker is used internally by the oj-input-date-time component and is not meant to display messages, be labelled, or be in a form layout by itself. Per the Redwood UX specification, the oj-date-time-picker is not intended to be a form component."}
+       * @instance
+       * @type {string}
+       * @ojsignature {target:"Type", value: "?"}
+       * @default ""
+       * @since 4.1.0
+       */
+      /**
+       * Help source URL associated with the component.
+       * <p>In the Redwood theme, the help-hints.source will show as a link inline to the field.
+       * For input components, it shows when the field takes focus. For other components,
+       * it shows all the time.
+       * </p>
+       * <p>
+       * For security reasons we only support urls with protocol 'http:' or 'https:'.
+       * If the url doesn't comply we ignore it and throw an error.
+       * Pass in an encoded URL since we do not encode the URL.</p>
+       *
+       * <p>See the <a href="#helpHints">help-hints</a> attribute for usage examples.</p>
+       *
+       * @ojshortdesc Help source URL associated with the component.
+       * @expose
+       * @name helpHints.source
+       * @memberof! oj.ojDateTimePicker
+       * @ojdeprecated {since: '17.0.0', description: "The oj-date-time-picker is used internally by the oj-input-date-time component and is not meant to display messages, be labelled, or be in a form layout by itself. Per the Redwood UX specification, the oj-date-time-picker is not intended to be a form component."}
+       * @instance
+       * @type {string}
+       * @ojsignature {target:"Type", value: "?"}
+       * @default ""
+       * @since 4.1.0
+       */
+      /**
+       * A type of user assistance text. User assistance text is used to provide
+       * guidance to help the user understand what data to enter or select.
+       * <p> In the Redwood theme for clarity only one user assistance text shows to the user.
+       *  The precedence rules are:
+       * <ul>
+       * <li>help.instruction shows;</li>
+       * <li>if no help.instruction, then validator hint shows;</li>
+       * <li>if no help.instruction or validator hint, then help-hints.definition shows;</li>
+       * <li>if no help.instruction, validator hint, or help-hints.definition, then converter hint shows.</li>
+       * <li>help-hints.source always shows along side the above.</li>
+       * </ul>
+       * </p>
+       * <p>In the Redwood theme, by default all user assistance text shows inline.
+       * For input components, it shows when the field takes focus. In other components
+       * it shows all the time. See the user-assistance-density property for other ways
+       * the user assistance text can render.
+       * <p>
+       *  How is help.instruction better than the html 'title' attribute?
+       * The html 'title' attribute only shows up as a tooltip on mouse over, not on keyboard and not in a mobile
+       * device. So the html 'title' would only be for text that is not important enough to show all users, or
+       * for text that you show the users in another way as well, like in the label.
+       * Also you cannot theme the native browser's title window like you can the JET
+       * notewindow, so low vision users may have a hard time seeing the 'title' window.
+       * For these reasons, the JET EditableValue components do not use the HTML's 'title'
+       * attribute and instead use the help.instruction attribute.
+       * </p>
+       *
+       * <p>
+       * To include formatted text in the help.instruction, format the string using html tags.
+       * The allowed html tags are: span, b, i, em, br, hr, li, ol, ul, p, small, pre.
+       * For example the
+       * help.instruction might look like:
+       * <pre class="prettyprint"><code>&lt;oj-some-element help.instruction="&lt;html>Enter &lt;b>at least&lt;/b> 6 characters&lt;/html>">&lt;/oj-some-element></code></pre>
+       * If you use formatted text, it should be accessible
+       * and make sense to the user if formatting wasn't there.
+       *
+       * @ojshortdesc Represents advisory information for the component, such as would be appropriate for a tooltip.
+       * @expose
+       * @access public
+       * @instance
+       * @name help.instruction
+       * @ojtranslatable
+       * @default ""
+       * @memberof! oj.ojDateTimePicker
+       * @ojdeprecated {since: '17.0.0', description: "The oj-date-time-picker is used internally by the oj-input-date-time component and is not meant to display messages, be labelled, or be in a form layout by itself. Per the Redwood UX specification, the oj-date-time-picker is not intended to be a form component."}
+       * @type {string=}
+       * @since 4.0.0
+       */
+      /**
+       * Represents a hint for rendering a label on the component.
+       * <p>This is used in combination with the <a href="#labelEdge">label-edge</a> attribute to control how the label should be rendered.</p>
+       *
+       * <p>
+       * When label-edge is "provided", it gives a hint to oj-form-layout parent element to create an oj-label element for the component.
+       * When the <code class="prettyprint">label-hint</code> attribute changes, oj-form-layout element refreshes to
+       * display the updated label information.
+       * </p>
+       * <p>
+       * When label-edge is "inside", it gives a hint to the component itself to render a label.
+       * </p>
+       * <p>
+       * When label-edge is "none", and if the component has no labelled-by, aria-label, or aria-labelledby attribute, the label-hint value will be used as the aria-label.
+       * </p>
+       *
+       * @ojshortdesc Represents a hint for oj-form-layout element to render a label on the editable component.
+       * @expose
+       * @access public
+       * @instance
+       * @name labelHint
+       * @ojtranslatable
+       * @default ""
+       * @memberof! oj.ojDateTimePicker
+       * @ojdeprecated {since: '17.0.0', description: "The oj-date-time-picker is used internally by the oj-input-date-time component and is not meant to display messages, be labelled, or be in a form layout by itself. Per the Redwood UX specification, the oj-date-time-picker is not intended to be a form component."}
+       * @type {string}
+       * @since 4.1.0
+       */
+      /**
+       * Specifies how the label of the component is created when the <code class="prettyprint">label-hint</code> attribute is set on the component.
+       * <p>The default value varies by theme, and it works well for the theme in most cases.
+       *  If the component is in an oj-form-layout, the label-edge attribute could come from the oj-form-layout's label-edge attribute.
+       * The oj-form-layout component uses the <a href="MetadataTypes.html#PropertyBinding">MetadataTypes.PropertyBinding</a>
+       * <code class="prettyprint">provide</code> property to provide and uses the <a href="MetadataTypes.html#ProvideProperty">MetadataTypes.ProvideProperty</a>
+       * <code class="prettyprint">transform</code> property to transform its <code class="prettyprint">label-edge</code>
+       * attribute to any descendent components that are configured to consume it.
+       * For example, if the oj-form-layout's label-edge attribute is set to "top" or "start", and a descendent form component does
+       * not have its label-edge attribute set, the form component's label-edge will be the transformed value "provided".</p>
+       * @ojshortdesc Defines how the label of a component is created. See the Help documentation for more information.
+       * @access public
+       * @expose
+       * @name labelEdge
+       * @instance
+       * @type {string}
+       * @ojsignature {target: "Type", value: "'inside'|'none'|'provided'",  jsdocOverride: true}
+       * @memberof! oj.ojDateTimePicker
+       * @ojdeprecated {since: '17.0.0', description: "The oj-date-time-picker is used internally by the oj-input-date-time component and is not meant to display messages, be labelled, or be in a form layout by itself. Per the Redwood UX specification, the oj-date-time-picker is not intended to be a form component."}
+       * @ojvalue {string} "inside" The component creates the label using the <code class="prettyprint">label-hint</code> attribute.
+       * <p>For text input components (such as oj-input-text), the label floats over the input element but moves up on focus or when the component has a value.</p>
+       * <p>For non-text input components (such as oj-checkboxset), the label is created at the top of the component and doesn't move.</p>
+       * @ojvalue {string} "none" The component will not have a label, regardless of whether it's in an oj-form-layout or not.
+       * <p>If the component has a <code class="prettyprint">label-hint</code> attribute but no labelled-by, aria-label, or aria-labelledby attribute, the label-hint value will be used as the aria-label.</p>
+       * <p>Note that if the component already has an external label, "none" should not be specified and "provided" should be used instead.
+       * Otherwise it may end up with conflicting label information.</p>
+       * @ojvalue {string} "provided" Label is provided by the parent if the parent is an oj-form-layout.
+       * <p>oj-form-layout provides the label using the label-hint from the form control and the <a href="oj.ojFormLayout.html#labelEdge">label-edge</a> from oj-form-layout.</p>
+       * <p>If there is no oj-form-layout, use an oj-label.</p>
+       * @since 8.0.0
+       */
+      /**
+       * <p>
+       * Specifies the density of the form component's user assistance presentation.
+       * It can be shown inline with reserved rows to prevent reflow if
+       * a user assistance text shows up, inline without reserved rows that would reflow if
+       * a user assistance text shows up,
+       * or it can be shown compactly in a popup instead.</p>
+       * <p>
+       * The default value is 'reflow' when the form component is not a descendent of an oj-form-layout
+       * component. When the form component is a descendent of an oj-form-layout, the default value comes from the
+       * oj-form-layout's <code class="prettyprint">user-assistance-density</code> attribute value.
+       * </p>
+       * <p>
+       * The oj-form-layout component uses the
+       * <a href="MetadataTypes.html#PropertyBinding">MetadataTypes.PropertyBinding</a>
+       * <code class="prettyprint">provide</code> property to provide its
+       * <code class="prettyprint">user-assistance-density</code>
+       * attribute value to be consumed by descendent components.
+       * The form components are configured to consume the
+       * <code class="prettyprint">user-assistance-density</code> property if an
+       * ancestor provides it and it is not explicitly set on the form component.
+       * Example, oj-form-layout defaults user-assistance-density='efficient', so all its
+       * form components descendents will have user-assistance-density='efficient' by default.
+       * </p>
+       * @ojshortdesc Specifies the density of the form component's user assistance presentation.
+       * @access public
+       * @expose
+       * @name userAssistanceDensity
+       * @ojunsupportedthemes ["Alta"]
+       * @default "reflow"
+       * @instance
+       * @type {string}
+       * @ojsignature {target: "Type", value: "'reflow'|'efficient'|'compact'",  jsdocOverride: true}
+       * @memberof oj.ojDateTimePicker
+       * @ojdeprecated {since: '17.0.0', description: "The oj-date-time-picker is used internally by the oj-input-date-time component and is not meant to display messages, be labelled, or be in a form layout by itself. Per the Redwood UX specification, the oj-date-time-picker is not intended to be a form component."}
+       * @ojvalue {string} "reflow" Messages, help, hints, and required are all shown inline under the field with no reserved space.
+       * @ojvalue {string} "efficient" Messages, help, hints, and required are all shown inline under the field with reserved space.
+       * @ojvalue {string} "compact" Messages, help, hints, and required will not be shown inline; they will show in a mode that keeps the screen more compact, like
+       * a popup for the messages, and a required icon to indicate Required.
+       * @since 9.0.0
+       */
+      /**
+       * List of messages an app would add to the component when it has business/custom validation
+       * errors that it wants the component to show. This allows the app to perform further validation
+       * before sending data to the server. When this option is set the message shows to the
+       * user right away. To clear the custom message, set <code class="prettyprint">messagesCustom</code>
+       * back to an empty array.<br/>
+       * <p>Each message in the array is an object that duck types oj.Message.
+       * See {@link Message} for details.
+       * message detail text can include formatted HTML text, whereas
+       * hints and message summary text cannot. If you use formatted text, it should be accessible
+       * and make sense to the user if formatting wasn't there.
+       * The allowed html tags are: span, b, i, em, br, hr, li, ol, ul, p, small, pre.
+       * To format the message detail, you could do this:
+       * <pre class="prettyprint"><code>&lt;html>Enter &lt;b>at least&lt;/b> 6 characters&lt;/html></code></pre>
+       * </p>
+       * <p>
+       * See the <a href="#validation-section">Validation and Messages</a> section
+       * for details on when the component clears <code class="prettyprint">messagesCustom</code>;
+       * for example, when full validation is run.
+       * </p>
+       * <p>In the Redwood theme, the Message summary is not displayed to the user, so make sure to have a Message detail
+       * set in your Message object.
+       * </p>
+       *
+       * @ojshortdesc A list of messages added by an application to the component. See the Help documentation for more information.
+       * @expose
+       * @name messagesCustom
+       * @access public
+       * @instance
+       * @memberof oj.ojDateTimePicker
+       * @ojdeprecated {since: '17.0.0', description: "The oj-date-time-picker is used internally by the oj-input-date-time component and is not meant to display messages, be labelled, or be in a form layout by itself. Per the Redwood UX specification, the oj-date-time-picker is not intended to be a form component."}
+       * @default []
+       * @type {Array.<Object>}
+       * @ojsignature {target: "Type", value: "Array<oj.Message>"}
+       * @since 0.7.0
+       * @ojwriteback
+       */
+      /**
+       * <p>
+       * The oj-label sets the labelledBy property programmatically on the form component
+       * to make it easy for the form component to find its oj-label component (a
+       * document.getElementById call.)
+       * </p>
+       * <p>
+       * The application developer should use the 'for'/'id api
+       * to link the oj-label with the form component;
+       * the 'for' on the oj-label to point to the 'id' on the input form component.
+       * This is the most performant way for the oj-label to find its form component.
+       * </p>
+       *
+       * @expose
+       * @ojshortdesc The oj-label sets the labelledBy property programmatically on the form component. See the Help documentation for more information.
+       * @type {string|null}
+       * @default null
+       * @public
+       * @instance
+       * @since 7.0.0
+       * @memberof oj.ojDateTimePicker
+       * @name labelledBy
+       * @ojdeprecated {since: '17.0.0', description: "The oj-date-time-picker is used internally by the oj-input-date-time component and is not meant to display messages, be labelled, or be in a form layout by itself. Per the Redwood UX specification, the oj-date-time-picker is not intended to be a form component."}
+       */
+      /**
+       * The placeholder text to set on the element.
+       *
+       * @example <caption>Initialize the component with the <code class="prettyprint">placeholder</code> attribute:</caption>
+       * &lt;oj-some-element placeholder="User Name">&lt;/oj-some-element>
+       *
+       * @example <caption>Get or set the <code class="prettyprint">placeholder</code> property after initialization:</caption>
+       * // getter
+       * var myPh = myComp.placeholder;
+       *
+       * // setter
+       * myComp.placeholder = myPlaceholder;
+       *
+       * If the attribute is not set and if a converter is set then the
+       * converter hint is used. See displayOptions for details.
+       *
+       *
+       * @expose
+       * @access public
+       * @instance
+       * @memberof! oj.ojDateTimePicker
+       * @name placeholder
+       * @ojdeprecated {since: '17.0.0', description: "oj-date-time-picker doesn't have a text input, so this was never needed."}
+       * @type {string}
+       * @ojtranslatable
+       */
+      /**
+       * <p>
+       * This property set to <code class="prettyprint">false</code> implies that a value is not required to be provided by the user.
+       * This is the default.
+       * This property set to <code class="prettyprint">true</code> implies that a value is required to be provided by the user.
+       * </p>
+       * <p>
+       * In the Redwood theme, by default, a Required text is rendered inline when the field is empty.
+       * If user-assistance-density is 'compact', it will show on the label as an icon.
+       * </p>
+       * <p>The Required error text is based on Redwood UX designs, and it is not recommended that
+       * it be changed.
+       * To override the required error message,
+       * use the <code class="prettyprint">translations.required</code> attribute.
+       * The component's label text is passed in as a token {label} and can be used in the message detail.
+       * </p>
+       * <p>When required is set to true, an implicit
+       * required validator is created, i.e.,
+       * <code class="prettyprint">new RequiredValidator()</code>. The required validator is the only
+       * validator to run during initial render, and its error is not shown to the user at this time;
+       * this is called deferred validation. The required validator also runs during normal validation;
+       * this is when the errors are shown to the user.
+       * See the <a href="#validation-section">Validation and Messaging</a> section for details.
+       * </p>
+       * <p>
+       * When the <code class="prettyprint">required</code> property changes due to programmatic intervention,
+       * the component may clear component messages and run validation, based on the current state it's in. </br>
+       *
+       * <h4>Running Validation when required property changes</h4>
+       * <ul>
+       * <li>if component is valid when required is set to true, then it runs deferred validation on
+       * the value property. If the field is empty, the valid state is invalidHidden. No errors are
+       * shown to the user.
+       * </li>
+       * <li>if component is invalid and has deferred messages when required is set to false, then
+       * component messages are cleared (messages-custom messages are not cleared)
+       * but no deferred validation is run because required is false.
+       * </li>
+       * <li>if component is invalid and currently showing invalid messages when required is set, then
+       * component messages are cleared and normal validation is run using the current display value.
+       * <ul>
+       *   <li>if there are validation errors, then <code class="prettyprint">value</code>
+       *   property is not updated and the error is shown.
+       *   </li>
+       *   <li>if no errors result from the validation, the <code class="prettyprint">value</code>
+       *   property is updated; page author can listen to the <code class="prettyprint">valueChanged</code>
+       *   event on the component to clear custom errors.</li>
+       * </ul>
+       * </li>
+       * </ul>
+       *
+       * <h4>Clearing Messages when required property changes</h4>
+       * <ul>
+       * <li>Only messages created by the component, like validation messages, are cleared when the required property changes.</li>
+       * <li><code class="prettyprint">messagesCustom</code> property is not cleared.</li>
+       * </ul>
+       *
+       * </p>
+       *
+       * @expose
+       * @access public
+       * @instance
+       * @memberof oj.ojDateTimePicker
+       * @ojdeprecated {since: '17.0.0', description: "The oj-date-time-picker is used internally by the oj-input-date-time component and is not meant to display messages, be labelled, or be in a form layout by itself. Per the Redwood UX specification, the oj-date-time-picker is not intended to be a form component."}
+       * @name required
+       * @ojshortdesc Specifies whether the component is required or optional. See the Help documentation for more information.
+       * @type {boolean}
+       * @default false
+       * @since 0.7.0
+       * @see #translations
+       */
+      /**
+       * List of validators, synchronous or asynchronous,
+       * used by component along with asynchronous validators from the deprecated async-validators option
+       * and the implicit component validators when performing validation. Each item is either an
+       * instance that duck types {@link oj.Validator} or {@link oj.AsyncValidator}.
+       * <p>
+       * Implicit validators are created by the element when certain attributes are present.
+       * For example, if the <code class="prettyprint">required</code> attribute
+       * is set, an implicit {@link oj.RequiredValidator} is created.
+       * At runtime when the component runs validation, it
+       * combines all the implicit validators with all the validators
+       * specified through this <code class="prettyprint">validators</code> attribute
+       * and the <code class="prettyprint">async-validators</code> attribute, and
+       * runs all of them.
+       * </p>
+       * <p>
+       * Hints exposed by validators are shown inline by default in the Redwood theme when the
+       * field has focus.
+       * In the Alta theme, validator hints are shown in a notewindow on focus,
+       * or as determined by the
+       * 'validatorHint' property set on the <code class="prettyprint">display-options</code>
+       * attribute.
+       * In either theme, you can turn off showing validator hints by using the
+       * 'validatorHint' property set to 'none' on the <code class="prettyprint">display-options</code>
+       * attribute.
+       * </p>
+       * <p>
+       * In the Redwood theme, only one hint shows at a time, so the precedence rules are:
+       * help.instruction shows; if no help.instruction then validator hints show;
+       * if none, then help-hints.definition shows; if none, then converter hint shows.
+       * help-hints.source always shows along with the other help or hint.
+       * </p>
+       *
+       * <p>
+       * When <code class="prettyprint">validators</code> property changes due to programmatic
+       * intervention, the component may decide to clear messages and run validation, based on the
+       * current state it is in. </br>
+       *
+       * <h4>Steps Performed Always</h4>
+       * <ul>
+       * <li>The cached list of validator instances are cleared and new validator hints is pushed to
+       * messaging. E.g., notewindow displays the new hint(s).
+       * </li>
+       * </ul>
+       *
+       * <h4>Running Validation</h4>
+       * <ul>
+       * <li>if component is valid when validators changes, component does nothing other than the
+       * steps it always performs.</li>
+       * <li>if component is invalid and is showing messages when
+       * <code class="prettyprint">validators</code> or
+       * <code class="prettyprint">async-validators</code> changes then all component messages
+       *  are cleared and full validation run using the display value on the component.
+       * <ul>
+       *   <li>if there are validation errors, then <code class="prettyprint">value</code>
+       *   property is not updated and the error is shown.
+       *   </li>
+       *   <li>if no errors result from the validation, the <code class="prettyprint">value</code>
+       *   property is updated; page author can listen to the <code class="prettyprint">valueChanged</code>
+       *   event to clear custom errors.</li>
+       * </ul>
+       * </li>
+       * <li>if component is invalid and has deferred messages when validators changes, it does
+       * nothing other than the steps it performs always.</li>
+       * </ul>
+       * </p>
+       *
+       * <h4>Clearing Messages</h4>
+       * <ul>
+       * <li>Only messages created by the component are cleared.</li>
+       * <li><code class="prettyprint">messagesCustom</code> property is not cleared.</li>
+       * </ul>
+       * </p>
+       *
+       * @expose
+       * @access public
+       * @instance
+       * @default []
+       * @memberof oj.ojDateTimePicker
+       * @name validators
+       * @ojshortdesc Specifies a list of synchronous validators for performing validation by the element. See the Help documentation for more information.
+       * @ojsignature  [{ target: "Type",
+       *       value: "Array<oj.Validator<string>|oj.AsyncValidator<string>>|null",
+       *       jsdocOverride: true},
+       * { target: "Type",
+       *       value: "Array<oj.Validator<string>|oj.AsyncValidator<string>|
+       *       oj.Validation.RegisteredValidator>|null",
+       *       consumedBy: 'tsdep'}]
+       * @ojdeprecated {since: '8.0.0', target: 'memberType', value: ['oj.Validation.RegisteredValidator'],
+       *                description: 'Defining a validator with an object literal with validator type and
+       *                  its options (aka JSON format) has been deprecated and does nothing. If needed, you can
+       *                  make the JSON format work again by importing the deprecated ojvalidation module you need,
+       *                  like ojvalidation-base.'}
+       * @ojdeprecated {since: '17.0.0', description: "The oj-date-time-picker is used internally by the oj-input-date-time component and is not meant to display messages, be labelled, or be in a form layout by itself. Per the Redwood UX specification, the oj-date-time-picker is not intended to be a form component."}
+       * @type {Array.<Object>}
+       */
+
+      /**
+       * @name autocomplete
+       * @ojshortdesc Dictates component's autocomplete state.
+       * @expose
+       * @type {"on"|"off"|string=}
+       * @default "on"
+       * @instance
+       * @ignore
+       * @since 4.0.0
+       * @memberof! oj.ojDateTimePicker
+       * @ojextension {_COPY_TO_INNER_ELEM: true}
+       */
+      /**
+       * <p>Attributes specified here will be set on the picker DOM element when it's launched.
+       * <p>The supported attribute is <code class="prettyprint">class</code>, which is appended to the picker's class, if any.
+       * Note: 1) pickerAttributes is not applied in the native theme.
+       * 2) setting this property after element creation has no effect.
+       *
+       * @property {string=} style
+       * @property {string=} class
+       *
+       * @example <caption>Initialize the dateTimePicker specifying the class attribute to be set on the picker DOM element:</caption>
+       * myDateTimePicker.pickerAttributes = {
+       *   "class": "my-class"
+       * };
+       *
+       * @example <caption>Get the <code class="prettyprint">pickerAttributes</code> property, after initialization:</caption>
+       * // getter
+       * var attrs = myDateTimePicker.pickerAttributes;
+       *
+       * @name pickerAttributes
+       * @expose
+       * @memberof! oj.ojDateTimePicker
+       * @ojshortdesc Specifies attributes to be set on the picker DOM element when it is launched. See the Help documentation for more information.
+       * @instance
+       * @ojdeprecated {target: "property", for: "style", since: "7.0.0", description: "Style property of pickerAttribute is deprecated as it violates the recommended <a href='https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy'>Content Security Policy</a> for JET which disallows <a href='https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/style-src'>inline styles</a>. Use class property instead. As of 11.0.0 this property is ignored and an error is logged."}
+       * @type {?Object}
+       * @default null
+       */
+      /**
+       * <p>The  <code class="prettyprint">rawValue</code> is the read-only property for retrieving
+       * the current value from the input field in string form. The main consumer of
+       * <code class="prettyprint">rawValue</code> is a converter.</p>
+       * <p>
+       * The <code class="prettyprint">rawValue</code> updates on the 'input' javascript event,
+       * so the <code class="prettyprint">rawValue</code> changes as the value of the input is changed.
+       * If the user types in '1,200' into the field, the rawValue will be '1', then '1,', then '1,2',
+       * ..., and finally '1,200'. Then when the user blurs or presses
+       * Enter the <code class="prettyprint">value</code> property gets converted and validated
+       * (if there is a converter or validators) and then gets updated if valid.
+       * </p>
+       * <p>This is a read-only attribute so page authors cannot set or change it directly.</p>
+       * @expose
+       * @access public
+       * @instance
+       * @memberof! oj.ojDateTimePicker
+       * @ojshortdesc Read-only property used for retrieving the current value from the input field in string form. See the Help documentation for more information.
+       * @ojdeprecated {since: '11.0.0', description: 'This property is deprecated because it was incorrectly exposed on oj-date-time-picker and not fully implemented.'}
+       * @type {string}
+       * @ojsignature {target: "Type", value: "string"}
+       * @since 1.2.0
+       * @readonly
+       * @ojwriteback
+       */
+      rawValue: undefined,
+      /**
+       * Allows applications to specify whether to render date picker in JET or
+       * as a native picker control. In inline mode, the only value supported is "jet"</br>
+       *
+       * Note that the native renderMode will attempt to load a Cordova plugin that
+       * will launch the native picker. If the plugin is not found, the default JET
+       * picker will be used.</br>
+       *  With native renderMode, the functionality that is sacrificed compared to jet renderMode are:
+       *    <ul>
+       *      <li>Date picker cannot be themed</li>
+       *      <li>Accessibility is limited to what the native picker supports</li>
+       *      <li>pickerAttributes is not applied</li>
+       *      <li>Sub-IDs are not available</li>
+       *      <li>hide() function is no-op</li>
+       *      <li>translations sub properties pertaining to the picker is not available</li>
+       *      <li>All of the 'datepicker' sub-properties except 'showOn' are not available</li>
+       *    </ul>
+       *
+       * @expose
+       * @memberof! oj.ojDateTimePicker
+       * @instance
+       * @name renderMode
+       * @ojshortdesc Specifies whether to render the date picker in JET, or as a native picker control. See the Help documentation for more information.
+       * @ojtsnarrowedtype
+       * @type {string}
+       * @ojvalue {string} 'jet' Applications get full JET functionality.
+       * @ojvalue {string} 'native' Applications get the functionality of the native picker. Native picker is
+       *  not available when the picker is inline, defaults to 'jet' instead.</br></br>
+       * @default "jet"
+       *
+       * @ojdeprecated {since: '8.0.0', description: 'Support for "native" mode rendering is deprecated because JET promotes a consistent Oracle UX based upon the Redwood design system. As a result, the theme variable "$inputDateTimeRenderModeOptionDefault" is also deprecated.'}
+       *
+       * @example <caption>Initialize the InputDate with the <code class="prettyprint">render-mode</code> attribute specified:</caption>
+       * &lt;oj-date-time-picker render-mode='jet'>&lt;/oj-date-time-picker>
+       *
+       * @example <caption>Get or set the <code class="prettyprint">renderMode</code> property after initialization:</caption>
+       * // getter
+       * var renderMode = myInputDate.renderMode;
+       *
+       * // setter
+       * myInputDate.renderMode = 'jet';
+       *
+       * @example <caption>Set the default in the theme (SCSS)</caption>
+       * $inputDateTimeRenderModeOptionDefault: native !default;
+       */
+      /**
+       * Allows applications to specify whether to render date and time pickers
+       * in JET or as a native picker control.</br>
+       *
+       *  Note that the native renderMode will attempt to load a Cordova plugin that
+       *  will launch the native picker. If the plugin is not found, the default JET
+       *  picker will be used.</br>
+       *  With native renderMode, the functionality that is sacrificed compared to jet renderMode are:
+       *    <ul>
+       *      <li>Date and time pickers cannot be themed</li>
+       *      <li>Accessibility is limited to what the native picker supports</li>
+       *      <li>pickerAttributes is not applied</li>
+       *      <li>Sub-IDs are not available</li>
+       *      <li>hide() and hideTimePicker() functions are no-op</li>
+       *      <li>translations sub properties pertaining to the picker is not available</li>
+       *      <li>All of the 'datepicker' sub-properties except 'showOn' are not available</li>
+       *      <li>'timePicker.timeIncrement' property is limited to iOS and will only take a precision of minutes</li>
+       *    </ul>
+       *
+       * @expose
+       * @memberof! oj.ojInputDateTime
+       * @ojshortdesc Specifies whether to render the date picker in JET, or as a native picker control. See the Help documentation for more information.
+       * @instance
+       * @type {string}
+       * @ojvalue {string} 'jet' Applications get full JET functionality.
+       * @ojvalue {string} 'native' Applications get the functionality of the native picker. Native picker is
+       *  not available when the picker is inline, defaults to 'jet' instead.</br></br>
+       * @default "jet"
+       *
+       * @ojdeprecated {since: '8.0.0', description: 'Support for "native" mode rendering is deprecated because JET promotes a consistent Oracle UX based upon the Redwood design system. As a result, the theme variable "$inputDateTimeRenderModeOptionDefault" is also deprecated.'}
+       *
+       * @example <caption>Get or set the <code class="prettyprint">renderMode</code> property for
+       * an InputDateTime after initialization:</caption>
+       * // getter
+       * var renderMode = myInputDateTime.renderMode;
+       * // setter
+       * myInputDateTime.renderMode = "native";
+       * // Example to set the default in the theme (SCSS)
+       * $inputDateTimeRenderModeOptionDefault: native !default;
+       */
+      renderMode: 'jet',
+
+      /**
+       * <p>
+       * Note that Jet framework prohibits setting subset of properties which are object types.<br/><br/>
+       * For example myInputDateTime.timePicker = {timeIncrement: "00:30:00:00"}; is prohibited as it will
+       * wipe out all other sub-properties for "timePicker" object.<br/><br/> If one wishes to do this [by above syntax or knockout] one
+       * will have to get the "timePicker" object, modify the necessary sub-property and pass it to above syntax.<br/><br/>
+       * </p>
+       *
+       * @memberof oj.ojInputDateTime
+       * @ojfragment dateTimeCommonTimePicker
+       */
+      /**
+       * {@ojinclude "name":"datePickerCommonDatePicker"}
+       *
+       * @expose
+       * @instance
+       * @memberof! oj.ojDateTimePicker
+       * @name timePicker
+       * @ojshortdesc An object whose properties describe the appearance and behavior of the time picker. See the Help documentation for more information.
+       * @type {Object}
+       * @ojtsignore tsdefonly
+       *
+       * @example <caption>Initialize the component, overriding some time-picker attributes and leaving the others intact:</caption>
+       * &lt;!-- Using dot notation -->
+       * &lt;oj-date-time-picker time-picker.time-increment='00:10:00:00'>&lt;/oj-date-time-picker>
+       *
+       * &lt;!-- Using JSON notation -->
+       * &lt;oj-date-time-picker time-picker='{"timeIncrement":"00:10:00:00"}'>&lt;/oj-date-time-picker>
+       *
+       * @example <caption>Get or set the <code class="prettyprint">timePicker</code> property after initialization:</caption>
+       * // Get one
+       * var value = myComponent.timePicker.showOn;
+       *
+       * // Set one, leaving the others intact. Use the setProperty API for
+       * // subproperties so that a property change event is fired.
+       * myComponent.setProperty('timePicker.showOn', 'image');
+       *
+       * // Get all
+       * var values = myComponent.timePicker;
+       *
+       * // Set all.  Must list every timePicker key, as those not listed are lost.
+       * myComponent.timePicker = {
+       *     timeIncrement: '00:10:00:00',
+       *     showOn: 'image'
+       * };
+       */
+      /**
+       * <p>
+       * Note that Jet framework prohibits setting subset of properties which are object types.<br/><br/>
+       * For example myInputDateTime.timePicker = {timeIncrement: "00:30:00:00"}; is prohibited as it will
+       * wipe out all other sub-properties for "timePicker" object.<br/><br/> If one wishes to do this [by above syntax or knockout] one
+       * will have to get the "timePicker" object, modify the necessary sub-property and pass it to above syntax.<br/><br/>
+       * </p>
+       *
+       * @expose
+       * @instance
+       * @memberof! oj.ojInputDateTime
+       * @ojshortdesc An object whose properties describe the appearance and behavior of the time picker. See the Help documentation for more information.
+       * @type {Object}
+       *
+       * @example <caption>Initialize the component, overriding some time-picker attributes and leaving the others intact:</caption>
+       * &lt;!-- Using dot notation -->
+       * &lt;oj-input-date-time time-picker.time-increment='00:10:00:00'>&lt;/oj-input-date-time>
+       *
+       * &lt;!-- Using JSON notation -->
+       * &lt;oj-input-date-time time-picker='{"timeIncrement":"00:10:00:00"}'>&lt;/oj-input-date-time>
+       *
+       * @example <caption>Get or set the <code class="prettyprint">timePicker</code> property after initialization:</caption>
+       * // Get one
+       * var value = myComponent.timePicker.showOn;
+       *
+       * // Set one, leaving the others intact. Use the setProperty API for
+       * // subproperties so that a property change event is fired.
+       * myComponent.setProperty('timePicker.showOn', 'image');
+       *
+       * // Get all
+       * var values = myComponent.timePicker;
+       *
+       * // Set all.  Must list every timePicker key, as those not listed are lost.
+       * myComponent.timePicker = {
+       *     timeIncrement: '00:10:00:00',
+       *     showOn: 'image'
+       * };
+       */
+      timePicker: {
+        /**
+         * Will dictate what content is shown within the footer of the wheel timepicker.
+         *
+         * <p>See the <a href="#timePicker">time-picker</a> attribute for usage examples.
+         *
+         * @expose
+         * @name timePicker.footerLayout
+         * @ojshortdesc Specifies what content is shown within the footer of the wheel time picker.
+         * @memberof! oj.ojInputDateTime
+         * @instance
+         * @type {string}
+         * @ojvalue {string} '' Do not show anything
+         * @ojvalue {string} 'now' Show the now button. When user clicks on the Now button, it will highlight the current time in the timepicker.
+         * @ojdeprecated {since: "8.2.0", description: "This attribute is deprecated and should not be used as it will be ignored in new UX design."}
+         * @default ""
+         */
+        footerLayout: '',
+        /**
+         * Time increment to be used for InputDateTime, the format is hh:mm:ss:SS. <br/><br/>
+         * Note that when renderMode is 'native', timeIncrement property is limited to iOS and will only take a precision of minutes.<br/><br/>
+         *
+         * <p>See the <a href="#timePicker">time-picker</a> attribute for usage examples.
+         *
+         * @expose
+         * @name timePicker.timeIncrement
+         * @ojshortdesc Specifies the time increment used for InputDateTime. See the Help documentation for more information.
+         * @memberof! oj.ojInputDateTime
+         * @instance
+         * @type {string=}
+         * @default "00:05:00:00"
+         */
+        timeIncrement: '00:05:00:00',
+
+        /**
+         * When the timepicker should be shown.
+         *
+         * <p>See the <a href="#timePicker">time-picker</a> attribute for usage examples.
+         *
+         * @expose
+         * @name timePicker.showOn
+         * @ojshortdesc Specifies when the time picker should be shown.
+         * @memberof! oj.ojInputDateTime
+         * @instance
+         * @type {string=}
+         * @ojvalue {string} 'focus' when the element receives focus or when the trigger clock image is clicked. When the picker is closed, the field regains focus and is editable.
+         * @ojvalue {string} 'userFocus' when the element receives focus from a user action (such as tab key press)
+         *   or the calendar image is clicked.  Programmatic calls to .focus() do not show the picker.
+         * @ojvalue {string} 'image' when the trigger clock image is clicked
+         * @default "focus"
+         */
+        showOn: 'focus'
+      }
+
+      /**
+       * The maximum selectable datetime, in ISO string format. When set to null, there is no maximum.
+       * <p>So it can be properly compared with the value the user selects, this should be in the same format
+       * as the converter's isoStrFormat since the value the user selects is parsed with the converter. By default, value is a local isostring for oj-date-time-picker.
+       * </p>
+       *
+       * @example <caption>Initialize the element with the <code class="prettyprint">max</code> attribute:</caption>
+       * &lt;oj-date-time-picker max='2014-09-25T13:30:00.000-08:00'&gt;&lt;/oj-date-time-picker&gt;
+       *
+       * @expose
+       * @name max
+       * @instance
+       * @memberof! oj.ojDateTimePicker
+       * @type {string|null}
+       * @ojformat date-time
+       * @default null
+       */
+      /**
+       * The maximum selectable datetime, in ISO string format. When set to null, there is no maximum.
+       * <p>So it can be properly compared with the value the user selects, this should be in the same format
+       * as the converter's isoStrFormat. By default, value is a local isostring for oj-input-date-time.
+       * </p>
+       * @example <caption>Initialize the element with the <code class="prettyprint">max</code> attribute:</caption>
+       * &lt;oj-input-date-time max='2014-09-25T13:30:00.000-08:00'&gt;&lt;/oj-input-date-time&gt;
+       *
+       * @expose
+       * @name max
+       * @instance
+       * @memberof! oj.ojInputDateTime
+       * @type {string|null}
+       * @ojformat date-time
+       * @default null
+       */
+
+      /**
+       * The minimum selectable datetime, in ISO string format. When set to null, there is no minimum.
+       * <p>So it can be properly compared with the value the user selects, this should be in the same format
+       * as the converter's isoStrFormat. By default, value is a local isostring for oj-date-time-picker.
+       * </p>
+       *
+       * @example <caption>Initialize the element with the <code class="prettyprint">min</code> attribute:</caption>
+       * &lt;oj-date-time-picker min='2014-08-25T08:00:00.000-08:00'&gt;&lt;/oj-date-time-picker&gt;
+       *
+       * @expose
+       * @name min
+       * @instance
+       * @memberof! oj.ojDateTimePicker
+       * @type {string|null}
+       * @ojformat date-time
+       * @default null
+       */
+      /**
+       * The minimum selectable datetime, in ISO string format. When set to null, there is no minimum.
+       * <p>So it can be properly compared with the value the user selects, this should be in the same format
+       * as the converter's isoStrFormat since the value the user selects is parsed with the converter. By default, value is a local isostring for oj-input-date-time.
+       * </p>
+       *
+       * @example <caption>Initialize the element with the <code class="prettyprint">min</code> attribute:</caption>
+       * &lt;oj-input-date-time min='2014-08-25T08:00:00.000-08:00'&gt;&lt;/oj-input-date-time&gt;
+       *
+       * @expose
+       * @name min
+       * @instance
+       * @memberof! oj.ojInputDateTime
+       * @type {string|null}
+       * @ojformat date-time
+       * @default null
+       */
+
+      /**
+       * List of validators, synchronous or asynchronous,
+       * used by component along with asynchronous validators from the deprecated async-validators option
+       * and the implicit component validators when performing validation. Each item is either an
+       * instance that duck types {@link oj.Validator} or {@link oj.AsyncValidator}.
+       * <p>
+       * Implicit validators are created by the element when certain attributes are present.
+       * For example, if the <code class="prettyprint">required</code>
+       * attribute is set, an implicit {@link oj.RequiredValidator} is created. If the
+       * <code class="prettyprint">min</code> and/or <code class="prettyprint">max</code> attribute
+       * is set, an implicit {@link oj.DateTimeRangeValidator} is created. If the
+       * <code class="prettyprint">dayFormatter</code> attribute is set,
+       * an implicit {@link oj.DateRestrictionValidator} is created.
+       * At runtime when the component runs validation, it
+       * combines all the implicit validators with all the validators
+       * specified through this <code class="prettyprint">validators</code> attribute, and runs
+       * all of them.
+       * </p>
+       * <p>
+       * Hints exposed by validators are shown inline by default in the Redwood theme when the
+       * field has focus.
+       * You can turn off showing validator hints by using the 'validatorHint' property set to 'none'
+       * on the <code class="prettyprint">display-options</code> attribute.
+       * </p>
+       *
+       * <p>
+       * When <code class="prettyprint">validators</code> property changes due to programmatic
+       * intervention, the element may decide to clear messages and run validation, based on the
+       * current state it is in. </br>
+       *
+       * <h4>Steps Performed Always</h4>
+       * <ul>
+       * <li>The cached list of validator instances are cleared and new validator hints is pushed to
+       * messaging. E.g., notewindow displays the new hint(s).
+       * </li>
+       * </ul>
+       *
+       * <h4>Running Validation</h4>
+       * <ul>
+       * <li>if element is valid when validators changes, element does nothing other than the
+       * steps it always performs.</li>
+       * <li>if element is invalid and is showing messages when
+       * <code class="prettyprint">validators</code> changes then all element messages are cleared
+       * and full validation run using the display value on the element.
+       * <ul>
+       *   <li>if there are validation errors, then <code class="prettyprint">value</code>
+       *   property is not updated and the error is shown.
+       *   </li>
+       *   <li>if no errors result from the validation, the <code class="prettyprint">value</code>
+       *   property is updated; page author can listen to the <code class="prettyprint">valueChanged</code>
+       *   event to clear custom errors.</li>
+       * </ul>
+       * </li>
+       * <li>if element is invalid and has deferred messages when validators changes, it does
+       * nothing other than the steps it performs always.</li>
+       * </ul>
+       * </p>
+       *
+       * <h4>Clearing Messages</h4>
+       * <ul>
+       * <li>Only messages created by the element are cleared.</li>
+       * <li><code class="prettyprint">messagesCustom</code> property is not cleared.</li>
+       * </ul>
+       * </p>
+       *
+
+       *
+       * @example <caption>Initialize the element with validator instance:</caption>
+       * var dateTimeRange = new DateTimeRangeValidator({
+       *       max: '2014-09-10T13:30:00.000',
+       *       min: '2014-09-01T00:00:00.000'
+       *     });
+       * myInputDateTime.validators = [dateTimeRange];
+       *
+       *
+       * @example <caption>Initialize the element with multiple validator instances:</caption>
+       * var validator1 = new MyCustomValidator({'foo': 'A'});
+       * var validator2 = new MyCustomValidator({'foo': 'B'});
+       * myInputDateTime.value = 10;
+       * myInputDateTime.validators = [validator1, validator2];
+       *
+       * @expose
+       * @name validators
+       * @ojshortdesc A list of validators used by the element, along with any implicit component validators, when performing validation. See the Help documentation for more information.
+       * @instance
+       * @memberof oj.ojInputDateTime
+       * @ojsignature  [{ target: "Type",
+       *       value: "Array<oj.Validator<string>|oj.AsyncValidator<string>>|null",
+       *       jsdocOverride: true},
+       *      { target: "Type",
+       *       value: "Array<oj.Validator<string>|oj.AsyncValidator<string>|
+       *       oj.Validation.RegisteredValidator>|null",
+       *       consumedBy: 'tsdep'}]
+       * @ojdeprecated {since: '8.0.0', target: 'memberType', value: ['oj.Validation.RegisteredValidator'],
+       *                description: 'Defining a validator with an object literal with validator type and
+       *                  its options (aka JSON format) has been deprecated and does nothing. If needed, you can
+       *                  make the JSON format work again by importing the deprecated ojvalidation-datetime module.'}
+       * @type {Array.<Object>}
+       * @default []
+       */
+
+      /**
+       * Determines if keyboard entry of the text is allowed.
+       * When the datepicker is inline, the only supported value is "disabled".
+       *
+       * @expose
+       * @instance
+       * @memberof! oj.ojDateTimePicker
+       * @name keyboardEdit
+       * @ojtsnarrowedtype
+       * @type {string}
+       * @ojvalue {string} "disabled" Changing the date can only be done with the picker.
+       * @default "disabled"
+       * @ojdeprecated {since: '17.0.0', description: "This was never intended for the oj-date-time-picker component."}
+       */
+      /**
+       * The value of the DateTimePicker element which should be an ISOString
+       *
+       * @example <caption>Initialize the element with the <code class="prettyprint">value</code> attribute:</caption>
+       * &lt;oj-date-time-picker value='2014-09-10T13:30:00.000'&gt;&lt;/oj-date-time-picker&gt;
+       * @example <caption>Initialize the element with the <code class="prettyprint">value</code> property specified programmatically
+       * using oj.IntlConverterUtils.dateToLocalIso :</caption>
+       * myInputDateTime.value = oj.IntlConverterUtils.dateToLocalIso(new Date());<br/>
+       * @example <caption>Get or set the <code class="prettyprint">value</code> property, after initialization:</caption>
+       * // Getter: returns Today's date in ISOString
+       * myInputDateTime.value;
+       * // Setter: sets it to a different date time
+       * myInputDateTime.value = "2013-12-01T20:00:00-08:00";
+       *
+       * @expose
+       * @name value
+       * @ojshortdesc The value of the datetime picker element, which must be an ISOString. See the Help documentation for more information.
+       * @instance
+       * @ojwriteback
+       * @memberof! oj.ojDateTimePicker
+       * @type {string}
+       * @ojformat date-time
+       * @ojeventgroup common
+       */
+      /**
+       * The value of the InputDateTime element which should be an ISOString.
+       * <p>
+       * If the converter's timeZone option is
+       * not set and the value is a zulu or offset (not local) ISOString,
+       * the timeZone will default to the user's system's timeZone.
+       * </p>
+       *
+       * @example <caption>Initialize the element with the <code class="prettyprint">value</code> attribute:</caption>
+       * &lt;oj-input-date-time value='2014-09-10T13:30:00.000'&gt;&lt;/oj-input-date-time&gt;
+       * @example <caption>Initialize the element with the <code class="prettyprint">value</code> property specified programmatically
+       * using oj.IntlConverterUtils.dateToLocalIso :</caption>
+       * myInputDateTime.value = oj.IntlConverterUtils.dateToLocalIso(new Date());<br/>
+       * @example <caption>Get or set the <code class="prettyprint">value</code> property, after initialization:</caption>
+       * // Getter: returns Today's date in ISOString
+       * myInputDateTime.value;
+       * // Setter: sets it to a different date time
+       * myInputDateTime.value = "2013-12-01T20:00:00-08:00";
+       *
+       * @expose
+       * @name value
+       * @instance
+       * @ojwriteback
+       * @memberof! oj.ojInputDateTime
+       * @ojshortdesc The value of the input datetime element, which must be an ISOString. See the Help documentation for more information.
+       * @type {string}
+       * @ojformat date-time
+       * @ojeventgroup common
+       */
+
+      // Events
+    },
+
+    /**
+     * @protected
+     * @override
+     * @instance
+     * @ignore
+     * @memberof! oj.ojInputDateTime
+     */
+    _GetDefaultConverter: function () {
+      if (this._dateTimeDefaultConverter == null) {
+        this._dateTimeDefaultConverter = _getDateTimeDefaultConverter();
+      }
+      return this._dateTimeDefaultConverter;
+    },
+
+    /**
+     * @protected
+     * @override
+     * @instance
+     * @ignore
+     * @memberof! oj.ojInputDateTime
+     */
+    _CreateConverters: function () {
+      this._super();
+
+      var createWorkerConverters = function (converterOrPromise) {
+        var promiseArray = [];
+        var promise;
+        promise = this._createTimePickerConverter(converterOrPromise);
+        if (promise instanceof Promise) {
+          this._timeConverterPromise = promise;
+          promiseArray.push(promise);
+        }
+
+        if (promiseArray.length) {
+          return Promise.all(promiseArray);
+        }
+
+        return null;
+      }.bind(this);
+
+      var converter = this._GetConverter();
+      if (converter instanceof Promise) {
+        this._resolveDateTimeConverterBusyState = this._SetConverterBusyState('datetime');
+        this._dateTimeConverterPromise = createWorkerConverters(converter);
+      } else {
+        // If the main converter is synchronous, this should return null
+        createWorkerConverters(converter);
+      }
+    },
+
+    /**
+     * @protected
+     * @override
+     * @instance
+     * @ignore
+     * @memberof! oj.ojInputDateTime
+     */
+    _InitBase: function () {
+      this._super();
+
+      this._timePickerElement = this.element; // if the ojInputDateTime is inline, then this ref will change to a NEW input element
+      this._timePicker = null;
+      //    this._timeConverter = null;
+
+      // need to remember the last _SetValue for the case of timepicker [i.e. select a date that is not in range due to
+      // time; however since we don't push invalid values to this.options["value"] the timepicker would pick up the wrong
+      // selected date
+      this._previousValue = null;
+
+      // below is when the switcher is active (i.e. datetimepicker and when one clicks on Cancel need to reset it)
+      this._switcherDiv = null;
+      this._switcherPrevValue = null;
+      this._switcherPrevDay = null;
+      this._switcherPrevMonth = null;
+      this._switcherPrevYear = null;
+
+      this._switcherDateValue = null;
+      this._switcherTimeValue = null;
+      this._dateTimeSwitcherActive = null;
+
+      if (!this._isInLine) {
+        if (this.options.readOnly !== true) {
+          this._createSwitcherDiv();
+        }
+      }
+    },
+
+    /**
+     * Don't render the readonly-div for the oj-date-time-picker.
+     * @ignore
+     * @override
+     * @protected
+     * @memberof! oj.ojInputDateTime
+     * @return {boolean}
+     */
+    _UseReadonlyDiv: function () {
+      if (this._isInLine) {
+        return false;
+      }
+      return this._superApply(arguments);
+    },
+
+    _createSwitcherDiv: function () {
+      this._switcherDiv = $(this._generateSwitcher());
+
+      var popupContent = this._popUpDpDiv.ojPopup('widget')[0].querySelector('.oj-popup-content');
+      popupContent.appendChild(this._switcherDiv[0]); // @HTMLUpdateOK
+
+      var self = this;
+      var cancelHandler = function () {
+        // only time when value is _Set in switcher is by clicking Done where both of the fields would be set to null
+        if (self._switcherDateValue !== null || self._switcherTimeValue !== null) {
+          self._currentDay = self._switcherPrevDay;
+          self._currentMonth = self._switcherPrevMonth;
+          self._drawMonth = self._currentMonth;
+          self._currentYear = self._switcherPrevYear;
+          self._drawYear = self._currentYear;
+          self._SetValue(self._switcherPrevValue);
+
+          self._switcherTimeValue = null;
+          self._switcherDateValue = null;
+          self._switcherPrevDay = null;
+          self._switcherPrevMonth = null;
+          self._switcherPrevYear = null;
+          self._switcherPrevValue = null;
+        }
+      };
+      this._popUpDpDiv.on('ojclose', function () {
+        cancelHandler();
+      });
+      this._switcherDiv.find('[data-handler]').map(function () {
+        var handler = {
+          /** @expose */
+          switchMe: function (evt) {
+            var keyCode = evt.keyCode;
+            if (
+              (evt.type === 'keydown' &&
+                ($.ui.keyCode.ENTER === keyCode || $.ui.keyCode.SPACE === keyCode)) ||
+              evt.type === 'click'
+            ) {
+              if (!self._isShowingDatePickerSwitcher()) {
+                self._timePicker.ojInputTime('show');
+              } else {
+                self.show();
+                self._placeFocusOnCalendar();
+              }
+
+              return false;
+            }
+            return undefined;
+          },
+
+          /** @expose */
+          switchDone: function (evt) {
+            var keyCode = evt.keyCode;
+            if (
+              (evt.type === 'keydown' &&
+                ($.ui.keyCode.ENTER === keyCode || $.ui.keyCode.SPACE === keyCode)) ||
+              evt.type === 'click'
+            ) {
+              // All manipulation (like copying in the time the user selected)
+              // should be done in offset or local, not zulu.
+              // newVal will contain the value, but in offset or local. When it
+              // is run back through the converter in SetValue then it will be converted
+              // back into the isoStrFormat of the component's converter.
+              var newVal;
+              // _switcherDateValue is the date and time that is displayed in the picker. This is
+              // a local date time with no offset or zulu. This can be manipulated to merge
+              // in a new day or a new time, no problem.
+              if (self._switcherDateValue) {
+                newVal = self._switcherDateValue;
+              } else {
+                // dateIso could be this._switcherDateValue, this.options.value, or this._getDefaultIsoDate();
+                // if local, don't change it
+                const dateIso = self._getDateIso();
+                if (dateIso && ojconverterutilsI18n.IntlConverterUtils._getISOStrFormatType(dateIso) === 'local') {
+                  newVal = dateIso;
+                } else {
+                  const converter = self._GetConverter();
+                  newVal = self._parseValueToSubstituteDateOrTimePiece(converter, dateIso);
+                }
+              }
+
+              // If the user changed the time in the datetime picker, we will
+              // have a _switcherTimeValue. We want to copy this time over into the new value.
+              if (self._switcherTimeValue) {
+                newVal = ojconverterutilsI18n.IntlConverterUtils._copyTimeOver(self._switcherTimeValue, newVal);
+              }
+              // but if we don't have a switcherTimeValue, we want to copy over the switcherPrevValue's
+              // time into the newValue.
+              if (self._switcherPrevValue && newVal && !self._switcherTimeValue) {
+                newVal = ojconverterutilsI18n.IntlConverterUtils._copyTimeOver(self._switcherPrevValue, newVal);
+              }
+
+              // At this point we have a newVal that is what the user picked. It's in local or offset format
+              // so that the user will see the day and time they picked.
+              // SetValue will parse it to whatever isoStrFormat the converter is in.
+              var formatted = self._GetConverter().format(newVal);
+              self._SetDisplayValue(formatted);
+              self._SetValue(formatted, {});
+
+              self._switcherTimeValue = null;
+              self._switcherDateValue = null;
+              self._switcherPrevDay = null;
+              self._switcherPrevMonth = null;
+              self._switcherPrevYear = null;
+              self._switcherPrevValue = null;
+              self._hide(self._ON_CLOSE_REASON_SELECTION);
+              // remove this class, since we have a value now.
+              let contentWrapper = self._GetContentWrapper();
+              if (contentWrapper) {
+                contentWrapper.parentElement.classList.remove('oj-form-control-empty-clearicon');
+              }
+              return false;
+            }
+            return undefined;
+          },
+
+          /** @expose */
+          switchCancel: function (evt) {
+            var keyCode = evt.keyCode;
+            if (
+              (evt.type === 'keydown' &&
+                ($.ui.keyCode.ENTER === keyCode || $.ui.keyCode.SPACE === keyCode)) ||
+              evt.type === 'click'
+            ) {
+              self._hide(self._ON_CLOSE_REASON_CANCELLED);
+              return false;
+            }
+            return undefined;
+          }
+        };
+
+        $(this).bind(this.getAttribute('data-event'), handler[this.getAttribute('data-handler')]);
+        return undefined;
+      });
+    },
+
+    _setupSwitcherButtons: function () {
+      var switcherButtons = this._switcherDiv.find('a');
+      this._AddHoverable(switcherButtons);
+      this._AddActiveable(switcherButtons);
+    },
+
+    /**
+     * @protected
+     * @override
+     * @instance
+     * @memberof! oj.ojInputDateTime
+     */
+    _ComponentCreate: function () {
+      var ret = this._super();
+
+      if (this._isInLine) {
+        // Since DatePicker never intended to have timepicker associated to it
+        // need to have an input element that is tied to the time selector
+        var translatedTime = this.getTranslatedString('time');
+        const inputHTML = `<input type='text' aria-label=${translatedTime}>`;
+        var input = $(inputHTML);
+        input.insertAfter(this.element); // @HTMLUpdateOK
+
+        // Now need to reset this._timePickerElement to the newly created input element
+        this._timePickerElement = input;
+      } else if (this.options.readOnly !== true) {
+        this._setupSwitcherButtons();
+      }
+
+      return ret;
+    },
+
+    _createTimePicker: function () {
+      var passOptions = [
+        'title',
+        'placeholder',
+        'disabled',
+        'required',
+        'readOnly',
+        'keyboardEdit',
+        'pickerAttributes',
+        'renderMode'
+      ];
+      var passObject = {};
+
+      for (var i = 0, j = passOptions.length; i < j; i++) {
+        passObject[passOptions[i]] = this.options[passOptions[i]];
+      }
+
+      // if it is inline, then go ahead and render the messages dom because
+      // the inputTime is rendered as its own input that someone can type into.
+      // if it is not inline, then do not render the messages dom, since then
+      // we'd get two and ojinputDateTime is rendered as one input, so we don't
+      // want two messages dom.
+      var messagesDisplayOption = this._isInLine ? this.options.displayOptions.messages : 'none';
+      // create time instance for the time portion
+
+      var timePickerOptions = this.options.timePicker;
+
+      var converter = this._GetConverter();
+      if (!(converter instanceof Promise)) {
+        var value = this._formatValueWithTimeConverter(this.options.value);
+        this._timePicker = this._timePickerElement.ojInputTime(
+          $.extend(passObject, {
+            converter: this._timeConverter,
+            userAssistanceDensity: 'compact',
+            displayOptions: { converterHint: 'none', title: 'none', messages: messagesDisplayOption },
+            // need to pass the value down as otherwise if the value is null then it might pickup this.element.val() from
+            // our frameworks generic if options.value is not defined then pick up from element; however that would be a formatted
+            // value from ojInputDateTime
+            value: value,
+            timePicker: timePickerOptions,
+            datePickerComp: { widget: this, inline: this._isInLine }
+          })
+        );
+      } else {
+        this._timePicker = this._timePickerElement.ojInputTime(
+          $.extend(passObject, {
+            converter: this._timeConverter || this._timeConverterPromise,
+            userAssistanceDensity: 'compact',
+            displayOptions: { converterHint: 'none', title: 'none', messages: messagesDisplayOption },
+            value: this.options.value,
+            timePicker: timePickerOptions,
+            datePickerComp: { widget: this, inline: this._isInLine }
+          })
+        );
+      }
+    },
+
+    /**
+     * @protected
+     * @override
+     * @instance
+     * @memberof! oj.ojInputDateTime
+     */
+    _AfterCreate: function () {
+      var ret = this._superApply(arguments);
+
+      this._createTimePicker();
+      this._dateTimeSwitcherActive = !isPickerNative(this) && this._timePicker && !this._isInLine;
+
+      return ret;
+    },
+
+    /**
+     * Do things here for creating the component where you need the converter, since
+     * getting the converter can be asynchronous. We get the converter before calling
+     * this method, so it is there.
+     *
+     * @protected
+     * @override
+     * @instance
+     * @memberof! oj.ojInputDateTime
+     */
+    _AfterCreateConverterCached: function () {
+      var ret = this._super();
+
+      var doFinishCreate = function () {
+        if (this._resolveDateTimeConverterBusyState) {
+          this._resolveDateTimeConverterBusyState();
+          delete this._resolveDateTimeConverterBusyState;
+        }
+
+        if (this._timeConverter === null) {
+          throw new Error("Please use ojInputDate if your converter doesn't specify a time format.");
+        }
+      }.bind(this);
+
+      if (this._dateTimeConverterPromise) {
+        var self = this;
+        this._dateTimeConverterPromise.then(function () {
+          doFinishCreate();
+          delete self._dateTimeConverterPromise;
+        });
+      } else {
+        doFinishCreate();
+      }
+
+      return ret;
+    },
+
+    // eslint-disable-next-line no-unused-vars
+    _setOption: function (key, value, flags) {
+      var retVal = this._superApply(arguments);
+      switch (key) {
+        case 'value':
+          // if goes through model does it needs to update or should be only used by selection + keydown
+          var optionsValue = this._formatValueWithTimeConverter(this.options.value);
+          this._previousValue = optionsValue;
+          break;
+        case 'readOnly':
+          if (!this._isInLine && !value && this._switcherDiv == null) {
+            this._createSwitcherDiv();
+            this._setupSwitcherButtons();
+            this._createTimePicker();
+          }
+          break;
+        default:
+          break;
+      }
+
+      if (this._timePicker) {
+        // note that min + max are not passed through since it should be taken care of by ojInputDateTime and not ojInputTime
+        // as it needs to use the fulle datetime
+        // adding value so that the time picker will update its value when the datetimepicker's value changes.
+        var timeInvoker = { disabled: true, readOnly: true, keyboardEdit: true, value: true };
+
+        if (key in timeInvoker) {
+          this._timePicker.ojInputTime('option', key, value);
+        } else if (key === 'timePicker') {
+          this._timePicker.ojInputTime('option', 'timePicker.timeIncrement', value.timeIncrement);
+        } else if (key === 'converter') {
+          var updateTimePickerConverter = function (ci) {
+            this._createTimePickerConverter(ci);
+            this._timePicker.ojInputTime('option', key, this._timeConverter);
+          }.bind(this);
+          var newConverter =
+            ojconverterutilsI18n.IntlConverterUtils.getConverterInstance(value) || this._GetDefaultConverter();
+
+          if (newConverter instanceof Promise) {
+            newConverter.then(function (ci) {
+              updateTimePickerConverter(ci);
+            });
+          } else if (newConverter) {
+            updateTimePickerConverter(newConverter);
+          }
+        }
+      }
+
+      return retVal;
+    },
+
+    /**
+     * @ignore
+     * @protected
+     * @override
+     * @memberof oj.ojInputDateTime
+     */
+    _ReleaseResources: function () {
+      if (this._IsCustomElement()) {
+        // Trigger the ojInputTime's _ReleaseResources() using the ojInputTime instance.
+        // this._timePicker.ojInputTime('destroy') will not work.
+        // jqueryui-base#destroy will throw an error because IsCustomElement() is true
+        // and you cannot call destroy when IsCustomElement is true.
+        if (this._timePicker) {
+          const timePickerInstance = this._timePicker.ojInputTime('instance');
+          if (timePickerInstance) {
+            timePickerInstance._ReleaseResources();
+            this._timePickerResourcesReleased = true;
+          }
+        }
+      }
+      return this._super();
+    },
+
+    /**
+     * @protected
+     * @override
+     * @instance
+     * @memberof! oj.ojInputDateTime
+     */
+    _SetupResources: function () {
+      var ret = this._superApply(arguments);
+      if (this._IsCustomElement()) {
+        // oj-input-date-time's AfterCreate calls createTimepicker, which creates ojInputTime() which
+        // calls InputTime's _SetupResources.
+        // Then oj-input-date-time's SetupResources is called. Only call ojInputTime's _SetupResources
+        // if they were released in ReleaseResources, so check the flag.
+        if (this._timePickerResourcesReleased && this._timePicker) {
+          const timePickerInstance = this._timePicker.ojInputTime('instance');
+          if (timePickerInstance) {
+            timePickerInstance._SetupResources();
+            this._timePickerResourcesReleased = false;
+          }
+        }
+      }
+      return ret;
+    },
+    /**
+     * @ignore
+     * @protected
+     * @override
+     * @memberof oj.ojInputDateTime
+     */
+    _destroy: function () {
+      this._cleanUpDateTimeResources();
+      return this._super();
+    },
+    /**
+     * Called from _destroy. This is for widgets. Cleaning up custom
+     * elements is done in ReleaseResources
+     * @ignore
+     * @private
+     * @memberof oj.ojInputDateTime
+     */
+    _cleanUpDateTimeResources: function () {
+      if (this._timePicker) {
+        this._timePicker.ojInputTime('destroy');
+      }
+      if (this._isInLine) {
+        // note that this.element below would be of the TimePicker's input element
+        this._timePickerElement.remove();
+      } else if (this._switcherDiv) {
+        var switcherButtons = this._switcherDiv.find('a');
+        this._RemoveActiveable(switcherButtons);
+        this._RemoveHoverable(switcherButtons);
+
+        this._switcherDiv.remove();
+      }
+    },
+
+    /**
+     * @ignore
+     * @protected
+     * @override
+     * @memberof oj.ojInputDateTime
+     */
+    _formatValueWithTimeConverter: function (optionsValue) {
+      var formattedValue = optionsValue;
+      try {
+        this._getTimePickerConverter().format(optionsValue);
+      } catch (e) {
+        Logger.info(
+          'The value of the InputDateTime element should be an ISOString, please use a valid ISOString'
+        );
+        formattedValue = this._getDefaultIsoDate();
+      }
+      return formattedValue;
+    },
+    /**
+     * @protected
+     * @override
+     * @instance
+     * @ignore
+     * @memberof! oj.ojInputDateTime
+     */
+    _GetCalendarTitle: function () {
+      return this._EscapeXSS(
+        this.getTranslatedString('tooltipCalendarTime' + (this.options.disabled ? 'Disabled' : ''))
+      );
+    },
+
+    /**
+     * Generate the element for the footer of the date picker.
+     *
+     * @ignore
+     */
+    _generateSwitcher: function () {
+      var switcher = document.createElement('div');
+      switcher.className = 'oj-datetimepicker-switcher';
+      switcher.setAttribute('data-oj-dropdownnofocuschange', '');
+
+      var childDiv = document.createElement('div');
+      childDiv.setAttribute('data-handler', 'switchMe');
+      childDiv.setAttribute('data-event', 'click keydown');
+
+      var elem = document.createElement('div');
+      elem.className =
+        'oj-inputdatetime-time-icon oj-clickable-icon-nocontext oj-component-icon oj-enabled oj-default';
+      // We want a voiceover user to be able to get to the toggle icon and hear the description.
+      if (_isSafariOnIos()) {
+        elem.setAttribute('aria-label', this.getTranslatedString('setTime'));
+        elem.setAttribute('role', 'button');
+      }
+      childDiv.appendChild(elem);
+
+      elem = document.createElement('a');
+      elem.addEventListener('click', (e) => {
+        e.preventDefault();
+      });
+      elem.setAttribute('href', '#');
+      elem.className = 'oj-enabled oj-datetimepicker-switcher-text';
+      elem.setAttribute('role', 'button');
+      childDiv.appendChild(elem);
+
+      switcher.appendChild(childDiv);
+
+      childDiv = document.createElement('div');
+      childDiv.className = 'oj-datetimepicker-switcher-buttons';
+      childDiv.setAttribute('data-oj-dropdownnofocuschange', '');
+
+      elem = document.createElement('a');
+      elem.addEventListener('click', (e) => {
+        e.preventDefault();
+      });
+      elem.setAttribute('href', '#');
+      elem.className = 'oj-enabled';
+      elem.setAttribute('data-handler', 'switchDone');
+      elem.setAttribute('data-event', 'click keydown');
+      elem.setAttribute('role', 'button');
+      elem.textContent = this._EscapeXSS(this.getTranslatedString('done'));
+      childDiv.appendChild(elem);
+
+      elem = document.createElement('a');
+      elem.addEventListener('click', (e) => {
+        e.preventDefault();
+      });
+      elem.setAttribute('href', '#');
+      elem.className = 'oj-enabled';
+      elem.setAttribute('data-handler', 'switchCancel');
+      elem.setAttribute('data-event', 'click keydown');
+      elem.setAttribute('role', 'button');
+      elem.textContent = this._EscapeXSS(this.getTranslatedString('cancel'));
+      childDiv.appendChild(elem);
+
+      switcher.appendChild(childDiv);
+
+      return switcher;
+    },
+
+    /**
+     * In the UI, the switcher text shows the date when the timepicker is up and it shows the time when the
+     * datepicker is up.
+     * @ignore
+     */
+    _updateSwitcherText: function () {
+      if (!this._switcherDiv) {
+        return;
+      }
+
+      var switcherText = '';
+      if (this._isShowingDatePickerSwitcher()) {
+        // create the date switcher converter we use to format the switcher text
+        // copy timezone and isoStrFormat from the component's converter.
+        const componentConverter = this._GetConverter();
+        const timeZone = _getConverterTimezone(componentConverter);
+        const isoStrFormat = componentConverter.resolvedOptions().isoStrFormat;
+        const dateSwitcherConverter = new ojconverterDatetime.IntlDateTimeConverter({
+          dateStyle: 'short',
+          timeZone,
+          isoStrFormat
+        });
+        try {
+          switcherText = dateSwitcherConverter.format(this._switcherDateValue || this._getDateIso());
+        } catch (e) {
+          switcherText = dateSwitcherConverter.format(this._getDefaultIsoDate());
+        }
+      } else {
+        try {
+          switcherText = this._getTimePickerConverter().format(
+            this._switcherTimeValue || this._getDateIso()
+          );
+        } catch (e) {
+          // create a converter to format the picker text
+          const timeSwitcherConverter = new ojconverterDatetime.IntlDateTimeConverter({
+            formatType: 'time',
+            timeFormat: 'short'
+          });
+          switcherText = timeSwitcherConverter.format(this._getDefaultIsoDate());
+        }
+      }
+
+      const switcherTextElement = $('.oj-datetimepicker-switcher-text', this._switcherDiv).text(
+        switcherText
+      );
+      // For IOS, we want to use an aria-label so the user knows that clicking on the value will switch to
+      // the date/time picker.
+      if (_isSafariOnIos()) {
+        if (this._isShowingDatePickerSwitcher()) {
+          switcherTextElement.attr(
+            'aria-label',
+            `${switcherText}, ${this.getTranslatedString('setDate')}`
+          );
+        } else {
+          switcherTextElement.attr(
+            'aria-label',
+            `${switcherText}, ${this.getTranslatedString('setTime')}`
+          );
+        }
+      }
+    },
+
+    /**
+     * @ignore
+     */
+    _isShowingDatePickerSwitcher: function () {
+      return !this._switcherDiv || $('.oj-inputdatetime-time-icon', this._switcherDiv).length === 0;
+    },
+
+    _togglePicker: function () {
+      var datepickerNode;
+      var timepickerNode;
+
+      var removeCss;
+      var addCss;
+      var newText;
+      var switcher = this._switcherDiv;
+      var timePickerShown = !this._isShowingDatePickerSwitcher();
+
+      if (timePickerShown) {
+        addCss = 'oj-inputdatetime-calendar-icon';
+        removeCss = 'oj-inputdatetime-time-icon';
+        newText = this.getTranslatedString('setDate');
+      } else {
+        addCss = 'oj-inputdatetime-time-icon';
+        removeCss = 'oj-inputdatetime-calendar-icon';
+        newText = this.getTranslatedString('setTime');
+      }
+
+      var children = $(switcher.children()[0]).children();
+      $(children[0]).removeClass(removeCss).addClass(addCss);
+      if (_isSafariOnIos()) {
+        $(children[0]).attr('aria-label', newText);
+      }
+      $(children[1]).text(newText);
+
+      children = $('.oj-popup-content', this._popUpDpDiv.ojPopup('widget')).children();
+
+      if (children[0].classList.contains('oj-datepicker-popup')) {
+        datepickerNode = $(children[0]);
+        timepickerNode = $(children[1]);
+      } else {
+        datepickerNode = $(children[1]);
+        timepickerNode = $(children[0]);
+      }
+
+      if (!timePickerShown) {
+        timepickerNode.css('display', 'none');
+        datepickerNode.css('display', 'block');
+      } else {
+        datepickerNode.css('display', 'none');
+        timepickerNode.css('display', 'block');
+      }
+
+      this._updateSwitcherText();
+    },
+
+    _createTimePickerConverter: function (converterOrPromise) {
+      var self = this;
+
+      var createTimeConverter = function (resolvedConverter) {
+        self._timeConverter = _getTimePickerConverter(resolvedConverter);
+        return self._timeConverter;
+      };
+
+      if (converterOrPromise instanceof Promise) {
+        return converterOrPromise.then(function (resolvedConverter) {
+          return createTimeConverter(resolvedConverter);
+        });
+      }
+
+      return createTimeConverter(converterOrPromise);
+    },
+
+    /*
+     * Will provide the timePicker converter based on the actual converter
+     */
+    _getTimePickerConverter: function () {
+      return this._timeConverter;
+    },
+    /**
+     * Handler for when the time is selected. Should be invoked ONLY by the ojInputTime component
+     *
+     * @ignore
+     * @param {string} newValue
+     * @param {Event} event
+     */
+    timeSelected: function (newValue, event) {
+      // TEMP TILL FIXED pass in formatted for _SetValue (should be newValue)
+      const converter = this._GetConverter();
+      if (!this._dateTimeSwitcherActive) {
+        var formatted = converter.format(newValue);
+        this._SetDisplayValue(formatted);
+        this._SetValue(formatted, event);
+      } else {
+        // switcherTimeValue will be in offset or local, but not zulu. It is the time that the user picked.
+        this._switcherTimeValue = this._parseValueToSubstituteDateOrTimePiece(converter, newValue);
+      }
+    },
+
+    /**
+     * Provides the current displayed selected value for ojInputTime component [i.e. when is invalid return this._previousValue]
+     * The complication occurs b/c we do not push invalid values to the model and b/c of that reason this.options["value"]
+     * might contain outdated isoString for ojInputTime. For instance let's say the min date is 02/01/14 2PM then
+     * when an user selects 02/01/14 the component would be invalid [as 12AM] and the value would not be pushed. However one needs
+     * to give opportunity for ojInputTime to allow user in selecting the valid datetime in full so the _previousValue
+     * must be passed through.
+     *
+     * @ignore
+     */
+    getValueForInputTime: function () {
+      var value = null;
+
+      if (this.isValid()) {
+        value = this.options.value;
+      } else if (this._previousValue) {
+        try {
+          // might have been that the user typed in an incorrect format, so try to parse it
+          value = this._GetConverter().parse(this._previousValue);
+        } catch (e) {
+          value = this.options.value;
+        }
+      } else {
+        value = null;
+      }
+
+      if (this._isDateTimeSwitcher()) {
+        value = this._switcherDateValue || value;
+
+        if (this._switcherTimeValue && value) {
+          value = ojconverterutilsI18n.IntlConverterUtils._copyTimeOver(this._switcherTimeValue, value);
+        }
+      }
+
+      return value;
+    },
+
+    /**
+     * @ignore
+     * @protected
+     * @override
+     * @instance
+     * @memberof! oj.ojInputDateTime
+     */
+    // eslint-disable-next-line no-unused-vars
+    _SetValue: function (newValue, event, options) {
+      var ret = this._superApply(arguments);
+
+      this._previousValue = newValue;
+
+      return ret;
+    },
+
+    /**
+     * @ignore
+     * @protected
+     * @override
+     * @instance
+     * @memberof! oj.ojInputDateTime
+     */
+    // eslint-disable-next-line no-unused-vars
+    _SetDisplayValue: function (displayValue) {
+      if (!this._isInLine) {
+        this._superApply(arguments);
+        this._updateSwitcherText();
+      } else {
+        // When the picker is inline, we should update the picker when the value changes so that
+        // the selected day has the correct CSS class set.
+        // If the date picker is inline, and it doesn't contain the focus, then we don't need
+        // to restore the focus.
+        var focusOnCalendar = !(this._isInLine && !this._dpDiv[0].contains(document.activeElement));
+        this._updateDatepicker(focusOnCalendar);
+      }
+      this._switcherTimeValue = null;
+    },
+
+    /**
+     * Just for the case of launching timepicker with Shift + Up or Shift + Down
+     *
+     * @ignore
+     * @protected
+     * @override
+     * @param {Event} event
+     * @instance
+     * @memberof! oj.ojInputDateTime
+     */
+    _onKeyDownHandler: function (event) {
+      var kc = $.ui.keyCode;
+      var handled = false;
+
+      switch (event.keyCode) {
+        case kc.UP:
+        case kc.DOWN:
+          if (event.shiftKey) {
+            this._SetValue(this._GetDisplayValue(), event);
+
+            this._timePicker.ojInputTime('show');
+            handled = true;
+          }
+          break;
+        default:
+      }
+
+      if (handled) {
+        event.preventDefault();
+        event.stopPropagation();
+        return false;
+      }
+
+      return this._superApply(arguments);
+    },
+
+    /**
+     * @instance
+     * @memberof oj.ojInputDateTime
+     * @return {void}
+     * @ojdeprecated {since: '17.0.0', description: 'This is not supported in the Redwood UX specification.'}
+     */
+    show: function () {
+      if (this._isShowingDatePickerSwitcher()) {
+        this._togglePicker();
+      }
+
+      return this._super();
+    },
+
+    /**
+     * Shows the native datepicker
+     *
+     * @protected
+     * @override
+     * @memberof! oj.ojInputDateTime
+     * @instance
+     */
+    _ShowNativeDatePicker: function (pickerOptions) {
+      // override the mode set by base class
+      // eslint-disable-next-line no-param-reassign
+      pickerOptions.mode = 'datetime';
+
+      var splitIncrements = splitTimeIncrement(this.options.timePicker.timeIncrement);
+
+      // native picker supports only minute interval and only on iOS, we consider minute interval
+      //  only when hours is not specified
+      // eslint-disable-next-line no-param-reassign
+      pickerOptions.minuteInterval = splitIncrements.hourIncr === 0 ? splitIncrements.minuteIncr : 1;
+
+      return this._super(pickerOptions);
+    },
+
+    /**
+     * callback upon picking date from native picker
+     *
+     * @protected
+     * @override
+     * @memberof! oj.ojInputDateTime
+     * @instance
+     */
+    _OnDatePicked: function (date) {
+      this._nativePickerShowing = false;
+
+      // for iOS and windows, from the current implementation of the native datepicker plugin,
+      //  for case when the picker is cancelled, this callback gets called without the parameter
+      if (date) {
+        var isoString;
+        isoString = this._validateDatetime(this._getDateIso(), {
+          month: date.getMonth(),
+          date: date.getDate(),
+          fullYear: date.getFullYear(),
+          hours: date.getHours(),
+          minutes: date.getMinutes(),
+          seconds: date.getSeconds()
+        });
+        var formattedTime = this._GetConverter().format(isoString);
+
+        // _SetValue will inturn call _SetDisplayValue
+        this._SetValue(formattedTime, {});
+      }
+
+      this._onClose(this._ON_CLOSE_REASON_SELECTION);
+    },
+
+    /**
+     * Shows the HTML datepicker
+     *
+     * @override
+     * @ignore
+     */
+    _ShowHTMLDatePicker: function () {
+      var retVal = this._superApply(arguments);
+      this._updateSwitcherText();
+      return retVal;
+    },
+
+    /**
+     * Method to show the internally created InputTime
+     *
+     * @expose
+     * @memberof oj.ojInputDateTime
+     * @instance
+     * @return {void}
+     */
+    showTimePicker: function () {
+      if (!this._datepickerShowing()) {
+        this.show();
+      }
+
+      if (!this._isShowingDatePickerSwitcher()) {
+        this._timePicker.ojInputTime('show');
+      }
+    },
+
+    /**
+     * @expose
+     * @memberof oj.ojInputDateTime
+     * @instance
+     * @return {void}
+     */
+    hideTimePicker: function () {
+      return this.hide();
+    },
+
+    /**
+     * Refreshes the element. Usually called after dom changes have been made.
+     * @expose
+     * @override
+     * @instance
+     * @memberof oj.ojInputDateTime
+     * @return {void}
+     */
+    refresh: function () {
+      var retVal = this._superApply(arguments) || this;
+
+      if (this._timePicker) {
+        this._timePicker.ojInputTime('refresh');
+      }
+
+      if (this._switcherDiv) {
+        $("a[data-handler='switchDone']", this._switcherDiv).text(this.getTranslatedString('done'));
+        $("a[data-handler='switchCancel']", this._switcherDiv).text(
+          this.getTranslatedString('cancel')
+        );
+      }
+
+      return retVal;
+    },
+
+    // @inheritdoc
+    getNodeBySubId: function (locator) {
+      var subId = locator && locator.subId;
+      var node = null;
+
+      if (subId) {
+        if (subId === 'oj-inputdatetime-date-input') {
+          node = this._isInLine ? this._timePickerElement[0] : this.element[0];
+        } else if (subId === 'oj-inputdatetime-calendar-clock-icon') {
+          node = $('.oj-inputdatetime-calendar-clock-icon', this._triggerNode)[0];
+        } else {
+          node = this._timePicker ? this._timePicker.ojInputTime('getNodeBySubId', locator) : null;
+        }
+      }
+
+      return node || this._superApply(arguments);
+    },
+
+    // @inheritdoc
+    getSubIdByNode: function (node) {
+      var dateTimeSpecific = null;
+
+      if (this._isInLine) {
+        if (node === this._timePickerElement[0]) {
+          dateTimeSpecific = 'oj-inputdatetime-date-input';
+        }
+      } else if (node === this.element[0]) {
+        dateTimeSpecific = 'oj-inputdatetime-date-input';
+      } else if (node === $('.oj-inputdatetime-calendar-clock-icon', this._triggerNode)[0]) {
+        dateTimeSpecific = 'oj-inputdatetime-calendar-clock-icon';
+      }
+
+      return (
+        dateTimeSpecific ||
+        (this._timePicker ? this._timePicker.ojInputTime('getSubIdByNode', node) : null) ||
+        this._superApply(arguments)
+      );
+    },
+
+    /**
+     * Need to override since apparently we allow users to set the converter to null, undefined, and etc and when
+     * they do we use the default converter
+     *
+     * @return {Object} a converter instance or null
+     *
+     * @memberof! oj.ojInputDateTime
+     * @instance
+     * @protected
+     * @override
+     */
+    _GetConverter: function () {
+      if (this.options.converter) {
+        return this._superApply(arguments);
+      }
+      // set the default converter when the app dev sets converter to null
+      var defaultConverter = this._GetDefaultConverter();
+      this.option('converter', defaultConverter, {
+        _context: {
+          writeback: true,
+          internalSet: true
+        }
+      });
+      return defaultConverter;
+    },
+    /**
+     * Notifies the component that its subtree has been removed from the document programmatically after the component has
+     * been created
+     * @memberof! oj.ojInputDateTime
+     * @instance
+     * @protected
+     */
+    _NotifyDetached: function () {
+      if (this._timePicker) {
+        this.hideTimePicker();
+      }
+
+      // hide sets focus to the input, so we want to call super after hide. If we didn't, then
+      // the messaging popup will reopen and we don't want that.
+      this._superApply(arguments);
+    },
+
+    /**
+     * Notifies the component that its subtree has been made hidden programmatically after the component has
+     * been created
+     * @memberof! oj.ojInputDateTime
+     * @instance
+     * @protected
+     */
+    _NotifyHidden: function () {
+      if (this._timePicker) {
+        this.hideTimePicker();
+      }
+
+      // hide sets focus to the input, so we want to call super after hide. If we didn't, then
+      // the messaging popup will reopen and we don't want that.
+      this._superApply(arguments);
+    },
+
+    /**
+     *
+     * @return {Object} jquery object
+     *
+     *
+     * @expose
+     * @protected
+     * @override
+     * @instance
+     * @memberof! oj.ojInputDateTime
+     */
+    _GetMessagingLauncherElement: function () {
+      return !this._isInLine ? this._super() : this._timePickerElement;
+    },
+
+    /**
+     * @protected
+     * @override
+     * @instance
+     * @memberof! oj.ojInputDateTime
+     * @return {string}
+     */
+    _GetDefaultStyleClass: function () {
+      return 'oj-inputdatetime';
+    },
+
+    /**
+     *
+     * @protected
+     * @override
+     * @instance
+     * @memberof! oj.ojInputDateTime
+     */
+    _SetLoading: function () {
+      this._super();
+      // If oj-date-time-picker is set to 'readonly'
+      // then it calls this._timePicker.ojInputTime(option, readonly).
+      // So do the same thing when loading a oj-date-time-picker.
+      if (this._timePicker) {
+        this._timePicker.ojInputTime('option', 'readOnly', true);
+      }
+    },
+
+    /**
+     *
+     * @protected
+     * @override
+     * @instance
+     * @memberof! oj.ojInputDateTime
+     */
+    _ClearLoading: function () {
+      this._super();
+      // set it back to whatever it was
+      if (this._timePicker) {
+        this._timePicker.ojInputTime('option', 'readOnly', this.options.readOnly);
+      }
+    },
+
+    /**
+     * @protected
+     * @override
+     * @instance
+     * @memberof! oj.ojInputDateTime
+     */
+    _GetTranslationsSectionName: function () {
+      return 'oj-ojInputDate';
+    }
+  });
+
+  // Add custom getters for properties
+  ojcomponentcore.setDefaultOptions({
+    ojInputDateTime: {
+      converter: ojcomponentcore.createDynamicPropertyGetter(function () {
+        if (_sDefaultDateTimeConverter == null) {
+          _sDefaultDateTimeConverter = _getDateTimeDefaultConverter();
+        }
+        return _sDefaultDateTimeConverter;
+      })
+    }
+  });
+
+  // Fragments:
+
+  /**
+   * <table class="keyboard-table">
+   *   <thead>
+   *     <tr>
+   *       <th>Target</th>
+   *       <th>Gesture</th>
+   *       <th>Action</th>
+   *     </tr>
+   *   </thead>
+   *   <tbody>
+   *     <tr>
+   *       <td>Input element and calendar trigger icon</td>
+   *       <td><kbd>Tap</kbd></td>
+   *       <td>When not inline, shows the grid and moves the focus into the expanded date grid.</td>
+   *     </tr>
+   *     <tr>
+   *       <td>Time trigger icon</td>
+   *       <td><kbd>Tap</kbd></td>
+   *       <td>Shows the time picker and moves the focus into the expanded time picker</td>
+   *     </tr>
+   *     <tr>
+   *       <td>Input element with picker open</td>
+   *       <td><kbd>Tap</kbd></td>
+   *       <td>Set focus to the input. If hints, title or messages exist in a notewindow,
+   *        pop up the notewindow.</td>
+   *     </tr>
+   *     <tr>
+   *       <td>Picker</td>
+   *       <td><kbd>Swipe Left</kbd></td>
+   *       <td>Switch to next month (or previous month on RTL page).</td>
+   *     </tr>
+   *     <tr>
+   *       <td>Picker</td>
+   *       <td><kbd>Swipe Right</kbd></td>
+   *       <td>Switch to previous month (or next month on RTL page).</td>
+   *     </tr>
+   *   </tbody>
+   * </table>
+   *
+   * @ojfragment touchDoc - Used in touch gesture section of classdesc, and standalone gesture doc
+   * @memberof oj.ojInputDateTime
+   */
+  /**
+   * <table class="keyboard-table">
+   *   <thead>
+   *     <tr>
+   *       <th>Target</th>
+   *       <th>Gesture</th>
+   *       <th>Action</th>
+   *     </tr>
+   *   </thead>
+   *   <tbody>
+   *     <tr>
+   *       <td>Time trigger icon</td>
+   *       <td><kbd>Tap</kbd></td>
+   *       <td>Shows the time picker and moves the focus into the expanded time picker</td>
+   *     </tr>
+   *     <tr>
+   *       <td>Picker</td>
+   *       <td><kbd>Swipe Left</kbd></td>
+   *       <td>Switch to next month (or previous month on RTL page).</td>
+   *     </tr>
+   *     <tr>
+   *       <td>Picker</td>
+   *       <td><kbd>Swipe Right</kbd></td>
+   *       <td>Switch to previous month (or next month on RTL page).</td>
+   *     </tr>
+   *   </tbody>
+   * </table>
+   *
+   * @ojfragment touchDoc - Used in touch gesture section of classdesc, and standalone gesture doc
+   * @memberof oj.ojDateTimePicker
+   */
+  /**
+   * <table class="keyboard-table">
+   *   <thead>
+   *     <tr>
+   *       <th>Target</th>
+   *       <th>Key</th>
+   *       <th>Action</th>
+   *     </tr>
+   *   </thead>
+   *   <tbody>
+   *     <tr>
+   *       <td>Input element</td>
+   *       <td><kbd>DownArrow or UpArrow</kbd></td>
+   *       <td>When not in inline mode, shows the calendar grid and moves the focus into the
+   *       expanded grid. When in inline mode, shows the time picker and moves the focus into the
+   *       expanded time picker</td>
+   *     </tr>
+   *     <tr>
+   *       <td>Input element</td>
+   *       <td><kbd>Shift + DownArrow or UpArrow</kbd></td>
+   *       <td>Shows the time picker and moves the focus into the expanded time picker</td>
+   *     </tr>
+   *     <tr>
+   *       <td>Input element</td>
+   *       <td><kbd>Esc</kbd></td>
+   *       <td>Close the grid.</tr>
+   *     </tr>
+   *     <tr>
+   *       <td>Input Element</td>
+   *       <td><kbd>Tab In</kbd></td>
+   *       <td>Set focus to the input. If hints, title or messages exist in a notewindow,
+   *        pop up the notewindow.</td>
+   *     </tr>
+   *     <tr>
+   *       <td>Picker</td>
+   *       <td><kbd>Enter</kbd></td>
+   *       <td>Select the currently focused day</td>
+   *     </tr>
+   *     <tr>
+   *       <td>Picker</td>
+   *       <td><kbd>UpArrow</kbd></td>
+   *       <td>Move up in the grid.</tr>
+   *     </tr>
+   *     <tr>
+   *       <td>Picker</td>
+   *       <td><kbd>DownArrow</kbd></td>
+   *       <td>Move down in the grid.</tr>
+   *     </tr>
+   *     <tr>
+   *       <td>Picker</td>
+   *       <td><kbd>RightArrow</kbd></td>
+   *       <td>Move right in the grid.</tr>
+   *     </tr>
+   *     <tr>
+   *       <td>Picker</td>
+   *       <td><kbd>LeftArrow</kbd></td>
+   *       <td>Move left in the grid.</tr>
+   *     </tr>
+   *     <tr>
+   *       <td>Picker</td>
+   *       <td><kbd>Esc</kbd></td>
+   *       <td>Close the grid.</tr>
+   *     </tr>
+   *     <tr>
+   *       <td>Picker</td>
+   *       <td><kbd>Home</kbd></td>
+   *       <td>Move focus to first day of the month.</tr>
+   *     </tr>
+   *     <tr>
+   *       <td>Picker</td>
+   *       <td><kbd>End</kbd></td>
+   *       <td>Move focus to last day of the month.</tr>
+   *     </tr>
+   *     <tr>
+   *       <td>Picker</td>
+   *       <td><kbd>PageUp</kbd></td>
+   *       <td>Switch to previous month.</tr>
+   *     </tr>
+   *     <tr>
+   *       <td>Picker</td>
+   *       <td><kbd>PageDown</kbd></td>
+   *       <td>Switch to next month.</tr>
+   *     </tr>
+   *     <tr>
+   *       <td>Picker</td>
+   *       <td><kbd>Alt + PageUp</kbd></td>
+   *       <td>Switch to previous year.</tr>
+   *     </tr>
+   *     <tr>
+   *       <td>Picker</td>
+   *       <td><kbd>Alt + PageDown</kbd></td>
+   *       <td>Switch to next year.</tr>
+   *     </tr>
+   *     <tr>
+   *       <td>Picker</td>
+   *       <td><kbd>Ctrl + Alt + PageUp</kbd></td>
+   *       <td>Switch to previous by stepBigMonths.</tr>
+   *     </tr>
+   *     <tr>
+   *       <td>Picker</td>
+   *       <td><kbd>Ctrl + Alt + PageDown</kbd></td>
+   *       <td>Switch to next by stepBigMonths.</tr>
+   *     </tr>
+   *     <tr>
+   *       <td>Picker</td>
+   *       <td><kbd>Ctrl + Alt + T</kbd></td>
+   *       <td>Places focus on Today button if it exists.</tr>
+   *     </tr>
+   *   </tbody>
+   * </table>
+   *
+   * @ojfragment keyboardDoc - Used in keyboard section of classdesc, and standalone gesture doc
+   * @memberof oj.ojInputDateTime
+   */
+  /**
+   * <table class="keyboard-table">
+   *   <thead>
+   *     <tr>
+   *       <th>Target</th>
+   *       <th>Key</th>
+   *       <th>Action</th>
+   *     </tr>
+   *   </thead>
+   *   <tbody>
+   *     <tr>
+   *       <td>Picker</td>
+   *       <td><kbd>Enter</kbd></td>
+   *       <td>Select the currently focused day</td>
+   *     </tr>
+   *     <tr>
+   *       <td>Picker</td>
+   *       <td><kbd>UpArrow</kbd></td>
+   *       <td>Move up in the grid.</tr>
+   *     </tr>
+   *     <tr>
+   *       <td>Picker</td>
+   *       <td><kbd>DownArrow</kbd></td>
+   *       <td>Move down in the grid.</tr>
+   *     </tr>
+   *     <tr>
+   *       <td>Picker</td>
+   *       <td><kbd>RightArrow</kbd></td>
+   *       <td>Move right in the grid.</tr>
+   *     </tr>
+   *     <tr>
+   *       <td>Picker</td>
+   *       <td><kbd>LeftArrow</kbd></td>
+   *       <td>Move left in the grid.</tr>
+   *     </tr>
+   *     <tr>
+   *       <td>Picker</td>
+   *       <td><kbd>Esc</kbd></td>
+   *       <td>Close the grid.</tr>
+   *     </tr>
+   *     <tr>
+   *       <td>Picker</td>
+   *       <td><kbd>Home</kbd></td>
+   *       <td>Move focus to first day of the month.</tr>
+   *     </tr>
+   *     <tr>
+   *       <td>Picker</td>
+   *       <td><kbd>End</kbd></td>
+   *       <td>Move focus to last day of the month.</tr>
+   *     </tr>
+   *     <tr>
+   *       <td>Picker</td>
+   *       <td><kbd>PageUp</kbd></td>
+   *       <td>Switch to previous month.</tr>
+   *     </tr>
+   *     <tr>
+   *       <td>Picker</td>
+   *       <td><kbd>PageDown</kbd></td>
+   *       <td>Switch to next month.</tr>
+   *     </tr>
+   *     <tr>
+   *       <td>Picker</td>
+   *       <td><kbd>Alt + PageUp</kbd></td>
+   *       <td>Switch to previous year.</tr>
+   *     </tr>
+   *     <tr>
+   *       <td>Picker</td>
+   *       <td><kbd>Alt + PageDown</kbd></td>
+   *       <td>Switch to next year.</tr>
+   *     </tr>
+   *     <tr>
+   *       <td>Picker</td>
+   *       <td><kbd>Ctrl + Alt + PageUp</kbd></td>
+   *       <td>Switch to previous by stepBigMonths.</tr>
+   *     </tr>
+   *     <tr>
+   *       <td>Picker</td>
+   *       <td><kbd>Ctrl + Alt + PageDown</kbd></td>
+   *       <td>Switch to next by stepBigMonths.</tr>
+   *     </tr>
+   *     <tr>
+   *       <td>Picker</td>
+   *       <td><kbd>Ctrl + Alt + T</kbd></td>
+   *       <td>Places focus on Today button if it exists.</tr>
+   *     </tr>
+   *   </tbody>
+   * </table>
+   *
+   * @ojfragment keyboardDoc - Used in keyboard section of classdesc, and standalone gesture doc
+   * @memberof oj.ojDateTimePicker
+   */
+
+  // ////////////////     SUB-IDS     //////////////////
+
+  /**
+   * <p>Sub-ID for the InputDateTime element's input element when not inline.</p>
+   *
+   * @ojsubid oj-inputdatetime-time-input
+   * @memberof oj.ojInputDateTime
+   * @instance
+   *
+   * @example <caption>Get the node for the input element:</caption>
+   * var node = myInputDateTime.getNodeBySubId( {'subId': 'oj-inputdatetime-time-input'} );
+   */
+
+  /**
+   * <p>Sub-ID for the icon that triggers the calendar display.</p>
+   *
+   * @ojsubid oj-inputdatetime-calendar-clock-icon
+   * @memberof oj.ojInputDateTime
+   * @instance
+   *
+   * @example <caption>Get the icon that triggers the calendar display:</caption>
+   * var node = myInputDateTime.getNodeBySubId( {'subId': 'oj-inputdatetime-calendar-clock-icon'} );
+   */
+
+  /**
+   * <p>Sub-ID for the time wheel picker drop down node.
+   *
+   * @ojsubid oj-timepicker-content
+   * @memberof oj.ojInputDateTime
+   * @instance
+   *
+   * @example <caption>Get the time wheel picker drop down node:</caption>
+   * var node = myInputDateTime.getNodeBySubId( {'subId': 'oj-timepicker-content'} );
+   */
+
+  /**
+   * <p>Sub-ID for the cancel button.
+   *
+   * @ojsubid oj-timepicker-cancel-button
+   * @memberof oj.ojInputDateTime
+   * @instance
+   *
+   * @example <caption>Get the cancel button:</caption>
+   * var node = myInputDateTime.getNodeBySubId( {'subId': 'oj-timepicker-cancel-button'} );
+   */
+
+  /**
+   * <p>Sub-ID for the OK button.
+   *
+   * @ojsubid oj-timepicker-ok-button
+   * @memberof oj.ojInputDateTime
+   * @instance
+   *
+   * @example <caption>Get the OK button:</caption>
+   * var node = myInputDateTime.getNodeBySubId( {'subId': 'oj-timepicker-ok-button'} );
+   */
+
+  /**
+   * <p>Sub-ID for the hour picker.
+   *
+   * @ojsubid oj-timepicker-hour
+   * @memberof oj.ojInputDateTime
+   * @instance
+   *
+   * @example <caption>Get the hour picker:</caption>
+   * var node = myInputDateTime.getNodeBySubId( {'subId': 'oj-timepicker-hour'} );
+   */
+
+  /**
+   * <p>Sub-ID for the minute picker.
+   *
+   * @ojsubid oj-timepicker-minute
+   * @memberof oj.ojInputDateTime
+   * @instance
+   *
+   * @example <caption>Get the minute picker:</caption>
+   * var node = myInputDateTime.getNodeBySubId( {'subId': 'oj-timepicker-minute'} );
+   */
+
+  /**
+   * <p>Sub-ID for the meridian picker.
+   *
+   * @ojsubid oj-timepicker-meridian
+   * @memberof oj.ojInputDateTime
+   * @instance
+   *
+   * @example <caption>Get the meridian picker:</caption>
+   * var node = myInputDateTime.getNodeBySubId( {'subId': 'oj-timepicker-meridian'} );
+   */
+
+  /**
+   * <p>Sub-ID for the now button for button bar.
+   *
+   * @ojsubid oj-timepicker-now
+   * @memberof oj.ojInputDateTime
+   * @instance
+   *
+   * @example <caption>Get the now/now button for button bar:</caption>
+   * var node = myInputDateTime.getNodeBySubId( {'subId': 'oj-timepicker-now'} );
+   */
+
+});

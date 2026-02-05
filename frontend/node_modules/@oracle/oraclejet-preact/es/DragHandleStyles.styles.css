@@ -1,0 +1,10 @@
+.DragHandleStyles_iconStyle__ex0siu0 {
+  height: calc(5 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  font-size: calc(5 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+}
+.DragHandleStyles_hoverStyle__ex0siu1 {
+  cursor: grab;
+}
+.DragHandleStyles_activeStyle__ex0siu2 {
+  cursor: grabbing;
+}

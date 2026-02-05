@@ -1,0 +1,439 @@
+[
+  {
+    "id": "oj-c.DrawerLayout",
+    "name": "DrawerLayout",
+    "memberof": "oj-c",
+    "kind": "class",
+    "meta": {
+      "filename": "drawer-layout.tsx",
+      "path": "web/components/oj-c/drawer-layout"
+    },
+    "ojcomponent": true,
+    "isvcomponent": true,
+    "since": "17.0.0",
+    "longname": "oj-c.DrawerLayout",
+    "pack": "oj-c",
+    "classdesc": "<h3 id=\"drawerLayoutOverview-section\">\n  JET Drawer Layout\n  <a class=\"bookmarkable-link\" title=\"Bookmarkable Link\" href=\"#drawerLayoutOverview-section\"></a>\n</h3>\n<p>Description: A Drawer Layout adds expandable side contents (drawers) alongside some primary content.\nThese drawers automatically swap 'reflow' and 'overlay' display mode based on width of the page and can be placed at the 'start', 'end' or 'bottom' edge.\n</p>\n<pre class=\"prettyprint\">\n<code>\n&lt;oj-drawer-layout end-opened=\"true\">\n\n   &lt;div slot=\"start\">Start drawer content &lt;/div>\n   &lt;div slot=\"end\">End drawer content &lt;/div>\n\n   Main section content\n\n&lt;/oj-drawer-layout>\n</code></pre>\n\n<p id=\"drawer-layout-popup-section\">JET Drawer Popup and Drawer Layout look similar, but are intended to be used\nfor different purposes.</p>\n<p>Use Drawer Layout</p>\n<ul>\n  <li>If you need to switch between the ‘reflow’ display mode (big screens) and ‘overlay’ (small screens).</li>\n  <li>If the drawer should only fill a specific part of the viewport rather than take its full height (start/end) or full width (bottom).</li>\n  <li>If modality is not required.</li>\n</ul>\n<p>Use Drawer Popup</p>\n<ul>\n  <li>If you need to display ‘overlay’ drawers attached to the edge of the viewport that stretch over the full viewport height or width.</li>\n  <li>If you need modality.</li>\n</ul>\n\n<h3 id=\"keyboard-section\">\n  Keyboard End User Information\n  <a class=\"bookmarkable-link\" title=\"Bookmarkable Link\" href=\"#keyboard-section\"></a>\n</h3>\n<table class=\"keyboard-table\">\n <thead>\n   <tr>\n     <th>Target</th>\n     <th>Key</th>\n     <th>Action</th>\n   </tr>\n </thead>\n <tbody>\n   <tr>\n     <td>Drawer element</td>\n     <td><kbd>Esc</kbd></td>\n     <td>Close the drawer</td>\n   </tr>\n </tbody>\n</table>\n\n<h3 id=\"a11y-section\">\n Accessibility\n <a class=\"bookmarkable-link\" title=\"Bookmarkable Link\" href=\"#a11y-section\"></a>\n</h3>\nIt is developer’s responsibility to define respective aria properties to meet accessibility requirements.\nUse <code class=\"prettyprint\">aria-labelledby</code>, <code class=\"prettyprint\">aria-describedby</code> or <code class=\"prettyprint\">aria-label</code> attributes\non drawer elements (slots of the Drawer Layout) to make them accessible.\n\n<h4>aria-labelledby </h4>\nIf a drawer already has a visible title bar, the text inside that bar can be used to label the dialog itself.\nSet the value of the <code class=\"prettyprint\">aria-labelledby</code> attribute to be the id of the element used to title the drawer.\nIf there isn't appropriate text visible in the DOM that could be referenced with <code class=\"prettyprint\">aria-labelledby</code>\nuse the <code class=\"prettyprint\">aria-label</code> attribute to define the accessible name of an element.\n\n<h4> aria-describedby </h4>\nIf the drawer contains additional descriptive text besides the drawer title,\nthis text can be associated with the drawer using the <code class=\"prettyprint\">aria-describedby</code> attribute.\n\n<h3 id=\"rtl-section\">\n  Reading direction\n  <a class=\"bookmarkable-link\" title=\"Bookmarkable Link\" href=\"#rtl-section\"></a>\n</h3>\n\n<p> Setting the reading direction (LTR or RTL) is supported by setting the <code class=\"prettyprint\">\"dir\"</code> attribute on the\n<code class=\"prettyprint\">&lt;html></code> element of the page. As with any JET component, in the unusual case that the reading direction\nis changed post-init, the page must be reloaded.</p>\n\n<h3 id=\"sizing\">\n  Sizing\n  <a class=\"bookmarkable-link\" title=\"Bookmarkable Link\" href=\"#sizing\"></a>\n</h3>\n\n<p>On mobile resolution side drawers stretch full-height. On non-mobile resolution side drawers stretch\nto Drawer Layout container's height. The bottom drawer always stretch to Drawer Layout container's width.\nThe other axis dimension is not predefined. This dimension's size is determined by its content.\nIf you want to set a custom size you can use units like px, rem, etc.\nHowever because there is no fixed-size parent percentages (%) won’t work,\nbut you can use vw (viewport width) or vh (viewport height) units to achieve a similar effect.</p>\n<ul>\n  <li>Note the side drawer's built-in minimal width limit in the 'Overlay' mode.</li>\n  <li>Note that DrawerLayout animates opening and closing. However, it is app developer's responsibility to add animations for custom runtime changes to a drawer size. See the 'Sizing' cookbook demo for an example.</li>\n</ul>",
+    "scope": "static",
+    "tagWithoutBrackets": "oj-c-drawer-layout",
+    "tagWithBrackets": "<oj-c-drawer-layout>",
+    "domInterface": "CDrawerLayoutElement",
+    "ojPageTitle": "&lt;oj-c-drawer-layout>",
+    "camelCaseName": "DrawerLayout",
+    "ojPageTitlePrefix": "Element: ",
+    "ojtsvcomponent": true,
+    "tstype": {
+      "target": "Type",
+      "value": "interface CDrawerLayoutElement extends JetElement<DrawerLayoutElementSettableProperties>"
+    },
+    "ojsignature": [
+      {
+        "target": "Type",
+        "value": "interface CDrawerLayoutElement extends JetElement<DrawerLayoutElementSettableProperties>"
+      }
+    ],
+    "tsdeprecated": [
+      {
+        "type": "supersedes",
+        "since": "17.0.0",
+        "value": [
+          "oj-drawer-layout"
+        ]
+      }
+    ],
+    "ojmodule": "drawer-layout"
+  },
+  {
+    "id": "oj-c.DrawerLayout#startOpened",
+    "name": "startOpened",
+    "memberof": "oj-c.DrawerLayout",
+    "meta": {
+      "filename": "drawer-layout.tsx",
+      "path": "web/components/oj-c/drawer-layout"
+    },
+    "kind": "member",
+    "longname": "oj-c.DrawerLayout#startOpened",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "boolean"
+      ]
+    },
+    "optional": true,
+    "ojwriteback": true,
+    "description": "Specifies whether the Start drawer is open.",
+    "defaultvalue": false
+  },
+  {
+    "id": "oj-c.DrawerLayout#endOpened",
+    "name": "endOpened",
+    "memberof": "oj-c.DrawerLayout",
+    "meta": {
+      "filename": "drawer-layout.tsx",
+      "path": "web/components/oj-c/drawer-layout"
+    },
+    "kind": "member",
+    "longname": "oj-c.DrawerLayout#endOpened",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "boolean"
+      ]
+    },
+    "optional": true,
+    "ojwriteback": true,
+    "description": "Specifies whether the End drawer is open.",
+    "defaultvalue": false
+  },
+  {
+    "id": "oj-c.DrawerLayout#bottomOpened",
+    "name": "bottomOpened",
+    "memberof": "oj-c.DrawerLayout",
+    "meta": {
+      "filename": "drawer-layout.tsx",
+      "path": "web/components/oj-c/drawer-layout"
+    },
+    "kind": "member",
+    "longname": "oj-c.DrawerLayout#bottomOpened",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "boolean"
+      ]
+    },
+    "optional": true,
+    "ojwriteback": true,
+    "description": "Specifies whether the Bottom drawer is open.",
+    "defaultvalue": false
+  },
+  {
+    "id": "oj-c.DrawerLayout#startDisplay",
+    "name": "startDisplay",
+    "memberof": "oj-c.DrawerLayout",
+    "meta": {
+      "filename": "drawer-layout.tsx",
+      "path": "web/components/oj-c/drawer-layout"
+    },
+    "kind": "member",
+    "longname": "oj-c.DrawerLayout#startDisplay",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "\"auto\"",
+        "\"overlay\"",
+        "\"reflow\""
+      ]
+    },
+    "optional": true,
+    "description": "Specifies display mode of the Start drawer.",
+    "defaultvalue": "\"auto\""
+  },
+  {
+    "id": "oj-c.DrawerLayout#endDisplay",
+    "name": "endDisplay",
+    "memberof": "oj-c.DrawerLayout",
+    "meta": {
+      "filename": "drawer-layout.tsx",
+      "path": "web/components/oj-c/drawer-layout"
+    },
+    "kind": "member",
+    "longname": "oj-c.DrawerLayout#endDisplay",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "\"auto\"",
+        "\"overlay\"",
+        "\"reflow\""
+      ]
+    },
+    "optional": true,
+    "description": "Specifies display mode of the Start drawer.",
+    "defaultvalue": "\"auto\""
+  },
+  {
+    "id": "oj-c.DrawerLayout#bottomDisplay",
+    "name": "bottomDisplay",
+    "memberof": "oj-c.DrawerLayout",
+    "meta": {
+      "filename": "drawer-layout.tsx",
+      "path": "web/components/oj-c/drawer-layout"
+    },
+    "kind": "member",
+    "longname": "oj-c.DrawerLayout#bottomDisplay",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "\"auto\"",
+        "\"overlay\"",
+        "\"reflow\""
+      ]
+    },
+    "optional": true,
+    "description": "Specifies display mode of the Bottom drawer.",
+    "defaultvalue": "\"auto\""
+  },
+  {
+    "id": "oj-c.DrawerLayout#setProperty",
+    "name": "setProperty",
+    "memberof": "oj-c.DrawerLayout",
+    "meta": {
+      "filename": "drawer-layout.tsx",
+      "path": "web/components/oj-c/drawer-layout"
+    },
+    "kind": "function",
+    "longname": "oj-c.DrawerLayout#setProperty",
+    "scope": "instance",
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "void"
+          ]
+        }
+      }
+    ],
+    "description": "Sets a property or a single subproperty for complex properties and notifies the component of the change, triggering a corresponding event.",
+    "params": [
+      {
+        "name": "property",
+        "description": "The property name to set. Supports dot notation for subproperty access.",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "value",
+        "description": "The new value to set the property to.",
+        "type": {
+          "names": [
+            "any"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.DrawerLayout#getProperty",
+    "name": "getProperty",
+    "memberof": "oj-c.DrawerLayout",
+    "meta": {
+      "filename": "drawer-layout.tsx",
+      "path": "web/components/oj-c/drawer-layout"
+    },
+    "kind": "function",
+    "longname": "oj-c.DrawerLayout#getProperty",
+    "scope": "instance",
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "any"
+          ]
+        }
+      }
+    ],
+    "description": "Retrieves the value of a property or a subproperty.",
+    "params": [
+      {
+        "name": "property",
+        "description": "The property name to get. Supports dot notation for subproperty access.",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.DrawerLayout#setProperties",
+    "name": "setProperties",
+    "memberof": "oj-c.DrawerLayout",
+    "meta": {
+      "filename": "drawer-layout.tsx",
+      "path": "web/components/oj-c/drawer-layout"
+    },
+    "kind": "function",
+    "longname": "oj-c.DrawerLayout#setProperties",
+    "scope": "instance",
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "void"
+          ]
+        }
+      }
+    ],
+    "description": "Performs a batch set of properties.",
+    "params": [
+      {
+        "name": "properties",
+        "description": "An object containing the property and value pairs to set.",
+        "type": {
+          "names": [
+            "object"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.DrawerLayout#event:ojBeforeClose",
+    "name": "ojBeforeClose",
+    "kind": "event",
+    "memberof": "oj-c.DrawerLayout",
+    "meta": {
+      "filename": "drawer-layout.tsx",
+      "path": "web/components/oj-c/drawer-layout"
+    },
+    "longname": "oj-c.DrawerLayout#event:ojBeforeClose",
+    "scope": "instance",
+    "description": "Triggered immediately before the drawer closes.\nCall <code class=\"prettyprint\">event.preventDefault()</code> in the event listener to veto the event synchronously, which prevents the drawer from closing.\nCall <code class=\"prettyprint\">event.detail.accept(Promise.reject());</code> in the event listener to veto the event asynchronously, which prevents the drawer from closing.",
+    "properties": [
+      {
+        "name": "accept",
+        "description": "This method can be called with an application-created Promise to cancel this event asynchronously.  The Promise should be resolved or rejected to accept or cancel the event, respectively.",
+        "type": {
+          "names": [
+            "function"
+          ]
+        }
+      },
+      {
+        "name": "edge",
+        "description": "edge from which the drawer slides into the layout.",
+        "optional": false,
+        "type": {
+          "names": [
+            "\"end\"",
+            "\"start\"",
+            "\"bottom\""
+          ]
+        }
+      },
+      {
+        "name": "reason",
+        "description": "reason for closing the drawer",
+        "optional": false,
+        "type": {
+          "names": [
+            "\"escapeKey\""
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.DrawerLayout#event:ojClose",
+    "name": "ojClose",
+    "kind": "event",
+    "memberof": "oj-c.DrawerLayout",
+    "meta": {
+      "filename": "drawer-layout.tsx",
+      "path": "web/components/oj-c/drawer-layout"
+    },
+    "longname": "oj-c.DrawerLayout#event:ojClose",
+    "scope": "instance",
+    "description": "Triggered immediately after the drawer closes.",
+    "properties": [
+      {
+        "name": "edge",
+        "description": "edge from which the drawer slides into the layout.",
+        "optional": false,
+        "type": {
+          "names": [
+            "\"end\"",
+            "\"start\"",
+            "\"bottom\""
+          ]
+        }
+      },
+      {
+        "name": "value",
+        "description": "opened value",
+        "optional": false,
+        "type": {
+          "names": [
+            "boolean"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.DrawerLayout#Default",
+    "name": "Default",
+    "memberof": "oj-c.DrawerLayout",
+    "meta": {
+      "filename": "drawer-layout.tsx",
+      "path": "web/components/oj-c/drawer-layout"
+    },
+    "kind": "member",
+    "longname": "oj-c.DrawerLayout#Default",
+    "scope": "instance",
+    "description": "The default slot is the content of the Drawer Popup.",
+    "ojchild": true,
+    "ojslot": false
+  },
+  {
+    "id": "oj-c.DrawerLayout#start",
+    "name": "start",
+    "memberof": "oj-c.DrawerLayout",
+    "meta": {
+      "filename": "drawer-layout.tsx",
+      "path": "web/components/oj-c/drawer-layout"
+    },
+    "kind": "member",
+    "longname": "oj-c.DrawerLayout#start",
+    "scope": "instance",
+    "description": "The content node to be shown within the Start Drawer",
+    "ojchild": false,
+    "ojslot": true
+  },
+  {
+    "id": "oj-c.DrawerLayout#end",
+    "name": "end",
+    "memberof": "oj-c.DrawerLayout",
+    "meta": {
+      "filename": "drawer-layout.tsx",
+      "path": "web/components/oj-c/drawer-layout"
+    },
+    "kind": "member",
+    "longname": "oj-c.DrawerLayout#end",
+    "scope": "instance",
+    "description": "The content node to be shown within the End Drawer",
+    "ojchild": false,
+    "ojslot": true
+  },
+  {
+    "id": "oj-c.DrawerLayout#bottom",
+    "name": "bottom",
+    "memberof": "oj-c.DrawerLayout",
+    "meta": {
+      "filename": "drawer-layout.tsx",
+      "path": "web/components/oj-c/drawer-layout"
+    },
+    "kind": "member",
+    "longname": "oj-c.DrawerLayout#bottom",
+    "scope": "instance",
+    "description": "The content node to be shown within the Bottom Drawer",
+    "ojchild": false,
+    "ojslot": true
+  },
+  {
+    "id": "oj-c.DrawerLayout.keyboardDoc",
+    "name": "keyboardDoc",
+    "kind": "member",
+    "longname": "oj-c.DrawerLayout.keyboardDoc",
+    "description": "<table class=\"keyboard-table\">\n <thead>\n   <tr>\n     <th>Target</th>\n     <th>Key</th>\n     <th>Action</th>\n   </tr>\n </thead>\n <tbody>\n   <tr>\n     <td>Drawer element</td>\n     <td><kbd>Esc</kbd></td>\n     <td>Close the drawer</td>\n   </tr>\n </tbody>\n</table>",
+    "memberof": "oj-c.DrawerLayout",
+    "meta": {
+      "filename": "drawer-layout.tsx",
+      "path": "web/components/oj-c/drawer-layout"
+    },
+    "ojfragment": true
+  }
+]

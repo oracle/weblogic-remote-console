@@ -1,0 +1,12 @@
+.CheckboxRadioLabelValueLayoutStyles_checkboxRadioLabelInnerStyles_startRadioSetWithoutTopUA__dgf9120 {
+  padding-block-start: calc((var(--rowHeight__11tjnon2) - var(--fontSize__kn3t7f9) * var(--lineHeight__kn3t7f1))*0.5);
+}
+.CheckboxRadioLabelValueLayoutStyles_checkboxRadioLabelInnerStyles_insideRadioSet__dgf9121 {
+  padding-block-start: calc((var(--rowHeight__11tjnon2) - var(--fontSize__kn3t7f9) * var(--lineHeight__kn3t7f1))*0.5 + var(--oj-c-EXPERIMENTAL-DO-NOT-USE-density-units, 0px));
+}
+.CheckboxRadioLabelValueLayoutStyles_checkboxRadioLabelInnerStyles_startCheckboxSetWithoutTopUA__dgf9122 {
+  padding-block-start: calc((var(--rowHeight__1qyga5a2) - var(--fontSize__kn3t7f9) * var(--lineHeight__kn3t7f1))*0.5);
+}
+.CheckboxRadioLabelValueLayoutStyles_checkboxRadioLabelInnerStyles_insideCheckboxSet__dgf9123 {
+  padding-block-start: calc((var(--rowHeight__1qyga5a2) - var(--fontSize__kn3t7f9) * var(--lineHeight__kn3t7f1))*0.5 + var(--oj-c-EXPERIMENTAL-DO-NOT-USE-density-units, 0px));
+}

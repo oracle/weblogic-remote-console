@@ -1,0 +1,23 @@
+.SeparatorStyles_separatorBase__219ew20 {
+  display: block;
+  width: 100%;
+  height: 0;
+  border-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-border-divider);
+  border-style: solid;
+  font-size: 0;
+  line-height: 0;
+  margin: 0;
+  padding: 0;
+}
+.SeparatorStyles_separatorVerticalWrapper__219ew21 {
+  display: inline-flex;
+  align-self: stretch;
+}
+.SeparatorStyles_multiVariantStyles_orientation_horizontal__219ew22 {
+  border-width: 1px 0 0 0;
+}
+.SeparatorStyles_multiVariantStyles_orientation_vertical__219ew23 {
+  display: inline-block;
+  border-width: 0 0 0 1px;
+  height: 100%;
+}

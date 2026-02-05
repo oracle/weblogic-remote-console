@@ -1,4 +1,4 @@
-// Copyright (c) 2020, 2024, Oracle and/or its affiliates.
+// Copyright (c) 2020, 2025, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.backend.build;
@@ -16,6 +16,7 @@ import weblogic.remoteconsole.common.repodef.BeanPropertyDef;
 import weblogic.remoteconsole.common.repodef.BeanTypeDef;
 import weblogic.remoteconsole.common.repodef.CreateFormDef;
 import weblogic.remoteconsole.common.repodef.FormSectionDef;
+import weblogic.remoteconsole.common.repodef.GroupNavTreeNodeDef;
 import weblogic.remoteconsole.common.repodef.HelpTopicDef;
 import weblogic.remoteconsole.common.repodef.LegalValueDef;
 import weblogic.remoteconsole.common.repodef.LinkDef;
@@ -285,6 +286,14 @@ public class EnglishResourceBundleCreator extends WebLogicPageDefWalker {
       propertyDef.getGetValueCustomizerDef();
       propertyDef.getGetOptionsCustomizerDef();
     }
+  }
+
+  @Override
+  protected void processGroupNavTreeNodeDef(GroupNavTreeNodeDef def) {
+    if (def.getDescription() != null) {
+      addResourceDefinition(def.getDescription());
+    }
+    addResourceDefinition(def.getLabel());
   }
 
   @Override

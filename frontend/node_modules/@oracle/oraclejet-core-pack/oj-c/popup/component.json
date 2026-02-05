@@ -1,0 +1,352 @@
+{
+  "name": "popup",
+  "version": "19.0.1",
+  "jetVersion": "^19.0.1",
+  "pack": "oj-c",
+  "type": "composite",
+  "dependencyScope": "runtime",
+  "license": "https://opensource.org/licenses/UPL",
+  "implements": [
+    "CPopupElement"
+  ],
+  "description": "A popup temporarily 'pops up' content in the foreground.",
+  "displayName": "Popup",
+  "help": "oj-c.Popup.html",
+  "main": "oj-c/popup",
+  "status": [
+    {
+      "type": "supersedes",
+      "since": "19.0.0",
+      "value": [
+        "oj-popup"
+      ]
+    }
+  ],
+  "extension": {
+    "catalog": {
+      "category": "Layout & Nav"
+    },
+    "vbdt": {
+      "module": "oj-c/popup"
+    },
+    "oracle": {
+      "icon": "oj-ux-ico-popup",
+      "uxSpecs": [
+        "popup"
+      ]
+    },
+    "webelement": {
+      "package": "@oracle/oraclejet-core-pack",
+      "version": "19.0.1",
+      "docUrl": "https://www.oracle.com/webfolder/technetwork/jet/cpwdtsdoc/classes/PopupWebElement.html",
+      "export": "findPopup",
+      "main": "@oracle/oraclejet-core-pack/webdriver"
+    }
+  },
+  "propertyLayout": [
+    {
+      "propertyGroup": "common",
+      "items": [
+        "opened",
+        "anchor",
+        "launcher",
+        "placement",
+        "collision",
+        "modality",
+        "offset",
+        "initialFocus",
+        "autoDismiss",
+        "tail",
+        "onOpenedChanged",
+        "onOjOpen",
+        "onOjBeforeClose",
+        "onOjClose",
+        "onOjFocus",
+        "width",
+        "minWidth",
+        "maxWidth",
+        "height",
+        "minHeight",
+        "maxHeight"
+      ]
+    }
+  ],
+  "since": "17.0.0",
+  "slots": {
+    "": {
+      "description": "The default slot is the content of the Popup.",
+      "displayName": "default",
+      "help": "#Default"
+    }
+  },
+  "properties": {
+    "opened": {
+      "type": "boolean",
+      "description": "Specifies whether the Popup is open.",
+      "displayName": "Opened",
+      "help": "#opened",
+      "extension": {
+        "webelement": {
+          "exceptionStatus": [
+            {
+              "type": "getterOnly"
+            }
+          ]
+        }
+      },
+      "writeback": true,
+      "value": false
+    },
+    "launcher": {
+      "type": "string|Element",
+      "description": "Specifies Popup's launcher. After Popup closes, it returns focus to the launcher.",
+      "displayName": "Launcher",
+      "help": "#launcher"
+    },
+    "anchor": {
+      "type": "string|Element|object",
+      "description": "Specifies Popup's anchor. Popup is placed relative to its anchor.",
+      "displayName": "Anchor",
+      "help": "#anchor"
+    },
+    "placement": {
+      "type": "string",
+      "description": "Specifies the location the popup will appear relative to another element.",
+      "displayName": "Placement",
+      "help": "#placement",
+      "enumValues": [
+        "center",
+        "end",
+        "start",
+        "top",
+        "bottom",
+        "top-start",
+        "top-end",
+        "top-start-corner",
+        "top-end-corner",
+        "start-top",
+        "start-bottom",
+        "start-top-corner",
+        "start-bottom-corner",
+        "bottom-start",
+        "bottom-end",
+        "bottom-start-corner",
+        "bottom-end-corner",
+        "end-top",
+        "end-bottom",
+        "end-top-corner",
+        "end-bottom-corner"
+      ]
+    },
+    "modality": {
+      "type": "string",
+      "description": "Specifies modality of the Popup.",
+      "displayName": "Modality",
+      "help": "#modality",
+      "enumValues": [
+        "modal",
+        "modeless"
+      ],
+      "value": "modeless"
+    },
+    "autoDismiss": {
+      "type": "string",
+      "description": "Specifies the auto dismissal behavior.",
+      "displayName": "Auto Dismiss",
+      "help": "#autoDismiss",
+      "enumValues": [
+        "none",
+        "focusLoss"
+      ],
+      "value": "focusLoss"
+    },
+    "tail": {
+      "type": "string",
+      "description": "Specifies Popup's tail. Simple tail is an arrow pointing to Popup's anchor.",
+      "displayName": "Tail",
+      "help": "#tail",
+      "enumValues": [
+        "none",
+        "simple"
+      ],
+      "value": "none"
+    },
+    "variant": {
+      "type": "string",
+      "description": "Specifies Popup's style variant.",
+      "displayName": "Variant",
+      "help": "#variant",
+      "enumValues": [
+        "standard",
+        "unstyled"
+      ],
+      "value": "standard"
+    },
+    "initialFocus": {
+      "type": "string",
+      "description": "Specifies if the Popup sets focus to its content when initially open.",
+      "displayName": "Initial Focus",
+      "help": "#initialFocus",
+      "enumValues": [
+        "auto",
+        "none",
+        "popup",
+        "firstFocusable"
+      ],
+      "value": "auto"
+    },
+    "offset": {
+      "type": "object",
+      "description": "Specifies displacement of the Popup from the anchor element along the specified axes.",
+      "displayName": "Offset",
+      "help": "#offset",
+      "properties": {
+        "x": {
+          "type": "number"
+        },
+        "y": {
+          "type": "number"
+        }
+      }
+    },
+    "collision": {
+      "type": "string",
+      "description": "Specifies rule for alternate placement alignment.",
+      "displayName": "Collision",
+      "help": "#collision",
+      "enumValues": [
+        "none",
+        "flip",
+        "fit",
+        "flipfit",
+        "flipcenter"
+      ],
+      "value": "fit"
+    },
+    "width": {
+      "type": "number|string",
+      "description": "Specifies width of the Popup content.",
+      "displayName": "Width",
+      "help": "#width"
+    },
+    "minWidth": {
+      "type": "number|string",
+      "description": "Specifies minWidth of the Popup content.",
+      "displayName": "Min Width",
+      "help": "#minWidth"
+    },
+    "maxWidth": {
+      "type": "number|string",
+      "description": "Specifies maxWidth of the Popup content.",
+      "displayName": "Max Width",
+      "help": "#maxWidth",
+      "value": "calc(100vw - 3rem)"
+    },
+    "height": {
+      "type": "number|string",
+      "description": "Specifies height of the Popup content.",
+      "displayName": "Height",
+      "help": "#height"
+    },
+    "minHeight": {
+      "type": "number|string",
+      "description": "Specifies minHeight of the Popup content.",
+      "displayName": "Min Height",
+      "help": "#minHeight"
+    },
+    "maxHeight": {
+      "type": "number|string",
+      "description": "Specifies maxHeight of the Popup content.",
+      "displayName": "Max Height",
+      "help": "#maxHeight",
+      "value": "calc(100vh - 3rem)"
+    },
+    "backgroundColor": {
+      "type": "string",
+      "description": "Specifies background color of the Popup.",
+      "displayName": "Background Color",
+      "help": "#backgroundColor"
+    }
+  },
+  "events": {
+    "ojOpen": {
+      "description": "Triggered immediately after the popup opens.",
+      "displayName": "ojOpen",
+      "help": "#event:open"
+    },
+    "ojBeforeClose": {
+      "cancelable": true,
+      "description": "Triggered immediately before the popup closes.",
+      "displayName": "ojBeforeClose",
+      "help": "#event:beforeClose",
+      "detail": {
+        "accept": {
+          "description": "This method can be called with an application-created Promise to cancel this event asynchronously.  The Promise should be resolved or rejected to accept or cancel the event, respectively.",
+          "type": "function"
+        },
+        "reason": {
+          "type": "string",
+          "description": "reason for closing the popup",
+          "enumValues": [
+            "outsideClick",
+            "escapeKey",
+            "closeSkipLink"
+          ]
+        }
+      }
+    },
+    "ojClose": {
+      "description": "Triggered immediately after the popup closes.",
+      "displayName": "ojClose",
+      "help": "#event:close"
+    },
+    "ojFocus": {
+      "description": "Triggered immediately after the popup receives focus.",
+      "displayName": "ojFocus",
+      "help": "#event:onOjFocus"
+    }
+  },
+  "methods": {
+    "setProperty": {
+      "description": "Sets a property or a single subproperty for complex properties and notifies the component of the change, triggering a corresponding event.",
+      "help": "#setProperty",
+      "params": [
+        {
+          "name": "property",
+          "description": "The property name to set. Supports dot notation for subproperty access.",
+          "type": "string"
+        },
+        {
+          "name": "value",
+          "description": "The new value to set the property to.",
+          "type": "any"
+        }
+      ],
+      "return": "void"
+    },
+    "getProperty": {
+      "description": "Retrieves the value of a property or a subproperty.",
+      "help": "#getProperty",
+      "params": [
+        {
+          "name": "property",
+          "description": "The property name to get. Supports dot notation for subproperty access.",
+          "type": "string"
+        }
+      ],
+      "return": "any"
+    },
+    "setProperties": {
+      "description": "Performs a batch set of properties.",
+      "help": "#setProperties",
+      "params": [
+        {
+          "name": "properties",
+          "description": "An object containing the property and value pairs to set.",
+          "type": "object"
+        }
+      ],
+      "return": "void"
+    }
+  }
+}

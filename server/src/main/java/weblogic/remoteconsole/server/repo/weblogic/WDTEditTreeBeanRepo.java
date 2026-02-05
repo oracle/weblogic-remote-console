@@ -224,7 +224,7 @@ public class WDTEditTreeBeanRepo extends WDTBeanRepo implements BeanEditorRepo, 
   public ModelTokens getModelTokens(InvocationContext ic) {
     ModelTokens modelTokens = null;
     if (ic.getProvider() instanceof WDTModelDataProvider) {
-      List<PropertySource> sources = ((WDTModelDataProvider)ic.getProvider()).getPropertySources();
+      List<PropertySource> sources = ((WDTModelDataProvider)ic.getProvider()).getPropertySources(ic);
 
       // Create the model tokens information using the property list source and the list of Properties
       if ((sources != null) && !sources.isEmpty()) {

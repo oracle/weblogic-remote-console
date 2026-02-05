@@ -1,0 +1,208 @@
+[
+  {
+    "id": "oj-c.Skeleton",
+    "name": "Skeleton",
+    "memberof": "oj-c",
+    "kind": "class",
+    "meta": {
+      "filename": "skeleton.tsx",
+      "path": "web/components/oj-c/skeleton"
+    },
+    "ojcomponent": true,
+    "isvcomponent": true,
+    "since": "18.0.0",
+    "longname": "oj-c.Skeleton",
+    "pack": "oj-c",
+    "classdesc": "<h3 id=\"skeletonOverview-section\">\n  JET Skeleton\n  <a class=\"bookmarkable-link\" title=\"Bookmarkable Link\" href=\"#skeletonOverview-section\"></a>\n</h3>\n<p>Description: A skeleton gives a visual representation that content is loading. </p>\n<p>The oj-c-skeleton is a component that may be placed within the skeletonTemplate of oj-c-card-view.\n\n<pre class=\"prettyprint\">\n<code>\n&lt;oj-c-card-view\n   id=\"cardview\"\n         class=\"demo-card-view\"\n         aria-label=\"cardview with custom skeleton\"\n         data=[[dataProvider]]>\n     &lt;template slot=\"skeletonTemplate\" data-oj-as=\"context\">\n       &lt;div class=\"oj-panel oj-sm-padding-0 \n        :style=\"[[context.loadingStatus === 'initial' ? { width: '300px', height: '240px' } : { width: context.width, height: context.height } ]]\">\n           &lt;oj-c-skeleton height =\"100%\">\n           &lt;/oj-c-skeleton>\n       &lt;/div>\n     &lt;/template>\n     &lt;template data-oj-as=\"item\" slot=\"itemTemplate\">\n       &lt;div class=\"oj-panel\">\n         &lt;demo-profile-card-layout\n           name=\"[[item.data.name]]\"\n           initials=\"[[item.data.initials]]\"\n         >\n         &lt;/demo-profile-card-layout>\n       &lt;/div>\n     &lt;/template>\n&lt;/oj-c-card-view>\n</code></pre>",
+    "scope": "static",
+    "tagWithoutBrackets": "oj-c-skeleton",
+    "tagWithBrackets": "<oj-c-skeleton>",
+    "domInterface": "CSkeletonElement",
+    "ojPageTitle": "&lt;oj-c-skeleton>",
+    "camelCaseName": "Skeleton",
+    "ojPageTitlePrefix": "Element: ",
+    "ojtsvcomponent": true,
+    "tstype": {
+      "target": "Type",
+      "value": "interface CSkeletonElement extends JetElement<SkeletonElementSettableProperties>"
+    },
+    "ojsignature": [
+      {
+        "target": "Type",
+        "value": "interface CSkeletonElement extends JetElement<SkeletonElementSettableProperties>"
+      }
+    ],
+    "tsdeprecated": [
+      {
+        "type": "production",
+        "since": "19.0.0"
+      }
+    ],
+    "ojmodule": "skeleton"
+  },
+  {
+    "id": "oj-c.Skeleton#height",
+    "name": "height",
+    "memberof": "oj-c.Skeleton",
+    "meta": {
+      "filename": "skeleton.tsx",
+      "path": "web/components/oj-c/skeleton"
+    },
+    "kind": "member",
+    "longname": "oj-c.Skeleton#height",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "number|string"
+      ]
+    },
+    "optional": false,
+    "description": "Specifies the height of the skeleton"
+  },
+  {
+    "id": "oj-c.Skeleton#width",
+    "name": "width",
+    "memberof": "oj-c.Skeleton",
+    "meta": {
+      "filename": "skeleton.tsx",
+      "path": "web/components/oj-c/skeleton"
+    },
+    "kind": "member",
+    "longname": "oj-c.Skeleton#width",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "number|string"
+      ]
+    },
+    "optional": true,
+    "description": "Specifies the width of the skeleton"
+  },
+  {
+    "id": "oj-c.Skeleton#borderRadius",
+    "name": "borderRadius",
+    "memberof": "oj-c.Skeleton",
+    "meta": {
+      "filename": "skeleton.tsx",
+      "path": "web/components/oj-c/skeleton"
+    },
+    "kind": "member",
+    "longname": "oj-c.Skeleton#borderRadius",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "number|string"
+      ]
+    },
+    "optional": true,
+    "description": "Specifies the border radius of the skeleton"
+  },
+  {
+    "id": "oj-c.Skeleton#setProperty",
+    "name": "setProperty",
+    "memberof": "oj-c.Skeleton",
+    "meta": {
+      "filename": "skeleton.tsx",
+      "path": "web/components/oj-c/skeleton"
+    },
+    "kind": "function",
+    "longname": "oj-c.Skeleton#setProperty",
+    "scope": "instance",
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "void"
+          ]
+        }
+      }
+    ],
+    "description": "Sets a property or a single subproperty for complex properties and notifies the component of the change, triggering a corresponding event.",
+    "params": [
+      {
+        "name": "property",
+        "description": "The property name to set. Supports dot notation for subproperty access.",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "value",
+        "description": "The new value to set the property to.",
+        "type": {
+          "names": [
+            "any"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.Skeleton#getProperty",
+    "name": "getProperty",
+    "memberof": "oj-c.Skeleton",
+    "meta": {
+      "filename": "skeleton.tsx",
+      "path": "web/components/oj-c/skeleton"
+    },
+    "kind": "function",
+    "longname": "oj-c.Skeleton#getProperty",
+    "scope": "instance",
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "any"
+          ]
+        }
+      }
+    ],
+    "description": "Retrieves the value of a property or a subproperty.",
+    "params": [
+      {
+        "name": "property",
+        "description": "The property name to get. Supports dot notation for subproperty access.",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.Skeleton#setProperties",
+    "name": "setProperties",
+    "memberof": "oj-c.Skeleton",
+    "meta": {
+      "filename": "skeleton.tsx",
+      "path": "web/components/oj-c/skeleton"
+    },
+    "kind": "function",
+    "longname": "oj-c.Skeleton#setProperties",
+    "scope": "instance",
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "void"
+          ]
+        }
+      }
+    ],
+    "description": "Performs a batch set of properties.",
+    "params": [
+      {
+        "name": "properties",
+        "description": "An object containing the property and value pairs to set.",
+        "type": {
+          "names": [
+            "object"
+          ]
+        }
+      }
+    ]
+  }
+]

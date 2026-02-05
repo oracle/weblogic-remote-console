@@ -1,0 +1,10 @@
+.TextFieldLoadingStyles_loadingStyles__1aqgcm00 {
+  background-color: var(--bgColor-end__1mh02731);
+  background-size: 200% 200%;
+  border-width: 0 !important;
+  animation-name: SkeletonStyles_skeletonAnimation__19fl8u0;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+  animation-duration: 1.5s;
+  opacity: 1;
+}

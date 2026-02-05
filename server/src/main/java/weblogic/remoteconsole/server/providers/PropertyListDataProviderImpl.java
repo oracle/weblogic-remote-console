@@ -1,23 +1,27 @@
-// Copyright (c) 2021, 2025, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2026, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.providers;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Properties;
 import javax.json.Json;
 import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
+import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
 
-import weblogic.remoteconsole.common.repodef.LocalizableString;
 import weblogic.remoteconsole.common.repodef.LocalizedConstants;
 import weblogic.remoteconsole.common.utils.UrlUtils;
 import weblogic.remoteconsole.server.repo.InvocationContext;
 import weblogic.remoteconsole.server.webapp.FailedRequestException;
-import weblogic.remoteconsole.server.webapp.ProviderResource;
 import weblogic.remoteconsole.server.webapp.UriUtils;
 
 /**
@@ -27,36 +31,68 @@ import weblogic.remoteconsole.server.webapp.UriUtils;
 public class PropertyListDataProviderImpl implements PropertyListDataProvider {
   public static final String TYPE_NAME = "PropertyList";
   private String name;
-  private String label;
   private String pageDescription;
   private String resourceData;
-  private String lastMessage = null;
-  private Properties properties = new Properties();
+  private Properties properties;
   private Map<String, Root> roots = new HashMap<String, Root>();
   private Root editRoot;
+  private String fileName;
 
-  public PropertyListDataProviderImpl(String name, String label) {
+  public PropertyListDataProviderImpl() {
+    makeRoots();
+  }
+
+  @Override
+  public String getLastRootUsed() {
+    return Root.PROPERTY_LIST_CONFIGURATION_NAME;
+  }
+
+  public PropertyListDataProviderImpl(String name, String fileName) {
     this.name = name;
-    this.label = label;
-    editRoot = new Root(
-      this,
-      Root.PROPERTY_LIST_CONFIGURATION_NAME,
-      Root.CONFIGURATION_ROOT,
-      Root.PROPERTY_LIST_CONFIGURATION_LABEL,
-      false, // editable
-      Root.NAV_TREE_RESOURCE,
-      Root.DOWNLOAD_RESOURCE
-    );
-    roots.put(Root.PROPERTY_LIST_CONFIGURATION_NAME, editRoot);
+    this.fileName = fileName;
+    makeRoots();
 
     // Compute the properties resource data location
     resourceData = "/" + UriUtils.API_URI + "/" + UrlUtils.urlEncode(name) + "/propertyList/data/Properties";
     pageDescription = "/" + UriUtils.API_URI + "/" + UrlUtils.urlEncode(name) + "/propertyList/pages/Properties";
   }
 
+  private void makeRoots() {
+    editRoot = new Root(
+      this,
+      Root.PROPERTY_LIST_CONFIGURATION_NAME,
+      Root.CONFIGURATION_ROOT,
+      Root.PROPERTY_LIST_CONFIGURATION_LABEL,
+      LocalizedConstants.PROPERTY_LIST_CONFIGURATION_DESCRIPTION,
+      false, // editable
+      Root.NAV_TREE_RESOURCE
+    );
+    roots.put(Root.PROPERTY_LIST_CONFIGURATION_NAME, editRoot);
+  }
+
   @Override
   public String getPageDescription() {
     return pageDescription;
+  }
+
+  public static void save(
+    InvocationContext ic,
+    Properties properties,
+    String fileName,
+    String name
+  ) {
+    try (FileOutputStream fos = new FileOutputStream(fileName)) {
+      properties.store(fos, name);
+    } catch (Exception e) {
+      throw new WebApplicationException(Response.status(
+        Status.BAD_REQUEST.getStatusCode(),
+         e.getMessage()).build());
+    }
+  }
+
+  @Override
+  public void save(InvocationContext ic) {
+    save(ic, properties, fileName, getName());
   }
 
   @Override
@@ -72,8 +108,10 @@ public class PropertyListDataProviderImpl implements PropertyListDataProvider {
   @Override
   public void parse(InputStream is, InvocationContext ic) {
     try {
+      properties = new Properties();
       properties.load(is);
     } catch (Exception e) {
+      properties = null;
       Throwable walk = e;
       for ( ; ; ) {
         if (walk.getCause() == null) {
@@ -81,11 +119,11 @@ public class PropertyListDataProviderImpl implements PropertyListDataProvider {
         }
         walk = walk.getCause();
       }
-      lastMessage = walk.getMessage();
-      if (lastMessage == null) {
-        System.err.println("The exception " + walk + "(" + walk.getClass() + ") has no message");
+      String message = walk.getMessage();
+      if (message == null) {
+        message = walk.getClass().getName();
       }
-      throw new FailedRequestException(toJSON(ic));
+      throw new FailedRequestException(message);
     }
   }
 
@@ -94,38 +132,7 @@ public class PropertyListDataProviderImpl implements PropertyListDataProvider {
     return TYPE_NAME;
   }
 
-  private static JsonObject makeHelpClause(
-    InvocationContext ic,
-    LocalizableString summary,
-    LocalizableString detail
-  ) {
-    JsonObjectBuilder ret = Json.createObjectBuilder();
-    ret.add("helpSummaryHTML", ic.getLocalizer().localizeString(summary));
-    ret.add("helpDetailHTML", ic.getLocalizer().localizeString(detail));
-    return ret.build();
-  }
 
-  public static JsonObject getHelp(InvocationContext ic) {
-    JsonObjectBuilder ret = Json.createObjectBuilder();
-    ret.add("name",
-      makeHelpClause(
-        ic,
-        LocalizedConstants.DATA_PROVIDER_HELP_NAME_SUMMARY,
-        LocalizedConstants.DATA_PROVIDER_HELP_NAME_DETAIL
-    ));
-    ret.add("file",
-      makeHelpClause(
-        ic,
-        LocalizedConstants.PROPERTY_LIST_PROVIDER_HELP_FILE_SUMMARY,
-        LocalizedConstants.PROPERTY_LIST_PROVIDER_HELP_FILE_DETAIL
-    ));
-    return ret.build();
-  }
-
-  @Override
-  public String getLabel() {
-    return label;
-  }
 
   @Override
   public String getName() {
@@ -137,16 +144,18 @@ public class PropertyListDataProviderImpl implements PropertyListDataProvider {
   }
 
   @Override
-  public void test(InvocationContext ic) {
-    start(ic);
-  }
-
-  @Override
   public boolean start(InvocationContext ic) {
-    ic.setProvider(this);
-    if (editRoot.getPageRepo() == null) {
-      lastMessage = null;
+    if (properties == null) {
+      try (FileInputStream fis = new FileInputStream(fileName)) {
+        parse(fis, ic);
+      } catch (Exception e) {
+        throw new WebApplicationException(Response.status(
+          Status.BAD_REQUEST.getStatusCode(),
+           e.getMessage()).build());
+      }
     }
+    ic.setProvider(this);
+    ic.setPageRepoByName(Root.EDIT_NAME);
     return true;
   }
 
@@ -159,24 +168,29 @@ public class PropertyListDataProviderImpl implements PropertyListDataProvider {
   public JsonObject toJSON(InvocationContext ic) {
     JsonObjectBuilder ret = Json.createObjectBuilder();
     ret.add("name", getName());
-    if ((getLabel() != null) && !getName().equals(getLabel())) {
-      ret.add("label", getLabel());
-    }
-    ret.add(ProviderResource.PROVIDER_TYPE, getType());
+    ret.add("providerType", getType());
     JsonArrayBuilder builder = Json.createArrayBuilder();
     for (Root root : getRoots().values()) {
       builder.add(root.toJSON(ic));
     }
+    ret.add("lastRootUsed", getLastRootUsed());
     ret.add("roots", builder);
     ret.add("mode", "standalone");
-    if (lastMessage != null) {
-      ret.add("messages", createMessages(lastMessage));
-    }
     return ret.build();
   }
 
   @Override
   public boolean isValidPath(String path) {
     return true;
+  }
+
+  @Override
+  public void updateStatus(InvocationContext ic) {
+  }
+
+  @Override
+  public LinkedHashMap<String, String> getStatusMap(InvocationContext ic) {
+    LinkedHashMap<String, String> ret = new LinkedHashMap<>();
+    return ret;
   }
 }

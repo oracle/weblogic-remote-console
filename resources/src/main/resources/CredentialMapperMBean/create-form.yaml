@@ -3,6 +3,9 @@
 
 introductionHTML: Create a new Credential Mapper
 
+presentation:
+  singleColumn: true
+
 instanceBasedPDJ: true
 customizePageDefMethod: weblogic.remoteconsole.customizers.SecurityProviderMBeanCustomizer.customizeCreateCredentialMapperPageDef
 

@@ -3,6 +3,9 @@
 
 package weblogic.remoteconsole.server.webapp;
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 import javax.ws.rs.Path;
 import javax.ws.rs.container.ResourceContext;
 import javax.ws.rs.core.Context;
@@ -10,8 +13,6 @@ import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.UriInfo;
 
-import weblogic.remoteconsole.server.providers.AdminServerDataProvider;
-import weblogic.remoteconsole.server.providers.Provider;
 import weblogic.remoteconsole.server.providers.Root;
 import weblogic.remoteconsole.server.repo.InvocationContext;
 
@@ -30,33 +31,52 @@ import weblogic.remoteconsole.server.repo.InvocationContext;
  */
 @Path(UriUtils.API_URI)
 public class RemoteConsoleResource extends BaseResource {
-  public static final String PROVIDER_MANAGEMENT_PATH = "providers";
   public static final String ABOUT_PATH = "about";
+  public static final String GROUP_PATH = "group";
+  public static final String PROJECT_PATH = "project";
   public static final String BOOKMARKS_PATH = "bookmarks";
+  public static final String HISTORY_PATH = "history";
   public static final String LOGOUT_PATH = "logout";
   public static final String SSO_TOKEN_PATH = "token";
-  public static final String DOMAIN_STATUS_PATH = "domainStatus";
+  public static final String EVENT_PATH = "events";
+  public static final String STATUS_PATH = "status";
+  private static final Set<String> reserved = new HashSet<>(
+    Arrays.asList(ABOUT_PATH, GROUP_PATH, PROJECT_PATH, BOOKMARKS_PATH,
+      EVENT_PATH, HISTORY_PATH, LOGOUT_PATH, SSO_TOKEN_PATH,
+      STATUS_PATH));
 
   @Context ResourceContext resourceContext;
   @Context HttpHeaders headers;
   @Context UriInfo uriInfo;
-
-  /*
-  // temporary
-  @Path("templog")
-  public TempDownloadResource getTempDownloadResource() {
-    return new TempDownloadResource();
-  }
-  */
 
   @Path(LOGOUT_PATH)
   public LogoutResource getLogoutResource() {
     return new LogoutResource();
   }
 
+  @Path(PROJECT_PATH)
+  public ProjectResource getProjectResource() {
+    return new ProjectResource();
+  }
+
+  @Path(EVENT_PATH)
+  public EventResource getEventResource() {
+    return new EventResource();
+  }
+
   @Path(ABOUT_PATH)
-  public AboutResource getAboutResourceNew() {
+  public AboutResource getAboutResource() {
     return new AboutResource();
+  }
+
+  @Path(STATUS_PATH)
+  public StatusResource getStatusResource() {
+    return new StatusResource();
+  }
+
+  @Path(GROUP_PATH)
+  public GroupResource getGroupResourceNew() {
+    return new GroupResource();
   }
 
   @Path(BOOKMARKS_PATH)
@@ -64,22 +84,9 @@ public class RemoteConsoleResource extends BaseResource {
     return new BookmarksResource();
   }
 
-  @Path(DOMAIN_STATUS_PATH)
-  public DomainStatusResource getStatusResource() {
-    if (!(getInvocationContext().getProvider() instanceof AdminServerDataProvider)) {
-      throw new FailedRequestException(
-        Status.NOT_FOUND.getStatusCode(),
-        "The provider "
-          + getInvocationContext().getProvider().getName()
-          + " is not an AdminServerDataProvider"
-      );
-    }
-    return copyContext(new DomainStatusResource());
-  }
-
-  @Path(PROVIDER_MANAGEMENT_PATH)
-  public ProviderResource getProviderResource() {
-    return new ProviderResource();
+  @Path(HISTORY_PATH)
+  public HistoryResource getHistory() {
+    return new HistoryResource();
   }
 
   @Path(SSO_TOKEN_PATH)
@@ -96,7 +103,7 @@ public class RemoteConsoleResource extends BaseResource {
           + getInvocationContext().getProvider().getName()
       );
     }
-    updateLastUsed();
+    updateLastRootUsed(Root.EDIT_NAME);
     return copyContext(new PageRepoResource());
   }
 
@@ -126,7 +133,7 @@ public class RemoteConsoleResource extends BaseResource {
           + getInvocationContext().getProvider().getName()
       );
     }
-    updateLastUsed();
+    updateLastRootUsed(Root.SERVER_CONFIGURATION_NAME);
     return copyContext(new PageRepoResource());
   }
 
@@ -139,7 +146,7 @@ public class RemoteConsoleResource extends BaseResource {
           + getInvocationContext().getProvider().getName()
       );
     }
-    updateLastUsed();
+    updateLastRootUsed(Root.SECURITY_DATA_NAME);
     return copyContext(new PageRepoResource());
   }
 
@@ -152,7 +159,7 @@ public class RemoteConsoleResource extends BaseResource {
           + getInvocationContext().getProvider().getName()
       );
     }
-    updateLastUsed();
+    updateLastRootUsed(Root.DOMAIN_RUNTIME_NAME);
     return copyContext(new WebLogicRestRuntimeTreeMonitoringResource());
   }
 
@@ -179,10 +186,11 @@ public class RemoteConsoleResource extends BaseResource {
     return ret;
   }
 
-  private void updateLastUsed() {
-    Provider provider = getInvocationContext().getProvider();
-    if (provider instanceof AdminServerDataProvider) {
-      ((AdminServerDataProvider)provider).updateLastUsed();
-    }
+  private void updateLastRootUsed(String root) {
+    getInvocationContext().getProvider().updateLastRootUsed(root);
+  }
+
+  public static boolean isReserved(String string) {
+    return reserved.contains(string);
   }
 }

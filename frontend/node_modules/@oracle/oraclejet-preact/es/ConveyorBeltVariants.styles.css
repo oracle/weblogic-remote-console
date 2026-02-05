@@ -1,0 +1,21 @@
+.ConveyorBeltVariants_multiVariantStyles_orientation_horizontal__1j16ept0 {
+  --displayVar__1u3kg3i1: flex;
+}
+.ConveyorBeltVariants_multiVariantStyles_orientation_vertical__1j16ept1 {
+  --displayVar__1u3kg3i1: inline-flex;
+  flex-direction: column;
+}
+.ConveyorBeltVariants_multiVariantStyles_content_horizontal__1j16ept2 {
+  height: 100%;
+}
+.ConveyorBeltVariants_multiVariantStyles_content_vertical__1j16ept3 {
+  height: auto;
+}
+.ConveyorBeltVariants_multiVariantStyles_overflow_horizontal__1j16ept4 {
+  overflow-x: scroll;
+  overflow-y: hidden;
+}
+.ConveyorBeltVariants_multiVariantStyles_overflow_vertical__1j16ept5 {
+  overflow-x: hidden;
+  overflow-y: scroll;
+}

@@ -1,0 +1,14 @@
+oj-c-progress-circle:not(.oj-complete) {
+  visibility: hidden;
+}
+oj-c-progress-circle {
+  display: inline-block;
+}
+oj-c-progress-circle[hidden] {
+  display: none;
+}
+oj-c-progress-circle {
+  height: var(--oj-c-PRIVATE-DO-NOT-USE-progress-circle-size);
+  width: var(--oj-c-PRIVATE-DO-NOT-USE-progress-circle-size);
+  line-height: 0;
+}

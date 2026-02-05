@@ -1,12 +1,17 @@
-// Copyright (c) 2022, Oracle and/or its affiliates.
+// Copyright (c) 2022, 2025, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.webapp;
 
 import java.util.Date;
+import javax.json.Json;
+import javax.json.JsonArrayBuilder;
+import javax.json.JsonObject;
+import javax.json.JsonObjectBuilder;
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ResourceContext;
 import javax.ws.rs.core.Cookie;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.NewCookie;
 import javax.ws.rs.core.Response;
 
@@ -43,6 +48,25 @@ public class WebAppUtils {
     InvocationContext ic
   ) {
     requestContext.setProperty(InvocationContext.class.getName(), ic);
+  }
+
+  public static Response ok(ResourceContext resContext, JsonArrayBuilder builder) {
+    return WebAppUtils.addCookieFromContext(resContext,
+      Response.ok(builder.build(), MediaType.APPLICATION_JSON)).build();
+  }
+
+  public static Response ok(ResourceContext resContext, JsonObjectBuilder builder) {
+    builder.add("statusData", Json.createObjectBuilder()
+      .add("shoppingCart", Json.createObjectBuilder()
+        .add("link", "linky")
+        .add("state", "full")
+        .add("version", "" + (new Date().getTime()))));
+    return WebAppUtils.addCookieFromContext(resContext,
+      Response.ok(builder.build(), MediaType.APPLICATION_JSON)).build();
+  }
+
+  public static Response ok(ResourceContext resContext, JsonObject object) {
+    return ok(resContext, Json.createObjectBuilder(object));
   }
 
   public static Response.ResponseBuilder addCookieFromContext(

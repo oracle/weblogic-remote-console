@@ -1,0 +1,151 @@
+[
+  {
+    "id": "oj-c.DragHandle",
+    "name": "DragHandle",
+    "memberof": "oj-c",
+    "kind": "class",
+    "meta": {
+      "filename": "drag-handle.tsx",
+      "path": "web/components/oj-c/drag-handle"
+    },
+    "ojcomponent": true,
+    "isvcomponent": true,
+    "since": "17.0.0",
+    "longname": "oj-c.DragHandle",
+    "pack": "oj-c",
+    "classdesc": "<h3 id=\"dragHandleOverview-section\">\n  JET DragHandle Component\n  <a class=\"bookmarkable-link\" title=\"Bookmarkable Link\" href=\"#dragHandleOverview-section\"></a>\n</h3>\n\n<p>Description: The JET DragHandle is a draggable icon used in components with reorder features.</p>",
+    "scope": "static",
+    "tagWithoutBrackets": "oj-c-drag-handle",
+    "tagWithBrackets": "<oj-c-drag-handle>",
+    "domInterface": "CDragHandleElement",
+    "ojPageTitle": "&lt;oj-c-drag-handle>",
+    "camelCaseName": "DragHandle",
+    "ojPageTitlePrefix": "Element: ",
+    "ojtsvcomponent": true,
+    "tstype": {
+      "target": "Type",
+      "value": "interface CDragHandleElement extends JetElement<DragHandleElementSettableProperties>"
+    },
+    "ojsignature": [
+      {
+        "target": "Type",
+        "value": "interface CDragHandleElement extends JetElement<DragHandleElementSettableProperties>"
+      }
+    ],
+    "tsdeprecated": [
+      {
+        "type": "candidate",
+        "since": "17.0.0"
+      }
+    ],
+    "ojmodule": "drag-handle"
+  },
+  {
+    "id": "oj-c.DragHandle#setProperty",
+    "name": "setProperty",
+    "memberof": "oj-c.DragHandle",
+    "meta": {
+      "filename": "drag-handle.tsx",
+      "path": "web/components/oj-c/drag-handle"
+    },
+    "kind": "function",
+    "longname": "oj-c.DragHandle#setProperty",
+    "scope": "instance",
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "void"
+          ]
+        }
+      }
+    ],
+    "description": "Sets a property or a single subproperty for complex properties and notifies the component of the change, triggering a corresponding event.",
+    "params": [
+      {
+        "name": "property",
+        "description": "The property name to set. Supports dot notation for subproperty access.",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "value",
+        "description": "The new value to set the property to.",
+        "type": {
+          "names": [
+            "any"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.DragHandle#getProperty",
+    "name": "getProperty",
+    "memberof": "oj-c.DragHandle",
+    "meta": {
+      "filename": "drag-handle.tsx",
+      "path": "web/components/oj-c/drag-handle"
+    },
+    "kind": "function",
+    "longname": "oj-c.DragHandle#getProperty",
+    "scope": "instance",
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "any"
+          ]
+        }
+      }
+    ],
+    "description": "Retrieves the value of a property or a subproperty.",
+    "params": [
+      {
+        "name": "property",
+        "description": "The property name to get. Supports dot notation for subproperty access.",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.DragHandle#setProperties",
+    "name": "setProperties",
+    "memberof": "oj-c.DragHandle",
+    "meta": {
+      "filename": "drag-handle.tsx",
+      "path": "web/components/oj-c/drag-handle"
+    },
+    "kind": "function",
+    "longname": "oj-c.DragHandle#setProperties",
+    "scope": "instance",
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "void"
+          ]
+        }
+      }
+    ],
+    "description": "Performs a batch set of properties.",
+    "params": [
+      {
+        "name": "properties",
+        "description": "An object containing the property and value pairs to set.",
+        "type": {
+          "names": [
+            "object"
+          ]
+        }
+      }
+    ]
+  }
+]

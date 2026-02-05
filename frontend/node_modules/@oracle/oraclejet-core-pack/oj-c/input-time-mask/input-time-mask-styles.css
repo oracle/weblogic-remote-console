@@ -1,0 +1,17 @@
+oj-c-input-time-mask:not(.oj-complete) {
+  visibility: hidden;
+}
+
+oj-c-input-time-mask {
+  display: inline-block;
+  max-width: 100%;
+  width: 100%;
+}
+
+oj-c-input-time-mask.in-form-layout {
+  display: block;
+}
+
+oj-c-input-time-mask[hidden] {
+  display: none;
+}

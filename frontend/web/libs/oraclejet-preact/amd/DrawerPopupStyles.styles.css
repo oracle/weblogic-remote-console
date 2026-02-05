@@ -1,0 +1,12 @@
+.DrawerPopupStyles_baseStyle__rsgy7b0 {
+  position: fixed;
+  overflow-y: auto;
+  background-color: var(--overlayDrawerBackgroundColor__1ekn0ug0);
+  touch-action: none;
+}
+.DrawerPopupStyles_visibilityHidden__rsgy7b1 {
+  visibility: hidden;
+}
+.DrawerPopupStyles_visibilityVisible__rsgy7b2 {
+  visibility: visible;
+}

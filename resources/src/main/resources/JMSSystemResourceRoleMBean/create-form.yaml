@@ -1,7 +1,10 @@
-# Copyright (c) 2022, 2023, Oracle and/or its affiliates.
+# Copyright (c) 2022, 2025, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 introductionHTML: "<p>Use this page to define a security role that can be used only in the policy for this JMS system module.</p>"
+
+presentation:
+  singleColumn: true
 
 properties:
 - name: Name

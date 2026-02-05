@@ -1,0 +1,26 @@
+.DrawerPopupVariants_multiVariantStyles_placement_left__idav9r0 {
+  box-shadow: 0.3rem 0 1.5rem rgba(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-boxshadow-shadowcolor), 0.05);
+  top: 0;
+  bottom: 0;
+  left: 0;
+}
+.DrawerPopupVariants_multiVariantStyles_placement_right__idav9r1 {
+  box-shadow: -0.3rem 0 1.5rem rgba(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-boxshadow-shadowcolor), 0.05);
+  top: 0;
+  bottom: 0;
+  right: 0;
+}
+.DrawerPopupVariants_multiVariantStyles_placement_bottom__idav9r2 {
+  box-shadow: 0 -0.3rem 0.3rem 0 rgba(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-boxshadow-shadowcolor), 0.05);
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+.DrawerPopupVariants_multiVariantStyles_displayModeHorizontal_overlay__idav9r5 {
+  max-width: 90vw;
+  min-width: 320px;
+}
+.DrawerPopupVariants_multiVariantStyles_displayModeHorizontal_fullOverlay__idav9r6 {
+  width: 100%;
+  max-width: 100%;
+}

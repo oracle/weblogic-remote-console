@@ -1,0 +1,22 @@
+.SplitMenuButtonTheme_baseTheme__ia40op0 {
+  --borderColor__1chzim70: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-border-enabled);
+  --borderColorDisabled__1chzim71: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-border-disabled);
+  --styleVariants-outlined-borderColor__1chzim72: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-border-enabled);
+  --styleVariants-outlined-borderColorDisabled__1chzim73: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-border-disabled);
+  --styleVariants-solid-borderColor__1chzim74: transparent;
+  --styleVariants-solid-borderColorDisabled__1chzim75: transparent;
+  --styleVariants-callToAction-borderColor__1chzim76: transparent;
+  --styleVariants-callToAction-borderColorDisabled__1chzim77: transparent;
+}
+.SplitMenuButtonTheme_multiVariantStyles_styleVariant_outlined__ia40op1 {
+  --borderColor__1chzim70: var(--styleVariants-outlined-borderColor__1chzim72);
+  --borderColorDisabled__1chzim71: var(--styleVariants-outlined-borderColorDisabled__1chzim73);
+}
+.SplitMenuButtonTheme_multiVariantStyles_styleVariant_solid__ia40op2 {
+  --borderColor__1chzim70: var(--styleVariants-solid-borderColor__1chzim74);
+  --borderColorDisabled__1chzim71: var(--styleVariants-solid-borderColorDisabled__1chzim75);
+}
+.SplitMenuButtonTheme_multiVariantStyles_styleVariant_callToAction__ia40op3 {
+  --borderColor__1chzim70: var(--styleVariants-callToAction-borderColor__1chzim76);
+  --borderColorDisabled__1chzim71: var(--styleVariants-callToAction-borderColorDisabled__1chzim77);
+}

@@ -1,0 +1,2 @@
+define(['exports', '../useColorScheme-3022ec9a', 'preact/hooks', '../LayerHost-daf96749', 'preact', '../index-f7ad24df', 'preact/jsx-runtime', 'preact/compat', '../UNSAFE_Layer/themes/LayerHostStyles.css', 'css!./../LayerHostStyles.styles.css'], (function(e,s,t,o,r,c,a,l,u,y){"use strict";e.useColorScheme=s.useColorScheme,Object.defineProperty(e,"__esModule",{value:!0})}));
+//# sourceMappingURL=UNSAFE_useColorScheme.js.map

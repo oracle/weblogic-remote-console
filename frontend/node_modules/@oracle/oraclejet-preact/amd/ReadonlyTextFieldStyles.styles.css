@@ -1,0 +1,45 @@
+.ReadonlyTextFieldStyles_readOnlyBase__71tiu80 {
+  font-weight: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-body-md-font-weight-regular);
+  font-size: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-body-md-font-size);
+  position: relative;
+  border-style: solid;
+  transition-property: border-color;
+  transition-duration: 0.1s;
+  transition-timing-function: linear;
+  border-radius: var(--borderRadius__w6gg1y2);
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  overflow: hidden;
+}
+.ReadonlyTextFieldStyles_readonlyTextFieldMiddleBase__71tiu81 {
+  display: inline-flex;
+  flex: 1;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+}
+.ReadonlyTextFieldStyles_readonlyTextFieldMiddleNotInEnabledForm__71tiu82 {
+  display: block;
+}
+.ReadonlyTextFieldStyles_readonlyTextFieldMiddleInEnabledForm__71tiu83 {
+  position: relative;
+  padding-inline-end: 0 !important;
+}
+.ReadonlyTextFieldStyles_readonlyTextFieldMiddleInEnabledFormNotTextarea__71tiu84 {
+  align-items: center;
+}
+.ReadonlyTextFieldStyles_startContentInsideLabel__71tiu85 {
+  font-size: calc(6 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+}
+.ReadonlyTextFieldStyles_startContentStartTopLabel__71tiu86 {
+  font-size: calc(5 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+}
+.ReadonlyTextFieldStyles_startContentMarginStart__71tiu87 {
+  margin-inline-start: var(--iconToEdgePadding__w6gg1y8);
+}
+.ReadonlyTextFieldStyles_startContentMarginEnd__71tiu88:not(:has(>* >oj-if:empty)) {
+  margin-inline-end: var(--iconToTextPadding__w6gg1y7);
+}

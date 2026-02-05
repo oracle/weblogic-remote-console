@@ -1,0 +1,12 @@
+oj-c-truncating-text:not(.oj-complete){
+  visibility: hidden;
+}
+
+oj-c-truncating-text{
+	display: inline;
+}
+
+oj-c-truncating-text[hidden]
+{
+  display: none;
+}

@@ -1,0 +1,7 @@
+.ReorderableTabBarItemStyles_itemOverlayFront__x1quu00 {
+  width: calc(50% + calc(3.5 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem)));
+  left: calc(-4 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+}
+.ReorderableTabBarItemStyles_itemOverlayRear__x1quu01 {
+  left: calc(50%);
+}

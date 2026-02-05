@@ -1,0 +1,2 @@
+define(['exports', 'css!./../../IconStyle.styles.css'], (function(n,e){"use strict";n.styles={primary:"IconStyle_primary__sdo2n60",secondary:"IconStyle_secondary__sdo2n61",disabled:"IconStyle_disabled__sdo2n62",danger:"IconStyle_danger__sdo2n63",warning:"IconStyle_warning__sdo2n64",success:"IconStyle_success__sdo2n65",info:"IconStyle_info__sdo2n66",currentColor:"IconStyle_currentColor__sdo2n67"},Object.defineProperty(n,"__esModule",{value:!0})}));
+//# sourceMappingURL=IconStyle.css.js.map

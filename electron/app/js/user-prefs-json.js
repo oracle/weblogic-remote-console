@@ -121,42 +121,6 @@ const UserPrefs = (() => {
             }
           },
           {
-            id: 'unsaved-confirmation',
-            label: `${I18NUtils.get('wrc-electron.menus.preferences.section.unsaved-confirmation.label')}`,
-            form: {
-              groups: [
-                {
-                  fields: [
-                    {
-                      label: `${I18NUtils.get('wrc-electron.menus.preferences.section.unsaved-confirmation.appExit.label')}`,
-                      help: `${I18NUtils.get('wrc-electron.menus.preferences.section.unsaved-confirmation.appExit.help')}`,
-                      key: 'appExit',
-                      type: 'radio',
-                      options: [
-                        {label: `${I18NUtils.get('wrc-electron.menus.preferences.yes')}`, value: true },
-                        {label: `${I18NUtils.get('wrc-electron.menus.preferences.no')}`, value: false }
-                      ]
-                    },
-                    {
-                      // The preference is currently used, but can occur in
-                      // various situations.  For now, we'll have the property
-                      // and use it in the code, but not show it or try to explain it.
-                      label: 'This is disabled for now',
-                      help: 'This is disabled for now',
-                      hideFunction: () => { return true; },
-                      key: 'unload',
-                      type: 'radio',
-                      options: [
-                        {label: `${I18NUtils.get('wrc-electron.menus.preferences.yes')}`, value: false},
-                        {label: `${I18NUtils.get('wrc-electron.menus.preferences.no')}`, value: true}
-                      ]
-                    }
-                  ]
-                }
-              ]
-            }
-          },
-          {
             id: 'language',
             label: `${I18NUtils.get('wrc-electron.menus.preferences.section.language.label')}`,
             form: {
@@ -222,20 +186,37 @@ const UserPrefs = (() => {
           });
           if (result == 0) {
             UserProjects.clearPasswords();
-            UserProjects.write();
           }
         }
+        // This is a little odd.  Since we've moved the project file support
+        // to the backend, we need to tell it to use or not use encryption.
+        // So, we need to write the file out (which will include that value)
+        require('./settings-editor').freshWrite(
+          {
+            'weblogic.remoteconsole.credentials.storage': UserPrefs.get('credentials.storage')
+          });
       });
+    },
+    getSettings: () => {
+      return {
+        'weblogic.remoteconsole.credentials.storage': UserPrefs.get('credentials.storage')
+      }
     },
     read: (userDataPath) => {
       // Ensure that there are file content changes instead of relying on file metadata (e.g. fstat)
       // Workaround for https://github.com/paulmillr/chokidar/issues/1345
-      const data = fs.readFileSync(UserPrefs.getPath(userDataPath), { encoding: 'utf8', flag: 'r' });
+      try {
+        const data = fs.readFileSync(UserPrefs.getPath(userDataPath), { encoding: 'utf8', flag: 'r' });
 
-      if (data != this.previousContent) {        
-        UserPrefs.init();
+        if (data != this.previousContent) {        
+          UserPrefs.init();
 
-        this.previousContent = data;
+          this.previousContent = data;
+        }
+      } catch(err) {
+        require('./console-logger').log('error', err);
+        const WindowManagement = require('./window-management');
+        WindowManagement.corruptFile(UserPrefs.getPath(userDataPath));
       }
     }
   };

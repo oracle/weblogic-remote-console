@@ -175,7 +175,7 @@ public abstract class ResponseMapper<T> {
     }
   }
 
-  protected JsonValue valueToJson(Value value) {
+  public JsonValue valueToJson(Value value) {
     if (value.isArray()) {
       return arrayToJson(value.asArray());
     }
@@ -315,8 +315,14 @@ public abstract class ResponseMapper<T> {
   }
 
   protected JsonValue beanTreePathToJson(BeanTreePath beanTreePath, String label, String queryParams) {
+    String name = "";
+    if ((beanTreePath.getLastSegment() != null)
+      && (beanTreePath.getLastSegment().getKey() != null)) {
+      name = beanTreePath.getLastSegment().getKey();
+    }
     return
       Json.createObjectBuilder()
+        .add("name", name)
         .add("label", label)
         .add("resourceData", getBackendRelativeUri(beanTreePath, queryParams))
         .build();
@@ -338,7 +344,7 @@ public abstract class ResponseMapper<T> {
     return Json.createObjectBuilder().add("label", label.getLabel()).build();
   }
 
-  private String getBeanTreePathLabel(BeanTreePath beanTreePath) {
+  public String getBeanTreePathLabel(BeanTreePath beanTreePath) {
     if (beanTreePath == null) {
       return getInvocationContext().getLocalizer().localizeString(LocalizedConstants.NULL_REFERENCE);
     }

@@ -1,0 +1,2 @@
+define(['exports', '../useDetectTruncation-d9046081', '../truncationUtils-84dea8ba', '../useResizeObserver-25032462', '../useAddBusyState-8ed5cc58', '../BusyStateContext-ab2c549a', 'preact', '../useBusyStateContext-26bb2acb', 'preact/hooks', '../unsafeDomAccess-602c5dde', '../TabbableModeContext-a9c97640', '../useTabbableMode-df433329', '../useId-c9578d26'], (function(e,t,s,a,c,u,n,o,d,b,r,i,f){"use strict";e.useDetectTruncation=t.useDetectTruncation,Object.defineProperty(e,"__esModule",{value:!0})}));
+//# sourceMappingURL=PRIVATE_useDetectTruncation.js.map

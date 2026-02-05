@@ -1,0 +1,632 @@
+[
+  {
+    "id": "oj-c.RatingGauge",
+    "name": "RatingGauge",
+    "memberof": "oj-c",
+    "kind": "class",
+    "meta": {
+      "filename": "rating-gauge.tsx",
+      "path": "web/components/oj-c/rating-gauge"
+    },
+    "ojcomponent": true,
+    "isvcomponent": true,
+    "since": "13.0.0",
+    "longname": "oj-c.RatingGauge",
+    "pack": "oj-c",
+    "classdesc": "<h3 id=\"ratingGaugeOverview-section\">\n  JET Rating Gauge\n  <a class=\"bookmarkable-link\" title=\"Bookmarkable Link\" href=\"#ratingGaugeOverview-section\"></a>\n</h3>\nRating gauges are typically used to display or accept user feedback on a product or service.\n<pre class=\"prettyprint\"><code>&lt;oj-c-rating-gauge value='4'>&lt;/oj-c-rating-gauge></code></pre>\n\n<h3 id=\"a11y-section\">\n  Accessibility\n  <a class=\"bookmarkable-link\" title=\"Bookmarkable Link\" href=\"#a11y-section\"></a>\n</h3>\n<p>\nThe application is required to set one of the following attributes on the element with meaningful descriptors as the rating-gauge element does not provide a default descriptor.\n</p>\n<ul>\n  <li>aria-label</li>\n  <li>aria-labelledby</li>\n  <li>aria-describedby</li>\n</ul>\n\n<p>\nIf the application is using readonly, thresholds or reference lines to provide additional context, they need to include such information for screender readers using either of the following methods:\n <ul>\n  <li>aria-describedby</li>\n  <li>aria-labelledby</li>\n  <li>aria-label</li>\n  <li>datatip</li>\n </ul>\n</p>\n\n<p>\nDisabled content: JET supports an accessible luminosity contrast ratio,\nas specified in <a href=\"http://www.w3.org/TR/WCAG20/#visual-audio-contrast-contrast\">WCAG 2.0 - Section 1.4.3 \"Contrast\"</a>,\nin the themes that are accessible.  (See the \"Theming\" chapter of the JET Developer Guide for more information on which\nthemes are accessible.)  Note that Section 1.4.3 says that text or images of text that are part of an inactive user\ninterface component have no contrast requirement.  Because disabled content may not meet the minimum contrast ratio\nrequired of enabled content, it cannot be used to convey meaningful information.\n</p>\n\n<h3 id=\"keyboardSection\">\n  Keyboard\n  <a class=\"bookmarkable-link\" title=\"Bookmarkable Link\" href=\"#keyboardSection\"></a>\n</h3>\n\n<table class=\"keyboard-table\">\n  <thead>\n    <tr>\n      <th>Key</th>\n      <th>Action</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <td><kbd>Enter</kbd></td>\n      <td>Submit the current value of the gauge.</td>\n    </tr>\n    <tr>\n      <td><kbd>Tab</kbd></td>\n      <td>Move focus to next element and submit the current value of the gauge.</td>\n    </tr>\n    <tr>\n      <td><kbd>Shift + Tab</kbd></td>\n      <td>Move focus to previous element.</td>\n    </tr>\n    <tr>\n      <td><kbd>End</kbd></td>\n      <td>Increase the gauge's transient value to max value. Value is set after using <kbd>Enter</kbd> or <kbd>Tab</kbd> to submit.</td>\n    </tr>\n    <tr>\n      <td><kbd>Home</kbd></td>\n      <td>Decrease the gauge's transient value to zero. Value is set after using <kbd>Enter</kbd> or <kbd>Tab</kbd> to submit.</td>\n    </tr>\n    <tr>\n      <td><kbd>LeftArrow</kbd></td>\n      <td>Decrease the gauge's transient value in left-to-right locales. Increase the gauge's transient value in right-to-left locales. Value is set after using <kbd>Enter</kbd> or <kbd>Tab</kbd> to submit.</td>\n    </tr>\n    <tr>\n      <td><kbd>RightArrow</kbd></td>\n      <td>Increase the gauge's transient value in left-to-right locales. Decrease the gauge's transient value in right-to-left locales. Value is set after using <kbd>Enter</kbd> or <kbd>Tab</kbd> to submit.</td>\n    </tr>\n  </tbody>\n</table>\n\n<h3 id=\"touch-section\">\nTouch End User Information\n  <a class=\"bookmarkable-link\" title=\"Bookmarkable Link\" href=\"#touch-section\"></a>\n</h3>\n\n<table class=\"keyboard-table\">\n  <thead>\n    <tr>\n      <th>Gesture</th>\n      <th>Action</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <td><kbd>Drag</kbd></td>\n      <td>Value change when <code class=\"prettyprint\">readonly</code> or <code class=\"prettyprint\">disabled</code> is <code class=\"prettyprint\">false</code>.</td>\n    </tr>\n  </tbody>\n</table>\n<br>",
+    "scope": "static",
+    "tagWithoutBrackets": "oj-c-rating-gauge",
+    "tagWithBrackets": "<oj-c-rating-gauge>",
+    "domInterface": "CRatingGaugeElement",
+    "ojPageTitle": "&lt;oj-c-rating-gauge>",
+    "camelCaseName": "RatingGauge",
+    "ojPageTitlePrefix": "Element: ",
+    "ojtsvcomponent": true,
+    "tstype": {
+      "target": "Type",
+      "value": "interface CRatingGaugeElement extends JetElement<RatingGaugeElementSettableProperties>"
+    },
+    "ojsignature": [
+      {
+        "target": "Type",
+        "value": "interface CRatingGaugeElement extends JetElement<RatingGaugeElementSettableProperties>"
+      }
+    ],
+    "tsdeprecated": [
+      {
+        "type": "supersedes",
+        "since": "15.0.0",
+        "value": [
+          "oj-rating-gauge"
+        ]
+      }
+    ],
+    "ojmodule": "rating-gauge"
+  },
+  {
+    "id": "oj-c.RatingGauge#max",
+    "name": "max",
+    "memberof": "oj-c.RatingGauge",
+    "meta": {
+      "filename": "rating-gauge.tsx",
+      "path": "web/components/oj-c/rating-gauge"
+    },
+    "kind": "member",
+    "longname": "oj-c.RatingGauge#max",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "number"
+      ]
+    },
+    "optional": true,
+    "description": "Integer value specifying the maximum value of the gauge, which determines the number of items that are displayed.",
+    "defaultvalue": 5
+  },
+  {
+    "id": "oj-c.RatingGauge#readonly",
+    "name": "readonly",
+    "memberof": "oj-c.RatingGauge",
+    "meta": {
+      "filename": "rating-gauge.tsx",
+      "path": "web/components/oj-c/rating-gauge"
+    },
+    "kind": "member",
+    "longname": "oj-c.RatingGauge#readonly",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "boolean"
+      ]
+    },
+    "optional": true,
+    "description": "Defines whether the value of the gauge can be changed by the end user.",
+    "defaultvalue": false
+  },
+  {
+    "id": "oj-c.RatingGauge#disabled",
+    "name": "disabled",
+    "memberof": "oj-c.RatingGauge",
+    "meta": {
+      "filename": "rating-gauge.tsx",
+      "path": "web/components/oj-c/rating-gauge"
+    },
+    "kind": "member",
+    "longname": "oj-c.RatingGauge#disabled",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "boolean"
+      ]
+    },
+    "optional": true,
+    "description": "Defines whether the gauge is disabled or not. User interaction is prevented and the rating gauge is hidden from screen readers if set to true.",
+    "defaultvalue": false
+  },
+  {
+    "id": "oj-c.RatingGauge#changed",
+    "name": "changed",
+    "memberof": "oj-c.RatingGauge",
+    "meta": {
+      "filename": "rating-gauge.tsx",
+      "path": "web/components/oj-c/rating-gauge"
+    },
+    "kind": "member",
+    "longname": "oj-c.RatingGauge#changed",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "boolean"
+      ]
+    },
+    "optional": true,
+    "ojwriteback": true,
+    "description": "Whether there has been a value entered by the user even if it is the same as the initial value.",
+    "defaultvalue": false
+  },
+  {
+    "id": "oj-c.RatingGauge#value",
+    "name": "value",
+    "memberof": "oj-c.RatingGauge",
+    "meta": {
+      "filename": "rating-gauge.tsx",
+      "path": "web/components/oj-c/rating-gauge"
+    },
+    "kind": "member",
+    "longname": "oj-c.RatingGauge#value",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "number|null"
+      ]
+    },
+    "optional": true,
+    "ojwriteback": true,
+    "description": "The value of the Rating Gauge. The element's value attribute is used if it\nis provided, otherwise the default value of 0 is used.\nAny other negative value will default to 0.",
+    "defaultvalue": 0
+  },
+  {
+    "id": "oj-c.RatingGauge#step",
+    "name": "step",
+    "memberof": "oj-c.RatingGauge",
+    "meta": {
+      "filename": "rating-gauge.tsx",
+      "path": "web/components/oj-c/rating-gauge"
+    },
+    "kind": "member",
+    "longname": "oj-c.RatingGauge#step",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "number"
+      ]
+    },
+    "optional": true,
+    "description": "Specifies the increment by which values can be changed by the end user.",
+    "defaultvalue": 1
+  },
+  {
+    "id": "oj-c.RatingGauge#describedBy",
+    "name": "describedBy",
+    "memberof": "oj-c.RatingGauge",
+    "meta": {
+      "filename": "rating-gauge.tsx",
+      "path": "web/components/oj-c/rating-gauge"
+    },
+    "kind": "member",
+    "longname": "oj-c.RatingGauge#describedBy",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "string|null"
+      ]
+    },
+    "optional": true,
+    "description": "Used to establish a relationship between this component and another element.\nA common use is to tie a label, which can be a text in a div or some other HTML element, and the oj-c-rating-gauge together for accessibility.\nThe oj-label element has a label-id, which is used by the described-by attribute to tie the two components together to facilitate correct screen reader behavior."
+  },
+  {
+    "id": "oj-c.RatingGauge#labelledBy",
+    "name": "labelledBy",
+    "memberof": "oj-c.RatingGauge",
+    "meta": {
+      "filename": "rating-gauge.tsx",
+      "path": "web/components/oj-c/rating-gauge"
+    },
+    "kind": "member",
+    "longname": "oj-c.RatingGauge#labelledBy",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "string|null"
+      ]
+    },
+    "optional": true,
+    "description": "Used to establish a relationship between this component and another element.\nA common use is to tie a label, which can be a text in a div or some other HTML element, and the oj-c-rating-gauge together for accessibility.\nThe oj-label element has a label-id, which is used by the labelled-by attribute to tie the two components together to facilitate correct screen reader behavior."
+  },
+  {
+    "id": "oj-c.RatingGauge#size",
+    "name": "size",
+    "memberof": "oj-c.RatingGauge",
+    "meta": {
+      "filename": "rating-gauge.tsx",
+      "path": "web/components/oj-c/rating-gauge"
+    },
+    "kind": "member",
+    "longname": "oj-c.RatingGauge#size",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "\"sm\"",
+        "\"md\"",
+        "\"lg\""
+      ]
+    },
+    "optional": true,
+    "description": "Specifies the size of the individual rating gauge items.",
+    "ojvalues": [
+      {
+        "name": "sm",
+        "description": "small Rating Gauge",
+        "displayName": "Small",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "md",
+        "description": "medium Rating Gauge (default, if unspecified)",
+        "displayName": "Medium",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "lg",
+        "description": "large Rating Gauge",
+        "displayName": "Large",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      }
+    ],
+    "defaultvalue": "\"md\""
+  },
+  {
+    "id": "oj-c.RatingGauge#color",
+    "name": "color",
+    "memberof": "oj-c.RatingGauge",
+    "meta": {
+      "filename": "rating-gauge.tsx",
+      "path": "web/components/oj-c/rating-gauge"
+    },
+    "kind": "member",
+    "longname": "oj-c.RatingGauge#color",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "\"gold\"",
+        "\"neutral\""
+      ]
+    },
+    "optional": true,
+    "description": "Specifies the color of the individual rating gauge items.",
+    "ojvalues": [
+      {
+        "name": "neutral",
+        "description": "neutral color Rating Gauge (default, if unspecified)",
+        "displayName": "Neutral",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "gold",
+        "description": "gold color Rating Gauge",
+        "displayName": "Gold",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      }
+    ],
+    "defaultvalue": "\"neutral\""
+  },
+  {
+    "id": "oj-c.RatingGauge#thresholds",
+    "name": "thresholds",
+    "memberof": "oj-c.RatingGauge",
+    "meta": {
+      "filename": "rating-gauge.tsx",
+      "path": "web/components/oj-c/rating-gauge"
+    },
+    "kind": "member",
+    "longname": "oj-c.RatingGauge#thresholds",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "Array<object>"
+      ]
+    },
+    "optional": true,
+    "description": "An array of objects defining the thresholds for the rating gauge.",
+    "tstype": [
+      {
+        "target": "Type",
+        "value": "Array<oj-c.RatingGauge.Threshold>",
+        "jsdocOverride": true
+      }
+    ]
+  },
+  {
+    "id": "oj-c.RatingGauge#datatip",
+    "name": "datatip",
+    "memberof": "oj-c.RatingGauge",
+    "meta": {
+      "filename": "rating-gauge.tsx",
+      "path": "web/components/oj-c/rating-gauge"
+    },
+    "kind": "member",
+    "longname": "oj-c.RatingGauge#datatip",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "function"
+      ]
+    },
+    "optional": true,
+    "description": "The rating gauge datatip string. Datatip is only used for interactive rating gauges.",
+    "tstype": [
+      {
+        "target": "Type",
+        "value": "(context: oj-c.RatingGauge.DatatipContext) => string",
+        "jsdocOverride": true
+      }
+    ]
+  },
+  {
+    "id": "oj-c.RatingGauge#tooltip",
+    "name": "tooltip",
+    "memberof": "oj-c.RatingGauge",
+    "meta": {
+      "filename": "rating-gauge.tsx",
+      "path": "web/components/oj-c/rating-gauge"
+    },
+    "kind": "member",
+    "longname": "oj-c.RatingGauge#tooltip",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "string"
+      ]
+    },
+    "optional": true,
+    "description": "The rating gauge tooltip. Tooltip is only used for read only rating gauges. If aria-label is not specified, tooltip will be used as the aria-label."
+  },
+  {
+    "id": "oj-c.RatingGauge#transientValue",
+    "name": "transientValue",
+    "memberof": "oj-c.RatingGauge",
+    "meta": {
+      "filename": "rating-gauge.tsx",
+      "path": "web/components/oj-c/rating-gauge"
+    },
+    "kind": "member",
+    "longname": "oj-c.RatingGauge#transientValue",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "number"
+      ]
+    },
+    "optional": true,
+    "ojwriteback": true,
+    "readonly": true,
+    "description": "A read-only property for retrieving the transient value from the rating gauge. It is updated upon user gestures that cause transient value changes, such as hovering over the rating gauge."
+  },
+  {
+    "id": "oj-c.RatingGauge#setProperty",
+    "name": "setProperty",
+    "memberof": "oj-c.RatingGauge",
+    "meta": {
+      "filename": "rating-gauge.tsx",
+      "path": "web/components/oj-c/rating-gauge"
+    },
+    "kind": "function",
+    "longname": "oj-c.RatingGauge#setProperty",
+    "scope": "instance",
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "void"
+          ]
+        }
+      }
+    ],
+    "description": "Sets a property or a single subproperty for complex properties and notifies the component of the change, triggering a corresponding event.",
+    "params": [
+      {
+        "name": "property",
+        "description": "The property name to set. Supports dot notation for subproperty access.",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "value",
+        "description": "The new value to set the property to.",
+        "type": {
+          "names": [
+            "any"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.RatingGauge#getProperty",
+    "name": "getProperty",
+    "memberof": "oj-c.RatingGauge",
+    "meta": {
+      "filename": "rating-gauge.tsx",
+      "path": "web/components/oj-c/rating-gauge"
+    },
+    "kind": "function",
+    "longname": "oj-c.RatingGauge#getProperty",
+    "scope": "instance",
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "any"
+          ]
+        }
+      }
+    ],
+    "description": "Retrieves the value of a property or a subproperty.",
+    "params": [
+      {
+        "name": "property",
+        "description": "The property name to get. Supports dot notation for subproperty access.",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.RatingGauge#setProperties",
+    "name": "setProperties",
+    "memberof": "oj-c.RatingGauge",
+    "meta": {
+      "filename": "rating-gauge.tsx",
+      "path": "web/components/oj-c/rating-gauge"
+    },
+    "kind": "function",
+    "longname": "oj-c.RatingGauge#setProperties",
+    "scope": "instance",
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "void"
+          ]
+        }
+      }
+    ],
+    "description": "Performs a batch set of properties.",
+    "params": [
+      {
+        "name": "properties",
+        "description": "An object containing the property and value pairs to set.",
+        "type": {
+          "names": [
+            "object"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.RatingGauge.touchDoc",
+    "name": "touchDoc",
+    "kind": "member",
+    "longname": "oj-c.RatingGauge.touchDoc",
+    "description": "<table class=\"keyboard-table\">\n  <thead>\n    <tr>\n      <th>Gesture</th>\n      <th>Action</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <td><kbd>Drag</kbd></td>\n      <td>Value change when <code class=\"prettyprint\">readonly</code> or <code class=\"prettyprint\">disabled</code> is <code class=\"prettyprint\">false</code>.</td>\n    </tr>\n  </tbody>\n</table>",
+    "memberof": "oj-c.RatingGauge",
+    "meta": {
+      "filename": "rating-gauge.tsx",
+      "path": "web/components/oj-c/rating-gauge"
+    },
+    "ojfragment": true
+  },
+  {
+    "id": "oj-c.RatingGauge.Threshold",
+    "name": "Threshold",
+    "kind": "typedef",
+    "memberof": "oj-c.RatingGauge",
+    "meta": {
+      "filename": "rating-gauge.tsx",
+      "path": "web/components/oj-c/rating-gauge"
+    },
+    "longname": "oj-c.RatingGauge.Threshold",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "scope": "static",
+    "description": "",
+    "properties": [
+      {
+        "name": "accessibleLabel",
+        "description": "A label for the threshold used for accessibility purposes.",
+        "optional": true,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "color",
+        "description": "<p>The color of the threshold.</p>\n<p>In addition to standard CSS color values, special enumerated values 'danger', 'warning',\nand 'success' are also supported. These special values are mapped to corresponding CSS color values\nbased upon the current theme.</p>",
+        "optional": true,
+        "type": {
+          "names": [
+            "\"danger\"|\"warning\"|\"success\"|string"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "\"danger\"|\"warning\"|\"success\"|string",
+            "jsdocOverride": true
+          }
+        ],
+        "ojvalues": [
+          {
+            "name": "danger",
+            "description": "Maps to theme-specific color indicating a danger condition",
+            "type": {
+              "names": [
+                "string"
+              ]
+            }
+          },
+          {
+            "name": "warning",
+            "description": "Maps to theme-specific color indicating a warning condition",
+            "type": {
+              "names": [
+                "string"
+              ]
+            }
+          },
+          {
+            "name": "success",
+            "description": "Maps to theme-specific color indicating a success condition",
+            "type": {
+              "names": [
+                "string"
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "name": "max",
+        "description": "The maximum value of the threshold.",
+        "optional": false,
+        "type": {
+          "names": [
+            "number"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.RatingGauge.DatatipContext",
+    "name": "DatatipContext",
+    "kind": "typedef",
+    "memberof": "oj-c.RatingGauge",
+    "meta": {
+      "filename": "rating-gauge.tsx",
+      "path": "web/components/oj-c/rating-gauge"
+    },
+    "longname": "oj-c.RatingGauge.DatatipContext",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "scope": "static",
+    "description": "Context for datatip function.",
+    "properties": [
+      {
+        "name": "value",
+        "description": "The value of the currently active rating gauge item.",
+        "optional": false,
+        "type": {
+          "names": [
+            "number"
+          ]
+        }
+      }
+    ]
+  }
+]

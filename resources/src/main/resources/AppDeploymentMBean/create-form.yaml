@@ -3,6 +3,10 @@
 
 # TODO: Should  add the new properties for upload case only if the extension supports uploadAndDeploy
 introductionHTML: Create a new Application Deployment
+
+presentation:
+  singleColumn: true
+
 sections:
 - properties:
   - name: Name

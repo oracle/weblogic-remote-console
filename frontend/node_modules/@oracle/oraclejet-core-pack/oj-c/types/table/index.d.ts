@@ -1,0 +1,2 @@
+export { Table, RowContext, CellTemplateContextDeprecated as CellTemplateContext, HeaderTemplateContextDeprecated as HeaderTemplateContext, FooterTemplateContextDeprecated as FooterTemplateContext } from './table';
+export { CTableElement } from './table';

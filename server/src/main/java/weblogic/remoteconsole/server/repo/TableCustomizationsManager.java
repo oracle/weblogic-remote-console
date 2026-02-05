@@ -1,4 +1,4 @@
-// Copyright (c) 2022, 2023, Oracle and/or its affiliates.
+// Copyright (c) 2022, 2025, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.repo;
@@ -22,7 +22,7 @@ public class TableCustomizationsManager extends PersistableFeature<PersistedTabl
 
   private PersistedTablesCustomizations customizations = new PersistedTablesCustomizations();
 
-  TableCustomizationsManager() {
+  public TableCustomizationsManager() {
   }
 
   @Override
@@ -210,7 +210,7 @@ public class TableCustomizationsManager extends PersistableFeature<PersistedTabl
     throw new AssertionError(pageDef.getPagePath() + " is not a table or a slice table");
   }
 
-  private Map<String,PersistedTableCustomizations> getTableIdToCustomizations() {
+  public Map<String,PersistedTableCustomizations> getTableIdToCustomizations() {
     return customizations.getTableCustomizations();
   }
 }

@@ -1,0 +1,13 @@
+oj-c-area-chart:not(.oj-complete) {
+  visibility: hidden;
+}
+
+oj-c-area-chart[hidden] {
+  display: none;
+}
+
+oj-c-area-chart {
+  display: block;
+  width: 100%;
+  height: 28rem;
+}

@@ -1,0 +1,11 @@
+.TabBarMixedStyles_tabBarBase__1tt3fgn0 {
+  display: flex;
+  flex: auto;
+  flex-direction: row;
+  position: relative;
+  overflow-x: hidden;
+  overflow-y: hidden;
+}
+.TabBarMixedStyles_tabBarBase__1tt3fgn0:focus {
+  outline-style: none;
+}

@@ -1,0 +1,4364 @@
+[
+  {
+    "id": "oj-c.AreaChart",
+    "name": "AreaChart",
+    "memberof": "oj-c",
+    "kind": "class",
+    "meta": {
+      "filename": "area-chart.tsx",
+      "path": "web/components/oj-c/area-chart"
+    },
+    "ojcomponent": true,
+    "isvcomponent": true,
+    "since": "16.0.0",
+    "longname": "oj-c.AreaChart",
+    "pack": "oj-c",
+    "classdesc": "<h3 id=\"areaChartOverview-section\">\n  JET Area Chart\n  <a class=\"bookmarkable-link\" title=\"Bookmarkable Link\" href=\"#areaChartOverview-section\"></a>\n</h3>\n<p>An area chart displays information graphically using lines and filled areas, making relationships among the data easier to understand.</p>\n\n\n<pre class=\"prettyprint\">\n<code>\n&lt;oj-c-area-chart\n  data=\"[[dataProvider]]\">\n&lt;/oj-c-area-chart>\n</code>\n</pre>\n\n<h3 id=\"a11y-section\">\n  Accessibility\n  <a class=\"bookmarkable-link\" title=\"Bookmarkable Link\" href=\"#a11y-section\"></a>\n</h3>\nTo make your component accessible, the application is required to include contextual information for screender readers using one or more the following methods as appropriate:\n <ul>\n  <li>aria-describedby</li>\n  <li>aria-labelledby</li>\n  <li>aria-label</li>\n  <li>short-desc property of your items</li>\n </ul>\n<p>\n If your application has custom keyboard and touch shortcuts implemented for the component, these shortcuts can conflict with those of the component. It is the application's responsibility to disclose these custom shortcuts, possibly via a datatip or help popup.\n</p>\n<p>\n When setting color, applications are responsible for making sure that the color meets the <a target=\"_blank\" href=\"https://www.w3.org/TR/WCAG21/#contrast-minimum\">minimum contrast requirements</a>.\n</p>\n\n<h3 id=\"keyboard-section\">\n  Keyboard End User Information\n  <a class=\"bookmarkable-link\" title=\"Bookmarkable Link\" href=\"#keyboard-section\"></a>\n</h3>\n<table class=\"keyboard-table\">\n  <thead>\n    <tr>\n      <th>Key</th>\n      <th>Action</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <td><kbd>Tab</kbd></td>\n      <td>Move focus to next element.</td>\n    </tr>\n    <tr>\n      <td><kbd>Shift + Tab</kbd></td>\n      <td>Move focus to previous element.</td>\n    </tr>\n    <tr>\n      <td><kbd>UpArrow</kbd></td>\n      <td>Move focus and selection to previous data item.</td>\n    </tr>\n    <tr>\n      <td><kbd>DownArrow</kbd></td>\n      <td>Move focus and selection to next data item.</td>\n    </tr>\n    <tr>\n      <td><kbd>LeftArrow</kbd></td>\n      <td>Move focus and selection to previous data item.</td>\n    </tr>\n    <tr>\n      <td><kbd>RightArrow</kbd></td>\n      <td>Move focus and selection to next data item.</td>\n    </tr>\n    <tr>\n      <td><kbd>Shift + UpArrow</kbd></td>\n      <td>Move focus and multi-select previous data item.</td>\n    </tr>\n    <tr>\n      <td><kbd>Shift + DownArrow</kbd></td>\n      <td>Move focus and multi-select next data item.</td>\n    </tr>\n    <tr>\n      <td><kbd>Shift + LeftArrow</kbd></td>\n      <td>Move focus and multi-select previous data item.</td>\n    </tr>\n    <tr>\n      <td><kbd>Shift + RightArrow</kbd></td>\n      <td>Move focus and multi-select next data item.</td>\n    </tr>\n    <tr>\n      <td><kbd>Ctrl + UpArrow</kbd></td>\n      <td>Move focus to previous data item, without changing the current selection.</td>\n    </tr>\n    <tr>\n      <td><kbd>Ctrl + DownArrow</kbd></td>\n      <td>Move focus to next data item, without changing the current selection.</td>\n    </tr>\n    <tr>\n      <td><kbd>Ctrl + LeftArrow</kbd></td>\n      <td>Move focus to previous data item, without changing the current selection.</td>\n    </tr>\n    <tr>\n      <td><kbd>Ctrl + RightArrow</kbd></td>\n      <td>Move focus to next data item, without changing the current selection.</td>\n    </tr>\n    <tr>\n      <td><kbd>Ctrl + Spacebar</kbd></td>\n      <td>Multi-select data item with focus.</td>\n    </tr>\n    <tr>\n      <td><kbd>= or +</kbd></td>\n      <td>Zoom in one level if zooming is enabled.</td>\n    </tr>\n    <tr>\n      <td><kbd>- or _</kbd></td>\n      <td>Zoom out one level if zooming is enabled.</td>\n    </tr>\n    <tr>\n      <td><kbd>PageUp or Shift + PageUp</kbd></td>\n      <td>Pan left in left-to-right locales. Pan right in right-to-left locales.</td>\n    </tr>\n    <tr>\n      <td><kbd>PageDown or Shift + PageDown</kbd></td>\n      <td>Pan right in left-to-right locales. Pan left in right-to-left locales.</td>\n    </tr>\n    <tr>\n      <td><kbd>Enter</kbd></td>\n      <td>Drill on data item, categorical axis label, or legend item when <code class=\"prettyprint\">drilling</code> is enabled.</td>\n    </tr>\n    <tr>\n      <td><kbd>Shift+F10</kbd></td>\n      <td>Launch the context menu if there is one associated with the current item.</td>\n    </tr>\n  </tbody>\n</table>\n\n<h3 id=\"perf-section\">\n  Performance\n  <a class=\"bookmarkable-link\" title=\"Bookmarkable Link\" href=\"#perf-section\"></a>\n</h3>\n\n<h4>Data Set Size</h4>\n<p>As a rule of thumb, it's recommended that applications only set usable data densities on the chart. For example,\n   it's not recommended to show more than 500 area series on a 500 pixel wide chart, since the areas will be unusably thin.\n   While there are several optimizations within the chart to deal with large data sets, it's always more efficient to\n   reduce the data set size as early as possible. Future optimizations will focus on improving end user experience as\n   well as developer productivity for common use cases.\n</p>\n\n<h4>Styling</h4>\n<p>Use the highest level property available. For example, consider setting styling properties on\n   <code class=\"prettyprint\">styleDefaults</code> or <code class=\"prettyprint\">series</code>, instead of styling properties\n   on the individual data items. The chart can take advantage of these higher level properties to apply the style properties on\n   containers, saving expensive DOM calls.\n</p>\n\n\n<h3 id=\"touch-section\">\nTouch End User Information\n  <a class=\"bookmarkable-link\" title=\"Bookmarkable Link\" href=\"#touch-section\"></a>\n</h3>\n\n<table class=\"keyboard-table\">\n  <thead>\n    <tr>\n      <th>Target</th>\n      <th>Gesture</th>\n      <th>Action</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <td rowspan=\"5\">Data Item</td>\n      <td rowspan=\"2\"><kbd>Tap</kbd></td>\n      <td>Select when <code class=\"prettyprint\">selectionMode</code> is enabled.</td>\n    </tr>\n    <tr>\n      <td>Drill when <code class=\"prettyprint\">drilling</code> is enabled and <code class=\"prettyprint\">selectionMode</code> is <code class=\"prettyprint\">none</code>.</td>\n    </tr>\n    <tr>\n      <td><kbd>Double Tap</kbd></td>\n      <td>Drill when <code class=\"prettyprint\">drilling</code> is enabled and <code class=\"prettyprint\">selectionMode</code> is enabled.</td>\n    </tr>\n    <tr>\n      <td rowspan=\"2\"><kbd>Press & Hold</kbd></td>\n      <td>Display tooltip.</td>\n    </tr>\n    <tr>\n      <td>Display context menu on release.</td>\n    </tr>\n    <tr>\n      <td rowspan=\"2\">Categorical Axis Item</td>\n      <td><kbd>Tap</kbd></td>\n      <td>Drill when <code class=\"prettyprint\">drilling</code> is enabled.</td>\n    </tr>\n     <tr>\n       <td><kbd>Press & Hold</kbd></td>\n       <td>Display context menu on release.</td>\n    </tr>\n    <tr>\n      <td rowspan=\"2\">Legend Item</td>\n      <td rowspan=\"2\"><kbd>Tap</kbd></td>\n      <td>Drill when <code class=\"prettyprint\">drilling</code> is enabled.</td>\n    </tr>\n    <tr>\n      <td>Filter when <code class=\"prettyprint\">hideAndShowBehavior</code> is enabled.</td>\n    </tr>\n    <tr>\n      <td rowspan=\"5\">Plot Area</td>\n      <td rowspan=\"2\"><kbd>Drag</kbd></td>\n      <td>Pan when panning is enabled and toggled into that mode.</td>\n    </tr>\n    <tr>\n      <td>Marquee select when <code class=\"prettyprint\">selectionMode</code> is <code class=\"prettyprint\">multiple</code> and toggled into that mode.</td>\n    </tr>\n    <tr>\n      <td><kbd>Pinch-close</kbd></td>\n      <td>Zoom out when zooming is enabled.</td>\n    </tr>\n    <tr>\n      <td><kbd>Spread-open</kbd></td>\n      <td>Zoom in when zooming is enabled.</td>\n    </tr>\n    <tr>\n       <td><kbd>Press & Hold</kbd></td>\n       <td>Display context menu on release.</td>\n    </tr>\n    <tr>\n       <td>Series Area</td>\n       <td><kbd>Press & Hold</kbd></td>\n       <td>Display context menu on release.</td>\n    </tr>\n    <tr>\n       <td>Axis Title</td>\n       <td><kbd>Press & Hold</kbd></td>\n       <td>Display context menu on release.</td>\n    </tr>\n  </tbody>\n</table>",
+    "scope": "static",
+    "tagWithoutBrackets": "oj-c-area-chart",
+    "tagWithBrackets": "<oj-c-area-chart>",
+    "domInterface": "CAreaChartElement",
+    "ojPageTitle": "&lt;oj-c-area-chart>",
+    "camelCaseName": "AreaChart",
+    "ojPageTitlePrefix": "Element: ",
+    "ojtsvcomponent": true,
+    "tstype": {
+      "target": "Type",
+      "value": "interface CAreaChartElement<K extends string | number,D extends oj-c.AreaChart.AreaItem<K> | any> extends JetElement<AreaChartElementSettableProperties<K,D>>"
+    },
+    "ojsignature": [
+      {
+        "target": "Type",
+        "value": "interface CAreaChartElement<K extends string | number,D extends oj-c.AreaChart.AreaItem<K> | any> extends JetElement<AreaChartElementSettableProperties<K,D>>"
+      }
+    ],
+    "tsdeprecated": [
+      {
+        "type": "candidate",
+        "since": "17.0.0"
+      }
+    ],
+    "ojmodule": "area-chart"
+  },
+  {
+    "id": "oj-c.AreaChart#data",
+    "name": "data",
+    "memberof": "oj-c.AreaChart",
+    "meta": {
+      "filename": "area-chart.tsx",
+      "path": "web/components/oj-c/area-chart"
+    },
+    "kind": "member",
+    "longname": "oj-c.AreaChart#data",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "DataProvider|null"
+      ]
+    },
+    "optional": true,
+    "description": "Specifies the DataProvider for the sections and items of the area-chart.\nA progressive loading indicator is shown by the component when the data provider fetch takes longer than a certain time.",
+    "tstype": [
+      {
+        "target": "Type",
+        "value": "DataProvider<K, D>|null",
+        "jsdocOverride": true,
+        "module": {
+          "DataProvider": "ojdataprovider"
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.AreaChart#seriesComparator",
+    "name": "seriesComparator",
+    "memberof": "oj-c.AreaChart",
+    "meta": {
+      "filename": "area-chart.tsx",
+      "path": "web/components/oj-c/area-chart"
+    },
+    "kind": "member",
+    "longname": "oj-c.AreaChart#seriesComparator",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "function"
+      ]
+    },
+    "optional": true,
+    "description": "A comparator function that determines the ordering of the chart series when using a DataProvider.\nIf undefined, the series will follow the order in which they are found in the data. The series objects will have the same properties as the context for <a href=\"#seriesTemplate\">seriesTemplate's $current</a>.\nIf seriesComparator(a, b) is less than 0, chart series a comes before chart series b.\nIf seriesComparator(a, b) is 0, the original order is preserved.\nIf seriesComparator(a, b) is greater than 0, chart series b comes before chart series a.",
+    "tstype": [
+      {
+        "target": "Type",
+        "value": "(context1: oj-c.AreaChart.ChartSeriesTemplateContext<K, D>, context2: oj-c.AreaChart.ChartSeriesTemplateContext<K, D>) => number",
+        "jsdocOverride": true
+      }
+    ]
+  },
+  {
+    "id": "oj-c.AreaChart#groupComparator",
+    "name": "groupComparator",
+    "memberof": "oj-c.AreaChart",
+    "meta": {
+      "filename": "area-chart.tsx",
+      "path": "web/components/oj-c/area-chart"
+    },
+    "kind": "member",
+    "longname": "oj-c.AreaChart#groupComparator",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "function"
+      ]
+    },
+    "optional": true,
+    "description": "A comparator function that determines the ordering of the chart groups when using a DataProvider.\nIf undefined, the group will follow the order in which they are found in the data. The group objects will have the same properties as the context for <a href=\"#groupTemplate\">groupTemplate's $current</a>.\nIf groupComparator(a, b) is less than 0, chart group a comes before chart group b.\nIf groupComparator(a, b) is 0, the original order is preserved.\nIf groupComparator(a, b) is greater than 0, chart group b comes before chart group a.",
+    "tstype": [
+      {
+        "target": "Type",
+        "value": "(context1: oj-c.AreaChart.ChartGroupTemplateContext<K, D>, context2: oj-c.AreaChart.ChartGroupTemplateContext<K, D>) => number",
+        "jsdocOverride": true
+      }
+    ]
+  },
+  {
+    "id": "oj-c.AreaChart#stack",
+    "name": "stack",
+    "memberof": "oj-c.AreaChart",
+    "meta": {
+      "filename": "area-chart.tsx",
+      "path": "web/components/oj-c/area-chart"
+    },
+    "kind": "member",
+    "longname": "oj-c.AreaChart#stack",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "\"off\"",
+        "\"on\""
+      ]
+    },
+    "optional": true,
+    "description": "Defines whether the data items are stacked.",
+    "ojvalues": [
+      {
+        "name": "on",
+        "description": "Data items belonging to same group will be stacked.",
+        "displayName": "On",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "off",
+        "description": "Data items will not be stacked.",
+        "displayName": "Off",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      }
+    ],
+    "defaultvalue": "\"off\""
+  },
+  {
+    "id": "oj-c.AreaChart#drilling",
+    "name": "drilling",
+    "memberof": "oj-c.AreaChart",
+    "meta": {
+      "filename": "area-chart.tsx",
+      "path": "web/components/oj-c/area-chart"
+    },
+    "kind": "member",
+    "longname": "oj-c.AreaChart#drilling",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "\"off\"",
+        "\"on\""
+      ]
+    },
+    "optional": true,
+    "description": "Whether drilling is enabled. Drillable objects will show a pointer cursor on hover and fire an <code class=\"prettyprint\">ojItemDrill</code>,  <code class=\"prettyprint\">ojSeriesDrill</code> and  <code class=\"prettyprint\">ojGroupDrill</code>  event on click (double click if selection is enabled). Use \"on\" to enable drilling for all series objects (legend items), group objects (x-axis labels), and data items. To enable or disable drilling on individual series, group, or data item, use the drilling attribute in each series, group, or data item.",
+    "ojvalues": [
+      {
+        "name": "on",
+        "description": "Drilling is enabled on data items, axis labels and legend items.",
+        "displayName": "On",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "off",
+        "description": "Drilling is not enabled.",
+        "displayName": "Off",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      }
+    ],
+    "defaultvalue": "\"off\""
+  },
+  {
+    "id": "oj-c.AreaChart#orientation",
+    "name": "orientation",
+    "memberof": "oj-c.AreaChart",
+    "meta": {
+      "filename": "area-chart.tsx",
+      "path": "web/components/oj-c/area-chart"
+    },
+    "kind": "member",
+    "longname": "oj-c.AreaChart#orientation",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "\"horizontal\"",
+        "\"vertical\""
+      ]
+    },
+    "optional": true,
+    "description": "The orientation of the chart.",
+    "ojvalues": [
+      {
+        "name": "horizontal",
+        "description": "Chart will be horizontally oriented.",
+        "displayName": "On",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "vertical",
+        "description": "Chart will be vertically oriented.",
+        "displayName": "Off",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      }
+    ],
+    "defaultvalue": "\"vertical\""
+  },
+  {
+    "id": "oj-c.AreaChart#timeAxisType",
+    "name": "timeAxisType",
+    "memberof": "oj-c.AreaChart",
+    "meta": {
+      "filename": "area-chart.tsx",
+      "path": "web/components/oj-c/area-chart"
+    },
+    "kind": "member",
+    "longname": "oj-c.AreaChart#timeAxisType",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "\"enabled\"",
+        "\"mixedFrequency\"",
+        "\"skipGaps\""
+      ]
+    },
+    "optional": true,
+    "description": "The type of time axis to display in the chart. If the value is \"enabled\" or \"skipGaps\", the time values must be provided through the \"group-id\" attribute of the <a target=\"_blank\" href=\"oj-c.AreaChartItem.html\">oj-c-area-chart-item</a>  element. In this case, stacking is supported. If the value is \"skipGaps\", the groups will be rendered at a regular interval regardless of any time gaps that may exist in the data.\nIf the value is \"mixedFrequency\", the time values must be provided through the \"x\" attribute of the <a target=\"_blank\" href=\"oj-c.AreaChartItem.html\">oj-c-area-chart-item</a> element. In this case stacking is not supported.\nThe time values provided must be an ISO date string.",
+    "ojvalues": [
+      {
+        "name": "enabled",
+        "description": "The regular time axis type. Time values are passed using <a target='_blank' href='oj-c.AreaChartItem.html'>oj-c-area-chart-item</a> group-id attribute.",
+        "displayName": "Regular",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "mixedFrequency",
+        "description": "The mixed frequency time axis type. The mixed frequency time axis type is used when different series have different sampling frequencies. Time values are passed using <a target='_blank' href='oj-c.AreaChartItem.html'>oj-c-area-chart-item</a> x attribute.",
+        "displayName": "MixedFrequency",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "skipGaps",
+        "description": "The regular time axis type. Time values are passed using <a target='_blank' href='oj-c.AreaChartItem.html'>oj-c-area-chart-item</a> group-id attribute. Gap between time values will be ignored.",
+        "displayName": "SkipGaps",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.AreaChart#yAxis",
+    "name": "yAxis",
+    "memberof": "oj-c.AreaChart",
+    "meta": {
+      "filename": "area-chart.tsx",
+      "path": "web/components/oj-c/area-chart"
+    },
+    "kind": "member",
+    "longname": "oj-c.AreaChart#yAxis",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "object"
+      ]
+    },
+    "optional": true,
+    "description": "An object defining properties for the y axis, tick marks, tick labels, and axis titles.",
+    "tstype": [
+      {
+        "target": "Type",
+        "value": "oj-c.AreaChart.YAxis",
+        "jsdocOverride": true
+      }
+    ]
+  },
+  {
+    "id": "oj-c.AreaChart#y2Axis",
+    "name": "y2Axis",
+    "memberof": "oj-c.AreaChart",
+    "meta": {
+      "filename": "area-chart.tsx",
+      "path": "web/components/oj-c/area-chart"
+    },
+    "kind": "member",
+    "longname": "oj-c.AreaChart#y2Axis",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "object"
+      ]
+    },
+    "optional": true,
+    "description": "The y2Axis options for the chart.",
+    "tstype": [
+      {
+        "target": "Type",
+        "value": "oj-c.AreaChart.Y2Axis",
+        "jsdocOverride": true
+      }
+    ]
+  },
+  {
+    "id": "oj-c.AreaChart#splitDualY",
+    "name": "splitDualY",
+    "memberof": "oj-c.AreaChart",
+    "meta": {
+      "filename": "area-chart.tsx",
+      "path": "web/components/oj-c/area-chart"
+    },
+    "kind": "member",
+    "longname": "oj-c.AreaChart#splitDualY",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "\"off\"",
+        "\"on\""
+      ]
+    },
+    "optional": true,
+    "description": "Defines whether the plot area is split into two sections, so that sets of data assigned to the different Y-axes appear in different parts of the plot area.",
+    "ojvalues": [
+      {
+        "name": "on",
+        "description": "Plot Area is split into two sections, one for each Y-axis.",
+        "displayName": "On",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "off",
+        "description": "Plot Area is not split.",
+        "displayName": "Off",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      }
+    ],
+    "defaultvalue": "\"off\""
+  },
+  {
+    "id": "oj-c.AreaChart#splitterPosition",
+    "name": "splitterPosition",
+    "memberof": "oj-c.AreaChart",
+    "meta": {
+      "filename": "area-chart.tsx",
+      "path": "web/components/oj-c/area-chart"
+    },
+    "kind": "member",
+    "longname": "oj-c.AreaChart#splitterPosition",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "number"
+      ]
+    },
+    "optional": true,
+    "description": "In a split dual-Y chart, specifies the fraction of the space that is given to the Y-axis subchart. Valid values are numbers from 0 to 1.",
+    "defaultvalue": 0.5
+  },
+  {
+    "id": "oj-c.AreaChart#xAxis",
+    "name": "xAxis",
+    "memberof": "oj-c.AreaChart",
+    "meta": {
+      "filename": "area-chart.tsx",
+      "path": "web/components/oj-c/area-chart"
+    },
+    "kind": "member",
+    "longname": "oj-c.AreaChart#xAxis",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "object"
+      ]
+    },
+    "optional": true,
+    "description": "An object defining properties for the x axis, tick marks, tick labels, and axis titles.",
+    "tstype": [
+      {
+        "target": "Type",
+        "value": "oj-c.AreaChart.XAxis",
+        "jsdocOverride": true
+      }
+    ]
+  },
+  {
+    "id": "oj-c.AreaChart#plotArea",
+    "name": "plotArea",
+    "memberof": "oj-c.AreaChart",
+    "meta": {
+      "filename": "area-chart.tsx",
+      "path": "web/components/oj-c/area-chart"
+    },
+    "kind": "member",
+    "longname": "oj-c.AreaChart#plotArea",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "object"
+      ]
+    },
+    "optional": true,
+    "description": "An object defining the style of the plot area.",
+    "tstype": [
+      {
+        "target": "Type",
+        "value": "oj-c.AreaChart.PlotArea",
+        "jsdocOverride": true
+      }
+    ]
+  },
+  {
+    "id": "oj-c.AreaChart#zoomAndScroll",
+    "name": "zoomAndScroll",
+    "memberof": "oj-c.AreaChart",
+    "meta": {
+      "filename": "area-chart.tsx",
+      "path": "web/components/oj-c/area-chart"
+    },
+    "kind": "member",
+    "longname": "oj-c.AreaChart#zoomAndScroll",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "\"off\"",
+        "\"live\""
+      ]
+    },
+    "optional": true,
+    "description": "Specifies the zoom and scroll behavior of the chart. \"Live\" behavior means that the chart will be updated continuously as it is being manipulated.\nWhile \"live\" zoom and scroll provides the best end user experience, no guarantess are made about the rendering performance or usability for large data sets or slow client environments."
+  },
+  {
+    "id": "oj-c.AreaChart#valueFormats",
+    "name": "valueFormats",
+    "memberof": "oj-c.AreaChart",
+    "meta": {
+      "filename": "area-chart.tsx",
+      "path": "web/components/oj-c/area-chart"
+    },
+    "kind": "member",
+    "longname": "oj-c.AreaChart#valueFormats",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "object"
+      ]
+    },
+    "optional": true,
+    "description": "An object specifying value formatting and tooltip behavior, whose keys generally correspond to the attribute names on the data items.",
+    "tstype": [
+      {
+        "target": "Type",
+        "value": "oj-c.AreaChart.ValueFormats",
+        "jsdocOverride": true
+      }
+    ]
+  },
+  {
+    "id": "oj-c.AreaChart#styleDefaults",
+    "name": "styleDefaults",
+    "memberof": "oj-c.AreaChart",
+    "meta": {
+      "filename": "area-chart.tsx",
+      "path": "web/components/oj-c/area-chart"
+    },
+    "kind": "member",
+    "longname": "oj-c.AreaChart#styleDefaults",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "object"
+      ]
+    },
+    "optional": true,
+    "description": "Object type defining the default styles for series colors, marker shapes, and other style attributes.\nProperties specified on this object may be overridden by specifications on the data object.",
+    "tstype": [
+      {
+        "target": "Type",
+        "value": "oj-c.AreaChart.StyleDefaults",
+        "jsdocOverride": true
+      }
+    ]
+  },
+  {
+    "id": "oj-c.AreaChart#selectionMode",
+    "name": "selectionMode",
+    "memberof": "oj-c.AreaChart",
+    "meta": {
+      "filename": "area-chart.tsx",
+      "path": "web/components/oj-c/area-chart"
+    },
+    "kind": "member",
+    "longname": "oj-c.AreaChart#selectionMode",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "\"none\"",
+        "\"multiple\"",
+        "\"single\""
+      ]
+    },
+    "optional": true,
+    "description": "The type of selection behavior that is enabled on the area chart This attribute controls the number of selections that can be made via selection gestures at any given time.",
+    "ojvalues": [
+      {
+        "name": "none",
+        "description": "No item can be selected.",
+        "displayName": "None",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "single",
+        "description": "Single item can be selected.",
+        "displayName": "Single",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "multiple",
+        "description": "Multiple items can be selected.",
+        "displayName": "Multiple",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      }
+    ],
+    "defaultvalue": "\"none\""
+  },
+  {
+    "id": "oj-c.AreaChart#selection",
+    "name": "selection",
+    "memberof": "oj-c.AreaChart",
+    "meta": {
+      "filename": "area-chart.tsx",
+      "path": "web/components/oj-c/area-chart"
+    },
+    "kind": "member",
+    "longname": "oj-c.AreaChart#selection",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "Array<string|number>"
+      ]
+    },
+    "optional": true,
+    "ojwriteback": true,
+    "description": "An array containing the ids of the initially selected data items.",
+    "defaultvalue": "[]",
+    "tstype": [
+      {
+        "target": "Type",
+        "value": "Array<K>",
+        "jsdocOverride": true
+      }
+    ]
+  },
+  {
+    "id": "oj-c.AreaChart#hiddenCategories",
+    "name": "hiddenCategories",
+    "memberof": "oj-c.AreaChart",
+    "meta": {
+      "filename": "area-chart.tsx",
+      "path": "web/components/oj-c/area-chart"
+    },
+    "kind": "member",
+    "longname": "oj-c.AreaChart#hiddenCategories",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "Array<string>"
+      ]
+    },
+    "optional": true,
+    "ojwriteback": true,
+    "description": "An array of category strings used for filtering. Series or data items with any category matching an item in this array will be filtered.",
+    "defaultvalue": "[]"
+  },
+  {
+    "id": "oj-c.AreaChart#dragMode",
+    "name": "dragMode",
+    "memberof": "oj-c.AreaChart",
+    "meta": {
+      "filename": "area-chart.tsx",
+      "path": "web/components/oj-c/area-chart"
+    },
+    "kind": "member",
+    "longname": "oj-c.AreaChart#dragMode",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "\"pan\"",
+        "\"zoom\"",
+        "\"select\"",
+        "\"off\"",
+        "\"user\""
+      ]
+    },
+    "optional": true,
+    "description": "The action that is performed when a drag occurs on the chart. Pan and marquee zoom are only available if zoom and scroll is turned on.\nMarquee select is only available if multiple selection is turned on. If the value is set to \"user\" and multiple actions are available,\nbuttons will be displayed on the plot area to let users switch between modes. Only 'select' and 'pan' buttons are shown in mobile, as\nzoom in or out can be performed with 2 finger pinch gesture."
+  },
+  {
+    "id": "oj-c.AreaChart#highlightedCategories",
+    "name": "highlightedCategories",
+    "memberof": "oj-c.AreaChart",
+    "meta": {
+      "filename": "area-chart.tsx",
+      "path": "web/components/oj-c/area-chart"
+    },
+    "kind": "member",
+    "longname": "oj-c.AreaChart#highlightedCategories",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "Array<string>"
+      ]
+    },
+    "optional": true,
+    "ojwriteback": true,
+    "description": "An array of category strings used for highlighting. Series or data items matching categories in this array will be highlighted.",
+    "defaultvalue": "[]"
+  },
+  {
+    "id": "oj-c.AreaChart#hideAndShowBehavior",
+    "name": "hideAndShowBehavior",
+    "memberof": "oj-c.AreaChart",
+    "meta": {
+      "filename": "area-chart.tsx",
+      "path": "web/components/oj-c/area-chart"
+    },
+    "kind": "member",
+    "longname": "oj-c.AreaChart#hideAndShowBehavior",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "\"none\"",
+        "\"withoutRescale\"",
+        "\"withRescale\""
+      ]
+    },
+    "optional": true,
+    "description": "Defines the hide and show behavior that is performed when clicking on a legend item. When data items are hidden, the y axes can be optionally rescaled to fit to the remaining data.",
+    "ojvalues": [
+      {
+        "name": "withRescale",
+        "description": "Rescaling of y axis when items are hidden.",
+        "displayName": "With Rescale",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "withoutRescale",
+        "description": "No rescaling of y axis when items are hidden.",
+        "displayName": "Without Rescale",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "none",
+        "description": "No hide and show behavior.",
+        "displayName": "None",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      }
+    ],
+    "defaultvalue": "\"none\""
+  },
+  {
+    "id": "oj-c.AreaChart#hoverBehavior",
+    "name": "hoverBehavior",
+    "memberof": "oj-c.AreaChart",
+    "meta": {
+      "filename": "area-chart.tsx",
+      "path": "web/components/oj-c/area-chart"
+    },
+    "kind": "member",
+    "longname": "oj-c.AreaChart#hoverBehavior",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "\"none\"",
+        "\"dim\""
+      ]
+    },
+    "optional": true,
+    "description": "Defines the behavior applied when hovering over data items.",
+    "ojvalues": [
+      {
+        "name": "dim",
+        "description": "Hovered items will be dimmed.",
+        "displayName": "Dim",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "none",
+        "description": "No hover behavior.",
+        "displayName": "None",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      }
+    ],
+    "defaultvalue": "\"none\""
+  },
+  {
+    "id": "oj-c.AreaChart#highlightMatch",
+    "name": "highlightMatch",
+    "memberof": "oj-c.AreaChart",
+    "meta": {
+      "filename": "area-chart.tsx",
+      "path": "web/components/oj-c/area-chart"
+    },
+    "kind": "member",
+    "longname": "oj-c.AreaChart#highlightMatch",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "\"all\"",
+        "\"any\""
+      ]
+    },
+    "optional": true,
+    "description": "The matching condition for the highlightedCategories property.\nBy default, highlightMatch is 'all' and only items whose categories match all of the values specified in the highlightedCategories array will be highlighted.\nIf highlightMatch is 'any', then items that match at least one of the highlightedCategories values will be highlighted.",
+    "ojvalues": [
+      {
+        "name": "any",
+        "description": "Any matching categories will be highlighted.",
+        "displayName": "Dim",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "all",
+        "description": "Items only with all matching categories will be highlighted.",
+        "displayName": "None",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      }
+    ],
+    "defaultvalue": "\"any\""
+  },
+  {
+    "id": "oj-c.AreaChart#legend",
+    "name": "legend",
+    "memberof": "oj-c.AreaChart",
+    "meta": {
+      "filename": "area-chart.tsx",
+      "path": "web/components/oj-c/area-chart"
+    },
+    "kind": "member",
+    "longname": "oj-c.AreaChart#legend",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "object"
+      ]
+    },
+    "optional": true,
+    "description": "An object defining the style, positioning, and behavior of the legend.",
+    "tstype": [
+      {
+        "target": "Type",
+        "value": "oj-c.AreaChart.ChartLegend",
+        "jsdocOverride": true
+      }
+    ]
+  },
+  {
+    "id": "oj-c.AreaChart#contextMenuConfig",
+    "name": "contextMenuConfig",
+    "memberof": "oj-c.AreaChart",
+    "meta": {
+      "filename": "area-chart.tsx",
+      "path": "web/components/oj-c/area-chart"
+    },
+    "kind": "member",
+    "longname": "oj-c.AreaChart#contextMenuConfig",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "object"
+      ]
+    },
+    "optional": true,
+    "description": "Specifies a context menu configuration.\nIt takes the keys `accessibleLabel` and `items`,\nwhere `accessibleLabel` is optional and items required . `items` function returns an array\nof menu item object representations that indicates what menu items are going to be part of\nmenu based on some specific context menu context.\n<table>\n<tr><th align='left'>Context Menu Item Type</th><th align='left'>Def</th></tr>\n<tr><td>ContextMenuSeparator</td><td>{ type: 'separator'}</td></tr>\n<tr><td>MenuItem</td><td>{\ntype?: 'item';\nlabel: string;\nkey: string;\ndisabled?: boolean;\nonAction?: () => void;\nstartIcon?: MenuIcon;\nendIcon?: MenuIcon;\nvariant?: 'standard' | 'destructive';\n};</td></tr>\n<tr><td>ContextMenuSubMenu</td><td>{\ntype: 'submenu';\nlabel?: string;\ndisabled?: boolean;\nstartIcon?: string;\nitems?: Array&lt;ContextMenuItems&gt;;\n};</td></tr>\n<tr><td>ContextMenuSelectSingle</td><td>{\ntype: 'selectsingle';\nkey?: string;\nitems?: Array&lt;MenuSelectItem&gt;;\nselection?: string;\nonSelection?: (detail: { value: string }) => void;\n};</td></tr>\n<tr><td>ContextMenuSelectMultiple</td><td>{\ntype: 'selectmultiple';\nkey?: string;\nitems?: Array&lt;MenuSelectItem&gt;;\nselection?: Array&lt;string&gt;;\nonSelection?: (detail: { value: Array&lt;string&gt; }) => void;\n};</td></tr>\n<tr><td>MenuIcon</td><td>{\ntype?: 'class';\n    class: string;\n  }\n| {\n    type: 'img';\n   src: string;\n  };</td></tr>\n<tr><td>MenuSelectItem</td><td>{\nlabel: string;\ndisabled?: boolean;\nendIcon?: MenuIcon;\nvalue: string;\n}</td></tr>\n</table>",
+    "tstype": [
+      {
+        "target": "Type",
+        "value": "oj-c.AreaChart.AreaChartContextMenuConfig<K, D>",
+        "jsdocOverride": true
+      }
+    ]
+  },
+  {
+    "id": "oj-c.AreaChart#setProperty",
+    "name": "setProperty",
+    "memberof": "oj-c.AreaChart",
+    "meta": {
+      "filename": "area-chart.tsx",
+      "path": "web/components/oj-c/area-chart"
+    },
+    "kind": "function",
+    "longname": "oj-c.AreaChart#setProperty",
+    "scope": "instance",
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "void"
+          ]
+        }
+      }
+    ],
+    "description": "Sets a property or a single subproperty for complex properties and notifies the component of the change, triggering a corresponding event.",
+    "params": [
+      {
+        "name": "property",
+        "description": "The property name to set. Supports dot notation for subproperty access.",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "value",
+        "description": "The new value to set the property to.",
+        "type": {
+          "names": [
+            "any"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.AreaChart#getProperty",
+    "name": "getProperty",
+    "memberof": "oj-c.AreaChart",
+    "meta": {
+      "filename": "area-chart.tsx",
+      "path": "web/components/oj-c/area-chart"
+    },
+    "kind": "function",
+    "longname": "oj-c.AreaChart#getProperty",
+    "scope": "instance",
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "any"
+          ]
+        }
+      }
+    ],
+    "description": "Retrieves the value of a property or a subproperty.",
+    "params": [
+      {
+        "name": "property",
+        "description": "The property name to get. Supports dot notation for subproperty access.",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.AreaChart#setProperties",
+    "name": "setProperties",
+    "memberof": "oj-c.AreaChart",
+    "meta": {
+      "filename": "area-chart.tsx",
+      "path": "web/components/oj-c/area-chart"
+    },
+    "kind": "function",
+    "longname": "oj-c.AreaChart#setProperties",
+    "scope": "instance",
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "void"
+          ]
+        }
+      }
+    ],
+    "description": "Performs a batch set of properties.",
+    "params": [
+      {
+        "name": "properties",
+        "description": "An object containing the property and value pairs to set.",
+        "type": {
+          "names": [
+            "object"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.AreaChart#event:ojViewportChange",
+    "name": "ojViewportChange",
+    "kind": "event",
+    "memberof": "oj-c.AreaChart",
+    "meta": {
+      "filename": "area-chart.tsx",
+      "path": "web/components/oj-c/area-chart"
+    },
+    "longname": "oj-c.AreaChart#event:ojViewportChange",
+    "scope": "instance",
+    "description": "Triggered after the viewport is changed due to a zoom or scroll operation.",
+    "properties": [
+      {
+        "name": "startGroup",
+        "description": "The start group of the new viewport on a chart with categorical axis.",
+        "optional": false,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "endGroup",
+        "description": "The end group of the new viewport on a chart with categorical axis.",
+        "optional": false,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "xMax",
+        "description": "The maximum x value of the new viewport.",
+        "optional": false,
+        "type": {
+          "names": [
+            "number"
+          ]
+        }
+      },
+      {
+        "name": "xMin",
+        "description": "The minimum x value of the new viewport.",
+        "optional": false,
+        "type": {
+          "names": [
+            "number"
+          ]
+        }
+      },
+      {
+        "name": "yMax",
+        "description": "The maximum y value of the new viewport.",
+        "optional": false,
+        "type": {
+          "names": [
+            "number"
+          ]
+        }
+      },
+      {
+        "name": "yMin",
+        "description": "The minimum y value of the new viewport.",
+        "optional": false,
+        "type": {
+          "names": [
+            "number"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.AreaChart#event:ojItemDrill",
+    "name": "ojItemDrill",
+    "kind": "event",
+    "memberof": "oj-c.AreaChart",
+    "meta": {
+      "filename": "area-chart.tsx",
+      "path": "web/components/oj-c/area-chart"
+    },
+    "longname": "oj-c.AreaChart#event:ojItemDrill",
+    "scope": "instance",
+    "description": "Triggered on a chart item (double click if selection is enabled, single click otherwise).",
+    "properties": [
+      {
+        "name": "id",
+        "description": "The id of the drilled object.",
+        "optional": false,
+        "type": {
+          "names": [
+            "any"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "K",
+            "jsdocOverride": true,
+            "for": "id"
+          }
+        ]
+      },
+      {
+        "name": "series",
+        "description": "The series id of the drilled object.",
+        "optional": false,
+        "type": {
+          "names": [
+            "any"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "K",
+            "jsdocOverride": true,
+            "for": "series"
+          }
+        ]
+      },
+      {
+        "name": "group",
+        "description": "The group id of the drilled object.",
+        "optional": false,
+        "type": {
+          "names": [
+            "any"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "K",
+            "jsdocOverride": true,
+            "for": "group"
+          }
+        ]
+      },
+      {
+        "name": "data",
+        "description": "The data object of the drilled item.",
+        "optional": false,
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "oj-c.AreaChart.AreaItem<K>",
+            "jsdocOverride": true,
+            "for": "data"
+          }
+        ]
+      },
+      {
+        "name": "itemData",
+        "description": "The row data object of the drilled item. This will only be set if a DataProvider is being used.",
+        "optional": false,
+        "type": {
+          "names": [
+            "any"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "D",
+            "jsdocOverride": true,
+            "for": "itemData"
+          }
+        ]
+      },
+      {
+        "name": "seriesData",
+        "description": "The data for the series of the drilled object.",
+        "optional": false,
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "oj-c.AreaChart.AreaChartSeries<K>",
+            "jsdocOverride": true,
+            "for": "seriesData"
+          }
+        ]
+      },
+      {
+        "name": "groupData",
+        "description": "An array of data for the group the drilled object belongs to.",
+        "optional": false,
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "oj-c.AreaChart.Group",
+            "jsdocOverride": true,
+            "for": "groupData"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "oj-c.AreaChart#event:ojGroupDrill",
+    "name": "ojGroupDrill",
+    "kind": "event",
+    "memberof": "oj-c.AreaChart",
+    "meta": {
+      "filename": "area-chart.tsx",
+      "path": "web/components/oj-c/area-chart"
+    },
+    "longname": "oj-c.AreaChart#event:ojGroupDrill",
+    "scope": "instance",
+    "description": "Triggered on a chart group drill gesture (double click if selection is enabled, single click otherwise).",
+    "properties": [
+      {
+        "name": "id",
+        "description": "The id of the drilled object.",
+        "optional": false,
+        "type": {
+          "names": [
+            "any"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "K",
+            "jsdocOverride": true,
+            "for": "id"
+          }
+        ]
+      },
+      {
+        "name": "group",
+        "description": "The group id of the drilled object.",
+        "optional": false,
+        "type": {
+          "names": [
+            "any"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "K",
+            "jsdocOverride": true,
+            "for": "group"
+          }
+        ]
+      },
+      {
+        "name": "groupData",
+        "description": "An array of data for the group the drilled object belongs to.",
+        "optional": false,
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "oj-c.AreaChart.Group",
+            "jsdocOverride": true,
+            "for": "groupData"
+          }
+        ]
+      },
+      {
+        "name": "items",
+        "description": "An array containing objects describing the data items belonging to the drilled group.",
+        "optional": false,
+        "type": {
+          "names": [
+            "Array<object>"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "Array<oj-c.AreaChart.AreaItem<K>>",
+            "jsdocOverride": true,
+            "for": "items"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "oj-c.AreaChart#event:ojSeriesDrill",
+    "name": "ojSeriesDrill",
+    "kind": "event",
+    "memberof": "oj-c.AreaChart",
+    "meta": {
+      "filename": "area-chart.tsx",
+      "path": "web/components/oj-c/area-chart"
+    },
+    "longname": "oj-c.AreaChart#event:ojSeriesDrill",
+    "scope": "instance",
+    "description": "Triggered on a chart series drill gesture (double click if selection is enabled, single click otherwise).",
+    "properties": [
+      {
+        "name": "id",
+        "description": "The id of the drilled object.",
+        "optional": false,
+        "type": {
+          "names": [
+            "any"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "K",
+            "jsdocOverride": true,
+            "for": "id"
+          }
+        ]
+      },
+      {
+        "name": "series",
+        "description": "The series id of the drilled object.",
+        "optional": false,
+        "type": {
+          "names": [
+            "any"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "K",
+            "jsdocOverride": true,
+            "for": "series"
+          }
+        ]
+      },
+      {
+        "name": "seriesData",
+        "description": "The data for the series of the drilled object.",
+        "optional": false,
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "oj-c.AreaChart.AreaChartSeries<K>",
+            "jsdocOverride": true,
+            "for": "seriesData"
+          }
+        ]
+      },
+      {
+        "name": "items",
+        "description": "An array containing objects describing the data items belonging to the drilled group.",
+        "optional": false,
+        "type": {
+          "names": [
+            "Array<object>"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "Array<oj-c.AreaChart.AreaItem<K>>",
+            "jsdocOverride": true,
+            "for": "items"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "oj-c.AreaChart#event:ojContextMenuAction",
+    "name": "ojContextMenuAction",
+    "kind": "event",
+    "memberof": "oj-c.AreaChart",
+    "meta": {
+      "filename": "area-chart.tsx",
+      "path": "web/components/oj-c/area-chart"
+    },
+    "longname": "oj-c.AreaChart#event:ojContextMenuAction",
+    "scope": "instance",
+    "description": "Triggered when a menu item is clicked, whether by keyboard, mouse, or touch events.",
+    "properties": [
+      {
+        "name": "menuItemKey",
+        "optional": false,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "contextMenuContext",
+        "optional": false,
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "{ type: 'background'; }|{ type: 'xAxisTickLabel'; data: oj-c.AreaChart.Group; }|{ type: 'axisTitle'; axis: 'x' | 'y'; }|{ data?: oj-c.AreaChart.AreaItem<K>; itemData?: D; type: 'item'; }|{ type: 'series'; data: oj-c.AreaChart.AreaChartSeries<K>; }",
+            "jsdocOverride": true,
+            "for": "contextMenuContext"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "oj-c.AreaChart#event:ojContextMenuSelection",
+    "name": "ojContextMenuSelection",
+    "kind": "event",
+    "memberof": "oj-c.AreaChart",
+    "meta": {
+      "filename": "area-chart.tsx",
+      "path": "web/components/oj-c/area-chart"
+    },
+    "longname": "oj-c.AreaChart#event:ojContextMenuSelection",
+    "scope": "instance",
+    "description": "Triggered when a select menu item is clicked, whether by keyboard, mouse, or touch events.",
+    "properties": [
+      {
+        "name": "value",
+        "optional": false,
+        "type": {
+          "names": [
+            "string|Array<string>"
+          ]
+        }
+      },
+      {
+        "name": "contextMenuContext",
+        "optional": false,
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "{ type: 'background'; }|{ type: 'xAxisTickLabel'; data: oj-c.AreaChart.Group; }|{ type: 'axisTitle'; axis: 'x' | 'y'; }|{ data?: oj-c.AreaChart.AreaItem<K>; itemData?: D; type: 'item'; }|{ type: 'series'; data: oj-c.AreaChart.AreaChartSeries<K>; }",
+            "jsdocOverride": true,
+            "for": "contextMenuContext"
+          }
+        ]
+      },
+      {
+        "name": "menuSelectionGroupKey",
+        "optional": false,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.AreaChart#itemTemplate",
+    "name": "itemTemplate",
+    "memberof": "oj-c.AreaChart",
+    "meta": {
+      "filename": "area-chart.tsx",
+      "path": "web/components/oj-c/area-chart"
+    },
+    "kind": "member",
+    "longname": "oj-c.AreaChart#itemTemplate",
+    "scope": "instance",
+    "description": "<p>The <code class=\"prettyprint\">itemTemplate</code> slot is used to specify the template for creating each item of the chart. The slot content must be a &lt;template> element.\nThe content of the template should only be one &lt;oj-c-area-chart-item> element. See the <a target=\"_blank\" href=\"oj-c.AreaChartItem.html\">oj-c-area-chart-item</a> doc for more details. A <b>series-id</b> and <b>group-id</b> must be specified.</p>\n<p>When the template is executed for each item, it will have access to the chart's binding context containing the following properties:</p>\n<ul>\n  <li>$current - an object that contains information for the current item. (See the table below for a list of properties available on $current) </li>\n  <li>alias - if data-oj-as attribute was specified, the value will be used to provide an application-named alias for $current.</li>\n</ul>",
+    "ojchild": false,
+    "ojslot": true,
+    "properties": [
+      {
+        "name": "data",
+        "description": "The data object of the current item.",
+        "optional": false,
+        "type": {
+          "names": [
+            "any"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "D",
+            "jsdocOverride": true,
+            "for": "data"
+          }
+        ]
+      },
+      {
+        "name": "key",
+        "description": "The key of the current item.",
+        "optional": false,
+        "type": {
+          "names": [
+            "any"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "K",
+            "jsdocOverride": true,
+            "for": "key"
+          }
+        ]
+      },
+      {
+        "name": "index",
+        "description": "The zero-based index of the current item.",
+        "optional": false,
+        "type": {
+          "names": [
+            "number"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.AreaChart#seriesTemplate",
+    "name": "seriesTemplate",
+    "memberof": "oj-c.AreaChart",
+    "meta": {
+      "filename": "area-chart.tsx",
+      "path": "web/components/oj-c/area-chart"
+    },
+    "kind": "member",
+    "longname": "oj-c.AreaChart#seriesTemplate",
+    "scope": "instance",
+    "description": "<p>The <code class=\"prettyprint\">seriesTemplate</code> slot is used to specify the template for generating the series properties of the chart. The slot content must be a single &lt;template> element.\nThe content of the template should only be one &lt;oj-c-area-chart-series> element.See the <a target=\"_blank\" href=\"oj-c.AreaChartSeries.html\">oj-c-area-chart-series</a> doc for more details.</p>\n<p>When the template is executed for each series, it will have access to the chart's binding context containing the following properties:</p>\n<ul>\n  <li>$current - an object that contains information for the current item. (See the table below for a list of properties available on $current) </li>\n  <li>alias - if data-oj-as attribute was specified, the value will be used to provide an application-named alias for $current.</li>\n</ul>",
+    "ojchild": false,
+    "ojslot": true,
+    "properties": [
+      {
+        "name": "items",
+        "description": "The array of objects which are chart items that belong to this series. The objects will have the following properties",
+        "optional": false,
+        "type": {
+          "names": [
+            "Array<object>"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "Array<oj-c.AreaChart.ChartItemTemplateContext<K, D>>",
+            "jsdocOverride": true,
+            "for": "items"
+          }
+        ]
+      },
+      {
+        "name": "id",
+        "description": "The series id",
+        "optional": false,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "index",
+        "description": "The series index",
+        "optional": false,
+        "type": {
+          "names": [
+            "number"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.AreaChart#groupTemplate",
+    "name": "groupTemplate",
+    "memberof": "oj-c.AreaChart",
+    "meta": {
+      "filename": "area-chart.tsx",
+      "path": "web/components/oj-c/area-chart"
+    },
+    "kind": "member",
+    "longname": "oj-c.AreaChart#groupTemplate",
+    "scope": "instance",
+    "description": "<p>The <code class=\"prettyprint\">groupTemplate</code> slot is used to specify the template for generating the group properties of the chart. The slot content must be a single &lt;template> element.\nThe content of the template should only be one &lt;oj-c-area-chart-group> element. See the <a target=\"_blank\" href=\"oj-c.AreaChartGroup.html\">oj-c-area-chart-group</a> doc for more details.</p>\n<p>When the template is executed for each group, it will have access to the chart's binding context containing the following properties:</p>\n<ul>\n  <li>$current - an object that contains information for the current item. (See the table below for a list of properties available on $current) </li>\n  <li>alias - if data-oj-as attribute was specified, the value will be used to provide an application-named alias for $current.</li>\n</ul>",
+    "ojchild": false,
+    "ojslot": true,
+    "properties": [
+      {
+        "name": "items",
+        "description": "The array of objects which are chart items that belong to this series. The objects will have the following properties",
+        "optional": false,
+        "type": {
+          "names": [
+            "Array<object>"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "Array<oj-c.AreaChart.ChartItemTemplateContext<K, D>>",
+            "jsdocOverride": true,
+            "for": "items"
+          }
+        ]
+      },
+      {
+        "name": "ids",
+        "description": "The key of the current item.",
+        "optional": false,
+        "type": {
+          "names": [
+            "Array<string>"
+          ]
+        }
+      },
+      {
+        "name": "index",
+        "description": "The group index",
+        "optional": false,
+        "type": {
+          "names": [
+            "number"
+          ]
+        }
+      },
+      {
+        "name": "depth",
+        "description": "The depth of the group. The depth of the outermost group under the invisible root is 1.",
+        "optional": false,
+        "type": {
+          "names": [
+            "number"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.AreaChart.touchDoc",
+    "name": "touchDoc",
+    "kind": "member",
+    "longname": "oj-c.AreaChart.touchDoc",
+    "description": "<table class=\"keyboard-table\">\n  <thead>\n    <tr>\n      <th>Target</th>\n      <th>Gesture</th>\n      <th>Action</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <td rowspan=\"5\">Data Item</td>\n      <td rowspan=\"2\"><kbd>Tap</kbd></td>\n      <td>Select when <code class=\"prettyprint\">selectionMode</code> is enabled.</td>\n    </tr>\n    <tr>\n      <td>Drill when <code class=\"prettyprint\">drilling</code> is enabled and <code class=\"prettyprint\">selectionMode</code> is <code class=\"prettyprint\">none</code>.</td>\n    </tr>\n    <tr>\n      <td><kbd>Double Tap</kbd></td>\n      <td>Drill when <code class=\"prettyprint\">drilling</code> is enabled and <code class=\"prettyprint\">selectionMode</code> is enabled.</td>\n    </tr>\n    <tr>\n      <td rowspan=\"2\"><kbd>Press & Hold</kbd></td>\n      <td>Display tooltip.</td>\n    </tr>\n    <tr>\n      <td>Display context menu on release.</td>\n    </tr>\n    <tr>\n      <td rowspan=\"2\">Categorical Axis Item</td>\n      <td><kbd>Tap</kbd></td>\n      <td>Drill when <code class=\"prettyprint\">drilling</code> is enabled.</td>\n    </tr>\n     <tr>\n       <td><kbd>Press & Hold</kbd></td>\n       <td>Display context menu on release.</td>\n    </tr>\n    <tr>\n      <td rowspan=\"2\">Legend Item</td>\n      <td rowspan=\"2\"><kbd>Tap</kbd></td>\n      <td>Drill when <code class=\"prettyprint\">drilling</code> is enabled.</td>\n    </tr>\n    <tr>\n      <td>Filter when <code class=\"prettyprint\">hideAndShowBehavior</code> is enabled.</td>\n    </tr>\n    <tr>\n      <td rowspan=\"5\">Plot Area</td>\n      <td rowspan=\"2\"><kbd>Drag</kbd></td>\n      <td>Pan when panning is enabled and toggled into that mode.</td>\n    </tr>\n    <tr>\n      <td>Marquee select when <code class=\"prettyprint\">selectionMode</code> is <code class=\"prettyprint\">multiple</code> and toggled into that mode.</td>\n    </tr>\n    <tr>\n      <td><kbd>Pinch-close</kbd></td>\n      <td>Zoom out when zooming is enabled.</td>\n    </tr>\n    <tr>\n      <td><kbd>Spread-open</kbd></td>\n      <td>Zoom in when zooming is enabled.</td>\n    </tr>\n    <tr>\n       <td><kbd>Press & Hold</kbd></td>\n       <td>Display context menu on release.</td>\n    </tr>\n    <tr>\n       <td>Series Area</td>\n       <td><kbd>Press & Hold</kbd></td>\n       <td>Display context menu on release.</td>\n    </tr>\n    <tr>\n       <td>Axis Title</td>\n       <td><kbd>Press & Hold</kbd></td>\n       <td>Display context menu on release.</td>\n    </tr>\n  </tbody>\n</table>",
+    "memberof": "oj-c.AreaChart",
+    "meta": {
+      "filename": "area-chart.tsx",
+      "path": "web/components/oj-c/area-chart"
+    },
+    "ojfragment": true
+  },
+  {
+    "id": "oj-c.AreaChart.keyboardDoc",
+    "name": "keyboardDoc",
+    "kind": "member",
+    "longname": "oj-c.AreaChart.keyboardDoc",
+    "description": "<table class=\"keyboard-table\">\n  <thead>\n    <tr>\n      <th>Key</th>\n      <th>Action</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <td><kbd>Tab</kbd></td>\n      <td>Move focus to next element.</td>\n    </tr>\n    <tr>\n      <td><kbd>Shift + Tab</kbd></td>\n      <td>Move focus to previous element.</td>\n    </tr>\n    <tr>\n      <td><kbd>UpArrow</kbd></td>\n      <td>Move focus and selection to previous data item.</td>\n    </tr>\n    <tr>\n      <td><kbd>DownArrow</kbd></td>\n      <td>Move focus and selection to next data item.</td>\n    </tr>\n    <tr>\n      <td><kbd>LeftArrow</kbd></td>\n      <td>Move focus and selection to previous data item.</td>\n    </tr>\n    <tr>\n      <td><kbd>RightArrow</kbd></td>\n      <td>Move focus and selection to next data item.</td>\n    </tr>\n    <tr>\n      <td><kbd>Shift + UpArrow</kbd></td>\n      <td>Move focus and multi-select previous data item.</td>\n    </tr>\n    <tr>\n      <td><kbd>Shift + DownArrow</kbd></td>\n      <td>Move focus and multi-select next data item.</td>\n    </tr>\n    <tr>\n      <td><kbd>Shift + LeftArrow</kbd></td>\n      <td>Move focus and multi-select previous data item.</td>\n    </tr>\n    <tr>\n      <td><kbd>Shift + RightArrow</kbd></td>\n      <td>Move focus and multi-select next data item.</td>\n    </tr>\n    <tr>\n      <td><kbd>Ctrl + UpArrow</kbd></td>\n      <td>Move focus to previous data item, without changing the current selection.</td>\n    </tr>\n    <tr>\n      <td><kbd>Ctrl + DownArrow</kbd></td>\n      <td>Move focus to next data item, without changing the current selection.</td>\n    </tr>\n    <tr>\n      <td><kbd>Ctrl + LeftArrow</kbd></td>\n      <td>Move focus to previous data item, without changing the current selection.</td>\n    </tr>\n    <tr>\n      <td><kbd>Ctrl + RightArrow</kbd></td>\n      <td>Move focus to next data item, without changing the current selection.</td>\n    </tr>\n    <tr>\n      <td><kbd>Ctrl + Spacebar</kbd></td>\n      <td>Multi-select data item with focus.</td>\n    </tr>\n    <tr>\n      <td><kbd>= or +</kbd></td>\n      <td>Zoom in one level if zooming is enabled.</td>\n    </tr>\n    <tr>\n      <td><kbd>- or _</kbd></td>\n      <td>Zoom out one level if zooming is enabled.</td>\n    </tr>\n    <tr>\n      <td><kbd>PageUp or Shift + PageUp</kbd></td>\n      <td>Pan left in left-to-right locales. Pan right in right-to-left locales.</td>\n    </tr>\n    <tr>\n      <td><kbd>PageDown or Shift + PageDown</kbd></td>\n      <td>Pan right in left-to-right locales. Pan left in right-to-left locales.</td>\n    </tr>\n    <tr>\n      <td><kbd>Enter</kbd></td>\n      <td>Drill on data item, categorical axis label, or legend item when <code class=\"prettyprint\">drilling</code> is enabled.</td>\n    </tr>\n    <tr>\n      <td><kbd>Shift+F10</kbd></td>\n      <td>Launch the context menu if there is one associated with the current item.</td>\n    </tr>\n  </tbody>\n</table>",
+    "memberof": "oj-c.AreaChart",
+    "meta": {
+      "filename": "area-chart.tsx",
+      "path": "web/components/oj-c/area-chart"
+    },
+    "ojfragment": true
+  },
+  {
+    "id": "oj-c.AreaChart.AreaItem",
+    "name": "AreaItem",
+    "kind": "typedef",
+    "memberof": "oj-c.AreaChart",
+    "meta": {
+      "filename": "area-chart.tsx",
+      "path": "web/components/oj-c/area-chart"
+    },
+    "longname": "oj-c.AreaChart.AreaItem",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "scope": "static",
+    "description": "",
+    "tsgenerictype": {
+      "target": "Type",
+      "value": "<K>",
+      "for": "genericTypeParameters"
+    },
+    "properties": [
+      {
+        "name": "id",
+        "description": "The item id should be set by the application if the DataProvider is not being used. The row key will be used as id in the DataProvider case.",
+        "optional": false,
+        "type": {
+          "names": [
+            "string|number"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "K",
+            "jsdocOverride": true,
+            "for": "id"
+          }
+        ]
+      },
+      {
+        "name": "seriesId",
+        "description": "The id for the series the item belongs to.",
+        "optional": false,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "groupId",
+        "description": "The array of ids for the groups the item belongs to. For hierarchical groups, it will be an array of outermost to innermost group ids. This is also used to specify the date for non mixed frequency time axes. The specified date for non mixed frequency time axes must be an ISO string.",
+        "optional": false,
+        "type": {
+          "names": [
+            "Array<string>"
+          ]
+        }
+      },
+      {
+        "name": "value",
+        "description": "The value for this data item. Null can be specified to skip a data point.",
+        "optional": false,
+        "type": {
+          "names": [
+            "number"
+          ]
+        }
+      },
+      {
+        "name": "x",
+        "description": "The x value. Mainly used to specify the date for mixed-frequency time axis. The date specified in the x value must be an ISO date string.",
+        "optional": true,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "color",
+        "description": "The color of the data item. This color value is not inherited by chart legend. See chart <a href=\"oj.ojChartSeries.html#color\">series color</a> and <a href=\"oj.ojChartSeries.html#displayInLegend\">display-in-legend</a> for more details.",
+        "optional": true,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "markerDisplayed",
+        "description": "Defines whether the data marker is displayed. Only applies to line, area, scatter, and bubble series. If auto, the markers will be displayed whenever the data points are not connected by a line.",
+        "optional": true,
+        "type": {
+          "names": [
+            "\"auto\"",
+            "\"off\"",
+            "\"on\""
+          ]
+        }
+      },
+      {
+        "name": "markerShape",
+        "description": "The shape of the data markers. Only applies to line, area, scatter, and bubble series. In addition to the built-in shapes, it may also take SVG path commands to specify a custom shape. The chart will style the custom shapes the same way as built-in shapes, supporting properties like color and borderColor and applying hover and selection effects. Only 'auto' is supported for range series.",
+        "optional": true,
+        "type": {
+          "names": [
+            "\"auto\"",
+            "\"square\"",
+            "\"circle\"",
+            "\"diamond\"",
+            "\"human\"",
+            "\"plus\"",
+            "\"star\"",
+            "\"triangleDown\"",
+            "\"triangleUp\""
+          ]
+        }
+      },
+      {
+        "name": "markerSize",
+        "description": "The size of the data markers. Only applies to line, area, and scatter series. Does not apply to bubble charts, which calculate marker size based on the z values.",
+        "optional": true,
+        "type": {
+          "names": [
+            "number"
+          ]
+        }
+      },
+      {
+        "name": "categories",
+        "description": "An optional array of category strings corresponding to this data item. This enables highlighting and filtering of individual data items through interactions with the legend or other visualization elements. If not defined, series categories are used.",
+        "optional": true,
+        "type": {
+          "names": [
+            "Array<string>"
+          ]
+        }
+      },
+      {
+        "name": "drilling",
+        "description": "Whether drilling is enabled for the data item. Drillable objects will show a pointer cursor on hover and fire an <code class=\"prettyprint\">ojDrill</code> event on click (double click if selection is enabled). To enable drilling for all data items at once, use the drilling attribute in the top level.",
+        "optional": true,
+        "type": {
+          "names": [
+            "\"inherit\"",
+            "\"off\"",
+            "\"on\""
+          ]
+        }
+      },
+      {
+        "name": "shortDesc",
+        "description": "The description of this object. This is used for accessibility and also for customizing the tooltip text.",
+        "optional": true,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.AreaChart.ChartItemTemplateContext",
+    "name": "ChartItemTemplateContext",
+    "kind": "typedef",
+    "memberof": "oj-c.AreaChart",
+    "meta": {
+      "filename": "area-chart.tsx",
+      "path": "web/components/oj-c/area-chart"
+    },
+    "longname": "oj-c.AreaChart.ChartItemTemplateContext",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "scope": "static",
+    "description": "",
+    "tsgenerictype": {
+      "target": "Type",
+      "value": "<K,D>",
+      "for": "genericTypeParameters"
+    },
+    "properties": [
+      {
+        "name": "data",
+        "description": "The data object of the current item.",
+        "optional": false,
+        "type": {
+          "names": [
+            "any"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "D",
+            "jsdocOverride": true,
+            "for": "data"
+          }
+        ]
+      },
+      {
+        "name": "key",
+        "description": "The key of the current item.",
+        "optional": false,
+        "type": {
+          "names": [
+            "any"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "K",
+            "jsdocOverride": true,
+            "for": "key"
+          }
+        ]
+      },
+      {
+        "name": "index",
+        "description": "The zero-based index of the current item.",
+        "optional": false,
+        "type": {
+          "names": [
+            "number"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.AreaChart.ChartSeriesTemplateContext",
+    "name": "ChartSeriesTemplateContext",
+    "kind": "typedef",
+    "memberof": "oj-c.AreaChart",
+    "meta": {
+      "filename": "area-chart.tsx",
+      "path": "web/components/oj-c/area-chart"
+    },
+    "longname": "oj-c.AreaChart.ChartSeriesTemplateContext",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "scope": "static",
+    "description": "",
+    "tsgenerictype": {
+      "target": "Type",
+      "value": "<K,D>",
+      "for": "genericTypeParameters"
+    },
+    "properties": [
+      {
+        "name": "items",
+        "description": "The array of objects which are chart items that belong to this series. The objects will have the following properties",
+        "optional": false,
+        "type": {
+          "names": [
+            "Array<object>"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "Array<oj-c.AreaChart.ChartItemTemplateContext<K, D>>",
+            "jsdocOverride": true,
+            "for": "items"
+          }
+        ]
+      },
+      {
+        "name": "id",
+        "description": "The series id",
+        "optional": false,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "index",
+        "description": "The series index",
+        "optional": false,
+        "type": {
+          "names": [
+            "number"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.AreaChart.ChartGroupTemplateContext",
+    "name": "ChartGroupTemplateContext",
+    "kind": "typedef",
+    "memberof": "oj-c.AreaChart",
+    "meta": {
+      "filename": "area-chart.tsx",
+      "path": "web/components/oj-c/area-chart"
+    },
+    "longname": "oj-c.AreaChart.ChartGroupTemplateContext",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "scope": "static",
+    "description": "",
+    "tsgenerictype": {
+      "target": "Type",
+      "value": "<K,D>",
+      "for": "genericTypeParameters"
+    },
+    "properties": [
+      {
+        "name": "items",
+        "description": "The array of objects which are chart items that belong to this series. The objects will have the following properties",
+        "optional": false,
+        "type": {
+          "names": [
+            "Array<object>"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "Array<oj-c.AreaChart.ChartItemTemplateContext<K, D>>",
+            "jsdocOverride": true,
+            "for": "items"
+          }
+        ]
+      },
+      {
+        "name": "ids",
+        "description": "The key of the current item.",
+        "optional": false,
+        "type": {
+          "names": [
+            "Array<string>"
+          ]
+        }
+      },
+      {
+        "name": "index",
+        "description": "The group index",
+        "optional": false,
+        "type": {
+          "names": [
+            "number"
+          ]
+        }
+      },
+      {
+        "name": "depth",
+        "description": "The depth of the group. The depth of the outermost group under the invisible root is 1.",
+        "optional": false,
+        "type": {
+          "names": [
+            "number"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.AreaChart.MajorTick",
+    "name": "MajorTick",
+    "kind": "typedef",
+    "memberof": "oj-c.AreaChart",
+    "meta": {
+      "filename": "area-chart.tsx",
+      "path": "web/components/oj-c/area-chart"
+    },
+    "longname": "oj-c.AreaChart.MajorTick",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "scope": "static",
+    "description": "",
+    "properties": [
+      {
+        "name": "lineColor",
+        "description": "The color of the line.",
+        "optional": true,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "lineStyle",
+        "description": "The style of the line.",
+        "optional": true,
+        "type": {
+          "names": [
+            "\"dashed\"",
+            "\"solid\"",
+            "\"dotted\""
+          ]
+        },
+        "ojvalues": [
+          {
+            "name": "dashed",
+            "description": "Renders dashed major tick.",
+            "displayName": "Dashed",
+            "type": {
+              "names": [
+                "string"
+              ]
+            }
+          },
+          {
+            "name": "dotted",
+            "description": "Renders dotted major tick.",
+            "displayName": "Dotted",
+            "type": {
+              "names": [
+                "string"
+              ]
+            }
+          },
+          {
+            "name": "solid",
+            "description": "Renders solid major tick.",
+            "displayName": "Solid",
+            "type": {
+              "names": [
+                "string"
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "name": "lineWidth",
+        "description": "The width of the line.",
+        "optional": true,
+        "type": {
+          "names": [
+            "number"
+          ]
+        }
+      },
+      {
+        "name": "rendered",
+        "description": "Whether the tick is rendered or not.",
+        "optional": false,
+        "type": {
+          "names": [
+            "\"auto\"",
+            "\"off\"",
+            "\"on\""
+          ]
+        },
+        "ojvalues": [
+          {
+            "name": "off",
+            "description": "Renders the minor tick.",
+            "displayName": "Off",
+            "type": {
+              "names": [
+                "string"
+              ]
+            }
+          },
+          {
+            "name": "on",
+            "description": "Does not render the minor tick.",
+            "displayName": "On",
+            "type": {
+              "names": [
+                "string"
+              ]
+            }
+          },
+          {
+            "name": "auto",
+            "description": "Renders the minor tick for log scale.",
+            "displayName": "Auto",
+            "type": {
+              "names": [
+                "string"
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "oj-c.AreaChart.MinorTick",
+    "name": "MinorTick",
+    "kind": "typedef",
+    "memberof": "oj-c.AreaChart",
+    "meta": {
+      "filename": "area-chart.tsx",
+      "path": "web/components/oj-c/area-chart"
+    },
+    "longname": "oj-c.AreaChart.MinorTick",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "scope": "static",
+    "description": "",
+    "properties": [
+      {
+        "name": "lineColor",
+        "description": "The color of the line.",
+        "optional": true,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "lineStyle",
+        "description": "The style of the line.",
+        "optional": true,
+        "type": {
+          "names": [
+            "\"dashed\"",
+            "\"solid\"",
+            "\"dotted\""
+          ]
+        },
+        "ojvalues": [
+          {
+            "name": "dashed",
+            "description": "Renders dashed major tick.",
+            "displayName": "Dashed",
+            "type": {
+              "names": [
+                "string"
+              ]
+            }
+          },
+          {
+            "name": "dotted",
+            "description": "Renders dotted major tick.",
+            "displayName": "Dotted",
+            "type": {
+              "names": [
+                "string"
+              ]
+            }
+          },
+          {
+            "name": "solid",
+            "description": "Renders solid major tick.",
+            "displayName": "Solid",
+            "type": {
+              "names": [
+                "string"
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "name": "lineWidth",
+        "description": "The width of the line.",
+        "optional": true,
+        "type": {
+          "names": [
+            "number"
+          ]
+        }
+      },
+      {
+        "name": "rendered",
+        "description": "Whether the tick is rendered.",
+        "optional": false,
+        "type": {
+          "names": [
+            "\"auto\"",
+            "\"off\"",
+            "\"on\""
+          ]
+        },
+        "ojvalues": [
+          {
+            "name": "off",
+            "description": "Renders the minor tick.",
+            "displayName": "Off",
+            "type": {
+              "names": [
+                "string"
+              ]
+            }
+          },
+          {
+            "name": "on",
+            "description": "Does not render the minor tick.",
+            "displayName": "On",
+            "type": {
+              "names": [
+                "string"
+              ]
+            }
+          },
+          {
+            "name": "auto",
+            "description": "Renders the minor tick for log scale.",
+            "displayName": "Auto",
+            "type": {
+              "names": [
+                "string"
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "oj-c.AreaChart.YAxisTickLabel",
+    "name": "YAxisTickLabel",
+    "kind": "typedef",
+    "memberof": "oj-c.AreaChart",
+    "meta": {
+      "filename": "area-chart.tsx",
+      "path": "web/components/oj-c/area-chart"
+    },
+    "longname": "oj-c.AreaChart.YAxisTickLabel",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "scope": "static",
+    "description": "",
+    "properties": [
+      {
+        "name": "converter",
+        "description": "The converter used to format the tick label of the axis.",
+        "optional": true,
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "Converter<number>",
+            "jsdocOverride": true,
+            "for": "converter",
+            "module": {
+              "Converter": "ojconverter"
+            }
+          }
+        ]
+      },
+      {
+        "name": "rendered",
+        "description": "Whether the tick labels are rendered or not.",
+        "optional": true,
+        "type": {
+          "names": [
+            "\"off\"",
+            "\"on\""
+          ]
+        },
+        "ojvalues": [
+          {
+            "name": "on",
+            "description": "Renders the axis tick label.",
+            "displayName": "On",
+            "type": {
+              "names": [
+                "string"
+              ]
+            }
+          },
+          {
+            "name": "off",
+            "description": "Axis tick labels won't be rendered.",
+            "displayName": "Off",
+            "type": {
+              "names": [
+                "string"
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "name": "style",
+        "description": "The object defining the style of the labels. The following style properties are supported: color, cursor, fontFamily, fontSize, fontStyle, fontWeight, textDecoration.",
+        "optional": true,
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "Partial<CSSStyleDeclaration>",
+            "jsdocOverride": true,
+            "for": "style"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "oj-c.AreaChart.YAxis",
+    "name": "YAxis",
+    "kind": "typedef",
+    "memberof": "oj-c.AreaChart",
+    "meta": {
+      "filename": "area-chart.tsx",
+      "path": "web/components/oj-c/area-chart"
+    },
+    "longname": "oj-c.AreaChart.YAxis",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "scope": "static",
+    "description": "",
+    "properties": [
+      {
+        "name": "dataMax",
+        "description": "The maximum data value corresponding to an axis. If specified, the automatic axis extent calculation will use this value.",
+        "optional": true,
+        "type": {
+          "names": [
+            "number"
+          ]
+        }
+      },
+      {
+        "name": "dataMin",
+        "description": "The minimum data value corresponding to an axis. If specified, the automatic axis extent calculation will use this value.",
+        "optional": true,
+        "type": {
+          "names": [
+            "number"
+          ]
+        }
+      },
+      {
+        "name": "max",
+        "description": "The maximum value of the axis. Defaults to null for automatic calculation based on the data.",
+        "optional": true,
+        "type": {
+          "names": [
+            "number"
+          ]
+        }
+      },
+      {
+        "name": "min",
+        "description": "The minumum value of the axis. Defaults to null for automatic calculation based on the data.",
+        "optional": true,
+        "type": {
+          "names": [
+            "number"
+          ]
+        }
+      },
+      {
+        "name": "majorTick",
+        "description": "The object defining the properties of the major tick of the y axis.",
+        "optional": true,
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "oj-c.AreaChart.MajorTick",
+            "jsdocOverride": true,
+            "for": "majorTick"
+          }
+        ]
+      },
+      {
+        "name": "minorTick",
+        "description": "The object defining the properties of the minor tick of the y axis.",
+        "optional": true,
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "oj-c.AreaChart.MinorTick",
+            "jsdocOverride": true,
+            "for": "minorTick"
+          }
+        ]
+      },
+      {
+        "name": "tickLabel",
+        "description": "The object defining the properties of tick labels of the y axis.",
+        "optional": true,
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "oj-c.AreaChart.YAxisTickLabel",
+            "jsdocOverride": true,
+            "for": "tickLabel"
+          }
+        ]
+      },
+      {
+        "name": "viewportMin",
+        "description": "Specifies the minimum y coordinate of the current viewport for zoom and scroll.\nIf not specified, this value will be the axis min.",
+        "optional": true,
+        "type": {
+          "names": [
+            "number"
+          ]
+        }
+      },
+      {
+        "name": "viewportMax",
+        "description": "Specifies the maximum y coordinate of the current viewport for zoom and scroll.\nIf not specified, this value will be the axis max.",
+        "optional": true,
+        "type": {
+          "names": [
+            "number"
+          ]
+        }
+      },
+      {
+        "name": "step",
+        "description": "The increment between major tick marks in y axis. Defaults to null for automatic calculation based on the data.\nFor log axis, the step is a multiplier, for example, if the step is 2, the major tick marks will be rendered at 1, 2, 4, 8, and so on.",
+        "optional": true,
+        "type": {
+          "names": [
+            "number"
+          ]
+        }
+      },
+      {
+        "name": "size",
+        "description": "Defines the size of the axis in terms of ratio of the width (for vertical charts) or height (for horizontal charts).",
+        "optional": true,
+        "type": {
+          "names": [
+            "number"
+          ]
+        }
+      },
+      {
+        "name": "scale",
+        "description": "Defines the axis scale. If set to log, major ticks will rendered will be incremented in logarithmic ratio.",
+        "optional": true,
+        "type": {
+          "names": [
+            "\"linear\"",
+            "\"log\""
+          ]
+        },
+        "ojvalues": [
+          {
+            "name": "linear",
+            "description": "Renders linear y axis.",
+            "displayName": "Linear",
+            "type": {
+              "names": [
+                "string"
+              ]
+            }
+          },
+          {
+            "name": "log",
+            "description": "Renders log y axis.",
+            "displayName": "Log",
+            "type": {
+              "names": [
+                "string"
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "name": "title",
+        "description": "The title of the axis.",
+        "optional": true,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "titleStyle",
+        "description": "The object defining the css properties of the axis title.\nThe following style properties are supported: color, cursor, fontFamily, fontSize, fontStyle, fontWeight, textDecoration.",
+        "optional": true,
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "Partial<CSSStyleDeclaration>",
+            "jsdocOverride": true,
+            "for": "titleStyle"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "oj-c.AreaChart.Y2Axis",
+    "name": "Y2Axis",
+    "kind": "typedef",
+    "memberof": "oj-c.AreaChart",
+    "meta": {
+      "filename": "area-chart.tsx",
+      "path": "web/components/oj-c/area-chart"
+    },
+    "longname": "oj-c.AreaChart.Y2Axis",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "scope": "static",
+    "description": "",
+    "properties": [
+      {
+        "name": "dataMax",
+        "description": "The maximum data value corresponding to an axis. If specified, the automatic axis extent calculation will use this value.",
+        "optional": true,
+        "type": {
+          "names": [
+            "number"
+          ]
+        }
+      },
+      {
+        "name": "dataMin",
+        "description": "The minimum data value corresponding to an axis. If specified, the automatic axis extent calculation will use this value.",
+        "optional": true,
+        "type": {
+          "names": [
+            "number"
+          ]
+        }
+      },
+      {
+        "name": "max",
+        "description": "The maximum value of the axis. Defaults to null for automatic calculation based on the data.",
+        "optional": true,
+        "type": {
+          "names": [
+            "number"
+          ]
+        }
+      },
+      {
+        "name": "min",
+        "description": "The minumum value of the axis. Defaults to null for automatic calculation based on the data.",
+        "optional": true,
+        "type": {
+          "names": [
+            "number"
+          ]
+        }
+      },
+      {
+        "name": "majorTick",
+        "description": "The object defining the properties of the major tick of the y axis.",
+        "optional": true,
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "oj-c.AreaChart.MajorTick",
+            "jsdocOverride": true,
+            "for": "majorTick"
+          }
+        ]
+      },
+      {
+        "name": "minorTick",
+        "description": "The object defining the properties of the minor tick of the y axis.",
+        "optional": true,
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "oj-c.AreaChart.MinorTick",
+            "jsdocOverride": true,
+            "for": "minorTick"
+          }
+        ]
+      },
+      {
+        "name": "tickLabel",
+        "description": "The object defining the properties of tick labels of the y axis.",
+        "optional": true,
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "oj-c.AreaChart.YAxisTickLabel",
+            "jsdocOverride": true,
+            "for": "tickLabel"
+          }
+        ]
+      },
+      {
+        "name": "viewportMin",
+        "description": "Specifies the minimum y coordinate of the current viewport for zoom and scroll.\nIf not specified, this value will be the axis min.",
+        "optional": true,
+        "type": {
+          "names": [
+            "number"
+          ]
+        }
+      },
+      {
+        "name": "viewportMax",
+        "description": "Specifies the maximum y coordinate of the current viewport for zoom and scroll.\nIf not specified, this value will be the axis max.",
+        "optional": true,
+        "type": {
+          "names": [
+            "number"
+          ]
+        }
+      },
+      {
+        "name": "step",
+        "description": "The increment between major tick marks in y axis. Defaults to null for automatic calculation based on the data.\nFor log axis, the step is a multiplier, for example, if the step is 2, the major tick marks will be rendered at 1, 2, 4, 8, and so on.",
+        "optional": true,
+        "type": {
+          "names": [
+            "number"
+          ]
+        }
+      },
+      {
+        "name": "size",
+        "description": "Defines the size of the axis in terms of ratio of the width (for vertical charts) or height (for horizontal charts).",
+        "optional": true,
+        "type": {
+          "names": [
+            "number"
+          ]
+        }
+      },
+      {
+        "name": "scale",
+        "description": "Defines the axis scale. If set to log, major ticks will rendered will be incremented in logarithmic ratio.",
+        "optional": true,
+        "type": {
+          "names": [
+            "\"linear\"",
+            "\"log\""
+          ]
+        },
+        "ojvalues": [
+          {
+            "name": "linear",
+            "description": "Renders linear y axis.",
+            "displayName": "Linear",
+            "type": {
+              "names": [
+                "string"
+              ]
+            }
+          },
+          {
+            "name": "log",
+            "description": "Renders log y axis.",
+            "displayName": "Log",
+            "type": {
+              "names": [
+                "string"
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "name": "title",
+        "description": "The title of the axis.",
+        "optional": true,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "titleStyle",
+        "description": "The object defining the css properties of the axis title.\nThe following style properties are supported: color, cursor, fontFamily, fontSize, fontStyle, fontWeight, textDecoration.",
+        "optional": true,
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "Partial<CSSStyleDeclaration>",
+            "jsdocOverride": true,
+            "for": "titleStyle"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "oj-c.AreaChart.XAxisTickLabel",
+    "name": "XAxisTickLabel",
+    "kind": "typedef",
+    "memberof": "oj-c.AreaChart",
+    "meta": {
+      "filename": "area-chart.tsx",
+      "path": "web/components/oj-c/area-chart"
+    },
+    "longname": "oj-c.AreaChart.XAxisTickLabel",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "scope": "static",
+    "description": "",
+    "properties": [
+      {
+        "name": "converter",
+        "description": "The converter used to format the tick label of the axis. When using a time axis, this attribute also takes an array of two converters, which apply respectively to the first and second label levels.",
+        "optional": true,
+        "type": {
+          "names": [
+            "object|Array<object>"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "Converter<string>|[Converter<string>,Converter<string>]",
+            "jsdocOverride": true,
+            "for": "converter",
+            "module": {
+              "Converter": "ojconverter"
+            }
+          }
+        ]
+      },
+      {
+        "name": "rendered",
+        "description": "Whether the tick labels are rendered or not.",
+        "optional": true,
+        "type": {
+          "names": [
+            "\"off\"",
+            "\"on\""
+          ]
+        },
+        "ojvalues": [
+          {
+            "name": "on",
+            "description": "Renders the axis tick label.",
+            "displayName": "On",
+            "type": {
+              "names": [
+                "string"
+              ]
+            }
+          },
+          {
+            "name": "off",
+            "description": "Axis tick labels won't be rendered.",
+            "displayName": "Off",
+            "type": {
+              "names": [
+                "string"
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "name": "rotation",
+        "description": "Defines whether the chart will automatically rotate the labels by 90 degrees in order to fit more labels on the axis.\nThe rotation will only be applied to categorical labels for a horizontal axis.",
+        "optional": true,
+        "type": {
+          "names": [
+            "\"auto\"",
+            "\"none\""
+          ]
+        },
+        "ojvalues": [
+          {
+            "name": "none",
+            "description": "The axis labels will not be rotated.",
+            "displayName": "On",
+            "type": {
+              "names": [
+                "string"
+              ]
+            }
+          },
+          {
+            "name": "off",
+            "description": "The axis labels might be rotated in order to fit more labels.",
+            "displayName": "auto",
+            "type": {
+              "names": [
+                "string"
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "name": "style",
+        "description": "The object defining the style of the labels. The following style properties are supported: color, cursor, fontFamily, fontSize, fontStyle, fontWeight, textDecoration, whiteSpace.\nThe CSS white-space property can be defined with value \"nowrap\" to disable default text wrapping of categorical labels",
+        "optional": true,
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "Partial<CSSStyleDeclaration>",
+            "jsdocOverride": true,
+            "for": "style"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "oj-c.AreaChart.XAxis",
+    "name": "XAxis",
+    "kind": "typedef",
+    "memberof": "oj-c.AreaChart",
+    "meta": {
+      "filename": "area-chart.tsx",
+      "path": "web/components/oj-c/area-chart"
+    },
+    "longname": "oj-c.AreaChart.XAxis",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "scope": "static",
+    "description": "",
+    "properties": [
+      {
+        "name": "majorTick",
+        "description": "The object defining the properties of the major tick of the x axis.",
+        "optional": true,
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "oj-c.AreaChart.MajorTick",
+            "jsdocOverride": true,
+            "for": "majorTick"
+          }
+        ]
+      },
+      {
+        "name": "minorTick",
+        "description": "The object defining the properties of the minor tick of the x axis.",
+        "optional": true,
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "oj-c.AreaChart.MinorTick",
+            "jsdocOverride": true,
+            "for": "minorTick"
+          }
+        ]
+      },
+      {
+        "name": "tickLabel",
+        "description": "The object defining the properties of tick labels of the x axis.",
+        "optional": true,
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "oj-c.AreaChart.XAxisTickLabel",
+            "jsdocOverride": true,
+            "for": "tickLabel"
+          }
+        ]
+      },
+      {
+        "name": "viewportMin",
+        "description": "Specifies the minimum y coordinate of the current viewport for zoom and scroll.\nIf not specified, this value will be the axis min.",
+        "optional": true,
+        "type": {
+          "names": [
+            "number"
+          ]
+        }
+      },
+      {
+        "name": "viewportMax",
+        "description": "Specifies the maximum y coordinate of the current viewport for zoom and scroll.\nIf not specified, this value will be the axis max.",
+        "optional": true,
+        "type": {
+          "names": [
+            "number"
+          ]
+        }
+      },
+      {
+        "name": "step",
+        "description": "The increment between major tick marks in y axis. Defaults to null for automatic calculation based on the data.\nFor log axis, the step is a multiplier, for example, if the step is 2, the major tick marks will be rendered at 1, 2, 4, 8, and so on.",
+        "optional": true,
+        "type": {
+          "names": [
+            "number"
+          ]
+        }
+      },
+      {
+        "name": "size",
+        "description": "Defines the size of the axis in terms of ratio of the width (for vertical charts) or height (for horizontal charts).",
+        "optional": true,
+        "type": {
+          "names": [
+            "number"
+          ]
+        }
+      },
+      {
+        "name": "scale",
+        "description": "Defines the axis scale. If set to log, major ticks will rendered will be incremented in logarithmic ratio.",
+        "optional": true,
+        "type": {
+          "names": [
+            "\"linear\"",
+            "\"log\""
+          ]
+        }
+      },
+      {
+        "name": "title",
+        "description": "The title of the axis.",
+        "optional": true,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "titleStyle",
+        "description": "The object defining the css properties of the axis title.",
+        "optional": true,
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "Partial<CSSStyleDeclaration>",
+            "jsdocOverride": true,
+            "for": "titleStyle"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "oj-c.AreaChart.PlotArea",
+    "name": "PlotArea",
+    "kind": "typedef",
+    "memberof": "oj-c.AreaChart",
+    "meta": {
+      "filename": "area-chart.tsx",
+      "path": "web/components/oj-c/area-chart"
+    },
+    "longname": "oj-c.AreaChart.PlotArea",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "scope": "static",
+    "description": "",
+    "properties": [
+      {
+        "name": "backgroundColor",
+        "description": "The color of the plot area background.",
+        "optional": true,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.AreaChart.TextValueFormat",
+    "name": "TextValueFormat",
+    "kind": "typedef",
+    "memberof": "oj-c.AreaChart",
+    "meta": {
+      "filename": "area-chart.tsx",
+      "path": "web/components/oj-c/area-chart"
+    },
+    "longname": "oj-c.AreaChart.TextValueFormat",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "scope": "static",
+    "description": "",
+    "properties": [
+      {
+        "name": "tooltipLabel",
+        "description": "A string representing the label that is displayed before the value in the tooltip.\nThis value can also take an array of strings to be applied to hierarchical group names, from outermost to innermost.",
+        "optional": true,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "tooltipDisplay",
+        "description": "Whether the value is displayed in the tooltip.",
+        "optional": true,
+        "type": {
+          "names": [
+            "\"auto\"",
+            "\"off\""
+          ]
+        },
+        "ojvalues": [
+          {
+            "name": "off",
+            "description": "The property will not be displayed in tooltip.",
+            "displayName": "Off",
+            "type": {
+              "names": [
+                "string"
+              ]
+            }
+          },
+          {
+            "name": "on",
+            "description": "The property will be displayed in tooltip.",
+            "displayName": "On",
+            "type": {
+              "names": [
+                "string"
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "oj-c.AreaChart.NumericalValueFormat",
+    "name": "NumericalValueFormat",
+    "kind": "typedef",
+    "memberof": "oj-c.AreaChart",
+    "meta": {
+      "filename": "area-chart.tsx",
+      "path": "web/components/oj-c/area-chart"
+    },
+    "longname": "oj-c.AreaChart.NumericalValueFormat",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "scope": "static",
+    "description": "",
+    "properties": [
+      {
+        "name": "converter",
+        "description": "The converter to format the numerical value for the tooltip.",
+        "optional": false,
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "Converter<number>",
+            "jsdocOverride": true,
+            "for": "converter",
+            "module": {
+              "Converter": "ojconverter"
+            }
+          }
+        ]
+      },
+      {
+        "name": "tooltipLabel",
+        "description": "A string representing the label that is displayed before the value in the tooltip.\nThis value can also take an array of strings to be applied to hierarchical group names, from outermost to innermost.",
+        "optional": true,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "tooltipDisplay",
+        "description": "Whether the value is displayed in the tooltip.",
+        "optional": true,
+        "type": {
+          "names": [
+            "\"auto\"",
+            "\"off\""
+          ]
+        },
+        "ojvalues": [
+          {
+            "name": "off",
+            "description": "The property will not be displayed in tooltip.",
+            "displayName": "Off",
+            "type": {
+              "names": [
+                "string"
+              ]
+            }
+          },
+          {
+            "name": "on",
+            "description": "The property will be displayed in tooltip.",
+            "displayName": "On",
+            "type": {
+              "names": [
+                "string"
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "oj-c.AreaChart.ValueFormats",
+    "name": "ValueFormats",
+    "kind": "typedef",
+    "memberof": "oj-c.AreaChart",
+    "meta": {
+      "filename": "area-chart.tsx",
+      "path": "web/components/oj-c/area-chart"
+    },
+    "longname": "oj-c.AreaChart.ValueFormats",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "scope": "static",
+    "description": "",
+    "properties": [
+      {
+        "name": "group",
+        "description": "Object that specifies the value formatting and tooltip behavior for the group.",
+        "optional": false,
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "oj-c.AreaChart.TextValueFormat",
+            "jsdocOverride": true,
+            "for": "group"
+          }
+        ]
+      },
+      {
+        "name": "series",
+        "description": "Object that specifies the value formatting and tooltip behavior for the series.",
+        "optional": false,
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "oj-c.AreaChart.TextValueFormat",
+            "jsdocOverride": true,
+            "for": "series"
+          }
+        ]
+      },
+      {
+        "name": "value",
+        "description": "Object that specifies the value formatting and tooltip behavior for the item value.",
+        "optional": false,
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "oj-c.AreaChart.NumericalValueFormat",
+            "jsdocOverride": true,
+            "for": "value"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "oj-c.AreaChart.StyleDefaults",
+    "name": "StyleDefaults",
+    "kind": "typedef",
+    "memberof": "oj-c.AreaChart",
+    "meta": {
+      "filename": "area-chart.tsx",
+      "path": "web/components/oj-c/area-chart"
+    },
+    "longname": "oj-c.AreaChart.StyleDefaults",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "scope": "static",
+    "description": "",
+    "properties": [
+      {
+        "name": "groupSeparators",
+        "description": "An object defining the group separator lines in hierarchical axis.",
+        "optional": true,
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "{ rendered?: 'auto' | 'off'; color?: ColorProps['color']; }",
+            "jsdocOverride": true,
+            "for": "groupSeparators"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "oj-c.AreaChart.AreaChartSeries",
+    "name": "AreaChartSeries",
+    "kind": "typedef",
+    "memberof": "oj-c.AreaChart",
+    "meta": {
+      "filename": "area-chart.tsx",
+      "path": "web/components/oj-c/area-chart"
+    },
+    "longname": "oj-c.AreaChart.AreaChartSeries",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "scope": "static",
+    "description": "",
+    "tsgenerictype": {
+      "target": "Type",
+      "value": "<K>",
+      "for": "genericTypeParameters"
+    },
+    "properties": [
+      {
+        "name": "items",
+        "optional": false,
+        "type": {
+          "names": [
+            "Array<object>"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "Array<oj-c.AreaChart.AreaItem<K>>",
+            "jsdocOverride": true,
+            "for": "items"
+          }
+        ]
+      },
+      {
+        "name": "assignedToY2",
+        "description": "Defines whether the series is associated with the y2 axis.",
+        "optional": true,
+        "type": {
+          "names": [
+            "\"off\"",
+            "\"on\""
+          ]
+        }
+      },
+      {
+        "name": "categories",
+        "description": "An array of category strings corresponding to the tag cloud items. This allows highlighting and filtering of items.",
+        "optional": true,
+        "type": {
+          "names": [
+            "Array<string>"
+          ]
+        }
+      },
+      {
+        "name": "color",
+        "description": "The color of the series. The chart legend item will inherit this color value.",
+        "optional": true,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "drilling",
+        "description": "Whether drilling is enabled on the series item. Drillable objects will show a pointer cursor on hover and fire an <code class=\"prettyprint\">ojDrill</code> event on click (double click if selection is enabled). To enable drilling for all series items at once, use the drilling attribute in the top level.",
+        "optional": true,
+        "type": {
+          "names": [
+            "\"inherit\"",
+            "\"off\"",
+            "\"on\""
+          ]
+        }
+      },
+      {
+        "name": "lineType",
+        "description": "The line type of the data line or area. Only applies to line, area, scatter, and bubble series. centeredStepped and centeredSegmented are not supported for polar, scatter, and bubble charts.",
+        "optional": true,
+        "type": {
+          "names": [
+            "\"curved\"",
+            "\"straight\""
+          ]
+        }
+      },
+      {
+        "name": "markerShape",
+        "description": "The shape of the data markers. In addition to the built-in shapes, it may also take SVG path commands to specify a custom shape. The chart will style the custom shapes the same way as built-in shapes, supporting properties like color and borderColor and applying hover and selection effects. Only 'auto' is supported for range series.",
+        "optional": true,
+        "type": {
+          "names": [
+            "\"auto\"",
+            "\"square\"",
+            "\"circle\"",
+            "\"diamond\"",
+            "\"human\"",
+            "\"plus\"",
+            "\"star\"",
+            "\"triangleDown\"",
+            "\"triangleUp\""
+          ]
+        }
+      },
+      {
+        "name": "markerColor",
+        "description": "The color of the data markers, if different from the series color.",
+        "optional": true,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "markerDisplayed",
+        "description": "Defines whether the data marker is displayed. Only applies to line, area, scatter, and bubble series. If auto, the markers will be displayed whenever the data points are not connected by a line.",
+        "optional": true,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "markerSize",
+        "description": "The size of the data markers.",
+        "optional": true,
+        "type": {
+          "names": [
+            "number"
+          ]
+        }
+      },
+      {
+        "name": "name",
+        "description": "The name of the series, displayed in the legend and tooltips.",
+        "optional": true,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "shortDesc",
+        "description": "The description of this series. This is used for accessibility and for customizing the tooltip text on the corresponding legend item for the series.",
+        "optional": true,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.AreaChart.Group",
+    "name": "Group",
+    "kind": "typedef",
+    "memberof": "oj-c.AreaChart",
+    "meta": {
+      "filename": "area-chart.tsx",
+      "path": "web/components/oj-c/area-chart"
+    },
+    "longname": "oj-c.AreaChart.Group",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "scope": "static",
+    "description": "",
+    "properties": [
+      {
+        "name": "drilling",
+        "description": "Whether drilling is enabled in the group label.",
+        "optional": true,
+        "type": {
+          "names": [
+            "\"inherit\"",
+            "\"off\"",
+            "\"on\""
+          ]
+        }
+      },
+      {
+        "name": "id",
+        "description": "The id of the group.",
+        "optional": false,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "name",
+        "description": "The name of the group.",
+        "optional": true,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "accessibleLabel",
+        "description": "The description of the group. This is used for the customizing the tooltip text and only applies to a categorical axis.",
+        "optional": true,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "groups",
+        "description": "An array of sub groups belonging to this group.",
+        "type": {
+          "names": [
+            "Array<object>"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "Array<oj-c.AreaChart.Group>",
+            "jsdocOverride": true,
+            "for": "groups"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "oj-c.AreaChart.ChartLegend",
+    "name": "ChartLegend",
+    "kind": "typedef",
+    "memberof": "oj-c.AreaChart",
+    "meta": {
+      "filename": "area-chart.tsx",
+      "path": "web/components/oj-c/area-chart"
+    },
+    "longname": "oj-c.AreaChart.ChartLegend",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "scope": "static",
+    "description": "The chart legend type.",
+    "properties": [
+      {
+        "name": "position",
+        "description": "The position of the legend within the chart. By default, the legend will be placed on the side or bottom\nof the chart.",
+        "optional": false,
+        "type": {
+          "names": [
+            "\"auto\"",
+            "\"end\"",
+            "\"start\"",
+            "\"top\"",
+            "\"bottom\""
+          ]
+        },
+        "defaultvalue": "\"auto\""
+      },
+      {
+        "name": "rendered",
+        "description": "Defines whether the legend is rendered. If set to auto, the legend will be hidden for charts with a large bunber of series.",
+        "optional": false,
+        "type": {
+          "names": [
+            "\"auto\"",
+            "\"off\"",
+            "\"on\""
+          ]
+        },
+        "defaultvalue": "\"on\""
+      },
+      {
+        "name": "maxSize",
+        "description": "The max size of the legend in pixels or in percentage.",
+        "optional": true,
+        "type": {
+          "names": [
+            "number|string"
+          ]
+        }
+      },
+      {
+        "name": "size",
+        "description": "Defines the size of legend in pixel or percent.",
+        "optional": true,
+        "type": {
+          "names": [
+            "number|string"
+          ]
+        }
+      },
+      {
+        "name": "symbolHeight",
+        "description": "The height of the legend symbol (line or marker) in pixels.",
+        "optional": true,
+        "type": {
+          "names": [
+            "number"
+          ]
+        }
+      },
+      {
+        "name": "symbolWidth",
+        "description": "The width of the legend symbol (line or marker) in pixels.",
+        "optional": true,
+        "type": {
+          "names": [
+            "number"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.AreaChart.MenuItem",
+    "name": "MenuItem",
+    "kind": "typedef",
+    "memberof": "oj-c.AreaChart",
+    "meta": {
+      "filename": "area-chart.tsx",
+      "path": "web/components/oj-c/area-chart"
+    },
+    "longname": "oj-c.AreaChart.MenuItem",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "scope": "static",
+    "description": "Specifies a standard menu item.",
+    "properties": [
+      {
+        "name": "type",
+        "description": "Specifies a standard menu item.",
+        "optional": true,
+        "type": {
+          "names": [
+            "\"item\""
+          ]
+        }
+      },
+      {
+        "name": "label",
+        "description": "The menu item label.",
+        "optional": false,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "key",
+        "description": "A unique key associated with the menu item.",
+        "optional": false,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "disabled",
+        "description": "Specifies if the menu item is disabled (enabled by default).",
+        "optional": true,
+        "type": {
+          "names": [
+            "boolean"
+          ]
+        }
+      },
+      {
+        "name": "onAction",
+        "description": "Optional callback function associated with the menu item.",
+        "optional": true,
+        "type": {
+          "names": [
+            "function"
+          ]
+        }
+      },
+      {
+        "name": "startIcon",
+        "description": "Optional icon to render at the start of the menu item.",
+        "optional": true,
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "{ type?: 'class'; class: string; }|{ type: 'img'; src: string; }",
+            "jsdocOverride": true,
+            "for": "startIcon"
+          }
+        ]
+      },
+      {
+        "name": "endIcon",
+        "description": "Optional icon to render at the end of the menu item.",
+        "optional": true,
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "{ type?: 'class'; class: string; }|{ type: 'img'; src: string; }",
+            "jsdocOverride": true,
+            "for": "endIcon"
+          }
+        ]
+      },
+      {
+        "name": "variant",
+        "description": "Specifies the menu item behavior.",
+        "optional": true,
+        "type": {
+          "names": [
+            "\"standard\"",
+            "\"destructive\""
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.AreaChart.ContextMenuSeparator",
+    "name": "ContextMenuSeparator",
+    "kind": "typedef",
+    "memberof": "oj-c.AreaChart",
+    "meta": {
+      "filename": "area-chart.tsx",
+      "path": "web/components/oj-c/area-chart"
+    },
+    "longname": "oj-c.AreaChart.ContextMenuSeparator",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "scope": "static",
+    "description": "",
+    "properties": [
+      {
+        "name": "type",
+        "optional": false,
+        "type": {
+          "names": [
+            "\"separator\""
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.AreaChart.MenuSelectItem",
+    "name": "MenuSelectItem",
+    "kind": "typedef",
+    "memberof": "oj-c.AreaChart",
+    "meta": {
+      "filename": "area-chart.tsx",
+      "path": "web/components/oj-c/area-chart"
+    },
+    "longname": "oj-c.AreaChart.MenuSelectItem",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "scope": "static",
+    "description": "Specifies a selectable item in a menu item.",
+    "properties": [
+      {
+        "name": "label",
+        "description": "The selectable item label.",
+        "optional": false,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "disabled",
+        "description": "Specifies if the selectable item is disabled (enabled by default).",
+        "optional": true,
+        "type": {
+          "names": [
+            "boolean"
+          ]
+        }
+      },
+      {
+        "name": "endIcon",
+        "description": "Optional icon to render at the end of the selectable item.",
+        "optional": true,
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "{ type?: 'class'; class: string; }|{ type: 'img'; src: string; }",
+            "jsdocOverride": true,
+            "for": "endIcon"
+          }
+        ]
+      },
+      {
+        "name": "value",
+        "description": "The value associated with the selectable item.",
+        "optional": false,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.AreaChart.MenuSelection",
+    "name": "MenuSelection",
+    "kind": "typedef",
+    "memberof": "oj-c.AreaChart",
+    "meta": {
+      "filename": "area-chart.tsx",
+      "path": "web/components/oj-c/area-chart"
+    },
+    "longname": "oj-c.AreaChart.MenuSelection",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "scope": "static",
+    "description": "",
+    "properties": [
+      {
+        "name": "at",
+        "description": "Takes an integer value and returns the item at that index,\nallowing for positive and negative integers.\nNegative integers count back from the last item in the array.",
+        "optional": false,
+        "type": {
+          "names": [
+            "function"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "(index: number) => string | undefined",
+            "jsdocOverride": true,
+            "for": "at"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "oj-c.AreaChart.SelectMenuItemDetail",
+    "name": "SelectMenuItemDetail",
+    "kind": "typedef",
+    "memberof": "oj-c.AreaChart",
+    "meta": {
+      "filename": "area-chart.tsx",
+      "path": "web/components/oj-c/area-chart"
+    },
+    "longname": "oj-c.AreaChart.SelectMenuItemDetail",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "scope": "static",
+    "description": "",
+    "tsgenerictype": {
+      "target": "Type",
+      "value": "<T extends oj-c.AreaChart.MenuSelection>",
+      "for": "genericTypeParameters"
+    },
+    "properties": [
+      {
+        "name": "value",
+        "optional": false,
+        "type": {
+          "names": [
+            "any"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "T",
+            "jsdocOverride": true,
+            "for": "value"
+          }
+        ]
+      },
+      {
+        "name": "menuSelectionGroupKey",
+        "optional": false,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.AreaChart.ContextMenuSelectSingle",
+    "name": "ContextMenuSelectSingle",
+    "kind": "typedef",
+    "memberof": "oj-c.AreaChart",
+    "meta": {
+      "filename": "area-chart.tsx",
+      "path": "web/components/oj-c/area-chart"
+    },
+    "longname": "oj-c.AreaChart.ContextMenuSelectSingle",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "scope": "static",
+    "description": "",
+    "properties": [
+      {
+        "name": "type",
+        "description": "Specifies a select single menu item.",
+        "optional": false,
+        "type": {
+          "names": [
+            "\"selectsingle\""
+          ]
+        }
+      },
+      {
+        "name": "key",
+        "description": "A unique key associated with the select single.",
+        "optional": false,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "items",
+        "description": "Specifies the array of select items that make up the select single.",
+        "optional": true,
+        "type": {
+          "names": [
+            "Array<object>"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "Array<oj-c.AreaChart.MenuSelectItem>",
+            "jsdocOverride": true,
+            "for": "items"
+          }
+        ]
+      },
+      {
+        "name": "selection",
+        "optional": true,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "onSelection",
+        "optional": true,
+        "type": {
+          "names": [
+            "function"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "(detail: oj-c.AreaChart.SelectMenuItemDetail<string>) => void",
+            "jsdocOverride": true,
+            "for": "onSelection"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "oj-c.AreaChart.ContextMenuSelectMultiple",
+    "name": "ContextMenuSelectMultiple",
+    "kind": "typedef",
+    "memberof": "oj-c.AreaChart",
+    "meta": {
+      "filename": "area-chart.tsx",
+      "path": "web/components/oj-c/area-chart"
+    },
+    "longname": "oj-c.AreaChart.ContextMenuSelectMultiple",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "scope": "static",
+    "description": "",
+    "properties": [
+      {
+        "name": "type",
+        "description": "Specifies a select multiple menu item.",
+        "optional": false,
+        "type": {
+          "names": [
+            "\"selectmultiple\""
+          ]
+        }
+      },
+      {
+        "name": "key",
+        "description": "A unique key associated with the select multiple.",
+        "optional": false,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "items",
+        "description": "Specifies the array of select items that make up the select multiple.",
+        "optional": true,
+        "type": {
+          "names": [
+            "Array<object>"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "Array<oj-c.AreaChart.MenuSelectItem>",
+            "jsdocOverride": true,
+            "for": "items"
+          }
+        ]
+      },
+      {
+        "name": "selection",
+        "optional": true,
+        "type": {
+          "names": [
+            "Array<string>"
+          ]
+        }
+      },
+      {
+        "name": "onSelection",
+        "optional": true,
+        "type": {
+          "names": [
+            "function"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "(detail: oj-c.AreaChart.SelectMenuItemDetail<string[]>) => void",
+            "jsdocOverride": true,
+            "for": "onSelection"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "oj-c.AreaChart.ContextMenuSubMenu",
+    "name": "ContextMenuSubMenu",
+    "kind": "typedef",
+    "memberof": "oj-c.AreaChart",
+    "meta": {
+      "filename": "area-chart.tsx",
+      "path": "web/components/oj-c/area-chart"
+    },
+    "longname": "oj-c.AreaChart.ContextMenuSubMenu",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "scope": "static",
+    "description": "",
+    "properties": [
+      {
+        "name": "type",
+        "description": "Specifies a submenu menu item.",
+        "optional": false,
+        "type": {
+          "names": [
+            "\"submenu\""
+          ]
+        }
+      },
+      {
+        "name": "key",
+        "description": "A unique key associated with the submenu menu item.",
+        "optional": true,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "label",
+        "description": "The submenu label.",
+        "optional": true,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "disabled",
+        "description": "Specifies if the submenu is disabled (enabled by default).",
+        "optional": true,
+        "type": {
+          "names": [
+            "boolean"
+          ]
+        }
+      },
+      {
+        "name": "startIcon",
+        "description": "Optional icon to render at the start of the submenu.",
+        "optional": true,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "items",
+        "optional": true,
+        "type": {
+          "names": [
+            "Array<string|object>"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "Array<string|oj-c.AreaChart.MenuItem|oj-c.AreaChart.ContextMenuSeparator|oj-c.AreaChart.ContextMenuSubMenu|oj-c.AreaChart.ContextMenuSelectSingle|oj-c.AreaChart.ContextMenuSelectMultiple>",
+            "jsdocOverride": true,
+            "for": "items"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "oj-c.AreaChart.ContextMenuItems",
+    "name": "ContextMenuItems",
+    "kind": "typedef",
+    "memberof": "oj-c.AreaChart",
+    "meta": {
+      "filename": "area-chart.tsx",
+      "path": "web/components/oj-c/area-chart"
+    },
+    "longname": "oj-c.AreaChart.ContextMenuItems",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "scope": "static",
+    "description": "",
+    "tstype": [
+      {
+        "target": "Type",
+        "value": "oj-c.AreaChart.MenuItem|oj-c.AreaChart.ContextMenuSeparator|oj-c.AreaChart.ContextMenuSubMenu|oj-c.AreaChart.ContextMenuSelectSingle|oj-c.AreaChart.ContextMenuSelectMultiple",
+        "jsdocOverride": true
+      }
+    ]
+  },
+  {
+    "id": "oj-c.AreaChart.AreaChartContextMenuConfig",
+    "name": "AreaChartContextMenuConfig",
+    "kind": "typedef",
+    "memberof": "oj-c.AreaChart",
+    "meta": {
+      "filename": "area-chart.tsx",
+      "path": "web/components/oj-c/area-chart"
+    },
+    "longname": "oj-c.AreaChart.AreaChartContextMenuConfig",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "scope": "static",
+    "description": "",
+    "tsgenerictype": {
+      "target": "Type",
+      "value": "<K,D>",
+      "for": "genericTypeParameters"
+    },
+    "properties": [
+      {
+        "name": "accessibleLabel",
+        "optional": true,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "items",
+        "optional": false,
+        "type": {
+          "names": [
+            "function"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "(context: AreaContextMenuContext<K, D>) => Array<oj-c.AreaChart.ContextMenuItems>",
+            "jsdocOverride": true,
+            "for": "items"
+          }
+        ]
+      }
+    ]
+  }
+]

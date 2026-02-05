@@ -1,0 +1,355 @@
+[
+  {
+    "id": "oj-c.DrawerPopup",
+    "name": "DrawerPopup",
+    "memberof": "oj-c",
+    "kind": "class",
+    "meta": {
+      "filename": "drawer-popup.tsx",
+      "path": "web/components/oj-c/drawer-popup"
+    },
+    "ojcomponent": true,
+    "isvcomponent": true,
+    "since": "16.0.0",
+    "longname": "oj-c.DrawerPopup",
+    "pack": "oj-c",
+    "classdesc": "<h3 id=\"drawerPopupOverview-section\">\n  JET Drawer Popup\n  <a class=\"bookmarkable-link\" title=\"Bookmarkable Link\" href=\"#drawerPopupOverview-section\"></a>\n</h3>\n<p>Description: Drawer Popup adds a single slide-in side content alongside some primary content to an application window. It can be placed at 'start', 'end' or 'bottom' edge and it always overlays the page.</p>\n<pre class=\"prettyprint\">\n<code>\n&lt;oj-c-drawer-popup>\n   Start drawer content\n&lt;/oj-c-drawer-popup>\n\n&lt;oj-c-drawer-popup edge=\"end\" opened=\"true\">\n   End drawer content\n&lt;/oj-c-drawer-popup>\n\n&lt;oj-c-drawer-popup edge=\"bottom\">\n   Bottom drawer content\n&lt;/oj-c-drawer-popup>\n\nMain section content\n</code></pre>\n\n<p id=\"drawer-popup-layout-section\">JET Drawer Popup and Drawer Layout look similar, but are intended to be used\nfor different purposes.</p>\n<p>Use Drawer Popup</p>\n<ul>\n  <li>If you need to display ‘overlay’ drawers attached to the edge of the viewport that stretch over the full viewport height or width.</li>\n  <li>If you need modality.</li>\n</ul>\n<p>Use Drawer Layout</p>\n<ul>\n  <li>If you need to switch between the ‘reflow’ display mode (big screens) and ‘overlay’ (small screens).</li>\n  <li>If the drawer should only fill a specific part of the viewport rather than take its full height (start/end) or full width (bottom).</li>\n  <li>If modality is not required.</li>\n</ul>\n\n<h3 id=\"keyboard-section\">\n  Keyboard End User Information\n  <a class=\"bookmarkable-link\" title=\"Bookmarkable Link\" href=\"#keyboard-section\"></a>\n</h3>\n<table class=\"keyboard-table\">\n <thead>\n   <tr>\n     <th>Target</th>\n     <th>Key</th>\n     <th>Action</th>\n   </tr>\n </thead>\n <tbody>\n   <tr>\n     <td>Drawer element</td>\n     <td><kbd>Esc</kbd></td>\n     <td>Close the drawer</td>\n   </tr>\n </tbody>\n</table>\n\n<h3 id=\"a11y-section\">\n  Accessibility\n  <a class=\"bookmarkable-link\" title=\"Bookmarkable Link\" href=\"#a11y-section\"></a>\n</h3>\n\n<h4>role</h4>\n<p>Drawer Popup always has the 'dialog' role.</p>\n\n<p>However, adding <code class=\"prettyprint\">role=\"dialog\"</code> alone is not sufficient to make a drawer accessible.\nIt must be properly labeled. It is developer’s responsibility to define respective aria properties to meet accessibility requirements.</p>\n\n<h4>aria-labelledby, aria-label</h4>\nIf a drawer already has a visible title bar, the text inside that bar can be used to label the dialog itself.\nSet the value of the <code class=\"prettyprint\">aria-labelledby</code> attribute to be the id of the element used to title the drawer.\nIf there isn't appropriate text visible in the DOM that could be referenced with <code class=\"prettyprint\">aria-labelledby</code>\nuse the <code class=\"prettyprint\">aria-label</code> attribute to define the accessible name of an element.\n\n<h4>aria-describedby</h4>\nIf the drawer contains additional descriptive text besides the drawer title,\nthis text can be associated with the drawer using the <code class=\"prettyprint\">aria-describedby</code> attribute.\n\n<h3 id=\"rtl-section\">\n  Reading direction\n  <a class=\"bookmarkable-link\" title=\"Bookmarkable Link\" href=\"#rtl-section\"></a>\n</h3>\n\n<p> Setting the reading direction (LTR or RTL) is supported by setting the <code class=\"prettyprint\">\"dir\"</code> attribute on the\n<code class=\"prettyprint\">&lt;html></code> element of the page. As with any JET component, in the unusual case that the reading direction\nis changed post-init, the page must be reloaded.</p>\n\n<h3 id=\"sizing\">\n  Sizing\n  <a class=\"bookmarkable-link\" title=\"Bookmarkable Link\" href=\"#sizing\"></a>\n</h3>\n\n<p>Side drawers always stretch to viewport's height and the bottom one to its width.\nThe other axis dimension is not predefined. This dimension's size is determined by its content.\nIf you want to set a custom size you can use units like px, rem, etc.\nHowever because there is no fixed-size parent percentages (%) won’t work,\nbut you can use vw (viewport width) or vh (viewport height) units to achieve a similar effect.</p>\n<ul>\n  <li>Note the built-in minimal and maximal width of side drawers.</li>\n  <li>Note that DrawerPopup animates opening and closing. However, it is app developer's responsibility to add animations for custom runtime changes to a drawer size. See the 'Sizing' cookbook demo for an example.</li>\n</ul>",
+    "scope": "static",
+    "tagWithoutBrackets": "oj-c-drawer-popup",
+    "tagWithBrackets": "<oj-c-drawer-popup>",
+    "domInterface": "CDrawerPopupElement",
+    "ojPageTitle": "&lt;oj-c-drawer-popup>",
+    "camelCaseName": "DrawerPopup",
+    "ojPageTitlePrefix": "Element: ",
+    "ojtsvcomponent": true,
+    "tstype": {
+      "target": "Type",
+      "value": "interface CDrawerPopupElement extends JetElement<DrawerPopupElementSettableProperties>"
+    },
+    "ojsignature": [
+      {
+        "target": "Type",
+        "value": "interface CDrawerPopupElement extends JetElement<DrawerPopupElementSettableProperties>"
+      }
+    ],
+    "tsdeprecated": [
+      {
+        "type": "supersedes",
+        "since": "17.0.0",
+        "value": [
+          "oj-drawer-popup"
+        ]
+      }
+    ],
+    "ojmodule": "drawer-popup"
+  },
+  {
+    "id": "oj-c.DrawerPopup#opened",
+    "name": "opened",
+    "memberof": "oj-c.DrawerPopup",
+    "meta": {
+      "filename": "drawer-popup.tsx",
+      "path": "web/components/oj-c/drawer-popup"
+    },
+    "kind": "member",
+    "longname": "oj-c.DrawerPopup#opened",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "boolean"
+      ]
+    },
+    "optional": false,
+    "ojwriteback": true,
+    "description": "Specifies whether the Drawer is open.",
+    "defaultvalue": false
+  },
+  {
+    "id": "oj-c.DrawerPopup#modality",
+    "name": "modality",
+    "memberof": "oj-c.DrawerPopup",
+    "meta": {
+      "filename": "drawer-popup.tsx",
+      "path": "web/components/oj-c/drawer-popup"
+    },
+    "kind": "member",
+    "longname": "oj-c.DrawerPopup#modality",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "\"modal\"",
+        "\"modeless\""
+      ]
+    },
+    "optional": true,
+    "description": "Specifies the modality of the drawer.\nSupported detail values are:\n<p><code>modal</code>, <code>modeless</code></p>",
+    "defaultvalue": "\"modal\""
+  },
+  {
+    "id": "oj-c.DrawerPopup#edge",
+    "name": "edge",
+    "memberof": "oj-c.DrawerPopup",
+    "meta": {
+      "filename": "drawer-popup.tsx",
+      "path": "web/components/oj-c/drawer-popup"
+    },
+    "kind": "member",
+    "longname": "oj-c.DrawerPopup#edge",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "\"end\"",
+        "\"start\"",
+        "\"bottom\""
+      ]
+    },
+    "optional": true,
+    "description": "Specifies at what edge the drawer opens.\nSupported values are:\n<p><code>start</code>, <code>end</code>, <code>bottom</code></p>\nDefault is <code>start</code>.",
+    "defaultvalue": "\"start\""
+  },
+  {
+    "id": "oj-c.DrawerPopup#autoDismiss",
+    "name": "autoDismiss",
+    "memberof": "oj-c.DrawerPopup",
+    "meta": {
+      "filename": "drawer-popup.tsx",
+      "path": "web/components/oj-c/drawer-popup"
+    },
+    "kind": "member",
+    "longname": "oj-c.DrawerPopup#autoDismiss",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "\"none\"",
+        "\"focus-loss\""
+      ]
+    },
+    "optional": true,
+    "description": "Specifies whether a click on the scrim closes the drawer.\nSupported values are:\n<p><code>focus-loss</code>, <code>none</code></p>\nDefault is <code>focus-loss</code>.",
+    "defaultvalue": "\"focus-loss\""
+  },
+  {
+    "id": "oj-c.DrawerPopup#closeGesture",
+    "name": "closeGesture",
+    "memberof": "oj-c.DrawerPopup",
+    "meta": {
+      "filename": "drawer-popup.tsx",
+      "path": "web/components/oj-c/drawer-popup"
+    },
+    "kind": "member",
+    "longname": "oj-c.DrawerPopup#closeGesture",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "\"none\"",
+        "\"swipe\""
+      ]
+    },
+    "optional": true,
+    "description": "Specifies whether a gesture closes the drawer.\nSupported values are:\n<p><code>swipe</code>, <code>none</code></p>\nDefault is <code>swipe</code>.",
+    "defaultvalue": "\"swipe\""
+  },
+  {
+    "id": "oj-c.DrawerPopup#backgroundColor",
+    "name": "backgroundColor",
+    "memberof": "oj-c.DrawerPopup",
+    "meta": {
+      "filename": "drawer-popup.tsx",
+      "path": "web/components/oj-c/drawer-popup"
+    },
+    "kind": "member",
+    "longname": "oj-c.DrawerPopup#backgroundColor",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "string"
+      ]
+    },
+    "optional": true,
+    "description": "Specifies background color of the Drawer."
+  },
+  {
+    "id": "oj-c.DrawerPopup#setProperty",
+    "name": "setProperty",
+    "memberof": "oj-c.DrawerPopup",
+    "meta": {
+      "filename": "drawer-popup.tsx",
+      "path": "web/components/oj-c/drawer-popup"
+    },
+    "kind": "function",
+    "longname": "oj-c.DrawerPopup#setProperty",
+    "scope": "instance",
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "void"
+          ]
+        }
+      }
+    ],
+    "description": "Sets a property or a single subproperty for complex properties and notifies the component of the change, triggering a corresponding event.",
+    "params": [
+      {
+        "name": "property",
+        "description": "The property name to set. Supports dot notation for subproperty access.",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "value",
+        "description": "The new value to set the property to.",
+        "type": {
+          "names": [
+            "any"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.DrawerPopup#getProperty",
+    "name": "getProperty",
+    "memberof": "oj-c.DrawerPopup",
+    "meta": {
+      "filename": "drawer-popup.tsx",
+      "path": "web/components/oj-c/drawer-popup"
+    },
+    "kind": "function",
+    "longname": "oj-c.DrawerPopup#getProperty",
+    "scope": "instance",
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "any"
+          ]
+        }
+      }
+    ],
+    "description": "Retrieves the value of a property or a subproperty.",
+    "params": [
+      {
+        "name": "property",
+        "description": "The property name to get. Supports dot notation for subproperty access.",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.DrawerPopup#setProperties",
+    "name": "setProperties",
+    "memberof": "oj-c.DrawerPopup",
+    "meta": {
+      "filename": "drawer-popup.tsx",
+      "path": "web/components/oj-c/drawer-popup"
+    },
+    "kind": "function",
+    "longname": "oj-c.DrawerPopup#setProperties",
+    "scope": "instance",
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "void"
+          ]
+        }
+      }
+    ],
+    "description": "Performs a batch set of properties.",
+    "params": [
+      {
+        "name": "properties",
+        "description": "An object containing the property and value pairs to set.",
+        "type": {
+          "names": [
+            "object"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.DrawerPopup#event:ojBeforeClose",
+    "name": "ojBeforeClose",
+    "kind": "event",
+    "memberof": "oj-c.DrawerPopup",
+    "meta": {
+      "filename": "drawer-popup.tsx",
+      "path": "web/components/oj-c/drawer-popup"
+    },
+    "longname": "oj-c.DrawerPopup#event:ojBeforeClose",
+    "scope": "instance",
+    "description": "Triggered immediately before the drawer closes.\nCall <code class=\"prettyprint\">event.preventDefault()</code> in the event listener to veto the event synchronously, which prevents the drawer from closing.\nCall <code class=\"prettyprint\">event.detail.accept(Promise.reject());</code> in the event listener to veto the event asynchronously, which prevents the drawer from closing.",
+    "properties": [
+      {
+        "name": "accept",
+        "description": "This method can be called with an application-created Promise to cancel this event asynchronously.  The Promise should be resolved or rejected to accept or cancel the event, respectively.",
+        "type": {
+          "names": [
+            "function"
+          ]
+        }
+      },
+      {
+        "name": "reason",
+        "optional": false,
+        "type": {
+          "names": [
+            "\"outsideClick\"",
+            "\"escapeKey\"",
+            "\"swipe\""
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.DrawerPopup#event:ojClose",
+    "name": "ojClose",
+    "kind": "event",
+    "memberof": "oj-c.DrawerPopup",
+    "meta": {
+      "filename": "drawer-popup.tsx",
+      "path": "web/components/oj-c/drawer-popup"
+    },
+    "longname": "oj-c.DrawerPopup#event:ojClose",
+    "scope": "instance",
+    "description": "Triggered immediately after the drawer closes."
+  },
+  {
+    "id": "oj-c.DrawerPopup#Default",
+    "name": "Default",
+    "memberof": "oj-c.DrawerPopup",
+    "meta": {
+      "filename": "drawer-popup.tsx",
+      "path": "web/components/oj-c/drawer-popup"
+    },
+    "kind": "member",
+    "longname": "oj-c.DrawerPopup#Default",
+    "scope": "instance",
+    "description": "The default slot is the content of the Drawer Popup.",
+    "ojchild": true,
+    "ojslot": false
+  },
+  {
+    "id": "oj-c.DrawerPopup.keyboardDoc",
+    "name": "keyboardDoc",
+    "kind": "member",
+    "longname": "oj-c.DrawerPopup.keyboardDoc",
+    "description": "<table class=\"keyboard-table\">\n <thead>\n   <tr>\n     <th>Target</th>\n     <th>Key</th>\n     <th>Action</th>\n   </tr>\n </thead>\n <tbody>\n   <tr>\n     <td>Drawer element</td>\n     <td><kbd>Esc</kbd></td>\n     <td>Close the drawer</td>\n   </tr>\n </tbody>\n</table>",
+    "memberof": "oj-c.DrawerPopup",
+    "meta": {
+      "filename": "drawer-popup.tsx",
+      "path": "web/components/oj-c/drawer-popup"
+    },
+    "ojfragment": true
+  }
+]

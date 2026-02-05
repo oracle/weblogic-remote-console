@@ -1,0 +1,71 @@
+.TabBarItemStyles_tabBarItemBase__1jor8oq0 {
+  position: relative;
+  color: var(--labelColor__1vg465e0);
+  cursor: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-cursor-clickable);
+  border-left: var(--borderWidthLeftRight__1vg465e5) solid transparent;
+  border-bottom: var(--borderWidthBottom__1vg465e4) solid transparent;
+  border-right: var(--borderWidthLeftRight__1vg465e5) solid transparent;
+  border-top: var(--borderWidthBottom__1vg465e4) solid transparent;
+  display: flex;
+  outline-style: none;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+.TabBarItemStyles_tabBarItemBase__1jor8oq0:hover {
+  color: var(--labelColorHover__1vg465e2);
+}
+.TabBarItemStyles_tabBarItemBase__1jor8oq0:active {
+  color: var(--labelColorSelected__1vg465e1);
+}
+.TabBarItemStyles_tabBarItemLink__1jor8oq1 {
+  color: inherit;
+  -webkit-text-decoration-line: none;
+          text-decoration-line: none;
+}
+.TabBarItemStyles_tabBarItemLink__1jor8oq1:hover {
+  -webkit-text-decoration-line: none;
+          text-decoration-line: none;
+  color: var(--labelColorSelected__1vg465e1);
+}
+.TabBarItemStyles_tabBarItemLink__1jor8oq1:active {
+  color: var(--labelColorSelected__1vg465e1);
+}
+.TabBarItemStyles_tabBarItemLabel__1jor8oq2 {
+  display: block;
+  box-sizing: border-box;
+}
+.TabBarItemStyles_tabBarItemLabelTruncated__1jor8oq3 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.TabBarItemStyles_tabBarItemIcon__1jor8oq4 {
+  font-size: var(--iconSize__1vg465e3);
+  display: inline-flex;
+}
+.TabBarItemStyles_tabBarItemIconStacked__1jor8oq5 {
+  position: relative;
+  height: var(--iconSize__1vg465e3);
+  width: var(--iconSize__1vg465e3);
+}
+.TabBarItemStyles_tabBarItemRemoveIcon__1jor8oq6 {
+  align-self: center;
+  display: inline-flex;
+}
+.TabBarItemStyles_tabBarItemMetadata__1jor8oq7 {
+  color: var(--labelColor__1vg465e0);
+  display: inline-flex;
+}
+.TabBarItemStyles_tabBarItemStackedBadge__1jor8oq8 {
+  position: absolute;
+  left: calc(var(--iconSize__1vg465e3) * 0.40);
+  bottom: calc(var(--iconSize__1vg465e3) * 0.35);
+}
+.TabBarItemStyles_tabBarItemStackedBadgeRtl__1jor8oq9 {
+  left: 0;
+  right: calc(var(--iconSize__1vg465e3) * 0.40);
+}

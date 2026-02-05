@@ -1,0 +1,183 @@
+/* Auto-size generic WRC dialogs to content with viewport caps */
+.cfe-generic-dialog {
+  /* Make dialog resizable and allow content to grow/shrink within viewport caps */
+  display: flex;
+  flex-direction: column;
+
+  /* Stabilize width so typing doesn't change measured width and trigger re-centering.
+     60vw keeps it responsive; min-width avoids overly narrow layouts. */
+  width: 60vw;
+  min-width: 480px;
+  max-width: 90vw;
+
+  height: auto;
+  max-height: 80vh;
+}
+
+/* Let body wrapper size to content and cap height so it doesn't overflow the viewport */
+.cfe-generic-dialog .oj-dialog-body-wrapper {
+  /* Let the body fill the dialog and cap to viewport; content scrolls inside */
+  flex: 1 1 auto;
+  height: 100% !important;
+  max-height: 80vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Ensure only the content area scrolls; prevent wrapper/body from adding a second scrollbar */
+.cfe-generic-dialog .oj-dialog-body,
+.cfe-generic-dialog .oj-dialog-body-wrapper {
+  overflow: hidden !important;
+}
+
+/* Scroll inner content if it exceeds the max-height */
+.cfe-generic-dialog .oj-dialog-content {
+  /* Fill available space; scroll content when it overflows */
+  display: flex;
+  flex: 1 1 auto;
+  overflow: auto;
+  width: 100%;
+  height: 100%;
+  max-width: 90vw;
+}
+
+/* Defensive: if oj-dialog uses a window wrapper, keep caps there too */
+.cfe-generic-dialog .oj-dialog-window {
+  width: auto;
+  max-width: 90vw;
+  height: auto;
+  max-height: 80vh;
+}
+
+.cfe-generic-dialog .oj-dialog-content > * {
+  /* Ensure slotted body fills and resizes with the dialog */
+  display: flex;
+  flex: 1 1 auto;
+  min-height: 0; /* allow inner tables to shrink/grow and scroll */
+}
+
+/* Optional dark-mode tweaks inherit from oj-color-invert on the host class.
+   We don't hardcode colors here; the host component adds oj-color-invert. */
+
+/* Override app.css id-based sizing for shopping cart dialog.
+   app.css sets oj-dialog#shoppingcart-dialog { width: 32rem; }
+   That conflicts with centering and content accommodation. Force responsive width here. */
+/* IMPORTANT: Free the host width so inner resizable container can control horizontal size */
+Xoj-dialog#shoppingcart-dialog.cfe-generic-dialog {
+  width: auto !important; /* Override .cfe-generic-dialog { width: 60vw } and app.css width:32rem for this dialog */
+}
+oj-dialog#shoppingcart-dialog,
+oj-dialog#shoppingcart-dialog .oj-dialog-container,
+oj-dialog#shoppingcart-dialog .oj-dialog-wrapper {
+  /* Allow oj-dialog to apply inline width/height during user resize.
+     Only cap bounds so resizing works. DO NOT force width/height here. */
+  max-width: min(calc(100vw - 48px), 95vw) !important;
+  max-height: min(calc(100vh - 48px), 95vh) !important;
+  min-width: 480px;
+  box-sizing: border-box !important;
+}
+
+oj-dialog#shoppingcart-dialog .oj-dialog-body,
+oj-dialog#shoppingcart-dialog .oj-dialog-content {
+  padding: 0;
+  overflow: hidden;
+}
+
+/* Let slotted body fill but not overflow horizontally */
+oj-dialog#shoppingcart-dialog .oj-dialog-content > * {
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+/* Ensure resize handles are visible and interactive for Shopping Cart dialog */
+oj-dialog#shoppingcart-dialog {
+  overflow: visible !important; /* override app.css oj-dialog.cfe-generic-dialog { overflow: hidden } */
+}
+oj-dialog#shoppingcart-dialog .oj-dialog-container,
+oj-dialog#shoppingcart-dialog .oj-dialog-wrapper {
+  overflow: visible !important;
+}
+oj-dialog#shoppingcart-dialog .oj-resizable-handle {
+  display: block !important;
+  pointer-events: auto !important;
+  opacity: 1 !important;
+  z-index: 1001 !important;
+  width: 12px !important;
+  height: 12px !important;
+}
+
+/* Make the bottom-right (SE) resize handle large, clickable, and on top */
+oj-dialog#shoppingcart-dialog .oj-resizable-handle-se {
+  position: absolute !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  width: 18px !important;
+  height: 18px !important;
+  cursor: se-resize !important;
+  background: transparent !important;
+  z-index: 1002 !important;
+}
+
+/* Cover alternate classnames used by JET resizable (defensive) */
+oj-dialog#shoppingcart-dialog .oj-resizable-se,
+oj-dialog#shoppingcart-dialog .oj-resizable-handle.oj-resizable-se {
+  position: absolute !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  width: 18px !important;
+  height: 18px !important;
+  cursor: se-resize !important;
+  background: transparent !important;
+  z-index: 1003 !important;
+  pointer-events: auto !important;
+  touch-action: none !important;
+}
+
+/* Enlarge east/south edges for easier grab if SE isn’t hit */
+oj-dialog#shoppingcart-dialog .oj-resizable-e,
+oj-dialog#shoppingcart-dialog .oj-resizable-handle.oj-resizable-e {
+  position: absolute !important;
+  right: 0 !important;
+  top: 0 !important;
+  width: 8px !important;
+  height: 100% !important;
+  cursor: e-resize !important;
+  background: transparent !important;
+  z-index: 1001 !important;
+  pointer-events: auto !important;
+}
+oj-dialog#shoppingcart-dialog .oj-resizable-s,
+oj-dialog#shoppingcart-dialog .oj-resizable-handle.oj-resizable-s {
+  position: absolute !important;
+  left: 0 !important;
+  bottom: 0 !important;
+  width: 100% !important;
+  height: 8px !important;
+  cursor: s-resize !important;
+  background: transparent !important;
+  z-index: 1001 !important;
+  pointer-events: auto !important;
+}
+
+/* Ensure the window container is above content and not clipping handles */
+oj-dialog#shoppingcart-dialog .oj-dialog-window {
+  overflow: visible !important;
+  position: relative !important;
+  z-index: 1000 !important;
+}
+
+/* Remove fixed content width inside Shopping Cart so horizontal resize isn't blocked */
+oj-dialog#shoppingcart-dialog .wrc-resource-wrapper {
+  width: auto !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+}
+
+/* Defensive: tables/content inside the dialog should not enforce a fixed layout width */
+oj-dialog#shoppingcart-dialog .wrc-breadcrumbs-row {
+  width: auto !important;       /* override app.css width: 75rem */
+  max-width: 100% !important;
+}
+oj-dialog#shoppingcart-dialog oj-table {
+  max-width: 100% !important;
+}

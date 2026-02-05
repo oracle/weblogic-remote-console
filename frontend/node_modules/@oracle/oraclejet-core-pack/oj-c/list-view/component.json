@@ -1,0 +1,595 @@
+{
+  "name": "list-view",
+  "version": "19.0.1",
+  "jetVersion": "^19.0.1",
+  "pack": "oj-c",
+  "type": "composite",
+  "dependencyScope": "runtime",
+  "license": "https://opensource.org/licenses/UPL",
+  "implements": [
+    "CListViewElement"
+  ],
+  "displayName": "List View",
+  "description": "A list view displays data items as a list or a grid with highly interactive features.",
+  "help": "oj-c.ListView.html",
+  "main": "oj-c/list-view",
+  "status": [
+    {
+      "type": "candidate",
+      "since": "17.0.0"
+    }
+  ],
+  "extension": {
+    "catalog": {
+      "category": "Collections"
+    },
+    "vbdt": {
+      "module": "oj-c/list-view"
+    },
+    "oracle": {
+      "icon": "oj-ux-ico-list",
+      "uxSpecs": [
+        "list-view"
+      ]
+    },
+    "webelement": {
+      "package": "@oracle/oraclejet-core-pack",
+      "version": "19.0.1",
+      "docUrl": "https://www.oracle.com/webfolder/technetwork/jet/cpwdtsdoc/classes/ListViewWebElement.html",
+      "export": "findListView",
+      "main": "@oracle/oraclejet-core-pack/webdriver"
+    }
+  },
+  "propertyLayout": [
+    {
+      "propertyGroup": "common",
+      "items": [
+        "selectionMode"
+      ]
+    },
+    {
+      "propertyGroup": "data",
+      "items": [
+        "data",
+        "selected"
+      ]
+    }
+  ],
+  "since": "15.0.0",
+  "properties": {
+    "currentItem": {
+      "type": "string|number",
+      "description": "The key of the item that currently has keyboard focus",
+      "displayName": "Current Item",
+      "help": "#currentItem",
+      "readOnly": true,
+      "writeback": true
+    },
+    "currentItemOverride": {
+      "type": "object",
+      "description": "The key of the item that will have keyboard focus",
+      "displayName": "Current Item Override",
+      "help": "#currentItemOverride",
+      "properties": {
+        "rowKey": {
+          "type": "string|number"
+        }
+      }
+    },
+    "data": {
+      "type": "DataProvider|null",
+      "description": "The data source for ListView.",
+      "displayName": "Data",
+      "help": "#data",
+      "extension": {
+        "webelement": {
+          "exceptionStatus": [
+            {
+              "type": "unsupported"
+            }
+          ]
+        }
+      }
+    },
+    "gridlines": {
+      "type": "object",
+      "description": "Specifies whether the grid lines should be visible.",
+      "displayName": "Gridlines",
+      "help": "#gridlines",
+      "properties": {
+        "item": {
+          "type": "string",
+          "enumValues": [
+            "hidden",
+            "visible"
+          ]
+        },
+        "top": {
+          "type": "string",
+          "enumValues": [
+            "hidden",
+            "visible"
+          ]
+        },
+        "bottom": {
+          "type": "string",
+          "enumValues": [
+            "hidden",
+            "visible"
+          ]
+        }
+      }
+    },
+    "scrollPolicyOptions": {
+      "type": "object",
+      "description": "Specifies fetch options for scrolling behaviors that trigger data fetches.",
+      "displayName": "Scroll Policy Options",
+      "help": "#scrollPolicyOptions",
+      "properties": {
+        "fetchSize": {
+          "type": "number"
+        },
+        "scroller": {
+          "type": "string"
+        }
+      }
+    },
+    "selected": {
+      "type": "object",
+      "description": "The selected property",
+      "displayName": "Selected Items Changed",
+      "help": "#selected",
+      "writeback": true
+    },
+    "selectionMode": {
+      "type": "string",
+      "description": "Type of selection behavior for the ListView",
+      "displayName": "Selection Mode",
+      "help": "#selectionMode",
+      "propertyEditorValues": {
+        "none": {
+          "description": "Selection is disabled.",
+          "displayName": "None"
+        },
+        "single": {
+          "description": "Only a single item can be selected at a time.",
+          "displayName": "Single"
+        },
+        "singleRequired": {
+          "description": "Only a single item can be selected at a time. In addition, ListView will also ensure that an item is selected at all time.",
+          "displayName": "Single Required"
+        },
+        "multiple": {
+          "description": "Multiple items can be selected at the same time with the 'replace' selection behavior. For example, clicking on an already selected item will not affect that item's selection, and clicking on a non-selected item will select that item and deselect any other previously selected items. In order to perform additive selections, users can click on selector checkboxes, use spacebar, or ctrl/cmd click on individual items to perform 'toggle' selection gestures.",
+          "displayName": "Multiple"
+        },
+        "multipleToggle": {
+          "description": "Multiple items can be selected at the same time with the 'toggle' selection behavior. For example, clicking on an already selected item will deselect that item, and clicking on any non-selected item will select that item without affecting any previously selected items.",
+          "displayName": "MultipleToggle"
+        }
+      },
+      "enumValues": [
+        "none",
+        "multiple",
+        "single",
+        "singleRequired",
+        "multipleToggle"
+      ],
+      "value": "none"
+    },
+    "contextMenuConfig": {
+      "type": "object",
+      "description": "Specifies a context menu configuration.",
+      "displayName": "Context Menu Config",
+      "help": "#contextMenuConfig",
+      "properties": {
+        "accessibleLabel": {
+          "type": "string"
+        },
+        "items": {
+          "type": "function"
+        }
+      }
+    },
+    "reorderable": {
+      "type": "object",
+      "description": "Specify the item reordering functionality.",
+      "displayName": "Reorderable",
+      "help": "#reorderable",
+      "properties": {
+        "items": {
+          "type": "string",
+          "enumValues": [
+            "disabled",
+            "enabled"
+          ],
+          "value": "disabled"
+        }
+      }
+    },
+    "item": {
+      "type": "object",
+      "description": "The item option contains a subset of options for items.",
+      "displayName": "Item",
+      "help": "#item",
+      "properties": {
+        "padding": {
+          "type": "string|object",
+          "description": "It controls the padding around the list item",
+          "displayName": "item.padding",
+          "help": "#item.padding",
+          "propertyEditorValues": {
+            "disabled": {},
+            "enabled": {}
+          },
+          "value": "disabled"
+        },
+        "enterKeyFocusBehavior": {
+          "type": "string",
+          "description": "It controls the focus behavior when enter key is pressed on an item",
+          "displayName": "item.enterKeyFocusBehavior",
+          "help": "#item.enterKeyFocusBehavior",
+          "enumValues": [
+            "none",
+            "focusWithin"
+          ],
+          "value": "focusWithin"
+        }
+      }
+    }
+  },
+  "slots": {
+    "itemTemplate": {
+      "description": "The itemTemplate slot is used to specify the template for rendering each item in the component. See the Help documentation for more information.",
+      "displayName": "itemTemplate",
+      "help": "#itemTemplate",
+      "maxItems": 1,
+      "data": {
+        "data": {
+          "type": "any"
+        },
+        "item": {
+          "type": "object",
+          "properties": {
+            "data": {
+              "type": "any"
+            },
+            "metadata": {
+              "type": "object",
+              "properties": {
+                "indexFromParent": {
+                  "type": "number"
+                },
+                "isLeaf": {
+                  "type": "boolean"
+                },
+                "key": {
+                  "type": "string|number"
+                },
+                "message": {
+                  "type": "object",
+                  "properties": {
+                    "detail": {
+                      "type": "string"
+                    },
+                    "severity": {
+                      "type": "string|number"
+                    },
+                    "summary": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "parentKey": {
+                  "type": "string|number"
+                },
+                "suggestion": {
+                  "type": "object"
+                },
+                "treeDepth": {
+                  "type": "number"
+                }
+              }
+            }
+          }
+        },
+        "isTabbable": {
+          "type": "boolean"
+        }
+      }
+    },
+    "noData": {
+      "description": "The noData slot is used to specify the content to show when there is no data. See the Help documentation for more information.",
+      "displayName": "noData",
+      "help": "#noData",
+      "maxItems": 1,
+      "templateSlotAlias": "noDataTemplate",
+      "data": {}
+    },
+    "skeletonTemplate": {
+      "description": "The skeletonTemplate slot is used to specify the template for rendering each skeleton while waiting for data during initial load as well as load more on scroll. See the Help documentation for more information.",
+      "displayName": "skeletonTemplate",
+      "help": "#skeletonTemplate",
+      "maxItems": 1,
+      "data": {
+        "loadingStatus": {
+          "type": "string"
+        },
+        "index": {
+          "type": "number"
+        }
+      }
+    }
+  },
+  "events": {
+    "ojItemAction": {
+      "description": "Triggered when user performs an action gesture on an item.",
+      "displayName": "Item Action",
+      "help": "#event:itemAction",
+      "detail": {
+        "context": {
+          "type": "object",
+          "properties": {
+            "data": {
+              "type": "any"
+            },
+            "item": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "any"
+                },
+                "metadata": {
+                  "type": "object",
+                  "properties": {
+                    "indexFromParent": {
+                      "type": "number"
+                    },
+                    "isLeaf": {
+                      "type": "boolean"
+                    },
+                    "key": {
+                      "type": "any"
+                    },
+                    "message": {
+                      "type": "object",
+                      "properties": {
+                        "detail": {
+                          "type": "string"
+                        },
+                        "severity": {
+                          "type": "string|number"
+                        },
+                        "summary": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "parentKey": {
+                      "type": "any"
+                    },
+                    "suggestion": {
+                      "type": "object"
+                    },
+                    "treeDepth": {
+                      "type": "number"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "ojFirstSelectedItem": {
+      "description": "Triggered when data for the first selected item is available.",
+      "displayName": "First Selected Item",
+      "help": "#event:firstSelectedItem",
+      "detail": {
+        "key": {
+          "type": "string|number"
+        },
+        "data": {
+          "type": "any"
+        }
+      }
+    },
+    "ojContextMenuAction": {
+      "bubbles": true,
+      "description": "Triggered when a menu item is clicked, whether by keyboard, mouse, or touch events.",
+      "eventGroup": "common",
+      "displayName": "onOjContextMenuAction",
+      "help": "#event:ojContextMenuAction",
+      "detail": {
+        "menuItemKey": {
+          "type": "string"
+        },
+        "contextMenuContext": {
+          "type": "object",
+          "properties": {
+            "data": {
+              "type": "any"
+            },
+            "item": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "any"
+                },
+                "metadata": {
+                  "type": "object",
+                  "properties": {
+                    "indexFromParent": {
+                      "type": "number"
+                    },
+                    "isLeaf": {
+                      "type": "boolean"
+                    },
+                    "key": {
+                      "type": "any"
+                    },
+                    "message": {
+                      "type": "object",
+                      "properties": {
+                        "detail": {
+                          "type": "string"
+                        },
+                        "severity": {
+                          "type": "string|number"
+                        },
+                        "summary": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "parentKey": {
+                      "type": "any"
+                    },
+                    "suggestion": {
+                      "type": "object"
+                    },
+                    "treeDepth": {
+                      "type": "number"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "ojContextMenuSelection": {
+      "bubbles": true,
+      "description": "Triggered when a select menu item is clicked, whether by keyboard, mouse, or touch events.",
+      "eventGroup": "common",
+      "displayName": "onOjContextMenuSelection",
+      "help": "#event:ojContextMenuSelection",
+      "detail": {
+        "value": {
+          "type": "string|Array<string>"
+        },
+        "menuSelectionGroupKey": {
+          "type": "string"
+        },
+        "contextMenuContext": {
+          "type": "object",
+          "properties": {
+            "data": {
+              "type": "any"
+            },
+            "item": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "any"
+                },
+                "metadata": {
+                  "type": "object",
+                  "properties": {
+                    "indexFromParent": {
+                      "type": "number"
+                    },
+                    "isLeaf": {
+                      "type": "boolean"
+                    },
+                    "key": {
+                      "type": "any"
+                    },
+                    "message": {
+                      "type": "object",
+                      "properties": {
+                        "detail": {
+                          "type": "string"
+                        },
+                        "severity": {
+                          "type": "string|number"
+                        },
+                        "summary": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "parentKey": {
+                      "type": "any"
+                    },
+                    "suggestion": {
+                      "type": "object"
+                    },
+                    "treeDepth": {
+                      "type": "number"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "ojReorder": {
+      "description": "Triggered after items are reordered within ListView via drag and drop or keyboard.",
+      "displayName": "Reorder",
+      "help": "#event:reorder",
+      "detail": {
+        "reorderedKeys": {
+          "type": "Array<string|number>"
+        },
+        "itemKeys": {
+          "type": "Array<string|number>"
+        },
+        "referenceKey": {
+          "type": "string|number|null"
+        }
+      }
+    }
+  },
+  "methods": {
+    "focus": {
+      "description": "Place focus on the list.",
+      "return": "void"
+    },
+    "setProperty": {
+      "description": "Sets a property or a single subproperty for complex properties and notifies the component of the change, triggering a corresponding event.",
+      "help": "#setProperty",
+      "params": [
+        {
+          "name": "property",
+          "description": "The property name to set. Supports dot notation for subproperty access.",
+          "type": "string"
+        },
+        {
+          "name": "value",
+          "description": "The new value to set the property to.",
+          "type": "any"
+        }
+      ],
+      "return": "void"
+    },
+    "getProperty": {
+      "description": "Retrieves the value of a property or a subproperty.",
+      "help": "#getProperty",
+      "params": [
+        {
+          "name": "property",
+          "description": "The property name to get. Supports dot notation for subproperty access.",
+          "type": "string"
+        }
+      ],
+      "return": "any"
+    },
+    "setProperties": {
+      "description": "Performs a batch set of properties.",
+      "help": "#setProperties",
+      "params": [
+        {
+          "name": "properties",
+          "description": "An object containing the property and value pairs to set.",
+          "type": "object"
+        }
+      ],
+      "return": "void"
+    }
+  }
+}

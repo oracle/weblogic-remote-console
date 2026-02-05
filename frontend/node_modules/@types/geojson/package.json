@@ -1,0 +1,45 @@
+{
+    "name": "@types/geojson",
+    "version": "7946.0.11",
+    "description": "TypeScript definitions for geojson",
+    "homepage": "https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/geojson",
+    "license": "MIT",
+    "contributors": [
+        {
+            "name": "Jacob Bruun",
+            "url": "https://github.com/cobster",
+            "githubUsername": "cobster"
+        },
+        {
+            "name": "Arne Schubert",
+            "url": "https://github.com/atd-schubert",
+            "githubUsername": "atd-schubert"
+        },
+        {
+            "name": "Jeff Jacobson",
+            "url": "https://github.com/JeffJacobson",
+            "githubUsername": "JeffJacobson"
+        },
+        {
+            "name": "Ilia Choly",
+            "url": "https://github.com/icholy",
+            "githubUsername": "icholy"
+        },
+        {
+            "name": "Dan Vanderkam",
+            "url": "https://github.com/danvk",
+            "githubUsername": "danvk"
+        }
+    ],
+    "main": "",
+    "types": "index.d.ts",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/DefinitelyTyped/DefinitelyTyped.git",
+        "directory": "types/geojson"
+    },
+    "scripts": {},
+    "dependencies": {},
+    "typesPublisherContentHash": "1c4142101c1c84433c7816f988efbd1244aec4fadd4d71a0b80c898dcc8a9f8a",
+    "typeScriptVersion": "4.5"
+}

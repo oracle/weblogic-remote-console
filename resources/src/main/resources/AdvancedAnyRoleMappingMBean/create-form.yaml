@@ -3,6 +3,9 @@
 
 introductionHTML: Create a new role mapping
 
+presentation:
+  singleColumn: true
+
 sections:
 - properties:
   - name: roleName

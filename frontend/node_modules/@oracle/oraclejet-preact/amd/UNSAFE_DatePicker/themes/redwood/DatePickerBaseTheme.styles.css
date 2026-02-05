@@ -1,0 +1,9 @@
+.DatePickerBaseTheme_baseTheme__tg9grh0 {
+  --width__1wy4iwf0: 100%;
+  --minWidth__1wy4iwf1: calc(72 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --maxWidth__1wy4iwf2: calc(84 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --calendarGridRowGap__1wy4iwf3: calc(4 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --monthYearGridRowGap__1wy4iwf4: calc(13 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --height__1wy4iwf5: calc(89 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --todayFooterButtonHeight__1wy4iwf6: calc(102 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+}

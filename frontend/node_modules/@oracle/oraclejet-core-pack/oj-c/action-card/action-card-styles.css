@@ -1,0 +1,12 @@
+oj-c-action-card:not(.oj-complete){
+  visibility: hidden;
+}
+
+oj-c-action-card {
+  display: inline-flex;
+}
+
+oj-c-action-card[hidden]
+{
+  display: none;
+}

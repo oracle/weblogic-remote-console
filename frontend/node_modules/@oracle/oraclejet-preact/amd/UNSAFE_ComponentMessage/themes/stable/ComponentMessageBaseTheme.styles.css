@@ -1,0 +1,8 @@
+.ComponentMessageBaseTheme_baseTheme__1pl8d0c0 {
+  --startIconColor__1aj7c360: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-info);
+  --startIconSize__1aj7c361: calc(4 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --summaryTextColor__1aj7c362: var(--inlineTextColor__1n9ixz60);
+  --summaryTextWeight__1aj7c363: 400;
+  --summaryTextSize__1aj7c364: var(--inlineFontSize__1n9ixz61);
+  --summaryLineHeight__1aj7c365: 1.333rem;
+}

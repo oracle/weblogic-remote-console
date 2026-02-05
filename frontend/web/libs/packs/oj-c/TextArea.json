@@ -1,0 +1,1486 @@
+[
+  {
+    "id": "oj-c.TextArea",
+    "name": "TextArea",
+    "memberof": "oj-c",
+    "kind": "class",
+    "meta": {
+      "filename": "text-area.tsx",
+      "path": "web/components/oj-c/text-area"
+    },
+    "ojcomponent": true,
+    "isvcomponent": true,
+    "since": "13.0.0",
+    "longname": "oj-c.TextArea",
+    "pack": "oj-c",
+    "classdesc": "<h3 id=\"textAreaOverview-section\">\n  JET TextArea Component\n  <a class=\"bookmarkable-link\" title=\"Bookmarkable Link\" href=\"#textAreaOverview-section\"></a>\n</h3>\n\n<p>Description: The oj-c-text-area component enhances a browser textarea element.</p>\n\n<pre class=\"prettyprint\"><code>&lt;oj-c-text-area value=\"value text\">&lt;/oj-c-text-area></code></pre>\n\n<h3 id=\"validation-section\">\n  Validation and Messaging\n  <a class=\"bookmarkable-link\" title=\"Bookmarkable Link\" href=\"#validation-section\"></a>\n</h3>\n\n<p>\nFor components that support validators, any invalid values entered by the user are not pushed into the value\nif validation fails: the <a href=\"#valid\">valid property</a> will change but the original value will remain unchanged.\nThe same thing applies to required validation: if required is set to true and the user clears the field,\nvalid will change, but empty values will not be pushed so the original value remains unchanged.\n</p>\n<p>\nUse <a href=\"../jetCookbook.html?component=validationGroup&demo=requiredFieldValidation\">\n&lt;oj-validation-group></a> to handle tracking valid across multiple components.\n</p>\n<p>\nAn editable component runs validation (normal or deferred) based on the action performed on it\n(either by end-user or page author), and the state it was in when the action occurred. Examples\nof actions are - creating a component, user changing the value of the component by interacting\nwith it, the app setting a value programmatically, the app calling the validate() method etc. At\nthe time the action occurs, the component could already be showing errors, or can have a deferred\nerror or have no errors.\n</p>\n<p>\nThese factors also determine whether validation errors/messages get shown to the user immediately\nor get deferred. The following sections highlight the kinds of validation that are run and how\nmessages get handled.\n</p>\n\n<h4 id=\"normal-validation-section\">\n  Normal Validation\n  <a class=\"bookmarkable-link\" title=\"Bookmarkable Link\" href=\"#normal-validation-section\"></a>\n</h4>\nNormal validation is run in the following cases on the display value, using the converter and\nvalidators (this includes async-validators) set on the component (for components that support these properties),\nand validation errors are reported to user immediately.\n<ul>\n<li>When value changes as a result of user interaction all messages are cleared, including custom\nmessages added by the app, and full validation is run on the UI value. The steps performed are\noutlined below.\n<ol>\n<li>All messages are cleared and <code class=\"prettyprint\">messagesCustom</code> property is cleared</li>\n<li>If no converter is present then processing continues to next step. If a converter is\npresent, the UI value is first converted (i.e., parsed). If there is a parse error then\nthe messages are shown and processing returns.</li>\n<li>If there are no validators setup for the component then the value is set on the component.\nOtherwise all validators are run in sequence using the parsed value from the previous step. The\nimplicit required is run first if the component is marked required. When a validation error is\nencountered it is remembered and the next validator in the sequence is run.\n<ul><li>NOTE: The value is trimmed before required validation is run</li></ul>\n</li>\n<li>At the end of the validation run if there are errors, the messages are shown\nand processing returns. If there are async-validators, those errors are shown as soon as they\ncome in, and not until all validators, sync and async validators, are complete, does processing\nreturn, that is, value and valid are updated. If there are no errors, then the\n<code class=\"prettyprint\">value</code> property is updated and the formatted value displayed on the\nUI.</li>\n</ol>\n</li>\n<li>When the <code class=\"prettyprint\">validate</code> method is called by app, all messages are\ncleared and full validation run using the display value. See <code class=\"prettyprint\">validate</code>\nmethod on the sub-classes for details. Note: JET validation is designed to catch user input errors, and not invalid\ndata passed from the server; this should be caught on the server.</li>\n<li>When certain properties change through programmatic intervention by app, the component\ndetermines whether it needs to run normal validation based on the state the component is in.\nRefer to the <a href=\"#mixed-validation-section\">Mixed Validation</a> section below for details. </li>\n</ul>\n\n<h4 id=\"deferred-validation-section\">\n  Deferred Validation\n  <a class=\"bookmarkable-link\" title=\"Bookmarkable Link\" href=\"#deferred-validation-section\"></a>\n</h4>\nDeferred validation is run in the following cases on the component value using the implicit\nrequired validator if required is true, and validation errors are deferred, i.e., not shown to user immediately.\nRefer to the <a href=\"#deferred-messages-section\">Showing Deferred Messages</a> section to\nunderstand how deferred messages can be shown.\n<ul>\n <li>When a component is created and it is required deferred validation is run and no messages are cleared\n prior to running validation.\n Refer to the <a href=\"#deferred-validators-section\">Validators\n Participating in Deferred Validation</a> section for details.</li>\n <li>When the <code class=\"prettyprint\">value</code> property changes due to programmatic\n intervention deferred validation is run, after all messages and messagesCustom property are cleared.</li>\n <li>When the <code class=\"prettyprint\">reset</code> method is called, deferred validation is run\n  after all messages and messagesCustom property are cleared.</li>\n <li>When certain properties change through programmatic intervention by app, the component\n determines whether it needs to run deferred validation based on the state the component is in.\n Refer to the <a href=\"#mixed-validation-section\">Mixed Validation</a> section below for details.</li>\n</ul>\n\n<h4 id=\"mixed-validation-section\">\n  Mixed Validation\n  <a class=\"bookmarkable-link\" title=\"Bookmarkable Link\" href=\"#mixed-validation-section\"></a>\n</h4>\nEither deferred or normal validation is run in the following cases based on the state the\ncomponent is in and any validation errors encountered are either hidden or shown to user.\n<ul>\n <li>when disabled property changes. See <a href=\"#disabled\">disabled</a> property for details.</li>\n <li>when converter property changes (for components that support converters). See <a href=\"#converter\">converter</a> property for details.</li>\n <li>when required property changes. See <a href=\"#required\">required</a> property for details.</li>\n <li>when validators property changes (for components that support validators). See <a href=\"#validators\">validators</a> property for details.</li>\n</ul>\n\n<h3 id=\"deferred-messages-section\">\n  Showing Deferred Messages\n  <a class=\"bookmarkable-link\" title=\"Bookmarkable Link\" href=\"#deferred-messages-section\"></a>\n</h3>\nDeferred validation messages are displayed only when page author requests for it explicitly in\none of the following ways:\n<ul>\n<li>calls the <a href=\"#showMessages\"><code class=\"prettyprint\">showMessages</code></a> method on the component</li>\n</ul>\n\n<h3 id=\"deferred-validators-section\">\n  Validators Participating in Deferred Validation\n  <a class=\"bookmarkable-link\" title=\"Bookmarkable Link\" href=\"#deferred-validators-section\"></a>\n</h3>\nThe required validator is the only validator type that participates in deferred validation.\nThe required property needs to be set to true for the required validator to run.\n\n<h3 id=\"user-assistance-text-section\">\n  User Assistance Text\n  <a class=\"bookmarkable-link\" title=\"Bookmarkable Link\" href=\"#user-assistance-text-section\"></a>\n</h3>\n<p>\nUser assistive text provides guidance to help the user understand what data to enter or select.\n</p>\n<p>\nBy default all user assistance text shows inline.\nFor input components, it shows when the field takes focus. In other components\nit shows all the time. See the user-assistance-density property for other ways\nthe user assistance text can render, like in 'compact' mode, it will render as an icon on the label\nwhich when clicked will show the user assistance text in a notewindow.\n</p>\n<p>\nThe JET form component properties that are used for user assistance text are help.instruction,\nvalidator and converter hints (for components that support these properties), and help-hints.\nIn the Redwood theme for clarity only one user assistance text shows to the user.\nThe precedence rules are:\n<ul>\n<li>help.instruction shows;</li>\n<li>if no help.instruction, then validator hint shows;</li>\n<li>if no help.instruction or validator hint, then help-hints.definition shows;</li>\n<li>if no help.instruction, validator hint, or help-hints.definition, then converter hint shows.</li>\n<li>help-hints.source always shows along side the above.</li>\n</ul>\n</p>\n<p>For components that support validators or converters, sometimes a hint shows that you do not want to show. To not show it,\n set the display-options.validator-hint and/or display-options.converter-hint property to 'none'.\n</p>\n<p>The required and placeholder properties also can be used to guide the user.\nIn Redwood, a required field shows the word Required under the field\nwhen the field is empty and does not have focus.\nPlaceholder is shown when the field is empty and has focus.\n</p>\n\n<h3 id=\"touch-section\">\n  Touch End User Information\n  <a class=\"bookmarkable-link\" title=\"Bookmarkable Link\" href=\"#touch-section\"></a>\n</h3>\n\n<table class=\"keyboard-table\">\n  <thead>\n    <tr>\n      <th>Target</th>\n      <th>Gesture</th>\n      <th>Action</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <td>Input</td>\n      <td><kbd>Tap</kbd></td>\n      <td>Sets focus to input. Show user assistance text.</td>\n    </tr>\n  </tbody>\n</table>\n\n<h3 id=\"keyboard-section\">\n  Keyboard End User Information\n  <a class=\"bookmarkable-link\" title=\"Bookmarkable Link\" href=\"#keyboard-section\"></a>\n</h3>\n\n<table class=\"keyboard-table\">\n  <thead>\n    <tr>\n      <th>Target</th>\n      <th>Key</th>\n      <th>Action</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <td>Input</td>\n      <td><kbd>Tab In</kbd></td>\n      <td>Set focus to the input. Show user assistance text.</td>\n    </tr>\n  </tbody>\n</table>\n\n<h3 id=\"a11y-section\">\n  Accessibility\n  <a class=\"bookmarkable-link\" title=\"Bookmarkable Link\" href=\"#a11y-section\"></a>\n</h3>\n\n<p>\nFor accessibility, set the <a href=\"#labelHint\">label-hint</a> property.\nIf there is no visible label, then to make this accessible to screen reader users,\nset the <a href=\"#labelHint\">label-hint</a> and <a href=\"#labelEdge\">label-edge</a>='none'\nwhich renders an aria-label with the label-hint text.\n</p>\n\n<p>\nThe placeholder text is not read reliably by the screen reader. For accessibility reasons,\nyou need to associate the text to its JET form component using aria-describedby.\n</p>\n\n<p>\nDisabled content: JET supports an accessible luminosity contrast ratio,\nas specified in <a href=\"http://www.w3.org/TR/WCAG20/#visual-audio-contrast-contrast\">WCAG 2.0 - Section 1.4.3 \"Contrast\"</a>,\nin the themes that are accessible.  (See the \"Theming\" chapter of the JET Developer Guide for more information on which\nthemes are accessible.)  Note that Section 1.4.3 says that text or images of text that are part of an inactive user\ninterface component have no contrast requirement.  Because disabled content may not meet the minimum contrast ratio\nrequired of enabled content, it cannot be used to convey meaningful information.\n</p>",
+    "scope": "static",
+    "tagWithoutBrackets": "oj-c-text-area",
+    "tagWithBrackets": "<oj-c-text-area>",
+    "domInterface": "CTextAreaElement",
+    "ojPageTitle": "&lt;oj-c-text-area>",
+    "camelCaseName": "TextArea",
+    "ojPageTitlePrefix": "Element: ",
+    "ojtsvcomponent": true,
+    "tstype": {
+      "target": "Type",
+      "value": "interface CTextAreaElement<V> extends JetElement<TextAreaElementSettableProperties<V>>"
+    },
+    "ojsignature": [
+      {
+        "target": "Type",
+        "value": "interface CTextAreaElement<V> extends JetElement<TextAreaElementSettableProperties<V>>"
+      }
+    ],
+    "tsdeprecated": [
+      {
+        "type": "supersedes",
+        "since": "16.0.0",
+        "value": [
+          "oj-text-area"
+        ]
+      }
+    ],
+    "ojmodule": "text-area"
+  },
+  {
+    "id": "oj-c.TextArea#autocomplete",
+    "name": "autocomplete",
+    "memberof": "oj-c.TextArea",
+    "meta": {
+      "filename": "text-area.tsx",
+      "path": "web/components/oj-c/text-area"
+    },
+    "kind": "member",
+    "longname": "oj-c.TextArea#autocomplete",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "string"
+      ]
+    },
+    "optional": true,
+    "description": "Dictates component's autocomplete state. This attribute indicates whether the value of\nthe control can be automatically completed by the browser. The common values are 'on' and 'off'.\n\nSince this attribute passes through to the textarea element unchanged, you can look at the html specs for\ndetailed information for how browsers behave and what values besides 'on' and 'off' you can set.\nThe html spec says the default is 'on', so when autocomplete is not explicitly set, the browsers treat it as 'on'.",
+    "defaultvalue": "\"on\""
+  },
+  {
+    "id": "oj-c.TextArea#columnSpan",
+    "name": "columnSpan",
+    "memberof": "oj-c.TextArea",
+    "meta": {
+      "filename": "text-area.tsx",
+      "path": "web/components/oj-c/text-area"
+    },
+    "kind": "member",
+    "longname": "oj-c.TextArea#columnSpan",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "number"
+      ]
+    },
+    "optional": true,
+    "description": "Specifies how many columns this component should span.\nThis only takes effect when this component is a child of a form layout\nthat has direction 'row'.",
+    "defaultvalue": 1
+  },
+  {
+    "id": "oj-c.TextArea#containerReadonly",
+    "name": "containerReadonly",
+    "memberof": "oj-c.TextArea",
+    "meta": {
+      "filename": "text-area.tsx",
+      "path": "web/components/oj-c/text-area"
+    },
+    "kind": "member",
+    "longname": "oj-c.TextArea#containerReadonly",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "boolean"
+      ]
+    },
+    "optional": true,
+    "description": "Specifies whether an ancestor container, like oj-c-form-layout, is readonly.\nThis affects whether a readonly component renders in full or mixed readonly mode.\nThis is also currently used to determine if there is an ancestor container by checking if the value\nis not equal to undefined."
+  },
+  {
+    "id": "oj-c.TextArea#converter",
+    "name": "converter",
+    "memberof": "oj-c.TextArea",
+    "meta": {
+      "filename": "text-area.tsx",
+      "path": "web/components/oj-c/text-area"
+    },
+    "kind": "member",
+    "longname": "oj-c.TextArea#converter",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "object|null"
+      ]
+    },
+    "optional": true,
+    "description": "A converter instance or one that duck types oj.Converter.\n<p>\nWhen <code class=\"prettyprint\">converter</code> property changes due to programmatic\nintervention, the element performs various tasks based on the current state it is in. </br>\n\n<h4>Steps Performed Always</h4>\n<ul>\n<li>Any cached converter instance is cleared and new converter created. The converter hint is\npushed to messaging. E.g., notewindow displays the new hint(s).\n</li>\n</ul>\n\n<h4>Running Validation</h4>\n<ul>\n<li>if element is valid when <code class=\"prettyprint\">converter</code> property changes, the\n display value is refreshed.</li>\n<li>if element is invalid and is showing messages when\n<code class=\"prettyprint\">converter</code> property changes then all element messages are\ncleared and full validation run using the current display value on the element.\n<ul>\n  <li>if there are validation errors, then <code class=\"prettyprint\">value</code>\n  property is not updated, and the error is shown.\n  The display value is not refreshed in this case. </li>\n  <li>if no errors result from the validation, the <code class=\"prettyprint\">value</code>\n  property is updated; page author can listen to the <code class=\"prettyprint\">valueChanged</code>\n  event to clear custom errors. The\n  display value is refreshed with the formatted value provided by converter.</li>\n</ul>\n</li>\n<li>if element is invalid and has deferred messages when converter property changes, the\n  display value is again refreshed with the formatted value provided by converter.</li>\n</ul>\n\n<h4>Clearing Messages</h4>\n<ul>\n<li>Only messages created by the element are cleared.</li>\n<li><code class=\"prettyprint\">messagesCustom</code> property is not cleared.\nPage authors can\nchoose to clear it explicitly when setting the converter option.</li>\n</ul>\n</p>\n<p>\n During validation, the converter takes the input value which is a string\n and parses it into the type of the component's value property\n (e.g. a number)\n before it passes it to the validator. It then takes the validated value property\n and formats it into a string to be displayed and puts it into the input.\n If the converter's format or parse functions\n throw an error, it will be displayed to the user inline on the field.\n</p>\n<p>\nThe hint exposed by the converter is shown inline by default in the Redwood theme when\nthe field has focus.\nYou can turn off showing converter hints by using the\n'converterHint' property set to 'none' on the <code class=\"prettyprint\">display-options</code>\nattribute.\n</p>\n<p>\nIn the Redwood theme, only one hint shows at a time, so the precedence rules are:\nhelp.instruction shows; if no help.instruction then validator hints show;\nif none, then help-hints.definition shows; if none, then converter hint shows.\nhelp-hints.source always shows along with the other help or hint.\n</p>",
+    "defaultvalue": null,
+    "tstype": [
+      {
+        "target": "Type",
+        "value": "Converter<V>|null",
+        "jsdocOverride": true,
+        "module": {
+          "Converter": "ojconverter"
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.TextArea#disabled",
+    "name": "disabled",
+    "memberof": "oj-c.TextArea",
+    "meta": {
+      "filename": "text-area.tsx",
+      "path": "web/components/oj-c/text-area"
+    },
+    "kind": "member",
+    "longname": "oj-c.TextArea#disabled",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "boolean"
+      ]
+    },
+    "optional": true,
+    "description": "Whether the component is disabled. The default is false.\n\n<p>\nWhen the <code class=\"prettyprint\">disabled</code> property changes due to programmatic\nintervention, the component may clear messages and run validation in some cases. </br>\n<ul>\n<li>when a required component is initialized as disabled\n<code class=\"prettyprint\">value=\"{{currentValue}}\" required disabled</code>,\ndeferred validation is skipped.</li>\n<li>when a disabled component is enabled,\n <ul>\n <li>if component is invalid and showing messages then all component messages are cleared,\n and full validation run using the display value.\n  <ul>\n   <li>if there are validation errors, they are shown.</li>\n   <li>if no errors result from the validation, the <code class=\"prettyprint\">value</code>\n   property is updated. Page authors can listen to the <code class=\"prettyprint\">valueChanged</code>\n   event to clear custom errors.</li>\n  </ul>\n </li>\n\n <li>if component is valid and has no errors then deferred validation is run.\n   <ul>\n   <li>if there is a deferred validation error, then the valid property is updated. </li>\n   </ul>\n </li>\n <li>if component is invalid and deferred errors then component messages are cleared and\n deferred validation re-run.\n   <ul>\n   <li>if there is a deferred validation error, then the valid property is updated.</li>\n   </ul>\n </li>\n </ul>\n</li>\n<li>when enabled component is disabled then no validation is run and the component appears\ndisabled.</li>\n</ul>\n</p>",
+    "defaultvalue": false
+  },
+  {
+    "id": "oj-c.TextArea#displayOptions",
+    "name": "displayOptions",
+    "memberof": "oj-c.TextArea",
+    "meta": {
+      "filename": "text-area.tsx",
+      "path": "web/components/oj-c/text-area"
+    },
+    "kind": "member",
+    "longname": "oj-c.TextArea#displayOptions",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "object"
+      ]
+    },
+    "optional": true,
+    "description": "Display options for auxiliary content that determines whether or not it should be displayed.",
+    "tstype": [
+      {
+        "target": "Type",
+        "value": "oj-c.TextArea.DisplayOptions",
+        "jsdocOverride": true
+      }
+    ]
+  },
+  {
+    "id": "oj-c.TextArea#help",
+    "name": "help",
+    "memberof": "oj-c.TextArea",
+    "meta": {
+      "filename": "text-area.tsx",
+      "path": "web/components/oj-c/text-area"
+    },
+    "kind": "member",
+    "longname": "oj-c.TextArea#help",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "object"
+      ]
+    },
+    "optional": true,
+    "description": "Form component help information.",
+    "tstype": [
+      {
+        "target": "Type",
+        "value": "oj-c.TextArea.Help",
+        "jsdocOverride": true
+      }
+    ]
+  },
+  {
+    "id": "oj-c.TextArea#helpHints",
+    "name": "helpHints",
+    "memberof": "oj-c.TextArea",
+    "meta": {
+      "filename": "text-area.tsx",
+      "path": "web/components/oj-c/text-area"
+    },
+    "kind": "member",
+    "longname": "oj-c.TextArea#helpHints",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "object"
+      ]
+    },
+    "optional": true,
+    "description": "The helpHints object contains a definition property and a source property.",
+    "tstype": [
+      {
+        "target": "Type",
+        "value": "oj-c.TextArea.HelpHints",
+        "jsdocOverride": true
+      }
+    ]
+  },
+  {
+    "id": "oj-c.TextArea#labelEdge",
+    "name": "labelEdge",
+    "memberof": "oj-c.TextArea",
+    "meta": {
+      "filename": "text-area.tsx",
+      "path": "web/components/oj-c/text-area"
+    },
+    "kind": "member",
+    "longname": "oj-c.TextArea#labelEdge",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "\"none\"",
+        "\"start\"",
+        "\"top\"",
+        "\"inside\""
+      ]
+    },
+    "optional": true,
+    "description": "Specifies how the label of the component is positioned when the label-hint\nattribute is set on the component.",
+    "ojvalues": [
+      {
+        "name": "inside",
+        "description": "The label floats over the input element, but moves up on focus or when the component has a value (default, if unspecified).",
+        "displayName": "Inside",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "none",
+        "description": "The component will not create a label, but instead set the aria-label property on the input element.",
+        "displayName": "None",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "start",
+        "description": "The label will be placed before the start of the component.",
+        "displayName": "Start",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "top",
+        "description": "The label will be placed on top of the component.",
+        "displayName": "Top",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.TextArea#labelHint",
+    "name": "labelHint",
+    "memberof": "oj-c.TextArea",
+    "meta": {
+      "filename": "text-area.tsx",
+      "path": "web/components/oj-c/text-area"
+    },
+    "kind": "member",
+    "longname": "oj-c.TextArea#labelHint",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "string"
+      ]
+    },
+    "optional": false,
+    "description": "Represents a hint for rendering a label on the component.\nThis is used in combination with the label-edge attribute to control how the label should be rendered."
+  },
+  {
+    "id": "oj-c.TextArea#labelStartWidth",
+    "name": "labelStartWidth",
+    "memberof": "oj-c.TextArea",
+    "meta": {
+      "filename": "text-area.tsx",
+      "path": "web/components/oj-c/text-area"
+    },
+    "kind": "member",
+    "longname": "oj-c.TextArea#labelStartWidth",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "number|string"
+      ]
+    },
+    "optional": true,
+    "description": "<p> The width of the label when labelEdge is 'start'.</p>\n<p> This attribute accepts values of type\n<code>0 | `--${string}` | `${number}%` | `${number}x` | `calc(${string})`</code></p>"
+  },
+  {
+    "id": "oj-c.TextArea#labelWrapping",
+    "name": "labelWrapping",
+    "memberof": "oj-c.TextArea",
+    "meta": {
+      "filename": "text-area.tsx",
+      "path": "web/components/oj-c/text-area"
+    },
+    "kind": "member",
+    "longname": "oj-c.TextArea#labelWrapping",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "\"truncate\"",
+        "\"wrap\""
+      ]
+    },
+    "optional": true,
+    "description": "Should the labels wrap or truncate when there is not enough available space.",
+    "tsdeprecated": [
+      {
+        "type": "deprecated",
+        "since": "18.0.0",
+        "description": "Label truncation for 'start' and 'top' aligned labels is no longer recommended by the Redwood Design System. The default for labelWrapping was 'wrap' and that is now the only suggested pattern by UX design for 'start' and 'top' aligned labels. 'inside' aligned labels are always truncated per UX design and are not affected by this property's value."
+      }
+    ],
+    "ojvalues": [
+      {
+        "name": "truncate",
+        "description": "Label will truncate if needed.",
+        "displayName": "Truncate",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "wrap",
+        "description": "Label will wrap if needed.",
+        "displayName": "Wrap",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.TextArea#length",
+    "name": "length",
+    "memberof": "oj-c.TextArea",
+    "meta": {
+      "filename": "text-area.tsx",
+      "path": "web/components/oj-c/text-area"
+    },
+    "kind": "member",
+    "longname": "oj-c.TextArea#length",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "object"
+      ]
+    },
+    "optional": true,
+    "description": "Defines the length limit for the field",
+    "tstype": [
+      {
+        "target": "Type",
+        "value": "oj-c.TextArea.Length",
+        "jsdocOverride": true
+      }
+    ]
+  },
+  {
+    "id": "oj-c.TextArea#maxRows",
+    "name": "maxRows",
+    "memberof": "oj-c.TextArea",
+    "meta": {
+      "filename": "text-area.tsx",
+      "path": "web/components/oj-c/text-area"
+    },
+    "kind": "member",
+    "longname": "oj-c.TextArea#maxRows",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "number"
+      ]
+    },
+    "optional": true,
+    "description": "The maximum number of visible text lines of the textarea. The textarea will change its height in\nresponse to content change. If this is 0, the number of visible text lines is always as specified\nby the \"rows\" attribute, and the textarea will never change its size. If this is -1, there is no\nmaximum and the textarea will grow to show all the content. If this is a positive number larger\nthan the \"rows\" attribute, the textarea will grow to fit the content, up to the maximum number of\ntext lines. The height will never be less than the number of rows specified by the \"rows\" attribute."
+  },
+  {
+    "id": "oj-c.TextArea#maxWidth",
+    "name": "maxWidth",
+    "memberof": "oj-c.TextArea",
+    "meta": {
+      "filename": "text-area.tsx",
+      "path": "web/components/oj-c/text-area"
+    },
+    "kind": "member",
+    "longname": "oj-c.TextArea#maxWidth",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "number|string"
+      ]
+    },
+    "optional": true,
+    "description": "Specifies the component's max width.  If unset, the default max width is 100%.",
+    "ojvalues": [
+      {
+        "name": "sm",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "md",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      }
+    ],
+    "tstype": [
+      {
+        "target": "Type",
+        "value": "number|string|\"sm\"|\"md\"",
+        "jsdocOverride": true
+      }
+    ]
+  },
+  {
+    "id": "oj-c.TextArea#messagesCustom",
+    "name": "messagesCustom",
+    "memberof": "oj-c.TextArea",
+    "meta": {
+      "filename": "text-area.tsx",
+      "path": "web/components/oj-c/text-area"
+    },
+    "kind": "member",
+    "longname": "oj-c.TextArea#messagesCustom",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "Array<object>"
+      ]
+    },
+    "optional": true,
+    "ojwriteback": true,
+    "description": "List of messages an app would add to the component when it has business/custom validation\nerrors that it wants the component to show. This allows the app to perform further validation\nbefore sending data to the server. When this option is set the message shows to the\nuser right away. To clear the custom message, set <code class=\"prettyprint\">messagesCustom</code>\nback to an empty array.<br/>\n<p>\nSee the <a href=\"#validation-section\">Validation and Messages</a> section\nfor details on when the component clears <code class=\"prettyprint\">messagesCustom</code>;\nfor example, when full validation is run.\n</p>",
+    "defaultvalue": "[]",
+    "tstype": [
+      {
+        "target": "Type",
+        "value": "Array<oj-c.TextArea.ComponentMessageItem>",
+        "jsdocOverride": true
+      }
+    ]
+  },
+  {
+    "id": "oj-c.TextArea#placeholder",
+    "name": "placeholder",
+    "memberof": "oj-c.TextArea",
+    "meta": {
+      "filename": "text-area.tsx",
+      "path": "web/components/oj-c/text-area"
+    },
+    "kind": "member",
+    "longname": "oj-c.TextArea#placeholder",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "string"
+      ]
+    },
+    "optional": true,
+    "description": "The placeholder text to set on the element."
+  },
+  {
+    "id": "oj-c.TextArea#readonly",
+    "name": "readonly",
+    "memberof": "oj-c.TextArea",
+    "meta": {
+      "filename": "text-area.tsx",
+      "path": "web/components/oj-c/text-area"
+    },
+    "kind": "member",
+    "longname": "oj-c.TextArea#readonly",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "boolean"
+      ]
+    },
+    "optional": true,
+    "description": "<p>\nWhether the component is readonly. The readonly property sets or returns whether an element\nis readonly, or not. A readonly element cannot be modified. However, a user can tab to it,\nhighlight it, focus on it, and copy the text from it. If you want to prevent the user from\ninteracting with the element, use the disabled property instead.\n</p>\n<p>\nIf the property value is not set either directly on the component or inherited from\na parent form layout, then the property is treated as if its value were false.\n</p>"
+  },
+  {
+    "id": "oj-c.TextArea#readonlyUserAssistanceShown",
+    "name": "readonlyUserAssistanceShown",
+    "memberof": "oj-c.TextArea",
+    "meta": {
+      "filename": "text-area.tsx",
+      "path": "web/components/oj-c/text-area"
+    },
+    "kind": "member",
+    "longname": "oj-c.TextArea#readonlyUserAssistanceShown",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "\"none\"",
+        "\"confirmationAndInfoMessages\""
+      ]
+    },
+    "optional": true,
+    "description": "<p>\nSpecifies which user assistance types should be shown when the component is readonly.\n</p>",
+    "defaultvalue": "\"none\""
+  },
+  {
+    "id": "oj-c.TextArea#required",
+    "name": "required",
+    "memberof": "oj-c.TextArea",
+    "meta": {
+      "filename": "text-area.tsx",
+      "path": "web/components/oj-c/text-area"
+    },
+    "kind": "member",
+    "longname": "oj-c.TextArea#required",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "boolean"
+      ]
+    },
+    "optional": true,
+    "description": "<p>\nThis property set to <code class=\"prettyprint\">false</code> implies that a value is not required to be provided by the user.\nThis is the default.\nThis property set to <code class=\"prettyprint\">true</code> implies that a value is required to be provided by the user.\n</p>\n<p>\nIn the Redwood theme, by default, a Required text is rendered inline when the field is empty.\nIf user-assistance-density is 'compact', it will show on the label as an icon.\n</p>\n<p>The Required error text is based on Redwood UX designs, and it is not recommended that\nit be changed.\nTo override the required error message,\nuse the <code class=\"prettyprint\">required-message-detail</code> attribute.\nThe component's label text is passed in as a token {label} and can be used in the message detail.\n</p>\n<p>When required is set to true, an implicit\nrequired validator is created, i.e.,\n<code class=\"prettyprint\">new RequiredValidator()</code>. The required validator is the only\nvalidator to run during initial render, and its error is not shown to the user at this time;\nthis is called deferred validation. The required validator also runs during normal validation;\nthis is when the errors are shown to the user.\nSee the <a href=\"#validation-section\">Validation and Messaging</a> section for details.\n</p>\n<p>\nWhen the <code class=\"prettyprint\">required</code> property changes due to programmatic intervention,\nthe component may clear component messages and run validation, based on the current state it's in. </br>\n\n<h4>Running Validation when required property changes</h4>\n<ul>\n<li>if component is valid when required is set to true, then it runs deferred validation on\nthe value property. If the field is empty, the valid state is invalidHidden. No errors are\nshown to the user.\n</li>\n<li>if component is valid when required is set from true to false, then no validation is run.\n</li>\n<li>if component is invalid and has deferred messages when required is set to false, then\ncomponent messages are cleared (messages-custom messages are not cleared)\nbut no deferred validation is run because required is false.\n</li>\n<li>if component is invalid and currently showing invalid messages (invalidShown) when required is changed\nto either true or false, then\ncomponent messages are cleared and normal validation is run using the current display value.\n<ul>\n  <li>if there are validation errors, then <code class=\"prettyprint\">value</code>\n  property is not updated and the error is shown.\n  </li>\n  <li>if no errors result from the validation, the <code class=\"prettyprint\">value</code>\n  property is updated; page author can listen to the <code class=\"prettyprint\">valueChanged</code>\n  event on the component to clear custom errors.</li>\n</ul>\n</li>\n</ul>\n\n<h4>Clearing Messages when required property changes</h4>\n<ul>\n<li>Only messages created by the component, like validation messages, are cleared when the required property changes.</li>\n<li><code class=\"prettyprint\">messagesCustom</code> property is not cleared.</li>\n</ul>\n\n</p>",
+    "defaultvalue": false
+  },
+  {
+    "id": "oj-c.TextArea#requiredMessageDetail",
+    "name": "requiredMessageDetail",
+    "memberof": "oj-c.TextArea",
+    "meta": {
+      "filename": "text-area.tsx",
+      "path": "web/components/oj-c/text-area"
+    },
+    "kind": "member",
+    "longname": "oj-c.TextArea#requiredMessageDetail",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "string"
+      ]
+    },
+    "optional": true,
+    "description": "<p>\nThe component-specific message detail when the required validation fails.\nIf the component needs a required validation error message that is different from the default,\nset this property. It should be a translated string.\n</p>"
+  },
+  {
+    "id": "oj-c.TextArea#resizeBehavior",
+    "name": "resizeBehavior",
+    "memberof": "oj-c.TextArea",
+    "meta": {
+      "filename": "text-area.tsx",
+      "path": "web/components/oj-c/text-area"
+    },
+    "kind": "member",
+    "longname": "oj-c.TextArea#resizeBehavior",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "\"both\"",
+        "\"none\"",
+        "\"horizontal\"",
+        "\"vertical\""
+      ]
+    },
+    "optional": true,
+    "description": "Defines the resizeBehavior of the textarea. Note that this is implemented via the native browser support\nfor resize on the textarea element. If a browser doesn't support this (IE, Edge, iOS, Android), then\nthis attribute has no effect.",
+    "ojvalues": [
+      {
+        "name": "horizontal",
+        "description": "The textarea will be resizable in the horizontal direction only.",
+        "displayName": "Horizontal",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "vertical",
+        "description": "The textarea will be resizable in the vertical direction only.",
+        "displayName": "Vertical",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "both",
+        "description": "The textarea will be interactively resizable both horizontally and vertically.",
+        "displayName": "Both",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "none",
+        "description": "The textarea will not be resizable by the user.",
+        "displayName": "None",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      }
+    ],
+    "defaultvalue": "\"none\""
+  },
+  {
+    "id": "oj-c.TextArea#rows",
+    "name": "rows",
+    "memberof": "oj-c.TextArea",
+    "meta": {
+      "filename": "text-area.tsx",
+      "path": "web/components/oj-c/text-area"
+    },
+    "kind": "member",
+    "longname": "oj-c.TextArea#rows",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "number"
+      ]
+    },
+    "optional": true,
+    "description": "The number of visible text lines in the textarea. It can also be used to give specific height to the\ntextarea. When used in conjuction with max-rows, the rows attribute will be the minimum height of\nthe textarea."
+  },
+  {
+    "id": "oj-c.TextArea#textAlign",
+    "name": "textAlign",
+    "memberof": "oj-c.TextArea",
+    "meta": {
+      "filename": "text-area.tsx",
+      "path": "web/components/oj-c/text-area"
+    },
+    "kind": "member",
+    "longname": "oj-c.TextArea#textAlign",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "\"end\"",
+        "\"start\"",
+        "\"right\""
+      ]
+    },
+    "optional": true,
+    "description": "Specifies how the text is aligned within the text field",
+    "ojvalues": [
+      {
+        "name": "start",
+        "description": "Aligns text left when reading direction is ltr and right when reading direction is rtl (default, if unspecified).",
+        "displayName": "Start",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "end",
+        "description": "Aligns text right when reading direction is ltr and left when reading direction is rtl.",
+        "displayName": "End",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "right",
+        "description": "Aligns text right regardless of reading direction, often used for numbers.",
+        "displayName": "Right",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.TextArea#userAssistanceDensity",
+    "name": "userAssistanceDensity",
+    "memberof": "oj-c.TextArea",
+    "meta": {
+      "filename": "text-area.tsx",
+      "path": "web/components/oj-c/text-area"
+    },
+    "kind": "member",
+    "longname": "oj-c.TextArea#userAssistanceDensity",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "\"compact\"",
+        "\"reflow\"",
+        "\"efficient\""
+      ]
+    },
+    "optional": true,
+    "description": "<p>\nSpecifies the density of the form component's user assistance presentation. It can be shown inline with\nreserved rows to prevent reflow if a user assistance text shows up, inline without reserved rows that would\nreflow if a user assistance text shows up, or it can be shown compactly in a popup instead.\n</p>\n<p>\nIf the property value is not set either directly on the component or inherited from\na parent form layout, then the property is treated as if its value were \"reflow\".\n</p>",
+    "ojvalues": [
+      {
+        "name": "reflow",
+        "description": "Messages, help, hints, and required are all shown inline under the field with no reserved space.",
+        "displayName": "Reflow",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "efficient",
+        "description": "Messages, help, hints, and required are all shown inline under the field with reserved space.",
+        "displayName": "Efficient",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "compact",
+        "description": "Messages, help, hints, and required will not be shown inline; they will show in a mode that keeps the screen more compact, like a popup for the messages, and a required icon to indicate Required.",
+        "displayName": "Compact",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.TextArea#validators",
+    "name": "validators",
+    "memberof": "oj-c.TextArea",
+    "meta": {
+      "filename": "text-area.tsx",
+      "path": "web/components/oj-c/text-area"
+    },
+    "kind": "member",
+    "longname": "oj-c.TextArea#validators",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "Array<object>|null"
+      ]
+    },
+    "optional": true,
+    "description": "List of validators, synchronous or asynchronous,\nused by the component\nand the implicit component validators when performing validation. Each item is either an\ninstance that duck types oj.Validator or oj.AsyncValidator.\n<p>\nImplicit validators are created by the element when certain attributes are present.\nFor example, if the <code class=\"prettyprint\">required</code> attribute\nis set, an implicit oj.RequiredValidator is created.\nAt runtime when the component runs validation, it\ncombines all the implicit validators with all the validators\nspecified through this <code class=\"prettyprint\">validators</code> attribute\nand the <code class=\"prettyprint\">async-validators</code> attribute, and\nruns all of them.\n</p>\n<p>\nHints exposed by validators are shown inline by default in the Redwood theme when the\nfield has focus.\nYou can turn off showing validator hints by using the\n'validatorHint' property set to 'none' on the <code class=\"prettyprint\">display-options</code>\nattribute.\n</p>\n<p>\nIn the Redwood theme, only one hint shows at a time, so the precedence rules are:\nhelp.instruction shows; if no help.instruction then validator hints show;\nif none, then help-hints.definition shows; if none, then converter hint shows.\nhelp-hints.source always shows along with the other help or hint.\n</p>\n\n<p>\nWhen <code class=\"prettyprint\">validators</code> property changes due to programmatic\nintervention, the component may decide to clear messages and run validation, based on the\ncurrent state it is in. </br>\n\n<h4>Steps Performed Always</h4>\n<ul>\n<li>The cached list of validator instances are cleared and new validator hints is pushed to\nmessaging.\n</li>\n</ul>\n\n<h4>Running Validation</h4>\n<ul>\n<li>if component is valid when validators changes, component does nothing other than the\nsteps it always performs.</li>\n<li>if component is invalid and is showing messages when\n<code class=\"prettyprint\">validators</code> or\n<code class=\"prettyprint\">async-validators</code> changes then all component messages\n are cleared and full validation run using the display value on the component.\n<ul>\n  <li>if there are validation errors, then <code class=\"prettyprint\">value</code>\n  property is not updated and the error is shown.\n  </li>\n  <li>if no errors result from the validation, the <code class=\"prettyprint\">value</code>\n  property is updated; page author can listen to the <code class=\"prettyprint\">valueChanged</code>\n  event to clear custom errors.</li>\n</ul>\n</li>\n<li>if component is invalid and has deferred messages when validators changes, it does\nnothing other than the steps it performs always.</li>\n</ul>\n</p>\n\n<h4>Clearing Messages</h4>\n<ul>\n<li>Only messages created by the component are cleared.</li>\n<li><code class=\"prettyprint\">messagesCustom</code> property is not cleared.</li>\n</ul>\n</p>",
+    "defaultvalue": "[]",
+    "tstype": [
+      {
+        "target": "Type",
+        "value": "Array<AsyncValidator<V>|Validator<V>>|null",
+        "jsdocOverride": true,
+        "module": {
+          "AsyncValidator": "ojvalidator-async",
+          "Validator": "ojvalidator"
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.TextArea#value",
+    "name": "value",
+    "memberof": "oj-c.TextArea",
+    "meta": {
+      "filename": "text-area.tsx",
+      "path": "web/components/oj-c/text-area"
+    },
+    "kind": "member",
+    "longname": "oj-c.TextArea#value",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "any"
+      ]
+    },
+    "optional": true,
+    "ojwriteback": true,
+    "description": "The value of the component.\n\n<p>\nWhen <code class=\"prettyprint\">value</code> property changes due to programmatic\nintervention, the component always clears all messages\nincluding <code class=\"prettyprint\">messagesCustom</code>, runs deferred validation, and\nalways refreshes UI display value.\n</p>\n\n<p>\nWhen the textarea field is cleared and the value is committed, the <code class=\"prettyprint\">value</code>\nproperty is set to <code>null</code>.\n</p>\n\n<h4>Running Validation</h4>\n<ul>\n<li>component always runs deferred validation; the\n<code class=\"prettyprint\">valid</code> property is updated with the result.</li>\n</ul>",
+    "defaultvalue": null,
+    "tstype": [
+      {
+        "target": "Type",
+        "value": "V|null",
+        "jsdocOverride": true
+      }
+    ]
+  },
+  {
+    "id": "oj-c.TextArea#width",
+    "name": "width",
+    "memberof": "oj-c.TextArea",
+    "meta": {
+      "filename": "text-area.tsx",
+      "path": "web/components/oj-c/text-area"
+    },
+    "kind": "member",
+    "longname": "oj-c.TextArea#width",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "number|string"
+      ]
+    },
+    "optional": true,
+    "description": "Specifies the component's width.  If unset, the default width is 100%.\nNote that by default max-width is 100%, which will override the width if the container is smaller than the width specified.",
+    "ojvalues": [
+      {
+        "name": "sm",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "md",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      }
+    ],
+    "tstype": [
+      {
+        "target": "Type",
+        "value": "number|string|\"sm\"|\"md\"",
+        "jsdocOverride": true
+      }
+    ]
+  },
+  {
+    "id": "oj-c.TextArea#rawValue",
+    "name": "rawValue",
+    "memberof": "oj-c.TextArea",
+    "meta": {
+      "filename": "text-area.tsx",
+      "path": "web/components/oj-c/text-area"
+    },
+    "kind": "member",
+    "longname": "oj-c.TextArea#rawValue",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "string"
+      ]
+    },
+    "optional": true,
+    "ojwriteback": true,
+    "readonly": true,
+    "description": "<p>The  <code class=\"prettyprint\">rawValue</code> is the read-only property for retrieving\nthe current value from the input field in string form. The main consumer of\n<code class=\"prettyprint\">rawValue</code> is a converter.</p>\n<p>\nThe <code class=\"prettyprint\">rawValue</code> updates on the 'input' javascript event,\nso the <code class=\"prettyprint\">rawValue</code> changes as the value of the input is changed.\nIf the user types in '1,200' into the field, the rawValue will be '1', then '1,', then '1,2',\n..., and finally '1,200'. Then when the user blurs or presses\nEnter the <code class=\"prettyprint\">value</code> property gets converted and validated\n(if there is a converter or validators) and then gets updated if valid.\n</p>\n<p>This is a read-only attribute so page authors cannot set or change it directly.</p>"
+  },
+  {
+    "id": "oj-c.TextArea#valid",
+    "name": "valid",
+    "memberof": "oj-c.TextArea",
+    "meta": {
+      "filename": "text-area.tsx",
+      "path": "web/components/oj-c/text-area"
+    },
+    "kind": "member",
+    "longname": "oj-c.TextArea#valid",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "\"pending\"",
+        "\"valid\"",
+        "\"invalidHidden\"",
+        "\"invalidShown\""
+      ]
+    },
+    "optional": true,
+    "ojwriteback": true,
+    "readonly": true,
+    "description": "<p>\nThe current valid state of the component. It is evaluated on initial render.\nIt is re-evaluated\n<ul>\n  <li>after each validator (validators or async-validators) is run (full or deferred)</li>\n  <li>when messagesCustom is updated,\n  since messagesCustom can be added by the app developer any time.</li>\n  <li>when showMessages() is called. Since showMessages() moves the\n  hidden messages into messages shown,\n  if the valid state was \"invalidHidden\" then it would become \"invalidShown\".</li>\n  <li>when the required property has changed. If a component is empty and has required\n  set, the valid state may be \"invalidHidden\" (if no invalid messages are being shown as well).\n  If required property is removed, the valid state would change to \"valid\".</li>\n</ul>\n</p>\n<p>\n Note: New valid states may be added to the list of valid values in future releases.\n Any new values will start with \"invalid\"\n if it is an invalid state, \"pending\" if it is pending state,\n and \"valid\" if it is a valid state.\n</p>",
+    "ojvalues": [
+      {
+        "name": "valid",
+        "description": "The component is valid",
+        "displayName": "Valid",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "pending",
+        "description": "The component is waiting for the validation state to be determined. The 'pending' state is set at the start of the convert/validate process.",
+        "displayName": "Pending",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "invalidHidden",
+        "description": "The component has invalid messages hidden and no invalid messages showing. An invalid message is one with severity 'error'.",
+        "displayName": "Invalid Hidden",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "invalidShown",
+        "description": "The component has invalid messages showing. An invalid message is one with severity 'error'.",
+        "displayName": "Invalid Shown",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.TextArea#blur",
+    "name": "blur",
+    "memberof": "oj-c.TextArea",
+    "meta": {
+      "filename": "text-area.tsx",
+      "path": "web/components/oj-c/text-area"
+    },
+    "kind": "function",
+    "longname": "oj-c.TextArea#blur",
+    "scope": "instance",
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "void"
+          ]
+        }
+      }
+    ],
+    "description": "Blurs the input field.",
+    "ojhidden": true
+  },
+  {
+    "id": "oj-c.TextArea#focus",
+    "name": "focus",
+    "memberof": "oj-c.TextArea",
+    "meta": {
+      "filename": "text-area.tsx",
+      "path": "web/components/oj-c/text-area"
+    },
+    "kind": "function",
+    "longname": "oj-c.TextArea#focus",
+    "scope": "instance",
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "void"
+          ]
+        }
+      }
+    ],
+    "description": "Focuses the input field.",
+    "ojhidden": true
+  },
+  {
+    "id": "oj-c.TextArea#showMessages",
+    "name": "showMessages",
+    "memberof": "oj-c.TextArea",
+    "meta": {
+      "filename": "text-area.tsx",
+      "path": "web/components/oj-c/text-area"
+    },
+    "kind": "function",
+    "longname": "oj-c.TextArea#showMessages",
+    "scope": "instance",
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "void"
+          ]
+        }
+      }
+    ],
+    "description": "Takes all deferred messages and shows them.\nIt then updates the valid property;\ne.g., if the valid state was \"invalidHidden\" before showMessages(),\nthe valid state will become \"invalidShown\" after showMessages().\nIf there were no deferred messages this method simply returns."
+  },
+  {
+    "id": "oj-c.TextArea#reset",
+    "name": "reset",
+    "memberof": "oj-c.TextArea",
+    "meta": {
+      "filename": "text-area.tsx",
+      "path": "web/components/oj-c/text-area"
+    },
+    "kind": "function",
+    "longname": "oj-c.TextArea#reset",
+    "scope": "instance",
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "void"
+          ]
+        }
+      }
+    ],
+    "description": "Resets the component by clearing all messages and messagesCustom attribute\nand updates the component's display value using the attribute value.\nUser entered values will be erased when this method is called."
+  },
+  {
+    "id": "oj-c.TextArea#validate",
+    "name": "validate",
+    "memberof": "oj-c.TextArea",
+    "meta": {
+      "filename": "text-area.tsx",
+      "path": "web/components/oj-c/text-area"
+    },
+    "kind": "function",
+    "longname": "oj-c.TextArea#validate",
+    "scope": "instance",
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Promise"
+          ]
+        },
+        "description": "Promise resolves to \"valid\" if there were no converter parse errors and the component\npassed all validations. The Promise resolves to \"valid\" if the component is disabled or readonly.\nThe Promise resolves to \"invalid\" if there were converter\nparse errors or if there were validation errors."
+      }
+    ],
+    "description": "If enabled, validates the component's display value using the converter and\nall validators registered on the component and updates the value\noption by performing the following steps.\n<ol>\n<li>All messages are cleared, including custom messages added by the app.</li>\n<li>If the UI display value is empty, then the component normalizes the value to null.</li>\n<li>\n If no converter is present, or the normalized value is null, then processing continues to next step. Otherwise,\n the UI value is first converted (i.e., parsed). If there is a parse error then the messages are shown and processing stops.\n</li>\n<li>\n If required is true, the implicit required validator is run. If the required validator throws an error, the message is shown.\n</li>\n<li>\n If there are no other validators registered on the component, or if the UI display value is empty,\n the value option is updated using the display value (an empty field's display value is null).\n\n Otherwise all validators are run in sequence\n using the parsed value from the previous step.\n When a validation error is encountered it is remembered and the next validator in the sequence is run.\n</li>\n<li>\n At the end of validation if there are errors, the messages are shown.\n If there were no errors, then the value option is updated.\n</li>\n</ol>\n<p>If the component is readonly or disabled, returns a Promise that resolves to 'valid'\nwithout doing any validation.</p>"
+  },
+  {
+    "id": "oj-c.TextArea#setProperty",
+    "name": "setProperty",
+    "memberof": "oj-c.TextArea",
+    "meta": {
+      "filename": "text-area.tsx",
+      "path": "web/components/oj-c/text-area"
+    },
+    "kind": "function",
+    "longname": "oj-c.TextArea#setProperty",
+    "scope": "instance",
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "void"
+          ]
+        }
+      }
+    ],
+    "description": "Sets a property or a single subproperty for complex properties and notifies the component of the change, triggering a corresponding event.",
+    "params": [
+      {
+        "name": "property",
+        "description": "The property name to set. Supports dot notation for subproperty access.",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "value",
+        "description": "The new value to set the property to.",
+        "type": {
+          "names": [
+            "any"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.TextArea#getProperty",
+    "name": "getProperty",
+    "memberof": "oj-c.TextArea",
+    "meta": {
+      "filename": "text-area.tsx",
+      "path": "web/components/oj-c/text-area"
+    },
+    "kind": "function",
+    "longname": "oj-c.TextArea#getProperty",
+    "scope": "instance",
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "any"
+          ]
+        }
+      }
+    ],
+    "description": "Retrieves the value of a property or a subproperty.",
+    "params": [
+      {
+        "name": "property",
+        "description": "The property name to get. Supports dot notation for subproperty access.",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.TextArea#setProperties",
+    "name": "setProperties",
+    "memberof": "oj-c.TextArea",
+    "meta": {
+      "filename": "text-area.tsx",
+      "path": "web/components/oj-c/text-area"
+    },
+    "kind": "function",
+    "longname": "oj-c.TextArea#setProperties",
+    "scope": "instance",
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "void"
+          ]
+        }
+      }
+    ],
+    "description": "Performs a batch set of properties.",
+    "params": [
+      {
+        "name": "properties",
+        "description": "An object containing the property and value pairs to set.",
+        "type": {
+          "names": [
+            "object"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.TextArea.touchDoc",
+    "name": "touchDoc",
+    "kind": "member",
+    "longname": "oj-c.TextArea.touchDoc",
+    "description": "<table class=\"keyboard-table\">\n  <thead>\n    <tr>\n      <th>Target</th>\n      <th>Gesture</th>\n      <th>Action</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <td>Input</td>\n      <td><kbd>Tap</kbd></td>\n      <td>Sets focus to input. Show user assistance text.</td>\n    </tr>\n  </tbody>\n</table>",
+    "memberof": "oj-c.TextArea",
+    "meta": {
+      "filename": "text-area.tsx",
+      "path": "web/components/oj-c/text-area"
+    },
+    "ojfragment": true
+  },
+  {
+    "id": "oj-c.TextArea.keyboardDoc",
+    "name": "keyboardDoc",
+    "kind": "member",
+    "longname": "oj-c.TextArea.keyboardDoc",
+    "description": "<table class=\"keyboard-table\">\n  <thead>\n    <tr>\n      <th>Target</th>\n      <th>Key</th>\n      <th>Action</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <td>Input</td>\n      <td><kbd>Tab In</kbd></td>\n      <td>Set focus to the input. Show user assistance text.</td>\n    </tr>\n  </tbody>\n</table>",
+    "memberof": "oj-c.TextArea",
+    "meta": {
+      "filename": "text-area.tsx",
+      "path": "web/components/oj-c/text-area"
+    },
+    "ojfragment": true
+  },
+  {
+    "id": "oj-c.TextArea#autofocus",
+    "name": "autofocus",
+    "memberof": "oj-c.TextArea",
+    "meta": {
+      "filename": "text-area.tsx",
+      "path": "web/components/oj-c/text-area"
+    },
+    "kind": "member",
+    "longname": "oj-c.TextArea#autofocus",
+    "observedGlobalProp": true,
+    "scope": "instance",
+    "type": {
+      "names": [
+        "boolean"
+      ]
+    },
+    "optional": true,
+    "description": "Autofocus is a Boolean that reflects the autofocus attribute.\nIf it is set to true then the associated component will get input focus when the page is loaded.\nSetting this property doesn't set the focus to the component:\nit tells the browser to focus to it when the element is inserted in the document."
+  },
+  {
+    "id": "oj-c.TextArea.DisplayOptions",
+    "name": "DisplayOptions",
+    "kind": "typedef",
+    "memberof": "oj-c.TextArea",
+    "meta": {
+      "filename": "text-area.tsx",
+      "path": "web/components/oj-c/text-area"
+    },
+    "longname": "oj-c.TextArea.DisplayOptions",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "scope": "static",
+    "description": "Display options for auxiliary content that determines whether or not it should be displayed.",
+    "properties": [
+      {
+        "name": "converterHint",
+        "description": "Display options for auxiliary converter hint text.",
+        "optional": true,
+        "type": {
+          "names": [
+            "\"none\"",
+            "\"display\""
+          ]
+        },
+        "defaultvalue": "\"display\""
+      },
+      {
+        "name": "messages",
+        "description": "Display options for auxiliary message text.",
+        "optional": true,
+        "type": {
+          "names": [
+            "\"none\"",
+            "\"display\""
+          ]
+        },
+        "defaultvalue": "\"display\""
+      },
+      {
+        "name": "validatorHint",
+        "description": "Display options for auxiliary validator hint text.",
+        "optional": true,
+        "type": {
+          "names": [
+            "\"none\"",
+            "\"display\""
+          ]
+        },
+        "defaultvalue": "\"display\""
+      }
+    ]
+  },
+  {
+    "id": "oj-c.TextArea.Help",
+    "name": "Help",
+    "kind": "typedef",
+    "memberof": "oj-c.TextArea",
+    "meta": {
+      "filename": "text-area.tsx",
+      "path": "web/components/oj-c/text-area"
+    },
+    "longname": "oj-c.TextArea.Help",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "scope": "static",
+    "description": "Form component help information.",
+    "properties": [
+      {
+        "name": "instruction",
+        "description": "A type of user assistance text. User assistance text is used to provide guidance to\nhelp the user understand what data to enter or select.",
+        "optional": true,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.TextArea.HelpHints",
+    "name": "HelpHints",
+    "kind": "typedef",
+    "memberof": "oj-c.TextArea",
+    "meta": {
+      "filename": "text-area.tsx",
+      "path": "web/components/oj-c/text-area"
+    },
+    "longname": "oj-c.TextArea.HelpHints",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "scope": "static",
+    "description": "The helpHints object contains a definition property and a source property.",
+    "properties": [
+      {
+        "name": "definition",
+        "description": "A type of user assistance text. User assistance text is used to provide guidance to help\nthe user understand what data to enter or select. help-hints could come from a help system.",
+        "optional": true,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "source",
+        "description": "Help source URL associated with the component.",
+        "optional": true,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "sourceText",
+        "description": "Custom text to be used for the source link.",
+        "optional": true,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.TextArea.Length",
+    "name": "Length",
+    "kind": "typedef",
+    "memberof": "oj-c.TextArea",
+    "meta": {
+      "filename": "text-area.tsx",
+      "path": "web/components/oj-c/text-area"
+    },
+    "longname": "oj-c.TextArea.Length",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "scope": "static",
+    "description": "Defines the length limit for the field",
+    "properties": [
+      {
+        "name": "countBy",
+        "description": "Dictates how the text area characters are counted.",
+        "optional": true,
+        "type": {
+          "names": [
+            "\"codePoint\"",
+            "\"codeUnit\""
+          ]
+        },
+        "defaultvalue": "\"codePoint\""
+      },
+      {
+        "name": "counter",
+        "description": "Decides whether the remaining number of characters that can be entered is shown or not.",
+        "optional": true,
+        "type": {
+          "names": [
+            "\"none\"",
+            "\"remaining\""
+          ]
+        },
+        "defaultvalue": "\"remaining\""
+      },
+      {
+        "name": "max",
+        "description": "Maximum number of characters that can be entered in the input field.",
+        "optional": true,
+        "type": {
+          "names": [
+            "number|null"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.TextArea.ComponentMessageItem",
+    "name": "ComponentMessageItem",
+    "kind": "typedef",
+    "memberof": "oj-c.TextArea",
+    "meta": {
+      "filename": "text-area.tsx",
+      "path": "web/components/oj-c/text-area"
+    },
+    "longname": "oj-c.TextArea.ComponentMessageItem",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "scope": "static",
+    "description": "A type for a single component message",
+    "properties": [
+      {
+        "name": "summary",
+        "optional": true,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "detail",
+        "optional": true,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "severity",
+        "optional": true,
+        "type": {
+          "names": [
+            "\"error\"",
+            "\"confirmation\"",
+            "\"info\"",
+            "\"warning\""
+          ]
+        }
+      }
+    ]
+  }
+]

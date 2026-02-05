@@ -1,0 +1,2 @@
+define(['exports', './LayerHost-daf96749', './EnvironmentProvider-d538fcb2', 'preact', './index-f7ad24df', 'preact/jsx-runtime', 'preact/compat', './UNSAFE_Layer/themes/LayerHostStyles.css', 'css!./LayerHostStyles.styles.css', 'preact/hooks', './LayerManager-8bad71b0'], (function(e,r,t,n,o,i,s,a,d,v,c){"use strict";e.EnvironmentContext=r.EnvironmentContext,e.EnvironmentProvider=t.EnvironmentProvider,e.RootEnvironmentProvider=t.RootEnvironmentProvider,Object.defineProperty(e,"__esModule",{value:!0})}));
+//# sourceMappingURL=UNSAFE_Environment.js.map

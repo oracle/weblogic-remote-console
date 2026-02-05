@@ -1,0 +1,33 @@
+.AxisStyles_outlineRing__zsz5r0 {
+  stroke-dasharray: 1.5;
+  stroke-width: 1px;
+  fill: transparent;
+  stroke: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-border-keyboard-focus);
+}
+.AxisStyles_isInteractive__zsz5r1 {
+  cursor: pointer;
+}
+.AxisStyles_axisLabel__zsz5r2 {
+  fill: var(--axisTickLabelTextColor__1veqowy1);
+  dominant-baseline: central;
+}
+.AxisStyles_axisTitle__zsz5r3 {
+  fill: var(--axisTitleTextColor__1veqowy0);
+  text-anchor: middle;
+}
+.AxisStyles_textAfterEdgeBaseline__zsz5r4 {
+  dominant-baseline: text-after-edge;
+}
+.AxisStyles_middleBaseline__zsz5r5 {
+  dominant-baseline: middle;
+}
+.AxisStyles_centralBaseline__zsz5r6 {
+  dominant-baseline: central;
+}
+.AxisStyles_axisBackground__zsz5r7 {
+  fill: transparent;
+}
+.AxisStyles_groupSeparatorLine__zsz5r8 {
+  stroke: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-border-divider);
+  stroke-width: 1px;
+}

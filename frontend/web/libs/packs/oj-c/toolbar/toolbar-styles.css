@@ -1,0 +1,21 @@
+/* This file is where css selectors for the component go.
+   There will be hard coded properties and properties controlled by variables, for example
+
+   oj-c-toolbar .oj-c-toolbar-value-text {
+   color: var(--oj-c-toolbar-value-text-color);
+   display: inline-block;
+	 }
+*/
+
+oj-c-toolbar:not(.oj-complete){
+  visibility: hidden;
+}
+
+oj-c-toolbar {
+  display: block;
+}
+
+oj-c-toolbar[hidden]
+{
+  display: none;
+}

@@ -1,118 +1,53 @@
 <!DOCTYPE html>
 <!--
- Copyright (c) 2020, 2024, Oracle Corp. and/or its affiliates.
- The Universal Permissive License (UPL), Version 1.0
--->
-<html lang="en-US">
+ Copyright (c) 2014, 2026, Oracle and/or its affiliates.
+ Licensed under The Universal Permissive License (UPL), Version 1.0
+ as shown at https://oss.oracle.com/licenses/upl/
+ -->
+
+<!-- ************************ IMPORTANT INFORMATION ************************************
+  This web basic template is provided as an example of how to configure
+  a JET web application.  It contains the Oracle JET framework and a default
+  requireJS configuration file to show how JET can be setup in a common application.
+  This project template can be used in conjunction with demo code from the JET
+  website to test JET component behavior and interactions.
+
+  Any CSS styling with the prefix "demo-" is for demonstration only and is not
+  provided as part of the JET framework.
+
+  Please see the demos under Cookbook/Patterns/App Shell: Web and the CSS documentation
+  under Support/API Docs/Non-Component Styling on the JET website for more information on how to use
+  the best practice patterns shown in this template.
+
+  Aria Landmark role attributes are added to the different sections of the application
+  for accessibility compliance. If you change the type of content for a specific
+  section from what is defined, you should also change the role value for that
+  section to represent the appropriate content type.
+  ***************************** IMPORTANT INFORMATION ************************************ -->
+  <html lang="en-US">
+  
   <head>
-    <meta http-equiv="x-ua-compatible" content="IE=edge"/>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <meta name="viewport" content="viewport-fit=cover, width=device-width, initial-scale=1">
-    <link href="images/favicon-32.png" type="image/x-icon" rel="icon"/>
-    <!--
-        !!! DO NOT DELETE THE FOLLOWING HREFS BECAUSE YOU MAY NEED THEM TO RETRIEVE !!!
-        !!! A WOFF FILE THAT GETS REFERENCED IN THE CSS, BUT HASN"T BEEN ADDED TO   !!!
-        !!! THE GITLAB REPO YET. THE MISSING WOFF FILE WON'T BE ONE THAT WE USE IN  !!!
-        !!! OUR JET APP, BUT SHOULD BE RETRIEVED AND ADDED TO THE REPO TO IN ORDER  !!!
-        !!! TO PREVENT GETTING A 404 IN THE JAVASCRIPT CONSOLE LOG.                 !!!
-
-        <link href="https://static.oracle.com/cdn/fnd/gallery/2310.0.1/OracleFont/OracleFont.min.css" type="text/css" rel="stylesheet" />
-        <link href="https://static.oracle.com/cdn/fnd/gallery/2010.1.0/OracleFont/OracleFont.min.css" type="text/css" rel="stylesheet" />
-        <link href="https://static.oracle.com/cdn/fnd/gallery/2004.1.0/images/iconfont/ojuxIconFont.min.css" type="text/css" rel="stylesheet"/>
-        <link href="https://static.oracle.com/cdn/fnd/gallery/2404.0.0/images/iconfont/ojuxIconFont.min.css" type="text/css" rel="stylesheet"/>
-    -->
-      <!-- This is the main css file for the default theme -->
-      <!-- injector:theme -->
-      <!-- endinjector -->
-
-    <link id="oraclefont-2010" href="js/jet-composites/wrc-frontend/1.0.0/css/fonts/2010.1.0/OracleFont/OracleFont.min.css" type="text/css" rel="stylesheet"/>
-    <link id="uxiconfont-2110" href="js/jet-composites/wrc-frontend/1.0.0/css/fonts/2110.1.0/images/iconfont/ojuxIconFont.min.css" type="text/css" rel="stylesheet"/>
-    <link id="uxiconfont-2404" href="js/jet-composites/wrc-frontend/1.0.0/css/fonts/2404.0.0/images/iconfont/ojuxIconFont.min.css" type="text/css" rel="stylesheet"/>
-    <link id="fontawesome-470" href="js/jet-composites/wrc-frontend/1.0.0/css/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css" rel="stylesheet"/>
-
-    <link href="js/jet-composites/wrc-frontend/1.0.0/css/tool.css" type="text/css" rel="stylesheet" />
-    <link href="css/app.css" type="text/css" rel="stylesheet"/>
+    <meta http-equiv="x-ua-compatible" content="IE=edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="viewport-fit=cover, width=device-width, initial-scale=1" />
+    <link href="images/favicon-32.png" type="image/x-icon" rel="icon" />
+  
+    <!-- This is injects main css file for the default theme -->
+    <!-- injector:theme -->
+    <link rel="stylesheet" href="https://static.oracle.com/cdn/jet/v19.0.0/default/css/redwood/oj-redwood.min.css" />
+    <!-- endinjector -->
+  
+    <!-- This is where you would add any app specific styling -->
+    <link rel="stylesheet" type="text/css" href="styles/app.bundle.css" />
+  
+    <link type="text/css" rel="stylesheet" href="styles/2401.0.3/OracleFont/OracleFont.min.css" />
+    <link type="text/css" rel="stylesheet" href="styles/2401.0.3/images/iconfont/ojuxIconFont.min.css" />
   </head>
-
-  <body>
-<div id="globalBody">
-  <header>
-    <oj-module config="[[headerModuleConfig]]"></oj-module>
-  </header>
-
-  <div id="middle-container" class="oj-flex oj-sm-flex-items-initial oj-sm-flex-wrap-nowrap" data-runtime-role="app">
-    <oj-module config='[[navStripModuleConfig]]'></oj-module>
-
-    <div id="spa-resizer" class="resizer_panel oj-flex oj-sm-flex-items-initial oj-sm-flex-wrap-nowrap">
-
-      <nav id="navtree-container" class="oj-flex-item">
-        <div class="left_panel">
-          <div>
-            <oj-bind-dom config="[[navtree.html]]"></oj-bind-dom>
-          </div>
-        </div>
-      </nav>
-
-      <main class="right_panel" aria-labelledby="spa-resizer">
-        <div id="content-area-container" class="oj-flex oj-sm-flex-direction-column oj-sm-flex-wrap-nowrap">
-          <!-- row 1 -->
-          <div id="content-area-header" class="oj-flex-item">
-            <oj-module config="[[contentAreaHeaderModuleConfig]]"></oj-module>
-          </div>
-
-          <!-- row 2 (a nested column-oriented flexbox) -->
-          <div id="content-area-body" class="oj-flex oj-sm-flex-items-initial oj-sm-flex-wrap-nowrap">
-            <div id="table-form-container" class="oj-flex-item">
-              <oj-module config="[[moduleConfig]]"></oj-module>
-            </div>
-          </div>
-        </div>
-        <div id="ancillary-content-area-container" class="oj-flex oj-sm-flex-items-initial oj-sm-justify-content-flex-end">
-          <oj-module config="[[ancillaryContentAreaModuleConfig]]"></oj-module>
-        </div>
-      </main>
-
-    </div> <!-- ending div for "spa-resizer" -->
-  </div> <!-- ending div for "middle-container" -->
-
-  <footer class="oj-applayout-fixed-bottom">
-    <oj-module config="[[footerModuleConfig]]"></oj-module>
-  </footer>
-
-  <div id="preloader-image">
-    <img data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.images.preloader.iconFile + '.png', alt: i18n.images.preloader.label}" />
-  </div>
-  <!--
-  The confirmDialog oj-dialog needs to be here, because it has to be
-  available outside of a form or table.
-  -->
-  <oj-dialog id="confirmDialog" dialog-title="[[i18n.dialog.title]]" initial-visibility="hide">
-    <div slot="body">
-      <div class="cfe-dialog-prompt">
-        <span id="confirmDialogPrompt" data-bind="html: [[i18n.dialog.prompt()]]"></span>
-      </div>
-    </div>
-
-    <div slot="footer">
-      <oj-button id="dlgYesBtn">
-        <span class="button-label" data-bind="text: [[i18n.buttons.yes.label]]"></span>
-      </oj-button>
-      <oj-button id="dlgNoBtn">
-        <span class="button-label" data-bind="text: [[i18n.buttons.no.label]]"></span>
-      </oj-button>
-      <div class="cfe-dialog-cancel">
-        <oj-button id="dlgCancelBtn">
-          <span class="button-label" data-bind="text: [[i18n.buttons.cancel.label]]"></span>
-        </oj-button>
-      </div>
-    </div>
-  </oj-dialog>
-
-</div> <!-- ending div for "globalBody" -->
-
-<!-- This injects script tags for the main javascript files -->
-<!-- injector:scripts -->
-<!-- endinjector -->
-  </body>
-
-</html>
+    <body data-oj-binding-provider="none">
+      <app-root></app-root>
+      <!-- This injects script tags for the main javascript files -->
+      <!-- injector:scripts -->
+      <!-- endinjector -->
+    </body>
+  
+  </html>

@@ -1,0 +1,29 @@
+.ChartDatatipStyles_datatipTable__d1bmz00 {
+  border-collapse: separate;
+  border-spacing: 0;
+  background-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-surface-neutral0);
+  font-size: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-body-xs-font-size);
+  line-height: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-body-xs-line-height);
+}
+.ChartDatatipStyles_datatipLabel__d1bmz01 {
+  color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-secondary);
+  padding-top: 0px;
+  padding-bottom: 0px;
+  padding-left: 2px;
+  padding-right: 2px;
+  white-space: nowrap;
+}
+.ChartDatatipStyles_rightAlign__d1bmz02 {
+  text-align: right;
+}
+.ChartDatatipStyles_leftAlign__d1bmz03 {
+  text-align: left;
+}
+.ChartDatatipStyles_datatipValue__d1bmz04 {
+  color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-primary);
+  padding-top: 0px;
+  padding-bottom: 0px;
+  padding-left: 2px;
+  padding-right: 2px;
+  white-space: nowrap;
+}

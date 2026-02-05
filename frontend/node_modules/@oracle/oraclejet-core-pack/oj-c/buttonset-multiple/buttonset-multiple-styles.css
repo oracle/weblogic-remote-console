@@ -1,0 +1,12 @@
+oj-c-buttonset-multiple:not(.oj-complete) {
+  visibility: hidden;
+}
+
+oj-c-buttonset-multiple {
+  display: inline-flex;
+  vertical-align: top;
+}
+
+oj-c-buttonset-multiple[hidden] {
+  display: none;
+}

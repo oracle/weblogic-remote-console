@@ -1,5 +1,5 @@
 #!/bin/bash
-# Copyright 2021, 2025, Oracle and/or its affiliates.
+# Copyright 2021, 2026, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at http://oss.oracle.com/licenses/upl.
 
 do_docker_pull() {
@@ -132,7 +132,7 @@ then
   esac
 fi
 
-buildtype=external
+buildtype=internal
 buildarch=$arch
 while [ -n "$1" ]
 do
@@ -240,7 +240,7 @@ fi
 
 set -- "$@" -c electron-builder-custom.json
 
-./gen-messages "$extra"/resources/nls ../frontend/src/resources/nls/frontend*.properties
+./gen-messages "$extra"/resources/nls ../frontend/nls/frontend*.properties
 
 while [ "$1" = -- ]
 do

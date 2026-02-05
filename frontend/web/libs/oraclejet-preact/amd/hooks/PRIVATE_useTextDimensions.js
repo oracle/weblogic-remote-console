@@ -1,0 +1,2 @@
+define(['exports', '../useTextDimensions-f254e8f5', 'preact/jsx-runtime', 'preact/hooks', '../clientHints-6d361eaa', '../useAddBusyState-8ed5cc58', '../BusyStateContext-ab2c549a', 'preact', '../useBusyStateContext-26bb2acb'], (function(e,t,s,n,i,u,a,c,o){"use strict";e.useTextDimensions=t.useTextDimensions,Object.defineProperty(e,"__esModule",{value:!0})}));
+//# sourceMappingURL=PRIVATE_useTextDimensions.js.map

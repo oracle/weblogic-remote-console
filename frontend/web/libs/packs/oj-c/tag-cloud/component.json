@@ -1,0 +1,308 @@
+{
+  "name": "tag-cloud",
+  "version": "19.0.1",
+  "jetVersion": "^19.0.1",
+  "pack": "oj-c",
+  "type": "composite",
+  "dependencyScope": "runtime",
+  "license": "https://opensource.org/licenses/UPL",
+  "implements": [
+    "CTagCloudElement"
+  ],
+  "description": "A tag cloud is an interactive data visualization of textual data, where the importance of each tagged word or phrase is represented by font size or color.",
+  "displayName": "Tag Cloud",
+  "main": "oj-c/tag-cloud",
+  "help": "oj-c.TagCloud.html",
+  "status": [
+    {
+      "type": "candidate",
+      "since": "17.0.0"
+    }
+  ],
+  "extension": {
+    "catalog": {
+      "category": "Visualizations"
+    },
+    "vbdt": {
+      "module": "oj-c/tag-cloud",
+      "defaultColumns": 12,
+      "minColumns": 6
+    },
+    "oracle": {
+      "icon": "oj-ux-ico-cloud-tag",
+      "uxSpecs": [
+        "tag-cloud"
+      ]
+    },
+    "webelement": {
+      "package": "@oracle/oraclejet-core-pack",
+      "version": "19.0.1",
+      "docUrl": "https://www.oracle.com/webfolder/technetwork/jet/cpwdtsdoc/classes/TagCloudWebElement.html",
+      "export": "findTagCloud",
+      "main": "@oracle/oraclejet-core-pack/webdriver"
+    }
+  },
+  "propertyLayout": [
+    {
+      "propertyGroup": "common",
+      "items": [
+        "layout",
+        "style"
+      ]
+    },
+    {
+      "propertyGroup": "data",
+      "items": [
+        "data",
+        "selection"
+      ]
+    }
+  ],
+  "since": "15.0.0",
+  "requirements": [
+    {
+      "type": "anyOf",
+      "label": "accessibility",
+      "properties": [
+        "aria-label",
+        "aria-labelledby",
+        "aria-describedby"
+      ]
+    }
+  ],
+  "properties": {
+    "data": {
+      "type": "DataProvider|null",
+      "description": "Specifies the DataProvider for the sections and items of the tag-cloud",
+      "displayName": "Data",
+      "help": "#data",
+      "extension": {
+        "webelement": {
+          "exceptionStatus": [
+            {
+              "type": "deprecated",
+              "since": "17.1.0",
+              "description": "Data sets from a DataProvider cannot be sent to WebDriverJS; use ViewModels or page variables instead."
+            }
+          ]
+        }
+      },
+      "value": null
+    },
+    "datatip": {
+      "type": "function",
+      "displayName": "Datatip",
+      "help": "#datatip"
+    },
+    "hiddenCategories": {
+      "type": "Array<string>",
+      "description": "An array of categories that will be hidden.",
+      "displayName": "Hidden Categories",
+      "help": "#hiddenCategories",
+      "writeback": true,
+      "value": []
+    },
+    "touchResponse": {
+      "type": "string",
+      "description": "Data visualizations require a press and hold delay before triggering tooltips and rollover effects on mobile devices to avoid interfering with page panning, but these hold delays can make applications seem slower and less responsive. For a better user experience, the application can remove the touch and hold delay when data visualizations are used within a non scrolling container or if there is sufficient space outside of the visualization for panning. If touchResponse is touchStart the element will instantly trigger the touch gesture and consume the page pan events. If touchResponse is auto, the element will behave like touchStart if it determines that it is not rendered within scrolling content and if element panning is not available for those elements that support the feature.",
+      "displayName": "Touch Response",
+      "help": "#touchResponse",
+      "enumValues": [
+        "auto",
+        "touchStart"
+      ]
+    },
+    "highlightMatch": {
+      "type": "string",
+      "description": "The matching condition for the highlightedCategories option. By default, highlightMatch is 'all' and only items whose categories match all of the values specified in the highlightedCategories array will be highlighted. If highlightMatch is 'any', then items that match at least one of the highlightedCategories values will be highlighted.",
+      "displayName": "Highlight Match",
+      "help": "#highlightMatch",
+      "enumValues": [
+        "all",
+        "any"
+      ],
+      "value": "all"
+    },
+    "highlightedCategories": {
+      "type": "Array<string>",
+      "description": "An array of categories that will be highlighted.",
+      "displayName": "Highlighted Categories",
+      "help": "#highlightedCategories",
+      "writeback": true,
+      "value": []
+    },
+    "hoverBehavior": {
+      "type": "string",
+      "description": "Defines the behavior applied when hovering over data items.",
+      "displayName": "Hover Behavior",
+      "help": "#hoverBehavior",
+      "propertyEditorValues": {
+        "dim": {
+          "description": "Dimming hover behavior is applied.",
+          "displayName": "Dim"
+        },
+        "none": {
+          "description": "No hover behavior will be applied.",
+          "displayName": "None"
+        }
+      },
+      "enumValues": [
+        "none",
+        "dim"
+      ],
+      "value": "none"
+    },
+    "layout": {
+      "type": "string",
+      "description": "The layout to use for tag display.",
+      "displayName": "Layout",
+      "help": "#layout",
+      "propertyEditorValues": {
+        "cloud": {
+          "description": "Items will be horizontally placed in available space.",
+          "displayName": "Cloud"
+        },
+        "rectangular": {
+          "description": "Items will be vertically stacked.",
+          "displayName": "Rectangular"
+        }
+      },
+      "enumValues": [
+        "cloud",
+        "rectangular"
+      ],
+      "value": "rectangular"
+    },
+    "selectionMode": {
+      "type": "string",
+      "description": "Specifies the selection mode.",
+      "displayName": "Selection Mode",
+      "help": "#selectionMode",
+      "enumValues": [
+        "none",
+        "multiple",
+        "single"
+      ],
+      "value": "none"
+    },
+    "selection": {
+      "type": "Array<string|number>",
+      "description": "An array containing the ids of the initially selected data items.",
+      "displayName": "Selection",
+      "help": "#selection",
+      "writeback": true,
+      "value": []
+    },
+    "contextMenuConfig": {
+      "type": "object",
+      "description": "Specifies a context menu configuration.",
+      "displayName": "Context Menu Config",
+      "help": "#contextMenuConfig",
+      "properties": {
+        "accessibleLabel": {
+          "type": "string"
+        },
+        "items": {
+          "type": "function"
+        }
+      }
+    }
+  },
+  "slots": {
+    "itemTemplate": {
+      "description": "The itemTemplate slot is used to map each data item in the component. See the Help documentation for more information.",
+      "displayName": "itemTemplate",
+      "help": "#itemTemplate",
+      "maxItems": 1,
+      "data": {
+        "data": {
+          "type": "any"
+        },
+        "key": {
+          "type": "any"
+        },
+        "index": {
+          "type": "number"
+        }
+      }
+    }
+  },
+  "events": {
+    "ojContextMenuAction": {
+      "bubbles": true,
+      "description": "Triggered when a menu item is clicked, whether by keyboard, mouse, or touch events.",
+      "eventGroup": "common",
+      "displayName": "onOjContextMenuAction",
+      "help": "#event:ojContextMenuAction",
+      "detail": {
+        "menuItemKey": {
+          "type": "string"
+        },
+        "contextMenuContext": {
+          "type": "object"
+        }
+      }
+    },
+    "ojContextMenuSelection": {
+      "bubbles": true,
+      "description": "Triggered when a select menu item is clicked, whether by keyboard, mouse, or touch events.",
+      "eventGroup": "common",
+      "displayName": "onOjContextMenuSelection",
+      "help": "#event:ojContextMenuSelection",
+      "detail": {
+        "value": {
+          "type": "string|Array<string>"
+        },
+        "contextMenuContext": {
+          "type": "object"
+        },
+        "menuSelectionGroupKey": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "methods": {
+    "setProperty": {
+      "description": "Sets a property or a single subproperty for complex properties and notifies the component of the change, triggering a corresponding event.",
+      "help": "#setProperty",
+      "params": [
+        {
+          "name": "property",
+          "description": "The property name to set. Supports dot notation for subproperty access.",
+          "type": "string"
+        },
+        {
+          "name": "value",
+          "description": "The new value to set the property to.",
+          "type": "any"
+        }
+      ],
+      "return": "void"
+    },
+    "getProperty": {
+      "description": "Retrieves the value of a property or a subproperty.",
+      "help": "#getProperty",
+      "params": [
+        {
+          "name": "property",
+          "description": "The property name to get. Supports dot notation for subproperty access.",
+          "type": "string"
+        }
+      ],
+      "return": "any"
+    },
+    "setProperties": {
+      "description": "Performs a batch set of properties.",
+      "help": "#setProperties",
+      "params": [
+        {
+          "name": "properties",
+          "description": "An object containing the property and value pairs to set.",
+          "type": "object"
+        }
+      ],
+      "return": "void"
+    }
+  }
+}

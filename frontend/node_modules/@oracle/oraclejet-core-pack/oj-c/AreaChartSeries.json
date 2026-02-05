@@ -1,0 +1,374 @@
+[
+  {
+    "id": "oj-c.AreaChartSeries",
+    "name": "AreaChartSeries",
+    "memberof": "oj-c",
+    "kind": "class",
+    "meta": {
+      "filename": "area-chart-series.tsx",
+      "path": "web/components/oj-c/area-chart-series"
+    },
+    "ojcomponent": true,
+    "isvcomponent": true,
+    "since": "16.0.0",
+    "longname": "oj-c.AreaChartSeries",
+    "pack": "oj-c",
+    "classdesc": "<h3 id=\"areaChartSeriesOverview-section\">\n   JET Area Chart Series\n   <a class=\"bookmarkable-link\" title=\"Bookmarkable Link\" href=\"#areaChartSeriesOverview-section\"></a>\n </h3>\n\n <p>The oj-c-area-chart-series element is used to declare series properties. See the Help documentation for more information</p>\n\n<pre class=\"prettyprint\">\n <code>\n &lt;oj-c-area-chart data=\"[[dataProvider]]\">\n  &lt;template slot='seriesTemplate'>\n    &lt;oj-c-area-chart-series\n      drilling='on'\n      marker-shape='[[ $current.id == \"Series 1\" ? \"square\" : \"circle\" ]]'>\n    &lt;/oj-c-area-chart-series>\n  &lt;/template>\n &lt;/oj-c-area-chart>\n </code>\n </pre>\n\n <h3 id=\"a11y-section\">\n   Accessibility\n   <a class=\"bookmarkable-link\" title=\"Bookmarkable Link\" href=\"#a11y-section\"></a>\n </h3>\n <p>\n  Read the <a target=\"_blank\" href=\"oj-c.AreaChart.html#a11y-section\">Accessibility Section</a> of the oj-c-area-chart component for details about making this component accessible.\n </p>",
+    "scope": "static",
+    "tagWithoutBrackets": "oj-c-area-chart-series",
+    "tagWithBrackets": "<oj-c-area-chart-series>",
+    "domInterface": "CAreaChartSeriesElement",
+    "ojPageTitle": "&lt;oj-c-area-chart-series>",
+    "camelCaseName": "AreaChartSeries",
+    "ojPageTitlePrefix": "Element: ",
+    "ojtsvcomponent": true,
+    "tstype": {
+      "target": "Type",
+      "value": "interface CAreaChartSeriesElement extends JetElement<AreaChartSeriesElementSettableProperties>"
+    },
+    "ojsignature": [
+      {
+        "target": "Type",
+        "value": "interface CAreaChartSeriesElement extends JetElement<AreaChartSeriesElementSettableProperties>"
+      }
+    ],
+    "tsdeprecated": [
+      {
+        "type": "candidate",
+        "since": "17.0.0"
+      }
+    ],
+    "ojmodule": "area-chart-series",
+    "ojslotcomponent": true
+  },
+  {
+    "id": "oj-c.AreaChartSeries#assignedToY2",
+    "name": "assignedToY2",
+    "memberof": "oj-c.AreaChartSeries",
+    "meta": {
+      "filename": "area-chart-series.tsx",
+      "path": "web/components/oj-c/area-chart-series"
+    },
+    "kind": "member",
+    "longname": "oj-c.AreaChartSeries#assignedToY2",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "\"off\"",
+        "\"on\""
+      ]
+    },
+    "optional": true,
+    "description": "Defines whether the series is associated with the y2 axis."
+  },
+  {
+    "id": "oj-c.AreaChartSeries#categories",
+    "name": "categories",
+    "memberof": "oj-c.AreaChartSeries",
+    "meta": {
+      "filename": "area-chart-series.tsx",
+      "path": "web/components/oj-c/area-chart-series"
+    },
+    "kind": "member",
+    "longname": "oj-c.AreaChartSeries#categories",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "Array<string>"
+      ]
+    },
+    "optional": true,
+    "description": "An array of category strings corresponding to the tag cloud items. This allows highlighting and filtering of items."
+  },
+  {
+    "id": "oj-c.AreaChartSeries#color",
+    "name": "color",
+    "memberof": "oj-c.AreaChartSeries",
+    "meta": {
+      "filename": "area-chart-series.tsx",
+      "path": "web/components/oj-c/area-chart-series"
+    },
+    "kind": "member",
+    "longname": "oj-c.AreaChartSeries#color",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "string"
+      ]
+    },
+    "optional": true,
+    "description": "The color of the series. The chart legend item will inherit this color value."
+  },
+  {
+    "id": "oj-c.AreaChartSeries#drilling",
+    "name": "drilling",
+    "memberof": "oj-c.AreaChartSeries",
+    "meta": {
+      "filename": "area-chart-series.tsx",
+      "path": "web/components/oj-c/area-chart-series"
+    },
+    "kind": "member",
+    "longname": "oj-c.AreaChartSeries#drilling",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "\"inherit\"",
+        "\"off\"",
+        "\"on\""
+      ]
+    },
+    "optional": true,
+    "description": "Whether drilling is enabled on the series item. Drillable objects will show a pointer cursor on hover and fire an <code class=\"prettyprint\">ojDrill</code> event on click (double click if selection is enabled). To enable drilling for all series items at once, use the drilling attribute in the top level.",
+    "defaultvalue": "\"inherit\""
+  },
+  {
+    "id": "oj-c.AreaChartSeries#lineType",
+    "name": "lineType",
+    "memberof": "oj-c.AreaChartSeries",
+    "meta": {
+      "filename": "area-chart-series.tsx",
+      "path": "web/components/oj-c/area-chart-series"
+    },
+    "kind": "member",
+    "longname": "oj-c.AreaChartSeries#lineType",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "\"curved\"",
+        "\"straight\""
+      ]
+    },
+    "optional": true,
+    "description": "The line type of the data line or area. Only applies to line, area, scatter, and bubble series. centeredStepped and centeredSegmented are not supported for polar, scatter, and bubble charts."
+  },
+  {
+    "id": "oj-c.AreaChartSeries#markerShape",
+    "name": "markerShape",
+    "memberof": "oj-c.AreaChartSeries",
+    "meta": {
+      "filename": "area-chart-series.tsx",
+      "path": "web/components/oj-c/area-chart-series"
+    },
+    "kind": "member",
+    "longname": "oj-c.AreaChartSeries#markerShape",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "\"auto\"",
+        "\"square\"",
+        "\"circle\"",
+        "\"diamond\"",
+        "\"human\"",
+        "\"plus\"",
+        "\"star\"",
+        "\"triangleDown\"",
+        "\"triangleUp\""
+      ]
+    },
+    "optional": true,
+    "description": "The shape of the data markers. In addition to the built-in shapes, it may also take SVG path commands to specify a custom shape. The chart will style the custom shapes the same way as built-in shapes, supporting properties like color and borderColor and applying hover and selection effects. Only 'auto' is supported for range series."
+  },
+  {
+    "id": "oj-c.AreaChartSeries#markerColor",
+    "name": "markerColor",
+    "memberof": "oj-c.AreaChartSeries",
+    "meta": {
+      "filename": "area-chart-series.tsx",
+      "path": "web/components/oj-c/area-chart-series"
+    },
+    "kind": "member",
+    "longname": "oj-c.AreaChartSeries#markerColor",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "string"
+      ]
+    },
+    "optional": true,
+    "description": "The color of the data markers, if different from the series color."
+  },
+  {
+    "id": "oj-c.AreaChartSeries#markerDisplayed",
+    "name": "markerDisplayed",
+    "memberof": "oj-c.AreaChartSeries",
+    "meta": {
+      "filename": "area-chart-series.tsx",
+      "path": "web/components/oj-c/area-chart-series"
+    },
+    "kind": "member",
+    "longname": "oj-c.AreaChartSeries#markerDisplayed",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "string"
+      ]
+    },
+    "optional": true,
+    "description": "Defines whether the data marker is displayed. Only applies to line, area, scatter, and bubble series. If auto, the markers will be displayed whenever the data points are not connected by a line."
+  },
+  {
+    "id": "oj-c.AreaChartSeries#markerSize",
+    "name": "markerSize",
+    "memberof": "oj-c.AreaChartSeries",
+    "meta": {
+      "filename": "area-chart-series.tsx",
+      "path": "web/components/oj-c/area-chart-series"
+    },
+    "kind": "member",
+    "longname": "oj-c.AreaChartSeries#markerSize",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "number"
+      ]
+    },
+    "optional": true,
+    "description": "The size of the data markers."
+  },
+  {
+    "id": "oj-c.AreaChartSeries#name",
+    "name": "name",
+    "memberof": "oj-c.AreaChartSeries",
+    "meta": {
+      "filename": "area-chart-series.tsx",
+      "path": "web/components/oj-c/area-chart-series"
+    },
+    "kind": "member",
+    "longname": "oj-c.AreaChartSeries#name",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "string"
+      ]
+    },
+    "optional": true,
+    "description": "The name of the series, displayed in the legend and tooltips."
+  },
+  {
+    "id": "oj-c.AreaChartSeries#shortDesc",
+    "name": "shortDesc",
+    "memberof": "oj-c.AreaChartSeries",
+    "meta": {
+      "filename": "area-chart-series.tsx",
+      "path": "web/components/oj-c/area-chart-series"
+    },
+    "kind": "member",
+    "longname": "oj-c.AreaChartSeries#shortDesc",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "string"
+      ]
+    },
+    "optional": true,
+    "description": "The description of this series. This is used for accessibility and for customizing the tooltip text on the corresponding legend item for the series."
+  },
+  {
+    "id": "oj-c.AreaChartSeries#setProperty",
+    "name": "setProperty",
+    "memberof": "oj-c.AreaChartSeries",
+    "meta": {
+      "filename": "area-chart-series.tsx",
+      "path": "web/components/oj-c/area-chart-series"
+    },
+    "kind": "function",
+    "longname": "oj-c.AreaChartSeries#setProperty",
+    "scope": "instance",
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "void"
+          ]
+        }
+      }
+    ],
+    "description": "Sets a property or a single subproperty for complex properties and notifies the component of the change, triggering a corresponding event.",
+    "params": [
+      {
+        "name": "property",
+        "description": "The property name to set. Supports dot notation for subproperty access.",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "value",
+        "description": "The new value to set the property to.",
+        "type": {
+          "names": [
+            "any"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.AreaChartSeries#getProperty",
+    "name": "getProperty",
+    "memberof": "oj-c.AreaChartSeries",
+    "meta": {
+      "filename": "area-chart-series.tsx",
+      "path": "web/components/oj-c/area-chart-series"
+    },
+    "kind": "function",
+    "longname": "oj-c.AreaChartSeries#getProperty",
+    "scope": "instance",
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "any"
+          ]
+        }
+      }
+    ],
+    "description": "Retrieves the value of a property or a subproperty.",
+    "params": [
+      {
+        "name": "property",
+        "description": "The property name to get. Supports dot notation for subproperty access.",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.AreaChartSeries#setProperties",
+    "name": "setProperties",
+    "memberof": "oj-c.AreaChartSeries",
+    "meta": {
+      "filename": "area-chart-series.tsx",
+      "path": "web/components/oj-c/area-chart-series"
+    },
+    "kind": "function",
+    "longname": "oj-c.AreaChartSeries#setProperties",
+    "scope": "instance",
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "void"
+          ]
+        }
+      }
+    ],
+    "description": "Performs a batch set of properties.",
+    "params": [
+      {
+        "name": "properties",
+        "description": "An object containing the property and value pairs to set.",
+        "type": {
+          "names": [
+            "object"
+          ]
+        }
+      }
+    ]
+  }
+]

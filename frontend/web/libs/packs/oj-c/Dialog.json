@@ -1,0 +1,1337 @@
+[
+  {
+    "id": "oj-c.Dialog",
+    "name": "Dialog",
+    "memberof": "oj-c",
+    "kind": "class",
+    "meta": {
+      "filename": "dialog.tsx",
+      "path": "web/components/oj-c/dialog"
+    },
+    "ojcomponent": true,
+    "isvcomponent": true,
+    "since": "18.0.0",
+    "longname": "oj-c.Dialog",
+    "pack": "oj-c",
+    "classdesc": "<h3 id=\"dialogOverview-section\">\n  JET Dialog\n  <a class=\"bookmarkable-link\" title=\"Bookmarkable Link\" href=\"#dialogOverview-section\"></a>\n</h3>\n<p>\n  Description: A Dialog is a floating window that typically contains a header, content and footer area.\n  A Dialog is typically modal and centered in viewport. The dialog window can be moved by dragging on the title area,\n  and closed with the 'x' icon (by default). Dialogs can also be resized by dragging on edges or corners of the dialog component.\n</p>\n<p>\n  If the content length exceeds the maximum height, a scrollbar will automatically appear.\n</p>\n<pre class=\"prettyprint\">\n<code>\n&lt;oj-c-dialog opened=\"true\">\n   &lt;div slot=\"header\">Dialog Header&lt;/div>\n   &lt;div slot=\"body\">Dialog Body&lt;/div>\n   &lt;div slot=\"footer\">Dialog Footer&lt;/div>\n&lt;/oj-c-dialog>\n\nMain section content\n</code></pre>\n\n<h3 id=\"focus-section\">\n  Focus\n  <a class=\"bookmarkable-link\" title=\"Bookmarkable Link\" href=\"#focus-section\"></a>\n</h3>\n\n<p>Upon opening a dialog, focus is automatically moved to the first item that matches the following:</p>\n<ol>\n <li>The first <code>:tabbable</code> element within the dialog body</li>\n <li>The first <code>:tabbable</code> element within the dialog footer</li>\n <li>The dialog's close button</li>\n <li>The dialog itself</li>\n</ol>\n<p>The use of the HTML <code>autofocus</code> global attribute is discouraged.\nIf specified, the dialog will try to honor it but it may have undesirable implications for accessibility.\nFor more details, see the <a href=\"https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/autofocus#accessibility_concerns\">Accessibility concerns section</a>.</p>\n\n<p>While open, the dialog widget ensures that tabbing cycles focus between elements within the dialog itself, not elements outside of it. Modal dialogs additionally prevent mouse users from clicking on elements outside of the dialog.</p>\n\n<p>Upon closing a dialog, focus is automatically returned to the element that had focus when the dialog was opened.</p>\n\n<h3 id=\"keyboard-section\">\n  Keyboard End User Information\n  <a class=\"bookmarkable-link\" title=\"Bookmarkable Link\" href=\"#keyboard-section\"></a>\n</h3>\n<table class=\"keyboard-table\">\n <thead>\n   <tr>\n     <th>Target</th>\n     <th>Key</th>\n     <th>Action</th>\n   </tr>\n </thead>\n <tbody>\n   <tr>\n      <td rowspan = \"3\">Dialog</td>\n      <td><kbd>Tab</kbd> or <kbd>Shift + Tab</kbd></td>\n      <td>Navigate the content of the Dialog.</td>\n   </tr>\n   <tr>\n     <td><kbd>F6</kbd></td>\n     <td>Move focus to the launcher for a Dialog with modeless modality.</td>\n   </tr>\n   <tr>\n     <td><kbd>Esc</kbd></td>\n     <td>Close the Dialog.</td>\n   </tr>\n   <tr>\n      <td>Dialog Close Icon</td>\n      <td><kbd>Enter</kbd> or <kbd>Space</kbd></td>\n      <td>Close the Dialog.</td>\n    </tr>\n   <tr>\n     <td rowspan = \"1\">Dialog Launcher</td>\n     <td><kbd>F6</kbd></td>\n     <td>Move focus to the first tab stop within the open Dialog. If there is not a tab stop\n         within the content, focus is established on the Dialog.</td>\n    </tr>\n </tbody>\n</table>\n\n<h3 id=\"touch-section\">\n  Touch End User Information\n  <a class=\"bookmarkable-link\" title=\"Bookmarkable Link\" href=\"#touch-section\"></a>\n</h3>\n\n<table class=\"keyboard-table\">\n <thead>\n   <tr>\n     <th>Target</th>\n     <th>Gesture</th>\n     <th>Action</th>\n   </tr>\n </thead>\n <tbody>\n   <tr>\n      <td rowspan = \"3\">Dialog Close Icon</td>\n      <td>Tap</td>\n      <td>Close the Dialog</td>\n   </tr>\n </tbody>\n</table>\n\n<h3>\n  Sizing\n  <a class=\"bookmarkable-link\" title=\"Bookmarkable Link\" href=\"#sizing\"></a>\n</h3>\n\n<p> Dialog dimensions, including <code class=\"prettyprint\"> height, width, min-width, max-width, min-height</code> and <code class=\"prettyprint\">max-height</code> are defined with attriutes. The default dialog dimensions are the following:\n\n<ul>\n <li> <code class=\"prettyprint\">height: auto</code> </li>\n <li> <code class=\"prettyprint\">width: 600px</code> </li>\n <li> <code class=\"prettyprint\">min-width: 200px</code> </li>\n <li> <code class=\"prettyprint\">max-width: min(600px, 90vw)</code> </li>\n <li> <code class=\"prettyprint\">max-height: min(600px, 90vh)</code> </li>\n</ul>\n\nIn most cases, you will want to use the default <code class=\"prettyprint\">height:auto</code>, since this will automatically adjust the height based on the content.\nUsers can change the dialog dimensions using style attributes:\n\n<pre class=\"prettyprint\">\n<code>\n&lt;oj-c-dialog id=\"wideDialog\" title=\"Wide Dialog\" width=\"400px\" min-width=\"100px\" max-width=\"500px\"&gt;\n   &lt;div slot=\"body\"&gt;\n      &lt;p&gt; Dialog Text\n   &lt;/div&gt;\n&lt;/oj-c-dialog&gt;\n</code></pre>\n\n<h3 id=\"a11y-section\">\n  Accessibility\n  <a class=\"bookmarkable-link\" title=\"Bookmarkable Link\" href=\"#a11y-section\"></a>\n</h3>\n<h4> role </h4>\nBy default, the role will be set to dialog.\nThis can be observed by inspecting the DOM:\n\n<pre class=\"prettyprint\">\n<code>\n &lt;div class=\"ojdialog ...\" role=\"dialog\"&gt;\n</code></pre>\n\nThis can be changed using the role attribute. WAI-ARIA recommends that role=\"dialog\" be used if the dialog expects input (such as text input),\notherwise, use the role attribute to assign role=\"alertdialog\".\n\n<h4> aria-labelledby </h4>\n\nFor simple dialog headers specified using the dialog-title attribute, the dialog component takes care of the\n<code class=\"prettyprint\">aria-labelledby</code> attribute and sets it automatically unless explicitly specified by the user.\nFor custom dialog headers specified using the header slot, the user is responsible for setting the\n<code class=\"prettyprint\">aria-labelledby</code> attribute and its association with the custom header content.\n\n<h4> aria-describedby </h4>\n\nIf the dialog contains additional descriptive text besides the dialog title, this text can be associated\nwith the dialog using the <code class=\"prettyprint\">aria-describedby</code> attribute. Unlike the\n<code class=\"prettyprint\">aria-labelledby</code> association,\nthe <code class=\"prettyprint\">aria-describedby</code> attribute is never generated and set automatically.\nIt is up to the user to specify the attribute\non <code class=\"prettyprint\">oj-dialog</code> and link it to the element containing the additional description:\n\n<pre class=\"prettyprint\">\n<code>\n&lt;oj-c-dialog id=\"dialog\" title=\"Accessible Title\" aria-describedby=\"desc\"&gt;\n   &lt;div slot=\"body\"&gt;\n      &lt;p id=\"desc\"&gt; This is a dialog with accessible description.\n   &lt;/div&gt;\n&lt;/oj-c-dialog&gt;\n</code></pre>\n\n<h3 id=\"reparenting-section\">\n  Reparenting\n  <a class=\"bookmarkable-link\" title=\"Bookmarkable Link\" href=\"#reparenting-section\"></a>\n</h3>\n<p id=\"reparenting-strategy\">\n   When dialogs are open, they will be reparented in the document and reparented back when\n   closed. When open, the location of the dialog within the document will be in context of\n   how it's used. Dialogs open from other dialogs will be relocated in the document into the\n   nearest parent dialog's layer. The dialogs layer defines its z-index weight \"stacking\n   context\".\n   The context of opening is defined by the launcher argument passed to the open method.  If\n   not open from another dialog, the dialog will be reparented to a container in the document\n   body. Dialogs of the same type are assigned the same z-index values.  The layering between\n   peer popups reflect the opening order.\n</p>\n<p>\n    There are known caveats with this design. However, these scenarios are considered \"bad use\"\n    based on our JET popup strategy.\n </p>\n <ol>\n   <li>Events raised within the dialog will not bubble up to the dialog's original ancestors.\n       Instead, listeners for dialog events should be applied to either the dialog's root\n       element, or the document.</li>\n   <li>Likewise, developers should not use CSS descendant selectors, or similar logic, that\n       assumes that the popup will remain a child of its original parent.</li>\n   <li>Dialogs containing iframes are problematic.  The iframe elements \"may\" fire a HTTP GET\n       request for its src attribute each time the iframe is reparented in the document.</li>\n   <li>If an iframe is added to the dialog's content, it must not be the first or last tab stop\n       within the popup or keyboard and VoiceOver navigation will not remain within the dialog.</li>\n   <li>In some browsers, reparenting a dialog that contains elements having overflow, will cause\n       these overflow elements to reset their scrollTop.</li>\n </ol>\n\n<h3 id=\"rtl-section\">\n  Reading direction\n  <a class=\"bookmarkable-link\" title=\"Bookmarkable Link\" href=\"#rtl-section\"></a>\n</h3>\n\n<p> Setting the reading direction (LTR or RTL) is supported by setting the <code class=\"prettyprint\">\"dir\"</code> attribute on the\n<code class=\"prettyprint\">&lt;html></code> element of the page.  As with any JET component, in the unusual case that the reading direction\nis changed post-init, the dialog must be <code class=\"prettyprint\">refresh()</code>ed, or the page must be reloaded.\n\n<h3>Additional Examples</h3>\n\n<p> The following defines a basic dialog, with an ok button in the footer:\n\n<pre class=\"prettyprint\">\n<code>\n&lt;oj-c-dialog id=\"dialogWithFooter\" dialog-title=\"Dialog with Footer\" width=400px\" min-width=\"100px\" max-widt=\"500px\"&gt;\n   &lt;div slot=\"body\"&gt;\n      &lt;p&gt; Dialog Text\n   &lt;/div&gt;\n   &lt;div slot=\"footer\"&gt;\n      &lt;oj-button id=\"okButton\"&gt; OK &lt;/oj-button&gt;\n   &lt;/div&gt;\n&lt;/oj-c-dialog&gt;\n\n</code></pre>\n\nNote that you will need to define your own event handlers for the ok and close buttons (see the demos for examples of this).\n\n<p> A dialog with user-defined header is shown next. Arbitrary header content can be defined using a user-defined header.\n\n<pre class=\"prettyprint\">\n<code>\n&lt;oj-c-dialog id=\"dialog\" dialog-title=\"Dialog Title\"&gt;\n   &lt;div slot=\"header\"&gt;\n      &lt;span id=\"dialog-title-id\" class=\"dialog-title\"&gt; User Defined Header&lt;/span&gt;\n   &lt;/div&gt;\n   &lt;div slot=\"body\"&gt;\n      &lt;p&gt; Dialog Text\n   &lt;/div&gt;\n&lt;/oj-dialog&gt;\n</code></pre>",
+    "scope": "static",
+    "tagWithoutBrackets": "oj-c-dialog",
+    "tagWithBrackets": "<oj-c-dialog>",
+    "domInterface": "CDialogElement",
+    "ojPageTitle": "&lt;oj-c-dialog>",
+    "camelCaseName": "Dialog",
+    "ojPageTitlePrefix": "Element: ",
+    "ojtsvcomponent": true,
+    "tstype": {
+      "target": "Type",
+      "value": "interface CDialogElement extends JetElement<DialogElementSettableProperties>"
+    },
+    "ojsignature": [
+      {
+        "target": "Type",
+        "value": "interface CDialogElement extends JetElement<DialogElementSettableProperties>"
+      }
+    ],
+    "tsdeprecated": [
+      {
+        "type": "supersedes",
+        "since": "19.0.0",
+        "value": [
+          "oj-dialog"
+        ]
+      }
+    ],
+    "ojmodule": "dialog"
+  },
+  {
+    "id": "oj-c.Dialog#cancelBehavior",
+    "name": "cancelBehavior",
+    "memberof": "oj-c.Dialog",
+    "meta": {
+      "filename": "dialog.tsx",
+      "path": "web/components/oj-c/dialog"
+    },
+    "kind": "member",
+    "longname": "oj-c.Dialog#cancelBehavior",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "\"none\"",
+        "\"icon\"",
+        "\"escape\""
+      ]
+    },
+    "optional": true,
+    "description": "Specifies the cancel behavior of the Dialog. Note that the cancelBehavior applies to both automatic and user-defined headers.",
+    "ojvalues": [
+      {
+        "name": "icon",
+        "description": "A close icon will automatically be created. The dialog will close when it has focus and user presses the escape (ESC) key.",
+        "displayName": "icon",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "escape",
+        "description": "The dialog will close when it has focus and user presses the escape (ESC) key. A close icon will not be created.",
+        "displayName": "escape",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "none",
+        "description": "A close icon will not be created. No actions will be associated with the escape key.",
+        "displayName": "none",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      }
+    ],
+    "defaultvalue": "\"none\""
+  },
+  {
+    "id": "oj-c.Dialog#dialogTitle",
+    "name": "dialogTitle",
+    "memberof": "oj-c.Dialog",
+    "meta": {
+      "filename": "dialog.tsx",
+      "path": "web/components/oj-c/dialog"
+    },
+    "kind": "member",
+    "longname": "oj-c.Dialog#dialogTitle",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "string"
+      ]
+    },
+    "optional": true,
+    "description": "Specifies title if header slot is not defined (custom header)."
+  },
+  {
+    "id": "oj-c.Dialog#dragAffordance",
+    "name": "dragAffordance",
+    "memberof": "oj-c.Dialog",
+    "meta": {
+      "filename": "dialog.tsx",
+      "path": "web/components/oj-c/dialog"
+    },
+    "kind": "member",
+    "longname": "oj-c.Dialog#dragAffordance",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "\"none\"",
+        "\"header\""
+      ]
+    },
+    "optional": true,
+    "description": "Specifies whether the Dialog is draggable.",
+    "ojvalues": [
+      {
+        "name": "none",
+        "description": "The dialog will not be draggable.",
+        "displayName": "none",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "header",
+        "description": "The dialog will be draggable by the header.",
+        "displayName": "header",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      }
+    ],
+    "defaultvalue": "\"none\""
+  },
+  {
+    "id": "oj-c.Dialog#headerDecoration",
+    "name": "headerDecoration",
+    "memberof": "oj-c.Dialog",
+    "meta": {
+      "filename": "dialog.tsx",
+      "path": "web/components/oj-c/dialog"
+    },
+    "kind": "member",
+    "longname": "oj-c.Dialog#headerDecoration",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "\"off\"",
+        "\"on\""
+      ]
+    },
+    "optional": true,
+    "description": "Specifies whether decorative stripe at the top is present.",
+    "ojvalues": [
+      {
+        "name": "on",
+        "description": "Renders a textured strip at the top of the dialog header in the Redwood theme.",
+        "displayName": "on",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "off",
+        "description": "No decoration is rendered.",
+        "displayName": "off",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      }
+    ],
+    "defaultvalue": "\"on\""
+  },
+  {
+    "id": "oj-c.Dialog#launcher",
+    "name": "launcher",
+    "memberof": "oj-c.Dialog",
+    "meta": {
+      "filename": "dialog.tsx",
+      "path": "web/components/oj-c/dialog"
+    },
+    "kind": "member",
+    "longname": "oj-c.Dialog#launcher",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "string|Element"
+      ]
+    },
+    "optional": true,
+    "description": "Specifies Dialog's launcher. After Dialog closes, it returns focus to the launcher.",
+    "tstype": [
+      {
+        "target": "Type",
+        "value": "string|Element",
+        "jsdocOverride": true
+      }
+    ]
+  },
+  {
+    "id": "oj-c.Dialog#modality",
+    "name": "modality",
+    "memberof": "oj-c.Dialog",
+    "meta": {
+      "filename": "dialog.tsx",
+      "path": "web/components/oj-c/dialog"
+    },
+    "kind": "member",
+    "longname": "oj-c.Dialog#modality",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "\"modal\"",
+        "\"modeless\""
+      ]
+    },
+    "optional": true,
+    "description": "Specifies modality of the Dialog.",
+    "ojvalues": [
+      {
+        "name": "modal",
+        "description": "The dialog is modal. Interactions with other page elements are disabled. Modal dialogs overlay other page elements.",
+        "displayName": "on",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "modeless",
+        "description": "Defines a modeless dialog.",
+        "displayName": "off",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      }
+    ],
+    "defaultvalue": "\"modal\""
+  },
+  {
+    "id": "oj-c.Dialog#opened",
+    "name": "opened",
+    "memberof": "oj-c.Dialog",
+    "meta": {
+      "filename": "dialog.tsx",
+      "path": "web/components/oj-c/dialog"
+    },
+    "kind": "member",
+    "longname": "oj-c.Dialog#opened",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "boolean"
+      ]
+    },
+    "optional": false,
+    "ojwriteback": true,
+    "description": "Specifies whether the Dialog is open.",
+    "defaultvalue": false
+  },
+  {
+    "id": "oj-c.Dialog#resizeBehavior",
+    "name": "resizeBehavior",
+    "memberof": "oj-c.Dialog",
+    "meta": {
+      "filename": "dialog.tsx",
+      "path": "web/components/oj-c/dialog"
+    },
+    "kind": "member",
+    "longname": "oj-c.Dialog#resizeBehavior",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "\"none\"",
+        "\"resizable\""
+      ]
+    },
+    "optional": true,
+    "description": "Specifies whether the Dialog is resizable.",
+    "ojvalues": [
+      {
+        "name": "none",
+        "description": "The dialog will not be interactively resizable.",
+        "displayName": "none",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "resizable",
+        "description": "\tThe dialog will be interactively resizable.",
+        "displayName": "resizable",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      }
+    ],
+    "defaultvalue": "\"none\""
+  },
+  {
+    "id": "oj-c.Dialog#anchor",
+    "name": "anchor",
+    "memberof": "oj-c.Dialog",
+    "meta": {
+      "filename": "dialog.tsx",
+      "path": "web/components/oj-c/dialog"
+    },
+    "kind": "member",
+    "longname": "oj-c.Dialog#anchor",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "string|Element|object"
+      ]
+    },
+    "optional": true,
+    "description": "Specifies Dialog's anchor. Dialog is placed relative to its anchor. If not specified, it is placed relative to window.",
+    "tstype": [
+      {
+        "target": "Type",
+        "value": "string|Element|oj-c.Dialog.Coords",
+        "jsdocOverride": true
+      }
+    ]
+  },
+  {
+    "id": "oj-c.Dialog#placement",
+    "name": "placement",
+    "memberof": "oj-c.Dialog",
+    "meta": {
+      "filename": "dialog.tsx",
+      "path": "web/components/oj-c/dialog"
+    },
+    "kind": "member",
+    "longname": "oj-c.Dialog#placement",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "\"center\"",
+        "\"end\"",
+        "\"start\"",
+        "\"top\"",
+        "\"bottom\"",
+        "\"top-start\"",
+        "\"top-end\"",
+        "\"start-top\"",
+        "\"start-bottom\"",
+        "\"bottom-start\"",
+        "\"bottom-end\"",
+        "\"end-top\"",
+        "\"end-bottom\""
+      ]
+    },
+    "optional": true,
+    "description": "Specifies the location the dialog will appear relative to another element. If not specified, the default dialog position is \"center\" on desktop and \"bottom-start\" on phone."
+  },
+  {
+    "id": "oj-c.Dialog#offset",
+    "name": "offset",
+    "memberof": "oj-c.Dialog",
+    "meta": {
+      "filename": "dialog.tsx",
+      "path": "web/components/oj-c/dialog"
+    },
+    "kind": "member",
+    "longname": "oj-c.Dialog#offset",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "number|object"
+      ]
+    },
+    "optional": true,
+    "description": "Specifies displacement of the Dialog from the anchor element placement along the specified axes. The offset object consists of mainAxis and crossAxis properties. The direction in which these propertie are applied depends on the current value of the position property. If a number is used, it represents the main axis. The <code>mainAxis</code> property represents the distance between the Popup and the anchor. The <code>crossAxis</code> property represents the deviation in the opposite axis to the main axis - the skidding between the Popup and the anchor.",
+    "tstype": [
+      {
+        "target": "Type",
+        "value": "number|{ mainAxis?: number; crossAxis?: number; }",
+        "jsdocOverride": true
+      }
+    ]
+  },
+  {
+    "id": "oj-c.Dialog#width",
+    "name": "width",
+    "memberof": "oj-c.Dialog",
+    "meta": {
+      "filename": "dialog.tsx",
+      "path": "web/components/oj-c/dialog"
+    },
+    "kind": "member",
+    "longname": "oj-c.Dialog#width",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "number|string"
+      ]
+    },
+    "optional": true,
+    "description": "Specifies width of the Dialog."
+  },
+  {
+    "id": "oj-c.Dialog#minWidth",
+    "name": "minWidth",
+    "memberof": "oj-c.Dialog",
+    "meta": {
+      "filename": "dialog.tsx",
+      "path": "web/components/oj-c/dialog"
+    },
+    "kind": "member",
+    "longname": "oj-c.Dialog#minWidth",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "number|string"
+      ]
+    },
+    "optional": true,
+    "description": "Specifies minWidth of the Dialog."
+  },
+  {
+    "id": "oj-c.Dialog#maxWidth",
+    "name": "maxWidth",
+    "memberof": "oj-c.Dialog",
+    "meta": {
+      "filename": "dialog.tsx",
+      "path": "web/components/oj-c/dialog"
+    },
+    "kind": "member",
+    "longname": "oj-c.Dialog#maxWidth",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "number|string"
+      ]
+    },
+    "optional": true,
+    "description": "Specifies maxWidth of the Dialog."
+  },
+  {
+    "id": "oj-c.Dialog#height",
+    "name": "height",
+    "memberof": "oj-c.Dialog",
+    "meta": {
+      "filename": "dialog.tsx",
+      "path": "web/components/oj-c/dialog"
+    },
+    "kind": "member",
+    "longname": "oj-c.Dialog#height",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "number|string"
+      ]
+    },
+    "optional": true,
+    "description": "Specifies height of the Dialog."
+  },
+  {
+    "id": "oj-c.Dialog#minHeight",
+    "name": "minHeight",
+    "memberof": "oj-c.Dialog",
+    "meta": {
+      "filename": "dialog.tsx",
+      "path": "web/components/oj-c/dialog"
+    },
+    "kind": "member",
+    "longname": "oj-c.Dialog#minHeight",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "number|string"
+      ]
+    },
+    "optional": true,
+    "description": "Specifies minHeight of the Dialog."
+  },
+  {
+    "id": "oj-c.Dialog#maxHeight",
+    "name": "maxHeight",
+    "memberof": "oj-c.Dialog",
+    "meta": {
+      "filename": "dialog.tsx",
+      "path": "web/components/oj-c/dialog"
+    },
+    "kind": "member",
+    "longname": "oj-c.Dialog#maxHeight",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "number|string"
+      ]
+    },
+    "optional": true,
+    "description": "Specifies maxHeight of the Dialog."
+  },
+  {
+    "id": "oj-c.Dialog#setProperty",
+    "name": "setProperty",
+    "memberof": "oj-c.Dialog",
+    "meta": {
+      "filename": "dialog.tsx",
+      "path": "web/components/oj-c/dialog"
+    },
+    "kind": "function",
+    "longname": "oj-c.Dialog#setProperty",
+    "scope": "instance",
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "void"
+          ]
+        }
+      }
+    ],
+    "description": "Sets a property or a single subproperty for complex properties and notifies the component of the change, triggering a corresponding event.",
+    "params": [
+      {
+        "name": "property",
+        "description": "The property name to set. Supports dot notation for subproperty access.",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "value",
+        "description": "The new value to set the property to.",
+        "type": {
+          "names": [
+            "any"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.Dialog#getProperty",
+    "name": "getProperty",
+    "memberof": "oj-c.Dialog",
+    "meta": {
+      "filename": "dialog.tsx",
+      "path": "web/components/oj-c/dialog"
+    },
+    "kind": "function",
+    "longname": "oj-c.Dialog#getProperty",
+    "scope": "instance",
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "any"
+          ]
+        }
+      }
+    ],
+    "description": "Retrieves the value of a property or a subproperty.",
+    "params": [
+      {
+        "name": "property",
+        "description": "The property name to get. Supports dot notation for subproperty access.",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.Dialog#setProperties",
+    "name": "setProperties",
+    "memberof": "oj-c.Dialog",
+    "meta": {
+      "filename": "dialog.tsx",
+      "path": "web/components/oj-c/dialog"
+    },
+    "kind": "function",
+    "longname": "oj-c.Dialog#setProperties",
+    "scope": "instance",
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "void"
+          ]
+        }
+      }
+    ],
+    "description": "Performs a batch set of properties.",
+    "params": [
+      {
+        "name": "properties",
+        "description": "An object containing the property and value pairs to set.",
+        "type": {
+          "names": [
+            "object"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.Dialog#event:ojOpen",
+    "name": "ojOpen",
+    "kind": "event",
+    "memberof": "oj-c.Dialog",
+    "meta": {
+      "filename": "dialog.tsx",
+      "path": "web/components/oj-c/dialog"
+    },
+    "longname": "oj-c.Dialog#event:ojOpen",
+    "scope": "instance",
+    "description": "Triggered immediately after the Dialog opens."
+  },
+  {
+    "id": "oj-c.Dialog#event:ojBeforeClose",
+    "name": "ojBeforeClose",
+    "kind": "event",
+    "memberof": "oj-c.Dialog",
+    "meta": {
+      "filename": "dialog.tsx",
+      "path": "web/components/oj-c/dialog"
+    },
+    "longname": "oj-c.Dialog#event:ojBeforeClose",
+    "scope": "instance",
+    "description": "Triggered immediately before the Dialog closes. Call <code class=\"prettyprint\">event.preventDefault()</code> in the event listener to veto the event synchronously, which prevents the Dialog from closing. Call <code class=\"prettyprint\">event.detail.accept(Promise.reject());</code> in the event listener to veto the event asynchronously, which prevents the Dialog from closing.",
+    "properties": [
+      {
+        "name": "accept",
+        "description": "This method can be called with an application-created Promise to cancel this event asynchronously.  The Promise should be resolved or rejected to accept or cancel the event, respectively.",
+        "type": {
+          "names": [
+            "function"
+          ]
+        }
+      },
+      {
+        "name": "reason",
+        "description": "reason for closing the dialog",
+        "optional": false,
+        "type": {
+          "names": [
+            "\"icon\"",
+            "\"escapeKey\""
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.Dialog#event:ojClose",
+    "name": "ojClose",
+    "kind": "event",
+    "memberof": "oj-c.Dialog",
+    "meta": {
+      "filename": "dialog.tsx",
+      "path": "web/components/oj-c/dialog"
+    },
+    "longname": "oj-c.Dialog#event:ojClose",
+    "scope": "instance",
+    "description": "Triggered immediately after the Dialog closes."
+  },
+  {
+    "id": "oj-c.Dialog#event:ojFocus",
+    "name": "ojFocus",
+    "kind": "event",
+    "memberof": "oj-c.Dialog",
+    "meta": {
+      "filename": "dialog.tsx",
+      "path": "web/components/oj-c/dialog"
+    },
+    "longname": "oj-c.Dialog#event:ojFocus",
+    "scope": "instance",
+    "description": "Triggered immediately after the Dialog receives focus."
+  },
+  {
+    "id": "oj-c.Dialog#event:ojDragStart",
+    "name": "ojDragStart",
+    "kind": "event",
+    "memberof": "oj-c.Dialog",
+    "meta": {
+      "filename": "dialog.tsx",
+      "path": "web/components/oj-c/dialog"
+    },
+    "longname": "oj-c.Dialog#event:ojDragStart",
+    "scope": "instance",
+    "description": "Triggered immediately before the Dialog moves.",
+    "properties": [
+      {
+        "name": "originalPosition",
+        "description": "original position of the dragged element",
+        "optional": false,
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "oj-c.Dialog.Position",
+            "jsdocOverride": true,
+            "for": "originalPosition"
+          }
+        ]
+      },
+      {
+        "name": "position",
+        "description": "current position of the dragged element",
+        "optional": false,
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "oj-c.Dialog.Position",
+            "jsdocOverride": true,
+            "for": "position"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "oj-c.Dialog#event:ojDragMove",
+    "name": "ojDragMove",
+    "kind": "event",
+    "memberof": "oj-c.Dialog",
+    "meta": {
+      "filename": "dialog.tsx",
+      "path": "web/components/oj-c/dialog"
+    },
+    "longname": "oj-c.Dialog#event:ojDragMove",
+    "scope": "instance",
+    "description": "Triggered when the Dialog moves.",
+    "properties": [
+      {
+        "name": "originalPosition",
+        "description": "original position of the dragged element",
+        "optional": false,
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "oj-c.Dialog.Position",
+            "jsdocOverride": true,
+            "for": "originalPosition"
+          }
+        ]
+      },
+      {
+        "name": "position",
+        "description": "current position of the dragged element",
+        "optional": false,
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "oj-c.Dialog.Position",
+            "jsdocOverride": true,
+            "for": "position"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "oj-c.Dialog#event:ojDragEnd",
+    "name": "ojDragEnd",
+    "kind": "event",
+    "memberof": "oj-c.Dialog",
+    "meta": {
+      "filename": "dialog.tsx",
+      "path": "web/components/oj-c/dialog"
+    },
+    "longname": "oj-c.Dialog#event:ojDragEnd",
+    "scope": "instance",
+    "description": "Triggered immediately after the Dialog stops moving.",
+    "properties": [
+      {
+        "name": "originalPosition",
+        "description": "original position of the dragged element",
+        "optional": false,
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "oj-c.Dialog.Position",
+            "jsdocOverride": true,
+            "for": "originalPosition"
+          }
+        ]
+      },
+      {
+        "name": "position",
+        "description": "current position of the dragged element",
+        "optional": false,
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "oj-c.Dialog.Position",
+            "jsdocOverride": true,
+            "for": "position"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "oj-c.Dialog#event:ojResizeStart",
+    "name": "ojResizeStart",
+    "kind": "event",
+    "memberof": "oj-c.Dialog",
+    "meta": {
+      "filename": "dialog.tsx",
+      "path": "web/components/oj-c/dialog"
+    },
+    "longname": "oj-c.Dialog#event:ojResizeStart",
+    "scope": "instance",
+    "description": "Triggered immediately before the Dialog resizes.",
+    "properties": [
+      {
+        "name": "originalPosition",
+        "description": "original position of the resized element",
+        "optional": false,
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "oj-c.Dialog.Position",
+            "jsdocOverride": true,
+            "for": "originalPosition"
+          }
+        ]
+      },
+      {
+        "name": "originalSize",
+        "description": "original dimensions of the resized element",
+        "optional": false,
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "oj-c.Dialog.Dimensions",
+            "jsdocOverride": true,
+            "for": "originalSize"
+          }
+        ]
+      },
+      {
+        "name": "position",
+        "description": "current position of the resized element",
+        "optional": false,
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "oj-c.Dialog.Position",
+            "jsdocOverride": true,
+            "for": "position"
+          }
+        ]
+      },
+      {
+        "name": "size",
+        "description": "current dimensions of the resized element",
+        "optional": false,
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "oj-c.Dialog.Dimensions",
+            "jsdocOverride": true,
+            "for": "size"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "oj-c.Dialog#event:ojResize",
+    "name": "ojResize",
+    "kind": "event",
+    "memberof": "oj-c.Dialog",
+    "meta": {
+      "filename": "dialog.tsx",
+      "path": "web/components/oj-c/dialog"
+    },
+    "longname": "oj-c.Dialog#event:ojResize",
+    "scope": "instance",
+    "description": "Triggered when the Dialog resizes.",
+    "properties": [
+      {
+        "name": "originalPosition",
+        "description": "original position of the resized element",
+        "optional": false,
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "oj-c.Dialog.Position",
+            "jsdocOverride": true,
+            "for": "originalPosition"
+          }
+        ]
+      },
+      {
+        "name": "originalSize",
+        "description": "original dimensions of the resized element",
+        "optional": false,
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "oj-c.Dialog.Dimensions",
+            "jsdocOverride": true,
+            "for": "originalSize"
+          }
+        ]
+      },
+      {
+        "name": "position",
+        "description": "current position of the resized element",
+        "optional": false,
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "oj-c.Dialog.Position",
+            "jsdocOverride": true,
+            "for": "position"
+          }
+        ]
+      },
+      {
+        "name": "size",
+        "description": "current dimensions of the resized element",
+        "optional": false,
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "oj-c.Dialog.Dimensions",
+            "jsdocOverride": true,
+            "for": "size"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "oj-c.Dialog#event:ojResizeEnd",
+    "name": "ojResizeEnd",
+    "kind": "event",
+    "memberof": "oj-c.Dialog",
+    "meta": {
+      "filename": "dialog.tsx",
+      "path": "web/components/oj-c/dialog"
+    },
+    "longname": "oj-c.Dialog#event:ojResizeEnd",
+    "scope": "instance",
+    "description": "Triggered immediately after the Dialog stops resizing.",
+    "properties": [
+      {
+        "name": "originalPosition",
+        "description": "original position of the resized element",
+        "optional": false,
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "oj-c.Dialog.Position",
+            "jsdocOverride": true,
+            "for": "originalPosition"
+          }
+        ]
+      },
+      {
+        "name": "originalSize",
+        "description": "original dimensions of the resized element",
+        "optional": false,
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "oj-c.Dialog.Dimensions",
+            "jsdocOverride": true,
+            "for": "originalSize"
+          }
+        ]
+      },
+      {
+        "name": "position",
+        "description": "current position of the resized element",
+        "optional": false,
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "oj-c.Dialog.Position",
+            "jsdocOverride": true,
+            "for": "position"
+          }
+        ]
+      },
+      {
+        "name": "size",
+        "description": "current dimensions of the resized element",
+        "optional": false,
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "oj-c.Dialog.Dimensions",
+            "jsdocOverride": true,
+            "for": "size"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "oj-c.Dialog#header",
+    "name": "header",
+    "memberof": "oj-c.Dialog",
+    "meta": {
+      "filename": "dialog.tsx",
+      "path": "web/components/oj-c/dialog"
+    },
+    "kind": "member",
+    "longname": "oj-c.Dialog#header",
+    "scope": "instance",
+    "description": "The content node to be shown within the Dialog header. If a header slot is not specified by the user, the dialog-title attribute will be used instead.",
+    "ojchild": false,
+    "ojslot": true
+  },
+  {
+    "id": "oj-c.Dialog#body",
+    "name": "body",
+    "memberof": "oj-c.Dialog",
+    "meta": {
+      "filename": "dialog.tsx",
+      "path": "web/components/oj-c/dialog"
+    },
+    "kind": "member",
+    "longname": "oj-c.Dialog#body",
+    "scope": "instance",
+    "description": "The content node to be shown within the Dialog body.",
+    "ojchild": false,
+    "ojslot": true
+  },
+  {
+    "id": "oj-c.Dialog#footer",
+    "name": "footer",
+    "memberof": "oj-c.Dialog",
+    "meta": {
+      "filename": "dialog.tsx",
+      "path": "web/components/oj-c/dialog"
+    },
+    "kind": "member",
+    "longname": "oj-c.Dialog#footer",
+    "scope": "instance",
+    "description": "The content node to be shown within the Dialog footer.",
+    "ojchild": false,
+    "ojslot": true
+  },
+  {
+    "id": "oj-c.Dialog.touchDoc",
+    "name": "touchDoc",
+    "kind": "member",
+    "longname": "oj-c.Dialog.touchDoc",
+    "description": "<table class=\"keyboard-table\">\n <thead>\n   <tr>\n     <th>Target</th>\n     <th>Gesture</th>\n     <th>Action</th>\n   </tr>\n </thead>\n <tbody>\n   <tr>\n      <td rowspan = \"3\">Dialog Close Icon</td>\n      <td>Tap</td>\n      <td>Close the Dialog</td>\n   </tr>\n </tbody>\n</table>",
+    "memberof": "oj-c.Dialog",
+    "meta": {
+      "filename": "dialog.tsx",
+      "path": "web/components/oj-c/dialog"
+    },
+    "ojfragment": true
+  },
+  {
+    "id": "oj-c.Dialog.keyboardDoc",
+    "name": "keyboardDoc",
+    "kind": "member",
+    "longname": "oj-c.Dialog.keyboardDoc",
+    "description": "<table class=\"keyboard-table\">\n <thead>\n   <tr>\n     <th>Target</th>\n     <th>Key</th>\n     <th>Action</th>\n   </tr>\n </thead>\n <tbody>\n   <tr>\n      <td rowspan = \"3\">Dialog</td>\n      <td><kbd>Tab</kbd> or <kbd>Shift + Tab</kbd></td>\n      <td>Navigate the content of the Dialog.</td>\n   </tr>\n   <tr>\n     <td><kbd>F6</kbd></td>\n     <td>Move focus to the launcher for a Dialog with modeless modality.</td>\n   </tr>\n   <tr>\n     <td><kbd>Esc</kbd></td>\n     <td>Close the Dialog.</td>\n   </tr>\n   <tr>\n      <td>Dialog Close Icon</td>\n      <td><kbd>Enter</kbd> or <kbd>Space</kbd></td>\n      <td>Close the Dialog.</td>\n    </tr>\n   <tr>\n     <td rowspan = \"1\">Dialog Launcher</td>\n     <td><kbd>F6</kbd></td>\n     <td>Move focus to the first tab stop within the open Dialog. If there is not a tab stop\n         within the content, focus is established on the Dialog.</td>\n    </tr>\n </tbody>\n</table>",
+    "memberof": "oj-c.Dialog",
+    "meta": {
+      "filename": "dialog.tsx",
+      "path": "web/components/oj-c/dialog"
+    },
+    "ojfragment": true
+  },
+  {
+    "id": "oj-c.Dialog.Coords",
+    "name": "Coords",
+    "kind": "typedef",
+    "memberof": "oj-c.Dialog",
+    "meta": {
+      "filename": "dialog.tsx",
+      "path": "web/components/oj-c/dialog"
+    },
+    "longname": "oj-c.Dialog.Coords",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "scope": "static",
+    "description": "",
+    "properties": [
+      {
+        "name": "x",
+        "optional": false,
+        "type": {
+          "names": [
+            "number"
+          ]
+        }
+      },
+      {
+        "name": "y",
+        "optional": false,
+        "type": {
+          "names": [
+            "number"
+          ]
+        }
+      },
+      {
+        "name": "contextElement",
+        "optional": true,
+        "type": {
+          "names": [
+            "Element"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "Element",
+            "jsdocOverride": true,
+            "for": "contextElement"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "oj-c.Dialog.Position",
+    "name": "Position",
+    "kind": "typedef",
+    "memberof": "oj-c.Dialog",
+    "meta": {
+      "filename": "dialog.tsx",
+      "path": "web/components/oj-c/dialog"
+    },
+    "longname": "oj-c.Dialog.Position",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "scope": "static",
+    "description": "",
+    "properties": [
+      {
+        "name": "x",
+        "description": "x coordinate",
+        "optional": false,
+        "type": {
+          "names": [
+            "number"
+          ]
+        }
+      },
+      {
+        "name": "y",
+        "description": "y coordinate",
+        "optional": false,
+        "type": {
+          "names": [
+            "number"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.Dialog.Dimensions",
+    "name": "Dimensions",
+    "kind": "typedef",
+    "memberof": "oj-c.Dialog",
+    "meta": {
+      "filename": "dialog.tsx",
+      "path": "web/components/oj-c/dialog"
+    },
+    "longname": "oj-c.Dialog.Dimensions",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "scope": "static",
+    "description": "",
+    "properties": [
+      {
+        "name": "width",
+        "description": "element's width",
+        "optional": false,
+        "type": {
+          "names": [
+            "number"
+          ]
+        }
+      },
+      {
+        "name": "height",
+        "description": "element's height",
+        "optional": false,
+        "type": {
+          "names": [
+            "number"
+          ]
+        }
+      }
+    ]
+  }
+]

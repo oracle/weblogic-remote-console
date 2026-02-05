@@ -1,0 +1,61 @@
+.SubheadingStyles_base__opv46b0 {
+  margin: 0;
+}
+.SubheadingStyles_base__opv46b0 > * {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+.SubheadingStyles_multiVariantStyles_size_2xs__opv46b1 {
+  font-size: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-subheading-2xs-font-size);
+  font-weight: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-subheading-2xs-font-weight);
+  line-height: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-subheading-2xs-line-height);
+}
+.SubheadingStyles_multiVariantStyles_size_xs__opv46b2 {
+  font-size: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-subheading-xs-font-size);
+  font-weight: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-subheading-xs-font-weight);
+  line-height: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-subheading-xs-line-height);
+}
+.SubheadingStyles_multiVariantStyles_size_sm__opv46b3 {
+  font-size: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-subheading-sm-font-size);
+  font-weight: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-subheading-sm-font-weight);
+  line-height: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-subheading-sm-line-height);
+}
+.SubheadingStyles_multiVariantStyles_size_md__opv46b4 {
+  font-size: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-subheading-md-font-size);
+  font-weight: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-subheading-md-font-weight);
+  line-height: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-subheading-md-line-height);
+}
+.SubheadingStyles_multiVariantStyles_size_lg__opv46b5 {
+  font-size: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-subheading-lg-font-size);
+  font-weight: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-subheading-lg-font-weight);
+  line-height: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-subheading-lg-line-height);
+}
+.SubheadingStyles_multiVariantStyles_size_xl__opv46b6 {
+  font-size: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-subheading-xl-font-size);
+  font-weight: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-subheading-xl-font-weight);
+  line-height: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-subheading-xl-line-height);
+}
+.SubheadingStyles_multiVariantStyles_size_2xl__opv46b7 {
+  font-size: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-subheading-2xl-font-size);
+  font-weight: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-subheading-2xl-font-weight);
+  line-height: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-subheading-2xl-line-height);
+}
+.SubheadingStyles_multiVariantStyles_size_inherit__opv46b8 {
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+}
+.SubheadingStyles_multiVariantStyles_variant_primary__opv46b9 {
+  color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-primary);
+}
+.SubheadingStyles_multiVariantStyles_variant_secondary__opv46ba {
+  color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-secondary);
+}
+.SubheadingStyles_multiVariantStyles_variant_disabled__opv46bb {
+  color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-disabled);
+}
+.SubheadingStyles_multiVariantStyles_variant_inherit__opv46bc {
+  color: inherit;
+}

@@ -1,0 +1,14 @@
+oj-c-date-picker:not(.oj-complete){
+  visibility: hidden;
+}
+
+oj-c-date-picker{
+  display: inline-block;
+  max-width: 100%;
+  width: 100%;
+}
+
+oj-c-date-picker[hidden]
+{
+  display: none;
+}

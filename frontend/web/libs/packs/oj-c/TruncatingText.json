@@ -1,0 +1,323 @@
+[
+  {
+    "id": "oj-c.TruncatingText",
+    "name": "TruncatingText",
+    "memberof": "oj-c",
+    "kind": "class",
+    "meta": {
+      "filename": "truncating-text.tsx",
+      "path": "web/components/oj-c/truncating-text"
+    },
+    "ojcomponent": true,
+    "isvcomponent": true,
+    "since": "19.0.0",
+    "longname": "oj-c.TruncatingText",
+    "pack": "oj-c",
+    "classdesc": "Truncating Text shows a tooltip containing the full text while also acting as a tab stop when truncation occurs.",
+    "scope": "static",
+    "tagWithoutBrackets": "oj-c-truncating-text",
+    "tagWithBrackets": "<oj-c-truncating-text>",
+    "domInterface": "CTruncatingTextElement",
+    "ojPageTitle": "&lt;oj-c-truncating-text>",
+    "camelCaseName": "TruncatingText",
+    "ojPageTitlePrefix": "Element: ",
+    "ojtsvcomponent": true,
+    "tstype": {
+      "target": "Type",
+      "value": "interface CTruncatingTextElement extends JetElement<TruncatingTextElementSettableProperties>"
+    },
+    "ojsignature": [
+      {
+        "target": "Type",
+        "value": "interface CTruncatingTextElement extends JetElement<TruncatingTextElementSettableProperties>"
+      }
+    ],
+    "tsdeprecated": [
+      {
+        "type": "production",
+        "since": "19.0.0"
+      }
+    ],
+    "ojmodule": "truncating-text"
+  },
+  {
+    "id": "oj-c.TruncatingText#variant",
+    "name": "variant",
+    "memberof": "oj-c.TruncatingText",
+    "meta": {
+      "filename": "truncating-text.tsx",
+      "path": "web/components/oj-c/truncating-text"
+    },
+    "kind": "member",
+    "longname": "oj-c.TruncatingText#variant",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "\"inherit\"",
+        "\"disabled\"",
+        "\"success\"",
+        "\"danger\"",
+        "\"warning\"",
+        "\"primary\"",
+        "\"secondary\""
+      ]
+    },
+    "optional": true,
+    "description": "Specifies text color. If set as 'inherit', takes text color from its parent element."
+  },
+  {
+    "id": "oj-c.TruncatingText#size",
+    "name": "size",
+    "memberof": "oj-c.TruncatingText",
+    "meta": {
+      "filename": "truncating-text.tsx",
+      "path": "web/components/oj-c/truncating-text"
+    },
+    "kind": "member",
+    "longname": "oj-c.TruncatingText#size",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "\"inherit\"",
+        "\"sm\"",
+        "\"md\"",
+        "\"lg\"",
+        "\"xs\"",
+        "\"2xs\"",
+        "\"xl\""
+      ]
+    },
+    "optional": true,
+    "description": "Specifies font size and line height. If set as 'inherit', takes font size and line height from its parent element."
+  },
+  {
+    "id": "oj-c.TruncatingText#weight",
+    "name": "weight",
+    "memberof": "oj-c.TruncatingText",
+    "meta": {
+      "filename": "truncating-text.tsx",
+      "path": "web/components/oj-c/truncating-text"
+    },
+    "kind": "member",
+    "longname": "oj-c.TruncatingText#weight",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "\"bold\"",
+        "\"normal\"",
+        "\"inherit\"",
+        "\"semiBold\""
+      ]
+    },
+    "optional": true,
+    "description": "Specifies the font weight. If set as 'inherit', takes font weight from its parent element."
+  },
+  {
+    "id": "oj-c.TruncatingText#overflowWrap",
+    "name": "overflowWrap",
+    "memberof": "oj-c.TruncatingText",
+    "meta": {
+      "filename": "truncating-text.tsx",
+      "path": "web/components/oj-c/truncating-text"
+    },
+    "kind": "member",
+    "longname": "oj-c.TruncatingText#overflowWrap",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "\"normal\"",
+        "\"anywhere\"",
+        "\"breakWord\""
+      ]
+    },
+    "optional": true,
+    "description": "Specifies the overflow-wrap."
+  },
+  {
+    "id": "oj-c.TruncatingText#hyphens",
+    "name": "hyphens",
+    "memberof": "oj-c.TruncatingText",
+    "meta": {
+      "filename": "truncating-text.tsx",
+      "path": "web/components/oj-c/truncating-text"
+    },
+    "kind": "member",
+    "longname": "oj-c.TruncatingText#hyphens",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "\"auto\"",
+        "\"none\""
+      ]
+    },
+    "optional": true,
+    "description": "Specifies if hyphens should be included when handling long words with no spaces."
+  },
+  {
+    "id": "oj-c.TruncatingText#truncation",
+    "name": "truncation",
+    "memberof": "oj-c.TruncatingText",
+    "meta": {
+      "filename": "truncating-text.tsx",
+      "path": "web/components/oj-c/truncating-text"
+    },
+    "kind": "member",
+    "longname": "oj-c.TruncatingText#truncation",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "\"none\"",
+        "\"clip\"",
+        "\"ellipsis\""
+      ]
+    },
+    "optional": true,
+    "description": "Determines text behavior when text is truncated. Be aware of setting either lineClamp or truncation. Setting both props would produce a type error. In most cases, lineClamp=1 tries to put the ellipsis at the end of a \"word\". On the other hand, using truncation=\"ellipsis\" will show as much as possible text, then put the ellipsis at the end."
+  },
+  {
+    "id": "oj-c.TruncatingText#lineClamp",
+    "name": "lineClamp",
+    "memberof": "oj-c.TruncatingText",
+    "meta": {
+      "filename": "truncating-text.tsx",
+      "path": "web/components/oj-c/truncating-text"
+    },
+    "kind": "member",
+    "longname": "oj-c.TruncatingText#lineClamp",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "number"
+      ]
+    },
+    "optional": true,
+    "description": "Truncates text at a specific number of lines and then displays an ellipsis (…) at the end of the last line. Parent of the element needs to have a specific width so text starts overflowing and produce a truncation."
+  },
+  {
+    "id": "oj-c.TruncatingText#value",
+    "name": "value",
+    "memberof": "oj-c.TruncatingText",
+    "meta": {
+      "filename": "truncating-text.tsx",
+      "path": "web/components/oj-c/truncating-text"
+    },
+    "kind": "member",
+    "longname": "oj-c.TruncatingText#value",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "string"
+      ]
+    },
+    "optional": false,
+    "description": "\"Specifies the text to be displayed."
+  },
+  {
+    "id": "oj-c.TruncatingText#setProperty",
+    "name": "setProperty",
+    "memberof": "oj-c.TruncatingText",
+    "meta": {
+      "filename": "truncating-text.tsx",
+      "path": "web/components/oj-c/truncating-text"
+    },
+    "kind": "function",
+    "longname": "oj-c.TruncatingText#setProperty",
+    "scope": "instance",
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "void"
+          ]
+        }
+      }
+    ],
+    "description": "Sets a property or a single subproperty for complex properties and notifies the component of the change, triggering a corresponding event.",
+    "params": [
+      {
+        "name": "property",
+        "description": "The property name to set. Supports dot notation for subproperty access.",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "value",
+        "description": "The new value to set the property to.",
+        "type": {
+          "names": [
+            "any"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.TruncatingText#getProperty",
+    "name": "getProperty",
+    "memberof": "oj-c.TruncatingText",
+    "meta": {
+      "filename": "truncating-text.tsx",
+      "path": "web/components/oj-c/truncating-text"
+    },
+    "kind": "function",
+    "longname": "oj-c.TruncatingText#getProperty",
+    "scope": "instance",
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "any"
+          ]
+        }
+      }
+    ],
+    "description": "Retrieves the value of a property or a subproperty.",
+    "params": [
+      {
+        "name": "property",
+        "description": "The property name to get. Supports dot notation for subproperty access.",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.TruncatingText#setProperties",
+    "name": "setProperties",
+    "memberof": "oj-c.TruncatingText",
+    "meta": {
+      "filename": "truncating-text.tsx",
+      "path": "web/components/oj-c/truncating-text"
+    },
+    "kind": "function",
+    "longname": "oj-c.TruncatingText#setProperties",
+    "scope": "instance",
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "void"
+          ]
+        }
+      }
+    ],
+    "description": "Performs a batch set of properties.",
+    "params": [
+      {
+        "name": "properties",
+        "description": "An object containing the property and value pairs to set.",
+        "type": {
+          "names": [
+            "object"
+          ]
+        }
+      }
+    ]
+  }
+]

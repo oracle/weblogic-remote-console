@@ -1,0 +1,11 @@
+oj-c-drawer-layout:not(.oj-complete) {
+    visibility: hidden;
+}
+
+oj-c-drawer-layout {
+    display: block;
+}
+
+oj-c-drawer-layout[hidden] {
+    display: none;
+}

@@ -1,0 +1,1 @@
+export { SelectorElementEventMap, SelectorElementSettableProperties, SelectorElementSettablePropertiesLenient, SelectorElement } from './ojselector';

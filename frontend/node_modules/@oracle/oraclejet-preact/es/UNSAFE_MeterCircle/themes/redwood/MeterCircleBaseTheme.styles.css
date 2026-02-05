@@ -1,0 +1,12 @@
+.MeterCircleBaseTheme_baseTheme__jo6utu0 {
+  --size__1qest1m0: ;
+  --trackSize__1qest1m1: ;
+  --sizes-lg__1qest1m2: calc(49  * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --sizes-md__1qest1m3: calc(24  * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --sizes-sm__1qest1m4: calc(14  * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --sizes-fit__1qest1m5: 100%;
+  --trackSizes-lg__1qest1m6: calc(3 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --trackSizes-md__1qest1m7: calc(2 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --trackSizes-sm__1qest1m8: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem);
+  --trackSizes-fit__1qest1m9: calc(3 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+}

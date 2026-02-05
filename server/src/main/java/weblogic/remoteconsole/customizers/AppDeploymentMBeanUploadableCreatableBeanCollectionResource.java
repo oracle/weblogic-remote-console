@@ -76,7 +76,6 @@ public class AppDeploymentMBeanUploadableCreatableBeanCollectionResource
   }
 
   private static class AppDeploymentMBeanCreateHelper extends DeploymentCreateHelper {
-    private InvocationContext invocationContext;
     private List<FormProperty> formProperties;
 
     @Override

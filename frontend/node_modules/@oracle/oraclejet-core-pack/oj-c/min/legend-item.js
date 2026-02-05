@@ -1,0 +1,10 @@
+define("oj-c/legend-item/legend-item",["require","exports","@oracle/oraclejet-preact/translationBundle","ojs/ojvcomponent"],(function(require,e,t,r){"use strict";Object.defineProperty(e,"__esModule",{value:!0}),e.LegendItem=e.LegendItemDefaults=void 0,e.LegendItemDefaults={markerShape:"square",symbolType:"marker",borderColor:"",categories:[],lineStyle:"solid",drilling:"inherit"},e.LegendItem=(0,r.registerCustomElement)("oj-c-legend-item",(({markerShape:t=e.LegendItemDefaults.markerShape,symbolType:r=e.LegendItemDefaults.symbolType,borderColor:n=e.LegendItemDefaults.borderColor,categories:l=e.LegendItemDefaults.categories,lineStyle:i=e.LegendItemDefaults.lineStyle,drilling:o=e.LegendItemDefaults.drilling,...s})=>null),"LegendItem",{properties:{text:{type:"string"},categories:{type:"Array<string>"},symbolType:{type:"string",enumValues:["marker","image","line","lineWithMarker"]},source:{type:"string"},color:{type:"string"},borderColor:{type:"string"},lineStyle:{type:"string",enumValues:["dashed","solid","dotted"]},lineWidth:{type:"number"},markerShape:{type:"string",enumValues:["square","circle","ellipse","diamond","human","plus","star","triangleDown","triangleUp","rectangle"]},markerColor:{type:"string"},shortDesc:{type:"string"},drilling:{type:"string",enumValues:["inherit","off","on"]}}},{markerShape:"square",symbolType:"marker",borderColor:"",categories:[],lineStyle:"solid",drilling:"inherit"},{"@oracle/oraclejet-preact":t.default})})),
+/**
+ * @license
+ * Copyright (c) %FIRST_YEAR% %CURRENT_YEAR%, Oracle and/or its affiliates.
+ * The Universal Permissive License (UPL), Version 1.0
+ * as shown at https://oss.oracle.com/licenses/upl/
+ * @ignore
+ */
+define("oj-c/legend-item",["require","exports","oj-c/legend-item/legend-item"],(function(require,e,t){"use strict";Object.defineProperty(e,"__esModule",{value:!0}),e.LegendItem=void 0,Object.defineProperty(e,"LegendItem",{enumerable:!0,get:function(){return t.LegendItem}})}));
+//# sourceMappingURL=legend-item.js.map

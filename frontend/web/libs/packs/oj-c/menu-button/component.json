@@ -1,0 +1,321 @@
+{
+  "name": "menu-button",
+  "version": "19.0.1",
+  "jetVersion": "^19.0.1",
+  "pack": "oj-c",
+  "type": "composite",
+  "dependencyScope": "runtime",
+  "license": "https://opensource.org/licenses/UPL",
+  "implements": [
+    "CMenuButtonElement"
+  ],
+  "description": "A menu button launches a menu when clicked.",
+  "displayName": "Menu Button",
+  "help": "oj-c.MenuButton.html",
+  "main": "oj-c/menu-button",
+  "extension": {
+    "catalog": {
+      "category": "Controls"
+    },
+    "vbdt": {
+      "module": "oj-c/menu-button",
+      "pi": {
+        "events": {
+          "suggestions": [
+            {
+              "type": "component",
+              "name": "ojMenuAction",
+              "mappings": [
+                {
+                  "variableName": "menuItemKey",
+                  "expression": "{{$event.detail.key}}",
+                  "type": "string"
+                }
+              ]
+            },
+            {
+              "type": "component",
+              "name": "onOjMenuSelection",
+              "mappings": [
+                {
+                  "variableName": "menuSelectionValue",
+                  "expression": "{{$event.detail.value}}",
+                  "type": "string"
+                },
+                {
+                  "variableName": "menuSelectionGroupKey",
+                  "expression": "{{$event.detail.menuSelectionGroupKey}}",
+                  "type": "string"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "oracle": {
+      "icon": "oj-ux-ico-menu-button",
+      "uxSpecs": [
+        "menu-button"
+      ]
+    },
+    "webelement": {
+      "package": "@oracle/oraclejet-core-pack",
+      "version": "19.0.1",
+      "docUrl": "https://www.oracle.com/webfolder/technetwork/jet/cpwdtsdoc/classes/MenuButtonWebElement.html",
+      "export": "findMenuButton",
+      "main": "@oracle/oraclejet-core-pack/webdriver"
+    }
+  },
+  "since": "16.0.0",
+  "status": [
+    {
+      "type": "supersedes",
+      "since": "16.0.0",
+      "value": [
+        "oj-menu-button",
+        "oj-menu-select-many"
+      ]
+    }
+  ],
+  "properties": {
+    "label": {
+      "type": "string",
+      "description": "Text to show in the button.",
+      "help": "#label",
+      "required": true,
+      "translatable": true,
+      "value": ""
+    },
+    "suffix": {
+      "type": "string",
+      "description": "Suffix appended to menu label to indicate last selection.",
+      "help": "#label",
+      "translatable": true
+    },
+    "tooltip": {
+      "type": "string",
+      "description": "Text to show in the tooltip. This overrides the default tooltip that renders the label when in icon mode.",
+      "help": "#tooltip",
+      "translatable": true
+    },
+    "items": {
+      "type": "Array<object>",
+      "description": "Items describe the menu items rendered by the menu button.",
+      "help": "#items",
+      "value": []
+    },
+    "selection": {
+      "type": "object",
+      "description": "An array containing key/value objects for menu selection groups.",
+      "help": "#selection",
+      "extension": {
+        "vbdt": {
+          "keyedProperties": {
+            "keys": {
+              "type": "string"
+            },
+            "values": {
+              "type": "string|Array<string>"
+            }
+          }
+        }
+      },
+      "writeback": true
+    },
+    "display": {
+      "type": "string",
+      "description": "Display just the label, the icons, or all. Label is used as tooltip and should be set in all cases.",
+      "help": "#display",
+      "propertyEditorValues": {
+        "all": {
+          "description": "Display both the label and icons.",
+          "displayName": "All"
+        },
+        "icons": {
+          "description": "Display only the icons.",
+          "displayName": "Icons"
+        },
+        "label": {
+          "description": "Display only the text label.",
+          "displayName": "label"
+        }
+      },
+      "enumValues": [
+        "all",
+        "label",
+        "icons"
+      ],
+      "value": "all"
+    },
+    "disabled": {
+      "type": "boolean",
+      "description": "Specifies that the button element should be disabled.",
+      "displayName": "disabled",
+      "help": "#disabled",
+      "value": false
+    },
+    "size": {
+      "type": "string",
+      "description": "Size of button",
+      "help": "#size",
+      "propertyEditorValues": {
+        "xs": {
+          "description": "Display an extra small button.  Only supported for component developers with ghost chroming in icon display mode.",
+          "displayName": "Extra Small"
+        },
+        "sm": {
+          "description": "Display a small button.",
+          "displayName": "Small"
+        },
+        "md": {
+          "description": "Display a default size button.",
+          "displayName": "Medium"
+        },
+        "lg": {
+          "description": "Display a large button.",
+          "displayName": "Large"
+        }
+      },
+      "enumValues": [
+        "sm",
+        "md",
+        "lg",
+        "xs"
+      ],
+      "value": "md"
+    },
+    "width": {
+      "type": "number|string",
+      "description": "Specifies that the button style width",
+      "displayName": "width",
+      "help": "#width"
+    },
+    "chroming": {
+      "type": "string",
+      "description": "Indicates in what states the button has chromings in background and border.",
+      "displayName": "chroming",
+      "help": "#chroming",
+      "propertyEditorValues": {
+        "ghost": {
+          "description": "Ghost buttons are the least prominent variation. Ghost buttons are useful for performing low-priority tasks, such as manipulating the UI.",
+          "displayName": "Ghost"
+        },
+        "borderless": {
+          "description": "Borderless buttons are a more prominent variation. Borderless buttons are useful for supplemental actions that require minimal emphasis.",
+          "displayName": "Borderless"
+        },
+        "outlined": {
+          "description": "Outlined buttons are salient, but lighter weight than solid buttons. Outlined buttons are useful for secondary actions.",
+          "displayName": "Outlined"
+        },
+        "solid": {
+          "description": "Solid buttons stand out, and direct the user's attention to the most important actions in the UI.",
+          "displayName": "Solid"
+        }
+      },
+      "enumValues": [
+        "solid",
+        "borderless",
+        "outlined",
+        "ghost"
+      ],
+      "binding": {
+        "consume": {
+          "name": "containerChroming"
+        }
+      },
+      "value": "outlined"
+    }
+  },
+  "slots": {
+    "startIcon": {
+      "description": "The startIcon slot is the button's start icon. The oj-c-menu-button element accepts DOM nodes as children with the startIcon slot.",
+      "displayName": "startIcon",
+      "help": "#startIcon"
+    },
+    "endIcon": {
+      "description": "The endIcon slot is the button's end icon. The oj-c-menu-button element accepts DOM nodes as children with the endIcon slot.",
+      "help": "#endIcon"
+    }
+  },
+  "events": {
+    "ojMenuAction": {
+      "bubbles": true,
+      "description": "Triggered when a menu item is clicked, whether by keyboard, mouse, or touch events. Detail indicates which menu item was clicked.",
+      "eventGroup": "common",
+      "help": "#event:ojMenuAction",
+      "detail": {
+        "key": {
+          "type": "string"
+        }
+      }
+    },
+    "ojMenuSelection": {
+      "bubbles": true,
+      "description": "Triggered when a menu selection group item is clicked, whether by keyboard, mouse, or touch events. Detail indicates new selection value for group.",
+      "eventGroup": "common",
+      "help": "#event:ojMenuSelection",
+      "detail": {
+        "value": {
+          "type": "string|Array<string>"
+        },
+        "menuSelectionGroupKey": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "methods": {
+    "focus": {
+      "return": "void"
+    },
+    "blur": {
+      "return": "void"
+    },
+    "click": {
+      "return": "void"
+    },
+    "setProperty": {
+      "description": "Sets a property or a single subproperty for complex properties and notifies the component of the change, triggering a corresponding event.",
+      "help": "#setProperty",
+      "params": [
+        {
+          "name": "property",
+          "description": "The property name to set. Supports dot notation for subproperty access.",
+          "type": "string"
+        },
+        {
+          "name": "value",
+          "description": "The new value to set the property to.",
+          "type": "any"
+        }
+      ],
+      "return": "void"
+    },
+    "getProperty": {
+      "description": "Retrieves the value of a property or a subproperty.",
+      "help": "#getProperty",
+      "params": [
+        {
+          "name": "property",
+          "description": "The property name to get. Supports dot notation for subproperty access.",
+          "type": "string"
+        }
+      ],
+      "return": "any"
+    },
+    "setProperties": {
+      "description": "Performs a batch set of properties.",
+      "help": "#setProperties",
+      "params": [
+        {
+          "name": "properties",
+          "description": "An object containing the property and value pairs to set.",
+          "type": "object"
+        }
+      ],
+      "return": "void"
+    }
+  }
+}

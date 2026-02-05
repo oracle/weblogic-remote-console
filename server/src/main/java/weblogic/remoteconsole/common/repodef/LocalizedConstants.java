@@ -1,4 +1,4 @@
-// Copyright (c) 2021, 2025, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2026, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef;
@@ -148,6 +148,12 @@ public class LocalizedConstants {
       "Edit Tree"
     );
 
+  public static final LocalizableString EDIT_DESCRIPTION =
+    addConstant(
+      "label.edit.description",
+      "Maintain configuration of the WebLogic domain"
+    );
+
   public static final LocalizableString CONFIGURATION_LABEL =
     addConstant(
       "label.configuration",
@@ -160,10 +166,34 @@ public class LocalizedConstants {
       "Composite View Tree"
     );
 
+  public static final LocalizableString COMPOSITE_CONFIGURATION_DESCRIPTION =
+    addConstant(
+      "label.compositeConfig.description",
+      "View a combined set of WebLogic Deploy Tooling model files"
+    );
+
+  public static final LocalizableString CONFIGURATION_DESCRIPTION =
+    addConstant(
+      "label.configuration.description",
+      "Examine read-only configuration of the WebLogic domain"
+    );
+
+  public static final LocalizableString MODEL_CONFIGURATION_DESCRIPTION =
+    addConstant(
+      "label.model.configuration.description",
+      "Maintain model files associated with the WebLogic Deploy Tooling tool."
+    );
+
   public static final LocalizableString PROPERTY_LIST_CONFIGURATION_LABEL =
     addConstant(
       "label.propertyList",
       "Property List"
+    );
+
+  public static final LocalizableString PROPERTY_LIST_CONFIGURATION_DESCRIPTION =
+    addConstant(
+      "label.propertyList.configuration.description",
+      "View or modify a set of properties from a property list file."
     );
 
   public static final LocalizableString MONITORING_LABEL =
@@ -172,10 +202,23 @@ public class LocalizedConstants {
       "Monitoring Tree"
     );
 
+  public static final LocalizableString MONITORING_DESCRIPTION =
+    addConstant(
+      "label.monitoring.description",
+      "View runtime data and perform operations on running WebLogic domain"
+    );
+
   public static final LocalizableString SECURITY_DATA_LABEL =
     addConstant(
       "label.securityData",
       "Security Data Tree"
+    );
+
+  public static final LocalizableString SECURITY_DATA_DESCRIPTION =
+    addConstant(
+      "label.securityData.description",
+      "Manage security-related information (e.g. users, groups, roles, policies,"
+      + " credentials, etc.) in the WebLogic domain"
     );
 
   public static final LocalizableString FILTERING_DASHBOARD_DEFAULT_DESCRIPTION =
@@ -603,6 +646,12 @@ public class LocalizedConstants {
       + "but the path part is automatically added by the Remote Console software"
     );
 
+  public static final LocalizableString ADMIN_SERVER_LABEL_PROXY =
+    addConstant(
+      "adminServerLabelProxy",
+      "Proxy Override"
+    );
+
   public static final LocalizableString ADMIN_SERVER_HELP_PROXY_SUMMARY =
     addConstant(
       "adminServerHelpProxySummary",
@@ -687,7 +736,6 @@ public class LocalizedConstants {
       "The path to a WebLogic Deploy Tooling model file"
     );
 
-
   public static final LocalizableString PROPERTY_LIST_PROVIDER_HELP_FILE_SUMMARY =
     addConstant(
       "propertyListProviderHelpFileSummary",
@@ -704,6 +752,585 @@ public class LocalizedConstants {
     addConstant(
       "wdtCompositeProviderHelpModelsSummary",
       "A list of WebLogic Deploy Tooling model providers"
+    );
+
+  public static final LocalizableString WDT_COMPOSITE_MODELS_LABEL =
+    addConstant(
+      "wdtCompositeCompositeModelsLabel",
+      "WDT Models"
+    );
+
+  public static final LocalizableString WDT_MODEL_EDITOR_DESCRIPTION =
+    addConstant(
+      "wdtModelEditorDescription",
+      "A WebLogic Deploy Tooling Model Editor for the file: {0}"
+    );
+
+  // Provider table related constants
+  public static final LocalizableString PROVIDER_TABLE_INTRODUCTION =
+    addConstant(
+      "providerTableIntroduction",
+      "This page is used to manage providers within a project"
+    );
+
+  public static final LocalizableString EMPTY_PROVIDER_TABLE_INTRODUCTION =
+    addConstant(
+      "emptyProviderTableIntroduction",
+      "This page is used to manage providers within a project"
+      + "<p><p><b>Choose Create to set up your first provider</b>"
+    );
+
+  public static final LocalizableString PROVIDER_TABLE_TYPE_LABEL =
+    addConstant(
+      "providerTableTypeLabel",
+      "Type"
+    );
+
+  public static final LocalizableString PROVIDER_TABLE_STATE_LABEL =
+    addConstant(
+      "providerTableStateLabel",
+      "State"
+    );
+
+  public static final LocalizableString PROVIDER_TABLE_INFORMATION_LABEL =
+    addConstant(
+      "providerTableInformationLabel",
+      "Information"
+    );
+
+  public static final LocalizableString PROVIDER_TABLE_USER_ORDERING_LABEL =
+    addConstant(
+      "providerTableUserOrderingLabel",
+      "User Ordering"
+    );
+
+  public static final LocalizableString PROVIDER_TABLE_CREATE_ADMIN_SERVER_LABEL =
+    addConstant(
+      "providerTableCreateAdminServerLabel",
+      "Admin Server Connection Provider"
+    );
+
+  public static final LocalizableString PROVIDER_TABLE_CREATE_EXISTING_WDT_LABEL =
+    addConstant(
+      "providerTableCreateExistingWDTLabel",
+      "Existing WDT Model File Provider"
+    );
+
+  public static final LocalizableString PROVIDER_TABLE_CREATE_WDT_COMPOSITE_LABEL =
+    addConstant(
+      "providerTableCreateWDTCompositeLabel",
+      "WDT Composite Model File Provider"
+    );
+
+  public static final LocalizableString PROVIDER_TABLE_CREATE_EXISTING_PROPERTY_LIST_LABEL =
+    addConstant(
+      "providerTableCreateExistingPropertyListLabel",
+      "Existing Property List File Provider"
+    );
+
+  public static final LocalizableString PROVIDER_TABLE_CREATE_NEW_WDT_LABEL =
+    addConstant(
+      "providerTableCreateNewWDTLabel",
+      "New WDT Model File Provider"
+    );
+
+  public static final LocalizableString PROVIDER_TABLE_CREATE_NEW_PROPERTY_LIST_LABEL =
+    addConstant(
+      "providerTableCreateNewPropertyListLabel",
+      "New Property List File Provider"
+    );
+
+  public static final LocalizableString PROVIDER_TABLE_CREATE_ACTION_LABEL =
+    addConstant(
+      "providerTableCreateActionLabel",
+      "Create"
+    );
+
+  public static final LocalizableString PROVIDER_TABLE_CONNECT_ACTIVATE_LABEL =
+    addConstant(
+      "providerTableConnectActivateLabel",
+      "Connect/Activate"
+    );
+
+  public static final LocalizableString PROVIDER_TABLE_DELETE_LABEL =
+    addConstant(
+      "providerTableDeleteLabel",
+      "Delete"
+    );
+
+  public static final LocalizableString PROVIDER_TABLE_MOVE_UP_LABEL =
+    addConstant(
+      "providerTableMoveUpLabel",
+      "Move Up"
+    );
+
+  public static final LocalizableString PROVIDER_TABLE_MOVE_DOWN_LABEL =
+    addConstant(
+      "providerTableMoveDownLabel",
+      "Move Down"
+    );
+
+  public static final LocalizableString PROVIDER_TABLE_PROVIDERS_LABEL =
+    addConstant(
+      "providerTableProvidersLabel",
+      "Providers"
+    );
+
+  public static final LocalizableString PROJECT_NOT_FOUND_MESSAGE =
+    addConstant(
+      "projectNotFoundMessage",
+      "Project not found"
+    );
+
+  public static final LocalizableString BAD_TYPE_MESSAGE =
+    addConstant(
+      "badTypeMessage",
+      "Bad type"
+    );
+
+  public static final LocalizableString CREATE_FORM_MISSING_DATA_MESSAGE =
+    addConstant(
+      "createFormMissingDataMessage",
+      "A create form must have a 'data' object"
+    );
+
+  public static final LocalizableString CANNOT_CREATE_FILE_MESSAGE =
+    addConstant(
+      "cannotCreateFileMessage",
+      "Cannot create {0}"
+    );
+
+  public static final LocalizableString MOVES_ONLY_ONE_ROW_MESSAGE =
+    addConstant(
+      "movesOnlyOneRowMessage",
+      "Moves only take one row"
+    );
+
+  public static final LocalizableString NO_SUCH_PROVIDER_MESSAGE =
+    addConstant(
+      "noSuchProviderMessage",
+      "No such provider: {0}"
+    );
+
+  public static final LocalizableString REQUEST_POORLY_FORMED_MESSAGE =
+    addConstant(
+      "requestPoorlyFormedMessage",
+      "This request is poorly formed"
+    );
+
+  public static final LocalizableString UNSUPPORTED_PARAM_MESSAGE =
+    addConstant(
+      "unsupportedParamMessage",
+      "{0} is not supported on a project table"
+    );
+
+  public static final LocalizableString CANNOT_WRITE_BOOKMARKS_FILE_MESSAGE =
+    addConstant(
+      "cannotWriteBookmarksFileMessage",
+      "Can't write bookmarks file {0}"
+    );
+
+  public static final LocalizableString PROJECTS_NAVIGATION_LABEL =
+    addConstant(
+      "projectsNavigationLabel",
+      "Projects"
+    );
+
+  // Property List Resource related constants
+  public static final LocalizableString PROPERTY_LIST_EDITOR_DESCRIPTION_WITH_FILE =
+    addConstant(
+      "propertyListEditorDescriptionWithFile",
+      "A Property List File Editor for the file: {0}"
+    );
+
+  public static final LocalizableString PROPERTY_LIST_EDITOR_DESCRIPTION =
+    addConstant(
+      "propertyListEditorDescription",
+      "A Property List File Editor."
+    );
+
+  public static final LocalizableString PROPERTY_LIST_BROWSE_INTRODUCTION =
+    addConstant(
+      "propertyListBrowseIntroduction",
+      "Click icon to browse for a properties file."
+    );
+
+  public static final LocalizableString PROPERTY_LIST_FILENAME_LABEL =
+    addConstant(
+      "propertyListFilenameLabel",
+      "Property List Filename"
+    );
+
+  public static final LocalizableString PROPERTY_LIST_SETTINGS_INTRODUCTION =
+    addConstant(
+      "propertyListSettingsIntroduction",
+      "Settings for the property list provider. Click icon to browse for a properties file."
+    );
+
+  public static final LocalizableString PROPERTY_LIST_PROVIDER_NAME_LABEL =
+    addConstant(
+      "propertyListProviderNameLabel",
+      "Property List Provider Name"
+    );
+
+  // WDT Composite Resource related constants
+  public static final LocalizableString WDT_COMPOSITE_EDITOR_DESCRIPTION =
+    addConstant(
+      "wdtCompositeEditorDescription",
+      "A WebLogic Deploy Tooling Multi-Model Composite Editor."
+    );
+
+  public static final LocalizableString WDT_COMPOSITE_LOADED_STATUS =
+    addConstant(
+      "wdtCompositeLoadedStatus",
+      "Loaded"
+    );
+
+  public static final LocalizableString WDT_COMPOSITE_SETTINGS_INTRODUCTION =
+    addConstant(
+      "wdtCompositeSettingsIntroduction",
+      "Enter settings for existing model file provider"
+    );
+
+  public static final LocalizableString WDT_COMPOSITE_VARIABLES_LABEL =
+    addConstant(
+      "wdtCompositeVariablesLabel",
+      "WDT Variables"
+    );
+
+  // WDT Resource related constants
+  public static final LocalizableString WDT_MODEL_EDITOR_FALLBACK_DESCRIPTION =
+    addConstant(
+      "wdtModelEditorFallbackDescription",
+      "A WebLogic Deploy Tooling Model Editor."
+    );
+
+  public static final LocalizableString WDT_NEW_MODEL_INTRODUCTION =
+    addConstant(
+      "wdtNewModelIntroduction",
+      "Enter settings for model file provider. Click icon to pick a new file to be created."
+    );
+
+  public static final LocalizableString WDT_NEW_MODEL_FILENAME_LABEL =
+    addConstant(
+      "wdtNewModelFilenameLabel",
+      "New WDT Model Filename"
+    );
+
+  public static final LocalizableString WDT_EXISTING_MODEL_INTRODUCTION =
+    addConstant(
+      "wdtExistingModelIntroduction",
+      "Enter settings for model file provider. Click upload icon to browse for model file."
+    );
+
+  public static final LocalizableString WDT_MODEL_FILENAME_LABEL =
+    addConstant(
+      "wdtModelFilenameLabel",
+      "WDT Model Filename"
+    );
+
+  public static final LocalizableString WDT_EXISTING_MODEL_FORM_INTRODUCTION =
+    addConstant(
+      "wdtExistingModelFormIntroduction",
+      "Enter settings for existing model file provider"
+    );
+
+  public static final LocalizableString VIEW_CHANGE_MANAGER_STATE_ACTION_LABEL =
+    addConstant(
+      "viewChangeManagerState",
+      "View Change Manager State"
+    );
+
+  public static final LocalizableString ACTIVATE_ACTION_LABEL =
+    addConstant(
+      "activateActionLabel",
+      "Activate"
+    );
+
+  public static final LocalizableString COMMIT_ACTION_LABEL =
+    addConstant(
+      "commitActionLabel",
+      "Commit Changes"
+    );
+
+  public static final LocalizableString DISCARD_ACTION_LABEL =
+    addConstant(
+      "discardActionLabel",
+      "Discard Changes"
+    );
+
+  public static final LocalizableString UNLOAD_ACTION_LABEL =
+    addConstant(
+      "unloadActionLabel",
+      "Unload"
+    );
+
+  public static final LocalizableString WDT_MODEL_PROVIDER_NAME_LABEL =
+    addConstant(
+      "wdtModelProviderNameLabel",
+      "WDT Model Provider Name"
+    );
+
+  public static final LocalizableString WDT_COMPOSITE_PROVIDER_NAME_LABEL =
+    addConstant(
+      "wdtCompositeProviderNameLabel",
+      "WDT Composite Provider Name"
+    );
+
+  public static final LocalizableString WDT_COMPOSITE_PROVIDER_MODELS_LABEL =
+    addConstant(
+      "wdtCompositeProviderModelsLabel",
+      "WDT Composite Provider Models"
+    );
+
+  public static final LocalizableString PROPERTY_LIST_PROVIDERS_LABEL =
+    addConstant(
+      "propertyListProvidersLabel",
+      "Property List Providers"
+    );
+
+  public static final LocalizableString PROJECT_FILE_NAME_TO_IMPORT =
+    addConstant(
+      "projectFileToImport",
+      "Project File To Import"
+    );
+
+  public static final LocalizableString INITIAL_FILE_CONTENTS =
+    addConstant(
+      "initialFileContents",
+      "Initial File Contents"
+    );
+
+  public static final LocalizableString RELOAD_FILE_CONTENTS =
+    addConstant(
+      "reloadFileContents",
+      "Reload File Contents From Local File"
+    );
+
+  public static final LocalizableString NEED_PROPER_FILE_NAME_MESSAGE =
+    addConstant(
+      "needProperFileNameMessage",
+      "Need a proper file name"
+    );
+
+  public static final LocalizableString NEED_MODELS =
+    addConstant(
+      "needWDTCompositeNonZeroModels",
+      "Need to have more than zero models to compose"
+    );
+
+  // Common label constants
+  public static final LocalizableString NAME_LABEL =
+    addConstant(
+      "nameLabel",
+      "Name"
+    );
+
+  public static final LocalizableString STATE_LABEL =
+    addConstant(
+      "stateLabel",
+      "State"
+    );
+
+  public static final LocalizableString URL_LABEL =
+    addConstant(
+      "urlLabel",
+      "URL"
+    );
+
+  public static final LocalizableString USER_NAME_LABEL =
+    addConstant(
+      "userNameLabel",
+      "User Name"
+    );
+
+  public static final LocalizableString PASSWORD_LABEL =
+    addConstant(
+      "passwordLabel",
+      "Password"
+    );
+
+  public static final LocalizableString FILENAME_LABEL =
+    addConstant(
+      "filenameLabel",
+      "Filename"
+    );
+
+  // Admin Server Resource related constants
+  public static final LocalizableString ADMIN_SERVER_CONNECTION_DESCRIPTION_WITH_URL =
+    addConstant(
+      "adminServerConnectionDescriptionWithUrl",
+      "An Admin Server connection provider which connects to: {0}"
+    );
+
+  public static final LocalizableString ADMIN_SERVER_CONNECTION_DESCRIPTION =
+    addConstant(
+      "adminServerConnectionDescription",
+      "An Admin Server connection provider."
+    );
+
+  public static final LocalizableString CONNECTED_STATUS_LABEL =
+    addConstant(
+      "connectedStatusLabel",
+      "Connected"
+    );
+
+  public static final LocalizableString ADMIN_SERVER_CREATE_INTRODUCTION =
+    addConstant(
+      "adminServerCreateIntroduction",
+      "Enter new name and connectivity settings for connection provider."
+    );
+
+  public static final LocalizableString USE_WEB_AUTHENTICATION_LABEL =
+    addConstant(
+      "useWebAuthenticationLabel",
+      "Use Web Authentication"
+    );
+
+  public static final LocalizableString MAKE_INSECURE_CONNECTION_LABEL =
+    addConstant(
+      "makeInsecureConnectionLabel",
+      "Make Insecure Connection"
+    );
+
+  public static final LocalizableString ADMIN_SERVER_PAGE_INTRODUCTION =
+    addConstant(
+      "adminServerPageIntroduction",
+      "This page describes a provider that connects to an WebLogic Administration Server"
+    );
+
+  public static final LocalizableString SAVE_AND_CONNECT_LABEL =
+    addConstant(
+      "saveAndConnectLabel",
+      "Save and Connect"
+    );
+
+  public static final LocalizableString DISCONNECT_LABEL =
+    addConstant(
+      "disconnectLabel",
+      "Disconnect"
+    );
+
+  public static final LocalizableString NO_URL_SPECIFIED_MESSAGE =
+    addConstant(
+      "noURLSpecifiedMessage",
+      "No URL specified"
+    );
+
+  public static final LocalizableString NO_NAME_SPECIFIED_MESSAGE =
+    addConstant(
+      "noNameSpecifiedMessage",
+      "No name specified"
+    );
+
+  public static final LocalizableString NO_USER_NAME_SPECIFIED_MESSAGE =
+    addConstant(
+      "noUserNameSpecifiedMessage",
+      "No user name specified"
+    );
+
+  public static final LocalizableString NO_PASSWORD_SPECIFIED_MESSAGE =
+    addConstant(
+      "noPasswordSpecifiedMessage",
+      "No password specified"
+    );
+
+  // Project Table related constants
+  public static final LocalizableString CREATE_PROJECT_ACTION_LABEL =
+    addConstant(
+      "createProjectActionLabel",
+      "Create"
+    );
+
+  public static final LocalizableString IMPORT_ACTION_LABEL =
+    addConstant(
+      "importActionLabel",
+      "Import"
+    );
+
+  public static final LocalizableString EXPORT_ACTION_LABEL =
+    addConstant(
+      "exportActionLabel",
+      "Export"
+    );
+
+  public static final LocalizableString CURRENT_TABLE_COLUMN_LABEL =
+    addConstant(
+      "currentTableColumnLabel",
+      "Current"
+    );
+
+  public static final LocalizableString PROJECTS_TABLE_LABEL =
+    addConstant(
+      "projectsTableLabel",
+      "Projects"
+    );
+
+  public static final LocalizableString PROJECT_TABLE_INTRODUCTION =
+    addConstant(
+      "projectTableIntroduction",
+      "This page is used to create, name and delete projects.\n<p>Projects are groups of providers"
+    );
+
+  public static final LocalizableString PROJECT_IMPORT_INTRODUCTION =
+    addConstant(
+      "projectImportIntroduction",
+      "Pick a project file to import each project"
+    );
+
+  public static final LocalizableString PROJECT_CREATE_INTRODUCTION =
+    addConstant(
+      "projectCreateIntroduction",
+      "Enter new project name"
+    );
+
+  public static final LocalizableString USER_ORDERING_COLUMN_LABEL =
+    addConstant(
+      "userOrderingColumnLabel",
+      "User Ordering"
+    );
+
+  public static final LocalizableString BAD_CONTENT_MESSAGE =
+    addConstant(
+      "badContentMessage",
+      "The content is not appropriate for this type"
+    );
+
+  public static final LocalizableString BAD_PROJECT_PAYLOAD_MESSAGE =
+    addConstant(
+      "badProjectPayloadMessage",
+      "The post payload for creating a project is bad"
+    );
+
+  public static final LocalizableString UNSUPPORTED_PROJECT_PARAM_MESSAGE =
+    addConstant(
+      "unsupportedProjectParamMessage",
+      "{0} is not supported on a project table"
+    );
+
+  // Provider Instance related constants
+  public static final LocalizableString PROVIDER_NOT_FOUND_MESSAGE =
+    addConstant(
+      "providerNotFoundMessage",
+      "Provider not found"
+    );
+
+  public static final LocalizableString SAVE_FORM_MISSING_DATA_MESSAGE =
+    addConstant(
+      "saveFormMissingDataMessage",
+      "A save form must have a 'data' object"
+    );
+
+  public static final LocalizableString FAILED_TO_CONNECT_MESSAGE =
+    addConstant(
+      "failedToConnectMessage",
+      "Failed to connect"
+    );
+
+  public static final LocalizableString UNSUPPORTED_PROVIDER_PARAM_MESSAGE =
+    addConstant(
+      "unsupportedProviderParamMessage",
+      "{0} is not supported on a provider instance"
     );
 
   public static final LocalizableString WDT_COMPOSITE_PROVIDER_HELP_MODELS_DETAIL =
@@ -754,7 +1381,6 @@ public class LocalizedConstants {
       "cannotModifyBuiltintDashboard",
       "Builtin dashboards cannot be modified: ''{0}''"
     );
-
 
   public static final LocalizableString NODE_MANAGER_LOG_DOWNLOAD_LABEL =
     addConstant(
@@ -939,6 +1565,44 @@ public class LocalizedConstants {
     addConstant(
       "jmsDisplayedMessageBody",
       "<p>This page displays the message body for ''{0}''.</p>"
+    );
+
+  // History/Bookmarks/Project/Change Manager/Status page introductions
+  public static final LocalizableString HISTORY_INTRODUCTION =
+    addConstant(
+      "historyIntroduction",
+      "Here are the pages visited since selecting the current provider. Click to navigate to associated page."
+    );
+
+  public static final LocalizableString BOOKMARKS_INTRODUCTION =
+    addConstant(
+      "bookmarksIntroduction",
+      "Here are the bookmarked pages. Notice that not all pages will work while viewing the present provider"
+    );
+
+  public static final LocalizableString CHANGE_MANAGER_INTRODUCTION =
+    addConstant(
+      "changeManagerIntroduction",
+      "Here is the set of pending changes"
+    );
+
+  public static final LocalizableString ADMIN_SERVER_STATUS_INTRODUCTION =
+    addConstant(
+      "adminServerStatusIntroduction",
+      "Connection Status for {0}"
+    );
+
+  public static final LocalizableString WDT_MODEL_STATUS_INTRODUCTION =
+    addConstant(
+      "wdtModelStatusIntroduction",
+      "Status for {0}"
+    );
+
+  public static final LocalizableString PROJECT_MANAGEMENT_STATUS_INTRODUCTION =
+    addConstant(
+      "projectManagementStatusIntroduction",
+      "The Project Management \"provider\" is a meta-provider with which you choose providers."
+        + " Providers are organized into groups called \"projects\""
     );
 
   // Returns all of the constants (used when the resource bundles are generated at build time)

@@ -1,0 +1,16 @@
+.InsetStyles_insetBase__1x4kupi0 > * {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+.InsetStyles_multiVariantStyles_variantGroup_listview__1x4kupi1 {
+  padding-top: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-list-item-padding-vertical);
+  padding-bottom: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-list-item-padding-vertical);
+  padding-inline-start: var(--oj-core-gutter-start, var(--oj-c-EXPERIMENTAL-DO-NOT-USE-list-item-padding-horizontal));
+  padding-inline-end: var(--oj-core-gutter-end, var(--oj-c-EXPERIMENTAL-DO-NOT-USE-list-item-padding-horizontal));
+}
+.InsetStyles_multiVariantStyles_variantGroup_toolbar__1x4kupi2 {
+  padding-top: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem);
+  padding-bottom: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem);
+}

@@ -1,0 +1,116 @@
+.AvatarVariants_multiVariantStyles_size_2xs__1h7waq80 {
+  --size__n2nsgo2: var(--sizes-2xs-size__n2nsgo12);
+  --initialsFontSize__n2nsgo4: var(--sizes-2xs-initialsFontSize__n2nsgo14);
+  --initialsFontWeight__n2nsgo5: var(--sizes-2xs-initialsFontWeight__n2nsgo15);
+  --iconFontSize__n2nsgo6: var(--sizes-2xs-iconFontSize__n2nsgo16);
+}
+.AvatarVariants_multiVariantStyles_size_xs__1h7waq81 {
+  --size__n2nsgo2: var(--sizes-xs-size__n2nsgo17);
+  --initialsFontSize__n2nsgo4: var(--sizes-xs-initialsFontSize__n2nsgo19);
+  --initialsFontWeight__n2nsgo5: var(--sizes-xs-initialsFontWeight__n2nsgo1a);
+  --iconFontSize__n2nsgo6: var(--sizes-xs-iconFontSize__n2nsgo1b);
+}
+.AvatarVariants_multiVariantStyles_size_sm__1h7waq82 {
+  --size__n2nsgo2: var(--sizes-sm-size__n2nsgo1c);
+  --initialsFontSize__n2nsgo4: var(--sizes-sm-initialsFontSize__n2nsgo1e);
+  --initialsFontWeight__n2nsgo5: var(--sizes-sm-initialsFontWeight__n2nsgo1f);
+  --iconFontSize__n2nsgo6: var(--sizes-sm-iconFontSize__n2nsgo1g);
+}
+.AvatarVariants_multiVariantStyles_size_md__1h7waq83 {
+  --size__n2nsgo2: var(--sizes-md-size__n2nsgo1h);
+  --initialsFontSize__n2nsgo4: var(--sizes-md-initialsFontSize__n2nsgo1j);
+  --initialsFontWeight__n2nsgo5: var(--sizes-md-initialsFontWeight__n2nsgo1k);
+  --iconFontSize__n2nsgo6: var(--sizes-md-iconFontSize__n2nsgo1l);
+}
+.AvatarVariants_multiVariantStyles_size_lg__1h7waq84 {
+  --size__n2nsgo2: var(--sizes-lg-size__n2nsgo1m);
+  --initialsFontSize__n2nsgo4: var(--sizes-lg-initialsFontSize__n2nsgo1o);
+  --initialsFontWeight__n2nsgo5: var(--sizes-lg-initialsFontWeight__n2nsgo1p);
+  --iconFontSize__n2nsgo6: var(--sizes-lg-iconFontSize__n2nsgo1q);
+}
+.AvatarVariants_multiVariantStyles_size_xl__1h7waq85 {
+  --size__n2nsgo2: var(--sizes-xl-size__n2nsgo1r);
+  --initialsFontSize__n2nsgo4: var(--sizes-xl-initialsFontSize__n2nsgo1t);
+  --initialsFontWeight__n2nsgo5: var(--sizes-xl-initialsFontWeight__n2nsgo1u);
+  --iconFontSize__n2nsgo6: var(--sizes-xl-iconFontSize__n2nsgo1v);
+}
+.AvatarVariants_multiVariantStyles_size_2xl__1h7waq86 {
+  --size__n2nsgo2: var(--sizes-2xl-size__n2nsgo1w);
+  --initialsFontSize__n2nsgo4: var(--sizes-2xl-initialsFontSize__n2nsgo1y);
+  --initialsFontWeight__n2nsgo5: var(--sizes-2xl-initialsFontWeight__n2nsgo1z);
+  --iconFontSize__n2nsgo6: var(--sizes-2xl-iconFontSize__n2nsgo20);
+}
+.AvatarVariants_multiVariantStyles_background_neutral__1h7waq87 {
+  --bgColor__n2nsgo0: var(--colors-neutral-bgColor__n2nsgo8);
+  --pattern__n2nsgo7: var(--colors-neutral-pattern__n2nsgo9);
+  --textColor__n2nsgo1: var(--colors-neutral-textColor__n2nsgoa);
+}
+.AvatarVariants_multiVariantStyles_background_orange__1h7waq88 {
+  --bgColor__n2nsgo0: var(--colors-orange-bgColor__n2nsgob);
+  --pattern__n2nsgo7: var(--colors-orange-pattern__n2nsgoc);
+  --textColor__n2nsgo1: var(--colors-orange-textColor__n2nsgod);
+}
+.AvatarVariants_multiVariantStyles_background_green__1h7waq89 {
+  --bgColor__n2nsgo0: var(--colors-green-bgColor__n2nsgoe);
+  --pattern__n2nsgo7: var(--colors-green-pattern__n2nsgof);
+  --textColor__n2nsgo1: var(--colors-green-textColor__n2nsgog);
+}
+.AvatarVariants_multiVariantStyles_background_teal__1h7waq8a {
+  --bgColor__n2nsgo0: var(--colors-teal-bgColor__n2nsgoh);
+  --pattern__n2nsgo7: var(--colors-teal-pattern__n2nsgoi);
+  --textColor__n2nsgo1: var(--colors-teal-textColor__n2nsgoj);
+}
+.AvatarVariants_multiVariantStyles_background_blue__1h7waq8b {
+  --bgColor__n2nsgo0: var(--colors-blue-bgColor__n2nsgok);
+  --pattern__n2nsgo7: var(--colors-blue-pattern__n2nsgol);
+  --textColor__n2nsgo1: var(--colors-blue-textColor__n2nsgom);
+}
+.AvatarVariants_multiVariantStyles_background_slate__1h7waq8c {
+  --bgColor__n2nsgo0: var(--colors-slate-bgColor__n2nsgon);
+  --pattern__n2nsgo7: var(--colors-slate-pattern__n2nsgoo);
+  --textColor__n2nsgo1: var(--colors-slate-textColor__n2nsgop);
+}
+.AvatarVariants_multiVariantStyles_background_pink__1h7waq8d {
+  --bgColor__n2nsgo0: var(--colors-pink-bgColor__n2nsgoq);
+  --pattern__n2nsgo7: var(--colors-pink-pattern__n2nsgor);
+  --textColor__n2nsgo1: var(--colors-pink-textColor__n2nsgos);
+}
+.AvatarVariants_multiVariantStyles_background_purple__1h7waq8e {
+  --bgColor__n2nsgo0: var(--colors-purple-bgColor__n2nsgot);
+  --pattern__n2nsgo7: var(--colors-purple-pattern__n2nsgou);
+  --textColor__n2nsgo1: var(--colors-purple-textColor__n2nsgov);
+}
+.AvatarVariants_multiVariantStyles_background_lilac__1h7waq8f {
+  --bgColor__n2nsgo0: var(--colors-lilac-bgColor__n2nsgow);
+  --pattern__n2nsgo7: var(--colors-lilac-pattern__n2nsgox);
+  --textColor__n2nsgo1: var(--colors-lilac-textColor__n2nsgoy);
+}
+.AvatarVariants_multiVariantStyles_background_gray__1h7waq8g {
+  --bgColor__n2nsgo0: var(--colors-gray-bgColor__n2nsgoz);
+  --pattern__n2nsgo7: var(--colors-gray-pattern__n2nsgo10);
+  --textColor__n2nsgo1: var(--colors-gray-textColor__n2nsgo11);
+}
+.AvatarVariants_multiVariantStyles_shape_circle__1h7waq8h {
+  --borderRadius__n2nsgo3: var(--shapes-circle-borderRadius__n2nsgo21);
+}
+.AvatarVariants_multiVariantStyles_compound_0__1h7waq8j {
+  --borderRadius__n2nsgo3: var(--sizes-2xs-borderRadius__n2nsgo13);
+}
+.AvatarVariants_multiVariantStyles_compound_1__1h7waq8k {
+  --borderRadius__n2nsgo3: var(--sizes-xs-borderRadius__n2nsgo18);
+}
+.AvatarVariants_multiVariantStyles_compound_2__1h7waq8l {
+  --borderRadius__n2nsgo3: var(--sizes-sm-borderRadius__n2nsgo1d);
+}
+.AvatarVariants_multiVariantStyles_compound_3__1h7waq8m {
+  --borderRadius__n2nsgo3: var(--sizes-md-borderRadius__n2nsgo1i);
+}
+.AvatarVariants_multiVariantStyles_compound_4__1h7waq8n {
+  --borderRadius__n2nsgo3: var(--sizes-lg-borderRadius__n2nsgo1n);
+}
+.AvatarVariants_multiVariantStyles_compound_5__1h7waq8o {
+  --borderRadius__n2nsgo3: var(--sizes-xl-borderRadius__n2nsgo1s);
+}
+.AvatarVariants_multiVariantStyles_compound_6__1h7waq8p {
+  --borderRadius__n2nsgo3: var(--sizes-2xl-borderRadius__n2nsgo1x);
+}

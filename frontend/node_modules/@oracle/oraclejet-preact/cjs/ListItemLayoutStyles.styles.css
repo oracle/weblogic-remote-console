@@ -1,0 +1,64 @@
+.ListItemLayoutStyles_selectorStyles__1b15h5i0 {
+  align-self: center;
+  margin: calc(-3.5 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem)) calc(-2.5 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+}
+.ListItemLayoutStyles_optInSelectorStyles__1b15h5i1 {
+  margin: calc(-1.5 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem)) calc(-2.5 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+}
+.ListItemLayoutStyles_centerVerticalStyles__1b15h5i2 {
+  align-self: center;
+  min-width: 0;
+}
+.ListItemLayoutStyles_topRowStyles__1b15h5i3 {
+  vertical-align: bottom;
+}
+.ListItemLayoutStyles_topAlignStyles__1b15h5i4 {
+  align-self: top;
+  height: -moz-min-content;
+  height: min-content;
+}
+.ListItemLayoutStyles_leftPaddingStyles__1b15h5i5 {
+  padding-inline-start: calc(4 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+}
+.ListItemLayoutStyles_optInRightPaddingStyles__1b15h5i6 {
+  padding-inline-end: calc(4 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+}
+.ListItemLayoutStyles_optInTopPaddingStyles__1b15h5i7 {
+  padding-block-start: calc(4 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+}
+.ListItemLayoutStyles_actionStyles__1b15h5i8 {
+  padding-inline-start: calc(4 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  margin-top: calc(-1 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-list-item-padding-vertical));
+  margin-bottom: calc(-1 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-list-item-padding-vertical));
+}
+.ListItemLayoutStyles_flexColumnStyles__1b15h5i9 {
+  display: flex;
+  flex-direction: column;
+}
+.ListItemLayoutStyles_flexRowStyles__1b15h5ia {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-self: center;
+}
+.ListItemLayoutStyles_endJustifyStyles__1b15h5ib {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+.ListItemLayoutStyles_optInExtraStyles__1b15h5ic {
+  height: -moz-fit-content;
+  height: fit-content;
+}
+.ListItemLayoutStyles_rowAlignStyles__1b15h5id {
+  align-self: end;
+}
+.ListItemLayoutStyles_displayFlexStyle__1b15h5ie {
+  display: flex;
+}
+.ListItemLayoutStyles_childrenStyles__1b15h5if {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}

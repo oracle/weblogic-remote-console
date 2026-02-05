@@ -1,0 +1,187 @@
+[
+  {
+    "id": "oj-c.SelectionCard",
+    "name": "SelectionCard",
+    "memberof": "oj-c",
+    "kind": "class",
+    "meta": {
+      "filename": "selection-card.tsx",
+      "path": "web/components/oj-c/selection-card"
+    },
+    "ojcomponent": true,
+    "isvcomponent": true,
+    "since": "16.0.0",
+    "longname": "oj-c.SelectionCard",
+    "pack": "oj-c",
+    "classdesc": "<h3 id=\"SelectionCardOverview-section\">\n  JET Selection\n  <a class=\"bookmarkable-link\" title=\"Bookmarkable Link\" href=\"#SelectionCardOverview-section\"></a>\n</h3>\n<p>Description: Themeable, WAI-ARIA-compliant element that represents a card.</p>\n<p>Selection Card provides a styled rectangular area for use in collections.\n\n\n<pre class=\"prettyprint\">\n<code>\n&lt;oj-c-selection-card\" selected=\"[[isSelected]]\">\n  Sample Text\n&lt;/oj-c-selection-card>\n\n</code></pre>\n\n<h3 id=\"diff-section\">\n  Differences between Cards in JET\n  <a class=\"bookmarkable-link\" title=\"Bookmarkable Link\" href=\"#diff-section\"></a>\n</h3>\n\n<p>\nThere are several different options for creating cards in JET applications.\n</p>\n<ul>\n<li><strong>oj-c-action-card:</strong> ActionCard fires action events and is supported for use stand alone or in oj-c-card-view. For accessibility reasons nothing interactive (for example links or buttons) can be put in an action card.</li>\n<li><strong>oj-c-selection-card:</strong> SelectionCard is supported for use in oj-c-card-view, with single or multiple selection.</li>\n<li><strong>oj-panel CSS class:</strong> For simple cases with no associated action or selection. Panel is supported for use in standalone or in oj-c-card-view.</li>\n</ul>",
+    "scope": "static",
+    "tagWithoutBrackets": "oj-c-selection-card",
+    "tagWithBrackets": "<oj-c-selection-card>",
+    "domInterface": "CSelectionCardElement",
+    "ojPageTitle": "&lt;oj-c-selection-card>",
+    "camelCaseName": "SelectionCard",
+    "ojPageTitlePrefix": "Element: ",
+    "ojtsvcomponent": true,
+    "tstype": {
+      "target": "Type",
+      "value": "interface CSelectionCardElement extends JetElement<SelectionCardElementSettableProperties>"
+    },
+    "ojsignature": [
+      {
+        "target": "Type",
+        "value": "interface CSelectionCardElement extends JetElement<SelectionCardElementSettableProperties>"
+      }
+    ],
+    "tsdeprecated": [
+      {
+        "type": "production",
+        "since": "19.0.0"
+      }
+    ],
+    "ojmodule": "selection-card"
+  },
+  {
+    "id": "oj-c.SelectionCard#selected",
+    "name": "selected",
+    "memberof": "oj-c.SelectionCard",
+    "meta": {
+      "filename": "selection-card.tsx",
+      "path": "web/components/oj-c/selection-card"
+    },
+    "kind": "member",
+    "longname": "oj-c.SelectionCard#selected",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "boolean"
+      ]
+    },
+    "optional": true,
+    "description": "Boolean that marks this card as selected.",
+    "ojhidden": true
+  },
+  {
+    "id": "oj-c.SelectionCard#setProperty",
+    "name": "setProperty",
+    "memberof": "oj-c.SelectionCard",
+    "meta": {
+      "filename": "selection-card.tsx",
+      "path": "web/components/oj-c/selection-card"
+    },
+    "kind": "function",
+    "longname": "oj-c.SelectionCard#setProperty",
+    "scope": "instance",
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "void"
+          ]
+        }
+      }
+    ],
+    "description": "Sets a property or a single subproperty for complex properties and notifies the component of the change, triggering a corresponding event.",
+    "params": [
+      {
+        "name": "property",
+        "description": "The property name to set. Supports dot notation for subproperty access.",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "value",
+        "description": "The new value to set the property to.",
+        "type": {
+          "names": [
+            "any"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.SelectionCard#getProperty",
+    "name": "getProperty",
+    "memberof": "oj-c.SelectionCard",
+    "meta": {
+      "filename": "selection-card.tsx",
+      "path": "web/components/oj-c/selection-card"
+    },
+    "kind": "function",
+    "longname": "oj-c.SelectionCard#getProperty",
+    "scope": "instance",
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "any"
+          ]
+        }
+      }
+    ],
+    "description": "Retrieves the value of a property or a subproperty.",
+    "params": [
+      {
+        "name": "property",
+        "description": "The property name to get. Supports dot notation for subproperty access.",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.SelectionCard#setProperties",
+    "name": "setProperties",
+    "memberof": "oj-c.SelectionCard",
+    "meta": {
+      "filename": "selection-card.tsx",
+      "path": "web/components/oj-c/selection-card"
+    },
+    "kind": "function",
+    "longname": "oj-c.SelectionCard#setProperties",
+    "scope": "instance",
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "void"
+          ]
+        }
+      }
+    ],
+    "description": "Performs a batch set of properties.",
+    "params": [
+      {
+        "name": "properties",
+        "description": "An object containing the property and value pairs to set.",
+        "type": {
+          "names": [
+            "object"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.SelectionCard#Default",
+    "name": "Default",
+    "memberof": "oj-c.SelectionCard",
+    "meta": {
+      "filename": "selection-card.tsx",
+      "path": "web/components/oj-c/selection-card"
+    },
+    "kind": "member",
+    "longname": "oj-c.SelectionCard#Default",
+    "scope": "instance",
+    "description": "The default slot is the content of the card.",
+    "ojhidden": true,
+    "ojchild": true,
+    "ojslot": false
+  }
+]

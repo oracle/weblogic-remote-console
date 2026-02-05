@@ -1,0 +1,13 @@
+oj-c-tag-cloud:not(.oj-complete) {
+  visibility: hidden;
+}
+
+oj-c-tag-cloud[hidden] {
+  display: none;
+}
+
+oj-c-tag-cloud {
+  display: block;
+  width: 100%;
+  height: 28rem;
+}

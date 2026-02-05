@@ -1,0 +1,2 @@
+define(['exports', '../colorUtils-b9dc1bd1', '../_curry1-df649359'], (function(e,o,t){"use strict";e.colorMap=o.colorMap,e.getContrast=o.getContrast,e.getContrastingTextColor=o.getContrastingTextColor,e.getLuminance=o.getLuminance,e.getNamedColor=o.getNamedColor,e.hexToRGBA=o.hexToRGBA,e.isRGB=o.isRGB,e.isRGBA=o.isRGBA,e.parseToRGBA=o.parseToRGBA,e.rgb=o.rgb,e.rgbaToHex=o.rgbaToHex,e.toRGBA=o.toRGBA,Object.defineProperty(e,"__esModule",{value:!0})}));
+//# sourceMappingURL=PRIVATE_colorUtils.js.map

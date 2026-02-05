@@ -1,0 +1,1 @@
+export { TruncatingBadge } from './TruncatingBadge';

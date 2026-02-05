@@ -1,0 +1,20 @@
+.CheckboxVariants_multiVariantStyles_disabled_isDisabled__yta2nm2 {
+  color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-disabled);
+}
+.CheckboxVariants_multiVariantStyles_disabled_notDisabled__yta2nm3 {
+  color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-primary);
+}
+@supports selector(:has(*)) {
+  .CheckboxVariants_multiVariantStyles_focused_isFocused__yta2nm4:has(input:focus-visible) {
+    outline-style: dotted;
+    outline-width: var(--outlineWidth__1qyga5a0);
+    outline-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-border-keyboard-focus);
+  }
+}
+@supports not selector(:has(*)) {
+  .CheckboxVariants_multiVariantStyles_focused_isFocused__yta2nm4 {
+    outline-style: dotted;
+    outline-width: var(--outlineWidth__1qyga5a0);
+    outline-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-border-keyboard-focus);
+  }
+}

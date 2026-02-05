@@ -1,0 +1,2412 @@
+[
+  {
+    "id": "oj-c.Table",
+    "name": "Table",
+    "memberof": "oj-c",
+    "kind": "class",
+    "meta": {
+      "filename": "table.tsx",
+      "path": "web/components/oj-c/table"
+    },
+    "ojcomponent": true,
+    "isvcomponent": true,
+    "since": "17.1.0",
+    "longname": "oj-c.Table",
+    "pack": "oj-c",
+    "classdesc": "<h3 id=\"tableOverview-section\">\n  JET Table Component\n  <a class=\"bookmarkable-link\" title=\"Bookmarkable Link\" href=\"#tableOverview-section\"></a>\n</h3>\n\n<p>Description: The Table component presents data in a tabular format with highly interactive features.\n\n<h3 id=\"data-section\">\n  Data\n  <a class=\"bookmarkable-link\" title=\"Bookmarkable Link\" href=\"#data-section\"></a>\n</h3>\n<p>The JET Table gets its data from a DataProvider.</p>\n\n<p>Example of data provider content</p>\n<pre class=\"prettyprint\"><code>&lt;oj-c-table data=\"[[dataProvider]]\">&lt;/oj-c-table></code></pre>\n\n\n<h3 id=\"coming-features-section\">\n  Coming Features\n  <a class=\"bookmarkable-link\" title=\"Bookmarkable Link\" href=\"#coming-features-section\"></a>\n</h3>\n\n<p>These features will be available in forthcoming versions</p>\n<ul>\n    <li>Sorting</li>\n    <li>Drag and Drop</li>\n    <li>Editing</li>\n    <li>Add Row</li>\n    <li>Page Scrolling</li>\n    <li>First Selected Row</li>\n    <li>Sticky Columns</li>\n    <li>Edge To Edge Padding</li>\n    <li>Tree Data</li>\n    <li>Context menu</li>\n    <li>Per Row Selectable</li>\n    <li>Group By Table</li>\n</ul>\n\n<h3 id=\"keyboard-section\">\n  Keyboard End User Information\n  <a class=\"bookmarkable-link\" title=\"Bookmarkable Link\" href=\"#keyboard-section\"></a>\n</h3>\n\n<table class=\"keyboard-table\">\n  <thead>\n    <tr>\n      <th>Target</th>\n      <th>Key</th>\n      <th>Action</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <td rowspan=\"18\" style=\"vertical-align:top;\">Data Cell</td>\n      <td>Tab</td>\n      <td>Move browser focus to next tab stop on the page.</td>\n    </tr>\n    <tr>\n      <td>Shift + Tab</td>\n      <td>Move browser focus to previous tab stop on the page.</td>\n    </tr>\n    <tr>\n      <td>F2</td>\n      <td>If there is focusable content in the current cell, move browser focus to the first focusable element in the current cell. No action otherwise.</td>\n    </tr>\n    <tr>\n      <td>Esc</td>\n      <td>No action.</td>\n    </tr>\n    <tr>\n      <td>Up Arrow</td>\n      <td>Focus the cell above the current cell.</td>\n    </tr>\n    <tr>\n      <td>Down Arrow</td>\n      <td>Focus the cell below the current cell.</td>\n    </tr>\n    <tr>\n      <td>Left Arrow</td>\n      <td>Focus the cell to the left of the current cell.</td>\n    </tr>\n    <tr>\n      <td>Right Arrow</td>\n      <td>Focus the cell to the right of the current cell.</td>\n    </tr>\n    <tr>\n      <td>Shift + Up Arrow</td>\n      <td>If multiple row selection is enabled, begin or extend a range selection to include the next row in the given direction without changing the currently focused cell. If multipleToggle row selection is enabled, begin or extend a range selection to include the next row in the given direction while also changing the currently focused cell. No action otherwise.</td>\n    </tr>\n    <tr>\n      <td>Shift + Down Arrow</td>\n      <td>If multiple row selection is enabled, begin or extend a range selection to include the next row in the given direction without changing the currently focused cell. If multipleToggle row selection is enabled, begin or extend a range selection to include the next row in the given direction while also changing the currently focused cell. No action otherwise.</td>\n    </tr>\n    <tr>\n      <td>Space</td>\n      <td>If row selection is enabled, toggle the selection state of the current row. Additionally, if row actions are enabled, trigger an ojRowAction event. No action otherwise.</td>\n    </tr>\n    <tr>\n      <td>Enter</td>\n      <td>If there is focusable content in the current cell, move browser focus to the first focusable element in the current cell. Additionally, if row actions are enabled, trigger an ojRowAction event. No action otherwise.</td>\n    </tr>\n    <tr>\n      <td>Page Up</td>\n      <td>Focus the corresponding cell in the first visible data row and scroll to make that data row the last visible data row of the table if possible.</td>\n    </tr>\n    <tr>\n      <td>Page Down</td>\n      <td>Focus the corresponding cell in the last visible data row and scroll to make that data row the first visible data row of the table if possible.</td>\n    </tr>\n    <tr>\n      <td>Home</td>\n      <td>Focus the first cell in the current row.</td>\n    </tr>\n    <tr>\n      <td>End</td>\n      <td>Focus the last cell in the current row.</td>\n    </tr>\n    <tr>\n      <td>Ctrl/Cmd + Home</td>\n      <td>Focus the first cell in the first row.</td>\n    </tr>\n    <tr>\n      <td>Ctrl/Cmd + End</td>\n      <td>Focus the last cell in the last available row.</td>\n    </tr>\n\n    <tr>\n      <td rowspan=\"18\" style=\"vertical-align:top;\">Header Cell</td>\n      <td>Tab</td>\n      <td>Move browser focus to next tab stop on the page.</td>\n    </tr>\n    <tr>\n      <td>Shift + Tab</td>\n      <td>Move browser focus to previous tab stop on the page.</td>\n    </tr>\n    <tr>\n      <td>F2</td>\n      <td>If there is focusable content in the current header cell, move browser focus to the first focusable element in the current header cell. No action otherwise.</td>\n    </tr>\n    <tr>\n      <td>Esc</td>\n     <td>No action.</td>\n    </tr>\n    <tr>\n      <td>Up Arrow</td>\n      <td>No action.</td>\n    </tr>\n    <tr>\n      <td>Down Arrow</td>\n      <td>Focus the cell below the current cell.</td>\n    </tr>\n    <tr>\n      <td>Left Arrow</td>\n      <td>Focus the header cell to the left of the current cell.</td>\n    </tr>\n    <tr>\n      <td>Right Arrow</td>\n      <td>Focus the header cell to the right of the current cell.</td>\n    </tr>\n    <tr>\n      <td>Shift + Left Arrow</td>\n      <td>If multiple column selection is enabled, begin or extend a range selection to include the next column in the given direction without changing the currently focused header cell. No action otherwise.</td>\n    </tr>\n    <tr>\n      <td>Shift + Right Arrow</td>\n      <td>If multiple column selection is enabled, begin or extend a range selection to include the next column in the given direction without changing the currently focused header cell. No action otherwise.</td>\n    </tr>\n    <tr>\n      <td>Space</td>\n      <td>If column selection is enabled and the current column is selectable, toggle the selection state of the current column. No action otherwise.</td>\n    </tr>\n    <tr>\n      <td>Enter</td>\n      <td>If there is focusable content in the current header cell, move browser focus to the first focusable element in the current header cell. No action otherwise.</td>\n    </tr>\n    <tr>\n      <td>Page Up</td>\n      <td>Focus the corresponding cell in the first visible data row and scroll to make that data row the last visible data row of the table if possible.</td>\n    </tr>\n    <tr>\n      <td>Page Down</td>\n      <td>Focus the corresponding cell in the last visible data row and scroll to make that data row the first visible data row of the table if possible.</td>\n    </tr>\n    <tr>\n      <td>Home</td>\n      <td>Focus the first header cell.</td>\n    </tr>\n    <tr>\n      <td>End</td>\n      <td>Focus the last header cell.</td>\n    </tr>\n    <tr>\n      <td>Ctrl/Cmd + Home</td>\n      <td>Focus the first cell in the first row.</td>\n    </tr>\n    <tr>\n      <td>Ctrl/Cmd + End</td>\n      <td>Focus the last cell in the last available row.</td>\n    </tr>\n\n\n    <tr>\n      <td rowspan=\"18\" style=\"vertical-align:top;\">Footer Cell</td>\n      <td>Tab</td>\n      <td>Move browser focus to next tab stop on the page.</td>\n    </tr>\n    <tr>\n      <td>Shift + Tab</td>\n      <td>Move browser focus to previous tab stop on the page.</td>\n    </tr>\n    <tr>\n      <td>F2</td>\n      <td>If there is focusable content in the current footer cell, move browser focus to the first focusable element in the current footer cell. No action otherwise.</td>\n    </tr>\n    <tr>\n      <td>Esc</td>\n      <td>No action.</td>\n    </tr>\n    <tr>\n      <td>Up Arrow</td>\n      <td>Focus the cell above the current cell.</td>\n    </tr>\n    <tr>\n      <td>Down Arrow</td>\n      <td>No action.</td>\n    </tr>\n    <tr>\n      <td>Left Arrow</td>\n      <td>Focus the footer cell to the left of the current cell.</td>\n    </tr>\n    <tr>\n      <td>Right Arrow</td>\n      <td>Focus the footer cell to the right of the current cell.</td>\n    </tr>\n    <tr>\n      <td>Shift + Left Arrow</td>\n      <td>If multiple column selection is enabled, begin or extend a range selection to include the next column in the given direction without changing the currently focused footer cell. No action otherwise.</td>\n    </tr>\n    <tr>\n      <td>Shift + Right Arrow</td>\n      <td>If multiple column selection is enabled, begin or extend a range selection to include the next column in the given direction without changing the currently focused footer cell. No action otherwise.</td>\n    </tr>\n    <tr>\n      <td>Space</td>\n      <td>If column selection is enabled and the current column is selectable, toggle the selection state of the current column. No action otherwise.</td>\n    </tr>\n   <tr>\n      <td>Enter</td>\n      <td>If there is focusable content in the current footer cell, move browser focus to the first focusable element in the current footer cell. No action otherwise.</td>\n    </tr>\n    <tr>\n      <td>Page Up</td>\n      <td>Focus the corresponding cell in the first visible data row and scroll to make that data row the last visible data row of the table if possible.</td>\n    </tr>\n    <tr>\n      <td>Page Down</td>\n      <td>Focus the corresponding cell in the last visible data row and scroll to make that data row the first visible data row of the table if possible.</td>\n    </tr>\n    <tr>\n      <td>Home</td>\n      <td>Focus the first footer cell.</td>\n    </tr>\n    <tr>\n      <td>End</td>\n      <td>Focus the last footer cell.</td>\n    </tr>\n    <tr>\n      <td>Ctrl/Cmd + Home</td>\n      <td>Focus the first cell in the first row.</td>\n    </tr>\n    <tr>\n      <td>Ctrl/Cmd + End</td>\n      <td>Focus the last cell in the last available row.</td>\n    </tr>\n\n\n    <tr>\n      <td rowspan=\"10\" style=\"vertical-align:top;\">No Data Cell</td>\n      <td>Tab</td>\n      <td>Move browser focus to next tab stop on the page.</td>\n    </tr>\n    <tr>\n      <td>Shift + Tab</td>\n      <td>Move browser focus to previous tab stop on the page.</td>\n    </tr>\n    <tr>\n      <td>F2</td>\n      <td>If there is focusable content in the no data cell, move browser focus to the first focusable element in the no data cell. No action otherwise.</td>\n    </tr>\n    <tr>\n      <td>Esc</td>\n      <td>No action.</td>\n    </tr>\n    <tr>\n      <td>Up Arrow</td>\n      <td>Focus the first header cell.</td>\n    </tr>\n    <tr>\n      <td>Down Arrow</td>\n      <td>If footer cells are rendered, focus the first footer cell. No action otherwise.</td>\n    </tr>\n    <tr>\n      <td>Left Arrow</td>\n      <td>No action.</td>\n    </tr>\n    <tr>\n      <td>Right Arrow</td>\n      <td>No action.</td>\n    </tr>\n    <tr>\n      <td>Space</td>\n      <td>No action.</td>\n    </tr>\n    <tr>\n      <td>Enter</td>\n      <td>If there is focusable content in the no data cell, move browser focus to the first focusable element in the no data cell. No action otherwise.</td>\n    </tr>\n\n\n    <tr>\n      <td rowspan=\"18\" style=\"vertical-align:top;\">Focused Cell Content</td>\n      <td>Tab</td>\n      <td>Move browser focus to the next focusable element in the table. If that element is already focused, move browser focus to the first focusable element in the table.</td>\n    </tr>\n    <tr>\n      <td>Shift + Tab</td>\n      <td>Move browser focus to the previous focusable element in the table. If that element is already focused, move browser focus to the last focusable element in the table.</td>\n    </tr>\n    <tr>\n      <td>F2</td>\n      <td>Restore focus to the current cell.</td>\n    </tr>\n    <tr>\n      <td>Esc</td>\n      <td>Restore focus to the current cell.</td>\n    </tr>\n    <tr>\n      <td>Space</td>\n      <td>No action.</td>\n    </tr>\n    <tr>\n      <td>Enter</td>\n      <td>No action.</td>\n    </tr>\n\n  </tbody>\n</table>\n\n<h3 id=\"touch-section\">\n  Touch End User Information\n  <a class=\"bookmarkable-link\" title=\"Bookmarkable Link\" href=\"#touch-section\"></a>\n</h3>\n\n<table class=\"keyboard-table\">\n  <thead>\n    <tr>\n      <th>Target</th>\n      <th>Gesture</th>\n      <th>Action</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <td rowspan=\"1\" style=\"vertical-align:top;\">\n        Data Cell\n      </td>\n      <td>Tap</td>\n      <td>Focus the data cell. Additionally, if row selection is enabled and the current row is selectable, toggle the selection state of the current row. Additionally, if row actions are enabled, trigger an ojRowAction event.</td>\n    </tr>\n    <tr>\n      <td rowspan=\"1\" style=\"vertical-align:top;\">\n        Header Cell\n      </td>\n      <td>Tap</td>\n      <td>Focus the header cell. Additionally, if column selection is enabled and the current column is selectable, toggle the selection state of the current column.</td>\n    </tr>\n    <tr>\n      <td rowspan=\"1\" style=\"vertical-align:top;\">\n        Footer Cell\n      </td>\n      <td>Tap</td>\n      <td>Focus the footer cell. Additionally, if column selection is enabled and the current column is selectable, toggle the selection state of the current column.</td>\n    </tr>\n    <tr>\n      <td rowspan=\"1\" style=\"vertical-align:top;\">\n        No Data Cell\n      </td>\n      <td>Tap</td>\n      <td>Focus the no data cell.</td>\n    </tr>\n  </tbody>\n</table>\n\n\n<h3 id=\"a11y-section\">\n  Accessibility\n  <a class=\"bookmarkable-link\" title=\"Bookmarkable Link\" href=\"#a11y-section\"></a>\n</h3>\n\n<p>The Table implements the grid role for accessibility. This enables the Table to be compatible with the special 'table\nreading' commands that most assistive technologies provide in addition to the standard keyboard interactions described\nin the Keyboard End User Information section above.</p>\n\n<p>An application is required to include contextual information to make the Table accessible for assistive technologies\nby providing one or more the following properties as appropriate:</p>\n\n<ul>\n  <li>aria-labelledby</li>\n  <li>aria-label</li>\n</ul>\n\n<p>Additionally, an application should specify at least 1 accessible row header per row by providing a value for the\n<code>row.accessible-row-header</code> attribute. The information in the cell(s) specified will be used by assistive technologies\nto convey basic contextual information for the focused row. For example, if a user is arrowing up or down in an 'Amount Due'\ncolumn, having something like '$500' read out does not provide any helpful information as to who or what that amount corresponds\nto. If an 'Account Holder' column is specified as an accessible row header, then something like 'Larry Ellison, $500' would be read\nout instead. Providing this additional row context is essential for creating accessible tables.</p>\n\n<h4>Managing Tab Stops</h4>\n<p>The Table does not manipulate the <code>tabindex</code> attribute of cell contents. For oj-c components specified\nas children of the Table, <code>tabindex</code> management will happen automatically. Otherwise, applications must\nspecifically set the <code>tabindex</code> of tabbable child elements based on the <code>isTabbable</code> property\nof the template context.</p>\n<p>However, there may be cases where applications do not have access to the tabbable elements themselves. For\nexample, a third-party component that does not support JET's new <code>tabindex</code> management. In that case,\napplications can specify the <code>data-oj-manage-tabs</code> attribute on any tabbable elements (or any one of\ntheir ancestors) to ensure the Table remains a single tab stop for accessibility purposes.</p>\n\n<h4>Custom Colors</h4>\n<p>Using colors, including background and text colors, is not accessible if it is the only way information is conveyed.\nLow vision users may not be able to see the different colors, and in high contrast mode the colors are removed.\nThe Redwood approved way to show status is to use a badge.</p>\n\n<h3 id=\"background-section\">\n  Background Color\n  <a class=\"bookmarkable-link\" title=\"Bookmarkable Link\" href=\"#background-section\"></a>\n</h3>\n\n<p>The Table's background color is managed via the --oj-current-bg-color CSS variable. If a different\nbackground color is desired, one can be set by adding a background color class on the Table. <b>The Table does\nnot support background colors with transparencies.</b> See the 'Background Color' cookbook demo for examples.\n</p>\n\n<h3 id=\"data-attributes-section\">\n  Custom Data Attributes\n  <a class=\"bookmarkable-link\" title=\"Bookmarkable Link\" href=\"#data-attributes-section\"></a>\n</h3>\n\n<p>Table supports the following custom data attributes.\n<table class=\"keyboard-table\">\n  <thead>\n    <tr>\n      <th>Name</th>\n      <th>Description</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <td><kbd>data-oj-as</kbd></td>\n      <td><p>Provides an alias for a specific template instance and has the same subproperties as the $current variable.</p>\n        <pre class=\"prettyprint\"><code>&lt;oj-c-table id=\"table\">\n  &lt;template slot=\"cellTemplate\" data-oj-as=\"cell\">\n  &lt;/template>\n&lt;/oj-c-table></code></pre>\n      </td>\n    </tr>\n    <tr>\n      <td><kbd>data-oj-clickthrough</kbd></td>\n      <td><p>Specify on any element inside a cell where you want to control whether the Table should perform actions triggered\n        by a click event originating from the element or one of its descendants.</p>\n        <p>For example, if you specify this attribute with a value of \"disabled\" on a button inside a cell, the Table\n        will not select the row or trigger an action event when a user clicks on the button.</p>\n        <pre class=\"prettyprint\"><code>&lt;oj-c-table id=\"table\">\n  &lt;template slot=\"cellTemplate\">\n    &lt;oj-c-button data-oj-clickthrough=\"disabled\">&lt;/oj-c-button>\n  &lt;/template>\n&lt;/oj-c-table></code></pre>\n      </td>\n    </tr>\n    <tr>\n      <td><kbd>data-oj-manage-tabs</kbd></td>\n      <td><p>The Table does not manipulate the <code>tabindex</code> attribute of cell contents. For oj-c elements\n        specified as children of the Table, <code>tabindex</code> management will happen automatically. Otherwise,\n        applications must specifically set the <code>tabindex</code> of tabbable child elements based on the\n        <code>isTabbable</code> property of the template context.</p>\n        <p>However, there may be cases where applications do not have access to the tabbable elements themselves. For\n        example, a third-party component that does not support JET's new <code>tabindex</code> management. In that case,\n        applications can specify the <code>data-oj-manage-tabs</code> attribute on any tabbable elements (or any one\n        of their ancestors) to ensure the Table remains a single tab stop for accessibility purposes.</p>\n        <pre class=\"prettyprint\"><code>&lt;oj-c-table>\n  &lt;template slot=\"cellTemplate1\" data-oj-as=\"cell\">\n    &lt;a href=\"#\" :tabindex=\"[[cell.isTabbable ? 0 : -1]]\">Link&lt;/a>\n  &lt;/template>\n  &lt;template slot=\"cellTemplate2\" data-oj-as=\"cell\">\n    &lt;some-tabbable-component data-oj-manage-tabs>&lt;/some-tabbable-component>\n  &lt;/template>\n&lt;/oj-c-table></code></pre>\n      </td>\n    </tr>\n  </tbody>\n</table>",
+    "scope": "static",
+    "tagWithoutBrackets": "oj-c-table",
+    "tagWithBrackets": "<oj-c-table>",
+    "domInterface": "CTableElement",
+    "ojPageTitle": "&lt;oj-c-table>",
+    "camelCaseName": "Table",
+    "ojPageTitlePrefix": "Element: ",
+    "ojtsvcomponent": true,
+    "tstype": {
+      "target": "Type",
+      "value": "interface CTableElement<K extends string | number,D,C extends string> extends JetElement<TableElementSettableProperties<K,D,C>>"
+    },
+    "ojsignature": [
+      {
+        "target": "Type",
+        "value": "interface CTableElement<K extends string | number,D,C extends string> extends JetElement<TableElementSettableProperties<K,D,C>>"
+      }
+    ],
+    "tsdeprecated": [
+      {
+        "type": "candidate",
+        "since": "17.1.0"
+      }
+    ],
+    "ojmodule": "table"
+  },
+  {
+    "id": "oj-c.Table#layout",
+    "name": "layout",
+    "memberof": "oj-c.Table",
+    "meta": {
+      "filename": "table.tsx",
+      "path": "web/components/oj-c/table"
+    },
+    "kind": "member",
+    "longname": "oj-c.Table#layout",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "\"fixed\"",
+        "\"contents\""
+      ]
+    },
+    "optional": true,
+    "description": "The column sizing method used for the Table's columns.",
+    "ojvalues": [
+      {
+        "name": "contents",
+        "description": "When specified, the initial column sizes are determined by the contents of the data. Does not require an overall width set on the Table. Can have performance issues when large numbers of columns and/or rows are initially rendered.",
+        "displayName": "Contents",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "fixed",
+        "description": "When specified, the initial column sizes are determined by column weights. Requires an overall width set on the Table (width='100%', width='200rem', etc.) Very performant when rendering large numbers of columns and/or rows.",
+        "displayName": "Fixed",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      }
+    ],
+    "defaultvalue": "\"contents\""
+  },
+  {
+    "id": "oj-c.Table#data",
+    "name": "data",
+    "memberof": "oj-c.Table",
+    "meta": {
+      "filename": "table.tsx",
+      "path": "web/components/oj-c/table"
+    },
+    "kind": "member",
+    "longname": "oj-c.Table#data",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "DataProvider"
+      ]
+    },
+    "optional": true,
+    "description": "The data provider for Table.",
+    "tstype": [
+      {
+        "target": "Type",
+        "value": "DataProvider<K, D>",
+        "jsdocOverride": true,
+        "module": {
+          "DataProvider": "ojdataprovider"
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.Table#columns",
+    "name": "columns",
+    "memberof": "oj-c.Table",
+    "meta": {
+      "filename": "table.tsx",
+      "path": "web/components/oj-c/table"
+    },
+    "kind": "member",
+    "longname": "oj-c.Table#columns",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "object"
+      ]
+    },
+    "optional": true,
+    "description": "The set of columns that can be displayed in the Table.\nIf no <code>columns-order</code> is specified, all columns specified will be displayed in\nthe order returned by <code>Object.keys(columns)</code>. Otherwise only the columns specified\nin the <code>columns-order</code> value will be displayed.",
+    "tstype": [
+      {
+        "target": "Type",
+        "value": "Record<C, oj-c.Table.Column<K, D>>",
+        "jsdocOverride": true
+      }
+    ]
+  },
+  {
+    "id": "oj-c.Table#row",
+    "name": "row",
+    "memberof": "oj-c.Table",
+    "meta": {
+      "filename": "table.tsx",
+      "path": "web/components/oj-c/table"
+    },
+    "kind": "member",
+    "longname": "oj-c.Table#row",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "object"
+      ]
+    },
+    "optional": true,
+    "description": "A subset of attributes for controlling certain behaviors on a per row basis.",
+    "tstype": [
+      {
+        "target": "Type",
+        "value": "{ accessibleRowHeader?: C | Array<C> | ((context: oj-c.Table.RowContext<K, D>) => C | Array<C>); }",
+        "jsdocOverride": true
+      }
+    ]
+  },
+  {
+    "id": "oj-c.Table#horizontalGridVisible",
+    "name": "horizontalGridVisible",
+    "memberof": "oj-c.Table",
+    "meta": {
+      "filename": "table.tsx",
+      "path": "web/components/oj-c/table"
+    },
+    "kind": "member",
+    "longname": "oj-c.Table#horizontalGridVisible",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "\"disabled\"",
+        "\"enabled\""
+      ]
+    },
+    "optional": true,
+    "description": "Controls the display of the Table's horizontal gridlines.",
+    "ojvalues": [
+      {
+        "name": "enabled",
+        "description": "Display horizontal gridlines",
+        "displayName": "Enabled",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "disabled",
+        "description": "Do not display horizontal gridlines",
+        "displayName": "Disabled",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      }
+    ],
+    "defaultvalue": "\"enabled\""
+  },
+  {
+    "id": "oj-c.Table#verticalGridVisible",
+    "name": "verticalGridVisible",
+    "memberof": "oj-c.Table",
+    "meta": {
+      "filename": "table.tsx",
+      "path": "web/components/oj-c/table"
+    },
+    "kind": "member",
+    "longname": "oj-c.Table#verticalGridVisible",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "\"disabled\"",
+        "\"enabled\""
+      ]
+    },
+    "optional": true,
+    "description": "Controls the display of the Table's vertical gridlines.",
+    "ojvalues": [
+      {
+        "name": "enabled",
+        "description": "Display vertical gridlines",
+        "displayName": "Enabled",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "disabled",
+        "description": "Do not display vertical gridlines",
+        "displayName": "Disabled",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      }
+    ],
+    "defaultvalue": "\"disabled\""
+  },
+  {
+    "id": "oj-c.Table#selected",
+    "name": "selected",
+    "memberof": "oj-c.Table",
+    "meta": {
+      "filename": "table.tsx",
+      "path": "web/components/oj-c/table"
+    },
+    "kind": "member",
+    "longname": "oj-c.Table#selected",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "object"
+      ]
+    },
+    "optional": true,
+    "ojwriteback": true,
+    "description": "The selected rows and/or columns.",
+    "tstype": [
+      {
+        "target": "Type",
+        "value": "{ column?: ImmutableKeySet<C>; row?: ImmutableKeySet<K>; }",
+        "jsdocOverride": true,
+        "module": {
+          "ImmutableKeySet": "ojkeyset"
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.Table#selectionMode",
+    "name": "selectionMode",
+    "memberof": "oj-c.Table",
+    "meta": {
+      "filename": "table.tsx",
+      "path": "web/components/oj-c/table"
+    },
+    "kind": "member",
+    "longname": "oj-c.Table#selectionMode",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "object"
+      ]
+    },
+    "optional": true,
+    "description": "Specifies whether row and/or column selection gestures are enabled on the Table, and the cardinality\nof each (single/multiple/multipleToggle/none). If <code>single</code>, <code>multiple</code>, or\n<code>multipleToggle</code> is specified, selection gestures will be enabled. Otherwise, selection\ngestures will be disabled. This attribute has no effect on the Table's selection styling as styling\nwill be applied to any rows and/or columns specified by the <code>selected</code> attribute regardless\nof the type of selection gestures enabled. Changing the value of this attribute will not affect the\nvalue of the <code>selected</code> attribute.",
+    "tstype": [
+      {
+        "target": "Type",
+        "value": "{ column?: 'none' | 'single' | 'multiple'; row?: 'none' | 'single' | 'multiple' | 'multipleToggle'; }",
+        "jsdocOverride": true
+      }
+    ]
+  },
+  {
+    "id": "oj-c.Table#selectionMode.column",
+    "name": "selectionMode.column",
+    "memberof": "oj-c.Table",
+    "meta": {
+      "filename": "table.tsx",
+      "path": "web/components/oj-c/table"
+    },
+    "kind": "member",
+    "longname": "oj-c.Table#selectionMode.column",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "\"none\"",
+        "\"multiple\"",
+        "\"single\""
+      ]
+    },
+    "optional": true,
+    "description": "Specifies whether column selection gestures are enabled on the Table.",
+    "ojvalues": [
+      {
+        "name": "none",
+        "description": "Column selection gestures are disabled.",
+        "displayName": "None",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "single",
+        "description": "A maximum of 1 column can be selected via user gestures.",
+        "displayName": "Single",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "multiple",
+        "description": "Any number of columns can be selected via user gestures.",
+        "displayName": "Multiple",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      }
+    ],
+    "defaultvalue": "\"none\""
+  },
+  {
+    "id": "oj-c.Table#selectionMode.row",
+    "name": "selectionMode.row",
+    "memberof": "oj-c.Table",
+    "meta": {
+      "filename": "table.tsx",
+      "path": "web/components/oj-c/table"
+    },
+    "kind": "member",
+    "longname": "oj-c.Table#selectionMode.row",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "\"none\"",
+        "\"multiple\"",
+        "\"single\"",
+        "\"multipleToggle\""
+      ]
+    },
+    "optional": true,
+    "description": "Specifies whether row selection gestures are enabled on the Table.",
+    "ojvalues": [
+      {
+        "name": "none",
+        "description": "Row selection gestures are disabled.",
+        "displayName": "None",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "single",
+        "description": "A maximum of 1 row can be selected via user gestures.",
+        "displayName": "Single",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "multiple",
+        "description": "Any number of rows can be selected via user gestures. Performing a selection gesture may affect the selection state of previously selected rows depending on render context as well as the use of modifier keys.",
+        "displayName": "Multiple",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "multipleToggle",
+        "description": "Any number of rows can be selected via user gestures. Performing a selection gesture will not affect the selection state of previously selected rows regardless of rendering context or the use of modifier keys.",
+        "displayName": "Multiple Toggle",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      }
+    ],
+    "defaultvalue": "\"none\""
+  },
+  {
+    "id": "oj-c.Table#selectAllControl",
+    "name": "selectAllControl",
+    "memberof": "oj-c.Table",
+    "meta": {
+      "filename": "table.tsx",
+      "path": "web/components/oj-c/table"
+    },
+    "kind": "member",
+    "longname": "oj-c.Table#selectAllControl",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "\"hidden\"",
+        "\"visible\""
+      ]
+    },
+    "optional": true,
+    "description": "Controls the display of the Table's select all control when multiple or multipleToggle row selection is enabled.",
+    "ojvalues": [
+      {
+        "name": "hidden",
+        "description": "Do not display the select all control",
+        "displayName": "Hidden",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "visible",
+        "description": "Display the select all control",
+        "displayName": "Visible",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      }
+    ],
+    "defaultvalue": "\"visible\""
+  },
+  {
+    "id": "oj-c.Table#columnOrder",
+    "name": "columnOrder",
+    "memberof": "oj-c.Table",
+    "meta": {
+      "filename": "table.tsx",
+      "path": "web/components/oj-c/table"
+    },
+    "kind": "member",
+    "longname": "oj-c.Table#columnOrder",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "Array<string>"
+      ]
+    },
+    "optional": true,
+    "ojwriteback": true,
+    "description": "Controls the displayed columns and their order.\nAn array of column keys that represents the displayed columns and the order to display them in.\nIf not set, all columns will be displayed in the order returned by <code>Object.keys(columns)</code>.",
+    "tstype": [
+      {
+        "target": "Type",
+        "value": "Array<C>",
+        "jsdocOverride": true
+      }
+    ]
+  },
+  {
+    "id": "oj-c.Table#currentCellOverride",
+    "name": "currentCellOverride",
+    "memberof": "oj-c.Table",
+    "meta": {
+      "filename": "table.tsx",
+      "path": "web/components/oj-c/table"
+    },
+    "kind": "member",
+    "longname": "oj-c.Table#currentCellOverride",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "object"
+      ]
+    },
+    "optional": true,
+    "description": "The cell override to apply to the current cell of the Table.\nIn order for this property to be honored, a new object instance must be set.\nAny or all aspects of a valid <code>DataCell</code>, <code>HeaderCell</code>, or\n<code>FooterCell</code> can be overridden. For instance, if the current cell is a data cell\nin the third row and second column, providing an override with only <code>type: 'header'</code>\nwill result in the second column's header cell becoming current. Providing an override with only\n<code>columnKey: [fourth column key]</code> instead will result in the data cell in the third\nrow and fourth column becoming current.",
+    "tstype": [
+      {
+        "target": "Type",
+        "value": "oj-c.Table.CellOverride<K, C>",
+        "jsdocOverride": true
+      }
+    ]
+  },
+  {
+    "id": "oj-c.Table#currentCell",
+    "name": "currentCell",
+    "memberof": "oj-c.Table",
+    "meta": {
+      "filename": "table.tsx",
+      "path": "web/components/oj-c/table"
+    },
+    "kind": "member",
+    "longname": "oj-c.Table#currentCell",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "object"
+      ]
+    },
+    "optional": true,
+    "ojwriteback": true,
+    "readonly": true,
+    "description": "The cell currently being used as the target for keyboard gestures made on the Table.\nThis value will be updated as a user interacts with the Table. It will not be updated due to\nthe Table losing browser focus alone, but may be updated due to the Table receiving browser focus.\nThe current cell can be programatically updated by providing a new value for the\n<code>current-cell-override</code> attribute.",
+    "tstype": [
+      {
+        "target": "Type",
+        "value": "oj-c.Table.Cell<K, C>",
+        "jsdocOverride": true
+      }
+    ]
+  },
+  {
+    "id": "oj-c.Table#columnWidths",
+    "name": "columnWidths",
+    "memberof": "oj-c.Table",
+    "meta": {
+      "filename": "table.tsx",
+      "path": "web/components/oj-c/table"
+    },
+    "kind": "member",
+    "longname": "oj-c.Table#columnWidths",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "object"
+      ]
+    },
+    "optional": true,
+    "ojwriteback": true,
+    "description": "The desired widths of the specified table columns.\nA record mapping columns keys to numbers representing pixel widths for each column.\nValues should only be provided when a specific width is desired for a column as values provided\nwill override the Table's normal column sizing calculations. Applications should avoid setting\nwidths for every column in most cases as doing so will likely result in a non-responsive layout.",
+    "tstype": [
+      {
+        "target": "Type",
+        "value": "Record<C, number>",
+        "jsdocOverride": true
+      }
+    ]
+  },
+  {
+    "id": "oj-c.Table#scrollPolicyOptions",
+    "name": "scrollPolicyOptions",
+    "memberof": "oj-c.Table",
+    "meta": {
+      "filename": "table.tsx",
+      "path": "web/components/oj-c/table"
+    },
+    "kind": "member",
+    "longname": "oj-c.Table#scrollPolicyOptions",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "object"
+      ]
+    },
+    "optional": true,
+    "description": "Options related to the Table's fetching and scrolling behaviors.",
+    "tstype": [
+      {
+        "target": "Type",
+        "value": "{ fetchSize?: number; }",
+        "jsdocOverride": true
+      }
+    ]
+  },
+  {
+    "id": "oj-c.Table#scrollPolicyOptions.fetchSize",
+    "name": "scrollPolicyOptions.fetchSize",
+    "memberof": "oj-c.Table",
+    "meta": {
+      "filename": "table.tsx",
+      "path": "web/components/oj-c/table"
+    },
+    "kind": "member",
+    "longname": "oj-c.Table#scrollPolicyOptions.fetchSize",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "number"
+      ]
+    },
+    "optional": true,
+    "description": "The number of records the Table will request during each data fetch.",
+    "defaultvalue": 25
+  },
+  {
+    "id": "oj-c.Table#columnResizeBehavior",
+    "name": "columnResizeBehavior",
+    "memberof": "oj-c.Table",
+    "meta": {
+      "filename": "table.tsx",
+      "path": "web/components/oj-c/table"
+    },
+    "kind": "member",
+    "longname": "oj-c.Table#columnResizeBehavior",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "\"add\"",
+        "\"redistribute\""
+      ]
+    },
+    "optional": true,
+    "description": "The column resize behavior this Table will utilize when column resizing is enabled on a given column.",
+    "ojvalues": [
+      {
+        "name": "add",
+        "description": "Column resize gestures only affect the width of the column on the start side of the divider.",
+        "displayName": "add",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "redistribute",
+        "description": "Column resize gestures affect the widths of columns on each side of the divider.",
+        "displayName": "redistribute",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      }
+    ],
+    "defaultvalue": "\"redistribute\""
+  },
+  {
+    "id": "oj-c.Table#setProperty",
+    "name": "setProperty",
+    "memberof": "oj-c.Table",
+    "meta": {
+      "filename": "table.tsx",
+      "path": "web/components/oj-c/table"
+    },
+    "kind": "function",
+    "longname": "oj-c.Table#setProperty",
+    "scope": "instance",
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "void"
+          ]
+        }
+      }
+    ],
+    "description": "Sets a property or a single subproperty for complex properties and notifies the component of the change, triggering a corresponding event.",
+    "params": [
+      {
+        "name": "property",
+        "description": "The property name to set. Supports dot notation for subproperty access.",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "value",
+        "description": "The new value to set the property to.",
+        "type": {
+          "names": [
+            "any"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.Table#getProperty",
+    "name": "getProperty",
+    "memberof": "oj-c.Table",
+    "meta": {
+      "filename": "table.tsx",
+      "path": "web/components/oj-c/table"
+    },
+    "kind": "function",
+    "longname": "oj-c.Table#getProperty",
+    "scope": "instance",
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "any"
+          ]
+        }
+      }
+    ],
+    "description": "Retrieves the value of a property or a subproperty.",
+    "params": [
+      {
+        "name": "property",
+        "description": "The property name to get. Supports dot notation for subproperty access.",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.Table#setProperties",
+    "name": "setProperties",
+    "memberof": "oj-c.Table",
+    "meta": {
+      "filename": "table.tsx",
+      "path": "web/components/oj-c/table"
+    },
+    "kind": "function",
+    "longname": "oj-c.Table#setProperties",
+    "scope": "instance",
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "void"
+          ]
+        }
+      }
+    ],
+    "description": "Performs a batch set of properties.",
+    "params": [
+      {
+        "name": "properties",
+        "description": "An object containing the property and value pairs to set.",
+        "type": {
+          "names": [
+            "object"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.Table#event:ojRowAction",
+    "name": "ojRowAction",
+    "kind": "event",
+    "memberof": "oj-c.Table",
+    "meta": {
+      "filename": "table.tsx",
+      "path": "web/components/oj-c/table"
+    },
+    "longname": "oj-c.Table#event:ojRowAction",
+    "scope": "instance",
+    "description": "Triggered when a user performs an action gesture on a row.\nAction gestures include when a user clicks (or taps) anywhere in a data cell, or presses the enter or space keys while a data cell or its content has browser focus.",
+    "properties": [
+      {
+        "name": "context",
+        "description": "Row context",
+        "optional": false,
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "oj-c.Table.RowContext<K, D>",
+            "jsdocOverride": true,
+            "for": "context"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "oj-c.Table#cellTemplate",
+    "name": "cellTemplate",
+    "memberof": "oj-c.Table",
+    "meta": {
+      "filename": "table.tsx",
+      "path": "web/components/oj-c/table"
+    },
+    "kind": "member",
+    "longname": "oj-c.Table#cellTemplate",
+    "scope": "instance",
+    "description": "The template for rendering each data cell in the table.\nWhen a column.template is specified that will take precedence over this template.\nThe slot content must be a template element.\nThe content of the template should not include the td element, only its contents.\nThe template has access to the context CellTemplateContext via $current or the aliased name for $current set via data-oj-as.",
+    "ojchild": false,
+    "ojslot": true,
+    "properties": [
+      {
+        "name": "columnKey",
+        "description": "Column key",
+        "optional": false,
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "C",
+            "jsdocOverride": true,
+            "for": "columnKey"
+          }
+        ]
+      },
+      {
+        "name": "item",
+        "description": "Row item containing data and metadata",
+        "optional": false,
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "Item<K, D>",
+            "jsdocOverride": true,
+            "for": "item",
+            "module": {
+              "Item": "ojdataprovider"
+            }
+          }
+        ]
+      },
+      {
+        "name": "data",
+        "description": "Data for the cell, derived from the column.field property",
+        "optional": true,
+        "type": {
+          "names": [
+            "any"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "D[keyof D]",
+            "jsdocOverride": true,
+            "for": "data"
+          }
+        ]
+      },
+      {
+        "name": "isTabbable",
+        "description": "Whether the cell is in tabbable mode or not.",
+        "optional": false,
+        "type": {
+          "names": [
+            "boolean"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.Table#headerTemplate",
+    "name": "headerTemplate",
+    "memberof": "oj-c.Table",
+    "meta": {
+      "filename": "table.tsx",
+      "path": "web/components/oj-c/table"
+    },
+    "kind": "member",
+    "longname": "oj-c.Table#headerTemplate",
+    "scope": "instance",
+    "description": "The template for rendering each header cell in the table.\nWhen a column.headerTemplate is specified that will take precedence over this template.\nThe slot content must be a template element.\nThe content of the template should not include the th element, only its contents.\nThe template has access to the context HeaderTemplateContext via $current or the aliased name for $current set via data-oj-as.",
+    "ojchild": false,
+    "ojslot": true,
+    "properties": [
+      {
+        "name": "key",
+        "description": "Column key",
+        "optional": false,
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "C",
+            "jsdocOverride": true,
+            "for": "key"
+          }
+        ]
+      },
+      {
+        "name": "headerText",
+        "description": "Column header text",
+        "optional": true,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "isTabbable",
+        "description": "Whether the cell is in tabbable mode or not.",
+        "optional": false,
+        "type": {
+          "names": [
+            "boolean"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.Table#footerTemplate",
+    "name": "footerTemplate",
+    "memberof": "oj-c.Table",
+    "meta": {
+      "filename": "table.tsx",
+      "path": "web/components/oj-c/table"
+    },
+    "kind": "member",
+    "longname": "oj-c.Table#footerTemplate",
+    "scope": "instance",
+    "description": "The template for rendering each footer cell in the table.\nWhen a column.footerTemplate is specified that will take precedence over this template.\nThe slot content must be a template element.\nThe content of the template should not include the td element, only its contents.\nThe template has access to the context FooterTemplateContext via $current or the aliased name for $current set via data-oj-as.",
+    "ojchild": false,
+    "ojslot": true,
+    "properties": [
+      {
+        "name": "key",
+        "description": "Column key",
+        "optional": false,
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "C",
+            "jsdocOverride": true,
+            "for": "key"
+          }
+        ]
+      },
+      {
+        "name": "footerText",
+        "description": "Column footer text",
+        "optional": true,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "isTabbable",
+        "description": "Whether the cell is in tabbable mode or not.",
+        "optional": false,
+        "type": {
+          "names": [
+            "boolean"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.Table#noData",
+    "name": "noData",
+    "memberof": "oj-c.Table",
+    "meta": {
+      "filename": "table.tsx",
+      "path": "web/components/oj-c/table"
+    },
+    "kind": "member",
+    "longname": "oj-c.Table#noData",
+    "scope": "instance",
+    "description": "The template for rendering content when the table has an empty data set.\nThe slot content must be a template element.\nIf not specified then a default no data message will be displayed.",
+    "ojchild": false,
+    "ojslot": true,
+    "properties": [
+      {
+        "name": "isTabbable",
+        "description": "Whether the cell is in tabbable mode or not.",
+        "optional": false,
+        "type": {
+          "names": [
+            "boolean"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.Table#DynamicSlots.CellTemplateContext",
+    "name": "DynamicSlots.CellTemplateContext",
+    "memberof": "oj-c.Table",
+    "meta": {
+      "filename": "table.tsx",
+      "path": "web/components/oj-c/table"
+    },
+    "kind": "member",
+    "longname": "oj-c.Table#DynamicSlots.CellTemplateContext",
+    "scope": "instance",
+    "dynamicSlot": true,
+    "description": "Context passed into the cell template specified in the <code>column.template</code> property. \n    <p><span style=\"font-weight: bold\">Note:</span> For additional information see .</p>",
+    "ojchild": false,
+    "ojslot": true,
+    "ojtemplateslotprops": "CellTemplateContext",
+    "properties": [
+      {
+        "name": "columnKey",
+        "description": "Column key",
+        "optional": false,
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "C",
+            "jsdocOverride": true,
+            "for": "columnKey"
+          }
+        ]
+      },
+      {
+        "name": "item",
+        "description": "Row item containing data and metadata",
+        "optional": false,
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "Item<K, D>",
+            "jsdocOverride": true,
+            "for": "item",
+            "module": {
+              "Item": "ojdataprovider"
+            }
+          }
+        ]
+      },
+      {
+        "name": "data",
+        "description": "Data for the cell, derived from the column.field property",
+        "optional": true,
+        "type": {
+          "names": [
+            "any"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "D[keyof D]",
+            "jsdocOverride": true,
+            "for": "data"
+          }
+        ]
+      },
+      {
+        "name": "isTabbable",
+        "description": "Whether the cell is in tabbable mode or not.",
+        "optional": false,
+        "type": {
+          "names": [
+            "boolean"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.Table#DynamicSlots.HeaderTemplateContext",
+    "name": "DynamicSlots.HeaderTemplateContext",
+    "memberof": "oj-c.Table",
+    "meta": {
+      "filename": "table.tsx",
+      "path": "web/components/oj-c/table"
+    },
+    "kind": "member",
+    "longname": "oj-c.Table#DynamicSlots.HeaderTemplateContext",
+    "scope": "instance",
+    "dynamicSlot": true,
+    "description": "Context passed into the header template specified in the <code>column.headerTemplate</code> property. \n    <p><span style=\"font-weight: bold\">Note:</span> For additional information see .</p>",
+    "ojchild": false,
+    "ojslot": true,
+    "ojtemplateslotprops": "HeaderTemplateContext",
+    "properties": [
+      {
+        "name": "key",
+        "description": "Column key",
+        "optional": false,
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "C",
+            "jsdocOverride": true,
+            "for": "key"
+          }
+        ]
+      },
+      {
+        "name": "headerText",
+        "description": "Column header text",
+        "optional": true,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "isTabbable",
+        "description": "Whether the cell is in tabbable mode or not.",
+        "optional": false,
+        "type": {
+          "names": [
+            "boolean"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.Table#DynamicSlots.FooterTemplateContext",
+    "name": "DynamicSlots.FooterTemplateContext",
+    "memberof": "oj-c.Table",
+    "meta": {
+      "filename": "table.tsx",
+      "path": "web/components/oj-c/table"
+    },
+    "kind": "member",
+    "longname": "oj-c.Table#DynamicSlots.FooterTemplateContext",
+    "scope": "instance",
+    "dynamicSlot": true,
+    "description": "Context passed into the footer template specified in the <code>column.footerTemplate</code> property. \n    <p><span style=\"font-weight: bold\">Note:</span> For additional information see .</p>",
+    "ojchild": false,
+    "ojslot": true,
+    "ojtemplateslotprops": "FooterTemplateContext",
+    "properties": [
+      {
+        "name": "key",
+        "description": "Column key",
+        "optional": false,
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "C",
+            "jsdocOverride": true,
+            "for": "key"
+          }
+        ]
+      },
+      {
+        "name": "footerText",
+        "description": "Column footer text",
+        "optional": true,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "isTabbable",
+        "description": "Whether the cell is in tabbable mode or not.",
+        "optional": false,
+        "type": {
+          "names": [
+            "boolean"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.Table.touchDoc",
+    "name": "touchDoc",
+    "kind": "member",
+    "longname": "oj-c.Table.touchDoc",
+    "description": "<table class=\"keyboard-table\">\n  <thead>\n    <tr>\n      <th>Target</th>\n      <th>Gesture</th>\n      <th>Action</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <td rowspan=\"1\" style=\"vertical-align:top;\">\n        Data Cell\n      </td>\n      <td>Tap</td>\n      <td>Focus the data cell. Additionally, if row selection is enabled and the current row is selectable, toggle the selection state of the current row. Additionally, if row actions are enabled, trigger an ojRowAction event.</td>\n    </tr>\n    <tr>\n      <td rowspan=\"1\" style=\"vertical-align:top;\">\n        Header Cell\n      </td>\n      <td>Tap</td>\n      <td>Focus the header cell. Additionally, if column selection is enabled and the current column is selectable, toggle the selection state of the current column.</td>\n    </tr>\n    <tr>\n      <td rowspan=\"1\" style=\"vertical-align:top;\">\n        Footer Cell\n      </td>\n      <td>Tap</td>\n      <td>Focus the footer cell. Additionally, if column selection is enabled and the current column is selectable, toggle the selection state of the current column.</td>\n    </tr>\n    <tr>\n      <td rowspan=\"1\" style=\"vertical-align:top;\">\n        No Data Cell\n      </td>\n      <td>Tap</td>\n      <td>Focus the no data cell.</td>\n    </tr>\n  </tbody>\n</table>",
+    "memberof": "oj-c.Table",
+    "meta": {
+      "filename": "table.tsx",
+      "path": "web/components/oj-c/table"
+    },
+    "ojfragment": true
+  },
+  {
+    "id": "oj-c.Table.keyboardDoc",
+    "name": "keyboardDoc",
+    "kind": "member",
+    "longname": "oj-c.Table.keyboardDoc",
+    "description": "<table class=\"keyboard-table\">\n  <thead>\n    <tr>\n      <th>Target</th>\n      <th>Key</th>\n      <th>Action</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <td rowspan=\"18\" style=\"vertical-align:top;\">Data Cell</td>\n      <td>Tab</td>\n      <td>Move browser focus to next tab stop on the page.</td>\n    </tr>\n    <tr>\n      <td>Shift + Tab</td>\n      <td>Move browser focus to previous tab stop on the page.</td>\n    </tr>\n    <tr>\n      <td>F2</td>\n      <td>If there is focusable content in the current cell, move browser focus to the first focusable element in the current cell. No action otherwise.</td>\n    </tr>\n    <tr>\n      <td>Esc</td>\n      <td>No action.</td>\n    </tr>\n    <tr>\n      <td>Up Arrow</td>\n      <td>Focus the cell above the current cell.</td>\n    </tr>\n    <tr>\n      <td>Down Arrow</td>\n      <td>Focus the cell below the current cell.</td>\n    </tr>\n    <tr>\n      <td>Left Arrow</td>\n      <td>Focus the cell to the left of the current cell.</td>\n    </tr>\n    <tr>\n      <td>Right Arrow</td>\n      <td>Focus the cell to the right of the current cell.</td>\n    </tr>\n    <tr>\n      <td>Shift + Up Arrow</td>\n      <td>If multiple row selection is enabled, begin or extend a range selection to include the next row in the given direction without changing the currently focused cell. If multipleToggle row selection is enabled, begin or extend a range selection to include the next row in the given direction while also changing the currently focused cell. No action otherwise.</td>\n    </tr>\n    <tr>\n      <td>Shift + Down Arrow</td>\n      <td>If multiple row selection is enabled, begin or extend a range selection to include the next row in the given direction without changing the currently focused cell. If multipleToggle row selection is enabled, begin or extend a range selection to include the next row in the given direction while also changing the currently focused cell. No action otherwise.</td>\n    </tr>\n    <tr>\n      <td>Space</td>\n      <td>If row selection is enabled, toggle the selection state of the current row. Additionally, if row actions are enabled, trigger an ojRowAction event. No action otherwise.</td>\n    </tr>\n    <tr>\n      <td>Enter</td>\n      <td>If there is focusable content in the current cell, move browser focus to the first focusable element in the current cell. Additionally, if row actions are enabled, trigger an ojRowAction event. No action otherwise.</td>\n    </tr>\n    <tr>\n      <td>Page Up</td>\n      <td>Focus the corresponding cell in the first visible data row and scroll to make that data row the last visible data row of the table if possible.</td>\n    </tr>\n    <tr>\n      <td>Page Down</td>\n      <td>Focus the corresponding cell in the last visible data row and scroll to make that data row the first visible data row of the table if possible.</td>\n    </tr>\n    <tr>\n      <td>Home</td>\n      <td>Focus the first cell in the current row.</td>\n    </tr>\n    <tr>\n      <td>End</td>\n      <td>Focus the last cell in the current row.</td>\n    </tr>\n    <tr>\n      <td>Ctrl/Cmd + Home</td>\n      <td>Focus the first cell in the first row.</td>\n    </tr>\n    <tr>\n      <td>Ctrl/Cmd + End</td>\n      <td>Focus the last cell in the last available row.</td>\n    </tr>\n\n    <tr>\n      <td rowspan=\"18\" style=\"vertical-align:top;\">Header Cell</td>\n      <td>Tab</td>\n      <td>Move browser focus to next tab stop on the page.</td>\n    </tr>\n    <tr>\n      <td>Shift + Tab</td>\n      <td>Move browser focus to previous tab stop on the page.</td>\n    </tr>\n    <tr>\n      <td>F2</td>\n      <td>If there is focusable content in the current header cell, move browser focus to the first focusable element in the current header cell. No action otherwise.</td>\n    </tr>\n    <tr>\n      <td>Esc</td>\n     <td>No action.</td>\n    </tr>\n    <tr>\n      <td>Up Arrow</td>\n      <td>No action.</td>\n    </tr>\n    <tr>\n      <td>Down Arrow</td>\n      <td>Focus the cell below the current cell.</td>\n    </tr>\n    <tr>\n      <td>Left Arrow</td>\n      <td>Focus the header cell to the left of the current cell.</td>\n    </tr>\n    <tr>\n      <td>Right Arrow</td>\n      <td>Focus the header cell to the right of the current cell.</td>\n    </tr>\n    <tr>\n      <td>Shift + Left Arrow</td>\n      <td>If multiple column selection is enabled, begin or extend a range selection to include the next column in the given direction without changing the currently focused header cell. No action otherwise.</td>\n    </tr>\n    <tr>\n      <td>Shift + Right Arrow</td>\n      <td>If multiple column selection is enabled, begin or extend a range selection to include the next column in the given direction without changing the currently focused header cell. No action otherwise.</td>\n    </tr>\n    <tr>\n      <td>Space</td>\n      <td>If column selection is enabled and the current column is selectable, toggle the selection state of the current column. No action otherwise.</td>\n    </tr>\n    <tr>\n      <td>Enter</td>\n      <td>If there is focusable content in the current header cell, move browser focus to the first focusable element in the current header cell. No action otherwise.</td>\n    </tr>\n    <tr>\n      <td>Page Up</td>\n      <td>Focus the corresponding cell in the first visible data row and scroll to make that data row the last visible data row of the table if possible.</td>\n    </tr>\n    <tr>\n      <td>Page Down</td>\n      <td>Focus the corresponding cell in the last visible data row and scroll to make that data row the first visible data row of the table if possible.</td>\n    </tr>\n    <tr>\n      <td>Home</td>\n      <td>Focus the first header cell.</td>\n    </tr>\n    <tr>\n      <td>End</td>\n      <td>Focus the last header cell.</td>\n    </tr>\n    <tr>\n      <td>Ctrl/Cmd + Home</td>\n      <td>Focus the first cell in the first row.</td>\n    </tr>\n    <tr>\n      <td>Ctrl/Cmd + End</td>\n      <td>Focus the last cell in the last available row.</td>\n    </tr>\n\n\n    <tr>\n      <td rowspan=\"18\" style=\"vertical-align:top;\">Footer Cell</td>\n      <td>Tab</td>\n      <td>Move browser focus to next tab stop on the page.</td>\n    </tr>\n    <tr>\n      <td>Shift + Tab</td>\n      <td>Move browser focus to previous tab stop on the page.</td>\n    </tr>\n    <tr>\n      <td>F2</td>\n      <td>If there is focusable content in the current footer cell, move browser focus to the first focusable element in the current footer cell. No action otherwise.</td>\n    </tr>\n    <tr>\n      <td>Esc</td>\n      <td>No action.</td>\n    </tr>\n    <tr>\n      <td>Up Arrow</td>\n      <td>Focus the cell above the current cell.</td>\n    </tr>\n    <tr>\n      <td>Down Arrow</td>\n      <td>No action.</td>\n    </tr>\n    <tr>\n      <td>Left Arrow</td>\n      <td>Focus the footer cell to the left of the current cell.</td>\n    </tr>\n    <tr>\n      <td>Right Arrow</td>\n      <td>Focus the footer cell to the right of the current cell.</td>\n    </tr>\n    <tr>\n      <td>Shift + Left Arrow</td>\n      <td>If multiple column selection is enabled, begin or extend a range selection to include the next column in the given direction without changing the currently focused footer cell. No action otherwise.</td>\n    </tr>\n    <tr>\n      <td>Shift + Right Arrow</td>\n      <td>If multiple column selection is enabled, begin or extend a range selection to include the next column in the given direction without changing the currently focused footer cell. No action otherwise.</td>\n    </tr>\n    <tr>\n      <td>Space</td>\n      <td>If column selection is enabled and the current column is selectable, toggle the selection state of the current column. No action otherwise.</td>\n    </tr>\n   <tr>\n      <td>Enter</td>\n      <td>If there is focusable content in the current footer cell, move browser focus to the first focusable element in the current footer cell. No action otherwise.</td>\n    </tr>\n    <tr>\n      <td>Page Up</td>\n      <td>Focus the corresponding cell in the first visible data row and scroll to make that data row the last visible data row of the table if possible.</td>\n    </tr>\n    <tr>\n      <td>Page Down</td>\n      <td>Focus the corresponding cell in the last visible data row and scroll to make that data row the first visible data row of the table if possible.</td>\n    </tr>\n    <tr>\n      <td>Home</td>\n      <td>Focus the first footer cell.</td>\n    </tr>\n    <tr>\n      <td>End</td>\n      <td>Focus the last footer cell.</td>\n    </tr>\n    <tr>\n      <td>Ctrl/Cmd + Home</td>\n      <td>Focus the first cell in the first row.</td>\n    </tr>\n    <tr>\n      <td>Ctrl/Cmd + End</td>\n      <td>Focus the last cell in the last available row.</td>\n    </tr>\n\n\n    <tr>\n      <td rowspan=\"10\" style=\"vertical-align:top;\">No Data Cell</td>\n      <td>Tab</td>\n      <td>Move browser focus to next tab stop on the page.</td>\n    </tr>\n    <tr>\n      <td>Shift + Tab</td>\n      <td>Move browser focus to previous tab stop on the page.</td>\n    </tr>\n    <tr>\n      <td>F2</td>\n      <td>If there is focusable content in the no data cell, move browser focus to the first focusable element in the no data cell. No action otherwise.</td>\n    </tr>\n    <tr>\n      <td>Esc</td>\n      <td>No action.</td>\n    </tr>\n    <tr>\n      <td>Up Arrow</td>\n      <td>Focus the first header cell.</td>\n    </tr>\n    <tr>\n      <td>Down Arrow</td>\n      <td>If footer cells are rendered, focus the first footer cell. No action otherwise.</td>\n    </tr>\n    <tr>\n      <td>Left Arrow</td>\n      <td>No action.</td>\n    </tr>\n    <tr>\n      <td>Right Arrow</td>\n      <td>No action.</td>\n    </tr>\n    <tr>\n      <td>Space</td>\n      <td>No action.</td>\n    </tr>\n    <tr>\n      <td>Enter</td>\n      <td>If there is focusable content in the no data cell, move browser focus to the first focusable element in the no data cell. No action otherwise.</td>\n    </tr>\n\n\n    <tr>\n      <td rowspan=\"18\" style=\"vertical-align:top;\">Focused Cell Content</td>\n      <td>Tab</td>\n      <td>Move browser focus to the next focusable element in the table. If that element is already focused, move browser focus to the first focusable element in the table.</td>\n    </tr>\n    <tr>\n      <td>Shift + Tab</td>\n      <td>Move browser focus to the previous focusable element in the table. If that element is already focused, move browser focus to the last focusable element in the table.</td>\n    </tr>\n    <tr>\n      <td>F2</td>\n      <td>Restore focus to the current cell.</td>\n    </tr>\n    <tr>\n      <td>Esc</td>\n      <td>Restore focus to the current cell.</td>\n    </tr>\n    <tr>\n      <td>Space</td>\n      <td>No action.</td>\n    </tr>\n    <tr>\n      <td>Enter</td>\n      <td>No action.</td>\n    </tr>\n\n  </tbody>\n</table>",
+    "memberof": "oj-c.Table",
+    "meta": {
+      "filename": "table.tsx",
+      "path": "web/components/oj-c/table"
+    },
+    "ojfragment": true
+  },
+  {
+    "id": "oj-c.Table.CellPadding",
+    "name": "CellPadding",
+    "kind": "typedef",
+    "memberof": "oj-c.Table",
+    "meta": {
+      "filename": "table.tsx",
+      "path": "web/components/oj-c/table"
+    },
+    "longname": "oj-c.Table.CellPadding",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "scope": "static",
+    "description": "Specifies whether padding is enabled or disabled on specific sides of a cell.",
+    "properties": [
+      {
+        "name": "bottom",
+        "description": "Specifies whether bottom padding is enabled or disabled.",
+        "optional": true,
+        "type": {
+          "names": [
+            "\"disabled\"",
+            "\"enabled\""
+          ]
+        }
+      },
+      {
+        "name": "end",
+        "description": "Specifies whether end padding (right in ltr locales, left in rtl locales) is enabled or disabled.",
+        "optional": true,
+        "type": {
+          "names": [
+            "\"disabled\"",
+            "\"enabled\""
+          ]
+        }
+      },
+      {
+        "name": "start",
+        "description": "Specifies whether start padding (left in ltr locales, right in rtl locales) is enabled or disabled.",
+        "optional": true,
+        "type": {
+          "names": [
+            "\"disabled\"",
+            "\"enabled\""
+          ]
+        }
+      },
+      {
+        "name": "top",
+        "description": "Specifies whether top padding is enabled or disabled.",
+        "optional": true,
+        "type": {
+          "names": [
+            "\"disabled\"",
+            "\"enabled\""
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.Table.RowContext",
+    "name": "RowContext",
+    "kind": "typedef",
+    "memberof": "oj-c.Table",
+    "meta": {
+      "filename": "table.tsx",
+      "path": "web/components/oj-c/table"
+    },
+    "longname": "oj-c.Table.RowContext",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "scope": "static",
+    "description": "Context used to specify the row of a Table.",
+    "tsgenerictype": {
+      "target": "Type",
+      "value": "<K,D>",
+      "for": "genericTypeParameters"
+    },
+    "properties": [
+      {
+        "name": "item",
+        "description": "Row item containing data and metadata",
+        "optional": false,
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "Item<K, D>",
+            "jsdocOverride": true,
+            "for": "item",
+            "module": {
+              "Item": "ojdataprovider"
+            }
+          }
+        ]
+      }
+    ],
+    "ojexports": true
+  },
+  {
+    "id": "oj-c.Table.Column",
+    "name": "Column",
+    "kind": "typedef",
+    "memberof": "oj-c.Table",
+    "meta": {
+      "filename": "table.tsx",
+      "path": "web/components/oj-c/table"
+    },
+    "longname": "oj-c.Table.Column",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "scope": "static",
+    "description": "Specifies the properties of a column.",
+    "tsgenerictype": {
+      "target": "Type",
+      "value": "<K,D>",
+      "for": "genericTypeParameters"
+    },
+    "properties": [
+      {
+        "name": "field",
+        "description": "Specifies the field attribute of the row item data that is mapped to the column.",
+        "optional": true,
+        "type": {
+          "names": [
+            "string|number"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "keyof D",
+            "jsdocOverride": true,
+            "for": "field"
+          }
+        ]
+      },
+      {
+        "name": "headerText",
+        "description": "Text to display in the header cell of the column.",
+        "optional": true,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "footerText",
+        "description": "Text to display in the footer cell of the column",
+        "optional": true,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "template",
+        "description": "The name of the slot used to specify the template for rendering data cells in the column.\nThe slot content must be a template element.\nThe content of the template should not include the td element, only its contents.\nThe template has access to the following context via $current or the aliased name for $current set via data-oj-as.",
+        "optional": true,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "headerTemplate",
+        "description": "The name of the slot used to specify the template for rendering the header cell in the column.\nThe slot content must be a template element.\nThe content of the template should not include the th element, only its contents.\nThe template has access to the following context via $current or the aliased name for $current set via data-oj-as.",
+        "optional": true,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "footerTemplate",
+        "description": "The name of the slot used to specify the template for rendering the footer cell in the column.\nThe slot content must be a template element.\nThe content of the template should not include the td element, only its contents.\nThe template has access to the following context via $current or the aliased name for $current set via data-oj-as.",
+        "optional": true,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "maxWidth",
+        "description": "The maximum width in pixels of the column. This value is used during initial render, and does not affect the ability to resize the column.\nThis value is applicable when either, layout='fixed' or layout='contents'.",
+        "optional": true,
+        "type": {
+          "names": [
+            "number"
+          ]
+        }
+      },
+      {
+        "name": "minWidth",
+        "description": "The minimum width in pixels of the column. This value is used during initial render, and does not affect the ability to resize the column.\nThis value is applicable when either, layout='fixed' or layout='contents'.\nIf not set and layout='fixed' a default minimum width will be determined by the theme.",
+        "optional": true,
+        "type": {
+          "names": [
+            "number"
+          ]
+        }
+      },
+      {
+        "name": "weight",
+        "description": "Specifies the relative sizing weight of the column. If not set a default of 1 is assumed.\nThis must be a positive number greater than or equal to 1. Its value does not affect the ability\nto resize the column. When the Table's layout attribute is set to <code>fixed</code>, this value\nis used to determine the relative width of the column compared to the other columns. For example,\na column with a weight of 2 will have twice as much space allocated to it as a column with a weight\nof 1. This value has no effect when the table's layout attribute is set to <code>contents</code>.",
+        "optional": true,
+        "type": {
+          "names": [
+            "number"
+          ]
+        }
+      },
+      {
+        "name": "padding",
+        "description": "Specifies padding for the data cells in this column. Valid string values include 'enabled' and 'disabled'. Setting either\n'enabled' or 'disabled' will apply to all sides of the data cells, while providing an instance of CellPadding will only\napply to the specified sides of the data cells.",
+        "optional": true,
+        "type": {
+          "names": [
+            "string|object|function"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "\"disabled\"|\"enabled\"|oj-c.Table.CellPadding|(context: oj-c.Table.RowContext<K, D>) => \"disabled\" | \"enabled\" | oj-c.Table.CellPadding",
+            "jsdocOverride": true,
+            "for": "padding"
+          }
+        ]
+      },
+      {
+        "name": "headerPadding",
+        "description": "Specifies padding for the header cell in this column. Valid string values include 'enabled' and 'disabled'. Setting either\n'enabled' or 'disabled' will apply to all sides of the header cell, while providing an instance of CellPadding will only\napply to the specified sides of the header cell.",
+        "optional": true,
+        "type": {
+          "names": [
+            "string|object"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "\"disabled\"|\"enabled\"|oj-c.Table.CellPadding",
+            "jsdocOverride": true,
+            "for": "headerPadding"
+          }
+        ]
+      },
+      {
+        "name": "footerPadding",
+        "description": "Specifies padding for the footer cell in this column. Valid string values include 'enabled' and 'disabled'. Setting either\n'enabled' or 'disabled' will apply to all sides of the footer cell, while providing an instance of CellPadding will only\napply to the specified sides of the footer cell.",
+        "optional": true,
+        "type": {
+          "names": [
+            "string|object"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "\"disabled\"|\"enabled\"|oj-c.Table.CellPadding",
+            "jsdocOverride": true,
+            "for": "footerPadding"
+          }
+        ]
+      },
+      {
+        "name": "tooltip",
+        "description": "Specifies whether default tooltips are enabled for data cells in this column. Valid string values include 'enabled'\nand 'disabled'.",
+        "optional": true,
+        "type": {
+          "names": [
+            "string|function"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "\"disabled\"|\"enabled\"|(context: oj-c.Table.RowContext<K, D>) => \"disabled\" | \"enabled\"",
+            "jsdocOverride": true,
+            "for": "tooltip"
+          }
+        ]
+      },
+      {
+        "name": "headerTooltip",
+        "description": "Specifies whether the default tooltip is enabled for the header cell in this column. Valid string values include\n'enabled' and 'disabled'.",
+        "optional": true,
+        "type": {
+          "names": [
+            "\"disabled\"",
+            "\"enabled\""
+          ]
+        }
+      },
+      {
+        "name": "footerTooltip",
+        "description": "Specifies whether the default tooltip is enabled for the footer cell in this column. Valid string values include\n'enabled' and 'disabled'.",
+        "optional": true,
+        "type": {
+          "names": [
+            "\"disabled\"",
+            "\"enabled\""
+          ]
+        }
+      },
+      {
+        "name": "sticky",
+        "description": "Whether this column should be prevented from scrolling out of view.",
+        "optional": true,
+        "type": {
+          "names": [
+            "\"disabled\"",
+            "\"enabled\""
+          ]
+        }
+      },
+      {
+        "name": "horizontalAlignment",
+        "description": "The horizontal alignment of the column.",
+        "optional": true,
+        "type": {
+          "names": [
+            "\"center\"",
+            "\"end\"",
+            "\"start\"",
+            "\"left\"",
+            "\"right\""
+          ]
+        }
+      },
+      {
+        "name": "resizable",
+        "description": "Enable or disable width resizing along the column end headers.",
+        "optional": true,
+        "type": {
+          "names": [
+            "\"disabled\"",
+            "\"enabled\""
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.Table.NoDataCell",
+    "name": "NoDataCell",
+    "kind": "typedef",
+    "memberof": "oj-c.Table",
+    "meta": {
+      "filename": "table.tsx",
+      "path": "web/components/oj-c/table"
+    },
+    "longname": "oj-c.Table.NoDataCell",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "scope": "static",
+    "description": "Specifies a no data cell.",
+    "properties": [
+      {
+        "name": "type",
+        "description": "Specifies the type of the cell.",
+        "optional": false,
+        "type": {
+          "names": [
+            "\"noData\""
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.Table.DataCellRowOverride",
+    "name": "DataCellRowOverride",
+    "kind": "typedef",
+    "memberof": "oj-c.Table",
+    "meta": {
+      "filename": "table.tsx",
+      "path": "web/components/oj-c/table"
+    },
+    "longname": "oj-c.Table.DataCellRowOverride",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "scope": "static",
+    "description": "Specifies a row override for a data cell. If only a <code>rowKey</code> is provided, using this as\nan override will attempt to keep the the current column the same and only change the current row.\nSee the <code>current-cell-override</code> attribute for more details.",
+    "tsgenerictype": {
+      "target": "Type",
+      "value": "<K,C>",
+      "for": "genericTypeParameters"
+    },
+    "properties": [
+      {
+        "name": "rowKey",
+        "description": "Specifies the row key of the cell override.",
+        "optional": false,
+        "type": {
+          "names": [
+            "any"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "K",
+            "jsdocOverride": true,
+            "for": "rowKey"
+          }
+        ]
+      },
+      {
+        "name": "columnKey",
+        "description": "Specifies the column key of the cell override. Valid values include 'oj-c-table_selection' when multiple\nor multipleToggle row selection is enabled.",
+        "optional": true,
+        "type": {
+          "names": [
+            "any"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "\"oj-c-table_selection\"|C",
+            "jsdocOverride": true,
+            "for": "columnKey"
+          }
+        ],
+        "ojvalues": [
+          {
+            "name": "oj-c-table_selection",
+            "type": {
+              "names": [
+                "string"
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "name": "type",
+        "description": "Specifies the type of the cell override.",
+        "optional": true,
+        "type": {
+          "names": [
+            "\"data\""
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.Table.DataCellColumnOverride",
+    "name": "DataCellColumnOverride",
+    "kind": "typedef",
+    "memberof": "oj-c.Table",
+    "meta": {
+      "filename": "table.tsx",
+      "path": "web/components/oj-c/table"
+    },
+    "longname": "oj-c.Table.DataCellColumnOverride",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "scope": "static",
+    "description": "Specifies a column override for a data cell. If only a <code>columnKey</code> is provided, using this\nas an override will attempt to keep the the current row the same and only change the current column.\nSee the <code>current-cell-override</code> attribute for more details.",
+    "tsgenerictype": {
+      "target": "Type",
+      "value": "<K,C>",
+      "for": "genericTypeParameters"
+    },
+    "properties": [
+      {
+        "name": "rowKey",
+        "description": "Specifies the row key of the cell override.",
+        "optional": true,
+        "type": {
+          "names": [
+            "any"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "K",
+            "jsdocOverride": true,
+            "for": "rowKey"
+          }
+        ]
+      },
+      {
+        "name": "columnKey",
+        "description": "Specifies the column key of the cell override. Valid values include 'oj-c-table_selection' when multiple\nor multipleToggle row selection is enabled.",
+        "optional": false,
+        "type": {
+          "names": [
+            "any"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "\"oj-c-table_selection\"|C",
+            "jsdocOverride": true,
+            "for": "columnKey"
+          }
+        ],
+        "ojvalues": [
+          {
+            "name": "oj-c-table_selection",
+            "type": {
+              "names": [
+                "string"
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "name": "type",
+        "description": "Specifies the type of the cell override.",
+        "optional": true,
+        "type": {
+          "names": [
+            "\"data\""
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.Table.DataCellTypeOverride",
+    "name": "DataCellTypeOverride",
+    "kind": "typedef",
+    "memberof": "oj-c.Table",
+    "meta": {
+      "filename": "table.tsx",
+      "path": "web/components/oj-c/table"
+    },
+    "longname": "oj-c.Table.DataCellTypeOverride",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "scope": "static",
+    "description": "Specifies a type override for a data cell. If only a <code>type</code> is provided, using this as\nan override will attempt to keep the the current column the same and change to the first data row.\nSee the <code>current-cell-override</code> attribute for more details.",
+    "tsgenerictype": {
+      "target": "Type",
+      "value": "<K,C>",
+      "for": "genericTypeParameters"
+    },
+    "properties": [
+      {
+        "name": "rowKey",
+        "description": "Specifies the row key of the cell override.",
+        "optional": true,
+        "type": {
+          "names": [
+            "any"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "K",
+            "jsdocOverride": true,
+            "for": "rowKey"
+          }
+        ]
+      },
+      {
+        "name": "columnKey",
+        "description": "Specifies the column key of the cell override. Valid values include 'oj-c-table_selection' when multiple\nor multipleToggle row selection is enabled.",
+        "optional": true,
+        "type": {
+          "names": [
+            "any"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "\"oj-c-table_selection\"|C",
+            "jsdocOverride": true,
+            "for": "columnKey"
+          }
+        ],
+        "ojvalues": [
+          {
+            "name": "oj-c-table_selection",
+            "type": {
+              "names": [
+                "string"
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "name": "type",
+        "description": "Specifies the type of the cell override.",
+        "optional": false,
+        "type": {
+          "names": [
+            "\"data\""
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.Table.HeaderCellColumnOverride",
+    "name": "HeaderCellColumnOverride",
+    "kind": "typedef",
+    "memberof": "oj-c.Table",
+    "meta": {
+      "filename": "table.tsx",
+      "path": "web/components/oj-c/table"
+    },
+    "longname": "oj-c.Table.HeaderCellColumnOverride",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "scope": "static",
+    "description": "Specifies a column override for a header cell. If only a <code>columnKey</code> is provided, using\nthis as an override will only change the current column.\nSee the <code>current-cell-override</code> attribute for more details.",
+    "tsgenerictype": {
+      "target": "Type",
+      "value": "<C>",
+      "for": "genericTypeParameters"
+    },
+    "properties": [
+      {
+        "name": "columnKey",
+        "description": "Specifies the column key of the cell override. Valid values include 'oj-c-table_selection' when multiple\nor multipleToggle row selection is enabled.",
+        "optional": false,
+        "type": {
+          "names": [
+            "any"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "\"oj-c-table_selection\"|C",
+            "jsdocOverride": true,
+            "for": "columnKey"
+          }
+        ],
+        "ojvalues": [
+          {
+            "name": "oj-c-table_selection",
+            "type": {
+              "names": [
+                "string"
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "name": "type",
+        "description": "Specifies the type of the cell override.",
+        "optional": true,
+        "type": {
+          "names": [
+            "\"header\""
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.Table.HeaderCellTypeOverride",
+    "name": "HeaderCellTypeOverride",
+    "kind": "typedef",
+    "memberof": "oj-c.Table",
+    "meta": {
+      "filename": "table.tsx",
+      "path": "web/components/oj-c/table"
+    },
+    "longname": "oj-c.Table.HeaderCellTypeOverride",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "scope": "static",
+    "description": "Specifies a type override for a header cell. If only a <code>type</code> is provided, using this as\nan override will attempt to keep the the current column the same and make a header cell current.\nSee the <code>current-cell-override</code> attribute for more details.",
+    "tsgenerictype": {
+      "target": "Type",
+      "value": "<C>",
+      "for": "genericTypeParameters"
+    },
+    "properties": [
+      {
+        "name": "columnKey",
+        "description": "Specifies the column key of the cell override. Valid values include 'oj-c-table_selection' when multiple\nor multipleToggle row selection is enabled.",
+        "optional": true,
+        "type": {
+          "names": [
+            "any"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "\"oj-c-table_selection\"|C",
+            "jsdocOverride": true,
+            "for": "columnKey"
+          }
+        ],
+        "ojvalues": [
+          {
+            "name": "oj-c-table_selection",
+            "type": {
+              "names": [
+                "string"
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "name": "type",
+        "description": "Specifies the type of the cell override.",
+        "optional": false,
+        "type": {
+          "names": [
+            "\"header\""
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.Table.FooterCellColumnOverride",
+    "name": "FooterCellColumnOverride",
+    "kind": "typedef",
+    "memberof": "oj-c.Table",
+    "meta": {
+      "filename": "table.tsx",
+      "path": "web/components/oj-c/table"
+    },
+    "longname": "oj-c.Table.FooterCellColumnOverride",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "scope": "static",
+    "description": "Specifies a column override for a footer cell. If only a <code>columnKey</code> is provided, using\nthis as an override will only change the current column.\nSee the <code>current-cell-override</code> attribute for more details.",
+    "tsgenerictype": {
+      "target": "Type",
+      "value": "<C>",
+      "for": "genericTypeParameters"
+    },
+    "properties": [
+      {
+        "name": "columnKey",
+        "description": "Specifies the column key of the cell override. Valid values include 'oj-c-table_selection' when multiple\nor multipleToggle row selection is enabled.",
+        "optional": false,
+        "type": {
+          "names": [
+            "any"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "\"oj-c-table_selection\"|C",
+            "jsdocOverride": true,
+            "for": "columnKey"
+          }
+        ],
+        "ojvalues": [
+          {
+            "name": "oj-c-table_selection",
+            "type": {
+              "names": [
+                "string"
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "name": "type",
+        "description": "Specifies the type of the cell override.",
+        "optional": true,
+        "type": {
+          "names": [
+            "\"footer\""
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.Table.FooterCellTypeOverride",
+    "name": "FooterCellTypeOverride",
+    "kind": "typedef",
+    "memberof": "oj-c.Table",
+    "meta": {
+      "filename": "table.tsx",
+      "path": "web/components/oj-c/table"
+    },
+    "longname": "oj-c.Table.FooterCellTypeOverride",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "scope": "static",
+    "description": "Specifies a type override for a footer cell. If only a <code>type</code> is provided, using this as\nan override will attempt to keep the the current column the same and make a footer cell current.\nSee the <code>current-cell-override</code> attribute for more details.",
+    "tsgenerictype": {
+      "target": "Type",
+      "value": "<C>",
+      "for": "genericTypeParameters"
+    },
+    "properties": [
+      {
+        "name": "columnKey",
+        "description": "Specifies the column key of the cell override. Valid values include 'oj-c-table_selection' when multiple\nor multipleToggle row selection is enabled.",
+        "optional": true,
+        "type": {
+          "names": [
+            "any"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "\"oj-c-table_selection\"|C",
+            "jsdocOverride": true,
+            "for": "columnKey"
+          }
+        ],
+        "ojvalues": [
+          {
+            "name": "oj-c-table_selection",
+            "type": {
+              "names": [
+                "string"
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "name": "type",
+        "description": "Specifies the type of the cell override.",
+        "optional": false,
+        "type": {
+          "names": [
+            "\"footer\""
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.Table.CellOverride",
+    "name": "CellOverride",
+    "kind": "typedef",
+    "memberof": "oj-c.Table",
+    "meta": {
+      "filename": "table.tsx",
+      "path": "web/components/oj-c/table"
+    },
+    "longname": "oj-c.Table.CellOverride",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "scope": "static",
+    "description": "Identifier for the override of cells in the table.",
+    "tsgenerictype": {
+      "target": "Type",
+      "value": "<K,C>",
+      "for": "genericTypeParameters"
+    },
+    "tstype": [
+      {
+        "target": "Type",
+        "value": "oj-c.Table.NoDataCell|oj-c.Table.DataCellRowOverride<K, C>|oj-c.Table.DataCellColumnOverride<K, C>|oj-c.Table.DataCellTypeOverride<K, C>|oj-c.Table.HeaderCellColumnOverride<C>|oj-c.Table.HeaderCellTypeOverride<C>|oj-c.Table.FooterCellColumnOverride<C>|oj-c.Table.FooterCellTypeOverride<C>",
+        "jsdocOverride": true
+      }
+    ]
+  },
+  {
+    "id": "oj-c.Table.DataCell",
+    "name": "DataCell",
+    "kind": "typedef",
+    "memberof": "oj-c.Table",
+    "meta": {
+      "filename": "table.tsx",
+      "path": "web/components/oj-c/table"
+    },
+    "longname": "oj-c.Table.DataCell",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "scope": "static",
+    "description": "Specifies a data cell.",
+    "tsgenerictype": {
+      "target": "Type",
+      "value": "<K,C>",
+      "for": "genericTypeParameters"
+    },
+    "properties": [
+      {
+        "name": "rowKey",
+        "description": "Specifies the row key of the cell.",
+        "optional": false,
+        "type": {
+          "names": [
+            "any"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "K",
+            "jsdocOverride": true,
+            "for": "rowKey"
+          }
+        ]
+      },
+      {
+        "name": "columnKey",
+        "description": "Specifies the column key of the cell. Valid values include 'oj-c-table_selection' when multiple\nor multipleToggle row selection is enabled.",
+        "optional": false,
+        "type": {
+          "names": [
+            "any"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "\"oj-c-table_selection\"|C",
+            "jsdocOverride": true,
+            "for": "columnKey"
+          }
+        ],
+        "ojvalues": [
+          {
+            "name": "oj-c-table_selection",
+            "type": {
+              "names": [
+                "string"
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "name": "type",
+        "description": "Specifies the the type of the cell.",
+        "optional": false,
+        "type": {
+          "names": [
+            "\"data\""
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.Table.HeaderCell",
+    "name": "HeaderCell",
+    "kind": "typedef",
+    "memberof": "oj-c.Table",
+    "meta": {
+      "filename": "table.tsx",
+      "path": "web/components/oj-c/table"
+    },
+    "longname": "oj-c.Table.HeaderCell",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "scope": "static",
+    "description": "Specifies a header cell.",
+    "tsgenerictype": {
+      "target": "Type",
+      "value": "<C>",
+      "for": "genericTypeParameters"
+    },
+    "properties": [
+      {
+        "name": "columnKey",
+        "description": "Specifies the column key of the cell. Valid values include 'oj-c-table_selection' when multiple\nor multipleToggle row selection is enabled.",
+        "optional": false,
+        "type": {
+          "names": [
+            "any"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "\"oj-c-table_selection\"|C",
+            "jsdocOverride": true,
+            "for": "columnKey"
+          }
+        ],
+        "ojvalues": [
+          {
+            "name": "oj-c-table_selection",
+            "type": {
+              "names": [
+                "string"
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "name": "type",
+        "description": "Specifies the type of the cell.",
+        "optional": false,
+        "type": {
+          "names": [
+            "\"header\""
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.Table.FooterCell",
+    "name": "FooterCell",
+    "kind": "typedef",
+    "memberof": "oj-c.Table",
+    "meta": {
+      "filename": "table.tsx",
+      "path": "web/components/oj-c/table"
+    },
+    "longname": "oj-c.Table.FooterCell",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "scope": "static",
+    "description": "Specifies a footer cell.",
+    "tsgenerictype": {
+      "target": "Type",
+      "value": "<C>",
+      "for": "genericTypeParameters"
+    },
+    "properties": [
+      {
+        "name": "columnKey",
+        "description": "Specifies the column key of the cell. Valid values include 'oj-c-table_selection' when multiple\nor multipleToggle row selection is enabled.",
+        "optional": false,
+        "type": {
+          "names": [
+            "any"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "\"oj-c-table_selection\"|C",
+            "jsdocOverride": true,
+            "for": "columnKey"
+          }
+        ],
+        "ojvalues": [
+          {
+            "name": "oj-c-table_selection",
+            "type": {
+              "names": [
+                "string"
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "name": "type",
+        "description": "Specifies the type of the cell.",
+        "optional": false,
+        "type": {
+          "names": [
+            "\"footer\""
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.Table.Cell",
+    "name": "Cell",
+    "kind": "typedef",
+    "memberof": "oj-c.Table",
+    "meta": {
+      "filename": "table.tsx",
+      "path": "web/components/oj-c/table"
+    },
+    "longname": "oj-c.Table.Cell",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "scope": "static",
+    "description": "Identifier for the cells in the table",
+    "tsgenerictype": {
+      "target": "Type",
+      "value": "<K,C>",
+      "for": "genericTypeParameters"
+    },
+    "tstype": [
+      {
+        "target": "Type",
+        "value": "oj-c.Table.NoDataCell|oj-c.Table.DataCell<K, C>|oj-c.Table.HeaderCell<C>|oj-c.Table.FooterCell<C>",
+        "jsdocOverride": true
+      }
+    ]
+  }
+]

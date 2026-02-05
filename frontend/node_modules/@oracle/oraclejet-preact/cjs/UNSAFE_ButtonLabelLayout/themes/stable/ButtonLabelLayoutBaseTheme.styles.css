@@ -1,0 +1,38 @@
+.ButtonLabelLayoutBaseTheme_baseTheme__mnw6k40 {
+  --textToEdgePadding__1onk43q3: ;
+  --iconToTextPadding__1onk43q2: ;
+  --iconToEdgePadding__1onk43q1: ;
+  --iconSize__1onk43q0: ;
+  --sizes-xs-iconSize__1onk43q4: max(calc(5 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem)), 20px);
+  --sizes-xs-iconToTextPadding__1onk43q6: max(calc(2 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem)), 8px);
+  --sizes-xs-iconToEdgePadding__1onk43q5: max(calc(2 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem)), 8px);
+  --sizes-xs-textToEdgePadding__1onk43q7: max(calc(4 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem)), 16px);
+  --sizes-sm-iconSize__1onk43q8: calc(5 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --sizes-sm-iconToTextPadding__1onk43q9: calc(2 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --sizes-sm-iconToEdgePadding__1onk43qa: calc(2 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --sizes-sm-textToEdgePadding__1onk43qb: calc(4 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --sizes-md-iconSize__1onk43qc: calc(6 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --sizes-md-iconToTextPadding__1onk43qe: calc(2.5 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --sizes-md-iconToEdgePadding__1onk43qd: calc(2.5 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --sizes-md-textToEdgePadding__1onk43qf: calc(4 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --sizes-lg-iconSize__1onk43qg: calc(6 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --sizes-lg-iconToTextPadding__1onk43qi: calc(4 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --sizes-lg-iconToEdgePadding__1onk43qh: calc(4 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --sizes-lg-textToEdgePadding__1onk43qj: calc(4 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --sizes-embeddedxs-iconSize__1onk43qk: max(calc(5 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem)), 20px);
+  --sizes-embeddedxs-iconToTextPadding__1onk43qm: max(calc(2 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem)), 8px);
+  --sizes-embeddedxs-iconToEdgePadding__1onk43ql: max(calc(2 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem)), 8px);
+  --sizes-embeddedxs-textToEdgePadding__1onk43qn: max(calc(4 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem)), 16px);
+  --sizes-embeddedsm-iconSize__1onk43qo: calc(5 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --sizes-embeddedsm-iconToTextPadding__1onk43qp: calc(2 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --sizes-embeddedsm-iconToEdgePadding__1onk43qq: calc(1.875 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --sizes-embeddedsm-textToEdgePadding__1onk43qr: calc(4 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --sizes-embeddedmd-iconSize__1onk43qs: calc(6 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --sizes-embeddedmd-iconToTextPadding__1onk43qu: calc(2.5 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --sizes-embeddedmd-iconToEdgePadding__1onk43qt: calc(2.375 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --sizes-embeddedmd-textToEdgePadding__1onk43qv: calc(4 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --sizes-embeddedlg-iconSize__1onk43qw: calc(6 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --sizes-embeddedlg-iconToTextPadding__1onk43qy: calc(4 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --sizes-embeddedlg-iconToEdgePadding__1onk43qx: calc(3.375 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --sizes-embeddedlg-textToEdgePadding__1onk43qz: calc(4 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+}

@@ -1,0 +1,9 @@
+.ProgressiveLoaderStyles_baseStyles__19xs31k0 {
+  width: 100%;
+  height: 100%;
+}
+.ProgressiveLoaderStyles_loadingContainerStyles__19xs31k1:focus-visible {
+  outline-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-border-keyboard-focus);
+  outline-style: dotted;
+  outline-width: 1px;
+}

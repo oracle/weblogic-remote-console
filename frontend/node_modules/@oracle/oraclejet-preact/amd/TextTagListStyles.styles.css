@@ -1,0 +1,22 @@
+.TextTagListStyles_textTagListBase__1cda2600 {
+  align-items: center;
+  box-sizing: border-box;
+  display: flex;
+  gap: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem);
+  height: 100%;
+  overflow-x: auto;
+  margin-inline-start: var(--textToEdgePadding__w6gg1y9);
+  scrollbar-width: none;
+}
+.TextTagListStyles_textTagListBase__1cda2600::-webkit-scrollbar {
+  display: none;
+}
+.TextTagListStyles_textTagListBase__1cda2600:focus {
+  outline: none;
+}
+.TextTagListStyles_textTagListBase__1cda2600:focus-visible {
+  outline: none;
+}
+.TextTagListStyles_textTagListInsideLabel__1cda2601 {
+  padding-top: calc(var(--insideEdgePaddingTop__w6gg1yh) + var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem) - 2px);
+}

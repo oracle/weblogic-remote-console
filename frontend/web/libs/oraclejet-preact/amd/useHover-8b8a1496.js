@@ -1,0 +1,2 @@
+define(['exports', './useToggle-a29f97af', 'preact/hooks'], (function(e,s,o){"use strict";e.useHover=function(e={isDisabled:!1}){const{bool:u,setTrue:t,setFalse:l}=s.useToggle(!1),{bool:n,setTrue:r,setFalse:a}=s.useToggle(!1),i=o.useCallback((()=>{n?a():t()}),[n,a,t]),c=e.isDisabled?{}:{onTouchEnd:r,onMouseEnter:i,onMouseLeave:l};return{isHover:!e.isDisabled&&u,hoverProps:c}}}));
+//# sourceMappingURL=useHover-8b8a1496.js.map

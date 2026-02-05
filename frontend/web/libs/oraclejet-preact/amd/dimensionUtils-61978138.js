@@ -1,0 +1,2 @@
+define(['exports'], (function(t){"use strict";t.cloneDimension=function(t){return{x:t.x,y:t.y,height:t.height,width:t.width}},t.getSectionDims=function(t,i,h,e){return"left"===i?{x:t.x,width:e,height:h,y:t.y}:"top"===i?{x:t.x,width:h,height:e,y:t.y}:"bottom"===i?{x:t.x,y:t.y+t.height-e,height:e,width:h}:{x:t.x+t.width-e,y:t.y,width:e,height:h}}}));
+//# sourceMappingURL=dimensionUtils-61978138.js.map

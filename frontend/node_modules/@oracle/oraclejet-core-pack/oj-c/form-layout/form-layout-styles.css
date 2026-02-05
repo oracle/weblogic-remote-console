@@ -1,0 +1,11 @@
+oj-c-form-layout:not(.oj-complete) {
+  visibility: hidden;
+}
+
+oj-c-form-layout {
+  display: block;
+}
+
+oj-c-form-layout[hidden] {
+  display: none;
+}

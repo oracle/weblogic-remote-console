@@ -1,11 +1,13 @@
-// Copyright (c) 2021, 2024, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2025, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.repo;
 
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
@@ -38,7 +40,7 @@ public class FrontendManager {
         }
       }
       if ((frontends.size() > 10 * MAX_ENTRIES_CHECK)
-          || oldest.getLastRequestTime() + HOUR < new Date().getTime()) {
+          || (oldest.getLastRequestTime() + HOUR < new Date().getTime())) {
         LOGGER.fine("Terminating frontend: " + oldest.getFullID() + ", " + oldest);
         oldest.terminate();
         frontends.remove(oldest.getFullID());
@@ -57,6 +59,16 @@ public class FrontendManager {
         frontend.terminate();
         frontends.remove(frontend.getFullID());
         ret = true;
+      }
+    }
+    return ret;
+  }
+
+  public static Collection<Frontend> getFrontendsWithID(String id) {
+    List<Frontend> ret = new LinkedList<>();
+    for (Frontend frontend : frontends.values()) {
+      if (frontend.getID().equals(id)) {
+        ret.add(frontend);
       }
     }
     return ret;

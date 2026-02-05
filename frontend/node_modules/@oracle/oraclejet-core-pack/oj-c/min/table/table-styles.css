@@ -1,0 +1,26 @@
+/* This file is where css selectors for the component go.
+   There will be hard coded properties and properties controlled by variables, for example
+
+   oj-c-table .oj-c-table-value-text {
+     color: var(--oj-c-table-value-text-color);
+     display: inline-block;
+	 }
+*/
+
+oj-c-table:not(.oj-complete) {
+  visibility: hidden;
+}
+
+oj-c-table {
+  align-items: stretch;
+  box-sizing: border-box;
+  clear: both;
+  display: inline-flex;
+  min-height: 24px;
+  min-width: 240px;
+  position: relative;
+}
+
+oj-c-table[hidden] {
+  display: none;
+}

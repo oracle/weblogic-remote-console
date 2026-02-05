@@ -1,0 +1,9 @@
+/**
+ * @license
+ * Copyright (c) 2014, 2025, Oracle and/or its affiliates.
+ * Licensed under The Universal Permissive License (UPL), Version 1.0
+ * as shown at https://oss.oracle.com/licenses/upl/
+ * @ignore
+ */
+define(["exports","preact/jsx-runtime","preact","ojs/ojvcomponent","ojs/ojcore-base"],function(e,t,r,i,s){"use strict";s=s&&Object.prototype.hasOwnProperty.call(s,"default")?s.default:s;var n=function(e,t,r,i){var s,n=arguments.length,h=n<3?t:null===i?i=Object.getOwnPropertyDescriptor(t,r):i;if("object"==typeof Reflect&&"function"==typeof Reflect.decorate)h=Reflect.decorate(e,t,r,i);else for(var o=e.length-1;o>=0;o--)(s=e[o])&&(h=(n<3?s(h):n>3?s(t,r,h):s(t,r))||h);return n>3&&h&&Object.defineProperty(t,r,h),h};e.HighlightText=class extends r.Component{constructor(){super(...arguments),this._HIGHLIGHT_TOKEN="__@@__"}render(e){const r=this._highlighter(e.text,e.matchText);return t.jsx(i.Root,{class:"oj-highlighttext",children:r})}_highlighter(e,r){if(r){const i=this._escapeRegExp(r),n=e.replace(new RegExp(i,"gi"),this._HIGHLIGHT_TOKEN+"$&"+this._HIGHLIGHT_TOKEN).split(this._HIGHLIGHT_TOKEN).map((e,r)=>r%2==0?e:t.jsx("span",{class:"oj-highlighttext-highlighter",children:e}));return s.AgentUtils.getAgentInfo().os===s.AgentUtils.OS.IOS?t.jsx("span",{role:"text",children:n}):t.jsx("span",{children:n})}return t.jsx("span",{children:e})}_escapeRegExp(e){return e.replace(/[.*+\-?^${}()|[\]\\]/g,"\\$&")}},e.HighlightText.defaultProps={text:"",matchText:""},e.HighlightText._metadata={properties:{text:{type:"string"},matchText:{type:"string"}}},e.HighlightText=n([i.customElement("oj-highlight-text")],e.HighlightText),Object.defineProperty(e,"__esModule",{value:!0})});
+//# sourceMappingURL=ojhighlighttext.js.map

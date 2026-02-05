@@ -1,0 +1,17 @@
+oj-c-file-picker:not(.oj-complete) {
+  visibility: hidden;
+}
+
+oj-c-file-picker {
+  display: block;
+  max-width: 400px;
+  width: 100%;
+}
+ 
+oj-c-file-picker.oj-c-file-picker-with-trigger {
+  display: inline-block;
+}
+
+oj-c-file-picker[hidden] {
+  display: none;
+}

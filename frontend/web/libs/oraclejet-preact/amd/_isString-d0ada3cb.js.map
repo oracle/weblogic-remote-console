@@ -1,0 +1,1 @@
+{"version":3,"file":"_isString-d0ada3cb.js","sources":["../../../../node_modules/ramda/es/internal/_isString.js"],"sourcesContent":["export default function _isString(x) {\n  return Object.prototype.toString.call(x) === '[object String]';\n}"],"names":["x","Object","prototype","toString","call"],"mappings":"yDAAe,SAAmBA,GAChC,MAA6C,oBAAtCC,OAAOC,UAAUC,SAASC,KAAKJ,EACxC"}

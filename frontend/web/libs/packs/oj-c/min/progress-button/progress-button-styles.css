@@ -1,0 +1,12 @@
+oj-c-progress-button:not(.oj-complete) {
+  visibility: hidden;
+}
+
+oj-c-progress-button {
+  display: inline-flex;
+  vertical-align: top;
+}
+
+oj-c-progress-button[hidden] {
+  display: none;
+}

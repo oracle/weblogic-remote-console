@@ -21,6 +21,7 @@ import weblogic.remoteconsole.common.utils.WebLogicVersions;
 import weblogic.remoteconsole.server.ConsoleBackendRuntime;
 import weblogic.remoteconsole.server.connection.Connection;
 import weblogic.remoteconsole.server.connection.ConnectionManager;
+import weblogic.remoteconsole.server.providers.ProjectManager;
 import weblogic.remoteconsole.server.providers.Provider;
 import weblogic.remoteconsole.server.providers.Root;
 
@@ -372,7 +373,15 @@ public class InvocationContext {
     this.frontend = frontend;
   }
 
-  public Map getCache() {
+  public Frontend getFrontend() {
+    return frontend;
+  }
+
+  public ProjectManager getProjectManager() {
+    return (frontend != null) ? frontend.getProjectManager() : null;
+  }
+
+  public Map<String, Object> getCache() {
     return cache;
   }
 

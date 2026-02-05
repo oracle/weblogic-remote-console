@@ -1,0 +1,11 @@
+oj-c-avatar:not(.oj-complete) {
+  visibility: hidden;
+}
+
+oj-c-avatar[hidden] {
+  display: none;
+}
+oj-c-avatar {
+  display: inline-block;
+  font-size: 0;
+}

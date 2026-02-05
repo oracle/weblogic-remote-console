@@ -28,7 +28,6 @@ const WindowManagement = (() => {
   const prompt = require('electron-prompt');
   
   const ConfigJSON = require('./config-json');
-  const ProjectManager = require('./project-management');
   const AutoUpdateUtils = require('./auto-update-utils');
   const CoreUtils = require('./core-utils');
   const OSUtils = require('./os-utils');
@@ -39,6 +38,7 @@ const WindowManagement = (() => {
   let corruption = [];
   let _window;
   let _params;
+  let _createNewWindowCallback;
   let newVersion;
   let downloadURL = 'https://github.com/oracle/weblogic-remote-console/releases';
   
@@ -245,202 +245,17 @@ const WindowManagement = (() => {
         accelerator: 'CommandOrControl+N',
         label: `${I18NUtils.get('wrc-electron.menus.file.newWindow.value')}`,
         click(item) {
-          const runme = (process.env.APPIMAGE && fs.existsSync(process.env.APPIMAGE)) ?
-            process.env.APPIMAGE :
-            app.getPath('exe');
-          execFile(runme);
-        }
-      });
-    }
-    /**
-     * A closure that creates the "New Project" submenu item, under the "File" menu
-     * See {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures}
-     */
-    function createNewProjectSubmenu() {
-      fileMenu.submenu.push({
-        id: 'newProject',
-        label: `${I18NUtils.get('wrc-electron.menus.file.newProject.value')}`,
-        click(item) {
-          prompt({
-            title: `${I18NUtils.get('wrc-electron.prompt.file.newProject.title')}`,
-            label: `${I18NUtils.get('wrc-electron.prompt.file.newProject.label')}`,
-            inputAttrs: { required: true },
-            resizable: true,
-            alwaysOnTop: true
-          })
-            .then(name => {
-              const results = ProjectManager.addNewProject(name);
-              if (results.succeeded) {
-                current_project = results.current_project;
-                generateAppMenu();
-                _window.webContents.send('on-project-switched', {action: 'create', from: results.previous_project, to: results.current_project});
-              }
-              else {
-                switch(results.resultReason) {
-                  case ProjectManager.ResultReason.ALREADY_EXISTS:
-                    showPopupMessage({
-                      title: `${I18NUtils.get('wrc-electron.prompt.file.newProject.already-exists-error.title')}`,
-                      severity: 'warning',
-                      details: `${I18NUtils.get('wrc-electron.prompt.file.newProject.already-exists-error.detail', name)}`
-                    });
-                    break;
-                  case ProjectManager.ResultReason.CANNOT_BE_NULL:
-                    break;
-                }
-              }
-            })
-            .catch(err => {
-              Promise.reject(new Error('Failed to create project'));
-            });
-        }
-      });
-    }
-    
-    /**
-     * A closure that populates the empty submenu field of the "Switch to project" submenu item, under the "File" menu
-     * See {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures}
-     */
-    function populateSwitchToProjectSubmenu() {
-      const switchable_projects = ProjectManager.getSwitchableProjects();
-      // Leaving this following block of code here for now, but
-      // it likely needs to be refactored and treated as part of
-      // the logic used in ProjectManager.getSwitchableProjects().
-      if (switchable_projects.length > 0) {
-        const subsubmenu = [];
-        for (let i = 0; i < switchable_projects.length; i++) {
-          subsubmenu.push({
-            label: `${switchable_projects[i].name}`,
-            id: i,
-            click(item) {
-              const results = ProjectManager.selectProject(item.label);
-              if  (results.succeeded) {
-                current_project = results.current_project;
-                generateAppMenu();
-                _window.webContents.send('on-project-switched', {action: 'select', from: results.previous_project, to: results.current_project});
-              }
-            }
-          });
-        }
-        
-        fileMenu.submenu.push({
-          id: 'switchToProject',
-          label: `${I18NUtils.get('wrc-electron.menus.file.switchToProject.value')}`,
-          submenu: subsubmenu
-        });
-      }
-      
-    }
-    
-    /**
-     * A closure that populates the empty submenu field of the "Delete Project" submenu item, under the "File" menu
-     * See {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures}
-     */
-    function populateDeleteProjectSubmenu() {
-      const deletable_projects = ProjectManager.getDeletableProjects();
-      const fileSubmenu = [];
-      let label;
-      
-      for (let i = 0; i < deletable_projects.length; i++) {
-        if (deletable_projects[i].current)
-          label = `${deletable_projects[i].name} (current)`;
-        else
-          label = `${deletable_projects[i].name}`;
-        
-        fileSubmenu.push({
-          label: label,
-          id: i,
-          click(item) {
-            // Use item.label to get name of project being deleted
-            const name = item.label.replace(' (current)', '');
-            const results = ProjectManager.deleteProject(name);
-            if (results.succeeded) {
-              // Update current_project using results returned from the
-              // call to ProjectManager.deleteProject.
-              current_project = results.current_project;
-              _window.webContents.send('on-project-switched', {action: 'navigate', from: results.deleted_project, to: results.current_project});
-              generateAppMenu();
-            }
+          if (_createNewWindowCallback) {
+            _createNewWindowCallback();
           }
-        });
-      }
-      
-      fileMenu.submenu.push({
-        id: 'deleteProject',
-        label: `${I18NUtils.get('wrc-electron.menus.file.deleteProject.value')}`,
-        submenu: fileSubmenu
-      });
-    }
-    
-    /**
-     * A closure that creates the "Name/Rename Project" submenu item, under the "File" menu
-     * See {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures}
-     */
-    function createNameProjectSubmenu() {
-      const attr = {};
-      if (current_project.name === '(unnamed)') {
-        attr['label'] = I18NUtils.get('wrc-electron.menus.file.nameProject.value');
-        attr['prompt'] = {
-          title: `${I18NUtils.get('wrc-electron.prompt.file.nameProject.title')}`,
-          label: `${I18NUtils.get('wrc-electron.prompt.file.nameProject.label')}`,
-          value: null
-        };
-      }
-      else {
-        attr['label'] = I18NUtils.get('wrc-electron.menus.file.renameProject.value', current_project.name);
-        attr['prompt'] = {
-          title: `${I18NUtils.get('wrc-electron.prompt.file.renameProject.title', current_project.name)}`,
-          label: `${I18NUtils.get('wrc-electron.prompt.file.renameProject.label')}`,
-          value: current_project.name
-        };
-      }
-      
-      fileMenu.submenu.push({
-        id: 'nameProject',
-        label: attr.label,
-        click(item) {
-          prompt({
-            title: attr.prompt.title,
-            label: attr.prompt.label,
-            value: attr.prompt.value,
-            inputAttrs: { required: true },
-            resizable: true,
-            alwaysOnTop: true
-          })
-            .then(name => {
-              const results = ProjectManager.renameCurrentProject(name);
-              if (results.succeeded) {
-                current_project = results.current_project;
-                _window.webContents.send('on-project-switched', {action: 'rename', from: results.renamed_project, to: results.current_project});
-                generateAppMenu();
-              }
-              else {
-                switch(results.resultReason) {
-                  case ProjectManager.ResultReason.ALREADY_EXISTS:
-                    showPopupMessage({title: 'Project Already Exist', severity: 'warning', details: `A project named "${name}" already exists!`});
-                    break;
-                  case ProjectManager.ResultReason.NAME_NOT_CHANGED:
-                  case ProjectManager.ResultReason.CANNOT_BE_NULL:
-                    break;
-                }
-              }
-            })
-            .catch(err => {
-              Promise.reject(new Error('Failed to create project'));
-            });
         }
       });
     }
-    
+
     // Get 'File' menu from application menu
     const fileMenu = appMenuTemplate.find(item => item.id === 'file');
-    // Declare function-scoped reference to the current project
-    let current_project = ProjectManager.getCurrentProject();
-    
+
     createNewWindowSubmenu();
-    createNewProjectSubmenu();
-    populateSwitchToProjectSubmenu();
-    populateDeleteProjectSubmenu();
-    createNameProjectSubmenu();
   }
   
   /**
@@ -751,27 +566,31 @@ const WindowManagement = (() => {
     }).then();
   }
   
+  /**
+   * Creates a new BrowserWindow and loads the specified URL
+   * @param {string} url - The URL to load in the new window
+   * @returns {BrowserWindow}
+   */
+  function createNewWindow(url) {
+    const newWindow = createBrowserWindow('', AutoPrefs.get('width'), AutoPrefs.get('height'));
+    newWindow.loadURL(url);
+    return newWindow;
+  }
+
   return {
     /**
      * @param {string} title
      * @param {{version: string, productName: string, copyright: string, homepage: string, supportsUpgradeCheck: boolean, supportsAutoUpgrades: boolean}} params
      * @param {string} exePath
      * @param {string} userDataPath
+     * @param {function} createNewWindowCallback - Callback function to create a new window with a URL
      * @returns {BrowserWindow}
      */
-    initialize: (title, params, exePath, userDataPath) => {
+    initialize: (title, params, exePath, userDataPath, createNewWindowCallback) => {
       function setOnWindowCloseListener() {
         _window.on('close', (event) => {
           if (_window) {
-            // Cancel the close, because we want to
-            // allow the JET side to do stuff (like
-            // attempt to save a "dirty" form) before
-            // closing.
-            event.preventDefault();
-            // 1. Send notification to JET side saying
-            //    that the app is closing.
-            _window.webContents.send('start-app-quit');
-            // 2. Write out the auto-prefs.json file.
+            // Write out the auto-prefs.json file.
             AutoPrefs.write();
           }
         });
@@ -795,7 +614,8 @@ const WindowManagement = (() => {
       });
       
       _params = params;
-      
+      _createNewWindowCallback = createNewWindowCallback;
+
       if (params.feedURL)
         downloadURL = params.feedURL;
       
@@ -856,10 +676,6 @@ const WindowManagement = (() => {
     notifyState: (state) => {
       if (Menu.getApplicationMenu()) {
         const items =  [
-          {id: 'newProject', state: state},
-          {id: 'switchToProject', state: state},
-          {id: 'deleteProject', state: state},
-          {id: 'nameProject', state: state},
           {id: 'reload', state: state}
         ];
         let submenuItem;
@@ -959,14 +775,15 @@ const WindowManagement = (() => {
     },
     corruptFile: (filename) => {
       let date = new Date();
-      let newfilename = filename + "-corrupt-" + date.getFullYear() + "-" + date.getMonth() + "-" + date.getDate() + "-" + Math.floor(Math.random() * 10000);
+      let newfilename = filename + '-corrupt-' + date.getFullYear() + '-' + date.getMonth() + '-' + date.getDate() + '-' + Math.floor(Math.random() * 10000);
       fs.rmSync(newfilename, { force: true } );
       fs.renameSync(filename, newfilename);
       if (!_window)
         saveCorruption(filename, newfilename);
       else
         showCorruption(filename, newfilename);
-    }
+    },
+    createNewWindow: createNewWindow
   };
   
 })();

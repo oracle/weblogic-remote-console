@@ -1,0 +1,238 @@
+[
+  {
+    "id": "oj-c.TruncatingBadge",
+    "name": "TruncatingBadge",
+    "memberof": "oj-c",
+    "kind": "class",
+    "meta": {
+      "filename": "truncating-badge.tsx",
+      "path": "web/components/oj-c/truncating-badge"
+    },
+    "ojcomponent": true,
+    "isvcomponent": true,
+    "since": "19.0.0",
+    "longname": "oj-c.TruncatingBadge",
+    "pack": "oj-c",
+    "classdesc": "A truncating badge is a label which holds a small amount of information, and also displays a tooltip when truncation occurs.",
+    "scope": "static",
+    "tagWithoutBrackets": "oj-c-truncating-badge",
+    "tagWithBrackets": "<oj-c-truncating-badge>",
+    "domInterface": "CTruncatingBadgeElement",
+    "ojPageTitle": "&lt;oj-c-truncating-badge>",
+    "camelCaseName": "TruncatingBadge",
+    "ojPageTitlePrefix": "Element: ",
+    "ojtsvcomponent": true,
+    "tstype": {
+      "target": "Type",
+      "value": "interface CTruncatingBadgeElement extends JetElement<TruncatingBadgeElementSettableProperties>"
+    },
+    "ojsignature": [
+      {
+        "target": "Type",
+        "value": "interface CTruncatingBadgeElement extends JetElement<TruncatingBadgeElementSettableProperties>"
+      }
+    ],
+    "tsdeprecated": [
+      {
+        "type": "production",
+        "since": "19.0.0"
+      }
+    ],
+    "ojmodule": "truncating-badge"
+  },
+  {
+    "id": "oj-c.TruncatingBadge#variant",
+    "name": "variant",
+    "memberof": "oj-c.TruncatingBadge",
+    "meta": {
+      "filename": "truncating-badge.tsx",
+      "path": "web/components/oj-c/truncating-badge"
+    },
+    "kind": "member",
+    "longname": "oj-c.TruncatingBadge#variant",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "\"success\"",
+        "\"danger\"",
+        "\"info\"",
+        "\"warning\"",
+        "\"neutral\"",
+        "\"neutralSubtle\"",
+        "\"dangerSubtle\"",
+        "\"successSubtle\"",
+        "\"warningSubtle\"",
+        "\"infoSubtle\""
+      ]
+    },
+    "optional": true,
+    "description": "Sets the variant for the badge. Badge can be subtle or solid with different colors. The default value of this property is theme driven."
+  },
+  {
+    "id": "oj-c.TruncatingBadge#size",
+    "name": "size",
+    "memberof": "oj-c.TruncatingBadge",
+    "meta": {
+      "filename": "truncating-badge.tsx",
+      "path": "web/components/oj-c/truncating-badge"
+    },
+    "kind": "member",
+    "longname": "oj-c.TruncatingBadge#size",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "\"sm\"",
+        "\"md\""
+      ]
+    },
+    "optional": true,
+    "description": "Specifies the size of the badge. Consists of two options: medium and small. The default value of this property is theme driven."
+  },
+  {
+    "id": "oj-c.TruncatingBadge#edge",
+    "name": "edge",
+    "memberof": "oj-c.TruncatingBadge",
+    "meta": {
+      "filename": "truncating-badge.tsx",
+      "path": "web/components/oj-c/truncating-badge"
+    },
+    "kind": "member",
+    "longname": "oj-c.TruncatingBadge#edge",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "\"none\"",
+        "\"end\""
+      ]
+    },
+    "optional": true,
+    "description": "Specifies the edge of the badge. Badges can be attached to the end edge of another component. They lose their default corner rounding on right side for ltr direction or left side for rtl direction."
+  },
+  {
+    "id": "oj-c.TruncatingBadge#label",
+    "name": "label",
+    "memberof": "oj-c.TruncatingBadge",
+    "meta": {
+      "filename": "truncating-badge.tsx",
+      "path": "web/components/oj-c/truncating-badge"
+    },
+    "kind": "member",
+    "longname": "oj-c.TruncatingBadge#label",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "string"
+      ]
+    },
+    "optional": false,
+    "description": "\"Specifies the text to be displayed in the badge."
+  },
+  {
+    "id": "oj-c.TruncatingBadge#setProperty",
+    "name": "setProperty",
+    "memberof": "oj-c.TruncatingBadge",
+    "meta": {
+      "filename": "truncating-badge.tsx",
+      "path": "web/components/oj-c/truncating-badge"
+    },
+    "kind": "function",
+    "longname": "oj-c.TruncatingBadge#setProperty",
+    "scope": "instance",
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "void"
+          ]
+        }
+      }
+    ],
+    "description": "Sets a property or a single subproperty for complex properties and notifies the component of the change, triggering a corresponding event.",
+    "params": [
+      {
+        "name": "property",
+        "description": "The property name to set. Supports dot notation for subproperty access.",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "value",
+        "description": "The new value to set the property to.",
+        "type": {
+          "names": [
+            "any"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.TruncatingBadge#getProperty",
+    "name": "getProperty",
+    "memberof": "oj-c.TruncatingBadge",
+    "meta": {
+      "filename": "truncating-badge.tsx",
+      "path": "web/components/oj-c/truncating-badge"
+    },
+    "kind": "function",
+    "longname": "oj-c.TruncatingBadge#getProperty",
+    "scope": "instance",
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "any"
+          ]
+        }
+      }
+    ],
+    "description": "Retrieves the value of a property or a subproperty.",
+    "params": [
+      {
+        "name": "property",
+        "description": "The property name to get. Supports dot notation for subproperty access.",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.TruncatingBadge#setProperties",
+    "name": "setProperties",
+    "memberof": "oj-c.TruncatingBadge",
+    "meta": {
+      "filename": "truncating-badge.tsx",
+      "path": "web/components/oj-c/truncating-badge"
+    },
+    "kind": "function",
+    "longname": "oj-c.TruncatingBadge#setProperties",
+    "scope": "instance",
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "void"
+          ]
+        }
+      }
+    ],
+    "description": "Performs a batch set of properties.",
+    "params": [
+      {
+        "name": "properties",
+        "description": "An object containing the property and value pairs to set.",
+        "type": {
+          "names": [
+            "object"
+          ]
+        }
+      }
+    ]
+  }
+]

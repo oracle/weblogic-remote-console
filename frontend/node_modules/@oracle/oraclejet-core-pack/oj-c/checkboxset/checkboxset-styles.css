@@ -1,0 +1,19 @@
+oj-c-checkboxset:not(.oj-complete) {
+  visibility: hidden;
+}
+
+oj-c-checkboxset {
+  display: inline-block;
+  box-sizing: border-box;
+  width: auto;
+}
+
+oj-c-checkboxset.in-form-layout {
+  display: block;
+  max-width: 100%;
+  width: 100%;
+}
+
+oj-c-checkboxset[hidden] {
+  display: none;
+}

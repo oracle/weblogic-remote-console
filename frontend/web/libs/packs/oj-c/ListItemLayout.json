@@ -1,0 +1,359 @@
+[
+  {
+    "id": "oj-c.ListItemLayout",
+    "name": "ListItemLayout",
+    "memberof": "oj-c",
+    "kind": "class",
+    "meta": {
+      "filename": "list-item-layout.tsx",
+      "path": "web/components/oj-c/list-item-layout"
+    },
+    "ojcomponent": true,
+    "isvcomponent": true,
+    "since": "14.0.0",
+    "longname": "oj-c.ListItemLayout",
+    "pack": "oj-c",
+    "classdesc": "<h3 id=\"listItemLayoutOverview-section\">\n  JET List Item Layout\n  <a class=\"bookmarkable-link\" title=\"Bookmarkable Link\" href=\"#listItemLayoutOverview-section\"></a>\n</h3>\nThe oj-c-list-item-layout helps application teams to easily layout their content into different slots.\n\n<pre class=\"prettyprint\"><code>//ListItemLayout with text\n&lt;oj-list-view id=\"listview1\" aria-label=\"list layout within list view\" data=\"[[dataProvider]]\" style=\"width: 450px;\"\n                 selected=\"{{selectorSelectedItems}}\" selection-mode=\"multiple\">\n   &lt;template slot=\"itemTemplate\" data-oj-as=\"item\">\n      &lt;li>\n         &lt;oj-c-list-item-layout>\n            &lt;oj-selector slot='selector' selected-keys='{{selectorSelectedItems}}' key='[[item.data.id]]'>\n            &lt;/oj-selector>\n            &lt;div>\n               &lt;oj-bind-text value=\"default\">&lt;/oj-bind-text>\n            &lt;/div>\n         &lt;/oj-c-list-item-layout>\n      &lt;/li>\n   &lt;/template>\n&lt;/oj-list-view>\n</code>",
+    "scope": "static",
+    "tagWithoutBrackets": "oj-c-list-item-layout",
+    "tagWithBrackets": "<oj-c-list-item-layout>",
+    "domInterface": "CListItemLayoutElement",
+    "ojPageTitle": "&lt;oj-c-list-item-layout>",
+    "camelCaseName": "ListItemLayout",
+    "ojPageTitlePrefix": "Element: ",
+    "ojtsvcomponent": true,
+    "tstype": {
+      "target": "Type",
+      "value": "interface CListItemLayoutElement extends JetElement<ListItemLayoutElementSettableProperties>"
+    },
+    "ojsignature": [
+      {
+        "target": "Type",
+        "value": "interface CListItemLayoutElement extends JetElement<ListItemLayoutElementSettableProperties>"
+      }
+    ],
+    "tsdeprecated": [
+      {
+        "type": "supersedes",
+        "since": "14.0.0",
+        "value": [
+          "oj-list-item-layout"
+        ]
+      }
+    ],
+    "ojmodule": "list-item-layout"
+  },
+  {
+    "id": "oj-c.ListItemLayout#inset",
+    "name": "inset",
+    "memberof": "oj-c.ListItemLayout",
+    "meta": {
+      "filename": "list-item-layout.tsx",
+      "path": "web/components/oj-c/list-item-layout"
+    },
+    "kind": "member",
+    "longname": "oj-c.ListItemLayout#inset",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "\"none\"",
+        "\"listInset\""
+      ]
+    },
+    "optional": true,
+    "description": "Controls padding around outside of list item layouts."
+  },
+  {
+    "id": "oj-c.ListItemLayout#verticalAlignment",
+    "name": "verticalAlignment",
+    "memberof": "oj-c.ListItemLayout",
+    "meta": {
+      "filename": "list-item-layout.tsx",
+      "path": "web/components/oj-c/list-item-layout"
+    },
+    "kind": "member",
+    "longname": "oj-c.ListItemLayout#verticalAlignment",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "\"top\"",
+        "\"middle\""
+      ]
+    },
+    "optional": true,
+    "description": "Default is 'middle' which vertically aligns layout content to center of the row."
+  },
+  {
+    "id": "oj-c.ListItemLayout#setProperty",
+    "name": "setProperty",
+    "memberof": "oj-c.ListItemLayout",
+    "meta": {
+      "filename": "list-item-layout.tsx",
+      "path": "web/components/oj-c/list-item-layout"
+    },
+    "kind": "function",
+    "longname": "oj-c.ListItemLayout#setProperty",
+    "scope": "instance",
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "void"
+          ]
+        }
+      }
+    ],
+    "description": "Sets a property or a single subproperty for complex properties and notifies the component of the change, triggering a corresponding event.",
+    "params": [
+      {
+        "name": "property",
+        "description": "The property name to set. Supports dot notation for subproperty access.",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "value",
+        "description": "The new value to set the property to.",
+        "type": {
+          "names": [
+            "any"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.ListItemLayout#getProperty",
+    "name": "getProperty",
+    "memberof": "oj-c.ListItemLayout",
+    "meta": {
+      "filename": "list-item-layout.tsx",
+      "path": "web/components/oj-c/list-item-layout"
+    },
+    "kind": "function",
+    "longname": "oj-c.ListItemLayout#getProperty",
+    "scope": "instance",
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "any"
+          ]
+        }
+      }
+    ],
+    "description": "Retrieves the value of a property or a subproperty.",
+    "params": [
+      {
+        "name": "property",
+        "description": "The property name to get. Supports dot notation for subproperty access.",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.ListItemLayout#setProperties",
+    "name": "setProperties",
+    "memberof": "oj-c.ListItemLayout",
+    "meta": {
+      "filename": "list-item-layout.tsx",
+      "path": "web/components/oj-c/list-item-layout"
+    },
+    "kind": "function",
+    "longname": "oj-c.ListItemLayout#setProperties",
+    "scope": "instance",
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "void"
+          ]
+        }
+      }
+    ],
+    "description": "Performs a batch set of properties.",
+    "params": [
+      {
+        "name": "properties",
+        "description": "An object containing the property and value pairs to set.",
+        "type": {
+          "names": [
+            "object"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.ListItemLayout#Default",
+    "name": "Default",
+    "memberof": "oj-c.ListItemLayout",
+    "meta": {
+      "filename": "list-item-layout.tsx",
+      "path": "web/components/oj-c/list-item-layout"
+    },
+    "kind": "member",
+    "longname": "oj-c.ListItemLayout#Default",
+    "scope": "instance",
+    "description": "The default slot accepts the primary data to be displayed.",
+    "ojchild": true,
+    "ojslot": false
+  },
+  {
+    "id": "oj-c.ListItemLayout#overline",
+    "name": "overline",
+    "memberof": "oj-c.ListItemLayout",
+    "meta": {
+      "filename": "list-item-layout.tsx",
+      "path": "web/components/oj-c/list-item-layout"
+    },
+    "kind": "member",
+    "longname": "oj-c.ListItemLayout#overline",
+    "scope": "instance",
+    "description": "The overline slot is for adding a overline text above the default slot.",
+    "ojchild": false,
+    "ojslot": true
+  },
+  {
+    "id": "oj-c.ListItemLayout#selector",
+    "name": "selector",
+    "memberof": "oj-c.ListItemLayout",
+    "meta": {
+      "filename": "list-item-layout.tsx",
+      "path": "web/components/oj-c/list-item-layout"
+    },
+    "kind": "member",
+    "longname": "oj-c.ListItemLayout#selector",
+    "scope": "instance",
+    "description": "The selector slot can accept a oj-selector component and is optional.",
+    "ojchild": false,
+    "ojslot": true
+  },
+  {
+    "id": "oj-c.ListItemLayout#leading",
+    "name": "leading",
+    "memberof": "oj-c.ListItemLayout",
+    "meta": {
+      "filename": "list-item-layout.tsx",
+      "path": "web/components/oj-c/list-item-layout"
+    },
+    "kind": "member",
+    "longname": "oj-c.ListItemLayout#leading",
+    "scope": "instance",
+    "description": "The leading slot is used for adding a leading visual next to the selector.",
+    "ojchild": false,
+    "ojslot": true
+  },
+  {
+    "id": "oj-c.ListItemLayout#secondary",
+    "name": "secondary",
+    "memberof": "oj-c.ListItemLayout",
+    "meta": {
+      "filename": "list-item-layout.tsx",
+      "path": "web/components/oj-c/list-item-layout"
+    },
+    "kind": "member",
+    "longname": "oj-c.ListItemLayout#secondary",
+    "scope": "instance",
+    "description": "The secondary slot is for adding a secondary text below the default text.",
+    "ojchild": false,
+    "ojslot": true
+  },
+  {
+    "id": "oj-c.ListItemLayout#tertiary",
+    "name": "tertiary",
+    "memberof": "oj-c.ListItemLayout",
+    "meta": {
+      "filename": "list-item-layout.tsx",
+      "path": "web/components/oj-c/list-item-layout"
+    },
+    "kind": "member",
+    "longname": "oj-c.ListItemLayout#tertiary",
+    "scope": "instance",
+    "description": "The tertiary slot is for adding a tertiary text below the secondary text.",
+    "ojchild": false,
+    "ojslot": true
+  },
+  {
+    "id": "oj-c.ListItemLayout#metadata",
+    "name": "metadata",
+    "memberof": "oj-c.ListItemLayout",
+    "meta": {
+      "filename": "list-item-layout.tsx",
+      "path": "web/components/oj-c/list-item-layout"
+    },
+    "kind": "member",
+    "longname": "oj-c.ListItemLayout#metadata",
+    "scope": "instance",
+    "description": "The metadata for adding extra trailing information. Examples of metadata are author, date etc.",
+    "ojchild": false,
+    "ojslot": true
+  },
+  {
+    "id": "oj-c.ListItemLayout#trailing",
+    "name": "trailing",
+    "memberof": "oj-c.ListItemLayout",
+    "meta": {
+      "filename": "list-item-layout.tsx",
+      "path": "web/components/oj-c/list-item-layout"
+    },
+    "kind": "member",
+    "longname": "oj-c.ListItemLayout#trailing",
+    "scope": "instance",
+    "description": "The trailing slot is used for adding a trailing visual.",
+    "ojchild": false,
+    "ojslot": true
+  },
+  {
+    "id": "oj-c.ListItemLayout#action",
+    "name": "action",
+    "memberof": "oj-c.ListItemLayout",
+    "meta": {
+      "filename": "list-item-layout.tsx",
+      "path": "web/components/oj-c/list-item-layout"
+    },
+    "kind": "member",
+    "longname": "oj-c.ListItemLayout#action",
+    "scope": "instance",
+    "description": "Action slot often uses a toolbar. In general, the action slot should display either one primary action or one or more secondary actions.",
+    "ojchild": false,
+    "ojslot": true
+  },
+  {
+    "id": "oj-c.ListItemLayout#quaternary",
+    "name": "quaternary",
+    "memberof": "oj-c.ListItemLayout",
+    "meta": {
+      "filename": "list-item-layout.tsx",
+      "path": "web/components/oj-c/list-item-layout"
+    },
+    "kind": "member",
+    "longname": "oj-c.ListItemLayout#quaternary",
+    "scope": "instance",
+    "description": "The quaternary slot is for adding a quaternary text below the tertiary text.",
+    "ojchild": false,
+    "ojslot": true
+  },
+  {
+    "id": "oj-c.ListItemLayout#navigation",
+    "name": "navigation",
+    "memberof": "oj-c.ListItemLayout",
+    "meta": {
+      "filename": "list-item-layout.tsx",
+      "path": "web/components/oj-c/list-item-layout"
+    },
+    "kind": "member",
+    "longname": "oj-c.ListItemLayout#navigation",
+    "scope": "instance",
+    "description": "The navigation slot is used for adding links below the trailing slot.",
+    "ojchild": false,
+    "ojslot": true
+  }
+]

@@ -1,0 +1,9 @@
+.useVisDragModeControls_background__am12e50 {
+  display: flex;
+  pointer-events: none;
+  background-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-surface-neutral0);
+  width: -moz-max-content;
+  width: max-content;
+  position: absolute;
+  border-radius: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-border-radius-sm);
+}

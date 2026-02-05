@@ -1,0 +1,2 @@
+define(['exports', './clientHints-6d361eaa'], (function(e,i){"use strict";const t=i.getClientHints().platform,l="android"===t||"ios"===t;e.generateAriaLabel=(e,i,t)=>[i,[void 0===t.isSelected?"":t.isSelected?e.vis_stateSelected():e.vis_stateUnselected(),t.isDrillable?e.vis_drillable():""].filter(Boolean).join(", ")].filter(Boolean).join(". "),e.supportsMobileScreenReader=l}));
+//# sourceMappingURL=accUtils-acd70e81.js.map

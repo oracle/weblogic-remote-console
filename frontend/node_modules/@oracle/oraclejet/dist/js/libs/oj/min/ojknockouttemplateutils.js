@@ -1,0 +1,9 @@
+/**
+ * @license
+ * Copyright (c) 2014, 2025, Oracle and/or its affiliates.
+ * Licensed under The Universal Permissive License (UPL), Version 1.0
+ * as shown at https://oss.oracle.com/licenses/upl/
+ * @ignore
+ */
+define(["exports","jqueryui-amd/widget","jquery","knockout"],function(e,t,n,r){"use strict";(n=n&&Object.prototype.hasOwnProperty.call(n,"default")?n.default:n).widget("oj._ojDetectCleanData",{options:{cleanParent:!1},_destroy:function(){var e=r.utils.domNodeDisposal,t="cleanExternalData",n=e[t];e[t]=function(){};try{this.options.cleanParent&&null!=this.element[0].parentNode?r.cleanNode(this.element[0].parentNode):r.cleanNode(this.element[0])}finally{e[t]=n}}});const a={getRenderer:function(e,t){var a=function(a){var o=a._parentElement||a.parentElement,l=r.contextFor(a.componentElement);if(l){var c=l.createChildContext(a.data,null,function(e){e.$context=a});r.renderTemplate(e,c,{afterRender:function(e){n(e)._ojDetectCleanData()}},o,t?"replaceNode":"replaceChildren")}return null};return function(t){if(t.componentElement.classList&&t.componentElement.classList.contains("oj-dvtbase")){var r=document.createElement("div");r.style.display="none",r._dvtcontext=t._dvtcontext,t.componentElement.appendChild(r),Object.defineProperty(t,"_parentElement",{value:r,enumerable:!1}),Object.defineProperty(t,"_templateCleanup",{value:function(){n(r).remove()},enumerable:!1}),Object.defineProperty(t,"_templateName",{value:e,enumerable:!1}),a(t);var o=r.children[0];return o?(r.removeChild(o),n(r).remove(),{insert:o}):{preventDefault:!0}}return a(t)}}},o=a.getRenderer;e.getRenderer=o,Object.defineProperty(e,"__esModule",{value:!0})});
+//# sourceMappingURL=ojknockouttemplateutils.js.map

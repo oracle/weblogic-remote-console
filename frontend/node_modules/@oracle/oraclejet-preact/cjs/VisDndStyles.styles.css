@@ -1,0 +1,9 @@
+.VisDndStyles_dndDragOverSvgStyle__hk2dyj0 {
+  fill: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-overlay-drop-active);
+}
+.VisDndStyles_dndDragOverHTMLStyle__hk2dyj1 {
+  background-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-overlay-drop-active);
+}
+.VisDndStyles_dndRejectedStyle__hk2dyj2 {
+  cursor: no-drop;
+}

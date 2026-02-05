@@ -1,0 +1,6 @@
+.ColorSwatchBaseTheme_baseTheme__1d9whcm0 {
+  --borderRadius__1bc16n60: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-border-radius-sm);
+  --borderWidth__1bc16n61: 1px;
+  --sizes-xs-height__1bc16n62: max(calc(calc(6 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem))),24px);
+  --sizes-sm-height__1bc16n63: calc(calc(11 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem)));
+}

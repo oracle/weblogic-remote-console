@@ -2,6 +2,10 @@
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 introductionHTML: Create a new admin security policy
+
+presentation:
+  singleColumn: true
+
 properties:
 - name: adm_category
 - name: adm_realm

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Copyright 2020, 2025, Oracle and/or its affiliates.
+<!-- Copyright 2020, 2026, Oracle and/or its affiliates.
      Licensed under the Universal Permissive License v 1.0 as shown at http://oss.oracle.com/licenses/upl.  -->
 <project
         xmlns="http://maven.apache.org/POM/4.0.0"
@@ -10,7 +10,7 @@
   <parent>
     <groupId>com.oracle.weblogic</groupId>
     <artifactId>console-backend</artifactId>
-    <version>2.4.19</version>
+    <version>3.0.0</version>
   </parent>
 
   <packaging>pom</packaging>
@@ -57,7 +57,7 @@
             <goals>
               <goal>exec</goal>
             </goals>
-            <phase>test</phase>
+            <phase>compile</phase>
             <configuration>
               <executable>ojet</executable>
               <commandlineArgs>restore</commandlineArgs>
@@ -68,65 +68,26 @@
             <goals>
               <goal>exec</goal>
             </goals>
-            <phase>test</phase>
+            <phase>compile</phase>
             <configuration>
               <executable>ojet</executable>
               <commandlineArgs>build ${ojet.build.user-options}</commandlineArgs>
             </configuration>
           </execution>
-
-          <!--execution>
-            <id>run-npm-test</id>
+          <execution>
+            <id>jest-unit-tests</id>
+            <goals>
+              <goal>exec</goal>
+            </goals>
             <phase>test</phase>
             <configuration>
+              <workingDirectory>.</workingDirectory>
               <executable>npm</executable>
-              <commandlineArgs>test</commandlineArgs>
+              <commandlineArgs>run test --silent</commandlineArgs>
+              <!-- Honor standard Maven test skip property -->
+              <skip>${maven.test.skip}</skip>
             </configuration>
-            <goals>
-              <goal>exec</goal>
-            </goals>
-          </execution-->
-<!--
-          <execution>
-            <id>run-t10n-bundle-creation</id>
-            <phase>test</phase>
-            <configuration>
-              <executable>${node-js.executable}</executable>
-              <arguments>
-                <argument>src/resources/nls/create-translation-bundles.js</argument>
-                <argument>&#x002d;&#x002d;path</argument>
-                <argument>src/resources/nls/frontend.properties</argument>
-                <argument>&#x002d;&#x002d;output</argument>
-                <argument>src/js/resources/nls/frontend.js</argument>
-              </arguments>
-            </configuration>
-            <goals>
-              <goal>exec</goal>
-            </goals>
           </execution>
--->
-          <execution>
-            <id>run-eslint-js</id>
-            <phase>test</phase>
-            <configuration>
-              <executable>${eslint-js.executable}</executable>
-              <arguments>
-                <argument>&#x002d;&#x002d;rulesdir</argument>
-                <argument>${eslint-js.rulesdir}</argument>
-                <argument>&#x002d;f</argument>
-                <argument>${eslint-js.formatter}</argument>
-<!--
-                <argument>&#x002d;o</argument>
-                <argument>${eslint-js.report}</argument>
--->
-                <argument>${eslint-js.root}</argument>
-              </arguments>
-            </configuration>
-            <goals>
-              <goal>exec</goal>
-            </goals>
-          </execution>
-
         </executions>
       </plugin>
 

@@ -1,0 +1,30 @@
+.TrainVariants_multiVariantStyles_needsEventsHover_isNeedsEventsHover__szao47p:not(:active) {
+  cursor: pointer;
+  background-color: var(--stepBgColorHover__wmjnh6m);
+}
+.TrainVariants_multiVariantStyles_stepIconNeedsEventsHover_isNeedsEventsHover__szao47t:not(:active) {
+  cursor: pointer;
+  border-color: var(--buttonBorderColorHover__wmjnh6k);
+  color: var(--buttonTextColorHover__wmjnh6l);
+  background-color: var(--buttonBgColorHover__wmjnh6j);
+}
+.TrainVariants_multiVariantStyles_stepLabelNeedsEventsHover_isNeedsEventsHover__szao47x:not(:active) {
+  -webkit-text-decoration-line: underline;
+          text-decoration-line: underline;
+}
+@media (hover: hover) {
+  .TrainVariants_multiVariantStyles_pseudoHover_isPseudoHover__szao47r:hover:not(:active) {
+    cursor: pointer;
+    background-color: var(--stepBgColorHover__wmjnh6m);
+  }
+  .TrainVariants_multiVariantStyles_stepIconPseudoHover_isPseudoHover__szao47v:hover:not(:active) {
+    cursor: pointer;
+    border-color: var(--buttonBorderColorHover__wmjnh6k);
+    color: var(--buttonTextColorHover__wmjnh6l);
+    background-color: var(--buttonBgColorHover__wmjnh6j);
+  }
+  .TrainVariants_multiVariantStyles_stepLabelPseudoHover_isPseudoHover__szao47z:hover:not(:active) {
+    -webkit-text-decoration-line: underline;
+            text-decoration-line: underline;
+  }
+}

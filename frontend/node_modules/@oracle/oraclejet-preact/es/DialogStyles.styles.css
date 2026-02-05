@@ -1,0 +1,136 @@
+.DialogStyles_baseStyle__54385j0 {
+  box-sizing: border-box;
+  box-shadow: var(--boxShadow__9f8o6i0);
+  background-color: var(--backgroundColor__9f8o6i1);
+  border-width: 1px;
+  border-style: solid;
+  border-color: var(--borderColor__9f8o6i2);
+}
+.DialogStyles_baseStyle__54385j0:focus-visible {
+  outline-style: dotted;
+  outline-width: 1px;
+  outline-offset: 1px;
+  outline-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-border-keyboard-focus);
+}
+.DialogStyles_baseStyleDesktop__54385j1 {
+  width: 600px;
+  min-width: 200px;
+  max-width: calc(min(600px, 90vw));
+  height: auto;
+  min-height: 200px;
+  max-height: calc(min(600px, 90vh));
+  border-radius: var(--borderRadius__9f8o6i3);
+}
+.DialogStyles_baseStyleSmallWidth__54385j2 {
+  width: 100vw;
+  min-width: 100vw;
+  max-width: 100vw;
+  height: auto;
+  max-height: 100vh;
+  border-radius: var(--borderRadius__9f8o6i3) var(--borderRadius__9f8o6i3) 0 0;
+}
+.DialogStyles_visibilityHidden__54385j3 {
+  visibility: hidden;
+}
+.DialogStyles_visibilityVisible__54385j4 {
+  visibility: visible;
+}
+.DialogStyles_dialogContainerStyle__54385j5 {
+  display: flex;
+  flex-direction: column;
+  overflow-x: auto;
+  overflow-y: auto;
+  width: 100%;
+  height: 100%;
+  max-height: inherit;
+}
+.DialogStyles_dialogContentStyle__54385j6 {
+  position: relative;
+  overflow-x: auto;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  flex: 1 1 auto;
+}
+.DialogStyles_dialogContentStyleNoShrink__54385j7 {
+  position: relative;
+  overflow-x: auto;
+  overflow-y: hidden;
+  flex: 1 0 auto;
+}
+.DialogStyles_dialogTitleStyle__54385j8 {
+  overflow-x: hidden;
+  overflow-y: hidden;
+  cursor: default;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+  align-self: center;
+  font-size: var(--titleFontSize__9f8o6i4);
+  color: var(--titleColor__9f8o6i5);
+  font-weight: var(--titleFontWeight__9f8o6i6);
+  line-height: var(--titleLineHeight__9f8o6i7);
+}
+.DialogStyles_dialogHeaderStyle__54385j9 {
+  flex: 0 0 auto;
+  border-width: 0 0 1px 0;
+  border-style: solid;
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  padding-top: var(--headerPaddingTop__9f8o6i9);
+  padding-right: var(--headerPaddingHorizontal__9f8o6ib);
+  padding-bottom: var(--headerPaddingBottom__9f8o6ia);
+  padding-left: var(--headerPaddingHorizontal__9f8o6ib);
+  background-color: var(--headerBackgroundColor__9f8o6ic);
+  border-bottom-color: var(--headerBorderBottomColor__9f8o6id);
+}
+.DialogStyles_dialogHeaderStyle__54385j9 > * {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+.DialogStyles_dialogHeaderDecorationStyle__54385ja {
+  background-image: var(--backgroundImage__9f8o6i8);
+  background-repeat: repeat-x;
+  background-size: auto 1.25rem;
+}
+.DialogStyles_dialogHeaderCloseIconStyle__54385jb {
+  margin-block-start: -1.5rem;
+  margin-inline-end: -1.5rem;
+}
+.DialogStyles_dialogBodyStyle__54385jc {
+  position: relative;
+  overflow-x: auto;
+  overflow-y: auto;
+  box-sizing: border-box;
+  height: 100%;
+  padding-top: var(--bodyPaddingTop__9f8o6ie);
+  padding-right: var(--bodyPaddingHorizontal__9f8o6ig);
+  padding-bottom: var(--bodyPaddingBottom__9f8o6if);
+  padding-left: var(--bodyPaddingHorizontal__9f8o6ig);
+}
+.DialogStyles_dialogBodyStyle__54385jc > * {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+.DialogStyles_dialogFooterStyle__54385jd {
+  display: flex;
+  justify-content: flex-end;
+  flex: 0 0 auto;
+  text-align: end;
+  padding-top: var(--footerPaddingTop__9f8o6ih);
+  padding-right: var(--footerPaddingHorizontal__9f8o6ij);
+  padding-bottom: var(--footerPaddingBottom__9f8o6ii);
+  padding-left: var(--footerPaddingHorizontal__9f8o6ij);
+  border-top: 1px solid;
+  border-color: var(--footerBorderColor__9f8o6ik);
+}
+.DialogStyles_dialogFooterStyle__54385jd > * {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}

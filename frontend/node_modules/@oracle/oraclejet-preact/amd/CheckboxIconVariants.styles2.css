@@ -1,0 +1,24 @@
+.CheckboxIconVariants_multiVariantStyles_iconSize_4xUnits__adckofa {
+  --iconSize__1denrfz0: calc(4 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+}
+.CheckboxIconVariants_multiVariantStyles_compound_0__adckofb {
+  color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-disabled);
+}
+.CheckboxIconVariants_multiVariantStyles_compound_1__adckofc {
+  color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-secondary);
+}
+.CheckboxIconVariants_multiVariantStyles_compound_2__adckofd {
+  color: var(--iconColorChecked__1denrfz1);
+}
+.CheckboxIconVariants_multiVariantStyles_compound_3__adckofe {
+  color: var(--iconColorUnchecked__1denrfz2);
+}
+.CheckboxIconVariants_multiVariantStyles_compound_4__adckoff {
+  color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-primary);
+}
+.CheckboxIconVariants_multiVariantStyles_compound_5__adckofg {
+  transform: var(--iconTransformActive__1denrfz3);
+  transition-property: transform;
+  transition-duration: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-duration-xs);
+  transition-timing-function: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-easing-persist);
+}

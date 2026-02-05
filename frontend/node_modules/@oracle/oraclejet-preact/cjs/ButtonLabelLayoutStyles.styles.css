@@ -1,0 +1,76 @@
+.ButtonLabelLayoutStyles_text__1g78mbn0 {
+  overflow-x: hidden;
+  overflow-y: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: inline-block;
+  & > * {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+}
+.ButtonLabelLayoutStyles_fill__1g78mbn1 {
+  width: 100%;
+}
+.ButtonLabelLayoutStyles_fillText__1g78mbn2 {
+  justify-content: center;
+}
+.ButtonLabelLayoutStyles_suffix__1g78mbn3 {
+  font-weight: 400;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin-inline-start: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem);
+  display: inline-flex;
+}
+.ButtonLabelLayoutStyles_icon__1g78mbn4 {
+  display: inline-flex;
+  font-size: var(--iconSize__1onk43q0);
+  height: var(--iconSize__1onk43q0);
+  width: var(--iconSize__1onk43q0);
+  font-weight: normal;
+  margin-top: 0;
+  margin-bottom: 0;
+  align-items: center;
+  justify-content: center;
+}
+.ButtonLabelLayoutStyles_startIcon__1g78mbn5 {
+  margin-inline-end: var(--iconToTextPadding__1onk43q2);
+  margin-inline-start: var(--iconToEdgePadding__1onk43q1);
+}
+.ButtonLabelLayoutStyles_endIcon__1g78mbn6 {
+  margin-inline-start: var(--iconToTextPadding__1onk43q2);
+  margin-inline-end: var(--iconToEdgePadding__1onk43q1);
+}
+.ButtonLabelLayoutStyles_startText__1g78mbn7 {
+  margin-inline-start: var(--textToEdgePadding__1onk43q3);
+}
+.ButtonLabelLayoutStyles_endText__1g78mbn8 {
+  margin-inline-end: var(--textToEdgePadding__1onk43q3);
+}
+.ButtonLabelLayoutStyles_startIconWhenBothIconsOnly__1g78mbn9 {
+  margin-inline-end: 0;
+}
+.ButtonLabelLayoutStyles_container__1g78mbna {
+  cursor: inherit;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+.ButtonLabelLayoutStyles_base__1g78mbnb {
+  cursor: inherit;
+}
+.ButtonLabelLayoutStyles_progressStyle__1g78mbnc {
+  display: inline-flex;
+}
+.ButtonLabelLayoutStyles_floatingIcon__1g78mbnd {
+  position: absolute;
+  z-index: 1;
+  height: var(--iconSize__1onk43q0);
+  width: var(--iconSize__1onk43q0);
+}

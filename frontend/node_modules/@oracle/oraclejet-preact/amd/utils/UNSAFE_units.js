@@ -1,0 +1,2 @@
+define(['exports', '../stringUtils-4ffd9d59'], (function(e,s){"use strict";const t=(n=Number,e=>null!=e&&e.constructor===n||e instanceof n);var n;const r=e=>0===e||"0"===e,i=new RegExp(`(${["px","%","em","rem","vh","vw"].join("|")})$`),o=e=>s.o(e)&&i.test(e),a=(c="px",e=>r(e)||o(e)||!(e=>!isNaN(parseFloat(e))&&!isNaN(e-0))(e)?e:e+c);var c;e.hasUnit=o,e.isNumber=t,e.isZero=r,e.px=a,Object.defineProperty(e,"__esModule",{value:!0})}));
+//# sourceMappingURL=UNSAFE_units.js.map

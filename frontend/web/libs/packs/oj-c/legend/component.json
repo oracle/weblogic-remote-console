@@ -1,0 +1,502 @@
+{
+  "name": "legend",
+  "version": "19.0.1",
+  "jetVersion": "^19.0.1",
+  "pack": "oj-c",
+  "type": "composite",
+  "dependencyScope": "runtime",
+  "license": "https://opensource.org/licenses/UPL",
+  "implements": [
+    "CLegendElement"
+  ],
+  "description": "A legend displays an interactive description of symbols, colors, etc., used in graphical information representations.",
+  "displayName": "Legend",
+  "main": "oj-c/legend",
+  "help": "oj-c.Legend.html",
+  "status": [
+    {
+      "type": "candidate",
+      "since": "17.0.0"
+    }
+  ],
+  "extension": {
+    "catalog": {
+      "category": "Visualizations"
+    },
+    "vbdt": {
+      "module": "oj-c/legend",
+      "defaultColumns": 2,
+      "minColumns": 1
+    },
+    "oracle": {
+      "icon": "oj-ux-ico-legend",
+      "uxSpecs": [
+        "legend"
+      ]
+    },
+    "webelement": {
+      "package": "@oracle/oraclejet-core-pack",
+      "version": "19.0.1",
+      "docUrl": "https://www.oracle.com/webfolder/technetwork/jet/cpwdtsdoc/classes/LegendWebElement.html",
+      "export": "findLegend",
+      "main": "@oracle/oraclejet-core-pack/webdriver"
+    }
+  },
+  "propertyLayout": [
+    {
+      "propertyGroup": "common",
+      "items": [
+        "orientation",
+        "halign",
+        "valign",
+        "hoverBehavior",
+        "style"
+      ]
+    },
+    {
+      "propertyGroup": "data",
+      "items": [
+        "data"
+      ]
+    }
+  ],
+  "since": "15.0.0",
+  "requirements": [
+    {
+      "type": "anyOf",
+      "label": "accessibility",
+      "properties": [
+        "aria-label",
+        "aria-labelledby",
+        "aria-describedby"
+      ]
+    }
+  ],
+  "properties": {
+    "data": {
+      "type": "DataProvider|null",
+      "description": "Specifies the DataProvider for the sections and items of the legend.",
+      "displayName": "Data",
+      "help": "#data",
+      "extension": {
+        "webelement": {
+          "exceptionStatus": [
+            {
+              "type": "deprecated",
+              "since": "17.1.0",
+              "description": "Data sets from a DataProvider cannot be sent to WebDriverJS; use ViewModels or page variables instead."
+            }
+          ]
+        }
+      },
+      "value": null
+    },
+    "drilling": {
+      "type": "string",
+      "description": "Specifies whether drilling is enabled.",
+      "displayName": "Drilling",
+      "help": "#drilling",
+      "propertyEditorValues": {
+        "on": {
+          "description": "Legend items will be drillable",
+          "displayName": "On"
+        },
+        "off": {
+          "description": "Legend items will not be drillable",
+          "displayName": "Off"
+        }
+      },
+      "enumValues": [
+        "off",
+        "on"
+      ],
+      "value": "off"
+    },
+    "halign": {
+      "type": "string",
+      "description": "Defines the horizontal alignment of the legend contents.",
+      "displayName": "Halign",
+      "help": "#halign",
+      "propertyEditorValues": {
+        "center": {
+          "description": "Legend contents will be center aligned",
+          "displayName": "Center"
+        },
+        "end": {
+          "description": "Legend contents will be end aligned",
+          "displayName": "End"
+        },
+        "start": {
+          "description": "Legend contents will be start aligned",
+          "displayName": "Start"
+        }
+      },
+      "enumValues": [
+        "center",
+        "end",
+        "start"
+      ],
+      "value": "start"
+    },
+    "hiddenCategories": {
+      "type": "Array<string>",
+      "description": "An array of categories that will be hidden.",
+      "displayName": "Hidden Categories",
+      "help": "#hiddenCategories",
+      "writeback": true,
+      "value": []
+    },
+    "hideAndShowBehavior": {
+      "type": "string",
+      "description": "Defines whether the legend can be used to initiate hide and show behavior on referenced data items.",
+      "displayName": "Hide And Show Behavior",
+      "help": "#hideAndShowBehavior",
+      "propertyEditorValues": {
+        "on": {
+          "description": "Legend can be used to initiate hide and show behavior on referenced data items.",
+          "displayName": "On"
+        },
+        "off": {
+          "description": "legend cannot be used to initiate hide and show behavior on referenced data items.",
+          "displayName": "Off"
+        }
+      },
+      "enumValues": [
+        "off",
+        "on"
+      ],
+      "value": "off"
+    },
+    "highlightedCategories": {
+      "type": "Array<string>",
+      "description": "An array of categories that will be highlighted.",
+      "displayName": "Highlighted Categories",
+      "help": "#highlightedCategories",
+      "writeback": true,
+      "value": []
+    },
+    "hoverBehavior": {
+      "type": "string",
+      "description": "Defines the behavior applied when hovering over a legend item.",
+      "displayName": "Hover Behavior",
+      "help": "#hoverBehavior",
+      "propertyEditorValues": {
+        "dim": {
+          "description": "Dimming hover behavior is applied.",
+          "displayName": "Dim"
+        },
+        "none": {
+          "description": "No hover behavior will be applied.",
+          "displayName": "None"
+        }
+      },
+      "enumValues": [
+        "none",
+        "dim"
+      ],
+      "value": "none"
+    },
+    "orientation": {
+      "type": "string",
+      "description": "Defines the orientation of the legend, which determines the direction in which the legend items are laid out.",
+      "displayName": "Orientation",
+      "help": "#orientation",
+      "propertyEditorValues": {
+        "horizontal": {
+          "description": "Legend items will be horizontally placed in available space.",
+          "displayName": "Horizontal"
+        },
+        "vertical": {
+          "description": "Legend items will be vertically stacked.",
+          "displayName": "Vertical"
+        }
+      },
+      "enumValues": [
+        "horizontal",
+        "vertical"
+      ],
+      "value": "vertical"
+    },
+    "symbolHeight": {
+      "type": "number",
+      "description": "The height of the legend symbol in pixels.",
+      "displayName": "Symbol Height",
+      "help": "#symbolHeight",
+      "value": 0
+    },
+    "symbolWidth": {
+      "type": "number",
+      "description": "The width of the legend symbol in pixels.",
+      "displayName": "Symbol Width",
+      "help": "#symbolWidth",
+      "value": 0
+    },
+    "textStyle": {
+      "type": "object",
+      "description": "The CSS style object defining the style of the legend item text.",
+      "displayName": "Text Style",
+      "help": "#textStyle",
+      "properties": {
+        "color": {
+          "type": "string"
+        },
+        "fontFamily": {
+          "type": "string"
+        },
+        "fontSize": {
+          "type": "string"
+        },
+        "fontStyle": {
+          "type": "string"
+        },
+        "fontWeight": {
+          "type": "string"
+        },
+        "textDecoration": {
+          "type": "string"
+        }
+      }
+    },
+    "valign": {
+      "type": "string",
+      "description": "Defines the vertical alignment of the legend contents.",
+      "displayName": "valign",
+      "help": "#valign",
+      "propertyEditorValues": {
+        "middle": {
+          "description": "The legend items will be middle aligned.",
+          "displayName": "Middle"
+        },
+        "bottom": {
+          "description": "The legend items will be bottom aligned.",
+          "displayName": "Bottom"
+        },
+        "top": {
+          "description": "The legend items will be top aligned.",
+          "displayName": "Top"
+        }
+      },
+      "enumValues": [
+        "top",
+        "bottom",
+        "middle"
+      ],
+      "value": "top"
+    },
+    "sectionTitleStyle": {
+      "type": "object",
+      "description": "The CSS style object defining the style of the section titles' text.",
+      "displayName": "Section Title Style",
+      "help": "#sectionTitleStyle",
+      "properties": {
+        "color": {
+          "type": "string"
+        },
+        "fontFamily": {
+          "type": "string"
+        },
+        "fontSize": {
+          "type": "string"
+        },
+        "fontStyle": {
+          "type": "string"
+        },
+        "fontWeight": {
+          "type": "string"
+        },
+        "textDecoration": {
+          "type": "string"
+        }
+      }
+    },
+    "sectionTitleHalign": {
+      "type": "string",
+      "description": "The horizontal alignment of the section titles.",
+      "displayName": "Section Title Halign",
+      "help": "#sectionTitleHalign",
+      "propertyEditorValues": {
+        "center": {
+          "description": "The section title will be center aligned.",
+          "displayName": "Center"
+        },
+        "end": {
+          "description": "The section title will be end aligned.",
+          "displayName": "End"
+        },
+        "start": {
+          "description": "The section title will be start aligned.",
+          "displayName": "Start"
+        }
+      },
+      "enumValues": [
+        "center",
+        "end",
+        "start"
+      ],
+      "value": "start"
+    },
+    "contextMenuConfig": {
+      "type": "object",
+      "description": "Specifies a context menu configuration.",
+      "displayName": "Context Menu Config",
+      "help": "#contextMenuConfig",
+      "properties": {
+        "accessibleLabel": {
+          "type": "string"
+        },
+        "items": {
+          "type": "function"
+        }
+      }
+    }
+  },
+  "slots": {
+    "itemTemplate": {
+      "description": "The itemTemplate slot is used to map each data item in the component. See the Help documentation for more information.",
+      "displayName": "itemTemplate",
+      "help": "#itemTemplate",
+      "maxItems": 1,
+      "preferredContent": [
+        "CLegendItemElement"
+      ],
+      "data": {
+        "data": {
+          "type": "any"
+        },
+        "key": {
+          "type": "any"
+        },
+        "index": {
+          "type": "number"
+        },
+        "parentData": {
+          "type": "Array<any>"
+        },
+        "parentKey": {
+          "type": "any"
+        }
+      }
+    },
+    "sectionTemplate": {
+      "description": "The sectionTemplate slot is used to map each data item in the component. See the Help documentation for more information.",
+      "displayName": "sectionTemplate",
+      "help": "#sectionTemplate",
+      "maxItems": 1,
+      "preferredContent": [
+        "CLegendSectionElement"
+      ],
+      "data": {
+        "data": {
+          "type": "any"
+        },
+        "key": {
+          "type": "any"
+        },
+        "index": {
+          "type": "number"
+        }
+      }
+    }
+  },
+  "events": {
+    "ojDrill": {
+      "description": "Triggered during a drill gesture (single click on the legend item).",
+      "help": "#event:drill",
+      "detail": {
+        "id": {
+          "type": "any",
+          "description": "The id of the drilled item."
+        }
+      }
+    },
+    "ojContextMenuAction": {
+      "bubbles": true,
+      "description": "Triggered when a menu item is clicked, whether by keyboard, mouse, or touch events.",
+      "eventGroup": "common",
+      "displayName": "onOjContextMenuAction",
+      "help": "#event:ojContextMenuAction",
+      "detail": {
+        "menuItemKey": {
+          "type": "string"
+        },
+        "contextMenuContext": {
+          "type": "object"
+        }
+      }
+    },
+    "ojContextMenuSelection": {
+      "bubbles": true,
+      "description": "Triggered when a select menu item is clicked, whether by keyboard, mouse, or touch events.",
+      "eventGroup": "common",
+      "displayName": "onOjContextMenuSelection",
+      "help": "#event:ojContextMenuSelection",
+      "detail": {
+        "value": {
+          "type": "string|Array<string>"
+        },
+        "contextMenuContext": {
+          "type": "object"
+        },
+        "menuSelectionGroupKey": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "methods": {
+    "_getPreferredSize": {
+      "params": [
+        {
+          "name": "_width",
+          "type": "number"
+        },
+        {
+          "name": "_height",
+          "type": "number"
+        }
+      ],
+      "return": "object"
+    },
+    "setProperty": {
+      "description": "Sets a property or a single subproperty for complex properties and notifies the component of the change, triggering a corresponding event.",
+      "help": "#setProperty",
+      "params": [
+        {
+          "name": "property",
+          "description": "The property name to set. Supports dot notation for subproperty access.",
+          "type": "string"
+        },
+        {
+          "name": "value",
+          "description": "The new value to set the property to.",
+          "type": "any"
+        }
+      ],
+      "return": "void"
+    },
+    "getProperty": {
+      "description": "Retrieves the value of a property or a subproperty.",
+      "help": "#getProperty",
+      "params": [
+        {
+          "name": "property",
+          "description": "The property name to get. Supports dot notation for subproperty access.",
+          "type": "string"
+        }
+      ],
+      "return": "any"
+    },
+    "setProperties": {
+      "description": "Performs a batch set of properties.",
+      "help": "#setProperties",
+      "params": [
+        {
+          "name": "properties",
+          "description": "An object containing the property and value pairs to set.",
+          "type": "object"
+        }
+      ],
+      "return": "void"
+    }
+  }
+}

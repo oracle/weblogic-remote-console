@@ -3,6 +3,9 @@
 
 introductionHTML: Create a new Cert Path Provider
 
+presentation:
+  singleColumn: true
+
 instanceBasedPDJ: true
 customizePageDefMethod: weblogic.remoteconsole.customizers.SecurityProviderMBeanCustomizer.customizeCreateCertPathProviderPageDef
 

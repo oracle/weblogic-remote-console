@@ -40,7 +40,6 @@ import javax.ws.rs.core.Response.Status;
 import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
 import org.glassfish.jersey.client.ClientConfig;
 import org.glassfish.jersey.client.HttpUrlConnectorProvider;
-import org.glassfish.jersey.client.authentication.HttpAuthenticationFeature;
 import org.glassfish.jersey.media.multipart.MultiPartFeature;
 import weblogic.console.utils.StringUtils;
 import weblogic.remoteconsole.common.repodef.LocalizableString;
@@ -203,25 +202,6 @@ public class ConnectionManager {
   }
 
   /**
-   * Make a connection by passing the credentials and the WebLogic Domain URL.
-   *
-   * @return The connection that was established or <code>null</code> when the connection fails
-   */
-  public Connection makeConnection(String domainUrl, String username, String password) {
-    Connection result = null;
-    maybeDisableHostnameVerification();
-
-    // Try to make the connection and check to see if the response was successful
-    ConnectionResponse response = tryConnection(domainUrl, username, password);
-    if (response.isSuccess()) {
-      result = getConnection(response.getConnectionId());
-    }
-
-    // Done.
-    return result;
-  }
-
-  /**
    * Try a connection to the WebLogic Domain and return a response status of the connection attempt
    * using the supplied HTTP Authorization header.
    *
@@ -287,31 +267,6 @@ public class ConnectionManager {
 
   // FortifyIssueSuppression Password Management: Password in Comment
   // The password parameter does not actually reveal a password
-
-  /**
-   * Try a connection to the WebLogic Domain and return a response status of the connection attempt
-   * using the supplied HTTP BASIC credentials.
-   *
-   * @param domainUrl The WebLogic Domain URL
-   * @param username The username
-   * @param password The password
-   * @return The connection response
-   */
-  public ConnectionResponse tryConnection(String domainUrl, String username, String password) {
-
-    // Create the JAX-RS client for use with the connection using the suppplied credentials
-    Client client =
-      ClientBuilder.newBuilder()
-        .connectTimeout(getConnectTimeout(), TimeUnit.MILLISECONDS)
-        .readTimeout(getReadTimeout(), TimeUnit.MILLISECONDS)
-        .register(JacksonJsonProvider.class)
-        .register(MultiPartFeature.class)
-        .register(HttpAuthenticationFeature.basic(username, password))
-        .build();
-
-    // Try to get WebLogic version from RESTful Management endpoint
-    return connect(domainUrl, username, client, null);
-  }
 
   /**
    * Determines which of the standard roles (Admin, Deployer, Operator, Monitor)

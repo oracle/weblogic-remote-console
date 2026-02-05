@@ -1,0 +1,7 @@
+.RadioBaseTheme_baseTheme__1e4jjcp0 {
+  --iconToTextGap__11tjnon1: calc(2 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --outlineWidth__11tjnon0: 1px;
+}
+:root, .oj-density-dependent {
+  --rowHeight__11tjnon2: calc(calc(9 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem)) + calc(2 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-density-units, 0px)));
+}

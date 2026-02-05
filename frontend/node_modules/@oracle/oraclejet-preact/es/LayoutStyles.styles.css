@@ -1,0 +1,70 @@
+.LayoutStyles_layoutSpanStyles_layoutSpanColumn__5qy13b4 {
+  grid-column: span max(1,min(2,var(--layoutLocalVars_minColumnCount__5qy13b1)));
+}
+.LayoutStyles_layoutSpanStyles_layoutSpanColumn__5qy13b5 {
+  grid-column: span max(1,min(3,var(--layoutLocalVars_minColumnCount__5qy13b1)));
+}
+.LayoutStyles_layoutSpanStyles_layoutSpanColumn__5qy13b6 {
+  grid-column: span max(1,min(4,var(--layoutLocalVars_minColumnCount__5qy13b1)));
+}
+.LayoutStyles_layoutSpanStyles_layoutSpanColumn__5qy13b7 {
+  grid-column: span max(1,min(5,var(--layoutLocalVars_minColumnCount__5qy13b1)));
+}
+.LayoutStyles_layoutSpanStyles_layoutSpanColumn__5qy13b8 {
+  grid-column: span max(1,min(6,var(--layoutLocalVars_minColumnCount__5qy13b1)));
+}
+@container (min-width: 576px) {
+  .LayoutStyles_layoutSpanStyles_layoutSpanColumn__5qy13b4 {
+    grid-column: span min(max(2,min(2,var(--layoutLocalVars_minColumnCount__5qy13b1))),var(--layoutLocalVars_maxColumnCount__5qy13b0));
+  }
+  .LayoutStyles_layoutSpanStyles_layoutSpanColumn__5qy13b5 {
+    grid-column: span min(max(2,min(3,var(--layoutLocalVars_minColumnCount__5qy13b1))),var(--layoutLocalVars_maxColumnCount__5qy13b0));
+  }
+  .LayoutStyles_layoutSpanStyles_layoutSpanColumn__5qy13b6 {
+    grid-column: span min(max(2,min(4,var(--layoutLocalVars_minColumnCount__5qy13b1))),var(--layoutLocalVars_maxColumnCount__5qy13b0));
+  }
+  .LayoutStyles_layoutSpanStyles_layoutSpanColumn__5qy13b7 {
+    grid-column: span min(max(2,min(5,var(--layoutLocalVars_minColumnCount__5qy13b1))),var(--layoutLocalVars_maxColumnCount__5qy13b0));
+  }
+  .LayoutStyles_layoutSpanStyles_layoutSpanColumn__5qy13b8 {
+    grid-column: span min(max(2,min(6,var(--layoutLocalVars_minColumnCount__5qy13b1))),var(--layoutLocalVars_maxColumnCount__5qy13b0));
+  }
+}
+@container (min-width: 864px) {
+  .LayoutStyles_layoutSpanStyles_layoutSpanColumn__5qy13b5 {
+    grid-column: span min(max(3,min(3,var(--layoutLocalVars_minColumnCount__5qy13b1))),var(--layoutLocalVars_maxColumnCount__5qy13b0));
+  }
+  .LayoutStyles_layoutSpanStyles_layoutSpanColumn__5qy13b6 {
+    grid-column: span min(max(3,min(4,var(--layoutLocalVars_minColumnCount__5qy13b1))),var(--layoutLocalVars_maxColumnCount__5qy13b0));
+  }
+  .LayoutStyles_layoutSpanStyles_layoutSpanColumn__5qy13b7 {
+    grid-column: span min(max(3,min(5,var(--layoutLocalVars_minColumnCount__5qy13b1))),var(--layoutLocalVars_maxColumnCount__5qy13b0));
+  }
+  .LayoutStyles_layoutSpanStyles_layoutSpanColumn__5qy13b8 {
+    grid-column: span min(max(3,min(6,var(--layoutLocalVars_minColumnCount__5qy13b1))),var(--layoutLocalVars_maxColumnCount__5qy13b0));
+  }
+}
+@container (min-width: 1152px) {
+  .LayoutStyles_layoutSpanStyles_layoutSpanColumn__5qy13b6 {
+    grid-column: span min(max(4,min(4,var(--layoutLocalVars_minColumnCount__5qy13b1))),var(--layoutLocalVars_maxColumnCount__5qy13b0));
+  }
+  .LayoutStyles_layoutSpanStyles_layoutSpanColumn__5qy13b7 {
+    grid-column: span min(max(4,min(5,var(--layoutLocalVars_minColumnCount__5qy13b1))),var(--layoutLocalVars_maxColumnCount__5qy13b0));
+  }
+  .LayoutStyles_layoutSpanStyles_layoutSpanColumn__5qy13b8 {
+    grid-column: span min(max(4,min(6,var(--layoutLocalVars_minColumnCount__5qy13b1))),var(--layoutLocalVars_maxColumnCount__5qy13b0));
+  }
+}
+@container (min-width: 1440px) {
+  .LayoutStyles_layoutSpanStyles_layoutSpanColumn__5qy13b7 {
+    grid-column: span min(max(5,min(5,var(--layoutLocalVars_minColumnCount__5qy13b1))),var(--layoutLocalVars_maxColumnCount__5qy13b0));
+  }
+  .LayoutStyles_layoutSpanStyles_layoutSpanColumn__5qy13b8 {
+    grid-column: span min(max(5,min(6,var(--layoutLocalVars_minColumnCount__5qy13b1))),var(--layoutLocalVars_maxColumnCount__5qy13b0));
+  }
+}
+@container (min-width: 1728px) {
+  .LayoutStyles_layoutSpanStyles_layoutSpanColumn__5qy13b8 {
+    grid-column: span min(max(6,min(6,var(--layoutLocalVars_minColumnCount__5qy13b1))),var(--layoutLocalVars_maxColumnCount__5qy13b0));
+  }
+}

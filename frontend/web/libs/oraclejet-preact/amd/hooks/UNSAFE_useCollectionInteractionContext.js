@@ -1,0 +1,2 @@
+define(['exports', '../CollectionInteractionContext-0b4ed98b', '../useCollectionInteractionContext-f345e8f7', 'preact', 'preact/hooks'], (function(t,e,o,n,c){"use strict";t.CollectionInteractionContext=e.CollectionInteractionContext,t.useCollectionInteractionContext=o.useCollectionInteractionContext,Object.defineProperty(t,"__esModule",{value:!0})}));
+//# sourceMappingURL=UNSAFE_useCollectionInteractionContext.js.map

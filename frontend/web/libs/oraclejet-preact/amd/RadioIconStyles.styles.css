@@ -1,0 +1,26 @@
+.RadioIconStyles_radioIconBaseStyle__o5p6af0 {
+  height: var(--rowHeight__11tjnon2);
+  display: inline-flex;
+  align-items: center;
+}
+.RadioIconStyles_radioSvgSelectedColor__o5p6af1 {
+  color: var(--iconColorSelected__bwcdcl1) !important;
+}
+.RadioIconStyles_radioSvgUnselectedColor__o5p6af2 {
+  color: var(--iconColorUnselected__bwcdcl2) !important;
+}
+.RadioIconStyles_radioSvgDisabledColor__o5p6af3 {
+  color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-disabled) !important;
+}
+.RadioIconStyles_radioSvgPrimaryColor__o5p6af4 {
+  color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-primary) !important;
+}
+.RadioIconStyles_radioSvgReadonlyColor__o5p6af5 {
+  color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-secondary) !important;
+}
+.RadioIconStyles_radioIconActive__o5p6af6 {
+  transform: var(--iconTransformActive__bwcdcl3);
+  transition-property: transform;
+  transition-duration: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-duration-xs);
+  transition-timing-function: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-easing-persist);
+}

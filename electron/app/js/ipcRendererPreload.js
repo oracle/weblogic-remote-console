@@ -1,13 +1,13 @@
 /**
  * @license
- * Copyright (c) 2021, 2023 Oracle and/or its affiliates.
+ * Copyright (c) 2021, 2023, 2025 Oracle and/or its affiliates.
  * Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
  * @ignore
  */
 
 'use strict';
 
-const { contextBridge, ipcRenderer } = require('electron');
+const { contextBridge, ipcRenderer, webUtils } = require('electron');
 
 contextBridge.exposeInMainWorld(
   'electron_api',
@@ -15,8 +15,6 @@ contextBridge.exposeInMainWorld(
     ipc: {
       receive: (channel, func) => {
         const validChannels = [
-          'on-project-switched',
-          'start-app-quit'
         ];
         if (validChannels.includes(channel)) {
           // Strip off the event since it includes the sender
@@ -28,7 +26,6 @@ contextBridge.exposeInMainWorld(
       },
       cancelReceive: (channel) => {
         const validChannels = [
-          'on-project-switched'
         ];
         if (validChannels.includes(channel)) {
           ipcRenderer.removeAllListeners(channel);
@@ -40,20 +37,13 @@ contextBridge.exposeInMainWorld(
       invoke: async (channel, arg) => {
         const validChannels = [
           'external-url-opening',
-          'translated-strings-sending',
-          'complete-login',
-          'perform-login',
-          'project-changing',
-          'current-project-requesting',
-          'credentials-requesting',
           'file-creating',
           'file-choosing',
-          'file-reading',
-          'file-writing',
-          'is-busy',
           'unsaved-changes',
           'preference-reading',
-          'window-app-quiting'
+          'get-file-path',
+          'get-property',
+          'set-property',
         ];
         return new Promise((resolve, reject) => {
           if (validChannels.includes(channel)) {
@@ -74,6 +64,8 @@ contextBridge.exposeInMainWorld(
           }
         });
       }
-    }
+    },
+    getFilePath: (file) => webUtils.getPathForFile(file),
+    getSaveAs: (file) => ipcRenderer.invoke('file-creating', file),
   }
 );

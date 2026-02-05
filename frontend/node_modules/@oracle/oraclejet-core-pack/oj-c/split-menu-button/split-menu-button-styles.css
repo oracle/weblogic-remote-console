@@ -1,0 +1,12 @@
+oj-c-split-menu-button:not(.oj-complete) {
+  visibility: hidden;
+}
+
+oj-c-split-menu-button {
+  display: inline-flex;
+  vertical-align: top;
+}
+
+oj-c-split-menu-button[hidden] {
+  display: none;
+}

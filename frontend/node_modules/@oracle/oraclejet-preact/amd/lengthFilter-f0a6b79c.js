@@ -1,0 +1,2 @@
+define(['exports'], (function(t){"use strict";function e(t,e="codeUnit"){if(!t)return 0;const n=t.length;let r,i=0;if("codePoint"===e){for(let e=0;e<n;e++)55296==(63488&t.charCodeAt(e))&&(i+=1);r=n-i/2}else r=n;return r}t.calcLength=e,t.filter=function(t,n,r){if(null==n)return t;if(n<1)throw new Error(`length filter's max option cannot be less than 1. max option is ${n}`);return e(t,r)<=n?t:t.slice(0,n)}}));
+//# sourceMappingURL=lengthFilter-f0a6b79c.js.map

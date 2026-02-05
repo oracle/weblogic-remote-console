@@ -1,0 +1,851 @@
+[
+  {
+    "id": "oj-c.Checkbox",
+    "name": "Checkbox",
+    "memberof": "oj-c",
+    "kind": "class",
+    "meta": {
+      "filename": "checkbox.tsx",
+      "path": "web/components/oj-c/checkbox"
+    },
+    "ojcomponent": true,
+    "isvcomponent": true,
+    "since": "16.0.0",
+    "longname": "oj-c.Checkbox",
+    "pack": "oj-c",
+    "classdesc": "<h3 id=\"checkboxOverview-section\">\n  JET Checkbox Component\n  <a class=\"bookmarkable-link\" title=\"Bookmarkable Link\" href=\"#checkboxOverview-section\"></a>\n</h3>\n\nCheckbox is a single standalone checkbox control. It represents a boolean value.\n\n<p>The Checkbox label is placed in the default slot and can be a short string or block of text\n</p>\n\n<pre class=\"prettyprint\">\n<code>\n&lt;oj-c-checkbox value=\"false\">\nI Agree\n&lt;/oj-c-checkbox>\n</code>\n</pre>\n\n<h3 id=\"validation-section\">\n  Validation and Messaging\n  <a class=\"bookmarkable-link\" title=\"Bookmarkable Link\" href=\"#validation-section\"></a>\n</h3>\n\n<p>\nFor components that support validators, any invalid values entered by the user are not pushed into the value\nif validation fails: the <a href=\"#valid\">valid property</a> will change but the original value will remain unchanged.\nThe same thing applies to required validation: if required is set to true and the user clears the field,\nvalid will change, but empty values will not be pushed so the original value remains unchanged.\n</p>\n<p>\nUse <a href=\"../jetCookbook.html?component=validationGroup&demo=requiredFieldValidation\">\n&lt;oj-validation-group></a> to handle tracking valid across multiple components.\n</p>\n<p>\nAn editable component runs validation (normal or deferred) based on the action performed on it\n(either by end-user or page author), and the state it was in when the action occurred. Examples\nof actions are - creating a component, user changing the value of the component by interacting\nwith it, the app setting a value programmatically, the app calling the validate() method etc. At\nthe time the action occurs, the component could already be showing errors, or can have a deferred\nerror or have no errors.\n</p>\n<p>\nThese factors also determine whether validation errors/messages get shown to the user immediately\nor get deferred. The following sections highlight the kinds of validation that are run and how\nmessages get handled.\n</p>\n\n<h4 id=\"normal-validation-section\">\n  Normal Validation\n  <a class=\"bookmarkable-link\" title=\"Bookmarkable Link\" href=\"#normal-validation-section\"></a>\n</h4>\nNormal validation is run in the following cases on the display value, using the converter and\nvalidators (this includes async-validators) set on the component (for components that support these properties),\n\nand validation errors are reported to user immediately.\n<ul>\n<li>When value changes as a result of user interaction all messages are cleared, including custom\nmessages added by the app, and full validation is run on the UI value. The steps performed are\noutlined below.\n<ol>\n<li>All messages are cleared and <code class=\"prettyprint\">messagesCustom</code> property is cleared</li>\n<li>If no converter is present then processing continues to next step. If a converter is\npresent, the UI value is first converted (i.e., parsed). If there is a parse error then\nthe messages are shown and processing returns.</li>\n<li>If there are no validators setup for the component then the value is set on the component.\nOtherwise all validators are run in sequence using the parsed value from the previous step. The\nimplicit required is run first if the component is marked required. When a validation error is\nencountered it is remembered and the next validator in the sequence is run.\n<ul><li>NOTE: The value is trimmed before required validation is run</li></ul>\n</li>\n<li>At the end of the validation run if there are errors, the messages are shown\nand processing returns. If there are async-validators, those errors are shown as soon as they\ncome in, and not until all validators, sync and async validators, are complete, does processing\nreturn, that is, value and valid are updated. If there are no errors, then the\n<code class=\"prettyprint\">value</code> property is updated and the formatted value displayed on the\nUI.</li>\n</ol>\n</li>\n<li>When the <code class=\"prettyprint\">validate</code> method is called by app, all messages are\ncleared and full validation run using the display value. See <code class=\"prettyprint\">validate</code>\nmethod on the sub-classes for details. Note: JET validation is designed to catch user input errors, and not invalid\ndata passed from the server; this should be caught on the server.</li>\n<li>When certain properties change through programmatic intervention by app, the component\ndetermines whether it needs to run normal validation based on the state the component is in.\nRefer to the <a href=\"#mixed-validation-section\">Mixed Validation</a> section below for details. </li>\n</ul>\n\n<h4 id=\"deferred-validation-section\">\n  Deferred Validation\n  <a class=\"bookmarkable-link\" title=\"Bookmarkable Link\" href=\"#deferred-validation-section\"></a>\n</h4>\nDeferred validation is run in the following cases on the component value using the implicit\nrequired validator if required is true, and validation errors are deferred, i.e., not shown to user immediately.\nRefer to the <a href=\"#deferred-messages-section\">Showing Deferred Messages</a> section to\nunderstand how deferred messages can be shown.\n<ul>\n <li>When a component is created and it is required deferred validation is run and no messages are cleared\n prior to running validation.\n Refer to the <a href=\"#deferred-validators-section\">Validators\n Participating in Deferred Validation</a> section for details.</li>\n <li>When the <code class=\"prettyprint\">value</code> property changes due to programmatic\n intervention deferred validation is run, after all messages and messagesCustom property are cleared.</li>\n <li>When the <code class=\"prettyprint\">reset</code> method is called, deferred validation is run\n  after all messages and messagesCustom property are cleared.</li>\n <li>When certain properties change through programmatic intervention by app, the component\n determines whether it needs to run deferred validation based on the state the component is in.\n Refer to the <a href=\"#mixed-validation-section\">Mixed Validation</a> section below for details.</li>\n</ul>\n\n<h4 id=\"mixed-validation-section\">\n  Mixed Validation\n  <a class=\"bookmarkable-link\" title=\"Bookmarkable Link\" href=\"#mixed-validation-section\"></a>\n</h4>\nEither deferred or normal validation is run in the following cases based on the state the\ncomponent is in and any validation errors encountered are either hidden or shown to user.\n<ul>\n <li>when disabled property changes. See <a href=\"#disabled\">disabled</a> property for details.</li>\n <li>when converter property changes (for components that support converters). See <a href=\"#converter\">converter</a> property for details.</li>\n <li>when required property changes. See <a href=\"#required\">required</a> property for details.</li>\n <li>when validators property changes (for components that support validators). See <a href=\"#validators\">validators</a> property for details.</li>\n</ul>\n\n<h3 id=\"deferred-messages-section\">\n  Showing Deferred Messages\n  <a class=\"bookmarkable-link\" title=\"Bookmarkable Link\" href=\"#deferred-messages-section\"></a>\n</h3>\nDeferred validation messages are displayed only when page author requests for it explicitly in\none of the following ways:\n<ul>\n<li>calls the <a href=\"#showMessages\"><code class=\"prettyprint\">showMessages</code></a> method on the component</li>\n</ul>\n\n<h3 id=\"deferred-validators-section\">\n  Validators Participating in Deferred Validation\n  <a class=\"bookmarkable-link\" title=\"Bookmarkable Link\" href=\"#deferred-validators-section\"></a>\n</h3>\nThe required validator is the only validator type that participates in deferred validation.\nThe required property needs to be set to true for the required validator to run.\n \n<h3 id=\"touch-section\">\nTouch End User Information\n<a class=\"bookmarkable-link\" title=\"Bookmarkable Link\" href=\"#touch-section\"></a>\n</h3>\n\n<table class=\"keyboard-table\">\n  <thead>\n    <tr>\n      <th>Target</th>\n      <th>Gesture</th>\n      <th>Action</th>\n    </tr>\n  </thead>\n  <tbody>\n   <tr>\n      <td>Checkbox</td>\n      <td><kbd>Tap</kbd></td>\n      <td> Select/unselect the checkbox</td>\n    </tr>\n    <tr>\n      <td>Checkbox's Label</td>\n      <td><kbd>Tap</kbd></td>\n      <td> Select/unselect the corresponding checkbox</td>\n   </tr>\n  </tbody>\n</table>\n\n<h3 id=\"keyboard-section\">\nKeyboard End User Information\n<a class=\"bookmarkable-link\" title=\"Bookmarkable Link\" href=\"#keyboard-section\"></a>\n</h3>\n\n<table class=\"keyboard-table\">\n  <thead>\n    <tr>\n      <th>Target</th>\n      <th>Key</th>\n      <th>Action</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <td>Checkbox</td>\n      <td><kbd>Tab In</kbd></td>\n      <td>Set focus on the checkbox.\n      Disabled checkboxes are not focusable.</td>\n    </tr>\n    <tr>\n      <td>Checkbox</td>\n      <td><kbd>Space</kbd></td>\n      <td>Toggles the checkbox; If the checkbox is unselected, it will select it and vice versa.</td>\n    </tr>\n   <tr>\n      <td>Checkbox</td>\n      <td><kbd>Tab</kbd></td>\n      <td>Focus goes to the next focusable item after the oj-c-checkbox or help icon if present.</td>\n    </tr>\n   <tr>\n      <td>Checkbox</td>\n      <td><kbd>Shift+Tab</kbd></td>\n      <td>Sets focus to the previous focusable item before the oj-c-checkbox.</td>\n    </tr>\n  </tbody>\n</table>\n\n<h3 id=\"a11y-section\">\nAccessibility\n<a class=\"bookmarkable-link\" title=\"Bookmarkable Link\" href=\"#a11y-section\"></a>\n</h3>\n\n<p>Text as a label is required in the default slot to associate with the checkbox element</p>",
+    "scope": "static",
+    "tagWithoutBrackets": "oj-c-checkbox",
+    "tagWithBrackets": "<oj-c-checkbox>",
+    "domInterface": "CCheckboxElement",
+    "ojPageTitle": "&lt;oj-c-checkbox>",
+    "camelCaseName": "Checkbox",
+    "ojPageTitlePrefix": "Element: ",
+    "ojtsvcomponent": true,
+    "tstype": {
+      "target": "Type",
+      "value": "interface CCheckboxElement extends JetElement<CheckboxElementSettableProperties>"
+    },
+    "ojsignature": [
+      {
+        "target": "Type",
+        "value": "interface CCheckboxElement extends JetElement<CheckboxElementSettableProperties>"
+      }
+    ],
+    "tsdeprecated": [
+      {
+        "type": "production",
+        "since": "17.0.0"
+      }
+    ],
+    "ojmodule": "checkbox"
+  },
+  {
+    "id": "oj-c.Checkbox#containerReadonly",
+    "name": "containerReadonly",
+    "memberof": "oj-c.Checkbox",
+    "meta": {
+      "filename": "checkbox.tsx",
+      "path": "web/components/oj-c/checkbox"
+    },
+    "kind": "member",
+    "longname": "oj-c.Checkbox#containerReadonly",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "boolean"
+      ]
+    },
+    "optional": true,
+    "description": "Specifies whether an ancestor container, like oj-c-form-layout, is readonly.\nThis affects whether a readonly component renders in full or mixed readonly mode."
+  },
+  {
+    "id": "oj-c.Checkbox#columnSpan",
+    "name": "columnSpan",
+    "memberof": "oj-c.Checkbox",
+    "meta": {
+      "filename": "checkbox.tsx",
+      "path": "web/components/oj-c/checkbox"
+    },
+    "kind": "member",
+    "longname": "oj-c.Checkbox#columnSpan",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "number"
+      ]
+    },
+    "optional": true,
+    "description": "Specifies how many columns this component should span.\nThis only takes effect when this component is a child of a form layout\nthat has direction 'row'.",
+    "defaultvalue": 1
+  },
+  {
+    "id": "oj-c.Checkbox#disabled",
+    "name": "disabled",
+    "memberof": "oj-c.Checkbox",
+    "meta": {
+      "filename": "checkbox.tsx",
+      "path": "web/components/oj-c/checkbox"
+    },
+    "kind": "member",
+    "longname": "oj-c.Checkbox#disabled",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "boolean"
+      ]
+    },
+    "optional": true,
+    "description": "Whether the component is disabled. The default is false.\n\n<p>\nWhen the <code class=\"prettyprint\">disabled</code> property changes due to programmatic\nintervention, the component may clear messages and run validation in some cases. </br>\n<ul>\n<li>when a required component is initialized as disabled\n<code class=\"prettyprint\">value=\"{{currentValue}}\" required disabled</code>,\ndeferred validation is skipped.</li>\n<li>when a disabled component is enabled,\n <ul>\n <li>if component is invalid and showing messages then all component messages are cleared,\n and full validation run using the display value.\n  <ul>\n   <li>if there are validation errors, they are shown.</li>\n   <li>if no errors result from the validation, the <code class=\"prettyprint\">value</code>\n   property is updated. Page authors can listen to the <code class=\"prettyprint\">valueChanged</code>\n   event to clear custom errors.</li>\n  </ul>\n </li>\n\n <li>if component is valid and has no errors then deferred validation is run.\n   <ul>\n   <li>if there is a deferred validation error, then the valid property is updated. </li>\n   </ul>\n </li>\n <li>if component is invalid and deferred errors then component messages are cleared and\n deferred validation re-run.\n   <ul>\n   <li>if there is a deferred validation error, then the valid property is updated.</li>\n   </ul>\n </li>\n </ul>\n</li>\n<li>when enabled component is disabled then no validation is run and the component appears\ndisabled.</li>\n</ul>\n</p>",
+    "defaultvalue": false
+  },
+  {
+    "id": "oj-c.Checkbox#displayOptions",
+    "name": "displayOptions",
+    "memberof": "oj-c.Checkbox",
+    "meta": {
+      "filename": "checkbox.tsx",
+      "path": "web/components/oj-c/checkbox"
+    },
+    "kind": "member",
+    "longname": "oj-c.Checkbox#displayOptions",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "object"
+      ]
+    },
+    "optional": true,
+    "description": "Display options for auxiliary content that describes whether or not it should be displayed.",
+    "tstype": [
+      {
+        "target": "Type",
+        "value": "oj-c.Checkbox.DisplayOptionsProps",
+        "jsdocOverride": true
+      }
+    ]
+  },
+  {
+    "id": "oj-c.Checkbox#help",
+    "name": "help",
+    "memberof": "oj-c.Checkbox",
+    "meta": {
+      "filename": "checkbox.tsx",
+      "path": "web/components/oj-c/checkbox"
+    },
+    "kind": "member",
+    "longname": "oj-c.Checkbox#help",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "object"
+      ]
+    },
+    "optional": true,
+    "description": "Form component help information.",
+    "tstype": [
+      {
+        "target": "Type",
+        "value": "oj-c.Checkbox.Help",
+        "jsdocOverride": true
+      }
+    ]
+  },
+  {
+    "id": "oj-c.Checkbox#helpHints",
+    "name": "helpHints",
+    "memberof": "oj-c.Checkbox",
+    "meta": {
+      "filename": "checkbox.tsx",
+      "path": "web/components/oj-c/checkbox"
+    },
+    "kind": "member",
+    "longname": "oj-c.Checkbox#helpHints",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "object"
+      ]
+    },
+    "optional": true,
+    "description": "The helpHints object contains a definition property, sourceText property, and a source property.",
+    "tstype": [
+      {
+        "target": "Type",
+        "value": "oj-c.Checkbox.HelpHints",
+        "jsdocOverride": true
+      }
+    ]
+  },
+  {
+    "id": "oj-c.Checkbox#messagesCustom",
+    "name": "messagesCustom",
+    "memberof": "oj-c.Checkbox",
+    "meta": {
+      "filename": "checkbox.tsx",
+      "path": "web/components/oj-c/checkbox"
+    },
+    "kind": "member",
+    "longname": "oj-c.Checkbox#messagesCustom",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "Array<object>"
+      ]
+    },
+    "optional": true,
+    "ojwriteback": true,
+    "description": "List of messages an app would add to the component when it has business/custom validation\nerrors that it wants the component to show. This allows the app to perform further validation\nbefore sending data to the server. When this option is set the message shows to the\nuser right away. To clear the custom message, set <code class=\"prettyprint\">messagesCustom</code>\nback to an empty array.<br/>\n<p>\nSee the <a href=\"#validation-section\">Validation and Messages</a> section\nfor details on when the component clears <code class=\"prettyprint\">messagesCustom</code>;\nfor example, when full validation is run.\n</p>",
+    "defaultvalue": "[]",
+    "tstype": [
+      {
+        "target": "Type",
+        "value": "Array<oj-c.Checkbox.ComponentMessageItem>",
+        "jsdocOverride": true
+      }
+    ]
+  },
+  {
+    "id": "oj-c.Checkbox#readonly",
+    "name": "readonly",
+    "memberof": "oj-c.Checkbox",
+    "meta": {
+      "filename": "checkbox.tsx",
+      "path": "web/components/oj-c/checkbox"
+    },
+    "kind": "member",
+    "longname": "oj-c.Checkbox#readonly",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "boolean"
+      ]
+    },
+    "optional": true,
+    "description": "<p>\nWhether the component is readonly. The readonly property sets or returns whether an element\nis readonly, or not. A readonly element cannot be modified. However, a user can tab to it,\nhighlight it, focus on it, and copy the text from it. If you want to prevent the user from\ninteracting with the element, use the disabled property instead.\n</p>\n<p>\nIf the property value is not set either directly on the component or inherited from\na parent form layout, then the property is treated as if its value were false.\n</p>"
+  },
+  {
+    "id": "oj-c.Checkbox#readonlyUserAssistanceShown",
+    "name": "readonlyUserAssistanceShown",
+    "memberof": "oj-c.Checkbox",
+    "meta": {
+      "filename": "checkbox.tsx",
+      "path": "web/components/oj-c/checkbox"
+    },
+    "kind": "member",
+    "longname": "oj-c.Checkbox#readonlyUserAssistanceShown",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "\"none\"",
+        "\"confirmationAndInfoMessages\""
+      ]
+    },
+    "optional": true,
+    "description": "<p>\nSpecifies which user assistance types should be shown when the component is readonly.\n</p>",
+    "defaultvalue": "\"none\""
+  },
+  {
+    "id": "oj-c.Checkbox#required",
+    "name": "required",
+    "memberof": "oj-c.Checkbox",
+    "meta": {
+      "filename": "checkbox.tsx",
+      "path": "web/components/oj-c/checkbox"
+    },
+    "kind": "member",
+    "longname": "oj-c.Checkbox#required",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "boolean"
+      ]
+    },
+    "optional": true,
+    "description": "<p>\nThis property set to <code class=\"prettyprint\">false</code> implies that a value is not required to be provided by the user.\nThis is the default.\nThis property set to <code class=\"prettyprint\">true</code> implies that a value is required to be provided by the user.\n</p>\n<p>\nIn the Redwood theme, by default, a Required text is rendered inline when the field is empty.\n</p>\n<p>The Required error text is based on Redwood UX designs, and it is not recommended that\nit be changed.\nTo override the required error message,\nuse the <code class=\"prettyprint\">required-message-detail</code> attribute.\nThe component's label text is passed in as a token {label} and can be used in the message detail.\n</p>\n<p>When required is set to true, an implicit\nrequired validator is created, i.e.,\n<code class=\"prettyprint\">new RequiredValidator()</code>. The required validator is the only\nvalidator to run during initial render, and its error is not shown to the user at this time;\nthis is called deferred validation. The required validator also runs during normal validation;\nthis is when the errors are shown to the user.\nSee the <a href=\"#validation-section\">Validation and Messaging</a> section for details.\n</p>\n<p>\nWhen the <code class=\"prettyprint\">required</code> property changes due to programmatic intervention,\nthe component may clear component messages and run validation, based on the current state it's in. </br>\n\n<h4>Running Validation when required property changes</h4>\n<ul>\n<li>if component is valid when required is set to true, then it runs deferred validation on\nthe value property. If the field is empty, the valid state is invalidHidden. No errors are\nshown to the user.\n</li>\n<li>if component is valid when required is set from true to false, then no validation is run.\n</li>\n<li>if component is invalid and has deferred messages (invalidHidden) when required is set to false, then\ncomponent messages are cleared (messages-custom messages are not cleared)\nbut no deferred validation is run because required is false.\n</li>\n<li>if component is invalid and currently showing invalid messages (invalidShown) when required is changed\nto either true or false, then\ncomponent messages are cleared and normal validation is run using the current display value.\n<ul>\n  <li>if there are validation errors, then <code class=\"prettyprint\">value</code>\n  property is not updated and the error is shown.\n  </li>\n  <li>if no errors result from the validation, the <code class=\"prettyprint\">value</code>\n  property is updated; page author can listen to the <code class=\"prettyprint\">valueChanged</code>\n  event on the component to clear custom errors.</li>\n</ul>\n</li>\n</ul>\n\n<h4>Clearing Messages when required property changes</h4>\n<ul>\n<li>Only messages created by the component, like validation messages, are cleared when the required property changes.</li>\n<li><code class=\"prettyprint\">messagesCustom</code> property is not cleared.</li>\n</ul>\n\n</p>",
+    "defaultvalue": false
+  },
+  {
+    "id": "oj-c.Checkbox#userAssistanceDensity",
+    "name": "userAssistanceDensity",
+    "memberof": "oj-c.Checkbox",
+    "meta": {
+      "filename": "checkbox.tsx",
+      "path": "web/components/oj-c/checkbox"
+    },
+    "kind": "member",
+    "longname": "oj-c.Checkbox#userAssistanceDensity",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "\"compact\"",
+        "\"reflow\"",
+        "\"efficient\""
+      ]
+    },
+    "optional": true,
+    "description": "<p>\nSpecifies the density of the form component's user assistance presentation. It can be shown inline with\nreserved rows to prevent reflow if a user assistance text shows up, inline without reserved rows that would\nreflow if a user assistance text shows up, or it can be shown compactly in a popup instead.\n</p>\n<p>\nIf the property value is not set either directly on the component or inherited from\na parent form layout, then the property is treated as if its value were \"reflow\".\n</p>",
+    "ojvalues": [
+      {
+        "name": "reflow",
+        "description": "Messages and required are shown inline under the field with no reserved space. Help & hints will appear in a popup with a help icon.",
+        "displayName": "Reflow",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "efficient",
+        "description": "Messages and required are shown inline under the field with reserved space. Help & hints will appear in a popup with a help icon.",
+        "displayName": "Efficient",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "compact",
+        "description": "Messages and required are shown inline under the field with reserved space. Help & hints will appear in a popup with a help icon.",
+        "displayName": "Compact",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.Checkbox#requiredMessageDetail",
+    "name": "requiredMessageDetail",
+    "memberof": "oj-c.Checkbox",
+    "meta": {
+      "filename": "checkbox.tsx",
+      "path": "web/components/oj-c/checkbox"
+    },
+    "kind": "member",
+    "longname": "oj-c.Checkbox#requiredMessageDetail",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "string"
+      ]
+    },
+    "optional": true,
+    "description": "<p>\nThe component-specific message detail when the required validation fails.\nIf the component needs a required validation error message that is different from the default,\nset this property. It should be a translated string.\n</p>"
+  },
+  {
+    "id": "oj-c.Checkbox#valid",
+    "name": "valid",
+    "memberof": "oj-c.Checkbox",
+    "meta": {
+      "filename": "checkbox.tsx",
+      "path": "web/components/oj-c/checkbox"
+    },
+    "kind": "member",
+    "longname": "oj-c.Checkbox#valid",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "\"pending\"",
+        "\"valid\"",
+        "\"invalidHidden\"",
+        "\"invalidShown\""
+      ]
+    },
+    "optional": true,
+    "ojwriteback": true,
+    "readonly": true,
+    "description": "<p>\nThe current valid state of the component. It is evaluated on initial render.\nIt is re-evaluated\n<ul>\n  <li>when messagesCustom is updated,\n  since messagesCustom can be added by the app developer any time.</li>\n  <li>when showMessages() is called. Since showMessages() moves the\n  hidden messages into messages shown,\n  if the valid state was \"invalidHidden\" then it would become \"invalidShown\".</li>\n  <li>when the required property has changed. If a component is empty and has required\n  set, the valid state may be \"invalidHidden\" (if no invalid messages are being shown as well).\n  If required property is removed, the valid state would change to \"valid\".</li>\n</ul>\n</p>\n<p>\n Note: New valid states may be added to the list of valid values in future releases.\n Any new values will start with \"invalid\"\n if it is an invalid state, \"pending\" if it is pending state,\n and \"valid\" if it is a valid state.\n</p>",
+    "ojvalues": [
+      {
+        "name": "valid",
+        "description": "The component is valid",
+        "displayName": "Valid",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "pending",
+        "description": "The component is waiting for the validation state to be determined. The 'pending' state is set at the start of the convert/validate process.",
+        "displayName": "Pending",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "invalidHidden",
+        "description": "The component has invalid messages hidden and no invalid messages showing. An invalid message is one with severity 'error'.",
+        "displayName": "Invalid Hidden",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "invalidShown",
+        "description": "The component has invalid messages showing. An invalid message is one with severity 'error'.",
+        "displayName": "Invalid Shown",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.Checkbox#value",
+    "name": "value",
+    "memberof": "oj-c.Checkbox",
+    "meta": {
+      "filename": "checkbox.tsx",
+      "path": "web/components/oj-c/checkbox"
+    },
+    "kind": "member",
+    "longname": "oj-c.Checkbox#value",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "boolean"
+      ]
+    },
+    "optional": true,
+    "ojwriteback": true,
+    "description": "The value of the component.\n\n<p>\nWhen <code class=\"prettyprint\">value</code> property changes due to programmatic\nintervention, the component always clears all messages\nincluding <code class=\"prettyprint\">messagesCustom</code>, runs deferred validation, and\nalways refreshes UI display value.\n</p>\n\n<p>\nWhen the checkbox is cleared and the value is committed, the <code class=\"prettyprint\">value</code>\nproperty is set to <code>false</code>.\n</p>\n\n<h4>Running Validation</h4>\n<ul>\n<li>component always runs deferred validation; the\n<code class=\"prettyprint\">valid</code> property is updated with the result.</li>\n</ul>",
+    "defaultvalue": false
+  },
+  {
+    "id": "oj-c.Checkbox#blur",
+    "name": "blur",
+    "memberof": "oj-c.Checkbox",
+    "meta": {
+      "filename": "checkbox.tsx",
+      "path": "web/components/oj-c/checkbox"
+    },
+    "kind": "function",
+    "longname": "oj-c.Checkbox#blur",
+    "scope": "instance",
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "void"
+          ]
+        }
+      }
+    ],
+    "description": "Blurs the input field.",
+    "ojhidden": true
+  },
+  {
+    "id": "oj-c.Checkbox#focus",
+    "name": "focus",
+    "memberof": "oj-c.Checkbox",
+    "meta": {
+      "filename": "checkbox.tsx",
+      "path": "web/components/oj-c/checkbox"
+    },
+    "kind": "function",
+    "longname": "oj-c.Checkbox#focus",
+    "scope": "instance",
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "void"
+          ]
+        }
+      }
+    ],
+    "description": "Focuses the input field.",
+    "ojhidden": true
+  },
+  {
+    "id": "oj-c.Checkbox#showMessages",
+    "name": "showMessages",
+    "memberof": "oj-c.Checkbox",
+    "meta": {
+      "filename": "checkbox.tsx",
+      "path": "web/components/oj-c/checkbox"
+    },
+    "kind": "function",
+    "longname": "oj-c.Checkbox#showMessages",
+    "scope": "instance",
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "void"
+          ]
+        }
+      }
+    ],
+    "description": "Takes all deferred messages and shows them.\nIt then updates the valid property;\ne.g., if the valid state was \"invalidHidden\" before showMessages(),\nthe valid state will become \"invalidShown\" after showMessages().\nIf there were no deferred messages this method simply returns."
+  },
+  {
+    "id": "oj-c.Checkbox#reset",
+    "name": "reset",
+    "memberof": "oj-c.Checkbox",
+    "meta": {
+      "filename": "checkbox.tsx",
+      "path": "web/components/oj-c/checkbox"
+    },
+    "kind": "function",
+    "longname": "oj-c.Checkbox#reset",
+    "scope": "instance",
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "void"
+          ]
+        }
+      }
+    ],
+    "description": "Resets the component by clearing all messages and messagesCustom attribute\nand updates the component's display value using the attribute value.\nUser entered value will be erased when this method is called."
+  },
+  {
+    "id": "oj-c.Checkbox#validate",
+    "name": "validate",
+    "memberof": "oj-c.Checkbox",
+    "meta": {
+      "filename": "checkbox.tsx",
+      "path": "web/components/oj-c/checkbox"
+    },
+    "kind": "function",
+    "longname": "oj-c.Checkbox#validate",
+    "scope": "instance",
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Promise"
+          ]
+        },
+        "description": "The Promise resolves to \"valid\" if the component is disabled or readonly.\nThe Promise resolves to \"invalid\" if there were errors."
+      }
+    ],
+    "description": "If enabled, validates the component's display value (or undefined if display value is empty) and updates the value\noption by performing the following steps.\n<ol>\n<li>All messages are cleared, including custom messages added by the app.</li>\n<li>\n At the end of validation if there are errors, the messages are shown.\n If there were no errors, then the value option is updated.\n</li>\n</ol>\n<p>If the component is readonly or disabled, returns a Promise that resolves to 'valid'\nwithout doing any validation.</p>"
+  },
+  {
+    "id": "oj-c.Checkbox#setProperty",
+    "name": "setProperty",
+    "memberof": "oj-c.Checkbox",
+    "meta": {
+      "filename": "checkbox.tsx",
+      "path": "web/components/oj-c/checkbox"
+    },
+    "kind": "function",
+    "longname": "oj-c.Checkbox#setProperty",
+    "scope": "instance",
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "void"
+          ]
+        }
+      }
+    ],
+    "description": "Sets a property or a single subproperty for complex properties and notifies the component of the change, triggering a corresponding event.",
+    "params": [
+      {
+        "name": "property",
+        "description": "The property name to set. Supports dot notation for subproperty access.",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "value",
+        "description": "The new value to set the property to.",
+        "type": {
+          "names": [
+            "any"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.Checkbox#getProperty",
+    "name": "getProperty",
+    "memberof": "oj-c.Checkbox",
+    "meta": {
+      "filename": "checkbox.tsx",
+      "path": "web/components/oj-c/checkbox"
+    },
+    "kind": "function",
+    "longname": "oj-c.Checkbox#getProperty",
+    "scope": "instance",
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "any"
+          ]
+        }
+      }
+    ],
+    "description": "Retrieves the value of a property or a subproperty.",
+    "params": [
+      {
+        "name": "property",
+        "description": "The property name to get. Supports dot notation for subproperty access.",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.Checkbox#setProperties",
+    "name": "setProperties",
+    "memberof": "oj-c.Checkbox",
+    "meta": {
+      "filename": "checkbox.tsx",
+      "path": "web/components/oj-c/checkbox"
+    },
+    "kind": "function",
+    "longname": "oj-c.Checkbox#setProperties",
+    "scope": "instance",
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "void"
+          ]
+        }
+      }
+    ],
+    "description": "Performs a batch set of properties.",
+    "params": [
+      {
+        "name": "properties",
+        "description": "An object containing the property and value pairs to set.",
+        "type": {
+          "names": [
+            "object"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.Checkbox#Default",
+    "name": "Default",
+    "memberof": "oj-c.Checkbox",
+    "meta": {
+      "filename": "checkbox.tsx",
+      "path": "web/components/oj-c/checkbox"
+    },
+    "kind": "member",
+    "longname": "oj-c.Checkbox#Default",
+    "scope": "instance",
+    "description": "The default slot is the content associated with the checkbox. This can be a label or a block of text.",
+    "ojchild": true,
+    "ojslot": false
+  },
+  {
+    "id": "oj-c.Checkbox.touchDoc",
+    "name": "touchDoc",
+    "kind": "member",
+    "longname": "oj-c.Checkbox.touchDoc",
+    "description": "<table class=\"keyboard-table\">\n  <thead>\n    <tr>\n      <th>Target</th>\n      <th>Gesture</th>\n      <th>Action</th>\n    </tr>\n  </thead>\n  <tbody>\n   <tr>\n      <td>Checkbox</td>\n      <td><kbd>Tap</kbd></td>\n      <td> Select/unselect the checkbox</td>\n    </tr>\n    <tr>\n      <td>Checkbox's Label</td>\n      <td><kbd>Tap</kbd></td>\n      <td> Select/unselect the corresponding checkbox</td>\n   </tr>\n  </tbody>\n</table>",
+    "memberof": "oj-c.Checkbox",
+    "meta": {
+      "filename": "checkbox.tsx",
+      "path": "web/components/oj-c/checkbox"
+    },
+    "ojfragment": true
+  },
+  {
+    "id": "oj-c.Checkbox.keyboardDoc",
+    "name": "keyboardDoc",
+    "kind": "member",
+    "longname": "oj-c.Checkbox.keyboardDoc",
+    "description": "<table class=\"keyboard-table\">\n  <thead>\n    <tr>\n      <th>Target</th>\n      <th>Key</th>\n      <th>Action</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <td>Checkbox</td>\n      <td><kbd>Tab In</kbd></td>\n      <td>Set focus on the checkbox.\n      Disabled checkboxes are not focusable.</td>\n    </tr>\n    <tr>\n      <td>Checkbox</td>\n      <td><kbd>Space</kbd></td>\n      <td>Toggles the checkbox; If the checkbox is unselected, it will select it and vice versa.</td>\n    </tr>\n   <tr>\n      <td>Checkbox</td>\n      <td><kbd>Tab</kbd></td>\n      <td>Focus goes to the next focusable item after the oj-c-checkbox or help icon if present.</td>\n    </tr>\n   <tr>\n      <td>Checkbox</td>\n      <td><kbd>Shift+Tab</kbd></td>\n      <td>Sets focus to the previous focusable item before the oj-c-checkbox.</td>\n    </tr>\n  </tbody>\n</table>",
+    "memberof": "oj-c.Checkbox",
+    "meta": {
+      "filename": "checkbox.tsx",
+      "path": "web/components/oj-c/checkbox"
+    },
+    "ojfragment": true
+  },
+  {
+    "id": "oj-c.Checkbox.DisplayOptionsProps",
+    "name": "DisplayOptionsProps",
+    "kind": "typedef",
+    "memberof": "oj-c.Checkbox",
+    "meta": {
+      "filename": "checkbox.tsx",
+      "path": "web/components/oj-c/checkbox"
+    },
+    "longname": "oj-c.Checkbox.DisplayOptionsProps",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "scope": "static",
+    "description": "Display options for auxiliary content that determines whether or not it should be displayed.",
+    "properties": [
+      {
+        "name": "messages",
+        "description": "Display options for auxiliary message text.",
+        "optional": true,
+        "type": {
+          "names": [
+            "\"none\"",
+            "\"display\""
+          ]
+        },
+        "defaultvalue": "\"display\""
+      }
+    ]
+  },
+  {
+    "id": "oj-c.Checkbox.Help",
+    "name": "Help",
+    "kind": "typedef",
+    "memberof": "oj-c.Checkbox",
+    "meta": {
+      "filename": "checkbox.tsx",
+      "path": "web/components/oj-c/checkbox"
+    },
+    "longname": "oj-c.Checkbox.Help",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "scope": "static",
+    "description": "Form component help information.",
+    "properties": [
+      {
+        "name": "instruction",
+        "description": "A type of user assistance text. User assistance text is used to provide guidance to\nhelp the user understand what data to enter or select.",
+        "optional": true,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.Checkbox.HelpHints",
+    "name": "HelpHints",
+    "kind": "typedef",
+    "memberof": "oj-c.Checkbox",
+    "meta": {
+      "filename": "checkbox.tsx",
+      "path": "web/components/oj-c/checkbox"
+    },
+    "longname": "oj-c.Checkbox.HelpHints",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "scope": "static",
+    "description": "The helpHints object contains a definition property and a source property.",
+    "properties": [
+      {
+        "name": "definition",
+        "description": "A type of user assistance text. User assistance text is used to provide guidance to help\nthe user understand what data to enter or select. help-hints could come from a help system.",
+        "optional": true,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "source",
+        "description": "Help source URL associated with the component.",
+        "optional": true,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "sourceText",
+        "description": "Custom text to be used for the source link.",
+        "optional": true,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.Checkbox.ComponentMessageItem",
+    "name": "ComponentMessageItem",
+    "kind": "typedef",
+    "memberof": "oj-c.Checkbox",
+    "meta": {
+      "filename": "checkbox.tsx",
+      "path": "web/components/oj-c/checkbox"
+    },
+    "longname": "oj-c.Checkbox.ComponentMessageItem",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "scope": "static",
+    "description": "A type for a single component message",
+    "properties": [
+      {
+        "name": "summary",
+        "optional": true,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "detail",
+        "optional": true,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "severity",
+        "optional": true,
+        "type": {
+          "names": [
+            "\"error\"",
+            "\"confirmation\"",
+            "\"info\"",
+            "\"warning\""
+          ]
+        }
+      }
+    ]
+  }
+]

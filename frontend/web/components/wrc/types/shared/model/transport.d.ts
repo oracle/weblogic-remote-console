@@ -1,0 +1,13 @@
+import { Action, PDJ } from "../typedefs/pdj";
+import { PropertyValueHolder, RDJ, Reference } from "../typedefs/rdj";
+export declare const fixOrigin: (url: string) => string;
+export declare const _post: (url: string, body: string | FormData) => Promise<Response>;
+export declare const doUpdate: (rdjUrl: string, changes: any, files?: Record<string, File>) => Promise<Response>;
+export declare const doAction: (actionUrl: string, action: Action | undefined, references?: Reference[] | string[], payloadOverride?: any) => Promise<any>;
+export declare const doActionInput: (url: string, changes: Record<string, PropertyValueHolder>, rows?: PropertyValueHolder, files?: Record<string, File> | undefined) => Promise<Response>;
+export declare const getData: (rdjUrl: string, pdjUrl: string | undefined, context?: string) => Promise<[RDJ, PDJ | undefined]>;
+export declare const getDataComponentText: (url: string, context?: string) => Promise<string>;
+export declare const getDataComponent: (url: string, context?: string) => Promise<any>;
+export declare const fetchServerStatus: () => Promise<Response | void>;
+export declare const startStatusPolling: (intervalMs?: number) => void;
+export declare const stopStatusPolling: () => void;

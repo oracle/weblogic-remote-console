@@ -1,22 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Copyright 2020, 2025, Oracle Corporation and/or its affiliates.  All rights reserved.
+<!-- Copyright 2020, 2026, Oracle Corporation and/or its affiliates.  All rights reserved.
      Licensed under the Universal Permissive License v 1.0 as shown at http://oss.oracle.com/licenses/upl.  -->
 <project>
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>com.oracle.weblogic.console-backend</groupId>
   <artifactId>build-tools</artifactId>
-  <version>2.4.19</version>
+  <version>3.0.0</version>
   <name>Build Tools</name>
 
   <parent>
       <groupId>com.oracle.weblogic</groupId>
       <artifactId>console-backend</artifactId>
-      <version>2.4.19</version>
+      <version>3.0.0</version>
   </parent>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
 
+  <dependencies>
+    <dependency>
+        <groupId>io.helidon.microprofile.bundles</groupId>
+        <artifactId>helidon-microprofile</artifactId>
+        <exclusions>
+            <exclusion>
+                <groupId>org.jboss.weld.probe</groupId>
+                <artifactId>weld-probe-core</artifactId>
+            </exclusion>
+        </exclusions>
+    </dependency>
+    <dependency>
+        <groupId>com.fasterxml.jackson.jaxrs</groupId>
+        <artifactId>jackson-jaxrs-json-provider</artifactId>
+        <version>${version.jackson.jaxrs}</version>
+    </dependency>
+    <dependency>
+        <groupId>org.glassfish.jersey.core</groupId>
+        <artifactId>jersey-common</artifactId>
+        <version>${version.jersey}</version>
+    </dependency>
+    <dependency>
+        <groupId>javax</groupId>
+        <artifactId>javaee-api</artifactId>
+        <version>8.0</version>
+    </dependency>
+  </dependencies>
 </project>

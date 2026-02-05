@@ -1,0 +1,2 @@
+define(['exports', 'preact/jsx-runtime', './Icon-865b3c78'], (function(e,l,c){"use strict";e.SvgMove=e=>l.jsx(c.Icon,{viewBox:"0 0 24 24",...e,children:l.jsx("path",{d:"m12 2 4 3.553L14.474 7 13 5.602V11h5.398L17 9.526 18.447 8 22 12l-3.553 4L17 14.474 18.398 13H13v5.398L14.474 17 16 18.447 12 22l-4-3.553L9.526 17 11 18.398V13H5.602L7 14.474 5.553 16 2 12l3.553-4L7 9.526 5.601 11H11V5.601L9.526 7 8 5.553z",fill:"currentcolor",fillRule:"evenodd"})})}));
+//# sourceMappingURL=Move-37905d32.js.map

@@ -1,0 +1,204 @@
+{
+  "name": "date-picker",
+  "version": "19.0.1",
+  "jetVersion": "^19.0.1",
+  "pack": "oj-c",
+  "type": "composite",
+  "dependencyScope": "runtime",
+  "license": "https://opensource.org/licenses/UPL",
+  "implements": [
+    "CDatePickerElement"
+  ],
+  "description": "A DatePicker is a calendar interface that allows users to select a single date.",
+  "displayName": "DatePicker",
+  "help": "oj-c.DatePicker.html",
+  "main": "oj-c/date-picker",
+  "extension": {
+    "catalog": {
+      "category": "Forms"
+    },
+    "vbdt": {
+      "module": "oj-c/date-picker"
+    },
+    "oracle": {
+      "icon": "oj-ux-ico-date"
+    },
+    "webelement": {
+      "package": "@oracle/oraclejet-core-pack",
+      "version": "19.0.1",
+      "docUrl": "https://www.oracle.com/webfolder/technetwork/jet/cpwdtsdoc/classes/DatePickerWebElement.html",
+      "export": "findDatePicker",
+      "main": "@oracle/oraclejet-core-pack/webdriver"
+    }
+  },
+  "since": "17.0.0",
+  "status": [
+    {
+      "type": "supersedes",
+      "since": "17.1.0",
+      "value": [
+        "oj-date-picker"
+      ]
+    }
+  ],
+  "properties": {
+    "dayFormatter": {
+      "type": "function"
+    },
+    "daysOutsideMonth": {
+      "type": "string",
+      "propertyEditorValues": {
+        "hidden": {
+          "description": "The days outside of the current month will be hidden.",
+          "displayName": "Hidden"
+        },
+        "selectable": {
+          "description": "The days outside of the current month will be visible and selectable.",
+          "displayName": "Selectable"
+        }
+      },
+      "enumValues": [
+        "hidden",
+        "selectable"
+      ],
+      "value": "hidden"
+    },
+    "monthAndYearPicker": {
+      "type": "string",
+      "propertyEditorValues": {
+        "on": {
+          "description": "The month and year toggle buttons will be shown.",
+          "displayName": "On"
+        },
+        "off": {
+          "description": "The month and year toggle buttons will not be shown and the date picker renders the month and the year as text.",
+          "displayName": "Off"
+        }
+      },
+      "enumValues": [
+        "off",
+        "on"
+      ],
+      "value": "on"
+    },
+    "max": {
+      "type": "string|null",
+      "description": "The maximum selectable date, in ISO string format",
+      "displayName": "Max",
+      "help": "#max",
+      "format": "date",
+      "value": null
+    },
+    "maxWidth": {
+      "type": "number|string",
+      "description": "Specifies the component style maxWidth.",
+      "displayName": "Max Width",
+      "help": "#maxWidth"
+    },
+    "min": {
+      "type": "string|null",
+      "description": "The maximum selectable date, in ISO string format",
+      "displayName": "Min",
+      "help": "#min",
+      "format": "date",
+      "value": null
+    },
+    "readonly": {
+      "type": "boolean",
+      "value": false
+    },
+    "todayButton": {
+      "type": "string",
+      "propertyEditorValues": {
+        "visible": {
+          "description": "The 'Go to Today' button will be shown and it can be pressed to navigate to Today.",
+          "displayName": "Visible"
+        },
+        "hidden": {
+          "description": "The 'Go to Today' button will be hidden.",
+          "displayName": "Hidden"
+        }
+      },
+      "enumValues": [
+        "hidden",
+        "visible"
+      ],
+      "value": "visible"
+    },
+    "todayTimeZone": {
+      "type": "string"
+    },
+    "value": {
+      "type": "string|null",
+      "writeback": true,
+      "value": null
+    },
+    "weekDisplay": {
+      "type": "string",
+      "propertyEditorValues": {
+        "none": {
+          "description": "The week of the year column will not be shown.",
+          "displayName": "None"
+        },
+        "number": {
+          "description": "Will show the week of the year as a number.",
+          "displayName": "Number"
+        }
+      },
+      "enumValues": [
+        "number",
+        "none"
+      ],
+      "value": "none"
+    },
+    "width": {
+      "type": "number|string",
+      "description": "Specifies the component style width.",
+      "displayName": "width",
+      "help": "#width"
+    }
+  },
+  "methods": {
+    "setProperty": {
+      "description": "Sets a property or a single subproperty for complex properties and notifies the component of the change, triggering a corresponding event.",
+      "help": "#setProperty",
+      "params": [
+        {
+          "name": "property",
+          "description": "The property name to set. Supports dot notation for subproperty access.",
+          "type": "string"
+        },
+        {
+          "name": "value",
+          "description": "The new value to set the property to.",
+          "type": "any"
+        }
+      ],
+      "return": "void"
+    },
+    "getProperty": {
+      "description": "Retrieves the value of a property or a subproperty.",
+      "help": "#getProperty",
+      "params": [
+        {
+          "name": "property",
+          "description": "The property name to get. Supports dot notation for subproperty access.",
+          "type": "string"
+        }
+      ],
+      "return": "any"
+    },
+    "setProperties": {
+      "description": "Performs a batch set of properties.",
+      "help": "#setProperties",
+      "params": [
+        {
+          "name": "properties",
+          "description": "An object containing the property and value pairs to set.",
+          "type": "object"
+        }
+      ],
+      "return": "void"
+    }
+  }
+}

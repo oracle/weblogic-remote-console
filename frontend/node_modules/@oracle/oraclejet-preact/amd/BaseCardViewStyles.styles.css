@@ -1,0 +1,83 @@
+.BaseCardViewStyles_baseStyle__7pe4s0 {
+  height: 100%;
+  padding: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem);
+  box-sizing: border-box;
+  overflow-y: inherit;
+  overflow-anchor: none;
+}
+.BaseCardViewStyles_baseStyle__7pe4s0:focus {
+  outline-style: none;
+}
+.BaseCardViewStyles_itemStyle__7pe4s1 {
+  width: -moz-max-content;
+  width: max-content;
+}
+.BaseCardViewStyles_itemInGridLayout__7pe4s2 {
+  width: auto;
+}
+.BaseCardViewStyles_getItemOverlay__7pe4s3 {
+  width: calc(50% + var(--oj-c-EXPERIMENTAL-DO-NOT-USE-card-view-gutter-size-xs)/2 - calc(0.5 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem)));
+  left: calc(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-card-view-gutter-size-xs)/-2);
+}
+.BaseCardViewStyles_getItemOverlay__7pe4s4 {
+  width: calc(50% + var(--oj-c-EXPERIMENTAL-DO-NOT-USE-card-view-gutter-size-sm)/2 - calc(0.5 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem)));
+  left: calc(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-card-view-gutter-size-sm)/-2);
+}
+.BaseCardViewStyles_getItemOverlay__7pe4s5 {
+  width: calc(50% + var(--oj-c-EXPERIMENTAL-DO-NOT-USE-card-view-gutter-size-md)/2 - calc(0.5 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem)));
+  left: calc(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-card-view-gutter-size-md)/-2);
+}
+.BaseCardViewStyles_getItemOverlay__7pe4s6 {
+  width: calc(50% + var(--oj-c-EXPERIMENTAL-DO-NOT-USE-card-view-gutter-size-lg)/2 - calc(0.5 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem)));
+  left: calc(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-card-view-gutter-size-lg)/-2);
+}
+.BaseCardViewStyles_getItemOverlay__7pe4s7 {
+  width: calc(50% + var(--oj-c-EXPERIMENTAL-DO-NOT-USE-card-view-gutter-size-xl)/2 - calc(0.5 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem)));
+  left: calc(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-card-view-gutter-size-xl)/-2);
+}
+.BaseCardViewStyles_getItemOverlayVertical__7pe4s8 {
+  height: calc(50% +  var(--oj-c-EXPERIMENTAL-DO-NOT-USE-card-view-gutter-size-xs)/2 - calc(0.5 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem)));
+  top: calc(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-card-view-gutter-size-xs)/-2);
+}
+.BaseCardViewStyles_getItemOverlayVertical__7pe4s9 {
+  height: calc(50% +  var(--oj-c-EXPERIMENTAL-DO-NOT-USE-card-view-gutter-size-sm)/2 - calc(0.5 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem)));
+  top: calc(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-card-view-gutter-size-sm)/-2);
+}
+.BaseCardViewStyles_getItemOverlayVertical__7pe4sa {
+  height: calc(50% +  var(--oj-c-EXPERIMENTAL-DO-NOT-USE-card-view-gutter-size-md)/2 - calc(0.5 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem)));
+  top: calc(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-card-view-gutter-size-md)/-2);
+}
+.BaseCardViewStyles_getItemOverlayVertical__7pe4sb {
+  height: calc(50% +  var(--oj-c-EXPERIMENTAL-DO-NOT-USE-card-view-gutter-size-lg)/2 - calc(0.5 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem)));
+  top: calc(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-card-view-gutter-size-lg)/-2);
+}
+.BaseCardViewStyles_getItemOverlayVertical__7pe4sc {
+  height: calc(50% +  var(--oj-c-EXPERIMENTAL-DO-NOT-USE-card-view-gutter-size-xl)/2 - calc(0.5 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem)));
+  top: calc(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-card-view-gutter-size-xl)/-2);
+}
+.BaseCardViewStyles_itemOverlayRear__7pe4sd {
+  left: calc(50%);
+}
+.BaseCardViewStyles_itemOverlayRearVertical__7pe4se {
+  top: calc(50%);
+}
+.BaseCardViewStyles_itemOverlayFrontEdge__7pe4sf {
+  width: calc(50% + calc(0.5 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem)));
+  left: calc(-0.5 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+}
+.BaseCardViewStyles_itemOverlayRearEdge__7pe4sg {
+  box-sizing: border-box;
+  width: calc(50%);
+  left: calc(50%);
+}
+.BaseCardViewStyles_itemDragger__7pe4sh {
+  border-radius: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem);
+}
+.BaseCardViewStyles_multiVariantStyles_itemFocused_isItemFocused__7pe4si {
+  outline-style: dotted;
+  outline-width: 1px;
+  outline-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-border-keyboard-focus);
+}
+.BaseCardViewStyles_multiVariantStyles_itemInitialOpacity_isTransparent__7pe4sk {
+  opacity: 0;
+}

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Copyright 2020, 2025, Oracle and/or its affiliates.
+<!-- Copyright 2020, 2026, Oracle and/or its affiliates.
      Licensed under the Universal Permissive License v 1.0 as shown at http://oss.oracle.com/licenses/upl.  -->
 <project
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -10,7 +10,7 @@
 
     <groupId>com.oracle.weblogic</groupId>
     <artifactId>console-backend</artifactId>
-    <version>2.4.19</version>
+    <version>3.0.0</version>
     <description>Oracle WebLogic Console Backend Parent</description>
     <packaging>pom</packaging>
 
@@ -33,7 +33,7 @@
         <version.jersey>2.45</version.jersey>
         <version.junit.jupiter>5.5.1</version.junit.jupiter>
         <version.snakeyaml>2.3</version.snakeyaml>
-        <version.console.backend>2.4.19</version.console.backend>
+        <version.console.backend>3.0.0</version.console.backend>
 
         <version.plugin.dependency-check>7.0.4</version.plugin.dependency-check>
         <version.plugin.maven-compiler>3.7.0</version.plugin.maven-compiler>
@@ -188,11 +188,10 @@
                         <nodePackageSkipDevDependencies>true</nodePackageSkipDevDependencies>
                         <excludes>
                             <exclude>run/*.ear</exclude>
-                            <exclude>frontend/node_modules/selenium-webdriver/**</exclude>
                             <!-- Below looks like an old version of jquery, but it is actually
                               support for working with old versions of jquery
                             -->
-                            <exclude>console-assembly-2.4.19.jar: jquery-1-7.js</exclude>
+                            <exclude>console-assembly-3.0.0.jar: jquery-1-7.js</exclude>
                         </excludes>
                         <formats>
                             <format>ALL</format>

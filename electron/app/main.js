@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2021, 2025, Oracle and/or its affiliates.
+ * Copyright (c) 2021, 2026, Oracle and/or its affiliates.
  * Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
  * @ignore
  */
@@ -37,8 +37,6 @@ const AutoPrefs = require('./js/auto-prefs-json');
 // persisted in the config.json file as well as its editor
 const AppConfig = require('./js/config-json');
 const SettingsEditor = require('./js/settings-editor');
-// Declare variable for IIFE class used to manage projects
-const ProjectManagement = require('./js/project-management');
 // Declare variable for IIFE class used to read and write projects
 const UserProjects = require('./js/user-projects-json');
 // Declare variable for IIFE class used to watch for changes to files
@@ -50,11 +48,10 @@ const AppWindow = require('./js/window-management');
 const instDir = path.dirname(app.getPath('exe'));
 const { homepage, productName, version, copyright } = require(`${instDir}/package.json`);
 
-if (OSUtils.isMacOS()) {
-  app.disableHardwareAcceleration();
-}
-
 let feedURL;
+
+// Place for command-line java options
+let javaOptions;
 
 // The documentation says to not use setFeedURL(), though it seems to work.
 // We'll only use it for testing.
@@ -79,7 +76,7 @@ const AppConstants = Object.freeze({
 });
 
 let logOptions;
-let window;
+let windows = [];
 let checkPid = 0;
 let cbePort = 0;
 let another_me = null;
@@ -91,6 +88,7 @@ let useTokenNotCookie = false;
 let quiet = false;
 let lines = [];
 let cbe;
+let cbeUrl = '';
 
 (() => {
   function updateUserDataPath() {
@@ -164,9 +162,6 @@ let cbe;
   if (app.commandLine.hasSwitch('lang')) {
     process.env['LANGUAGE'] = app.commandLine.getSwitchValue('lang');
   }
-
-  ProjectManagement.readProjects(userDataPath);
-  ProjectManagement.selectCurrentProject();
 })();
 
 // On Mac OS, "activate" signifies that the user has "clicked" on the Remote
@@ -179,7 +174,7 @@ let cbe;
 // "headless", we start a "headed" version.
 app.on('activate', () => {
   logger.log('debug', `Event activate (${process.pid})`);
-  // window is set for "headed" instances.  So, if it is set, we are good.
+  // windows is set for "headed" instances.  So, if it is set, we are good.
   // If not, then we want to see if there is already a headed instance running
   // and only start a headed instance if there is not.  Regretfully, at this
   // time, we don't have a way of knowing that there is a headed instance.  We
@@ -190,7 +185,7 @@ app.on('activate', () => {
   // there already is one.  This new instance *will* grab the lock, so another
   // click will not start yet another.  This is not an important issue; we will
   // fix it soon.
-  if (!window && app.requestSingleInstanceLock()) {
+  if (windows.length === 0 && app.requestSingleInstanceLock()) {
     app.releaseSingleInstanceLock();
     start_another_me();
     if (isHeadlessMode())
@@ -224,7 +219,8 @@ function doCheckPid() {
 
 function doit() {
   if (!isHeadlessMode()) {
-    AppWindow.load(`http://localhost:${cbePort}/`);
+    cbeUrl = `http://localhost:${cbePort}/`;
+    AppWindow.load(cbeUrl);
   }
 }
 
@@ -241,6 +237,7 @@ function processCmdLineOptions() {
 
   const argv = yargs
     .options({
+      'java-options': {describe: 'Pass options to underlying java process'},
       'quiet': {describe: 'Do not put any output on standard output'},
       'verbose': {describe: 'Show debugging output to standard output'},
       'check-ppid': {describe: 'Use the parent process ID to check for death.  If it is dead, this process should die'},
@@ -252,6 +249,8 @@ function processCmdLineOptions() {
     })
     .help()
     .argv;
+
+  javaOptions = argv.javaOptions;
 
   if (argv.verbose) {
     logger.setStdoutEnabled();
@@ -322,6 +321,11 @@ function start_cbe() {
       spawnArgs.push(arg);
     }
   }
+  if (javaOptions) {
+    for (arg of javaOptions.split(';')) {
+      spawnArgs.push(arg);
+    }
+  }
   spawnArgs.push(...[
     `-Djava.io.tmpdir=${cbeTempDir}`,
     `-Dserver.port=${cbePort}`,
@@ -344,6 +348,8 @@ function start_cbe() {
   let readlineStdout = readline.createInterface({
     input: cbe.stdout,
   });
+
+  UserProjects.dumpPasswords(cbe.stdin);
 
   readlineStderr.on('line', (line) => {
     logger.log('info', line, false);
@@ -373,6 +379,18 @@ function start_cbe() {
       cbePort = line.replace('Port=', '');
       started = true;
       doit();
+    } else if (line.startsWith('URL: ')) {
+      shell.openExternal(line.replace('URL: ', ''));
+    } else if (line.startsWith('EncryptionService: ')) {
+      if (safeStorage.isEncryptionAvailable()) {
+        const decrypted = atob(line.replace('EncryptionService: ', ''));
+        const encrypted = safeStorage.encryptString(decrypted);
+        const output = 
+          `${btoa(decrypted)} ${btoa(encrypted.toString('base64'))}`;
+        cbe.stdin.write(`EncryptionService: ${output}\n`);
+      }
+    } else if (line.startsWith('BACKEND OUTPUT: ')) {
+      line = line.replace('BACKEND OUTPUT: ', '');
     }
     logger.log('debug', `!${line}!`);
   });
@@ -389,6 +407,17 @@ function start_another_me() {
 
 app.whenReady()
   .then(() => {
+    function createNewWindow() {
+      const newWindow = AppWindow.createNewWindow(cbeUrl);
+      windows.push(newWindow);
+      newWindow.on('closed', () => {
+        windows = windows.filter(w => w !== newWindow);
+        if (windows.length === 0) {
+          app.quit();
+        }
+      });
+    }
+
     I18NUtils.initialize(`${instDir}/resources`, app.getLocale());
     if (!I18NUtils.get('wrc-electron.labels.app.appName.value')) {
       logger.log('error', 'Cannot load internationalization utilities');
@@ -456,19 +485,29 @@ app.whenReady()
         supportsAutoUpgrades: supportsAutoUpgrades
       };
 
-      window = AppWindow.initialize(
+      const mainWindow = AppWindow.initialize(
         I18NUtils.get('wrc-electron.messages.initializing'),
         params,
         path.dirname(app.getPath('exe')),
-        app.getPath('userData')
+        app.getPath('userData'),
+        createNewWindow
       );
+      windows.push(mainWindow);
+
+      // Handle window closing
+      mainWindow.on('closed', () => {
+        windows = windows.filter(w => w !== mainWindow);
+        if (windows.length === 0) {
+          app.quit();
+        }
+      });
 
       AppWindow.renderAppMenu();
     }
     else {
       AppWindow.hideDockIconMacOS();
     }
-    Watcher.initialize(app.getPath('userData'), window, [UserProjects, UserPrefs, AutoPrefs, AppConfig]);
+    Watcher.initialize(app.getPath('userData'), windows[0], [UserPrefs, AutoPrefs, AppConfig]);
     start_cbe();
   })
   .catch(err => {
@@ -482,8 +521,37 @@ app.whenReady()
     process.kill(process.pid, 9);
   });
 
+ipcMain.handle('preference-reading', async (event, arg) => {
+  logger.log('debug', `'preference-reading' arg=${JSON.stringify(arg)}`);
+  // You don't need to return an explicit Promise
+  // here, because the async keyword before the
+  // "(event, ...args)" in the method signature,
+  // does that implicitly.
+  return UserPrefs.get(arg);
+});
 
-ipcMain.handle('translated-strings-sending', async (event, arg) => {
+ipcMain.handle('file-choosing', async (event, dialogParams) => {
+  console.trace('FIXME file-choosing in electron is going away');
+  return null;
+});
+
+ipcMain.handle('external-url-opening', async (event, arg) => {
+  AppWindow.openExternalURL(arg);
+});
+
+
+ipcMain.handle('unsaved-changes', async (event, busy) => {
+  console.trace('FIXME unsaved-changes is going away');
+});
+
+
+ipcMain.handle('get-property', async (event, prop) => {
+  return AutoPrefs.get(prop);
+});
+
+ipcMain.handle('set-property', async (event, arg) => {
+  AutoPrefs.set(arg);
+  AutoPrefs.write();
 });
 
 /**
@@ -496,242 +564,30 @@ ipcMain.handle('translated-strings-sending', async (event, arg) => {
  *    console.log(JSON.stringify(failure));
  *  });
  */
-ipcMain.handle('file-creating', async (event, arg) => {
-  if (arg.fileContents) {
-    const dialogParams = {
-      defaultPath: arg.filepath,
-      properties: ['createDirectory'],
-      filters: { name: 'Supported Formats', extensions: FileUtils.fileExtensions }
-    };
-    return AppWindow.showFileCreatingSaveDialog(dialogParams)
-      .then(result => {
-        if (!result.canceled) {
-          return FileUtils.writeFileAsync(result.filePath, arg.fileContents)
-            .then(reply => {
-              reply['filePath'] = result.filePath;
-              return Promise.resolve(reply);
-            });
-        }
-        else {
-          return Promise.resolve({succeeded: false, filePath: ''});
-        }
-      });
-  }
-  else {
-    const response = {
-      succeeded: false,
-      failure: {
-        transport: {statusText: 'Missing or invalid parameter'},
-        failureType: 'VERIFICATION',
-        failureReason: 'Parameters cannot be undefined, null or an empty string: arg.fileContents!'
-      }
-    };
-    return Promise.resolve(response);
-  }
-});
+ipcMain.handle("file-creating", async (event, arg) => {
+  const dialogParams = {
+    defaultPath: arg.filepath,
+    properties: ["createDirectory"],
+    filters: {
+      name: "Supported Formats",
+      extensions: FileUtils.fileExtensions,
+    },
+  };
 
-ipcMain.handle('file-reading', async (event, arg) => {
-  return FileUtils.createFileReadingResponse(arg.filepath)
-    .catch(response => {
-      if (arg.allowDialog && (response.failureType === 'NOT_FOUND')) {
-        const dialogParams = {
-          defaultPath: arg.filepath,
-          properties: ['openFile'],
-          filters: { name: 'Supported Formats', extensions: FileUtils.fileExtensions }
-        };
-        return AppWindow.showFileReadingOpenDialog(dialogParams)
-          .then(dialogReturnValue => {
-            if (dialogReturnValue.filePaths.length > 0) {
-              return FileUtils.createFileReadingResponse(dialogReturnValue.filePaths[0]);
-            }
-            // User didn't pick a file, so just return
-            // an empty JS object
-            return Promise.resolve({});
-          })
-          .catch(failure => {
-            return Promise.reject(failure);
-          })
-      }
-      else {
-        return Promise.reject(response.failureReason);
-      }
-    });
-});
-
-ipcMain.handle('file-writing', async (event, arg) => {
-  if (arg.filepath && arg.fileContents) {
-    if (path.dirname(arg.filepath) === '.') {
-      arg.filepath = path.join(__dirname, arg.filepath)
-    }
-    return FileUtils.writeFileAsync(arg.filepath, arg.fileContents);
-  }
-  else {
-    const response = {
-      succeeded: false,
-      failure: {
-        transport: {statusText: 'Missing or invalid parameter'},
-        failureType: 'VERIFICATION',
-        failureReason: 'Parameters cannot be undefined, null or an empty string: arg.filepath, arg.fileContents!'
-      }
-    };
-    return Promise.resolve(response);
-  }
-});
-
-ipcMain.handle('preference-reading', async (event, arg) => {
-  logger.log('debug', `'preference-reading' arg=${JSON.stringify(arg)}`);
-  // You don't need to return an explicit Promise
-  // here, because the async keyword before the
-  // "(event, ...args)" in the method signature,
-  // does that implicitly.
-  return UserPrefs.get(arg);
-});
-
-ipcMain.handle('file-choosing', async (event, dialogParams) => {
-  return AppWindow.showFileChoosingOpenDialog(dialogParams)
-    .then(dialogReturnValue => {
-      if (dialogReturnValue.filePaths.length > 0) {
-        const filepath = dialogReturnValue.filePaths[0];
-        return FileUtils.createFileReadingResponse(filepath);
-      }
-      // User didn't pick a file, so just return
-      // an empty JS object
-      return Promise.resolve({});
-    })
-    .catch(err => {
-      const response = {
-        transport: {statusText: err},
-        failureType: 'UNEXPECTED',
-        failureReason: err
-      };
-      return Promise.reject(response);
-    });
-});
-
-ipcMain.handle('external-url-opening', async (event, arg) => {
-  AppWindow.openExternalURL(arg);
-});
-
-ipcMain.handle('complete-login', async (event, arg) => {
-  logger.log('info', `'complete-login' provider='${arg.name}'`);
-  AppWindow.showMainWindow();
-});
-
-ipcMain.handle('perform-login', async (event, arg) => {
-  return new Promise(function (resolve, reject) {
-    if (arg) {
-      logger.log('info', `'perform-login' provider='${arg.name}' url='${arg.loginUrl}'`);
-
-      // Validate the URL content and exec the user's browser
-      try {
-        const loginUrl = new URL(arg.loginUrl);
-        if (!['https:', 'http:'].includes(loginUrl.protocol.toLowerCase())) {
-          logger.log('error', `'perform-login' invalid protocol=${loginUrl.protocol}`);
-          reject(new Error(`Invalid protocol '${loginUrl.protocol}'`));
-        }
-        else {
-          shell.openExternal(arg.loginUrl)
-            .then(() => {
-              resolve(true);
-            })
-            .catch((error) => {
-              logger.log('error', `'perform-login' failed open error=${error}`);
-              reject(new Error(`${error}`));
-            });
+  return AppWindow.showFileCreatingSaveDialog(dialogParams).then((result) => {
+    if (!result.canceled) {
+      if (arg.fileContents) {
+        return FileUtils.writeFileAsync(result.filePath, arg.fileContents).then(
+          (reply) => {
+            reply["filePath"] = result.filePath;
+            return Promise.resolve(reply);
           }
+        );
+      } else {
+        return Promise.resolve({ succeeded: true, filePath: result.filePath });
       }
-      catch (error) {
-        logger.log('error', `'perform-login' failed error=${error}`);
-        reject(new Error(`${error.message}`));
-      }
+    } else {
+      return Promise.resolve({ succeeded: false, filePath: "" });
     }
-    resolve(false);
   });
-});
-
-ipcMain.handle('current-project-requesting', async (event, ...args) => {
-  // You don't need to return an explicit Promise
-  // here, because the async keyword before the
-  // "(event, ...args)" in the method signature,
-  // does that implicitly.
-  const current_project = ProjectManagement.getCurrentProject();
-  if (typeof current_project !== 'undefined') {
-    return current_project;
-  }
-  return null;
-});
-
-ipcMain.handle('unsaved-changes', async (event, busy) => {
-  ProjectManagement.markProjectBusyState(busy);
-  AppWindow.notifyState(!busy);
-});
-
-ipcMain.handle('is-busy', async (event) => {
-  return ProjectManagement.isCurrentProjectBusy();
-});
-
-ipcMain.handle('project-changing', async (event, arg) => {
-  const result = ProjectManagement.processChangedProject(arg);
-  if (result.succeeded) {
-    AppWindow.renderAppMenu();
-  }
-  // You don't need to return an explicit Promise
-  // here, because the async keyword before the
-  // "(event, ...args)" in the method signature,
-  // does that implicitly.
-  return 'Saved it!';
-});
-
-/**
- * @example
- * const options = {project: {name: self.project.name}, provider: {name: dataProvider.name, username: dataProvider.username}};
- * window.electron_api.ipc.invoke('credentials-requesting', options);
- */
-ipcMain.handle('credentials-requesting', (event, arg) => {
-  const reply = {succeeded: false};
-  if (!UserPrefs.get('credentials.storage') || !safeStorage.isEncryptionAvailable()) {
-    reply['failure'] = {
-      failureType: 'PASSWORD_STORAGE_NOT_SUPPORTED',
-      failureReason: 'Either password storage is disabled or is not supported on this platform'
-    }
-    return reply;
-  }
-
-  const current_project = ProjectManagement.getCurrentProject();
-  const provider = current_project.dataProviders.find(item => item.name === arg.provider.name);
-
-  if (!provider) {
-    reply['failure'] = {
-      failureType: 'INVALID_PROVIDER',
-      failureReason: `Provider named '${arg.provider.name}' is not associated with the specified project: '${arg.project.name}'`
-    };
-    return reply;
-  }
-  if (!provider.passwordEncrypted) {
-    reply['failure'] = {
-      failureType: 'NO_STORED_PASSWORD',
-      failureReason: 'There is no password stored for this provider'
-    };
-    return reply;
-  }
-  try {
-    reply['secret'] = safeStorage.decryptString(Buffer.from(provider.passwordEncrypted, 'base64'));
-    reply.succeeded = true;
-  } catch(err) {
-    logger.log('error', 'Error decrypting password, pretending it does not exist');
-    reply['failure'] = {
-      failureType: 'NO_STORED_PASSWORD',
-      failureReason: 'There is no password stored for this provider'
-    };
-  }
-  return reply;
-});
-
-ipcMain.handle('window-app-quiting', async (event, arg) => {
-  logger.log('debug', `'window-app-quiting' reply=${JSON.stringify(arg)}`);
-  if (!arg.preventQuitting) {
-    // Destroy app menu, which has references to the
-    // app and window module-scoped variables.
-    AppWindow.destroy();
-  }
 });

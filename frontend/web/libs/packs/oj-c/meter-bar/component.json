@@ -1,0 +1,379 @@
+{
+  "name": "meter-bar",
+  "version": "19.0.1",
+  "jetVersion": "^19.0.1",
+  "pack": "oj-c",
+  "type": "composite",
+  "dependencyScope": "runtime",
+  "license": "https://opensource.org/licenses/UPL",
+  "implements": [
+    "CMeterBarElement"
+  ],
+  "description": "A Meter bar displays information graphically in a rectangular bar, highlighting a specific metric value's progress in relation to its min, max, or thresholds.",
+  "displayName": "Meter Bar",
+  "main": "oj-c/meter-bar",
+  "help": "oj-c.MeterBar.html",
+  "status": [
+    {
+      "type": "supersedes",
+      "since": "15.0.0",
+      "value": [
+        "oj-status-meter-gauge"
+      ]
+    }
+  ],
+  "extension": {
+    "catalog": {
+      "category": "Visualizations"
+    },
+    "vbdt": {
+      "module": "oj-c/meter-bar"
+    },
+    "oracle": {
+      "icon": "oj-ux-ico-linear-status",
+      "uxSpecs": [
+        "meter-bar"
+      ]
+    },
+    "webelement": {
+      "package": "@oracle/oraclejet-core-pack",
+      "version": "19.0.1",
+      "docUrl": "https://www.oracle.com/webfolder/technetwork/jet/cpwdtsdoc/classes/MeterBarWebElement.html",
+      "export": "findMeterBar",
+      "main": "@oracle/oraclejet-core-pack/webdriver"
+    }
+  },
+  "propertyLayout": [
+    {
+      "propertyGroup": "common",
+      "items": [
+        "orientation",
+        "thresholdDisplay",
+        "plotArea.rendered",
+        "color",
+        "style"
+      ]
+    },
+    {
+      "propertyGroup": "data",
+      "items": [
+        "value",
+        "min",
+        "max",
+        "step",
+        "thresholds",
+        "referenceLines"
+      ]
+    }
+  ],
+  "since": "14.0.0",
+  "requirements": [
+    {
+      "type": "anyOf",
+      "label": "accessibility",
+      "properties": [
+        "aria-label",
+        "aria-labelledby",
+        "aria-describedby",
+        "described-by",
+        "labelled-by"
+      ]
+    }
+  ],
+  "properties": {
+    "max": {
+      "type": "number",
+      "description": "The maximum value of the meter bar.",
+      "displayName": "Max",
+      "help": "#max",
+      "value": 100
+    },
+    "min": {
+      "type": "number",
+      "description": "The minimum value of the meter bar.",
+      "displayName": "Min",
+      "help": "#min",
+      "value": 0
+    },
+    "readonly": {
+      "type": "boolean",
+      "help": "#readonly",
+      "displayName": "Readonly",
+      "value": false
+    },
+    "value": {
+      "type": "number|null",
+      "description": "The value of the meter bar.",
+      "displayName": "Value",
+      "help": "#value",
+      "writeback": true,
+      "value": 0
+    },
+    "baseline": {
+      "type": "number",
+      "description": "Define the baseline value of the bar. If undefined, defaults to minimum value of the meter bar.",
+      "displayName": "Baseline",
+      "help": "#baseline"
+    },
+    "step": {
+      "type": "number",
+      "displayName": "Step",
+      "help": "#step",
+      "value": 1
+    },
+    "color": {
+      "type": "string",
+      "displayName": "Color",
+      "help": "#color",
+      "format": "color",
+      "status": [
+        {
+          "type": "antiPattern",
+          "since": "16.0.0",
+          "themes": [
+            "Redwood"
+          ]
+        }
+      ]
+    },
+    "indicatorSize": {
+      "type": "number",
+      "displayName": "Indicator Size",
+      "help": "#indicatorSize",
+      "status": [
+        {
+          "type": "antiPattern",
+          "since": "16.0.0",
+          "themes": [
+            "Redwood"
+          ]
+        }
+      ],
+      "value": 1
+    },
+    "plotArea": {
+      "type": "object",
+      "displayName": "Plot Area",
+      "help": "#plotArea",
+      "properties": {
+        "color": {
+          "type": "string",
+          "format": "color"
+        },
+        "rendered": {
+          "type": "string",
+          "enumValues": [
+            "off",
+            "on"
+          ]
+        }
+      }
+    },
+    "orientation": {
+      "type": "string",
+      "displayName": "Orientation",
+      "help": "#orientation",
+      "enumValues": [
+        "horizontal",
+        "vertical"
+      ],
+      "value": "horizontal"
+    },
+    "referenceLines": {
+      "type": "Array<object>",
+      "displayName": "Reference Lines",
+      "help": "#referenceLines",
+      "extension": {
+        "vbdt": {
+          "itemProperties": {
+            "color": {
+              "type": "string",
+              "format": "color",
+              "propertyEditorValues": {
+                "danger": {
+                  "description": "Maps to theme-specific color indicating a danger condition"
+                },
+                "warning": {
+                  "description": "Maps to theme-specific color indicating a warning condition"
+                },
+                "success": {
+                  "description": "Maps to theme-specific color indicating a success condition"
+                }
+              }
+            },
+            "position": {
+              "type": "string",
+              "enumValues": [
+                "end",
+                "start"
+              ]
+            },
+            "value": {
+              "type": "number"
+            },
+            "label": {
+              "type": "string"
+            },
+            "style": {
+              "type": "object",
+              "properties": {
+                "color": {
+                  "type": "string",
+                  "format": "color"
+                },
+                "fontSize": {
+                  "type": "string"
+                },
+                "fontStyle": {
+                  "type": "string"
+                },
+                "fontWeight": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "thresholdDisplay": {
+      "type": "string",
+      "displayName": "Threshold Display",
+      "help": "#thresholdDisplay",
+      "enumValues": [
+        "all",
+        "plotArea",
+        "indicator"
+      ],
+      "value": "indicator"
+    },
+    "thresholds": {
+      "type": "Array<object>",
+      "displayName": "Thresholds",
+      "help": "#thresholds",
+      "extension": {
+        "vbdt": {
+          "itemProperties": {
+            "accessibleLabel": {
+              "type": "string"
+            },
+            "color": {
+              "type": "string",
+              "format": "color",
+              "propertyEditorValues": {
+                "danger": {
+                  "description": "Maps to theme-specific color indicating a danger condition"
+                },
+                "warning": {
+                  "description": "Maps to theme-specific color indicating a warning condition"
+                },
+                "success": {
+                  "description": "Maps to theme-specific color indicating a success condition"
+                }
+              }
+            },
+            "max": {
+              "type": "number"
+            }
+          }
+        }
+      }
+    },
+    "describedBy": {
+      "type": "string|null",
+      "displayName": "Described By",
+      "help": "#describedBy"
+    },
+    "labelledBy": {
+      "type": "string|null",
+      "displayName": "Labelled By",
+      "help": "#labelledBy"
+    },
+    "size": {
+      "type": "string",
+      "description": "Specifies the size of the meter bar.",
+      "displayName": "Size",
+      "help": "#size",
+      "propertyEditorValues": {
+        "sm": {
+          "description": "small Meter Bar",
+          "displayName": "Small"
+        },
+        "md": {
+          "description": "medium Meter Bar (default, if unspecified)",
+          "displayName": "Medium"
+        },
+        "lg": {
+          "description": "large Meter Bar",
+          "displayName": "Large"
+        },
+        "fit": {
+          "description": "Meter Bar that fits the available space",
+          "displayName": "Fit"
+        }
+      },
+      "enumValues": [
+        "sm",
+        "md",
+        "lg",
+        "fit"
+      ],
+      "value": "md"
+    },
+    "datatip": {
+      "type": "function",
+      "displayName": "Datatip",
+      "help": "#datatip"
+    },
+    "transientValue": {
+      "type": "number",
+      "displayName": "transientValue",
+      "help": "#transientValue",
+      "readOnly": true,
+      "writeback": true
+    }
+  },
+  "methods": {
+    "setProperty": {
+      "description": "Sets a property or a single subproperty for complex properties and notifies the component of the change, triggering a corresponding event.",
+      "help": "#setProperty",
+      "params": [
+        {
+          "name": "property",
+          "description": "The property name to set. Supports dot notation for subproperty access.",
+          "type": "string"
+        },
+        {
+          "name": "value",
+          "description": "The new value to set the property to.",
+          "type": "any"
+        }
+      ],
+      "return": "void"
+    },
+    "getProperty": {
+      "description": "Retrieves the value of a property or a subproperty.",
+      "help": "#getProperty",
+      "params": [
+        {
+          "name": "property",
+          "description": "The property name to get. Supports dot notation for subproperty access.",
+          "type": "string"
+        }
+      ],
+      "return": "any"
+    },
+    "setProperties": {
+      "description": "Performs a batch set of properties.",
+      "help": "#setProperties",
+      "params": [
+        {
+          "name": "properties",
+          "description": "An object containing the property and value pairs to set.",
+          "type": "object"
+        }
+      ],
+      "return": "void"
+    }
+  }
+}

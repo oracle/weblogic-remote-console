@@ -1,0 +1,22 @@
+/* This file is where css selectors for the component go.
+   There will be hard coded properties and properties controlled by variables, for example
+
+   oj-c-truncating-badge .oj-c-truncating-badge-value-text {
+   color: var(--oj-c-truncating-badge-value-text-color);
+   display: inline-block;
+	 }
+*/
+
+oj-c-truncating-badge:not(.oj-complete){
+  visibility: hidden;
+}
+
+oj-c-truncating-badge{
+	min-height: 50px;
+	width: 50px;
+}
+
+oj-c-truncating-badge[hidden]
+{
+  display: none;
+}

@@ -1,0 +1,22 @@
+
+@import "oj/utilities/_oj.utilities.modules.scss";
+
+// This file is where css selectors shared by all themes go.
+// There will be hard code properties and properties controlled by variables, for example
+//
+// wrc-wrc-form .wrc-wrc-form-value-text {
+// color: var(--wrc-wrc-form-value-text-color);
+// display: inline-block;
+// }
+
+// Even if this file is imported many times 'module-include-once' ensures the content is included just once .
+@include module-include-once("wrc-wrc-form.base") {
+  wrc-wrc-form:not(.oj-complete){
+    visibility: hidden;
+  }
+  
+  wrc-wrc-form{
+  	min-height: 50px;
+  	width: 50px;
+  }
+}

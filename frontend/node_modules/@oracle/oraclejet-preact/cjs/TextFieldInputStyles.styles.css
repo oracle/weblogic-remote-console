@@ -1,0 +1,46 @@
+.TextFieldInputStyles_textFieldInputBase__lkfh4l0 {
+  outline-style: none;
+  outline-width: 0;
+  box-sizing: border-box;
+  font-family: inherit;
+  height: 100%;
+  line-height: inherit;
+  font-weight: inherit;
+  border: 0;
+  background-color: transparent;
+  width: 100%;
+}
+.TextFieldInputStyles_textFieldInputBase__lkfh4l0::-moz-selection {
+  background-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-surface-selected);
+}
+.TextFieldInputStyles_textFieldInputBase__lkfh4l0::selection {
+  background-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-surface-selected);
+}
+.TextFieldInputStyles_textFieldInputBase__lkfh4l0::-webkit-search-decoration {
+  display: none;
+}
+.TextFieldInputStyles_textFieldInputBase__lkfh4l0::-webkit-search-cancel-button {
+  display: none;
+}
+.TextFieldInputStyles_textFieldInputBase__lkfh4l0::-webkit-search-results-button {
+  display: none;
+}
+.TextFieldInputStyles_textFieldInputBase__lkfh4l0::-webkit-search-results-decoration {
+  display: none;
+}
+.TextFieldInputStyles_labelDefaultPadding__lkfh4l1 {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+.TextFieldInputStyles_textFieldInputEmbedded__lkfh4l2 {
+  color: inherit;
+  font-size: inherit;
+  height: 100%;
+  margin: 0;
+  padding-block: 0;
+  padding-inline: var(--textToEdgePadding__w6gg1y9);
+  resize: none;
+}
+.TextFieldInputStyles_textFieldInputEmbedded__lkfh4l2::-ms-reveal {
+  display: none;
+}

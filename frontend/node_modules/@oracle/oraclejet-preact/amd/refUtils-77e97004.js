@@ -1,0 +1,2 @@
+define(['exports'], (function(n){"use strict";function t(n,t){if(null!=n){if("function"==typeof n)return n(t);try{n.current=t}catch(e){throw new Error(`Cannot assign value '${t}' to ref '${n}'`)}}}n.assignRef=t,n.mergeRefs=function(...n){return e=>{let r;const o=n.reduce(((n,r)=>{const o=t(r,e);return"function"==typeof o&&n.push(o),n}),[]);return o.length>0&&(r=()=>{o.forEach((n=>n()))}),r}}}));
+//# sourceMappingURL=refUtils-77e97004.js.map

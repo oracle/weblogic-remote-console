@@ -1,0 +1,53 @@
+@keyframes TableSkeletonStyles__skeletonContainerAnimation__o1qmzv0 {
+  0% {
+    opacity: 0.05;
+  }
+  100% {
+    opacity: 0.15;
+  }
+}
+.TableSkeletonStyles_tableSkeletonStyles_bar__o1qmzv1 {
+  background-color: rgb(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-170));
+}
+.TableSkeletonStyles_tableSkeletonStyles_row__o1qmzv2 {
+  align-items: center;
+  background-color: inherit;
+  box-sizing: border-box;
+  display: flex;
+  padding-inline-end: calc(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-table-cell-padding-horizontal) + var(--gridlineWidth__efrfp90));
+  padding-inline-start: calc(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-table-cell-padding-horizontal) + var(--gridlineWidth__efrfp90));
+}
+.TableSkeletonStyles_tableSkeletonStyles_cell__o1qmzv3 {
+  overflow: hidden;
+  position: relative;
+}
+.TableSkeletonStyles_tableSkeletonStyles_cell__o1qmzv3:focus {
+  outline-style: none;
+}
+.TableSkeletonStyles_tableSkeletonStyles_innerCell__o1qmzv4 {
+  animation-name: TableSkeletonStyles__skeletonContainerAnimation__o1qmzv0;
+  animation-iteration-count: infinite;
+  animation-delay: 50ms;
+  animation-direction: alternate;
+  animation-duration: 1.5s;
+  height: 100%;
+  opacity: 0.001;
+  overflow: hidden;
+}
+.TableSkeletonStyles_tableSkeletonStyles_focus__o1qmzv5::before {
+  content: "";
+  display: block;
+  inset: 0;
+  outline-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-border-keyboard-focus);
+  outline-offset: -1px;
+  outline-style: dotted;
+  outline-width: 1px;
+  pointer-events: none;
+  position: absolute;
+}
+.TableSkeletonStyles_tableSkeletonStyles_pendingLayout__o1qmzv6 {
+  background-color: inherit;
+  inset: 0;
+  position: absolute;
+  z-index: 0;
+}

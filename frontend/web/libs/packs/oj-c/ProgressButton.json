@@ -1,0 +1,583 @@
+[
+  {
+    "id": "oj-c.ProgressButton",
+    "name": "ProgressButton",
+    "memberof": "oj-c",
+    "kind": "class",
+    "meta": {
+      "filename": "progress-button.tsx",
+      "path": "web/components/oj-c/progress-button"
+    },
+    "ojcomponent": true,
+    "isvcomponent": true,
+    "since": "17.1.0",
+    "longname": "oj-c.ProgressButton",
+    "pack": "oj-c",
+    "classdesc": "<h3 id=\"progressButtonOverview-section\">\n  JET Progress Button\n  <a class=\"bookmarkable-link\" title=\"Bookmarkable Link\" href=\"#progressButtonOverview-section\"></a>\n</h3>\n\n<p>Description: A Progress button represents button-level action initiation.\n\n<pre class=\"prettyprint\"><code>&lt;oj-c-progress-button id=\"myButton\" label=\"My Button\">\n&lt;/oj-c-progress-button>\n&lt;oj-c-progress-button label=\"start icon\" is-loading=\"[[loading]]\" on-oj-action=\"[[handler]]\" >\n  &lt;span slot='startIcon' class='myIconClass'>&lt;/span>\n&lt;/oj-c-progress-button>\n</code></pre>\n\n<h3 id=\"progressButtons-section\">\n  Progress Buttons\n  <a class=\"bookmarkable-link\" title=\"Bookmarkable Link\" href=\"#progressButtons-section\"></a>\n</h3>\n\n<p>Progress buttons communicate\nbutton-level initiation of an indeterminate action with a typical progress span of less\nthan 8 seconds.  They reflect a user's brief interaction with a button.\n\n<h3 id=\"touch-section\">\n  Touch End User Information\n  <a class=\"bookmarkable-link\" title=\"Bookmarkable Link\" href=\"#touch-section\"></a>\n</h3>\n\n<table class=\"keyboard-table\">\n  <thead>\n    <tr>\n      <th>Target</th>\n      <th>Gesture</th>\n      <th>Action</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <td>Progress Button</td>\n      <td><kbd>Tap</kbd></td>\n      <td>Push the button.</td>\n    </tr>\n  </tbody>\n</table>\n\n<h3 id=\"keyboard-section\">\n  Keyboard End User Information\n  <a class=\"bookmarkable-link\" title=\"Bookmarkable Link\" href=\"#keyboard-section\"></a>\n</h3>\n\n<table class=\"keyboard-table\">\n  <thead>\n    <tr>\n      <th>Target</th>\n      <th>Key</th>\n      <th>Action</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <td>Progress Button</td>\n      <td><kbd>Enter</kbd> or <kbd>Space</kbd></td>\n      <td>Push the button.</td>\n    </tr>\n  </tbody>\n</table>\n\n<h3 id=\"a11y-section\">\n  Accessibility\n  <a class=\"bookmarkable-link\" title=\"Bookmarkable Link\" href=\"#a11y-section\"></a>\n</h3>\n\n<p>For accessibility, it is not required to set an aria label on a JET button as it uses the label text to generate an aria label.\nTherefore the label should be specified even if the button is <a href=\"#display\">icon-only (display=icons)</a>. However,\nyou can override the default behavior by setting <code class=\"prettyprint\">aria-label</code>.\nThe label can be hidden using the display attribute.\n\n<p>\nDisabled content: JET supports an accessible luminosity contrast ratio,\nas specified in <a href=\"http://www.w3.org/TR/WCAG20/#visual-audio-contrast-contrast\">WCAG 2.0 - Section 1.4.3 \"Contrast\"</a>,\nin the themes that are accessible.  (See the \"Theming\" chapter of the JET Developer Guide for more information on which\nthemes are accessible.)  Note that Section 1.4.3 says that text or images of text that are part of an inactive user\ninterface component have no contrast requirement.  Because disabled content may not meet the minimum contrast ratio\nrequired of enabled content, it cannot be used to convey meaningful information.\n</p>",
+    "scope": "static",
+    "tagWithoutBrackets": "oj-c-progress-button",
+    "tagWithBrackets": "<oj-c-progress-button>",
+    "domInterface": "CProgressButtonElement",
+    "ojPageTitle": "&lt;oj-c-progress-button>",
+    "camelCaseName": "ProgressButton",
+    "ojPageTitlePrefix": "Element: ",
+    "ojtsvcomponent": true,
+    "tstype": {
+      "target": "Type",
+      "value": "interface CProgressButtonElement extends JetElement<ProgressButtonElementSettableProperties>"
+    },
+    "ojsignature": [
+      {
+        "target": "Type",
+        "value": "interface CProgressButtonElement extends JetElement<ProgressButtonElementSettableProperties>"
+      }
+    ],
+    "tsdeprecated": [
+      {
+        "type": "production",
+        "since": "17.1.0"
+      }
+    ],
+    "ojmodule": "progress-button"
+  },
+  {
+    "id": "oj-c.ProgressButton#label",
+    "name": "label",
+    "memberof": "oj-c.ProgressButton",
+    "meta": {
+      "filename": "progress-button.tsx",
+      "path": "web/components/oj-c/progress-button"
+    },
+    "kind": "member",
+    "longname": "oj-c.ProgressButton#label",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "string"
+      ]
+    },
+    "optional": false,
+    "description": "Text to show in the button or as tooltip for icon mode."
+  },
+  {
+    "id": "oj-c.ProgressButton#tooltip",
+    "name": "tooltip",
+    "memberof": "oj-c.ProgressButton",
+    "meta": {
+      "filename": "progress-button.tsx",
+      "path": "web/components/oj-c/progress-button"
+    },
+    "kind": "member",
+    "longname": "oj-c.ProgressButton#tooltip",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "string"
+      ]
+    },
+    "optional": true,
+    "description": "Text to show in the tooltip. This overrides the default tooltip that renders the label when in icon mode."
+  },
+  {
+    "id": "oj-c.ProgressButton#disabled",
+    "name": "disabled",
+    "memberof": "oj-c.ProgressButton",
+    "meta": {
+      "filename": "progress-button.tsx",
+      "path": "web/components/oj-c/progress-button"
+    },
+    "kind": "member",
+    "longname": "oj-c.ProgressButton#disabled",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "boolean"
+      ]
+    },
+    "optional": true,
+    "description": "Specifies that the button element should be disabled.",
+    "defaultvalue": false
+  },
+  {
+    "id": "oj-c.ProgressButton#isLoading",
+    "name": "isLoading",
+    "memberof": "oj-c.ProgressButton",
+    "meta": {
+      "filename": "progress-button.tsx",
+      "path": "web/components/oj-c/progress-button"
+    },
+    "kind": "member",
+    "longname": "oj-c.ProgressButton#isLoading",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "boolean"
+      ]
+    },
+    "optional": true,
+    "description": "Specifies if progress should be shown."
+  },
+  {
+    "id": "oj-c.ProgressButton#width",
+    "name": "width",
+    "memberof": "oj-c.ProgressButton",
+    "meta": {
+      "filename": "progress-button.tsx",
+      "path": "web/components/oj-c/progress-button"
+    },
+    "kind": "member",
+    "longname": "oj-c.ProgressButton#width",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "number|string"
+      ]
+    },
+    "optional": true,
+    "description": "Specifies that the button style width"
+  },
+  {
+    "id": "oj-c.ProgressButton#display",
+    "name": "display",
+    "memberof": "oj-c.ProgressButton",
+    "meta": {
+      "filename": "progress-button.tsx",
+      "path": "web/components/oj-c/progress-button"
+    },
+    "kind": "member",
+    "longname": "oj-c.ProgressButton#display",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "\"all\"",
+        "\"label\"",
+        "\"icons\""
+      ]
+    },
+    "optional": true,
+    "description": "Display just the label, the icons, or all. Label is used as tooltip and should be set in all cases.",
+    "ojvalues": [
+      {
+        "name": "all",
+        "description": "Display both the label and icons.",
+        "displayName": "All",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "icons",
+        "description": "Display only the icons.",
+        "displayName": "Icons",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "label",
+        "description": "Display only the text label.",
+        "displayName": "label",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      }
+    ],
+    "defaultvalue": "\"all\""
+  },
+  {
+    "id": "oj-c.ProgressButton#size",
+    "name": "size",
+    "memberof": "oj-c.ProgressButton",
+    "meta": {
+      "filename": "progress-button.tsx",
+      "path": "web/components/oj-c/progress-button"
+    },
+    "kind": "member",
+    "longname": "oj-c.ProgressButton#size",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "\"sm\"",
+        "\"md\"",
+        "\"lg\""
+      ]
+    },
+    "optional": true,
+    "description": "Size of button",
+    "ojvalues": [
+      {
+        "name": "sm",
+        "description": "Display a small button.",
+        "displayName": "Small",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "md",
+        "description": "Display a default size button.",
+        "displayName": "Medium",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "lg",
+        "description": "Display a large button.",
+        "displayName": "Large",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      }
+    ],
+    "defaultvalue": "\"md\""
+  },
+  {
+    "id": "oj-c.ProgressButton#edge",
+    "name": "edge",
+    "memberof": "oj-c.ProgressButton",
+    "meta": {
+      "filename": "progress-button.tsx",
+      "path": "web/components/oj-c/progress-button"
+    },
+    "kind": "member",
+    "longname": "oj-c.ProgressButton#edge",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "\"none\"",
+        "\"bottom\""
+      ]
+    },
+    "optional": true,
+    "description": "Specifies whether the button is attached to an edge. For example setting edge='bottom' can be used to attach a button to the bottom of a card. The button is then stretched to 100% width, and borders adjusted.",
+    "ojvalues": [
+      {
+        "name": "none",
+        "description": "Display a default standalone button.",
+        "displayName": "Small",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "bottom",
+        "description": "Stretch the button to 100% width and adjust borders for usage at bottom of container.",
+        "displayName": "Bottom",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      }
+    ],
+    "defaultvalue": "\"none\""
+  },
+  {
+    "id": "oj-c.ProgressButton#chroming",
+    "name": "chroming",
+    "memberof": "oj-c.ProgressButton",
+    "meta": {
+      "filename": "progress-button.tsx",
+      "path": "web/components/oj-c/progress-button"
+    },
+    "kind": "member",
+    "longname": "oj-c.ProgressButton#chroming",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "\"solid\"",
+        "\"borderless\"",
+        "\"outlined\"",
+        "\"callToAction\""
+      ]
+    },
+    "optional": true,
+    "description": "Indicates in what states the button has variants in background and border.",
+    "ojvalues": [
+      {
+        "name": "borderless",
+        "description": "Borderless buttons are a more prominent variation. Borderless buttons are useful for supplemental actions that require minimal emphasis.",
+        "displayName": "Borderless",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "outlined",
+        "description": "Outlined buttons are salient, but lighter weight than solid buttons. Outlined buttons are useful for secondary actions.",
+        "displayName": "Outlined",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "solid",
+        "description": "Solid buttons stand out, and direct the user's attention to the most important actions in the UI.",
+        "displayName": "Solid",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "callToAction",
+        "description": "A Call To Action (CTA) button guides the user to take or complete the action that is the main goal of the page or page section. There should only be one CTA button on a page at any given time.",
+        "displayName": "Call To Action",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      }
+    ],
+    "defaultvalue": "\"outlined\""
+  },
+  {
+    "id": "oj-c.ProgressButton#focus",
+    "name": "focus",
+    "memberof": "oj-c.ProgressButton",
+    "meta": {
+      "filename": "progress-button.tsx",
+      "path": "web/components/oj-c/progress-button"
+    },
+    "kind": "function",
+    "longname": "oj-c.ProgressButton#focus",
+    "scope": "instance",
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "void"
+          ]
+        }
+      }
+    ],
+    "description": ""
+  },
+  {
+    "id": "oj-c.ProgressButton#blur",
+    "name": "blur",
+    "memberof": "oj-c.ProgressButton",
+    "meta": {
+      "filename": "progress-button.tsx",
+      "path": "web/components/oj-c/progress-button"
+    },
+    "kind": "function",
+    "longname": "oj-c.ProgressButton#blur",
+    "scope": "instance",
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "void"
+          ]
+        }
+      }
+    ],
+    "description": ""
+  },
+  {
+    "id": "oj-c.ProgressButton#click",
+    "name": "click",
+    "memberof": "oj-c.ProgressButton",
+    "meta": {
+      "filename": "progress-button.tsx",
+      "path": "web/components/oj-c/progress-button"
+    },
+    "kind": "function",
+    "longname": "oj-c.ProgressButton#click",
+    "scope": "instance",
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "void"
+          ]
+        }
+      }
+    ],
+    "description": ""
+  },
+  {
+    "id": "oj-c.ProgressButton#setProperty",
+    "name": "setProperty",
+    "memberof": "oj-c.ProgressButton",
+    "meta": {
+      "filename": "progress-button.tsx",
+      "path": "web/components/oj-c/progress-button"
+    },
+    "kind": "function",
+    "longname": "oj-c.ProgressButton#setProperty",
+    "scope": "instance",
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "void"
+          ]
+        }
+      }
+    ],
+    "description": "Sets a property or a single subproperty for complex properties and notifies the component of the change, triggering a corresponding event.",
+    "params": [
+      {
+        "name": "property",
+        "description": "The property name to set. Supports dot notation for subproperty access.",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "value",
+        "description": "The new value to set the property to.",
+        "type": {
+          "names": [
+            "any"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.ProgressButton#getProperty",
+    "name": "getProperty",
+    "memberof": "oj-c.ProgressButton",
+    "meta": {
+      "filename": "progress-button.tsx",
+      "path": "web/components/oj-c/progress-button"
+    },
+    "kind": "function",
+    "longname": "oj-c.ProgressButton#getProperty",
+    "scope": "instance",
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "any"
+          ]
+        }
+      }
+    ],
+    "description": "Retrieves the value of a property or a subproperty.",
+    "params": [
+      {
+        "name": "property",
+        "description": "The property name to get. Supports dot notation for subproperty access.",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.ProgressButton#setProperties",
+    "name": "setProperties",
+    "memberof": "oj-c.ProgressButton",
+    "meta": {
+      "filename": "progress-button.tsx",
+      "path": "web/components/oj-c/progress-button"
+    },
+    "kind": "function",
+    "longname": "oj-c.ProgressButton#setProperties",
+    "scope": "instance",
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "void"
+          ]
+        }
+      }
+    ],
+    "description": "Performs a batch set of properties.",
+    "params": [
+      {
+        "name": "properties",
+        "description": "An object containing the property and value pairs to set.",
+        "type": {
+          "names": [
+            "object"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.ProgressButton#event:ojAction",
+    "name": "ojAction",
+    "kind": "event",
+    "memberof": "oj-c.ProgressButton",
+    "meta": {
+      "filename": "progress-button.tsx",
+      "path": "web/components/oj-c/progress-button"
+    },
+    "longname": "oj-c.ProgressButton#event:ojAction",
+    "scope": "instance",
+    "description": "Triggered when a button is clicked, whether by keyboard, mouse, or touch events. To meet accessibility requirements, the only supported way to react to the click of a button is to listen for this event."
+  },
+  {
+    "id": "oj-c.ProgressButton#startIcon",
+    "name": "startIcon",
+    "memberof": "oj-c.ProgressButton",
+    "meta": {
+      "filename": "progress-button.tsx",
+      "path": "web/components/oj-c/progress-button"
+    },
+    "kind": "member",
+    "longname": "oj-c.ProgressButton#startIcon",
+    "scope": "instance",
+    "description": "The startIcon slot is the button's start icon. The oj-c-progress-button element accepts DOM nodes as children with the startIcon slot.",
+    "ojchild": false,
+    "ojslot": true
+  },
+  {
+    "id": "oj-c.ProgressButton.touchDoc",
+    "name": "touchDoc",
+    "kind": "member",
+    "longname": "oj-c.ProgressButton.touchDoc",
+    "description": "<table class=\"keyboard-table\">\n  <thead>\n    <tr>\n      <th>Target</th>\n      <th>Gesture</th>\n      <th>Action</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <td>Progress Button</td>\n      <td><kbd>Tap</kbd></td>\n      <td>Push the button.</td>\n    </tr>\n  </tbody>\n</table>",
+    "memberof": "oj-c.ProgressButton",
+    "meta": {
+      "filename": "progress-button.tsx",
+      "path": "web/components/oj-c/progress-button"
+    },
+    "ojfragment": true
+  },
+  {
+    "id": "oj-c.ProgressButton.keyboardDoc",
+    "name": "keyboardDoc",
+    "kind": "member",
+    "longname": "oj-c.ProgressButton.keyboardDoc",
+    "description": "<table class=\"keyboard-table\">\n  <thead>\n    <tr>\n      <th>Target</th>\n      <th>Key</th>\n      <th>Action</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <td>Progress Button</td>\n      <td><kbd>Enter</kbd> or <kbd>Space</kbd></td>\n      <td>Push the button.</td>\n    </tr>\n  </tbody>\n</table>",
+    "memberof": "oj-c.ProgressButton",
+    "meta": {
+      "filename": "progress-button.tsx",
+      "path": "web/components/oj-c/progress-button"
+    },
+    "ojfragment": true
+  }
+]

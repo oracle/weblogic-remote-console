@@ -1,0 +1,7 @@
+.FormLayoutBaseTheme_baseTheme__sm2a4g0 {
+  --startEdgeLabelToValuePadding__vm51h40: calc(6 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --startEdgeLabelTextAlign__vm51h41: end;
+}
+:root, .oj-density-dependent {
+  --topEdgeLabelToValuePadding__vm51h42: calc(calc(2 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem)) + var(--oj-c-EXPERIMENTAL-DO-NOT-USE-density-units, 0px));
+}

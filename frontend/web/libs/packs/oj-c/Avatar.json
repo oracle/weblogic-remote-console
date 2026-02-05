@@ -1,0 +1,483 @@
+[
+  {
+    "id": "oj-c.Avatar",
+    "name": "Avatar",
+    "memberof": "oj-c",
+    "kind": "class",
+    "meta": {
+      "filename": "avatar.tsx",
+      "path": "web/components/oj-c/avatar"
+    },
+    "ojcomponent": true,
+    "isvcomponent": true,
+    "since": "13.0.0",
+    "longname": "oj-c.Avatar",
+    "pack": "oj-c",
+    "classdesc": "<h3 id=\"avatarOverview-section\">\n  JET Avatar\n  <a class=\"bookmarkable-link\" title=\"Bookmarkable Link\" href=\"#avatarOverview-section\"></a>\n</h3>\n<p>Description: Themeable, WAI-ARIA-compliant element that often represents a person.</p>\n<p>An oj-c-avatar is an icon capable of displaying\na custom image, or initials, or a placeholder image.  The order of precedence for\nwhat is displayed, in order from highest to lowest, is:</p>\n<ol>\n <li>Icon specified through the \"icon-class\" attribute</li>\n <li>Custom image specified through the \"src\" attribute</li>\n <li>Initials specified through the \"initials\" attribute</li>\n <li>Default placeholder image</li>\n</ol>\n<pre class=\"prettyprint\">\n<code>//Avatar with initials\n&lt;oj-c-avatar initials=\"AB\">\n&lt;/oj-c-avatar>\n</code></pre>\n <h3 id=\"a11y-section\">\n  Accessibility\n  <a class=\"bookmarkable-link\" title=\"Bookmarkable Link\" href=\"#a11y-section\"></a>\n </h3>\n\n<p>If any associated information (e.g. the name of the person represented by the oj-c-avatar) is already available to assistive technologies, for example by rendering the name in addition to the avatar as part of the page content, then setting the aria-label is optional.\nOtherwise setting the aria-label is required by passing a descriptive text to the aria-label attribute. The component will then internally set role='img' if the aria-label is set.\n\n<p>JET Avatar does not have\nany interaction with the application, therefore it is not keyboard navigable by default.\nThe aria-label will be picked up by the tabbable/focusable parent unless it is\noverriden by the application.\nThe parent of the avatar is responsible for providing aria-* props and tooltip support if the avatar is informational or in\nan actionable element\n\n\n<p>In order to meet <a href=\"https://www.w3.org/TR/WCAG21/#contrast-minimum\">accessibility requirements</a> for text, color contrast ratio\nbetween the background color and text must be\ngreater than 4.5 for the two smallest avatars and 3.1 for the five larger avatars.\nAvatar's default background satisfies the 4.5 color contrast ratio.  If colors are customized through theming, the\napplication is responsible for specifying colors that satisfy the contrast ratio requirements.\n\n<h3 id=\"image-section\">\n  Image\n  <a class=\"bookmarkable-link\" title=\"Bookmarkable Link\" href=\"#image-section\"></a>\n </h3>\n\n<p>The avatar will display an icon if the iconClass is populated.  If it is not, then the avatar will display the image provided\nfrom the src attribute if the src\nattribute is populated.  If the src attribute is not provided and the initials have been,\nthe initials will be displayed.  If neither iconClass, src nor initials attributes are populated,\na single person placeholder image is shown.\nExamples displaying each type of avatar:\n<pre class=\"prettyprint\">\n<code>//Individual Placeholder\n&lt;oj-c-avatar>\n &lt;/oj-c-avatar>\n//Icon\n&lt;oj-c-avatar icon-class=\"oj-ux-ico-contact-group\">\n &lt;/oj-c-avatar>\n//Initials\n&lt;oj-c-avatar initials=\"AB\">\n&lt;/oj-c-avatar>\n//Image\n&lt;oj-c-avatar initials=\"AB\" src=\"image.jpg\">\n&lt;/oj-c-avatar>\n</code></pre>",
+    "scope": "static",
+    "tagWithoutBrackets": "oj-c-avatar",
+    "tagWithBrackets": "<oj-c-avatar>",
+    "domInterface": "CAvatarElement",
+    "ojPageTitle": "&lt;oj-c-avatar>",
+    "camelCaseName": "Avatar",
+    "ojPageTitlePrefix": "Element: ",
+    "ojtsvcomponent": true,
+    "tstype": {
+      "target": "Type",
+      "value": "interface CAvatarElement extends JetElement<AvatarElementSettableProperties>"
+    },
+    "ojsignature": [
+      {
+        "target": "Type",
+        "value": "interface CAvatarElement extends JetElement<AvatarElementSettableProperties>"
+      }
+    ],
+    "tsdeprecated": [
+      {
+        "type": "supersedes",
+        "since": "15.0.0",
+        "value": [
+          "oj-avatar"
+        ]
+      }
+    ],
+    "ojmodule": "avatar"
+  },
+  {
+    "id": "oj-c.Avatar#background",
+    "name": "background",
+    "memberof": "oj-c.Avatar",
+    "meta": {
+      "filename": "avatar.tsx",
+      "path": "web/components/oj-c/avatar"
+    },
+    "kind": "member",
+    "longname": "oj-c.Avatar#background",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "\"blue\"",
+        "\"gray\"",
+        "\"green\"",
+        "\"orange\"",
+        "\"pink\"",
+        "\"purple\"",
+        "\"teal\"",
+        "\"neutral\"",
+        "\"slate\"",
+        "\"lilac\""
+      ]
+    },
+    "optional": true,
+    "description": "Specifies the background of the avatar.",
+    "ojvalues": [
+      {
+        "name": "neutral",
+        "description": "Neutral background (default, if unspecified)",
+        "displayName": "Neutral",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "orange",
+        "description": "Orange background",
+        "displayName": "Orange",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "green",
+        "description": "Green background",
+        "displayName": "Green",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "teal",
+        "description": "Teal background",
+        "displayName": "Teal",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "blue",
+        "description": "Blue background",
+        "displayName": "Blue",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "slate",
+        "description": "Slate background",
+        "displayName": "Slate",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "pink",
+        "description": "Pink background",
+        "displayName": "Pink",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "purple",
+        "description": "Purple background",
+        "displayName": "Purple",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "lilac",
+        "description": "Lilac background",
+        "displayName": "Lilac",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "gray",
+        "description": "Gray background",
+        "displayName": "Gray",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      }
+    ],
+    "defaultvalue": "\"neutral\""
+  },
+  {
+    "id": "oj-c.Avatar#initials",
+    "name": "initials",
+    "memberof": "oj-c.Avatar",
+    "meta": {
+      "filename": "avatar.tsx",
+      "path": "web/components/oj-c/avatar"
+    },
+    "kind": "member",
+    "longname": "oj-c.Avatar#initials",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "string|null"
+      ]
+    },
+    "optional": true,
+    "description": " Specifies the initials of the avatar.  Initials will not be displayed if src or iconClass attributes are specified.\n <a href=\"oj.IntlConverterUtils.html#.getInitials\">IntlConverterUtils.getInitials</a> can be used\n to generate initials from first and last names in a locale-specific manner."
+  },
+  {
+    "id": "oj-c.Avatar#size",
+    "name": "size",
+    "memberof": "oj-c.Avatar",
+    "meta": {
+      "filename": "avatar.tsx",
+      "path": "web/components/oj-c/avatar"
+    },
+    "kind": "member",
+    "longname": "oj-c.Avatar#size",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "\"sm\"",
+        "\"md\"",
+        "\"lg\"",
+        "\"xs\"",
+        "\"2xs\"",
+        "\"xl\"",
+        "\"2xl\""
+      ]
+    },
+    "optional": true,
+    "description": "Specifies the size of the avatar.",
+    "ojvalues": [
+      {
+        "name": "2xs",
+        "description": "extra, extra small avatar",
+        "displayName": "Extra Extra Small",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "xs",
+        "description": "extra small avatar",
+        "displayName": "Extra Small",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "sm",
+        "description": "small avatar",
+        "displayName": "Small",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "md",
+        "description": "medium avatar (default, if unspecified)",
+        "displayName": "Medium",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "lg",
+        "description": "large avatar",
+        "displayName": "Large",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "xl",
+        "description": "extra large avatar",
+        "displayName": "Extra Large",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "2xl",
+        "description": "extra, extra large avatar",
+        "displayName": "Extra Extra Large",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      }
+    ],
+    "defaultvalue": "\"md\""
+  },
+  {
+    "id": "oj-c.Avatar#src",
+    "name": "src",
+    "memberof": "oj-c.Avatar",
+    "meta": {
+      "filename": "avatar.tsx",
+      "path": "web/components/oj-c/avatar"
+    },
+    "kind": "member",
+    "longname": "oj-c.Avatar#src",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "string|null"
+      ]
+    },
+    "optional": true,
+    "description": "Specifies the src for the image of the avatar.  Image will be rendered as a background image.  Src will have\nprecedence over initials, but not icon."
+  },
+  {
+    "id": "oj-c.Avatar#iconClass",
+    "name": "iconClass",
+    "memberof": "oj-c.Avatar",
+    "meta": {
+      "filename": "avatar.tsx",
+      "path": "web/components/oj-c/avatar"
+    },
+    "kind": "member",
+    "longname": "oj-c.Avatar#iconClass",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "string"
+      ]
+    },
+    "optional": true,
+    "description": "Specifies the icon class to be displayed.  IconClass will have precedence over src and initials."
+  },
+  {
+    "id": "oj-c.Avatar#shape",
+    "name": "shape",
+    "memberof": "oj-c.Avatar",
+    "meta": {
+      "filename": "avatar.tsx",
+      "path": "web/components/oj-c/avatar"
+    },
+    "kind": "member",
+    "longname": "oj-c.Avatar#shape",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "\"square\"",
+        "\"circle\""
+      ]
+    },
+    "optional": true,
+    "description": "Specifies the shape of the avatar. Can be square or circle.The default value of this property varies by theme.",
+    "ojvalues": [
+      {
+        "name": "square",
+        "description": "square avatar (default, if unspecified)",
+        "displayName": "Square Avatar",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "circle",
+        "description": "circular avatar",
+        "displayName": "Circular Avatar",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      }
+    ],
+    "defaultvalue": "\"square\""
+  },
+  {
+    "id": "oj-c.Avatar#setProperty",
+    "name": "setProperty",
+    "memberof": "oj-c.Avatar",
+    "meta": {
+      "filename": "avatar.tsx",
+      "path": "web/components/oj-c/avatar"
+    },
+    "kind": "function",
+    "longname": "oj-c.Avatar#setProperty",
+    "scope": "instance",
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "void"
+          ]
+        }
+      }
+    ],
+    "description": "Sets a property or a single subproperty for complex properties and notifies the component of the change, triggering a corresponding event.",
+    "params": [
+      {
+        "name": "property",
+        "description": "The property name to set. Supports dot notation for subproperty access.",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "value",
+        "description": "The new value to set the property to.",
+        "type": {
+          "names": [
+            "any"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.Avatar#getProperty",
+    "name": "getProperty",
+    "memberof": "oj-c.Avatar",
+    "meta": {
+      "filename": "avatar.tsx",
+      "path": "web/components/oj-c/avatar"
+    },
+    "kind": "function",
+    "longname": "oj-c.Avatar#getProperty",
+    "scope": "instance",
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "any"
+          ]
+        }
+      }
+    ],
+    "description": "Retrieves the value of a property or a subproperty.",
+    "params": [
+      {
+        "name": "property",
+        "description": "The property name to get. Supports dot notation for subproperty access.",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.Avatar#setProperties",
+    "name": "setProperties",
+    "memberof": "oj-c.Avatar",
+    "meta": {
+      "filename": "avatar.tsx",
+      "path": "web/components/oj-c/avatar"
+    },
+    "kind": "function",
+    "longname": "oj-c.Avatar#setProperties",
+    "scope": "instance",
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "void"
+          ]
+        }
+      }
+    ],
+    "description": "Performs a batch set of properties.",
+    "params": [
+      {
+        "name": "properties",
+        "description": "An object containing the property and value pairs to set.",
+        "type": {
+          "names": [
+            "object"
+          ]
+        }
+      }
+    ]
+  }
+]

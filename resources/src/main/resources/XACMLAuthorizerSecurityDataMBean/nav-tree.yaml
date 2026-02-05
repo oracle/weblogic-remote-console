@@ -4,6 +4,7 @@ contents:
 - child: AppDeployments
 - child: CoherenceClusterSystemResources
 - label: Domain
+  description: Security policies for domain-level operations
   type: group
   contents:
   - child: Domain.Configuration
@@ -14,6 +15,7 @@ contents:
   - child: Domain.UserLockout
   - child: Domain.ViewLog
 - label: Root Level
+  description: All security policies for this authorizer
   type: group
   contents:
   - child: RootLevel.Admin
@@ -31,6 +33,7 @@ contents:
 - child: JMSSystemResources
 - child: Servers
 - label: Advanced
+  description: Advanced security policies and configurations for this authorizer
   type: group
   contents:
   - child: AdvancedAdminPolicies

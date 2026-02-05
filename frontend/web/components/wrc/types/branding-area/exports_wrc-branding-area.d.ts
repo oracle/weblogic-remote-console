@@ -1,0 +1,1 @@
+export { BrandingAreaElement } from './header';

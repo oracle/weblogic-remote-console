@@ -1,0 +1,2 @@
+define(['exports', 'preact/jsx-runtime', './BaseButton-c02238cd', './ButtonLabelLayout-9cc087dc'], (function(e,i,a,t){"use strict";e.EmbeddedIconButton=({isDisabled:e=!1,size:s="sm",onAction:n,"aria-label":d,"aria-describedby":c,"aria-hidden":o=!1,...r})=>i.jsx(a.BaseButton,{elementDetails:{type:"span",isFocusable:!1},isDisabled:e,size:s,variant:"ghost",styling:["min"],onAction:n,"aria-describedby":c,"aria-hidden":o,"aria-label":d,children:i.jsx(t.ButtonLabelLayout,{display:"icons",startIcon:r.children,size:s})})}));
+//# sourceMappingURL=EmbeddedIconButton-cb74290f.js.map

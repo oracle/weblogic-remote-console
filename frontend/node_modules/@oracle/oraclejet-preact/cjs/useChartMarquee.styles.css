@@ -1,0 +1,8 @@
+.useChartMarquee_visMarquee__yh8ph20 {
+  stroke: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-dvt-marquee-border);
+  fill: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-dvt-marquee-surface);
+}
+.useChartMarquee_visMarqueeInnerArea__yh8ph21 {
+  fill: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-dvt-marquee-surface);
+  stroke: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-dvt-contrast-line);
+}

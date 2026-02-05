@@ -1,0 +1,11 @@
+import { ComponentThemeType, CompoundVariantStyles, VariantOptions } from '../../UNSAFE_Theme';
+type MenuSeparatorVariant = typeof variants;
+type MenuSeparatorVariantOptions = VariantOptions<MenuSeparatorVariant>;
+type MenuSeparatorStyles = typeof styles;
+type MenuSeparatorTheme = ComponentThemeType<MenuSeparatorVariant, MenuSeparatorStyles>;
+declare const baseStyle: string;
+declare const styles: {};
+declare const variants: {};
+declare const compoundVariants: CompoundVariantStyles<MenuSeparatorVariantOptions>;
+export type { MenuSeparatorVariantOptions, MenuSeparatorStyles, MenuSeparatorTheme };
+export { baseStyle, styles, variants, compoundVariants };

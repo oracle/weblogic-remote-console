@@ -1,0 +1,2 @@
+define(['exports', 'preact/hooks'], (function(s,e){"use strict";s.useFormFieldContextProps=function({hasTruncatedLabel:s,hasValue:a,isDisabled:i,isFocused:u,isInputFocused:o,isLoading:d,isReadonly:n}){return e.useMemo((()=>n?{hasTruncatedLabel:s,hasValue:a,isFocused:u,isInputFocused:o,isLoading:d,isReadonly:!0}:i?{hasTruncatedLabel:!1,hasValue:a,isDisabled:!0,isLoading:d}:{hasTruncatedLabel:s,hasValue:a,isFocused:u,isInputFocused:o,isLoading:d}),[s,a,i,u,o,d,n])}}));
+//# sourceMappingURL=useFormFieldContextProps-08e673cf.js.map

@@ -1,0 +1,2 @@
+define(['exports', 'css!./../../TableViewStyles.styles.css'], (function(e,l){"use strict";e.tableViewStyles={base:"TableViewStyles_tableViewStyles_base__1cet5nj0",internalScroller:"TableViewStyles_tableViewStyles_internalScroller__1cet5nj1",externalScroller:"TableViewStyles_tableViewStyles_externalScroller__1cet5nj2"},Object.defineProperty(e,"__esModule",{value:!0})}));
+//# sourceMappingURL=TableViewStyles.css.js.map

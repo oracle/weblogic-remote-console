@@ -1,0 +1,38 @@
+.MenuItemStyles_baseStyle__735dwf0 {
+  cursor: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-cursor-clickable) !important;
+  width: 100%;
+  padding-top: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-list-item-padding-vertical);
+  padding-bottom: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-list-item-padding-vertical);
+  padding-inline-start: var(--startEdgeToStartIconPadding__1qbg5hn1);
+  padding-inline-end: var(--endIconToEndEdgePadding__1qbg5hn2);
+  box-sizing: border-box;
+  min-height: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-list-item-height);
+  display: flex;
+  -webkit-text-decoration-line: none !important;
+          text-decoration-line: none !important;
+  outline-style: none;
+}
+.MenuItemStyles_iconLabelContainer__735dwf1 {
+  display: flex;
+  align-items: center;
+  overflow-x: hidden;
+  overflow-y: hidden;
+}
+.MenuItemStyles_labelContainer__735dwf2 {
+  min-height: var(--iconSize__1qbg5hn0);
+  color: var(--textColor__1qbg5hn5);
+}
+.MenuItemStyles_iconContainer__735dwf3 {
+  font-size: var(--iconSize__1qbg5hn0);
+  height: var(--iconSize__1qbg5hn0);
+  color: var(--iconColor__1qbg5hn6);
+}
+.MenuItemStyles_noSelectedIcon__735dwf4 {
+  width: var(--iconSize__1qbg5hn0);
+}
+.MenuItemStyles_startIconContainer__735dwf5 {
+  margin-inline-end: var(--startIconToLabelPadding__1qbg5hn3);
+}
+.MenuItemStyles_endIconContainer__735dwf6 {
+  margin-inline-start: var(--labelToEndIconPadding__1qbg5hn4);
+}

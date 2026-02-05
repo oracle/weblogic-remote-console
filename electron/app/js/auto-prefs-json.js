@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2022, 2024, Oracle and/or its affiliates.
+ * Copyright (c) 2022, 2025, Oracle and/or its affiliates.
  * Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
  * @ignore
  */
@@ -40,17 +40,17 @@
 const AutoPrefs = (() => {
   const fs = require('fs');
   const {log} = require('./console-logger');
-  const UserProjects = require('./user-projects-json');
   const UserPrefs = require('./user-prefs-json');
 
   const _appPaths = {};
   let _fields = {};
 
-  ((version, width, height, location) => {
+  ((version, width, height, location, resizer_width) => {
     _fields['version'] = version;
     _fields['width'] = width;
     _fields['height'] = height;
     _fields['location'] = location;
+    _fields['resizer_width'] = resizer_width;
   })(null, 1600, 1000, null);
 
   return {
@@ -75,6 +75,7 @@ const AutoPrefs = (() => {
       if (fields.width) _fields.width = fields.width;
       if (fields.height) _fields.height = fields.height;
       if (fields.location) _fields.location = fields.location;
+      if (fields.resizer_width) _fields.resizer_width = fields.resizer_width;
     },
     /**
      * Removes in-memory field from ``AutoPrefs`` with a given ``key``.
@@ -114,14 +115,6 @@ const AutoPrefs = (() => {
               // Update all the other _fields with values from the
               // file just read.
               AutoPrefs.set(props);
-              // See if auto-prefs.json contained a projects field
-              if (typeof props.projects !== 'undefined') {
-                // It did, so use it to do a UserProjects.putAll()
-                UserProjects.putAll(props.projects);
-                // Use UserProjects.write() to write out the
-                // in-memory projects.
-                UserProjects.write(userDataPath);
-              }
               // See if auto-prefs.json contained a preferences field
               if (typeof props.preferences !== 'undefined') {
                 // It did, so use it to do a UserPrefs.putAll()

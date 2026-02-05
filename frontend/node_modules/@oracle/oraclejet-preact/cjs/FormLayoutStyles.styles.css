@@ -1,0 +1,39 @@
+.FormLayoutStyles_rootWrapperStyle__1h1o9fy0 {
+  container-type: inline-size;
+}
+.FormLayoutStyles_rootWrapperFullWidthStyle__1h1o9fy1 {
+  max-width: 100%;
+}
+.FormLayoutStyles_baseRowDirectionStyle__1h1o9fy2 {
+  display: grid;
+  grid-column-gap: var(--columnGapWidth__pa4rfz5);
+  grid-row-gap: var(--rowGapWidth__pa4rfz4);
+}
+.FormLayoutStyles_baseColumnDirectionStyle__1h1o9fy3 {
+  -moz-column-gap: var(--columnGapWidth__pa4rfz5);
+       column-gap: var(--columnGapWidth__pa4rfz5);
+}
+.FormLayoutStyles_baseColumnDirectionStyle__1h1o9fy3 > * {
+  margin-top: 0 !important;
+  padding-bottom: var(--rowGapWidth__pa4rfz4) !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  -moz-column-break-inside: avoid;
+       break-inside: avoid;
+}
+.FormLayoutStyles_baseRowDirectionStyle__1h1o9fy2:not(.FormLayoutBaseTheme_baseTheme__1sotkej0 .FormLayoutBaseTheme_baseTheme__1sotkej0 .FormLayoutStyles_baseRowDirectionStyle__1h1o9fy2), .FormLayoutStyles_baseColumnDirectionStyle__1h1o9fy3:not(.FormLayoutBaseTheme_baseTheme__1sotkej0 .FormLayoutBaseTheme_baseTheme__1sotkej0 .FormLayoutStyles_baseColumnDirectionStyle__1h1o9fy3) {
+  --columnGapWidth__pa4rfz5: var(--columnGapWidthSm__pa4rfz3);
+  --layoutLocalVars_actualColumnGapWidth__5qy13b3: var(--columnGapWidthSm__pa4rfz3);
+}
+.FormLayoutStyles_startEdgeColumnWidth__1h1o9fy4 {
+  max-width: calc(var(--layoutLocalVars_maxColumnCount__5qy13b0) * var(--maxStartColumnWidth__pa4rfz0));
+}
+.FormLayoutStyles_nonStartEdgeColumnWidth__1h1o9fy5 {
+  max-width: calc(var(--layoutLocalVars_maxColumnCount__5qy13b0) * var(--maxNonStartColumnWidth__pa4rfz1));
+}
+@container (min-width: 600px) {
+  .FormLayoutStyles_baseRowDirectionStyle__1h1o9fy2:not(.FormLayoutBaseTheme_baseTheme__1sotkej0 .FormLayoutBaseTheme_baseTheme__1sotkej0 .FormLayoutStyles_baseRowDirectionStyle__1h1o9fy2), .FormLayoutStyles_baseColumnDirectionStyle__1h1o9fy3:not(.FormLayoutBaseTheme_baseTheme__1sotkej0 .FormLayoutBaseTheme_baseTheme__1sotkej0 .FormLayoutStyles_baseColumnDirectionStyle__1h1o9fy3) {
+    --columnGapWidth__pa4rfz5: var(--columnGapWidthMd__pa4rfz2);
+    --layoutLocalVars_actualColumnGapWidth__5qy13b3: var(--columnGapWidthMd__pa4rfz2);
+  }
+}

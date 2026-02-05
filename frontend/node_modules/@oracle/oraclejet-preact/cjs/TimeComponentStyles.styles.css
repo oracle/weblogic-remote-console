@@ -1,0 +1,166 @@
+.TimeComponentStyles_baseStyle__1qjsdby0 {
+  width: 100%;
+  height: calc(140 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+  touch-action: none;
+}
+.TimeComponentStyles_baseStyle__1qjsdby0:focus-visible {
+  outline: none;
+}
+.TimeComponentStyles_panZoomLayoutStyles_base__1qjsdby1 {
+  display: grid;
+  grid-template-areas: 
+      'g g g .'
+      'g g g v'
+      'g g g .'
+      '. h . .'
+    ;
+  width: 100%;
+  height: 100%;
+}
+.TimeComponentStyles_panZoomLayoutStyles_verticalControl__1qjsdby2 {
+  grid-area: v;
+}
+.TimeComponentStyles_panZoomLayoutStyles_verticalControlWithSpacing__1qjsdby3 {
+  margin-inline-start: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem);
+}
+.TimeComponentStyles_panZoomLayoutStyles_horizontalControl__1qjsdby4 {
+  grid-area: h;
+}
+.TimeComponentStyles_panZoomLayoutStyles_horizontalControlWithSpacing__1qjsdby5 {
+  margin-top: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem);
+}
+.TimeComponentStyles_panZoomLayoutStyles_vis__1qjsdby6 {
+  grid-area: g;
+}
+.TimeComponentStyles_overlayControlsContainerStyles_base__1qjsdby7 {
+  width: 100%;
+  height: 100%;
+  visibility: hidden;
+}
+.TimeComponentStyles_overlayControlsContainerStyles_visible__1qjsdby8 {
+  visibility: visible;
+}
+.TimeComponentStyles_zoomControlsLayoutStyles_base__1qjsdby9 {
+  display: grid;
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+.TimeComponentStyles_zoomControlsLayoutStyles_topStart__1qjsdbya {
+  grid-template-rows: auto 1fr;
+  grid-template-columns: auto 1fr;
+  grid-template-areas: 
+      'c .'
+      '. .'
+    ;
+}
+.TimeComponentStyles_zoomControlsLayoutStyles_topEnd__1qjsdbyb {
+  grid-template-rows: auto 1fr;
+  grid-template-columns: 1fr auto;
+  grid-template-areas: 
+      '. c'
+      '. .'
+    ;
+}
+.TimeComponentStyles_zoomControlsLayoutStyles_bottomStart__1qjsdbyc {
+  grid-template-rows: 1fr auto;
+  grid-template-columns: auto 1fr;
+  grid-template-areas: 
+      '. .'
+      'c .'
+    ;
+}
+.TimeComponentStyles_zoomControlsLayoutStyles_bottomEnd__1qjsdbyd {
+  grid-template-rows: 1fr auto;
+  grid-template-columns: 1fr auto;
+  grid-template-areas: 
+      '. .'
+      '. c'
+    ;
+}
+.TimeComponentStyles_zoomControlsLayoutStyles_controls__1qjsdbye {
+  grid-area: c;
+  margin: calc(2.625 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+}
+.TimeComponentStyles_zoomControlStyles_base__1qjsdbyf {
+  background-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-surface-neutral0);
+  pointer-events: auto;
+}
+.TimeComponentStyles_horizontalScrollbarStyles_base__1qjsdbyg {
+  width: 100%;
+  height: calc(2.75 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+}
+.TimeComponentStyles_horizontalScrollbarStyles_container__1qjsdbyh {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.TimeComponentStyles_horizontalScrollbarStyles_track__1qjsdbyi {
+  width: 100%;
+  height: calc(0.75 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  background-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-surface-neutral30);
+  pointer-events: none;
+}
+.TimeComponentStyles_horizontalScrollbarStyles_thumb__1qjsdbyj {
+  position: relative;
+  height: calc(0.75 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  background-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-surface-neutral-strong);
+  pointer-events: none;
+}
+.TimeComponentStyles_verticalScrollbarStyles_base__1qjsdbyk {
+  width: calc(2.75 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  height: 100%;
+}
+.TimeComponentStyles_verticalScrollbarStyles_container__1qjsdbyl {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+.TimeComponentStyles_verticalScrollbarStyles_track__1qjsdbym {
+  height: 100%;
+  width: calc(0.75 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  background-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-surface-neutral30);
+  pointer-events: none;
+}
+.TimeComponentStyles_verticalScrollbarStyles_thumb__1qjsdbyn {
+  position: relative;
+  width: calc(0.75 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  background-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-surface-neutral-strong);
+  pointer-events: none;
+}
+.TimeComponentStyles_verticalGridlinesStyles_major__1qjsdbyo {
+  stroke: rgba(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-190), 0.3);
+  shape-rendering: crispEdges;
+}
+.TimeComponentStyles_verticalGridlinesStyles_minor__1qjsdbyp {
+  stroke: rgba(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-190), 0.3);
+  shape-rendering: crispEdges;
+  stroke-dasharray: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem),var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem);
+}
+.TimeComponentStyles_timeAxisLabelsStyles_base__1qjsdbyq {
+  position: relative;
+}
+.TimeComponentStyles_timeAxisLabelsStyles_label__1qjsdbyr {
+  position: absolute;
+  box-sizing: border-box;
+  padding-inline-start: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem);
+  padding-inline-end: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem);
+}
+.TimeComponentStyles_timeAxisLabelsStyles_labelTruncated__1qjsdbys {
+  pointer-events: auto;
+}
+.TimeComponentStyles_layersStackStyles_base__1qjsdbyt {
+  display: grid;
+  grid-template-rows: 100%;
+  grid-template-columns: 100%;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+.TimeComponentStyles_layersStackStyles_layer__1qjsdbyu {
+  grid-row-start: 1;
+  grid-column-start: 1;
+}

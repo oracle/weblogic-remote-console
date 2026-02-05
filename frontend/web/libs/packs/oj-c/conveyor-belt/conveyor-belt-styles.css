@@ -1,0 +1,20 @@
+oj-c-conveyor-belt:not(.oj-complete){
+  visibility: hidden;
+}
+
+oj-c-conveyor-belt
+{
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+oj-c-conveyor-belt[hidden]
+{
+  display: none;
+}
+
+oj-c-conveyor-belt[orientation='vertical']
+{
+  display: inline-flex;
+}

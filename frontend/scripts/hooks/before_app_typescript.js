@@ -1,5 +1,5 @@
 /**
-  Copyright (c) 2015, 2025, Oracle and/or its affiliates.
+  Copyright (c) 2015, 2026, Oracle and/or its affiliates.
   Licensed under The Universal Permissive License (UPL), Version 1.0
   as shown at https://oss.oracle.com/licenses/upl/
 
@@ -9,6 +9,29 @@
 module.exports = function (configObj) {
   return new Promise((resolve) => {
     console.log("Running before_app_typescript hook.");
+
+    console.log('Generating root nls bundle');
+    
+    const { execFileSync } = require("child_process");
+    const fs = require("fs");
+    
+    const destinationDir = './web/components/wrc/shared/resources/nls';
+
+    fs.mkdirSync(destinationDir, { recursive: true });
+
+
+    const cwd = process.cwd();
+
+    const env = { ...process.env, ...{
+      NODE_PATH: `${cwd}/node_modules`
+    } };
+
+    execFileSync(
+      'node',
+      [ 'nls/create-translation-bundles.js', '-p', 'nls', '-o', `${destinationDir}` ],
+      { stdio: 'inherit', env: env },
+    );
+    
     //const { tsconfigJson } = configObj.typescript;
     resolve(configObj);
   });

@@ -1,0 +1,38 @@
+.PieChartStyles_chart__1a5vzfm0 {
+  position: relative;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+}
+.PieChartStyles_chart__1a5vzfm0:focus-visible {
+  outline: none;
+}
+.PieChartStyles_innerShapes__1a5vzfm1 {
+  pointer-events: none;
+}
+.PieChartStyles_selectedBorder__1a5vzfm2 {
+  fill: rgb(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-130));
+}
+.PieChartStyles_svg__1a5vzfm3 {
+  width: 100%;
+  height: 100%;
+}
+.PieChartStyles_contrastBorder__1a5vzfm4 {
+  stroke: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-dvt-contrast-line);
+  stroke-width: 1px;
+}
+.PieChartStyles_dimensionStyle__1a5vzfm5 {
+  width: 100%;
+  height: calc(112 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+}
+.PieChartStyles_interactiveItemStyle__1a5vzfm6 {
+  cursor: pointer;
+}
+.PieChartStyles_fillerLineStyle__1a5vzfm7 {
+  stroke: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-border-enabled);
+  stroke-width: 1;
+}
+.PieChartStyles_labelStyle__1a5vzfm8 {
+  font-size: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-label-sm-font-size);
+  fill: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-primary);
+}

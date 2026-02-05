@@ -1,0 +1,32 @@
+.TextTagStyles_base__1x9w9me0 {
+  align-items: center;
+  background-color: rgba(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-190), 0.08);
+  border-color: transparent;
+  border-radius: 6px;
+  border-style: solid;
+  border-width: 1px;
+  box-sizing: border-box;
+  color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-primary);
+  cursor: default;
+  display: flex;
+  height: calc(5 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  padding-left: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem);
+  padding-right: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem);
+  white-space: nowrap;
+}
+.TextTagStyles_base__1x9w9me0:focus-visible {
+  outline-style: dotted;
+  outline-offset: 1px;
+  outline-width: 1px;
+  outline-color: rgb(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-border-keyboard-focus));
+}
+.TextTagStyles_base__1x9w9me0:hover {
+  background-color: rgba(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-190), 0.12);
+}
+.TextTagStyles_selected__1x9w9me1 {
+  background-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-surface-selected);
+  border-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-border-selected);
+}
+.TextTagStyles_selected__1x9w9me1:hover {
+  background-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-surface-selected);
+}

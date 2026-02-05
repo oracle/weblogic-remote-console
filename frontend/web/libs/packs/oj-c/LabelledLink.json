@@ -1,0 +1,608 @@
+[
+  {
+    "id": "oj-c.LabelledLink",
+    "name": "LabelledLink",
+    "memberof": "oj-c",
+    "kind": "class",
+    "meta": {
+      "filename": "labelled-link.tsx",
+      "path": "web/components/oj-c/labelled-link"
+    },
+    "ojcomponent": true,
+    "isvcomponent": true,
+    "since": "16.0.0",
+    "longname": "oj-c.LabelledLink",
+    "pack": "oj-c",
+    "classdesc": "<h3 id=\"labelledLinkOverview-section\">\n  JET LabelledLink\n  <a class=\"bookmarkable-link\" title=\"Bookmarkable Link\" href=\"#labelledLinkOverview-section\"></a>\n</h3>\n\n<p>\nDescription: LabelledLink component can be used to render a readonly form control\nfield that has a link for its content.\n</p>\n\n<pre class=\"prettyprint\"><code>\n&lt;oj-c-labelled-link\n  href=\"www.oracle.com\"\n  text=\"Website\"\n  label-hint=\"Labelled Link\">\n&lt;/oj-c-linked-link>\n</code></pre>\n\n<h3 id=\"touch-section\">\n  Touch End User Information\n  <a class=\"bookmarkable-link\" title=\"Bookmarkable Link\" href=\"#touch-section\"></a>\n</h3>\n\n<table class=\"keyboard-table\">\n  <thead>\n    <tr>\n      <th>Target</th>\n      <th>Gesture</th>\n      <th>Action</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <td>Link</td>\n      <td><kbd>Tap</kbd></td>\n      <td>Sets focus to the link. Opens the link or invokes the ojAction event.</td>\n    </tr>\n  </tbody>\n</table>\n\n<h3 id=\"keyboard-section\">\n  Keyboard End User Information\n  <a class=\"bookmarkable-link\" title=\"Bookmarkable Link\" href=\"#keyboard-section\"></a>\n</h3>\n\n<table class=\"keyboard-table\">\n  <thead>\n    <tr>\n      <th>Target</th>\n      <th>Key</th>\n      <th>Action</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <td>Link</td>\n      <td><kbd>Tab In</kbd></td>\n      <td>Set focus to the link.</td>\n    </tr>\n\n     <tr>\n      <td>Link</td>\n      <td><kbd>Enter</kbd></td>\n      <td>Opens the link or invokes the ojAction event.</td>\n    </tr>\n  </tbody>\n</table>\n\n<h3 id=\"a11y-section\">\n  Accessibility\n  <a class=\"bookmarkable-link\" title=\"Bookmarkable Link\" href=\"#a11y-section\"></a>\n</h3>\n\n<p>\nFor accessibility, set the <a href=\"#labelHint\">label-hint</a> property.\nIf there is no visible label, then to make this accessible to screen reader users,\nset the <a href=\"#labelHint\">label-hint</a> and <a href=\"#labelEdge\">label-edge</a>='none'\nwhich renders a visually hidden and screen-reader accessible label.\n</p>",
+    "scope": "static",
+    "tagWithoutBrackets": "oj-c-labelled-link",
+    "tagWithBrackets": "<oj-c-labelled-link>",
+    "domInterface": "CLabelledLinkElement",
+    "ojPageTitle": "&lt;oj-c-labelled-link>",
+    "camelCaseName": "LabelledLink",
+    "ojPageTitlePrefix": "Element: ",
+    "ojtsvcomponent": true,
+    "tstype": {
+      "target": "Type",
+      "value": "interface CLabelledLinkElement extends JetElement<LabelledLinkElementSettableProperties>"
+    },
+    "ojsignature": [
+      {
+        "target": "Type",
+        "value": "interface CLabelledLinkElement extends JetElement<LabelledLinkElementSettableProperties>"
+      }
+    ],
+    "tsdeprecated": [
+      {
+        "type": "production",
+        "since": "17.0.0"
+      }
+    ],
+    "ojmodule": "labelled-link"
+  },
+  {
+    "id": "oj-c.LabelledLink#columnSpan",
+    "name": "columnSpan",
+    "memberof": "oj-c.LabelledLink",
+    "meta": {
+      "filename": "labelled-link.tsx",
+      "path": "web/components/oj-c/labelled-link"
+    },
+    "kind": "member",
+    "longname": "oj-c.LabelledLink#columnSpan",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "number"
+      ]
+    },
+    "optional": true,
+    "description": "Specifies how many columns this component should span.\nThis only takes effect when this component is a child of a form layout\nthat has direction 'row'."
+  },
+  {
+    "id": "oj-c.LabelledLink#containerReadonly",
+    "name": "containerReadonly",
+    "memberof": "oj-c.LabelledLink",
+    "meta": {
+      "filename": "labelled-link.tsx",
+      "path": "web/components/oj-c/labelled-link"
+    },
+    "kind": "member",
+    "longname": "oj-c.LabelledLink#containerReadonly",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "boolean"
+      ]
+    },
+    "optional": true,
+    "description": "Specifies whether an ancestor container, like oj-c-form-layout, is readonly.\nThis affects whether a readonly component renders in full or mixed readonly mode."
+  },
+  {
+    "id": "oj-c.LabelledLink#href",
+    "name": "href",
+    "memberof": "oj-c.LabelledLink",
+    "meta": {
+      "filename": "labelled-link.tsx",
+      "path": "web/components/oj-c/labelled-link"
+    },
+    "kind": "member",
+    "longname": "oj-c.LabelledLink#href",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "string"
+      ]
+    },
+    "optional": true,
+    "description": "Specifies the URL that the link points to. If the href is provided, clicking the link\nwill trigger the default browser behavior and will open the link. The\n<code class=\"prettyprint\">ojAction</code> event will not be triggered. If the href property is\nnot provided, then the default browser behavior will be prevented and the\n<code class=\"prettyprint\">ojAction</code> event will be triggered."
+  },
+  {
+    "id": "oj-c.LabelledLink#labelEdge",
+    "name": "labelEdge",
+    "memberof": "oj-c.LabelledLink",
+    "meta": {
+      "filename": "labelled-link.tsx",
+      "path": "web/components/oj-c/labelled-link"
+    },
+    "kind": "member",
+    "longname": "oj-c.LabelledLink#labelEdge",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "\"none\"",
+        "\"start\"",
+        "\"top\"",
+        "\"inside\""
+      ]
+    },
+    "optional": true,
+    "description": "Specifies how the label of the component is positioned when the label-hint\nattribute is set on the component.",
+    "ojvalues": [
+      {
+        "name": "inside",
+        "description": "The label will be placed inside the component and above the link (default, if unspecified).",
+        "displayName": "Inside",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "none",
+        "description": "The component will not create a label, but instead set the aria-labelledby property on the anchor element.",
+        "displayName": "None",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "start",
+        "description": "The label will be placed before the start of the component.",
+        "displayName": "Start",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "top",
+        "description": "The label will be placed on top of the component.",
+        "displayName": "Top",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.LabelledLink#labelHint",
+    "name": "labelHint",
+    "memberof": "oj-c.LabelledLink",
+    "meta": {
+      "filename": "labelled-link.tsx",
+      "path": "web/components/oj-c/labelled-link"
+    },
+    "kind": "member",
+    "longname": "oj-c.LabelledLink#labelHint",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "string"
+      ]
+    },
+    "optional": false,
+    "description": "Represents a hint for rendering a label on the component.\nThis is used in combination with the label-edge attribute to control how the label should be rendered."
+  },
+  {
+    "id": "oj-c.LabelledLink#labelStartWidth",
+    "name": "labelStartWidth",
+    "memberof": "oj-c.LabelledLink",
+    "meta": {
+      "filename": "labelled-link.tsx",
+      "path": "web/components/oj-c/labelled-link"
+    },
+    "kind": "member",
+    "longname": "oj-c.LabelledLink#labelStartWidth",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "number|string"
+      ]
+    },
+    "optional": true,
+    "description": "<p> The width of the label when labelEdge is 'start'.</p>\n<p> This attribute accepts values of type\n<code>0 | `--${string}` | `${number}%` | `${number}x` | `calc(${string})`</code></p>"
+  },
+  {
+    "id": "oj-c.LabelledLink#labelWrapping",
+    "name": "labelWrapping",
+    "memberof": "oj-c.LabelledLink",
+    "meta": {
+      "filename": "labelled-link.tsx",
+      "path": "web/components/oj-c/labelled-link"
+    },
+    "kind": "member",
+    "longname": "oj-c.LabelledLink#labelWrapping",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "\"truncate\"",
+        "\"wrap\""
+      ]
+    },
+    "optional": true,
+    "description": "Should the labels wrap or truncate when there is not enough available space.",
+    "tsdeprecated": [
+      {
+        "type": "deprecated",
+        "since": "18.0.0",
+        "description": "Label truncation for 'start' and 'top' aligned labels is no longer recommended by the Redwood Design System. The default for labelWrapping was 'wrap' and that is now the only suggested pattern by UX design for 'start' and 'top' aligned labels. 'inside' aligned labels are always truncated per UX design and are not affected by this property's value."
+      }
+    ],
+    "ojvalues": [
+      {
+        "name": "truncate",
+        "description": "Label will truncate if needed.",
+        "displayName": "Truncate",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "wrap",
+        "description": "Label will wrap if needed.",
+        "displayName": "Wrap",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.LabelledLink#target",
+    "name": "target",
+    "memberof": "oj-c.LabelledLink",
+    "meta": {
+      "filename": "labelled-link.tsx",
+      "path": "web/components/oj-c/labelled-link"
+    },
+    "kind": "member",
+    "longname": "oj-c.LabelledLink#target",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "string"
+      ]
+    },
+    "optional": true,
+    "description": "Sets the target attribute of the link."
+  },
+  {
+    "id": "oj-c.LabelledLink#text",
+    "name": "text",
+    "memberof": "oj-c.LabelledLink",
+    "meta": {
+      "filename": "labelled-link.tsx",
+      "path": "web/components/oj-c/labelled-link"
+    },
+    "kind": "member",
+    "longname": "oj-c.LabelledLink#text",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "string"
+      ]
+    },
+    "optional": true,
+    "description": "Specifies the text that should appear in the field. If this property\nis not provided, then the URL provided using the <code class=\"prettyprint\">href</code> property\nwill be used as the text in the field."
+  },
+  {
+    "id": "oj-c.LabelledLink#textAlign",
+    "name": "textAlign",
+    "memberof": "oj-c.LabelledLink",
+    "meta": {
+      "filename": "labelled-link.tsx",
+      "path": "web/components/oj-c/labelled-link"
+    },
+    "kind": "member",
+    "longname": "oj-c.LabelledLink#textAlign",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "\"end\"",
+        "\"start\"",
+        "\"right\""
+      ]
+    },
+    "optional": true,
+    "description": "Specifies how the text is aligned within the text field",
+    "ojvalues": [
+      {
+        "name": "start",
+        "description": "Aligns text left when reading direction is ltr and right when reading direction is rtl (default, if unspecified).",
+        "displayName": "Start",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "end",
+        "description": "Aligns text right when reading direction is ltr and left when reading direction is rtl.",
+        "displayName": "End",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "right",
+        "description": "Aligns text right regardless of reading direction, often used for numbers.",
+        "displayName": "Right",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.LabelledLink#unsafe_labelledBy",
+    "name": "unsafe_labelledBy",
+    "memberof": "oj-c.LabelledLink",
+    "meta": {
+      "filename": "labelled-link.tsx",
+      "path": "web/components/oj-c/labelled-link"
+    },
+    "kind": "member",
+    "longname": "oj-c.LabelledLink#unsafe_labelledBy",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "string"
+      ]
+    },
+    "optional": true,
+    "description": "This is temporary unsafe API for JET-52089. It enables a wrapper VComponent to pass\nthe id of an external label that it wants to associate with the inner input.",
+    "ojhidden": true
+  },
+  {
+    "id": "oj-c.LabelledLink#userAssistanceDensity",
+    "name": "userAssistanceDensity",
+    "memberof": "oj-c.LabelledLink",
+    "meta": {
+      "filename": "labelled-link.tsx",
+      "path": "web/components/oj-c/labelled-link"
+    },
+    "kind": "member",
+    "longname": "oj-c.LabelledLink#userAssistanceDensity",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "\"compact\"",
+        "\"reflow\"",
+        "\"efficient\""
+      ]
+    },
+    "optional": true,
+    "description": "The component does not support any assistive text. But, this property can be used to specify\nwhether or not the component should reserve space to be consistent with the other form components\nin the Form Layout.",
+    "ojvalues": [
+      {
+        "name": "reflow",
+        "description": "The field will not reserve any space.",
+        "displayName": "Reflow",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "efficient",
+        "description": "The field will reserve space to prevent reflow.",
+        "displayName": "Efficient",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "compact",
+        "description": "The field will not reserve any space.",
+        "displayName": "Compact",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.LabelledLink#blur",
+    "name": "blur",
+    "memberof": "oj-c.LabelledLink",
+    "meta": {
+      "filename": "labelled-link.tsx",
+      "path": "web/components/oj-c/labelled-link"
+    },
+    "kind": "function",
+    "longname": "oj-c.LabelledLink#blur",
+    "scope": "instance",
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "void"
+          ]
+        }
+      }
+    ],
+    "description": "Blurs the link.",
+    "ojhidden": true
+  },
+  {
+    "id": "oj-c.LabelledLink#focus",
+    "name": "focus",
+    "memberof": "oj-c.LabelledLink",
+    "meta": {
+      "filename": "labelled-link.tsx",
+      "path": "web/components/oj-c/labelled-link"
+    },
+    "kind": "function",
+    "longname": "oj-c.LabelledLink#focus",
+    "scope": "instance",
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "void"
+          ]
+        }
+      }
+    ],
+    "description": "Focuses the link.",
+    "ojhidden": true
+  },
+  {
+    "id": "oj-c.LabelledLink#setProperty",
+    "name": "setProperty",
+    "memberof": "oj-c.LabelledLink",
+    "meta": {
+      "filename": "labelled-link.tsx",
+      "path": "web/components/oj-c/labelled-link"
+    },
+    "kind": "function",
+    "longname": "oj-c.LabelledLink#setProperty",
+    "scope": "instance",
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "void"
+          ]
+        }
+      }
+    ],
+    "description": "Sets a property or a single subproperty for complex properties and notifies the component of the change, triggering a corresponding event.",
+    "params": [
+      {
+        "name": "property",
+        "description": "The property name to set. Supports dot notation for subproperty access.",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "value",
+        "description": "The new value to set the property to.",
+        "type": {
+          "names": [
+            "any"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.LabelledLink#getProperty",
+    "name": "getProperty",
+    "memberof": "oj-c.LabelledLink",
+    "meta": {
+      "filename": "labelled-link.tsx",
+      "path": "web/components/oj-c/labelled-link"
+    },
+    "kind": "function",
+    "longname": "oj-c.LabelledLink#getProperty",
+    "scope": "instance",
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "any"
+          ]
+        }
+      }
+    ],
+    "description": "Retrieves the value of a property or a subproperty.",
+    "params": [
+      {
+        "name": "property",
+        "description": "The property name to get. Supports dot notation for subproperty access.",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.LabelledLink#setProperties",
+    "name": "setProperties",
+    "memberof": "oj-c.LabelledLink",
+    "meta": {
+      "filename": "labelled-link.tsx",
+      "path": "web/components/oj-c/labelled-link"
+    },
+    "kind": "function",
+    "longname": "oj-c.LabelledLink#setProperties",
+    "scope": "instance",
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "void"
+          ]
+        }
+      }
+    ],
+    "description": "Performs a batch set of properties.",
+    "params": [
+      {
+        "name": "properties",
+        "description": "An object containing the property and value pairs to set.",
+        "type": {
+          "names": [
+            "object"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.LabelledLink#event:ojAction",
+    "name": "ojAction",
+    "kind": "event",
+    "memberof": "oj-c.LabelledLink",
+    "meta": {
+      "filename": "labelled-link.tsx",
+      "path": "web/components/oj-c/labelled-link"
+    },
+    "longname": "oj-c.LabelledLink#event:ojAction",
+    "scope": "instance",
+    "description": "Triggered when the link is clicked, whether by keyboard, mouse, or touch events. This event is triggered only when the href is not provided. If the href is provided, clicking the link will not trigger this event."
+  },
+  {
+    "id": "oj-c.LabelledLink.touchDoc",
+    "name": "touchDoc",
+    "kind": "member",
+    "longname": "oj-c.LabelledLink.touchDoc",
+    "description": "<table class=\"keyboard-table\">\n  <thead>\n    <tr>\n      <th>Target</th>\n      <th>Gesture</th>\n      <th>Action</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <td>Link</td>\n      <td><kbd>Tap</kbd></td>\n      <td>Sets focus to the link. Opens the link or invokes the ojAction event.</td>\n    </tr>\n  </tbody>\n</table>",
+    "memberof": "oj-c.LabelledLink",
+    "meta": {
+      "filename": "labelled-link.tsx",
+      "path": "web/components/oj-c/labelled-link"
+    },
+    "ojfragment": true
+  },
+  {
+    "id": "oj-c.LabelledLink.keyboardDoc",
+    "name": "keyboardDoc",
+    "kind": "member",
+    "longname": "oj-c.LabelledLink.keyboardDoc",
+    "description": "<table class=\"keyboard-table\">\n  <thead>\n    <tr>\n      <th>Target</th>\n      <th>Key</th>\n      <th>Action</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <td>Link</td>\n      <td><kbd>Tab In</kbd></td>\n      <td>Set focus to the link.</td>\n    </tr>\n\n     <tr>\n      <td>Link</td>\n      <td><kbd>Enter</kbd></td>\n      <td>Opens the link or invokes the ojAction event.</td>\n    </tr>\n  </tbody>\n</table>",
+    "memberof": "oj-c.LabelledLink",
+    "meta": {
+      "filename": "labelled-link.tsx",
+      "path": "web/components/oj-c/labelled-link"
+    },
+    "ojfragment": true
+  }
+]

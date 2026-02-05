@@ -1,0 +1,10 @@
+.MessageBannerVariants_multiVariantStyles_severity_error__15mgzlb0 {
+  --backgroundColor__l2hi9d0: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-surface-danger-low, var(--oj-core-danger-secondary-3));
+  --startIconColor__l2hi9d1: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-danger, var(--oj-core-danger-3));
+  --summaryTextColor__l2hi9d3: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-danger, var(--oj-core-danger-3));
+}
+.MessageBannerVariants_multiVariantStyles_severity_warning__15mgzlb1 {
+  --backgroundColor__l2hi9d0: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-surface-warning-low, var(--oj-core-warning-secondary-3));
+  --startIconColor__l2hi9d1: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-warning, var(--oj-core-warning-3));
+  --summaryTextColor__l2hi9d3: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-warning, var(--oj-core-warning-3));
+}

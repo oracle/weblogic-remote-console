@@ -1,0 +1,4 @@
+.TreeViewBaseTheme_baseTheme__zkud4u0 {
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-tree-view-item-height: calc(10 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-tree-view-indent-width: calc(6 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+}

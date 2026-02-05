@@ -1,0 +1,48 @@
+.DiagramStyles_outerStyles__amen390 {
+  position: relative;
+  overflow: hidden;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+}
+.DiagramStyles_outerStyles__amen390:focus-visible {
+  outline-width: 0px;
+}
+.DiagramStyles_layerStyles__amen391 {
+  display: inline-block;
+  pointer-events: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.DiagramStyles_nodeStyles__amen392 {
+  position: absolute;
+  pointer-events: auto;
+}
+.DiagramStyles_linkStyles__amen393 {
+  pointer-events: auto;
+}
+.DiagramStyles_labelStyle__amen394 {
+  position: absolute;
+}
+.DiagramStyles_buttonStyle__amen395 {
+  position: absolute;
+}
+.DiagramStyles_labelBorderStyle__amen396 {
+  border-style: solid;
+}
+.DiagramStyles_childContentStyle__amen397 {
+  position: absolute;
+}
+.DiagramStyles_dimmedItemStyle__amen398 {
+  opacity: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-dimmed-opacity);
+}
+.DiagramStyles_panZoomStyles__amen399 {
+  transform-origin: top left;
+  position: relative;
+  pointer-events: none;
+}
+.DiagramStyles_dimensionStyle__amen39a {
+  width: 100%;
+  height: calc(140 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+}

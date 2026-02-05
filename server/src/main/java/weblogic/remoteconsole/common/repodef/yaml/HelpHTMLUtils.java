@@ -104,7 +104,7 @@ public class HelpHTMLUtils {
     return harvestedBeforeSummary + pdySummary + harvestedAfterSummary;
   }
 
-  private static String getSummary(String html) {
+  public static String getSummary(String html) {
     if (html == null) {
       return null;
     }

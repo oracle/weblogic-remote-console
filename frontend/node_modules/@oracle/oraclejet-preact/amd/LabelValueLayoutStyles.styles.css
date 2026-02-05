@@ -1,0 +1,56 @@
+.LabelValueLayoutStyles_labelSlotStyles_base__z3rxc50 {
+  display: block;
+  flex-grow: 0;
+  flex-shrink: 1;
+  box-sizing: border-box;
+}
+.LabelValueLayoutStyles_labelSlotStyles_start__z3rxc51 {
+  padding-inline-end: var(--startEdgeLabelToValuePadding__vm51h40);
+}
+.LabelValueLayoutStyles_labelSlotStyles_top__z3rxc52 {
+  flex-basis: 100%;
+  width: 100%;
+  max-width: 100%;
+  padding-block-end: var(--topEdgeLabelToValuePadding__vm51h42);
+}
+.LabelValueLayoutStyles_labelSlotStyles_topAndTopUA__z3rxc53 {
+  padding-block-end: 0;
+}
+.LabelValueLayoutStyles_labelSlotStyles_topPureReadonly__z3rxc54 {
+  padding-block-end: 0;
+}
+.LabelValueLayoutStyles_labelInnerStyles_base__z3rxc55 {
+  display: block;
+  color: var(--color__kn3t7f2);
+  font-size: var(--fontSize__kn3t7f9);
+  line-height: var(--lineHeight__kn3t7f1);
+  width: 100%;
+}
+.LabelValueLayoutStyles_labelInnerStyles_start__z3rxc56 {
+  display: inline-flex;
+}
+.LabelValueLayoutStyles_labelInnerStyles_startNotPureReadonly__z3rxc57 {
+  padding-block-start: calc((var(--height__w6gg1yi) - var(--fontSize__kn3t7f9) * var(--lineHeight__kn3t7f1))*0.5);
+}
+.LabelValueLayoutStyles_labelInnerStyles_startUnknownParent__z3rxc58 {
+  padding-block-start: 0;
+}
+.LabelValueLayoutStyles_labelInnerStyles_startWithoutTopFormComponentWrapperUA__z3rxc59 {
+  padding-block-start: calc((calc(calc(9 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem)) + calc(2 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-density-units, 0px))) - var(--fontSize__kn3t7f9) * var(--lineHeight__kn3t7f1)) * 0.5);
+}
+.LabelValueLayoutStyles_labelInnerStyles_insideFormComponentWrapper__z3rxc5a {
+  padding-block-start: calc(
+      (calc(calc(9 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem)) + calc(2 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-density-units, 0px))) - var(--fontSize__kn3t7f9) * var(--lineHeight__kn3t7f1))*0.5 + var(--oj-c-EXPERIMENTAL-DO-NOT-USE-density-units, 0px)
+    );
+}
+.LabelValueLayoutStyles_labelInnerStyles_noWrap__z3rxc5b {
+  white-space: nowrap;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  text-overflow: ellipsis;
+}
+.LabelValueLayoutStyles_valueSlotStyles__z3rxc5c {
+  flex: 1 1 100%;
+  width: 100%;
+  max-width: 100%;
+}

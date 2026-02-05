@@ -1,0 +1,71 @@
+@keyframes ProgressCircleStyles_circleRotation__o65man0 {
+  0% {
+    transform: rotate(30deg);
+  }
+  100% {
+    transform: rotate(390deg);
+  }
+}
+@keyframes ProgressCircleStyles_circleLength__o65man1 {
+  0% {
+    clip-path: polygon(21.1% 0, 21.1% 0, 21.1% 0, 50% 50%, 78.9% 0, 78.9% 0, 78.9% 0);
+  }
+  6.25% {
+    clip-path: polygon(0 0, 0 0, 0 0, 50% 50%, 100% 0, 100% 0, 100% 0);
+  }
+  43.75% {
+    clip-path: polygon(0 0, 0 100%, 0 100%, 50% 50%, 100% 100%, 100% 100%, 100% 0);
+  }
+  50% {
+    clip-path: polygon(0 0, 0 100%, 21.1% 100%, 50% 50%, 78.9% 100%, 100% 100%, 100% 0);
+  }
+  56.25% {
+    clip-path: polygon(0 0, 0 100%, 0 100%, 50% 50%, 100% 100%, 100% 100%, 100% 0);
+  }
+  93.75% {
+    clip-path: polygon(0 0, 0 0, 0 0, 50% 50%, 100% 0, 100% 0, 100% 0);
+  }
+  100% {
+    clip-path: polygon(21.1% 0, 21.1% 0, 21.1% 0, 50% 50%, 78.9% 0, 78.9% 0, 78.9% 0);
+  }
+}
+.ProgressCircleStyles_base__o65man2 {
+  position: relative;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  display: inline-block;
+  max-width: 100%;
+  max-height: 100%;
+  width: var(--size__lborgv0);
+  height: var(--size__lborgv0);
+}
+.ProgressCircleStyles_indeterminate__o65man3 {
+  border-width: var(--trackWidth__lborgv1);
+  border-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-measure-fill-enabled);
+  border-style: solid;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  border-radius: 50%;
+  animation-name: ProgressCircleStyles_circleLength__o65man1;
+  animation-duration: 1.5s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+  position: absolute;
+}
+.ProgressCircleStyles_determinate__o65man4 {
+  border-width: var(--trackWidth__lborgv1);
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  border-radius: 50%;
+  position: absolute;
+  border-style: solid;
+}
+.ProgressCircleStyles_track__o65man5 {
+  border-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-measure-track-enabled);
+}
+.ProgressCircleStyles_valueStyle__o65man6 {
+  border-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-measure-fill-enabled);
+}

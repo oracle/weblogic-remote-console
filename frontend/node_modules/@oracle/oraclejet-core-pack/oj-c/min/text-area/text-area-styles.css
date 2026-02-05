@@ -1,0 +1,17 @@
+oj-c-text-area:not(.oj-complete) {
+  visibility: hidden;
+}
+
+oj-c-text-area {
+  display: inline-block;
+  max-width: 100%;
+  width: 100%;
+}
+
+oj-c-text-area.in-form-layout {
+  display: block;
+}
+
+oj-c-text-area[hidden] {
+  display: none;
+}

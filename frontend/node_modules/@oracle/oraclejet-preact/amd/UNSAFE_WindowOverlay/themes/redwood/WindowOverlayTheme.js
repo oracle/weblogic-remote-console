@@ -1,0 +1,2 @@
+define(['exports', '../WindowOverlayStyles.css', './WindowOverlayBaseTheme.css', './WindowOverlayVariants.css', 'css!./../../../WindowOverlayStyles.styles.css', 'module', '../../../vanilla-extract-recipes-createRuntimeFn.esm-d881c69a'], (function(e,s,a,t,i,l,n){"use strict";const r={baseTheme:a.baseTheme,multiVariantStyles:t.multiVariantStyles,variants:s.variants,styles:s.styles};e.WindowOverlayRedwoodTheme=r,Object.defineProperty(e,"__esModule",{value:!0})}));
+//# sourceMappingURL=WindowOverlayTheme.js.map

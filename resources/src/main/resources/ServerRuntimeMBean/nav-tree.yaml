@@ -2,10 +2,12 @@
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 contents:
 - label: Environment
+  description: Runtime data and control for a particular WebLogic Server
   type: group
   contents:
   - child: JVMRuntime
   - label: Clustering
+    description: Runtime data and control related to clustering for a particular WebLogic Server
     type: group
     contents:
     - child: ClusterRuntime
@@ -16,6 +18,7 @@ contents:
   - child: ServerChannelRuntimes
   - child: WLDFRuntime.WLDFControlRuntime.SystemResourceControls
 - label: Scheduling
+  description: Runtime data and control for thread pools and execution scheduling for a particular WebLogic Server
   type: group
   contents:
   - child: ExecuteQueueRuntimes
@@ -25,12 +28,14 @@ contents:
   - child: WorkManagerRuntimes
   - child: ConcurrentManagedObjectsRuntime
 - label: Deployments
+  description: Runtime data and control for applications and libraries for a particular WebLogic Server
   type: group
   contents:
   - child: ApplicationRuntimes
   - child: LibraryRuntimes
   - child: WebServerRuntimes
   - label: Web Services
+    description: Runtime data and control for web service operations for a particular WebLogic Server
     type: group
     contents:
     - child: WseeClusterFrontEndRuntime
@@ -38,15 +43,18 @@ contents:
     - child: EntityCacheCurrentStateRuntime
     - child: EntityCacheCumulativeRuntime
   - label: Resource Adapters
+    description: Runtime data and control for resource adapter operations for a particular WebLogic Server
     type: group
     contents:
     - child: ConnectorServiceRuntime.ActiveRAs
     - child: ConnectorServiceRuntime.InactiveRAs
     - child: ConnectorServiceRuntime.RAs
 - label: Services
+  description: Runtime data and control for system services like JDBC and JMS for a particular WebLogic Server
   type: group
   contents:
   - label: Messaging
+    description: Runtime data and control for JMS and messaging for a particular WebLogic Server
     type: group
     contents:
     - child: JMSRuntime
@@ -54,21 +62,25 @@ contents:
     - child: PathServiceRuntimes
     - child: MessagingBridgeRuntimes
   - label: Data Sources
+    description: Runtime data and control for database connections for a particular WebLogic Server
     type: group
     contents:
     - child: JDBCServiceRuntime.JDBCDataSourceRuntimeMBeans
     - child: JDBCServiceRuntime.JDBCDriverRuntimeMBeans
     - child: JDBCServiceRuntime.JDBCMultiDataSourceRuntimeMBeans
   - label: Transactions
+    description: Runtime data and control for transaction management for a particular WebLogic Server
     type: group
     contents:
     - child: JTARuntime
   - label: Persistence
+    description: Runtime data and control for data persistence for a particular WebLogic Server
     type: group
     contents:
     - child: PersistentStoreRuntimes
     - child: WLDFRuntime.WLDFAccessRuntime.DataAccessRuntimes
 - label: Security
+  description: Runtime data and control for security realms and keystores for a particular WebLogic Server
   type: group
   contents:
   - child: ServerSecurityRuntime.RealmRuntimes
@@ -86,11 +98,13 @@ contents:
       allowed:
       - Operator
 - label: Interoperability
+  description: Runtime data and control for external system integrations for a particular WebLogic Server
   type: group
   contents:
   - child: JoltRuntime
   - child: WTCRuntime
 - label: Diagnostics
+  description: Runtime data and control for monitoring and diagnostics for a particular WebLogic Server
   type: group
   contents:
   - child: WLDFRuntime.WLDFAccessRuntime.WLDFDataAccessRuntimes

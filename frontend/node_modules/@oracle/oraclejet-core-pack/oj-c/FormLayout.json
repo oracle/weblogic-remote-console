@@ -1,0 +1,482 @@
+[
+  {
+    "id": "oj-c.FormLayout",
+    "name": "FormLayout",
+    "memberof": "oj-c",
+    "kind": "class",
+    "meta": {
+      "filename": "form-layout.tsx",
+      "path": "web/components/oj-c/form-layout"
+    },
+    "ojcomponent": true,
+    "isvcomponent": true,
+    "since": "16.0.0",
+    "longname": "oj-c.FormLayout",
+    "pack": "oj-c",
+    "classdesc": "<h3 id=\"formLayoutOverview-section\">\n  JET FormLayout Component\n  <a class=\"bookmarkable-link\" title=\"Bookmarkable Link\" href=\"#formLayoutOverview-section\"></a>\n</h3>\n\n<p>Description: The oj-c-form-layout component provides a responsive layout capability to lay out child\nelements in the row or column direction where the number of columns displayed depends on the available\nwidth of the container.  Child components are responsible for rendering the label with the alignment as\nspecified by the oj-c-form-layout's label-edge property, which the child components consume.</p>\n\n<pre class=\"prettyprint\"><code>&lt;oj-c-form-layout columns=\"2\">\n  &ltoj-c-input-text label-hint=\"First Name\">&lt/oj-c-input-text>\n  &ltoj-c-input-text label-hint=\"Last Name\">&lt/oj-c-input-text>\n  &ltoj-c-input-text label-hint=\"address\" column-span=\"2\">&lt/oj-c-input-text>\n&lt;/oj-c-form-layout></code></pre>",
+    "scope": "static",
+    "tagWithoutBrackets": "oj-c-form-layout",
+    "tagWithBrackets": "<oj-c-form-layout>",
+    "domInterface": "CFormLayoutElement",
+    "ojPageTitle": "&lt;oj-c-form-layout>",
+    "camelCaseName": "FormLayout",
+    "ojPageTitlePrefix": "Element: ",
+    "ojtsvcomponent": true,
+    "tstype": {
+      "target": "Type",
+      "value": "interface CFormLayoutElement extends JetElement<FormLayoutElementSettableProperties>"
+    },
+    "ojsignature": [
+      {
+        "target": "Type",
+        "value": "interface CFormLayoutElement extends JetElement<FormLayoutElementSettableProperties>"
+      }
+    ],
+    "tsdeprecated": [
+      {
+        "type": "candidate",
+        "since": "17.0.0"
+      }
+    ],
+    "ojmodule": "form-layout"
+  },
+  {
+    "id": "oj-c.FormLayout#columns",
+    "name": "columns",
+    "memberof": "oj-c.FormLayout",
+    "meta": {
+      "filename": "form-layout.tsx",
+      "path": "web/components/oj-c/form-layout"
+    },
+    "kind": "member",
+    "longname": "oj-c.FormLayout#columns",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "number"
+      ]
+    },
+    "optional": true,
+    "description": "Specifies the absolute number of columns and overrides maxColumns, if the value is\npositive. If the value is not positive, then this attribute is ignored and max-columns\nis used to determine the number of columns. This attribute should only be used in\nspecial circumstances where you need a specific number of columns even if the fields\nwill be narrower than the suggested minimum (a nested form layout is an example).",
+    "defaultvalue": 0
+  },
+  {
+    "id": "oj-c.FormLayout#columnSpan",
+    "name": "columnSpan",
+    "memberof": "oj-c.FormLayout",
+    "meta": {
+      "filename": "form-layout.tsx",
+      "path": "web/components/oj-c/form-layout"
+    },
+    "kind": "member",
+    "longname": "oj-c.FormLayout#columnSpan",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "number"
+      ]
+    },
+    "optional": true,
+    "description": "Specifies how many columns this component should span.\nThis only takes effect when this component is a child of a form layout\nthat has direction 'row'.",
+    "defaultvalue": 1
+  },
+  {
+    "id": "oj-c.FormLayout#direction",
+    "name": "direction",
+    "memberof": "oj-c.FormLayout",
+    "meta": {
+      "filename": "form-layout.tsx",
+      "path": "web/components/oj-c/form-layout"
+    },
+    "kind": "member",
+    "longname": "oj-c.FormLayout#direction",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "\"row\"",
+        "\"column\""
+      ]
+    },
+    "optional": true,
+    "description": "Specifies if the child elements should be laid out column first or row first.",
+    "ojvalues": [
+      {
+        "name": "column",
+        "description": "Components are laid out in columns.",
+        "displayName": "Column",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "row",
+        "description": "Components are laid out in rows.",
+        "displayName": "Row",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      }
+    ],
+    "defaultvalue": "\"row\""
+  },
+  {
+    "id": "oj-c.FormLayout#fullWidth",
+    "name": "fullWidth",
+    "memberof": "oj-c.FormLayout",
+    "meta": {
+      "filename": "form-layout.tsx",
+      "path": "web/components/oj-c/form-layout"
+    },
+    "kind": "member",
+    "longname": "oj-c.FormLayout#fullWidth",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "boolean"
+      ]
+    },
+    "optional": true,
+    "description": "Indicates if the form layout will use 100% of the container's width, and will ignore the theme's max column width.",
+    "defaultvalue": false
+  },
+  {
+    "id": "oj-c.FormLayout#labelEdge",
+    "name": "labelEdge",
+    "memberof": "oj-c.FormLayout",
+    "meta": {
+      "filename": "form-layout.tsx",
+      "path": "web/components/oj-c/form-layout"
+    },
+    "kind": "member",
+    "longname": "oj-c.FormLayout#labelEdge",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "\"start\"",
+        "\"top\"",
+        "\"inside\""
+      ]
+    },
+    "optional": true,
+    "description": "<p>\nSpecifies how the child form components should position their labels.\n</p>\n<p>\nIf the property value is not set either directly on the component or inherited from\na parent form layout, then the property is treated as if its value were 'inside'.\n</p>\n<p>\nWhen using the oj-c-form-layout custom element inside of a VDOM application, this property will not propagate down to the child components.\nThis is because binding propagation is Knockout-based, and VDOM applications are not Knockout-based.\n</p>",
+    "ojvalues": [
+      {
+        "name": "inside",
+        "description": "The label floats over the input element, but moves up on focus or when the component has a value (default, if unspecified).",
+        "displayName": "Inside",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "start",
+        "description": "The label will be placed before the start of the component.",
+        "displayName": "Start",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "top",
+        "description": "The label will be placed on top of the component.",
+        "displayName": "Top",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.FormLayout#labelStartWidth",
+    "name": "labelStartWidth",
+    "memberof": "oj-c.FormLayout",
+    "meta": {
+      "filename": "form-layout.tsx",
+      "path": "web/components/oj-c/form-layout"
+    },
+    "kind": "member",
+    "longname": "oj-c.FormLayout#labelStartWidth",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "number|string"
+      ]
+    },
+    "optional": true,
+    "description": "<p> The width of the label when labelEdge is 'start'.</p>\n<p> This attribute accepts values of type\n<code>0 | `--${string}` | `${number}%` | `${number}x` | `calc(${string})`</code></p>\n<p>\nIf the property value is not set either directly on the component or inherited from\na parent form layout, then the property is treated as if its value were '33%'.\n</p>\n<p>\nWhen using the oj-c-form-layout custom element inside of a VDOM application, this property will not propagate down to the child components.\nThis is because binding propagation is Knockout-based, and VDOM applications are not Knockout-based.\n</p>"
+  },
+  {
+    "id": "oj-c.FormLayout#labelWrapping",
+    "name": "labelWrapping",
+    "memberof": "oj-c.FormLayout",
+    "meta": {
+      "filename": "form-layout.tsx",
+      "path": "web/components/oj-c/form-layout"
+    },
+    "kind": "member",
+    "longname": "oj-c.FormLayout#labelWrapping",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "\"truncate\"",
+        "\"wrap\""
+      ]
+    },
+    "optional": true,
+    "description": "<p>\nShould the labels wrap or truncate when there is not enough available space.\n</p>\n<p>\nIf the property value is not set either directly on the component or inherited from\na parent form layout, then the property is treated as if its value were 'wrap'.\n</p>\n<p>\nWhen using the oj-c-form-layout custom element inside of a VDOM application, this property will not propagate down to the child components.\nThis is because binding propagation is Knockout-based, and VDOM applications are not Knockout-based.\n</p>",
+    "tsdeprecated": [
+      {
+        "type": "deprecated",
+        "since": "18.0.0",
+        "description": "Label truncation for 'start' and 'top' aligned labels is no longer recommended by the Redwood Design System. The default for labelWrapping was 'wrap' and that is now the only suggested pattern by UX design for 'start' and 'top' aligned labels. 'inside' aligned labels are always truncated per UX design and are not affected by this property's value."
+      }
+    ],
+    "ojvalues": [
+      {
+        "name": "truncate",
+        "description": "Label will truncate if needed.",
+        "displayName": "Truncate",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "wrap",
+        "description": "Label will wrap if needed.",
+        "displayName": "Wrap",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.FormLayout#maxColumns",
+    "name": "maxColumns",
+    "memberof": "oj-c.FormLayout",
+    "meta": {
+      "filename": "form-layout.tsx",
+      "path": "web/components/oj-c/form-layout"
+    },
+    "kind": "member",
+    "longname": "oj-c.FormLayout#maxColumns",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "number"
+      ]
+    },
+    "optional": true,
+    "description": "Specifies how many columns should be displayed.\nThis property is used when the actual number of columns rendered\nis responsive and depends on the container's available width.\nNote that maxColumns will be ignored if columns has a positive value.",
+    "defaultvalue": 1
+  },
+  {
+    "id": "oj-c.FormLayout#readonly",
+    "name": "readonly",
+    "memberof": "oj-c.FormLayout",
+    "meta": {
+      "filename": "form-layout.tsx",
+      "path": "web/components/oj-c/form-layout"
+    },
+    "kind": "member",
+    "longname": "oj-c.FormLayout#readonly",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "boolean"
+      ]
+    },
+    "optional": true,
+    "description": "<p>\nWhether the child components should be rendered as readonly.\n</p>\n<p>\nIf the property value is not set either directly on the component or inherited from\na parent form layout, then the property is treated as if its value were 'false'.\n</p>\n<p>\nWhen using the oj-c-form-layout custom element inside of a VDOM application, this property will not propagate down to the child components.\nThis is because binding propagation is Knockout-based, and VDOM applications are not Knockout-based.\n</p>"
+  },
+  {
+    "id": "oj-c.FormLayout#userAssistanceDensity",
+    "name": "userAssistanceDensity",
+    "memberof": "oj-c.FormLayout",
+    "meta": {
+      "filename": "form-layout.tsx",
+      "path": "web/components/oj-c/form-layout"
+    },
+    "kind": "member",
+    "longname": "oj-c.FormLayout#userAssistanceDensity",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "\"compact\"",
+        "\"reflow\"",
+        "\"efficient\""
+      ]
+    },
+    "optional": true,
+    "description": "<p>\nSpecifies the density of the children form component's user assistance presentation. It can be shown inline with\nreserved rows to prevent reflow if a user assistance text shows up, inline without reserved rows that would\nreflow if a user assistance text shows up, or it can be shown compactly in a popup instead.\n</p>\n<p>\nIf the property value is not set either directly on the component or inherited from\na parent form layout, then the property is treated as if its value were \"efficient\".\n</p>\n<p>\nWhen using the oj-c-form-layout custom element inside of a VDOM application, this property will not propagate down to the child components.\nThis is because binding propagation is Knockout-based, and VDOM applications are not Knockout-based.\n</p>",
+    "ojvalues": [
+      {
+        "name": "reflow",
+        "description": "Messages, help, hints, and required are all shown inline under the field with no reserved space.",
+        "displayName": "Reflow",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "efficient",
+        "description": "Messages, help, hints, and required are all shown inline under the field with reserved space.",
+        "displayName": "Efficient",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "compact",
+        "description": "Messages, help, hints, and required will not be shown inline; they will show in a mode that keeps the screen more compact, like a popup for the messages, and a required icon to indicate Required.",
+        "displayName": "Compact",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.FormLayout#setProperty",
+    "name": "setProperty",
+    "memberof": "oj-c.FormLayout",
+    "meta": {
+      "filename": "form-layout.tsx",
+      "path": "web/components/oj-c/form-layout"
+    },
+    "kind": "function",
+    "longname": "oj-c.FormLayout#setProperty",
+    "scope": "instance",
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "void"
+          ]
+        }
+      }
+    ],
+    "description": "Sets a property or a single subproperty for complex properties and notifies the component of the change, triggering a corresponding event.",
+    "params": [
+      {
+        "name": "property",
+        "description": "The property name to set. Supports dot notation for subproperty access.",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "value",
+        "description": "The new value to set the property to.",
+        "type": {
+          "names": [
+            "any"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.FormLayout#getProperty",
+    "name": "getProperty",
+    "memberof": "oj-c.FormLayout",
+    "meta": {
+      "filename": "form-layout.tsx",
+      "path": "web/components/oj-c/form-layout"
+    },
+    "kind": "function",
+    "longname": "oj-c.FormLayout#getProperty",
+    "scope": "instance",
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "any"
+          ]
+        }
+      }
+    ],
+    "description": "Retrieves the value of a property or a subproperty.",
+    "params": [
+      {
+        "name": "property",
+        "description": "The property name to get. Supports dot notation for subproperty access.",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.FormLayout#setProperties",
+    "name": "setProperties",
+    "memberof": "oj-c.FormLayout",
+    "meta": {
+      "filename": "form-layout.tsx",
+      "path": "web/components/oj-c/form-layout"
+    },
+    "kind": "function",
+    "longname": "oj-c.FormLayout#setProperties",
+    "scope": "instance",
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "void"
+          ]
+        }
+      }
+    ],
+    "description": "Performs a batch set of properties.",
+    "params": [
+      {
+        "name": "properties",
+        "description": "An object containing the property and value pairs to set.",
+        "type": {
+          "names": [
+            "object"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.FormLayout#Default",
+    "name": "Default",
+    "memberof": "oj-c.FormLayout",
+    "meta": {
+      "filename": "form-layout.tsx",
+      "path": "web/components/oj-c/form-layout"
+    },
+    "kind": "member",
+    "longname": "oj-c.FormLayout#Default",
+    "scope": "instance",
+    "description": "The default slot is the content of the form layout. The oj-c-form-layout element expects core pack form component children for the default slot.",
+    "ojchild": true,
+    "ojslot": false
+  }
+]

@@ -1,0 +1,308 @@
+{
+  "name": "oj-c",
+  "version": "19.0.1",
+  "jetVersion": "^19.0.1",
+  "type": "mono-pack",
+  "displayName": "Oracle JET Core pack",
+  "description": "Core Oracle JET components implemented using virtual DOM technology",
+  "help": "index.html",
+  "license": "https://opensource.org/licenses/UPL",
+  "dependencyScope": "runtime",
+  "dependencies": {
+    "oj-ref-oraclejet-preact": "19.0.1"
+  },
+  "bundles": {
+    "oj-c/corepackbundle": [
+      "oj-c/area-chart",
+      "oj-c/area-chart-item",
+      "oj-c/area-chart-series",
+      "oj-c/area-chart-group",
+      "oj-c/date-picker",
+      "oj-c/dialog",
+      "oj-c/highlight-text",
+      "oj-c/input-date-mask",
+      "oj-c/input-date-picker",
+      "oj-c/input-date-text",
+      "oj-c/input-month-mask",
+      "oj-c/input-number",
+      "oj-c/input-password",
+      "oj-c/input-sensitive-text",
+      "oj-c/input-text",
+      "oj-c/message-toast",
+      "oj-c/text-area",
+      "oj-c/progress-bar",
+      "oj-c/progress-circle",
+      "oj-c/avatar",
+      "oj-c/button",
+      "oj-c/checkbox",
+      "oj-c/checkboxset",
+      "oj-c/rating-gauge",
+      "oj-c/select-multiple",
+      "oj-c/select-single",
+      "oj-c/collapsible",
+      "oj-c/file-picker",
+      "oj-c/meter-bar",
+      "oj-c/meter-circle",
+      "oj-c/line-chart",
+      "oj-c/line-chart-item",
+      "oj-c/line-chart-series",
+      "oj-c/line-chart-group",
+      "oj-c/list-item-layout",
+      "oj-c/list-view",
+      "oj-c/radioset",
+      "oj-c/split-menu-button",
+      "oj-c/selector",
+      "oj-c/selector-all",
+      "oj-c/legend",
+      "oj-c/legend-item",
+      "oj-c/legend-section",
+      "oj-c/tag-cloud",
+      "oj-c/tag-cloud-item",
+      "oj-c/message-banner",
+      "oj-c/action-card",
+      "oj-c/selection-card",
+      "oj-c/popup",
+      "oj-c/drawer-popup",
+      "oj-c/drawer-layout",
+      "oj-c/form-layout",
+      "oj-c/labelled-link",
+      "oj-c/menu-button",
+      "oj-c/tab-bar",
+      "oj-c/tab-bar-mixed",
+      "oj-c/card-view",
+      "oj-c/conveyor-belt",
+      "oj-c/drag-handle",
+      "oj-c/toggle-button",
+      "oj-c/buttonset-single",
+      "oj-c/buttonset-multiple",
+      "oj-c/table",
+      "oj-c/progress-button",
+      "oj-c/skeleton",
+      "oj-c/toolbar",
+      "oj-c/rich-checkboxset",
+      "oj-c/rich-radioset",
+      "oj-c/input-time-mask",
+      "oj-c/badge",
+      "oj-c/truncating-badge",
+      "oj-c/truncating-text"
+    ]
+  },
+  "contents": [
+    {
+      "name": "area-chart"
+    },
+    {
+      "name": "area-chart-item"
+    },
+    {
+      "name": "area-chart-series"
+    },
+    {
+      "name": "area-chart-group"
+    },
+    {
+      "name": "date-picker"
+    },
+    {
+      "name": "dialog"
+    },
+    {
+      "name": "highlight-text"
+    },
+    {
+      "name": "input-number"
+    },
+    {
+      "name": "input-password"
+    },
+    {
+      "name": "input-sensitive-text"
+    },
+    {
+      "name": "input-text"
+    },
+    {
+      "name": "message-toast"
+    },
+    {
+      "name": "select-multiple"
+    },
+    {
+      "name": "select-single"
+    },
+    {
+      "name": "text-area"
+    },
+    {
+      "name": "progress-bar"
+    },
+    {
+      "name": "progress-circle"
+    },
+    {
+      "name": "avatar"
+    },
+    {
+      "name": "button"
+    },
+    {
+      "name": "rating-gauge"
+    },
+    {
+      "name": "collapsible"
+    },
+    {
+      "name": "file-picker"
+    },
+    {
+      "name": "meter-bar"
+    },
+    {
+      "name": "meter-circle"
+    },
+    {
+      "name": "line-chart"
+    },
+    {
+      "name": "line-chart-item"
+    },
+    {
+      "name": "line-chart-series"
+    },
+    {
+      "name": "line-chart-group"
+    },
+    {
+      "name": "list-item-layout"
+    },
+    {
+      "name": "list-view"
+    },
+    {
+      "name": "split-menu-button"
+    },
+    {
+      "name": "selector"
+    },
+    {
+      "name": "selector-all"
+    },
+    {
+      "name": "input-date-text"
+    },
+    {
+      "name": "input-date-mask"
+    },
+    {
+      "name": "legend"
+    },
+    {
+      "name": "legend-item"
+    },
+    {
+      "name": "legend-section"
+    },
+    {
+      "name": "tag-cloud"
+    },
+    {
+      "name": "tag-cloud-item"
+    },
+    {
+      "name": "message-banner"
+    },
+    {
+      "name": "radioset"
+    },
+    {
+      "name": "action-card"
+    },
+    {
+      "name": "selection-card"
+    },
+    {
+      "name": "checkbox"
+    },
+    {
+      "name": "checkboxset"
+    },
+    {
+      "name": "popup"
+    },
+    {
+      "name": "drawer-popup"
+    },
+    {
+      "name": "drawer-layout"
+    },
+    {
+      "name": "form-layout"
+    },
+    {
+      "name": "labelled-link"
+    },
+    {
+      "name": "menu-button"
+    },
+    {
+      "name": "input-month-mask"
+    },
+    {
+      "name": "tab-bar"
+    },
+    {
+      "name": "tab-bar-mixed"
+    },
+    {
+      "name": "card-view"
+    },
+    {
+      "name": "conveyor-belt"
+    },
+    {
+      "name": "input-date-picker"
+    },
+    {
+      "name": "drag-handle"
+    },
+    {
+      "name": "toggle-button"
+    },
+    {
+      "name": "buttonset-single"
+    },
+    {
+      "name": "buttonset-multiple"
+    },
+    {
+      "name": "table"
+    },
+    {
+      "name": "progress-button"
+    },
+    {
+      "name": "skeleton"
+    },
+    {
+      "name": "toolbar"
+    },
+    {
+      "name": "rich-checkboxset"
+    },
+    {
+      "name": "rich-radioset"
+    },
+    {
+      "name": "input-time-mask"
+    },
+    {
+      "name": "badge"
+    },
+    {
+      "name": "truncating-badge"
+    },
+    {
+      "name": "truncating-text"
+    }
+  ]
+}

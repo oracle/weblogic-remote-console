@@ -1,0 +1,40 @@
+.useDatatip_visDatatipStyle__susedo0 {
+  color: rgb(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-190));
+  border-width: 1px;
+  border-style: solid;
+  padding: calc(2 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  border-radius: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-border-radius-md);
+  background-color: rgb(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-0));
+  border-color: rgb(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-190));
+  font-size: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-body-xs-font-size);
+  line-height: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-body-xs-line-height);
+}
+.useDatatip_datatipTable__susedo1 {
+  border-collapse: separate;
+  border-spacing: 0;
+  background-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-surface-neutral0);
+  font-size: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-body-xs-font-size);
+  line-height: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-body-xs-line-height);
+}
+.useDatatip_datatipLabel__susedo2 {
+  color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-secondary);
+  padding-top: 0px;
+  padding-bottom: 0px;
+  padding-left: 2px;
+  padding-right: 2px;
+  white-space: nowrap;
+}
+.useDatatip_rightAlign__susedo3 {
+  text-align: right;
+}
+.useDatatip_leftAlign__susedo4 {
+  text-align: left;
+}
+.useDatatip_datatipValue__susedo5 {
+  color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-primary);
+  padding-top: 0px;
+  padding-bottom: 0px;
+  padding-left: 2px;
+  padding-right: 2px;
+  white-space: nowrap;
+}

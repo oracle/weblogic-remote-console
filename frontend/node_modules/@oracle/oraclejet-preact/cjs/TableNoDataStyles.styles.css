@@ -1,0 +1,35 @@
+.TableNoDataStyles_tableNoDataStyles_base__l9789o0 {
+  background-color: inherit;
+  box-sizing: border-box;
+  color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-primary);
+  font-size: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-body-md-font-size);
+  overflow: hidden;
+  position: relative;
+  text-align: start;
+  text-overflow: ellipsis;
+  vertical-align: top;
+  white-space: nowrap;
+}
+.TableNoDataStyles_tableNoDataStyles_base__l9789o0:focus {
+  outline-style: none;
+}
+.TableNoDataStyles_tableNoDataStyles_defaultRenderer__l9789o1 {
+  padding-bottom: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-table-cell-padding-vertical);
+  padding-inline-end: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-table-cell-padding-horizontal);
+  padding-inline-start: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-table-cell-padding-horizontal);
+  padding-top: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-table-cell-padding-vertical);
+}
+.TableNoDataStyles_tableNoDataStyles_renderer__l9789o2 {
+  padding: 0;
+}
+.TableNoDataStyles_tableNoDataStyles_focused__l9789o3::before {
+  content: "";
+  display: block;
+  inset: 0;
+  outline-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-border-keyboard-focus);
+  outline-offset: -1px;
+  outline-style: dotted;
+  outline-width: 1px;
+  pointer-events: none;
+  position: absolute;
+}

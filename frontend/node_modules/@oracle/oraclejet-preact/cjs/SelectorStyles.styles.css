@@ -1,0 +1,40 @@
+.SelectorStyles_base__l80isg0 {
+  cursor: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-cursor-clickable);
+  position: relative;
+  width: calc(9 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  height: calc(9 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+}
+.SelectorStyles_container__l80isg1 {
+  display: inline-block;
+}
+.SelectorStyles_checkbox__l80isg2 {
+  font-size: var(--iconSize__1denrfz0);
+  line-height: 0;
+}
+.SelectorStyles_checkbox__l80isg2:focus-visible {
+  outline-style: dotted;
+  outline-offset: 1px;
+  outline-width: 1px;
+  outline-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-border-keyboard-focus);
+}
+.SelectorStyles_multiVariantStyles_checked_isChecked__l80isg3 {
+  color: var(--iconColorChecked__1denrfz1);
+}
+.SelectorStyles_multiVariantStyles_checked_isPartiallyChecked__l80isg4 {
+  color: var(--iconColorUnchecked__1denrfz2);
+}
+.SelectorStyles_multiVariantStyles_checked_notChecked__l80isg5 {
+  color: var(--iconColorUnchecked__1denrfz2);
+}
+.SelectorStyles_multiVariantStyles_active_isActive__l80isg6 {
+  transform: var(--iconTransformActive__1denrfz3);
+  transition-property: transform;
+  transition-duration: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-duration-xs);
+  transition-timing-function: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-easing-persist);
+}

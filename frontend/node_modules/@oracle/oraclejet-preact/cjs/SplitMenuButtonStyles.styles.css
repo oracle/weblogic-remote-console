@@ -1,0 +1,20 @@
+.SplitMenuButtonStyles_divider__1v0fe4u0 {
+  border-top-width: 0px;
+  border-bottom-width: 0px;
+  border-right-width: 0px;
+  border-left-width: 1px;
+  border-style: solid;
+  height: 100%;
+  display: inline-flex;
+  border-color: var(--borderColor__1chzim70);
+}
+.SplitMenuButtonStyles_disabledDivider__1v0fe4u1 {
+  border-color: var(--borderColorDisabled__1chzim71);
+}
+.SplitMenuButtonStyles_icon__1v0fe4u2 {
+  display: contents;
+}
+.SplitMenuButtonStyles_base__1v0fe4u3 {
+  display: inline-block;
+  text-align: center;
+}

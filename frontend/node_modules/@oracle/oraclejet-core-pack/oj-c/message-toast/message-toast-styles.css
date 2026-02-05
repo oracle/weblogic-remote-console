@@ -1,0 +1,8 @@
+oj-c-message-toast:not(.oj-complete){
+  visibility: hidden;
+}
+
+oj-c-message-toast[hidden]
+{
+  display: none;
+}

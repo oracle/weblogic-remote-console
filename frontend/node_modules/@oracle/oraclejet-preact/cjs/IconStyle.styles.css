@@ -1,0 +1,24 @@
+.IconStyle_primary__sdo2n60 {
+  color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-primary);
+}
+.IconStyle_secondary__sdo2n61 {
+  color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-secondary);
+}
+.IconStyle_disabled__sdo2n62 {
+  color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-disabled);
+}
+.IconStyle_danger__sdo2n63 {
+  color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-danger);
+}
+.IconStyle_warning__sdo2n64 {
+  color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-warning);
+}
+.IconStyle_success__sdo2n65 {
+  color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-success);
+}
+.IconStyle_info__sdo2n66 {
+  color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-info);
+}
+.IconStyle_currentColor__sdo2n67 {
+  color: currentColor;
+}

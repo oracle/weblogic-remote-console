@@ -25,8 +25,6 @@ public abstract class BeanRepoDefImpl implements BeanRepoDef {
 
   private static final Logger LOGGER = Logger.getLogger(BeanRepoDefImpl.class.getName());
 
-  private static boolean REPORT_MISSING = Boolean.parseBoolean(System.getenv("ReportMissing"));
-
   protected BeanRepoDefImpl(WebLogicMBeansVersion mbeansVersion) {
     this.mbeansVersion = mbeansVersion;
   }

@@ -1,0 +1,2 @@
+define(['exports', '../CheckboxStyles.css', './CheckboxBaseTheme.css', './CheckboxVariants.css', 'css!./../../../CheckboxStyles.styles.css', 'module', 'css!./../../../CheckboxVariants.styles2.css', '../../../vanilla-extract-recipes-createRuntimeFn.esm-d881c69a'], (function(e,s,t,a,c,l,i,n){"use strict";const r={baseTheme:t.baseTheme,multiVariantStyles:a.multiVariantStyles,variants:s.variants,styles:s.styles};e.CheckboxStableTheme=r,Object.defineProperty(e,"__esModule",{value:!0})}));
+//# sourceMappingURL=CheckboxTheme.js.map

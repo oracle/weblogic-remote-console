@@ -1,0 +1,14 @@
+oj-c-legend:not(.oj-complete) {
+    visibility: hidden;
+}
+
+oj-c-legend[hidden] {
+    display: none;
+}
+
+oj-c-legend {
+    box-sizing: border-box;
+    display: block;
+    position: relative;
+    width: 100%;
+}

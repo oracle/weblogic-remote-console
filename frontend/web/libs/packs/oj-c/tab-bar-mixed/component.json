@@ -1,0 +1,249 @@
+{
+  "name": "tab-bar-mixed",
+  "version": "19.0.1",
+  "jetVersion": "^19.0.1",
+  "pack": "oj-c",
+  "type": "composite",
+  "dependencyScope": "runtime",
+  "license": "https://opensource.org/licenses/UPL",
+  "implements": [
+    "CTabBarMixedElement"
+  ],
+  "description": "A navigation component that enables horizontal navigation between distinct content with a mixture of static and dynamic tabs.",
+  "displayName": "Tab Bar Mixed",
+  "help": "oj-c.TabBarMixed.html",
+  "main": "oj-c/tab-bar-mixed",
+  "status": [
+    {
+      "type": "production",
+      "since": "17.0.0"
+    }
+  ],
+  "extension": {
+    "catalog": {
+      "category": "Layout & Nav"
+    },
+    "vbdt": {
+      "module": "oj-c/tab-bar-mixed"
+    },
+    "webelement": {
+      "package": "@oracle/oraclejet-core-pack",
+      "version": "19.0.1",
+      "docUrl": "https://www.oracle.com/webfolder/technetwork/jet/cpwdtsdoc/classes/TabBarMixedWebElement.html",
+      "export": "findTabBarMixed",
+      "main": "@oracle/oraclejet-core-pack/webdriver"
+    }
+  },
+  "since": "16.1.0",
+  "properties": {
+    "dynamicTabs": {
+      "type": "Array<object>",
+      "description": "An array of dynamic tabs",
+      "displayName": "Dynamic Tabs",
+      "extension": {
+        "vbdt": {
+          "itemProperties": {
+            "badge": {
+              "type": "number"
+            },
+            "icon": {
+              "type": "object"
+            },
+            "itemKey": {
+              "type": "string|number"
+            },
+            "label": {
+              "type": "string"
+            },
+            "tabPanelId": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "dynamicTabsOverflow": {
+      "type": "string",
+      "description": "Dynamic tabs overflow configurations",
+      "displayName": "Dynamic Tabs Overflow",
+      "propertyEditorValues": {
+        "conveyor": {
+          "description": "Dynamic tabs are displayed inside a conveyor belt.",
+          "displayName": "Conveyor"
+        },
+        "popup": {
+          "description": "Dynamic tabs are displayed inside a popup.",
+          "displayName": "Popup"
+        }
+      },
+      "enumValues": [
+        "popup",
+        "conveyor"
+      ]
+    },
+    "dynamicTabsOverflowIcon": {
+      "type": "object",
+      "description": "The icon used on the overflow tab",
+      "displayName": "Icon for overflow tab"
+    },
+    "size": {
+      "type": "string",
+      "description": "Size of TabBarMixed",
+      "displayName": "Size",
+      "propertyEditorValues": {
+        "md": {
+          "description": "TabBarMixed is set with a medium height.",
+          "displayName": "Medium"
+        },
+        "lg": {
+          "description": "TabBarMixed is set with a large height.",
+          "displayName": "Large"
+        }
+      },
+      "enumValues": [
+        "md",
+        "lg"
+      ]
+    },
+    "selection": {
+      "type": "string|number",
+      "description": "The key of the selected tab",
+      "displayName": "Selected Tab",
+      "help": "#selection",
+      "writeback": true
+    },
+    "separatorPadding": {
+      "type": "string",
+      "description": "The padding around the vertical divider that seperates collections of tabs.",
+      "displayName": "Divider Padding"
+    },
+    "staticTabs": {
+      "type": "Array<object>",
+      "description": "An array of static tabs",
+      "displayName": "Static Tabs",
+      "extension": {
+        "vbdt": {
+          "itemProperties": {
+            "badge": {
+              "type": "number"
+            },
+            "icon": {
+              "type": "object"
+            },
+            "itemKey": {
+              "type": "string|number"
+            },
+            "label": {
+              "type": "string"
+            },
+            "tabPanelId": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "staticTabsDisplay": {
+      "type": "string",
+      "description": "The display configuration for static tabs.",
+      "displayName": "Static Tabs Display",
+      "propertyEditorValues": {
+        "standard": {
+          "description": "Label and icon are shown for all static tabs.",
+          "displayName": "Standard"
+        },
+        "icons": {
+          "description": "Only icons are shown for all static tabs.",
+          "displayName": "Icons"
+        }
+      },
+      "enumValues": [
+        "standard",
+        "icons"
+      ]
+    }
+  },
+  "events": {
+    "ojBeforeSelect": {
+      "cancelable": true,
+      "description": "Triggered before a tab is selected.",
+      "displayName": "Before Select",
+      "help": "#event:beforeSelect",
+      "detail": {
+        "accept": {
+          "description": "This method can be called with an application-created Promise to cancel this event asynchronously.  The Promise should be resolved or rejected to accept or cancel the event, respectively.",
+          "type": "function"
+        },
+        "key": {
+          "type": "string|number"
+        }
+      }
+    },
+    "ojRemove": {
+      "description": "Triggered when user performs a remove gesture on a tab.",
+      "displayName": "Remove",
+      "help": "#event:remove",
+      "detail": {
+        "key": {
+          "type": "string|number"
+        }
+      }
+    },
+    "ojSelectionAction": {
+      "description": "Triggered when user performs an action gesture on a tab.",
+      "displayName": "Selection Action",
+      "help": "#event:selectionAction",
+      "detail": {
+        "previousValue": {
+          "type": "string|number"
+        },
+        "value": {
+          "type": "string|number"
+        }
+      }
+    }
+  },
+  "methods": {
+    "setProperty": {
+      "description": "Sets a property or a single subproperty for complex properties and notifies the component of the change, triggering a corresponding event.",
+      "help": "#setProperty",
+      "params": [
+        {
+          "name": "property",
+          "description": "The property name to set. Supports dot notation for subproperty access.",
+          "type": "string"
+        },
+        {
+          "name": "value",
+          "description": "The new value to set the property to.",
+          "type": "any"
+        }
+      ],
+      "return": "void"
+    },
+    "getProperty": {
+      "description": "Retrieves the value of a property or a subproperty.",
+      "help": "#getProperty",
+      "params": [
+        {
+          "name": "property",
+          "description": "The property name to get. Supports dot notation for subproperty access.",
+          "type": "string"
+        }
+      ],
+      "return": "any"
+    },
+    "setProperties": {
+      "description": "Performs a batch set of properties.",
+      "help": "#setProperties",
+      "params": [
+        {
+          "name": "properties",
+          "description": "An object containing the property and value pairs to set.",
+          "type": "object"
+        }
+      ],
+      "return": "void"
+    }
+  }
+}

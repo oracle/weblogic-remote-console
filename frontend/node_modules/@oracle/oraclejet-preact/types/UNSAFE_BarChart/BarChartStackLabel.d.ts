@@ -1,0 +1,22 @@
+import { Scale, Group } from "../utils/UNSAFE_visTypes/chart";
+import { Dimension } from "../utils/UNSAFE_visTypes/common";
+import { VisTextStyle } from "../utils/UNSAFE_visUtils";
+import { BarChartProps, BarItemData } from './barChart.types';
+import { Font } from "../hooks/PRIVATE_useTextDimensions/textDimensionsUtils";
+type Props<K, D extends BarItemData<K>> = {
+    groupCenter: number;
+    labelStyle?: VisTextStyle;
+    yScale: Scale;
+    defaultFontSize: string;
+    getStackLabel: NonNullable<BarChartProps<K, D>['getStackLabel']>;
+    group: Group;
+    isRtl: boolean;
+    posValue: number;
+    negValue: number;
+    posItemsData: D[];
+    isHoriz: boolean;
+    negItemsData: D[];
+    getTextDimensions: (text: string, font: Font) => Dimension;
+};
+export declare function StackLabels<K, D extends BarItemData<K>>({ groupCenter, getStackLabel, group, posValue, negValue, posItemsData, yScale, isHoriz, isRtl, negItemsData, defaultFontSize, labelStyle, getTextDimensions }: Props<K, D>): import("preact").JSX.Element;
+export {};

@@ -1,0 +1,182 @@
+{
+  "name": "line-chart-series",
+  "version": "19.0.1",
+  "jetVersion": "^19.0.1",
+  "pack": "oj-c",
+  "type": "composite",
+  "dependencyScope": "runtime",
+  "license": "https://opensource.org/licenses/UPL",
+  "implements": [
+    "CLineChartSeriesElement"
+  ],
+  "subcomponentType": "data",
+  "description": "The oj-c-line-chart-series element is used to declare series properties in the seriesTemplate",
+  "displayName": "LineChartSeries",
+  "main": "oj-c/line-chart-series",
+  "help": "oj-c.LineChartSeries.html",
+  "status": [
+    {
+      "type": "candidate",
+      "since": "17.0.0"
+    }
+  ],
+  "extension": {
+    "catalog": {
+      "category": "Visualizations"
+    }
+  },
+  "since": "16.0.0",
+  "properties": {
+    "assignedToY2": {
+      "type": "string",
+      "description": "Defines whether the series is associated with the y2 axis",
+      "displayName": "Assigned To Y2",
+      "help": "#assignedToY2",
+      "enumValues": [
+        "off",
+        "on"
+      ]
+    },
+    "categories": {
+      "type": "Array<string>",
+      "description": "An array of category strings corresponding to the tag cloud items.",
+      "displayName": "Categories",
+      "help": "#categories"
+    },
+    "color": {
+      "type": "string",
+      "description": "The color of the series. The chart legend item will inherit this color value.",
+      "displayName": "Color",
+      "help": "#color"
+    },
+    "drilling": {
+      "type": "string",
+      "description": "Whether drilling is enabled on the series item.",
+      "displayName": "Drilling",
+      "help": "#drilling",
+      "enumValues": [
+        "inherit",
+        "off",
+        "on"
+      ],
+      "value": "inherit"
+    },
+    "lineStyle": {
+      "type": "string",
+      "description": "The line style of the data line.",
+      "displayName": "LineStyle",
+      "help": "#lineStyle",
+      "enumValues": [
+        "dashed",
+        "solid",
+        "dotted"
+      ]
+    },
+    "lineType": {
+      "type": "string",
+      "description": "The line type of the data line or area.",
+      "displayName": "Line Type",
+      "help": "#lineType",
+      "enumValues": [
+        "curved",
+        "straight"
+      ]
+    },
+    "lineWidth": {
+      "type": "number",
+      "description": "The width of the data line.",
+      "displayName": "Line Width",
+      "help": "#lineWidth"
+    },
+    "markerShape": {
+      "type": "string",
+      "description": "The shape of the data markers.",
+      "displayName": "Marker Shape",
+      "help": "#markerShape",
+      "enumValues": [
+        "auto",
+        "square",
+        "circle",
+        "diamond",
+        "human",
+        "plus",
+        "star",
+        "triangleDown",
+        "triangleUp"
+      ]
+    },
+    "markerColor": {
+      "type": "string",
+      "description": "The color of the data markers, if different from the series color.",
+      "displayName": "Marker Color",
+      "help": "#markerColor"
+    },
+    "markerDisplayed": {
+      "type": "string",
+      "description": "Defines whether the data marker is displayed. Only applies to line, area, scatter, and bubble series.",
+      "displayName": "Marker Displayed",
+      "help": "#markerDisplayed"
+    },
+    "markerSize": {
+      "type": "number",
+      "description": "The size of the data markers.",
+      "displayName": "Marker Size",
+      "help": "#markerSize"
+    },
+    "name": {
+      "type": "string",
+      "description": "The name of the series, displayed in the legend and tooltips.",
+      "displayName": "Name",
+      "help": "#name"
+    },
+    "shortDesc": {
+      "type": "string",
+      "description": "The description of this series. This is used for accessibility and for customizing the tooltip text on the corresponding legend item for the series.",
+      "displayName": "Short Desc",
+      "help": "#shortDesc"
+    }
+  },
+  "methods": {
+    "setProperty": {
+      "description": "Sets a property or a single subproperty for complex properties and notifies the component of the change, triggering a corresponding event.",
+      "help": "#setProperty",
+      "params": [
+        {
+          "name": "property",
+          "description": "The property name to set. Supports dot notation for subproperty access.",
+          "type": "string"
+        },
+        {
+          "name": "value",
+          "description": "The new value to set the property to.",
+          "type": "any"
+        }
+      ],
+      "return": "void"
+    },
+    "getProperty": {
+      "description": "Retrieves the value of a property or a subproperty.",
+      "help": "#getProperty",
+      "params": [
+        {
+          "name": "property",
+          "description": "The property name to get. Supports dot notation for subproperty access.",
+          "type": "string"
+        }
+      ],
+      "return": "any"
+    },
+    "setProperties": {
+      "description": "Performs a batch set of properties.",
+      "help": "#setProperties",
+      "params": [
+        {
+          "name": "properties",
+          "description": "An object containing the property and value pairs to set.",
+          "type": "object"
+        }
+      ],
+      "return": "void"
+    }
+  }
+}
