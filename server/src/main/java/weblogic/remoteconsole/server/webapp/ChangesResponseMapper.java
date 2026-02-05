@@ -34,6 +34,10 @@ public class ChangesResponseMapper extends ResponseMapper<Changes> {
     return new ChangesResponseMapper(invocationContext, response).toResponse();
   }
 
+  public ChangesResponseMapper(InvocationContext invocationContext) {
+    super(invocationContext, null);
+  }
+
   private ChangesResponseMapper(
     InvocationContext invocationContext,
     Response<Changes> response
@@ -182,7 +186,7 @@ public class ChangesResponseMapper extends ResponseMapper<Changes> {
     dataBldr.add("removals", bldr);
   }
 
-  private String getBreadCrumbs(BeanTreePath beanPath) {
+  public String getBreadCrumbs(BeanTreePath beanPath) {
     Path breadCrumbs = new Path();
     for (BeanTreePathSegment segment : beanPath.getSegments()) {
       BeanChildDef childDef = segment.getChildDef();

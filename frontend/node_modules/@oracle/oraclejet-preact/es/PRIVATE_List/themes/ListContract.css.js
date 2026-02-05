@@ -1,0 +1,6 @@
+/* @oracle/oraclejet-preact: undefined */
+var densityVars = {itemHeight:'var(--oj-c-EXPERIMENTAL-DO-NOT-USE-list-item-height)',itemPaddingVertical:'var(--oj-c-EXPERIMENTAL-DO-NOT-USE-list-item-padding-vertical)',itemPaddingHorizontal:'var(--oj-c-EXPERIMENTAL-DO-NOT-USE-list-item-padding-horizontal)'};
+var listVars = {itemHeight:'var(--oj-c-EXPERIMENTAL-DO-NOT-USE-list-item-height)',itemPaddingVertical:'var(--oj-c-EXPERIMENTAL-DO-NOT-USE-list-item-padding-vertical)',itemPaddingHorizontal:'var(--oj-c-EXPERIMENTAL-DO-NOT-USE-list-item-padding-horizontal)'};
+
+export { densityVars, listVars };
+//# sourceMappingURL=ListContract.css.js.map

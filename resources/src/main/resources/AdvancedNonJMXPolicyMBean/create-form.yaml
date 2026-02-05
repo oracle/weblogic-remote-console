@@ -3,6 +3,9 @@
 
 introductionHTML: Create a new non-JMX security policy
 
+presentation:
+  singleColumn: true
+
 sections:
 - properties:
   - name: type

@@ -1,0 +1,61 @@
+.TableHeaderCellStyles_tableHeaderCellStyles_base__1kmo4bz0 {
+  border-bottom: var(--gridlineWidth__efrfp90) solid color-mix(in srgb, var(--oj-c-EXPERIMENTAL-DO-NOT-USE-border-divider-opaque-color) var(--oj-c-EXPERIMENTAL-DO-NOT-USE-border-divider-opaque-percent), var(--oj-current-bg-color, var(--oj-c-EXPERIMENTAL-DO-NOT-USE-page-background-neutral0)));
+  box-sizing: border-box;
+  color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-primary);
+  font-size: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-body-md-font-size);
+  font-weight: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-body-md-font-weight-semibold);
+  height: calc(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-table-header-row-height) + var(--gridlineWidth__efrfp90));
+  overflow: hidden;
+  position: sticky;
+  touch-action: none;
+  z-index: 100008;
+}
+.TableHeaderCellStyles_tableHeaderCellStyles_base__1kmo4bz0:focus {
+  outline-style: none;
+}
+.TableHeaderCellStyles_tableHeaderCellStyles_defaultRendererSpan__1kmo4bz1 {
+  display: -webkit-box;
+  overflow: hidden;
+  overflow-wrap: normal;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+.TableHeaderCellStyles_tableHeaderCellStyles_stickyColumn__1kmo4bz2 {
+  z-index: 100009;
+}
+.TableHeaderCellStyles_tableHeaderCellStyles_stickyEdge__1kmo4bz3 {
+  z-index: 100010;
+}
+.TableHeaderCellStyles_tableHeaderCellStyles_focused__1kmo4bz4::before {
+  content: "";
+  display: block;
+  inset: 0;
+  outline-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-border-keyboard-focus);
+  outline-offset: -1px;
+  outline-style: dotted;
+  outline-width: 1px;
+  pointer-events: none;
+  position: absolute;
+}
+.TableHeaderCellStyles_tableHeaderCellStyles_active__1kmo4bz5 {
+  background-image: linear-gradient(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-overlay-hover), var(--oj-c-EXPERIMENTAL-DO-NOT-USE-overlay-hover));
+}
+.TableHeaderCellStyles_tableHeaderCellStyles_activeSelected__1kmo4bz6 {
+  background-image: 
+    linear-gradient(
+      var(--oj-c-EXPERIMENTAL-DO-NOT-USE-collection-header-surface-selected),
+      var(--oj-c-EXPERIMENTAL-DO-NOT-USE-collection-header-surface-selected)
+    ),
+    linear-gradient(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-overlay-hover), var(--oj-c-EXPERIMENTAL-DO-NOT-USE-overlay-hover));
+}
+.TableHeaderCellStyles_tableHeaderCellStyles_hover__1kmo4bz7 {
+  background-image: linear-gradient(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-overlay-hover), var(--oj-c-EXPERIMENTAL-DO-NOT-USE-overlay-hover));
+}
+.TableHeaderCellStyles_tableHeaderCellStyles_hoverSelected__1kmo4bz8 {
+  background-image: 
+    linear-gradient(
+      var(--oj-c-EXPERIMENTAL-DO-NOT-USE-collection-header-surface-selected),
+      var(--oj-c-EXPERIMENTAL-DO-NOT-USE-collection-header-surface-selected)
+    ),
+    linear-gradient(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-overlay-hover), var(--oj-c-EXPERIMENTAL-DO-NOT-USE-overlay-hover));
+}

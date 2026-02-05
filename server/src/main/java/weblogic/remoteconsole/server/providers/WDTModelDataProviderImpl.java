@@ -1,11 +1,13 @@
-// Copyright (c) 2021, 2024, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2026, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.providers;
 
-import java.io.InputStream;
+import java.io.FileInputStream;
+import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -14,9 +16,12 @@ import javax.json.Json;
 import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
+import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.yaml.snakeyaml.Yaml;
-import weblogic.remoteconsole.common.repodef.LocalizableString;
 import weblogic.remoteconsole.common.repodef.LocalizedConstants;
 import weblogic.remoteconsole.common.utils.WebLogicMBeansVersions;
 import weblogic.remoteconsole.common.utils.WebLogicVersion;
@@ -30,51 +35,50 @@ import weblogic.remoteconsole.server.repo.weblogic.WDTModelBuilder;
 import weblogic.remoteconsole.server.repo.weblogic.WDTModelSchema;
 import weblogic.remoteconsole.server.repo.weblogic.WDTPageRepo;
 import weblogic.remoteconsole.server.webapp.FailedRequestException;
-import weblogic.remoteconsole.server.webapp.ProviderResource;
 
 /**
  * The implementation of the provider for WDT Models.  The model is
- * initialized via an InputStream and parsed immediately into a map
- * representation of the data.
+ * parsed immediately into a map representation of the data.
 */
 public class WDTModelDataProviderImpl implements WDTModelDataProvider {
   private static final Logger LOGGER = Logger.getLogger(WDTModelDataProviderImpl.class.getName());
 
   public static final String TYPE_NAME = "WDTModel";
   private String name;
-  private String label;
-  private String lastMessage = null;
   private Map<String, Object> model = null;
   private Map<String, Root> roots = new HashMap<String, Root>();
   private Root editRoot;
   private boolean isJson = false;
   private List<String> propertyListNames = null;
-  private ProviderManager pm = null;
+  private String fileName;
 
-  public WDTModelDataProviderImpl(String name, String label) {
-    this.name = name;
-    this.label = label;
+  private void makeRoots() {
     editRoot = new Root(
       this,
       Root.EDIT_NAME,
       Root.CONFIGURATION_ROOT,
       Root.EDIT_LABEL,
+      LocalizedConstants.EDIT_DESCRIPTION,
       false, // it is not read only
       Root.NAV_TREE_RESOURCE,
-      Root.SIMPLE_SEARCH_RESOURCE,
-      Root.DOWNLOAD_RESOURCE
+      Root.SIMPLE_SEARCH_RESOURCE
     );
     roots.put(Root.EDIT_NAME, editRoot);
   }
 
-  @Override
-  public void parseModel(InputStream is, boolean isJson, InvocationContext ic) {
-    try {
+  public WDTModelDataProviderImpl(String name, String fileName) {
+    this.name = name;
+    this.fileName = fileName;
+    isJson = fileName.endsWith(".json");
+    makeRoots();
+  }
+
+  public void parseModel(InvocationContext ic) {
+    try (FileInputStream fis = new FileInputStream(fileName)) {
       // Parse and return exceptions from the parse...
-      this.isJson = isJson;
-      Object parsedModel = new Yaml().load(is);
+      Object parsedModel = new Yaml().load(fis);
       model = getAcceptableModel(parsedModel, ic);
-      test(ic); // Builds the bean tree so we can look for more problems with the model
+      start(ic); // Builds the bean tree so we can look for more problems with the model
     } catch (FailedRequestException fre) {
       throw fre;
     } catch (Exception e) {
@@ -85,11 +89,11 @@ public class WDTModelDataProviderImpl implements WDTModelDataProvider {
         }
         walk = walk.getCause();
       }
-      lastMessage = walk.getMessage();
-      if (lastMessage == null) {
-        System.err.println("The exception " + walk + "(" + walk.getClass() + ") has no message");
+      String message = walk.getMessage();
+      if (message == null) {
+        message = getNoModelMessage(ic);
       }
-      throw new FailedRequestException(toJSON(ic));
+      throw new FailedRequestException(message);
     }
     // Return failure when no model available!
     if (model == null) {
@@ -99,6 +103,9 @@ public class WDTModelDataProviderImpl implements WDTModelDataProvider {
 
   @Override
   public Map<String, Object> getModel(InvocationContext ic) {
+    if (model == null) {
+      parseModel(ic);
+    }
     // IFF provider has not been started, return the uploaded model
     PageRepo pageRepo = editRoot.getPageRepo();
     if (pageRepo == null) {
@@ -116,13 +123,7 @@ public class WDTModelDataProviderImpl implements WDTModelDataProvider {
   }
 
   @Override
-  public void setPropertyListProviders(List<String> propertyListNames, ProviderManager pm) {
-    this.pm = pm;
-    this.propertyListNames = propertyListNames;
-  }
-
-  @Override
-  public List<PropertySource> getPropertySources() {
+  public List<PropertySource> getPropertySources(InvocationContext ic) {
     // No information when no property list references exist
     if (propertyListNames == null) {
       return null;
@@ -132,7 +133,7 @@ public class WDTModelDataProviderImpl implements WDTModelDataProvider {
     List<PropertyListDataProvider> dataProviders = new ArrayList<>(propertyListNames.size());
     propertyListNames.forEach(name -> {
       PropertyListDataProvider dataProvider = (PropertyListDataProvider)
-        pm.getProvider(name, PropertyListDataProviderImpl.TYPE_NAME);
+        null; // was pm.getProvider(name, PropertyListDataProviderImpl.TYPE_NAME);
       boolean added = ((dataProvider != null) ? dataProviders.add(dataProvider) : false);
       if (!added) {
         LOGGER.finest("WDTModelDataProviderImpl unable to find Property List provider: " + name);
@@ -196,39 +197,6 @@ public class WDTModelDataProviderImpl implements WDTModelDataProvider {
     return TYPE_NAME;
   }
 
-  private static JsonObject makeHelpClause(
-    InvocationContext ic,
-    LocalizableString summary,
-    LocalizableString detail
-  ) {
-    JsonObjectBuilder ret = Json.createObjectBuilder();
-    ret.add("helpSummaryHTML", ic.getLocalizer().localizeString(summary));
-    ret.add("helpDetailHTML", ic.getLocalizer().localizeString(detail));
-    return ret.build();
-  }
-
-  public static JsonObject getHelp(InvocationContext ic) {
-    JsonObjectBuilder ret = Json.createObjectBuilder();
-    ret.add("name",
-      makeHelpClause(
-        ic,
-        LocalizedConstants.DATA_PROVIDER_HELP_NAME_SUMMARY,
-        LocalizedConstants.DATA_PROVIDER_HELP_NAME_DETAIL
-    ));
-    ret.add("file",
-      makeHelpClause(
-        ic,
-        LocalizedConstants.WDT_PROVIDER_HELP_FILE_SUMMARY,
-        LocalizedConstants.WDT_PROVIDER_HELP_FILE_DETAIL
-    ));
-    return ret.build();
-  }
-
-  @Override
-  public String getLabel() {
-    return label;
-  }
-
   @Override
   public String getName() {
     return name;
@@ -239,17 +207,12 @@ public class WDTModelDataProviderImpl implements WDTModelDataProvider {
   }
 
   @Override
-  public void test(InvocationContext ic) {
-    start(ic);
-  }
-
-  @Override
   public boolean start(InvocationContext ic) {
     ic.setProvider(this);
     if (editRoot.getPageRepo() == null) {
       if (model == null) {
         // Only provide error message when start fails...
-        throw new FailedRequestException(getNoModelMessage(ic));
+        parseModel(ic);
       }
       WebLogicVersion weblogicVersion = WebLogicVersions.getLatestVersion();
       editRoot.setPageRepo(
@@ -262,7 +225,6 @@ public class WDTModelDataProviderImpl implements WDTModelDataProvider {
           ic
         )
       );
-      lastMessage = null;
     }
     return true;
   }
@@ -278,18 +240,13 @@ public class WDTModelDataProviderImpl implements WDTModelDataProvider {
         .anyMatch(entry -> WDTModelSchema.KNOWN_SECTIONS.contains(entry.getKey()));
       result = validModel ? parsed : null;
     }
-    if (result == null) {
-      lastMessage = getNoModelMessage(ic);
-    }
     return result;
   }
 
   // Get the response message when no model is set on the provider
   private String getNoModelMessage(InvocationContext ic) {
-    return
-      (lastMessage != null)
-        ? lastMessage
-        : ic.getLocalizer().localizeString(LocalizedConstants.MODEL_INVALID, WDTModelSchema.KNOWN_SECTIONS);
+    return ic.getLocalizer().localizeString(
+      LocalizedConstants.MODEL_INVALID, WDTModelSchema.KNOWN_SECTIONS);
   }
 
   @Override
@@ -298,17 +255,76 @@ public class WDTModelDataProviderImpl implements WDTModelDataProvider {
   }
 
   @Override
+  public void updateLastRootUsed(String root) {
+    // There's only one
+  }
+
+  @Override
+  public String getLastRootUsed() {
+    return Root.EDIT_NAME;
+  }
+
+  public static void saveNew(InvocationContext ic, String fileName) {
+    try (FileWriter writer = new FileWriter(fileName)) {
+      if (fileName.endsWith(".json")) {
+        JsonObject json = Json.createObjectBuilder()
+          .add("domainInfo", Json.createObjectBuilder()
+            .add("AdminUserName", "@@PROP:ADMIN_USERNAME@@")
+            .add("AdminPassword", "@@PROP:ADMIN_PASSWORD@@"))
+          .add("topology", Json.createObjectBuilder()
+            .add("domainInfo", Json.createObjectBuilder())).build();
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.writerWithDefaultPrettyPrinter().writeValue(
+          writer, mapper.readValue(json.toString(), Object.class));
+      } else {
+        String init =
+          "domainInfo:\n"
+          + "  AdminUserName: '@@PROP:ADMIN_USERNAME@@'\n"
+          + "  AdminPassword: '@@PROP:ADMIN_PASSWORD@@'\n"
+          + "topology:\n"
+          + "  Server:\n"
+          + "    AdminServer:\n";
+        writer.write(init, 0, init.length());
+      }
+    } catch (Exception e) {
+      throw new WebApplicationException(Response.status(
+        Status.UNAUTHORIZED.getStatusCode(),
+         e.getMessage()).build());
+    }
+  }
+
+  public static void save(InvocationContext ic, String fileName, String contents) {
+    try (FileWriter writer = new FileWriter(fileName)) {
+      writer.write(contents, 0, contents.length());
+    } catch (Exception e) {
+      throw new WebApplicationException(Response.status(
+        Status.UNAUTHORIZED.getStatusCode(),
+         e.getMessage()).build());
+    }
+  }
+
+  @Override
+  public void save(InvocationContext ic) {
+    DownloadBeanRepo drepo = (DownloadBeanRepo) ic.getPageRepo().getBeanRepo();
+    try (FileWriter writer = new FileWriter(fileName)) {
+      drepo.download(writer, ic);
+    } catch (Exception e) {
+      throw new WebApplicationException(Response.status(
+        Status.UNAUTHORIZED.getStatusCode(),
+         e.getMessage()).build());
+    }
+  }
+
+  @Override
   public JsonObject toJSON(InvocationContext ic) {
     JsonObjectBuilder ret = Json.createObjectBuilder();
     ret.add("name", getName());
-    if ((getLabel() != null) && !getName().equals(getLabel())) {
-      ret.add("label", getLabel());
-    }
-    ret.add(ProviderResource.PROVIDER_TYPE, getType());
+    ret.add("providerType", getType());
     JsonArrayBuilder builder = Json.createArrayBuilder();
     for (Root root : getRoots().values()) {
       builder.add(root.toJSON(ic));
     }
+    ret.add("lastRootUsed", "edit");
     ret.add("roots", builder);
     ret.add("mode", "standalone");
     if (propertyListNames != null) {
@@ -316,14 +332,42 @@ public class WDTModelDataProviderImpl implements WDTModelDataProvider {
       propertyListNames.forEach(props::add);
       ret.add("propertyLists", props);
     }
-    if (lastMessage != null) {
-      ret.add("messages", createMessages(lastMessage));
-    }
     return ret.build();
   }
 
   @Override
   public boolean isValidPath(String path) {
     return WDTModelBuilder.isValidPath(path);
+  }
+
+  @Override
+  public boolean supportsShoppingCart() {
+    return false;
+  }
+
+  @Override
+  public boolean isShoppingCartEmpty() {
+    return true;
+  }
+
+  @Override
+  public void setIsShoppingCartEmpty(boolean isEmpty) {
+    // We could assert here
+  }
+
+  @Override
+  public void updateStatus(InvocationContext ic) {
+  }
+
+  @Override
+  public LinkedHashMap<String, String> getStatusMap(InvocationContext ic) {
+    LinkedHashMap<String, String> ret = new LinkedHashMap<>();
+    ret.put("introductionHTML", ic.getLocalizer().localizeString(
+      LocalizedConstants.WDT_MODEL_STATUS_INTRODUCTION, getName()));
+    ret.put("Name", getName());
+    ret.put("Provider Type", getType());
+    ret.put("State", "Active");
+    ret.put("INDIRECT-File Contents", "/api/-current-/edit/download");
+    return ret;
   }
 }

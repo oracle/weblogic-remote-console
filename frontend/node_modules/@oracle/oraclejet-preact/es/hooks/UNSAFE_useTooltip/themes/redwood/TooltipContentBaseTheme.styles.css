@@ -1,0 +1,29 @@
+.TooltipContentBaseTheme_baseTheme__sanbbo0 {
+  --maxWidth__1x922a00: ;
+  --backgroundColor__1x922a01: ;
+  --textColor__1x922a02: ;
+  --fontSize__1x922a03: ;
+  --lineHeight__1x922a04: ;
+  --borderRadius__1x922a05: ;
+  --borderColor__1x922a06: ;
+  --paddingHorizontal__1x922a07: ;
+  --paddingVertical__1x922a08: ;
+  --variants-tooltip-maxWidth__1x922a09: calc(72 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --variants-tooltip-backgroundColor__1x922a0a: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-surface-neutral30);
+  --variants-tooltip-textColor__1x922a0b: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-primary);
+  --variants-tooltip-fontSize__1x922a0c: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-body-sm-font-size);
+  --variants-tooltip-lineHeight__1x922a0d: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-body-sm-line-height);
+  --variants-tooltip-borderRadius__1x922a0e: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-border-radius-md);
+  --variants-tooltip-borderColor__1x922a0f: transparent;
+  --variants-tooltip-paddingHorizontal__1x922a0g: calc(2 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --variants-tooltip-paddingVertical__1x922a0h: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem);
+  --variants-datatip-maxWidth__1x922a0i: calc(72 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --variants-datatip-backgroundColor__1x922a0j: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-surface-neutral0);
+  --variants-datatip-textColor__1x922a0k: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-primary);
+  --variants-datatip-fontSize__1x922a0l: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-body-xs-font-size);
+  --variants-datatip-lineHeight__1x922a0m: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-body-xs-line-height);
+  --variants-datatip-borderRadius__1x922a0n: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-border-radius-md);
+  --variants-datatip-borderColor__1x922a0o: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-border-enabled);
+  --variants-datatip-paddingHorizontal__1x922a0p: calc(2 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --variants-datatip-paddingVertical__1x922a0q: calc(2 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+}

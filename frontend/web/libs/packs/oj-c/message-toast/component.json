@@ -1,0 +1,315 @@
+{
+  "name": "message-toast",
+  "version": "19.0.1",
+  "jetVersion": "^19.0.1",
+  "pack": "oj-c",
+  "type": "composite",
+  "dependencyScope": "runtime",
+  "license": "https://opensource.org/licenses/UPL",
+  "implements": [
+    "CMessageToastElement"
+  ],
+  "displayName": "MessageToast",
+  "description": "Toast messages are short, noncritical, auto-dismissible messages that communicate non-disruptive contextual messages.",
+  "help": "oj-c.MessageToast.html",
+  "main": "oj-c/message-toast",
+  "extension": {
+    "catalog": {
+      "category": "Controls"
+    },
+    "vbdt": {
+      "defaultColumns": 2,
+      "minColumns": 1,
+      "module": "oj-c/message-toast"
+    },
+    "oracle": {
+      "icon": "oj-ux-ico-messages",
+      "uxSpecs": [
+        "messages-toast-jet"
+      ]
+    },
+    "webelement": {
+      "package": "@oracle/oraclejet-core-pack",
+      "version": "19.0.1",
+      "docUrl": "https://www.oracle.com/webfolder/technetwork/jet/cpwdtsdoc/classes/MessageToastWebElement.html",
+      "export": "findMessageToast",
+      "main": "@oracle/oraclejet-core-pack/webdriver"
+    }
+  },
+  "propertyLayout": [
+    {
+      "propertyGroup": "data",
+      "items": [
+        "data"
+      ]
+    }
+  ],
+  "since": "14.0.0",
+  "status": [
+    {
+      "type": "supersedes",
+      "since": "15.0.0",
+      "value": [
+        "oj-messages"
+      ]
+    }
+  ],
+  "properties": {
+    "data": {
+      "type": "DataProvider",
+      "description": "Data for the Message Toast component.",
+      "displayName": "Data",
+      "help": "#data",
+      "extension": {
+        "webelement": {
+          "exceptionStatus": [
+            {
+              "type": "deprecated",
+              "since": "15.0.0",
+              "description": "Data sets from a DataProvider cannot be sent to WebDriverJS; use ViewModels or page variables instead."
+            }
+          ]
+        }
+      }
+    },
+    "detailTemplateValue": {
+      "type": "string|function",
+      "description": "A dynamic template key or a function that determines the detail template for the current row.",
+      "displayName": "Current Detail Template",
+      "help": "#detailTemplateValue",
+      "dynamicSlotDef": "MessageToastTemplateContext",
+      "templateSlotAlias": "detailTemplate"
+    },
+    "iconTemplateValue": {
+      "type": "string|function",
+      "description": "A dynamic template key or a function that determines the icon template for the current row.",
+      "displayName": "Current Icon Template",
+      "help": "#iconTemplateValue",
+      "dynamicSlotDef": "MessageToastTemplateContext",
+      "templateSlotAlias": "iconTemplate"
+    },
+    "offset": {
+      "type": "number|object",
+      "description": "Offset for the Message Toast component's position.",
+      "displayName": "Offset",
+      "help": "#offset",
+      "value": 0
+    },
+    "position": {
+      "type": "string",
+      "description": "Position for the Message Toast component.",
+      "displayName": "Position",
+      "help": "#position",
+      "enumValues": [
+        "top",
+        "bottom",
+        "top-start",
+        "top-end",
+        "bottom-start",
+        "bottom-end",
+        "top-left",
+        "top-right",
+        "bottom-left",
+        "bottom-right"
+      ],
+      "value": "bottom"
+    }
+  },
+  "dynamicSlots": {
+    "MessageToastTemplateContext": {
+      "description": "The dynamic template slots for the Toast message.",
+      "displayName": "Dynamic Template Slots",
+      "help": "#dynamicTemplates",
+      "data": {
+        "data": {
+          "type": "object",
+          "properties": {
+            "closeAffordance": {
+              "type": "string"
+            },
+            "detail": {
+              "type": "string"
+            },
+            "severity": {
+              "type": "string"
+            },
+            "sound": {
+              "type": "string"
+            },
+            "summary": {
+              "type": "string"
+            },
+            "autoTimeout": {
+              "type": "number|string"
+            }
+          }
+        },
+        "key": {
+          "type": "string|number"
+        },
+        "metadata": {
+          "type": "object",
+          "properties": {
+            "indexFromParent": {
+              "type": "number"
+            },
+            "isLeaf": {
+              "type": "boolean"
+            },
+            "key": {
+              "type": "string|number"
+            },
+            "message": {
+              "type": "object",
+              "properties": {
+                "detail": {
+                  "type": "string"
+                },
+                "severity": {
+                  "type": "string|number"
+                },
+                "summary": {
+                  "type": "string"
+                }
+              }
+            },
+            "parentKey": {
+              "type": "string|number"
+            },
+            "suggestion": {
+              "type": "object"
+            },
+            "treeDepth": {
+              "type": "number"
+            }
+          }
+        }
+      }
+    }
+  },
+  "events": {
+    "ojClose": {
+      "description": "Event emitted when the user tries to close a message though UI interaction",
+      "help": "#event:ojClose",
+      "detail": {
+        "data": {
+          "type": "object",
+          "properties": {
+            "closeAffordance": {
+              "type": "string",
+              "enumValues": [
+                "off",
+                "on"
+              ]
+            },
+            "detail": {
+              "type": "string"
+            },
+            "severity": {
+              "type": "string",
+              "enumValues": [
+                "none",
+                "error",
+                "confirmation",
+                "info",
+                "warning"
+              ]
+            },
+            "sound": {
+              "type": "string"
+            },
+            "summary": {
+              "type": "string"
+            },
+            "autoTimeout": {
+              "type": "number|string"
+            }
+          }
+        },
+        "key": {
+          "type": "string|number"
+        },
+        "metadata": {
+          "type": "object",
+          "properties": {
+            "indexFromParent": {
+              "type": "number"
+            },
+            "isLeaf": {
+              "type": "boolean"
+            },
+            "key": {
+              "type": "string|number"
+            },
+            "message": {
+              "type": "object",
+              "properties": {
+                "detail": {
+                  "type": "string"
+                },
+                "severity": {
+                  "type": "string|number"
+                },
+                "summary": {
+                  "type": "string"
+                }
+              }
+            },
+            "parentKey": {
+              "type": "string|number"
+            },
+            "suggestion": {
+              "type": "object"
+            },
+            "treeDepth": {
+              "type": "number"
+            }
+          }
+        }
+      }
+    }
+  },
+  "methods": {
+    "setProperty": {
+      "description": "Sets a property or a single subproperty for complex properties and notifies the component of the change, triggering a corresponding event.",
+      "help": "#setProperty",
+      "params": [
+        {
+          "name": "property",
+          "description": "The property name to set. Supports dot notation for subproperty access.",
+          "type": "string"
+        },
+        {
+          "name": "value",
+          "description": "The new value to set the property to.",
+          "type": "any"
+        }
+      ],
+      "return": "void"
+    },
+    "getProperty": {
+      "description": "Retrieves the value of a property or a subproperty.",
+      "help": "#getProperty",
+      "params": [
+        {
+          "name": "property",
+          "description": "The property name to get. Supports dot notation for subproperty access.",
+          "type": "string"
+        }
+      ],
+      "return": "any"
+    },
+    "setProperties": {
+      "description": "Performs a batch set of properties.",
+      "help": "#setProperties",
+      "params": [
+        {
+          "name": "properties",
+          "description": "An object containing the property and value pairs to set.",
+          "type": "object"
+        }
+      ],
+      "return": "void"
+    }
+  }
+}

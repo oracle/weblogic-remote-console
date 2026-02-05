@@ -1,4 +1,4 @@
-// Copyright (c) 2020, 2025, Oracle Corporation and/or its affiliates.
+// Copyright (c) 2020, 2026, Oracle Corporation and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.providers;
@@ -6,7 +6,7 @@ package weblogic.remoteconsole.server.providers;
 import java.net.URI;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -25,7 +25,6 @@ import javax.json.JsonObjectBuilder;
 import javax.ws.rs.core.Response;
 
 import weblogic.console.utils.StringUtils;
-import weblogic.remoteconsole.common.repodef.LocalizableString;
 import weblogic.remoteconsole.common.repodef.LocalizedConstants;
 //import weblogic.remoteconsole.common.utils.RemoteConsoleExtension;
 import weblogic.remoteconsole.common.utils.UrlUtils;
@@ -34,6 +33,7 @@ import weblogic.remoteconsole.common.utils.WebLogicMBeansVersions;
 import weblogic.remoteconsole.common.utils.WebLogicRoles;
 import weblogic.remoteconsole.server.ConsoleBackendRuntime;
 import weblogic.remoteconsole.server.ConsoleBackendRuntimeConfig;
+import weblogic.remoteconsole.server.StdoutRedirector;
 import weblogic.remoteconsole.server.connection.Connection;
 import weblogic.remoteconsole.server.connection.ConnectionManager;
 import weblogic.remoteconsole.server.filter.ClientAuthHeader;
@@ -46,8 +46,8 @@ import weblogic.remoteconsole.server.repo.weblogic.WebLogicRestServerConfigPageR
 import weblogic.remoteconsole.server.utils.ResponseHelper;
 import weblogic.remoteconsole.server.utils.WebLogicRestClient;
 import weblogic.remoteconsole.server.utils.WebLogicRestRequest;
+import weblogic.remoteconsole.server.webapp.ChangeManagerResource;
 import weblogic.remoteconsole.server.webapp.FailedRequestException;
-import weblogic.remoteconsole.server.webapp.ProviderResource;
 import weblogic.remoteconsole.server.webapp.UriUtils;
 
 /**
@@ -63,10 +63,10 @@ public class AdminServerDataProviderImpl implements AdminServerDataProvider {
   // Keep the repos of the 3 most recently stale admin providers in memory:
   private static final int MAX_STALE_PROVIDERS = 3;
 
+  private JsonArray messages;
+  private boolean isShoppingCartEmpty = true; // empty until made otherwise
   private String connectionId;
-  private ProviderManager providerManager;
   private String name;
-  private String label;
   private String url;
   private String urlOrigin = null;
   private String ssoDomainLoginUri = null;
@@ -78,10 +78,9 @@ public class AdminServerDataProviderImpl implements AdminServerDataProvider {
   private boolean isInsecureConnection = false;
   private String proxyOverride = null;
   private String connectionWarning;
-  private String lastMessage;
   private boolean isLastConnectionAttemptSuccessful;
   private boolean isAnyConnectionAttemptSuccessful;
-  private Map<String, Root> roots = new HashMap<>();
+  private Map<String, Root> roots = new LinkedHashMap<>();
   private Root editRoot;
   private Root viewRoot;
   private Root monitoringRoot;
@@ -95,27 +94,20 @@ public class AdminServerDataProviderImpl implements AdminServerDataProvider {
   private static long lastTimeDiscardedStaleRepos = System.currentTimeMillis();
   private static long DISCARD_STALE_REPO_INTERVAL = 10 * 1000; // milliseconds
   private long lastUsed;
+  private String lastRootUsed;
   private static LocalConnectionInfoFetcher localConnectionInfoFetcher;
 
-  public AdminServerDataProviderImpl(
-    ProviderManager providerManager,
-    String name,
-    String label,
-    String url,
-    String authorizationHeader,
-    boolean local
-  ) {
-    this.providerManager = providerManager;
-    this.name = name;
-    this.label = label;
-    this.url = url;
-    this.authorizationHeader = authorizationHeader;
-    this.local = local;
+  public AdminServerDataProviderImpl() {
+    makeRoots();
+  }
+
+  private void makeRoots() {
     editRoot = new Root(
       this,
       Root.EDIT_NAME,
       Root.CONFIGURATION_ROOT,
       Root.EDIT_LABEL,
+      LocalizedConstants.EDIT_DESCRIPTION,
       false, // it is not read only
       Root.NAV_TREE_RESOURCE,
       Root.SIMPLE_SEARCH_RESOURCE,
@@ -126,6 +118,7 @@ public class AdminServerDataProviderImpl implements AdminServerDataProvider {
       Root.SERVER_CONFIGURATION_NAME,
       Root.CONFIGURATION_ROOT,
       Root.CONFIGURATION_LABEL,
+      LocalizedConstants.CONFIGURATION_DESCRIPTION,
       true, // it is read only
       Root.NAV_TREE_RESOURCE,
       Root.SIMPLE_SEARCH_RESOURCE
@@ -135,6 +128,7 @@ public class AdminServerDataProviderImpl implements AdminServerDataProvider {
       Root.DOMAIN_RUNTIME_NAME,
       Root.MONITORING_ROOT,
       Root.MONITORING_LABEL,
+      LocalizedConstants.MONITORING_DESCRIPTION,
       true, // it is read only
       Root.NAV_TREE_RESOURCE,
       Root.SIMPLE_SEARCH_RESOURCE
@@ -144,11 +138,25 @@ public class AdminServerDataProviderImpl implements AdminServerDataProvider {
       Root.SECURITY_DATA_NAME,
       Root.SECURITY_DATA_ROOT,
       Root.SECURITY_DATA_LABEL,
+      LocalizedConstants.SECURITY_DATA_DESCRIPTION,
       false, // it is not read only
       Root.NAV_TREE_RESOURCE,
       Root.SIMPLE_SEARCH_RESOURCE
     );
-    updateLastUsed();
+  }
+
+  public AdminServerDataProviderImpl(
+    String name,
+    String url,
+    String authorizationHeader,
+    boolean local
+  ) {
+    this.name = name;
+    this.url = url;
+    this.authorizationHeader = authorizationHeader;
+    this.local = local;
+    updateLastRootUsed(null);
+    makeRoots();
   }
 
   public static void setLocalConnectionInfoFetcher(LocalConnectionInfoFetcher localConnectionInfoFetcher) {
@@ -164,63 +172,7 @@ public class AdminServerDataProviderImpl implements AdminServerDataProvider {
     return local;
   }
 
-  private static JsonObject makeHelpClause(
-    InvocationContext ic,
-    LocalizableString summary,
-    LocalizableString detail
-  ) {
-    JsonObjectBuilder ret = Json.createObjectBuilder();
-    ret.add("helpSummaryHTML", ic.getLocalizer().localizeString(summary));
-    ret.add("helpDetailHTML", ic.getLocalizer().localizeString(detail));
-    return ret.build();
-  }
 
-  public static JsonObject getHelp(InvocationContext ic) {
-    JsonObjectBuilder ret = Json.createObjectBuilder();
-    ret.add("name",
-      makeHelpClause(
-        ic,
-        LocalizedConstants.DATA_PROVIDER_HELP_NAME_SUMMARY,
-        LocalizedConstants.DATA_PROVIDER_HELP_NAME_DETAIL
-    ));
-    ret.add("url",
-      makeHelpClause(
-        ic,
-        LocalizedConstants.ADMIN_SERVER_HELP_URL_SUMMARY,
-        LocalizedConstants.ADMIN_SERVER_HELP_URL_DETAIL
-    ));
-    ret.add("settings.proxyOverride",
-      makeHelpClause(
-        ic,
-        LocalizedConstants.ADMIN_SERVER_HELP_PROXY_SUMMARY,
-        LocalizedConstants.ADMIN_SERVER_HELP_PROXY_DETAIL
-    ));
-    ret.add("username",
-      makeHelpClause(
-        ic,
-        LocalizedConstants.ADMIN_SERVER_HELP_USERNAME_SUMMARY,
-        LocalizedConstants.ADMIN_SERVER_HELP_USERNAME_DETAIL
-    ));
-    ret.add("password",
-      makeHelpClause(
-        ic,
-        LocalizedConstants.ADMIN_SERVER_HELP_PASSWORD_SUMMARY,
-        LocalizedConstants.ADMIN_SERVER_HELP_PASSWORD_DETAIL
-    ));
-    ret.add("settings.insecure",
-      makeHelpClause(
-        ic,
-        LocalizedConstants.ADMIN_SERVER_HELP_INSECURE_SUMMARY,
-        LocalizedConstants.ADMIN_SERVER_HELP_INSECURE_DETAIL
-    ));
-    ret.add("settings.sso",
-      makeHelpClause(
-        ic,
-        LocalizedConstants.ADMIN_SERVER_HELP_SSO_SUMMARY,
-        LocalizedConstants.ADMIN_SERVER_HELP_SSO_DETAIL
-    ));
-    return ret.build();
-  }
 
   @Override
   public String getURL() {
@@ -324,11 +276,6 @@ public class AdminServerDataProviderImpl implements AdminServerDataProvider {
   }
 
   @Override
-  public String getLabel() {
-    return label;
-  }
-
-  @Override
   public String getName() {
     return name;
   }
@@ -348,17 +295,44 @@ public class AdminServerDataProviderImpl implements AdminServerDataProvider {
     return (connectionId != null);
   }
 
+  // Notice that this isn't synchronized, since it is not doing any global
+  // maintenance.  It is just waiting for the token, if necessary
   @Override
-  public void test(InvocationContext ic) {
-    start(ic);
+  public boolean start(InvocationContext ic) {
+    if (connectionId == null) {
+      // Ensure that a provider used for SSO has the token available
+      if (!isLocal() && (getSsoTokenId() != null)) {
+        if (!isSsoTokenAvailable()) {
+          StdoutRedirector.println("URL: " + getURL() + "/console/login?"
+            + "ssoid=" + getSsoTokenId()
+            + "&port=" + System.getProperty("server.port"));
+        }
+        // Let's give it 30 seconds for now.  We need to do better at handling
+        // long running operations in the CBE, but not specifically for this
+        // one and not today
+        long iterations = 300;
+        for (int i = 0; (i < iterations) && !isSsoTokenAvailable(); i++) {
+          try {
+            Thread.sleep(100);
+          } catch (InterruptedException e) {
+            // Just loop around again either way
+          }
+        }
+        if (!isSsoTokenAvailable()) {
+          throw new FailedRequestException(
+            Response.Status.REQUEST_TIMEOUT.getStatusCode(), getTokenUnavailable(ic));
+        }
+      }
+    }
+    return startNowThatWeAreReady(ic);
   }
 
-  @Override
-  public synchronized boolean start(InvocationContext ic) {
+  private synchronized boolean startNowThatWeAreReady(InvocationContext ic) {
+    boolean newlyCreatedConnection = false;
     ic.setProvider(this);
     Connection connection = null;
     if (connectionId == null) {
-      // Ensure that a provider used for SSO has the token available!
+      newlyCreatedConnection = true;
       if (isLocal() && (localConnectionInfoFetcher != null)) {
         url = localConnectionInfoFetcher.fetchURL();
         String token = localConnectionInfoFetcher.fetchToken();
@@ -366,9 +340,6 @@ public class AdminServerDataProviderImpl implements AdminServerDataProvider {
           throw new FailedRequestException(Response.Status.UNAUTHORIZED.getStatusCode(), getTokenUnavailable(ic));
         }
         authorizationHeader = "Bearer " + token;
-      }
-      if ((getSsoTokenId() != null) && !isSsoTokenAvailable()) {
-        throw new FailedRequestException(Response.Status.UNAUTHORIZED.getStatusCode(), getTokenUnavailable(ic));
       }
       ClientAuthHeader authHeader = new ClientAuthHeader(authorizationHeader);
       ConnectionManager.ConnectionResponse result =
@@ -392,8 +363,6 @@ public class AdminServerDataProviderImpl implements AdminServerDataProvider {
         connection = CONNECTION_MANAGER.getConnection(connectionId);
         CONNECTION_MANAGER.initializeConnectionUserRoles(connection);
         roots.clear();
-        roots.put(viewRoot.getName(), viewRoot);
-        roots.put(monitoringRoot.getName(), monitoringRoot);
         Set<String> roles = connection.getRoles();
         if (WebLogicMBeansVersion.isAccessAllowed(roles, Set.of(WebLogicRoles.ADMIN, WebLogicRoles.DEPLOYER))) {
           // Admins and deployers are allowed to edit the configuration
@@ -401,6 +370,8 @@ public class AdminServerDataProviderImpl implements AdminServerDataProvider {
         } else {
           // Other users are not allowed to edit the configuration
         }
+        roots.put(viewRoot.getName(), viewRoot);
+        roots.put(monitoringRoot.getName(), monitoringRoot);
         // See if the domain has a version of the remote console rest extension installed that supports security data.
         if (connection.getCapabilities().contains("RealmsSecurityData")) {
           // Only admins are allowed to manage the security data.
@@ -408,13 +379,11 @@ public class AdminServerDataProviderImpl implements AdminServerDataProvider {
             roots.put(securityDataRoot.getName(), securityDataRoot);
           }
         }
-        lastMessage = null;
       } else {
         isLastConnectionAttemptSuccessful = false;
-        lastMessage = result.getMessage();
         ic.setConnection(null);
         throw new FailedRequestException(
-          result.getStatus().getStatusCode(), toJSON(ic));
+          result.getStatus().getStatusCode(), result.getMessage());
       }
     } else {
       connection = CONNECTION_MANAGER.getConnection(connectionId);
@@ -422,6 +391,10 @@ public class AdminServerDataProviderImpl implements AdminServerDataProvider {
     initializeRepos(connection);
     ic.setConnection(connection);
     discardStaleRepos(ic);
+    if (newlyCreatedConnection && roots.containsKey(Root.EDIT_NAME)) {
+      ic.setPageRepoByName(Root.EDIT_NAME);
+      ChangeManagerResource.setHasChanges(ic);
+    }
     return true;
   }
 
@@ -434,7 +407,7 @@ public class AdminServerDataProviderImpl implements AdminServerDataProvider {
       if (reposInitialized) {
         return;
       }
-      LOGGER.finest("Initialize repos " + getName() + " " + getLabel());
+      LOGGER.finest("Initialize repos " + getName());
       WebLogicMBeansVersion mbeansVersion = WebLogicMBeansVersions.getVersion(connection);
       editRoot.setPageRepo(new WebLogicRestEditPageRepo(mbeansVersion));
       viewRoot.setPageRepo(new WebLogicRestServerConfigPageRepo(mbeansVersion));
@@ -463,7 +436,8 @@ public class AdminServerDataProviderImpl implements AdminServerDataProvider {
         return;
       }
       Map<Long,AdminServerDataProviderImpl> sortedLastUsedToStaleProvider = new TreeMap<>();
-      for (Provider provider : providerManager.getAll()) {
+      ProjectManager projectManager = ic.getFrontend().getProjectManager();
+      for (Provider provider : projectManager.getAllLiveProviders()) {
         if (provider != this && provider instanceof AdminServerDataProviderImpl) {
           AdminServerDataProviderImpl adminProvider = (AdminServerDataProviderImpl)provider;
           if (adminProvider.isReposInitialized()) {
@@ -485,7 +459,7 @@ public class AdminServerDataProviderImpl implements AdminServerDataProvider {
       if (!reposInitialized) {
         return;
       }
-      LOGGER.finest("Discard repos " + getName() + " " + getLabel());
+      LOGGER.finest("Discard repos " + getName());
       discardRepos(ic, editRoot);
       discardRepos(ic, viewRoot);
       discardRepos(ic, monitoringRoot);
@@ -516,10 +490,9 @@ public class AdminServerDataProviderImpl implements AdminServerDataProvider {
   }
 
   // Get the response message when no token is available for the provider
-  private JsonObject getTokenUnavailable(InvocationContext ic) {
+  private String getTokenUnavailable(InvocationContext ic) {
     isLastConnectionAttemptSuccessful = false;
-    lastMessage = ic.getLocalizer().localizeString(LocalizedConstants.SSO_TOKEN_UNAVAILABLE);
-    return toJSON(ic);
+    return ic.getLocalizer().localizeString(LocalizedConstants.SSO_TOKEN_UNAVAILABLE);
   }
 
   @Override
@@ -531,11 +504,8 @@ public class AdminServerDataProviderImpl implements AdminServerDataProvider {
   public JsonObject toJSON(InvocationContext ic) {
     JsonObjectBuilder ret = Json.createObjectBuilder();
     ret.add("name", getName());
-    if ((getLabel() != null) && !getName().equals(getLabel())) {
-      ret.add("label", getLabel());
-    }
-    ret.add(ProviderResource.PROVIDER_TYPE, getType());
-    ret.add(ProviderResource.DOMAIN_URL, getURL());
+    ret.add("providerType", getType());
+    ret.add("domainUrl", getURL());
     if (isInsecureConnection()) {
       ret.add("insecure", true);
     }
@@ -570,19 +540,11 @@ public class AdminServerDataProviderImpl implements AdminServerDataProvider {
         capabilities.add(capability);
       }
       ret.add("capabilities", capabilities);
-      /* Uncomment if/when we want to display the extensions in the CFE:
-      JsonArrayBuilder extensions = Json.createArrayBuilder();
-      for (RemoteConsoleExtension extension : connection.getExtensions()) {
-        extensions.add(
-          Json.createObjectBuilder()
-            .add("name", extension.getName())
-            .add("version", extension.getVersion())
-        );
-      }
-      ret.add("extensions", extensions);
-      */
       if (connectionWarning != null) {
         ret.add("connectionWarning", connectionWarning);
+      }
+      if (messages != null) {
+        ret.add("messages", messages);
       }
       String consoleExtensionVersion = connection.getConsoleExtensionVersion();
       if (StringUtils.isEmpty(consoleExtensionVersion)) {
@@ -592,14 +554,19 @@ public class AdminServerDataProviderImpl implements AdminServerDataProvider {
       ret.add("consoleExtensionVersion", consoleExtensionVersion);
     } else {
       ret.add("state", "disconnected");
-      if (lastMessage != null) {
-        ret.add("messages", createMessages(lastMessage));
-      }
+    }
+    if (lastRootUsed != null) {
+      ret.add("lastRootUsed", lastRootUsed);
     }
     addStatusToJSON(ret);
     addRootsToJSON(ret, connection, ic);
     addRolesToJSON(ret, connection);
     return ret.build();
+  }
+
+  @Override
+  public boolean isConnectionOriented() {
+    return true;
   }
 
   private void addRootsToJSON(JsonObjectBuilder jsonBuilder, Connection connection, InvocationContext ic) {
@@ -628,15 +595,20 @@ public class AdminServerDataProviderImpl implements AdminServerDataProvider {
     JsonObjectBuilder statusBuilder = Json.createObjectBuilder();
     String resourceData = "/" + UriUtils.API_URI + "/" + UrlUtils.urlEncode(getName()) + "/domainStatus";
     statusBuilder.add("resourceData", resourceData);
-    statusBuilder.add("refreshSeconds", 15);
+    if (System.getenv("CBE_DOMAIN_STATUS_REFRESH") != null) {
+      statusBuilder.add("refreshSeconds", Integer.parseInt(
+        System.getenv("CBE_DOMAIN_STATUS_REFRESH")));
+    } else {
+      statusBuilder.add("refreshSeconds", 15);
+    }
     jsonBuilder.add("domainStatus", statusBuilder);
   }
 
   @Override
-  public JsonObject getStatus(InvocationContext ic) {
+  public void updateStatus(InvocationContext ic) {
     Connection connection =
       isLastConnectionAttemptSuccessful() ? CONNECTION_MANAGER.getConnection(connectionId) : null;
-    return (new DomainStatusGetter(connection, ic)).getDomainStatus();
+    new DomainStatusGetter(connection, ic).getDomainStatus();
   }
 
   @Override
@@ -650,13 +622,87 @@ public class AdminServerDataProviderImpl implements AdminServerDataProvider {
   }
 
   @Override
-  public void updateLastUsed() {
+  public void updateLastRootUsed(String root) {
     lastUsed = System.currentTimeMillis();
+    lastRootUsed = root;
+  }
+
+  @Override
+  public String getLastRootUsed() {
+    return lastRootUsed;
   }
 
   @Override
   public long getLastUsed() {
     return lastUsed;
+  }
+
+  @Override
+  public boolean supportsShoppingCart() {
+    return true;
+  }
+
+  @Override
+  public boolean isShoppingCartEmpty() {
+    return isShoppingCartEmpty;
+  }
+
+  @Override
+  public void setIsShoppingCartEmpty(boolean isEmpty) {
+    isShoppingCartEmpty = isEmpty;
+  }
+
+  @Override
+  public LinkedHashMap<String, String> getStatusMap(InvocationContext ic) {
+    LinkedHashMap<String, String> ret = new LinkedHashMap<>();
+    ret.put("introductionHTML", ic.getLocalizer().localizeString(
+      LocalizedConstants.ADMIN_SERVER_STATUS_INTRODUCTION, getName()));
+    ret.put("Name", getName());
+    ret.put("Provider Type", getType());
+    ret.put("Domain URL", getURL());
+    if (isInsecureConnection()) {
+      ret.put("Insecure Connection", "True");
+    }
+    if (proxyOverride != null) {
+      ret.put("Proxy Override", proxyOverride);
+    }
+    if (getSsoTokenId() != null) {
+      ret.put("Web Authentication", "True");
+    }
+    if (isLocal()) {
+      ret.put("Local Connection", "true");
+    }
+    Connection connection = null;
+    if (isLastConnectionAttemptSuccessful()) {
+      ret.put("State", "Connected");
+      connection = CONNECTION_MANAGER.getConnection(connectionId);
+      ret.put("Connection Timeout", "" + getConnectTimeout());
+      ret.put("Read Timeout", "" + getReadTimeout());
+      ret.put("Domain Version", connection.getWebLogicVersion().getDomainVersion());
+      ret.put("Domain Name", connection.getDomainName());
+      String consoleExtensionVersion = connection.getConsoleExtensionVersion();
+      if (StringUtils.isEmpty(consoleExtensionVersion)) {
+        consoleExtensionVersion =
+          ic.getLocalizer().localizeString(LocalizedConstants.CONSOLE_REST_EXTENSION_NOT_INSTALLED);
+      }
+      ret.put("Console Extension Version", consoleExtensionVersion);
+      if (connection.getUsername() != null) {
+        ret.put("User Name", connection.getUsername());
+      }
+      if (connection.getRoles() != null) {
+        StringBuffer roles = new StringBuffer();
+        for (String role : connection.getRoles()) {
+          if (roles.length() > 0) {
+            roles.append(", ");
+          }
+          roles.append(role);
+        }
+        ret.put("Roles", roles.toString());
+      }
+    } else {
+      ret.put("State", "Disconnected");
+    }
+    return ret;
   }
 
   private boolean refreshLocalConnectionToken() {
@@ -706,69 +752,44 @@ public class AdminServerDataProviderImpl implements AdminServerDataProvider {
   }
 
   private class DomainStatusGetter {
-    private JsonObjectBuilder builder = Json.createObjectBuilder();
     private Connection connection;
     private InvocationContext ic;
     private boolean connectFailed;
-    private LocalizableString messageLabel;
-    private String severity;
-    private LocalizableString linkLabel;
-    private String linkHref;
-    private String linkResourceData;
-    private LocalizableString detailsLabel;
-    private String detailsMessage;
+    private JsonArrayBuilder messagesBuilder;
 
     private DomainStatusGetter(Connection connection, InvocationContext ic) {
       this.connection = connection;
       this.ic = ic;
     }
 
-    private JsonObject getDomainStatus() {
-      testWebLogicRestDelegation();
+    private void getDomainStatus() {
+      testWebLogicRestDelegation(getAdminServerName());
       getNeedServerRestart();
       getSecurityWarnings();
       if (connectFailed) {
-        messageLabel = LocalizedConstants.CANT_CONNECT_TO_ADMIN_SERVER;
-        linkLabel = null;
-        severity = "warning";
+        messagesBuilder = Json.createArrayBuilder();
+        messagesBuilder.add(Json.createObjectBuilder()
+          .add("messageSummary", ic.getLocalizer().localizeString(
+            LocalizedConstants.CANT_CONNECT_TO_ADMIN_SERVER))
+          .add("severity", "warning"));
       }
-      if (messageLabel != null) {
-        builder.add("messageHTML", ic.getLocalizer().localizeString(messageLabel));
-        builder.add("severity", severity);
-        if (linkLabel != null) {
-          JsonObjectBuilder linkBuilder =
-            Json.createObjectBuilder().add("label", ic.getLocalizer().localizeString(linkLabel));
-          if (linkHref != null) {
-            linkBuilder.add("href", linkHref);
-          } else {
-            linkBuilder.add("resourceData", linkResourceData);
-          }
-          builder.add("link", linkBuilder);
-        }
-        if ((detailsLabel != null) && (detailsMessage != null)) {
-          JsonObjectBuilder detailsBuilder =
-            Json.createObjectBuilder().add("label", ic.getLocalizer().localizeString(detailsLabel));
-          detailsBuilder.add("message", detailsMessage);
-          builder.add("messageDetails", detailsBuilder);
-        }
+      if (messagesBuilder == null) {
+        messagesBuilder = Json.createArrayBuilder();
+        messagesBuilder.add(Json.createObjectBuilder()
+          .add("severity", "info")
+          .add("messageSummary", ic.getLocalizer().localizeString(
+              LocalizedConstants.NO_SECURITY_VALIDATION_WARNINGS_LABEL))
+          .add("link", Json.createObjectBuilder()
+            .add("label", ic.getLocalizer().localizeString(
+              LocalizedConstants.SECURITY_VALIDATION_WARNINGS_LINK_LABEL))
+            .add("resourceData", "/api/-current-/" + Root.DOMAIN_RUNTIME_NAME
+              + "/data/DomainRuntime/DomainSecurityRuntime?slice=SecurityWarnings")));
       }
-      return builder.build();
-    }
-
-    private void testWebLogicRestDelegation() {
-      // Determines whether the admin server can make WLS REST calls to WLS servers.
-      // If it can't, it's probably because either OWSM or the DefaultIdentityAsserter isn't
-      // properly configured to allow weblogic-jwt-tokens.
-      // To do the test, first get the admin server's name from the domain config tree
-      // then try get to the admin server's runtime mbean through the domain runtime mbean.
-      if (connectFailed || messageLabel != null) {
-        return;
-      }
-      testWebLogicRestDelegation(getAdminServerName());
+      messages = messagesBuilder.build();
     }
 
     private void testWebLogicRestDelegation(String adminServerName) {
-      if (connectFailed || messageLabel != null) {
+      if (adminServerName == null) {
         return;
       }
       WebLogicRestRequest request =
@@ -791,22 +812,20 @@ public class AdminServerDataProviderImpl implements AdminServerDataProvider {
           + " " + response.getStatus()
           + " " + ((entityAsJson != null) ? entityAsJson.toString() : ResponseHelper.getEntityAsString(response))
         );
-        severity = "error";
-        messageLabel = LocalizedConstants.WEBLOGIC_REST_DELEGATION_NOT_WORKING_MESSAGE;
-        setExternalLink(
-          LocalizedConstants.WEBLOGIC_REST_DELEGATION_NOT_WORKING_LINK,
-          ConsoleBackendRuntimeConfig.getDocumentationSite()
-            + "/troubleshoot-weblogic-remote-console/#GUID-2EF5267E-FE34-4D74-BF2F-3F318E47062A"
-        );
-        setMessageDetails(
-          LocalizedConstants.WEBLOGIC_REST_DELEGATION_NOT_WORKING_DETAILS_LABEL,
-          entityAsJson
-        );
-        detailsMessage = "<ul><li>"
-            + detailsMessage
-            + "</li><li>"
-            + ic.getLocalizer().localizeString(LocalizedConstants.SUGGEST_RESTART_SERVER_MESSAGE)
-            + "</li></ul>";
+        if (messagesBuilder == null) {
+          messagesBuilder = Json.createArrayBuilder();
+        }
+        messagesBuilder.add(Json.createObjectBuilder()
+          .add("severity", "error")
+          .add("messageSummary", ic.getLocalizer().localizeString(
+            LocalizedConstants.WEBLOGIC_REST_DELEGATION_NOT_WORKING_MESSAGE))
+          .add("messageDetails", ic.getLocalizer().localizeString(
+              LocalizedConstants.SUGGEST_RESTART_SERVER_MESSAGE))
+          .add("link", Json.createObjectBuilder()
+            .add("label", ic.getLocalizer().localizeString(
+              LocalizedConstants.WEBLOGIC_REST_DELEGATION_NOT_WORKING_LINK)))
+            .add("externalLink", ConsoleBackendRuntimeConfig.getDocumentationSite()
+              + "/troubleshoot-weblogic-remote-console/#GUID-2EF5267E-FE34-4D74-BF2F-3F318E47062A"));
         return;
       } catch (Exception exc) {
         LOGGER.log(Level.FINEST, "testWebLogicRestDelegation failed: " + exc.toString(), exc);
@@ -815,9 +834,6 @@ public class AdminServerDataProviderImpl implements AdminServerDataProvider {
     }
 
     private String getAdminServerName() {
-      if (connectFailed || messageLabel != null) {
-        return null;
-      }
       WebLogicRestRequest request =
         WebLogicRestRequest.builder()
           .connection(connection)
@@ -843,7 +859,7 @@ public class AdminServerDataProviderImpl implements AdminServerDataProvider {
     }
 
     private void getNeedServerRestart() {
-      if (connectFailed || messageLabel != null) {
+      if (connectFailed) {
         return;
       }
       WebLogicRestRequest request =
@@ -855,21 +871,27 @@ public class AdminServerDataProviderImpl implements AdminServerDataProvider {
           .build();
       try (Response response = WebLogicRestClient.get(request)) {
         if (response.getStatus() == Response.Status.OK.getStatusCode()) {
-          boolean needRestart = false;
           JsonArray items = ResponseHelper.getEntityAsJson(response).getJsonArray("items");
-          for (int i = 0; !needRestart && i < items.size(); i++) {
+          int numberNeedingRestart = 0;
+          for (int i = 0; i < items.size(); i++) {
             boolean serverNeedsRestart = items.getJsonObject(i).getBoolean("restartRequired", false);
             if (serverNeedsRestart) {
-              needRestart = true;
+              numberNeedingRestart++;
             }
           }
-          if (needRestart) {
-            messageLabel = LocalizedConstants.NEED_SERVER_RESTART_LABEL;
-            severity = "warning";
-            setPageLink(
-              LocalizedConstants.SERVER_RESTART_LINK_LABEL,
-              Root.DOMAIN_RUNTIME_NAME + "/data/DomainRuntime/CombinedServerRuntimes"
-            );
+          if (numberNeedingRestart > 0) {
+            if (messagesBuilder == null) {
+              messagesBuilder = Json.createArrayBuilder();
+            }
+            messagesBuilder.add(Json.createObjectBuilder()
+              .add("severity", "warning")
+              .add("messageSummary", ic.getLocalizer().localizeString(
+                LocalizedConstants.NEED_SERVER_RESTART_LABEL))
+              .add("link", Json.createObjectBuilder()
+                .add("label", ic.getLocalizer().localizeString(
+                  LocalizedConstants.SERVER_RESTART_LINK_LABEL))
+                .add("resourceData", "/api/-current-/" + Root.DOMAIN_RUNTIME_NAME
+                  + "/data/DomainRuntime/CombinedServerRuntimes")));
           }
           return;
         } else {
@@ -904,7 +926,7 @@ public class AdminServerDataProviderImpl implements AdminServerDataProvider {
     }
 
     private void getSecurityWarnings() {
-      if (connectFailed || messageLabel != null) {
+      if (connectFailed) {
         return;
       }
       WebLogicRestRequest request =
@@ -915,16 +937,18 @@ public class AdminServerDataProviderImpl implements AdminServerDataProvider {
       JsonObject requestBody = Json.createObjectBuilder().build();
       try (Response response = WebLogicRestClient.post(request, requestBody)) {
         if (response.getStatus() == Response.Status.OK.getStatusCode()) {
-          setPageLink(
-            LocalizedConstants.SECURITY_VALIDATION_WARNINGS_LINK_LABEL,
-            Root.DOMAIN_RUNTIME_NAME + "/data/DomainRuntime/DomainSecurityRuntime?slice=SecurityWarnings"
-          );
-          boolean hasWarnings = ResponseHelper.getEntityAsJson(response).getBoolean("return");
-          messageLabel =
-            hasWarnings
-              ? LocalizedConstants.HAVE_SECURITY_VALIDATION_WARNINGS_LABEL
-              : LocalizedConstants.NO_SECURITY_VALIDATION_WARNINGS_LABEL;
-          severity = hasWarnings ? "error" : "info";
+          if (ResponseHelper.getEntityAsJson(response).getBoolean("return")) {
+            // There are security warnings
+            messagesBuilder.add(Json.createObjectBuilder()
+              .add("severity", "error")
+              .add("messageSummary", ic.getLocalizer().localizeString(
+                LocalizedConstants.HAVE_SECURITY_VALIDATION_WARNINGS_LABEL))
+              .add("link", Json.createObjectBuilder()
+                .add("label", ic.getLocalizer().localizeString(
+                  LocalizedConstants.SECURITY_VALIDATION_WARNINGS_LINK_LABEL))
+                .add("resourceData", "/api/-current-/" + Root.DOMAIN_RUNTIME_NAME
+                  + "/data/DomainRuntime/DomainSecurityRuntime?slice=SecurityWarnings")));
+          }
           return;
         } else if (response.getStatus() == Response.Status.NOT_FOUND.getStatusCode()) {
           // The domain doesn't support security validation warnings.
@@ -943,46 +967,6 @@ public class AdminServerDataProviderImpl implements AdminServerDataProvider {
         LOGGER.log(Level.FINEST, "getSecurityWarnings failed: " + exc.toString(), exc);
       }
       connectFailed = true;
-    }
-
-    private void setPageLink(LocalizableString label, String path) {
-      linkLabel = label;
-      linkResourceData = "/" + UriUtils.API_URI + "/" + UrlUtils.urlEncode(getName()) + "/" + path;
-      linkHref = null;
-    }
-
-    private void setExternalLink(LocalizableString label, String href) {
-      linkLabel = label;
-      linkHref = href;
-      linkResourceData = null;
-    }
-
-    private void setMessageDetails(LocalizableString label, JsonObject entityAsJson) {
-      if ((entityAsJson != null) && entityAsJson.containsKey("messages")) {
-        JsonArray messagesJson = entityAsJson.getJsonArray("messages");
-        if (messagesJson != null) {
-          String details = "";
-          boolean firstMessage = true;
-          for (int i = 0; i < messagesJson.size(); i++) {
-            JsonObject messageJson = messagesJson.getJsonObject(i);
-            if ((messageJson != null) && messageJson.containsKey("message")) {
-              String message = messageJson.getString("message");
-              if ((message != null) && !message.isBlank()) {
-                if (!firstMessage) {
-                  details += " - ";
-                } else {
-                  firstMessage = false;
-                }
-                details += message;
-              }
-            }
-          }
-          if (!details.isEmpty()) {
-            detailsLabel = label;
-            detailsMessage = details;
-          }
-        }
-      }
     }
   }
 

@@ -1,0 +1,24 @@
+declare const dialogVars: {
+    boxShadow: `var(--${string})` | `var(--${string}, ${string})` | `var(--${string}, ${number})`;
+    backgroundColor: `var(--${string})` | `var(--${string}, ${string})` | `var(--${string}, ${number})`;
+    borderColor: `var(--${string})` | `var(--${string}, ${string})` | `var(--${string}, ${number})`;
+    borderRadius: `var(--${string})` | `var(--${string}, ${string})` | `var(--${string}, ${number})`;
+    titleFontSize: `var(--${string})` | `var(--${string}, ${string})` | `var(--${string}, ${number})`;
+    titleColor: `var(--${string})` | `var(--${string}, ${string})` | `var(--${string}, ${number})`;
+    titleFontWeight: `var(--${string})` | `var(--${string}, ${string})` | `var(--${string}, ${number})`;
+    titleLineHeight: `var(--${string})` | `var(--${string}, ${string})` | `var(--${string}, ${number})`;
+    backgroundImage: `var(--${string})` | `var(--${string}, ${string})` | `var(--${string}, ${number})`;
+    headerPaddingTop: `var(--${string})` | `var(--${string}, ${string})` | `var(--${string}, ${number})`;
+    headerPaddingBottom: `var(--${string})` | `var(--${string}, ${string})` | `var(--${string}, ${number})`;
+    headerPaddingHorizontal: `var(--${string})` | `var(--${string}, ${string})` | `var(--${string}, ${number})`;
+    headerBackgroundColor: `var(--${string})` | `var(--${string}, ${string})` | `var(--${string}, ${number})`;
+    headerBorderBottomColor: `var(--${string})` | `var(--${string}, ${string})` | `var(--${string}, ${number})`;
+    bodyPaddingTop: `var(--${string})` | `var(--${string}, ${string})` | `var(--${string}, ${number})`;
+    bodyPaddingBottom: `var(--${string})` | `var(--${string}, ${string})` | `var(--${string}, ${number})`;
+    bodyPaddingHorizontal: `var(--${string})` | `var(--${string}, ${string})` | `var(--${string}, ${number})`;
+    footerPaddingTop: `var(--${string})` | `var(--${string}, ${string})` | `var(--${string}, ${number})`;
+    footerPaddingBottom: `var(--${string})` | `var(--${string}, ${string})` | `var(--${string}, ${number})`;
+    footerPaddingHorizontal: `var(--${string})` | `var(--${string}, ${string})` | `var(--${string}, ${number})`;
+    footerBorderColor: `var(--${string})` | `var(--${string}, ${string})` | `var(--${string}, ${number})`;
+};
+export { dialogVars };

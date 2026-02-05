@@ -1,0 +1,54 @@
+.TableFooterCellStyles_tableFooterCellStyles_base__1axh81o0 {
+  border-top: var(--gridlineWidth__efrfp90) solid color-mix(in srgb, var(--oj-c-EXPERIMENTAL-DO-NOT-USE-border-divider-opaque-color) var(--oj-c-EXPERIMENTAL-DO-NOT-USE-border-divider-opaque-percent), var(--oj-current-bg-color, var(--oj-c-EXPERIMENTAL-DO-NOT-USE-page-background-neutral0)));
+  box-sizing: border-box;
+  color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-primary);
+  font-size: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-body-md-font-size);
+  height: calc(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-table-row-height) + var(--gridlineWidth__efrfp90));
+  overflow: hidden;
+  position: sticky;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  z-index: 100005;
+}
+.TableFooterCellStyles_tableFooterCellStyles_base__1axh81o0:focus {
+  outline-style: none;
+}
+.TableFooterCellStyles_tableFooterCellStyles_stickyColumn__1axh81o1 {
+  z-index: 100006;
+}
+.TableFooterCellStyles_tableFooterCellStyles_stickyEdge__1axh81o2 {
+  z-index: 100007;
+}
+.TableFooterCellStyles_tableFooterCellStyles_focused__1axh81o3::before {
+  content: "";
+  display: block;
+  inset: 0;
+  outline-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-border-keyboard-focus);
+  outline-offset: -1px;
+  outline-style: dotted;
+  outline-width: 1px;
+  pointer-events: none;
+  position: absolute;
+}
+.TableFooterCellStyles_tableFooterCellStyles_active__1axh81o4 {
+  background-image: linear-gradient(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-overlay-hover), var(--oj-c-EXPERIMENTAL-DO-NOT-USE-overlay-hover));
+}
+.TableFooterCellStyles_tableFooterCellStyles_activeSelected__1axh81o5 {
+  background-image: 
+    linear-gradient(
+      var(--oj-c-EXPERIMENTAL-DO-NOT-USE-collection-header-surface-selected),
+      var(--oj-c-EXPERIMENTAL-DO-NOT-USE-collection-header-surface-selected)
+    ),
+    linear-gradient(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-overlay-hover), var(--oj-c-EXPERIMENTAL-DO-NOT-USE-overlay-hover));
+}
+.TableFooterCellStyles_tableFooterCellStyles_hover__1axh81o6 {
+  background-image: linear-gradient(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-overlay-hover), var(--oj-c-EXPERIMENTAL-DO-NOT-USE-overlay-hover));
+}
+.TableFooterCellStyles_tableFooterCellStyles_hoverSelected__1axh81o7 {
+  background-image: 
+    linear-gradient(
+      var(--oj-c-EXPERIMENTAL-DO-NOT-USE-collection-header-surface-selected),
+      var(--oj-c-EXPERIMENTAL-DO-NOT-USE-collection-header-surface-selected)
+    ),
+    linear-gradient(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-overlay-hover), var(--oj-c-EXPERIMENTAL-DO-NOT-USE-overlay-hover));
+}

@@ -1,0 +1,898 @@
+/* start:UNSAFE_RadioItem/themes/redwood/RadioBaseTheme.styles.css */
+.RadioBaseTheme_baseTheme__1xmeiy50 {
+  --iconToTextGap__11tjnon1: calc(2 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --outlineWidth__11tjnon0: 1px;
+}
+:root, .oj-density-dependent {
+  --rowHeight__11tjnon2: calc(calc(9 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem)) + calc(2 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-density-units, 0px)));
+}
+/* end:UNSAFE_RadioItem/themes/redwood/RadioBaseTheme.styles.css */
+/* start:UNSAFE_TextField/themes/redwood/FormLayoutBaseTheme.styles.css */
+.FormLayoutBaseTheme_baseTheme__sm2a4g0 {
+  --startEdgeLabelToValuePadding__vm51h40: calc(6 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --startEdgeLabelTextAlign__vm51h41: end;
+}
+:root, .oj-density-dependent {
+  --topEdgeLabelToValuePadding__vm51h42: calc(calc(2 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem)) + var(--oj-c-EXPERIMENTAL-DO-NOT-USE-density-units, 0px));
+}
+/* end:UNSAFE_TextField/themes/redwood/FormLayoutBaseTheme.styles.css */
+/* start:UNSAFE_Checkbox/themes/redwood/CheckboxBaseTheme.styles.css */
+.CheckboxBaseTheme_baseTheme__lptpwa0 {
+  --iconToTextGap__1qyga5a1: calc(2 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --outlineWidth__1qyga5a0: 1px;
+}
+:root, .oj-density-dependent {
+  --rowHeight__1qyga5a2: calc(calc(9 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem)) + calc(2 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-density-units, 0px)));
+}
+/* end:UNSAFE_Checkbox/themes/redwood/CheckboxBaseTheme.styles.css */
+/* start:UNSAFE_Label/themes/redwood/LabelBaseTheme.styles.css */
+.LabelBaseTheme_baseTheme__mpxezv0 {
+  --fontWeight__kn3t7f0: 600;
+  --lineHeight__kn3t7f1: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-body-sm-line-height);
+  --color__kn3t7f2: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-primary);
+  --colorDisabled__kn3t7f3: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-disabled);
+  --insideEdgeFontSize__kn3t7f4: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-body-xs-font-size);
+  --insideEdgeFontWeight__kn3t7f5: 600;
+  --insideEdgeLineHeight__kn3t7f6: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-body-xs-line-height);
+  --insideEdgeColor__kn3t7f7: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-secondary);
+  --formLayoutTopEdgeLabelTextAlign__kn3t7f8: end;
+}
+:root, .oj-scale-dependent, :root.oj-scale-sm, :root.oj-scale-md, .oj-density-dependent {
+  --fontSize__kn3t7f9: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-body-sm-font-size);
+  --insideEdgePositionTop__kn3t7fa: calc(calc(2 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem)) + var(--oj-c-EXPERIMENTAL-DO-NOT-USE-density-units, 0px));
+}
+.oj-scale-sm, :root.oj-scale-sm {
+  --fontSize__kn3t7f9: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-body-md-font-size);
+  --insideEdgePositionTop__kn3t7fa: max(calc(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem) + var(--oj-c-EXPERIMENTAL-DO-NOT-USE-density-units, 0px)),3px);
+}
+.oj-scale-md, :root.oj-scale-md {
+  --fontSize__kn3t7f9: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-body-md-font-size);
+  --insideEdgePositionTop__kn3t7fa: max(calc(calc(1.14 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem)) + var(--oj-c-EXPERIMENTAL-DO-NOT-USE-density-units, 0px)),3.5px);
+}
+.oj-scale-lg {
+  --fontSize__kn3t7f9: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-body-sm-font-size);
+  --insideEdgePositionTop__kn3t7fa: calc(calc(2 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem)) + var(--oj-c-EXPERIMENTAL-DO-NOT-USE-density-units, 0px));
+}
+:root, .oj-density-dependent {
+  --formLayoutTopEdgeLabelToValuePadding__kn3t7fb: calc(calc(2 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem)) + var(--oj-c-EXPERIMENTAL-DO-NOT-USE-density-units, 0px));
+}
+/* end:UNSAFE_Label/themes/redwood/LabelBaseTheme.styles.css */
+/* start:UNSAFE_UserAssistance/themes/redwood/UserAssistanceBaseTheme.styles.css */
+.UserAssistanceBaseTheme_baseTheme__j8tei50 {
+  --inlineTextColor__1n9ixz60: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-secondary);
+  --inlineFontSize__1n9ixz61: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-body-xs-font-size);
+}
+/* end:UNSAFE_UserAssistance/themes/redwood/UserAssistanceBaseTheme.styles.css */
+/* start:UNSAFE_ComponentMessage/themes/redwood/ComponentMessageBaseTheme.styles.css */
+.ComponentMessageBaseTheme_baseTheme__tgaz2j0 {
+  --startIconColor__1aj7c360: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-info);
+  --startIconSize__1aj7c361:  1rem;
+  --summaryTextColor__1aj7c362: var(--inlineTextColor__1n9ixz60);
+  --summaryTextWeight__1aj7c363: 400;
+  --summaryTextSize__1aj7c364: var(--inlineFontSize__1n9ixz61);
+  --summaryLineHeight__1aj7c365: 1.333rem;
+}
+/* end:UNSAFE_ComponentMessage/themes/redwood/ComponentMessageBaseTheme.styles.css */
+/* start:UNSAFE_Popup/themes/redwood/PopupBaseTheme.styles.css */
+.PopupBaseTheme_baseTheme__17qjw4f0 {
+  --borderColor__2ugez71: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-border-divider);
+  --boxShadow__2ugez73: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-box-shadow-xs);
+  --borderRadius__2ugez72: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-border-radius-sm);
+  --backgroundColor__2ugez70: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-surface-popup);
+  --padding__2ugez74: calc(2 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+}
+/* end:UNSAFE_Popup/themes/redwood/PopupBaseTheme.styles.css */
+/* start:hooks/UNSAFE_useTooltip/themes/redwood/TooltipContentBaseTheme.styles.css */
+.TooltipContentBaseTheme_baseTheme__sanbbo0 {
+  --maxWidth__1x922a00: ;
+  --backgroundColor__1x922a01: ;
+  --textColor__1x922a02: ;
+  --fontSize__1x922a03: ;
+  --lineHeight__1x922a04: ;
+  --borderRadius__1x922a05: ;
+  --borderColor__1x922a06: ;
+  --paddingHorizontal__1x922a07: ;
+  --paddingVertical__1x922a08: ;
+  --variants-tooltip-maxWidth__1x922a09: calc(72 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --variants-tooltip-backgroundColor__1x922a0a: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-surface-neutral30);
+  --variants-tooltip-textColor__1x922a0b: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-primary);
+  --variants-tooltip-fontSize__1x922a0c: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-body-sm-font-size);
+  --variants-tooltip-lineHeight__1x922a0d: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-body-sm-line-height);
+  --variants-tooltip-borderRadius__1x922a0e: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-border-radius-md);
+  --variants-tooltip-borderColor__1x922a0f: transparent;
+  --variants-tooltip-paddingHorizontal__1x922a0g: calc(2 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --variants-tooltip-paddingVertical__1x922a0h: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem);
+  --variants-datatip-maxWidth__1x922a0i: calc(72 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --variants-datatip-backgroundColor__1x922a0j: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-surface-neutral0);
+  --variants-datatip-textColor__1x922a0k: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-primary);
+  --variants-datatip-fontSize__1x922a0l: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-body-xs-font-size);
+  --variants-datatip-lineHeight__1x922a0m: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-body-xs-line-height);
+  --variants-datatip-borderRadius__1x922a0n: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-border-radius-md);
+  --variants-datatip-borderColor__1x922a0o: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-border-enabled);
+  --variants-datatip-paddingHorizontal__1x922a0p: calc(2 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --variants-datatip-paddingVertical__1x922a0q: calc(2 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+}
+/* end:hooks/UNSAFE_useTooltip/themes/redwood/TooltipContentBaseTheme.styles.css */
+/* start:UNSAFE_Floating/themes/redwood/FloatingBaseTheme.styles.css */
+.FloatingBaseTheme_baseTheme__18jw0qa0 {
+  --backgroundColor__ihlnqb0: transparent;
+}
+/* end:UNSAFE_Floating/themes/redwood/FloatingBaseTheme.styles.css */
+/* start:UNSAFE_MessageBanner/themes/redwood/MessageBannerBaseTheme.styles.css */
+.MessageBannerBaseTheme_baseTheme__1mzbhvy0 {
+  --backgroundColor__l2hi9d0: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-surface-info-low, var(--oj-core-info-secondary-3));
+  --startIconColor__l2hi9d1: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-info, var(--oj-core-info-3));
+  --startIconSize__l2hi9d2: calc(4 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --summaryTextColor__l2hi9d3: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-info, var(--oj-core-info-3));
+  --summaryTextWeight__l2hi9d4: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-subheading-xs-font-weight, var(--oj-typography-subheading-xs-font-weight));
+  --summaryTextSize__l2hi9d5: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-subheading-xs-font-size, var(--oj-typography-subheading-xs-font-size));
+  --summaryLineHeight__l2hi9d6: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-subheading-xs-line-height);
+}
+/* end:UNSAFE_MessageBanner/themes/redwood/MessageBannerBaseTheme.styles.css */
+/* start:UNSAFE_WindowOverlay/themes/redwood/WindowOverlayBaseTheme.styles.css */
+.WindowOverlayBaseTheme_baseTheme__1qrldld0 {
+  --notificationMainAxisOffset__5h4cac0: 0px;
+  --notificationCrossAxisOffset__5h4cac1: 0px;
+}
+/* end:UNSAFE_WindowOverlay/themes/redwood/WindowOverlayBaseTheme.styles.css */
+/* start:UNSAFE_BaseButton/themes/redwood/BaseButtonBaseTheme.styles.css */
+:root, .oj-c-colorscheme-light {
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-outlined-base-background-color: transparent;
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-outlined-base-border-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-border-enabled);
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-outlined-base-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-primary);
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-outlined-disabled-background-color: transparent;
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-outlined-disabled-border-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-border-disabled);
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-outlined-disabled-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-disabled);
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-outlined-hover-background-overlay-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-overlay-hover);
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-outlined-active-background-overlay-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-overlay-active);
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-call-to-action-base-background-color: rgb(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-170));
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-call-to-action-base-border-color: transparent;
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-call-to-action-base-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-inverse);
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-call-to-action-disabled-background-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-surface-disabled);
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-call-to-action-disabled-border-color: transparent;
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-call-to-action-disabled-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-disabled);
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-call-to-action-hover-background-overlay-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-overlay-inverse-hover);
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-call-to-action-active-background-overlay-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-overlay-inverse-active);
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-borderless-base-background-color: transparent;
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-borderless-base-border-color: transparent;
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-borderless-base-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-primary);
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-borderless-disabled-background-color: transparent;
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-borderless-disabled-border-color: transparent;
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-borderless-disabled-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-disabled);
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-borderless-hover-background-overlay-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-overlay-hover);
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-borderless-active-background-overlay-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-overlay-active);
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-ghost-base-background-color: transparent;
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-ghost-base-border-color: transparent;
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-ghost-base-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-primary);
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-ghost-disabled-background-color: transparent;
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-ghost-disabled-border-color: transparent;
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-ghost-disabled-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-disabled);
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-ghost-hover-background-overlay-color: transparent;
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-ghost-active-background-overlay-color: transparent;
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-solid-base-background-color: rgba(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-190), 0.08);
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-solid-base-border-color: transparent;
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-solid-base-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-primary);
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-solid-disabled-background-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-surface-disabled);
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-solid-disabled-border-color: transparent;
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-solid-disabled-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-disabled);
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-solid-hover-background-overlay-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-overlay-hover);
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-solid-active-background-overlay-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-overlay-active);
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-danger-base-background-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-surface-danger-strong);
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-danger-base-border-color: transparent;
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-danger-base-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-on-color);
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-danger-disabled-background-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-surface-disabled);
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-danger-disabled-border-color: transparent;
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-danger-disabled-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-disabled);
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-danger-hover-background-overlay-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-overlay-danger-hover);
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-danger-active-background-overlay-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-overlay-danger-active);
+}
+.oj-c-colorscheme-dark, .oj-color-invert {
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-outlined-base-background-color: transparent;
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-outlined-base-border-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-border-enabled);
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-outlined-base-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-primary);
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-outlined-disabled-background-color: transparent;
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-outlined-disabled-border-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-border-disabled);
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-outlined-disabled-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-disabled);
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-outlined-hover-background-overlay-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-overlay-hover);
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-outlined-active-background-overlay-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-overlay-active);
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-call-to-action-base-background-color: rgb(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-200));
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-call-to-action-base-border-color: transparent;
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-call-to-action-base-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-inverse);
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-call-to-action-disabled-background-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-surface-disabled);
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-call-to-action-disabled-border-color: transparent;
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-call-to-action-disabled-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-disabled);
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-call-to-action-hover-background-overlay-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-overlay-inverse-hover);
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-call-to-action-active-background-overlay-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-overlay-inverse-active);
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-borderless-base-background-color: transparent;
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-borderless-base-border-color: transparent;
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-borderless-base-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-primary);
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-borderless-disabled-background-color: transparent;
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-borderless-disabled-border-color: transparent;
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-borderless-disabled-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-disabled);
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-borderless-hover-background-overlay-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-overlay-hover);
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-borderless-active-background-overlay-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-overlay-active);
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-ghost-base-background-color: transparent;
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-ghost-base-border-color: transparent;
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-ghost-base-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-primary);
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-ghost-disabled-background-color: transparent;
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-ghost-disabled-border-color: transparent;
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-ghost-disabled-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-disabled);
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-ghost-hover-background-overlay-color: transparent;
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-ghost-active-background-overlay-color: transparent;
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-solid-base-background-color: rgba(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-190), 0.08);
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-solid-base-border-color: transparent;
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-solid-base-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-primary);
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-solid-disabled-background-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-surface-disabled);
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-solid-disabled-border-color: transparent;
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-solid-disabled-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-disabled);
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-solid-hover-background-overlay-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-overlay-hover);
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-solid-active-background-overlay-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-overlay-active);
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-danger-base-background-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-surface-danger-strong);
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-danger-base-border-color: transparent;
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-danger-base-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-inverse);
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-danger-disabled-background-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-surface-disabled);
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-danger-disabled-border-color: transparent;
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-danger-disabled-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-disabled);
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-danger-hover-background-overlay-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-overlay-danger-hover);
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-danger-active-background-overlay-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-overlay-danger-active);
+}
+:root, .oj-scale-dependent, :root.oj-scale-sm, :root.oj-scale-md, .oj-density-dependent {
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-border-radius: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-border-radius-md);
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-font-size: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-body-sm-font-size);
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-sizes-xs-text-to-edge-padding: calc(4 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-sizes-xs-height: max(calc(calc(6 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem)) + calc(3 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-density-units, 0px))),24px);
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-sizes-sm-text-to-edge-padding: calc(4 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-sizes-sm-height: max(calc(calc(9 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem)) + calc(3 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-density-units, 0px))),24px);
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-sizes-md-text-to-edge-padding: calc(4 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-sizes-md-height: calc(calc(11 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem)) + calc(2 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-density-units, 0px)));
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-sizes-lg-text-to-edge-padding: calc(6 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-sizes-lg-height: calc(calc(13 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem)) + calc(2 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-density-units, 0px)));
+}
+.oj-scale-sm, :root.oj-scale-sm {
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-border-radius: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-border-radius-md);
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-font-size: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-body-md-font-size);
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-sizes-xs-text-to-edge-padding: calc(5.33 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-sizes-xs-height: max(calc(calc(8 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem)) + calc(3 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-density-units, 0px))),24px);
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-sizes-sm-text-to-edge-padding: calc(4 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-sizes-sm-height: max(calc(calc(9 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem)) + calc(3 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-density-units, 0px))),24px);
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-sizes-md-text-to-edge-padding: calc(4 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-sizes-md-height: max(calc(calc(9.33 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem)) + calc(2 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-density-units, 0px))),24px);
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-sizes-lg-text-to-edge-padding: calc(6 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-sizes-lg-height: calc(calc(13 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem)) + calc(2 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-density-units, 0px)));
+}
+.oj-scale-md, :root.oj-scale-md {
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-border-radius: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-border-radius-md);
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-font-size: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-body-md-font-size);
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-sizes-xs-text-to-edge-padding: calc(4.57 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-sizes-xs-height: max(calc(calc(6.86 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem)) + calc(3 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-density-units, 0px))),24px);
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-sizes-sm-text-to-edge-padding: calc(4 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-sizes-sm-height: max(calc(calc(9 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem)) + calc(3 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-density-units, 0px))),24px);
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-sizes-md-text-to-edge-padding: calc(4 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-sizes-md-height: calc(calc(11 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem)) + calc(2 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-density-units, 0px)));
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-sizes-lg-text-to-edge-padding: calc(6 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-sizes-lg-height: calc(calc(13 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem)) + calc(2 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-density-units, 0px)));
+}
+.oj-scale-lg {
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-border-radius: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-border-radius-md);
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-font-size: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-body-sm-font-size);
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-sizes-xs-text-to-edge-padding: calc(4 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-sizes-xs-height: max(calc(calc(6 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem)) + calc(3 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-density-units, 0px))),24px);
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-sizes-sm-text-to-edge-padding: calc(4 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-sizes-sm-height: max(calc(calc(9 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem)) + calc(3 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-density-units, 0px))),24px);
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-sizes-md-text-to-edge-padding: calc(4 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-sizes-md-height: calc(calc(11 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem)) + calc(2 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-density-units, 0px)));
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-sizes-lg-text-to-edge-padding: calc(6 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-sizes-lg-height: calc(calc(13 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem)) + calc(2 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-density-units, 0px)));
+}
+/* end:UNSAFE_BaseButton/themes/redwood/BaseButtonBaseTheme.styles.css */
+/* start:PRIVATE_Axis/themes/redwood/AxisBaseTheme.styles.css */
+.AxisBaseTheme_baseTheme__14uuhu50 {
+  --axisTitleTextColor__1veqowy0: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-secondary);
+  --axisTickLabelTextColor__1veqowy1: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-secondary);
+}
+/* end:PRIVATE_Axis/themes/redwood/AxisBaseTheme.styles.css */
+/* start:UNSAFE_ButtonLabelLayout/themes/redwood/ButtonLabelLayoutBaseTheme.styles.css */
+.ButtonLabelLayoutBaseTheme_baseTheme__1wxhc8g0 {
+  --textToEdgePadding__1onk43q3: ;
+  --iconToTextPadding__1onk43q2: ;
+  --iconToEdgePadding__1onk43q1: ;
+  --iconSize__1onk43q0: ;
+  --sizes-xs-iconSize__1onk43q4: max(calc(5 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem)), 20px);
+  --sizes-xs-iconToTextPadding__1onk43q6: max(calc(2 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem)), 8px);
+  --sizes-xs-iconToEdgePadding__1onk43q5: max(calc(2 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem)), 8px);
+  --sizes-xs-textToEdgePadding__1onk43q7: max(calc(4 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem)), 16px);
+  --sizes-sm-iconSize__1onk43q8: calc(5 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --sizes-sm-iconToTextPadding__1onk43q9: calc(2 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --sizes-sm-iconToEdgePadding__1onk43qa: calc(2 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --sizes-sm-textToEdgePadding__1onk43qb: calc(4 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --sizes-md-iconSize__1onk43qc: calc(6 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --sizes-md-iconToTextPadding__1onk43qe: calc(2.5 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --sizes-md-iconToEdgePadding__1onk43qd: calc(2.5 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --sizes-md-textToEdgePadding__1onk43qf: calc(4 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --sizes-lg-iconSize__1onk43qg: calc(6 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --sizes-lg-iconToTextPadding__1onk43qi: calc(4 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --sizes-lg-iconToEdgePadding__1onk43qh: calc(4 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --sizes-lg-textToEdgePadding__1onk43qj: calc(4 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --sizes-embeddedxs-iconSize__1onk43qk: max(calc(5 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem)), 20px);
+  --sizes-embeddedxs-iconToTextPadding__1onk43qm: max(calc(2 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem)), 8px);
+  --sizes-embeddedxs-iconToEdgePadding__1onk43ql: max(calc(2 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem)), 8px);
+  --sizes-embeddedxs-textToEdgePadding__1onk43qn: max(calc(4 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem)), 16px);
+  --sizes-embeddedsm-iconSize__1onk43qo: calc(5 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --sizes-embeddedsm-iconToTextPadding__1onk43qp: calc(2 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --sizes-embeddedsm-iconToEdgePadding__1onk43qq: calc(1.875 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --sizes-embeddedsm-textToEdgePadding__1onk43qr: calc(4 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --sizes-embeddedmd-iconSize__1onk43qs: calc(6 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --sizes-embeddedmd-iconToTextPadding__1onk43qu: calc(2.5 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --sizes-embeddedmd-iconToEdgePadding__1onk43qt: calc(2.375 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --sizes-embeddedmd-textToEdgePadding__1onk43qv: calc(4 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --sizes-embeddedlg-iconSize__1onk43qw: calc(6 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --sizes-embeddedlg-iconToTextPadding__1onk43qy: calc(4 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --sizes-embeddedlg-iconToEdgePadding__1onk43qx: calc(3.375 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --sizes-embeddedlg-textToEdgePadding__1onk43qz: calc(4 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+}
+/* end:UNSAFE_ButtonLabelLayout/themes/redwood/ButtonLabelLayoutBaseTheme.styles.css */
+/* start:UNSAFE_Menu/themes/redwood/MenuItemBaseTheme.styles.css */
+.MenuItemBaseTheme_baseTheme__153jibj0 {
+  --iconSize__1qbg5hn0: calc(5 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --startEdgeToStartIconPadding__1qbg5hn1: calc(4 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --endIconToEndEdgePadding__1qbg5hn2: calc(4 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --startIconToLabelPadding__1qbg5hn3: calc(4 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --labelToEndIconPadding__1qbg5hn4: calc(8 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --textColor__1qbg5hn5: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-primary);
+  --iconColor__1qbg5hn6: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-primary);
+}
+/* end:UNSAFE_Menu/themes/redwood/MenuItemBaseTheme.styles.css */
+/* start:UNSAFE_Menu/themes/redwood/MenuSeparatorBaseTheme.styles.css */
+.MenuSeparatorBaseTheme_baseTheme__bwp4nk0 {
+  --verticalPadding__168r8wj0: calc(2 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+}
+/* end:UNSAFE_Menu/themes/redwood/MenuSeparatorBaseTheme.styles.css */
+/* start:UNSAFE_Skeleton/themes/redwood/SkeletonBaseTheme.styles.css */
+.SkeletonBaseTheme_baseTheme__afgqbw0 {
+  --bgColor-start__1mh02730: rgba(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-170), 0.05);
+  --bgColor-end__1mh02731: rgba(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-170), 0.15);
+}
+/* end:UNSAFE_Skeleton/themes/redwood/SkeletonBaseTheme.styles.css */
+/* start:UNSAFE_Checkbox/themes/redwood/CheckboxIconBaseTheme.styles.css */
+.CheckboxIconBaseTheme_baseTheme__1broikm0 {
+  --iconSize__1denrfz0: initial;
+  --iconColorChecked__1denrfz1: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-primary);
+  --iconColorUnchecked__1denrfz2: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-primary);
+  --iconTransformActive__1denrfz3: scale(0.75);
+}
+/* end:UNSAFE_Checkbox/themes/redwood/CheckboxIconBaseTheme.styles.css */
+/* start:PRIVATE_BaseCardView/themes/redwood/BaseCardViewBaseTheme.styles.css */
+:root, .oj-density-dependent {
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-card-view-gutter-size-xs: calc(3 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-card-view-gutter-size-sm: calc(calc(4 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem)) + var(--oj-c-EXPERIMENTAL-DO-NOT-USE-density-units, 0px));
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-card-view-gutter-size-md: calc(calc(6 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem)) + calc(3 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-density-units, 0px)));
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-card-view-gutter-size-lg: calc(calc(12 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem)) + calc(9 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-density-units, 0px)));
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-card-view-gutter-size-xl: calc(calc(16 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem)) + calc(13 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-density-units, 0px)));
+}
+/* end:PRIVATE_BaseCardView/themes/redwood/BaseCardViewBaseTheme.styles.css */
+/* start:PRIVATE_List/themes/redwood/ListBaseTheme.styles.css */
+:root, .oj-density-dependent {
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-list-item-height: calc(calc(12 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem)) + calc(2 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-density-units, 0px)));
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-list-item-padding-vertical: calc(calc(3 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem)) + var(--oj-c-EXPERIMENTAL-DO-NOT-USE-density-units, 0px));
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-list-item-padding-horizontal: calc(calc(4 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem)));
+}
+/* end:PRIVATE_List/themes/redwood/ListBaseTheme.styles.css */
+/* start:UNSAFE_GroupedList/themes/redwood/GroupedListBaseTheme.styles.css */
+.GroupedListBaseTheme_baseTheme__1nfzl1m0 {
+  --groupHeaderBgColorSticky__11yn0c70: rgb(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-30));
+}
+/* end:UNSAFE_GroupedList/themes/redwood/GroupedListBaseTheme.styles.css */
+/* start:UNSAFE_Link/themes/redwood/LinkBaseTheme.styles.css */
+.LinkBaseTheme_baseTheme__eahcnn0 {
+  --standaloneTextDecoration__1w21kyl0: none;
+  --standaloneTextDecorationHover__1w21kyl1: underline;
+  --standaloneFontWeight__1w21kyl2: 600;
+  --embeddedTextDecoration__1w21kyl3: underline;
+  --embeddedTextDecorationHover__1w21kyl4: none;
+  --textUnderlineOffset__1w21kyl5: calc(0.6 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --textColor__1w21kyl6: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-link);
+  --textColorActive__1w21kyl7: var(--textColor__1w21kyl6);
+  --textColorVisited__1w21kyl8: var(--textColor__1w21kyl6);
+}
+/* end:UNSAFE_Link/themes/redwood/LinkBaseTheme.styles.css */
+/* start:PRIVATE_Table/themes/redwood/TableBaseTheme.styles.css */
+.TableBaseTheme_baseTheme__10g2zer0 {
+  --gridlineWidth__efrfp90: 1px;
+}
+:root, .oj-density-dependent {
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-table-row-height: calc(calc(12 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem)) + calc(2 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-density-units, 0px)));
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-table-cell-padding-vertical: calc(calc(3 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem)) + var(--oj-c-EXPERIMENTAL-DO-NOT-USE-density-units, 0px));
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-table-cell-padding-horizontal: calc(calc(4 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem)));
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-table-header-row-height: calc(calc(13 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem)) + calc(2 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-density-units, 0px)));
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-table-header-cell-padding-vertical: calc(calc(1.5 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem)) + var(--oj-c-EXPERIMENTAL-DO-NOT-USE-density-units, 0px));
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-table-header-cell-padding-full-horizontal: calc(calc(4 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem)));
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-table-header-cell-padding-half-horizontal: calc(calc(2 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem)));
+}
+/* end:PRIVATE_Table/themes/redwood/TableBaseTheme.styles.css */
+/* start:UNSAFE_Dialog/themes/redwood/DialogBaseTheme.styles.css */
+.DialogBaseTheme_baseTheme__s3vxcb0 {
+  --boxShadow__9f8o6i0: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-box-shadow-lg);
+  --backgroundColor__9f8o6i1: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-surface-popup);
+  --borderColor__9f8o6i2: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-border-divider);
+  --borderRadius__9f8o6i3: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-border-radius-lg);
+  --titleFontSize__9f8o6i4: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-heading-xs-font-size);
+  --titleColor__9f8o6i5: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-primary);
+  --titleFontWeight__9f8o6i6: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-heading-xs-font-weight);
+  --titleLineHeight__9f8o6i7: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-heading-xs-line-height);
+  --backgroundImage__9f8o6i8: var(--imageVars_dialogTexture08__odczjtb);
+  --headerPaddingTop__9f8o6i9: calc(11 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --headerPaddingBottom__9f8o6ia: calc(3 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --headerPaddingHorizontal__9f8o6ib: calc(8 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --headerBackgroundColor__9f8o6ic: transparent;
+  --headerBorderBottomColor__9f8o6id: transparent;
+  --bodyPaddingTop__9f8o6ie: calc(0 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --bodyPaddingBottom__9f8o6if: calc(4 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --bodyPaddingHorizontal__9f8o6ig: calc(8 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --footerPaddingTop__9f8o6ih: calc(4 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --footerPaddingBottom__9f8o6ii: calc(8 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --footerPaddingHorizontal__9f8o6ij: calc(8 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --footerBorderColor__9f8o6ik: transparent;
+}
+/* end:UNSAFE_Dialog/themes/redwood/DialogBaseTheme.styles.css */
+/* start:UNSAFE_Badge/themes/redwood/BadgeThemeBaseTheme.styles.css */
+.BadgeThemeBaseTheme_baseTheme__lng3910 {
+  --backgroundColor__88ut8n0: ;
+  --color__88ut8n1: ;
+  --fontSize__88ut8n2: ;
+  --fontWeight__88ut8n3: ;
+  --fontStretch__88ut8n4: ;
+  --size__88ut8n5: ;
+  --height__88ut8n6: ;
+  --borderRadius__88ut8n7: ;
+  --padding__88ut8n8: ;
+  --variants-neutral-backgroundColor__88ut8n9: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-surface-neutral-strong);
+  --variants-neutral-color__88ut8na: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-inverse);
+  --variants-danger-backgroundColor__88ut8nb: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-surface-danger-strong);
+  --variants-danger-color__88ut8nc: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-inverse);
+  --variants-warning-backgroundColor__88ut8nd: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-surface-warning-strong);
+  --variants-warning-color__88ut8ne: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-inverse);
+  --variants-success-backgroundColor__88ut8nf: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-surface-success-strong);
+  --variants-success-color__88ut8ng: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-inverse);
+  --variants-info-backgroundColor__88ut8nh: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-surface-info-strong);
+  --variants-info-color__88ut8ni: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-inverse);
+  --variants-neutralSubtle-backgroundColor__88ut8nj: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-surface-neutral-subtle);
+  --variants-neutralSubtle-color__88ut8nk: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-primary);
+  --variants-dangerSubtle-backgroundColor__88ut8nl: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-surface-danger-subtle);
+  --variants-dangerSubtle-color__88ut8nm: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-primary);
+  --variants-warningSubtle-backgroundColor__88ut8nn: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-surface-warning-subtle);
+  --variants-warningSubtle-color__88ut8no: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-primary);
+  --variants-successSubtle-backgroundColor__88ut8np: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-surface-success-subtle);
+  --variants-successSubtle-color__88ut8nq: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-primary);
+  --variants-infoSubtle-backgroundColor__88ut8nr: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-surface-info-subtle);
+  --variants-infoSubtle-color__88ut8ns: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-primary);
+  --sizes-xs-height__88ut8nt: calc(4 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --sizes-xs-fontSize__88ut8nu: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-body-2xs-font-size);
+  --sizes-xs-fontWeight__88ut8nv: normal;
+  --sizes-xs-borderRadius__88ut8nw: calc(2.25 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --sizes-xs-padding__88ut8nx: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem);
+  --sizes-sm-height__88ut8ny: calc(5 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --sizes-sm-fontSize__88ut8nz: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-body-2xs-font-size);
+  --sizes-sm-fontWeight__88ut8n10: normal;
+  --sizes-sm-borderRadius__88ut8n11: calc(2.25 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --sizes-sm-padding__88ut8n12: calc(2 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --sizes-md-height__88ut8n13: calc(6 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --sizes-md-fontSize__88ut8n14: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-body-sm-font-size);
+  --sizes-md-fontWeight__88ut8n15: normal;
+  --sizes-md-borderRadius__88ut8n16: calc(3 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --sizes-md-padding__88ut8n17: calc(3 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+}
+/* end:UNSAFE_Badge/themes/redwood/BadgeThemeBaseTheme.styles.css */
+/* start:UNSAFE_Avatar/themes/redwood/AvatarBaseTheme.styles.css */
+.AvatarBaseTheme_baseTheme__se034w0 {
+  --bgColor__n2nsgo0: ;
+  --textColor__n2nsgo1: ;
+  --size__n2nsgo2: ;
+  --borderRadius__n2nsgo3: ;
+  --initialsFontSize__n2nsgo4: ;
+  --initialsFontWeight__n2nsgo5: ;
+  --iconFontSize__n2nsgo6: ;
+  --pattern__n2nsgo7: ;
+  --colors-neutral-bgColor__n2nsgo8: rgb(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-130));
+  --colors-neutral-pattern__n2nsgo9: var(--imageVars_avatarPattern0__odczjt0);
+  --colors-neutral-textColor__n2nsgoa: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-inverse);
+  --colors-orange-bgColor__n2nsgob: #9b5734;
+  --colors-orange-pattern__n2nsgoc: var(--imageVars_avatarPattern1__odczjt1);
+  --colors-orange-textColor__n2nsgod: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-inverse);
+  --colors-green-bgColor__n2nsgoe: #4c825c;
+  --colors-green-pattern__n2nsgof: var(--imageVars_avatarPattern2__odczjt2);
+  --colors-green-textColor__n2nsgog: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-inverse);
+  --colors-teal-bgColor__n2nsgoh: #4f7d7b;
+  --colors-teal-pattern__n2nsgoi: var(--imageVars_avatarPattern3__odczjt3);
+  --colors-teal-textColor__n2nsgoj: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-inverse);
+  --colors-blue-bgColor__n2nsgok: #437c94;
+  --colors-blue-pattern__n2nsgol: var(--imageVars_avatarPattern4__odczjt4);
+  --colors-blue-textColor__n2nsgom: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-inverse);
+  --colors-slate-bgColor__n2nsgon: #798b8a;
+  --colors-slate-pattern__n2nsgoo: var(--imageVars_avatarPattern5__odczjt5);
+  --colors-slate-textColor__n2nsgop: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-inverse);
+  --colors-pink-bgColor__n2nsgoq: #925865;
+  --colors-pink-pattern__n2nsgor: var(--imageVars_avatarPattern6__odczjt6);
+  --colors-pink-textColor__n2nsgos: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-inverse);
+  --colors-purple-bgColor__n2nsgot: #846a92;
+  --colors-purple-pattern__n2nsgou: var(--imageVars_avatarPattern7__odczjt7);
+  --colors-purple-textColor__n2nsgov: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-inverse);
+  --colors-lilac-bgColor__n2nsgow: #6b7494;
+  --colors-lilac-pattern__n2nsgox: var(--imageVars_avatarPattern8__odczjt8);
+  --colors-lilac-textColor__n2nsgoy: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-inverse);
+  --colors-gray-bgColor__n2nsgoz: #6f757e;
+  --colors-gray-pattern__n2nsgo10: var(--imageVars_avatarPattern9__odczjt9);
+  --colors-gray-textColor__n2nsgo11: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-inverse);
+  --sizes-2xs-size__n2nsgo12: calc(7 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --sizes-2xs-borderRadius__n2nsgo13: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-border-radius-md);
+  --sizes-2xs-initialsFontSize__n2nsgo14: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-body-xs-font-size);
+  --sizes-2xs-initialsFontWeight__n2nsgo15: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-body-xs-font-weight-semibold);
+  --sizes-2xs-iconFontSize__n2nsgo16: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-body-xs-font-size);
+  --sizes-xs-size__n2nsgo17: calc(11 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --sizes-xs-borderRadius__n2nsgo18: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-border-radius-lg);
+  --sizes-xs-initialsFontSize__n2nsgo19: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-body-md-font-size);
+  --sizes-xs-initialsFontWeight__n2nsgo1a: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-body-md-font-weight-regular);
+  --sizes-xs-iconFontSize__n2nsgo1b: calc(4 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --sizes-sm-size__n2nsgo1c: calc(14 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --sizes-sm-borderRadius__n2nsgo1d: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-border-radius-lg);
+  --sizes-sm-initialsFontSize__n2nsgo1e: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-heading-xs-font-size);
+  --sizes-sm-initialsFontWeight__n2nsgo1f: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-body-xs-font-weight-regular);
+  --sizes-sm-iconFontSize__n2nsgo1g: calc(6 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --sizes-md-size__n2nsgo1h: calc(18 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --sizes-md-borderRadius__n2nsgo1i: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-border-radius-xl);
+  --sizes-md-initialsFontSize__n2nsgo1j: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-heading-lg-font-size);
+  --sizes-md-initialsFontWeight__n2nsgo1k: lighter;
+  --sizes-md-iconFontSize__n2nsgo1l: calc(8 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --sizes-lg-size__n2nsgo1m: calc(24 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --sizes-lg-borderRadius__n2nsgo1n: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-border-radius-xl);
+  --sizes-lg-initialsFontSize__n2nsgo1o: calc(10 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --sizes-lg-initialsFontWeight__n2nsgo1p: lighter;
+  --sizes-lg-iconFontSize__n2nsgo1q: calc(9 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --sizes-xl-size__n2nsgo1r: calc(36 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --sizes-xl-borderRadius__n2nsgo1s: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-border-radius-xl);
+  --sizes-xl-initialsFontSize__n2nsgo1t: calc(12 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --sizes-xl-initialsFontWeight__n2nsgo1u: lighter;
+  --sizes-xl-iconFontSize__n2nsgo1v: calc(14 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --sizes-2xl-size__n2nsgo1w: calc(49 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --sizes-2xl-borderRadius__n2nsgo1x: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-border-radius-xl);
+  --sizes-2xl-initialsFontSize__n2nsgo1y: calc(18 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --sizes-2xl-initialsFontWeight__n2nsgo1z: lighter;
+  --sizes-2xl-iconFontSize__n2nsgo20: calc(14 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --shapes-circle-borderRadius__n2nsgo21: 50%;
+}
+/* end:UNSAFE_Avatar/themes/redwood/AvatarBaseTheme.styles.css */
+/* start:UNSAFE_ButtonLayout/themes/redwood/ButtonLayoutBaseTheme.styles.css */
+.ButtonLayoutBaseTheme_baseTheme__8fzs170 {
+  --spacing-lg-columnGap__rt5x5j0: calc(4 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --spacing-sm-columnGap__rt5x5j1: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem);
+}
+/* end:UNSAFE_ButtonLayout/themes/redwood/ButtonLayoutBaseTheme.styles.css */
+/* start:UNSAFE_ColorPicker/themes/redwood/ColorPickerBaseTheme.styles.css */
+.ColorPickerBaseTheme_baseTheme__mrs8ey0 {
+  --width__1urfhqt0: 100%;
+  --minWidth__1urfhqt1: calc(55 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --maxWidth__1urfhqt2: calc(55 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --maxHeight__1urfhqt3: calc(85 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+}
+/* end:UNSAFE_ColorPicker/themes/redwood/ColorPickerBaseTheme.styles.css */
+/* start:UNSAFE_ColorSwatch/themes/redwood/ColorSwatchBaseTheme.styles.css */
+.ColorSwatchBaseTheme_baseTheme__j3p4lr0 {
+  --borderRadius__1bc16n60: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-border-radius-sm);
+  --borderWidth__1bc16n61: 1px;
+  --sizes-xs-height__1bc16n62: max(calc(calc(6 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem))),24px);
+  --sizes-sm-height__1bc16n63: calc(calc(11 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem)));
+}
+/* end:UNSAFE_ColorSwatch/themes/redwood/ColorSwatchBaseTheme.styles.css */
+/* start:UNSAFE_ConveyorBelt/themes/redwood/ConveyorBeltBaseTheme.styles.css */
+.ConveyorBeltBaseTheme_baseTheme__1ktowgq0 {
+  --boxShadow-width__114pbvl0: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem);
+}
+/* end:UNSAFE_ConveyorBelt/themes/redwood/ConveyorBeltBaseTheme.styles.css */
+/* start:UNSAFE_DatePicker/themes/redwood/DatePickerBaseTheme.styles.css */
+.DatePickerBaseTheme_baseTheme__tg9grh0 {
+  --width__1wy4iwf0: 100%;
+  --minWidth__1wy4iwf1: calc(72 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --maxWidth__1wy4iwf2: calc(84 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --calendarGridRowGap__1wy4iwf3: calc(4 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --monthYearGridRowGap__1wy4iwf4: calc(13 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --height__1wy4iwf5: calc(89 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --todayFooterButtonHeight__1wy4iwf6: calc(102 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+}
+/* end:UNSAFE_DatePicker/themes/redwood/DatePickerBaseTheme.styles.css */
+/* start:UNSAFE_DrawerPopup/themes/redwood/DrawerPopupBaseTheme.styles.css */
+.DrawerPopupBaseTheme_baseTheme__11hfduf0 {
+  --overlayDrawerBackgroundColor__1ekn0ug0: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-surface-neutral10);
+}
+/* end:UNSAFE_DrawerPopup/themes/redwood/DrawerPopupBaseTheme.styles.css */
+/* start:UNSAFE_DrawerLayout/themes/redwood/DrawerLayoutBaseTheme.styles.css */
+.DrawerLayoutBaseTheme_baseTheme__qqda4t0 {
+  --overlayDrawerBackgroundColor__37aqbl0: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-surface-neutral10);
+}
+/* end:UNSAFE_DrawerLayout/themes/redwood/DrawerLayoutBaseTheme.styles.css */
+/* start:UNSAFE_FilePicker/themes/redwood/FilePickerBaseTheme.styles.css */
+.FilePickerBaseTheme_baseTheme__gjv4mp0 {
+  --borderColor__12s6ppx0: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-border-enabled);
+  --borderRadius__12s6ppx1: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-border-radius-xl);
+  --borderWidth__12s6ppx2: 1px;
+}
+/* end:UNSAFE_FilePicker/themes/redwood/FilePickerBaseTheme.styles.css */
+/* start:UNSAFE_ProgressCircle/themes/redwood/ProgressCircleBaseTheme.styles.css */
+.ProgressCircleBaseTheme_baseTheme__1qsbny60 {
+  --size__lborgv0: ;
+  --trackWidth__lborgv1: ;
+  --sizes-sm-size__lborgv2: calc(6 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --sizes-sm-trackWidth__lborgv3: 2px;
+  --sizes-md-size__lborgv4: calc(12 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --sizes-md-trackWidth__lborgv5: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem);
+  --sizes-lg-size__lborgv6: calc(24 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --sizes-lg-trackWidth__lborgv7: calc(1.5 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+}
+/* end:UNSAFE_ProgressCircle/themes/redwood/ProgressCircleBaseTheme.styles.css */
+/* start:UNSAFE_FormLayout/themes/redwood/FormLayoutBaseTheme.styles.css */
+.FormLayoutBaseTheme_baseTheme__1sotkej0 {
+  --columnGapWidthMd__pa4rfz2: calc(6 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --columnGapWidthSm__pa4rfz3: calc(4 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --maxStartColumnWidth__pa4rfz0: calc(150 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --maxNonStartColumnWidth__pa4rfz1: calc(112 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --rowGapWidth__pa4rfz4: max(calc(12px + calc(2 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-density-units, 0px))),calc(calc(3.5 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem)) + calc(1.5 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-density-units, 0px))));
+  --columnGapWidth__pa4rfz5: inherit;
+}
+/* end:UNSAFE_FormLayout/themes/redwood/FormLayoutBaseTheme.styles.css */
+/* start:UNSAFE_Indexer/themes/redwood/IndexerBaseTheme.styles.css */
+.IndexerBaseTheme_baseTheme__k2mgdb0 {
+  --textColor__1gj3n970: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-primary);
+  --fontSize__1gj3n971: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-body-sm-font-size);
+}
+/* end:UNSAFE_Indexer/themes/redwood/IndexerBaseTheme.styles.css */
+/* start:UNSAFE_MessageToast/themes/redwood/MessageToastBaseTheme.styles.css */
+.MessageToastBaseTheme_baseTheme__3146600 {
+  --backgroundColor__zw7y740: rgb(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-50));
+  --maxWidthLg__zw7y741: calc(150 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --maxWidthMd__zw7y742: calc(100vw - calc(12 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem)));
+  --maxWidthSm__zw7y743: calc(100vw - calc(8 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem)));
+  --startIconColor__zw7y744: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-primary);
+  --startIconSize__zw7y745: calc(6 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --summaryTextColor__zw7y746: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-primary);
+  --summaryTextWeight__zw7y747: normal;
+  --summaryTextSize__zw7y748: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-body-md-font-size);
+  --summaryLineHeight__zw7y749: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-body-md-line-height);
+  --detailTextColor__zw7y74a: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-secondary);
+}
+/* end:UNSAFE_MessageToast/themes/redwood/MessageToastBaseTheme.styles.css */
+/* start:UNSAFE_MeterBar/themes/redwood/MeterBarBaseTheme.styles.css */
+.MeterBarBaseTheme_baseTheme__1n8hfuv0 {
+  --size__saju1q0: ;
+  --sizes-lg__saju1q1: calc(3 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --sizes-md__saju1q2: calc(2 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --sizes-sm__saju1q3: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem);
+  --sizes-fit__saju1q4: 100%;
+}
+/* end:UNSAFE_MeterBar/themes/redwood/MeterBarBaseTheme.styles.css */
+/* start:UNSAFE_MeterCircle/themes/redwood/MeterCircleBaseTheme.styles.css */
+.MeterCircleBaseTheme_baseTheme__jo6utu0 {
+  --size__1qest1m0: ;
+  --trackSize__1qest1m1: ;
+  --sizes-lg__1qest1m2: calc(49  * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --sizes-md__1qest1m3: calc(24  * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --sizes-sm__1qest1m4: calc(14  * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --sizes-fit__1qest1m5: 100%;
+  --trackSizes-lg__1qest1m6: calc(3 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --trackSizes-md__1qest1m7: calc(2 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --trackSizes-sm__1qest1m8: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem);
+  --trackSizes-fit__1qest1m9: calc(3 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+}
+/* end:UNSAFE_MeterCircle/themes/redwood/MeterCircleBaseTheme.styles.css */
+/* start:UNSAFE_ProgressBar/themes/redwood/ProgressBarBaseTheme.styles.css */
+.ProgressBarBaseTheme_baseTheme__suzb8h0 {
+  --height__irxz4j0: 6px;
+  --borderRadius__irxz4j1: 3px;
+}
+/* end:UNSAFE_ProgressBar/themes/redwood/ProgressBarBaseTheme.styles.css */
+/* start:UNSAFE_NavigationList/themes/redwood/NavigationListItemBaseTheme.styles.css */
+.NavigationListItemBaseTheme_baseTheme__cn44r50 {
+  --fontSize__1497t560: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-body-md-font-size);
+  --fontWeight__1497t561: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-body-md-font-weight-semibold);
+  --minHeight__1497t563: calc(12 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --borderWidth__1497t564: 3px;
+  --borderHeight__1497t565: calc(10 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --iconSize__1497t562: calc(5 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --paddingHorizontal__1497t566: calc(4 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --labelColor__1497t567: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-secondary);
+  --labelColorHover__1497t568: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-primary);
+  --backgroundColorHover__1497t569: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-overlay-hover);
+  --borderColorHover__1497t56a: transparent;
+  --labelColorSelected__1497t56b: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-primary);
+  --backgroundColorSelected__1497t56c: transparent;
+  --borderColorSelected__1497t56d: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-primary);
+  --backgroundColorActive__1497t56e: transparent;
+  --labelColorActive__1497t56f: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-primary);
+  --borderColorActive__1497t56g: transparent;
+}
+/* end:UNSAFE_NavigationList/themes/redwood/NavigationListItemBaseTheme.styles.css */
+/* start:UNSAFE_RadioItem/themes/redwood/RadioIconBaseTheme.styles.css */
+.RadioIconBaseTheme_baseTheme__1j9fixc0 {
+  --iconSize__bwcdcl0: var(--iconSize__bwcdcl0);
+  --iconColorSelected__bwcdcl1: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-primary);
+  --iconColorUnselected__bwcdcl2: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-primary);
+  --iconTransformActive__bwcdcl3: scale(0.75);
+}
+/* end:UNSAFE_RadioItem/themes/redwood/RadioIconBaseTheme.styles.css */
+/* start:UNSAFE_TabBarCommon/themes/redwood/TabBarItemBaseTheme.styles.css */
+.TabBarItemBaseTheme_baseTheme__1izcbv90 {
+  --labelColor__1vg465e0: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-secondary);
+  --labelColorSelected__1vg465e1: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-primary);
+  --labelColorHover__1vg465e2: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-primary);
+  --iconSize__1vg465e3: calc(5 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --borderWidthBottom__1vg465e4: 3px;
+  --borderWidthLeftRight__1vg465e5: 3px;
+}
+:root, .oj-density-dependent {
+  --mdHeight__1vg465e6: calc(calc(10.5 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem)) + calc(2 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-density-units, 0px)));
+  --lgHeight__1vg465e7: calc(calc(14.5 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem)) + calc(2 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-density-units, 0px)));
+  --stackedHeight__1vg465e8: calc(calc(18.5 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem)) + calc(2 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-density-units, 0px)));
+}
+/* end:UNSAFE_TabBarCommon/themes/redwood/TabBarItemBaseTheme.styles.css */
+/* start:UNSAFE_RatingGauge/themes/redwood/RatingGaugeBaseTheme.styles.css */
+.RatingGaugeBaseTheme_baseTheme__1u6vk8m0 {
+  --colorSelected__1kgzocs0: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-primary);
+  --borderColorSelected__1kgzocs1: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-primary);
+  --colorUnselected__1kgzocs2: transparent;
+  --borderColorUnselected__1kgzocs3: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-primary);
+  --colorSelectedDisabled__1kgzocs4: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-disabled);
+  --borderColorSelectedDisabled__1kgzocs5: transparent;
+  --colorUnselectedDisabled__1kgzocs6: rgba(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-190), 0.12);
+  --borderColorUnselectedDisabled__1kgzocs7: transparent;
+  --colorSelectedReadonly__1kgzocs8: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-primary);
+  --borderColorSelectedReadonly__1kgzocs9: transparent;
+  --colorUnselectedReadonly__1kgzocsa: rgba(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-170), 0.15);
+  --borderColorUnselectedReadonly__1kgzocsb: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-border-enabled);
+  --size__1kgzocsc: ;
+  --margin__1kgzocsd: ;
+  --sizes-sm__1kgzocse: calc(4 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --sizes-md__1kgzocsf: calc(5 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --sizes-lg__1kgzocsg: calc(9 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --colors-gold-colorSelected__1kgzocsh: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-surface-warning-strong);
+  --colors-gold-bordorColorSelected__1kgzocsi: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-border-warning);
+  --colors-gold-colorSelectedReadonly__1kgzocsj: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-surface-warning-strong);
+  --colors-gold-borderColorUnselected__1kgzocsk: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-border-warning);
+  --colors-gold-borderColorUnselectedReadonly__1kgzocsl: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-border-enabled);
+  --colors-gold-borderColorSelectedReadonly__1kgzocsm: transparent;
+  --colors-success-colorSelected__1kgzocsn: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-dvt-threshold-success);
+  --colors-success-bordorColorSelected__1kgzocso: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-dvt-threshold-success);
+  --colors-success-colorSelectedReadonly__1kgzocsp: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-dvt-threshold-success);
+  --colors-warning-colorSelected__1kgzocsq: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-dvt-threshold-warning);
+  --colors-warning-bordorColorSelected__1kgzocsr: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-dvt-threshold-warning);
+  --colors-warning-colorSelectedReadonly__1kgzocss: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-dvt-threshold-warning);
+  --colors-danger-colorSelected__1kgzocst: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-dvt-threshold-danger);
+  --colors-danger-bordorColorSelected__1kgzocsu: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-dvt-threshold-danger);
+  --colors-danger-colorSelectedReadonly__1kgzocsv: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-dvt-threshold-danger);
+}
+/* end:UNSAFE_RatingGauge/themes/redwood/RatingGaugeBaseTheme.styles.css */
+/* start:UNSAFE_Train/themes/redwood/TrainBaseTheme.styles.css */
+.TrainBaseTheme_baseTheme__kpes8h0 {
+  --stepWidth__wmjnh60: calc(28 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --stepPaddingTop__wmjnh61: calc(3 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --stepPaddingBottom__wmjnh62: calc(3 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --stepBorderRadius__wmjnh6n: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-border-radius-xl);
+  --labelFontSize__wmjnh63: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-body-sm-font-size);
+  --labelPaddingTop__wmjnh65: calc(3 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --buttonDiameter__wmjnh66: calc(6 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --buttonFontSize__wmjnh67: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-body-xs-font-size);
+  --connectorHeight__wmjnh68: calc(0.5 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --buttonBgColor__wmjnh6a: transparent;
+  --buttonBorderColor__wmjnh6b: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-border-enabled);
+  --buttonTextColor__wmjnh6c: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-secondary);
+  --labelColor__wmjnh6d: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-secondary);
+  --labelFontWeight__wmjnh64: bold;
+  --connectorColor__wmjnh6e: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-border-enabled);
+  --connectorPadding__wmjnh69: calc(2.5 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --buttonBgColorVisited__wmjnh6f: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-success);
+  --buttonBorderColorVisited__wmjnh6g: transparent;
+  --buttonTextColorVisited__wmjnh6h: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-inverse);
+  --labelColorVisited__wmjnh6i: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-primary);
+  --buttonBgColorHover__wmjnh6j: transparent;
+  --buttonBorderColorHover__wmjnh6k: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-border-enabled);
+  --buttonTextColorHover__wmjnh6l: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-secondary);
+  --stepBgColorHover__wmjnh6m: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-overlay-hover);
+  --buttonBgColorActive__wmjnh6o: transparent;
+  --buttonBorderColorActive__wmjnh6p: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-border-enabled);
+  --buttonTextColorActive__wmjnh6q: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-secondary);
+  --labelFontWeightActive__wmjnh6r: bold;
+  --stepBgColorActive__wmjnh6s: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-overlay-active);
+  --buttonBgColorSelected__wmjnh6t: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-surface-neutral-strong);
+  --buttonBorderColorSelected__wmjnh6u: transparent;
+  --buttonTextColorSelected__wmjnh6v: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-inverse);
+  --labelFontWeightSelected__wmjnh6w: bold;
+  --labelColorSelected__wmjnh6x: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-primary);
+  --connectorColorSelected__wmjnh6y: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-border-enabled);
+  --connectorPaddingSelected__wmjnh6z: 0px;
+  --buttonBgColorDisabled__wmjnh610: transparent;
+  --buttonBorderColorDisabled__wmjnh611: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-border-disabled);
+  --buttonTextColorDisabled__wmjnh612: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-disabled);
+  --labelColorDisabled__wmjnh613: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-disabled);
+}
+/* end:UNSAFE_Train/themes/redwood/TrainBaseTheme.styles.css */
+/* start:PRIVATE_MonthView/themes/redwood/MonthViewBaseTheme.styles.css */
+:root, .oj-c-colorscheme-light {
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-month-view-day-of-the-week-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-secondary);
+}
+.oj-c-colorscheme-dark, .oj-color-invert {
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-month-view-day-of-the-week-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-secondary);
+}
+:root, .oj-scale-dependent, :root.oj-scale-sm, :root.oj-scale-md {
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-month-view-row-gap: calc(3 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-month-view-column-gap: calc(0 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-month-view-day-of-the-week-line-height: calc(2 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-body-xs-font-size));
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-month-view-day-of-the-week-font-size: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-body-xs-font-size);
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-month-view-day-of-the-week-font-weight: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-body-xs-font-weight-semibold);
+}
+.oj-scale-sm, :root.oj-scale-sm {
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-month-view-row-gap: calc(3 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-month-view-column-gap: calc(0 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-month-view-day-of-the-week-line-height: calc(2 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-body-xs-font-size));
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-month-view-day-of-the-week-font-size: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-body-xs-font-size);
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-month-view-day-of-the-week-font-weight: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-body-xs-font-weight-semibold);
+}
+.oj-scale-md, :root.oj-scale-md {
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-month-view-row-gap: calc(3 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-month-view-column-gap: calc(0 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-month-view-day-of-the-week-line-height: calc(2 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-body-xs-font-size));
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-month-view-day-of-the-week-font-size: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-body-xs-font-size);
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-month-view-day-of-the-week-font-weight: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-body-xs-font-weight-semibold);
+}
+.oj-scale-lg {
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-month-view-row-gap: calc(3 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-month-view-column-gap: calc(0 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-month-view-day-of-the-week-line-height: calc(2 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-body-xs-font-size));
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-month-view-day-of-the-week-font-size: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-body-xs-font-size);
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-month-view-day-of-the-week-font-weight: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-body-xs-font-weight-semibold);
+}
+/* end:PRIVATE_MonthView/themes/redwood/MonthViewBaseTheme.styles.css */
+/* start:UNSAFE_FlatTreeView/themes/redwood/TreeViewBaseTheme.styles.css */
+.TreeViewBaseTheme_baseTheme__15pwif10 {
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-tree-view-item-height: calc(10 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-tree-view-indent-width: calc(6 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+}
+/* end:UNSAFE_FlatTreeView/themes/redwood/TreeViewBaseTheme.styles.css */
+/* start:UNSAFE_TextField/themes/redwood/TextFieldBaseTheme.styles.css */
+.TextFieldBaseTheme_baseTheme__1qsscqw0 {
+  --borderColor__w6gg1y0: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-textfield-border-enabled);
+  --borderWidth__w6gg1y1: 1px;
+  --borderRadius__w6gg1y2: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-border-radius-md);
+  --bgColor__w6gg1y3: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-textfield-surface-enabled);
+  --borderColorFocus__w6gg1y4: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-border-selected);
+  --boxShadowFocus__w6gg1y5: 0 0 0 1px var(--oj-c-EXPERIMENTAL-DO-NOT-USE-border-selected) inset;
+  --fontSize__w6gg1y6: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-body-md-font-size);
+  --iconToTextPadding__w6gg1y7: calc(4 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --iconToEdgePadding__w6gg1y8: calc(4 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --insideEdgeLabelColorFocus__w6gg1ya: rgb(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-brand-110));
+  --textToEdgePadding__w6gg1y9: calc(4 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --textColor__w6gg1yb: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-primary);
+  --bgColorDisabled__w6gg1yc: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-surface-disabled);
+  --borderColorDisabled__w6gg1yd: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-border-disabled);
+  --textColorDisabled__w6gg1ye: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-disabled);
+  --placeholderAnimationName__w6gg1yf: TextFieldStyles_placeholderAnimation__952vaf0;
+}
+:root, .oj-density-dependent {
+  --insideEdgeHeight__w6gg1yg: max(calc(calc(13 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem)) + calc(2 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-density-units, 0px))),36px);
+  --insideEdgePaddingTop__w6gg1yh: max(calc(calc(3.25 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem)) + var(--oj-c-EXPERIMENTAL-DO-NOT-USE-density-units, 0px)),9.75px);
+}
+:root, .oj-scale-dependent, :root.oj-scale-sm, :root.oj-scale-md, .oj-density-dependent, .oj-scale-lg {
+  --height__w6gg1yi: max(calc(calc(11 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem)) + calc(2 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-density-units, 0px))),36px);
+  --defaultPaddingTopMask__w6gg1yj: calc(calc(2.75 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem)) + var(--oj-c-EXPERIMENTAL-DO-NOT-USE-density-units, 0px));
+  --insideEdgePaddingTopMask__w6gg1yk: calc(calc(5.625 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem)) + calc(1.375 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-density-units, 0px)));
+}
+.oj-scale-sm, :root.oj-scale-sm {
+  --height__w6gg1yi: max(calc(calc(9.33 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem)) + calc(2 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-density-units, 0px))),24px);
+  --defaultPaddingTopMask__w6gg1yj: calc(calc(1.66 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem)) + calc(0.5 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-density-units, 0px)));
+  --insideEdgePaddingTopMask__w6gg1yk: calc(calc(5.666 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem)) + calc(0.5 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-density-units, 0px)));
+}
+.oj-scale-md, :root.oj-scale-md {
+  --height__w6gg1yi: max(calc(calc(11 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem)) + calc(2 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-density-units, 0px))),36px);
+  --defaultPaddingTopMask__w6gg1yj: calc(calc(2.75 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem)) + calc(0.357 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-density-units, 0px)));
+  --insideEdgePaddingTopMask__w6gg1yk: calc(calc(5.625 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem)) + calc(1.25 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-density-units, 0px)));
+}
+/* end:UNSAFE_TextField/themes/redwood/TextFieldBaseTheme.styles.css */
+/* start:@oracle/oraclejet-internal-theme-redwood/style.css */
+:root,.oj-c-colorscheme-dependent{--oj-c-EXPERIMENTAL-DO-NOT-USE-cursor-clickable: pointer;--oj-c-EXPERIMENTAL-DO-NOT-USE-box-shadow-xs: rgba(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-boxshadow-shadowcolor), .12) 0 calc(.25 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, .25rem)) var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, .25rem) 0;--oj-c-EXPERIMENTAL-DO-NOT-USE-box-shadow-sm: rgba(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-boxshadow-shadowcolor), .16) 0 var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, .25rem) calc(2 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, .25rem)) 0;--oj-c-EXPERIMENTAL-DO-NOT-USE-box-shadow-md: rgba(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-boxshadow-shadowcolor), .2) 0 calc(1.5 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, .25rem)) calc(3 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, .25rem)) 0;--oj-c-EXPERIMENTAL-DO-NOT-USE-box-shadow-lg: rgba(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-boxshadow-shadowcolor), .24) 0 calc(2 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, .25rem)) calc(4 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, .25rem)) 0;--oj-c-EXPERIMENTAL-DO-NOT-USE-box-shadow-xl: rgba(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-boxshadow-shadowcolor), .28) 0 calc(3 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, .25rem)) calc(5 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, .25rem)) 0;--oj-c-EXPERIMENTAL-DO-NOT-USE-border-radius-sm: calc(.5 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, .25rem));--oj-c-EXPERIMENTAL-DO-NOT-USE-border-radius-md: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, .25rem);--oj-c-EXPERIMENTAL-DO-NOT-USE-border-radius-lg: calc(1.5 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, .25rem));--oj-c-EXPERIMENTAL-DO-NOT-USE-border-radius-xl: calc(2 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, .25rem))}:root{--oj-c-EXPERIMENTAL-DO-NOT-USE-easing-enter: cubic-bezier(0,0,.2,1);--oj-c-EXPERIMENTAL-DO-NOT-USE-easing-persist: cubic-bezier(.4,0,.2,1);--oj-c-EXPERIMENTAL-DO-NOT-USE-easing-exit: cubic-bezier(.4,0,1,1);--oj-c-EXPERIMENTAL-DO-NOT-USE-easing-linear: cubic-bezier(0,0,0,0);--oj-c-EXPERIMENTAL-DO-NOT-USE-anchor-default-vertical: .5;--oj-c-EXPERIMENTAL-DO-NOT-USE-anchor-default-horizontal: .5;--oj-c-EXPERIMENTAL-DO-NOT-USE-anchor-start-top-corner-vertical: 0;--oj-c-EXPERIMENTAL-DO-NOT-USE-anchor-start-top-corner-horizontal: 1;--oj-c-EXPERIMENTAL-DO-NOT-USE-anchor-top-vertical: .5;--oj-c-EXPERIMENTAL-DO-NOT-USE-anchor-top-horizontal: 1;--oj-c-EXPERIMENTAL-DO-NOT-USE-anchor-end-top-corner-vertical: 1;--oj-c-EXPERIMENTAL-DO-NOT-USE-anchor-end-top-corner-horizontal: 1;--oj-c-EXPERIMENTAL-DO-NOT-USE-anchor-start-vertical: 0;--oj-c-EXPERIMENTAL-DO-NOT-USE-anchor-start-horizontal: .5;--oj-c-EXPERIMENTAL-DO-NOT-USE-anchor-end-vertical: 1;--oj-c-EXPERIMENTAL-DO-NOT-USE-anchor-end-horizontal: .5;--oj-c-EXPERIMENTAL-DO-NOT-USE-anchor-start-bottom-corner-vertical: 0;--oj-c-EXPERIMENTAL-DO-NOT-USE-anchor-start-bottom-corner-horizontal: 0;--oj-c-EXPERIMENTAL-DO-NOT-USE-anchor-bottom-vertical: .5;--oj-c-EXPERIMENTAL-DO-NOT-USE-anchor-bottom-horizontal: 0;--oj-c-EXPERIMENTAL-DO-NOT-USE-anchor-end-bottom-corner-vertical: 1;--oj-c-EXPERIMENTAL-DO-NOT-USE-anchor-end-bottom-corner-horizontal: 0;--oj-c-EXPERIMENTAL-DO-NOT-USE-duration-2xs: 25ms;--oj-c-EXPERIMENTAL-DO-NOT-USE-duration-xs: 50ms;--oj-c-EXPERIMENTAL-DO-NOT-USE-duration-sm: .1s;--oj-c-EXPERIMENTAL-DO-NOT-USE-duration-md: .15s;--oj-c-EXPERIMENTAL-DO-NOT-USE-duration-lg: .25s;--oj-c-EXPERIMENTAL-DO-NOT-USE-duration-xl: .3s;--oj-c-EXPERIMENTAL-DO-NOT-USE-duration-2xl: .5s;--oj-c-EXPERIMENTAL-DO-NOT-USE-delay-none: 0ms;--oj-c-EXPERIMENTAL-DO-NOT-USE-delay-sm: 20ms;--oj-c-EXPERIMENTAL-DO-NOT-USE-delay-md: 30ms;--oj-c-EXPERIMENTAL-DO-NOT-USE-delay-lg: 50ms;--oj-c-EXPERIMENTAL-DO-NOT-USE-slide-up-sm: .25;--oj-c-EXPERIMENTAL-DO-NOT-USE-slide-up-md: .5;--oj-c-EXPERIMENTAL-DO-NOT-USE-slide-up-lg: .75;--oj-c-EXPERIMENTAL-DO-NOT-USE-slide-up-xl: 1;--oj-c-EXPERIMENTAL-DO-NOT-USE-slide-down-sm: .25;--oj-c-EXPERIMENTAL-DO-NOT-USE-slide-down-md: .5;--oj-c-EXPERIMENTAL-DO-NOT-USE-slide-down-lg: .75;--oj-c-EXPERIMENTAL-DO-NOT-USE-slide-down-xl: 1;--oj-c-EXPERIMENTAL-DO-NOT-USE-slide-start-sm: .25;--oj-c-EXPERIMENTAL-DO-NOT-USE-slide-start-md: .5;--oj-c-EXPERIMENTAL-DO-NOT-USE-slide-start-lg: .75;--oj-c-EXPERIMENTAL-DO-NOT-USE-slide-start-xl: 1;--oj-c-EXPERIMENTAL-DO-NOT-USE-slide-end-sm: .25;--oj-c-EXPERIMENTAL-DO-NOT-USE-slide-end-md: .5;--oj-c-EXPERIMENTAL-DO-NOT-USE-slide-end-lg: .75;--oj-c-EXPERIMENTAL-DO-NOT-USE-slide-end-xl: 1;--oj-c-EXPERIMENTAL-DO-NOT-USE-scale-down-sm-to: 1;--oj-c-EXPERIMENTAL-DO-NOT-USE-scale-down-sm-from: .9;--oj-c-EXPERIMENTAL-DO-NOT-USE-scale-down-md-to: 1;--oj-c-EXPERIMENTAL-DO-NOT-USE-scale-down-md-from: .7;--oj-c-EXPERIMENTAL-DO-NOT-USE-scale-down-full-to: 1;--oj-c-EXPERIMENTAL-DO-NOT-USE-scale-down-full-from: 0;--oj-c-EXPERIMENTAL-DO-NOT-USE-scale-up-sm-to: .9;--oj-c-EXPERIMENTAL-DO-NOT-USE-scale-up-sm-from: 1;--oj-c-EXPERIMENTAL-DO-NOT-USE-scale-up-md-to: .7;--oj-c-EXPERIMENTAL-DO-NOT-USE-scale-up-md-from: 1;--oj-c-EXPERIMENTAL-DO-NOT-USE-scale-up-full-to: 0;--oj-c-EXPERIMENTAL-DO-NOT-USE-scale-up-full-from: 1;--oj-c-EXPERIMENTAL-DO-NOT-USE-fade-in-sm-to: .6;--oj-c-EXPERIMENTAL-DO-NOT-USE-fade-in-sm-from: 1;--oj-c-EXPERIMENTAL-DO-NOT-USE-fade-in-full-to: 0;--oj-c-EXPERIMENTAL-DO-NOT-USE-fade-in-full-from: 1;--oj-c-EXPERIMENTAL-DO-NOT-USE-fade-out-sm-to: 1;--oj-c-EXPERIMENTAL-DO-NOT-USE-fade-out-sm-from: .6;--oj-c-EXPERIMENTAL-DO-NOT-USE-fade-out-full-to: 1;--oj-c-EXPERIMENTAL-DO-NOT-USE-fade-out-full-from: 0}:root,.oj-scale-dependent,:root.oj-scale-sm,:root.oj-scale-md{--oj-c-EXPERIMENTAL-DO-NOT-USE-heading-xs-font-size: calc(5 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, .25rem));--oj-c-EXPERIMENTAL-DO-NOT-USE-heading-xs-line-height: 1.4;--oj-c-EXPERIMENTAL-DO-NOT-USE-heading-xs-font-weight: 800;--oj-c-EXPERIMENTAL-DO-NOT-USE-heading-sm-font-size: calc(6 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, .25rem));--oj-c-EXPERIMENTAL-DO-NOT-USE-heading-sm-line-height: 1.3333;--oj-c-EXPERIMENTAL-DO-NOT-USE-heading-sm-font-weight: 800;--oj-c-EXPERIMENTAL-DO-NOT-USE-heading-md-font-size: calc(7 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, .25rem));--oj-c-EXPERIMENTAL-DO-NOT-USE-heading-md-line-height: 1.2857;--oj-c-EXPERIMENTAL-DO-NOT-USE-heading-md-font-weight: 800;--oj-c-EXPERIMENTAL-DO-NOT-USE-heading-lg-font-size: calc(8 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, .25rem));--oj-c-EXPERIMENTAL-DO-NOT-USE-heading-lg-line-height: 1.25;--oj-c-EXPERIMENTAL-DO-NOT-USE-heading-lg-font-weight: 800;--oj-c-EXPERIMENTAL-DO-NOT-USE-heading-xl-font-size: calc(9 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, .25rem));--oj-c-EXPERIMENTAL-DO-NOT-USE-heading-xl-line-height: 1.222;--oj-c-EXPERIMENTAL-DO-NOT-USE-heading-xl-font-weight: 800;--oj-c-EXPERIMENTAL-DO-NOT-USE-heading-2xl-font-size: calc(10 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, .25rem));--oj-c-EXPERIMENTAL-DO-NOT-USE-heading-2xl-line-height: 1.3;--oj-c-EXPERIMENTAL-DO-NOT-USE-heading-2xl-font-weight: 800;--oj-c-EXPERIMENTAL-DO-NOT-USE-subheading-2xs-font-size: calc(3.5 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, .25rem));--oj-c-EXPERIMENTAL-DO-NOT-USE-subheading-2xs-line-height: 1.4286;--oj-c-EXPERIMENTAL-DO-NOT-USE-subheading-2xs-font-weight: 700;--oj-c-EXPERIMENTAL-DO-NOT-USE-subheading-xs-font-size: calc(4 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, .25rem));--oj-c-EXPERIMENTAL-DO-NOT-USE-subheading-xs-line-height: 1.5;--oj-c-EXPERIMENTAL-DO-NOT-USE-subheading-xs-font-weight: 700;--oj-c-EXPERIMENTAL-DO-NOT-USE-subheading-sm-font-size: calc(5 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, .25rem));--oj-c-EXPERIMENTAL-DO-NOT-USE-subheading-sm-line-height: 1.4;--oj-c-EXPERIMENTAL-DO-NOT-USE-subheading-sm-font-weight: 700;--oj-c-EXPERIMENTAL-DO-NOT-USE-subheading-md-font-size: calc(6 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, .25rem));--oj-c-EXPERIMENTAL-DO-NOT-USE-subheading-md-line-height: 1.3333;--oj-c-EXPERIMENTAL-DO-NOT-USE-subheading-md-font-weight: 700;--oj-c-EXPERIMENTAL-DO-NOT-USE-subheading-lg-font-size: calc(7 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, .25rem));--oj-c-EXPERIMENTAL-DO-NOT-USE-subheading-lg-line-height: 1.2857;--oj-c-EXPERIMENTAL-DO-NOT-USE-subheading-lg-font-weight: 700;--oj-c-EXPERIMENTAL-DO-NOT-USE-subheading-xl-font-size: calc(8 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, .25rem));--oj-c-EXPERIMENTAL-DO-NOT-USE-subheading-xl-line-height: 1.25;--oj-c-EXPERIMENTAL-DO-NOT-USE-subheading-xl-font-weight: 700;--oj-c-EXPERIMENTAL-DO-NOT-USE-subheading-2xl-font-size: calc(9 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, .25rem));--oj-c-EXPERIMENTAL-DO-NOT-USE-subheading-2xl-line-height: 1.2222;--oj-c-EXPERIMENTAL-DO-NOT-USE-subheading-2xl-font-weight: 700;--oj-c-EXPERIMENTAL-DO-NOT-USE-body-2xs-font-size: max(calc(2.5 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, .25rem)),10px);--oj-c-EXPERIMENTAL-DO-NOT-USE-body-2xs-line-height: 1.2;--oj-c-EXPERIMENTAL-DO-NOT-USE-body-2xs-font-weight-regular: 400;--oj-c-EXPERIMENTAL-DO-NOT-USE-body-2xs-font-weight-semibold: 600;--oj-c-EXPERIMENTAL-DO-NOT-USE-body-2xs-font-weight-bold: 700;--oj-c-EXPERIMENTAL-DO-NOT-USE-body-xs-font-size: max(calc(3 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, .25rem)),12px);--oj-c-EXPERIMENTAL-DO-NOT-USE-body-xs-line-height: 1.3333;--oj-c-EXPERIMENTAL-DO-NOT-USE-body-xs-font-weight-regular: 400;--oj-c-EXPERIMENTAL-DO-NOT-USE-body-xs-font-weight-semibold: 600;--oj-c-EXPERIMENTAL-DO-NOT-USE-body-xs-font-weight-bold: 700;--oj-c-EXPERIMENTAL-DO-NOT-USE-body-sm-font-size: max(calc(3.4375 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, .25rem)),12px);--oj-c-EXPERIMENTAL-DO-NOT-USE-body-sm-line-height: 1.2;--oj-c-EXPERIMENTAL-DO-NOT-USE-body-sm-font-weight-regular: 400;--oj-c-EXPERIMENTAL-DO-NOT-USE-body-sm-font-weight-semibold: 600;--oj-c-EXPERIMENTAL-DO-NOT-USE-body-sm-font-weight-bold: 700;--oj-c-EXPERIMENTAL-DO-NOT-USE-body-md-font-size: max(calc(4 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, .25rem)),12px);--oj-c-EXPERIMENTAL-DO-NOT-USE-body-md-line-height: 1.25;--oj-c-EXPERIMENTAL-DO-NOT-USE-body-md-font-weight-regular: 400;--oj-c-EXPERIMENTAL-DO-NOT-USE-body-md-font-weight-semibold: 600;--oj-c-EXPERIMENTAL-DO-NOT-USE-body-md-font-weight-bold: 700;--oj-c-EXPERIMENTAL-DO-NOT-USE-body-lg-font-size: max(calc(4.5 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, .25rem)),14px);--oj-c-EXPERIMENTAL-DO-NOT-USE-body-lg-line-height: 1.3333;--oj-c-EXPERIMENTAL-DO-NOT-USE-body-lg-font-weight-regular: 400;--oj-c-EXPERIMENTAL-DO-NOT-USE-body-lg-font-weight-semibold: 600;--oj-c-EXPERIMENTAL-DO-NOT-USE-body-lg-font-weight-bold: 700;--oj-c-EXPERIMENTAL-DO-NOT-USE-body-xl-font-size: max(calc(5 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, .25rem)),16px);--oj-c-EXPERIMENTAL-DO-NOT-USE-body-xl-line-height: 1.4;--oj-c-EXPERIMENTAL-DO-NOT-USE-body-xl-font-weight-regular: 400;--oj-c-EXPERIMENTAL-DO-NOT-USE-body-xl-font-weight-semibold: 600;--oj-c-EXPERIMENTAL-DO-NOT-USE-body-xl-font-weight-bold: 700}:root,.oj-c-colorscheme-light{--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-0: 255,255,255;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-10: 251,249,248;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-20: 245,244,242;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-30: 241,239,237;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-40: 228,225,221;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-50: 212,207,202;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-60: 188,182,177;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-70: 174,168,162;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-80: 158,152,146;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-90: 139,133,128;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-100: 122,115,110;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-110: 111,105,100;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-120: 102,95,91;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-130: 92,86,81;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-140: 81,76,71;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-150: 71,66,62;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-160: 58,54,50;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-170: 49,45,42;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-180: 32,30,28;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-190: 22,21,19;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-200: 0,0,0;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-danger-10: 255,248,247;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-danger-20: 255,241,239;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-danger-30: 255,235,232;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-danger-40: 255,217,211;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-danger-50: 255,193,184;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-danger-60: 255,157,144;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-danger-70: 255,134,117;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-danger-80: 254,105,84;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-danger-90: 236,79,58;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-danger-100: 214,59,37;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-danger-110: 195,53,34;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-danger-120: 179,49,31;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-danger-130: 162,44,28;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-danger-140: 143,39,25;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-danger-150: 124,34,22;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-danger-160: 102,28,18;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-danger-170: 86,24,15;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-danger-180: 60,17,11;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-danger-190: 42,12,7;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-success-10: 244,252,235;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-success-20: 235,248,222;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-success-30: 228,245,211;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-success-40: 207,235,179;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-success-50: 177,221,136;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-success-60: 138,201,79;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-success-70: 125,186,69;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-success-80: 111,169,57;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-success-90: 94,148,43;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-success-100: 80,130,35;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-success-110: 73,118,32;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-success-120: 67,107,29;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-success-130: 60,96,26;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-success-140: 53,86,23;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-success-150: 46,73,20;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-success-160: 38,61,16;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-success-170: 31,51,14;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-success-180: 21,35,9;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-success-190: 15,23,6;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-warning-10: 254,249,242;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-warning-20: 253,242,229;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-warning-30: 252,237,220;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-warning-40: 249,221,188;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-warning-50: 246,199,146;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-warning-60: 240,169,87;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-warning-70: 235,150,50;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-warning-80: 225,130,18;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-warning-90: 198,113,14;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-warning-100: 172,99,12;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-warning-110: 156,89,11;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-warning-120: 143,82,10;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-warning-130: 129,73,9;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-warning-140: 114,65,8;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-warning-150: 99,56,7;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-warning-160: 81,47,6;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-warning-170: 69,39,5;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-warning-180: 46,26,3;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-warning-190: 32,18,2;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-info-10: 246,250,252;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-info-20: 237,246,249;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-info-30: 228,241,247;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-info-40: 208,229,238;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-info-50: 180,213,225;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-info-60: 143,191,208;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-info-70: 121,177,198;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-info-80: 95,162,186;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-info-90: 65,144,172;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-info-100: 34,126,158;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-info-110: 14,114,149;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-info-120: 0,104,140;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-info-130: 2,94,126;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-info-140: 4,83,111;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-info-150: 6,72,95;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-info-160: 6,60,78;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-info-170: 5,50,66;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-info-180: 4,35,45;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-info-190: 2,24,31;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-brand-10: 246,250,252;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-brand-20: 237,246,249;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-brand-30: 228,241,247;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-brand-40: 208,229,238;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-brand-50: 180,213,225;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-brand-60: 143,191,208;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-brand-70: 121,177,198;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-brand-80: 95,162,186;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-brand-90: 65,144,172;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-brand-100: 34,126,158;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-brand-110: 14,114,149;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-brand-120: 0,104,140;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-brand-130: 2,94,126;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-brand-140: 4,83,111;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-brand-150: 6,72,95;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-brand-160: 6,60,78;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-brand-170: 5,50,66;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-brand-180: 4,35,45;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-brand-190: 2,24,31;--oj-c-EXPERIMENTAL-DO-NOT-USE-overlay-hover: rgba(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-190), .08);--oj-c-EXPERIMENTAL-DO-NOT-USE-overlay-active: rgba(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-190), .16);--oj-c-EXPERIMENTAL-DO-NOT-USE-overlay-danger-hover: rgba(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-danger-60), .24);--oj-c-EXPERIMENTAL-DO-NOT-USE-overlay-danger-active: rgba(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-danger-60), .32);--oj-c-EXPERIMENTAL-DO-NOT-USE-overlay-scrim: rgba(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-190), .4);--oj-c-EXPERIMENTAL-DO-NOT-USE-overlay-inverse-hover: rgba(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-0), .08);--oj-c-EXPERIMENTAL-DO-NOT-USE-overlay-inverse-active: rgba(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-0), .12);--oj-c-EXPERIMENTAL-DO-NOT-USE-overlay-drop-active: rgb(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-brand-40));--oj-c-EXPERIMENTAL-DO-NOT-USE-page-background-neutral0: rgb(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-0));--oj-c-EXPERIMENTAL-DO-NOT-USE-page-background-neutral10: rgb(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-10));--oj-c-EXPERIMENTAL-DO-NOT-USE-page-background-neutral20: rgb(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-20));--oj-c-EXPERIMENTAL-DO-NOT-USE-page-background-neutral30: rgb(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-30));--oj-c-EXPERIMENTAL-DO-NOT-USE-page-background-neutral40: rgb(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-40));--oj-c-EXPERIMENTAL-DO-NOT-USE-surface-neutral0: rgb(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-0));--oj-c-EXPERIMENTAL-DO-NOT-USE-surface-neutral10: rgb(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-10));--oj-c-EXPERIMENTAL-DO-NOT-USE-surface-neutral20: rgb(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-20));--oj-c-EXPERIMENTAL-DO-NOT-USE-surface-neutral30: rgb(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-30));--oj-c-EXPERIMENTAL-DO-NOT-USE-surface-selected: rgb(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-brand-30));--oj-c-EXPERIMENTAL-DO-NOT-USE-surface-disabled: rgba(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-190), .04);--oj-c-EXPERIMENTAL-DO-NOT-USE-surface-popup: rgb(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-0));--oj-c-EXPERIMENTAL-DO-NOT-USE-surface-neutral-low: rgb(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-10));--oj-c-EXPERIMENTAL-DO-NOT-USE-surface-neutral-subtle: rgba(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-190), .08);--oj-c-EXPERIMENTAL-DO-NOT-USE-surface-neutral-strong: rgb(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-100));--oj-c-EXPERIMENTAL-DO-NOT-USE-surface-success-low: rgb(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-success-10));--oj-c-EXPERIMENTAL-DO-NOT-USE-surface-success-subtle: rgba(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-success-60), .4);--oj-c-EXPERIMENTAL-DO-NOT-USE-surface-success-strong: rgb(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-success-120));--oj-c-EXPERIMENTAL-DO-NOT-USE-surface-info-low: rgb(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-info-10));--oj-c-EXPERIMENTAL-DO-NOT-USE-surface-info-subtle: rgba(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-info-60), .4);--oj-c-EXPERIMENTAL-DO-NOT-USE-surface-info-strong: rgb(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-info-120));--oj-c-EXPERIMENTAL-DO-NOT-USE-surface-warning-low: rgb(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-warning-10));--oj-c-EXPERIMENTAL-DO-NOT-USE-surface-warning-subtle: rgba(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-warning-60), .4);--oj-c-EXPERIMENTAL-DO-NOT-USE-surface-warning-strong: rgb(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-warning-120));--oj-c-EXPERIMENTAL-DO-NOT-USE-surface-danger-low: rgb(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-danger-10));--oj-c-EXPERIMENTAL-DO-NOT-USE-surface-danger-subtle: rgba(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-danger-60), .4);--oj-c-EXPERIMENTAL-DO-NOT-USE-surface-danger-strong: rgb(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-danger-120));--oj-c-EXPERIMENTAL-DO-NOT-USE-border-enabled: rgba(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-190), .5);--oj-c-EXPERIMENTAL-DO-NOT-USE-border-disabled: rgba(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-190), .2);--oj-c-EXPERIMENTAL-DO-NOT-USE-border-divider: rgba(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-190), .12);--oj-c-EXPERIMENTAL-DO-NOT-USE-border-divider-opaque-color: rgb(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-190));--oj-c-EXPERIMENTAL-DO-NOT-USE-border-divider-opaque-percent: 12%;--oj-c-EXPERIMENTAL-DO-NOT-USE-border-selected: rgb(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-brand-100));--oj-c-EXPERIMENTAL-DO-NOT-USE-border-drop-line: rgb(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-brand-100));--oj-c-EXPERIMENTAL-DO-NOT-USE-border-selected-neutral: rgb(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-190));--oj-c-EXPERIMENTAL-DO-NOT-USE-border-warning: rgb(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-warning-120));--oj-c-EXPERIMENTAL-DO-NOT-USE-border-danger: rgb(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-danger-120));--oj-c-EXPERIMENTAL-DO-NOT-USE-border-keyboard-focus: rgb(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-190));--oj-c-EXPERIMENTAL-DO-NOT-USE-boxshadow-shadowcolor: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-200);--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-primary: rgb(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-190));--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-secondary: rgba(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-190), .7);--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-disabled: rgba(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-190), .4);--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-inverse: rgb(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-0));--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-on-color: rgb(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-0));--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-link: rgb(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-brand-120));--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-success: rgb(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-success-120));--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-info: rgb(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-info-120));--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-warning: rgb(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-warning-120));--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-danger: rgb(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-danger-120));--oj-c-EXPERIMENTAL-DO-NOT-USE-textfield-surface-enabled: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-surface-neutral0);--oj-c-EXPERIMENTAL-DO-NOT-USE-textfield-border-enabled: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-border-enabled);--oj-c-EXPERIMENTAL-DO-NOT-USE-collection-header-text: rgb(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-primary));--oj-c-EXPERIMENTAL-DO-NOT-USE-collection-header-surface-selected: rgba(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-190), .12);--oj-c-EXPERIMENTAL-DO-NOT-USE-collection-header-surface-partial-selected: rgba(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-190), .04);--oj-c-EXPERIMENTAL-DO-NOT-USE-collection-grid-cell-surface-edit: rgb(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-0));--oj-c-EXPERIMENTAL-DO-NOT-USE-measure-track-enabled: rgba(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-190), .16);--oj-c-EXPERIMENTAL-DO-NOT-USE-measure-track-disabled: rgba(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-190), .16);--oj-c-EXPERIMENTAL-DO-NOT-USE-measure-fill-enabled: rgb(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-190));--oj-c-EXPERIMENTAL-DO-NOT-USE-measure-fill-disabled: rgba(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-190), .2);--oj-c-EXPERIMENTAL-DO-NOT-USE-measure-thumb-surface: var(--oj-current-bg-color, var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-10));--oj-c-EXPERIMENTAL-DO-NOT-USE-measure-reference-line: rgba(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-190), .8);--oj-c-EXPERIMENTAL-DO-NOT-USE-measure-reference-line-contrast: rgba(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-20), .7);--oj-c-EXPERIMENTAL-DO-NOT-USE-measure-reference-area: rgba(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-170), .08);--oj-c-EXPERIMENTAL-DO-NOT-USE-dvt-contrast-line: rgb(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-20));--oj-c-EXPERIMENTAL-DO-NOT-USE-dvt-palette-qualitative-1: 36, 93, 99;--oj-c-EXPERIMENTAL-DO-NOT-USE-dvt-palette-qualitative-2: 215, 121, 15;--oj-c-EXPERIMENTAL-DO-NOT-USE-dvt-palette-qualitative-3: 49, 160, 156;--oj-c-EXPERIMENTAL-DO-NOT-USE-dvt-palette-qualitative-4: 78, 65, 55;--oj-c-EXPERIMENTAL-DO-NOT-USE-dvt-palette-qualitative-5: 105, 158, 97;--oj-c-EXPERIMENTAL-DO-NOT-USE-dvt-palette-qualitative-6: 180, 114, 130;--oj-c-EXPERIMENTAL-DO-NOT-USE-dvt-palette-qualitative-7: 131, 64, 30;--oj-c-EXPERIMENTAL-DO-NOT-USE-dvt-palette-qualitative-8: 158, 127, 204;--oj-c-EXPERIMENTAL-DO-NOT-USE-dvt-palette-qualitative-9: 168, 142, 0;--oj-c-EXPERIMENTAL-DO-NOT-USE-dvt-palette-qualitative-10: 88, 49, 110;--oj-c-EXPERIMENTAL-DO-NOT-USE-dvt-palette-qualitative-11: 89, 153, 181;--oj-c-EXPERIMENTAL-DO-NOT-USE-dvt-palette-qualitative-12: 49, 122, 69;--oj-c-EXPERIMENTAL-DO-NOT-USE-dvt-threshold-success: rgb(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-success-100));--oj-c-EXPERIMENTAL-DO-NOT-USE-dvt-threshold-warning: rgb(207, 124, 0);--oj-c-EXPERIMENTAL-DO-NOT-USE-dvt-threshold-danger: rgb(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-danger-100));--oj-c-EXPERIMENTAL-DO-NOT-USE-dvt-marquee-border: rgba(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-190), .8);--oj-c-EXPERIMENTAL-DO-NOT-USE-dvt-marquee-surface: rgba(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-20), .1);--oj-c-EXPERIMENTAL-DO-NOT-USE-dvt-reference-object-area: rgba(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-170), .08);--oj-c-EXPERIMENTAL-DO-NOT-USE-dvt-reference-object-line: rgba(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-190), .8);--oj-c-EXPERIMENTAL-DO-NOT-USE-dvt-overview-background: rgb(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-30));--oj-c-EXPERIMENTAL-DO-NOT-USE-dvt-overview-window-background: rgb(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-0));--oj-c-EXPERIMENTAL-DO-NOT-USE-dvt-overview-window-border: rgb(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-170))}.oj-c-colorscheme-dark,.oj-color-invert{--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-0: 0, 0, 0;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-10: 10, 10, 9;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-20: 18, 17, 15;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-30: 23, 22, 20;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-40: 35, 33, 31;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-50: 49, 46, 43;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-60: 67, 63, 59;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-70: 78, 73, 68;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-80: 91, 85, 81;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-90: 107, 101, 96;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-100: 124, 117, 112;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-110: 135, 129, 124;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-120: 146, 139, 134;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-130: 157, 150, 145;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-140: 170, 163, 158;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-150: 184, 178, 173;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-160: 200, 195, 191;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-170: 212, 207, 204;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-180: 231, 227, 225;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-190: 241, 238, 237;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-200: 255, 255, 255;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-danger-10: 18, 5, 3;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-danger-20: 32, 9, 5;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-danger-30: 41, 12, 7;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-danger-40: 64, 18, 11;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-danger-50: 89, 24, 15;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-danger-60: 119, 32, 20;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-danger-70: 138, 37, 24;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-danger-80: 160, 43, 28;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-danger-90: 188, 52, 33;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-danger-100: 216, 63, 42;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-danger-110: 224, 82, 62;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-danger-120: 231, 98, 80;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-danger-130: 238, 115, 98;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-danger-140: 245, 133, 118;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-danger-150: 253, 151, 138;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-danger-160: 255, 176, 166;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-danger-170: 255, 193, 185;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-danger-180: 255, 220, 216;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-danger-190: 255, 234, 232;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-success-10: 7, 11, 3;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-success-20: 11, 17, 4;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-success-30: 16, 25, 7;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-success-40: 24, 37, 10;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-success-50: 33, 52, 14;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-success-60: 44, 70, 19;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-success-70: 51, 82, 22;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-success-80: 60, 95, 26;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-success-90: 70, 113, 31;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-success-100: 81, 131, 36;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-success-110: 91, 144, 43;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-success-120: 100, 154, 50;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-success-130: 110, 167, 58;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-success-140: 121, 181, 66;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-success-150: 134, 196, 76;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-success-160: 159, 211, 109;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-success-170: 179, 221, 140;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-success-180: 211, 236, 187;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-success-190: 228, 244, 212;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-warning-10: 15, 8, 1;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-warning-20: 25, 14, 2;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-warning-30: 33, 18, 2;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-warning-40: 50, 28, 3;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-warning-50: 70, 39, 5;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-warning-60: 95, 53, 7;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-warning-70: 110, 62, 8;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-warning-80: 128, 72, 9;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-warning-90: 151, 86, 11;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-warning-100: 174, 101, 14;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-warning-110: 185, 113, 27;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-warning-120: 196, 124, 39;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-warning-130: 208, 136, 52;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-warning-140: 221, 149, 66;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-warning-150: 236, 164, 82;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-warning-160: 243, 185, 118;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-warning-170: 246, 201, 148;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-warning-180: 250, 224, 193;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-warning-190: 252, 237, 218;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-info-10: 1, 11, 15;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-info-20: 2, 19, 24;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-info-30: 2, 24, 31;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-info-40: 3, 37, 49;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-info-50: 4, 51, 67;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-info-60: 6, 69, 91;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-info-70: 10, 80, 104;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-info-80: 17, 93, 120;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-info-90: 26, 110, 140;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-info-100: 36, 127, 159;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-info-110: 57, 139, 168;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-info-120: 73, 149, 176;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-info-130: 93, 161, 185;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-info-140: 114, 173, 195;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-info-150: 135, 186, 205;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-info-160: 163, 202, 217;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-info-170: 182, 213, 225;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-info-180: 213, 231, 238;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-info-190: 229, 241, 245;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-brand-10: 10, 8, 4;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-brand-20: 19, 16, 9;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-brand-30: 26, 22, 12;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-brand-40: 38, 32, 18;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-brand-50: 54, 46, 25;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-brand-60: 73, 62, 34;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-brand-70: 85, 72, 40;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-brand-80: 99, 84, 47;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-brand-90: 118, 100, 56;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-brand-100: 137, 116, 65;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-brand-110: 150, 127, 71;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-brand-120: 162, 137, 76;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-brand-130: 175, 149, 83;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-brand-140: 190, 162, 90;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-brand-150: 206, 176, 97;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-brand-160: 226, 192, 107;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-brand-170: 240, 204, 114;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-brand-180: 247, 226, 176;--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-brand-190: 250, 238, 209;--oj-c-EXPERIMENTAL-DO-NOT-USE-overlay-hover: rgba(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-200), .08);--oj-c-EXPERIMENTAL-DO-NOT-USE-overlay-active: rgba(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-200), .12);--oj-c-EXPERIMENTAL-DO-NOT-USE-overlay-danger-hover: rgba(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-danger-60), .32);--oj-c-EXPERIMENTAL-DO-NOT-USE-overlay-danger-active: rgba(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-danger-60), .2);--oj-c-EXPERIMENTAL-DO-NOT-USE-overlay-scrim: rgba(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-0), .4);--oj-c-EXPERIMENTAL-DO-NOT-USE-overlay-inverse-hover: rgba(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-20), .08);--oj-c-EXPERIMENTAL-DO-NOT-USE-overlay-inverse-active: rgba(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-20), .16);--oj-c-EXPERIMENTAL-DO-NOT-USE-overlay-drop-active: rgb(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-brand-40));--oj-c-EXPERIMENTAL-DO-NOT-USE-page-background-neutral0: rgb(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-50));--oj-c-EXPERIMENTAL-DO-NOT-USE-page-background-neutral10: rgb(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-40));--oj-c-EXPERIMENTAL-DO-NOT-USE-page-background-neutral20: rgb(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-30));--oj-c-EXPERIMENTAL-DO-NOT-USE-page-background-neutral30: rgb(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-20));--oj-c-EXPERIMENTAL-DO-NOT-USE-page-background-neutral40: rgb(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-10));--oj-c-EXPERIMENTAL-DO-NOT-USE-surface-neutral0: rgb(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-50));--oj-c-EXPERIMENTAL-DO-NOT-USE-surface-neutral10: rgb(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-40));--oj-c-EXPERIMENTAL-DO-NOT-USE-surface-neutral20: rgb(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-30));--oj-c-EXPERIMENTAL-DO-NOT-USE-surface-neutral30: rgb(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-20));--oj-c-EXPERIMENTAL-DO-NOT-USE-surface-selected: rgb(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-brand-70));--oj-c-EXPERIMENTAL-DO-NOT-USE-surface-disabled: rgba(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-200), .04);--oj-c-EXPERIMENTAL-DO-NOT-USE-surface-popup: rgb(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-50));--oj-c-EXPERIMENTAL-DO-NOT-USE-surface-neutral-low: rgb(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-40));--oj-c-EXPERIMENTAL-DO-NOT-USE-surface-neutral-subtle: rgba(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-200), .16);--oj-c-EXPERIMENTAL-DO-NOT-USE-surface-neutral-strong: rgb(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-120));--oj-c-EXPERIMENTAL-DO-NOT-USE-surface-success-low: rgb(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-success-40));--oj-c-EXPERIMENTAL-DO-NOT-USE-surface-success-subtle: rgba(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-success-80), .76);--oj-c-EXPERIMENTAL-DO-NOT-USE-surface-success-strong: rgb(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-success-130));--oj-c-EXPERIMENTAL-DO-NOT-USE-surface-info-low: rgb(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-info-40));--oj-c-EXPERIMENTAL-DO-NOT-USE-surface-info-subtle: rgba(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-info-80), .76);--oj-c-EXPERIMENTAL-DO-NOT-USE-surface-info-strong: rgb(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-info-130));--oj-c-EXPERIMENTAL-DO-NOT-USE-surface-warning-low: rgb(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-warning-40));--oj-c-EXPERIMENTAL-DO-NOT-USE-surface-warning-subtle: rgba(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-warning-80), .76);--oj-c-EXPERIMENTAL-DO-NOT-USE-surface-warning-strong: rgb(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-warning-150));--oj-c-EXPERIMENTAL-DO-NOT-USE-surface-danger-low: rgb(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-danger-40));--oj-c-EXPERIMENTAL-DO-NOT-USE-surface-danger-subtle: rgba(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-danger-80), .76);--oj-c-EXPERIMENTAL-DO-NOT-USE-surface-danger-strong: rgb(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-danger-130));--oj-c-EXPERIMENTAL-DO-NOT-USE-border-enabled: rgba(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-200), .5);--oj-c-EXPERIMENTAL-DO-NOT-USE-border-disabled: rgba(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-200), .2);--oj-c-EXPERIMENTAL-DO-NOT-USE-border-divider: rgba(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-200), .12);--oj-c-EXPERIMENTAL-DO-NOT-USE-border-divider-opaque-color: rgb(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-200));--oj-c-EXPERIMENTAL-DO-NOT-USE-border-divider-opaque-percent: 12%;--oj-c-EXPERIMENTAL-DO-NOT-USE-border-selected: rgb(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-brand-170));--oj-c-EXPERIMENTAL-DO-NOT-USE-border-drop-line: rgb(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-brand-170));--oj-c-EXPERIMENTAL-DO-NOT-USE-border-selected-neutral: rgb(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-200));--oj-c-EXPERIMENTAL-DO-NOT-USE-border-warning: rgb(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-warning-120));--oj-c-EXPERIMENTAL-DO-NOT-USE-border-danger: rgb(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-danger-120));--oj-c-EXPERIMENTAL-DO-NOT-USE-border-keyboard-focus: rgb(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-200));--oj-c-EXPERIMENTAL-DO-NOT-USE-boxshadow-shadowcolor: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-0);--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-primary: rgb(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-200));--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-secondary: rgba(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-200), .7);--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-disabled: rgba(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-200), .4);--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-inverse: rgb(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-10));--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-link: rgb(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-brand-170));--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-success: rgb(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-success-130));--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-info: rgb(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-info-130));--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-warning: rgb(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-warning-150));--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-danger: rgb(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-danger-130));--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-on-color: rgb(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-200));--oj-c-EXPERIMENTAL-DO-NOT-USE-textfield-surface-enabled: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-surface-neutral20);--oj-c-EXPERIMENTAL-DO-NOT-USE-textfield-border-enabled: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-border-enabled);--oj-c-EXPERIMENTAL-DO-NOT-USE-collection-header-text: rgb(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-primary));--oj-c-EXPERIMENTAL-DO-NOT-USE-collection-header-surface-selected: rgba(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-200), .12);--oj-c-EXPERIMENTAL-DO-NOT-USE-collection-header-surface-partial-selected: rgba(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-200), .04);--oj-c-EXPERIMENTAL-DO-NOT-USE-collection-grid-cell-surface-edit: rgb(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-0));--oj-c-EXPERIMENTAL-DO-NOT-USE-measure-track-enabled: rgba(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-200), .16);--oj-c-EXPERIMENTAL-DO-NOT-USE-measure-track-disabled: rgba(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-200), .16);--oj-c-EXPERIMENTAL-DO-NOT-USE-measure-fill-enabled: rgb(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-200));--oj-c-EXPERIMENTAL-DO-NOT-USE-measure-fill-disabled: rgba(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-200), .3);--oj-c-EXPERIMENTAL-DO-NOT-USE-measure-thumb-surface: var(--oj-current-bg-color, var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-0));--oj-c-EXPERIMENTAL-DO-NOT-USE-measure-reference-line: rgba(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-200), .8);--oj-c-EXPERIMENTAL-DO-NOT-USE-measure-reference-line-contrast: rgba(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-20), .7);--oj-c-EXPERIMENTAL-DO-NOT-USE-measure-reference-area: rgba(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-200), .08);--oj-c-EXPERIMENTAL-DO-NOT-USE-dvt-contrast-line: rgb(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-20));--oj-c-EXPERIMENTAL-DO-NOT-USE-dvt-palette-qualitative-1: 87, 184, 194;--oj-c-EXPERIMENTAL-DO-NOT-USE-dvt-palette-qualitative-2: 175, 97, 9;--oj-c-EXPERIMENTAL-DO-NOT-USE-dvt-palette-qualitative-3: 40, 129, 126;--oj-c-EXPERIMENTAL-DO-NOT-USE-dvt-palette-qualitative-4: 206, 195, 186;--oj-c-EXPERIMENTAL-DO-NOT-USE-dvt-palette-qualitative-5: 78, 124, 70;--oj-c-EXPERIMENTAL-DO-NOT-USE-dvt-palette-qualitative-6: 170, 95, 113;--oj-c-EXPERIMENTAL-DO-NOT-USE-dvt-palette-qualitative-7: 226, 160, 126;--oj-c-EXPERIMENTAL-DO-NOT-USE-dvt-palette-qualitative-8: 130, 91, 189;--oj-c-EXPERIMENTAL-DO-NOT-USE-dvt-palette-qualitative-9: 184, 156, 0;--oj-c-EXPERIMENTAL-DO-NOT-USE-dvt-palette-qualitative-10: 214, 191, 227;--oj-c-EXPERIMENTAL-DO-NOT-USE-dvt-palette-qualitative-11: 62, 115, 137;--oj-c-EXPERIMENTAL-DO-NOT-USE-dvt-palette-qualitative-12: 66, 164, 92;--oj-c-EXPERIMENTAL-DO-NOT-USE-dvt-threshold-success: rgb(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-success-100));--oj-c-EXPERIMENTAL-DO-NOT-USE-dvt-threshold-warning: rgb(207, 124, 0);--oj-c-EXPERIMENTAL-DO-NOT-USE-dvt-threshold-danger: rgb(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-danger-100));--oj-c-EXPERIMENTAL-DO-NOT-USE-dvt-marquee-border: rgba(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-190), .8);--oj-c-EXPERIMENTAL-DO-NOT-USE-dvt-marquee-surface: rgba(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-20), .1);--oj-c-EXPERIMENTAL-DO-NOT-USE-dvt-reference-object-area: rgba(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-170), .08);--oj-c-EXPERIMENTAL-DO-NOT-USE-dvt-reference-object-line: rgba(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-190), .8);--oj-c-EXPERIMENTAL-DO-NOT-USE-dvt-overview-background: rgb(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-30));--oj-c-EXPERIMENTAL-DO-NOT-USE-dvt-overview-window-background: rgb(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-0));--oj-c-EXPERIMENTAL-DO-NOT-USE-dvt-overview-window-border: rgb(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-170))}.oj-scale-sm,:root.oj-scale-sm{--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units: 3px}.oj-scale-md,:root.oj-scale-md{--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units: 3.5px}.oj-scale-lg{--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units: 4px}:root{--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units: .25rem}:root,.oj-density-standard{--oj-c-EXPERIMENTAL-DO-NOT-USE-density-units: 0px}.oj-density-compact{--oj-c-EXPERIMENTAL-DO-NOT-USE-density-units: -1 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units)}:root{--oj-c-EXPERIMENTAL-DO-NOT-USE-font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;--oj-c-EXPERIMENTAL-DO-NOT-USE-font-size: 1em}:root{--oj-c-EXPERIMENTAL-DO-NOT-USE-bg-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-surface-neutral10)}:root,.oj-scale-dependent,:root.oj-scale-sm,:root.oj-scale-md{--oj-c-EXPERIMENTAL-DO-NOT-USE-label-sm-font-size: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-body-xs-font-size);--oj-c-EXPERIMENTAL-DO-NOT-USE-label-md-font-size: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-body-sm-font-size);--oj-c-EXPERIMENTAL-DO-NOT-USE-label-lg-font-size: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-body-md-font-size);--oj-c-EXPERIMENTAL-DO-NOT-USE-dimmed-opacity: .35}
+
+/* end:@oracle/oraclejet-internal-theme-redwood/style.css */

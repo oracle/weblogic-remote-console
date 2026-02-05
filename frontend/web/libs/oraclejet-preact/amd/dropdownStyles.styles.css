@@ -1,0 +1,13 @@
+.dropdownStyles_base__d55yjw0 {
+  --oj-current-bg-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-surface-popup);
+  box-sizing: border-box;
+  background-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-surface-popup);
+  border-width: 1px;
+  border-style: solid;
+  border-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-border-divider);
+  border-radius: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-border-radius-md);
+  box-shadow: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-box-shadow-sm);
+  display: flex;
+  max-height: inherit;
+  overflow: hidden;
+}

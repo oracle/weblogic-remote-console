@@ -1,0 +1,1 @@
+export { useCache } from './useCache';

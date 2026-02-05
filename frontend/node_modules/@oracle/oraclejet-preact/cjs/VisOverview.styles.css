@@ -1,0 +1,13 @@
+.VisOverview_overviewBackground__1fs6dzb0 {
+  stroke-width: 0;
+  fill: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-dvt-overview-background);
+}
+.VisOverview_overviewWindow__1fs6dzb1 {
+  stroke: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-dvt-overview-window-border);
+  stroke-width: 1px;
+  fill: transparent;
+}
+.VisOverview_overviewWindowBorder__1fs6dzb2 {
+  stroke-width: 1.5;
+  stroke: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-dvt-overview-window-border);
+}

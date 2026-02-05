@@ -1,0 +1,34 @@
+.MenuItemVariants_multiVariantStyles_variant_standard__2irn5a0:active {
+  background-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-overlay-active);
+}
+.MenuItemVariants_multiVariantStyles_variant_destructive__2irn5a1 {
+  --textColor__1qbg5hn5: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-danger);
+  --iconColor__1qbg5hn6: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-danger);
+}
+.MenuItemVariants_multiVariantStyles_variant_destructive__2irn5a1:active {
+  --textColor__1qbg5hn5: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-danger);
+  --iconColor__1qbg5hn6: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-danger);
+  background-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-overlay-danger-active);
+}
+.MenuItemVariants_multiVariantStyles_variant_disabled__2irn5a2 {
+  --textColor__1qbg5hn5: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-disabled);
+  --iconColor__1qbg5hn6: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-disabled);
+  cursor: default !important;
+}
+.MenuItemVariants_multiVariantStyles_compound_0__2irn5ab {
+  outline-style: dotted;
+  outline-offset: -1px;
+  outline-width: 1px;
+  outline-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-border-keyboard-focus);
+}
+.MenuItemVariants_multiVariantStyles_compound_1__2irn5ac:not(:active) {
+  background-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-overlay-hover);
+}
+.MenuItemVariants_multiVariantStyles_compound_2__2irn5ad:not(:active) {
+  background-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-overlay-hover);
+}
+.MenuItemVariants_multiVariantStyles_compound_3__2irn5ae:not(:active) {
+  --textColor__1qbg5hn5: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-danger);
+  --iconColor__1qbg5hn6: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-danger);
+  background-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-overlay-danger-hover);
+}

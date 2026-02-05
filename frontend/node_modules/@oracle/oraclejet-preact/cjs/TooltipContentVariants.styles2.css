@@ -1,0 +1,22 @@
+.TooltipContentVariants_multiVariantStyles_variant_tooltip__1o562t70 {
+  --maxWidth__1x922a00: var(--variants-tooltip-maxWidth__1x922a09);
+  --backgroundColor__1x922a01: var(--variants-tooltip-backgroundColor__1x922a0a);
+  --textColor__1x922a02: var(--variants-tooltip-textColor__1x922a0b);
+  --fontSize__1x922a03: var(--variants-tooltip-fontSize__1x922a0c);
+  --lineHeight__1x922a04: var(--variants-tooltip-lineHeight__1x922a0d);
+  --borderRadius__1x922a05: var(--variants-tooltip-borderRadius__1x922a0e);
+  --borderColor__1x922a06: var(--variants-tooltip-borderColor__1x922a0f);
+  --paddingHorizontal__1x922a07: var(--variants-tooltip-paddingHorizontal__1x922a0g);
+  --paddingVertical__1x922a08: var(--variants-tooltip-paddingVertical__1x922a0h);
+}
+.TooltipContentVariants_multiVariantStyles_variant_datatip__1o562t71 {
+  --maxWidth__1x922a00: var(--variants-datatip-maxWidth__1x922a0i);
+  --backgroundColor__1x922a01: var(--variants-datatip-backgroundColor__1x922a0j);
+  --textColor__1x922a02: var(--variants-datatip-textColor__1x922a0k);
+  --fontSize__1x922a03: var(--variants-datatip-fontSize__1x922a0l);
+  --lineHeight__1x922a04: var(--variants-datatip-lineHeight__1x922a0m);
+  --borderRadius__1x922a05: var(--variants-datatip-borderRadius__1x922a0n);
+  --borderColor__1x922a06: var(--variants-datatip-borderColor__1x922a0o);
+  --paddingHorizontal__1x922a07: var(--variants-datatip-paddingHorizontal__1x922a0p);
+  --paddingVertical__1x922a08: var(--variants-datatip-paddingVertical__1x922a0q);
+}

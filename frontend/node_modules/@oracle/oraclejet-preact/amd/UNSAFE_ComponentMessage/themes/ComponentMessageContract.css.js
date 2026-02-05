@@ -1,0 +1,2 @@
+define(['exports'], (function(e){"use strict";e.componentMessageVars={startIconColor:"var(--startIconColor__1aj7c360)",startIconSize:"var(--startIconSize__1aj7c361)",summaryTextColor:"var(--summaryTextColor__1aj7c362)",summaryTextWeight:"var(--summaryTextWeight__1aj7c363)",summaryTextSize:"var(--summaryTextSize__1aj7c364)",summaryLineHeight:"var(--summaryLineHeight__1aj7c365)"},Object.defineProperty(e,"__esModule",{value:!0})}));
+//# sourceMappingURL=ComponentMessageContract.css.js.map

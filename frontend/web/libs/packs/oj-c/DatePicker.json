@@ -1,0 +1,563 @@
+[
+  {
+    "id": "oj-c.DatePicker",
+    "name": "DatePicker",
+    "memberof": "oj-c",
+    "kind": "class",
+    "meta": {
+      "filename": "date-picker.tsx",
+      "path": "web/components/oj-c/date-picker"
+    },
+    "ojcomponent": true,
+    "isvcomponent": true,
+    "since": "17.0.0",
+    "longname": "oj-c.DatePicker",
+    "pack": "oj-c",
+    "classdesc": "<h3 id=\"datePickerOverview-section\">\n  JET DatePicker Component\n  <a class=\"bookmarkable-link\" title=\"Bookmarkable Link\" href=\"#datePickerOverview-section\"></a>\n</h3>\n\n<p>Description: A DatePicker is a calendar interface that allows users to select a single date.</p>\n\n<pre class=\"prettyprint\"><code>&lt;oj-c-date-picker value=\"2023-03-20\">&lt;/oj-c-date-picker></code></pre>\n\n\n<h3 id=\"touch-section\">\n  Touch End User Information\n  <a class=\"bookmarkable-link\" title=\"Bookmarkable Link\" href=\"#touch-section\"></a>\n</h3>\n\n<table class=\"keyboard-table\">\n  <thead>\n    <tr>\n      <th>Target</th>\n      <th>Gesture</th>\n      <th>Action</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <td>Month/Year picker buttons</td>\n      <td><kbd>Tap</kbd></td>\n      <td>Toggles between Date picker mode and Month/Year picker mode.</td>\n    </tr>\n    <tr>\n      <td>Prev/Next buttons</td>\n      <td><kbd>Tap</kbd></td>\n      <td>Moves to the prev/next month in the date picker or to the prev/next decade in the year picker.</td>\n    </tr>\n    <tr>\n      <td>Today button</td>\n      <td><kbd>Tap</kbd></td>\n      <td>Navigates to the Year and Month that contains today's date.</td>\n    </tr>\n    <tr>\n      <td>Day Button</td>\n      <td><kbd>Tap</kbd></td>\n      <td>Selects this day as the current date.</td>\n    </tr>\n    <tr>\n      <td>Month Button</td>\n      <td><kbd>Tap</kbd></td>\n      <td>In the month picker, selects this month and returns to the date picker, refreshing the display to show the selected month.</td>\n    </tr>\n    <tr>\n      <td>Year Button</td>\n      <td><kbd>Tap</kbd></td>\n      <td>In the year picker, selects this year and returns to the date picker, refreshing the display to show the selected year.</td>\n    </tr>\n  </tbody>\n</table>\n\n<h3 id=\"keyboard-section\">\n  Keyboard End User Information\n  <a class=\"bookmarkable-link\" title=\"Bookmarkable Link\" href=\"#keyboard-section\"></a>\n</h3>\n\n<table class=\"keyboard-table\">\n  <thead>\n    <tr>\n      <th>Target</th>\n      <th>Key</th>\n      <th>Action</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <td>Date Picker</td>\n      <td><kbd>Tab</kbd></td>\n      <td>\n        Moves the focus to next element in the date picker sequence. Only one element in the calendar grid is in the Tab sequence\n        (current day/month/year or selected day/month/year depending on scenario). If focus is on the last tabbable element\n        inside the date picker, moves focus off the date picker to the next tabbable element on the page.\n      </td>\n    </tr>\n    <tr>\n      <td>Date Picker</td>\n      <td><kbd>Shift + Tab</kbd></td>\n      <td>\n        Moves the focus to the previous tabbable element inside the date picker. If focus is on the first tabbable element\n        inside the date picker, moves focus off the date picker to the previous tabbable element on the page.\n      </td>\n    </tr>\n    <tr>\n      <td>Date Picker</td>\n      <td><kbd>Enter/Space</kbd></td>\n      <td>\n        Selects the currently focused day or activates the button currently focused.\n      </td>\n    </tr>\n    <tr>\n      <td>Calendar Grid</td>\n      <td><kbd>PageUp</kbd></td>\n      <td>Changes the calendar grid to the previous month. Moves focus to the closest day in the previous month.</td>\n    </tr>\n    <tr>\n      <td>Calendar Grid</td>\n      <td><kbd>PageDown</kbd></td>\n      <td>Changes the calendar grid to the next month. Moves focus to the closest day in the next month.</td>\n    </tr>\n    <tr>\n      <td>Calendar Grid</td>\n      <td><kbd>Shift + PageUp</kbd></td>\n      <td>Changes the calendar grid to the previous year. Moves focus to the closest day of the same month in the previous year.</td>\n    </tr>\n    <tr>\n      <td>Calendar Grid</td>\n      <td><kbd>Shift + PageDown</kbd></td>\n      <td>Changes the calendar grid to the next year. Moves focus to the closest day of the same month in the next year.</td>\n    </tr>\n    <tr>\n      <td>Calendar Grid</td>\n      <td><kbd>Ctrl + Alt + T or Ctrl + Option + T</kbd></td>\n     <td>Changes the calendar grid to the year and month that contains today's date. Moves focus to Today.</td>\n    </tr>\n    <tr>\n      <td>Calendar Grid</td>\n      <td><kbd>Home</kbd></td>\n      <td>Go to the first day of the current month.</td>\n    </tr>\n    <tr>\n      <td>Calendar Grid</td>\n      <td><kbd>End</kbd></td>\n      <td>Go to the last day of the current month.</td>\n    </tr>\n    <tr>\n      <td>Calendar Grid</td>\n      <td><kbd>ArrowLeft</kbd></td>\n      <td>Moves focus to the previous day. In RTL, this will move focus to the next day.</td>\n    </tr>\n    <tr>\n      <td>Calendar Grid</td>\n      <td><kbd>ArrowRight</kbd></td>\n      <td>Moves focus to the next day. In RTL, this will move focus to the previous day.</td>\n    </tr>\n    <tr>\n      <td>Calendar Grid</td>\n      <td><kbd>ArrowUp</kbd></td>\n      <td>Moves focus to the same day of the previous week.</td>\n    </tr>\n    <tr>\n      <td>Calendar Grid</td>\n      <td><kbd>ArrowDown</kbd></td>\n      <td>Moves focus to the same day of the next week.</td>\n    </tr>\n    <tr>\n      <td>Months Grid</td>\n      <td><kbd>Enter/Space</kbd></td>\n      <td>\n        Selects the currently focused month and returns to the date picker, refreshing the display to show the selected month.\n      </td>\n    </tr>\n    <tr>\n      <td>Months Grid</td>\n      <td><kbd>UpArrow</kbd></td>\n      <td>Moves focus to four months back from the current focused month.</td>\n    </tr>\n    <tr>\n      <td>Months Grid</td>\n      <td><kbd>DownArrow</kbd></td>\n      <td>Moves focus to four months ahead from the current focused month.</td>\n    </tr>\n    <tr>\n      <td>Months Grid</td>\n      <td><kbd>RightArrow</kbd></td>\n      <td>Moves focus to the next month. In RTL, this will move focus to the previous month.</td>\n    </tr>\n    <tr>\n      <td>Months Grid</td>\n      <td><kbd>LeftArrow</kbd></td>\n      <td>Moves focus to the previous month. In RTL, this will move focus to the next month.</td>\n    </tr>\n    <tr>\n      <td>Years Grid</td>\n      <td><kbd>Enter/Space</kbd></td>\n      <td>\n        Selects the currently focused year and returns to the date picker, refreshing the display to show the selected month.\n      </td>\n    </tr>\n    <tr>\n      <td>Years Grid</td>\n      <td><kbd>PageUp</kbd></td>\n      <td>Changes the year grid to the previous decade. The focus remains in the same location with respect to the current decade.</td>\n    </tr>\n    <tr>\n      <td>Years Grid</td>\n      <td><kbd>PageDown</kbd></td>\n      <td>Changes the year grid to the next decade. The focus remains in the same location with respect to the current decade.</td>\n    </tr>\n    <tr>\n      <td>Years Grid</td>\n      <td><kbd>UpArrow</kbd></td>\n      <td>Moves focus to four years back from the current focused year. If that year is not in the year grid, go back 1 decade.</td>\n    </tr>\n    <tr>\n      <td>Years Grid</td>\n      <td><kbd>DownArrow</kbd></td>\n      <td>Moves focus to four years ahead from the current focused year. If that year is not in the year grid, go ahead 1 decade.</td>\n    </tr>\n    <tr>\n      <td>Years Grid</td>\n      <td><kbd>RightArrow</kbd></td>\n      <td>Moves focus to the next year. In RTL, this will move focus to the previous year.</td>\n    </tr>\n    <tr>\n      <td>Years Grid</td>\n      <td><kbd>LeftArrow</kbd></td>\n      <td>Moves focus to the previous year. In RTL, this will move focus to the next year.</td>\n    </tr>\n  </tbody>\n</table>\n<h3 id=\"a11y-section\">\n  Accessibility\n  <a class=\"bookmarkable-link\" title=\"Bookmarkable Link\" href=\"#a11y-section\"></a>\n</h3>\n\n<p>\nThe oj-c-date-picker is not intended to be a labelled component.  Component authors using this component should use the aria-describedby to give\na description of the date being entered.\n</p>",
+    "scope": "static",
+    "tagWithoutBrackets": "oj-c-date-picker",
+    "tagWithBrackets": "<oj-c-date-picker>",
+    "domInterface": "CDatePickerElement",
+    "ojPageTitle": "&lt;oj-c-date-picker>",
+    "camelCaseName": "DatePicker",
+    "ojPageTitlePrefix": "Element: ",
+    "ojtsvcomponent": true,
+    "tstype": {
+      "target": "Type",
+      "value": "interface CDatePickerElement extends JetElement<DatePickerElementSettableProperties>"
+    },
+    "ojsignature": [
+      {
+        "target": "Type",
+        "value": "interface CDatePickerElement extends JetElement<DatePickerElementSettableProperties>"
+      }
+    ],
+    "tsdeprecated": [
+      {
+        "type": "supersedes",
+        "since": "17.1.0",
+        "value": [
+          "oj-date-picker"
+        ]
+      }
+    ],
+    "ojmodule": "date-picker"
+  },
+  {
+    "id": "oj-c.DatePicker#dayFormatter",
+    "name": "dayFormatter",
+    "memberof": "oj-c.DatePicker",
+    "meta": {
+      "filename": "date-picker.tsx",
+      "path": "web/components/oj-c/date-picker"
+    },
+    "kind": "member",
+    "longname": "oj-c.DatePicker#dayFormatter",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "function"
+      ]
+    },
+    "optional": true,
+    "description": "A function that receives a date and returns an object specifying how to format the provided date.\nThis function is called for each date that is rendered and this can be used to control how individual\ndates are rendered - disabled, restricted, or enabled.",
+    "tstype": [
+      {
+        "target": "Type",
+        "value": "(date: Required<oj-c.DatePicker.CalendarDate>) => { state: \"disabled\" | \"enabled\" | \"restricted\"; }",
+        "jsdocOverride": true
+      }
+    ]
+  },
+  {
+    "id": "oj-c.DatePicker#daysOutsideMonth",
+    "name": "daysOutsideMonth",
+    "memberof": "oj-c.DatePicker",
+    "meta": {
+      "filename": "date-picker.tsx",
+      "path": "web/components/oj-c/date-picker"
+    },
+    "kind": "member",
+    "longname": "oj-c.DatePicker#daysOutsideMonth",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "\"hidden\"",
+        "\"selectable\""
+      ]
+    },
+    "optional": true,
+    "description": "The days-outside-month attribute affects the day cells that are outside of the current month.",
+    "ojvalues": [
+      {
+        "name": "hidden",
+        "description": "The days outside of the current month will be hidden.",
+        "displayName": "Hidden",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "selectable",
+        "description": "The days outside of the current month will be visible and selectable.",
+        "displayName": "Selectable",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      }
+    ],
+    "defaultvalue": "\"hidden\""
+  },
+  {
+    "id": "oj-c.DatePicker#monthAndYearPicker",
+    "name": "monthAndYearPicker",
+    "memberof": "oj-c.DatePicker",
+    "meta": {
+      "filename": "date-picker.tsx",
+      "path": "web/components/oj-c/date-picker"
+    },
+    "kind": "member",
+    "longname": "oj-c.DatePicker#monthAndYearPicker",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "\"off\"",
+        "\"on\""
+      ]
+    },
+    "optional": true,
+    "description": "The month-and-year-picker attribute can be used to specify whether or not the DatePicker should show the\ntoggle buttons that toggle the month grid picker and year grid picker. The month picker grid allows\nthe user to select a month to display in the date picker and the year picker grid allows the user to\nselect the year to display in the date picker.",
+    "ojvalues": [
+      {
+        "name": "on",
+        "description": "The month and year toggle buttons will be shown.",
+        "displayName": "On",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "off",
+        "description": "The month and year toggle buttons will not be shown and the date picker renders the month and the year as text.",
+        "displayName": "Off",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      }
+    ],
+    "defaultvalue": "\"on\""
+  },
+  {
+    "id": "oj-c.DatePicker#max",
+    "name": "max",
+    "memberof": "oj-c.DatePicker",
+    "meta": {
+      "filename": "date-picker.tsx",
+      "path": "web/components/oj-c/date-picker"
+    },
+    "kind": "member",
+    "longname": "oj-c.DatePicker#max",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "string|null"
+      ]
+    },
+    "optional": true,
+    "description": "The maximum selectable date, in date only ISO string format.\nDates in the date picker that are greater than this date will not be selectable.\nThis must be a date only ISO string with no time, otherwise an error is thrown and the component will not render.\nWhen set to null, there is no maximum.",
+    "defaultvalue": null
+  },
+  {
+    "id": "oj-c.DatePicker#maxWidth",
+    "name": "maxWidth",
+    "memberof": "oj-c.DatePicker",
+    "meta": {
+      "filename": "date-picker.tsx",
+      "path": "web/components/oj-c/date-picker"
+    },
+    "kind": "member",
+    "longname": "oj-c.DatePicker#maxWidth",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "number|string"
+      ]
+    },
+    "optional": true,
+    "description": "Specifies the component style maxWidth.\n<p>If not specified, defaults to the theme specified maxWidth.<br/>\nThis attribute accepts values of type:<br/>\n0 | `${number}${CssUnits}` | `${number}x` | `--${string}` | `var($string})` | `${number}%`</p>\n<p>When this component is used in composition and the component should take up 100% of the parent container's\nwidth, set maxWidth to '100%'.<br/>\nBecause there is a theme default value for maxWidth, when setting the width property to achieve a fixed width,\nset the maxWidth property to the same value.</p>"
+  },
+  {
+    "id": "oj-c.DatePicker#min",
+    "name": "min",
+    "memberof": "oj-c.DatePicker",
+    "meta": {
+      "filename": "date-picker.tsx",
+      "path": "web/components/oj-c/date-picker"
+    },
+    "kind": "member",
+    "longname": "oj-c.DatePicker#min",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "string|null"
+      ]
+    },
+    "optional": true,
+    "description": "The minimum selectable date, in date only ISO string format.\nDates in the date picker that are less than this date will not be selectable.\nThis must be a date only ISO string with no time, otherwise an error is thrown and the component will not render.\nWhen set to null, there is no minimum.",
+    "defaultvalue": null
+  },
+  {
+    "id": "oj-c.DatePicker#readonly",
+    "name": "readonly",
+    "memberof": "oj-c.DatePicker",
+    "meta": {
+      "filename": "date-picker.tsx",
+      "path": "web/components/oj-c/date-picker"
+    },
+    "kind": "member",
+    "longname": "oj-c.DatePicker#readonly",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "boolean"
+      ]
+    },
+    "optional": true,
+    "description": "Whether the component is readonly. When the component is readonly, the date picker can still be used to navigate\nto different calendar dates, but the date picker won't allow the date to be changed via user action.",
+    "defaultvalue": false
+  },
+  {
+    "id": "oj-c.DatePicker#todayButton",
+    "name": "todayButton",
+    "memberof": "oj-c.DatePicker",
+    "meta": {
+      "filename": "date-picker.tsx",
+      "path": "web/components/oj-c/date-picker"
+    },
+    "kind": "member",
+    "longname": "oj-c.DatePicker#todayButton",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "\"hidden\"",
+        "\"visible\""
+      ]
+    },
+    "optional": true,
+    "description": "Specifies the visibility of the 'Go to today' button.",
+    "ojvalues": [
+      {
+        "name": "visible",
+        "description": "The 'Go to Today' button will be shown and it can be pressed to navigate to Today.",
+        "displayName": "Visible",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "hidden",
+        "description": "The 'Go to Today' button will be hidden.",
+        "displayName": "Hidden",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      }
+    ],
+    "defaultvalue": "\"visible\""
+  },
+  {
+    "id": "oj-c.DatePicker#todayTimeZone",
+    "name": "todayTimeZone",
+    "memberof": "oj-c.DatePicker",
+    "meta": {
+      "filename": "date-picker.tsx",
+      "path": "web/components/oj-c/date-picker"
+    },
+    "kind": "member",
+    "longname": "oj-c.DatePicker#todayTimeZone",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "string"
+      ]
+    },
+    "optional": true,
+    "description": "The today-time-zone attribute is used to compute today's date.\nThis defaults to the user's system timezone.\n<p>\nThe only reason an application would set the today-time-zone property is if they want the\nhighlighted today cell to be in a different timezone than the user's system's timezone,\nlike if the user has a preferred timezone that is not where they are physically working.\n</p>"
+  },
+  {
+    "id": "oj-c.DatePicker#value",
+    "name": "value",
+    "memberof": "oj-c.DatePicker",
+    "meta": {
+      "filename": "date-picker.tsx",
+      "path": "web/components/oj-c/date-picker"
+    },
+    "kind": "member",
+    "longname": "oj-c.DatePicker#value",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "string|null"
+      ]
+    },
+    "optional": true,
+    "ojwriteback": true,
+    "description": "The value of the component.\n<p>The value must be a local date (no time) ISO string such as '2021-03-14',\notherwise the component will throw an error.</p>\n<p>\nThe oj-c-date-picker initially opens to the selected date if there is one and it is within the min/max range.\nIf there is no value, the DatePicker initially opens to today's month.\n</p>",
+    "defaultvalue": null
+  },
+  {
+    "id": "oj-c.DatePicker#weekDisplay",
+    "name": "weekDisplay",
+    "memberof": "oj-c.DatePicker",
+    "meta": {
+      "filename": "date-picker.tsx",
+      "path": "web/components/oj-c/date-picker"
+    },
+    "kind": "member",
+    "longname": "oj-c.DatePicker#weekDisplay",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "\"number\"",
+        "\"none\""
+      ]
+    },
+    "optional": true,
+    "description": "Whether week of the year will be shown in the DatePicker. The default calculation follows the\nrule for ISO 8601 as follows: The first week of the year is defined as the week that contains\nthe first Thursday. Therefore, if January 1st falls on a Friday, it is considered part of the last week\nof the previous year. Conversely, if December 31st falls on a Wednesday, it is part of week 1 of the following year.",
+    "ojvalues": [
+      {
+        "name": "none",
+        "description": "The week of the year column will not be shown.",
+        "displayName": "None",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "number",
+        "description": "Will show the week of the year as a number.",
+        "displayName": "Number",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      }
+    ],
+    "defaultvalue": "\"none\""
+  },
+  {
+    "id": "oj-c.DatePicker#width",
+    "name": "width",
+    "memberof": "oj-c.DatePicker",
+    "meta": {
+      "filename": "date-picker.tsx",
+      "path": "web/components/oj-c/date-picker"
+    },
+    "kind": "member",
+    "longname": "oj-c.DatePicker#width",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "number|string"
+      ]
+    },
+    "optional": true,
+    "description": "Specifies the component style width.\n<p>If not specified, defaults to '100%'.</p>\n<p>This attribute accepts values of type:</p>\n<p>0 | `${number}${CssUnits}` | `${number}x` | `--${string}`  | `var($string})` | `${number}%`</p>\n<br/>\n<p>Because there is a theme default value for maxWidth, when setting the width property to achieve a fixed width,\nset the maxWidth property to the same value.</p>"
+  },
+  {
+    "id": "oj-c.DatePicker#setProperty",
+    "name": "setProperty",
+    "memberof": "oj-c.DatePicker",
+    "meta": {
+      "filename": "date-picker.tsx",
+      "path": "web/components/oj-c/date-picker"
+    },
+    "kind": "function",
+    "longname": "oj-c.DatePicker#setProperty",
+    "scope": "instance",
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "void"
+          ]
+        }
+      }
+    ],
+    "description": "Sets a property or a single subproperty for complex properties and notifies the component of the change, triggering a corresponding event.",
+    "params": [
+      {
+        "name": "property",
+        "description": "The property name to set. Supports dot notation for subproperty access.",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "value",
+        "description": "The new value to set the property to.",
+        "type": {
+          "names": [
+            "any"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.DatePicker#getProperty",
+    "name": "getProperty",
+    "memberof": "oj-c.DatePicker",
+    "meta": {
+      "filename": "date-picker.tsx",
+      "path": "web/components/oj-c/date-picker"
+    },
+    "kind": "function",
+    "longname": "oj-c.DatePicker#getProperty",
+    "scope": "instance",
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "any"
+          ]
+        }
+      }
+    ],
+    "description": "Retrieves the value of a property or a subproperty.",
+    "params": [
+      {
+        "name": "property",
+        "description": "The property name to get. Supports dot notation for subproperty access.",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.DatePicker#setProperties",
+    "name": "setProperties",
+    "memberof": "oj-c.DatePicker",
+    "meta": {
+      "filename": "date-picker.tsx",
+      "path": "web/components/oj-c/date-picker"
+    },
+    "kind": "function",
+    "longname": "oj-c.DatePicker#setProperties",
+    "scope": "instance",
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "void"
+          ]
+        }
+      }
+    ],
+    "description": "Performs a batch set of properties.",
+    "params": [
+      {
+        "name": "properties",
+        "description": "An object containing the property and value pairs to set.",
+        "type": {
+          "names": [
+            "object"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.DatePicker.touchDoc",
+    "name": "touchDoc",
+    "kind": "member",
+    "longname": "oj-c.DatePicker.touchDoc",
+    "description": "<table class=\"keyboard-table\">\n  <thead>\n    <tr>\n      <th>Target</th>\n      <th>Gesture</th>\n      <th>Action</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <td>Month/Year picker buttons</td>\n      <td><kbd>Tap</kbd></td>\n      <td>Toggles between Date picker mode and Month/Year picker mode.</td>\n    </tr>\n    <tr>\n      <td>Prev/Next buttons</td>\n      <td><kbd>Tap</kbd></td>\n      <td>Moves to the prev/next month in the date picker or to the prev/next decade in the year picker.</td>\n    </tr>\n    <tr>\n      <td>Today button</td>\n      <td><kbd>Tap</kbd></td>\n      <td>Navigates to the Year and Month that contains today's date.</td>\n    </tr>\n    <tr>\n      <td>Day Button</td>\n      <td><kbd>Tap</kbd></td>\n      <td>Selects this day as the current date.</td>\n    </tr>\n    <tr>\n      <td>Month Button</td>\n      <td><kbd>Tap</kbd></td>\n      <td>In the month picker, selects this month and returns to the date picker, refreshing the display to show the selected month.</td>\n    </tr>\n    <tr>\n      <td>Year Button</td>\n      <td><kbd>Tap</kbd></td>\n      <td>In the year picker, selects this year and returns to the date picker, refreshing the display to show the selected year.</td>\n    </tr>\n  </tbody>\n</table>",
+    "memberof": "oj-c.DatePicker",
+    "meta": {
+      "filename": "date-picker.tsx",
+      "path": "web/components/oj-c/date-picker"
+    },
+    "ojfragment": true
+  },
+  {
+    "id": "oj-c.DatePicker.keyboardDoc",
+    "name": "keyboardDoc",
+    "kind": "member",
+    "longname": "oj-c.DatePicker.keyboardDoc",
+    "description": "<table class=\"keyboard-table\">\n  <thead>\n    <tr>\n      <th>Target</th>\n      <th>Key</th>\n      <th>Action</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <td>Date Picker</td>\n      <td><kbd>Tab</kbd></td>\n      <td>\n        Moves the focus to next element in the date picker sequence. Only one element in the calendar grid is in the Tab sequence\n        (current day/month/year or selected day/month/year depending on scenario). If focus is on the last tabbable element\n        inside the date picker, moves focus off the date picker to the next tabbable element on the page.\n      </td>\n    </tr>\n    <tr>\n      <td>Date Picker</td>\n      <td><kbd>Shift + Tab</kbd></td>\n      <td>\n        Moves the focus to the previous tabbable element inside the date picker. If focus is on the first tabbable element\n        inside the date picker, moves focus off the date picker to the previous tabbable element on the page.\n      </td>\n    </tr>\n    <tr>\n      <td>Date Picker</td>\n      <td><kbd>Enter/Space</kbd></td>\n      <td>\n        Selects the currently focused day or activates the button currently focused.\n      </td>\n    </tr>\n    <tr>\n      <td>Calendar Grid</td>\n      <td><kbd>PageUp</kbd></td>\n      <td>Changes the calendar grid to the previous month. Moves focus to the closest day in the previous month.</td>\n    </tr>\n    <tr>\n      <td>Calendar Grid</td>\n      <td><kbd>PageDown</kbd></td>\n      <td>Changes the calendar grid to the next month. Moves focus to the closest day in the next month.</td>\n    </tr>\n    <tr>\n      <td>Calendar Grid</td>\n      <td><kbd>Shift + PageUp</kbd></td>\n      <td>Changes the calendar grid to the previous year. Moves focus to the closest day of the same month in the previous year.</td>\n    </tr>\n    <tr>\n      <td>Calendar Grid</td>\n      <td><kbd>Shift + PageDown</kbd></td>\n      <td>Changes the calendar grid to the next year. Moves focus to the closest day of the same month in the next year.</td>\n    </tr>\n    <tr>\n      <td>Calendar Grid</td>\n      <td><kbd>Ctrl + Alt + T or Ctrl + Option + T</kbd></td>\n     <td>Changes the calendar grid to the year and month that contains today's date. Moves focus to Today.</td>\n    </tr>\n    <tr>\n      <td>Calendar Grid</td>\n      <td><kbd>Home</kbd></td>\n      <td>Go to the first day of the current month.</td>\n    </tr>\n    <tr>\n      <td>Calendar Grid</td>\n      <td><kbd>End</kbd></td>\n      <td>Go to the last day of the current month.</td>\n    </tr>\n    <tr>\n      <td>Calendar Grid</td>\n      <td><kbd>ArrowLeft</kbd></td>\n      <td>Moves focus to the previous day. In RTL, this will move focus to the next day.</td>\n    </tr>\n    <tr>\n      <td>Calendar Grid</td>\n      <td><kbd>ArrowRight</kbd></td>\n      <td>Moves focus to the next day. In RTL, this will move focus to the previous day.</td>\n    </tr>\n    <tr>\n      <td>Calendar Grid</td>\n      <td><kbd>ArrowUp</kbd></td>\n      <td>Moves focus to the same day of the previous week.</td>\n    </tr>\n    <tr>\n      <td>Calendar Grid</td>\n      <td><kbd>ArrowDown</kbd></td>\n      <td>Moves focus to the same day of the next week.</td>\n    </tr>\n    <tr>\n      <td>Months Grid</td>\n      <td><kbd>Enter/Space</kbd></td>\n      <td>\n        Selects the currently focused month and returns to the date picker, refreshing the display to show the selected month.\n      </td>\n    </tr>\n    <tr>\n      <td>Months Grid</td>\n      <td><kbd>UpArrow</kbd></td>\n      <td>Moves focus to four months back from the current focused month.</td>\n    </tr>\n    <tr>\n      <td>Months Grid</td>\n      <td><kbd>DownArrow</kbd></td>\n      <td>Moves focus to four months ahead from the current focused month.</td>\n    </tr>\n    <tr>\n      <td>Months Grid</td>\n      <td><kbd>RightArrow</kbd></td>\n      <td>Moves focus to the next month. In RTL, this will move focus to the previous month.</td>\n    </tr>\n    <tr>\n      <td>Months Grid</td>\n      <td><kbd>LeftArrow</kbd></td>\n      <td>Moves focus to the previous month. In RTL, this will move focus to the next month.</td>\n    </tr>\n    <tr>\n      <td>Years Grid</td>\n      <td><kbd>Enter/Space</kbd></td>\n      <td>\n        Selects the currently focused year and returns to the date picker, refreshing the display to show the selected month.\n      </td>\n    </tr>\n    <tr>\n      <td>Years Grid</td>\n      <td><kbd>PageUp</kbd></td>\n      <td>Changes the year grid to the previous decade. The focus remains in the same location with respect to the current decade.</td>\n    </tr>\n    <tr>\n      <td>Years Grid</td>\n      <td><kbd>PageDown</kbd></td>\n      <td>Changes the year grid to the next decade. The focus remains in the same location with respect to the current decade.</td>\n    </tr>\n    <tr>\n      <td>Years Grid</td>\n      <td><kbd>UpArrow</kbd></td>\n      <td>Moves focus to four years back from the current focused year. If that year is not in the year grid, go back 1 decade.</td>\n    </tr>\n    <tr>\n      <td>Years Grid</td>\n      <td><kbd>DownArrow</kbd></td>\n      <td>Moves focus to four years ahead from the current focused year. If that year is not in the year grid, go ahead 1 decade.</td>\n    </tr>\n    <tr>\n      <td>Years Grid</td>\n      <td><kbd>RightArrow</kbd></td>\n      <td>Moves focus to the next year. In RTL, this will move focus to the previous year.</td>\n    </tr>\n    <tr>\n      <td>Years Grid</td>\n      <td><kbd>LeftArrow</kbd></td>\n      <td>Moves focus to the previous year. In RTL, this will move focus to the next year.</td>\n    </tr>\n  </tbody>\n</table>",
+    "memberof": "oj-c.DatePicker",
+    "meta": {
+      "filename": "date-picker.tsx",
+      "path": "web/components/oj-c/date-picker"
+    },
+    "ojfragment": true
+  },
+  {
+    "id": "oj-c.DatePicker.CalendarDate",
+    "name": "CalendarDate",
+    "kind": "typedef",
+    "memberof": "oj-c.DatePicker",
+    "meta": {
+      "filename": "date-picker.tsx",
+      "path": "web/components/oj-c/date-picker"
+    },
+    "longname": "oj-c.DatePicker.CalendarDate",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "scope": "static",
+    "description": "",
+    "properties": [
+      {
+        "name": "year",
+        "optional": true,
+        "type": {
+          "names": [
+            "number"
+          ]
+        }
+      },
+      {
+        "name": "month",
+        "optional": true,
+        "type": {
+          "names": [
+            "number"
+          ]
+        }
+      },
+      {
+        "name": "day",
+        "optional": true,
+        "type": {
+          "names": [
+            "number"
+          ]
+        }
+      }
+    ]
+  }
+]

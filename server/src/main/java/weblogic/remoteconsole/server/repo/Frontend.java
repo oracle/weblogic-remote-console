@@ -9,11 +9,18 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import javax.json.Json;
+import javax.json.JsonObject;
 import javax.ws.rs.container.ContainerRequestContext;
+import javax.ws.rs.container.ResourceContext;
+import javax.ws.rs.sse.Sse;
+import javax.ws.rs.sse.SseEventSink;
 
 import weblogic.console.utils.StringUtils;
+import weblogic.remoteconsole.server.BookmarkManager;
 import weblogic.remoteconsole.server.ConsoleBackendRuntimeConfig;
-import weblogic.remoteconsole.server.providers.ProviderManager;
+import weblogic.remoteconsole.server.HistoryManager;
+import weblogic.remoteconsole.server.providers.ProjectManager;
 
 /**
  * The Frontend class corresponds to one session.  It holds
@@ -23,8 +30,13 @@ import weblogic.remoteconsole.server.providers.ProviderManager;
 public class Frontend {
   private String id;
   private String subId;
+  private SseEventSink sseSink;
+  private Sse sseObject;
+  private JsonObject contexts = Json.createObjectBuilder().build();
   private long lastRequestTime;
-  private ProviderManager pm = new ProviderManager();
+  private ProjectManager projectManager;
+  private HistoryManager historyManager = new HistoryManager();
+  private BookmarkManager bookmarkManager = new BookmarkManager();
   private static boolean isSameSiteCookieEnabled =
     ConsoleBackendRuntimeConfig.isSameSiteCookieEnabled();
   private static String valueSameSiteCookie =
@@ -34,6 +46,12 @@ public class Frontend {
   public Frontend(String id, String subId) {
     this.id = id;
     this.subId = subId;
+  }
+
+  public void initIfNeeded(InvocationContext ic) {
+    if (projectManager == null) {
+      projectManager = new ProjectManager(ic);
+    }
   }
 
   public String getID() {
@@ -61,7 +79,12 @@ public class Frontend {
   }
 
   public void terminate() {
-    pm.terminate();
+    getProjectManager().terminate();
+    if (sseSink != null) {
+      sseSink.close();
+      sseSink = null;
+      sseObject = null;
+    }
   }
 
   public void storeInRequestContext(ContainerRequestContext context) {
@@ -72,8 +95,21 @@ public class Frontend {
     return (Frontend) context.getProperty(Frontend.class.getName());
   }
 
-  public ProviderManager getProviderManager() {
-    return pm;
+  public static Frontend getFromContext(ResourceContext context) {
+    return Frontend.getFromContext(
+      context.getResource(ContainerRequestContext.class));
+  }
+
+  public ProjectManager getProjectManager() {
+    return projectManager;
+  }
+
+  public HistoryManager getHistoryManager() {
+    return historyManager;
+  }
+
+  public BookmarkManager getBookmarkManager() {
+    return bookmarkManager;
   }
 
   public boolean isSameSiteCookieEnabled() {
@@ -109,6 +145,31 @@ public class Frontend {
     }
   }
 
+  public void setSSESink(SseEventSink sseSink) {
+    this.sseSink = sseSink;
+  }
+
+  public void setSSEObject(Sse sseObject) {
+    this.sseObject = sseObject;
+  }
+
+  public SseEventSink getSSESink() {
+    if (sseSink == null) {
+      for (Frontend other : FrontendManager. getFrontendsWithID(id)) {
+        if (other.sseSink != null) {
+          sseSink = other.sseSink;
+          sseObject = other.sseObject;
+          return sseSink;
+        }
+      }
+    }
+    return sseSink;
+  }
+
+  public Sse getSSEObject() {
+    return sseObject;
+  }
+
   public synchronized void storeData(
     String key,
     Object referenceKey,
@@ -122,6 +183,14 @@ public class Frontend {
   public synchronized void removeData(String key, Object referenceKey) {
     storedData.remove(key + referenceKey);
     clean();
+  }
+
+  public JsonObject getContexts() {
+    return contexts;
+  }
+
+  public void setContexts(JsonObject contexts) {
+    this.contexts = contexts;
   }
 
   private static class StoredDataObject {

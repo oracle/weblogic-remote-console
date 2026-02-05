@@ -1,0 +1,257 @@
+{
+  "name": "file-picker",
+  "version": "19.0.1",
+  "jetVersion": "^19.0.1",
+  "pack": "oj-c",
+  "type": "composite",
+  "dependencyScope": "runtime",
+  "license": "https://opensource.org/licenses/UPL",
+  "implements": [
+    "CFilePickerElement"
+  ],
+  "description": "A file picker displays a clickable dropzone for selecting files from the device storage.",
+  "displayName": "File Picker",
+  "help": "oj-c.FilePicker.html",
+  "main": "oj-c/file-picker",
+  "status": [
+    {
+      "type": "supersedes",
+      "since": "15.0.0",
+      "value": [
+        "oj-file-picker"
+      ]
+    }
+  ],
+  "extension": {
+    "catalog": {
+      "category": "Controls"
+    },
+    "vbdt": {
+      "module": "oj-c/file-picker"
+    },
+    "oracle": {
+      "icon": "oj-ux-ico-file-image",
+      "uxSpecs": [
+        "file-picker"
+      ]
+    },
+    "webelement": {
+      "package": "@oracle/oraclejet-core-pack",
+      "version": "19.0.1",
+      "docUrl": "https://www.oracle.com/webfolder/technetwork/jet/cpwdtsdoc/classes/FilePickerWebElement.html",
+      "export": "findFilePicker",
+      "main": "@oracle/oraclejet-core-pack/webdriver"
+    }
+  },
+  "propertyLayout": [
+    {
+      "propertyGroup": "common",
+      "items": [
+        "accept",
+        "selectionMode",
+        "disabled",
+        "primaryText",
+        "secondaryText"
+      ]
+    }
+  ],
+  "since": "14.0.0",
+  "properties": {
+    "accept": {
+      "type": "Array<string>|null",
+      "description": "An array of strings of allowed MIME types or file extensions that can be uploaded. If not specified, accept all file types",
+      "displayName": "Accept",
+      "help": "#accept"
+    },
+    "capture": {
+      "type": "string|null",
+      "description": "Specifies the preferred facing mode for the device's media capture mechanism.",
+      "displayName": "Capture",
+      "help": "#capture",
+      "propertyEditorValues": {
+        "user": {
+          "description": "Specifies user-facing as the preferred mode",
+          "displayName": "User"
+        },
+        "environment": {
+          "description": "Specifies environment-facing as the preferred mode",
+          "displayName": "Environment"
+        },
+        "implementation": {
+          "description": "Specifies an implementation-specific default as the preferred facing mode",
+          "displayName": "Implementation"
+        },
+        "none": {
+          "description": "No capture mechanism is used",
+          "displayName": "None"
+        }
+      },
+      "enumValues": [
+        "none",
+        "environment",
+        "user",
+        "implementation"
+      ],
+      "value": "none"
+    },
+    "disabled": {
+      "type": "boolean",
+      "description": "Disables the filepicker if set to true",
+      "displayName": "Disabled",
+      "help": "#disabled",
+      "value": false
+    },
+    "primaryText": {
+      "type": "string|function",
+      "description": "The primary text for the default file picker.",
+      "displayName": "Primary Text",
+      "help": "#primaryText"
+    },
+    "secondaryText": {
+      "type": "string|function",
+      "description": "The secondary text for the default file picker.",
+      "displayName": "Secondary Text",
+      "help": "#secondaryText"
+    },
+    "selectionMode": {
+      "type": "string",
+      "description": "Whether to allow single or multiple file selection.",
+      "displayName": "Selection Mode",
+      "help": "#selectionMode",
+      "propertyEditorValues": {
+        "multiple": {
+          "description": "multiple file selection",
+          "displayName": "Multiple"
+        },
+        "single": {
+          "description": "single file selection",
+          "displayName": "Single"
+        }
+      },
+      "enumValues": [
+        "multiple",
+        "single"
+      ],
+      "value": "multiple"
+    }
+  },
+  "slots": {
+    "trigger": {
+      "description": "The trigger slot is used to replace the default content of the file picker.",
+      "help": "#trigger"
+    }
+  },
+  "events": {
+    "ojBeforeSelect": {
+      "cancelable": true,
+      "description": "Triggered before files are selected to allow for custom validation",
+      "help": "#event:beforeSelect",
+      "detail": {
+        "accept": {
+          "description": "This method can be called with an application-created Promise to cancel this event asynchronously.  The Promise should be resolved or rejected to accept or cancel the event, respectively.",
+          "type": "function"
+        },
+        "files": {
+          "type": "FileList",
+          "description": "The selected files"
+        }
+      }
+    },
+    "ojInvalidSelect": {
+      "description": "Triggered when invalid files are selected",
+      "help": "#event:invalidSelect",
+      "detail": {
+        "messages": {
+          "type": "Array<object>",
+          "description": "Messages that should be displayed to the user describing invalid files.",
+          "extension": {
+            "vbdt": {
+              "itemProperties": {
+                "summary": {
+                  "type": "string"
+                },
+                "detail": {
+                  "type": "string"
+                },
+                "severity": {
+                  "type": "string",
+                  "enumValues": [
+                    "error",
+                    "confirmation",
+                    "info",
+                    "warning"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "until": {
+          "type": "Promise|null",
+          "description": "This property may be populated with a Promise to provide short-term feedback during a user interaction (typically drag and drop); the feedback should be cleared upon the resolution of this Promise."
+        }
+      }
+    },
+    "ojSelect": {
+      "description": "Triggered after the files are selected",
+      "help": "#event:select",
+      "detail": {
+        "files": {
+          "type": "FileList",
+          "description": "The files that were just selected."
+        }
+      }
+    }
+  },
+  "methods": {
+    "focus": {
+      "description": "Sets focus on the file picker or the first tabbable element for a file picker with custom content.",
+      "return": "void"
+    },
+    "blur": {
+      "description": "Blurs the file picker.",
+      "return": "void"
+    },
+    "setProperty": {
+      "description": "Sets a property or a single subproperty for complex properties and notifies the component of the change, triggering a corresponding event.",
+      "help": "#setProperty",
+      "params": [
+        {
+          "name": "property",
+          "description": "The property name to set. Supports dot notation for subproperty access.",
+          "type": "string"
+        },
+        {
+          "name": "value",
+          "description": "The new value to set the property to.",
+          "type": "any"
+        }
+      ],
+      "return": "void"
+    },
+    "getProperty": {
+      "description": "Retrieves the value of a property or a subproperty.",
+      "help": "#getProperty",
+      "params": [
+        {
+          "name": "property",
+          "description": "The property name to get. Supports dot notation for subproperty access.",
+          "type": "string"
+        }
+      ],
+      "return": "any"
+    },
+    "setProperties": {
+      "description": "Performs a batch set of properties.",
+      "help": "#setProperties",
+      "params": [
+        {
+          "name": "properties",
+          "description": "An object containing the property and value pairs to set.",
+          "type": "object"
+        }
+      ],
+      "return": "void"
+    }
+  }
+}

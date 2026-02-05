@@ -1,0 +1,29 @@
+.VisTabularDatatipStyles_VisTabularDatatipTable__16qzb7l0 {
+  border-collapse: separate;
+  border-spacing: 0;
+  background-color: transparent;
+  font-size: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-body-xs-font-size);
+  line-height: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-body-xs-line-height);
+}
+.VisTabularDatatipStyles_VisTabularDatatipLabel__16qzb7l1 {
+  color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-secondary);
+  padding-top: 0px;
+  padding-bottom: 0px;
+  padding-inline-start: calc(0.5 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  padding-inline-end: calc(0.5 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  white-space: nowrap;
+}
+.VisTabularDatatipStyles_rightAlign__16qzb7l2 {
+  text-align: right;
+}
+.VisTabularDatatipStyles_leftAlign__16qzb7l3 {
+  text-align: left;
+}
+.VisTabularDatatipStyles_VisTabularDatatipValue__16qzb7l4 {
+  color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-primary);
+  padding-top: 0px;
+  padding-bottom: 0px;
+  padding-inline-start: calc(0.5 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  padding-inline-end: calc(0.5 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  white-space: nowrap;
+}

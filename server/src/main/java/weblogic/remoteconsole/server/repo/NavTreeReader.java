@@ -78,6 +78,7 @@ class NavTreeReader extends PageReader {
       NavTreePath navTreePath = new NavTreePath(getPageRepo(), parentNavTreePath.childPath(name));
       NavTreeNode expandedNode = new NavTreeNode();
       expandedNode.setName(name);
+      expandedNode.setNavTreePath(navTreePath);
       expandedNode.setExpanded(nodeToExpand != null);
       if (nodeDef.isGroupNodeDef()) {
         return completeGroupNode(expandedNode, navTreePath, nodeDef.asGroupNodeDef(), nodeToExpand);
@@ -222,6 +223,7 @@ class NavTreeReader extends PageReader {
       node.setName(key);
       node.setLabel(key);
       node.setResourceData(childResults.getBeanTreePath());
+      node.setNavTreePath(new NavTreePath(getPageRepo(), childResults.getBeanTreePath()));
       expandChildChildrenNodes(node, findNodeToExpand(key, childNodesToExpand));
       return node;
     }

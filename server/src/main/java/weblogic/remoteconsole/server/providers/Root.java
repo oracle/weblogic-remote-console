@@ -40,6 +40,7 @@ public class Root {
   private String name;
   private String rootName;
   private LocalizableString label;
+  private LocalizableString description;
   private boolean readOnly;
   private String[] topLevelResources;
   private PageRepo pageRepo;
@@ -49,6 +50,7 @@ public class Root {
     String name,
     String rootName,
     LocalizableString label,
+    LocalizableString description,
     boolean readOnly,
     String... topLevelResources
   ) {
@@ -56,6 +58,7 @@ public class Root {
     this.name = name;
     this.rootName = rootName;
     this.label = label;
+    this.description = description;
     this.readOnly = readOnly;
     this.topLevelResources = topLevelResources;
   }
@@ -72,6 +75,10 @@ public class Root {
     return label;
   }
 
+  public LocalizableString getDescription() {
+    return description;
+  }
+
   public PageRepo getPageRepo() {
     return pageRepo;
   }
@@ -85,6 +92,7 @@ public class Root {
     JsonObjectBuilder ret = Json.createObjectBuilder();
     ret.add("name", name);
     ret.add("label", ic.getLocalizer().localizeString(label));
+    ret.add("description", ic.getLocalizer().localizeString(description));
     String encodedProviderName = UrlUtils.urlEncode(provider.getName());
     for (String topLevelResource : topLevelResources) {
       ret.add(

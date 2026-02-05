@@ -1,0 +1,12 @@
+oj-c-menu-button:not(.oj-complete) {
+  visibility: hidden;
+}
+
+oj-c-menu-button {
+  display: inline-flex;
+  vertical-align: top;
+}
+
+oj-c-menu-button[hidden] {
+  display: none;
+}

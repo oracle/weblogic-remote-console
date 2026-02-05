@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2022, 2023, Oracle and/or its affiliates.
+ * Copyright (c) 2022, 2026, Oracle and/or its affiliates.
  * Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
  * @ignore
  */
@@ -28,7 +28,7 @@ const I18NUtils = (() => {
       // All of the property files look like either:
       // <resourceDir>/nls/electron_<language>.properties or
       // <resourceDir>/nls/electron_<language>_<dialect>.properties
-      // frontend/src/resources/nls/frontend_ja.properties
+      // <resourceDir>/nls/frontend_ja.properties
 
       // Read in the default strings and then replace with localized
       // ones, in case some strings haven't been translated yet

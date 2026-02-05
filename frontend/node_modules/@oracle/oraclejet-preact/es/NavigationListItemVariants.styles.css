@@ -1,0 +1,23 @@
+.NavigationListItemVariants_multiVariantStyles_compound_0__16ggl23e:not(:active) {
+  background-color: var(--backgroundColorHover__1497t569);
+  border-color: var(--borderColorHover__1497t56a);
+  color: var(--labelColorHover__1497t568);
+}
+.NavigationListItemVariants_multiVariantStyles_compound_2__16ggl23g {
+  background-color: var(--backgroundColorActive__1497t56e);
+  border-color: var(--borderColorActive__1497t56g);
+  color: var(--labelColorActive__1497t56f);
+}
+.NavigationListItemVariants_multiVariantStyles_compound_3__16ggl23h {
+  outline-style: dotted;
+  outline-offset: -1px;
+  outline-width: 1px;
+  outline-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-border-keyboard-focus);
+}
+@media (hover: hover) {
+  .NavigationListItemVariants_multiVariantStyles_compound_1__16ggl23f:hover:not(:active) {
+    background-color: var(--backgroundColorHover__1497t569);
+    border-color: var(--borderColorHover__1497t56a);
+    color: var(--labelColorHover__1497t568);
+  }
+}

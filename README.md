@@ -14,11 +14,12 @@ WebLogic Remote Console provides an alternative WebLogic Server administration G
 * Deploy and undeploy applications
 * Start and stop servers and applications
 * Monitor server and application performance
+* So much more
 
 Although WebLogic Remote Console strives to provide functionality that's comparable to the Administration Console, it does not strive to be an exact duplicate. Equivalent features may be implemented in new ways or not at all.
 
 ## Get Started
-You can install WebLogic Remote Console as a desktop or as a web application, depending on your requirements, although the desktop application is recommended. The desktop application is available to download from [https://github.com/oracle/weblogic-remote-console/releases](https://github.com/oracle/weblogic-remote-console/releases). The web application is included in the WebLogic Server installation (14.1.2.0.0 or later only) and must be deployed to the domain.
+You can install WebLogic Remote Console as a desktop application, depending on your requirements, although the desktop application is recommended. The desktop application is available to download from [https://github.com/oracle/weblogic-remote-console/releases](https://github.com/oracle/weblogic-remote-console/releases). The web application is included in the WebLogic Server installation (14.1.2.0.0 or later only) and must be deployed to the domain.
 
 Read documentation for WebLogic Remote Console at [https://oracle.github.io/weblogic-remote-console/](https://oracle.github.io/weblogic-remote-console/).
 

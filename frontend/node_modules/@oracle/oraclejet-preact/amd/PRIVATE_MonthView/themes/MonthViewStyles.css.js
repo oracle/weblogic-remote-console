@@ -1,0 +1,2 @@
+define(['exports', 'css!./../../MonthViewStyles.styles.css', '../../vanilla-extract-recipes-createRuntimeFn.esm-d881c69a'], (function(e,t,s){"use strict";var a=s.createRuntimeFn({defaultClassName:"",variantClassNames:{},defaultVariants:{},compoundVariants:[]});e.multiVariantStyles=a,e.styles={dayOfTheWeek:"MonthViewStyles_styles_dayOfTheWeek__11qg3ts0",sticky:"MonthViewStyles_styles_sticky__11qg3ts1"},e.variants={},Object.defineProperty(e,"__esModule",{value:!0})}));
+//# sourceMappingURL=MonthViewStyles.css.js.map

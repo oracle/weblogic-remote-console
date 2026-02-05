@@ -1,0 +1,459 @@
+{
+  "name": "checkboxset",
+  "version": "19.0.1",
+  "jetVersion": "^19.0.1",
+  "pack": "oj-c",
+  "type": "composite",
+  "dependencyScope": "runtime",
+  "license": "https://opensource.org/licenses/UPL",
+  "implements": [
+    "CCheckboxsetElement"
+  ],
+  "displayName": "Checkboxset",
+  "description": "A checkbox set allows the user to select one or more options from a set.",
+  "help": "oj-c.Checkboxset.html",
+  "main": "oj-c/checkboxset",
+  "status": [
+    {
+      "type": "supersedes",
+      "since": "16.0.0",
+      "value": [
+        "oj-checkboxset"
+      ]
+    }
+  ],
+  "extension": {
+    "catalog": {
+      "category": "Forms"
+    },
+    "vbdt": {
+      "module": "oj-c/checkboxset",
+      "defaultColumns": 6,
+      "minColumns": 2
+    },
+    "oracle": {
+      "icon": "oj-ux-ico-checkbox-on",
+      "uxSpecs": [
+        "checkboxset"
+      ]
+    },
+    "webelement": {
+      "package": "@oracle/oraclejet-core-pack",
+      "version": "19.0.1",
+      "docUrl": "https://www.oracle.com/webfolder/technetwork/jet/cpwdtsdoc/classes/CheckboxsetWebElement.html",
+      "export": "findCheckboxset",
+      "main": "@oracle/oraclejet-core-pack/webdriver"
+    }
+  },
+  "propertyLayout": [
+    {
+      "propertyGroup": "common",
+      "items": [
+        "disabled",
+        "labelHint",
+        "readonly",
+        "required"
+      ]
+    },
+    {
+      "propertyGroup": "data",
+      "items": [
+        "value"
+      ]
+    }
+  ],
+  "since": "16.0.0",
+  "requirements": [
+    {
+      "type": "anyOf",
+      "label": "accessibility",
+      "properties": [
+        "labelHint",
+        "options"
+      ]
+    },
+    {
+      "type": "not",
+      "label": "accessibility",
+      "properties": [
+        "aria-label",
+        "aria-labelledby"
+      ]
+    }
+  ],
+  "properties": {
+    "containerReadonly": {
+      "type": "boolean",
+      "description": "Specifies whether an ancestor container, like oj-form-layout, is readonly.",
+      "displayName": "Container Readonly",
+      "help": "#containerReadonly",
+      "binding": {
+        "consume": {
+          "name": "containerReadonly"
+        }
+      }
+    },
+    "columnSpan": {
+      "type": "number",
+      "description": "Specifies how many columns this component should span.",
+      "displayName": "Column Span",
+      "help": "#columnSpan",
+      "value": 1
+    },
+    "disabled": {
+      "type": "boolean",
+      "description": "Specifies whether the component is disabled.",
+      "displayName": "Disabled",
+      "help": "#disabled",
+      "value": false
+    },
+    "direction": {
+      "type": "string",
+      "description": "Layout direction of the checkbox elements.",
+      "displayName": "Direction",
+      "help": "#direction",
+      "enumValues": [
+        "row",
+        "column"
+      ],
+      "value": "column"
+    },
+    "displayOptions": {
+      "type": "object",
+      "description": "Display options for auxiliary content that describes whether or not it should be displayed.",
+      "displayName": "Display Options",
+      "help": "#displayOptions",
+      "properties": {
+        "messages": {
+          "type": "string",
+          "enumValues": [
+            "none",
+            "display"
+          ],
+          "value": "display"
+        }
+      }
+    },
+    "help": {
+      "type": "object",
+      "description": "Form component help information.",
+      "displayName": "Help",
+      "help": "#help",
+      "properties": {
+        "instruction": {
+          "type": "string",
+          "value": ""
+        }
+      }
+    },
+    "helpHints": {
+      "type": "object",
+      "description": "The helpHints object contains a definition property, sourceText property, and a source property.",
+      "displayName": "Help Hints",
+      "help": "#helpHints",
+      "properties": {
+        "definition": {
+          "type": "string",
+          "value": ""
+        },
+        "source": {
+          "type": "string",
+          "value": ""
+        },
+        "sourceText": {
+          "type": "string"
+        }
+      }
+    },
+    "labelEdge": {
+      "type": "string",
+      "description": "Specifies how the label is positioned for the component",
+      "displayName": "Label Edge",
+      "help": "#labelEdge",
+      "propertyEditorValues": {
+        "inside": {
+          "description": "The label will be placed on top of the checkboxset, but is smaller than 'top' option.",
+          "displayName": "Inside"
+        },
+        "none": {
+          "description": "The checkboxset will not create a label, but instead set the aria-label property on the checkboxset.",
+          "displayName": "None"
+        },
+        "start": {
+          "description": "The label will be placed before the start of the checkboxset.",
+          "displayName": "Start"
+        },
+        "top": {
+          "description": "The label will be placed on top of the checkboxset.",
+          "displayName": "Top"
+        }
+      },
+      "enumValues": [
+        "none",
+        "start",
+        "top",
+        "inside"
+      ],
+      "binding": {
+        "consume": {
+          "name": "containerLabelEdge"
+        }
+      }
+    },
+    "labelHint": {
+      "type": "string",
+      "description": "Represents a hint for rendering a label on the component.",
+      "displayName": "Label Hint",
+      "help": "#labelHint",
+      "required": true,
+      "translatable": true
+    },
+    "labelStartWidth": {
+      "type": "number|string",
+      "description": "The width of the label when labelEdge is 'start'.",
+      "displayName": "Label Start Width",
+      "help": "#labelStartWidth",
+      "binding": {
+        "consume": {
+          "name": "labelWidth"
+        }
+      }
+    },
+    "messagesCustom": {
+      "type": "Array<object>",
+      "description": "List of custom component messages",
+      "displayName": "Messages Custom",
+      "help": "#messagesCustom",
+      "extension": {
+        "vbdt": {
+          "itemProperties": {
+            "summary": {
+              "type": "string"
+            },
+            "detail": {
+              "type": "string"
+            },
+            "severity": {
+              "type": "string",
+              "enumValues": [
+                "error",
+                "confirmation",
+                "info",
+                "warning"
+              ]
+            }
+          }
+        }
+      },
+      "writeback": true,
+      "value": []
+    },
+    "readonly": {
+      "type": "boolean",
+      "description": "Whether the component is readonly",
+      "displayName": "Readonly",
+      "help": "#readonly",
+      "binding": {
+        "consume": {
+          "name": "containerReadonly"
+        }
+      }
+    },
+    "readonlyUserAssistanceShown": {
+      "type": "string",
+      "description": "Specifies which user assistance types should be shown when the component is readonly.",
+      "displayName": "ReadonlyUserAssistanceShown",
+      "help": "#readonlyUserAssistanceShown",
+      "enumValues": [
+        "none",
+        "confirmationAndInfoMessages"
+      ],
+      "value": "none"
+    },
+    "required": {
+      "type": "boolean",
+      "description": "Specifies whether or not the component is required.",
+      "displayName": "Required",
+      "help": "#required",
+      "value": false
+    },
+    "userAssistanceDensity": {
+      "type": "string",
+      "description": "Specifies the density of the form component's user assistance presentation.",
+      "displayName": "User Assistance Density",
+      "help": "#userAssistanceDensity",
+      "propertyEditorValues": {
+        "reflow": {
+          "description": "Help and hints are shown above the field. Messages and required are shown inline under the field with no reserved space.",
+          "displayName": "Reflow"
+        },
+        "efficient": {
+          "description": "Help and hints are shown above the field. Messages and required are shown inline under the field with reserved space.",
+          "displayName": "Efficient"
+        },
+        "compact": {
+          "description": "Help and hints are shown above the field. Messages and required are shown inline under the field with reserved space.",
+          "displayName": "Compact"
+        }
+      },
+      "enumValues": [
+        "compact",
+        "reflow",
+        "efficient"
+      ],
+      "binding": {
+        "consume": {
+          "name": "containerUserAssistanceDensity"
+        }
+      }
+    },
+    "options": {
+      "type": "Array<object>|DataProvider",
+      "description": "An array of data items or a data provider that returns the option items for the Checkboxset.",
+      "displayName": "Options",
+      "help": "#options"
+    },
+    "labelWrapping": {
+      "type": "string",
+      "status": [
+        {
+          "type": "deprecated",
+          "since": "18.0.0",
+          "description": "Label truncation for 'start' and 'top' aligned labels is no longer recommended by the Redwood Design System. The default for labelWrapping was 'wrap' and that is now the only suggested pattern by UX design for 'start' and 'top' aligned labels. 'inside' aligned labels are always truncated per UX design and are not affected by this property's value."
+        }
+      ],
+      "description": "Should the labels wrap or truncate when there is not enough available space.",
+      "displayName": "Label Wrapping",
+      "help": "#labelWrapping",
+      "propertyEditorValues": {
+        "truncate": {
+          "description": "Label will truncate if needed.",
+          "displayName": "Truncate"
+        },
+        "wrap": {
+          "description": "Label will wrap if needed.",
+          "displayName": "Wrap"
+        }
+      },
+      "enumValues": [
+        "truncate",
+        "wrap"
+      ],
+      "binding": {
+        "consume": {
+          "name": "labelWrapping"
+        }
+      }
+    },
+    "requiredMessageDetail": {
+      "type": "string",
+      "description": "Overrides the default Required error message.",
+      "displayName": "Required Message Detail",
+      "help": "#requiredMessageDetail",
+      "translatable": true
+    },
+    "valid": {
+      "type": "string",
+      "description": "Specifies how the valid state of the component",
+      "displayName": "Valid",
+      "help": "#valid",
+      "propertyEditorValues": {
+        "valid": {
+          "description": "The component is valid",
+          "displayName": "Valid"
+        },
+        "pending": {
+          "description": "The component is waiting for the validation state to be determined. The 'pending' state is set at the start of the convert/validate process.",
+          "displayName": "Pending"
+        },
+        "invalidHidden": {
+          "description": "The component has invalid messages hidden and no invalid messages showing. An invalid message is one with severity 'error'.",
+          "displayName": "Invalid Hidden"
+        },
+        "invalidShown": {
+          "description": "The component has invalid messages showing. An invalid message is one with severity 'error'.",
+          "displayName": "Invalid Shown"
+        }
+      },
+      "enumValues": [
+        "pending",
+        "valid",
+        "invalidHidden",
+        "invalidShown"
+      ],
+      "readOnly": true,
+      "writeback": true
+    },
+    "value": {
+      "type": "Array<string|number>|null",
+      "description": "The value of the component.",
+      "displayName": "Value",
+      "help": "#value",
+      "writeback": true,
+      "value": null
+    }
+  },
+  "methods": {
+    "blur": {
+      "description": "Blurs the checkboxset.",
+      "return": "void"
+    },
+    "focus": {
+      "description": "Sets focus on the first tabbable checkbox.",
+      "return": "void"
+    },
+    "showMessages": {
+      "description": "Takes all deferred messages and shows them.",
+      "return": "void"
+    },
+    "reset": {
+      "description": "Resets the component by clearing all messages.",
+      "return": "void"
+    },
+    "validate": {
+      "description": "If enabled, validates the component's display value.",
+      "return": "Promise"
+    },
+    "setProperty": {
+      "description": "Sets a property or a single subproperty for complex properties and notifies the component of the change, triggering a corresponding event.",
+      "help": "#setProperty",
+      "params": [
+        {
+          "name": "property",
+          "description": "The property name to set. Supports dot notation for subproperty access.",
+          "type": "string"
+        },
+        {
+          "name": "value",
+          "description": "The new value to set the property to.",
+          "type": "any"
+        }
+      ],
+      "return": "void"
+    },
+    "getProperty": {
+      "description": "Retrieves the value of a property or a subproperty.",
+      "help": "#getProperty",
+      "params": [
+        {
+          "name": "property",
+          "description": "The property name to get. Supports dot notation for subproperty access.",
+          "type": "string"
+        }
+      ],
+      "return": "any"
+    },
+    "setProperties": {
+      "description": "Performs a batch set of properties.",
+      "help": "#setProperties",
+      "params": [
+        {
+          "name": "properties",
+          "description": "An object containing the property and value pairs to set.",
+          "type": "object"
+        }
+      ],
+      "return": "void"
+    }
+  }
+}

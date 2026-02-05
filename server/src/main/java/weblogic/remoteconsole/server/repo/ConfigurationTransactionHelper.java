@@ -1,7 +1,9 @@
-// Copyright (c) 2021, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2025, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.repo;
+
+import weblogic.remoteconsole.server.providers.FileBasedProvider;
 
 /**
  * When a page makes edits to the bean repo (e.g. adds, modifies, deletes beans),
@@ -28,7 +30,11 @@ public class ConfigurationTransactionHelper {
     BeanRepo beanRepo = ic.getPageRepo().getBeanRepo();
     if (!beanRepo.isChangeManagerBeanRepo()) {
       // The bean repo doesn't support transactions. Just do the work.
-      return editor.editConfiguration();
+      Response<Void> ret = editor.editConfiguration();
+      if (ic.getProvider() instanceof FileBasedProvider) {
+        ((FileBasedProvider) ic.getProvider()).save(ic);
+      }
+      return ret;
     }
     // The bean repo supports transactions.  Wrap the work in one.
     ChangeManagerBeanRepo changeManagerBeanRepo = beanRepo.asChangeManagerBeanRepo();

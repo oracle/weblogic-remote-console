@@ -1,0 +1,111 @@
+{
+  "name": "tag-cloud-item",
+  "version": "19.0.1",
+  "jetVersion": "^19.0.1",
+  "pack": "oj-c",
+  "type": "composite",
+  "dependencyScope": "runtime",
+  "license": "https://opensource.org/licenses/UPL",
+  "implements": [
+    "CTagCloudItemElement"
+  ],
+  "subcomponentType": "data",
+  "description": "The oj-c-tag-cloud-item element is used to declare properties for tag cloud items",
+  "displayName": "TagCloudItem",
+  "main": "oj-c/tag-cloud-item",
+  "help": "oj-c.TagCloudItem.html",
+  "status": [
+    {
+      "type": "candidate",
+      "since": "17.0.0"
+    }
+  ],
+  "extension": {
+    "catalog": {
+      "category": "Visualizations"
+    }
+  },
+  "since": "15.0.0",
+  "properties": {
+    "categories": {
+      "type": "Array<string>",
+      "description": "An array of category strings corresponding to the tag cloud items.",
+      "displayName": "Categories",
+      "help": "#categories",
+      "value": []
+    },
+    "color": {
+      "type": "string",
+      "description": "The color of the text. Will be overridden by any color defined in the style option. The default value comes from the CSS and varies based on theme.",
+      "displayName": "Color",
+      "help": "#color"
+    },
+    "label": {
+      "type": "string",
+      "description": "The text of the item.",
+      "displayName": "Label",
+      "help": "#label"
+    },
+    "value": {
+      "type": "number|null",
+      "description": "The value of this item is used to scale its font size within the tag cloud.",
+      "displayName": "Value",
+      "help": "#value"
+    },
+    "url": {
+      "type": "string",
+      "description": "The url this item references.",
+      "displayName": "Url",
+      "help": "#url"
+    },
+    "shortDesc": {
+      "type": "string",
+      "description": "The description of the item. This is used for customizing the tooltip text.",
+      "displayName": "ShortDesc",
+      "help": "#shortDesc"
+    }
+  },
+  "methods": {
+    "setProperty": {
+      "description": "Sets a property or a single subproperty for complex properties and notifies the component of the change, triggering a corresponding event.",
+      "help": "#setProperty",
+      "params": [
+        {
+          "name": "property",
+          "description": "The property name to set. Supports dot notation for subproperty access.",
+          "type": "string"
+        },
+        {
+          "name": "value",
+          "description": "The new value to set the property to.",
+          "type": "any"
+        }
+      ],
+      "return": "void"
+    },
+    "getProperty": {
+      "description": "Retrieves the value of a property or a subproperty.",
+      "help": "#getProperty",
+      "params": [
+        {
+          "name": "property",
+          "description": "The property name to get. Supports dot notation for subproperty access.",
+          "type": "string"
+        }
+      ],
+      "return": "any"
+    },
+    "setProperties": {
+      "description": "Performs a batch set of properties.",
+      "help": "#setProperties",
+      "params": [
+        {
+          "name": "properties",
+          "description": "An object containing the property and value pairs to set.",
+          "type": "object"
+        }
+      ],
+      "return": "void"
+    }
+  }
+}

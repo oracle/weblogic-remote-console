@@ -1,0 +1,11 @@
+.RadioIconVariants_multiVariantStyles_iconSize_4xUnits__ykyxsd8 {
+  --iconSize__bwcdcl0: calc(4 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+}
+.RadioIconVariants_multiVariantStyles_richSelection_isLayoutXL__ykyxsd9 {
+  height: calc(4 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  width: calc(4 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+}
+.RadioIconVariants_multiVariantStyles_richSelection_notLayoutXL__ykyxsda {
+  height: calc(5 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  width: calc(4 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+}

@@ -1,0 +1,10 @@
+.FilePickerVariants_multiVariantStyles_disabledState_isDisabled__ac40y0 {
+  background-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-surface-disabled);
+  border-color: transparent;
+  cursor: auto;
+}
+@media (hover: hover) {
+  .FilePickerVariants_multiVariantStyles_pseudoHoveredState_isPseudoHover__ac40y2:hover:not(:active) {
+    cursor: pointer;
+  }
+}

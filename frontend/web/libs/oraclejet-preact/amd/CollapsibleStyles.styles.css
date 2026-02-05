@@ -1,0 +1,38 @@
+.CollapsibleStyles_baseStyle__zrqzyk0 {
+  cursor: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-cursor-clickable);
+  color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-primary);
+  padding-inline-start: var(--oj-core-gutter-start);
+  padding-inline-end: var(--oj-core-gutter-end);
+}
+.CollapsibleStyles_headerChildrenStyle__zrqzyk1 {
+  flex: 1;
+}
+.CollapsibleStyles_headerChildrenStyle__zrqzyk1 > * {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+.CollapsibleStyles_iconStartStyle__zrqzyk2 {
+  padding-inline-start: calc(4 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+}
+.CollapsibleStyles_iconEndStyle__zrqzyk3 {
+  padding-inline-end: calc(4 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+}
+.CollapsibleStyles_contentHiddenStyle__zrqzyk4 {
+  visibility: hidden;
+}
+.CollapsibleStyles_contentChildrenStyle__zrqzyk5 > * {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+.CollapsibleStyles_chevronStyle__zrqzyk6 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.CollapsibleStyles_chevronStyle__zrqzyk6:focus-visible {
+  outline-style: none;
+}

@@ -38,6 +38,10 @@ public final class Main {
           // This isn't Java EE
           System.exit(0);
         }
+        if (line.startsWith(EncryptDecrypt.MESSAGE_PREFIX)) {
+          EncryptDecrypt.processMessage(line);
+          continue;
+        }
         if (line.equals("START")) {
           propertyFileHandler.clearProperties();
           continue;
@@ -110,6 +114,12 @@ public final class Main {
         persistenceDirectory = args[i];
       }
     }
+    if (stdin || showPortOnStdout) {
+      StdoutRedirector.init();
+    }
+    if (stdin) {
+      EncryptDecrypt.init();
+    }
     if (!configInitialized) {
       if (stdin) {
         propertyFileHandler = new PropertyFileHandler();
@@ -121,6 +131,9 @@ public final class Main {
     configureLogging();
 
     if (persistenceDirectory != null) {
+      if (!"true".equals(System.getenv("CONSOLE_TEST_HOSTED"))) {
+        ConsoleBackendRuntimeConfig.setFilesAreLocal(true);
+      }
       PersistenceManager.initialize(new SimplePersistenceConfigurator(persistenceDirectory));
     } else {
       PersistenceManager.initialize(null);
@@ -130,9 +143,13 @@ public final class Main {
     Server server = startServer();
 
     if (showPortOnStdout) {
-      System.out.println("Port=" + server.port());
+      StdoutRedirector.println("Port=" + server.port());
     }
+    System.setProperty("server.port", "" + server.port());
+    ConsoleBackendRuntimeConfig.setServerPort(server.port());
     if (stdin) {
+      ConsoleBackendRuntimeConfig.setFilesAreLocal(true);
+      // This will loop until the standard input closes
       readStandardInput();
     }
   }
@@ -228,10 +245,12 @@ public final class Main {
       file = new File(path);
     }
 
+    @Override
     public boolean shouldIPersistProjects(InvocationContext ic) {
       return false;
     }
 
+    @Override
     public File getDirectory(InvocationContext ic) {
       return file;
     }

@@ -1,0 +1,8 @@
+.FormLayoutBaseTheme_baseTheme__10ijf6z0 {
+  --columnGapWidthMd__pa4rfz2: calc(6 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --columnGapWidthSm__pa4rfz3: calc(4 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --maxStartColumnWidth__pa4rfz0: calc(150 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --maxNonStartColumnWidth__pa4rfz1: calc(150 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --rowGapWidth__pa4rfz4: calc(3.5 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --columnGapWidth__pa4rfz5: inherit;
+}

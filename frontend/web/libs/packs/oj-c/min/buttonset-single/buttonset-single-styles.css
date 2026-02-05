@@ -1,0 +1,12 @@
+oj-c-buttonset-single:not(.oj-complete) {
+  visibility: hidden;
+}
+
+oj-c-buttonset-single {
+  display: inline-flex;
+  vertical-align: top;
+}
+
+oj-c-buttonset-single[hidden] {
+  display: none;
+}

@@ -1,0 +1,22 @@
+.TableStyles_tableStyles_base__k2noww0 {
+  background-color: inherit;
+  box-sizing: border-box;
+  position: relative;
+  width: 100%;
+  z-index: 0;
+}
+.TableStyles_tableStyles_base__k2noww0:focus {
+  outline-style: none;
+}
+.TableStyles_tableStyles_focused__k2noww1::before {
+  content: "";
+  display: block;
+  inset: 0;
+  outline-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-border-keyboard-focus);
+  outline-offset: -1px;
+  outline-style: dotted;
+  outline-width: 1px;
+  pointer-events: none;
+  position: absolute;
+  z-index: 1;
+}

@@ -34,7 +34,6 @@ import weblogic.remoteconsole.server.repo.StringValue;
 import weblogic.remoteconsole.server.repo.Table;
 import weblogic.remoteconsole.server.repo.TableCell;
 import weblogic.remoteconsole.server.repo.TableRow;
-import weblogic.remoteconsole.server.webapp.UriUtils;
 
 /**
  * Converts a Response<Page> to a JAXRS Response.

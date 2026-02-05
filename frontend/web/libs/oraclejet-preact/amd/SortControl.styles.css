@@ -1,0 +1,17 @@
+.SortControl_sortControlStyles_base__b6q4j00 {
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+}
+.SortControl_sortControlStyles_hidden__b6q4j01 {
+  opacity: 0.001;
+  overflow: hidden;
+  pointer-events: none;
+  width: 1px;
+}
+.SortControl_sortControlStyles_visible__b6q4j02 {
+  opacity: 1;
+  overflow: visible;
+  pointer-events: auto;
+  width: auto;
+}

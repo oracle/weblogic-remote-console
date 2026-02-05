@@ -1,0 +1,7 @@
+.PopupBaseTheme_baseTheme__13ticij0 {
+  --borderColor__2ugez71: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-border-divider);
+  --boxShadow__2ugez73: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-box-shadow-xs);
+  --borderRadius__2ugez72: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-border-radius-sm);
+  --backgroundColor__2ugez70: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-surface-popup);
+  --padding__2ugez74: calc(2 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+}

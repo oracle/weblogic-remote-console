@@ -1,0 +1,56 @@
+.HeadingStyles_base__1fxnri60 {
+  margin: 0;
+}
+.HeadingStyles_base__1fxnri60 > * {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+.HeadingStyles_multiVariantStyles_size_xs__1fxnri61 {
+  font-size: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-heading-xs-font-size);
+  font-weight: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-heading-xs-font-weight);
+  line-height: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-heading-xs-line-height);
+}
+.HeadingStyles_multiVariantStyles_size_sm__1fxnri62 {
+  font-size: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-heading-sm-font-size);
+  font-weight: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-heading-sm-font-weight);
+  line-height: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-heading-sm-line-height);
+}
+.HeadingStyles_multiVariantStyles_size_md__1fxnri63 {
+  font-size: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-heading-md-font-size);
+  font-weight: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-heading-md-font-weight);
+  line-height: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-heading-md-line-height);
+}
+.HeadingStyles_multiVariantStyles_size_lg__1fxnri64 {
+  font-size: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-heading-lg-font-size);
+  font-weight: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-heading-lg-font-weight);
+  line-height: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-heading-lg-line-height);
+}
+.HeadingStyles_multiVariantStyles_size_xl__1fxnri65 {
+  font-size: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-heading-xl-font-size);
+  font-weight: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-heading-xl-font-weight);
+  line-height: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-heading-xl-line-height);
+}
+.HeadingStyles_multiVariantStyles_size_2xl__1fxnri66 {
+  font-size: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-heading-2xl-font-size);
+  font-weight: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-heading-2xl-font-weight);
+  line-height: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-heading-2xl-line-height);
+}
+.HeadingStyles_multiVariantStyles_size_inherit__1fxnri67 {
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+}
+.HeadingStyles_multiVariantStyles_variant_primary__1fxnri68 {
+  color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-primary);
+}
+.HeadingStyles_multiVariantStyles_variant_secondary__1fxnri69 {
+  color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-secondary);
+}
+.HeadingStyles_multiVariantStyles_variant_disabled__1fxnri6a {
+  color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-disabled);
+}
+.HeadingStyles_multiVariantStyles_variant_inherit__1fxnri6b {
+  color: inherit;
+}

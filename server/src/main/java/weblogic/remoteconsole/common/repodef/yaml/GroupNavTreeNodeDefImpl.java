@@ -19,6 +19,7 @@ class GroupNavTreeNodeDefImpl extends NavTreeNodeDefImpl implements GroupNavTree
   private List<NavTreeNodeDefImpl> contentDefImpls;
   private List<NavTreeNodeDef> contentDefs;
   private LocalizableString label;
+  private LocalizableString description;
 
   GroupNavTreeNodeDefImpl(
     NavTreeDefImpl navTreeDefImpl,
@@ -42,6 +43,8 @@ class GroupNavTreeNodeDefImpl extends NavTreeNodeDefImpl implements GroupNavTree
     // need to initialize label before contents since it's used to create the contents
     this.label =
       new LocalizableString(getLocalizationKey("label"), getNodeName());
+    this.description =
+      new LocalizableString(getLocalizationKey("description"), getSource().getDescription());
     this.contentDefImpls =
       getNavTreeDefImpl().createNavTreeNodeDefImpls(source.getContents(), this);
     this.contentDefs = Collections.unmodifiableList(getContentDefImpls());
@@ -54,6 +57,11 @@ class GroupNavTreeNodeDefImpl extends NavTreeNodeDefImpl implements GroupNavTree
   @Override
   public List<NavTreeNodeDef> getContentDefs() {
     return this.contentDefs;
+  }
+
+  @Override
+  public LocalizableString getDescription() {
+    return this.description;
   }
 
   @Override

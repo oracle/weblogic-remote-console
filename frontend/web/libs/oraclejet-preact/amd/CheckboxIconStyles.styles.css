@@ -1,0 +1,11 @@
+.CheckboxIconStyles_base__szul0q0 {
+  height: var(--iconSize__1denrfz0);
+  display: inline-flex;
+  align-items: center;
+}
+.CheckboxIconStyles_focus__szul0q1 > svg {
+  outline-style: dotted;
+  outline-offset: 1px;
+  outline-width: 1px;
+  outline-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-border-keyboard-focus);
+}

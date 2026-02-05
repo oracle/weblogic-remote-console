@@ -39,6 +39,7 @@ public class NavTreeNodeDefSource extends YamlSource {
   private Value<Type> type = Value.create(Type.child);
   private StringValue child = StringValue.create();
   private StringValue label = StringValue.create();
+  private StringValue description = StringValue.create();
   private BooleanValue forceNotExpandable = BooleanValue.create();
   private ListValue<NavTreeNodeDefSource> contents = ListValue.create();
   private Value<RolesDefSource> roles = Value.create();
@@ -78,6 +79,18 @@ public class NavTreeNodeDefSource extends YamlSource {
 
   public void setLabel(String value) {
     label = label.setValue(value);
+  }
+
+  // The english description to display for this node.
+  //
+  // Optional: but only used if 'type' is 'group'.
+  //
+  public String getDescription() {
+    return description.getValue();
+  }
+
+  public void setDescription(String value) {
+    description = description.setValue(value);
   }
 
   // Whether this node cannot be expanded even if it normally would be expandable.

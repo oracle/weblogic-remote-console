@@ -1,0 +1,284 @@
+[
+  {
+    "id": "oj-c.Selector",
+    "name": "Selector",
+    "memberof": "oj-c",
+    "kind": "class",
+    "meta": {
+      "filename": "selector.tsx",
+      "path": "web/components/oj-c/selector"
+    },
+    "ojcomponent": true,
+    "isvcomponent": true,
+    "since": "15.0.0",
+    "longname": "oj-c.Selector",
+    "pack": "oj-c",
+    "classdesc": "<h3 id=\"selectorOverview-section\">\n  JET Selector\n  <a class=\"bookmarkable-link\" title=\"Bookmarkable Link\" href=\"#selectorOverview-section\"></a>\n</h3>\n<p>Description: A checkbox to support selection in Collection Components</p>\n<p>The oj-c-selector is a component that may be placed within a template for Table, ListView.\nIt presents as a checkbox when the Collection Component is configured for multi-selection.\n\n<pre class=\"prettyprint\">\n<code>\n&lt;oj-c-list-view\n   id=\"listview\"\n   data=\"[[dataProvider]]\"\n   selected=\"{{selectedItems}}\"\n   selection-mode=\"[[selectedSelectionMode]]\">\n &lt;template slot=\"itemTemplate\" data-oj-as=\"item\">\n   &lt;oj-c-list-item-layout>\n     &lt;oj-c-selector\n       slot=\"selector\">\n     &lt;/oj-c-selector>\n     &lt;span>\n       &lt;oj-bind-text value=\"[[item.data.name]]\">&lt;/oj-bind-text>\n     &lt;/span>\n   &lt;/oj-c-list-item-layout>\n &lt;/template>\n&lt;/oj-c-list-view>\n</code></pre>\n\n<h3 id=\"a11y-section\">\n  Accessibility\n  <a class=\"bookmarkable-link\" title=\"Bookmarkable Link\" href=\"#a11y-section\"></a>\n</h3>\n\n<p>Application must specify a value for the aria-label attribute with a meaningful description of the purpose of this selector in order for this to be accessible.</p>",
+    "scope": "static",
+    "tagWithoutBrackets": "oj-c-selector",
+    "tagWithBrackets": "<oj-c-selector>",
+    "domInterface": "CSelectorElement",
+    "ojPageTitle": "&lt;oj-c-selector>",
+    "camelCaseName": "Selector",
+    "ojPageTitlePrefix": "Element: ",
+    "ojtsvcomponent": true,
+    "tstype": {
+      "target": "Type",
+      "value": "interface CSelectorElement<K extends string | number> extends JetElement<SelectorElementSettableProperties<K>>",
+      "genericParameters": [
+        {
+          "name": "K",
+          "description": "Type of key"
+        }
+      ]
+    },
+    "ojsignature": [
+      {
+        "target": "Type",
+        "value": "interface CSelectorElement<K extends string | number> extends JetElement<SelectorElementSettableProperties<K>>",
+        "genericParameters": [
+          {
+            "name": "K",
+            "description": "Type of key"
+          }
+        ]
+      }
+    ],
+    "tsdeprecated": [
+      {
+        "type": "supersedes",
+        "since": "16.0.0",
+        "value": [
+          "oj-selector"
+        ]
+      }
+    ],
+    "ojmodule": "selector"
+  },
+  {
+    "id": "oj-c.Selector#rowKey",
+    "name": "rowKey",
+    "memberof": "oj-c.Selector",
+    "meta": {
+      "filename": "selector.tsx",
+      "path": "web/components/oj-c/selector"
+    },
+    "kind": "member",
+    "longname": "oj-c.Selector#rowKey",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "string|number"
+      ]
+    },
+    "optional": true,
+    "description": "Specifies the row key of each selector.\nNote that if the selector is used inside one of these components:\n<ul>\n<li>oj-c-card-view</li>\n<li>oj-c-list-view</li>\n</ul>\nThen the selector will retrieve this directly from the above component and\ntherefore this attribute should not be set.",
+    "tstype": [
+      {
+        "target": "Type",
+        "value": "K",
+        "jsdocOverride": true
+      }
+    ]
+  },
+  {
+    "id": "oj-c.Selector#selectedKeys",
+    "name": "selectedKeys",
+    "memberof": "oj-c.Selector",
+    "meta": {
+      "filename": "selector.tsx",
+      "path": "web/components/oj-c/selector"
+    },
+    "kind": "member",
+    "longname": "oj-c.Selector#selectedKeys",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "object"
+      ]
+    },
+    "optional": true,
+    "ojwriteback": true,
+    "description": "Specifies the selectedKeys.\nNote that if the selector is used inside one of these components:\n<ul>\n<li>oj-c-card-view</li>\n<li>oj-c-list-view</li>\n</ul>\nThen the selector will retrieve this directly from the above component and\ntherefore this attribute should not be set.",
+    "tstype": [
+      {
+        "target": "Type",
+        "value": "ImmutableKeySet<K>",
+        "jsdocOverride": true,
+        "module": {
+          "ImmutableKeySet": "ojkeyset"
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.Selector#indeterminate",
+    "name": "indeterminate",
+    "memberof": "oj-c.Selector",
+    "meta": {
+      "filename": "selector.tsx",
+      "path": "web/components/oj-c/selector"
+    },
+    "kind": "member",
+    "longname": "oj-c.Selector#indeterminate",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "boolean"
+      ]
+    },
+    "optional": true,
+    "description": "Specifies if the selector should show the visual partial state.\nThe original checked state of the selector will still be maintained.\nUser selection of checkboxes will remove the indeterminate state and reveal the checkbox state.\nOtherwise, programmatically changing the checkbox state will not change the indeterminate state.",
+    "defaultvalue": false
+  },
+  {
+    "id": "oj-c.Selector#selectionMode",
+    "name": "selectionMode",
+    "memberof": "oj-c.Selector",
+    "meta": {
+      "filename": "selector.tsx",
+      "path": "web/components/oj-c/selector"
+    },
+    "kind": "member",
+    "longname": "oj-c.Selector#selectionMode",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "\"multiple\"",
+        "\"single\""
+      ]
+    },
+    "optional": true,
+    "description": "Specifies the selection mode ('single', 'multiple'). For selection mode 'all', please refer to oj-c-selector-all component.\nNote that if the selector is used inside one of these components:\n<ul>\n<li>oj-c-card-view</li>\n<li>oj-c-list-view</li>\n</ul>\nThen the selector will retrieve this directly from the above component and\ntherefore this attribute should not be set.",
+    "ojvalues": [
+      {
+        "name": "multiple",
+        "description": "Multiple items can be selected at the same time.",
+        "displayName": "Multiple",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "single",
+        "description": "Only a single item can be selected at a time.",
+        "displayName": "Single",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.Selector#setProperty",
+    "name": "setProperty",
+    "memberof": "oj-c.Selector",
+    "meta": {
+      "filename": "selector.tsx",
+      "path": "web/components/oj-c/selector"
+    },
+    "kind": "function",
+    "longname": "oj-c.Selector#setProperty",
+    "scope": "instance",
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "void"
+          ]
+        }
+      }
+    ],
+    "description": "Sets a property or a single subproperty for complex properties and notifies the component of the change, triggering a corresponding event.",
+    "params": [
+      {
+        "name": "property",
+        "description": "The property name to set. Supports dot notation for subproperty access.",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "value",
+        "description": "The new value to set the property to.",
+        "type": {
+          "names": [
+            "any"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.Selector#getProperty",
+    "name": "getProperty",
+    "memberof": "oj-c.Selector",
+    "meta": {
+      "filename": "selector.tsx",
+      "path": "web/components/oj-c/selector"
+    },
+    "kind": "function",
+    "longname": "oj-c.Selector#getProperty",
+    "scope": "instance",
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "any"
+          ]
+        }
+      }
+    ],
+    "description": "Retrieves the value of a property or a subproperty.",
+    "params": [
+      {
+        "name": "property",
+        "description": "The property name to get. Supports dot notation for subproperty access.",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.Selector#setProperties",
+    "name": "setProperties",
+    "memberof": "oj-c.Selector",
+    "meta": {
+      "filename": "selector.tsx",
+      "path": "web/components/oj-c/selector"
+    },
+    "kind": "function",
+    "longname": "oj-c.Selector#setProperties",
+    "scope": "instance",
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "void"
+          ]
+        }
+      }
+    ],
+    "description": "Performs a batch set of properties.",
+    "params": [
+      {
+        "name": "properties",
+        "description": "An object containing the property and value pairs to set.",
+        "type": {
+          "names": [
+            "object"
+          ]
+        }
+      }
+    ]
+  }
+]

@@ -1,0 +1,48 @@
+.ButtonLabelLayoutVariants_multiVariantStyles_size_xs__5e67fm0 {
+  --iconSize__1onk43q0: var(--sizes-xs-iconSize__1onk43q4);
+  --iconToTextPadding__1onk43q2: var(--sizes-xs-iconToTextPadding__1onk43q6);
+  --iconToEdgePadding__1onk43q1: var(--sizes-xs-iconToEdgePadding__1onk43q5);
+  --textToEdgePadding__1onk43q3: var(--sizes-xs-textToEdgePadding__1onk43q7);
+}
+.ButtonLabelLayoutVariants_multiVariantStyles_size_sm__5e67fm1 {
+  --iconSize__1onk43q0: var(--sizes-sm-iconSize__1onk43q8);
+  --iconToTextPadding__1onk43q2: var(--sizes-sm-iconToTextPadding__1onk43q9);
+  --iconToEdgePadding__1onk43q1: var(--sizes-sm-iconToEdgePadding__1onk43qa);
+  --textToEdgePadding__1onk43q3: var(--sizes-sm-textToEdgePadding__1onk43qb);
+}
+.ButtonLabelLayoutVariants_multiVariantStyles_size_md__5e67fm2 {
+  --iconSize__1onk43q0: var(--sizes-md-iconSize__1onk43qc);
+  --iconToTextPadding__1onk43q2: var(--sizes-md-iconToTextPadding__1onk43qe);
+  --iconToEdgePadding__1onk43q1: var(--sizes-md-iconToEdgePadding__1onk43qd);
+  --textToEdgePadding__1onk43q3: var(--sizes-md-textToEdgePadding__1onk43qf);
+}
+.ButtonLabelLayoutVariants_multiVariantStyles_size_lg__5e67fm3 {
+  --iconSize__1onk43q0: var(--sizes-lg-iconSize__1onk43qg);
+  --iconToTextPadding__1onk43q2: var(--sizes-lg-iconToTextPadding__1onk43qi);
+  --iconToEdgePadding__1onk43q1: var(--sizes-lg-iconToEdgePadding__1onk43qh);
+  --textToEdgePadding__1onk43q3: var(--sizes-lg-textToEdgePadding__1onk43qj);
+}
+.ButtonLabelLayoutVariants_multiVariantStyles_size_embeddedxs__5e67fm4 {
+  --iconSize__1onk43q0: var(--sizes-embeddedxs-iconSize__1onk43qk);
+  --iconToTextPadding__1onk43q2: var(--sizes-embeddedxs-iconToTextPadding__1onk43qm);
+  --iconToEdgePadding__1onk43q1: var(--sizes-embeddedxs-iconToEdgePadding__1onk43ql);
+  --textToEdgePadding__1onk43q3: var(--sizes-embeddedxs-textToEdgePadding__1onk43qn);
+}
+.ButtonLabelLayoutVariants_multiVariantStyles_size_embeddedsm__5e67fm5 {
+  --iconSize__1onk43q0: var(--sizes-embeddedsm-iconSize__1onk43qo);
+  --iconToTextPadding__1onk43q2: var(--sizes-embeddedsm-iconToTextPadding__1onk43qp);
+  --iconToEdgePadding__1onk43q1: var(--sizes-embeddedsm-iconToEdgePadding__1onk43qq);
+  --textToEdgePadding__1onk43q3: var(--sizes-embeddedsm-textToEdgePadding__1onk43qr);
+}
+.ButtonLabelLayoutVariants_multiVariantStyles_size_embeddedmd__5e67fm6 {
+  --iconSize__1onk43q0: var(--sizes-embeddedmd-iconSize__1onk43qs);
+  --iconToTextPadding__1onk43q2: var(--sizes-embeddedmd-iconToTextPadding__1onk43qu);
+  --iconToEdgePadding__1onk43q1: var(--sizes-embeddedmd-iconToEdgePadding__1onk43qt);
+  --textToEdgePadding__1onk43q3: var(--sizes-embeddedmd-textToEdgePadding__1onk43qv);
+}
+.ButtonLabelLayoutVariants_multiVariantStyles_size_embeddedlg__5e67fm7 {
+  --iconSize__1onk43q0: var(--sizes-embeddedlg-iconSize__1onk43qw);
+  --iconToTextPadding__1onk43q2: var(--sizes-embeddedlg-iconToTextPadding__1onk43qy);
+  --iconToEdgePadding__1onk43q1: var(--sizes-embeddedlg-iconToEdgePadding__1onk43qx);
+  --textToEdgePadding__1onk43q3: var(--sizes-embeddedlg-textToEdgePadding__1onk43qz);
+}

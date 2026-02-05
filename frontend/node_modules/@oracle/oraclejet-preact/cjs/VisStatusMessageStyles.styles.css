@@ -1,0 +1,16 @@
+.VisStatusMessageStyles_baseStyles__j1s37j0 {
+  width: 100%;
+  height: 100%;
+  font-size: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-label-md-font-size);
+  color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-secondary);
+}
+.VisStatusMessageStyles_baseStyles__j1s37j0:focus-visible {
+  outline-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-border-keyboard-focus);
+  outline-style: dotted;
+  outline-width: 1px;
+}
+.VisStatusMessageStyles_userSelectStyles__j1s37j1 {
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+}

@@ -1,0 +1,931 @@
+[
+  {
+    "id": "oj-c.MeterBar",
+    "name": "MeterBar",
+    "memberof": "oj-c",
+    "kind": "class",
+    "meta": {
+      "filename": "meter-bar.tsx",
+      "path": "web/components/oj-c/meter-bar"
+    },
+    "ojcomponent": true,
+    "isvcomponent": true,
+    "since": "14.0.0",
+    "longname": "oj-c.MeterBar",
+    "pack": "oj-c",
+    "classdesc": "<h3 id=\"meterBarOverview-section\">\n  JET meter bar\n  <a class=\"bookmarkable-link\" title=\"Bookmarkable Link\" href=\"#meterBarOverview-section\"></a>\n</h3>\nA meter bar is typically used to display or accept user feedback on a product or service.\n<pre class=\"prettyprint\"><code>&lt;oj-c-meter-bar value='4'>&lt;/oj-c-meter-bar></code></pre>\n\n<h3 id=\"a11y-section\">\n  Accessibility\n  <a class=\"bookmarkable-link\" title=\"Bookmarkable Link\" href=\"#a11y-section\"></a>\n</h3>\n<p>\nThe application is required to set one of the following attributes on the element with meaningful descriptors as the oj-c-meter-bar element does not provide a default descriptor.\n</p>\n<ul>\n  <li>aria-label</li>\n  <li>aria-labelledby</li>\n  <li>aria-describedby</li>\n</ul>\n\n<p>\nIf the application is using readonly, thresholds or reference lines to provide additional context, they need to include such information for screender readers using either of the following methods:\n <ul>\n  <li>aria-describedby</li>\n  <li>aria-labelledby</li>\n  <li>aria-label</li>\n  <li>datatip</li>\n </ul>\n</p>\n<p>\nIf you are using indicatorColor, applications are responsible for making sure that the color meets the\n<a href=\"https://www.w3.org/TR/WCAG21/#contrast-minimum\">minimum contrast ratio</a>.\n</p>\n\n<h3 id=\"keyboardSection\">\n  Keyboard\n  <a class=\"bookmarkable-link\" title=\"Bookmarkable Link\" href=\"#keyboardSection\"></a>\n</h3>\n\n<table class=\"keyboard-table\">\n  <thead>\n    <tr>\n      <th>Key</th>\n      <th>Action</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <td><kbd>Enter</kbd></td>\n      <td>Submit the current value of the meter bar.</td>\n    </tr>\n    <tr>\n      <td><kbd>Tab</kbd></td>\n      <td>Move focus to next element and submit the current value of the meter bar.</td>\n    </tr>\n    <tr>\n      <td><kbd>Shift + Tab</kbd></td>\n      <td>Move focus to previous element.</td>\n    </tr>\n    <tr>\n      <td><kbd>End</kbd></td>\n      <td>Increase the meter bar's transient value to max value. Value is set after using <kbd>Enter</kbd> or <kbd>Tab</kbd> to submit.</td>\n    </tr>\n    <tr>\n      <td><kbd>Home</kbd></td>\n      <td>Decrease the meter bar's transient value to zero. Value is set after using <kbd>Enter</kbd> or <kbd>Tab</kbd> to submit.</td>\n    </tr>\n    <tr>\n      <td><kbd>UpArrow</kbd></td>\n      <td>Increase the meter bar's transient value. Value is set after using <kbd>Enter</kbd> or <kbd>Tab</kbd> to submit.</td>\n    </tr>\n    <tr>\n      <td><kbd>DownArrow</kbd></td>\n      <td>Decrease the meter bar's transient value. Value is set after using <kbd>Enter</kbd> or <kbd>Tab</kbd> to submit.</td>\n    </tr>\n    <tr>\n      <td><kbd>LeftArrow</kbd></td>\n      <td>Decrease the meter bar's transient value in left-to-right locales. Increase the meter bar's transient value in right-to-left locales. Value is set after using <kbd>Enter</kbd> or <kbd>Tab</kbd> to submit.</td>\n    </tr>\n    <tr>\n      <td><kbd>RightArrow</kbd></td>\n      <td>Increase the meter bar's transient value in left-to-right locales. Decrease the meter bar's transient value in right-to-left locales. Value is set after using <kbd>Enter</kbd> or <kbd>Tab</kbd> to submit.</td>\n    </tr>\n  </tbody>\n</table>\n\n<h3 id=\"touch-section\">\nTouch End User Information\n  <a class=\"bookmarkable-link\" title=\"Bookmarkable Link\" href=\"#touch-section\"></a>\n</h3>\n\n<table class=\"keyboard-table\">\n  <thead>\n    <tr>\n      <th>Gesture</th>\n      <th>Action</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <td><kbd>Drag</kbd></td>\n      <td>Value change when <code class=\"prettyprint\">readonly</code> is <code class=\"prettyprint\">false</code>.</td>\n    </tr>\n  </tbody>\n</table>",
+    "scope": "static",
+    "tagWithoutBrackets": "oj-c-meter-bar",
+    "tagWithBrackets": "<oj-c-meter-bar>",
+    "domInterface": "CMeterBarElement",
+    "ojPageTitle": "&lt;oj-c-meter-bar>",
+    "camelCaseName": "MeterBar",
+    "ojPageTitlePrefix": "Element: ",
+    "ojtsvcomponent": true,
+    "tstype": {
+      "target": "Type",
+      "value": "interface CMeterBarElement extends JetElement<MeterBarElementSettableProperties>"
+    },
+    "ojsignature": [
+      {
+        "target": "Type",
+        "value": "interface CMeterBarElement extends JetElement<MeterBarElementSettableProperties>"
+      }
+    ],
+    "tsdeprecated": [
+      {
+        "type": "supersedes",
+        "since": "15.0.0",
+        "value": [
+          "oj-status-meter-gauge"
+        ]
+      }
+    ],
+    "ojmodule": "meter-bar"
+  },
+  {
+    "id": "oj-c.MeterBar#max",
+    "name": "max",
+    "memberof": "oj-c.MeterBar",
+    "meta": {
+      "filename": "meter-bar.tsx",
+      "path": "web/components/oj-c/meter-bar"
+    },
+    "kind": "member",
+    "longname": "oj-c.MeterBar#max",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "number"
+      ]
+    },
+    "optional": true,
+    "description": "Integer value specifying the maximum value of the meter bar.",
+    "defaultvalue": 100
+  },
+  {
+    "id": "oj-c.MeterBar#min",
+    "name": "min",
+    "memberof": "oj-c.MeterBar",
+    "meta": {
+      "filename": "meter-bar.tsx",
+      "path": "web/components/oj-c/meter-bar"
+    },
+    "kind": "member",
+    "longname": "oj-c.MeterBar#min",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "number"
+      ]
+    },
+    "optional": true,
+    "description": "Integer value specifying the minimum value of the meter bar.",
+    "defaultvalue": 0
+  },
+  {
+    "id": "oj-c.MeterBar#readonly",
+    "name": "readonly",
+    "memberof": "oj-c.MeterBar",
+    "meta": {
+      "filename": "meter-bar.tsx",
+      "path": "web/components/oj-c/meter-bar"
+    },
+    "kind": "member",
+    "longname": "oj-c.MeterBar#readonly",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "boolean"
+      ]
+    },
+    "optional": true,
+    "description": "Defines whether the value of the meter bar can be changed by the end user.",
+    "defaultvalue": false
+  },
+  {
+    "id": "oj-c.MeterBar#value",
+    "name": "value",
+    "memberof": "oj-c.MeterBar",
+    "meta": {
+      "filename": "meter-bar.tsx",
+      "path": "web/components/oj-c/meter-bar"
+    },
+    "kind": "member",
+    "longname": "oj-c.MeterBar#value",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "number|null"
+      ]
+    },
+    "optional": true,
+    "ojwriteback": true,
+    "description": "The value of the meter bar.",
+    "defaultvalue": 0
+  },
+  {
+    "id": "oj-c.MeterBar#baseline",
+    "name": "baseline",
+    "memberof": "oj-c.MeterBar",
+    "meta": {
+      "filename": "meter-bar.tsx",
+      "path": "web/components/oj-c/meter-bar"
+    },
+    "kind": "member",
+    "longname": "oj-c.MeterBar#baseline",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "number"
+      ]
+    },
+    "optional": true,
+    "description": "Define the baseline value of the bar. If undefined, defaults to minimum value of the meter bar.\nThe baseline value must be between the min and max."
+  },
+  {
+    "id": "oj-c.MeterBar#step",
+    "name": "step",
+    "memberof": "oj-c.MeterBar",
+    "meta": {
+      "filename": "meter-bar.tsx",
+      "path": "web/components/oj-c/meter-bar"
+    },
+    "kind": "member",
+    "longname": "oj-c.MeterBar#step",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "number"
+      ]
+    },
+    "optional": true,
+    "description": "Specifies the increment by which values can be changed by the end user when readonly is false. The step must be a positive value that is smaller than the difference between the min and max.",
+    "defaultvalue": 1
+  },
+  {
+    "id": "oj-c.MeterBar#color",
+    "name": "color",
+    "memberof": "oj-c.MeterBar",
+    "meta": {
+      "filename": "meter-bar.tsx",
+      "path": "web/components/oj-c/meter-bar"
+    },
+    "kind": "member",
+    "longname": "oj-c.MeterBar#color",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "string"
+      ]
+    },
+    "optional": true,
+    "description": "Specifies the color of the meter bar indicator. Only applies when thresholdDisplay is not set to indicator.",
+    "tsdeprecated": []
+  },
+  {
+    "id": "oj-c.MeterBar#indicatorSize",
+    "name": "indicatorSize",
+    "memberof": "oj-c.MeterBar",
+    "meta": {
+      "filename": "meter-bar.tsx",
+      "path": "web/components/oj-c/meter-bar"
+    },
+    "kind": "member",
+    "longname": "oj-c.MeterBar#indicatorSize",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "number"
+      ]
+    },
+    "optional": true,
+    "description": "Specifies the ratio of relative thickness of the indicator to the plot area.",
+    "tsdeprecated": [],
+    "defaultvalue": 1
+  },
+  {
+    "id": "oj-c.MeterBar#plotArea",
+    "name": "plotArea",
+    "memberof": "oj-c.MeterBar",
+    "meta": {
+      "filename": "meter-bar.tsx",
+      "path": "web/components/oj-c/meter-bar"
+    },
+    "kind": "member",
+    "longname": "oj-c.MeterBar#plotArea",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "object"
+      ]
+    },
+    "optional": true,
+    "description": "Specifies the plot area of the meter bar.",
+    "tstype": [
+      {
+        "target": "Type",
+        "value": "oj-c.MeterBar.PlotArea",
+        "jsdocOverride": true
+      }
+    ]
+  },
+  {
+    "id": "oj-c.MeterBar#orientation",
+    "name": "orientation",
+    "memberof": "oj-c.MeterBar",
+    "meta": {
+      "filename": "meter-bar.tsx",
+      "path": "web/components/oj-c/meter-bar"
+    },
+    "kind": "member",
+    "longname": "oj-c.MeterBar#orientation",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "\"horizontal\"",
+        "\"vertical\""
+      ]
+    },
+    "optional": true,
+    "description": "Specifies the orientation of the meter bar to render.",
+    "defaultvalue": "\"horizontal\""
+  },
+  {
+    "id": "oj-c.MeterBar#referenceLines",
+    "name": "referenceLines",
+    "memberof": "oj-c.MeterBar",
+    "meta": {
+      "filename": "meter-bar.tsx",
+      "path": "web/components/oj-c/meter-bar"
+    },
+    "kind": "member",
+    "longname": "oj-c.MeterBar#referenceLines",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "Array<object>"
+      ]
+    },
+    "optional": true,
+    "description": "Specifies the array of objects defining the reference lines for the meter bar.",
+    "tstype": [
+      {
+        "target": "Type",
+        "value": "Array<oj-c.MeterBar.ReferenceLine>",
+        "jsdocOverride": true
+      }
+    ]
+  },
+  {
+    "id": "oj-c.MeterBar#thresholdDisplay",
+    "name": "thresholdDisplay",
+    "memberof": "oj-c.MeterBar",
+    "meta": {
+      "filename": "meter-bar.tsx",
+      "path": "web/components/oj-c/meter-bar"
+    },
+    "kind": "member",
+    "longname": "oj-c.MeterBar#thresholdDisplay",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "\"all\"",
+        "\"plotArea\"",
+        "\"indicator\""
+      ]
+    },
+    "optional": true,
+    "description": "Controls whether the current threshold is displayed on the indicator, in the plot area, or if all the thresholds are displayed in the plot area.",
+    "defaultvalue": "\"indicator\""
+  },
+  {
+    "id": "oj-c.MeterBar#thresholds",
+    "name": "thresholds",
+    "memberof": "oj-c.MeterBar",
+    "meta": {
+      "filename": "meter-bar.tsx",
+      "path": "web/components/oj-c/meter-bar"
+    },
+    "kind": "member",
+    "longname": "oj-c.MeterBar#thresholds",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "Array<object>"
+      ]
+    },
+    "optional": true,
+    "description": "An array of objects defining the thresholds for the meter bar.",
+    "tstype": [
+      {
+        "target": "Type",
+        "value": "Array<oj-c.MeterBar.Threshold>",
+        "jsdocOverride": true
+      }
+    ]
+  },
+  {
+    "id": "oj-c.MeterBar#describedBy",
+    "name": "describedBy",
+    "memberof": "oj-c.MeterBar",
+    "meta": {
+      "filename": "meter-bar.tsx",
+      "path": "web/components/oj-c/meter-bar"
+    },
+    "kind": "member",
+    "longname": "oj-c.MeterBar#describedBy",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "string|null"
+      ]
+    },
+    "optional": true,
+    "description": "Used to establish a relationship between this component and another element.\nA common use is to tie a label, which can be a text in a div or some other HTML element, and the oj-c-meter-bar together for accessibility.\nThe oj-label element has a label-id, which is used by the described-by attribute to tie the two components together to facilitate correct screen reader behavior."
+  },
+  {
+    "id": "oj-c.MeterBar#labelledBy",
+    "name": "labelledBy",
+    "memberof": "oj-c.MeterBar",
+    "meta": {
+      "filename": "meter-bar.tsx",
+      "path": "web/components/oj-c/meter-bar"
+    },
+    "kind": "member",
+    "longname": "oj-c.MeterBar#labelledBy",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "string|null"
+      ]
+    },
+    "optional": true,
+    "description": "Used to establish a relationship between this component and another element.\nA common use is to tie a label, which can be a text in a div or some other HTML element, and the oj-c-meter-bar together for accessibility.\nThe oj-label element has a label-id, which is used by the labelled-by attribute to tie the two components together to facilitate correct screen reader behavior."
+  },
+  {
+    "id": "oj-c.MeterBar#size",
+    "name": "size",
+    "memberof": "oj-c.MeterBar",
+    "meta": {
+      "filename": "meter-bar.tsx",
+      "path": "web/components/oj-c/meter-bar"
+    },
+    "kind": "member",
+    "longname": "oj-c.MeterBar#size",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "\"sm\"",
+        "\"md\"",
+        "\"lg\"",
+        "\"fit\""
+      ]
+    },
+    "optional": true,
+    "description": "Specifies the size of the meter bar.",
+    "ojvalues": [
+      {
+        "name": "sm",
+        "description": "small Meter Bar",
+        "displayName": "Small",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "md",
+        "description": "medium Meter Bar (default, if unspecified)",
+        "displayName": "Medium",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "lg",
+        "description": "large Meter Bar",
+        "displayName": "Large",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "fit",
+        "description": "Meter Bar that fits the available space",
+        "displayName": "Fit",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      }
+    ],
+    "defaultvalue": "\"md\""
+  },
+  {
+    "id": "oj-c.MeterBar#datatip",
+    "name": "datatip",
+    "memberof": "oj-c.MeterBar",
+    "meta": {
+      "filename": "meter-bar.tsx",
+      "path": "web/components/oj-c/meter-bar"
+    },
+    "kind": "member",
+    "longname": "oj-c.MeterBar#datatip",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "function"
+      ]
+    },
+    "optional": true,
+    "description": "The function that returns a custom datatip string for given value of meter bar. The function is called with DatatipContext as context. If datatip is undefined,\nmeter bar will use the default datatip. If the returned value of the function is null, no datatip is shown.",
+    "tstype": [
+      {
+        "target": "Type",
+        "value": "(context: oj-c.MeterBar.DatatipContext) => string | null",
+        "jsdocOverride": true
+      }
+    ]
+  },
+  {
+    "id": "oj-c.MeterBar#transientValue",
+    "name": "transientValue",
+    "memberof": "oj-c.MeterBar",
+    "meta": {
+      "filename": "meter-bar.tsx",
+      "path": "web/components/oj-c/meter-bar"
+    },
+    "kind": "member",
+    "longname": "oj-c.MeterBar#transientValue",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "number"
+      ]
+    },
+    "optional": true,
+    "ojwriteback": true,
+    "readonly": true,
+    "description": "A read-only property for retrieving the transient value from the meter bar. It is triggered when dragging over the meter bar."
+  },
+  {
+    "id": "oj-c.MeterBar#setProperty",
+    "name": "setProperty",
+    "memberof": "oj-c.MeterBar",
+    "meta": {
+      "filename": "meter-bar.tsx",
+      "path": "web/components/oj-c/meter-bar"
+    },
+    "kind": "function",
+    "longname": "oj-c.MeterBar#setProperty",
+    "scope": "instance",
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "void"
+          ]
+        }
+      }
+    ],
+    "description": "Sets a property or a single subproperty for complex properties and notifies the component of the change, triggering a corresponding event.",
+    "params": [
+      {
+        "name": "property",
+        "description": "The property name to set. Supports dot notation for subproperty access.",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "value",
+        "description": "The new value to set the property to.",
+        "type": {
+          "names": [
+            "any"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.MeterBar#getProperty",
+    "name": "getProperty",
+    "memberof": "oj-c.MeterBar",
+    "meta": {
+      "filename": "meter-bar.tsx",
+      "path": "web/components/oj-c/meter-bar"
+    },
+    "kind": "function",
+    "longname": "oj-c.MeterBar#getProperty",
+    "scope": "instance",
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "any"
+          ]
+        }
+      }
+    ],
+    "description": "Retrieves the value of a property or a subproperty.",
+    "params": [
+      {
+        "name": "property",
+        "description": "The property name to get. Supports dot notation for subproperty access.",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.MeterBar#setProperties",
+    "name": "setProperties",
+    "memberof": "oj-c.MeterBar",
+    "meta": {
+      "filename": "meter-bar.tsx",
+      "path": "web/components/oj-c/meter-bar"
+    },
+    "kind": "function",
+    "longname": "oj-c.MeterBar#setProperties",
+    "scope": "instance",
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "void"
+          ]
+        }
+      }
+    ],
+    "description": "Performs a batch set of properties.",
+    "params": [
+      {
+        "name": "properties",
+        "description": "An object containing the property and value pairs to set.",
+        "type": {
+          "names": [
+            "object"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.MeterBar.touchDoc",
+    "name": "touchDoc",
+    "kind": "member",
+    "longname": "oj-c.MeterBar.touchDoc",
+    "description": "<table class=\"keyboard-table\">\n  <thead>\n    <tr>\n      <th>Gesture</th>\n      <th>Action</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <td><kbd>Drag</kbd></td>\n      <td>Value change when <code class=\"prettyprint\">readonly</code> is <code class=\"prettyprint\">false</code>.</td>\n    </tr>\n  </tbody>\n</table>",
+    "memberof": "oj-c.MeterBar",
+    "meta": {
+      "filename": "meter-bar.tsx",
+      "path": "web/components/oj-c/meter-bar"
+    },
+    "ojfragment": true
+  },
+  {
+    "id": "oj-c.MeterBar.PlotArea",
+    "name": "PlotArea",
+    "kind": "typedef",
+    "memberof": "oj-c.MeterBar",
+    "meta": {
+      "filename": "meter-bar.tsx",
+      "path": "web/components/oj-c/meter-bar"
+    },
+    "longname": "oj-c.MeterBar.PlotArea",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "scope": "static",
+    "description": "",
+    "properties": [
+      {
+        "name": "color",
+        "description": "The color of the plot area.",
+        "optional": true,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "rendered",
+        "description": "Defines if the plot area is to be rendered. The default value is on.",
+        "optional": true,
+        "type": {
+          "names": [
+            "\"off\"",
+            "\"on\""
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.MeterBar.ReferenceLineLabelStyle",
+    "name": "ReferenceLineLabelStyle",
+    "kind": "typedef",
+    "memberof": "oj-c.MeterBar",
+    "meta": {
+      "filename": "meter-bar.tsx",
+      "path": "web/components/oj-c/meter-bar"
+    },
+    "longname": "oj-c.MeterBar.ReferenceLineLabelStyle",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "scope": "static",
+    "description": "",
+    "properties": [
+      {
+        "name": "color",
+        "description": "The color of the text.",
+        "optional": true,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "fontSize",
+        "description": "The font size of the text.",
+        "optional": true,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "fontStyle",
+        "description": "The font style of the text.",
+        "optional": true,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "fontWeight",
+        "description": "The font weight of the text.",
+        "optional": true,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.MeterBar.ReferenceLine",
+    "name": "ReferenceLine",
+    "kind": "typedef",
+    "memberof": "oj-c.MeterBar",
+    "meta": {
+      "filename": "meter-bar.tsx",
+      "path": "web/components/oj-c/meter-bar"
+    },
+    "longname": "oj-c.MeterBar.ReferenceLine",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "scope": "static",
+    "description": "",
+    "properties": [
+      {
+        "name": "color",
+        "description": "<p>The color of the reference line.</p>\n<p>In addition to standard CSS color values, special enumerated values 'danger', 'warning',\nand 'success' are also supported. These special values are mapped to corresponding CSS color values\nbased upon the current theme.</p>",
+        "optional": true,
+        "type": {
+          "names": [
+            "\"danger\"|\"warning\"|\"success\"|string"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "\"danger\"|\"warning\"|\"success\"|string",
+            "jsdocOverride": true
+          }
+        ],
+        "ojvalues": [
+          {
+            "name": "danger",
+            "description": "Maps to theme-specific color indicating a danger condition",
+            "type": {
+              "names": [
+                "string"
+              ]
+            }
+          },
+          {
+            "name": "warning",
+            "description": "Maps to theme-specific color indicating a warning condition",
+            "type": {
+              "names": [
+                "string"
+              ]
+            }
+          },
+          {
+            "name": "success",
+            "description": "Maps to theme-specific color indicating a success condition",
+            "type": {
+              "names": [
+                "string"
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "name": "position",
+        "description": "The position of the reference line.",
+        "optional": true,
+        "type": {
+          "names": [
+            "\"end\"",
+            "\"start\""
+          ]
+        }
+      },
+      {
+        "name": "value",
+        "description": "The value of the reference line.",
+        "optional": false,
+        "type": {
+          "names": [
+            "number"
+          ]
+        }
+      },
+      {
+        "name": "label",
+        "description": "The label for the reference line.",
+        "optional": true,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "style",
+        "description": "The style of the label for the reference line.",
+        "optional": true,
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "oj-c.MeterBar.ReferenceLineLabelStyle",
+            "jsdocOverride": true,
+            "for": "style"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "oj-c.MeterBar.Threshold",
+    "name": "Threshold",
+    "kind": "typedef",
+    "memberof": "oj-c.MeterBar",
+    "meta": {
+      "filename": "meter-bar.tsx",
+      "path": "web/components/oj-c/meter-bar"
+    },
+    "longname": "oj-c.MeterBar.Threshold",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "scope": "static",
+    "description": "",
+    "properties": [
+      {
+        "name": "accessibleLabel",
+        "description": "A label for the threshold used for accessibility purposes.",
+        "optional": true,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "color",
+        "description": "<p>The color of the threshold.</p>\n<p>In addition to standard CSS color values, special enumerated values 'danger', 'warning',\nand 'success' are also supported. These special values are mapped to corresponding CSS color values\nbased upon the current theme.</p>",
+        "optional": true,
+        "type": {
+          "names": [
+            "\"danger\"|\"warning\"|\"success\"|string"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "\"danger\"|\"warning\"|\"success\"|string",
+            "jsdocOverride": true
+          }
+        ],
+        "ojvalues": [
+          {
+            "name": "danger",
+            "description": "Maps to theme-specific color indicating a danger condition",
+            "type": {
+              "names": [
+                "string"
+              ]
+            }
+          },
+          {
+            "name": "warning",
+            "description": "Maps to theme-specific color indicating a warning condition",
+            "type": {
+              "names": [
+                "string"
+              ]
+            }
+          },
+          {
+            "name": "success",
+            "description": "Maps to theme-specific color indicating a success condition",
+            "type": {
+              "names": [
+                "string"
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "name": "max",
+        "description": "The maximum value of the threshold.",
+        "optional": false,
+        "type": {
+          "names": [
+            "number"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.MeterBar.DatatipContext",
+    "name": "DatatipContext",
+    "kind": "typedef",
+    "memberof": "oj-c.MeterBar",
+    "meta": {
+      "filename": "meter-bar.tsx",
+      "path": "web/components/oj-c/meter-bar"
+    },
+    "longname": "oj-c.MeterBar.DatatipContext",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "scope": "static",
+    "description": "Context for datatip function.",
+    "properties": [
+      {
+        "name": "value",
+        "description": "The current value of the meter bar.",
+        "optional": false,
+        "type": {
+          "names": [
+            "number"
+          ]
+        }
+      }
+    ]
+  }
+]

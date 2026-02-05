@@ -1,0 +1,237 @@
+[
+  {
+    "id": "oj-c.ProgressBar",
+    "name": "ProgressBar",
+    "memberof": "oj-c",
+    "kind": "class",
+    "meta": {
+      "filename": "progress-bar.tsx",
+      "path": "web/components/oj-c/progress-bar"
+    },
+    "ojcomponent": true,
+    "isvcomponent": true,
+    "since": "13.0.0",
+    "longname": "oj-c.ProgressBar",
+    "pack": "oj-c",
+    "classdesc": "<h3 id=\"progressBarOverview-section\">\n  JET Progress Bar\n  <a class=\"bookmarkable-link\" title=\"Bookmarkable Link\" href=\"#progressBarOverview-section\"></a>\n</h3>\nThe oj-c-progress-bar element allows a user to display progress of an operation in a rectangular horizontal meter.\nIf a developer does not wish to display the exact value, a value of '-1' can be passed in to display an indeterminate value.\n\n<pre class=\"prettyprint\"><code>&lt;oj-c-progress-bar value='{{progressValue}}'>&lt;/oj-c-progress-bar></code></pre>\n\n<h3 id=\"a11y-section\">\n  Accessibility\n  <a class=\"bookmarkable-link\" title=\"Bookmarkable Link\" href=\"#a11y-section\"></a>\n</h3>\n\n<p>\nTo meet accessibility requirements, use one or more of the following ARIA attributes to provide meaningful text describing the purpose or status of the progress bar for assistive technologies:\n</p>\n<ul>\n  <li>aria-label</li>\n  <li>aria-labelledby</li>\n</ul>\n\n<p>\nThese ARIA attributes help assistive technologies accurately convey loading status and context to users.\n</p>\n\n<p>\nIf the progress bar is used to indicate the loading state of a specific region, the region element must have aria-describedby referencing the progress bar’s id. Include <code>aria-busy=\"true\"</code> for the duration of the loading. Remove or set it to \"false\" once loading is complete.\n</p>",
+    "scope": "static",
+    "tagWithoutBrackets": "oj-c-progress-bar",
+    "tagWithBrackets": "<oj-c-progress-bar>",
+    "domInterface": "CProgressBarElement",
+    "ojPageTitle": "&lt;oj-c-progress-bar>",
+    "camelCaseName": "ProgressBar",
+    "ojPageTitlePrefix": "Element: ",
+    "ojtsvcomponent": true,
+    "tstype": {
+      "target": "Type",
+      "value": "interface CProgressBarElement extends JetElement<ProgressBarElementSettableProperties>"
+    },
+    "ojsignature": [
+      {
+        "target": "Type",
+        "value": "interface CProgressBarElement extends JetElement<ProgressBarElementSettableProperties>"
+      }
+    ],
+    "tsdeprecated": [
+      {
+        "type": "supersedes",
+        "since": "15.0.0",
+        "value": [
+          "oj-progress-bar"
+        ]
+      }
+    ],
+    "ojmodule": "progress-bar"
+  },
+  {
+    "id": "oj-c.ProgressBar#max",
+    "name": "max",
+    "memberof": "oj-c.ProgressBar",
+    "meta": {
+      "filename": "progress-bar.tsx",
+      "path": "web/components/oj-c/progress-bar"
+    },
+    "kind": "member",
+    "longname": "oj-c.ProgressBar#max",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "number"
+      ]
+    },
+    "optional": true,
+    "description": "The maximum allowed value. The element's max attribute is used if it\nis provided, otherwise the default value of 100 is used.",
+    "defaultvalue": 100
+  },
+  {
+    "id": "oj-c.ProgressBar#value",
+    "name": "value",
+    "memberof": "oj-c.ProgressBar",
+    "meta": {
+      "filename": "progress-bar.tsx",
+      "path": "web/components/oj-c/progress-bar"
+    },
+    "kind": "member",
+    "longname": "oj-c.ProgressBar#value",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "number"
+      ]
+    },
+    "optional": true,
+    "description": "The value of the Progress Bar. The element's value attribute is used if it\nis provided, otherwise the default value of 0 is used. For indeterminate Progress, set value to -1.\nAny other negative value will default to 0.",
+    "defaultvalue": 0
+  },
+  {
+    "id": "oj-c.ProgressBar#edge",
+    "name": "edge",
+    "memberof": "oj-c.ProgressBar",
+    "meta": {
+      "filename": "progress-bar.tsx",
+      "path": "web/components/oj-c/progress-bar"
+    },
+    "kind": "member",
+    "longname": "oj-c.ProgressBar#edge",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "\"none\"",
+        "\"top\""
+      ]
+    },
+    "optional": true,
+    "description": "Whether the progress bar is positioned at the top edge of a container or not.\nIf set to 'top', the curved borders will be removed.",
+    "ojvalues": [
+      {
+        "name": "none",
+        "description": "Not attached progress bar (default, if unspecified)",
+        "displayName": "Not Attached Progress Bar",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "top",
+        "description": "Progress Bar at Top Edge of container",
+        "displayName": "Progress Bar Top Edge Container",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      }
+    ],
+    "defaultvalue": "\"none\""
+  },
+  {
+    "id": "oj-c.ProgressBar#setProperty",
+    "name": "setProperty",
+    "memberof": "oj-c.ProgressBar",
+    "meta": {
+      "filename": "progress-bar.tsx",
+      "path": "web/components/oj-c/progress-bar"
+    },
+    "kind": "function",
+    "longname": "oj-c.ProgressBar#setProperty",
+    "scope": "instance",
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "void"
+          ]
+        }
+      }
+    ],
+    "description": "Sets a property or a single subproperty for complex properties and notifies the component of the change, triggering a corresponding event.",
+    "params": [
+      {
+        "name": "property",
+        "description": "The property name to set. Supports dot notation for subproperty access.",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "value",
+        "description": "The new value to set the property to.",
+        "type": {
+          "names": [
+            "any"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.ProgressBar#getProperty",
+    "name": "getProperty",
+    "memberof": "oj-c.ProgressBar",
+    "meta": {
+      "filename": "progress-bar.tsx",
+      "path": "web/components/oj-c/progress-bar"
+    },
+    "kind": "function",
+    "longname": "oj-c.ProgressBar#getProperty",
+    "scope": "instance",
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "any"
+          ]
+        }
+      }
+    ],
+    "description": "Retrieves the value of a property or a subproperty.",
+    "params": [
+      {
+        "name": "property",
+        "description": "The property name to get. Supports dot notation for subproperty access.",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.ProgressBar#setProperties",
+    "name": "setProperties",
+    "memberof": "oj-c.ProgressBar",
+    "meta": {
+      "filename": "progress-bar.tsx",
+      "path": "web/components/oj-c/progress-bar"
+    },
+    "kind": "function",
+    "longname": "oj-c.ProgressBar#setProperties",
+    "scope": "instance",
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "void"
+          ]
+        }
+      }
+    ],
+    "description": "Performs a batch set of properties.",
+    "params": [
+      {
+        "name": "properties",
+        "description": "An object containing the property and value pairs to set.",
+        "type": {
+          "names": [
+            "object"
+          ]
+        }
+      }
+    ]
+  }
+]

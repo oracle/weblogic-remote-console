@@ -1,0 +1,2 @@
+define(['exports'], (function(e){"use strict";e.default=["ar","ar-XB","bg","bs","bs-Cyrl","cs","da","de","el","en","en-XA","en-XC","es","et","fi","fr","fr-CA","he","hr","hu","is","it","ja","ko","lt","lv","ms","nl","no","pl","pt","pt-PT","ro","ru","sk","sl","sr","sr-Latn","sv","th","tr","uk","vi","zh-Hans","zh-Hant"],Object.defineProperty(e,"__esModule",{value:!0})}));
+//# sourceMappingURL=supportedLocales.js.map

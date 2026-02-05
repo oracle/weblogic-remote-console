@@ -1,0 +1,469 @@
+.BaseButtonStyles_styles_base__jvi3ds0 {
+  cursor: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-cursor-clickable);
+  box-sizing: border-box;
+}
+.BaseButtonStyles_styles_styled__jvi3ds1 {
+  align-items: center;
+  border-style: solid;
+  border-width: 1px;
+  box-sizing: border-box;
+  display: inline-block;
+  font-family: inherit;
+  justify-content: center;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  padding-top: 0;
+  padding-bottom: 0;
+  pointer-events: auto;
+  text-overflow: ellipsis;
+  vertical-align: top;
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+  white-space: nowrap;
+  border-radius: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-border-radius);
+  font-weight: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-body-md-font-weight-semibold);
+}
+.BaseButtonStyles_styles_styled__jvi3ds1:focus-visible {
+  outline-style: dotted;
+  outline-offset: 1px;
+  outline-width: 1px;
+  outline-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-border-keyboard-focus);
+}
+.BaseButtonStyles_styles_styled__jvi3ds1:has(input:focus-visible) {
+  outline-style: dotted;
+  outline-offset: 1px;
+  outline-width: 1px;
+  outline-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-border-keyboard-focus);
+}
+.BaseButtonStyles_styles_styledOutline__jvi3ds2:focus-visible {
+  outline-style: dotted;
+  outline-offset: 1px;
+  outline-width: 1px;
+  outline-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-border-keyboard-focus);
+}
+.BaseButtonStyles_styles_styledOutline__jvi3ds2:has(input:focus-visible) {
+  outline-style: dotted;
+  outline-offset: 1px;
+  outline-width: 1px;
+  outline-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-border-keyboard-focus);
+}
+.BaseButtonStyles_styles_styledOutlineButtonset__jvi3ds3:focus-visible {
+  z-index: 2;
+  outline-style: dotted;
+  outline-offset: 1px;
+  outline-width: 1px;
+  outline-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-border-keyboard-focus);
+}
+.BaseButtonStyles_styles_styledOutlineButtonset__jvi3ds3:has(input:focus-visible) {
+  z-index: 2;
+  outline-style: dotted;
+  outline-offset: 1px;
+  outline-width: 1px;
+  outline-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-border-keyboard-focus);
+}
+.BaseButtonStyles_styles_outline__jvi3ds4 {
+  outline-style: dotted;
+  outline-offset: 1px;
+  outline-width: 1px;
+  outline-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-border-keyboard-focus);
+}
+.BaseButtonStyles_styles_outlineButtonset__jvi3ds5 {
+  z-index: 2;
+  outline-style: dotted;
+  outline-offset: 1px;
+  outline-width: 1px;
+  outline-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-border-keyboard-focus);
+}
+.BaseButtonStyles_styles_min__jvi3ds6 {
+  padding-inline-start: unset !important;
+  padding-inline-end: unset !important;
+}
+.BaseButtonStyles_styles_fill__jvi3ds7 {
+  width: 100%;
+}
+.BaseButtonStyles_styles_spanOnly__jvi3ds8 {
+  display: inline-flex;
+}
+.BaseButtonStyles_styles_embedded__jvi3ds9 {
+  height: 100%;
+  display: inline-flex;
+}
+.BaseButtonStyles_styles_embedded__jvi3ds9:focus-visible {
+  outline-style: none;
+}
+.BaseButtonStyles_styles_noBorderStart__jvi3dsa {
+  border-inline-start-width: 0px;
+}
+.BaseButtonStyles_styles_noBorderEnd__jvi3dsb {
+  border-inline-end-width: 0px;
+}
+.BaseButtonStyles_styles_noBorderStartButtonset__jvi3dsc {
+  position: relative;
+  z-index: 0;
+  margin-inline-start: -1px;
+}
+.BaseButtonStyles_styles_noBorderEndButtonset__jvi3dsd {
+  position: relative;
+  z-index: 0;
+}
+.BaseButtonStyles_styles_unselectedBorderEnd__jvi3dse {
+  border-inline-end-color: transparent;
+}
+.BaseButtonStyles_styles_unselectedBorderStart__jvi3dsf {
+  border-inline-start-color: transparent;
+}
+.BaseButtonStyles_styles_noBorderRadiusStart__jvi3dsg {
+  border-start-start-radius: 0;
+  border-end-start-radius: 0;
+}
+.BaseButtonStyles_styles_noBorderRadiusEnd__jvi3dsh {
+  border-end-end-radius: 0;
+  border-start-end-radius: 0;
+}
+.BaseButtonStyles_styles_inputLabel__jvi3dsi {
+  cursor: inherit;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+.BaseButtonStyles_styles_widthEqual__jvi3dsj {
+  flex: 1;
+  overflow: hidden;
+}
+.BaseButtonStyles_styles_widthAuto__jvi3dsk {
+  flex: auto;
+}
+.BaseButtonStyles_styles_bottom__jvi3dsl {
+  border-inline-start-width: 0;
+  border-right-width: 0;
+  border-block-end-width: 0;
+  width: 100%;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+.BaseButtonStyles_styles_notInteractive__jvi3dsm {
+  cursor: default;
+}
+.BaseButtonStyles_styles_newStackingContext__jvi3dsn {
+  z-index: 0;
+}
+.BaseButtonStyles_styles_variants_outlined_base__jvi3dso {
+  background-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-outlined-base-background-color);
+  border-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-outlined-base-border-color);
+  color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-outlined-base-color);
+}
+.BaseButtonStyles_styles_variants_outlined_hiddenLabel__jvi3dsp {
+  color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-outlined-base-background-color);
+}
+.BaseButtonStyles_styles_variants_outlined_disabled__jvi3dsq {
+  background-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-outlined-disabled-background-color);
+  border-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-outlined-disabled-border-color);
+  color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-outlined-disabled-color);
+  cursor: not-allowed;
+}
+.BaseButtonStyles_styles_variants_outlined_hover__jvi3dsr:not(:active) {
+  background-image: linear-gradient(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-outlined-hover-background-overlay-color),var(--oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-outlined-hover-background-overlay-color));
+  border-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-border-enabled);
+}
+.BaseButtonStyles_styles_variants_outlined_active__jvi3dss {
+  background-image: linear-gradient(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-outlined-active-background-overlay-color),var(--oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-outlined-active-background-overlay-color));
+  border-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-border-enabled);
+  color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-primary);
+}
+.BaseButtonStyles_styles_variants_outlined_selected__jvi3dst {
+  background-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-surface-selected);
+  border-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-border-selected);
+  z-index: 1;
+}
+.BaseButtonStyles_styles_variants_outlined_selectedDisabled__jvi3dsu {
+  background-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-surface-disabled);
+}
+.BaseButtonStyles_styles_variants_outlined_container__jvi3dsz {
+  background-color: transparent;
+  border-style: hidden;
+  cursor: none;
+  display: flex;
+}
+.BaseButtonStyles_styles_variants_outlined_buttonSetItem__jvi3ds10 {
+  border-inline-start-color: transparent;
+  border-inline-start-width: 1px;
+}
+.BaseButtonStyles_styles_variants_outlined_buttonSetItemSelected__jvi3ds11 {
+  border-inline-start-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-border-selected);
+  border-inline-start-width: 1px;
+}
+.BaseButtonStyles_styles_variants_outlined_buttonSetItemDisabled__jvi3ds12 {
+  border-inline-start-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-outlined-disabled-border-color);
+  border-inline-start-width: 1px;
+}
+.BaseButtonStyles_styles_variants_callToAction_base__jvi3ds13 {
+  background-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-call-to-action-base-background-color);
+  border-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-call-to-action-base-border-color);
+  color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-call-to-action-base-color);
+}
+.BaseButtonStyles_styles_variants_callToAction_hiddenLabel__jvi3ds14 {
+  color: transparent;
+}
+.BaseButtonStyles_styles_variants_callToAction_disabled__jvi3ds15 {
+  background-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-call-to-action-disabled-background-color);
+  border-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-call-to-action-disabled-border-color);
+  color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-call-to-action-disabled-color);
+  cursor: not-allowed;
+}
+.BaseButtonStyles_styles_variants_callToAction_hover__jvi3ds16:not(:active) {
+  background-image: linear-gradient(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-call-to-action-hover-background-overlay-color),var(--oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-call-to-action-hover-background-overlay-color));
+  border-color: transparent;
+}
+.BaseButtonStyles_styles_variants_callToAction_active__jvi3ds17 {
+  background-image: linear-gradient(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-call-to-action-active-background-overlay-color),var(--oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-call-to-action-active-background-overlay-color));
+  border-color: transparent;
+  color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-inverse);
+}
+.BaseButtonStyles_styles_variants_callToAction_container__jvi3ds1a {
+  background-color: transparent;
+  border-style: hidden;
+  cursor: none;
+  display: flex;
+}
+.BaseButtonStyles_styles_variants_borderless_base__jvi3ds1b {
+  background-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-borderless-base-background-color);
+  border-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-borderless-base-border-color);
+  color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-borderless-base-color);
+}
+.BaseButtonStyles_styles_variants_borderless_hiddenLabel__jvi3ds1c {
+  color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-borderless-base-background-color);
+}
+.BaseButtonStyles_styles_variants_borderless_disabled__jvi3ds1d {
+  background-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-borderless-disabled-background-color);
+  border-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-borderless-disabled-border-color);
+  color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-borderless-disabled-color);
+  cursor: not-allowed;
+}
+.BaseButtonStyles_styles_variants_borderless_hover__jvi3ds1e:not(:active) {
+  background-image: linear-gradient(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-borderless-hover-background-overlay-color),var(--oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-borderless-hover-background-overlay-color));
+  border-color: transparent;
+}
+.BaseButtonStyles_styles_variants_borderless_active__jvi3ds1f {
+  background-image: linear-gradient(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-borderless-active-background-overlay-color),var(--oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-borderless-active-background-overlay-color));
+  border-color: transparent;
+  color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-primary);
+}
+.BaseButtonStyles_styles_variants_borderless_selected__jvi3ds1g {
+  background-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-surface-selected);
+  border-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-border-selected);
+}
+.BaseButtonStyles_styles_variants_borderless_selectedDisabled__jvi3ds1h {
+  background-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-surface-disabled);
+}
+.BaseButtonStyles_styles_variants_borderless_container__jvi3ds1m {
+  background-color: transparent;
+  border-style: hidden;
+  cursor: none;
+  display: flex;
+}
+.BaseButtonStyles_styles_variants_borderless_buttonSetItem__jvi3ds1n {
+  margin-inline-start: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem);
+}
+.BaseButtonStyles_styles_variants_ghost_base__jvi3ds1o {
+  background-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-ghost-base-background-color);
+  border-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-ghost-base-border-color);
+  color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-ghost-base-color);
+}
+.BaseButtonStyles_styles_variants_ghost_hiddenLabel__jvi3ds1p {
+  color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-ghost-base-background-color);
+}
+.BaseButtonStyles_styles_variants_ghost_disabled__jvi3ds1q {
+  background-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-ghost-disabled-background-color);
+  border-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-ghost-disabled-border-color);
+  color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-ghost-disabled-color);
+  cursor: not-allowed;
+}
+.BaseButtonStyles_styles_variants_ghost_hover__jvi3ds1r:not(:active) {
+  background-image: linear-gradient(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-ghost-hover-background-overlay-color),var(--oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-ghost-hover-background-overlay-color));
+  border-color: transparent;
+  color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-secondary);
+}
+.BaseButtonStyles_styles_variants_ghost_active__jvi3ds1s {
+  background-image: linear-gradient(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-ghost-active-background-overlay-color),var(--oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-ghost-active-background-overlay-color));
+  border-color: transparent;
+  color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-secondary);
+}
+.BaseButtonStyles_styles_variants_ghost_container__jvi3ds1v {
+  background-color: transparent;
+  border-style: hidden;
+  cursor: none;
+  display: flex;
+}
+.BaseButtonStyles_styles_variants_solid_base__jvi3ds1w {
+  background-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-solid-base-background-color);
+  border-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-solid-base-border-color);
+  color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-solid-base-color);
+}
+.BaseButtonStyles_styles_variants_solid_hiddenLabel__jvi3ds1x {
+  color: transparent;
+}
+.BaseButtonStyles_styles_variants_solid_disabled__jvi3ds1y {
+  background-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-solid-disabled-background-color);
+  border-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-solid-disabled-border-color);
+  color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-solid-disabled-color);
+  cursor: not-allowed;
+}
+.BaseButtonStyles_styles_variants_solid_hover__jvi3ds1z:not(:active) {
+  background-image: linear-gradient(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-solid-hover-background-overlay-color),var(--oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-solid-hover-background-overlay-color));
+  border-color: transparent;
+}
+.BaseButtonStyles_styles_variants_solid_active__jvi3ds20 {
+  background-image: linear-gradient(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-solid-active-background-overlay-color),var(--oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-solid-active-background-overlay-color));
+  border-color: transparent;
+  color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-primary);
+}
+.BaseButtonStyles_styles_variants_solid_container__jvi3ds23 {
+  background-color: transparent;
+  border-style: hidden;
+  cursor: none;
+  display: flex;
+}
+.BaseButtonStyles_styles_variants_danger_base__jvi3ds24 {
+  background-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-danger-base-background-color);
+  border-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-danger-base-border-color);
+  color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-danger-base-color);
+}
+.BaseButtonStyles_styles_variants_danger_hiddenLabel__jvi3ds25 {
+  color: transparent;
+}
+.BaseButtonStyles_styles_variants_danger_disabled__jvi3ds26 {
+  background-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-danger-disabled-background-color);
+  border-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-danger-disabled-border-color);
+  color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-danger-disabled-color);
+  cursor: not-allowed;
+}
+.BaseButtonStyles_styles_variants_danger_hover__jvi3ds27:not(:active) {
+  background-image: linear-gradient(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-danger-hover-background-overlay-color),var(--oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-danger-hover-background-overlay-color));
+  border-color: transparent;
+}
+.BaseButtonStyles_styles_variants_danger_active__jvi3ds28 {
+  background-image: linear-gradient(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-danger-active-background-overlay-color),var(--oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-danger-active-background-overlay-color));
+  border-color: transparent;
+  color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-on-color);
+}
+.BaseButtonStyles_styles_variants_danger_container__jvi3ds2b {
+  background-color: transparent;
+  border-style: hidden;
+  cursor: none;
+  display: flex;
+}
+.BaseButtonStyles_styles_sizes_xs__jvi3ds2c {
+  height: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-sizes-xs-height);
+  min-width: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-sizes-xs-height);
+  padding-inline-start: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-sizes-xs-text-to-edge-padding);
+  padding-inline-end: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-sizes-xs-text-to-edge-padding);
+  font-size: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-font-size);
+}
+.BaseButtonStyles_styles_sizes_sm__jvi3ds2d {
+  height: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-sizes-sm-height);
+  min-width: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-sizes-sm-height);
+  padding-inline-start: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-sizes-sm-text-to-edge-padding);
+  padding-inline-end: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-sizes-sm-text-to-edge-padding);
+  font-size: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-font-size);
+}
+.BaseButtonStyles_styles_sizes_md__jvi3ds2e {
+  height: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-sizes-md-height);
+  min-width: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-sizes-md-height);
+  padding-inline-start: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-sizes-md-text-to-edge-padding);
+  padding-inline-end: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-sizes-md-text-to-edge-padding);
+  font-size: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-font-size);
+}
+.BaseButtonStyles_styles_sizes_lg__jvi3ds2f {
+  height: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-sizes-lg-height);
+  min-width: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-sizes-lg-height);
+  padding-inline-start: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-sizes-lg-text-to-edge-padding);
+  padding-inline-end: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-sizes-lg-text-to-edge-padding);
+  font-size: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-font-size);
+}
+.BaseButtonStyles_styles_labelSizes_xs__jvi3ds2g {
+  padding-inline-start: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-sizes-xs-text-to-edge-padding);
+  padding-inline-end: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-sizes-xs-text-to-edge-padding);
+}
+.BaseButtonStyles_styles_labelSizes_sm__jvi3ds2h {
+  padding-inline-start: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-sizes-sm-text-to-edge-padding);
+  padding-inline-end: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-sizes-sm-text-to-edge-padding);
+}
+.BaseButtonStyles_styles_labelSizes_md__jvi3ds2i {
+  padding-inline-start: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-sizes-md-text-to-edge-padding);
+  padding-inline-end: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-sizes-md-text-to-edge-padding);
+}
+.BaseButtonStyles_styles_labelSizes_lg__jvi3ds2j {
+  padding-inline-start: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-sizes-lg-text-to-edge-padding);
+  padding-inline-end: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-sizes-lg-text-to-edge-padding);
+}
+.BaseButtonStyles_styles_base__jvi3ds0 > * {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+@media (hover: hover) {
+  .BaseButtonStyles_styles_variants_outlined_pseudohover__jvi3dsv:hover:enabled:not(:active) {
+    background-image: linear-gradient(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-outlined-hover-background-overlay-color),var(--oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-outlined-hover-background-overlay-color));
+    border-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-border-enabled);
+  }
+  .BaseButtonStyles_styles_variants_outlined_pseudohoverSelected__jvi3dsw:hover:enabled:not(:active) {
+    background-image: linear-gradient(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-outlined-hover-background-overlay-color),var(--oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-outlined-hover-background-overlay-color));
+  }
+  .BaseButtonStyles_styles_variants_outlined_pseudohoverSpan__jvi3dsx:hover:not(:active) {
+    background-image: linear-gradient(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-outlined-hover-background-overlay-color),var(--oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-outlined-hover-background-overlay-color));
+    border-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-border-enabled);
+  }
+  .BaseButtonStyles_styles_variants_outlined_pseudohoverSpanSelected__jvi3dsy:hover:not(:active) {
+    background-image: linear-gradient(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-outlined-hover-background-overlay-color),var(--oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-outlined-hover-background-overlay-color));
+  }
+  .BaseButtonStyles_styles_variants_callToAction_pseudohover__jvi3ds18:hover:enabled:not(:active) {
+    background-image: linear-gradient(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-call-to-action-hover-background-overlay-color),var(--oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-call-to-action-hover-background-overlay-color));
+    border-color: transparent;
+  }
+  .BaseButtonStyles_styles_variants_callToAction_pseudohoverSpan__jvi3ds19:hover:not(:active) {
+    background-image: linear-gradient(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-call-to-action-hover-background-overlay-color),var(--oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-call-to-action-hover-background-overlay-color));
+    border-color: transparent;
+  }
+  .BaseButtonStyles_styles_variants_borderless_pseudohover__jvi3ds1i:hover:enabled:not(:active) {
+    background-image: linear-gradient(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-borderless-hover-background-overlay-color),var(--oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-borderless-hover-background-overlay-color));
+    border-color: transparent;
+  }
+  .BaseButtonStyles_styles_variants_borderless_pseudohoverSelected__jvi3ds1j:hover:enabled:not(:active) {
+    background-image: linear-gradient(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-borderless-hover-background-overlay-color),var(--oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-borderless-hover-background-overlay-color));
+  }
+  .BaseButtonStyles_styles_variants_borderless_pseudohoverSpan__jvi3ds1k:hover:not(:active) {
+    background-image: linear-gradient(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-borderless-hover-background-overlay-color),var(--oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-borderless-hover-background-overlay-color));
+    border-color: transparent;
+  }
+  .BaseButtonStyles_styles_variants_borderless_pseudohoverSpanSelected__jvi3ds1l:hover:not(:active) {
+    background-image: linear-gradient(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-borderless-hover-background-overlay-color),var(--oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-borderless-hover-background-overlay-color));
+  }
+  .BaseButtonStyles_styles_variants_ghost_pseudohover__jvi3ds1t:hover:enabled:not(:active) {
+    background-image: linear-gradient(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-ghost-hover-background-overlay-color),var(--oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-ghost-hover-background-overlay-color));
+    border-color: transparent;
+    color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-secondary);
+  }
+  .BaseButtonStyles_styles_variants_ghost_pseudohoverSpan__jvi3ds1u:hover:not(:active) {
+    background-image: linear-gradient(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-ghost-hover-background-overlay-color),var(--oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-ghost-hover-background-overlay-color));
+    border-color: transparent;
+    color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-secondary);
+  }
+  .BaseButtonStyles_styles_variants_solid_pseudohover__jvi3ds21:hover:enabled:not(:active) {
+    background-image: linear-gradient(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-solid-hover-background-overlay-color),var(--oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-solid-hover-background-overlay-color));
+    border-color: transparent;
+  }
+  .BaseButtonStyles_styles_variants_solid_pseudohoverSpan__jvi3ds22:hover:not(:active) {
+    background-image: linear-gradient(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-solid-hover-background-overlay-color),var(--oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-solid-hover-background-overlay-color));
+    border-color: transparent;
+  }
+  .BaseButtonStyles_styles_variants_danger_pseudohover__jvi3ds29:hover:enabled:not(:active) {
+    background-image: linear-gradient(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-danger-hover-background-overlay-color),var(--oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-danger-hover-background-overlay-color));
+    border-color: transparent;
+  }
+  .BaseButtonStyles_styles_variants_danger_pseudohoverSpan__jvi3ds2a:hover:not(:active) {
+    background-image: linear-gradient(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-danger-hover-background-overlay-color),var(--oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-variants-danger-hover-background-overlay-color));
+    border-color: transparent;
+  }
+}

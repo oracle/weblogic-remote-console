@@ -1,0 +1,248 @@
+[
+  {
+    "id": "oj-c.ActionCard",
+    "name": "ActionCard",
+    "memberof": "oj-c",
+    "kind": "class",
+    "meta": {
+      "filename": "action-card.tsx",
+      "path": "web/components/oj-c/action-card"
+    },
+    "ojcomponent": true,
+    "isvcomponent": true,
+    "since": "16.0.0",
+    "longname": "oj-c.ActionCard",
+    "pack": "oj-c",
+    "classdesc": "<h3 id=\"ActionCardOverview-section\">\n  JET Action\n  <a class=\"bookmarkable-link\" title=\"Bookmarkable Link\" href=\"#CardOverview-section\"></a>\n</h3>\n<p>Description: Themeable, WAI-ARIA-compliant element that represents a card.</p>\n<p>Action Card provides a styled rectangular area with hover/focus/active state rendering,\nalong with an ojAction event.\n\n<pre class=\"prettyprint\">\n<code>\n&lt;oj-c-action-card onAction=\"[[actionHandler]]\">\n  Sample Text\n&lt;/oj-c-action-card>\n\n</code></pre>\n\n<h3 id=\"diff-section\">\n  Differences between Cards in JET\n  <a class=\"bookmarkable-link\" title=\"Bookmarkable Link\" href=\"#diff-section\"></a>\n</h3>\n\n<p>\nThere are several different options for creating cards in JET applications.\n</p>\n<ul>\n<li><strong>oj-c-action-card:</strong> ActionCard fires action events and is supported for use stand alone or in oj-c-card-view. For accessibility reasons nothing interactive (for example links or buttons) can be put in an action card.</li>\n<li><strong>oj-c-selection-card:</strong> SelectionCard is supported for use in oj-c-card-view, with single or multiple selection.</li>\n<li><strong>oj-panel CSS class:</strong> For simple cases with no associated action or selection. Panel is supported for use in standalone or in oj-c-card-view.</li>\n</ul>\n\n\n<h3 id=\"a11y-section\">\n  Accessibility\n  <a class=\"bookmarkable-link\" title=\"Bookmarkable Link\" href=\"#a11y-section\"></a>\n</h3>\n\n<p>A clarification in a11y rules states that any element with role of ActionCard should not have interactive elements inside: https://www.w3.org/TR/html-aria/#allowed-descendants-of-aria-roles </p>",
+    "scope": "static",
+    "tagWithoutBrackets": "oj-c-action-card",
+    "tagWithBrackets": "<oj-c-action-card>",
+    "domInterface": "CActionCardElement",
+    "ojPageTitle": "&lt;oj-c-action-card>",
+    "camelCaseName": "ActionCard",
+    "ojPageTitlePrefix": "Element: ",
+    "ojtsvcomponent": true,
+    "tstype": {
+      "target": "Type",
+      "value": "interface CActionCardElement extends JetElement<ActionCardElementSettableProperties>"
+    },
+    "ojsignature": [
+      {
+        "target": "Type",
+        "value": "interface CActionCardElement extends JetElement<ActionCardElementSettableProperties>"
+      }
+    ],
+    "tsdeprecated": [
+      {
+        "type": "candidate",
+        "since": "17.0.0"
+      }
+    ],
+    "ojmodule": "action-card"
+  },
+  {
+    "id": "oj-c.ActionCard#click",
+    "name": "click",
+    "memberof": "oj-c.ActionCard",
+    "meta": {
+      "filename": "action-card.tsx",
+      "path": "web/components/oj-c/action-card"
+    },
+    "kind": "function",
+    "longname": "oj-c.ActionCard#click",
+    "scope": "instance",
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "any"
+          ]
+        }
+      }
+    ],
+    "description": "blurs the card",
+    "ojhidden": true
+  },
+  {
+    "id": "oj-c.ActionCard#blur",
+    "name": "blur",
+    "memberof": "oj-c.ActionCard",
+    "meta": {
+      "filename": "action-card.tsx",
+      "path": "web/components/oj-c/action-card"
+    },
+    "kind": "function",
+    "longname": "oj-c.ActionCard#blur",
+    "scope": "instance",
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "any"
+          ]
+        }
+      }
+    ],
+    "description": "blurs the card",
+    "ojhidden": true
+  },
+  {
+    "id": "oj-c.ActionCard#focus",
+    "name": "focus",
+    "memberof": "oj-c.ActionCard",
+    "meta": {
+      "filename": "action-card.tsx",
+      "path": "web/components/oj-c/action-card"
+    },
+    "kind": "function",
+    "longname": "oj-c.ActionCard#focus",
+    "scope": "instance",
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "any"
+          ]
+        }
+      }
+    ],
+    "description": "focuses the card",
+    "ojhidden": true
+  },
+  {
+    "id": "oj-c.ActionCard#setProperty",
+    "name": "setProperty",
+    "memberof": "oj-c.ActionCard",
+    "meta": {
+      "filename": "action-card.tsx",
+      "path": "web/components/oj-c/action-card"
+    },
+    "kind": "function",
+    "longname": "oj-c.ActionCard#setProperty",
+    "scope": "instance",
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "void"
+          ]
+        }
+      }
+    ],
+    "description": "Sets a property or a single subproperty for complex properties and notifies the component of the change, triggering a corresponding event.",
+    "params": [
+      {
+        "name": "property",
+        "description": "The property name to set. Supports dot notation for subproperty access.",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "value",
+        "description": "The new value to set the property to.",
+        "type": {
+          "names": [
+            "any"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.ActionCard#getProperty",
+    "name": "getProperty",
+    "memberof": "oj-c.ActionCard",
+    "meta": {
+      "filename": "action-card.tsx",
+      "path": "web/components/oj-c/action-card"
+    },
+    "kind": "function",
+    "longname": "oj-c.ActionCard#getProperty",
+    "scope": "instance",
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "any"
+          ]
+        }
+      }
+    ],
+    "description": "Retrieves the value of a property or a subproperty.",
+    "params": [
+      {
+        "name": "property",
+        "description": "The property name to get. Supports dot notation for subproperty access.",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.ActionCard#setProperties",
+    "name": "setProperties",
+    "memberof": "oj-c.ActionCard",
+    "meta": {
+      "filename": "action-card.tsx",
+      "path": "web/components/oj-c/action-card"
+    },
+    "kind": "function",
+    "longname": "oj-c.ActionCard#setProperties",
+    "scope": "instance",
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "void"
+          ]
+        }
+      }
+    ],
+    "description": "Performs a batch set of properties.",
+    "params": [
+      {
+        "name": "properties",
+        "description": "An object containing the property and value pairs to set.",
+        "type": {
+          "names": [
+            "object"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.ActionCard#event:ojAction",
+    "name": "ojAction",
+    "kind": "event",
+    "memberof": "oj-c.ActionCard",
+    "meta": {
+      "filename": "action-card.tsx",
+      "path": "web/components/oj-c/action-card"
+    },
+    "longname": "oj-c.ActionCard#event:ojAction",
+    "scope": "instance",
+    "description": "Triggered when a card is clicked, whether by keyboard, mouse, or touch events. To meet accessibility requirements, the only supported way to react to the click is to listen for this event."
+  },
+  {
+    "id": "oj-c.ActionCard#Default",
+    "name": "Default",
+    "memberof": "oj-c.ActionCard",
+    "meta": {
+      "filename": "action-card.tsx",
+      "path": "web/components/oj-c/action-card"
+    },
+    "kind": "member",
+    "longname": "oj-c.ActionCard#Default",
+    "scope": "instance",
+    "description": "The default slot is the content of the card.",
+    "ojchild": true,
+    "ojslot": false
+  }
+]

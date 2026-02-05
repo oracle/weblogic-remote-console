@@ -1,0 +1,271 @@
+{
+  "name": "legend-item",
+  "version": "19.0.1",
+  "jetVersion": "^19.0.1",
+  "pack": "oj-c",
+  "type": "composite",
+  "dependencyScope": "runtime",
+  "license": "https://opensource.org/licenses/UPL",
+  "implements": [
+    "CLegendItemElement"
+  ],
+  "subcomponentType": "data",
+  "description": "The oj-c-legend-item element is used to declare properties for legend items.",
+  "displayName": "LegendItem",
+  "main": "oj-c/legend-item",
+  "help": "oj-c.LegendItem.html",
+  "status": [
+    {
+      "type": "candidate",
+      "since": "17.0.0"
+    }
+  ],
+  "extension": {
+    "catalog": {
+      "category": "Visualizations"
+    }
+  },
+  "since": "15.0.0",
+  "properties": {
+    "text": {
+      "type": "string",
+      "description": "The legend item text.",
+      "displayName": "Text",
+      "help": "#text",
+      "required": true,
+      "translatable": true
+    },
+    "categories": {
+      "type": "Array<string>",
+      "description": "An array of categories for the legend item. Legend items currently only support a single category.",
+      "displayName": "Categories",
+      "help": "#categories",
+      "value": []
+    },
+    "symbolType": {
+      "type": "string",
+      "description": "The type of legend symbol to display.",
+      "displayName": "Symbol Type",
+      "help": "#symbolType",
+      "propertyEditorValues": {
+        "line": {
+          "description": "The legend symbol will be a line.",
+          "displayName": "Line"
+        },
+        "lineWithMarker": {
+          "description": "The legend symbol will be a line and a marker.",
+          "displayName": "LineWithMarker"
+        },
+        "image": {
+          "description": "The legend symbol will be an image.",
+          "displayName": "Image"
+        },
+        "marker": {
+          "description": "The legend symbol will be a marker.",
+          "displayName": "Marker"
+        }
+      },
+      "enumValues": [
+        "marker",
+        "image",
+        "line",
+        "lineWithMarker"
+      ],
+      "value": "marker"
+    },
+    "source": {
+      "type": "string",
+      "description": "The URI of the image of the legend symbol.",
+      "displayName": "Source",
+      "help": "#source"
+    },
+    "color": {
+      "type": "string",
+      "description": "The color of the legend symbol (line or marker). When symbolType is \"lineWithMarker\", this attribute defines the line color and the markerColor attribute defines the marker color.",
+      "displayName": "Color",
+      "help": "#color"
+    },
+    "borderColor": {
+      "type": "string",
+      "description": "The border color of the marker. Only applies if symbolType is \"marker\" or \"lineWithMarker.",
+      "displayName": "Border Color",
+      "help": "#borderColor",
+      "value": ""
+    },
+    "lineStyle": {
+      "type": "string",
+      "description": "The line style. Only applies when the symbolType is \"line\" or \"lineWithMarker\".",
+      "displayName": "Line Style",
+      "help": "#lineStyle",
+      "propertyEditorValues": {
+        "dotted": {
+          "description": "Line will have dotted strokes.",
+          "displayName": "Dotted"
+        },
+        "dashed": {
+          "description": "Line will have dashed strokes.",
+          "displayName": "Dashed"
+        },
+        "solid": {
+          "description": "Line will have a solid stroke.",
+          "displayName": "Solid"
+        }
+      },
+      "enumValues": [
+        "dashed",
+        "solid",
+        "dotted"
+      ],
+      "value": "solid"
+    },
+    "lineWidth": {
+      "type": "number",
+      "description": "The line width in pixels. Only applies when the symbolType is \"line\" or \"lineWithMarker.",
+      "displayName": "Line Width",
+      "help": "#lineWidth"
+    },
+    "markerShape": {
+      "type": "string",
+      "description": "The shape of the marker. Only applies if symbolType is \"marker\" or \"lineWithMarker\". Does not apply if a custom image is specified.",
+      "displayName": "Marker Shape",
+      "help": "#markerShape",
+      "propertyEditorValues": {
+        "circle": {
+          "description": "The marker will be of circular shape.",
+          "displayName": "Circle"
+        },
+        "diamond": {
+          "description": "The marker will be of diamond shape.",
+          "displayName": "Diamond"
+        },
+        "ellipse": {
+          "description": "The marker will be of ellipse shape.",
+          "displayName": "Ellipse"
+        },
+        "human": {
+          "description": "The marker will be of human shape.",
+          "displayName": "Human"
+        },
+        "plus": {
+          "description": "The marker will be of plus shape.",
+          "displayName": "Plus"
+        },
+        "rectangle": {
+          "description": "The marker will be of rectangular shape.",
+          "displayName": "Rectangle"
+        },
+        "square": {
+          "description": "The marker will be of square shape.",
+          "displayName": "Square"
+        },
+        "star": {
+          "description": "The marker will be of star shape.",
+          "displayName": "Star"
+        },
+        "triangleDown": {
+          "description": "The  marker will be of triangular shape facing down.",
+          "displayName": "Triangle Down"
+        },
+        "triangleUp": {
+          "description": "The  marker will be of triangular shape facing up.",
+          "displayName": "Triangle Up"
+        }
+      },
+      "enumValues": [
+        "square",
+        "circle",
+        "ellipse",
+        "diamond",
+        "human",
+        "plus",
+        "star",
+        "triangleDown",
+        "triangleUp",
+        "rectangle"
+      ],
+      "value": "square"
+    },
+    "markerColor": {
+      "type": "string",
+      "description": "The color of the marker, if different than the line color. Only applies if the symbolType is \"lineWithMarker\".",
+      "displayName": "sections",
+      "help": "#sections"
+    },
+    "shortDesc": {
+      "type": "string",
+      "description": "The description of this legend item. This is used for accessibility and for customizing the tooltip text.",
+      "displayName": "Short Desc",
+      "help": "#shortDesc",
+      "translatable": true
+    },
+    "drilling": {
+      "type": "string",
+      "description": "Whether drilling is enabled on the legend item.",
+      "displayName": "Drilling",
+      "help": "#drilling",
+      "propertyEditorValues": {
+        "inherit": {
+          "description": "The drilling behavior is inherited from legend.",
+          "displayName": "Inherit"
+        },
+        "off": {
+          "description": "The legend item will not be drillable.",
+          "displayName": "Off"
+        },
+        "on": {
+          "description": "The legend item will be drillable.",
+          "displayName": "On"
+        }
+      },
+      "enumValues": [
+        "inherit",
+        "off",
+        "on"
+      ],
+      "value": "inherit"
+    }
+  },
+  "methods": {
+    "setProperty": {
+      "description": "Sets a property or a single subproperty for complex properties and notifies the component of the change, triggering a corresponding event.",
+      "help": "#setProperty",
+      "params": [
+        {
+          "name": "property",
+          "description": "The property name to set. Supports dot notation for subproperty access.",
+          "type": "string"
+        },
+        {
+          "name": "value",
+          "description": "The new value to set the property to.",
+          "type": "any"
+        }
+      ],
+      "return": "void"
+    },
+    "getProperty": {
+      "description": "Retrieves the value of a property or a subproperty.",
+      "help": "#getProperty",
+      "params": [
+        {
+          "name": "property",
+          "description": "The property name to get. Supports dot notation for subproperty access.",
+          "type": "string"
+        }
+      ],
+      "return": "any"
+    },
+    "setProperties": {
+      "description": "Performs a batch set of properties.",
+      "help": "#setProperties",
+      "params": [
+        {
+          "name": "properties",
+          "description": "An object containing the property and value pairs to set.",
+          "type": "object"
+        }
+      ],
+      "return": "void"
+    }
+  }
+}

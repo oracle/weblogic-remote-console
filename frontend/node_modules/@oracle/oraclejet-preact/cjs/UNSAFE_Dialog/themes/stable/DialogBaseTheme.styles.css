@@ -1,0 +1,23 @@
+.DialogBaseTheme_baseTheme__1t7et6q0 {
+  --boxShadow__9f8o6i0: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-box-shadow-lg);
+  --backgroundColor__9f8o6i1: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-surface-popup);
+  --borderColor__9f8o6i2: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-border-divider);
+  --borderRadius__9f8o6i3: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-border-radius-lg);
+  --titleFontSize__9f8o6i4: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-heading-xs-font-size);
+  --titleColor__9f8o6i5: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-primary);
+  --titleFontWeight__9f8o6i6: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-heading-xs-font-weight);
+  --titleLineHeight__9f8o6i7: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-heading-xs-line-height);
+  --backgroundImage__9f8o6i8: ;
+  --headerPaddingTop__9f8o6i9: calc(11 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --headerPaddingBottom__9f8o6ia: calc(3 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --headerPaddingHorizontal__9f8o6ib: calc(8 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --headerBackgroundColor__9f8o6ic: transparent;
+  --headerBorderBottomColor__9f8o6id: transparent;
+  --bodyPaddingTop__9f8o6ie: calc(0 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --bodyPaddingBottom__9f8o6if: calc(4 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --bodyPaddingHorizontal__9f8o6ig: calc(8 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --footerPaddingTop__9f8o6ih: calc(4 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --footerPaddingBottom__9f8o6ii: calc(8 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --footerPaddingHorizontal__9f8o6ij: calc(8 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --footerBorderColor__9f8o6ik: transparent;
+}

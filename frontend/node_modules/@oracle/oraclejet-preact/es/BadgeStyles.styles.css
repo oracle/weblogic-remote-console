@@ -1,0 +1,43 @@
+.BadgeStyles_base__r1bnwu0 {
+  background-color: var(--backgroundColor__88ut8n0);
+  color: var(--color__88ut8n1);
+  display: inline-block;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: var(--padding__88ut8n8);
+  padding-right: var(--padding__88ut8n8);
+  box-sizing: border-box;
+  border-top-left-radius: var(--borderRadius__88ut8n7);
+  border-top-right-radius: var(--borderRadius__88ut8n7);
+  border-bottom-right-radius: var(--borderRadius__88ut8n7);
+  border-bottom-left-radius: var(--borderRadius__88ut8n7);
+  height: var(--height__88ut8n6);
+  line-height: var(--height__88ut8n6);
+  max-width: 100%;
+  min-width: var(--height__88ut8n6);
+  font-size: var(--fontSize__88ut8n2);
+  font-weight: var(--fontWeight__88ut8n3);
+  font-stretch: var(--fontStretch__88ut8n4);
+  overflow-x: hidden;
+  overflow-y: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  text-align: center;
+  vertical-align: middle;
+}
+.BadgeStyles_base__r1bnwu0:focus-visible {
+  outline-style: dotted;
+  outline-offset: 1px;
+  outline-width: 1px;
+  outline-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-border-keyboard-focus);
+}
+.BadgeStyles_base__r1bnwu0::after {
+  content: "";
+  display: block;
+}
+.BadgeStyles_base__r1bnwu0 > * {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}

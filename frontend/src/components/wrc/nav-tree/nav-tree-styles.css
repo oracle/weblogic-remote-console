@@ -1,0 +1,59 @@
+/* This file is where css selectors for the component go.
+   There will be hard coded properties and properties controlled by variables, for example
+
+   nav-tree .nav-tree-value-text {
+   color: var(--nav-tree-value-text-color);
+   display: inline-block;
+	 }
+*/
+
+wrc-nav-tree:not(.oj-complete){
+  visibility: hidden;
+}
+
+.wrc-nav-tree {
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  box-sizing: border-box;
+  flex: 1 1 auto;
+}
+
+/* Align oj-navigation-list tokens to body text (scoped so headers/static content aren't affected) */
+.wrc-nav-tree oj-navigation-list {
+  --oj-navigation-list-font-size: var(--oj-typography-body-md-font-size);
+  --oj-navigation-list-sliding-heading-font-size: var(--oj-typography-body-md-font-size);
+  --oj-navigation-list-sliding-heading-font-weight: 400;
+  --oj-navigation-list-item-label-color: var(--oj-core-text-color-primary);
+  --oj-navigation-list-item-label-color-hover: var(--oj-core-text-color-primary);
+  --oj-navigation-list-item-label-color-selected: var(--oj-core-text-color-primary);
+}
+
+/* Use a consistent, variable-controlled background across the nav-tree area */
+.wrc-nav-tree,
+.wrc-nav-tree oj-accordion,
+.wrc-nav-tree oj-c-collapsible,
+.wrc-nav-tree .oj-collapsible-header,
+.wrc-nav-tree .oj-collapsible-content,
+.wrc-nav-tree oj-navigation-list {
+  background-color: var(--wrc-bg-body);
+}
+
+/* Keep nav item label typography consistent and matched to body text (scope to oj-navigation-list only) */
+.wrc-nav-tree oj-navigation-list a.oj-navigationlist-item-content > .oj-navigationlist-item-label,
+.wrc-nav-tree oj-navigation-list .oj-navigationlist-item-content,
+.wrc-nav-tree oj-navigation-list .oj-navigationlist-item-label {
+  font-family: var(--oj-core-font-family);
+  font-size: var(--oj-typography-body-md-font-size) !important;
+  line-height: var(--oj-typography-body-md-line-height) !important;
+  font-weight: 400 !important;
+  color: var(--oj-core-text-color-primary) !important;
+}
+
+/* Freeze weight across states to avoid temporary heavier rendering (scope to oj-navigation-list only) */
+.wrc-nav-tree oj-navigation-list .oj-selected .oj-navigationlist-item-label,
+.wrc-nav-tree oj-navigation-list .oj-hover .oj-navigationlist-item-label,
+.wrc-nav-tree oj-navigation-list .oj-focus .oj-navigationlist-item-label,
+.wrc-nav-tree oj-navigation-list .oj-active .oj-navigationlist-item-label {
+  font-weight: 400 !important;
+}

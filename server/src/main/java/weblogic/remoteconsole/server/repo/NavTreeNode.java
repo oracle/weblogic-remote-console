@@ -1,4 +1,4 @@
-// Copyright (c) 2021, 2024, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2025, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.repo;
@@ -31,6 +31,7 @@ public class NavTreeNode {
   private boolean selectable;
   private Type type;
   private BeanTreePath resourceData;
+  private NavTreePath navTreePath;
   private List<NavTreeNode> contents = new ArrayList<>();
 
   // The name of the nav tree node (used to identify the node when
@@ -99,6 +100,15 @@ public class NavTreeNode {
 
   public void setResourceData(BeanTreePath val) {
     resourceData = val;
+  }
+
+  // The navigation tree path for this node
+  public NavTreePath getNavTreePath() {
+    return navTreePath;
+  }
+
+  public void setNavTreePath(NavTreePath val) {
+    navTreePath = val;
   }
 
   // The nodes this node directly parents.

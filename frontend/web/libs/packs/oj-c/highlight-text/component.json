@@ -1,0 +1,114 @@
+{
+  "name": "highlight-text",
+  "version": "19.0.1",
+  "jetVersion": "^19.0.1",
+  "pack": "oj-c",
+  "type": "composite",
+  "dependencyScope": "runtime",
+  "license": "https://opensource.org/licenses/UPL",
+  "implements": [
+    "CHighlightTextElement"
+  ],
+  "displayName": "Highlight Text",
+  "description": "A Highlight Text renders text with highlighting applied.",
+  "help": "oj-c.HighlightText.html",
+  "main": "oj-c/highlight-text",
+  "extension": {
+    "catalog": {
+      "category": "Forms"
+    },
+    "vbdt": {
+      "defaultColumns": 6,
+      "minColumns": 2,
+      "module": "oj-c/highlight-text"
+    },
+    "oracle": {
+      "icon": "oj-ux-ico-background-color"
+    },
+    "webelement": {
+      "package": "@oracle/oraclejet-core-pack",
+      "version": "19.0.1",
+      "docUrl": "https://www.oracle.com/webfolder/technetwork/jet/cpwdtsdoc/classes/HighlightTextWebElement.html",
+      "export": "findHighlightText",
+      "main": "@oracle/oraclejet-core-pack/webdriver"
+    }
+  },
+  "propertyLayout": [
+    {
+      "propertyGroup": "common",
+      "items": [
+        "text",
+        "matchText"
+      ]
+    }
+  ],
+  "since": "15.0.0",
+  "status": [
+    {
+      "type": "supersedes",
+      "since": "16.0.0",
+      "value": [
+        "oj-highlight-text"
+      ]
+    }
+  ],
+  "properties": {
+    "matchText": {
+      "type": "string",
+      "description": "The text string to match.",
+      "displayName": "Match Text",
+      "help": "#matchText",
+      "translatable": true
+    },
+    "text": {
+      "type": "string",
+      "description": "The text string to apply highlighting to.",
+      "displayName": "Text",
+      "help": "#text",
+      "translatable": true
+    }
+  },
+  "methods": {
+    "setProperty": {
+      "description": "Sets a property or a single subproperty for complex properties and notifies the component of the change, triggering a corresponding event.",
+      "help": "#setProperty",
+      "params": [
+        {
+          "name": "property",
+          "description": "The property name to set. Supports dot notation for subproperty access.",
+          "type": "string"
+        },
+        {
+          "name": "value",
+          "description": "The new value to set the property to.",
+          "type": "any"
+        }
+      ],
+      "return": "void"
+    },
+    "getProperty": {
+      "description": "Retrieves the value of a property or a subproperty.",
+      "help": "#getProperty",
+      "params": [
+        {
+          "name": "property",
+          "description": "The property name to get. Supports dot notation for subproperty access.",
+          "type": "string"
+        }
+      ],
+      "return": "any"
+    },
+    "setProperties": {
+      "description": "Performs a batch set of properties.",
+      "help": "#setProperties",
+      "params": [
+        {
+          "name": "properties",
+          "description": "An object containing the property and value pairs to set.",
+          "type": "object"
+        }
+      ],
+      "return": "void"
+    }
+  }
+}

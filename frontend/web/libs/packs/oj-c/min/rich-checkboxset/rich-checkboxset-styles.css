@@ -1,0 +1,18 @@
+oj-c-rich-checkboxset:not(.oj-complete) {
+  visibility: hidden;
+}
+
+oj-c-rich-checkboxset {
+  display: inline-block;
+  box-sizing: border-box;
+  max-width: 100%;
+  width: 100%;
+}
+
+oj-c-rich-checkboxset.in-form-layout {
+  display: block;
+}
+
+oj-c-rich-checkboxset[hidden] {
+  display: none;
+}

@@ -1,0 +1,18 @@
+oj-c-rich-radioset:not(.oj-complete) {
+  visibility: hidden;
+}
+
+oj-c-rich-radioset {
+  display: inline-block;
+  box-sizing: border-box;
+  max-width: 100%;
+  width: 100%;
+}
+
+oj-c-rich-radioset.in-form-layout {
+  display: block;
+}
+
+oj-c-rich-radioset[hidden] {
+  display: none;
+}

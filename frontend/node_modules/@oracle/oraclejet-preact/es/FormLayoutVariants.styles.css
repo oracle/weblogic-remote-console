@@ -1,0 +1,66 @@
+.FormLayoutVariants_multiVariantStyles_compound_0__18itx629 {
+  --layoutLocalVars_actualColumnCount__5qy13b2: 1;
+  grid-template-columns: repeat(1, minmax(0, 100%));
+}
+.FormLayoutVariants_multiVariantStyles_compound_1__18itx62a {
+  -moz-column-count: 1;
+       column-count: 1;
+}
+.FormLayoutVariants_multiVariantStyles_compound_2__18itx62b {
+  --layoutLocalVars_actualColumnCount__5qy13b2: var(--layoutLocalVars_maxColumnCount__5qy13b0);
+  grid-template-columns: repeat(var(--layoutLocalVars_maxColumnCount__5qy13b0), minmax(0, 1fr));
+}
+.FormLayoutVariants_multiVariantStyles_compound_3__18itx62c {
+  -moz-column-count: var(--layoutLocalVars_maxColumnCount__5qy13b0);
+       column-count: var(--layoutLocalVars_maxColumnCount__5qy13b0);
+}
+@container (min-width: 576px) {
+  .FormLayoutVariants_multiVariantStyles_compound_0__18itx629 {
+    --layoutLocalVars_actualColumnCount__5qy13b2: min(2, var(--layoutLocalVars_maxColumnCount__5qy13b0));
+    grid-template-columns: repeat(min(2, var(--layoutLocalVars_maxColumnCount__5qy13b0)), minmax(0, 100%));
+  }
+  .FormLayoutVariants_multiVariantStyles_compound_1__18itx62a {
+    -moz-column-count: min(2, var(--layoutLocalVars_maxColumnCount__5qy13b0));
+         column-count: min(2, var(--layoutLocalVars_maxColumnCount__5qy13b0));
+  }
+}
+@container (min-width: 864px) {
+  .FormLayoutVariants_multiVariantStyles_compound_0__18itx629 {
+    --layoutLocalVars_actualColumnCount__5qy13b2: min(3, var(--layoutLocalVars_maxColumnCount__5qy13b0));
+    grid-template-columns: repeat(min(3, var(--layoutLocalVars_maxColumnCount__5qy13b0)), minmax(0, 100%));
+  }
+  .FormLayoutVariants_multiVariantStyles_compound_1__18itx62a {
+    -moz-column-count: min(3, var(--layoutLocalVars_maxColumnCount__5qy13b0));
+         column-count: min(3, var(--layoutLocalVars_maxColumnCount__5qy13b0));
+  }
+}
+@container (min-width: 1152px) {
+  .FormLayoutVariants_multiVariantStyles_compound_0__18itx629 {
+    --layoutLocalVars_actualColumnCount__5qy13b2: min(4, var(--layoutLocalVars_maxColumnCount__5qy13b0));
+    grid-template-columns: repeat(min(4, var(--layoutLocalVars_maxColumnCount__5qy13b0)), minmax(0, 100%));
+  }
+  .FormLayoutVariants_multiVariantStyles_compound_1__18itx62a {
+    -moz-column-count: min(4, var(--layoutLocalVars_maxColumnCount__5qy13b0));
+         column-count: min(4, var(--layoutLocalVars_maxColumnCount__5qy13b0));
+  }
+}
+@container (min-width: 1440px) {
+  .FormLayoutVariants_multiVariantStyles_compound_0__18itx629 {
+    --layoutLocalVars_actualColumnCount__5qy13b2: min(5, var(--layoutLocalVars_maxColumnCount__5qy13b0));
+    grid-template-columns: repeat(min(5, var(--layoutLocalVars_maxColumnCount__5qy13b0)), minmax(0, 100%));
+  }
+  .FormLayoutVariants_multiVariantStyles_compound_1__18itx62a {
+    -moz-column-count: min(5, var(--layoutLocalVars_maxColumnCount__5qy13b0));
+         column-count: min(5, var(--layoutLocalVars_maxColumnCount__5qy13b0));
+  }
+}
+@container (min-width: 1728px) {
+  .FormLayoutVariants_multiVariantStyles_compound_0__18itx629 {
+    --layoutLocalVars_actualColumnCount__5qy13b2: min(6, var(--layoutLocalVars_maxColumnCount__5qy13b0));
+    grid-template-columns: repeat(min(6, var(--layoutLocalVars_maxColumnCount__5qy13b0)), minmax(0, 100%));
+  }
+  .FormLayoutVariants_multiVariantStyles_compound_1__18itx62a {
+    -moz-column-count: min(6, var(--layoutLocalVars_maxColumnCount__5qy13b0));
+         column-count: min(6, var(--layoutLocalVars_maxColumnCount__5qy13b0));
+  }
+}

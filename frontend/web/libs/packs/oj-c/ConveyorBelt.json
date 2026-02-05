@@ -1,0 +1,436 @@
+[
+  {
+    "id": "oj-c.ConveyorBelt",
+    "name": "ConveyorBelt",
+    "memberof": "oj-c",
+    "kind": "class",
+    "meta": {
+      "filename": "conveyor-belt.tsx",
+      "path": "web/components/oj-c/conveyor-belt"
+    },
+    "ojcomponent": true,
+    "isvcomponent": true,
+    "since": "17.0.0",
+    "longname": "oj-c.ConveyorBelt",
+    "pack": "oj-c",
+    "classdesc": "<p>Container element that manages overflow for its child\nelements and allows scrolling among them.\n\n\n<pre class=\"prettyprint\"><code>\n&lt;oj-c-conveyor-belt items=\"[[dataArray]]\">\n   &lt;template slot='itemTemplate'>\n       &lt;oj-c-button label=\"[[$current.data]]\"></oj-c-button>\n    &lt;/template>\n&lt;/oj-c-conveyor-belt>\n</code></pre>\n\n<p>Use ConveyorBelt when you want to:\n<ul>\n<li>handle overflow without showing a scrollbar</li>\n<li>keep all items accessible via tabbing and readable by a screen reader</li>\n</ul>",
+    "scope": "static",
+    "tagWithoutBrackets": "oj-c-conveyor-belt",
+    "tagWithBrackets": "<oj-c-conveyor-belt>",
+    "domInterface": "CConveyorBeltElement",
+    "ojPageTitle": "&lt;oj-c-conveyor-belt>",
+    "camelCaseName": "ConveyorBelt",
+    "ojPageTitlePrefix": "Element: ",
+    "ojtsvcomponent": true,
+    "tstype": {
+      "target": "Type",
+      "value": "interface CConveyorBeltElement<K extends string | number = string | number,D extends oj-c.ConveyorBelt.ConveyorBeltDataItem = ConveyorBeltDataItem> extends JetElement<ConveyorBeltElementSettableProperties<K,D>>"
+    },
+    "ojsignature": [
+      {
+        "target": "Type",
+        "value": "interface CConveyorBeltElement<K extends string | number = string | number,D extends oj-c.ConveyorBelt.ConveyorBeltDataItem = ConveyorBeltDataItem> extends JetElement<ConveyorBeltElementSettableProperties<K,D>>"
+      }
+    ],
+    "tsdeprecated": [
+      {
+        "type": "supersedes",
+        "since": "17.0.0",
+        "value": [
+          "oj-conveyor-belt"
+        ]
+      }
+    ],
+    "ojmodule": "conveyor-belt"
+  },
+  {
+    "id": "oj-c.ConveyorBelt#scrollPosition",
+    "name": "scrollPosition",
+    "memberof": "oj-c.ConveyorBelt",
+    "meta": {
+      "filename": "conveyor-belt.tsx",
+      "path": "web/components/oj-c/conveyor-belt"
+    },
+    "kind": "member",
+    "longname": "oj-c.ConveyorBelt#scrollPosition",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "number"
+      ]
+    },
+    "optional": true,
+    "ojwriteback": true,
+    "description": "<p>Gets or sets the number of pixels that an element's content is scrolled from its initial position.\n\n<p>The default value of this property is 0.\n\n<p> There is no difference between LTR/RTL value assignment.\nIn both LTR and RTL values changes from 0 and max scroll position >=0  if we scroll to the end.\nIf we scroll to the beginning then the values changes from max scroll position >=0 to min scroll position = 0\nWhen the value exceeds max/min the value is constrained to the max/min scroll position accordingly."
+  },
+  {
+    "id": "oj-c.ConveyorBelt#arrowVisibility",
+    "name": "arrowVisibility",
+    "memberof": "oj-c.ConveyorBelt",
+    "meta": {
+      "filename": "conveyor-belt.tsx",
+      "path": "web/components/oj-c/conveyor-belt"
+    },
+    "kind": "member",
+    "longname": "oj-c.ConveyorBelt#arrowVisibility",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "\"auto\"",
+        "\"hidden\"",
+        "\"visible\""
+      ]
+    },
+    "optional": true,
+    "description": "<p>Indicates whether overflow content arrows are visible or hidden.\n\n<p>The default value of this property varies by theme. If the default value is 'auto', then the behavior varies by device."
+  },
+  {
+    "id": "oj-c.ConveyorBelt#items",
+    "name": "items",
+    "memberof": "oj-c.ConveyorBelt",
+    "meta": {
+      "filename": "conveyor-belt.tsx",
+      "path": "web/components/oj-c/conveyor-belt"
+    },
+    "kind": "member",
+    "longname": "oj-c.ConveyorBelt#items",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "Array<object>|DataProvider"
+      ]
+    },
+    "optional": true,
+    "description": "An array of data items or a data provider that returns the items for the ConveyorBelt.",
+    "tstype": [
+      {
+        "target": "Type",
+        "value": "Array<oj-c.ConveyorBelt.ConveyorBeltArrayDataItem<K, D>>|DataProvider<K, D>",
+        "jsdocOverride": true,
+        "module": {
+          "DataProvider": "ojdataprovider"
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.ConveyorBelt#orientation",
+    "name": "orientation",
+    "memberof": "oj-c.ConveyorBelt",
+    "meta": {
+      "filename": "conveyor-belt.tsx",
+      "path": "web/components/oj-c/conveyor-belt"
+    },
+    "kind": "member",
+    "longname": "oj-c.ConveyorBelt#orientation",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "\"horizontal\"",
+        "\"vertical\""
+      ]
+    },
+    "optional": true,
+    "description": "Specify the orientation of the conveyorBelt.\n\"horizontal\" Orient the conveyorBelt horizontally.\n\"vertical\" Orient the conveyorBelt vertically.",
+    "defaultvalue": "\"horizontal\""
+  },
+  {
+    "id": "oj-c.ConveyorBelt#scrollElementIntoView",
+    "name": "scrollElementIntoView",
+    "memberof": "oj-c.ConveyorBelt",
+    "meta": {
+      "filename": "conveyor-belt.tsx",
+      "path": "web/components/oj-c/conveyor-belt"
+    },
+    "kind": "function",
+    "longname": "oj-c.ConveyorBelt#scrollElementIntoView",
+    "scope": "instance",
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "void"
+          ]
+        }
+      }
+    ],
+    "description": "Scrolls element into view.",
+    "params": [
+      {
+        "name": "element",
+        "type": {
+          "names": [
+            "HTMLElement"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.ConveyorBelt#setProperty",
+    "name": "setProperty",
+    "memberof": "oj-c.ConveyorBelt",
+    "meta": {
+      "filename": "conveyor-belt.tsx",
+      "path": "web/components/oj-c/conveyor-belt"
+    },
+    "kind": "function",
+    "longname": "oj-c.ConveyorBelt#setProperty",
+    "scope": "instance",
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "void"
+          ]
+        }
+      }
+    ],
+    "description": "Sets a property or a single subproperty for complex properties and notifies the component of the change, triggering a corresponding event.",
+    "params": [
+      {
+        "name": "property",
+        "description": "The property name to set. Supports dot notation for subproperty access.",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "value",
+        "description": "The new value to set the property to.",
+        "type": {
+          "names": [
+            "any"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.ConveyorBelt#getProperty",
+    "name": "getProperty",
+    "memberof": "oj-c.ConveyorBelt",
+    "meta": {
+      "filename": "conveyor-belt.tsx",
+      "path": "web/components/oj-c/conveyor-belt"
+    },
+    "kind": "function",
+    "longname": "oj-c.ConveyorBelt#getProperty",
+    "scope": "instance",
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "any"
+          ]
+        }
+      }
+    ],
+    "description": "Retrieves the value of a property or a subproperty.",
+    "params": [
+      {
+        "name": "property",
+        "description": "The property name to get. Supports dot notation for subproperty access.",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.ConveyorBelt#setProperties",
+    "name": "setProperties",
+    "memberof": "oj-c.ConveyorBelt",
+    "meta": {
+      "filename": "conveyor-belt.tsx",
+      "path": "web/components/oj-c/conveyor-belt"
+    },
+    "kind": "function",
+    "longname": "oj-c.ConveyorBelt#setProperties",
+    "scope": "instance",
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "void"
+          ]
+        }
+      }
+    ],
+    "description": "Performs a batch set of properties.",
+    "params": [
+      {
+        "name": "properties",
+        "description": "An object containing the property and value pairs to set.",
+        "type": {
+          "names": [
+            "object"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.ConveyorBelt#Default",
+    "name": "Default",
+    "memberof": "oj-c.ConveyorBelt",
+    "meta": {
+      "filename": "conveyor-belt.tsx",
+      "path": "web/components/oj-c/conveyor-belt"
+    },
+    "kind": "member",
+    "longname": "oj-c.ConveyorBelt#Default",
+    "scope": "instance",
+    "description": "The default slot is the content of the Conveyor Belt.",
+    "ojchild": true,
+    "ojslot": false
+  },
+  {
+    "id": "oj-c.ConveyorBelt#itemTemplate",
+    "name": "itemTemplate",
+    "memberof": "oj-c.ConveyorBelt",
+    "meta": {
+      "filename": "conveyor-belt.tsx",
+      "path": "web/components/oj-c/conveyor-belt"
+    },
+    "kind": "member",
+    "longname": "oj-c.ConveyorBelt#itemTemplate",
+    "scope": "instance",
+    "description": "<p>The <code class=\"prettyprint\">itemTemplate</code> slot is used to specify the template for rendering each item in the Conveyor Belt. The slot content must be a &lt;template> element.\n<p>When the template is executed for each item, it will have access to the binding context containing the following properties:</p>\n<ul>\n  <li>$current - an object that contains information for the current item.</li>\n</ul>",
+    "ojchild": false,
+    "ojslot": true,
+    "properties": [
+      {
+        "name": "data",
+        "description": "The data of the item.  Note this is made available primarily to ease migration.\nApplications should get the data from the item property instead.",
+        "optional": false,
+        "type": {
+          "names": [
+            "any"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "D",
+            "jsdocOverride": true,
+            "for": "data"
+          }
+        ]
+      },
+      {
+        "name": "item",
+        "description": "Contains the data and metadata of the item.",
+        "optional": false,
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "Item<K, D>",
+            "jsdocOverride": true,
+            "for": "item",
+            "module": {
+              "Item": "ojdataprovider"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "oj-c.ConveyorBelt.ConveyorBeltDataItem",
+    "name": "ConveyorBeltDataItem",
+    "kind": "typedef",
+    "memberof": "oj-c.ConveyorBelt",
+    "meta": {
+      "filename": "conveyor-belt.tsx",
+      "path": "web/components/oj-c/conveyor-belt"
+    },
+    "longname": "oj-c.ConveyorBelt.ConveyorBeltDataItem",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "scope": "static",
+    "description": "",
+    "properties": [
+      {
+        "name": "label",
+        "optional": true,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.ConveyorBelt.ConveyorBeltArrayDataItem",
+    "name": "ConveyorBeltArrayDataItem",
+    "kind": "typedef",
+    "memberof": "oj-c.ConveyorBelt",
+    "meta": {
+      "filename": "conveyor-belt.tsx",
+      "path": "web/components/oj-c/conveyor-belt"
+    },
+    "longname": "oj-c.ConveyorBelt.ConveyorBeltArrayDataItem",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "scope": "static",
+    "description": "",
+    "tsgenerictype": {
+      "target": "Type",
+      "value": "<K,D>",
+      "for": "genericTypeParameters"
+    },
+    "properties": [
+      {
+        "name": "data",
+        "optional": false,
+        "type": {
+          "names": [
+            "any"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "D",
+            "jsdocOverride": true,
+            "for": "data"
+          }
+        ]
+      },
+      {
+        "name": "key",
+        "optional": false,
+        "type": {
+          "names": [
+            "any"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "K",
+            "jsdocOverride": true,
+            "for": "key"
+          }
+        ]
+      }
+    ]
+  }
+]

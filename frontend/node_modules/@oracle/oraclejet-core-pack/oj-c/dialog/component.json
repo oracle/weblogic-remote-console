@@ -1,0 +1,642 @@
+{
+  "name": "dialog",
+  "version": "19.0.1",
+  "jetVersion": "^19.0.1",
+  "pack": "oj-c",
+  "type": "composite",
+  "dependencyScope": "runtime",
+  "license": "https://opensource.org/licenses/UPL",
+  "implements": [
+    "CDialogElement"
+  ],
+  "description": "A Dialog is a floating window that typically contains a header, content and footer area. A Dialog is typically modal and centered in viewport.",
+  "displayName": "Dialog",
+  "help": "oj-c.Dialog.html",
+  "main": "oj-c/dialog",
+  "status": [
+    {
+      "type": "supersedes",
+      "since": "19.0.0",
+      "value": [
+        "oj-dialog"
+      ]
+    }
+  ],
+  "extension": {
+    "catalog": {
+      "category": "Layout & Nav"
+    },
+    "vbdt": {
+      "module": "oj-c/dialog"
+    },
+    "oracle": {
+      "icon": "oj-ux-ico-dialog",
+      "uxSpecs": [
+        "dialog"
+      ]
+    },
+    "webelement": {
+      "package": "@oracle/oraclejet-core-pack",
+      "version": "19.0.1",
+      "docUrl": "https://www.oracle.com/webfolder/technetwork/jet/cpwdtsdoc/classes/DialogWebElement.html",
+      "export": "findDialog",
+      "main": "@oracle/oraclejet-core-pack/webdriver"
+    }
+  },
+  "since": "18.0.0",
+  "slots": {
+    "header": {
+      "description": "The content node to be shown within the Dialog header. If a header slot is not specified by the user, the dialog-title attribute will be used instead."
+    },
+    "body": {
+      "description": "The content node to be shown within the Dialog body."
+    },
+    "footer": {
+      "description": "The content node to be shown within the Dialog footer."
+    }
+  },
+  "properties": {
+    "cancelBehavior": {
+      "type": "string",
+      "description": "Specifies the cancel behavior of the Dialog. Note that the cancelBehavior applies to both automatic and user-defined headers.",
+      "displayName": "Cancel Behavior",
+      "help": "#cancelBehavior",
+      "propertyEditorValues": {
+        "icon": {
+          "description": "A close icon will automatically be created. The dialog will close when it has focus and user presses the escape (ESC) key.",
+          "displayName": "icon"
+        },
+        "escape": {
+          "description": "The dialog will close when it has focus and user presses the escape (ESC) key. A close icon will not be created.",
+          "displayName": "escape"
+        },
+        "none": {
+          "description": "A close icon will not be created. No actions will be associated with the escape key.",
+          "displayName": "none"
+        }
+      },
+      "enumValues": [
+        "none",
+        "icon",
+        "escape"
+      ],
+      "value": "none"
+    },
+    "dialogTitle": {
+      "type": "string",
+      "description": "Specifies title if header slot is not defined (custom header).",
+      "displayName": "Dialog Title",
+      "help": "#dialogTitle"
+    },
+    "dragAffordance": {
+      "type": "string",
+      "description": "Specifies whether the Dialog is draggable.",
+      "displayName": "Drag Affordance",
+      "help": "#dragAffordance",
+      "propertyEditorValues": {
+        "none": {
+          "description": "The dialog will not be draggable.",
+          "displayName": "none"
+        },
+        "header": {
+          "description": "The dialog will be draggable by the header.",
+          "displayName": "header"
+        }
+      },
+      "enumValues": [
+        "none",
+        "header"
+      ],
+      "value": "none"
+    },
+    "headerDecoration": {
+      "type": "string",
+      "description": "Specifies whether decorative stripe at the top is present.",
+      "displayName": "Header Decoration",
+      "help": "#headerDecoration",
+      "propertyEditorValues": {
+        "on": {
+          "description": "Renders a textured strip at the top of the dialog header in the Redwood theme.",
+          "displayName": "on"
+        },
+        "off": {
+          "description": "No decoration is rendered.",
+          "displayName": "off"
+        }
+      },
+      "enumValues": [
+        "off",
+        "on"
+      ],
+      "value": "on"
+    },
+    "launcher": {
+      "type": "string|Element",
+      "description": "Specifies Dialog's launcher. After Dialog closes, it returns focus to the launcher.",
+      "displayName": "Launcher",
+      "help": "#launcher"
+    },
+    "modality": {
+      "type": "string",
+      "description": "Specifies modality of the Dialog.",
+      "displayName": "Modality",
+      "help": "#modality",
+      "propertyEditorValues": {
+        "modal": {
+          "description": "The dialog is modal. Interactions with other page elements are disabled. Modal dialogs overlay other page elements.",
+          "displayName": "on"
+        },
+        "modeless": {
+          "description": "Defines a modeless dialog.",
+          "displayName": "off"
+        }
+      },
+      "enumValues": [
+        "modal",
+        "modeless"
+      ],
+      "value": "modal"
+    },
+    "opened": {
+      "type": "boolean",
+      "description": "Specifies whether the Dialog is open.",
+      "displayName": "Opened",
+      "help": "#opened",
+      "extension": {
+        "webelement": {
+          "exceptionStatus": [
+            {
+              "type": "getterOnly"
+            }
+          ]
+        }
+      },
+      "writeback": true,
+      "value": false
+    },
+    "resizeBehavior": {
+      "type": "string",
+      "description": "Specifies whether the Dialog is resizable.",
+      "displayName": "Resize Behavior",
+      "help": "#resizeBehavior",
+      "propertyEditorValues": {
+        "none": {
+          "description": "The dialog will not be interactively resizable.",
+          "displayName": "none"
+        },
+        "resizable": {
+          "description": "\tThe dialog will be interactively resizable.",
+          "displayName": "resizable"
+        }
+      },
+      "enumValues": [
+        "none",
+        "resizable"
+      ],
+      "value": "none"
+    },
+    "anchor": {
+      "type": "string|Element|object",
+      "description": "Specifies Dialog's anchor. Dialog is placed relative to its anchor. If not specified, it is placed relative to window.",
+      "displayName": "Anchor",
+      "help": "#anchor"
+    },
+    "placement": {
+      "type": "string",
+      "description": "Specifies the location the dialog will appear relative to another element. If not specified, the default dialog position is \"center\" on desktop and \"bottom-start\" on phone.",
+      "displayName": "Placement",
+      "help": "#placement",
+      "enumValues": [
+        "center",
+        "end",
+        "start",
+        "top",
+        "bottom",
+        "top-start",
+        "top-end",
+        "start-top",
+        "start-bottom",
+        "bottom-start",
+        "bottom-end",
+        "end-top",
+        "end-bottom"
+      ]
+    },
+    "offset": {
+      "type": "number|object",
+      "description": "Specifies displacement of the Dialog from the anchor element placement along the specified axes. The offset object consists of mainAxis and crossAxis properties. The direction in which these propertie are applied depends on the current value of the position property. If a number is used, it represents the main axis. The <code>mainAxis</code> property represents the distance between the Popup and the anchor. The <code>crossAxis</code> property represents the deviation in the opposite axis to the main axis - the skidding between the Popup and the anchor.",
+      "displayName": "Offset",
+      "help": "#offset"
+    },
+    "width": {
+      "type": "number|string",
+      "description": "Specifies width of the Dialog.",
+      "displayName": "Width",
+      "help": "#width"
+    },
+    "minWidth": {
+      "type": "number|string",
+      "description": "Specifies minWidth of the Dialog.",
+      "displayName": "Min Width",
+      "help": "#minWidth"
+    },
+    "maxWidth": {
+      "type": "number|string",
+      "description": "Specifies maxWidth of the Dialog.",
+      "displayName": "Max Width",
+      "help": "#maxWidth"
+    },
+    "height": {
+      "type": "number|string",
+      "description": "Specifies height of the Dialog.",
+      "displayName": "Height",
+      "help": "#height"
+    },
+    "minHeight": {
+      "type": "number|string",
+      "description": "Specifies minHeight of the Dialog.",
+      "displayName": "Min Height",
+      "help": "#minHeight"
+    },
+    "maxHeight": {
+      "type": "number|string",
+      "description": "Specifies maxHeight of the Dialog.",
+      "displayName": "Max Height",
+      "help": "#maxHeight"
+    }
+  },
+  "events": {
+    "ojOpen": {
+      "description": "Triggered immediately after the Dialog opens.",
+      "displayName": "ojOpen",
+      "help": "#event:open"
+    },
+    "ojBeforeClose": {
+      "cancelable": true,
+      "description": "Triggered immediately before the Dialog closes. Call <code class=\"prettyprint\">event.preventDefault()</code> in the event listener to veto the event synchronously, which prevents the Dialog from closing. Call <code class=\"prettyprint\">event.detail.accept(Promise.reject());</code> in the event listener to veto the event asynchronously, which prevents the Dialog from closing.",
+      "displayName": "ojBeforeClose",
+      "help": "#event:beforeClose",
+      "detail": {
+        "accept": {
+          "description": "This method can be called with an application-created Promise to cancel this event asynchronously.  The Promise should be resolved or rejected to accept or cancel the event, respectively.",
+          "type": "function"
+        },
+        "reason": {
+          "type": "string",
+          "description": "reason for closing the dialog",
+          "enumValues": [
+            "icon",
+            "escapeKey"
+          ]
+        }
+      }
+    },
+    "ojClose": {
+      "description": "Triggered immediately after the Dialog closes.",
+      "displayName": "ojClose",
+      "help": "#event:close"
+    },
+    "ojFocus": {
+      "description": "Triggered immediately after the Dialog receives focus.",
+      "displayName": "ojFocus",
+      "help": "#event:onOjFocus"
+    },
+    "ojDragStart": {
+      "description": "Triggered immediately before the Dialog moves.",
+      "displayName": "ojDragStart",
+      "help": "#event:onOjDragStart",
+      "detail": {
+        "originalPosition": {
+          "type": "object",
+          "description": "original position of the dragged element",
+          "properties": {
+            "x": {
+              "type": "number",
+              "description": "x coordinate"
+            },
+            "y": {
+              "type": "number",
+              "description": "y coordinate"
+            }
+          }
+        },
+        "position": {
+          "type": "object",
+          "description": "current position of the dragged element",
+          "properties": {
+            "x": {
+              "type": "number",
+              "description": "x coordinate"
+            },
+            "y": {
+              "type": "number",
+              "description": "y coordinate"
+            }
+          }
+        }
+      }
+    },
+    "ojDragMove": {
+      "description": "Triggered when the Dialog moves.",
+      "displayName": "ojDragMove",
+      "help": "#event:onOjDragMove",
+      "detail": {
+        "originalPosition": {
+          "type": "object",
+          "description": "original position of the dragged element",
+          "properties": {
+            "x": {
+              "type": "number",
+              "description": "x coordinate"
+            },
+            "y": {
+              "type": "number",
+              "description": "y coordinate"
+            }
+          }
+        },
+        "position": {
+          "type": "object",
+          "description": "current position of the dragged element",
+          "properties": {
+            "x": {
+              "type": "number",
+              "description": "x coordinate"
+            },
+            "y": {
+              "type": "number",
+              "description": "y coordinate"
+            }
+          }
+        }
+      }
+    },
+    "ojDragEnd": {
+      "description": "Triggered immediately after the Dialog stops moving.",
+      "displayName": "ojDragEnd",
+      "help": "#event:onOjDragEnd",
+      "detail": {
+        "originalPosition": {
+          "type": "object",
+          "description": "original position of the dragged element",
+          "properties": {
+            "x": {
+              "type": "number",
+              "description": "x coordinate"
+            },
+            "y": {
+              "type": "number",
+              "description": "y coordinate"
+            }
+          }
+        },
+        "position": {
+          "type": "object",
+          "description": "current position of the dragged element",
+          "properties": {
+            "x": {
+              "type": "number",
+              "description": "x coordinate"
+            },
+            "y": {
+              "type": "number",
+              "description": "y coordinate"
+            }
+          }
+        }
+      }
+    },
+    "ojResizeStart": {
+      "description": "Triggered immediately before the Dialog resizes.",
+      "displayName": "ojResizeStart",
+      "help": "#event:onOjResizeStart",
+      "detail": {
+        "originalPosition": {
+          "type": "object",
+          "description": "original position of the resized element",
+          "properties": {
+            "x": {
+              "type": "number",
+              "description": "x coordinate"
+            },
+            "y": {
+              "type": "number",
+              "description": "y coordinate"
+            }
+          }
+        },
+        "originalSize": {
+          "type": "object",
+          "description": "original dimensions of the resized element",
+          "properties": {
+            "width": {
+              "type": "number",
+              "description": "element's width"
+            },
+            "height": {
+              "type": "number",
+              "description": "element's height"
+            }
+          }
+        },
+        "position": {
+          "type": "object",
+          "description": "current position of the resized element",
+          "properties": {
+            "x": {
+              "type": "number",
+              "description": "x coordinate"
+            },
+            "y": {
+              "type": "number",
+              "description": "y coordinate"
+            }
+          }
+        },
+        "size": {
+          "type": "object",
+          "description": "current dimensions of the resized element",
+          "properties": {
+            "width": {
+              "type": "number",
+              "description": "element's width"
+            },
+            "height": {
+              "type": "number",
+              "description": "element's height"
+            }
+          }
+        }
+      }
+    },
+    "ojResize": {
+      "description": "Triggered when the Dialog resizes.",
+      "displayName": "ojResize",
+      "help": "#event:onOjResize",
+      "detail": {
+        "originalPosition": {
+          "type": "object",
+          "description": "original position of the resized element",
+          "properties": {
+            "x": {
+              "type": "number",
+              "description": "x coordinate"
+            },
+            "y": {
+              "type": "number",
+              "description": "y coordinate"
+            }
+          }
+        },
+        "originalSize": {
+          "type": "object",
+          "description": "original dimensions of the resized element",
+          "properties": {
+            "width": {
+              "type": "number",
+              "description": "element's width"
+            },
+            "height": {
+              "type": "number",
+              "description": "element's height"
+            }
+          }
+        },
+        "position": {
+          "type": "object",
+          "description": "current position of the resized element",
+          "properties": {
+            "x": {
+              "type": "number",
+              "description": "x coordinate"
+            },
+            "y": {
+              "type": "number",
+              "description": "y coordinate"
+            }
+          }
+        },
+        "size": {
+          "type": "object",
+          "description": "current dimensions of the resized element",
+          "properties": {
+            "width": {
+              "type": "number",
+              "description": "element's width"
+            },
+            "height": {
+              "type": "number",
+              "description": "element's height"
+            }
+          }
+        }
+      }
+    },
+    "ojResizeEnd": {
+      "description": "Triggered immediately after the Dialog stops resizing.",
+      "displayName": "ojResizeEnd",
+      "help": "#event:onOjResizeEnd",
+      "detail": {
+        "originalPosition": {
+          "type": "object",
+          "description": "original position of the resized element",
+          "properties": {
+            "x": {
+              "type": "number",
+              "description": "x coordinate"
+            },
+            "y": {
+              "type": "number",
+              "description": "y coordinate"
+            }
+          }
+        },
+        "originalSize": {
+          "type": "object",
+          "description": "original dimensions of the resized element",
+          "properties": {
+            "width": {
+              "type": "number",
+              "description": "element's width"
+            },
+            "height": {
+              "type": "number",
+              "description": "element's height"
+            }
+          }
+        },
+        "position": {
+          "type": "object",
+          "description": "current position of the resized element",
+          "properties": {
+            "x": {
+              "type": "number",
+              "description": "x coordinate"
+            },
+            "y": {
+              "type": "number",
+              "description": "y coordinate"
+            }
+          }
+        },
+        "size": {
+          "type": "object",
+          "description": "current dimensions of the resized element",
+          "properties": {
+            "width": {
+              "type": "number",
+              "description": "element's width"
+            },
+            "height": {
+              "type": "number",
+              "description": "element's height"
+            }
+          }
+        }
+      }
+    }
+  },
+  "methods": {
+    "setProperty": {
+      "description": "Sets a property or a single subproperty for complex properties and notifies the component of the change, triggering a corresponding event.",
+      "help": "#setProperty",
+      "params": [
+        {
+          "name": "property",
+          "description": "The property name to set. Supports dot notation for subproperty access.",
+          "type": "string"
+        },
+        {
+          "name": "value",
+          "description": "The new value to set the property to.",
+          "type": "any"
+        }
+      ],
+      "return": "void"
+    },
+    "getProperty": {
+      "description": "Retrieves the value of a property or a subproperty.",
+      "help": "#getProperty",
+      "params": [
+        {
+          "name": "property",
+          "description": "The property name to get. Supports dot notation for subproperty access.",
+          "type": "string"
+        }
+      ],
+      "return": "any"
+    },
+    "setProperties": {
+      "description": "Performs a batch set of properties.",
+      "help": "#setProperties",
+      "params": [
+        {
+          "name": "properties",
+          "description": "An object containing the property and value pairs to set.",
+          "type": "object"
+        }
+      ],
+      "return": "void"
+    }
+  }
+}

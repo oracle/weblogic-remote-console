@@ -1,0 +1,225 @@
+{
+  "name": "drawer-layout",
+  "version": "19.0.1",
+  "jetVersion": "^19.0.1",
+  "pack": "oj-c",
+  "type": "composite",
+  "dependencyScope": "runtime",
+  "license": "https://opensource.org/licenses/UPL",
+  "implements": [
+    "CDrawerLayoutElement"
+  ],
+  "description": "A Drawer Layout adds expandable side contents (drawers) alongside some primary content.",
+  "displayName": "Drawer Layout",
+  "help": "oj-c.DrawerLayout.html",
+  "main": "oj-c/drawer-layout",
+  "status": [
+    {
+      "type": "supersedes",
+      "since": "17.0.0",
+      "value": [
+        "oj-drawer-layout"
+      ]
+    }
+  ],
+  "extension": {
+    "catalog": {
+      "category": "Layout & Nav"
+    },
+    "vbdt": {
+      "module": "oj-c/drawer-layout"
+    },
+    "oracle": {
+      "icon": "oj-ux-ico-drawer",
+      "uxSpecs": [
+        "drawer"
+      ]
+    },
+    "webelement": {
+      "package": "@oracle/oraclejet-core-pack",
+      "version": "19.0.1",
+      "docUrl": "https://www.oracle.com/webfolder/technetwork/jet/cpwdtsdoc/classes/DrawerLayoutWebElement.html",
+      "export": "findDrawerLayout",
+      "main": "@oracle/oraclejet-core-pack/webdriver"
+    }
+  },
+  "propertyLayout": [
+    {
+      "propertyGroup": "common",
+      "items": [
+        "startOpened",
+        "endOpened",
+        "bottomOpened",
+        "startDisplay",
+        "endDisplay",
+        "bottomDisplay"
+      ]
+    }
+  ],
+  "since": "17.0.0",
+  "slots": {
+    "": {
+      "description": "The default slot is the content of the Drawer Popup.",
+      "displayName": "default",
+      "help": "#Default"
+    },
+    "start": {},
+    "end": {},
+    "bottom": {}
+  },
+  "properties": {
+    "startOpened": {
+      "type": "boolean",
+      "description": "Specifies whether the Drawer is open.",
+      "displayName": "Start Opened",
+      "help": "#startOpened",
+      "writeback": true,
+      "value": false
+    },
+    "endOpened": {
+      "type": "boolean",
+      "description": "Specifies whether the Drawer is open.",
+      "displayName": "End Opened",
+      "help": "#endOpened",
+      "writeback": true,
+      "value": false
+    },
+    "bottomOpened": {
+      "type": "boolean",
+      "description": "Specifies whether the Drawer is open.",
+      "displayName": "Bottom Opened",
+      "help": "#bottomOpened",
+      "writeback": true,
+      "value": false
+    },
+    "startDisplay": {
+      "type": "string",
+      "description": "Specifies display mode of the Start drawer.",
+      "displayName": "Start Display",
+      "help": "#startDisplay",
+      "enumValues": [
+        "auto",
+        "overlay",
+        "reflow"
+      ],
+      "value": "auto"
+    },
+    "endDisplay": {
+      "type": "string",
+      "description": "Specifies display mode of the End drawer.",
+      "displayName": "End Display",
+      "help": "#endDisplay",
+      "enumValues": [
+        "auto",
+        "overlay",
+        "reflow"
+      ],
+      "value": "auto"
+    },
+    "bottomDisplay": {
+      "type": "string",
+      "description": "Specifies display mode of the Start drawer.",
+      "displayName": "Bottom Display",
+      "help": "#bottomDisplay",
+      "enumValues": [
+        "auto",
+        "overlay",
+        "reflow"
+      ],
+      "value": "auto"
+    }
+  },
+  "events": {
+    "ojBeforeClose": {
+      "cancelable": true,
+      "description": "Triggered immediately before the drawer closes",
+      "displayName": "ojBeforeclose",
+      "help": "#event:beforeClose",
+      "detail": {
+        "accept": {
+          "description": "This method can be called with an application-created Promise to cancel this event asynchronously.  The Promise should be resolved or rejected to accept or cancel the event, respectively.",
+          "type": "function"
+        },
+        "edge": {
+          "type": "string",
+          "description": "edge from which the drawer slides into the layout.",
+          "enumValues": [
+            "end",
+            "start",
+            "bottom"
+          ]
+        },
+        "reason": {
+          "type": "string",
+          "description": "reason for closing the drawer",
+          "enumValues": [
+            "escapeKey"
+          ]
+        }
+      }
+    },
+    "ojClose": {
+      "description": "Triggered immediately after the drawer closes",
+      "displayName": "ojClose",
+      "help": "#event:close",
+      "detail": {
+        "edge": {
+          "type": "string",
+          "description": "edge from which the drawer slides into the layout.",
+          "enumValues": [
+            "end",
+            "start",
+            "bottom"
+          ]
+        },
+        "value": {
+          "type": "boolean",
+          "description": "opened value"
+        }
+      }
+    }
+  },
+  "methods": {
+    "setProperty": {
+      "description": "Sets a property or a single subproperty for complex properties and notifies the component of the change, triggering a corresponding event.",
+      "help": "#setProperty",
+      "params": [
+        {
+          "name": "property",
+          "description": "The property name to set. Supports dot notation for subproperty access.",
+          "type": "string"
+        },
+        {
+          "name": "value",
+          "description": "The new value to set the property to.",
+          "type": "any"
+        }
+      ],
+      "return": "void"
+    },
+    "getProperty": {
+      "description": "Retrieves the value of a property or a subproperty.",
+      "help": "#getProperty",
+      "params": [
+        {
+          "name": "property",
+          "description": "The property name to get. Supports dot notation for subproperty access.",
+          "type": "string"
+        }
+      ],
+      "return": "any"
+    },
+    "setProperties": {
+      "description": "Performs a batch set of properties.",
+      "help": "#setProperties",
+      "params": [
+        {
+          "name": "properties",
+          "description": "An object containing the property and value pairs to set.",
+          "type": "object"
+        }
+      ],
+      "return": "void"
+    }
+  }
+}

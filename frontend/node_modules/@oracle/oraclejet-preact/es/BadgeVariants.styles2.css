@@ -1,0 +1,65 @@
+.BadgeVariants_multiVariantStyles_edge_end__1h6m6d71 {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+.BadgeVariants_multiVariantStyles_size_xs__1h6m6d72 {
+  --height__88ut8n6: var(--sizes-xs-height__88ut8nt);
+  --fontSize__88ut8n2: var(--sizes-xs-fontSize__88ut8nu);
+  --fontWeight__88ut8n3: var(--sizes-xs-fontWeight__88ut8nv);
+  --borderRadius__88ut8n7: var(--sizes-xs-borderRadius__88ut8nw);
+  --padding__88ut8n8: var(--sizes-xs-padding__88ut8nx);
+}
+.BadgeVariants_multiVariantStyles_size_sm__1h6m6d73 {
+  --height__88ut8n6: var(--sizes-sm-height__88ut8ny);
+  --fontSize__88ut8n2: var(--sizes-sm-fontSize__88ut8nz);
+  --fontWeight__88ut8n3: var(--sizes-sm-fontWeight__88ut8n10);
+  --borderRadius__88ut8n7: var(--sizes-sm-borderRadius__88ut8n11);
+  --padding__88ut8n8: var(--sizes-sm-padding__88ut8n12);
+}
+.BadgeVariants_multiVariantStyles_size_md__1h6m6d74 {
+  --height__88ut8n6: var(--sizes-md-height__88ut8n13);
+  --fontSize__88ut8n2: var(--sizes-md-fontSize__88ut8n14);
+  --fontWeight__88ut8n3: var(--sizes-md-fontWeight__88ut8n15);
+  --borderRadius__88ut8n7: var(--sizes-md-borderRadius__88ut8n16);
+  --padding__88ut8n8: var(--sizes-md-padding__88ut8n17);
+}
+.BadgeVariants_multiVariantStyles_variant_neutral__1h6m6d75 {
+  --backgroundColor__88ut8n0: var(--variants-neutral-backgroundColor__88ut8n9);
+  --color__88ut8n1: var(--variants-neutral-color__88ut8na);
+}
+.BadgeVariants_multiVariantStyles_variant_danger__1h6m6d76 {
+  --backgroundColor__88ut8n0: var(--variants-danger-backgroundColor__88ut8nb);
+  --color__88ut8n1: var(--variants-danger-color__88ut8nc);
+}
+.BadgeVariants_multiVariantStyles_variant_warning__1h6m6d77 {
+  --backgroundColor__88ut8n0: var(--variants-warning-backgroundColor__88ut8nd);
+  --color__88ut8n1: var(--variants-warning-color__88ut8ne);
+}
+.BadgeVariants_multiVariantStyles_variant_success__1h6m6d78 {
+  --backgroundColor__88ut8n0: var(--variants-success-backgroundColor__88ut8nf);
+  --color__88ut8n1: var(--variants-success-color__88ut8ng);
+}
+.BadgeVariants_multiVariantStyles_variant_info__1h6m6d79 {
+  --backgroundColor__88ut8n0: var(--variants-info-backgroundColor__88ut8nh);
+  --color__88ut8n1: var(--variants-info-color__88ut8ni);
+}
+.BadgeVariants_multiVariantStyles_variant_neutralSubtle__1h6m6d7a {
+  --backgroundColor__88ut8n0: var(--variants-neutralSubtle-backgroundColor__88ut8nj);
+  --color__88ut8n1: var(--variants-neutralSubtle-color__88ut8nk);
+}
+.BadgeVariants_multiVariantStyles_variant_dangerSubtle__1h6m6d7b {
+  --backgroundColor__88ut8n0: var(--variants-dangerSubtle-backgroundColor__88ut8nl);
+  --color__88ut8n1: var(--variants-dangerSubtle-color__88ut8nm);
+}
+.BadgeVariants_multiVariantStyles_variant_warningSubtle__1h6m6d7c {
+  --backgroundColor__88ut8n0: var(--variants-warningSubtle-backgroundColor__88ut8nn);
+  --color__88ut8n1: var(--variants-warningSubtle-color__88ut8no);
+}
+.BadgeVariants_multiVariantStyles_variant_successSubtle__1h6m6d7d {
+  --backgroundColor__88ut8n0: var(--variants-successSubtle-backgroundColor__88ut8np);
+  --color__88ut8n1: var(--variants-successSubtle-color__88ut8nq);
+}
+.BadgeVariants_multiVariantStyles_variant_infoSubtle__1h6m6d7e {
+  --backgroundColor__88ut8n0: var(--variants-infoSubtle-backgroundColor__88ut8nr);
+  --color__88ut8n1: var(--variants-infoSubtle-color__88ut8ns);
+}

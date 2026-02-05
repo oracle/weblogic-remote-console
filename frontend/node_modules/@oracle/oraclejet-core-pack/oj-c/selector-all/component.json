@@ -1,0 +1,104 @@
+{
+  "name": "selector-all",
+  "version": "19.0.1",
+  "jetVersion": "^19.0.1",
+  "pack": "oj-c",
+  "type": "composite",
+  "dependencyScope": "runtime",
+  "license": "https://opensource.org/licenses/UPL",
+  "implements": [
+    "CSelectorAllElement"
+  ],
+  "description": "The selector all component renders a checkbox in collections to support selection.",
+  "displayName": "SelectorAll",
+  "extension": {
+    "catalog": {
+      "category": "Collections"
+    },
+    "vbdt": {
+      "module": "oj-c/selectorAll"
+    },
+    "webelement": {
+      "package": "@oracle/oraclejet-core-pack",
+      "version": "19.0.1",
+      "docUrl": "https://www.oracle.com/webfolder/technetwork/jet/cpwdtsdoc/classes/SelectorAllWebElement.html",
+      "export": "findSelectorAll",
+      "main": "@oracle/oraclejet-core-pack/webdriver"
+    }
+  },
+  "help": "oj-c.SelectorAll.html",
+  "since": "15.0.0",
+  "status": [
+    {
+      "type": "supersedes",
+      "since": "16.0.0",
+      "value": [
+        "oj-selector"
+      ]
+    }
+  ],
+  "main": "oj-c/selector-all",
+  "properties": {
+    "selectedKeys": {
+      "type": "object",
+      "description": "Specifies the selectedKeys, should be hooked into the collection component.",
+      "displayName": "Selected Keys",
+      "help": "#selectedKeys",
+      "required": true,
+      "writeback": true
+    },
+    "showTooltip": {
+      "type": "string",
+      "description": "Specifies whether tooltip should be shown on the SelectorAll checkbox",
+      "displayName": "Show Tooltip",
+      "help": "#showTooltip",
+      "enumValues": [
+        "disabled",
+        "enabled"
+      ]
+    }
+  },
+  "methods": {
+    "setProperty": {
+      "description": "Sets a property or a single subproperty for complex properties and notifies the component of the change, triggering a corresponding event.",
+      "help": "#setProperty",
+      "params": [
+        {
+          "name": "property",
+          "description": "The property name to set. Supports dot notation for subproperty access.",
+          "type": "string"
+        },
+        {
+          "name": "value",
+          "description": "The new value to set the property to.",
+          "type": "any"
+        }
+      ],
+      "return": "void"
+    },
+    "getProperty": {
+      "description": "Retrieves the value of a property or a subproperty.",
+      "help": "#getProperty",
+      "params": [
+        {
+          "name": "property",
+          "description": "The property name to get. Supports dot notation for subproperty access.",
+          "type": "string"
+        }
+      ],
+      "return": "any"
+    },
+    "setProperties": {
+      "description": "Performs a batch set of properties.",
+      "help": "#setProperties",
+      "params": [
+        {
+          "name": "properties",
+          "description": "An object containing the property and value pairs to set.",
+          "type": "object"
+        }
+      ],
+      "return": "void"
+    }
+  }
+}

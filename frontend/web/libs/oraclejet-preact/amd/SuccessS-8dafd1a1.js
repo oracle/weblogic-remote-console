@@ -1,0 +1,2 @@
+define(['exports', 'preact/jsx-runtime', './Icon-865b3c78'], (function(c,e,n){"use strict";c.SvgSuccessS=c=>e.jsx(n.Icon,{viewBox:"0 0 24 24",...c,children:e.jsx("g",{fill:"none",children:e.jsx("path",{d:"M2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10S2 17.523 2 12zm15.207-2.793-1.414-1.414L10 13.586l-2.293-2.293-1.414 1.414L10 16.414z",fill:"currentcolor"})})})}));
+//# sourceMappingURL=SuccessS-8dafd1a1.js.map

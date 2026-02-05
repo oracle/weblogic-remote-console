@@ -14,7 +14,6 @@
     "app/js/os-utils.js",
     "app/js/token-utils.js",
     "app/js/settings-editor.js",
-    "app/js/project-management.js",
     "app/js/user-prefs-json.js",
     "app/js/user-projects-json.js",
     "app/js/watcher.js",

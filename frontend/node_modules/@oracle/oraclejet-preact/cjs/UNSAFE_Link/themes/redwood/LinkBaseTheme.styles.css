@@ -1,0 +1,11 @@
+.LinkBaseTheme_baseTheme__eahcnn0 {
+  --standaloneTextDecoration__1w21kyl0: none;
+  --standaloneTextDecorationHover__1w21kyl1: underline;
+  --standaloneFontWeight__1w21kyl2: 600;
+  --embeddedTextDecoration__1w21kyl3: underline;
+  --embeddedTextDecorationHover__1w21kyl4: none;
+  --textUnderlineOffset__1w21kyl5: calc(0.6 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --textColor__1w21kyl6: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-link);
+  --textColorActive__1w21kyl7: var(--textColor__1w21kyl6);
+  --textColorVisited__1w21kyl8: var(--textColor__1w21kyl6);
+}

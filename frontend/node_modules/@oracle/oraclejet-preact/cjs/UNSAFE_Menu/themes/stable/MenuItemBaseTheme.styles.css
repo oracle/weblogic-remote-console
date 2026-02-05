@@ -1,0 +1,9 @@
+.MenuItemBaseTheme_baseTheme__1n321v10 {
+  --iconSize__1qbg5hn0: calc(6 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --startEdgeToStartIconPadding__1qbg5hn1: calc(4 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --endIconToEndEdgePadding__1qbg5hn2: calc(4 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --startIconToLabelPadding__1qbg5hn3: calc(4 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --labelToEndIconPadding__1qbg5hn4: calc(8 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --textColor__1qbg5hn5: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-primary);
+  --iconColor__1qbg5hn6: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-primary);
+}

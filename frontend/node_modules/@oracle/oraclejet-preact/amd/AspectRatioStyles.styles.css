@@ -1,0 +1,118 @@
+.AspectRatioStyles_base__zzf8050 {
+  position: relative;
+  overflow-x: hidden;
+  overflow-y: hidden;
+}
+.AspectRatioStyles_base__zzf8050::before {
+  content: '';
+  display: block;
+}
+.AspectRatioStyles_variant_9\/16__zzf8051::before {
+  background: transparent;
+  padding-bottom: calc(100% / (9/16));
+}
+.AspectRatioStyles_variant_1\/1__zzf8052::before {
+  background: transparent;
+  padding-bottom: calc(100% / (1/1));
+}
+.AspectRatioStyles_variant_6\/5__zzf8053::before {
+  background: transparent;
+  padding-bottom: calc(100% / (6/5));
+}
+.AspectRatioStyles_variant_5\/4__zzf8054::before {
+  background: transparent;
+  padding-bottom: calc(100% / (5/4));
+}
+.AspectRatioStyles_variant_4\/3__zzf8055::before {
+  background: transparent;
+  padding-bottom: calc(100% / (4/3));
+}
+.AspectRatioStyles_variant_11\/8__zzf8056::before {
+  background: transparent;
+  padding-bottom: calc(100% / (11/8));
+}
+.AspectRatioStyles_variant_1\.43\/1__zzf8057::before {
+  background: transparent;
+  padding-bottom: calc(100% / (1.43/1));
+}
+.AspectRatioStyles_variant_3\/2__zzf8058::before {
+  background: transparent;
+  padding-bottom: calc(100% / (3/2));
+}
+.AspectRatioStyles_variant_14\/9__zzf8059::before {
+  background: transparent;
+  padding-bottom: calc(100% / (14/9));
+}
+.AspectRatioStyles_variant_16\/10__zzf805a::before {
+  background: transparent;
+  padding-bottom: calc(100% / (16/10));
+}
+.AspectRatioStyles_variant_1\.6180\/1__zzf805b::before {
+  background: transparent;
+  padding-bottom: calc(100% / (1.6180/1));
+}
+.AspectRatioStyles_variant_5\/3__zzf805c::before {
+  background: transparent;
+  padding-bottom: calc(100% / (5/3));
+}
+.AspectRatioStyles_variant_16\/9__zzf805d::before {
+  background: transparent;
+  padding-bottom: calc(100% / (16/9));
+}
+.AspectRatioStyles_variant_1\.85\/1__zzf805e::before {
+  background: transparent;
+  padding-bottom: calc(100% / (1.85/1));
+}
+.AspectRatioStyles_variant_1\.9\/1__zzf805f::before {
+  background: transparent;
+  padding-bottom: calc(100% / (1.9/1));
+}
+.AspectRatioStyles_variant_2\/1__zzf805g::before {
+  background: transparent;
+  padding-bottom: calc(100% / (2/1));
+}
+.AspectRatioStyles_variant_2\.2\/1__zzf805h::before {
+  background: transparent;
+  padding-bottom: calc(100% / (2.2/1));
+}
+.AspectRatioStyles_variant_64\/21__zzf805i::before {
+  background: transparent;
+  padding-bottom: calc(100% / (64/21));
+}
+.AspectRatioStyles_variant_2\.4\/1__zzf805j::before {
+  background: transparent;
+  padding-bottom: calc(100% / (2.4/1));
+}
+.AspectRatioStyles_variant_2\.414\/1__zzf805k::before {
+  background: transparent;
+  padding-bottom: calc(100% / (2.414/1));
+}
+.AspectRatioStyles_variant_2\.76\/1__zzf805l::before {
+  background: transparent;
+  padding-bottom: calc(100% / (2.76/1));
+}
+.AspectRatioStyles_variant_32\/9__zzf805m::before {
+  background: transparent;
+  padding-bottom: calc(100% / (32/9));
+}
+.AspectRatioStyles_variant_18\/5__zzf805n::before {
+  background: transparent;
+  padding-bottom: calc(100% / (18/5));
+}
+.AspectRatioStyles_variant_4\/1__zzf805o::before {
+  background: transparent;
+  padding-bottom: calc(100% / (4/1));
+}
+.AspectRatioStyles_base__zzf8050 > :first-child {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+}
+.AspectRatioStyles_base__zzf8050 > img, .AspectRatioStyles_base__zzf8050 > video {
+  -o-object-fit: cover;
+     object-fit: cover;
+}

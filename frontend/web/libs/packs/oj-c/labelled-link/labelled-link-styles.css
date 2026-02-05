@@ -1,0 +1,13 @@
+oj-c-labelled-link:not(.oj-complete) {
+  visibility: hidden;
+}
+
+oj-c-labelled-link {
+  display: inline-block;
+  max-width: 100%;
+  width: 100%;
+}
+
+oj-c-labelled-link[hidden] {
+  display: none;
+}

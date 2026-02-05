@@ -1,0 +1,17 @@
+.TabBarItemVariants_multiVariantStyles_selection_isSelected__1yttea0 {
+  color: var(--labelColorSelected__1vg465e1);
+  border-left: var(--borderWidthLeftRight__1vg465e5) solid transparent;
+  border-bottom: var(--borderWidthBottom__1vg465e4) solid;
+  border-right: var(--borderWidthLeftRight__1vg465e5) solid transparent;
+}
+.TabBarItemVariants_multiVariantStyles_compound_0__1yttea8 {
+  outline-style: dotted;
+  outline-offset: -1px;
+  outline-width: 1px;
+  outline-color: var(--labelColor__1vg465e0);
+  color: var(--labelColorSelected__1vg465e1);
+}
+.TabBarItemVariants_multiVariantStyles_compound_1__1yttea9 {
+  border-bottom: var(--borderWidthBottom__1vg465e4) solid transparent;
+  border-top: var(--borderWidthBottom__1vg465e4) solid;
+}

@@ -56,8 +56,8 @@ public class NavTreeNodeResponseMapper extends ResponseMapper<List<NavTreeNode>>
     addIfNotEmpty(builder, "name", node.getName());
     addIfNotEmpty(builder, "label", node.getLabel());
     addIfNotFalse(builder, "expanded", node.isExpanded());
-    addIfNotTrue(builder, "expandable", node.isExpandable());
-    addIfNotTrue(builder, "selectable", node.isSelectable());
+    add(builder, "expandable", node.isExpandable());
+    add(builder, "selectable", node.isSelectable());
     addIfNotEmpty(builder, "type", getType(node));
     addIfNotEmpty(builder, "contents", navTreeNodesToJson(node.getContents()));
     if (node.getType() != NavTreeNode.Type.GROUP) {
@@ -98,10 +98,8 @@ public class NavTreeNodeResponseMapper extends ResponseMapper<List<NavTreeNode>>
     }
   }
 
-  private void addIfNotTrue(JsonObjectBuilder builder, String key, boolean val) {
-    if (!val) {
-      builder.add(key, val);
-    }
+  private void add(JsonObjectBuilder builder, String key, boolean val) {
+    builder.add(key, val);
   }
 
   private void addIfNotFalse(JsonObjectBuilder builder, String key, boolean val) {

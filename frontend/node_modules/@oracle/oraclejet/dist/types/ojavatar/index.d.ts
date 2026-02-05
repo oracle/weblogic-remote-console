@@ -1,0 +1,1 @@
+export { AvatarElementEventMap, AvatarElementSettableProperties, AvatarElementSettablePropertiesLenient, AvatarElement, ojAvatarEventMap, ojAvatarSettableProperties, ojAvatarSettablePropertiesLenient, ojAvatar } from './ojavatar';

@@ -1,0 +1,212 @@
+[
+  {
+    "id": "oj-c.LineChartGroup",
+    "name": "LineChartGroup",
+    "memberof": "oj-c",
+    "kind": "class",
+    "meta": {
+      "filename": "line-chart-group.tsx",
+      "path": "web/components/oj-c/line-chart-group"
+    },
+    "ojcomponent": true,
+    "isvcomponent": true,
+    "since": "16.0.0",
+    "longname": "oj-c.LineChartGroup",
+    "pack": "oj-c",
+    "classdesc": "<h3 id=\"lineChartGroupOverview-section\">\n   JET Line Chart Group\n   <a class=\"bookmarkable-link\" title=\"Bookmarkable Link\" href=\"#lineChartGroupOverview-section\"></a>\n </h3>\n\n <p>The oj-c-line-chart-group element is used to declare group properties. See the Help documentation for more information.</p>\n\n<pre class=\"prettyprint\">\n <code>\n &lt;oj-c-line-chart data=\"[[dataProvider]]\">\n  &lt;template slot='groupTemplate'>\n    &lt;oj-c-line-chart-group\n      drilling='on'\n      label-style='[[$current.depth == 1 ? {\"fontWeight\":\"bold\"} : {\"fontStyle\":\"italic\"}]]'>\n    &lt;/oj-c-line-chart-group>\n  &lt;/template>\n &lt;/oj-c-line-chart>\n </code>\n </pre>\n\n <h3 id=\"a11y-section\">\n   Accessibility\n   <a class=\"bookmarkable-link\" title=\"Bookmarkable Link\" href=\"#a11y-section\"></a>\n </h3>\n <p>\n  Read the <a target=\"_blank\" href=\"oj-c.LineChart.html#a11y-section\">Accessibility Section</a> of the oj-c-line-chart component for details about making this component accessible.\n </p>",
+    "scope": "static",
+    "tagWithoutBrackets": "oj-c-line-chart-group",
+    "tagWithBrackets": "<oj-c-line-chart-group>",
+    "domInterface": "CLineChartGroupElement",
+    "ojPageTitle": "&lt;oj-c-line-chart-group>",
+    "camelCaseName": "LineChartGroup",
+    "ojPageTitlePrefix": "Element: ",
+    "ojtsvcomponent": true,
+    "tstype": {
+      "target": "Type",
+      "value": "interface CLineChartGroupElement extends JetElement<LineChartGroupElementSettableProperties>"
+    },
+    "ojsignature": [
+      {
+        "target": "Type",
+        "value": "interface CLineChartGroupElement extends JetElement<LineChartGroupElementSettableProperties>"
+      }
+    ],
+    "tsdeprecated": [
+      {
+        "type": "candidate",
+        "since": "17.0.0"
+      }
+    ],
+    "ojmodule": "line-chart-group",
+    "ojslotcomponent": true
+  },
+  {
+    "id": "oj-c.LineChartGroup#drilling",
+    "name": "drilling",
+    "memberof": "oj-c.LineChartGroup",
+    "meta": {
+      "filename": "line-chart-group.tsx",
+      "path": "web/components/oj-c/line-chart-group"
+    },
+    "kind": "member",
+    "longname": "oj-c.LineChartGroup#drilling",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "\"inherit\"",
+        "\"off\"",
+        "\"on\""
+      ]
+    },
+    "optional": true,
+    "description": "Whether drilling is enabled on the group label. Drillable objects will show a pointer cursor on hover and fire an <code class=\"prettyprint\">ojDrill</code> event on click. To enable drilling for all group labels at once, use the drilling attribute in the top level.",
+    "defaultvalue": "\"inherit\""
+  },
+  {
+    "id": "oj-c.LineChartGroup#name",
+    "name": "name",
+    "memberof": "oj-c.LineChartGroup",
+    "meta": {
+      "filename": "line-chart-group.tsx",
+      "path": "web/components/oj-c/line-chart-group"
+    },
+    "kind": "member",
+    "longname": "oj-c.LineChartGroup#name",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "string"
+      ]
+    },
+    "optional": true,
+    "description": "The name of the group."
+  },
+  {
+    "id": "oj-c.LineChartGroup#shortDesc",
+    "name": "shortDesc",
+    "memberof": "oj-c.LineChartGroup",
+    "meta": {
+      "filename": "line-chart-group.tsx",
+      "path": "web/components/oj-c/line-chart-group"
+    },
+    "kind": "member",
+    "longname": "oj-c.LineChartGroup#shortDesc",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "string"
+      ]
+    },
+    "optional": true,
+    "description": "The description of the group. This is used for customizing the tooltip text and only applies to a categorical axis."
+  },
+  {
+    "id": "oj-c.LineChartGroup#setProperty",
+    "name": "setProperty",
+    "memberof": "oj-c.LineChartGroup",
+    "meta": {
+      "filename": "line-chart-group.tsx",
+      "path": "web/components/oj-c/line-chart-group"
+    },
+    "kind": "function",
+    "longname": "oj-c.LineChartGroup#setProperty",
+    "scope": "instance",
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "void"
+          ]
+        }
+      }
+    ],
+    "description": "Sets a property or a single subproperty for complex properties and notifies the component of the change, triggering a corresponding event.",
+    "params": [
+      {
+        "name": "property",
+        "description": "The property name to set. Supports dot notation for subproperty access.",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "value",
+        "description": "The new value to set the property to.",
+        "type": {
+          "names": [
+            "any"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.LineChartGroup#getProperty",
+    "name": "getProperty",
+    "memberof": "oj-c.LineChartGroup",
+    "meta": {
+      "filename": "line-chart-group.tsx",
+      "path": "web/components/oj-c/line-chart-group"
+    },
+    "kind": "function",
+    "longname": "oj-c.LineChartGroup#getProperty",
+    "scope": "instance",
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "any"
+          ]
+        }
+      }
+    ],
+    "description": "Retrieves the value of a property or a subproperty.",
+    "params": [
+      {
+        "name": "property",
+        "description": "The property name to get. Supports dot notation for subproperty access.",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.LineChartGroup#setProperties",
+    "name": "setProperties",
+    "memberof": "oj-c.LineChartGroup",
+    "meta": {
+      "filename": "line-chart-group.tsx",
+      "path": "web/components/oj-c/line-chart-group"
+    },
+    "kind": "function",
+    "longname": "oj-c.LineChartGroup#setProperties",
+    "scope": "instance",
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "void"
+          ]
+        }
+      }
+    ],
+    "description": "Performs a batch set of properties.",
+    "params": [
+      {
+        "name": "properties",
+        "description": "An object containing the property and value pairs to set.",
+        "type": {
+          "names": [
+            "object"
+          ]
+        }
+      }
+    ]
+  }
+]

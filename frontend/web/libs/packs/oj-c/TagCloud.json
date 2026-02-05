@@ -1,0 +1,1412 @@
+[
+  {
+    "id": "oj-c.TagCloud",
+    "name": "TagCloud",
+    "memberof": "oj-c",
+    "kind": "class",
+    "meta": {
+      "filename": "tag-cloud.tsx",
+      "path": "web/components/oj-c/tag-cloud"
+    },
+    "ojcomponent": true,
+    "isvcomponent": true,
+    "since": "15.0.0",
+    "longname": "oj-c.TagCloud",
+    "pack": "oj-c",
+    "classdesc": "<h3 id=\"tagCloudOverview-section\">\n  JET Tag Cloud\n  <a class=\"bookmarkable-link\" title=\"Bookmarkable Link\" href=\"#tagCloudOverview-section\"></a>\n</h3>\n*\n<p>Tag clouds are used to display text data with\nthe importance of each tag shown with font size or color.</p>\n\n\n<pre class=\"prettyprint\">\n<code>\n&lt;oj-c-tag-cloud\n  data=\"[[dataProvider]]\">\n&lt;/oj-c-tag-cloud>\n</code>\n</pre>\n\n\n<p>When using font colors as a data dimension for tag clouds, the application\nneeds to ensure that they meet minimum contrast requirements. Not all colors\nin the default value ramp provided by oj.ColorAttributeGroupHandler\nwill meet minimum contrast requirements.</p>\n\n<h3 id=\"keyboard-section\">\n  Keyboard End User Information\n  <a class=\"bookmarkable-link\" title=\"Bookmarkable Link\" href=\"#keyboard-section\"></a>\n</h3>\n<table class=\"keyboard-table\">\n  <thead>\n    <tr>\n      <th>Key</th>\n      <th>Action</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <td><kbd>Tab</kbd></td>\n      <td>Move focus to next element.</td>\n    </tr>\n    <tr>\n      <td><kbd>Shift + Tab</kbd></td>\n      <td>Move focus to previous element.</td>\n    </tr>\n    <tr>\n      <td><kbd>UpArrow</kbd></td>\n      <td>Move focus and selection to previous data item.</td>\n    </tr>\n    <tr>\n      <td><kbd>DownArrow</kbd></td>\n      <td>Move focus and selection to next data item.</td>\n    </tr>\n    <tr>\n      <td><kbd>LeftArrow</kbd></td>\n      <td>Move focus and selection to previous data item.</td>\n    </tr>\n    <tr>\n      <td><kbd>RightArrow</kbd></td>\n      <td>Move focus and selection to next data item.</td>\n    </tr>\n    <tr>\n      <td><kbd>Shift + UpArrow</kbd></td>\n      <td>Move focus and multi-select previous data item.</td>\n    </tr>\n    <tr>\n      <td><kbd>Shift + DownArrow</kbd></td>\n      <td>Move focus and multi-select next data item.</td>\n    </tr>\n    <tr>\n      <td><kbd>Shift + LeftArrow</kbd></td>\n      <td>Move focus and multi-select previous data item.</td>\n    </tr>\n    <tr>\n      <td><kbd>Shift + RightArrow</kbd></td>\n      <td>Move focus and multi-select next data item.</td>\n    </tr>\n    <tr>\n      <td><kbd>Ctrl + UpArrow</kbd></td>\n      <td>Move focus to previous data item, without changing the current selection.</td>\n    </tr>\n    <tr>\n      <td><kbd>Ctrl + DownArrow</kbd></td>\n      <td>Move focus to next data item, without changing the current selection.</td>\n    </tr>\n    <tr>\n      <td><kbd>Ctrl + LeftArrow</kbd></td>\n      <td>Move focus to previous data item, without changing the current selection.</td>\n    </tr>\n    <tr>\n      <td><kbd>Ctrl + RightArrow</kbd></td>\n      <td>Move focus to next data item, without changing the current selection.</td>\n    </tr>\n    <tr>\n      <td><kbd>Ctrl + Spacebar</kbd></td>\n      <td>Multi-select data item with focus.</td>\n    </tr>\n    <tr>\n      <td><kbd>Enter</kbd></td>\n      <td>Open a link when the <code class=\"prettyprint\">url</code> for a data item is set.</td>\n    </tr>\n     <tr>\n      <td><kbd>Shift+F10</kbd></td>\n      <td>Launch the context menu if there is one associated with the current item.</td>\n    </tr>\n  </tbody>\n</table>\n\n<h3 id=\"a11y-section\">\n  Accessibility\n  <a class=\"bookmarkable-link\" title=\"Bookmarkable Link\" href=\"#a11y-section\"></a>\n</h3>\nTo make your component accessible, the application is required to include contextual information for screender readers using one or more the following methods as appropriate:\n <ul>\n  <li>aria-describedby</li>\n  <li>aria-labelledby</li>\n  <li>aria-label</li>\n  <li>short-desc property of your items</li>\n </ul>\n<p>\n If your application has custom keyboard and touch shortcuts implemented for the component, these shortcuts can conflict with those of the component. It is the application's responsibility to disclose these custom shortcuts, possibly via a datatip or help popup.\n</p>\n<p>\n When using colors as a data dimension for tag clouds, the application needs to ensure that they meet <a target=\"_blank\" href=\"https://www.w3.org/TR/WCAG21/#contrast-minimum\">minimum contrast requirements</a>.\n</p>\n\n<h3 id=\"perf-section\">\n  Performance\n  <a class=\"bookmarkable-link\" title=\"Bookmarkable Link\" href=\"#perf-section\"></a>\n</h3>\n\n<h4>Shaped Data</h4>\n<p>As a rule of thumb, it's recommended that applications use <a href=\"https://jet.oraclecorp.com/trunk/jetCookbook.html?component=tagCloudCorepack&demo=shapedData\">shaped data</a> if possible for performance gains.</p>\n\n<h4>Layout</h4>\n<p>Rectangular layouts are faster than cloud layouts and are recommended for larger data sets.\n</p>\n\n\n<h3 id=\"touch-section\">\nTouch End User Information\n  <a class=\"bookmarkable-link\" title=\"Bookmarkable Link\" href=\"#touch-section\"></a>\n</h3>\n\n<table class=\"keyboard-table\">\n  <thead>\n    <tr>\n      <th>Target</th>\n      <th>Gesture</th>\n      <th>Action</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <td rowspan=\"3\">Data Item</td>\n      <td rowspan=\"2\"><kbd>Tap</kbd></td>\n      <td>Select when <code class=\"prettyprint\">selectionMode</code> is enabled.</td>\n    </tr>\n    <tr>\n       <td>Open a link when the <code class=\"prettyprint\">url</code> for a data item is set.</td>\n    </tr>\n    <tr>\n       <td><kbd>Press & Hold</kbd></td>\n       <td>Display context menu on release.</td>\n    </tr>\n    <tr>\n       <td>Background</td>\n       <td><kbd>Press & Hold</kbd></td>\n       <td>Display context menu on release.</td>\n    </tr>\n  </tbody>\n</table>",
+    "scope": "static",
+    "tagWithoutBrackets": "oj-c-tag-cloud",
+    "tagWithBrackets": "<oj-c-tag-cloud>",
+    "domInterface": "CTagCloudElement",
+    "ojPageTitle": "&lt;oj-c-tag-cloud>",
+    "camelCaseName": "TagCloud",
+    "ojPageTitlePrefix": "Element: ",
+    "ojtsvcomponent": true,
+    "tstype": {
+      "target": "Type",
+      "value": "interface CTagCloudElement<K extends string | number,D extends oj-c.TagCloud.Item<K> | any> extends JetElement<TagCloudElementSettableProperties<K,D>>"
+    },
+    "ojsignature": [
+      {
+        "target": "Type",
+        "value": "interface CTagCloudElement<K extends string | number,D extends oj-c.TagCloud.Item<K> | any> extends JetElement<TagCloudElementSettableProperties<K,D>>"
+      }
+    ],
+    "tsdeprecated": [
+      {
+        "type": "candidate",
+        "since": "17.0.0"
+      }
+    ],
+    "ojmodule": "tag-cloud"
+  },
+  {
+    "id": "oj-c.TagCloud#data",
+    "name": "data",
+    "memberof": "oj-c.TagCloud",
+    "meta": {
+      "filename": "tag-cloud.tsx",
+      "path": "web/components/oj-c/tag-cloud"
+    },
+    "kind": "member",
+    "longname": "oj-c.TagCloud#data",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "DataProvider|null"
+      ]
+    },
+    "optional": false,
+    "description": "Specifies the DataProvider for the sections and items of the tag-cloud.",
+    "defaultvalue": null,
+    "tstype": [
+      {
+        "target": "Type",
+        "value": "DataProvider<K, D>|null",
+        "jsdocOverride": true,
+        "module": {
+          "DataProvider": "ojdataprovider"
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.TagCloud#datatip",
+    "name": "datatip",
+    "memberof": "oj-c.TagCloud",
+    "meta": {
+      "filename": "tag-cloud.tsx",
+      "path": "web/components/oj-c/tag-cloud"
+    },
+    "kind": "member",
+    "longname": "oj-c.TagCloud#datatip",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "function"
+      ]
+    },
+    "optional": true,
+    "description": "The tagcloud datatip string.",
+    "tstype": [
+      {
+        "target": "Type",
+        "value": "(context: oj-c.TagCloud.DatatipContext<K>) => string",
+        "jsdocOverride": true
+      }
+    ]
+  },
+  {
+    "id": "oj-c.TagCloud#hiddenCategories",
+    "name": "hiddenCategories",
+    "memberof": "oj-c.TagCloud",
+    "meta": {
+      "filename": "tag-cloud.tsx",
+      "path": "web/components/oj-c/tag-cloud"
+    },
+    "kind": "member",
+    "longname": "oj-c.TagCloud#hiddenCategories",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "Array<string>"
+      ]
+    },
+    "optional": true,
+    "ojwriteback": true,
+    "description": "An array of category strings used for highlighting. Data items matching categories in this array will be highlighted.",
+    "defaultvalue": "[]"
+  },
+  {
+    "id": "oj-c.TagCloud#touchResponse",
+    "name": "touchResponse",
+    "memberof": "oj-c.TagCloud",
+    "meta": {
+      "filename": "tag-cloud.tsx",
+      "path": "web/components/oj-c/tag-cloud"
+    },
+    "kind": "member",
+    "longname": "oj-c.TagCloud#touchResponse",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "\"auto\"",
+        "\"touchStart\""
+      ]
+    },
+    "optional": true,
+    "description": "Data visualizations require a press and hold delay before triggering tooltips and rollover effects on mobile devices to avoid interfering with page panning, but these hold delays can make applications seem slower and less responsive. For a better user experience, the application can remove the touch and hold \\delay when data visualizations are used within a non scrolling container or if there is sufficient space outside of the visualization for panning. If touchResponse is touchStart the element will instantly trigger the touch gesture and consume the page pan events. If touchResponse is auto, the element will behave like touchStart if it determines that it is not rendered within scrolling content and if element panning is not available for those elements that support the feature."
+  },
+  {
+    "id": "oj-c.TagCloud#highlightMatch",
+    "name": "highlightMatch",
+    "memberof": "oj-c.TagCloud",
+    "meta": {
+      "filename": "tag-cloud.tsx",
+      "path": "web/components/oj-c/tag-cloud"
+    },
+    "kind": "member",
+    "longname": "oj-c.TagCloud#highlightMatch",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "\"all\"",
+        "\"any\""
+      ]
+    },
+    "optional": true,
+    "description": "The matching condition for the highlightedCategories option. By default, highlightMatch is 'all' and only items whose categories match all of the values specified in the highlightedCategories array will be highlighted. If highlightMatch is 'any', then items that match at least one of the highlightedCategories values will be highlighted.",
+    "defaultvalue": "\"all\""
+  },
+  {
+    "id": "oj-c.TagCloud#highlightedCategories",
+    "name": "highlightedCategories",
+    "memberof": "oj-c.TagCloud",
+    "meta": {
+      "filename": "tag-cloud.tsx",
+      "path": "web/components/oj-c/tag-cloud"
+    },
+    "kind": "member",
+    "longname": "oj-c.TagCloud#highlightedCategories",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "Array<string>"
+      ]
+    },
+    "optional": true,
+    "ojwriteback": true,
+    "description": "An array of categories that will be highlighted.",
+    "defaultvalue": "[]"
+  },
+  {
+    "id": "oj-c.TagCloud#hoverBehavior",
+    "name": "hoverBehavior",
+    "memberof": "oj-c.TagCloud",
+    "meta": {
+      "filename": "tag-cloud.tsx",
+      "path": "web/components/oj-c/tag-cloud"
+    },
+    "kind": "member",
+    "longname": "oj-c.TagCloud#hoverBehavior",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "\"none\"",
+        "\"dim\""
+      ]
+    },
+    "optional": true,
+    "description": "Defines the behavior applied when hovering over a tagcloud item.",
+    "ojvalues": [
+      {
+        "name": "dim",
+        "description": "Dimming hover behavior is applied.",
+        "displayName": "Dim",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "none",
+        "description": "No hover behavior will be applied.",
+        "displayName": "None",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      }
+    ],
+    "defaultvalue": "\"none\""
+  },
+  {
+    "id": "oj-c.TagCloud#layout",
+    "name": "layout",
+    "memberof": "oj-c.TagCloud",
+    "meta": {
+      "filename": "tag-cloud.tsx",
+      "path": "web/components/oj-c/tag-cloud"
+    },
+    "kind": "member",
+    "longname": "oj-c.TagCloud#layout",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "\"cloud\"",
+        "\"rectangular\""
+      ]
+    },
+    "optional": true,
+    "description": "The layout to use for tag display.",
+    "ojvalues": [
+      {
+        "name": "cloud",
+        "description": "Items will be horizontally placed in available space.",
+        "displayName": "Cloud",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "rectangular",
+        "description": "Items will be vertically stacked.",
+        "displayName": "Rectangular",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      }
+    ],
+    "defaultvalue": "\"rectangular\""
+  },
+  {
+    "id": "oj-c.TagCloud#selectionMode",
+    "name": "selectionMode",
+    "memberof": "oj-c.TagCloud",
+    "meta": {
+      "filename": "tag-cloud.tsx",
+      "path": "web/components/oj-c/tag-cloud"
+    },
+    "kind": "member",
+    "longname": "oj-c.TagCloud#selectionMode",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "\"none\"",
+        "\"multiple\"",
+        "\"single\""
+      ]
+    },
+    "optional": true,
+    "description": "The type of selection behavior that is enabled on the tag cloud. This attribute controls the number of selections that can be made via selection gestures at any given time.",
+    "defaultvalue": "\"none\""
+  },
+  {
+    "id": "oj-c.TagCloud#selection",
+    "name": "selection",
+    "memberof": "oj-c.TagCloud",
+    "meta": {
+      "filename": "tag-cloud.tsx",
+      "path": "web/components/oj-c/tag-cloud"
+    },
+    "kind": "member",
+    "longname": "oj-c.TagCloud#selection",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "Array<string|number>"
+      ]
+    },
+    "optional": true,
+    "ojwriteback": true,
+    "description": "An array containing the ids of the initially selected data items.",
+    "defaultvalue": "[]",
+    "tstype": [
+      {
+        "target": "Type",
+        "value": "Array<K>",
+        "jsdocOverride": true
+      }
+    ]
+  },
+  {
+    "id": "oj-c.TagCloud#contextMenuConfig",
+    "name": "contextMenuConfig",
+    "memberof": "oj-c.TagCloud",
+    "meta": {
+      "filename": "tag-cloud.tsx",
+      "path": "web/components/oj-c/tag-cloud"
+    },
+    "kind": "member",
+    "longname": "oj-c.TagCloud#contextMenuConfig",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "object"
+      ]
+    },
+    "optional": true,
+    "description": "Specifies a context menu configuration.\nIt takes the keys `accessibleLabel` and `items`,\nwhere `accessibleLabel` is optional and items required . `items` function returns an array\nof menu item object representations that indicates what menu items are going to be part of\nmenu based on some specific context menu context.\n<table>\n<tr><th align='left'>Context Menu Item Type</th><th align='left'>Def</th></tr>\n<tr><td>ContextMenuSeparator</td><td>{ type: 'separator'}</td></tr>\n<tr><td>MenuItem</td><td>{\ntype?: 'item';\nlabel: string;\nkey: string;\ndisabled?: boolean;\nonAction?: () => void;\nstartIcon?: MenuIcon;\nendIcon?: MenuIcon;\nvariant?: 'standard' | 'destructive';\n};</td></tr>\n<tr><td>ContextMenuSubMenu</td><td>{\ntype: 'submenu';\nlabel?: string;\ndisabled?: boolean;\nstartIcon?: string;\nitems?: Array&lt;ContextMenuItems&gt;;\n};</td></tr>\n<tr><td>ContextMenuSelectSingle</td><td>{\ntype: 'selectsingle';\nkey?: string;\nitems?: Array&lt;MenuSelectItem&gt;;\nselection?: string;\nonSelection?: (detail: { value: string }) => void;\n};</td></tr>\n<tr><td>ContextMenuSelectMultiple</td><td>{\ntype: 'selectmultiple';\nkey?: string;\nitems?: Array&lt;MenuSelectItem&gt;;\nselection?: Array&lt;string&gt;;\nonSelection?: (detail: { value: Array&lt;string&gt; }) => void;\n};</td></tr>\n<tr><td>MenuIcon</td><td>{\ntype?: 'class';\n    class: string;\n  }\n| {\n    type: 'img';\n   src: string;\n  };</td></tr>\n<tr><td>MenuSelectItem</td><td>{\nlabel: string;\ndisabled?: boolean;\nendIcon?: MenuIcon;\nvalue: string;\n}</td></tr>\n</table>",
+    "tstype": [
+      {
+        "target": "Type",
+        "value": "oj-c.TagCloud.TagCloudContextMenuConfig<K, D>",
+        "jsdocOverride": true
+      }
+    ]
+  },
+  {
+    "id": "oj-c.TagCloud#setProperty",
+    "name": "setProperty",
+    "memberof": "oj-c.TagCloud",
+    "meta": {
+      "filename": "tag-cloud.tsx",
+      "path": "web/components/oj-c/tag-cloud"
+    },
+    "kind": "function",
+    "longname": "oj-c.TagCloud#setProperty",
+    "scope": "instance",
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "void"
+          ]
+        }
+      }
+    ],
+    "description": "Sets a property or a single subproperty for complex properties and notifies the component of the change, triggering a corresponding event.",
+    "params": [
+      {
+        "name": "property",
+        "description": "The property name to set. Supports dot notation for subproperty access.",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "value",
+        "description": "The new value to set the property to.",
+        "type": {
+          "names": [
+            "any"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.TagCloud#getProperty",
+    "name": "getProperty",
+    "memberof": "oj-c.TagCloud",
+    "meta": {
+      "filename": "tag-cloud.tsx",
+      "path": "web/components/oj-c/tag-cloud"
+    },
+    "kind": "function",
+    "longname": "oj-c.TagCloud#getProperty",
+    "scope": "instance",
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "any"
+          ]
+        }
+      }
+    ],
+    "description": "Retrieves the value of a property or a subproperty.",
+    "params": [
+      {
+        "name": "property",
+        "description": "The property name to get. Supports dot notation for subproperty access.",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.TagCloud#setProperties",
+    "name": "setProperties",
+    "memberof": "oj-c.TagCloud",
+    "meta": {
+      "filename": "tag-cloud.tsx",
+      "path": "web/components/oj-c/tag-cloud"
+    },
+    "kind": "function",
+    "longname": "oj-c.TagCloud#setProperties",
+    "scope": "instance",
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "void"
+          ]
+        }
+      }
+    ],
+    "description": "Performs a batch set of properties.",
+    "params": [
+      {
+        "name": "properties",
+        "description": "An object containing the property and value pairs to set.",
+        "type": {
+          "names": [
+            "object"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.TagCloud#event:ojContextMenuAction",
+    "name": "ojContextMenuAction",
+    "kind": "event",
+    "memberof": "oj-c.TagCloud",
+    "meta": {
+      "filename": "tag-cloud.tsx",
+      "path": "web/components/oj-c/tag-cloud"
+    },
+    "longname": "oj-c.TagCloud#event:ojContextMenuAction",
+    "scope": "instance",
+    "description": "Triggered when a menu item is clicked, whether by keyboard, mouse, or touch events.",
+    "properties": [
+      {
+        "name": "menuItemKey",
+        "optional": false,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "contextMenuContext",
+        "optional": false,
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "{ type: 'background'; }|{ data?: oj-c.TagCloud.Item<K>; itemData?: D; type: 'item'; }",
+            "jsdocOverride": true,
+            "for": "contextMenuContext"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "oj-c.TagCloud#event:ojContextMenuSelection",
+    "name": "ojContextMenuSelection",
+    "kind": "event",
+    "memberof": "oj-c.TagCloud",
+    "meta": {
+      "filename": "tag-cloud.tsx",
+      "path": "web/components/oj-c/tag-cloud"
+    },
+    "longname": "oj-c.TagCloud#event:ojContextMenuSelection",
+    "scope": "instance",
+    "description": "Triggered when a select menu item is clicked, whether by keyboard, mouse, or touch events.",
+    "properties": [
+      {
+        "name": "value",
+        "optional": false,
+        "type": {
+          "names": [
+            "string|Array<string>"
+          ]
+        }
+      },
+      {
+        "name": "contextMenuContext",
+        "optional": false,
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "{ type: 'background'; }|{ data?: oj-c.TagCloud.Item<K>; itemData?: D; type: 'item'; }",
+            "jsdocOverride": true,
+            "for": "contextMenuContext"
+          }
+        ]
+      },
+      {
+        "name": "menuSelectionGroupKey",
+        "optional": false,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.TagCloud#itemTemplate",
+    "name": "itemTemplate",
+    "memberof": "oj-c.TagCloud",
+    "meta": {
+      "filename": "tag-cloud.tsx",
+      "path": "web/components/oj-c/tag-cloud"
+    },
+    "kind": "member",
+    "longname": "oj-c.TagCloud#itemTemplate",
+    "scope": "instance",
+    "description": "<p>\n The <code class=\"prettyprint\">itemTemplate</code> slot is used to specify the template for\n creating items. The slot content must be a single  &lt;template>\n element.\n</p>\n<p>\n When the template is executed for each area, it will have access to the tag cloud's binding context and the following properties:\n</p>\n<ul>\n  <li>\n     $current - an object that contains information for the current item.\n     (See the table below for a list of properties available on $current)\n  </li>\n  <li>\n     alias - if data-oj-as attribute was specified, the value will be used to provide an application-named alias for $current.\n  </li>\n</ul>\n<p>\nThe content of the template should only be one &lt;oj-c-tag-cloud-item> element. See the oj-tag-cloud-item doc for more details.\n</p>",
+    "ojchild": false,
+    "ojslot": true,
+    "properties": [
+      {
+        "name": "data",
+        "description": "The data object of the current item.",
+        "optional": false,
+        "type": {
+          "names": [
+            "any"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "D",
+            "jsdocOverride": true,
+            "for": "data"
+          }
+        ]
+      },
+      {
+        "name": "key",
+        "description": "The key of the current item.",
+        "optional": false,
+        "type": {
+          "names": [
+            "any"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "K",
+            "jsdocOverride": true,
+            "for": "key"
+          }
+        ]
+      },
+      {
+        "name": "index",
+        "description": "The zero-based index of the current item.",
+        "optional": false,
+        "type": {
+          "names": [
+            "number"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.TagCloud.touchDoc",
+    "name": "touchDoc",
+    "kind": "member",
+    "longname": "oj-c.TagCloud.touchDoc",
+    "description": "<table class=\"keyboard-table\">\n  <thead>\n    <tr>\n      <th>Target</th>\n      <th>Gesture</th>\n      <th>Action</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <td rowspan=\"3\">Data Item</td>\n      <td rowspan=\"2\"><kbd>Tap</kbd></td>\n      <td>Select when <code class=\"prettyprint\">selectionMode</code> is enabled.</td>\n    </tr>\n    <tr>\n       <td>Open a link when the <code class=\"prettyprint\">url</code> for a data item is set.</td>\n    </tr>\n    <tr>\n       <td><kbd>Press & Hold</kbd></td>\n       <td>Display context menu on release.</td>\n    </tr>\n    <tr>\n       <td>Background</td>\n       <td><kbd>Press & Hold</kbd></td>\n       <td>Display context menu on release.</td>\n    </tr>\n  </tbody>\n</table>",
+    "memberof": "oj-c.TagCloud",
+    "meta": {
+      "filename": "tag-cloud.tsx",
+      "path": "web/components/oj-c/tag-cloud"
+    },
+    "ojfragment": true
+  },
+  {
+    "id": "oj-c.TagCloud.keyboardDoc",
+    "name": "keyboardDoc",
+    "kind": "member",
+    "longname": "oj-c.TagCloud.keyboardDoc",
+    "description": "<table class=\"keyboard-table\">\n  <thead>\n    <tr>\n      <th>Key</th>\n      <th>Action</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <td><kbd>Tab</kbd></td>\n      <td>Move focus to next element.</td>\n    </tr>\n    <tr>\n      <td><kbd>Shift + Tab</kbd></td>\n      <td>Move focus to previous element.</td>\n    </tr>\n    <tr>\n      <td><kbd>UpArrow</kbd></td>\n      <td>Move focus and selection to previous data item.</td>\n    </tr>\n    <tr>\n      <td><kbd>DownArrow</kbd></td>\n      <td>Move focus and selection to next data item.</td>\n    </tr>\n    <tr>\n      <td><kbd>LeftArrow</kbd></td>\n      <td>Move focus and selection to previous data item.</td>\n    </tr>\n    <tr>\n      <td><kbd>RightArrow</kbd></td>\n      <td>Move focus and selection to next data item.</td>\n    </tr>\n    <tr>\n      <td><kbd>Shift + UpArrow</kbd></td>\n      <td>Move focus and multi-select previous data item.</td>\n    </tr>\n    <tr>\n      <td><kbd>Shift + DownArrow</kbd></td>\n      <td>Move focus and multi-select next data item.</td>\n    </tr>\n    <tr>\n      <td><kbd>Shift + LeftArrow</kbd></td>\n      <td>Move focus and multi-select previous data item.</td>\n    </tr>\n    <tr>\n      <td><kbd>Shift + RightArrow</kbd></td>\n      <td>Move focus and multi-select next data item.</td>\n    </tr>\n    <tr>\n      <td><kbd>Ctrl + UpArrow</kbd></td>\n      <td>Move focus to previous data item, without changing the current selection.</td>\n    </tr>\n    <tr>\n      <td><kbd>Ctrl + DownArrow</kbd></td>\n      <td>Move focus to next data item, without changing the current selection.</td>\n    </tr>\n    <tr>\n      <td><kbd>Ctrl + LeftArrow</kbd></td>\n      <td>Move focus to previous data item, without changing the current selection.</td>\n    </tr>\n    <tr>\n      <td><kbd>Ctrl + RightArrow</kbd></td>\n      <td>Move focus to next data item, without changing the current selection.</td>\n    </tr>\n    <tr>\n      <td><kbd>Ctrl + Spacebar</kbd></td>\n      <td>Multi-select data item with focus.</td>\n    </tr>\n    <tr>\n      <td><kbd>Enter</kbd></td>\n      <td>Open a link when the <code class=\"prettyprint\">url</code> for a data item is set.</td>\n    </tr>\n     <tr>\n      <td><kbd>Shift+F10</kbd></td>\n      <td>Launch the context menu if there is one associated with the current item.</td>\n    </tr>\n  </tbody>\n</table>",
+    "memberof": "oj-c.TagCloud",
+    "meta": {
+      "filename": "tag-cloud.tsx",
+      "path": "web/components/oj-c/tag-cloud"
+    },
+    "ojfragment": true
+  },
+  {
+    "id": "oj-c.TagCloud.Item",
+    "name": "Item",
+    "kind": "typedef",
+    "memberof": "oj-c.TagCloud",
+    "meta": {
+      "filename": "tag-cloud.tsx",
+      "path": "web/components/oj-c/tag-cloud"
+    },
+    "longname": "oj-c.TagCloud.Item",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "scope": "static",
+    "description": "",
+    "tsgenerictype": {
+      "target": "Type",
+      "value": "<K>",
+      "for": "genericTypeParameters"
+    },
+    "properties": [
+      {
+        "name": "id",
+        "description": "The item id should be set by the application if the DataProvider is not being used. The row key will be used as id in the DataProvider case.",
+        "optional": false,
+        "type": {
+          "names": [
+            "string|number"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "K",
+            "jsdocOverride": true,
+            "for": "id"
+          }
+        ]
+      },
+      {
+        "name": "categories",
+        "description": "An array of category strings corresponding to the tag cloud items. This allows highlighting and filtering of items.",
+        "optional": true,
+        "type": {
+          "names": [
+            "Array<string>"
+          ]
+        }
+      },
+      {
+        "name": "color",
+        "description": "The color of the text. Will be overridden by any color defined in the style option. The default value comes from the CSS and varies based on theme.",
+        "optional": true,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "label",
+        "description": "The text of the item.",
+        "optional": false,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "value",
+        "description": "The value of this item is used to scale its font size within the tag cloud.",
+        "optional": false,
+        "type": {
+          "names": [
+            "number|null"
+          ]
+        }
+      },
+      {
+        "name": "url",
+        "description": "The url this item references.",
+        "optional": true,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "shortDesc",
+        "description": "The description of the item. This is used for customizing the tooltip text.",
+        "optional": true,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.TagCloud.DatatipContext",
+    "name": "DatatipContext",
+    "kind": "typedef",
+    "memberof": "oj-c.TagCloud",
+    "meta": {
+      "filename": "tag-cloud.tsx",
+      "path": "web/components/oj-c/tag-cloud"
+    },
+    "longname": "oj-c.TagCloud.DatatipContext",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "scope": "static",
+    "description": "Context for datatip function.",
+    "tsgenerictype": {
+      "target": "Type",
+      "value": "<K>",
+      "for": "genericTypeParameters"
+    },
+    "properties": [
+      {
+        "name": "id",
+        "description": "The id of the currently active tag cloud item.",
+        "optional": false,
+        "type": {
+          "names": [
+            "any"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "K",
+            "jsdocOverride": true,
+            "for": "id"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "oj-c.TagCloud.MenuItem",
+    "name": "MenuItem",
+    "kind": "typedef",
+    "memberof": "oj-c.TagCloud",
+    "meta": {
+      "filename": "tag-cloud.tsx",
+      "path": "web/components/oj-c/tag-cloud"
+    },
+    "longname": "oj-c.TagCloud.MenuItem",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "scope": "static",
+    "description": "Specifies a standard menu item.",
+    "properties": [
+      {
+        "name": "type",
+        "description": "Specifies a standard menu item.",
+        "optional": true,
+        "type": {
+          "names": [
+            "\"item\""
+          ]
+        }
+      },
+      {
+        "name": "label",
+        "description": "The menu item label.",
+        "optional": false,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "key",
+        "description": "A unique key associated with the menu item.",
+        "optional": false,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "disabled",
+        "description": "Specifies if the menu item is disabled (enabled by default).",
+        "optional": true,
+        "type": {
+          "names": [
+            "boolean"
+          ]
+        }
+      },
+      {
+        "name": "onAction",
+        "description": "Optional callback function associated with the menu item.",
+        "optional": true,
+        "type": {
+          "names": [
+            "function"
+          ]
+        }
+      },
+      {
+        "name": "startIcon",
+        "description": "Optional icon to render at the start of the menu item.",
+        "optional": true,
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "{ type?: 'class'; class: string; }|{ type: 'img'; src: string; }",
+            "jsdocOverride": true,
+            "for": "startIcon"
+          }
+        ]
+      },
+      {
+        "name": "endIcon",
+        "description": "Optional icon to render at the end of the menu item.",
+        "optional": true,
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "{ type?: 'class'; class: string; }|{ type: 'img'; src: string; }",
+            "jsdocOverride": true,
+            "for": "endIcon"
+          }
+        ]
+      },
+      {
+        "name": "variant",
+        "description": "Specifies the menu item behavior.",
+        "optional": true,
+        "type": {
+          "names": [
+            "\"standard\"",
+            "\"destructive\""
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.TagCloud.ContextMenuSeparator",
+    "name": "ContextMenuSeparator",
+    "kind": "typedef",
+    "memberof": "oj-c.TagCloud",
+    "meta": {
+      "filename": "tag-cloud.tsx",
+      "path": "web/components/oj-c/tag-cloud"
+    },
+    "longname": "oj-c.TagCloud.ContextMenuSeparator",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "scope": "static",
+    "description": "",
+    "properties": [
+      {
+        "name": "type",
+        "optional": false,
+        "type": {
+          "names": [
+            "\"separator\""
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.TagCloud.MenuSelectItem",
+    "name": "MenuSelectItem",
+    "kind": "typedef",
+    "memberof": "oj-c.TagCloud",
+    "meta": {
+      "filename": "tag-cloud.tsx",
+      "path": "web/components/oj-c/tag-cloud"
+    },
+    "longname": "oj-c.TagCloud.MenuSelectItem",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "scope": "static",
+    "description": "Specifies a selectable item in a menu item.",
+    "properties": [
+      {
+        "name": "label",
+        "description": "The selectable item label.",
+        "optional": false,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "disabled",
+        "description": "Specifies if the selectable item is disabled (enabled by default).",
+        "optional": true,
+        "type": {
+          "names": [
+            "boolean"
+          ]
+        }
+      },
+      {
+        "name": "endIcon",
+        "description": "Optional icon to render at the end of the selectable item.",
+        "optional": true,
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "{ type?: 'class'; class: string; }|{ type: 'img'; src: string; }",
+            "jsdocOverride": true,
+            "for": "endIcon"
+          }
+        ]
+      },
+      {
+        "name": "value",
+        "description": "The value associated with the selectable item.",
+        "optional": false,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.TagCloud.MenuSelection",
+    "name": "MenuSelection",
+    "kind": "typedef",
+    "memberof": "oj-c.TagCloud",
+    "meta": {
+      "filename": "tag-cloud.tsx",
+      "path": "web/components/oj-c/tag-cloud"
+    },
+    "longname": "oj-c.TagCloud.MenuSelection",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "scope": "static",
+    "description": "",
+    "properties": [
+      {
+        "name": "at",
+        "description": "Takes an integer value and returns the item at that index,\nallowing for positive and negative integers.\nNegative integers count back from the last item in the array.",
+        "optional": false,
+        "type": {
+          "names": [
+            "function"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "(index: number) => string | undefined",
+            "jsdocOverride": true,
+            "for": "at"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "oj-c.TagCloud.SelectMenuItemDetail",
+    "name": "SelectMenuItemDetail",
+    "kind": "typedef",
+    "memberof": "oj-c.TagCloud",
+    "meta": {
+      "filename": "tag-cloud.tsx",
+      "path": "web/components/oj-c/tag-cloud"
+    },
+    "longname": "oj-c.TagCloud.SelectMenuItemDetail",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "scope": "static",
+    "description": "",
+    "tsgenerictype": {
+      "target": "Type",
+      "value": "<T extends oj-c.TagCloud.MenuSelection>",
+      "for": "genericTypeParameters"
+    },
+    "properties": [
+      {
+        "name": "value",
+        "optional": false,
+        "type": {
+          "names": [
+            "any"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "T",
+            "jsdocOverride": true,
+            "for": "value"
+          }
+        ]
+      },
+      {
+        "name": "menuSelectionGroupKey",
+        "optional": false,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.TagCloud.ContextMenuSelectSingle",
+    "name": "ContextMenuSelectSingle",
+    "kind": "typedef",
+    "memberof": "oj-c.TagCloud",
+    "meta": {
+      "filename": "tag-cloud.tsx",
+      "path": "web/components/oj-c/tag-cloud"
+    },
+    "longname": "oj-c.TagCloud.ContextMenuSelectSingle",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "scope": "static",
+    "description": "",
+    "properties": [
+      {
+        "name": "type",
+        "description": "Specifies a select single menu item.",
+        "optional": false,
+        "type": {
+          "names": [
+            "\"selectsingle\""
+          ]
+        }
+      },
+      {
+        "name": "key",
+        "description": "A unique key associated with the select single.",
+        "optional": false,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "items",
+        "description": "Specifies the array of select items that make up the select single.",
+        "optional": true,
+        "type": {
+          "names": [
+            "Array<object>"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "Array<oj-c.TagCloud.MenuSelectItem>",
+            "jsdocOverride": true,
+            "for": "items"
+          }
+        ]
+      },
+      {
+        "name": "selection",
+        "optional": true,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "onSelection",
+        "optional": true,
+        "type": {
+          "names": [
+            "function"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "(detail: oj-c.TagCloud.SelectMenuItemDetail<string>) => void",
+            "jsdocOverride": true,
+            "for": "onSelection"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "oj-c.TagCloud.ContextMenuSelectMultiple",
+    "name": "ContextMenuSelectMultiple",
+    "kind": "typedef",
+    "memberof": "oj-c.TagCloud",
+    "meta": {
+      "filename": "tag-cloud.tsx",
+      "path": "web/components/oj-c/tag-cloud"
+    },
+    "longname": "oj-c.TagCloud.ContextMenuSelectMultiple",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "scope": "static",
+    "description": "",
+    "properties": [
+      {
+        "name": "type",
+        "description": "Specifies a select multiple menu item.",
+        "optional": false,
+        "type": {
+          "names": [
+            "\"selectmultiple\""
+          ]
+        }
+      },
+      {
+        "name": "key",
+        "description": "A unique key associated with the select multiple.",
+        "optional": false,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "items",
+        "description": "Specifies the array of select items that make up the select multiple.",
+        "optional": true,
+        "type": {
+          "names": [
+            "Array<object>"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "Array<oj-c.TagCloud.MenuSelectItem>",
+            "jsdocOverride": true,
+            "for": "items"
+          }
+        ]
+      },
+      {
+        "name": "selection",
+        "optional": true,
+        "type": {
+          "names": [
+            "Array<string>"
+          ]
+        }
+      },
+      {
+        "name": "onSelection",
+        "optional": true,
+        "type": {
+          "names": [
+            "function"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "(detail: oj-c.TagCloud.SelectMenuItemDetail<string[]>) => void",
+            "jsdocOverride": true,
+            "for": "onSelection"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "oj-c.TagCloud.ContextMenuSubMenu",
+    "name": "ContextMenuSubMenu",
+    "kind": "typedef",
+    "memberof": "oj-c.TagCloud",
+    "meta": {
+      "filename": "tag-cloud.tsx",
+      "path": "web/components/oj-c/tag-cloud"
+    },
+    "longname": "oj-c.TagCloud.ContextMenuSubMenu",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "scope": "static",
+    "description": "",
+    "properties": [
+      {
+        "name": "type",
+        "description": "Specifies a submenu menu item.",
+        "optional": false,
+        "type": {
+          "names": [
+            "\"submenu\""
+          ]
+        }
+      },
+      {
+        "name": "key",
+        "description": "A unique key associated with the submenu menu item.",
+        "optional": true,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "label",
+        "description": "The submenu label.",
+        "optional": true,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "disabled",
+        "description": "Specifies if the submenu is disabled (enabled by default).",
+        "optional": true,
+        "type": {
+          "names": [
+            "boolean"
+          ]
+        }
+      },
+      {
+        "name": "startIcon",
+        "description": "Optional icon to render at the start of the submenu.",
+        "optional": true,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "items",
+        "optional": true,
+        "type": {
+          "names": [
+            "Array<string|object>"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "Array<string|oj-c.TagCloud.MenuItem|oj-c.TagCloud.ContextMenuSeparator|oj-c.TagCloud.ContextMenuSubMenu|oj-c.TagCloud.ContextMenuSelectSingle|oj-c.TagCloud.ContextMenuSelectMultiple>",
+            "jsdocOverride": true,
+            "for": "items"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "oj-c.TagCloud.ContextMenuItems",
+    "name": "ContextMenuItems",
+    "kind": "typedef",
+    "memberof": "oj-c.TagCloud",
+    "meta": {
+      "filename": "tag-cloud.tsx",
+      "path": "web/components/oj-c/tag-cloud"
+    },
+    "longname": "oj-c.TagCloud.ContextMenuItems",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "scope": "static",
+    "description": "",
+    "tstype": [
+      {
+        "target": "Type",
+        "value": "oj-c.TagCloud.MenuItem|oj-c.TagCloud.ContextMenuSeparator|oj-c.TagCloud.ContextMenuSubMenu|oj-c.TagCloud.ContextMenuSelectSingle|oj-c.TagCloud.ContextMenuSelectMultiple",
+        "jsdocOverride": true
+      }
+    ]
+  },
+  {
+    "id": "oj-c.TagCloud.TagCloudContextMenuConfig",
+    "name": "TagCloudContextMenuConfig",
+    "kind": "typedef",
+    "memberof": "oj-c.TagCloud",
+    "meta": {
+      "filename": "tag-cloud.tsx",
+      "path": "web/components/oj-c/tag-cloud"
+    },
+    "longname": "oj-c.TagCloud.TagCloudContextMenuConfig",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "scope": "static",
+    "description": "",
+    "tsgenerictype": {
+      "target": "Type",
+      "value": "<K,D>",
+      "for": "genericTypeParameters"
+    },
+    "properties": [
+      {
+        "name": "accessibleLabel",
+        "optional": true,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "items",
+        "optional": false,
+        "type": {
+          "names": [
+            "function"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "(context: TagcloudContextMenuContext<K, D>) => Array<oj-c.TagCloud.ContextMenuItems>",
+            "jsdocOverride": true,
+            "for": "items"
+          }
+        ]
+      }
+    ]
+  }
+]

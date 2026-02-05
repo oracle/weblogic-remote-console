@@ -1,13 +1,8 @@
-// Copyright (c) 2021, 2022, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2025, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.webapp;
 
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
 import java.util.Map;
 import java.util.Properties;
 import javax.json.Json;
@@ -23,19 +18,17 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.StreamingOutput;
 
 import weblogic.remoteconsole.common.repodef.LocalizableString;
 import weblogic.remoteconsole.common.repodef.LocalizedConstants;
 import weblogic.remoteconsole.server.providers.PropertyListDataProvider;
 import weblogic.remoteconsole.server.providers.Root;
+import weblogic.remoteconsole.server.repo.InvocationContext;
 
 /**
  * Top level JAXRS resource for a page repo of a provider.
  */
 public class PropertyListPageRepoResource extends BaseResource {
-  // private static final Logger LOGGER = Logger.getLogger(PropertyListPageRepoResource.class.getName());
-
   // The text for labels and help used with a response
   public static final LocalizableString PROPERTY_LIST_CONFIGURATION_LABEL =
     LocalizedConstants.PROPERTY_LIST_CONFIGURATION_LABEL;
@@ -48,19 +41,19 @@ public class PropertyListPageRepoResource extends BaseResource {
   @GET
   @Path("data/{pathSegments: .+}")
   public Response getDataResource() {
-    PropertyListDataProvider provider = (PropertyListDataProvider) getInvocationContext().getProvider();
+    return getDataResource(getInvocationContext());
+  }
+
+  public static Response getDataResource(InvocationContext ic) {
+    PropertyListDataProvider provider = (PropertyListDataProvider) ic.getProvider();
 
     JsonObjectBuilder entity = Json.createObjectBuilder();
     JsonArrayBuilder empty = Json.createArrayBuilder();
-    String labelProperties = getInvocationContext().getLocalizer().localizeString(PROPERTY_LIST_PROPERTIES);
     entity.add("breadCrumbs", empty);
     entity.add("links", empty);
     entity.add("pageDescription", provider.getPageDescription());
     entity.add("navigation", "Properties");
-    JsonObjectBuilder self = Json.createObjectBuilder();
-    self.add("label", labelProperties);
-    self.add("resourceData", provider.getResourceData());
-    entity.add("self", self.build());
+    entity.add("self", Json.createObjectBuilder());
 
     JsonObjectBuilder data = Json.createObjectBuilder();
     JsonObjectBuilder properties = Json.createObjectBuilder();
@@ -100,6 +93,9 @@ public class PropertyListPageRepoResource extends BaseResource {
       value = value.substring(1, value.length() - 1);
       propertyList.put(entry.getKey(), value);
     }
+    InvocationContext ic = getInvocationContext();
+    PropertyListDataProvider prov = (PropertyListDataProvider) ic.getProvider();
+    prov.save(ic);
     return Response.ok().entity(Json.createObjectBuilder().build()).build();
   }
 
@@ -122,6 +118,7 @@ public class PropertyListPageRepoResource extends BaseResource {
     properties.add(property.build());
     sliceForm.add("properties", properties.build());
     entity.add("sliceForm", sliceForm.build());
+    entity.add("introductionHTML", "");
     return Response.ok().entity(
       entity.build()).type(MediaType.APPLICATION_JSON).build();
   }
@@ -152,23 +149,5 @@ public class PropertyListPageRepoResource extends BaseResource {
     entity.add("contents", contents.build());
     return Response.ok().entity(
       entity.build()).type(MediaType.APPLICATION_JSON).build();
-  }
-
-  // Get the JAXRS resource for downloading the contents of the property list
-  @Path(Root.DOWNLOAD_RESOURCE)
-  @GET
-  @Produces(MediaType.APPLICATION_OCTET_STREAM)
-  public Object download() {
-    StreamingOutput stream = new StreamingOutput() {
-      @Override
-      public void write(OutputStream os) throws IOException, FailedRequestException {
-        // Uses the default platform encoding for chars to bytes...
-        Writer writer = new BufferedWriter(new OutputStreamWriter(os));
-        PropertyListDataProvider provider =
-          (PropertyListDataProvider) getInvocationContext().getProvider();
-        provider.getProperties().store(writer, null);
-      }
-    };
-    return Response.ok(stream).build();
   }
 }

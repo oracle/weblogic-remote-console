@@ -1,0 +1,37 @@
+.TextFieldBaseTheme_baseTheme__tcmxi50 {
+  --borderColor__w6gg1y0: rgba(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-190), 0.5);
+  --borderWidth__w6gg1y1: 1px;
+  --borderRadius__w6gg1y2: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-border-radius-md);
+  --bgColor__w6gg1y3: rgb(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-neutral-0));
+  --borderColorFocus__w6gg1y4: rgb(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-brand-100));
+  --boxShadowFocus__w6gg1y5: none;
+  --fontSize__w6gg1y6: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-body-md-font-size);
+  --iconToTextPadding__w6gg1y7: calc(3 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --iconToEdgePadding__w6gg1y8: calc(3 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --insideEdgeLabelColorFocus__w6gg1ya: rgb(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-palette-brand-110));
+  --textToEdgePadding__w6gg1y9: calc(3 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --textColor__w6gg1yb: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-primary);
+  --bgColorDisabled__w6gg1yc: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-surface-disabled);
+  --borderColorDisabled__w6gg1yd: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-border-disabled);
+  --textColorDisabled__w6gg1ye: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-disabled);
+  --placeholderAnimationName__w6gg1yf: TextFieldStyles_placeholderAnimation__952vaf0;
+}
+:root, .oj-density-dependent {
+  --insideEdgeHeight__w6gg1yg: max(calc(calc(12 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem)) + calc(2 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-density-units, 0px))),36px);
+  --insideEdgePaddingTop__w6gg1yh: max(calc(calc(3.25 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem)) + var(--oj-c-EXPERIMENTAL-DO-NOT-USE-density-units, 0px)),9.75px);
+}
+:root, .oj-scale-dependent, :root.oj-scale-sm, :root.oj-scale-md, .oj-density-dependent, .oj-scale-lg {
+  --height__w6gg1yi: max(calc(calc(11 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem)) + calc(2 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-density-units, 0px))),36px);
+  --defaultPaddingTopMask__w6gg1yj: calc(2.75 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --insideEdgePaddingTopMask__w6gg1yk: calc(calc(5.625 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem)) + calc(1.375 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-density-units, 0px)));
+}
+.oj-scale-sm, :root.oj-scale-sm {
+  --height__w6gg1yi: max(calc(calc(9.33 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem)) + calc(2 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-density-units, 0px))),24px);
+  --defaultPaddingTopMask__w6gg1yj: calc(calc(1.66 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem)) + calc(0.5 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-density-units, 0px)));
+  --insideEdgePaddingTopMask__w6gg1yk: calc(calc(5.666 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem)) + calc(0.5 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-density-units, 0px)));
+}
+.oj-scale-md, :root.oj-scale-md {
+  --height__w6gg1yi: max(calc(calc(11 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem)) + calc(2 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-density-units, 0px))),36px);
+  --defaultPaddingTopMask__w6gg1yj: calc(calc(2.75 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem)) + calc(0.25 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-density-units, 0px)));
+  --insideEdgePaddingTopMask__w6gg1yk: calc(calc(5.625 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem)) + calc(1.25 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-density-units, 0px)));
+}

@@ -1,0 +1,331 @@
+{
+  "name": "message-banner",
+  "version": "19.0.1",
+  "jetVersion": "^19.0.1",
+  "pack": "oj-c",
+  "type": "composite",
+  "dependencyScope": "runtime",
+  "license": "https://opensource.org/licenses/UPL",
+  "implements": [
+    "CMessageBannerElement"
+  ],
+  "description": "Message Banners are brief, moderately disruptive, semi-permanent messages that help communicate relevant and useful information.",
+  "displayName": "Message Banner",
+  "main": "oj-c/message-banner",
+  "help": "oj-c.MessageBanner.html",
+  "extension": {
+    "catalog": {
+      "category": "Controls"
+    },
+    "oracle": {
+      "icon": "oj-ux-ico-message-banner",
+      "uxSpecs": [
+        "bannerMessages"
+      ]
+    },
+    "vbdt": {
+      "defaultColumns": 2,
+      "minColumns": 1,
+      "module": "oj-c/message-banner"
+    },
+    "webelement": {
+      "package": "@oracle/oraclejet-core-pack",
+      "version": "19.0.1",
+      "docUrl": "https://www.oracle.com/webfolder/technetwork/jet/cpwdtsdoc/classes/MessageBannerWebElement.html",
+      "export": "findMessageBanner",
+      "main": "@oracle/oraclejet-core-pack/webdriver"
+    }
+  },
+  "propertyLayout": [
+    {
+      "propertyGroup": "common",
+      "items": [
+        "type"
+      ]
+    },
+    {
+      "propertyGroup": "data",
+      "items": [
+        "data"
+      ]
+    }
+  ],
+  "since": "16.0.0",
+  "status": [
+    {
+      "type": "supersedes",
+      "since": "16.0.0",
+      "value": [
+        "oj-messages",
+        "oj-message-banner"
+      ]
+    }
+  ],
+  "properties": {
+    "data": {
+      "type": "DataProvider",
+      "description": "Data for the Message Banner component.",
+      "displayName": "Data",
+      "help": "#data",
+      "extension": {
+        "webelement": {
+          "exceptionStatus": [
+            {
+              "type": "unsupported"
+            }
+          ]
+        }
+      }
+    },
+    "type": {
+      "type": "string",
+      "description": "The type of the Banner message.",
+      "displayName": "Type",
+      "help": "#type",
+      "propertyEditorValues": {
+        "page": {
+          "description": "Renders the messages as edge-to-edge messages with no gap in between them.",
+          "displayName": "Page"
+        },
+        "section": {
+          "description": "Renders the messages as section messages - with rounded corners, outline and gap between messages.",
+          "displayName": "Section"
+        }
+      },
+      "enumValues": [
+        "page",
+        "section"
+      ],
+      "value": "section"
+    },
+    "detailTemplateValue": {
+      "type": "string|function",
+      "description": "The function that determines the detail template for the current row.",
+      "displayName": "Current Detail Template",
+      "help": "#detailTemplateValue",
+      "dynamicSlotDef": "MessageBannerTemplateContext",
+      "templateSlotAlias": "detailTemplate"
+    },
+    "sorting": {
+      "type": "string",
+      "description": "Specifies how to sort the messages from the dataprovider.",
+      "displayName": "Sorting",
+      "help": "#sorting",
+      "propertyEditorValues": {
+        "severity": {
+          "description": "Sort the messages in the decreasing order of severity: error, warning, info, confirmation, and none. Then sort the messages of the same severity in reverse chronological order using the timestamp property.",
+          "displayName": "Severity"
+        },
+        "off": {
+          "description": "Messages appear in the order they are supplied with no additional sorting.",
+          "displayName": "Off"
+        }
+      },
+      "enumValues": [
+        "off",
+        "severity"
+      ],
+      "value": "severity"
+    }
+  },
+  "dynamicSlots": {
+    "MessageBannerTemplateContext": {
+      "description": "The dynamic template slots for the Banner message.",
+      "displayName": "Dynamic Template Slots",
+      "help": "#dynamicTemplates",
+      "data": {
+        "data": {
+          "type": "object",
+          "properties": {
+            "closeAffordance": {
+              "type": "string"
+            },
+            "detail": {
+              "type": "string"
+            },
+            "severity": {
+              "type": "string"
+            },
+            "sound": {
+              "type": "string"
+            },
+            "summary": {
+              "type": "string"
+            },
+            "timestamp": {
+              "type": "string"
+            }
+          }
+        },
+        "key": {
+          "type": "string|number"
+        },
+        "metadata": {
+          "type": "object",
+          "properties": {
+            "indexFromParent": {
+              "type": "number"
+            },
+            "isLeaf": {
+              "type": "boolean"
+            },
+            "key": {
+              "type": "string|number"
+            },
+            "message": {
+              "type": "object",
+              "properties": {
+                "detail": {
+                  "type": "string"
+                },
+                "severity": {
+                  "type": "string|number"
+                },
+                "summary": {
+                  "type": "string"
+                }
+              }
+            },
+            "parentKey": {
+              "type": "string|number"
+            },
+            "suggestion": {
+              "type": "object"
+            },
+            "treeDepth": {
+              "type": "number"
+            }
+          }
+        }
+      }
+    }
+  },
+  "events": {
+    "ojClose": {
+      "description": "Event emitted when the user tries to close a message though UI interaction",
+      "help": "#event:ojClose",
+      "detail": {
+        "data": {
+          "type": "object",
+          "description": "The data that was used to render the message.",
+          "properties": {
+            "closeAffordance": {
+              "type": "string",
+              "enumValues": [
+                "off",
+                "on"
+              ]
+            },
+            "detail": {
+              "type": "string"
+            },
+            "severity": {
+              "type": "string",
+              "enumValues": [
+                "none",
+                "error",
+                "confirmation",
+                "info",
+                "warning"
+              ]
+            },
+            "sound": {
+              "type": "string"
+            },
+            "summary": {
+              "type": "string"
+            },
+            "timestamp": {
+              "type": "string"
+            }
+          }
+        },
+        "key": {
+          "type": "string|number",
+          "description": "The key for the message."
+        },
+        "metadata": {
+          "type": "object",
+          "description": "The metadata of the message.",
+          "properties": {
+            "indexFromParent": {
+              "type": "number"
+            },
+            "isLeaf": {
+              "type": "boolean"
+            },
+            "key": {
+              "type": "string|number"
+            },
+            "message": {
+              "type": "object",
+              "properties": {
+                "detail": {
+                  "type": "string"
+                },
+                "severity": {
+                  "type": "string|number"
+                },
+                "summary": {
+                  "type": "string"
+                }
+              }
+            },
+            "parentKey": {
+              "type": "string|number"
+            },
+            "suggestion": {
+              "type": "object"
+            },
+            "treeDepth": {
+              "type": "number"
+            }
+          }
+        }
+      }
+    }
+  },
+  "methods": {
+    "setProperty": {
+      "description": "Sets a property or a single subproperty for complex properties and notifies the component of the change, triggering a corresponding event.",
+      "help": "#setProperty",
+      "params": [
+        {
+          "name": "property",
+          "description": "The property name to set. Supports dot notation for subproperty access.",
+          "type": "string"
+        },
+        {
+          "name": "value",
+          "description": "The new value to set the property to.",
+          "type": "any"
+        }
+      ],
+      "return": "void"
+    },
+    "getProperty": {
+      "description": "Retrieves the value of a property or a subproperty.",
+      "help": "#getProperty",
+      "params": [
+        {
+          "name": "property",
+          "description": "The property name to get. Supports dot notation for subproperty access.",
+          "type": "string"
+        }
+      ],
+      "return": "any"
+    },
+    "setProperties": {
+      "description": "Performs a batch set of properties.",
+      "help": "#setProperties",
+      "params": [
+        {
+          "name": "properties",
+          "description": "An object containing the property and value pairs to set.",
+          "type": "object"
+        }
+      ],
+      "return": "void"
+    }
+  }
+}

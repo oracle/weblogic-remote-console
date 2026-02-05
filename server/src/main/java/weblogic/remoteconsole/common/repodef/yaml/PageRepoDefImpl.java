@@ -88,6 +88,10 @@ public abstract class PageRepoDefImpl implements PageRepoDef {
     return this.yamlReader;
   }
 
+  String getRootName() {
+    return this.rootName;
+  }
+
   private Map<String, Optional<PageDefImpl>> getPagePathToPageDefImplMap() {
     return this.pagePathToPageDefImplMap;
   }

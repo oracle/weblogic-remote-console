@@ -1,0 +1,2 @@
+define(['exports', 'preact/jsx-runtime', './Icon-865b3c78'], (function(e,c,n){"use strict";e.SvgCheckboxCrossed=e=>c.jsx(n.Icon,{viewBox:"0 0 24 24",...e,children:c.jsx("g",{fill:"none",children:c.jsx("path",{d:"M2.222 0A2.222 2.222 0 0 0 0 2.222v19.556C0 23.005.995 24 2.222 24h19.556A2.222 2.222 0 0 0 24 21.778V2.222A2.222 2.222 0 0 0 21.778 0H2.222zM12 10.586 3.414 2h17.172L12 10.586zM10.586 12 2 20.586V3.414L10.586 12zM3.414 22 12 13.414 20.586 22H3.414zm10-10L22 3.414v17.172L13.414 12z",fill:"currentcolor"})})})}));
+//# sourceMappingURL=CheckboxCrossed-5a1e4f21.js.map

@@ -1,0 +1,216 @@
+[
+  {
+    "id": "oj-c.SelectorAll",
+    "name": "SelectorAll",
+    "memberof": "oj-c",
+    "kind": "class",
+    "meta": {
+      "filename": "selector-all.tsx",
+      "path": "web/components/oj-c/selector-all"
+    },
+    "ojcomponent": true,
+    "isvcomponent": true,
+    "since": "15.0.0",
+    "longname": "oj-c.SelectorAll",
+    "pack": "oj-c",
+    "classdesc": "<h3 id=\"selectorAllOverview-section\">\n  JET SelectorAll\n  <a class=\"bookmarkable-link\" title=\"Bookmarkable Link\" href=\"#selectorAllOverview-section\"></a>\n</h3>\n<p>Description: A checkbox to support select all functionality in Collection Components</p>\n<p>The oj-c-selector-all is a component that may be placed above Table, ListView. It presents as a checkbox\nwhen the Collection Component is configured for select all.</p>\n<p>Note that if the application wants to explicitly update the visual state of the component (e.g. to have\nit checked when every item in the associated ListView is selected), it will need to update the selectedKeys\nattribute with an AllKeySetImpl (with empty deletedKeys) to have it checked, or a KeySetImpl (with empty keys)\nto have it unchecked. Partial state will be shown if either an AllKeySetImpl with non-empty deletedKeys or a\nKeySetImpl with non-empty keys is specified.</p>\n\n<pre class=\"prettyprint\">\n<code>\n&lt;div class=\"oj-flex oj-sm-align-items-center\">\n  &lt;oj-c-selector-all\n    id=\"selectAll\"\n    selected-keys=\"{{selectedItems}}\">\n  &lt;/oj-c-selector-all>\n  &lt;span>Select All</span>\n&lt;/div>\n&lt;oj-c-list-view\n  id=\"listview\"\n  data=\"[[dataProvider]]\"\n  selected=\"{{selectedItems}}\"\n  selection-mode=\"multiple\">\n &lt;template slot=\"itemTemplate\" data-oj-as=\"item\">\n   &lt;oj-c-list-item-layout>\n     &lt;oj-c-selector\n       selected-keys=\"{{selectedItems}}\"\n       selection-mode=\"multiple\"\n       row-key=\"[[item.data.id]]\"\n       slot=\"selector\">\n     &lt;/oj-c-selector>\n     &lt;span>\n       &lt;oj-bind-text value=\"[[item.data.name]]\">&lt;/oj-bind-text>\n     &lt;/span>\n    &lt;/oj-c-list-item-layout>\n  &lt;/template>\n&lt;/oj-c-list-view>\n</code></pre>\n\n<h3 id=\"a11y-section\">\n  Accessibility\n  <a class=\"bookmarkable-link\" title=\"Bookmarkable Link\" href=\"#a11y-section\"></a>\n</h3>\n\n<p>Application must specify a value for the aria-label attribute with a meaningful description of the purpose of this selector in order for this to be accessible.</p>",
+    "scope": "static",
+    "tagWithoutBrackets": "oj-c-selector-all",
+    "tagWithBrackets": "<oj-c-selector-all>",
+    "domInterface": "CSelectorAllElement",
+    "ojPageTitle": "&lt;oj-c-selector-all>",
+    "camelCaseName": "SelectorAll",
+    "ojPageTitlePrefix": "Element: ",
+    "ojtsvcomponent": true,
+    "tstype": {
+      "target": "Type",
+      "value": "interface CSelectorAllElement<K extends string | number> extends JetElement<SelectorAllElementSettableProperties<K>>",
+      "genericParameters": [
+        {
+          "name": "K",
+          "description": "Type of key"
+        }
+      ]
+    },
+    "ojsignature": [
+      {
+        "target": "Type",
+        "value": "interface CSelectorAllElement<K extends string | number> extends JetElement<SelectorAllElementSettableProperties<K>>",
+        "genericParameters": [
+          {
+            "name": "K",
+            "description": "Type of key"
+          }
+        ]
+      }
+    ],
+    "tsdeprecated": [
+      {
+        "type": "supersedes",
+        "since": "16.0.0",
+        "value": [
+          "oj-selector"
+        ]
+      }
+    ],
+    "ojmodule": "selector-all"
+  },
+  {
+    "id": "oj-c.SelectorAll#selectedKeys",
+    "name": "selectedKeys",
+    "memberof": "oj-c.SelectorAll",
+    "meta": {
+      "filename": "selector-all.tsx",
+      "path": "web/components/oj-c/selector-all"
+    },
+    "kind": "member",
+    "longname": "oj-c.SelectorAll#selectedKeys",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "object"
+      ]
+    },
+    "optional": false,
+    "ojwriteback": true,
+    "description": "Specifies the selectedKeys, should be hooked into the collection component.",
+    "tstype": [
+      {
+        "target": "Type",
+        "value": "ImmutableKeySet<K>",
+        "jsdocOverride": true,
+        "module": {
+          "ImmutableKeySet": "ojkeyset"
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.SelectorAll#showTooltip",
+    "name": "showTooltip",
+    "memberof": "oj-c.SelectorAll",
+    "meta": {
+      "filename": "selector-all.tsx",
+      "path": "web/components/oj-c/selector-all"
+    },
+    "kind": "member",
+    "longname": "oj-c.SelectorAll#showTooltip",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "\"disabled\"",
+        "\"enabled\""
+      ]
+    },
+    "optional": true,
+    "description": "Specifies whether tooltip should be shown on the SelectorAll checkbox"
+  },
+  {
+    "id": "oj-c.SelectorAll#setProperty",
+    "name": "setProperty",
+    "memberof": "oj-c.SelectorAll",
+    "meta": {
+      "filename": "selector-all.tsx",
+      "path": "web/components/oj-c/selector-all"
+    },
+    "kind": "function",
+    "longname": "oj-c.SelectorAll#setProperty",
+    "scope": "instance",
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "void"
+          ]
+        }
+      }
+    ],
+    "description": "Sets a property or a single subproperty for complex properties and notifies the component of the change, triggering a corresponding event.",
+    "params": [
+      {
+        "name": "property",
+        "description": "The property name to set. Supports dot notation for subproperty access.",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "value",
+        "description": "The new value to set the property to.",
+        "type": {
+          "names": [
+            "any"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.SelectorAll#getProperty",
+    "name": "getProperty",
+    "memberof": "oj-c.SelectorAll",
+    "meta": {
+      "filename": "selector-all.tsx",
+      "path": "web/components/oj-c/selector-all"
+    },
+    "kind": "function",
+    "longname": "oj-c.SelectorAll#getProperty",
+    "scope": "instance",
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "any"
+          ]
+        }
+      }
+    ],
+    "description": "Retrieves the value of a property or a subproperty.",
+    "params": [
+      {
+        "name": "property",
+        "description": "The property name to get. Supports dot notation for subproperty access.",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.SelectorAll#setProperties",
+    "name": "setProperties",
+    "memberof": "oj-c.SelectorAll",
+    "meta": {
+      "filename": "selector-all.tsx",
+      "path": "web/components/oj-c/selector-all"
+    },
+    "kind": "function",
+    "longname": "oj-c.SelectorAll#setProperties",
+    "scope": "instance",
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "void"
+          ]
+        }
+      }
+    ],
+    "description": "Performs a batch set of properties.",
+    "params": [
+      {
+        "name": "properties",
+        "description": "An object containing the property and value pairs to set.",
+        "type": {
+          "names": [
+            "object"
+          ]
+        }
+      }
+    ]
+  }
+]

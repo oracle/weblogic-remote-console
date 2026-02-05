@@ -1,0 +1,763 @@
+oj-c-area-chart:not(.oj-complete) {
+  visibility: hidden;
+}
+
+oj-c-area-chart[hidden] {
+  display: none;
+}
+
+oj-c-area-chart {
+  display: block;
+  width: 100%;
+  height: 28rem;
+}oj-c-dialog:not(.oj-complete){
+    visibility: hidden;
+}
+
+oj-c-dialog {
+    display: none;
+}
+
+oj-c-dialog[hidden]
+{
+    display: none;
+}oj-c-highlight-text:not(.oj-complete) {
+  visibility: hidden;
+}
+
+oj-c-highlight-text {
+  display: inline;
+}
+
+oj-c-highlight-text[hidden] {
+  display: none;
+}oj-c-input-date-mask:not(.oj-complete) {
+  visibility: hidden;
+}
+
+oj-c-input-date-mask {
+  display: inline-block;
+  max-width: 100%;
+  width: 100%;
+}
+
+oj-c-input-date-mask.in-form-layout {
+  display: block;
+}
+
+oj-c-input-date-mask[hidden] {
+  display: none;
+}oj-c-input-date-picker:not(.oj-complete) {
+  visibility: hidden;
+}
+
+oj-c-input-date-picker {
+  display: inline-block;
+  max-width: 100%;
+  width: 100%;
+}
+
+oj-c-input-date-picker.in-form-layout {
+  display: block;
+}
+
+oj-c-input-date-picker[hidden] {
+  display: none;
+}oj-c-input-date-text:not(.oj-complete) {
+  visibility: hidden;
+}
+
+oj-c-input-date-text {
+  display: inline-block;
+  max-width: 100%;
+  width: 100%;
+}
+
+oj-c-input-date-text.in-form-layout {
+  display: block;
+}
+
+oj-c-input-date-text[hidden] {
+  display: none;
+}oj-c-input-month-mask:not(.oj-complete) {
+  visibility: hidden;
+}
+
+oj-c-input-month-mask {
+  display: inline-block;
+  max-width: 100%;
+  width: 100%;
+}
+
+oj-c-input-month-mask.in-form-layout {
+  display: block;
+}
+
+oj-c-input-month-mask[hidden] {
+  display: none;
+}oj-c-input-number:not(.oj-complete) {
+  visibility: hidden;
+}
+
+oj-c-input-number {
+  display: inline-block;
+  max-width: 100%;
+  width: 100%;
+}
+
+oj-c-input-number.in-form-layout {
+  display: block;
+}
+
+oj-c-input-number[hidden] {
+  display: none;
+}oj-c-input-password:not(.oj-complete) {
+  visibility: hidden;
+}
+
+oj-c-input-password {
+  display: inline-block;
+  max-width: 100%;
+  width: 100%;
+}
+
+oj-c-input-password.in-form-layout {
+  display: block;
+}
+
+oj-c-input-password[hidden] {
+  display: none;
+}oj-c-input-sensitive-text:not(.oj-complete) {
+  visibility: hidden;
+}
+
+oj-c-input-sensitive-text {
+  display: inline-block;
+  max-width: 100%;
+  width: 100%;
+}
+
+oj-c-input-sensitive-text.in-form-layout {
+  display: block;
+}
+
+oj-c-input-sensitive-text[hidden] {
+  display: none;
+}oj-c-input-text:not(.oj-complete) {
+  visibility: hidden;
+}
+
+oj-c-input-text {
+  display: inline-block;
+  max-width: 100%;
+  width: 100%;
+}
+
+oj-c-input-text.in-form-layout {
+  display: block;
+}
+
+oj-c-input-text[hidden] {
+  display: none;
+}oj-c-message-toast:not(.oj-complete){
+  visibility: hidden;
+}
+
+oj-c-message-toast[hidden]
+{
+  display: none;
+}
+oj-c-text-area:not(.oj-complete) {
+  visibility: hidden;
+}
+
+oj-c-text-area {
+  display: inline-block;
+  max-width: 100%;
+  width: 100%;
+}
+
+oj-c-text-area.in-form-layout {
+  display: block;
+}
+
+oj-c-text-area[hidden] {
+  display: none;
+}oj-c-progress-bar:not(.oj-complete) {
+  visibility: hidden;
+}
+
+oj-c-progress-bar {
+  display: block;
+}
+
+oj-c-progress-bar[hidden] {
+  display: none;
+}
+oj-c-progress-circle:not(.oj-complete) {
+  visibility: hidden;
+}
+oj-c-progress-circle {
+  display: inline-block;
+}
+oj-c-progress-circle[hidden] {
+  display: none;
+}
+oj-c-progress-circle {
+  height: var(--oj-c-PRIVATE-DO-NOT-USE-progress-circle-size);
+  width: var(--oj-c-PRIVATE-DO-NOT-USE-progress-circle-size);
+  line-height: 0;
+}oj-c-avatar:not(.oj-complete) {
+  visibility: hidden;
+}
+
+oj-c-avatar[hidden] {
+  display: none;
+}
+oj-c-avatar {
+  display: inline-block;
+  font-size: 0;
+}
+oj-c-button:not(.oj-complete) {
+  visibility: hidden;
+}
+
+oj-c-button {
+  display: inline-flex;
+  vertical-align: top;
+}
+
+oj-c-button[hidden] {
+  display: none;
+}oj-c-checkbox:not(.oj-complete) {
+  visibility: hidden;
+}
+
+oj-c-checkbox {
+  display: inline-block;
+}
+
+oj-c-checkbox.in-form-layout {
+  display: block;
+  max-width: 100%; 
+  width: 100%;
+}
+
+oj-c-checkbox[hidden] {
+  display: none;
+}oj-c-checkboxset:not(.oj-complete) {
+  visibility: hidden;
+}
+
+oj-c-checkboxset {
+  display: inline-block;
+  box-sizing: border-box;
+  width: auto;
+}
+
+oj-c-checkboxset.in-form-layout {
+  display: block;
+  max-width: 100%;
+  width: 100%;
+}
+
+oj-c-checkboxset[hidden] {
+  display: none;
+}oj-c-rating-gauge:not(.oj-complete) {
+    visibility: hidden;
+}
+
+oj-c-rating-gauge[hidden] {
+    display: none;
+}
+
+oj-c-rating-gauge {
+    display: block;
+    line-height: 0;
+}oj-c-select-multiple:not(.oj-complete) {
+  visibility: hidden;
+}
+
+oj-c-select-multiple {
+  display: inline-block;
+  max-width: 100%;
+  width: 100%;
+}
+
+oj-c-select-multiple.in-form-layout {
+  display: block;
+}
+
+oj-c-select-multiple[hidden] {
+  display: none;
+}/* This file is where css selectors for the component go.
+   There will be hard coded properties and properties controlled by variables, for example
+
+   oj-c-select-single .oj-c-select-single-value-text {
+   color: var(--oj-c-select-single-value-text-color);
+   display: inline-block;
+	 }
+*/
+
+oj-c-select-single:not(.oj-complete) {
+  visibility: hidden;
+}
+
+oj-c-select-single {
+  display: inline-block;
+  max-width: 100%;
+  width: 100%;
+}
+
+oj-c-select-single.in-form-layout {
+  display: block;
+}
+
+oj-c-select-single[hidden] {
+  display: none;
+}oj-c-collapsible:not(.oj-complete) {
+  visibility: hidden;
+}
+
+oj-c-collapsible {
+  display: block;
+}
+
+oj-c-collapsible[hidden] {
+  display: none;
+}
+oj-c-file-picker:not(.oj-complete) {
+  visibility: hidden;
+}
+
+oj-c-file-picker {
+  display: block;
+  max-width: 400px;
+  width: 100%;
+}
+ 
+oj-c-file-picker.oj-c-file-picker-with-trigger {
+  display: inline-block;
+}
+
+oj-c-file-picker[hidden] {
+  display: none;
+}oj-c-meter-bar:not(.oj-complete) {
+    visibility: hidden;
+}
+
+oj-c-meter-bar[hidden] {
+    display: none;
+}
+
+oj-c-meter-bar {
+    display: block;
+}
+
+.oj-c-meter-bar-horizontal {
+    width: 100%;
+    line-height: 0;
+}
+
+.oj-c-meter-bar-vertical {
+    height: 100%;
+    min-height: 154px;
+}
+
+.oj-c-meter-bar-horizontal-fit {
+    width: 1.5625rem;
+    height: 13.75rem;
+    line-height: 0;
+}
+
+.oj-c-meter-bar-vertical-fit {
+    width: 13.75rem;
+    height: 1.5625rem;
+    min-height: 154px;
+}oj-c-meter-circle:not(.oj-complete) {
+    visibility: hidden;
+}
+
+oj-c-meter-circle[hidden] {
+    display: none;
+}
+
+oj-c-meter-circle {
+    display: block;
+    width: fit-content;
+    height: fit-content;
+    line-height: 0;
+}
+
+.oj-c-meter-circle-fit {
+    width: 6rem;
+    height: 6rem;
+}oj-c-line-chart:not(.oj-complete) {
+  visibility: hidden;
+}
+
+oj-c-line-chart[hidden] {
+  display: none;
+}
+
+oj-c-line-chart {
+  display: block;
+  width: 100%;
+  height: 28rem;
+}oj-c-list-item-layout:not(.oj-complete){
+  visibility: hidden;
+}
+
+oj-c-list-item-layout {
+  display: block;
+}
+
+oj-c-list-item-layout[hidden]
+{
+  display: none;
+}
+oj-c-list-view:not(.oj-complete){
+  visibility: hidden;
+}
+
+oj-c-list-view {
+  display: block;
+  overflow: auto;
+  box-sizing: border-box;
+}
+
+oj-c-list-view[hidden]
+{
+  display: none;
+}
+
+oj-c-list-view:last-child
+{
+  overflow-anchor: none;
+}oj-c-radioset:not(.oj-complete) {
+  visibility: hidden;
+}
+
+oj-c-radioset {
+  display: inline-block;
+  box-sizing: border-box;
+  width: auto;
+}
+
+oj-c-radioset.in-form-layout {
+  display: block;
+  max-width: 100%;
+  width: 100%;
+}
+
+oj-c-radioset[hidden] {
+  display: none;
+}oj-c-split-menu-button:not(.oj-complete) {
+  visibility: hidden;
+}
+
+oj-c-split-menu-button {
+  display: inline-flex;
+  vertical-align: top;
+}
+
+oj-c-split-menu-button[hidden] {
+  display: none;
+}oj-c-legend:not(.oj-complete) {
+    visibility: hidden;
+}
+
+oj-c-legend[hidden] {
+    display: none;
+}
+
+oj-c-legend {
+    box-sizing: border-box;
+    display: block;
+    position: relative;
+    width: 100%;
+}oj-c-tag-cloud:not(.oj-complete) {
+  visibility: hidden;
+}
+
+oj-c-tag-cloud[hidden] {
+  display: none;
+}
+
+oj-c-tag-cloud {
+  display: block;
+  width: 100%;
+  height: 28rem;
+}oj-c-message-banner:not(.oj-complete) {
+  visibility: hidden;
+}
+
+oj-c-message-banner {
+  display: block;
+}
+
+oj-c-message-banner[hidden] {
+  display: none;
+}
+oj-c-action-card:not(.oj-complete){
+  visibility: hidden;
+}
+
+oj-c-action-card {
+  display: inline-flex;
+}
+
+oj-c-action-card[hidden]
+{
+  display: none;
+}oj-c-selection-card:not(.oj-complete){
+  visibility: hidden;
+}
+
+oj-c-selection-card {
+  display: inline-flex;
+}
+
+oj-c-selection-card[hidden]
+{
+  display: none;
+}oj-c-popup:not(.oj-complete){
+  visibility: hidden;
+}
+
+oj-c-popup {
+  display: none;
+}
+
+oj-c-popup[hidden]
+{
+  display: none;
+}oj-c-drawer-popup:not(.oj-complete) {
+  visibility: hidden;
+}
+
+oj-c-drawer-popup {
+  display: none;
+}
+
+oj-c-drawer-popup[hidden] {
+  display: none;
+}oj-c-drawer-layout:not(.oj-complete) {
+    visibility: hidden;
+}
+
+oj-c-drawer-layout {
+    display: block;
+}
+
+oj-c-drawer-layout[hidden] {
+    display: none;
+}oj-c-form-layout:not(.oj-complete) {
+  visibility: hidden;
+}
+
+oj-c-form-layout {
+  display: block;
+}
+
+oj-c-form-layout[hidden] {
+  display: none;
+}
+oj-c-labelled-link:not(.oj-complete) {
+  visibility: hidden;
+}
+
+oj-c-labelled-link {
+  display: inline-block;
+  max-width: 100%;
+  width: 100%;
+}
+
+oj-c-labelled-link[hidden] {
+  display: none;
+}oj-c-menu-button:not(.oj-complete) {
+  visibility: hidden;
+}
+
+oj-c-menu-button {
+  display: inline-flex;
+  vertical-align: top;
+}
+
+oj-c-menu-button[hidden] {
+  display: none;
+}
+oj-c-card-view:not(.oj-complete){
+  visibility: hidden;
+}
+  
+oj-c-card-view {
+  display: block;
+  overflow: auto;
+  box-sizing: border-box;
+}
+
+oj-c-card-view[hidden]
+{
+  display: none;
+}oj-c-conveyor-belt:not(.oj-complete){
+  visibility: hidden;
+}
+
+oj-c-conveyor-belt
+{
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+oj-c-conveyor-belt[hidden]
+{
+  display: none;
+}
+
+oj-c-conveyor-belt[orientation='vertical']
+{
+  display: inline-flex;
+}oj-c-buttonset-single:not(.oj-complete) {
+  visibility: hidden;
+}
+
+oj-c-buttonset-single {
+  display: inline-flex;
+  vertical-align: top;
+}
+
+oj-c-buttonset-single[hidden] {
+  display: none;
+}oj-c-buttonset-multiple:not(.oj-complete) {
+  visibility: hidden;
+}
+
+oj-c-buttonset-multiple {
+  display: inline-flex;
+  vertical-align: top;
+}
+
+oj-c-buttonset-multiple[hidden] {
+  display: none;
+}/* This file is where css selectors for the component go.
+   There will be hard coded properties and properties controlled by variables, for example
+
+   oj-c-table .oj-c-table-value-text {
+     color: var(--oj-c-table-value-text-color);
+     display: inline-block;
+	 }
+*/
+
+oj-c-table:not(.oj-complete) {
+  visibility: hidden;
+}
+
+oj-c-table {
+  align-items: stretch;
+  box-sizing: border-box;
+  clear: both;
+  display: inline-flex;
+  min-height: 24px;
+  min-width: 240px;
+  position: relative;
+}
+
+oj-c-table[hidden] {
+  display: none;
+}
+oj-c-progress-button:not(.oj-complete) {
+  visibility: hidden;
+}
+
+oj-c-progress-button {
+  display: inline-flex;
+  vertical-align: top;
+}
+
+oj-c-progress-button[hidden] {
+  display: none;
+}oj-c-rich-checkboxset:not(.oj-complete) {
+  visibility: hidden;
+}
+
+oj-c-rich-checkboxset {
+  display: inline-block;
+  box-sizing: border-box;
+  max-width: 100%;
+  width: 100%;
+}
+
+oj-c-rich-checkboxset.in-form-layout {
+  display: block;
+}
+
+oj-c-rich-checkboxset[hidden] {
+  display: none;
+}oj-c-rich-radioset:not(.oj-complete) {
+  visibility: hidden;
+}
+
+oj-c-rich-radioset {
+  display: inline-block;
+  box-sizing: border-box;
+  max-width: 100%;
+  width: 100%;
+}
+
+oj-c-rich-radioset.in-form-layout {
+  display: block;
+}
+
+oj-c-rich-radioset[hidden] {
+  display: none;
+}oj-c-input-time-mask:not(.oj-complete) {
+  visibility: hidden;
+}
+
+oj-c-input-time-mask {
+  display: inline-block;
+  max-width: 100%;
+  width: 100%;
+}
+
+oj-c-input-time-mask.in-form-layout {
+  display: block;
+}
+
+oj-c-input-time-mask[hidden] {
+  display: none;
+}/* This file is where css selectors for the component go.
+   There will be hard coded properties and properties controlled by variables, for example
+
+   oj-c-badge .oj-c-badge-value-text {
+   color: var(--oj-c-badge-value-text-color);
+   display: inline-block;
+	 }
+*/
+
+oj-c-badge:not(.oj-complete){
+  visibility: hidden;
+}
+
+oj-c-badge{
+	min-height: 50px;
+	width: 50px;
+}
+
+oj-c-badge[hidden]
+{
+  display: none;
+}oj-c-truncating-text:not(.oj-complete){
+  visibility: hidden;
+}
+
+oj-c-truncating-text{
+	display: inline;
+}
+
+oj-c-truncating-text[hidden]
+{
+  display: none;
+}

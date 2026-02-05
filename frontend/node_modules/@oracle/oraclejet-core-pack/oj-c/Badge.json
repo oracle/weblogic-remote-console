@@ -1,0 +1,239 @@
+[
+  {
+    "id": "oj-c.Badge",
+    "name": "Badge",
+    "memberof": "oj-c",
+    "kind": "class",
+    "meta": {
+      "filename": "badge.tsx",
+      "path": "web/components/oj-c/badge"
+    },
+    "ojcomponent": true,
+    "isvcomponent": true,
+    "since": "19.0.0",
+    "longname": "oj-c.Badge",
+    "pack": "oj-c",
+    "classdesc": "A badge is a label which holds a small amount of information.",
+    "scope": "static",
+    "tagWithoutBrackets": "oj-c-badge",
+    "tagWithBrackets": "<oj-c-badge>",
+    "domInterface": "CBadgeElement",
+    "ojPageTitle": "&lt;oj-c-badge>",
+    "camelCaseName": "Badge",
+    "ojPageTitlePrefix": "Element: ",
+    "ojtsvcomponent": true,
+    "tstype": {
+      "target": "Type",
+      "value": "interface CBadgeElement extends JetElement<BadgeElementSettableProperties>"
+    },
+    "ojsignature": [
+      {
+        "target": "Type",
+        "value": "interface CBadgeElement extends JetElement<BadgeElementSettableProperties>"
+      }
+    ],
+    "tsdeprecated": [
+      {
+        "type": "supersedes",
+        "since": "19.0.0",
+        "description": "Note: This component supersedes the following style class: <a href='stylingdocs/Badge.html#oj-badge'>oj-badge</a>."
+      }
+    ],
+    "ojmodule": "badge"
+  },
+  {
+    "id": "oj-c.Badge#variant",
+    "name": "variant",
+    "memberof": "oj-c.Badge",
+    "meta": {
+      "filename": "badge.tsx",
+      "path": "web/components/oj-c/badge"
+    },
+    "kind": "member",
+    "longname": "oj-c.Badge#variant",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "\"success\"",
+        "\"danger\"",
+        "\"info\"",
+        "\"warning\"",
+        "\"neutral\"",
+        "\"neutralSubtle\"",
+        "\"dangerSubtle\"",
+        "\"successSubtle\"",
+        "\"warningSubtle\"",
+        "\"infoSubtle\""
+      ]
+    },
+    "optional": true,
+    "description": "Sets the variant for the badge. Badge can be subtle or solid with different colors. The default value of this property is theme driven."
+  },
+  {
+    "id": "oj-c.Badge#size",
+    "name": "size",
+    "memberof": "oj-c.Badge",
+    "meta": {
+      "filename": "badge.tsx",
+      "path": "web/components/oj-c/badge"
+    },
+    "kind": "member",
+    "longname": "oj-c.Badge#size",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "\"sm\"",
+        "\"md\""
+      ]
+    },
+    "optional": true,
+    "description": "Specifies the size of the badge. Consists of two options: medium and small. The default value of this property is theme driven."
+  },
+  {
+    "id": "oj-c.Badge#edge",
+    "name": "edge",
+    "memberof": "oj-c.Badge",
+    "meta": {
+      "filename": "badge.tsx",
+      "path": "web/components/oj-c/badge"
+    },
+    "kind": "member",
+    "longname": "oj-c.Badge#edge",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "\"none\"",
+        "\"end\""
+      ]
+    },
+    "optional": true,
+    "description": "Specifies the edge of the badge. Badges can be attached to the end edge of another component. They lose their default corner rounding on right side for ltr direction or left side for rtl direction."
+  },
+  {
+    "id": "oj-c.Badge#label",
+    "name": "label",
+    "memberof": "oj-c.Badge",
+    "meta": {
+      "filename": "badge.tsx",
+      "path": "web/components/oj-c/badge"
+    },
+    "kind": "member",
+    "longname": "oj-c.Badge#label",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "string"
+      ]
+    },
+    "optional": false,
+    "description": "\"Specifies the text to be displayed in the badge."
+  },
+  {
+    "id": "oj-c.Badge#setProperty",
+    "name": "setProperty",
+    "memberof": "oj-c.Badge",
+    "meta": {
+      "filename": "badge.tsx",
+      "path": "web/components/oj-c/badge"
+    },
+    "kind": "function",
+    "longname": "oj-c.Badge#setProperty",
+    "scope": "instance",
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "void"
+          ]
+        }
+      }
+    ],
+    "description": "Sets a property or a single subproperty for complex properties and notifies the component of the change, triggering a corresponding event.",
+    "params": [
+      {
+        "name": "property",
+        "description": "The property name to set. Supports dot notation for subproperty access.",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "value",
+        "description": "The new value to set the property to.",
+        "type": {
+          "names": [
+            "any"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.Badge#getProperty",
+    "name": "getProperty",
+    "memberof": "oj-c.Badge",
+    "meta": {
+      "filename": "badge.tsx",
+      "path": "web/components/oj-c/badge"
+    },
+    "kind": "function",
+    "longname": "oj-c.Badge#getProperty",
+    "scope": "instance",
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "any"
+          ]
+        }
+      }
+    ],
+    "description": "Retrieves the value of a property or a subproperty.",
+    "params": [
+      {
+        "name": "property",
+        "description": "The property name to get. Supports dot notation for subproperty access.",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.Badge#setProperties",
+    "name": "setProperties",
+    "memberof": "oj-c.Badge",
+    "meta": {
+      "filename": "badge.tsx",
+      "path": "web/components/oj-c/badge"
+    },
+    "kind": "function",
+    "longname": "oj-c.Badge#setProperties",
+    "scope": "instance",
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "void"
+          ]
+        }
+      }
+    ],
+    "description": "Performs a batch set of properties.",
+    "params": [
+      {
+        "name": "properties",
+        "description": "An object containing the property and value pairs to set.",
+        "type": {
+          "names": [
+            "object"
+          ]
+        }
+      }
+    ]
+  }
+]

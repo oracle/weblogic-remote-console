@@ -1,0 +1,7 @@
+.CheckboxBaseTheme_baseTheme__lptpwa0 {
+  --iconToTextGap__1qyga5a1: calc(2 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --outlineWidth__1qyga5a0: 1px;
+}
+:root, .oj-density-dependent {
+  --rowHeight__1qyga5a2: calc(calc(9 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem)) + calc(2 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-density-units, 0px)));
+}

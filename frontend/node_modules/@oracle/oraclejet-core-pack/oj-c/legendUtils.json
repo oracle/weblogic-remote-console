@@ -1,0 +1,85 @@
+[
+  {
+    "id": "oj-c.legendUtils",
+    "name": "legendUtils",
+    "ojmodulecontainer": "oj-c.legendUtils",
+    "memberof": "oj-c",
+    "longname": "oj-c.legendUtils",
+    "kind": "namespace",
+    "scope": "static",
+    "meta": {
+      "filename": "legendUtils.ts",
+      "path": "/home/jenkins/uitech/workspace/OJET_Code_19.0.1/packages/oraclejet-core-pack/web/components/oj-c/legend-utils"
+    },
+    "pack": "oj-c",
+    "classdesc": "A collection of utility functions related to determining the dimensions of an element.",
+    "ojmodule": "legend-utils"
+  },
+  {
+    "id": "oj-c.legendUtils#getPreferredSize",
+    "name": "getPreferredSize",
+    "memberof": "oj-c.legendUtils",
+    "meta": {
+      "filename": "legendUtils.ts",
+      "path": "/home/jenkins/uitech/workspace/OJET_Code_19.0.1/packages/oraclejet-core-pack/web/components/oj-c/legend-utils"
+    },
+    "kind": "function",
+    "longname": "oj-c.legendUtils#getPreferredSize",
+    "scope": "instance",
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "description": "An object containing preferred width and height required by legend to render.",
+        "tstype": {
+          "target": "Type",
+          "value": "{ width: number; height: number; }",
+          "jsdocOverride": true,
+          "for": "returns"
+        }
+      }
+    ],
+    "ojexports": true,
+    "description": "",
+    "params": [
+      {
+        "name": "element",
+        "description": "An oj-c-legend element.",
+        "type": {
+          "names": [
+            "HTMLElement"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "HTMLElement",
+            "jsdocOverride": true,
+            "for": "element"
+          }
+        ]
+      },
+      {
+        "name": "width",
+        "description": "The width allocated for rendering the legend.",
+        "type": {
+          "names": [
+            "number"
+          ]
+        }
+      },
+      {
+        "name": "height",
+        "description": "The height allocated for rendering the legend.",
+        "type": {
+          "names": [
+            "number"
+          ]
+        }
+      }
+    ]
+  }
+]

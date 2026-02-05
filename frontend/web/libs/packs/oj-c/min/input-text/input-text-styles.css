@@ -1,0 +1,17 @@
+oj-c-input-text:not(.oj-complete) {
+  visibility: hidden;
+}
+
+oj-c-input-text {
+  display: inline-block;
+  max-width: 100%;
+  width: 100%;
+}
+
+oj-c-input-text.in-form-layout {
+  display: block;
+}
+
+oj-c-input-text[hidden] {
+  display: none;
+}

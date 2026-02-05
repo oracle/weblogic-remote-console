@@ -1,0 +1,64 @@
+@keyframes ProgressBarStyles_animationLTR__1hi376f0 {
+  0% {
+    left: -35%;
+    right: 100%;
+  }
+  60% {
+    left: 100%;
+    right: -90%;
+  }
+  100% {
+    left: 100%;
+    right: -90%;
+  }
+}
+@keyframes ProgressBarStyles_animationRTL__1hi376f1 {
+  0% {
+    left: 100%;
+    right: -35%;
+  }
+  60% {
+    left: -90%;
+    right: 100%;
+  }
+  100% {
+    left: -90%;
+    right: 100%;
+  }
+}
+.ProgressBarStyles_base__1hi376f2 {
+  height: var(--height__irxz4j0);
+  position: relative;
+  box-sizing: border-box;
+  overflow-x: hidden;
+  background-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-measure-track-enabled);
+}
+.ProgressBarStyles_trackBorderEdgeNone__1hi376f3 {
+  box-shadow: 0px 0px 0px 1px var(--oj-c-EXPERIMENTAL-DO-NOT-USE-border-enabled) inset;
+}
+.ProgressBarStyles_trackBorderEdgeTop__1hi376f4 {
+  box-shadow: 0px -1px 0px 0px var(--oj-c-EXPERIMENTAL-DO-NOT-USE-border-enabled) inset;
+}
+.ProgressBarStyles_valueStyle__1hi376f5 {
+  background-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-measure-fill-enabled);
+  height: 100%;
+  box-sizing: border-box;
+}
+.ProgressBarStyles_highContrastValueStyle__1hi376f6 {
+  border: 1px dashed var(--oj-c-EXPERIMENTAL-DO-NOT-USE-border-keyboard-focus);
+}
+.ProgressBarStyles_indeterminate__1hi376f7 {
+  width: 25%;
+  height: var(--height__irxz4j0);
+  position: relative;
+  animation-duration: 2s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  border-radius: var(--borderRadius__irxz4j1);
+}
+.ProgressBarStyles_animationStyleRTL__1hi376f8 {
+  animation-name: ProgressBarStyles_animationRTL__1hi376f1;
+}
+.ProgressBarStyles_animationStyleLTR__1hi376f9 {
+  animation-name: ProgressBarStyles_animationLTR__1hi376f0;
+}

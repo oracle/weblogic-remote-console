@@ -1,0 +1,87 @@
+/* MultiSelect (Available / Buttons / Chosen) layout and styling */
+
+
+#available-container,
+#chosen-container {
+  min-width: 0;
+}
+
+#available-container oj-label,
+#chosen-container oj-label {
+  margin-bottom: 6px;
+}
+
+/* The box that holds the checkbox sets */
+#available-container > div,
+#chosen-container > div {
+  border: 1px solid var(--oj-core-divider-color, #dcdcdc);
+  border-radius: 4px;
+  padding: 6px 8px;
+  min-height: 220px;
+  overflow: auto;
+  background-color: var(--oj-core-bg-color, transparent);
+  box-sizing: border-box;      /* include padding/border in width to avoid visual overlap */
+}
+
+/* Middle button column: vertical stack and vertically centered relative to the side boxes */
+#available-chosen-buttonset {
+  min-width: 56px;             /* enough width for icon-only buttons */
+  padding: 0 4px;
+  row-gap: 8px;                /* enforce vertical space between stacked buttons in flex column */
+}
+
+#available-chosen-buttonset .oj-c-button,
+#available-chosen-buttonset oj-c-button {
+  margin: 8px 0;               /* defensive spacing if gap isn't applied in some themes */
+}
+
+/* Ensure spacing between wrappers too, to avoid overlap when host utils are ignored */
+#available-chosen-buttonset > div {
+  margin: 6px 0;
+}
+
+/* Optional: make checkbox items wrap long labels nicely inside the bordered area */
+#available-container .oj-c-checkboxset,
+#chosen-container .oj-c-checkboxset {
+  inline-size: 100%;
+  overflow: auto;
+}
+
+/* Small screens: allow columns to wrap if space is too tight */
+
+/* Force horizontal 3-column layout: Available | Buttons | Chosen */
+#available-chosen-container {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  column-gap: 12px;
+  row-gap: 0;
+  align-items: stretch;
+}
+
+/* Left and right columns stack their label over the box and flex to fill */
+#available-container,
+#chosen-container {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 0%;
+  min-width: 0;            /* allow shrink without overlap */
+}
+
+/* Make bordered checkbox areas fill the column height */
+#available-container > div,
+#chosen-container > div {
+  flex: 1 1 0%;
+}
+
+/* Middle column: stack buttons vertically and size to content */
+#available-chosen-buttonset {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
+  /* Button column sizes to its content; no overlap */
+  flex: 0 0 auto !important;
+  width: auto;
+  margin-left: 0;              /* grid column gap provides spacing */
+  box-sizing: border-box;
+}

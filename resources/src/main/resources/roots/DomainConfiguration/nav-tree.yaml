@@ -2,6 +2,7 @@
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 contents:
 - label: Environment
+  description: Configuration of various entities used to create an environment for running applications, like servers and clusters
   type: group
   contents:
   - child: Domain
@@ -18,6 +19,7 @@ contents:
   - child: Domain.CoherenceClusterSystemResources
   - child: Domain.RMIForwardings
 - label: Scheduling
+  description: Configuration for managing thread pools
   type: group
   contents:
   - child: Domain.SelfTuning.WorkManagers
@@ -31,6 +33,7 @@ contents:
   - child: Domain.ManagedScheduledExecutorServiceTemplates
   - child: Domain.ManagedThreadFactoryTemplates
 - label: Deployments
+  description: Management of application and other types of deployments
   type: group
   contents:
   - child: Domain.AppDeployments
@@ -38,6 +41,7 @@ contents:
   - child: Domain.DBClientDataDirectories
   - child: Domain.PluginDeployments
 - label: Services
+  description: Configuration of system services like JDBC, JMS, and persistence
   type: group
   contents:
   - child: Domain.JDBCSystemResources
@@ -56,6 +60,7 @@ contents:
   - child: Domain.MailSessions
   - child: Domain.OsgiFrameworks
 - label: Security
+  description: Security realm and certificate management settings
   type: group
   contents:
   - child: Domain.SecurityConfiguration.Realms
@@ -64,11 +69,13 @@ contents:
   - child: Domain.SecurityConfiguration.CredentialSets
   - child: Domain.WebserviceSecurities
 - label: Interoperability
+  description: Settings for integration with external systems like Tuxedo
   type: group
   contents:
   - child: Domain.WTCServers
   - child: Domain.JoltConnectionPools
 - label: Diagnostics
+  description: Monitoring and diagnostic tools configuration
   type: group
   contents:
   - child: Domain.WLDFSystemResources

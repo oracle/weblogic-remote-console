@@ -1,0 +1,19 @@
+.LinkStyles_standard__ta6igz0 {
+  display: inline;
+  color: var(--textColor__1w21kyl6);
+  -webkit-text-decoration-color: var(--textColor__1w21kyl6);
+          text-decoration-color: var(--textColor__1w21kyl6);
+  text-decoration-thickness: 1px;
+  text-underline-offset: var(--textUnderlineOffset__1w21kyl5);
+}
+.LinkStyles_standard__ta6igz0:visited {
+  color: var(--textColorVisited__1w21kyl8);
+}
+.LinkStyles_standard__ta6igz0:active {
+  color: var(--textColorActive__1w21kyl7);
+}
+.LinkStyles_standard__ta6igz0:focus-visible {
+  outline-style: dotted;
+  outline-width: 1px;
+  outline-offset: 1px;
+}

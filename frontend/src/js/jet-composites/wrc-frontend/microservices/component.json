@@ -1,9 +1,0 @@
-{
-  "name": "microservices",
-  "pack": "wrc-frontend",
-  "displayName": "wrc-frontend/microservices",
-  "description": "A JET Resource component containing modules formerly located under src/js/microservices.",
-  "type": "resource",
-  "version": "1.0.0",
-  "jetVersion": "^10.1.0"
-}

@@ -1,0 +1,17 @@
+.WeekNumberCellStyle_weekNumberStyles__3p670z0 {
+  align-items: center;
+  box-sizing: border-box;
+  color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-secondary);
+  display: flex;
+  font-size: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-body-xs-font-size);
+  font-weight: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-body-xs-font-weight-regular);
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+}
+.WeekNumberCellStyle_weekNumberCellStyles__3p670z1 {
+  border-inline-end: 1px solid var(--oj-c-EXPERIMENTAL-DO-NOT-USE-border-divider);
+  display: flex;
+  justify-content: center;
+  width: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-base-button-sizes-sm-height);
+}

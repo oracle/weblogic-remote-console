@@ -1,0 +1,52 @@
+.ChartStyles_baseChartStyle__19zsovb0 {
+  outline: none;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+.ChartStyles_cursorEnable__19zsovb1 {
+  cursor: pointer;
+}
+.ChartStyles_dimmed__19zsovb2 {
+  opacity: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-dimmed-opacity);
+}
+.ChartStyles_selectedBorder__19zsovb3 {
+  fill: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-border-selected-neutral);
+}
+.ChartStyles_contrastBorder__19zsovb4 {
+  stroke: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-dvt-contrast-line);
+  stroke-width: 1px;
+}
+.ChartStyles_dimensionStyle__19zsovb5 {
+  width: 100%;
+  height: calc(112 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+}
+.ChartStyles_dataLabelStyle__19zsovb6 {
+  font-size: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-label-sm-font-size);
+  fill: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-primary);
+  dominant-baseline: middle;
+  text-anchor: middle;
+  pointer-events: none;
+}
+.ChartStyles_dataLabelContrast__19zsovb7 {
+  stroke: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-dvt-contrast-line);
+  stroke-opacity: 0.8;
+  stroke-width: 0.25em;
+  stroke-linejoin: round;
+  paint-order: stroke;
+  font-weight: 600;
+}
+.ChartStyles_highContrastLabelStyle__19zsovb8 {
+  fill: CanvasText;
+  stroke: Canvas;
+}
+.ChartStyles_stackLabelStyle__19zsovb9 {
+  font-size: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-label-sm-font-size);
+  fill: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-primary);
+  dominant-baseline: middle;
+  text-anchor: middle;
+  font-weight: bold;
+}

@@ -1,0 +1,153 @@
+.MeterBarStyles_baseStyle__1h0btjv0 {
+  display: inline-flex;
+  pointer-events: none;
+  -webkit-tap-highlight-color: transparent;
+}
+.MeterBarStyles_baseStyle__1h0btjv0:focus-visible {
+  outline-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-border-keyboard-focus);
+  outline-style: dotted;
+  outline-width: 1px;
+}
+.MeterBarStyles_interactiveStyle__1h0btjv1 {
+  cursor: pointer;
+  touch-action: none;
+}
+.MeterBarStyles_horizontalStyle__1h0btjv2 {
+  width: 100%;
+}
+.MeterBarStyles_verticalStyle__1h0btjv3 {
+  height: 100%;
+}
+.MeterBarStyles_barValueBaseStyle__1h0btjv4 {
+  background-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-measure-fill-enabled);
+  border-radius: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-border-radius-sm);
+  position: absolute;
+  pointer-events: none;
+}
+.MeterBarStyles_barValueVerticalStyle__1h0btjv5 {
+  bottom: 0%;
+  left: 50%;
+  transform: translate(-50%, 0);
+}
+.MeterBarStyles_barValueHorizontalStyle__1h0btjv6 {
+  top: 50%;
+  transform: translate(0, -50%);
+}
+.MeterBarStyles_barValueHighContrastStyle__1h0btjv7 {
+  border: 1px dashed var(--oj-c-EXPERIMENTAL-DO-NOT-USE-border-keyboard-focus);
+}
+.MeterBarStyles_barTrackBaseStyle__1h0btjv8 {
+  position: relative;
+  display: flex;
+  background-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-measure-track-enabled);
+  border-radius: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-border-radius-sm);
+  pointer-events: auto;
+}
+.MeterBarStyles_barTrackBorderStyle__1h0btjv9 {
+  outline: 1px solid var(--oj-c-EXPERIMENTAL-DO-NOT-USE-border-enabled);
+  outline-offset: -1px;
+}
+.MeterBarStyles_barTrackHorizontalSizeStyle__1h0btjva {
+  width: 100%;
+  height: var(--size__saju1q0);
+}
+.MeterBarStyles_barTrackVerticalSizeStyle__1h0btjvb {
+  flex-direction: column-reverse;
+  width: var(--size__saju1q0);
+  height: 100%;
+}
+.MeterBarStyles_barTrackMarginTopStyle__1h0btjvc {
+  margin-top: calc(calc(5 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem)) - var(--size__saju1q0));
+}
+.MeterBarStyles_barTrackMarginStartStyle__1h0btjvd {
+  margin-inline-start: calc(calc(5 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem)) - var(--size__saju1q0));
+}
+.MeterBarStyles_barTrackMarginEndStyle__1h0btjve {
+  margin-inline-end: calc(calc(5 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem)) - var(--size__saju1q0));
+}
+.MeterBarStyles_barTrackMarginBottomStyle__1h0btjvf {
+  margin-bottom: calc(calc(5 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem)) - var(--size__saju1q0));
+}
+.MeterBarStyles_barTrackMarginTopFitStyle__1h0btjvg {
+  margin-top: calc(4 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+}
+.MeterBarStyles_barTrackMarginStartFitStyle__1h0btjvh {
+  margin-inline-start: calc(4 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+}
+.MeterBarStyles_barTrackMarginEndFitStyle__1h0btjvi {
+  margin-inline-end: calc(4 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+}
+.MeterBarStyles_barTrackMarginBottomFitStyle__1h0btjvj {
+  margin-bottom: calc(4 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+}
+.MeterBarStyles_trackSectionHorizontalFirstStyle__1h0btjvk {
+  border-radius: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-border-radius-sm) 0 0 var(--oj-c-EXPERIMENTAL-DO-NOT-USE-border-radius-sm);
+}
+.MeterBarStyles_trackSectionHorizontalLastStyle__1h0btjvl {
+  border-radius: 0 var(--oj-c-EXPERIMENTAL-DO-NOT-USE-border-radius-sm) var(--oj-c-EXPERIMENTAL-DO-NOT-USE-border-radius-sm) 0;
+  border-width: 0;
+}
+.MeterBarStyles_trackSectionVerticalFirstStyle__1h0btjvm {
+  border-radius: 0 0 var(--oj-c-EXPERIMENTAL-DO-NOT-USE-border-radius-sm) var(--oj-c-EXPERIMENTAL-DO-NOT-USE-border-radius-sm);
+}
+.MeterBarStyles_trackSectionVerticalLastStyle__1h0btjvn {
+  border-radius: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-border-radius-sm) var(--oj-c-EXPERIMENTAL-DO-NOT-USE-border-radius-sm) 0 0;
+  border-width: 0;
+}
+.MeterBarStyles_trackSectionRoundedCornersStyle__1h0btjvo {
+  border-radius: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-border-radius-sm);
+}
+.MeterBarStyles_referenceLinesBaseStyle__1h0btjvp {
+  background-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-dvt-reference-object-line);
+  background-clip: padding-box;
+  position: absolute;
+  pointer-events: none;
+  border-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-dvt-contrast-line);
+  border-style: solid;
+}
+.MeterBarStyles_referenceLinesVerticalStyle__1h0btjvq {
+  width: calc(5 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  height: 2px;
+  border-width: 1px 0 0 0;
+}
+.MeterBarStyles_referenceLinesHorizontalStyle__1h0btjvr {
+  width: 2px;
+  height: calc(5 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  border-width: 0 1px 0 0;
+}
+.MeterBarStyles_referenceLinesHoriontalStartStyle__1h0btjvs {
+  bottom: 0%;
+}
+.MeterBarStyles_referenceLinesVerticalStartLtrStyle__1h0btjvt {
+  right: 0%;
+}
+.MeterBarStyles_referenceLinesVerticalStartRtlStyle__1h0btjvu {
+  left: 0%;
+}
+.MeterBarStyles_labelDivStyle__1h0btjvv {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  text-align: center;
+  transform-origin: 0 50%;
+  position: absolute;
+  line-height: initial;
+  color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-primary);
+}
+.MeterBarStyles_thresholdBarBaseStyle__1h0btjvw {
+  border-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-dvt-contrast-line);
+  border-style: solid;
+  box-sizing: border-box;
+  pointer-events: none;
+  background-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-measure-track-enabled);
+  background-clip: padding-box;
+}
+.MeterBarStyles_thresholdBarVerticalBarTrackSectionStyle__1h0btjvx {
+  border-width: 1px 0 0 0;
+}
+.MeterBarStyles_thresholdBarHorizontalBarTrackSectionRtlStyle__1h0btjvy {
+  border-width: 0 0 0 1px;
+}
+.MeterBarStyles_thresholdBarHorizontalBarTrackSectionLtrStyle__1h0btjvz {
+  border-width: 0 1px 0 0;
+}

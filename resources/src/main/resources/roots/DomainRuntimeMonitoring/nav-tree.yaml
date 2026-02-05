@@ -2,6 +2,7 @@
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 contents:
 - label: Environment
+  description: Runtime data and control for environment entities like servers and clusters
   type: group
   contents:
   - child: DomainRuntime
@@ -14,6 +15,7 @@ contents:
   - child: DomainRuntime.AggregatedJVMRuntime
   - child: DomainRuntime.NodeManagerRuntimes
   - label: Clustering
+    description: Runtime data and control for cluster operations across all running servers
     type: group
     contents:
     - child: DomainRuntime.AggregatedClusterRuntime
@@ -23,6 +25,7 @@ contents:
     - child: DomainRuntime.AggregatedWANReplicationRuntime
     - child: DomainRuntime.ElasticServiceManagerRuntime.ScalingTasks
   - label: Migration
+    description: Runtime data and control for service migration across all running servers
     type: group
     contents:
     - child: DomainRuntime.MigratableServiceCoordinatorRuntime
@@ -31,6 +34,7 @@ contents:
     - child: DomainRuntime.MigrationDataRuntimes
     - child: DomainRuntime.ServiceMigrationDataRuntimes
   - label: ZDT
+    description: Runtime data and control for zero downtime updates across all running servers
     type: group
     contents:
     - child: DomainRuntime.RolloutService.AllWorkflows
@@ -40,6 +44,7 @@ contents:
   - child: DomainRuntime.EditSessionConfigurationManager.EditSessionConfigurations
   - child: DomainRuntime.SystemComponentLifeCycleRuntimes
 - label: Scheduling
+  description: Runtime data and control for thread pools and execution scheduling across all running servers
   type: group
   contents:
   - child: DomainRuntime.AggregatedExecuteQueueRuntimes
@@ -49,6 +54,7 @@ contents:
   - child: DomainRuntime.AggregatedWorkManagerRuntimes
   - child: DomainRuntime.AggregatedConcurrentManagedObjectsRuntime
 - label: Deployments
+  description: Runtime data and control for applications and libraries across all running servers
   type: group
   contents:
   - child: DomainRuntime.AggregatedApplicationRuntimes
@@ -64,6 +70,7 @@ contents:
   - child: DomainRuntime.DeploymentManager.DeploymentProgressObjects
   - child: DomainRuntime.AggregatedWebServerRuntimes
   - label: Web Services
+    description: Runtime data and control for web service operations across all running servers
     type: group
     contents:
     - child: DomainRuntime.AggregatedWseeClusterFrontEndRuntime
@@ -71,21 +78,25 @@ contents:
     - child: DomainRuntime.AggregatedEntityCacheCurrentStateRuntime
     - child: DomainRuntime.AggregatedEntityCacheCumulativeRuntime
   - label: Resource Adapters
+    description: Runtime data and control for resource adapter operations across all running servers
     type: group
     contents:
     - child: DomainRuntime.AggregatedConnectorServiceRuntime.ActiveRAs
     - child: DomainRuntime.AggregatedConnectorServiceRuntime.InactiveRAs
     - child: DomainRuntime.AggregatedConnectorServiceRuntime.RAs
 - label: Services
+  description: Runtime data and control for system services like JDBC and JMS across all running servers
   type: group
   contents:
   - label: Data Sources
+    description: Runtime data and control for database connections across all running servers
     type: group
     contents:
     - child: DomainRuntime.AggregatedJDBCServiceRuntime.JDBCDataSourceRuntimeMBeans
     - child: DomainRuntime.AggregatedJDBCServiceRuntime.JDBCDriverRuntimeMBeans
     - child: DomainRuntime.AggregatedJDBCServiceRuntime.JDBCMultiDataSourceRuntimeMBeans
   - label: Messaging
+    description: Runtime data and control for JMS and messaging across all running servers
     type: group
     contents:
     - child: DomainRuntime.AggregatedJMSRuntime
@@ -93,15 +104,18 @@ contents:
     - child: DomainRuntime.AggregatedPathServiceRuntimes
     - child: DomainRuntime.AggregatedMessagingBridgeRuntimes
   - label: Transactions
+    description: Runtime data and control for transaction management across all running servers
     type: group
     contents:
     - child: DomainRuntime.AggregatedJTARuntime
   - label: Persistence
+    description: Runtime data and control for data persistence across all running servers
     type: group
     contents:
     - child: DomainRuntime.AggregatedPersistentStoreRuntimes
     - child: DomainRuntime.AggregatedWLDFRuntime.WLDFAccessRuntime.DataAccessRuntimes
 - label: Security
+  description: Runtime data and control for security realms and keystores across all running servers
   type: group
   contents:
   - child: DomainRuntime.AggregatedServerSecurityRuntime.RealmRuntimes
@@ -127,11 +141,13 @@ contents:
       allowed:
       - Operator
 - label: Interoperability
+  description: Runtime data and control for external system integrations across all running servers
   type: group
   contents:
   - child: DomainRuntime.AggregatedJoltRuntime
   - child: DomainRuntime.AggregatedWTCRuntime
 - label: Diagnostics
+  description: Runtime data and control for monitoring and diagnostics across all running servers
   type: group
   contents:
   - child: DomainRuntime.AggregatedWLDFRuntime.WLDFAccessRuntime.WLDFDataAccessRuntimes

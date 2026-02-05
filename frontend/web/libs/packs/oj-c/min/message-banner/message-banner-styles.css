@@ -1,0 +1,11 @@
+oj-c-message-banner:not(.oj-complete) {
+  visibility: hidden;
+}
+
+oj-c-message-banner {
+  display: block;
+}
+
+oj-c-message-banner[hidden] {
+  display: none;
+}

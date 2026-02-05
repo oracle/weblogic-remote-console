@@ -1,0 +1,14 @@
+@keyframes SkeletonStyles_skeletonAnimation__19fl8u0 {
+  0% {
+    background-color: var(--bgColor-end__1mh02731);
+  }
+  100% {
+    background-color: var(--bgColor-start__1mh02730);
+  }
+}
+.SkeletonStyles_skeletonBase__19fl8u1 {
+  animation-name: SkeletonStyles_skeletonAnimation__19fl8u0;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+  animation-duration: 1.5s;
+}

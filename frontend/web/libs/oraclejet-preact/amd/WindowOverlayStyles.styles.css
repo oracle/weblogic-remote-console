@@ -1,0 +1,165 @@
+.WindowOverlayStyles_windowOverlayStyles_notificationPosition__d5jpag0 {
+  position: relative;
+  pointer-events: initial;
+  width: -moz-max-content;
+  width: max-content;
+}
+.WindowOverlayStyles_windowOverlayStyles_top__d5jpag1 {
+  left: var(--notificationCrossAxisOffset__5h4cac1);
+  top: var(--notificationMainAxisOffset__5h4cac0);
+}
+.WindowOverlayStyles_windowOverlayStyles__d5jpag2 {
+  left: var(--notificationCrossAxisOffset__5h4cac1);
+  top: var(--notificationMainAxisOffset__5h4cac0);
+}
+.WindowOverlayStyles_windowOverlayStyles_bottom__d5jpag3 {
+  left: var(--notificationCrossAxisOffset__5h4cac1);
+  bottom: var(--notificationMainAxisOffset__5h4cac0);
+}
+.WindowOverlayStyles_windowOverlayStyles__d5jpag4 {
+  bottom: var(--notificationMainAxisOffset__5h4cac0);
+  left: var(--notificationCrossAxisOffset__5h4cac1);
+}
+.WindowOverlayStyles_windowOverlayStyles__d5jpag5 {
+  right: var(--notificationCrossAxisOffset__5h4cac1);
+  top: var(--notificationMainAxisOffset__5h4cac0);
+}
+.WindowOverlayStyles_windowOverlayStyles__d5jpag6 {
+  right: var(--notificationCrossAxisOffset__5h4cac1);
+  bottom: var(--notificationMainAxisOffset__5h4cac0);
+}
+.WindowOverlayStyles_windowOverlayStyles_right__d5jpag7 {
+  right: var(--notificationMainAxisOffset__5h4cac0);
+  top: var(--notificationCrossAxisOffset__5h4cac1);
+}
+.WindowOverlayStyles_windowOverlayStyles_left__d5jpag8 {
+  left: var(--notificationMainAxisOffset__5h4cac0);
+  top: var(--notificationCrossAxisOffset__5h4cac1);
+}
+.WindowOverlayStyles_windowOverlayStyles__d5jpag9 {
+  left: var(--notificationMainAxisOffset__5h4cac0);
+  top: var(--notificationCrossAxisOffset__5h4cac1);
+}
+.WindowOverlayStyles_windowOverlayStyles__d5jpaga {
+  left: var(--notificationMainAxisOffset__5h4cac0);
+  bottom: var(--notificationCrossAxisOffset__5h4cac1);
+}
+.WindowOverlayStyles_windowOverlayStyles__d5jpagb {
+  right: var(--notificationMainAxisOffset__5h4cac0);
+  top: var(--notificationCrossAxisOffset__5h4cac1);
+}
+.WindowOverlayStyles_windowOverlayStyles__d5jpagc {
+  right: var(--notificationMainAxisOffset__5h4cac0);
+  bottom: var(--notificationCrossAxisOffset__5h4cac1);
+}
+.WindowOverlayStyles_placementStyles_center__d5jpagd {
+  align-items: center;
+  justify-items: center;
+}
+.WindowOverlayStyles_placementStyles_top__d5jpage {
+  align-items: start;
+  justify-items: center;
+}
+.WindowOverlayStyles_placementStyles__d5jpagf {
+  align-items: start;
+  justify-items: end;
+}
+.WindowOverlayStyles_placementStyles__d5jpagg {
+  align-items: start;
+  justify-items: end;
+}
+.WindowOverlayStyles_placementStyles__d5jpagh {
+  align-items: start;
+  justify-items: start;
+}
+.WindowOverlayStyles_placementStyles__d5jpagi {
+  align-items: start;
+  justify-items: start;
+}
+.WindowOverlayStyles_placementStyles__d5jpagj {
+  align-items: start;
+  justify-items: end;
+}
+.WindowOverlayStyles_placementStyles__d5jpagk {
+  align-items: start;
+  justify-items: start;
+}
+.WindowOverlayStyles_placementStyles_end__d5jpagl {
+  align-items: center;
+  justify-items: end;
+}
+.WindowOverlayStyles_placementStyles__d5jpagm {
+  align-items: start;
+  justify-items: end;
+}
+.WindowOverlayStyles_placementStyles__d5jpagn {
+  align-items: end;
+  justify-items: end;
+}
+.WindowOverlayStyles_placementStyles__d5jpago {
+  align-items: start;
+  justify-items: end;
+}
+.WindowOverlayStyles_placementStyles__d5jpagp {
+  align-items: end;
+  justify-items: end;
+}
+.WindowOverlayStyles_placementStyles_bottom__d5jpagq {
+  align-items: end;
+  justify-items: center;
+}
+.WindowOverlayStyles_placementStyles__d5jpagr {
+  align-items: end;
+  justify-items: end;
+}
+.WindowOverlayStyles_placementStyles__d5jpags {
+  align-items: end;
+  justify-items: end;
+}
+.WindowOverlayStyles_placementStyles__d5jpagt {
+  align-items: end;
+  justify-items: start;
+}
+.WindowOverlayStyles_placementStyles__d5jpagu {
+  align-items: end;
+  justify-items: start;
+}
+.WindowOverlayStyles_placementStyles__d5jpagv {
+  align-items: end;
+  justify-items: end;
+}
+.WindowOverlayStyles_placementStyles__d5jpagw {
+  align-items: end;
+  justify-items: start;
+}
+.WindowOverlayStyles_placementStyles_start__d5jpagx {
+  align-items: center;
+  justify-items: start;
+}
+.WindowOverlayStyles_placementStyles__d5jpagy {
+  align-items: start;
+  justify-items: start;
+}
+.WindowOverlayStyles_placementStyles__d5jpagz {
+  align-items: end;
+  justify-items: start;
+}
+.WindowOverlayStyles_placementStyles__d5jpag10 {
+  align-items: start;
+  justify-items: start;
+}
+.WindowOverlayStyles_placementStyles__d5jpag11 {
+  align-items: end;
+  justify-items: start;
+}
+.WindowOverlayStyles_baseStyle__d5jpag12 {
+  position: fixed;
+  pointer-events: none;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+.WindowOverlayStyles_gridStyles__d5jpag13 {
+  display: grid;
+}

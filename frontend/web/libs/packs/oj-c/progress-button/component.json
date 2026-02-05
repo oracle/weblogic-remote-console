@@ -1,0 +1,262 @@
+{
+  "name": "progress-button",
+  "version": "19.0.1",
+  "jetVersion": "^19.0.1",
+  "pack": "oj-c",
+  "type": "composite",
+  "dependencyScope": "runtime",
+  "license": "https://opensource.org/licenses/UPL",
+  "implements": [
+    "CProgressButtonElement"
+  ],
+  "description": "A Progress button represents button-level initiation.",
+  "displayName": "Progress Button",
+  "help": "oj-c.ProgressButton.html",
+  "main": "oj-c/progress-button",
+  "since": "17.1.0",
+  "status": [
+    {
+      "type": "production",
+      "since": "17.1.0"
+    }
+  ],
+  "extension": {
+    "catalog": {
+      "category": "Controls"
+    },
+    "vbdt": {
+      "module": "oj-c/progress-button"
+    },
+    "oracle": {
+      "icon": "oj-ux-ico-button",
+      "uxSpecs": [
+        "button"
+      ]
+    },
+    "webelement": {
+      "package": "@oracle/oraclejet-core-pack",
+      "version": "19.0.1",
+      "docUrl": "https://www.oracle.com/webfolder/technetwork/jet/cpwdtsdoc/classes/ProgressButtonWebElement.html",
+      "export": "findProgressButton",
+      "main": "@oracle/oraclejet-core-pack/webdriver"
+    }
+  },
+  "propertyLayout": [
+    {
+      "propertyGroup": "common",
+      "items": [
+        "label",
+        "tooltip",
+        "display",
+        "chroming",
+        "isloading",
+        "size",
+        "width",
+        "edge",
+        "disabled"
+      ]
+    }
+  ],
+  "properties": {
+    "label": {
+      "type": "string",
+      "description": "Text to show in the button or as tooltip for icon mode.",
+      "help": "#label",
+      "required": true,
+      "translatable": true
+    },
+    "tooltip": {
+      "type": "string",
+      "description": "Text to show in the tooltip. This overrides the default tooltip that renders the label when in icon mode.",
+      "help": "#tooltip",
+      "translatable": true
+    },
+    "disabled": {
+      "type": "boolean",
+      "description": "Specifies that the button element should be disabled.",
+      "help": "#disabled",
+      "value": false
+    },
+    "isLoading": {
+      "type": "boolean",
+      "description": "Specifies if progress should be shown.",
+      "help": "#isLoading"
+    },
+    "width": {
+      "type": "number|string",
+      "description": "Specifies that the button style width",
+      "help": "#width"
+    },
+    "display": {
+      "type": "string",
+      "description": "Display just the label, the icons, or all. Label is used as tooltip and should be set in all cases.",
+      "help": "#display",
+      "propertyEditorValues": {
+        "all": {
+          "description": "Display both the label and icons.",
+          "displayName": "All"
+        },
+        "icons": {
+          "description": "Display only the icons.",
+          "displayName": "Icons"
+        },
+        "label": {
+          "description": "Display only the text label.",
+          "displayName": "label"
+        }
+      },
+      "enumValues": [
+        "all",
+        "label",
+        "icons"
+      ],
+      "value": "all"
+    },
+    "size": {
+      "type": "string",
+      "description": "Size of button",
+      "help": "#size",
+      "propertyEditorValues": {
+        "sm": {
+          "description": "Display a small button.",
+          "displayName": "Small"
+        },
+        "md": {
+          "description": "Display a default size button.",
+          "displayName": "Medium"
+        },
+        "lg": {
+          "description": "Display a large button.",
+          "displayName": "Large"
+        }
+      },
+      "enumValues": [
+        "sm",
+        "md",
+        "lg"
+      ],
+      "value": "md"
+    },
+    "edge": {
+      "type": "string",
+      "description": "Specifies whether the button is attached to an edge. For example setting edge='bottom' can be used to attach a button to the bottom of a card. The button is then stretched to 100% width, and borders adjusted.",
+      "help": "#edge",
+      "propertyEditorValues": {
+        "none": {
+          "description": "Display a default standalone button.",
+          "displayName": "Small"
+        },
+        "bottom": {
+          "description": "Stretch the button to 100% width and adjust borders for usage at bottom of container.",
+          "displayName": "Bottom"
+        }
+      },
+      "enumValues": [
+        "none",
+        "bottom"
+      ],
+      "value": "none"
+    },
+    "chroming": {
+      "type": "string",
+      "description": "Indicates in what states the button has variants in background and border.",
+      "help": "#chroming",
+      "propertyEditorValues": {
+        "borderless": {
+          "description": "Borderless buttons are a more prominent variation. Borderless buttons are useful for supplemental actions that require minimal emphasis.",
+          "displayName": "Borderless"
+        },
+        "outlined": {
+          "description": "Outlined buttons are salient, but lighter weight than solid buttons. Outlined buttons are useful for secondary actions.",
+          "displayName": "Outlined"
+        },
+        "solid": {
+          "description": "Solid buttons stand out, and direct the user's attention to the most important actions in the UI.",
+          "displayName": "Solid"
+        },
+        "callToAction": {
+          "description": "A Call To Action (CTA) button guides the user to take or complete the action that is the main goal of the page or page section. There should only be one CTA button on a page at any given time.",
+          "displayName": "Call To Action"
+        }
+      },
+      "enumValues": [
+        "solid",
+        "borderless",
+        "outlined",
+        "callToAction"
+      ],
+      "binding": {
+        "consume": {
+          "name": "containerChroming"
+        }
+      },
+      "value": "outlined"
+    }
+  },
+  "slots": {
+    "startIcon": {
+      "description": "The startIcon slot is the button's start icon. The oj-c-progress-button element accepts DOM nodes as children with the startIcon slot.",
+      "help": "#startIcon"
+    }
+  },
+  "events": {
+    "ojAction": {
+      "bubbles": true,
+      "description": "Triggered when a button is clicked, whether by keyboard, mouse, or touch events. To meet accessibility requirements, the only supported way to react to the click of a button is to listen for this event.",
+      "eventGroup": "common",
+      "help": "#event:action"
+    }
+  },
+  "methods": {
+    "focus": {
+      "return": "void"
+    },
+    "blur": {
+      "return": "void"
+    },
+    "click": {
+      "return": "void"
+    },
+    "setProperty": {
+      "description": "Sets a property or a single subproperty for complex properties and notifies the component of the change, triggering a corresponding event.",
+      "help": "#setProperty",
+      "params": [
+        {
+          "name": "property",
+          "description": "The property name to set. Supports dot notation for subproperty access.",
+          "type": "string"
+        },
+        {
+          "name": "value",
+          "description": "The new value to set the property to.",
+          "type": "any"
+        }
+      ],
+      "return": "void"
+    },
+    "getProperty": {
+      "description": "Retrieves the value of a property or a subproperty.",
+      "help": "#getProperty",
+      "params": [
+        {
+          "name": "property",
+          "description": "The property name to get. Supports dot notation for subproperty access.",
+          "type": "string"
+        }
+      ],
+      "return": "any"
+    },
+    "setProperties": {
+      "description": "Performs a batch set of properties.",
+      "help": "#setProperties",
+      "params": [
+        {
+          "name": "properties",
+          "description": "An object containing the property and value pairs to set.",
+          "type": "object"
+        }
+      ],
+      "return": "void"
+    }
+  }
+}

@@ -250,7 +250,6 @@ public class JMSMessageManagementRuntimeMBeanCustomizer {
   // Returns all of the JMS destination runtimes in this JMS destination's JMS server
   // on this server (used for moving messages)
   private static List<Option> getAllDestinations(InvocationContext ic) {
-    List<Option> destinations = new ArrayList<>();
     // ic's btp =
     // 0 DomainRuntime
     // 1 CombinedServerRuntimes:<ServerName>

@@ -1,0 +1,2 @@
+define(['exports', './BusyStateContext-ab2c549a', './useBusyStateContext-26bb2acb', 'preact/hooks'], (function(t,e,u,s){"use strict";t.useAddBusyState=function(t){const{addBusyState:e}=u.useBusyStateContext(),a=s.useRef(),n=s.useCallback((()=>{a.current?.(),a.current=void 0}),[]),c=s.useCallback((()=>{n(),a.current=e(t)}),[t,n,e]);return s.useLayoutEffect((()=>n),[n]),{onBusyStart:c,onBusyEnd:n}}}));
+//# sourceMappingURL=useAddBusyState-8ed5cc58.js.map

@@ -1,0 +1,12 @@
+oj-c-dialog:not(.oj-complete){
+    visibility: hidden;
+}
+
+oj-c-dialog {
+    display: none;
+}
+
+oj-c-dialog[hidden]
+{
+    display: none;
+}

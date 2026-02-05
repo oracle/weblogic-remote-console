@@ -1,0 +1,41 @@
+:root, .oj-scale-dependent, :root.oj-scale-sm, :root.oj-scale-md {
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-month-view-row-gap: calc(3 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-month-view-column-gap: calc(0 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-month-view-day-of-the-week-line-height: calc(2 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-body-xs-font-size));
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-month-view-day-of-the-week-font-size: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-body-xs-font-size);
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-month-view-day-of-the-week-font-weight: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-body-xs-font-weight-semibold);
+}
+:root, .oj-c-colorscheme-light {
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-month-view-day-of-the-week-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-secondary);
+}
+.oj-c-colorscheme-dark, .oj-color-invert {
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-month-view-day-of-the-week-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-secondary);
+}
+.oj-scale-sm, :root.oj-scale-sm {
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-month-view-row-gap: calc(3 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-month-view-column-gap: calc(0 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-month-view-day-of-the-week-line-height: calc(2 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-body-xs-font-size));
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-month-view-day-of-the-week-font-size: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-body-xs-font-size);
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-month-view-day-of-the-week-font-weight: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-body-xs-font-weight-semibold);
+}
+.oj-scale-md, :root.oj-scale-md {
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-month-view-row-gap: calc(3 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-month-view-column-gap: calc(0 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-month-view-day-of-the-week-line-height: calc(2 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-body-xs-font-size));
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-month-view-day-of-the-week-font-size: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-body-xs-font-size);
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-month-view-day-of-the-week-font-weight: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-body-xs-font-weight-semibold);
+}
+.oj-scale-lg {
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-month-view-row-gap: calc(3 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-month-view-column-gap: calc(0 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-month-view-day-of-the-week-line-height: calc(2 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-body-xs-font-size));
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-month-view-day-of-the-week-font-size: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-body-xs-font-size);
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-month-view-day-of-the-week-font-weight: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-body-xs-font-weight-semibold);
+}
+:root {
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-month-view-row-gap: calc(3 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-month-view-column-gap: calc(0 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-month-view-day-of-the-week-line-height: calc(2 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-body-xs-font-size));
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-month-view-day-of-the-week-font-size: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-body-xs-font-size);
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-month-view-day-of-the-week-font-weight: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-body-xs-font-weight-semibold);
+}

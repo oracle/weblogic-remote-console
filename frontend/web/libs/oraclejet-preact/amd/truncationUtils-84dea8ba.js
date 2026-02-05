@@ -1,0 +1,2 @@
+define(['exports'], (function(t){"use strict";t.detectTruncation=t=>{if(t.current){const e=t.current,n=new Range;n.selectNodeContents(e);const r=n.getBoundingClientRect(),i=e.getBoundingClientRect(),o=getComputedStyle(e),d=parseFloat(o.paddingLeft)+parseFloat(o.paddingRight),a=parseFloat(o.borderLeft)+parseFloat(o.borderRight);return r.width>i.width-d-a+1||r.height>i.height+5}return!1}}));
+//# sourceMappingURL=truncationUtils-84dea8ba.js.map

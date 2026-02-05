@@ -1,0 +1,12 @@
+oj-c-toggle-button:not(.oj-complete) {
+  visibility: hidden;
+}
+
+oj-c-toggle-button {
+  display: inline-flex;
+  vertical-align: top;
+}
+
+oj-c-toggle-button[hidden] {
+  display: none;
+}

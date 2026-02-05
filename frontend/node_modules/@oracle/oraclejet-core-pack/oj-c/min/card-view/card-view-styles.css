@@ -1,0 +1,15 @@
+
+oj-c-card-view:not(.oj-complete){
+  visibility: hidden;
+}
+  
+oj-c-card-view {
+  display: block;
+  overflow: auto;
+  box-sizing: border-box;
+}
+
+oj-c-card-view[hidden]
+{
+  display: none;
+}

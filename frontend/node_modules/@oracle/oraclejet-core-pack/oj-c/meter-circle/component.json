@@ -1,0 +1,424 @@
+{
+  "name": "meter-circle",
+  "version": "19.0.1",
+  "jetVersion": "^19.0.1",
+  "pack": "oj-c",
+  "type": "composite",
+  "dependencyScope": "runtime",
+  "license": "https://opensource.org/licenses/UPL",
+  "implements": [
+    "CMeterCircleElement"
+  ],
+  "description": "A Meter circle displays information graphically in a circular bar, highlighting a specific metric value's progress in relation to its min, max, or thresholds.",
+  "displayName": "Meter circle",
+  "main": "oj-c/meter-circle",
+  "help": "oj-c.Metercircle.html",
+  "status": [
+    {
+      "type": "supersedes",
+      "since": "15.0.0",
+      "value": [
+        "oj-status-meter-gauge"
+      ]
+    }
+  ],
+  "extension": {
+    "catalog": {
+      "category": "Visualizations"
+    },
+    "vbdt": {
+      "module": "oj-c/meter-circle"
+    },
+    "oracle": {
+      "icon": "oj-ux-ico-circular-progress-7",
+      "uxSpecs": [
+        "meter-circle"
+      ]
+    },
+    "webelement": {
+      "package": "@oracle/oraclejet-core-pack",
+      "version": "19.0.1",
+      "docUrl": "https://www.oracle.com/webfolder/technetwork/jet/cpwdtsdoc/classes/MeterCircleWebElement.html",
+      "export": "findMeterCircle",
+      "main": "@oracle/oraclejet-core-pack/webdriver"
+    }
+  },
+  "propertyLayout": [
+    {
+      "propertyGroup": "common",
+      "items": [
+        "thresholdDisplay",
+        "plotArea.rendered",
+        "color",
+        "style"
+      ]
+    },
+    {
+      "propertyGroup": "data",
+      "items": [
+        "value",
+        "min",
+        "max",
+        "step",
+        "thresholds",
+        "referenceLines"
+      ]
+    }
+  ],
+  "since": "14.0.0",
+  "requirements": [
+    {
+      "type": "anyOf",
+      "label": "accessibility",
+      "properties": [
+        "aria-label",
+        "aria-labelledby",
+        "aria-describedby",
+        "described-by",
+        "labelled-by"
+      ]
+    }
+  ],
+  "properties": {
+    "max": {
+      "type": "number",
+      "description": "The maximum value of the meter circle.",
+      "displayName": "Max",
+      "help": "#max",
+      "value": 100
+    },
+    "min": {
+      "type": "number",
+      "description": "The minimum value of the meter circle.",
+      "displayName": "Min",
+      "help": "#min",
+      "value": 0
+    },
+    "readonly": {
+      "type": "boolean",
+      "help": "#readonly",
+      "displayName": "Readonly",
+      "value": false
+    },
+    "value": {
+      "type": "number|null",
+      "description": "The value of the meter circle.",
+      "displayName": "Value",
+      "help": "#value",
+      "writeback": true,
+      "value": 0
+    },
+    "step": {
+      "type": "number",
+      "displayName": "Step",
+      "help": "#step",
+      "value": 1
+    },
+    "color": {
+      "type": "string",
+      "displayName": "Color",
+      "help": "#color",
+      "format": "color",
+      "status": [
+        {
+          "type": "antiPattern",
+          "since": "16.0.0",
+          "themes": [
+            "Redwood"
+          ]
+        }
+      ]
+    },
+    "indicatorSize": {
+      "type": "number",
+      "displayName": "Indicator Size",
+      "help": "#indicatorSize",
+      "status": [
+        {
+          "type": "antiPattern",
+          "since": "16.0.0",
+          "themes": [
+            "Redwood"
+          ]
+        }
+      ],
+      "value": 1
+    },
+    "innerRadius": {
+      "type": "number",
+      "displayName": "Inner Radius",
+      "help": "innerRadius",
+      "status": [
+        {
+          "type": "antiPattern",
+          "since": "16.0.0",
+          "themes": [
+            "Redwood"
+          ]
+        }
+      ]
+    },
+    "plotArea": {
+      "type": "object",
+      "displayName": "Plot Area",
+      "help": "#plotArea",
+      "properties": {
+        "color": {
+          "type": "string",
+          "format": "color"
+        },
+        "rendered": {
+          "type": "string",
+          "enumValues": [
+            "off",
+            "on"
+          ]
+        }
+      }
+    },
+    "angleExtent": {
+      "type": "number",
+      "displayName": "Angle Extent",
+      "help": "#angleExtent",
+      "value": 360
+    },
+    "startAngle": {
+      "type": "number",
+      "displayName": "Start Angle",
+      "help": "#startAngle",
+      "value": 90
+    },
+    "referenceLines": {
+      "type": "Array<object>",
+      "displayName": "Reference Lines",
+      "help": "#referenceLines",
+      "extension": {
+        "vbdt": {
+          "itemProperties": {
+            "color": {
+              "type": "string",
+              "format": "color",
+              "propertyEditorValues": {
+                "danger": {
+                  "description": "Maps to theme-specific color indicating a danger condition"
+                },
+                "warning": {
+                  "description": "Maps to theme-specific color indicating a warning condition"
+                },
+                "success": {
+                  "description": "Maps to theme-specific color indicating a success condition"
+                }
+              }
+            },
+            "value": {
+              "type": "number"
+            },
+            "label": {
+              "type": "string"
+            },
+            "style": {
+              "type": "object",
+              "properties": {
+                "color": {
+                  "type": "string",
+                  "format": "color"
+                },
+                "fontSize": {
+                  "type": "string"
+                },
+                "fontStyle": {
+                  "type": "string"
+                },
+                "fontWeight": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "thresholdDisplay": {
+      "type": "string",
+      "displayName": "Threshold Display",
+      "help": "#thresholdDisplay",
+      "enumValues": [
+        "all",
+        "plotArea",
+        "indicator"
+      ],
+      "value": "indicator"
+    },
+    "thresholds": {
+      "type": "Array<object>",
+      "displayName": "Thresholds",
+      "help": "#thresholds",
+      "extension": {
+        "vbdt": {
+          "itemProperties": {
+            "accessibleLabel": {
+              "type": "string"
+            },
+            "color": {
+              "type": "string",
+              "format": "color",
+              "propertyEditorValues": {
+                "danger": {
+                  "description": "Maps to theme-specific color indicating a danger condition"
+                },
+                "warning": {
+                  "description": "Maps to theme-specific color indicating a warning condition"
+                },
+                "success": {
+                  "description": "Maps to theme-specific color indicating a success condition"
+                }
+              }
+            },
+            "max": {
+              "type": "number"
+            }
+          }
+        }
+      }
+    },
+    "describedBy": {
+      "type": "string|null",
+      "displayName": "Described By",
+      "help": "#describedBy"
+    },
+    "labelledBy": {
+      "type": "string|null",
+      "displayName": "Labelled By",
+      "help": "#labelledBy"
+    },
+    "size": {
+      "type": "string",
+      "description": "Specifies the size of the meter circle.",
+      "displayName": "Size",
+      "help": "#size",
+      "propertyEditorValues": {
+        "sm": {
+          "description": "small Meter circle",
+          "displayName": "Small"
+        },
+        "md": {
+          "description": "medium Meter circle (default, if unspecified)",
+          "displayName": "Medium"
+        },
+        "lg": {
+          "description": "large Meter circle",
+          "displayName": "Large"
+        },
+        "fit": {
+          "description": "Meter Circle that fills available width and height.",
+          "displayName": "Fit"
+        }
+      },
+      "enumValues": [
+        "sm",
+        "md",
+        "lg",
+        "fit"
+      ],
+      "value": "md"
+    },
+    "datatip": {
+      "type": "function",
+      "displayName": "Datatip",
+      "help": "#datatip"
+    },
+    "transientValue": {
+      "type": "number",
+      "displayName": "transientValue",
+      "help": "#transientValue",
+      "readOnly": true,
+      "writeback": true
+    }
+  },
+  "slots": {
+    "centerTemplate": {
+      "data": {
+        "innerBounds": {
+          "type": "object",
+          "properties": {
+            "width": {
+              "type": "number"
+            },
+            "height": {
+              "type": "number"
+            },
+            "x": {
+              "type": "number"
+            },
+            "y": {
+              "type": "number"
+            }
+          }
+        },
+        "outerBounds": {
+          "type": "object",
+          "properties": {
+            "width": {
+              "type": "number"
+            },
+            "height": {
+              "type": "number"
+            },
+            "x": {
+              "type": "number"
+            },
+            "y": {
+              "type": "number"
+            }
+          }
+        },
+        "value": {
+          "type": "number|null"
+        }
+      }
+    }
+  },
+  "methods": {
+    "setProperty": {
+      "description": "Sets a property or a single subproperty for complex properties and notifies the component of the change, triggering a corresponding event.",
+      "help": "#setProperty",
+      "params": [
+        {
+          "name": "property",
+          "description": "The property name to set. Supports dot notation for subproperty access.",
+          "type": "string"
+        },
+        {
+          "name": "value",
+          "description": "The new value to set the property to.",
+          "type": "any"
+        }
+      ],
+      "return": "void"
+    },
+    "getProperty": {
+      "description": "Retrieves the value of a property or a subproperty.",
+      "help": "#getProperty",
+      "params": [
+        {
+          "name": "property",
+          "description": "The property name to get. Supports dot notation for subproperty access.",
+          "type": "string"
+        }
+      ],
+      "return": "any"
+    },
+    "setProperties": {
+      "description": "Performs a batch set of properties.",
+      "help": "#setProperties",
+      "params": [
+        {
+          "name": "properties",
+          "description": "An object containing the property and value pairs to set.",
+          "type": "object"
+        }
+      ],
+      "return": "void"
+    }
+  }
+}

@@ -21,7 +21,8 @@ import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.ext.Provider;
 
 import weblogic.remoteconsole.common.utils.UrlUtils;
-import weblogic.remoteconsole.server.providers.ProviderManager;
+import weblogic.remoteconsole.server.providers.ProjectManager;
+import weblogic.remoteconsole.server.providers.ProjectManager.Project;
 import weblogic.remoteconsole.server.repo.Frontend;
 import weblogic.remoteconsole.server.repo.FrontendManager;
 import weblogic.remoteconsole.server.repo.InvocationContext;
@@ -62,14 +63,14 @@ public class SessionFilter implements ContainerRequestFilter {
   private static final Logger LOGGER = Logger.getLogger(SessionFilter.class.getName());
 
   @Override
-  public void filter(ContainerRequestContext requestContext) throws IOException {
+  public void filter(ContainerRequestContext reqContext) throws IOException {
     if (inputOutputTrace) {
       LOGGER.info("Entering SessionFilter "
-        + requestContext.getRequest().toString()
-        + " with " + requestContext.getUriInfo().getRequestUri());
+        + reqContext.getRequest().toString()
+        + " with " + reqContext.getUriInfo().getRequestUri());
     }
 
-    List<PathSegment> segs = requestContext.getUriInfo().getPathSegments(false);
+    List<PathSegment> segs = reqContext.getUriInfo().getPathSegments(false);
 
     // Determine if FINE log level is enabled to avoid logger overhead
     // as the SessionFilter is used for all Console Backend requests
@@ -77,15 +78,15 @@ public class SessionFilter implements ContainerRequestFilter {
       LOGGER.fine(
         "Request"
         + " uri="
-        + requestContext.getUriInfo().getRequestUri()
+        + reqContext.getUriInfo().getRequestUri()
         + " method="
-        + requestContext.getMethod()
+        + reqContext.getMethod()
         + " cookies="
-        + requestContext.getCookies()
+        + reqContext.getCookies()
         + " headers="
-        + requestContext.getHeaders()
+        + reqContext.getHeaders()
         + " and UserPrincipal of "
-        + requestContext.getSecurityContext().getUserPrincipal()
+        + reqContext.getSecurityContext().getUserPrincipal()
       );
     }
 
@@ -98,29 +99,34 @@ public class SessionFilter implements ContainerRequestFilter {
     // Skip session id handling for the SSO token endpoint
     if ((segs.size() > 1) && segs.get(1).getPath().equals(RemoteConsoleResource.SSO_TOKEN_PATH)) {
       LOGGER.fine("Setup SsoTokenManager for request!");
-      SsoTokenManager.setInRequestContext(requestContext);
+      SsoTokenManager.setInRequestContext(reqContext);
       return;
     }
 
     // HTTP OPTIONS is ignored for the session handling of other resources
-    if (requestContext.getMethod().equals(HttpMethod.OPTIONS)) {
+    if (reqContext.getMethod().equals(HttpMethod.OPTIONS)) {
       LOGGER.finest("Ignoring OPTIONS request for session handling!");
       return;
     }
 
     Frontend frontend = null;
-    String windowId = requestContext.getHeaderString("Unique-Id");
+    String windowId = reqContext.getHeaderString("Unique-Id");
     if (requestServletContext != null) {
       frontend = FrontendManager.find(requestServletContext.getSession().getId(), windowId);
       if (frontend == null) {
         frontend = FrontendManager.create(requestServletContext.getSession().getId(), windowId);
+        LOGGER.fine("Creating a new frontend, using the session context: " + frontend);
+      } else {
+        LOGGER.fine("Using request servlet context to use frontend: " + frontend);
       }
     } else {
       // Look for the session id and setup the request context property
-      Cookie sessionId = requestContext.getCookies().get(WebAppUtils.CONSOLE_BACKEND_COOKIE);
+      Cookie sessionId = reqContext.getCookies().get(WebAppUtils.CONSOLE_BACKEND_COOKIE);
       if (sessionId == null) {
-        String header = requestContext.getHeaderString("X-Session-Token");
+        String header = reqContext.getHeaderString("X-Session-Token");
         if (header != null) {
+          LOGGER.fine("The backend cookie was not present, but the X-Session-Token: "
+            + header + " was");
           sessionId = new Cookie("whocares", header);
         }
       }
@@ -128,7 +134,7 @@ public class SessionFilter implements ContainerRequestFilter {
         // Create frontend instance
         LOGGER.fine("Creating a new frontend, because the session id is null");
         frontend = FrontendManager.create(UUID.randomUUID().toString(), windowId);
-        WebAppUtils.storeCookieInContext(requestContext, frontend);
+        WebAppUtils.storeCookieInContext(reqContext, frontend);
       } else {
         frontend = FrontendManager.find(sessionId.getValue(), windowId);
         if (frontend == null) {
@@ -140,32 +146,29 @@ public class SessionFilter implements ContainerRequestFilter {
         }
       }
     }
-    frontend.storeInRequestContext(requestContext);
+    frontend.storeInRequestContext(reqContext);
     frontend.setLastRequestTime();
     InvocationContext ic = new InvocationContext();
     ic.setFrontend(frontend);
-    WebAppUtils.storeInvocationContextInRequestContext(requestContext, ic);
-    ic.setLocales(requestContext.getAcceptableLanguages());
-    ic.setUriInfo(requestContext.getUriInfo());
-    if (requestContext.getSecurityContext().getUserPrincipal() != null) {
-      ic.setUser(requestContext.getSecurityContext().getUserPrincipal().getName());
+    WebAppUtils.storeInvocationContextInRequestContext(reqContext, ic);
+    ic.setLocales(reqContext.getAcceptableLanguages());
+    ic.setUriInfo(reqContext.getUriInfo());
+    if (reqContext.getSecurityContext().getUserPrincipal() != null) {
+      ic.setUser(reqContext.getSecurityContext().getUserPrincipal().getName());
     }
-    if (isProviderBasedPath(requestContext)) {
-      setupConnectionAndRewriteURL(requestContext, frontend, ic);
+    frontend.initIfNeeded(ic);
+    if (isProviderBasedPath(reqContext)) {
+      setupConnectionAndRewriteURL(reqContext, frontend, ic);
     }
   }
 
-  private static boolean isProviderBasedPath(ContainerRequestContext requestContext) {
-    List<PathSegment> segs = requestContext.getUriInfo().getPathSegments(false);
-    // Must be at least three segments "/api/provider/<something>
+  private static boolean isProviderBasedPath(ContainerRequestContext reqContext) {
+    List<PathSegment> segs = reqContext.getUriInfo().getPathSegments(false);
+    // Must be at least three segments "/api/provider/<something>"
     if (segs.size() < 3) {
       return false;
     }
-    if (segs.get(1).getPath().equals(
-        RemoteConsoleResource.PROVIDER_MANAGEMENT_PATH)) {
-      return false;
-    }
-    if (segs.get(0).getPath().equals(RemoteConsoleResource.ABOUT_PATH)) {
+    if (RemoteConsoleResource.isReserved(segs.get(1).getPath())) {
       return false;
     }
     return true;
@@ -174,37 +177,59 @@ public class SessionFilter implements ContainerRequestFilter {
   // We know from test above that the path includes a provider (i.e. has two
   // segments at least
   private static void setupConnectionAndRewriteURL(
-    ContainerRequestContext requestContext,
+    ContainerRequestContext reqContext,
     Frontend frontend,
     InvocationContext ic
   ) {
     // Do not decode the path segments or else the segment will be screwed up
     // when putting it back together
-    List<PathSegment> segs = requestContext.getUriInfo().getPathSegments(false);
+    List<PathSegment> segs = reqContext.getUriInfo().getPathSegments(false);
 
-    ProviderManager pm = frontend.getProviderManager();
-    // Decode only the provider segment
-    String provider = UrlUtils.urlDecode(segs.get(1).getPath());
-    if (!pm.hasProvider(provider)) {
-      requestContext.abortWith(Response.status(Status.FORBIDDEN).build());
-      LOGGER.fine(
-        "Aborted Console Backend request due to bad provider: " + provider
-          + " with frontend: " + frontend.getID());
-      return;
+    String providerName = UrlUtils.urlDecode(segs.get(1).getPath());
+    ProjectManager projManager = frontend.getProjectManager();
+    weblogic.remoteconsole.server.providers.Provider provider;
+    if (providerName.equals("-project-")) {
+      // Funny dance here:  "unset provider" is the project management provider
+      projManager.unsetCurrentLiveProvider();
+      provider = projManager.getCurrentLiveProvider();
+    } else if (providerName.equals("-current-")) {
+      provider = projManager.getCurrentLiveProvider();
+    } else {
+      Project proj = projManager.getCurrentProject();
+      if (!proj.getNames().contains(providerName)) {
+        reqContext.abortWith(Response.status(Status.FORBIDDEN).build());
+        LOGGER.fine(
+          "Aborted Console Backend request due to bad provider: "
+            + providerName + " with frontend: " + frontend.getID());
+        return;
+      }
+      provider = proj.getProvider(providerName).getLiveProvider();
+      if (provider == null) {
+        proj.getProvider(providerName).start(ic);
+        provider = proj.getProvider(providerName).getLiveProvider();
+      }
     }
-    if (!pm.startProvider(provider, ic)) {
-      LOGGER.fine("Aborted Console Backend request due to failed provider!");
-      requestContext.abortWith(Response.status(Status.FORBIDDEN).build());
-      return;
-    }
+    ic.setProvider(provider);
+    provider.start(ic);
+    String rootName = UrlUtils.urlDecode(segs.get(2).getPath());
     StringBuilder newPath = new StringBuilder();
-    newPath.append(requestContext.getUriInfo().getBaseUri().getPath());
-    newPath.append(UriUtils.API_URI);
-    for (PathSegment seg : segs.subList(2, segs.size())) {
+    newPath.append(reqContext.getUriInfo().getBaseUri().getPath());
+    newPath.append(UriUtils.API_URI + '/');
+    // We can do this better, but, for now, the Project Management provider
+    // is its own thing and this makes it that
+    // if (provider.getRoots() == null) {
+    //   rootName = "project";
+    // }
+    newPath.append(rootName);
+    for (PathSegment seg : segs.subList(3, segs.size())) {
       newPath.append("/");
       newPath.append(seg.getPath());
     }
-    requestContext.setRequestUri(
-      requestContext.getUriInfo().getRequestUriBuilder().replacePath(newPath.toString()).build());
+    if (inputOutputTrace) {
+      LOGGER.info("Change url from " + reqContext.getUriInfo().getRequestUri()
+        + " to " + newPath);
+    }
+    reqContext.setRequestUri(
+      reqContext.getUriInfo().getRequestUriBuilder().replacePath(newPath.toString()).build());
   }
 }

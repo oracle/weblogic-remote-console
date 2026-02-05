@@ -1,0 +1,2 @@
+define(['exports', '../TableNoDataStyles.css', './TableNoDataVariants.css', 'css!./../../../Table.styles.css', 'css!./../../../TableNoDataStyles.styles.css', '../../../vanilla-extract-recipes-createRuntimeFn.esm-d881c69a'], (function(e,a,t,s,l,i){"use strict";const n={multiVariantStyles:t.multiVariantStyles,variants:a.variants,styles:a.tableNoDataStyles};e.TableNoDataStableTheme=n,Object.defineProperty(e,"__esModule",{value:!0})}));
+//# sourceMappingURL=TableNoDataTheme.js.map

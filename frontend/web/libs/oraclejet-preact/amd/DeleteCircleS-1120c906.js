@@ -1,0 +1,2 @@
+define(['exports', 'preact/jsx-runtime', './Icon-865b3c78'], (function(e,c,l){"use strict";e.SvgDeleteCircleS=e=>c.jsx(l.Icon,{viewBox:"0 0 24 24",...e,children:c.jsx("g",{fill:"none",children:c.jsx("path",{d:"M2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10S2 17.523 2 12zm8.586 0-3.293 3.293 1.414 1.414L12 13.414l3.293 3.293 1.414-1.414L13.414 12l3.293-3.293-1.414-1.414L12 10.586 8.707 7.293 7.293 8.707z",fill:"currentcolor"})})})}));
+//# sourceMappingURL=DeleteCircleS-1120c906.js.map

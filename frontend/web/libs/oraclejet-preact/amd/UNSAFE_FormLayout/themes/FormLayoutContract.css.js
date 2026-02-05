@@ -1,0 +1,2 @@
+define(['exports'], (function(a){"use strict";a.formLayoutVars={maxStartColumnWidth:"var(--maxStartColumnWidth__pa4rfz0)",maxNonStartColumnWidth:"var(--maxNonStartColumnWidth__pa4rfz1)",columnGapWidthMd:"var(--columnGapWidthMd__pa4rfz2)",columnGapWidthSm:"var(--columnGapWidthSm__pa4rfz3)",rowGapWidth:"var(--rowGapWidth__pa4rfz4)",columnGapWidth:"var(--columnGapWidth__pa4rfz5)"},Object.defineProperty(a,"__esModule",{value:!0})}));
+//# sourceMappingURL=FormLayoutContract.css.js.map

@@ -1,0 +1,2 @@
+define(['exports', 'css!./text.styles.css', './vanilla-extract-sprinkles-createRuntimeSprinkles.esm-84d30764'], (function(t,e,s){"use strict";var i=s.createSprinkles({conditions:void 0,styles:{textAlign:{values:{start:{defaultClass:"text_textAlign_start__1h8gevb0"},end:{defaultClass:"text_textAlign_end__1h8gevb1"},right:{defaultClass:"text_textAlign_right__1h8gevb2"}}}}});const l={textAlign:({textAlign:t})=>void 0===t?{}:{class:i({textAlign:t})}};t.textAligns=["start","end","right"],t.textInterpolations=l}));
+//# sourceMappingURL=textAlign-ef924afd.js.map

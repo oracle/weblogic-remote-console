@@ -1,0 +1,16 @@
+.InputColorPickerDropdownStyles_userAssistanceStyles__1663txb0 {
+  border-top-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-border-divider);
+  border-top-style: solid;
+  border-top-width: 1px;
+  padding-bottom: calc(2 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  padding-left: calc(2 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  padding-right: calc(2 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  padding-top: calc(2 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  width: 0;
+  min-width: 100%;
+  box-sizing: border-box;
+}
+.InputColorPickerDropdownStyles_dropdownStyles__1663txb1 {
+  overflow-x: hidden;
+  overflow-y: auto;
+}

@@ -1,0 +1,2 @@
+define(['exports', 'preact/jsx-runtime', './Icon-865b3c78'], (function(n,e,c){"use strict";n.SvgRadioButtonOff=n=>e.jsx(c.Icon,{viewBox:"0 0 24 24",...n,children:e.jsx("g",{fill:"none",children:e.jsx("path",{d:"M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zM0 12C0 5.373 5.373 0 12 0s12 5.373 12 12-5.373 12-12 12S0 18.627 0 12z",fill:"currentcolor"})})})}));
+//# sourceMappingURL=RadioButtonOff-6f07a04e.js.map

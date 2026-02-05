@@ -1,0 +1,2 @@
+define(['exports'], (function(e){"use strict";const t=e=>{const t=document.createElement("input");return t.type="file",e?.capture&&"none"!=e.capture&&(t.capture=e.capture),t.accept=e.accept.join(","),t.multiple="multiple"===e.selectionMode,t.style.display="none",t};e.pickFiles=function(e,{accept:c=[],capture:n="none",selectionMode:i="single"}){const o=t({accept:c,capture:n,selectionMode:i});o.addEventListener("change",(()=>{const t=o._pickerTestData?o._pickerTestData:o.files;e(t)}),{once:!0}),o.click()}}));
+//# sourceMappingURL=filePickerUtils-e4392bf2.js.map

@@ -1,4 +1,4 @@
-// Copyright (c) 2020, 2024, Oracle and/or its affiliates.
+// Copyright (c) 2020, 2025, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.filter;
@@ -22,6 +22,7 @@ public class CorsFilter implements ContainerResponseFilter {
     (System.getenv("BACKEND_FRONTEND_INPUT_OUTPUT_TRACE") != null);
   private static final Logger LOGGER = Logger.getLogger(CorsFilter.class.getName());
   private static final String ORIGIN_LOCALHOST_8000 = "http://localhost:8000";
+  private static final String ORIGIN_LOCALHOST_8050 = "http://localhost:8050";
 
   // From https://www.baeldung.com/cors-in-jax-rs
   @Override
@@ -29,7 +30,7 @@ public class CorsFilter implements ContainerResponseFilter {
     List<String> origin = req.getHeaders().get("Origin");
     if ((origin != null) && !origin.isEmpty()) {
       String allowOrigin = origin.get(0);
-      if (!ORIGIN_LOCALHOST_8000.equals(allowOrigin)) {
+      if (!ORIGIN_LOCALHOST_8000.equals(allowOrigin) && !ORIGIN_LOCALHOST_8050.equals(allowOrigin)) {
         LOGGER.fine("Origin=" + allowOrigin);
         // Handle CORS headers based on SSO token manager which was
         // established from the session filter for the token endpoint,
@@ -65,7 +66,7 @@ public class CorsFilter implements ContainerResponseFilter {
         res
           .getHeaders()
           .add("Access-Control-Allow-Headers",
-              "origin, content-type, accept, authorization, x-session-token, unique-id");
+              "origin, content-type, accept, authorization, x-session-token, unique-id, user-agent");
         res
           .getHeaders()
           .add("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD");

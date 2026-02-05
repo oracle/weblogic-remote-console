@@ -4,9 +4,6 @@
 package weblogic.remoteconsole.server.providers;
 
 import java.util.Map;
-import javax.json.JsonObject;
-
-import weblogic.remoteconsole.server.repo.InvocationContext;
 
 /**
  * The Provider interface for connections to the admin server
@@ -42,14 +39,10 @@ public interface AdminServerDataProvider extends ConnectionOrientedProvider {
 
   public String getProxyOverride();
 
-  public JsonObject getStatus(InvocationContext ic);
-
   public boolean isLocal();
 
   // Used to record information specific to this provider, for example the user and group filters
   public Map<String,Object> getCache();
-
-  public void updateLastUsed();
 
   public long getLastUsed();
 }

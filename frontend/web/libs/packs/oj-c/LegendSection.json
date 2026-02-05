@@ -1,0 +1,172 @@
+[
+  {
+    "id": "oj-c.LegendSection",
+    "name": "LegendSection",
+    "memberof": "oj-c",
+    "kind": "class",
+    "meta": {
+      "filename": "legend-section.tsx",
+      "path": "/home/jenkins/uitech/workspace/OJET_Code_19.0.1/packages/oraclejet-core-pack/web/components/oj-c/legend-section"
+    },
+    "ojcomponent": true,
+    "isvcomponent": true,
+    "since": "15.0.0",
+    "longname": "oj-c.LegendSection",
+    "pack": "oj-c",
+    "classdesc": "<h3 id=\"overview\">\n  JET Legend Section\n  <a class=\"bookmarkable-link\" title=\"Bookmarkable Link\" href=\"#overview\"></a>\n</h3>\n\n<p>\n The oj-c-legend-section element is used to declare properties for legend sections and is only valid as the\n child of a template element for the <a target=\"_blank\" href=\"oj-c.Legend.html#sectionTemplate\">sectionTemplate</a>\n slot of oj-c-legend.\n</p>",
+    "scope": "static",
+    "tagWithoutBrackets": "oj-c-legend-section",
+    "tagWithBrackets": "<oj-c-legend-section>",
+    "domInterface": "CLegendSectionElement",
+    "ojPageTitle": "&lt;oj-c-legend-section>",
+    "camelCaseName": "LegendSection",
+    "ojPageTitlePrefix": "Element: ",
+    "ojtsvcomponent": true,
+    "tstype": {
+      "target": "Type",
+      "value": "interface CLegendSectionElement extends JetElement<LegendSectionElementSettableProperties>"
+    },
+    "ojsignature": [
+      {
+        "target": "Type",
+        "value": "interface CLegendSectionElement extends JetElement<LegendSectionElementSettableProperties>"
+      }
+    ],
+    "tsdeprecated": [
+      {
+        "type": "candidate",
+        "since": "17.0.0"
+      }
+    ],
+    "ojmodule": "legend-section",
+    "ojslotcomponent": true
+  },
+  {
+    "id": "oj-c.LegendSection#text",
+    "name": "text",
+    "memberof": "oj-c.LegendSection",
+    "meta": {
+      "filename": "legend-section.tsx",
+      "path": "/home/jenkins/uitech/workspace/OJET_Code_19.0.1/packages/oraclejet-core-pack/web/components/oj-c/legend-section"
+    },
+    "kind": "member",
+    "longname": "oj-c.LegendSection#text",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "string"
+      ]
+    },
+    "optional": true,
+    "description": "The title of the legend section.",
+    "defaultvalue": "\"\""
+  },
+  {
+    "id": "oj-c.LegendSection#setProperty",
+    "name": "setProperty",
+    "memberof": "oj-c.LegendSection",
+    "meta": {
+      "filename": "legend-section.tsx",
+      "path": "/home/jenkins/uitech/workspace/OJET_Code_19.0.1/packages/oraclejet-core-pack/web/components/oj-c/legend-section"
+    },
+    "kind": "function",
+    "longname": "oj-c.LegendSection#setProperty",
+    "scope": "instance",
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "void"
+          ]
+        }
+      }
+    ],
+    "description": "Sets a property or a single subproperty for complex properties and notifies the component of the change, triggering a corresponding event.",
+    "params": [
+      {
+        "name": "property",
+        "description": "The property name to set. Supports dot notation for subproperty access.",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "value",
+        "description": "The new value to set the property to.",
+        "type": {
+          "names": [
+            "any"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.LegendSection#getProperty",
+    "name": "getProperty",
+    "memberof": "oj-c.LegendSection",
+    "meta": {
+      "filename": "legend-section.tsx",
+      "path": "/home/jenkins/uitech/workspace/OJET_Code_19.0.1/packages/oraclejet-core-pack/web/components/oj-c/legend-section"
+    },
+    "kind": "function",
+    "longname": "oj-c.LegendSection#getProperty",
+    "scope": "instance",
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "any"
+          ]
+        }
+      }
+    ],
+    "description": "Retrieves the value of a property or a subproperty.",
+    "params": [
+      {
+        "name": "property",
+        "description": "The property name to get. Supports dot notation for subproperty access.",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.LegendSection#setProperties",
+    "name": "setProperties",
+    "memberof": "oj-c.LegendSection",
+    "meta": {
+      "filename": "legend-section.tsx",
+      "path": "/home/jenkins/uitech/workspace/OJET_Code_19.0.1/packages/oraclejet-core-pack/web/components/oj-c/legend-section"
+    },
+    "kind": "function",
+    "longname": "oj-c.LegendSection#setProperties",
+    "scope": "instance",
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "void"
+          ]
+        }
+      }
+    ],
+    "description": "Performs a batch set of properties.",
+    "params": [
+      {
+        "name": "properties",
+        "description": "An object containing the property and value pairs to set.",
+        "type": {
+          "names": [
+            "object"
+          ]
+        }
+      }
+    ]
+  }
+]

@@ -1,0 +1,16 @@
+.PictoChartStyles_baseStyles__10gosed0 {
+  display: grid;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+.PictoChartStyles_baseStyles__10gosed0:focus-visible {
+  outline: none;
+}
+.PictoChartStyles_dimmedItemStyle__10gosed1 {
+  opacity: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-dimmed-opacity);
+}
+.PictoChartStyles_interactiveItemStyle__10gosed2 {
+  cursor: pointer;
+}

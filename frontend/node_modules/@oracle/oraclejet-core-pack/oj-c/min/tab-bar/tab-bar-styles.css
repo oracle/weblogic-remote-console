@@ -1,0 +1,11 @@
+oj-c-tab-bar:not(.oj-complete) {
+  visibility: hidden;
+}
+
+oj-c-tab-bar {
+  display: block;
+}
+
+oj-c-tab-bar [hidden] {
+  display: none;
+}

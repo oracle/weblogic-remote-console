@@ -52,7 +52,7 @@ class RootBeanTypeDefImpl extends BaseBeanTypeDefImpl {
   }
 
   @Override
-  LocalizableString getDescriptionHTML() {
+  public LocalizableString getDescriptionHTML() {
     return LocalizableString.NULL;
   }
 

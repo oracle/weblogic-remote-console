@@ -1,4 +1,4 @@
-# Copyright (c) 2022, 2023, Oracle and/or its affiliates.
+# Copyright (c) 2022, 2025, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 introductionHTML: >
@@ -6,6 +6,9 @@ introductionHTML: >
   This role can be used only by this realm's authorizer's domain level policies.</p>
   <p>For example, this role can be used in polices that you create to determine who
   can view a domain's log files.</p>
+
+presentation:
+  singleColumn: true
 
 properties:
 - name: Name

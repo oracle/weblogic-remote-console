@@ -1,0 +1,1 @@
+export { HighlightTextElementEventMap, HighlightTextElementSettableProperties, HighlightTextElementSettablePropertiesLenient, HighlightTextElement } from './ojhighlighttext';

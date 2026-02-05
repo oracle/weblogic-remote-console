@@ -1,0 +1,636 @@
+[
+  {
+    "id": "oj-c.TabBarMixed",
+    "name": "TabBarMixed",
+    "memberof": "oj-c",
+    "kind": "class",
+    "meta": {
+      "filename": "tab-bar-mixed.tsx",
+      "path": "web/components/oj-c/tab-bar-mixed"
+    },
+    "ojcomponent": true,
+    "isvcomponent": true,
+    "since": "16.1.0",
+    "longname": "oj-c.TabBarMixed",
+    "pack": "oj-c",
+    "classdesc": "<h3 id=\"tabBarMixedOverview-section\">\n  JET TabBarMixed\n  <a class=\"bookmarkable-link\" title=\"Bookmarkable Link\" href=\"#tabBarMixedOverview-section\"></a>\n</h3>\n\nThe oj-c-tab-bar-mixed enables horizontal navigation between distinct content with a mixture of static and dynamic tabs.\n\n<h3 id=\"touch-section\">\n  Touch End User Information\n  <a class=\"bookmarkable-link\" title=\"Bookmarkable Link\" href=\"#touch-section\"></a>\n</h3>\n\n<table class=\"keyboard-table\">\n  <thead>\n    <tr>\n      <th>Target</th>\n      <th>Gesture</th>\n      <th>Action</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <td>Tab</td>\n      <td><kbd>Tap</kbd></td>\n      <td>Selects the tab.</td>\n    </tr>\n    <tr>\n      <td>Remove button</td>\n      <td><kbd>Tap</kbd></td>\n      <td>Removes the tab.</td>\n    </tr>\n    <tr>\n      <td>Arrow button</td>\n      <td><kbd>Tap</kbd></td>\n      <td>When dynamic tabs are displayed inside a conveyor belt, tapping the arrow button will scroll the conveyor belt.</td>\n    </tr>\n  </tbody>\n</table>\n\n<h3 id=\"keyboard-section\">\n  Keyboard End User Information\n  <a class=\"bookmarkable-link\" title=\"Bookmarkable Link\" href=\"#keyboard-section\"></a>\n</h3>\n\n<table class=\"keyboard-table\">\n  <thead>\n    <tr>\n      <th>Target</th>\n      <th>Key</th>\n      <th>Action</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <td>Tab</td>\n      <td><kbd>Enter or Space</kbd></td>\n      <td>Select the current tab.</td>\n    </tr>\n    <tr>\n      <td>Tab</td>\n      <td><kbd>LeftArrow or RightArrow</kbd></td>\n      <td>Navigate to the previous or next tab.</td>\n    </tr>\n    <tr>\n      <td>Tab</td>\n      <td><kbd>Delete</kbd></td>\n      <td>Remove the current tab.</td>\n    </tr>\n    <tr>\n      <td>Tab</td>\n      <td><kbd>Esc</kbd></td>\n      <td>Hide the tooltip if tooltip is shown.</td>\n    </tr>\n    <tr>\n      <td>Dropdown</td>\n      <td><kbd>UpArrow or DownArrow</kbd></td>\n      <td>Navigate the dynamic tab represented as item in the list in the direction of the arrow.</td>\n    </tr>\n    <tr>\n      <td>Dropdown</td>\n      <td><kbd>Enter or Space</kbd></td>\n      <td>Select the highlighted choice from the dropdown and close the dropdown.</td>\n    </tr>\n    <tr>\n      <td>Dropdown</td>\n      <td><kbd>Esc</kbd></td>\n      <td>Close the dropdown.</td>\n    </tr>\n  </tbody>\n</table>",
+    "scope": "static",
+    "tagWithoutBrackets": "oj-c-tab-bar-mixed",
+    "tagWithBrackets": "<oj-c-tab-bar-mixed>",
+    "domInterface": "CTabBarMixedElement",
+    "ojPageTitle": "&lt;oj-c-tab-bar-mixed>",
+    "camelCaseName": "TabBarMixed",
+    "ojPageTitlePrefix": "Element: ",
+    "ojtsvcomponent": true,
+    "tstype": {
+      "target": "Type",
+      "value": "interface CTabBarMixedElement<K extends string | number = string | number> extends JetElement<TabBarMixedElementSettableProperties<K>>"
+    },
+    "ojsignature": [
+      {
+        "target": "Type",
+        "value": "interface CTabBarMixedElement<K extends string | number = string | number> extends JetElement<TabBarMixedElementSettableProperties<K>>"
+      }
+    ],
+    "tsdeprecated": [
+      {
+        "type": "production",
+        "since": "17.0.0"
+      }
+    ],
+    "ojmodule": "tab-bar-mixed"
+  },
+  {
+    "id": "oj-c.TabBarMixed#dynamicTabs",
+    "name": "dynamicTabs",
+    "memberof": "oj-c.TabBarMixed",
+    "meta": {
+      "filename": "tab-bar-mixed.tsx",
+      "path": "web/components/oj-c/tab-bar-mixed"
+    },
+    "kind": "member",
+    "longname": "oj-c.TabBarMixed#dynamicTabs",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "Array<object>"
+      ]
+    },
+    "optional": true,
+    "description": "Specifies the data definitions for the dynamics tabs (the collection of tabs that are removable).",
+    "tstype": [
+      {
+        "target": "Type",
+        "value": "Array<oj-c.TabBarMixed.TabData<K>>",
+        "jsdocOverride": true
+      }
+    ]
+  },
+  {
+    "id": "oj-c.TabBarMixed#dynamicTabsOverflow",
+    "name": "dynamicTabsOverflow",
+    "memberof": "oj-c.TabBarMixed",
+    "meta": {
+      "filename": "tab-bar-mixed.tsx",
+      "path": "web/components/oj-c/tab-bar-mixed"
+    },
+    "kind": "member",
+    "longname": "oj-c.TabBarMixed#dynamicTabsOverflow",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "\"popup\"",
+        "\"conveyor\""
+      ]
+    },
+    "optional": true,
+    "description": "Specifies whether the dynamic tabs are displayed inside a conveyor belt or a popup.",
+    "ojvalues": [
+      {
+        "name": "conveyor",
+        "description": "Dynamic tabs are displayed inside a conveyor belt.",
+        "displayName": "Conveyor",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "popup",
+        "description": "Dynamic tabs are displayed inside a popup.",
+        "displayName": "Popup",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.TabBarMixed#dynamicTabsOverflowIcon",
+    "name": "dynamicTabsOverflowIcon",
+    "memberof": "oj-c.TabBarMixed",
+    "meta": {
+      "filename": "tab-bar-mixed.tsx",
+      "path": "web/components/oj-c/tab-bar-mixed"
+    },
+    "kind": "member",
+    "longname": "oj-c.TabBarMixed#dynamicTabsOverflowIcon",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "object"
+      ]
+    },
+    "optional": true,
+    "description": "Specifies the icon used on the overflow tab when dynamicTabsOverflow is set to 'popup'.",
+    "tstype": [
+      {
+        "target": "Type",
+        "value": "{ type?: 'class'; class: string; }|{ type: 'img'; src: string; }",
+        "jsdocOverride": true
+      }
+    ]
+  },
+  {
+    "id": "oj-c.TabBarMixed#size",
+    "name": "size",
+    "memberof": "oj-c.TabBarMixed",
+    "meta": {
+      "filename": "tab-bar-mixed.tsx",
+      "path": "web/components/oj-c/tab-bar-mixed"
+    },
+    "kind": "member",
+    "longname": "oj-c.TabBarMixed#size",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "\"md\"",
+        "\"lg\""
+      ]
+    },
+    "optional": true,
+    "description": "Specifies the size of the TabBarMixed.",
+    "ojvalues": [
+      {
+        "name": "md",
+        "description": "TabBarMixed is set with a medium height.",
+        "displayName": "Medium",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "lg",
+        "description": "TabBarMixed is set with a large height.",
+        "displayName": "Large",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.TabBarMixed#selection",
+    "name": "selection",
+    "memberof": "oj-c.TabBarMixed",
+    "meta": {
+      "filename": "tab-bar-mixed.tsx",
+      "path": "web/components/oj-c/tab-bar-mixed"
+    },
+    "kind": "member",
+    "longname": "oj-c.TabBarMixed#selection",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "string|number"
+      ]
+    },
+    "optional": true,
+    "ojwriteback": true,
+    "description": "The key of the currently selected tab.",
+    "tstype": [
+      {
+        "target": "Type",
+        "value": "K",
+        "jsdocOverride": true
+      }
+    ]
+  },
+  {
+    "id": "oj-c.TabBarMixed#separatorPadding",
+    "name": "separatorPadding",
+    "memberof": "oj-c.TabBarMixed",
+    "meta": {
+      "filename": "tab-bar-mixed.tsx",
+      "path": "web/components/oj-c/tab-bar-mixed"
+    },
+    "kind": "member",
+    "longname": "oj-c.TabBarMixed#separatorPadding",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "string"
+      ]
+    },
+    "optional": true,
+    "description": "The padding around the vertical divider that seperates collections of tabs."
+  },
+  {
+    "id": "oj-c.TabBarMixed#staticTabs",
+    "name": "staticTabs",
+    "memberof": "oj-c.TabBarMixed",
+    "meta": {
+      "filename": "tab-bar-mixed.tsx",
+      "path": "web/components/oj-c/tab-bar-mixed"
+    },
+    "kind": "member",
+    "longname": "oj-c.TabBarMixed#staticTabs",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "Array<object>"
+      ]
+    },
+    "optional": true,
+    "description": "Specifies the data definitions for the static tabs (the collection of tabs that are non-removable).",
+    "tstype": [
+      {
+        "target": "Type",
+        "value": "Array<oj-c.TabBarMixed.TabData<K>>",
+        "jsdocOverride": true
+      }
+    ]
+  },
+  {
+    "id": "oj-c.TabBarMixed#staticTabsDisplay",
+    "name": "staticTabsDisplay",
+    "memberof": "oj-c.TabBarMixed",
+    "meta": {
+      "filename": "tab-bar-mixed.tsx",
+      "path": "web/components/oj-c/tab-bar-mixed"
+    },
+    "kind": "member",
+    "longname": "oj-c.TabBarMixed#staticTabsDisplay",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "\"standard\"",
+        "\"icons\""
+      ]
+    },
+    "optional": true,
+    "description": "Whether to display both the label and icons (\"standard\") or just the icons (\"icons\").\nIn the latter case, the label is displayed in a tooltip instead.",
+    "ojvalues": [
+      {
+        "name": "standard",
+        "description": "Label and icon are shown for all static tabs.",
+        "displayName": "Standard",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "icons",
+        "description": "Only icons are shown for all static tabs.",
+        "displayName": "Icons",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.TabBarMixed#setProperty",
+    "name": "setProperty",
+    "memberof": "oj-c.TabBarMixed",
+    "meta": {
+      "filename": "tab-bar-mixed.tsx",
+      "path": "web/components/oj-c/tab-bar-mixed"
+    },
+    "kind": "function",
+    "longname": "oj-c.TabBarMixed#setProperty",
+    "scope": "instance",
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "void"
+          ]
+        }
+      }
+    ],
+    "description": "Sets a property or a single subproperty for complex properties and notifies the component of the change, triggering a corresponding event.",
+    "params": [
+      {
+        "name": "property",
+        "description": "The property name to set. Supports dot notation for subproperty access.",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "value",
+        "description": "The new value to set the property to.",
+        "type": {
+          "names": [
+            "any"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.TabBarMixed#getProperty",
+    "name": "getProperty",
+    "memberof": "oj-c.TabBarMixed",
+    "meta": {
+      "filename": "tab-bar-mixed.tsx",
+      "path": "web/components/oj-c/tab-bar-mixed"
+    },
+    "kind": "function",
+    "longname": "oj-c.TabBarMixed#getProperty",
+    "scope": "instance",
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "any"
+          ]
+        }
+      }
+    ],
+    "description": "Retrieves the value of a property or a subproperty.",
+    "params": [
+      {
+        "name": "property",
+        "description": "The property name to get. Supports dot notation for subproperty access.",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.TabBarMixed#setProperties",
+    "name": "setProperties",
+    "memberof": "oj-c.TabBarMixed",
+    "meta": {
+      "filename": "tab-bar-mixed.tsx",
+      "path": "web/components/oj-c/tab-bar-mixed"
+    },
+    "kind": "function",
+    "longname": "oj-c.TabBarMixed#setProperties",
+    "scope": "instance",
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "void"
+          ]
+        }
+      }
+    ],
+    "description": "Performs a batch set of properties.",
+    "params": [
+      {
+        "name": "properties",
+        "description": "An object containing the property and value pairs to set.",
+        "type": {
+          "names": [
+            "object"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.TabBarMixed#event:ojBeforeSelect",
+    "name": "ojBeforeSelect",
+    "kind": "event",
+    "memberof": "oj-c.TabBarMixed",
+    "meta": {
+      "filename": "tab-bar-mixed.tsx",
+      "path": "web/components/oj-c/tab-bar-mixed"
+    },
+    "longname": "oj-c.TabBarMixed#event:ojBeforeSelect",
+    "scope": "instance",
+    "description": "Triggered before user selects a tab which includes user gestures or selection is changed programmatically.",
+    "properties": [
+      {
+        "name": "accept",
+        "description": "This method can be called with an application-created Promise to cancel this event asynchronously.  The Promise should be resolved or rejected to accept or cancel the event, respectively.",
+        "type": {
+          "names": [
+            "function"
+          ]
+        }
+      },
+      {
+        "name": "key",
+        "optional": false,
+        "type": {
+          "names": [
+            "string|number"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "K",
+            "jsdocOverride": true,
+            "for": "key"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "oj-c.TabBarMixed#event:ojRemove",
+    "name": "ojRemove",
+    "kind": "event",
+    "memberof": "oj-c.TabBarMixed",
+    "meta": {
+      "filename": "tab-bar-mixed.tsx",
+      "path": "web/components/oj-c/tab-bar-mixed"
+    },
+    "longname": "oj-c.TabBarMixed#event:ojRemove",
+    "scope": "instance",
+    "description": "Triggered when user performs a remove gesture on a tab.  The remove gestures include:\n<ul>\n  <li>User clicks the remove icon in a tab</li>\n  <li>User presses Delete key on a tab</li>\n</ul>",
+    "properties": [
+      {
+        "name": "key",
+        "optional": false,
+        "type": {
+          "names": [
+            "string|number"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "K",
+            "jsdocOverride": true,
+            "for": "key"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "oj-c.TabBarMixed#event:ojSelectionAction",
+    "name": "ojSelectionAction",
+    "kind": "event",
+    "memberof": "oj-c.TabBarMixed",
+    "meta": {
+      "filename": "tab-bar-mixed.tsx",
+      "path": "web/components/oj-c/tab-bar-mixed"
+    },
+    "longname": "oj-c.TabBarMixed#event:ojSelectionAction",
+    "scope": "instance",
+    "description": "Triggered when user performs a selection action gesture on a tab.  The action gestures include:\n<ul>\n  <li>User clicks anywhere in a tab</li>\n  <li>User taps anywhere in a tab</li>\n  <li>User pressed spacebar or enter key on a tab</li>\n</ul>",
+    "properties": [
+      {
+        "name": "previousValue",
+        "optional": false,
+        "type": {
+          "names": [
+            "string|number"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "K",
+            "jsdocOverride": true,
+            "for": "previousValue"
+          }
+        ]
+      },
+      {
+        "name": "value",
+        "optional": false,
+        "type": {
+          "names": [
+            "string|number"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "K",
+            "jsdocOverride": true,
+            "for": "value"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "oj-c.TabBarMixed.touchDoc",
+    "name": "touchDoc",
+    "kind": "member",
+    "longname": "oj-c.TabBarMixed.touchDoc",
+    "description": "<table class=\"keyboard-table\">\n  <thead>\n    <tr>\n      <th>Target</th>\n      <th>Gesture</th>\n      <th>Action</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <td>Tab</td>\n      <td><kbd>Tap</kbd></td>\n      <td>Selects the tab.</td>\n    </tr>\n    <tr>\n      <td>Remove button</td>\n      <td><kbd>Tap</kbd></td>\n      <td>Removes the tab.</td>\n    </tr>\n    <tr>\n      <td>Arrow button</td>\n      <td><kbd>Tap</kbd></td>\n      <td>When dynamic tabs are displayed inside a conveyor belt, tapping the arrow button will scroll the conveyor belt.</td>\n    </tr>\n  </tbody>\n</table>",
+    "memberof": "oj-c.TabBarMixed",
+    "meta": {
+      "filename": "tab-bar-mixed.tsx",
+      "path": "web/components/oj-c/tab-bar-mixed"
+    },
+    "ojfragment": true
+  },
+  {
+    "id": "oj-c.TabBarMixed.keyboardDoc",
+    "name": "keyboardDoc",
+    "kind": "member",
+    "longname": "oj-c.TabBarMixed.keyboardDoc",
+    "description": "<table class=\"keyboard-table\">\n  <thead>\n    <tr>\n      <th>Target</th>\n      <th>Key</th>\n      <th>Action</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <td>Tab</td>\n      <td><kbd>Enter or Space</kbd></td>\n      <td>Select the current tab.</td>\n    </tr>\n    <tr>\n      <td>Tab</td>\n      <td><kbd>LeftArrow or RightArrow</kbd></td>\n      <td>Navigate to the previous or next tab.</td>\n    </tr>\n    <tr>\n      <td>Tab</td>\n      <td><kbd>Delete</kbd></td>\n      <td>Remove the current tab.</td>\n    </tr>\n    <tr>\n      <td>Tab</td>\n      <td><kbd>Esc</kbd></td>\n      <td>Hide the tooltip if tooltip is shown.</td>\n    </tr>\n    <tr>\n      <td>Dropdown</td>\n      <td><kbd>UpArrow or DownArrow</kbd></td>\n      <td>Navigate the dynamic tab represented as item in the list in the direction of the arrow.</td>\n    </tr>\n    <tr>\n      <td>Dropdown</td>\n      <td><kbd>Enter or Space</kbd></td>\n      <td>Select the highlighted choice from the dropdown and close the dropdown.</td>\n    </tr>\n    <tr>\n      <td>Dropdown</td>\n      <td><kbd>Esc</kbd></td>\n      <td>Close the dropdown.</td>\n    </tr>\n  </tbody>\n</table>",
+    "memberof": "oj-c.TabBarMixed",
+    "meta": {
+      "filename": "tab-bar-mixed.tsx",
+      "path": "web/components/oj-c/tab-bar-mixed"
+    },
+    "ojfragment": true
+  },
+  {
+    "id": "oj-c.TabBarMixed.TabData",
+    "name": "TabData",
+    "kind": "typedef",
+    "memberof": "oj-c.TabBarMixed",
+    "meta": {
+      "filename": "tab-bar-mixed.tsx",
+      "path": "web/components/oj-c/tab-bar-mixed"
+    },
+    "longname": "oj-c.TabBarMixed.TabData",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "scope": "static",
+    "description": "",
+    "tsgenerictype": {
+      "target": "Type",
+      "value": "<K extends string | number>",
+      "for": "genericTypeParameters"
+    },
+    "properties": [
+      {
+        "name": "badge",
+        "optional": true,
+        "type": {
+          "names": [
+            "number"
+          ]
+        }
+      },
+      {
+        "name": "icon",
+        "optional": true,
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "{ type?: 'class'; class: string; }|{ type: 'img'; src: string; }",
+            "jsdocOverride": true,
+            "for": "icon"
+          }
+        ]
+      },
+      {
+        "name": "itemKey",
+        "optional": false,
+        "type": {
+          "names": [
+            "string|number"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "K",
+            "jsdocOverride": true,
+            "for": "itemKey"
+          }
+        ]
+      },
+      {
+        "name": "label",
+        "optional": false,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "tabPanelId",
+        "description": "Accepts the tabpanel element's ID associated with the tab item",
+        "optional": true,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      }
+    ]
+  }
+]

@@ -1,0 +1,18 @@
+.SelectMobileFieldInputStyles_base__1du09e20 {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: center;
+  white-space: nowrap;
+  width: 100%;
+  overflow-x: hidden;
+  overflow-y: hidden;
+}
+.SelectMobileFieldInputStyles_content__1du09e21 {
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
+}
+.SelectMobileFieldInputStyles_content__1du09e21::-webkit-scrollbar {
+  display: none;
+}

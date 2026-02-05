@@ -1,0 +1,2 @@
+define(['exports', 'preact/jsx-runtime', './useHover-8b8a1496', './StyledCard-8dbd5d58'], (function(e,t,r,d){"use strict";e.SelectionCard=({children:e,isSelected:s=!1,testId:i,...n})=>{const{hoverProps:o,isHover:l}=r.useHover();return t.jsx(d.StyledCard,{...o,display:"inlineFlex",isHover:l,isSelected:s,parentComponentVariant:"selectionCard",testId:i,...n,children:e})}}));
+//# sourceMappingURL=SelectionCard-601660df.js.map

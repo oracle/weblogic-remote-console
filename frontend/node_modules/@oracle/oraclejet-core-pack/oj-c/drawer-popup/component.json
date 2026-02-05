@@ -1,0 +1,217 @@
+{
+  "name": "drawer-popup",
+  "version": "19.0.1",
+  "jetVersion": "^19.0.1",
+  "pack": "oj-c",
+  "type": "composite",
+  "dependencyScope": "runtime",
+  "license": "https://opensource.org/licenses/UPL",
+  "implements": [
+    "CDrawerPopupElement"
+  ],
+  "description": "A Drawer Popup is a panel that slides into the viewport.",
+  "displayName": "Drawer Popup",
+  "help": "oj-c.DrawerPopup.html",
+  "main": "oj-c/drawer-popup",
+  "status": [
+    {
+      "type": "supersedes",
+      "since": "17.0.0",
+      "value": [
+        "oj-drawer-popup"
+      ]
+    }
+  ],
+  "extension": {
+    "catalog": {
+      "category": "Layout & Nav"
+    },
+    "vbdt": {
+      "module": "oj-c/drawer-popup",
+      "pi": {
+        "layouts": {
+          "general": {
+            "customizers": [
+              {
+                "propertyName": "closeGesture",
+                "type": "enumeration"
+              },
+              {
+                "propertyName": "autoDismiss",
+                "type": "enumeration"
+              },
+              {
+                "propertyName": "edge",
+                "type": "enumeration"
+              },
+              {
+                "propertyName": "modality",
+                "type": "enumeration"
+              },
+              {
+                "propertyName": "opened"
+              }
+            ]
+          }
+        }
+      }
+    },
+    "oracle": {
+      "icon": "oj-ux-ico-drawer",
+      "uxSpecs": [
+        "drawer"
+      ]
+    },
+    "webelement": {
+      "package": "@oracle/oraclejet-core-pack",
+      "version": "19.0.1",
+      "docUrl": "https://www.oracle.com/webfolder/technetwork/jet/cpwdtsdoc/classes/DrawerPopupWebElement.html",
+      "export": "findDrawerPopup",
+      "main": "@oracle/oraclejet-core-pack/webdriver"
+    }
+  },
+  "since": "16.0.0",
+  "slots": {
+    "": {
+      "description": "The default slot is the content of the Drawer Popup.",
+      "displayName": "default",
+      "help": "#Default"
+    }
+  },
+  "properties": {
+    "opened": {
+      "type": "boolean",
+      "description": "Specifies whether the Drawer is open.",
+      "displayName": "Opened",
+      "help": "#opened",
+      "extension": {
+        "vbdt": {
+          "temporaryOverride": {}
+        }
+      },
+      "writeback": true,
+      "value": false
+    },
+    "modality": {
+      "type": "string",
+      "description": "Controls the modality of the drawer.",
+      "displayName": "Modality",
+      "help": "#modality",
+      "enumValues": [
+        "modal",
+        "modeless"
+      ],
+      "value": "modal"
+    },
+    "edge": {
+      "type": "string",
+      "description": "Specifies at what edge the drawer opens.",
+      "displayName": "Edge",
+      "help": "#edge",
+      "enumValues": [
+        "end",
+        "start",
+        "bottom"
+      ],
+      "value": "start"
+    },
+    "autoDismiss": {
+      "type": "string",
+      "description": "Specifies the close auto-dismiss behaviour to close the drawer.",
+      "displayName": "Auto Dismiss",
+      "help": "#autoDismiss",
+      "enumValues": [
+        "none",
+        "focus-loss"
+      ],
+      "value": "focus-loss"
+    },
+    "closeGesture": {
+      "type": "string",
+      "description": "Specifies whether a gesture closes the drawer.",
+      "displayName": "Close Gesture",
+      "help": "#closeGesture",
+      "enumValues": [
+        "none",
+        "swipe"
+      ],
+      "value": "swipe"
+    },
+    "backgroundColor": {
+      "type": "string",
+      "description": "Specifies background color of the Drawer.",
+      "displayName": "Background Color",
+      "help": "#backgroundColor"
+    }
+  },
+  "events": {
+    "ojBeforeClose": {
+      "cancelable": true,
+      "description": "Triggered immediately before the drawer closes",
+      "displayName": "ojBeforeClose",
+      "help": "#event:beforeClose",
+      "detail": {
+        "accept": {
+          "description": "This method can be called with an application-created Promise to cancel this event asynchronously.  The Promise should be resolved or rejected to accept or cancel the event, respectively.",
+          "type": "function"
+        },
+        "reason": {
+          "type": "string",
+          "enumValues": [
+            "outsideClick",
+            "escapeKey",
+            "swipe"
+          ]
+        }
+      }
+    },
+    "ojClose": {
+      "description": "Triggered immediately after the drawer closes",
+      "displayName": "ojClose",
+      "help": "#event:close"
+    }
+  },
+  "methods": {
+    "setProperty": {
+      "description": "Sets a property or a single subproperty for complex properties and notifies the component of the change, triggering a corresponding event.",
+      "help": "#setProperty",
+      "params": [
+        {
+          "name": "property",
+          "description": "The property name to set. Supports dot notation for subproperty access.",
+          "type": "string"
+        },
+        {
+          "name": "value",
+          "description": "The new value to set the property to.",
+          "type": "any"
+        }
+      ],
+      "return": "void"
+    },
+    "getProperty": {
+      "description": "Retrieves the value of a property or a subproperty.",
+      "help": "#getProperty",
+      "params": [
+        {
+          "name": "property",
+          "description": "The property name to get. Supports dot notation for subproperty access.",
+          "type": "string"
+        }
+      ],
+      "return": "any"
+    },
+    "setProperties": {
+      "description": "Performs a batch set of properties.",
+      "help": "#setProperties",
+      "params": [
+        {
+          "name": "properties",
+          "description": "An object containing the property and value pairs to set.",
+          "type": "object"
+        }
+      ],
+      "return": "void"
+    }
+  }
+}

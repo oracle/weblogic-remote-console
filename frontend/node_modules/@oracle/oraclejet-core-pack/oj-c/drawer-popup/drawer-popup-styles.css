@@ -1,0 +1,11 @@
+oj-c-drawer-popup:not(.oj-complete) {
+  visibility: hidden;
+}
+
+oj-c-drawer-popup {
+  display: none;
+}
+
+oj-c-drawer-popup[hidden] {
+  display: none;
+}

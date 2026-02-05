@@ -1,0 +1,381 @@
+{
+    "introductionHTML": "<p>This page is used to configure how WebLogic Server will replicate HTTP Session State across a cluster.</p>\n",
+    "helpPageTitle": "Cluster: Replication",
+    "helpTopics": [
+        {
+            "label": "Configuring WebLogic Server to Avoid Overload Conditions ",
+            "href": "https://docs.oracle.com/en/middleware/standalone/weblogic-server/14.1.1.0/cnfgd/overload.html#CNFGD147"
+        },
+        {
+            "label": "HTTP Session State Replication",
+            "href": "https://docs.oracle.com/en/middleware/standalone/weblogic-server/14.1.1.0/clust/failover.html#CLUST206"
+        },
+        {
+            "label": "Session State Replication Across Clusters",
+            "href": "https://docs.oracle.com/en/middleware/standalone/weblogic-server/14.1.1.0/clust/failover.html#CLUST224"
+        },
+        {
+            "label": "Network Requirements for Cross Cluster Replication",
+            "href": "https://docs.oracle.com/en/middleware/standalone/weblogic-server/14.1.1.0/clust/failover.html#CLUST225"
+        },
+        {
+            "label": "Configuration Requirements for Cross Cluster Replication",
+            "href": "https://docs.oracle.com/en/middleware/standalone/weblogic-server/14.1.1.0/clust/failover.html#CLUST231"
+        }
+    ],
+    "sliceForm": {
+        "slices": [
+            {
+                "name": "General",
+                "label": "General"
+            },
+            {
+                "name": "Health",
+                "label": "Health"
+            },
+            {
+                "name": "Http",
+                "label": "Http"
+            },
+            {
+                "name": "JTA",
+                "label": "JTA"
+            },
+            {
+                "name": "Migration",
+                "label": "Migration",
+                "slices": [
+                    {
+                        "name": "General",
+                        "label": "General"
+                    },
+                    {
+                        "name": "Candidates",
+                        "label": "Candidates"
+                    }
+                ]
+            },
+            {
+                "name": "Overload",
+                "label": "Overload"
+            },
+            {
+                "name": "Replication",
+                "label": "Replication"
+            },
+            {
+                "name": "Scheduler",
+                "label": "Scheduler"
+            },
+            {
+                "name": "Dynamic",
+                "label": "Dynamic"
+            },
+            {
+                "name": "Servers",
+                "label": "Servers"
+            },
+            {
+                "name": "Messaging",
+                "label": "Messaging"
+            },
+            {
+                "name": "Coherence",
+                "label": "Coherence"
+            },
+            {
+                "name": "ReferencedBy",
+                "label": "Referenced By"
+            }
+        ],
+        "properties": [
+            {
+                "name": "ClusterType",
+                "label": "Cross-cluster Replication Type",
+                "helpLabel": "Cross-cluster Replication Type",
+                "helpSummaryHTML": "Optimizes cross-cluster replication for the type of network that servers in the clusters use for administrative communication.",
+                "detailedHelpHTML": "<p>Optimizes cross-cluster replication for the type of network that servers in the clusters use for administrative communication.</p>  <p>To enhance the reliability of HTTP sessions, you can configure servers in one cluster to replicate the session data to servers in a different cluster. In such an environment, configure the clusters to be one of the following types:</p>  <ul> <li><code>man</code> <p>If the clustered servers can send their data through a metro area network (man) in which latency is negligible. With this ClusterType value, servers replicate session state synchronously and in memory only. For example, when serverA in cluster1 starts an HTTP session, its backup server, serverB in cluster2, immediately replicates this session in memory to Server B.</p> </li>  <li><code>wan</code> <p>If the clusters are far apart or send their data through a wide area network (wan) that experiences significant network latency. With this ClusterType value, a server replicates session state synchronously to the backup server in the same cluster and asynchronously to a server in the remote cluster. For example, when serverA in cluster1 starts an HTTP session, it sends the data to serverB in cluster1 and then asynchronously sends data to serverX in cluster 2. ServerX will persist the session state in the database.</p>  <p>If you persist session data in a replicating database, and if you prefer to use the database to replicate the data instead of WebLogic Server, choose a cluster type of <code>wan</code> and leave the remote cluster address undefined. WebLogic Server saves the session data to the local database and assumes that the database replicates data as needed.</p> </li> </ul> ",
+                "legalValues": [
+                    {
+                        "value": "none",
+                        "label": "None"
+                    },
+                    {
+                        "value": "wan",
+                        "label": "Wide Area Network (WAN)"
+                    },
+                    {
+                        "value": "man",
+                        "label": "Metro Area Network (MAN)"
+                    }
+                ],
+                "externalHelp": {
+                    "title": "MBean Info",
+                    "label": "ClusterMBean.ClusterType",
+                    "introLabel": "MBean Attribute:",
+                    "href": "https://docs.oracle.com/en/middleware/standalone/weblogic-server/14.1.1.0/wlmbr/mbeans/ClusterMBean.html#ClusterType"
+                },
+                "defaultValue": "none",
+                "restartNeeded": true
+            },
+            {
+                "name": "RemoteClusterAddress",
+                "label": "Remote Cluster Address",
+                "helpLabel": "Remote Cluster Address",
+                "helpSummaryHTML": "Set the foreign cluster.",
+                "detailedHelpHTML": "<p>Set the foreign cluster. Cluster infrastructure uses this address to connect to foreign cluster for HTTP Session WAN/MAN failover.</p> ",
+                "usedIf": {
+                    "property": "ClusterType",
+                    "values": [
+                        "man",
+                        "wan"
+                    ]
+                },
+                "externalHelp": {
+                    "title": "MBean Info",
+                    "label": "ClusterMBean.RemoteClusterAddress",
+                    "introLabel": "MBean Attribute:",
+                    "href": "https://docs.oracle.com/en/middleware/standalone/weblogic-server/14.1.1.0/wlmbr/mbeans/ClusterMBean.html#RemoteClusterAddress"
+                },
+                "defaultValue": null,
+                "restartNeeded": true
+            },
+            {
+                "name": "ReplicationChannel",
+                "label": "Replication Channel",
+                "helpLabel": "Replication Channel",
+                "helpSummaryHTML": "The channel name to be used for replication traffic.",
+                "detailedHelpHTML": "<p>The channel name to be used for replication traffic. Cluster infrastructure uses this channel to send updates for HTTP sessions and stateful session beans. If none is set then the default channel will be used.</p>  <p>In order for this feature to work, the named channel must exist on all members of the cluster and must be configured to use the same protocol. It is valid for the selected channel to be configured to use a secure protocol.</p> ",
+                "externalHelp": {
+                    "title": "MBean Info",
+                    "label": "ClusterMBean.ReplicationChannel",
+                    "introLabel": "MBean Attribute:",
+                    "href": "https://docs.oracle.com/en/middleware/standalone/weblogic-server/14.1.1.0/wlmbr/mbeans/ClusterMBean.html#ReplicationChannel"
+                },
+                "defaultValue": "ReplicationChannel",
+                "restartNeeded": true
+            },
+            {
+                "name": "DataSourceForSessionPersistence",
+                "label": "Data Source For Session Persistence",
+                "helpLabel": "Data Source For Session Persistence",
+                "type": "reference-dynamic-enum",
+                "helpSummaryHTML": "To support HTTP Session failover across data centers, a datasource is required to dump session state on disk.",
+                "detailedHelpHTML": "<p>To support HTTP Session failover across data centers, a datasource is required to dump session state on disk.</p> ",
+                "usedIf": {
+                    "property": "ClusterType",
+                    "values": [
+                        "wan"
+                    ]
+                },
+                "externalHelp": {
+                    "title": "MBean Info",
+                    "label": "ClusterMBean.DataSourceForSessionPersistence",
+                    "introLabel": "MBean Attribute:",
+                    "href": "https://docs.oracle.com/en/middleware/standalone/weblogic-server/14.1.1.0/wlmbr/mbeans/ClusterMBean.html#DataSourceForSessionPersistence"
+                },
+                "defaultValue": null,
+                "restartNeeded": true
+            },
+            {
+                "name": "PersistSessionsOnShutdown",
+                "label": "Persist Sessions On Shutdown",
+                "helpLabel": "Persist Sessions On Shutdown",
+                "type": "boolean",
+                "helpSummaryHTML": "When shutting down servers, sessions are not updated.",
+                "detailedHelpHTML": "<p>When shutting down servers, sessions are not updated. If the primary and secondary servers of a session are shut down with no session updates, the session will be lost. Turning on PersistSessionsOnShutdown will save any active sessions to the database specified in ClusterMBean.getDataSourceForSessionPersistence() when a server is shutdown. The sessions will not be written at any other time. (For example, they are not saved via this mechanism if there is a server crash.)</p>  <p>This attribute is applicable both to session persistence on server shutdown or session persistence across a WAN.</p>  <p>Rolling upgrade can potentially have a bad interaction with traditional in-memory session replication.  As managed servers are shutdown and upgraded, in-memory servlet sessions will be lost if both primary and secondary are rebooted before a new request arrives for the session.</p> ",
+                "usedIf": {
+                    "property": "ClusterType",
+                    "values": [
+                        "wan"
+                    ]
+                },
+                "externalHelp": {
+                    "title": "MBean Info",
+                    "label": "ClusterMBean.PersistSessionsOnShutdown",
+                    "introLabel": "MBean Attribute:",
+                    "href": "https://docs.oracle.com/en/middleware/standalone/weblogic-server/14.1.1.0/wlmbr/mbeans/ClusterMBean.html#PersistSessionsOnShutdown"
+                },
+                "defaultValue": false,
+                "restartNeeded": true
+            },
+            {
+                "name": "SecureReplicationEnabled",
+                "label": "Secure Replication Enabled",
+                "helpLabel": "Secure Replication Enabled",
+                "type": "boolean",
+                "helpSummaryHTML": "Servers in a cluster replicate session data.",
+                "detailedHelpHTML": "<p>Servers in a cluster replicate session data. If a replication channel is defined then the session data will be sent using the replication channel protocol and secured replication settings will be ignored. If no replication channel is defined and secured replication is enabled then session data for in-memory replication will be sent over SSL using the default secured channel. However, this added security for replication traffic comes with a significant cluster performance degradation. It should only be enabled if security is of greater concern than performance degradation.</p> ",
+                "usedIf": {
+                    "property": "ClusterType",
+                    "values": [
+                        "none",
+                        "man"
+                    ]
+                },
+                "externalHelp": {
+                    "title": "MBean Info",
+                    "label": "ClusterMBean.SecureReplicationEnabled",
+                    "introLabel": "MBean Attribute:",
+                    "href": "https://docs.oracle.com/en/middleware/standalone/weblogic-server/14.1.1.0/wlmbr/mbeans/ClusterMBean.html#SecureReplicationEnabled"
+                },
+                "secureDefaultValue": true,
+                "restartNeeded": true
+            }
+        ],
+        "advancedProperties": [
+            {
+                "name": "SessionFlushInterval",
+                "label": "Session Flush Interval",
+                "helpLabel": "Session Flush Interval",
+                "type": "int",
+                "helpSummaryHTML": "Interval in seconds until HTTP Sessions are periodically flushed to the backup cluster to dump session state on disk.",
+                "detailedHelpHTML": "<p>Interval in seconds until HTTP Sessions are periodically flushed to the backup cluster to dump session state on disk.</p> ",
+                "externalHelp": {
+                    "title": "MBean Info",
+                    "label": "ClusterMBean.SessionFlushInterval",
+                    "introLabel": "MBean Attribute:",
+                    "href": "https://docs.oracle.com/en/middleware/standalone/weblogic-server/14.1.1.0/wlmbr/mbeans/ClusterMBean.html#SessionFlushInterval"
+                },
+                "defaultValue": 180
+            },
+            {
+                "name": "SessionFlushThreshold",
+                "label": "Session Flush Threshold",
+                "helpLabel": "Session Flush Threshold",
+                "type": "int",
+                "helpSummaryHTML": "When number of sessions to be flushed reaches this threshold limit, sessions will be flushed to the backup cluster before the flush interval.",
+                "detailedHelpHTML": "<p>When number of sessions to be flushed reaches this threshold limit, sessions will be flushed to the backup cluster before the flush interval. This helps the server to flush sessions faster under load.</p> ",
+                "externalHelp": {
+                    "title": "MBean Info",
+                    "label": "ClusterMBean.SessionFlushThreshold",
+                    "introLabel": "MBean Attribute:",
+                    "href": "https://docs.oracle.com/en/middleware/standalone/weblogic-server/14.1.1.0/wlmbr/mbeans/ClusterMBean.html#SessionFlushThreshold"
+                },
+                "defaultValue": 10000
+            },
+            {
+                "name": "InterClusterCommLinkHealthCheckInterval",
+                "label": "Inter-Cluster Comm Link Health Check Interval",
+                "helpLabel": "Inter-Cluster Comm Link Health Check Interval",
+                "type": "int",
+                "helpSummaryHTML": "If the cluster link between two clusters goes down, a trigger will run periodically to see if the link is restored.",
+                "detailedHelpHTML": "<p>If the cluster link between two clusters goes down, a trigger will run periodically to see if the link is restored. The duration is specified in milliseconds.</p> ",
+                "externalHelp": {
+                    "title": "MBean Info",
+                    "label": "ClusterMBean.InterClusterCommLinkHealthCheckInterval",
+                    "introLabel": "MBean Attribute:",
+                    "href": "https://docs.oracle.com/en/middleware/standalone/weblogic-server/14.1.1.0/wlmbr/mbeans/ClusterMBean.html#InterClusterCommLinkHealthCheckInterval"
+                },
+                "defaultValue": 30000
+            },
+            {
+                "name": "SessionStateQueryRequestTimeout",
+                "label": "Session State Query Request Timeout",
+                "helpLabel": "Session State Query Request Timeout",
+                "type": "int",
+                "helpSummaryHTML": "The maximum time, in seconds, for session state query request to wait for response from cluster members.",
+                "detailedHelpHTML": "The maximum time, in seconds, for session state query request to wait for response from cluster members. ",
+                "externalHelp": {
+                    "title": "MBean Info",
+                    "label": "ClusterMBean.SessionStateQueryRequestTimeout",
+                    "introLabel": "MBean Attribute:",
+                    "href": "https://docs.oracle.com/en/middleware/standalone/weblogic-server/14.1.1.0/wlmbr/mbeans/ClusterMBean.html#SessionStateQueryRequestTimeout"
+                },
+                "defaultValue": 30
+            },
+            {
+                "name": "SessionStateQueryProtocolEnabled",
+                "label": "Enable Session State Query Protocol",
+                "helpLabel": "Enable Session State Query Protocol",
+                "type": "boolean",
+                "helpSummaryHTML": "Indicates if session state query protocol is enabled.",
+                "detailedHelpHTML": "Indicates if session state query protocol is enabled.  The Session State Query protocol will query the local cluster for the location of a session state instance if a request arrives at a server that is neither the primary or secondary server. ",
+                "externalHelp": {
+                    "title": "MBean Info",
+                    "label": "ClusterMBean.SessionStateQueryProtocolEnabled",
+                    "introLabel": "MBean Attribute:",
+                    "href": "https://docs.oracle.com/en/middleware/standalone/weblogic-server/14.1.1.0/wlmbr/mbeans/ClusterMBean.html#SessionStateQueryProtocolEnabled"
+                },
+                "defaultValue": false
+            },
+            {
+                "name": "ReplicationTimeoutEnabled",
+                "label": "Enable Replication Timeout",
+                "helpLabel": "Enable Replication Timeout",
+                "type": "boolean",
+                "helpSummaryHTML": "Indicates if timeout should be applied to session replication calls.",
+                "detailedHelpHTML": "<p>Indicates if timeout should be applied to session replication calls.</p> ",
+                "externalHelp": {
+                    "title": "MBean Info",
+                    "label": "ClusterMBean.ReplicationTimeoutEnabled",
+                    "introLabel": "MBean Attribute:",
+                    "href": "https://docs.oracle.com/en/middleware/standalone/weblogic-server/14.1.1.0/wlmbr/mbeans/ClusterMBean.html#ReplicationTimeoutEnabled"
+                },
+                "defaultValue": true,
+                "restartNeeded": true
+            },
+            {
+                "name": "ReplicationTimeoutMillis",
+                "label": "Replication Timeout Millis",
+                "helpLabel": "Replication Timeout Millis",
+                "type": "int",
+                "helpSummaryHTML": "Interval in milliseconds at which Migratable Servers and Cluster Masters prove their liveness via the database.",
+                "detailedHelpHTML": "<p>Interval in milliseconds at which Migratable Servers and Cluster Masters prove their liveness via the database.</p> ",
+                "externalHelp": {
+                    "title": "MBean Info",
+                    "label": "ClusterMBean.ReplicationTimeoutMillis",
+                    "introLabel": "MBean Attribute:",
+                    "href": "https://docs.oracle.com/en/middleware/standalone/weblogic-server/14.1.1.0/wlmbr/mbeans/ClusterMBean.html#ReplicationTimeoutMillis"
+                },
+                "restartNeeded": true
+            },
+            {
+                "name": "OneWayRmiForReplicationEnabled",
+                "label": "Enable One Way RMI For Replication",
+                "helpLabel": "Enable One Way RMI For Replication",
+                "type": "boolean",
+                "helpSummaryHTML": "Indicates if one-way RMI is being used for replication.",
+                "detailedHelpHTML": "<p>Indicates if one-way RMI is being used for replication. One-way RMI also requires configuring replication ports on each server in the cluster.</p> ",
+                "externalHelp": {
+                    "title": "MBean Info",
+                    "label": "ClusterMBean.OneWayRmiForReplicationEnabled",
+                    "introLabel": "MBean Attribute:",
+                    "href": "https://docs.oracle.com/en/middleware/standalone/weblogic-server/14.1.1.0/wlmbr/mbeans/ClusterMBean.html#OneWayRmiForReplicationEnabled"
+                },
+                "defaultValue": false,
+                "restartNeeded": true
+            },
+            {
+                "name": "SessionLazyDeserializationEnabled",
+                "label": "Enable Lazy Session Deserialization",
+                "helpLabel": "Enable Lazy Session Deserialization",
+                "type": "boolean",
+                "helpSummaryHTML": "Enables increased efficiency with session replication.",
+                "detailedHelpHTML": "<p>Enables increased efficiency with session replication. Enabling this attribute should be used only when configuring a WebLogic domain for Oracle Exalogic.</p> ",
+                "externalHelp": {
+                    "title": "MBean Info",
+                    "label": "ClusterMBean.SessionLazyDeserializationEnabled",
+                    "introLabel": "MBean Attribute:",
+                    "href": "https://docs.oracle.com/en/middleware/standalone/weblogic-server/14.1.1.0/wlmbr/mbeans/ClusterMBean.html#SessionLazyDeserializationEnabled"
+                }
+            },
+            {
+                "name": "MaxSecondarySelectionAttempts",
+                "label": "Max Secondary Selection Attempts",
+                "helpLabel": "Max Secondary Selection Attempts",
+                "type": "int",
+                "helpSummaryHTML": "This is the max number of attempts at choosing a suitable secondary server for replication.If it is set to 0,secondary server selection for replication will be tried on all servers in the cluster.",
+                "detailedHelpHTML": "<p>This is the max number of attempts at choosing a suitable secondary server for replication.If it is set to 0,secondary server selection for replication will be tried on all servers in the cluster. </p> ",
+                "externalHelp": {
+                    "title": "MBean Info",
+                    "label": "ClusterMBean.MaxSecondarySelectionAttempts",
+                    "introLabel": "MBean Attribute:",
+                    "href": "https://docs.oracle.com/en/middleware/standalone/weblogic-server/14.1.1.0/wlmbr/mbeans/ClusterMBean.html#MaxSecondarySelectionAttempts"
+                },
+                "defaultValue": 0
+            }
+        ],
+        "readOnly": false
+    }
+}

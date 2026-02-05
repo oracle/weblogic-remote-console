@@ -1,0 +1,12 @@
+oj-c-list-item-layout:not(.oj-complete){
+  visibility: hidden;
+}
+
+oj-c-list-item-layout {
+  display: block;
+}
+
+oj-c-list-item-layout[hidden]
+{
+  display: none;
+}

@@ -1,0 +1,15 @@
+.LayerStyles_baseStyle__g9p4b90 {
+  position: relative;
+}
+.LayerStyles_tooltipPriorityStyle__g9p4b91 {
+  z-index: 800;
+}
+.LayerStyles_popupPriorityStyle__g9p4b92 {
+  z-index: 1000;
+}
+.LayerStyles_dialogPriorityStyle__g9p4b93 {
+  z-index: 1050;
+}
+.LayerStyles_messagesPriorityStyle__g9p4b94 {
+  z-index: 2000;
+}

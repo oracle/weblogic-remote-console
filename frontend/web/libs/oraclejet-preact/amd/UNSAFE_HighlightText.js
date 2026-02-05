@@ -1,0 +1,2 @@
+define(['exports', './HighlightText-ecd2e5ce', 'preact/jsx-runtime', 'css!./HighlightTextStyles.styles.css', './useTestId-9afc201a', './LayerHost-daf96749', 'preact', './index-f7ad24df', 'preact/compat', './UNSAFE_Layer/themes/LayerHostStyles.css', 'css!./LayerHostStyles.styles.css', 'preact/hooks'], (function(e,t,s,a,c,i,r,l,h,o,y,d){"use strict";e.HighlightText=t.HighlightText,Object.defineProperty(e,"__esModule",{value:!0})}));
+//# sourceMappingURL=UNSAFE_HighlightText.js.map

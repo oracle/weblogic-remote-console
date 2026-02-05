@@ -35,12 +35,16 @@ public class Localizer {
     } else {
       this.locale = locale;
     }
-    this.resourceBundle =
-      ResourceBundle.getBundle(
-        resourceBundleName,
-        this.locale,
-        Thread.currentThread().getContextClassLoader()
-      );
+    if (this.locale.getLanguage().startsWith("en")) {
+      this.resourceBundle = null;
+    } else {
+      this.resourceBundle =
+        ResourceBundle.getBundle(
+          resourceBundleName,
+          this.locale,
+          Thread.currentThread().getContextClassLoader()
+        );
+    }
   }
 
   // Get the locale for this localizer (i.e. the language the client wants to use)
@@ -70,7 +74,7 @@ public class Localizer {
     if (StringUtils.isEmpty(english)) {
       return "";
     }
-    if (localizableString.isUnlocalized()) {
+    if (localizableString.isUnlocalized() || (resourceBundle == null)) {
       return english;
     }
     String key = localizableString.getResourceBundleKey();

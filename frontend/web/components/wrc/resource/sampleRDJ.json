@@ -1,0 +1,142 @@
+{
+    "navigation": "Environment/Clusters/Cluster1",
+    "self": {
+        "label": "Cluster1",
+        "resourceData": "/api/1720538734878/edit/data/Domain/Clusters/Cluster1?slice=Replication"
+    },
+    "breadCrumbs": [
+        {
+            "label": "Clusters",
+            "resourceData": "/api/1720538734878/edit/data/Domain/Clusters"
+        }
+    ],
+    "links": [
+        {
+            "label": "Cluster1 - Configuration View Tree",
+            "resourceData": "/api/1720538734878/serverConfig/data/Domain/Clusters/Cluster1"
+        },
+        {
+            "label": "Server Failure Trigger - Cluster1",
+            "resourceData": "/api/1720538734878/edit/data/Domain/Clusters/Cluster1/OverloadProtection/ServerFailureTrigger"
+        }
+    ],
+    "changeManager": {
+        "locked": false,
+        "mergeNeeded": false,
+        "supportsChanges": true
+    },
+    "data": {
+        "ClusterType": {
+            "set": false,
+            "value": "none"
+        },
+        "RemoteClusterAddress": {
+            "set": false,
+            "value": null
+        },
+        "ReplicationChannel": {
+            "set": false,
+            "value": "ReplicationChannel"
+        },
+        "DataSourceForSessionPersistence": {
+            "set": false,
+            "value": null,
+            "options": [
+                {
+                    "label": "None",
+                    "value": null
+                },
+                {
+                    "label": "MyDataSource",
+                    "value": {
+                        "label": "MyDataSource",
+                        "resourceData": "/api/1720538734878/edit/data/Domain/JDBCSystemResources/MyDataSource"
+                    }
+                },
+                {
+                    "label": "MyGridLinkDataSource",
+                    "value": {
+                        "label": "MyGridLinkDataSource",
+                        "resourceData": "/api/1720538734878/edit/data/Domain/JDBCSystemResources/MyGridLinkDataSource"
+                    }
+                },
+                {
+                    "label": "MyMultiDataSource",
+                    "value": {
+                        "label": "MyMultiDataSource",
+                        "resourceData": "/api/1720538734878/edit/data/Domain/JDBCSystemResources/MyMultiDataSource"
+                    }
+                },
+                {
+                    "label": "MyPersistentStoreDS",
+                    "value": {
+                        "label": "MyPersistentStoreDS",
+                        "resourceData": "/api/1720538734878/edit/data/Domain/JDBCSystemResources/MyPersistentStoreDS"
+                    }
+                },
+                {
+                    "label": "MyUCPDataSource",
+                    "value": {
+                        "label": "MyUCPDataSource",
+                        "resourceData": "/api/1720538734878/edit/data/Domain/JDBCSystemResources/MyUCPDataSource"
+                    }
+                }
+            ],
+            "optionsSources": [
+                {
+                    "label": "Data Sources",
+                    "resourceData": "/api/1720538734878/edit/data/Domain/JDBCSystemResources"
+                }
+            ]
+        },
+        "PersistSessionsOnShutdown": {
+            "set": false,
+            "value": false
+        },
+        "SecureReplicationEnabled": {
+            "set": false,
+            "value": false
+        },
+        "SessionFlushInterval": {
+            "set": false,
+            "value": 180
+        },
+        "SessionFlushThreshold": {
+            "set": false,
+            "value": 10000
+        },
+        "InterClusterCommLinkHealthCheckInterval": {
+            "set": false,
+            "value": 30000
+        },
+        "SessionStateQueryRequestTimeout": {
+            "set": false,
+            "value": 30
+        },
+        "SessionStateQueryProtocolEnabled": {
+            "set": false,
+            "value": false
+        },
+        "ReplicationTimeoutEnabled": {
+            "set": false,
+            "value": true
+        },
+        "ReplicationTimeoutMillis": {
+            "set": false,
+            "value": 30000
+        },
+        "OneWayRmiForReplicationEnabled": {
+            "set": false,
+            "value": false
+        },
+        "SessionLazyDeserializationEnabled": {
+            "set": false,
+            "value": false
+        },
+        "MaxSecondarySelectionAttempts": {
+            "set": false,
+            "value": 0
+        }
+    },
+    "pageDescription": "/api/1720538734878/edit/pages/ClusterMBean?view=Replication"
+}

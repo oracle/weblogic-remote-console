@@ -1,0 +1,19 @@
+.NavigationListItemBaseTheme_baseTheme__cn44r50 {
+  --fontSize__1497t560: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-body-md-font-size);
+  --fontWeight__1497t561: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-body-md-font-weight-semibold);
+  --minHeight__1497t563: calc(12 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --borderWidth__1497t564: 3px;
+  --borderHeight__1497t565: calc(10 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --iconSize__1497t562: calc(5 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --paddingHorizontal__1497t566: calc(4 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --labelColor__1497t567: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-secondary);
+  --labelColorHover__1497t568: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-primary);
+  --backgroundColorHover__1497t569: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-overlay-hover);
+  --borderColorHover__1497t56a: transparent;
+  --labelColorSelected__1497t56b: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-primary);
+  --backgroundColorSelected__1497t56c: transparent;
+  --borderColorSelected__1497t56d: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-primary);
+  --backgroundColorActive__1497t56e: transparent;
+  --labelColorActive__1497t56f: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-primary);
+  --borderColorActive__1497t56g: transparent;
+}

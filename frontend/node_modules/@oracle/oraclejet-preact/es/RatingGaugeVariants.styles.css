@@ -1,0 +1,67 @@
+.RatingGaugeVariants_multiVariantStyles_size_sm__vs4x6x0 {
+  --size__1kgzocsc: var(--sizes-sm__1kgzocse);
+  --margin__1kgzocsd: 0px 1px;
+}
+.RatingGaugeVariants_multiVariantStyles_size_md__vs4x6x1 {
+  --size__1kgzocsc: var(--sizes-md__1kgzocsf);
+  --margin__1kgzocsd: 0px 1px;
+}
+.RatingGaugeVariants_multiVariantStyles_size_lg__vs4x6x2 {
+  --size__1kgzocsc: var(--sizes-lg__1kgzocsg);
+  --margin__1kgzocsd: 0px 2px;
+}
+.RatingGaugeVariants_multiVariantStyles_color_gold__vs4x6x4 {
+  --colorSelected__1kgzocs0: var(--colors-gold-colorSelected__1kgzocsh);
+  --borderColorSelected__1kgzocs1: var(--colors-gold-bordorColorSelected__1kgzocsi);
+  --colorSelectedReadonly__1kgzocs8: var(--colors-gold-colorSelectedReadonly__1kgzocsj);
+  --borderColorUnselected__1kgzocs3: var(--colors-gold-borderColorUnselected__1kgzocsk);
+  --borderColorUnselectedReadonly__1kgzocsb: var(--colors-gold-borderColorUnselectedReadonly__1kgzocsl);
+  --borderColorSelectedReadonly__1kgzocs9: var(--colors-gold-borderColorSelectedReadonly__1kgzocsm);
+}
+.RatingGaugeVariants_multiVariantStyles_color_success__vs4x6x5 {
+  --colorSelected__1kgzocs0: var(--colors-success-colorSelected__1kgzocsn);
+  --borderColorSelected__1kgzocs1: var(--colors-success-bordorColorSelected__1kgzocso);
+  --colorSelectedReadonly__1kgzocs8: var(--colors-success-colorSelectedReadonly__1kgzocsp);
+}
+.RatingGaugeVariants_multiVariantStyles_color_warning__vs4x6x6 {
+  --colorSelected__1kgzocs0: var(--colors-warning-colorSelected__1kgzocsq);
+  --borderColorSelected__1kgzocs1: var(--colors-warning-bordorColorSelected__1kgzocsr);
+  --colorSelectedReadonly__1kgzocs8: var(--colors-warning-colorSelectedReadonly__1kgzocss);
+}
+.RatingGaugeVariants_multiVariantStyles_color_danger__vs4x6x7 {
+  --colorSelected__1kgzocs0: var(--colors-danger-colorSelected__1kgzocst);
+  --borderColorSelected__1kgzocs1: var(--colors-danger-bordorColorSelected__1kgzocsu);
+  --colorSelectedReadonly__1kgzocs8: var(--colors-danger-colorSelectedReadonly__1kgzocsv);
+}
+.RatingGaugeVariants_multiVariantStyles_compound_0__vs4x6xg {
+  --colorSelected__1kgzocs0: var(--colorSelectedDisabled__1kgzocs4);
+  --borderColorSelected__1kgzocs1: var(--borderColorSelectedDisabled__1kgzocs5);
+}
+.RatingGaugeVariants_multiVariantStyles_compound_1__vs4x6xh {
+  --colorSelected__1kgzocs0: var(--colorSelectedReadonly__1kgzocs8);
+  --borderColorSelected__1kgzocs1: var(--borderColorSelectedReadonly__1kgzocs9);
+}
+.RatingGaugeVariants_multiVariantStyles_compound_2__vs4x6xi {
+  --colorSelected__1kgzocs0: var(--colorUnselectedDisabled__1kgzocs6);
+  --borderColorSelected__1kgzocs1: var(--borderColorUnselectedDisabled__1kgzocs7);
+}
+.RatingGaugeVariants_multiVariantStyles_compound_3__vs4x6xj {
+  --colorSelected__1kgzocs0: var(--colorUnselectedReadonly__1kgzocsa);
+  --borderColorSelected__1kgzocs1: var(--borderColorUnselectedReadonly__1kgzocsb);
+}
+.RatingGaugeVariants_multiVariantStyles_compound_4__vs4x6xk {
+  --colorSelected__1kgzocs0: var(--colorUnselected__1kgzocs2);
+  --borderColorSelected__1kgzocs1: var(--borderColorUnselected__1kgzocs3);
+}
+.RatingGaugeVariants_multiVariantStyles_compound_5__vs4x6xl {
+  --colorSelected__1kgzocs0: currentColor;
+  --borderColorSelected__1kgzocs1: currentColor;
+}
+.RatingGaugeVariants_multiVariantStyles_compound_6__vs4x6xm {
+  --colorSelected__1kgzocs0: transparent;
+  --borderColorSelected__1kgzocs1: currentColor;
+}
+.RatingGaugeVariants_multiVariantStyles_compound_7__vs4x6xn {
+  --colorSelected__1kgzocs0: transparent;
+  --borderColorSelected__1kgzocs1: transparent;
+}

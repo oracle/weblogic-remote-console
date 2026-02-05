@@ -1,0 +1,11 @@
+oj-c-highlight-text:not(.oj-complete) {
+  visibility: hidden;
+}
+
+oj-c-highlight-text {
+  display: inline;
+}
+
+oj-c-highlight-text[hidden] {
+  display: none;
+}

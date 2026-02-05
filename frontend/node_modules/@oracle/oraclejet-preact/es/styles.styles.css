@@ -1,0 +1,15 @@
+.styles_container__sc292h0 {
+  background-color: aliceblue;
+  border: yellow dotted 2px;
+  box-sizing: border-box;
+  color: orangered;
+  height: 80px;
+  min-width: 6em;
+  text-align: right;
+  width: 25em;
+}
+.styles_wrapper__sc292h1 {
+  min-width: 18rem;
+  max-width: 28rem;
+  width: 50%;
+}

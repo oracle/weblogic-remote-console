@@ -1,14 +1,14 @@
-// Copyright (c) 2021, 2024, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2025, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.providers;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
-import java.util.stream.IntStream;
 import javax.json.Json;
 import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
@@ -25,63 +25,48 @@ import weblogic.remoteconsole.server.repo.weblogic.WDTCompositePageRepo;
 import weblogic.remoteconsole.server.repo.weblogic.WDTModelBuilder;
 import weblogic.remoteconsole.server.repo.weblogic.WDTModelSchema;
 import weblogic.remoteconsole.server.webapp.FailedRequestException;
-import weblogic.remoteconsole.server.webapp.ProviderResource;
 
 /**
  * The implementation of the provider for an order list of WDT Models
  * where the models come from other created WDT providers.
 */
-public class WDTCompositeDataProviderImpl implements WDTCompositeDataProvider {
+public class WDTCompositeDataProviderImpl implements Provider {
   private static final Logger LOGGER = Logger.getLogger(WDTCompositeDataProviderImpl.class.getName());
 
   public static final String TYPE_NAME = "WDTCompositeModel";
   private String name;
-  private String label;
   private List<String> modelNames;
-  private ProviderManager pm;
-  private String lastMessage = null;
   private String lastProviderNoModel = null;
   private List<Map<String, Object>> models = null;
   private Map<String, Root> roots = new HashMap<String, Root>();
-  private Root viewRoot;
+  private Root editRoot;
 
-  public WDTCompositeDataProviderImpl(String name, String label, List<String> modelNames, ProviderManager pm) {
+  public WDTCompositeDataProviderImpl() {
+    makeRoots();
+  }
+
+  public WDTCompositeDataProviderImpl(String name, List<String> modelNames) {
     this.name = name;
-    this.label = label;
     this.modelNames = modelNames;
-    this.pm = pm;
+    makeRoots();
+  }
 
-    // Setup the roots
-    viewRoot = new Root(
+  private void makeRoots() {
+    // Setup the only root.  Technically, this isn't really "edit", since you
+    // can't change anything, but it is a simplifying assumption in the code
+    // that every provider has an edit and then maybe others.  The name isn't
+    // used anywhere except in the wire protocol.
+    editRoot = new Root(
       this,
-      Root.COMPOSITE_CONFIGURATION_NAME,
+      Root.EDIT_NAME,
       Root.CONFIGURATION_ROOT,
-      Root.COMPOSITE_CONFIGURATION_LABEL,
+      Root.EDIT_LABEL,
+      LocalizedConstants.COMPOSITE_CONFIGURATION_DESCRIPTION,
       true, // read only
       Root.NAV_TREE_RESOURCE,
       Root.SIMPLE_SEARCH_RESOURCE
      );
-    roots.put(Root.COMPOSITE_CONFIGURATION_NAME, viewRoot);
-  }
-
-  @Override
-  public void checkModels(InvocationContext ic) {
-    lastProviderNoModel = null;
-
-    // Obtain the WDT models
-    models = getCurrentModels(ic);
-
-    // Check if there was a problem with any of the providers or models
-    // and set the list of models to null so an error will be reported
-    if (lastProviderNoModel != null) {
-      models = null;
-      throw new FailedRequestException(getNoModelMessage(ic));
-    }
-  }
-
-  @Override
-  public List<Map<String, Object>> getModels() {
-    return models;
+    roots.put(Root.EDIT_NAME, editRoot);
   }
 
   @Override
@@ -96,7 +81,7 @@ public class WDTCompositeDataProviderImpl implements WDTCompositeDataProvider {
   ) {
     JsonObjectBuilder ret = Json.createObjectBuilder();
     ret.add("helpSummaryHTML", ic.getLocalizer().localizeString(summary));
-    ret.add("helpDetailHTML", ic.getLocalizer().localizeString(detail));
+    ret.add("detailedHelpHTML", ic.getLocalizer().localizeString(detail));
     return ret.build();
   }
 
@@ -118,11 +103,6 @@ public class WDTCompositeDataProviderImpl implements WDTCompositeDataProvider {
   }
 
   @Override
-  public String getLabel() {
-    return label;
-  }
-
-  @Override
   public String getName() {
     return name;
   }
@@ -132,39 +112,24 @@ public class WDTCompositeDataProviderImpl implements WDTCompositeDataProvider {
   }
 
   @Override
-  public void test(InvocationContext ic) {
-    start(ic);
-  }
-
-  @Override
   public boolean start(InvocationContext ic) {
     ic.setProvider(this);
-    if (models == null) {
+    if ((modelNames == null) || (modelNames.size() == 0)) {
       // The WDT Composite Provider is unable to start without any WDT models!
       throw new FailedRequestException(getNoModelMessage(ic));
     }
 
     // IFF the models have been updated then update the PageRepo so these changes are visible to the composite...
     List<Map<String, Object>> currentModels = getCurrentModels(ic);
-    boolean sameLength = (models.size() == currentModels.size());
-    if (!sameLength || !IntStream.range(0, models.size()).allMatch(i -> models.get(i) == currentModels.get(i))) {
-      LOGGER.fine("WDTCompositeDataProvider: WDT models updated for the WDT composite: " + name);
-      models = currentModels;
-      setPageRepo(ic);
-      return true;
-    }
-
-    // Otherwise ensure the PageRepo is setup and continue...
-    if (viewRoot.getPageRepo() == null) {
-      setPageRepo(ic);
-    }
+    models = currentModels;
+    setPageRepo(ic);
     return true;
   }
 
   // Set a new PageRepo for the tree using the current list of WDT models
   private void setPageRepo(InvocationContext ic) {
     WebLogicVersion weblogicVersion = WebLogicVersions.getLatestVersion();
-    viewRoot.setPageRepo(
+    editRoot.setPageRepo(
       new WDTCompositePageRepo(
         WebLogicMBeansVersions.getVersion(
           weblogicVersion,
@@ -182,11 +147,13 @@ public class WDTCompositeDataProviderImpl implements WDTCompositeDataProvider {
     // Obtain the list of WDT model providers from the WDT model names
     List<WDTModelDataProvider> wdtProviders = new ArrayList<>(modelNames.size());
     modelNames.forEach(name -> {
-      WDTModelDataProvider provider = (WDTModelDataProvider)pm.getProvider(name,WDTModelDataProviderImpl.TYPE_NAME);
+      ConfiguredProvider prov = ic.getProjectManager().getCurrentProject().getProvider(name);
+      prov.start(ic);
+      WDTModelDataProvider provider = (WDTModelDataProvider) prov.getLiveProvider();
       boolean added = ((provider != null) ? wdtProviders.add(provider) : false);
       if (!added) {
         // Log and note the provider that was not found...
-        LOGGER.finest("WDTCompositeDataProvider unable to find WDT model provider: " + name);
+        LOGGER.finest("WDTCompositeDataProviderImpl unable to find WDT model provider: " + name);
         lastProviderNoModel = " (" + name + ")";
       }
     });
@@ -198,7 +165,7 @@ public class WDTCompositeDataProviderImpl implements WDTCompositeDataProvider {
       boolean added = ((model != null) ? wdtModels.add(model) : false);
       if (!added) {
         // Log and note the provider name for the model that was not found...
-        LOGGER.finest("WDTCompositeDataProvider unable to get WDT model: " + provider.getName());
+        LOGGER.finest("WDTCompositeDataProviderImpl unable to get WDT model: " + provider.getName());
         lastProviderNoModel = " (" + provider.getName() + ")";
       }
     });
@@ -213,7 +180,6 @@ public class WDTCompositeDataProviderImpl implements WDTCompositeDataProvider {
         WDTModelSchema.KNOWN_SECTIONS
       );
     result += (lastProviderNoModel != null) ? lastProviderNoModel : "";
-    lastMessage = result;
     return result;
   }
 
@@ -226,14 +192,12 @@ public class WDTCompositeDataProviderImpl implements WDTCompositeDataProvider {
   public JsonObject toJSON(InvocationContext ic) {
     JsonObjectBuilder ret = Json.createObjectBuilder();
     ret.add("name", getName());
-    if ((getLabel() != null) && !getName().equals(getLabel())) {
-      ret.add("label", getLabel());
-    }
-    ret.add(ProviderResource.PROVIDER_TYPE, getType());
+    ret.add("providerType", getType());
     JsonArrayBuilder builder = Json.createArrayBuilder();
     for (Root root : getRoots().values()) {
       builder.add(root.toJSON(ic));
     }
+    ret.add("lastRootUsed", "edit");
     ret.add("roots", builder);
     ret.add("mode", "standalone");
     if (modelNames != null) {
@@ -241,14 +205,21 @@ public class WDTCompositeDataProviderImpl implements WDTCompositeDataProvider {
       modelNames.forEach(models::add);
       ret.add("modelNames", models);
     }
-    if (lastMessage != null) {
-      ret.add("messages", createMessages(lastMessage));
-    }
     return ret.build();
   }
 
   @Override
   public boolean isValidPath(String path) {
     return WDTModelBuilder.isValidPath(path);
+  }
+
+  @Override
+  public void updateStatus(InvocationContext ic) {
+  }
+
+  @Override
+  public LinkedHashMap<String, String> getStatusMap(InvocationContext ic) {
+    LinkedHashMap<String, String> ret = new LinkedHashMap<>();
+    return ret;
   }
 }

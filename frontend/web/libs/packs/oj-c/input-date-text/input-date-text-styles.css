@@ -1,0 +1,17 @@
+oj-c-input-date-text:not(.oj-complete) {
+  visibility: hidden;
+}
+
+oj-c-input-date-text {
+  display: inline-block;
+  max-width: 100%;
+  width: 100%;
+}
+
+oj-c-input-date-text.in-form-layout {
+  display: block;
+}
+
+oj-c-input-date-text[hidden] {
+  display: none;
+}

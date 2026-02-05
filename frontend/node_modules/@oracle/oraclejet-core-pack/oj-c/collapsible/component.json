@@ -1,0 +1,220 @@
+{
+  "name": "collapsible",
+  "version": "19.0.1",
+  "jetVersion": "^19.0.1",
+  "pack": "oj-c",
+  "type": "composite",
+  "dependencyScope": "runtime",
+  "license": "https://opensource.org/licenses/UPL",
+  "implements": [
+    "CCollapsibleElement"
+  ],
+  "description": "A collapsible displays a header that can be expanded to show its content.",
+  "displayName": "Collapsible",
+  "help": "oj-c.Collapsible.html",
+  "main": "oj-c/collapsible",
+  "status": [
+    {
+      "type": "candidate",
+      "since": "17.0.0"
+    }
+  ],
+  "extension": {
+    "catalog": {
+      "category": "Layout & Nav"
+    },
+    "vbdt": {
+      "module": "oj-c/collapsible"
+    },
+    "oracle": {
+      "icon": "oj-ux-ico-collapsible",
+      "uxSpecs": [
+        "collapsible"
+      ]
+    },
+    "webelement": {
+      "package": "@oracle/oraclejet-core-pack",
+      "version": "19.0.1",
+      "docUrl": "https://www.oracle.com/webfolder/technetwork/jet/cpwdtsdoc/classes/CollapsibleWebElement.html",
+      "export": "findCollapsible",
+      "main": "@oracle/oraclejet-core-pack/webdriver"
+    }
+  },
+  "propertyLayout": [
+    {
+      "propertyGroup": "common",
+      "items": [
+        "disabled",
+        "expanded",
+        "iconPosition",
+        "variant"
+      ]
+    }
+  ],
+  "since": "14.0.0",
+  "slots": {
+    "": {
+      "description": "The default slot is the content of the collapsible. The oj-c-collapsible element accepts plain text or DOM nodes as children for the default slot.",
+      "help": "#Default"
+    },
+    "header": {
+      "description": "The header slot is the collapsible's header. If not specified, the header contains only an open/close icon. Note that the header text is required for JET collapsible for accessibility purposes.",
+      "help": "#header"
+    }
+  },
+  "properties": {
+    "disabled": {
+      "type": "boolean",
+      "description": "Disables the collapsible if set to true.",
+      "help": "#disabled",
+      "value": false
+    },
+    "expanded": {
+      "type": "boolean",
+      "description": "Specifies if the content is expanded.",
+      "help": "#expanded",
+      "extension": {
+        "webelement": {
+          "exceptionStatus": [
+            {
+              "type": "getterOnly"
+            }
+          ]
+        }
+      },
+      "writeback": true,
+      "value": false
+    },
+    "iconPosition": {
+      "type": "string",
+      "description": "Controls placement of the icon in the header.",
+      "help": "#iconPosition",
+      "propertyEditorValues": {
+        "start": {
+          "description": "icon position is start (default, if unspecified)",
+          "displayName": "Start"
+        },
+        "end": {
+          "description": "icon position is end",
+          "displayName": "End"
+        }
+      },
+      "enumValues": [
+        "end",
+        "start"
+      ],
+      "value": "start"
+    },
+    "variant": {
+      "type": "string",
+      "description": "Controls display of the optional divider below the header.",
+      "help": "#variant",
+      "propertyEditorValues": {
+        "basic": {
+          "description": "basic, no divider (default, if unspecified)",
+          "displayName": "Basic"
+        },
+        "horizontal-rule": {
+          "description": "displays a horizontal divider between the header and content",
+          "displayName": "Horizontal Rule"
+        }
+      },
+      "enumValues": [
+        "basic",
+        "horizontal-rule"
+      ],
+      "value": "basic"
+    }
+  },
+  "events": {
+    "ojBeforeCollapse": {
+      "cancelable": true,
+      "description": "Triggered immediately before the collapsible is collapsed.",
+      "help": "#event:beforeCollapse",
+      "detail": {
+        "accept": {
+          "description": "This method can be called with an application-created Promise to cancel this event asynchronously.  The Promise should be resolved or rejected to accept or cancel the event, respectively.",
+          "type": "function"
+        },
+        "target": {
+          "type": "EventTarget|null"
+        }
+      }
+    },
+    "ojBeforeExpand": {
+      "cancelable": true,
+      "description": "Triggered immediately before the collapsible is expanded.",
+      "help": "#event:beforeExpand",
+      "detail": {
+        "accept": {
+          "description": "This method can be called with an application-created Promise to cancel this event asynchronously.  The Promise should be resolved or rejected to accept or cancel the event, respectively.",
+          "type": "function"
+        },
+        "target": {
+          "type": "EventTarget|null"
+        }
+      }
+    },
+    "ojCollapse": {
+      "description": "Triggered after the collapsible has been collapsed.",
+      "help": "#event:collapse",
+      "detail": {
+        "target": {
+          "type": "EventTarget|null"
+        }
+      }
+    },
+    "ojExpand": {
+      "description": "Triggered after the collapsible has been expanded (after animation completes).",
+      "help": "#event:expand",
+      "detail": {
+        "target": {
+          "type": "EventTarget|null"
+        }
+      }
+    }
+  },
+  "methods": {
+    "setProperty": {
+      "description": "Sets a property or a single subproperty for complex properties and notifies the component of the change, triggering a corresponding event.",
+      "help": "#setProperty",
+      "params": [
+        {
+          "name": "property",
+          "description": "The property name to set. Supports dot notation for subproperty access.",
+          "type": "string"
+        },
+        {
+          "name": "value",
+          "description": "The new value to set the property to.",
+          "type": "any"
+        }
+      ],
+      "return": "void"
+    },
+    "getProperty": {
+      "description": "Retrieves the value of a property or a subproperty.",
+      "help": "#getProperty",
+      "params": [
+        {
+          "name": "property",
+          "description": "The property name to get. Supports dot notation for subproperty access.",
+          "type": "string"
+        }
+      ],
+      "return": "any"
+    },
+    "setProperties": {
+      "description": "Performs a batch set of properties.",
+      "help": "#setProperties",
+      "params": [
+        {
+          "name": "properties",
+          "description": "An object containing the property and value pairs to set.",
+          "type": "object"
+        }
+      ],
+      "return": "void"
+    }
+  }
+}

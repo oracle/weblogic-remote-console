@@ -1,0 +1,1758 @@
+[
+  {
+    "id": "oj-c.ListView",
+    "name": "ListView",
+    "memberof": "oj-c",
+    "kind": "class",
+    "meta": {
+      "filename": "list-view.tsx",
+      "path": "web/components/oj-c/list-view"
+    },
+    "ojcomponent": true,
+    "isvcomponent": true,
+    "since": "15.0.0",
+    "longname": "oj-c.ListView",
+    "pack": "oj-c",
+    "classdesc": "<h3 id=\"listViewOverview-section\">\n  JET ListView Component\n  <a class=\"bookmarkable-link\" title=\"Bookmarkable Link\" href=\"#listViewOverview-section\"></a>\n</h3>\n\n<p>Description: The JET ListView enhances a HTML list element into a themable, WAI-ARIA compliant, mobile friendly component with advance interactive features.\nThe child content can be configured via a DataProvider which should be used for mutable data.</p>\n\n<p>For migration information from <code>oj-list-view</code> refer to the <a href=\"https://jet.oraclecorp.com/trunk/jsdocs/oj.ojListView.html#styling-section\">migration section</a> in the API docs.\n\n<h3 id=\"data-section\">\n  Data\n  <a class=\"bookmarkable-link\" title=\"Bookmarkable Link\" href=\"#data-section\"></a>\n</h3>\n<p>The JET ListView gets its data from a DataProvider.</p>\n\n<p><b>ArrayDataProvider</b> - Use this when the underlying data is an array object or an observableArray.  In the observableArray case, ListView will automatically react\nwhen items are added or removed from the array.  See the documentation for ArrayDataProvider for more details on the available options.</p>\n\n<p>Example of data provider content</p>\n<pre class=\"prettyprint\"><code>\n  &lt;oj-c-list-view aria-label=\"Accessible Summary\" data=\"[[dataProvider]]\">\n  &lt;/oj-c-list-view>\n</code></pre>\n\n<p>Check out the Listview Basic demo</a>\n\n<h3 id=\"keyboard-section\">\n  Coming Features\n  <a class=\"bookmarkable-link\" title=\"Bookmarkable Link\" href=\"#coming-features-section\"></a>\n</h3>\n\n<p>These features will be the domain of new, specialized components</p>\n<ul>\n   <li>Cards in grid layout</li>\n   <li>Cards in waterfall layout</li>\n   <li>Grouped list</li>\n   <li>Expandable list</li>\n</ul>\n\n<p>These features will be available in forthcoming versions</p>\n<ul>\n   <li>Drag and drop between components</li>\n   <li>Managing scroll position</li>\n</ul>\n\n<h3 id=\"keyboard-section\">\n  Keyboard End User Information\n  <a class=\"bookmarkable-link\" title=\"Bookmarkable Link\" href=\"#keyboard-section\"></a>\n</h3>\n\n<table class=\"keyboard-table\">\n  <thead>\n    <tr>\n      <th>Target</th>\n      <th>Key</th>\n      <th>Action</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <td rowspan = \"20\" nowrap>List Item</td>\n      <td><kbd>F2</kbd></td>\n      <td>Enters tabbable mode.  This enables keyboard action on elements inside the item, including navigate between focusable elements inside the item.  It can also be used to exit tabbable mode if already in tabbable mode.</td>\n    </tr>\n    <tr>\n      <td><kbd>Enter</kbd></td>\n      <td>Enters tabbable mode if <a href=\"#item\">enterKeyFocusBehavior</a> is \"focusWithin\" (default).  This enables keyboard action on elements inside the item, including navigate between focusable elements inside the item.</td>\n    </tr>\n    <tr>\n      <td><kbd>Esc</kbd></td>\n      <td>Exits tabbable mode.</td>\n    </tr>\n    <tr>\n      <td><kbd>Tab</kbd></td>\n      <td>When in tabbable mode, navigates to next focusable element within the item.  If the last focusable element is reached, shift focus back to the first focusable element.\n          When not in tabbable mode, navigates to next focusable element on page (outside ListView).</td>\n    </tr>\n    <tr>\n      <td><kbd>Shift+Tab</kbd></td>\n      <td>When in tabbable mode, navigates to previous focusable element within the item.  If the first focusable element is reached, shift focus back to the last focusable element.\n          When not in tabbable mode, navigates to previous focusable element on page (outside ListView).</td>\n    </tr>\n    <tr>\n      <td><kbd>DownArrow</kbd></td>\n      <td>Move focus to the item below.</td>\n    </tr>\n    <tr>\n      <td><kbd>UpArrow</kbd></td>\n      <td>Move focus to the item above.</td>\n    </tr>\n    <tr>\n      <td><kbd>Shift+DownArrow</kbd></td>\n      <td>Extend the selection to the item below.</td>\n    </tr>\n    <tr>\n      <td><kbd>Shift+UpArrow</kbd></td>\n      <td>Extend the selection to the item above.</td>\n    </tr>\n    <tr>\n      <td><kbd>Space</kbd></td>\n      <td>Toggles to select and deselect the current item while maintaining previously selected items.</td>\n    </tr>\n    <tr>\n      <td><kbd>Shift+Space</kbd></td>\n      <td>Toggles to select and deselect the current item while maintaining previously selected items.</td>\n    </tr>\n    <tr>\n      <td><kbd>Shift+Cmd/Ctrl+UpArrow</kbd></td>\n      <td>Reorder the current item up.</td>\n    </tr>\n    <tr>\n      <td><kbd>Shift+Cmd/Ctrl+DownArrow</kbd></td>\n      <td>Reorder the current item down.</td>\n    </tr>\n    <tr>\n      <td><kbd>Ctrl+Space</kbd></td>\n      <td>Toggles to select and deselect the current item while maintaining previously selected items.</td>\n    </tr>\n  </tbody>\n</table>\n\n<h3 id=\"a11y-section\">\n  Accessibility\n  <a class=\"bookmarkable-link\" title=\"Bookmarkable Link\" href=\"#a11y-section\"></a>\n</h3>\n\n<p>Application should specify a value for the aria-label attribute with a meaningful description of the purpose of this list.</p>\n<p>Note that ListView uses the grid role and follows the <a href=\"https://www.w3.org/TR/wai-aria-practices/examples/grid/LayoutGrids.html\">Layout Grid</a> design as outlined in the <a href=\"https://www.w3.org/TR/wai-aria-practices/#grid\">grid design pattern</a></p>\n<p>Nesting collection components such as ListView, Table, TreeView, and ListView inside of ListView is not supported.</p>\n<p>When reorder feature is enabled, application should specify a live region which contains an announcement to notify assistive technologies that the item reordering happens.</p>\n\n<h4>Custom Colours</h4>\n<p>Using colors, including background and text colors, is not accessible if it is the only way information is conveyed.\nLow vision users may not be able to see the different colors, and in high contrast mode the colors are removed.\nThe Redwood approved way to show status is to use badge.</p>\n\n<h3 id=\"context-section\">\n  Item Context\n  <a class=\"bookmarkable-link\" title=\"Bookmarkable Link\" href=\"#context-section\"></a>\n</h3>\n\n<p>For all item options, developers can specify a function as the return value.  The function takes a single argument, which is an object that contains contextual information about the particular item.  This gives developers the flexibility to return different value depending on the context.</p>\n\n<p>The context parameter contains the following keys:</p>\n<table class=\"keyboard-table\">\n  <thead>\n    <tr>\n      <th>Key</th>\n      <th>Description</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <td><kbd>data</kbd></td>\n      <td>The data of the item.  Note this is made available primarily to ease migration.\n          Applications should get the data from the item property instead.</td>\n    </tr>\n    <tr>\n      <td><kbd>item</kbd></td>\n      <td>An object that contains the data and metadata for the item.</td>\n    </tr>\n    <tr>\n      <td><kbd>isTabbable</kbd></td>\n      <td>A boolean indicating whether the item is in tabbable mode or not.\n         This should be used to implement conditional behavior for all tabbable elements, this avoids creating a keyboard trap when tabbing through a List.<br/>\n         This can be implemented as a conditional tabindex, for example <code>tabindex=\"[[!item.isTabbable && '-1']]\"</code>.<br/>\n         When composing with core pack components, this is not needed, as they are tabbable mode aware.\n        </td>\n    </tr>\n  </tbody>\n</table>\n\n<p>The following keys are not currently supported:</p>\n\n<table class=\"keyboard-table\">\n  <thead>\n    <tr>\n      <th>Key</th>\n      <th>Description</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <td><kbd>componentElement</kbd></td>\n      <td>A reference to the root element of ListView.</td>\n    </tr>\n    <tr>\n      <td><kbd>datasource</kbd></td>\n      <td>A reference to the data source object.</td>\n    </tr>\n    <tr>\n      <td><kbd>index</kbd></td>\n      <td>The index of the item, where 0 is the index of the first item.  In the hierarchical case the index is relative to its parent.</td>\n    </tr>\n    <tr>\n      <td><kbd>key</kbd></td>\n      <td>The key of the item (this duplicates item.metadata.key and has been deprecated)</td>\n    </tr>\n    <tr>\n      <td><kbd>metadata</kbd></td>\n      <td>The metadata of the item (this is instead available in item)</td>\n    </tr>\n    <tr>\n      <td><kbd>parentElement</kbd></td>\n      <td>This will be supported by the Hierarchical list component and no longer applies to list view..</td>\n    </tr>\n  </tbody>\n</table>\n\n<h3 id=\"data-attributes-section\">\n  Custom Data Attributes\n  <a class=\"bookmarkable-link\" title=\"Bookmarkable Link\" href=\"#data-attributes-section\"></a>\n</h3>\n\n<p>ListView supports the following custom data attributes.\n<table class=\"keyboard-table\">\n  <thead>\n    <tr>\n      <th>Name</th>\n      <th>Description</th>\n      <th>Example</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <td><kbd>data-oj-as</kbd></td>\n      <td>Provides an alias for a specific template instance and has the same subproperties as the $current variable.</td>\n      <td>\n        <pre class=\"prettyprint\"><code>&lt;oj-c-list-view id=\"listView\">\n  &lt;template slot=\"itemTemplate\" data-oj-as=\"item\">\n  &lt;/template>\n&lt;/oj-c-list-view></code></pre>\n      </td>\n    </tr>\n    <tr>\n      <td><kbd>data-oj-clickthrough</kbd></td>\n      <td><p>Specify on any element inside an item where you want to control whether ListView should perform actions triggered by\n          a click event originating from the element or one of its descendants.</p>\n          <p>For example, if you specify this attribute with a value of \"disabled\" on a link inside an item, then ListView\n          will not select or trigger itemAction event to be fired when user clicks on the link.</p>\n          <p>Note that the currentItem will still be updated to the item that the user clicked on.</p>\n          <p>Also note you do not need to set this attribute on core pack components such as oj-c-button, as it natively supports\n             disabling clickthrough.</p>\n      </td>\n      <td>\n        <pre class=\"prettyprint\"><code>&lt;oj-c-list-view id=\"listView\">\n  &lt;template slot=\"itemTemplate\">\n    &lt;a href=\"#\" data-oj-clickthrough=\"disabled\">&lt;/a>\n  &lt;/template>\n&lt;/oj-c-list-view></code></pre>\n      </td>\n    </tr>\n    <tr>\n      <td><kbd>data-oj-manage-tabs</kbd></td>\n      <td><p>ListView does not manipulate the tabindex of the item content.  Applications should set the tabIndex of any focusable\n         element based on the isTabbableMode property from the context pass to the itemTemplate.</p>\n         <p>However, there will be cases where you can't control the tabindex of the content, for example, if you are using components from another team.</p>\n         <p>In that case, applications can specify this attribute on the element or one of its ancestors so that when the itemTemplate is processed,\n         it will scan and manipulate the tabindex of any focusable elements.</p>\n      </td>\n      <td>\n        <pre class=\"prettyprint\"><code>&lt;oj-c-list-view id=\"listView\">\n  &lt;template slot=\"itemTemplate\">\n    &lt;some-component-with-focusable-elements data-oj-manage-tabs>&lt;/some-component-with-focusable-elements>\n  &lt;/template>\n&lt;/oj-c-list-view></code></pre>\n      </td>\n    </tr>\n  </tbody>\n</table>\n\n<h3 id=\"suggestion-items-section\">\n  Suggestion Items\n  <a class=\"bookmarkable-link\" title=\"Bookmarkable Link\" href=\"#suggestion-items-section\"></a>\n</h3>\n\n<p>If <a href=\"ItemMetadata.html\">ItemMetadata</a> returned by the DataProvider contains suggestion field, ListView will apply special visual to those\n   items. The DataProvider must ensure the suggestion items are the first items returned by the initial fetchFirst call.</p>",
+    "scope": "static",
+    "tagWithoutBrackets": "oj-c-list-view",
+    "tagWithBrackets": "<oj-c-list-view>",
+    "domInterface": "CListViewElement",
+    "ojPageTitle": "&lt;oj-c-list-view>",
+    "camelCaseName": "ListView",
+    "ojPageTitlePrefix": "Element: ",
+    "ojtsvcomponent": true,
+    "tstype": {
+      "target": "Type",
+      "value": "interface CListViewElement<K extends string | number,D> extends JetElement<ListViewElementSettableProperties<K,D>>"
+    },
+    "ojsignature": [
+      {
+        "target": "Type",
+        "value": "interface CListViewElement<K extends string | number,D> extends JetElement<ListViewElementSettableProperties<K,D>>"
+      }
+    ],
+    "tsdeprecated": [
+      {
+        "type": "candidate",
+        "since": "17.0.0"
+      }
+    ],
+    "ojmodule": "list-view"
+  },
+  {
+    "id": "oj-c.ListView#currentItem",
+    "name": "currentItem",
+    "memberof": "oj-c.ListView",
+    "meta": {
+      "filename": "list-view.tsx",
+      "path": "web/components/oj-c/list-view"
+    },
+    "kind": "member",
+    "longname": "oj-c.ListView#currentItem",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "string|number"
+      ]
+    },
+    "optional": true,
+    "ojwriteback": true,
+    "readonly": true,
+    "description": "The key of the item that currently has keyboard focus",
+    "tstype": [
+      {
+        "target": "Type",
+        "value": "K",
+        "jsdocOverride": true
+      }
+    ]
+  },
+  {
+    "id": "oj-c.ListView#currentItemOverride",
+    "name": "currentItemOverride",
+    "memberof": "oj-c.ListView",
+    "meta": {
+      "filename": "list-view.tsx",
+      "path": "web/components/oj-c/list-view"
+    },
+    "kind": "member",
+    "longname": "oj-c.ListView#currentItemOverride",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "object"
+      ]
+    },
+    "optional": true,
+    "description": "The key of the item that will have keyboard focus",
+    "tstype": [
+      {
+        "target": "Type",
+        "value": "{ rowKey: K; }",
+        "jsdocOverride": true
+      }
+    ]
+  },
+  {
+    "id": "oj-c.ListView#currentItemOverride.rowKey",
+    "name": "currentItemOverride.rowKey",
+    "memberof": "oj-c.ListView",
+    "meta": {
+      "filename": "list-view.tsx",
+      "path": "web/components/oj-c/list-view"
+    },
+    "kind": "member",
+    "longname": "oj-c.ListView#currentItemOverride.rowKey",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "string|number"
+      ]
+    },
+    "optional": false,
+    "description": "",
+    "tstype": [
+      {
+        "target": "Type",
+        "value": "K",
+        "jsdocOverride": true
+      }
+    ]
+  },
+  {
+    "id": "oj-c.ListView#data",
+    "name": "data",
+    "memberof": "oj-c.ListView",
+    "meta": {
+      "filename": "list-view.tsx",
+      "path": "web/components/oj-c/list-view"
+    },
+    "kind": "member",
+    "longname": "oj-c.ListView#data",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "DataProvider|null"
+      ]
+    },
+    "optional": true,
+    "description": "The data source for ListView. Must be of type DataProvider.",
+    "tstype": [
+      {
+        "target": "Type",
+        "value": "DataProvider<K, D>|null",
+        "jsdocOverride": true,
+        "module": {
+          "DataProvider": "ojdataprovider"
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.ListView#gridlines",
+    "name": "gridlines",
+    "memberof": "oj-c.ListView",
+    "meta": {
+      "filename": "list-view.tsx",
+      "path": "web/components/oj-c/list-view"
+    },
+    "kind": "member",
+    "longname": "oj-c.ListView#gridlines",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "object"
+      ]
+    },
+    "optional": true,
+    "description": "Specifies whether the horizontal grid lines should be visible.  By default gridlines\nare hidden.\n\nIt takes the keys `item`, `top` and `bottom`,\neach of which are optional and take a value of \"hidden\" or \"visible\". `item`\ntoggles the presence of bottom gridlines except the last item,\nand `top` and `bottom` toggle the initial and trailing gridlines.\nBy default all gridlines are hidden.",
+    "tstype": [
+      {
+        "target": "Type",
+        "value": "oj-c.ListView.Gridlines",
+        "jsdocOverride": true
+      }
+    ]
+  },
+  {
+    "id": "oj-c.ListView#scrollPolicyOptions",
+    "name": "scrollPolicyOptions",
+    "memberof": "oj-c.ListView",
+    "meta": {
+      "filename": "list-view.tsx",
+      "path": "web/components/oj-c/list-view"
+    },
+    "kind": "member",
+    "longname": "oj-c.ListView#scrollPolicyOptions",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "object"
+      ]
+    },
+    "optional": true,
+    "description": "scrollPolicy options.\n<p>\nThe following options are supported:\n<ul>\n  <li>fetchSize: The number of items fetched each time when scroll to the end.</li>\n  <li>scroller: The css selector that locates the element in which listview uses to determine the scroll position as well as the maximum scroll position where scroll to the end will trigger a fetch.  If not specified then the root element of listview is used.</li>\n</ul>\nBy default, the next block of rows is fetched when the user scrolls to the end of the list/scroller. The fetchSize option determines how many rows are fetched in each block.",
+    "tstype": [
+      {
+        "target": "Type",
+        "value": "{ fetchSize?: number; scroller?: string; }",
+        "jsdocOverride": true
+      }
+    ]
+  },
+  {
+    "id": "oj-c.ListView#scrollPolicyOptions.fetchSize",
+    "name": "scrollPolicyOptions.fetchSize",
+    "memberof": "oj-c.ListView",
+    "meta": {
+      "filename": "list-view.tsx",
+      "path": "web/components/oj-c/list-view"
+    },
+    "kind": "member",
+    "longname": "oj-c.ListView#scrollPolicyOptions.fetchSize",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "number"
+      ]
+    },
+    "optional": true,
+    "description": ""
+  },
+  {
+    "id": "oj-c.ListView#scrollPolicyOptions.scroller",
+    "name": "scrollPolicyOptions.scroller",
+    "memberof": "oj-c.ListView",
+    "meta": {
+      "filename": "list-view.tsx",
+      "path": "web/components/oj-c/list-view"
+    },
+    "kind": "member",
+    "longname": "oj-c.ListView#scrollPolicyOptions.scroller",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "string"
+      ]
+    },
+    "optional": true,
+    "description": ""
+  },
+  {
+    "id": "oj-c.ListView#selected",
+    "name": "selected",
+    "memberof": "oj-c.ListView",
+    "meta": {
+      "filename": "list-view.tsx",
+      "path": "web/components/oj-c/list-view"
+    },
+    "kind": "member",
+    "longname": "oj-c.ListView#selected",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "object"
+      ]
+    },
+    "optional": true,
+    "ojwriteback": true,
+    "description": "The current selected items in the ListView. An empty KeySet indicates nothing is selected.\nNote that property change event for the deprecated selection property will still be fire when\nselected property has changed. In addition, <a href=\"AllKeySetImpl.html\">AllKeySetImpl</a> set\ncan be used to represent select all state. In this case, the value for selection would have an\n'inverted' property set to true, and would contain the keys of the items that are not selected.",
+    "tstype": [
+      {
+        "target": "Type",
+        "value": "ImmutableKeySet<K>",
+        "jsdocOverride": true,
+        "module": {
+          "ImmutableKeySet": "ojkeyset"
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.ListView#selectionMode",
+    "name": "selectionMode",
+    "memberof": "oj-c.ListView",
+    "meta": {
+      "filename": "list-view.tsx",
+      "path": "web/components/oj-c/list-view"
+    },
+    "kind": "member",
+    "longname": "oj-c.ListView#selectionMode",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "\"none\"",
+        "\"multiple\"",
+        "\"single\"",
+        "\"singleRequired\"",
+        "\"multipleToggle\""
+      ]
+    },
+    "optional": true,
+    "description": "<p>The type of selection behavior that is enabled on the ListView. This attribute controls the number of selections that can be made via selection gestures at any given time.\n\n<p>If the specified value is not <code class=\"prettyprint\">none</code>, selection gestures will be enabled, and the ListView's selection styling will be applied to all items specified by the <a href=\"#selected\">selected</a> attribute.\nIf <code class=\"prettyprint\">singleRequired</code> is specified, then the behavior is the same as single except that ListView will ensure there is an item selected at all times. Specifically, the user will not be able to de-selected a selected item.  And if selection is initially empty, ListView will select the first item.\nIf <code class=\"prettyprint\">none</code> is specified, selection gestures will be disabled, and the ListView's selection styling will not be applied to any items specified by the <a href=\"#selected\">selected</a> attribute.\n<p>Changing the value of this attribute will not affect the value of the <a href=\"#selected\">selected</a> attribute.",
+    "ojvalues": [
+      {
+        "name": "none",
+        "description": "Selection is disabled.",
+        "displayName": "None",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "single",
+        "description": "Only a single item can be selected at a time.",
+        "displayName": "Single",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "singleRequired",
+        "description": "Only a single item can be selected at a time. In addition, ListView will also ensure that an item is selected at all time.",
+        "displayName": "Single Required",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "multiple",
+        "description": "Multiple items can be selected at the same time with the 'replace' selection behavior. For example, clicking on an already selected item will not affect that item's selection, and clicking on a non-selected item will select that item and deselect any other previously selected items. In order to perform additive selections, users can click on selector checkboxes, use spacebar, or ctrl/cmd click on individual items to perform 'toggle' selection gestures.",
+        "displayName": "Multiple",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "multipleToggle",
+        "description": "Multiple items can be selected at the same time with the 'toggle' selection behavior. For example, clicking on an already selected item will deselect that item, and clicking on any non-selected item will select that item without affecting any previously selected items.",
+        "displayName": "MultipleToggle",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      }
+    ],
+    "defaultvalue": "\"none\""
+  },
+  {
+    "id": "oj-c.ListView#contextMenuConfig",
+    "name": "contextMenuConfig",
+    "memberof": "oj-c.ListView",
+    "meta": {
+      "filename": "list-view.tsx",
+      "path": "web/components/oj-c/list-view"
+    },
+    "kind": "member",
+    "longname": "oj-c.ListView#contextMenuConfig",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "object"
+      ]
+    },
+    "optional": true,
+    "description": "Specifies a context menu configuration.\nIt takes the keys `accessibleLabel` and `items`,\nwhere `accessibleLabel` is optional and items required . `items` function returns an array\nof menu item object representations that indicates what menu items are going to be part of\nmenu based on some specific context menu context.\n<table>\n<tr><th>Context Menu Item Type</th><th>Def</th></tr>\n<tr><td>ContextMenuSeparator</td><td>{ type: 'separator'}</td></tr>\n<tr><td>MenuItem</td><td>{\ntype?: 'item';\nlabel: string;\nkey: string;\ndisabled?: boolean;\nonAction?: () => void;\nstartIcon?: MenuIcon;\nendIcon?: MenuIcon;\nvariant?: 'standard' | 'destructive';\n};</td></tr>\n<tr><td>ContextMenuSubMenu</td><td>{\ntype: 'submenu';\nlabel?: string;\ndisabled?: boolean;\nstartIcon?: string;\nitems?: Array&lt;ContextMenuItems&gt;;\n};</td></tr>\n<tr><td>ContextMenuSelectSingle</td><td>{\ntype: 'selectsingle';\nkey?: string;\nitems?: Array&lt;MenuSelectItem&gt;;\nselection?: string;\nonSelection?: (detail: { value: string }) => void;\n};</td></tr>\n<tr><td>ContextMenuSelectMultiple</td><td>{\ntype: 'selectmultiple';\nkey?: string;\nitems?: Array&lt;MenuSelectItem&gt;;\nselection?: Array&lt;string&gt;;\nonSelection?: (detail: { value: Array&lt;string&gt; }) => void;\n};</td></tr>\n<tr><td>MenuIcon</td><td>{\ntype?: 'class';\n    class: string;\n  }\n| {\n    type: 'img';\n   src: string;\n  };</td></tr>\n<tr><td>MenuSelectItem</td><td>{\nlabel: string;\ndisabled?: boolean;\nendIcon?: MenuIcon;\nvalue: string;\n}</td></tr>\n</table>",
+    "tstype": [
+      {
+        "target": "Type",
+        "value": "oj-c.ListView.ContextMenuConfig<K, D>",
+        "jsdocOverride": true
+      }
+    ]
+  },
+  {
+    "id": "oj-c.ListView#reorderable",
+    "name": "reorderable",
+    "memberof": "oj-c.ListView",
+    "meta": {
+      "filename": "list-view.tsx",
+      "path": "web/components/oj-c/list-view"
+    },
+    "kind": "member",
+    "longname": "oj-c.ListView#reorderable",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "object"
+      ]
+    },
+    "optional": true,
+    "description": "The reorder option contains a subset of options for reordering items.\n\n<p>The following options are supported:</p>\n<ul>\n  <li>items: Enable or disable reordering the items within the same ListView using drag and drop or keyboard. Specify 'enabled' to enable reordering. Setting the value to <code class=\"prettyprint\">\"disabled\"</code> or setting the <code class=\"prettyprint\">\"reorderable\"</code> property\n             to <code class=\"prettyprint\">null</code> (or omitting it), disables reordering support.</li>\n</ul>",
+    "tstype": [
+      {
+        "target": "Type",
+        "value": "{ items?: 'enabled' | 'disabled'; }",
+        "jsdocOverride": true
+      }
+    ]
+  },
+  {
+    "id": "oj-c.ListView#reorderable.items",
+    "name": "reorderable.items",
+    "memberof": "oj-c.ListView",
+    "meta": {
+      "filename": "list-view.tsx",
+      "path": "web/components/oj-c/list-view"
+    },
+    "kind": "member",
+    "longname": "oj-c.ListView#reorderable.items",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "\"disabled\"",
+        "\"enabled\""
+      ]
+    },
+    "optional": true,
+    "description": "",
+    "defaultvalue": "\"disabled\""
+  },
+  {
+    "id": "oj-c.ListView#item",
+    "name": "item",
+    "memberof": "oj-c.ListView",
+    "meta": {
+      "filename": "list-view.tsx",
+      "path": "web/components/oj-c/list-view"
+    },
+    "kind": "member",
+    "longname": "oj-c.ListView#item",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "object"
+      ]
+    },
+    "optional": true,
+    "description": "The item option contains a subset of options for items.",
+    "tstype": [
+      {
+        "target": "Type",
+        "value": "{ padding?: 'disabled' | 'enabled' | oj-c.ListView.ItemPadding; enterKeyFocusBehavior?: 'none' | 'focusWithin'; }",
+        "jsdocOverride": true
+      }
+    ]
+  },
+  {
+    "id": "oj-c.ListView#focus",
+    "name": "focus",
+    "memberof": "oj-c.ListView",
+    "meta": {
+      "filename": "list-view.tsx",
+      "path": "web/components/oj-c/list-view"
+    },
+    "kind": "function",
+    "longname": "oj-c.ListView#focus",
+    "scope": "instance",
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "void"
+          ]
+        }
+      }
+    ],
+    "description": "Place focus on the list.",
+    "ojhidden": true
+  },
+  {
+    "id": "oj-c.ListView#setProperty",
+    "name": "setProperty",
+    "memberof": "oj-c.ListView",
+    "meta": {
+      "filename": "list-view.tsx",
+      "path": "web/components/oj-c/list-view"
+    },
+    "kind": "function",
+    "longname": "oj-c.ListView#setProperty",
+    "scope": "instance",
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "void"
+          ]
+        }
+      }
+    ],
+    "description": "Sets a property or a single subproperty for complex properties and notifies the component of the change, triggering a corresponding event.",
+    "params": [
+      {
+        "name": "property",
+        "description": "The property name to set. Supports dot notation for subproperty access.",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "value",
+        "description": "The new value to set the property to.",
+        "type": {
+          "names": [
+            "any"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.ListView#getProperty",
+    "name": "getProperty",
+    "memberof": "oj-c.ListView",
+    "meta": {
+      "filename": "list-view.tsx",
+      "path": "web/components/oj-c/list-view"
+    },
+    "kind": "function",
+    "longname": "oj-c.ListView#getProperty",
+    "scope": "instance",
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "any"
+          ]
+        }
+      }
+    ],
+    "description": "Retrieves the value of a property or a subproperty.",
+    "params": [
+      {
+        "name": "property",
+        "description": "The property name to get. Supports dot notation for subproperty access.",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.ListView#setProperties",
+    "name": "setProperties",
+    "memberof": "oj-c.ListView",
+    "meta": {
+      "filename": "list-view.tsx",
+      "path": "web/components/oj-c/list-view"
+    },
+    "kind": "function",
+    "longname": "oj-c.ListView#setProperties",
+    "scope": "instance",
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "void"
+          ]
+        }
+      }
+    ],
+    "description": "Performs a batch set of properties.",
+    "params": [
+      {
+        "name": "properties",
+        "description": "An object containing the property and value pairs to set.",
+        "type": {
+          "names": [
+            "object"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.ListView#event:ojItemAction",
+    "name": "ojItemAction",
+    "kind": "event",
+    "memberof": "oj-c.ListView",
+    "meta": {
+      "filename": "list-view.tsx",
+      "path": "web/components/oj-c/list-view"
+    },
+    "longname": "oj-c.ListView#event:ojItemAction",
+    "scope": "instance",
+    "description": "Triggered when user performs an action gesture on an item while ListView is in navigation mode.  The action gestures include:\n<ul>\n  <li>User clicks anywhere in an item</li>\n  <li>User taps anywhere in an item</li>\n  <li>User pressed enter key while item has focus</li>\n</ul>",
+    "properties": [
+      {
+        "name": "context",
+        "optional": false,
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "oj-c.ListView.ListItemContextProps<K, D>",
+            "jsdocOverride": true,
+            "for": "context"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "oj-c.ListView#event:ojFirstSelectedItem",
+    "name": "ojFirstSelectedItem",
+    "kind": "event",
+    "memberof": "oj-c.ListView",
+    "meta": {
+      "filename": "list-view.tsx",
+      "path": "web/components/oj-c/list-view"
+    },
+    "longname": "oj-c.ListView#event:ojFirstSelectedItem",
+    "scope": "instance",
+    "description": "Triggered when data for the first selected item is available.  This can occurred when:\n<ul>\n  <li>ListView is initialized with a selection or first item is selected due to singleRequired selection mode.</li>\n  <li>Selection has changed.</li>\n  <li>Data for the first selected item is updated.</li>\n</ul>\nNote this event will only be enabled if selection-mode is set to <code class=\"prettyprint\">singleRequired</code>.",
+    "properties": [
+      {
+        "name": "key",
+        "optional": false,
+        "type": {
+          "names": [
+            "string|number"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "K",
+            "jsdocOverride": true,
+            "for": "key"
+          }
+        ]
+      },
+      {
+        "name": "data",
+        "optional": false,
+        "type": {
+          "names": [
+            "any"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "D",
+            "jsdocOverride": true,
+            "for": "data"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "oj-c.ListView#event:ojContextMenuAction",
+    "name": "ojContextMenuAction",
+    "kind": "event",
+    "memberof": "oj-c.ListView",
+    "meta": {
+      "filename": "list-view.tsx",
+      "path": "web/components/oj-c/list-view"
+    },
+    "longname": "oj-c.ListView#event:ojContextMenuAction",
+    "scope": "instance",
+    "description": "Triggered when a menu item is clicked, whether by keyboard, mouse, or touch events.",
+    "properties": [
+      {
+        "name": "menuItemKey",
+        "optional": false,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "contextMenuContext",
+        "optional": false,
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "oj-c.ListView.ListItemContextProps<K, D>",
+            "jsdocOverride": true,
+            "for": "contextMenuContext"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "oj-c.ListView#event:ojContextMenuSelection",
+    "name": "ojContextMenuSelection",
+    "kind": "event",
+    "memberof": "oj-c.ListView",
+    "meta": {
+      "filename": "list-view.tsx",
+      "path": "web/components/oj-c/list-view"
+    },
+    "longname": "oj-c.ListView#event:ojContextMenuSelection",
+    "scope": "instance",
+    "description": "Triggered when a select menu item is clicked, whether by keyboard, mouse, or touch events.",
+    "properties": [
+      {
+        "name": "value",
+        "optional": false,
+        "type": {
+          "names": [
+            "string|Array<string>"
+          ]
+        }
+      },
+      {
+        "name": "menuSelectionGroupKey",
+        "optional": false,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "contextMenuContext",
+        "optional": false,
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "oj-c.ListView.ListItemContextProps<K, D>",
+            "jsdocOverride": true,
+            "for": "contextMenuContext"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "oj-c.ListView#event:ojReorder",
+    "name": "ojReorder",
+    "kind": "event",
+    "memberof": "oj-c.ListView",
+    "meta": {
+      "filename": "list-view.tsx",
+      "path": "web/components/oj-c/list-view"
+    },
+    "longname": "oj-c.ListView#event:ojReorder",
+    "scope": "instance",
+    "description": "Triggered after items are reordered within ListView via drag and drop or keyboard.",
+    "properties": [
+      {
+        "name": "reorderedKeys",
+        "description": "An array of keys matching the new order of items",
+        "optional": false,
+        "type": {
+          "names": [
+            "Array<string|number>"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "Array<K>",
+            "jsdocOverride": true,
+            "for": "reorderedKeys"
+          }
+        ]
+      },
+      {
+        "name": "itemKeys",
+        "description": "An array of keys of the items that are moved",
+        "optional": false,
+        "type": {
+          "names": [
+            "Array<string|number>"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "Array<K>",
+            "jsdocOverride": true,
+            "for": "itemKeys"
+          }
+        ]
+      },
+      {
+        "name": "referenceKey",
+        "description": "The key of the item where the moved items will be dropped after. If the moved items were dropped at the very beginning, the referenceKey will be null.",
+        "optional": false,
+        "type": {
+          "names": [
+            "string|number|null"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "K|null",
+            "jsdocOverride": true,
+            "for": "referenceKey"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "oj-c.ListView#itemTemplate",
+    "name": "itemTemplate",
+    "memberof": "oj-c.ListView",
+    "meta": {
+      "filename": "list-view.tsx",
+      "path": "web/components/oj-c/list-view"
+    },
+    "kind": "member",
+    "longname": "oj-c.ListView#itemTemplate",
+    "scope": "instance",
+    "description": "<p>The <code class=\"prettyprint\">itemTemplate</code> slot is used to specify the template for rendering each item in the List. The slot content must be a &lt;template> element.\n<p>When the template is executed for each item, it will have access to the binding context containing the following properties:</p>\n<ul>\n  <li>$current - an object that contains information for the current item.</li>\n</ul>",
+    "ojchild": false,
+    "ojslot": true,
+    "properties": [
+      {
+        "name": "data",
+        "description": "The data of the item.  Note this is made available primarily to ease migration.\nApplications should get the data from the item property instead.",
+        "optional": false,
+        "type": {
+          "names": [
+            "any"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "D",
+            "jsdocOverride": true,
+            "for": "data"
+          }
+        ]
+      },
+      {
+        "name": "item",
+        "description": "Contains the data and metadata of the item.",
+        "optional": false,
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "Item<K, D>",
+            "jsdocOverride": true,
+            "for": "item",
+            "module": {
+              "Item": "ojdataprovider"
+            }
+          }
+        ]
+      },
+      {
+        "name": "isTabbable",
+        "description": "A boolean indicating whether the item is in tabbable mode or not.\nTemplate elements should not be tab-stops when the item is not in tabbable mode, this context can be used to implement\nconditional behavior for all tabbable child elements.",
+        "optional": false,
+        "type": {
+          "names": [
+            "boolean"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.ListView#noData",
+    "name": "noData",
+    "memberof": "oj-c.ListView",
+    "meta": {
+      "filename": "list-view.tsx",
+      "path": "web/components/oj-c/list-view"
+    },
+    "kind": "member",
+    "longname": "oj-c.ListView#noData",
+    "scope": "instance",
+    "description": "<p>The <code class=\"prettyprint\">noData</code> slot is used to specify the content to display when the list is empty. The slot content\nmust be a &lt;template&gt; element. If not specified then a default no data message will be displayed.",
+    "ojchild": false,
+    "ojslot": true,
+    "properties": []
+  },
+  {
+    "id": "oj-c.ListView#skeletonTemplate",
+    "name": "skeletonTemplate",
+    "memberof": "oj-c.ListView",
+    "meta": {
+      "filename": "list-view.tsx",
+      "path": "web/components/oj-c/list-view"
+    },
+    "kind": "member",
+    "longname": "oj-c.ListView#skeletonTemplate",
+    "scope": "instance",
+    "description": "<p>The <code class=\"prettyprint\">skeletonTemplate</code> slot is used to specify the template for rendering each skeleton while waiting for data during initial load as well as load more on scroll. The slot content\nmust be a &lt;template&gt; element. If not specified then the default skeleton will display.\n<p>When the template is executed for each skeleton, it will have access to the binding context containing the following properties:</p>\n<ul>\n  <li>$current - an object that contains information for the current skeleton.</li>\n</ul>\n<h5>Properties of $current:</h5>\n<p></p>\n<table class=\"keyboard-table\">\n<thead>\n<tr><th>Name</th><th>Type</th><th>Description</th></tr>\n</thead>\n<tbody>\n<tr><td>loadingStatus</td><td>'initial' | 'loadMore'</td><td>Whether the skeletons are rendered for initial load of data or for load more data in CardView</td></tr>\n<tr><td>index</td><td>number</td><td>The index prop can be used to determine the order of different skeletons that to be place to create the whole list item skeleton.</td></tr>\n</tbody>\n</table>\n<p></p>\n<p>Example of skeletonTemplate slot usage.</p>\n<pre class=\"prettyprint\">\n<code>\n&lt;oj-c-list-view\nid=\"cardview\"\n       id=\"listview\"\n       class=\"demo-list-view\"\n       aria-label=\"listview with skeleton\"\n       data=\"[[dataProvider]]\">\n   &lt;template slot=\"skeletonTemplate\" data-oj-as=\"context\">\n     &lt;div>\n               &lt;oj-bind-if test=\"[[context.loadingStatus === 'initial']]\">\n               &lt;oj-bind-if test=\"[[context.index % 3 === 0]]\">\n                   &lt;oj-c-skeleton height=\"4x\" width=\"4x\">\n                   &lt;/oj-c-skeleton>\n               &lt;/oj-bind-if>\n               &lt;oj-bind-if test=\"[[context.index % 3 === 1]]\">\n                &lt;oj-c-skeleton height=\"4x\" width=\"6x\">\n                   &lt;/oj-c-skeleton>\n               &lt;/oj-bind-if>\n               &lt;oj-bind-if test=\"[[context.index % 3 === 2]]\">\n                    &lt;oj-c-skeleton height=\"4x\" width=\"8x\">\n                   &lt;/oj-c-skeleton>\n               &lt;/oj-bind-if>\n               &lt;/oj-bind-if>\n               &lt;oj-bind-if test=\"[[context.loadingStatus === 'loadMore']]\">\n                    &lt;oj-c-skeleton height=\"4x\" width=\"8x\">\n                   &lt;/oj-c-skeleton>\n               &lt;/oj-bind-if>\n           &lt;/div>\n       &lt;/template>\n       &lt;template slot=\"itemTemplate\" data-oj-as=\"item\">\n         &lt;oj-c-list-item-layout>\n           <&lt;pan class=\"oj-typography-body-md oj-text-color-primary\">\n             &lt;oj-bind-text value=\"[[item.item.data.name]]\"></oj-bind-text>\n           &lt;/span>\n           &lt;oj-c-avatar slot=\"leading\" size=\"xs\" src=\"[[item.item.data.image]]\"></oj-c-avatar>\n           &lt;span slot=\"secondary\" class=\"oj-typography-body-sm oj-text-color-secondary\">\n             &lt;oj-bind-text value=\"[[item.item.data.title]]\"></oj-bind-text>\n           &lt;/span>\n         &lt;/oj-c-list-item-layout>\n       &lt;/template>\n&lt;/oj-c-list-view>\n</code></pre>",
+    "ojchild": false,
+    "ojslot": true,
+    "properties": [
+      {
+        "name": "loadingStatus",
+        "optional": false,
+        "type": {
+          "names": [
+            "\"initial\"",
+            "\"loadMore\""
+          ]
+        }
+      },
+      {
+        "name": "index",
+        "optional": false,
+        "type": {
+          "names": [
+            "number"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.ListView.keyboardDoc",
+    "name": "keyboardDoc",
+    "kind": "member",
+    "longname": "oj-c.ListView.keyboardDoc",
+    "description": "<table class=\"keyboard-table\">\n  <thead>\n    <tr>\n      <th>Target</th>\n      <th>Key</th>\n      <th>Action</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <td rowspan = \"20\" nowrap>List Item</td>\n      <td><kbd>F2</kbd></td>\n      <td>Enters tabbable mode.  This enables keyboard action on elements inside the item, including navigate between focusable elements inside the item.  It can also be used to exit tabbable mode if already in tabbable mode.</td>\n    </tr>\n    <tr>\n      <td><kbd>Enter</kbd></td>\n      <td>Enters tabbable mode if <a href=\"#item\">enterKeyFocusBehavior</a> is \"focusWithin\" (default).  This enables keyboard action on elements inside the item, including navigate between focusable elements inside the item.</td>\n    </tr>\n    <tr>\n      <td><kbd>Esc</kbd></td>\n      <td>Exits tabbable mode.</td>\n    </tr>\n    <tr>\n      <td><kbd>Tab</kbd></td>\n      <td>When in tabbable mode, navigates to next focusable element within the item.  If the last focusable element is reached, shift focus back to the first focusable element.\n          When not in tabbable mode, navigates to next focusable element on page (outside ListView).</td>\n    </tr>\n    <tr>\n      <td><kbd>Shift+Tab</kbd></td>\n      <td>When in tabbable mode, navigates to previous focusable element within the item.  If the first focusable element is reached, shift focus back to the last focusable element.\n          When not in tabbable mode, navigates to previous focusable element on page (outside ListView).</td>\n    </tr>\n    <tr>\n      <td><kbd>DownArrow</kbd></td>\n      <td>Move focus to the item below.</td>\n    </tr>\n    <tr>\n      <td><kbd>UpArrow</kbd></td>\n      <td>Move focus to the item above.</td>\n    </tr>\n    <tr>\n      <td><kbd>Shift+DownArrow</kbd></td>\n      <td>Extend the selection to the item below.</td>\n    </tr>\n    <tr>\n      <td><kbd>Shift+UpArrow</kbd></td>\n      <td>Extend the selection to the item above.</td>\n    </tr>\n    <tr>\n      <td><kbd>Space</kbd></td>\n      <td>Toggles to select and deselect the current item while maintaining previously selected items.</td>\n    </tr>\n    <tr>\n      <td><kbd>Shift+Space</kbd></td>\n      <td>Toggles to select and deselect the current item while maintaining previously selected items.</td>\n    </tr>\n    <tr>\n      <td><kbd>Shift+Cmd/Ctrl+UpArrow</kbd></td>\n      <td>Reorder the current item up.</td>\n    </tr>\n    <tr>\n      <td><kbd>Shift+Cmd/Ctrl+DownArrow</kbd></td>\n      <td>Reorder the current item down.</td>\n    </tr>\n    <tr>\n      <td><kbd>Ctrl+Space</kbd></td>\n      <td>Toggles to select and deselect the current item while maintaining previously selected items.</td>\n    </tr>\n  </tbody>\n</table>",
+    "memberof": "oj-c.ListView",
+    "meta": {
+      "filename": "list-view.tsx",
+      "path": "web/components/oj-c/list-view"
+    },
+    "ojfragment": true
+  },
+  {
+    "id": "oj-c.ListView.Gridlines",
+    "name": "Gridlines",
+    "kind": "typedef",
+    "memberof": "oj-c.ListView",
+    "meta": {
+      "filename": "list-view.tsx",
+      "path": "web/components/oj-c/list-view"
+    },
+    "longname": "oj-c.ListView.Gridlines",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "scope": "static",
+    "description": "",
+    "properties": [
+      {
+        "name": "item",
+        "optional": true,
+        "type": {
+          "names": [
+            "\"hidden\"",
+            "\"visible\""
+          ]
+        }
+      },
+      {
+        "name": "top",
+        "optional": true,
+        "type": {
+          "names": [
+            "\"hidden\"",
+            "\"visible\""
+          ]
+        }
+      },
+      {
+        "name": "bottom",
+        "optional": true,
+        "type": {
+          "names": [
+            "\"hidden\"",
+            "\"visible\""
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.ListView.ListItemContextProps",
+    "name": "ListItemContextProps",
+    "kind": "typedef",
+    "memberof": "oj-c.ListView",
+    "meta": {
+      "filename": "list-view.tsx",
+      "path": "web/components/oj-c/list-view"
+    },
+    "longname": "oj-c.ListView.ListItemContextProps",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "scope": "static",
+    "description": "",
+    "tsgenerictype": {
+      "target": "Type",
+      "value": "<K,D>",
+      "for": "genericTypeParameters"
+    },
+    "properties": [
+      {
+        "name": "data",
+        "description": "The data of the item.  Note this is made available primarily to ease migration.\nApplications should get the data from the item property instead.",
+        "optional": false,
+        "type": {
+          "names": [
+            "any"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "D",
+            "jsdocOverride": true,
+            "for": "data"
+          }
+        ]
+      },
+      {
+        "name": "item",
+        "description": "Contains the data and metadata of the item.",
+        "optional": false,
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "Item<K, D>",
+            "jsdocOverride": true,
+            "for": "item",
+            "module": {
+              "Item": "ojdataprovider"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "oj-c.ListView.MenuItem",
+    "name": "MenuItem",
+    "kind": "typedef",
+    "memberof": "oj-c.ListView",
+    "meta": {
+      "filename": "list-view.tsx",
+      "path": "web/components/oj-c/list-view"
+    },
+    "longname": "oj-c.ListView.MenuItem",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "scope": "static",
+    "description": "Specifies a standard menu item.",
+    "properties": [
+      {
+        "name": "type",
+        "description": "Specifies a standard menu item.",
+        "optional": true,
+        "type": {
+          "names": [
+            "\"item\""
+          ]
+        }
+      },
+      {
+        "name": "label",
+        "description": "The menu item label.",
+        "optional": false,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "key",
+        "description": "A unique key associated with the menu item.",
+        "optional": false,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "disabled",
+        "description": "Specifies if the menu item is disabled (enabled by default).",
+        "optional": true,
+        "type": {
+          "names": [
+            "boolean"
+          ]
+        }
+      },
+      {
+        "name": "onAction",
+        "description": "Optional callback function associated with the menu item.",
+        "optional": true,
+        "type": {
+          "names": [
+            "function"
+          ]
+        }
+      },
+      {
+        "name": "startIcon",
+        "description": "Optional icon to render at the start of the menu item.",
+        "optional": true,
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "{ type?: 'class'; class: string; }|{ type: 'img'; src: string; }",
+            "jsdocOverride": true,
+            "for": "startIcon"
+          }
+        ]
+      },
+      {
+        "name": "endIcon",
+        "description": "Optional icon to render at the end of the menu item.",
+        "optional": true,
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "{ type?: 'class'; class: string; }|{ type: 'img'; src: string; }",
+            "jsdocOverride": true,
+            "for": "endIcon"
+          }
+        ]
+      },
+      {
+        "name": "variant",
+        "description": "Specifies the menu item behavior.",
+        "optional": true,
+        "type": {
+          "names": [
+            "\"standard\"",
+            "\"destructive\""
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.ListView.ContextMenuSeparator",
+    "name": "ContextMenuSeparator",
+    "kind": "typedef",
+    "memberof": "oj-c.ListView",
+    "meta": {
+      "filename": "list-view.tsx",
+      "path": "web/components/oj-c/list-view"
+    },
+    "longname": "oj-c.ListView.ContextMenuSeparator",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "scope": "static",
+    "description": "",
+    "properties": [
+      {
+        "name": "type",
+        "optional": false,
+        "type": {
+          "names": [
+            "\"separator\""
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.ListView.MenuSelectItem",
+    "name": "MenuSelectItem",
+    "kind": "typedef",
+    "memberof": "oj-c.ListView",
+    "meta": {
+      "filename": "list-view.tsx",
+      "path": "web/components/oj-c/list-view"
+    },
+    "longname": "oj-c.ListView.MenuSelectItem",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "scope": "static",
+    "description": "Specifies a selectable item in a menu item.",
+    "properties": [
+      {
+        "name": "label",
+        "description": "The selectable item label.",
+        "optional": false,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "disabled",
+        "description": "Specifies if the selectable item is disabled (enabled by default).",
+        "optional": true,
+        "type": {
+          "names": [
+            "boolean"
+          ]
+        }
+      },
+      {
+        "name": "endIcon",
+        "description": "Optional icon to render at the end of the selectable item.",
+        "optional": true,
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "{ type?: 'class'; class: string; }|{ type: 'img'; src: string; }",
+            "jsdocOverride": true,
+            "for": "endIcon"
+          }
+        ]
+      },
+      {
+        "name": "value",
+        "description": "The value associated with the selectable item.",
+        "optional": false,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.ListView.MenuSelection",
+    "name": "MenuSelection",
+    "kind": "typedef",
+    "memberof": "oj-c.ListView",
+    "meta": {
+      "filename": "list-view.tsx",
+      "path": "web/components/oj-c/list-view"
+    },
+    "longname": "oj-c.ListView.MenuSelection",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "scope": "static",
+    "description": "",
+    "properties": [
+      {
+        "name": "at",
+        "description": "Takes an integer value and returns the item at that index,\nallowing for positive and negative integers.\nNegative integers count back from the last item in the array.",
+        "optional": false,
+        "type": {
+          "names": [
+            "function"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "(index: number) => string | undefined",
+            "jsdocOverride": true,
+            "for": "at"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "oj-c.ListView.SelectMenuItemDetail",
+    "name": "SelectMenuItemDetail",
+    "kind": "typedef",
+    "memberof": "oj-c.ListView",
+    "meta": {
+      "filename": "list-view.tsx",
+      "path": "web/components/oj-c/list-view"
+    },
+    "longname": "oj-c.ListView.SelectMenuItemDetail",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "scope": "static",
+    "description": "",
+    "tsgenerictype": {
+      "target": "Type",
+      "value": "<T extends oj-c.ListView.MenuSelection>",
+      "for": "genericTypeParameters"
+    },
+    "properties": [
+      {
+        "name": "value",
+        "optional": false,
+        "type": {
+          "names": [
+            "any"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "T",
+            "jsdocOverride": true,
+            "for": "value"
+          }
+        ]
+      },
+      {
+        "name": "menuSelectionGroupKey",
+        "optional": false,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.ListView.ContextMenuSelectSingle",
+    "name": "ContextMenuSelectSingle",
+    "kind": "typedef",
+    "memberof": "oj-c.ListView",
+    "meta": {
+      "filename": "list-view.tsx",
+      "path": "web/components/oj-c/list-view"
+    },
+    "longname": "oj-c.ListView.ContextMenuSelectSingle",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "scope": "static",
+    "description": "",
+    "properties": [
+      {
+        "name": "type",
+        "description": "Specifies a select single menu item.",
+        "optional": false,
+        "type": {
+          "names": [
+            "\"selectsingle\""
+          ]
+        }
+      },
+      {
+        "name": "key",
+        "description": "A unique key associated with the select single.",
+        "optional": false,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "items",
+        "description": "Specifies the array of select items that make up the select single.",
+        "optional": true,
+        "type": {
+          "names": [
+            "Array<object>"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "Array<oj-c.ListView.MenuSelectItem>",
+            "jsdocOverride": true,
+            "for": "items"
+          }
+        ]
+      },
+      {
+        "name": "selection",
+        "optional": true,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "onSelection",
+        "optional": true,
+        "type": {
+          "names": [
+            "function"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "(detail: oj-c.ListView.SelectMenuItemDetail<string>) => void",
+            "jsdocOverride": true,
+            "for": "onSelection"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "oj-c.ListView.ContextMenuSelectMultiple",
+    "name": "ContextMenuSelectMultiple",
+    "kind": "typedef",
+    "memberof": "oj-c.ListView",
+    "meta": {
+      "filename": "list-view.tsx",
+      "path": "web/components/oj-c/list-view"
+    },
+    "longname": "oj-c.ListView.ContextMenuSelectMultiple",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "scope": "static",
+    "description": "",
+    "properties": [
+      {
+        "name": "type",
+        "description": "Specifies a select multiple menu item.",
+        "optional": false,
+        "type": {
+          "names": [
+            "\"selectmultiple\""
+          ]
+        }
+      },
+      {
+        "name": "key",
+        "description": "A unique key associated with the select multiple.",
+        "optional": false,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "items",
+        "description": "Specifies the array of select items that make up the select multiple.",
+        "optional": true,
+        "type": {
+          "names": [
+            "Array<object>"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "Array<oj-c.ListView.MenuSelectItem>",
+            "jsdocOverride": true,
+            "for": "items"
+          }
+        ]
+      },
+      {
+        "name": "selection",
+        "optional": true,
+        "type": {
+          "names": [
+            "Array<string>"
+          ]
+        }
+      },
+      {
+        "name": "onSelection",
+        "optional": true,
+        "type": {
+          "names": [
+            "function"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "(detail: oj-c.ListView.SelectMenuItemDetail<string[]>) => void",
+            "jsdocOverride": true,
+            "for": "onSelection"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "oj-c.ListView.ContextMenuSubMenu",
+    "name": "ContextMenuSubMenu",
+    "kind": "typedef",
+    "memberof": "oj-c.ListView",
+    "meta": {
+      "filename": "list-view.tsx",
+      "path": "web/components/oj-c/list-view"
+    },
+    "longname": "oj-c.ListView.ContextMenuSubMenu",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "scope": "static",
+    "description": "",
+    "properties": [
+      {
+        "name": "type",
+        "description": "Specifies a submenu menu item.",
+        "optional": false,
+        "type": {
+          "names": [
+            "\"submenu\""
+          ]
+        }
+      },
+      {
+        "name": "key",
+        "description": "A unique key associated with the submenu menu item.",
+        "optional": true,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "label",
+        "description": "The submenu label.",
+        "optional": true,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "disabled",
+        "description": "Specifies if the submenu is disabled (enabled by default).",
+        "optional": true,
+        "type": {
+          "names": [
+            "boolean"
+          ]
+        }
+      },
+      {
+        "name": "startIcon",
+        "description": "Optional icon to render at the start of the submenu.",
+        "optional": true,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "items",
+        "optional": true,
+        "type": {
+          "names": [
+            "Array<string|object>"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "Array<string|oj-c.ListView.MenuItem|oj-c.ListView.ContextMenuSeparator|oj-c.ListView.ContextMenuSubMenu|oj-c.ListView.ContextMenuSelectSingle|oj-c.ListView.ContextMenuSelectMultiple>",
+            "jsdocOverride": true,
+            "for": "items"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "oj-c.ListView.ContextMenuItems",
+    "name": "ContextMenuItems",
+    "kind": "typedef",
+    "memberof": "oj-c.ListView",
+    "meta": {
+      "filename": "list-view.tsx",
+      "path": "web/components/oj-c/list-view"
+    },
+    "longname": "oj-c.ListView.ContextMenuItems",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "scope": "static",
+    "description": "",
+    "tstype": [
+      {
+        "target": "Type",
+        "value": "oj-c.ListView.MenuItem|oj-c.ListView.ContextMenuSeparator|oj-c.ListView.ContextMenuSubMenu|oj-c.ListView.ContextMenuSelectSingle|oj-c.ListView.ContextMenuSelectMultiple",
+        "jsdocOverride": true
+      }
+    ]
+  },
+  {
+    "id": "oj-c.ListView.ContextMenuConfig",
+    "name": "ContextMenuConfig",
+    "kind": "typedef",
+    "memberof": "oj-c.ListView",
+    "meta": {
+      "filename": "list-view.tsx",
+      "path": "web/components/oj-c/list-view"
+    },
+    "longname": "oj-c.ListView.ContextMenuConfig",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "scope": "static",
+    "description": "",
+    "tsgenerictype": {
+      "target": "Type",
+      "value": "<K,D>",
+      "for": "genericTypeParameters"
+    },
+    "properties": [
+      {
+        "name": "accessibleLabel",
+        "optional": true,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "items",
+        "optional": false,
+        "type": {
+          "names": [
+            "function"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "(context: oj-c.ListView.ListItemContextProps<K, D>) => Array<oj-c.ListView.ContextMenuItems>",
+            "jsdocOverride": true,
+            "for": "items"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "oj-c.ListView.ItemPadding",
+    "name": "ItemPadding",
+    "kind": "typedef",
+    "memberof": "oj-c.ListView",
+    "meta": {
+      "filename": "list-view.tsx",
+      "path": "web/components/oj-c/list-view"
+    },
+    "longname": "oj-c.ListView.ItemPadding",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "scope": "static",
+    "description": "",
+    "properties": [
+      {
+        "name": "bottom",
+        "optional": true,
+        "type": {
+          "names": [
+            "\"disabled\"",
+            "\"enabled\""
+          ]
+        }
+      },
+      {
+        "name": "end",
+        "optional": true,
+        "type": {
+          "names": [
+            "\"disabled\"",
+            "\"enabled\""
+          ]
+        }
+      },
+      {
+        "name": "start",
+        "optional": true,
+        "type": {
+          "names": [
+            "\"disabled\"",
+            "\"enabled\""
+          ]
+        }
+      },
+      {
+        "name": "top",
+        "optional": true,
+        "type": {
+          "names": [
+            "\"disabled\"",
+            "\"enabled\""
+          ]
+        }
+      }
+    ]
+  }
+]

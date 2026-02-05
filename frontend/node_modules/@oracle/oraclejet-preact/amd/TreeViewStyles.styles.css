@@ -1,0 +1,52 @@
+.TreeViewStyles_baseStyle__6ipohg0 {
+  height: 100%;
+  list-style: none;
+  box-sizing: border-box;
+  overflow-y: inherit;
+  overflow-anchor: none;
+}
+.TreeViewStyles_baseStyle__6ipohg0:focus {
+  outline-style: none;
+}
+.TreeViewStyles_treeItemStyles_base__6ipohg1 {
+  min-height: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-tree-view-item-height);
+  align-content: center;
+  outline-style: none;
+  position: relative;
+}
+.TreeViewStyles_treeItemStyles_focused__6ipohg2 {
+  outline-style: dotted;
+  outline-width: 1px;
+  outline-offset: -1px;
+  outline-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-border-keyboard-focus);
+}
+.TreeViewStyles_treeItemStyles_hovered__6ipohg3 {
+  background-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-overlay-hover);
+}
+.TreeViewStyles_treeItemStyles_selected__6ipohg4 {
+  background-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-surface-selected);
+}
+.TreeViewStyles_treeItemStyles_checkboxlessSelected__6ipohg5 {
+  outline-style: solid;
+  outline-width: 1px;
+  outline-offset: -1px;
+  outline-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-border-selected);
+}
+.TreeViewStyles_selectedHoveredOverlay__6ipohg6 {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-overlay-hover);
+}
+.TreeViewStyles_expanderStyle__6ipohg7 {
+  width: calc(10 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  display: flex;
+  justify-content: center;
+}
+.TreeViewStyles_skeletonStyles_container__6ipohg8 {
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: hidden;
+}

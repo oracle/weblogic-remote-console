@@ -1,0 +1,2 @@
+define(['exports', 'css!./../../VisTabularDatatipStyles.styles.css'], (function(a,t){"use strict";a.styles={VisTabularDatatipTable:"VisTabularDatatipStyles_VisTabularDatatipTable__16qzb7l0",VisTabularDatatipLabel:"VisTabularDatatipStyles_VisTabularDatatipLabel__16qzb7l1",VisTabularDatatipValue:"VisTabularDatatipStyles_VisTabularDatatipValue__16qzb7l4",leftAlign:"VisTabularDatatipStyles_leftAlign__16qzb7l3",rightAlign:"VisTabularDatatipStyles_rightAlign__16qzb7l2"},Object.defineProperty(a,"__esModule",{value:!0})}));
+//# sourceMappingURL=VisTabularDatatipStyles.css.js.map

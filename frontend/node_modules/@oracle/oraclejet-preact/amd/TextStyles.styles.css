@@ -1,0 +1,162 @@
+.TextStyles_base__13t47my0 {
+  overflow-x: hidden;
+  overflow-y: hidden;
+  overflow-wrap: anywhere;
+  display: inline;
+  vertical-align: inherit;
+}
+.TextStyles_base__13t47my0:focus-visible {
+  outline-style: dotted;
+  outline-offset: 1px;
+  outline-width: 1px;
+  outline-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-border-keyboard-focus);
+}
+.TextStyles_lineClamp__13t47my1 {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+}
+.TextStyles_multiVariantStyles_safariStyles_needs__13t47my2::after {
+  content: "";
+  display: block;
+}
+.TextStyles_multiVariantStyles_size_2xs__13t47my4 {
+  font-size: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-body-2xs-font-size);
+  line-height: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-body-2xs-line-height);
+}
+.TextStyles_multiVariantStyles_size_xs__13t47my5 {
+  font-size: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-body-xs-font-size);
+  line-height: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-body-xs-line-height);
+}
+.TextStyles_multiVariantStyles_size_sm__13t47my6 {
+  font-size: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-body-sm-font-size);
+  line-height: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-body-sm-line-height);
+}
+.TextStyles_multiVariantStyles_size_md__13t47my7 {
+  font-size: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-body-md-font-size);
+  line-height: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-body-md-line-height);
+}
+.TextStyles_multiVariantStyles_size_lg__13t47my8 {
+  font-size: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-body-lg-font-size);
+  line-height: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-body-lg-line-height);
+}
+.TextStyles_multiVariantStyles_size_xl__13t47my9 {
+  font-size: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-body-xl-font-size);
+  line-height: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-body-xl-line-height);
+}
+.TextStyles_multiVariantStyles_size_inherit__13t47mya {
+  font-size: inherit;
+  line-height: inherit;
+}
+.TextStyles_multiVariantStyles_variant_primary__13t47myb {
+  color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-primary);
+}
+.TextStyles_multiVariantStyles_variant_secondary__13t47myc {
+  color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-secondary);
+}
+.TextStyles_multiVariantStyles_variant_disabled__13t47myd {
+  color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-disabled);
+}
+.TextStyles_multiVariantStyles_variant_danger__13t47mye {
+  color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-danger);
+}
+.TextStyles_multiVariantStyles_variant_warning__13t47myf {
+  color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-warning);
+}
+.TextStyles_multiVariantStyles_variant_success__13t47myg {
+  color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-success);
+}
+.TextStyles_multiVariantStyles_variant_inherit__13t47myh {
+  color: inherit;
+}
+.TextStyles_multiVariantStyles_weight_normal__13t47myi {
+  font-weight: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-body-md-font-weight-regular);
+}
+.TextStyles_multiVariantStyles_weight_semiBold__13t47myj {
+  font-weight: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-body-md-font-weight-semibold);
+}
+.TextStyles_multiVariantStyles_weight_bold__13t47myk {
+  font-weight: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-body-md-font-weight-bold);
+}
+.TextStyles_multiVariantStyles_weight_inherit__13t47myl {
+  font-weight: inherit;
+}
+.TextStyles_multiVariantStyles_hyphens_auto__13t47mym {
+  -webkit-hyphens: auto;
+          hyphens: auto;
+}
+.TextStyles_multiVariantStyles_hyphens_none__13t47myn {
+  -webkit-hyphens: none;
+          hyphens: none;
+}
+.TextStyles_multiVariantStyles_truncation_clip__13t47myp {
+  text-overflow: clip;
+  white-space: nowrap;
+  width: 100%;
+  display: inline-block;
+}
+.TextStyles_multiVariantStyles_truncation_ellipsis__13t47myq {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 100%;
+  display: inline-block;
+}
+.TextStyles_multiVariantStyles_overflowWrap_breakWord__13t47myr {
+  overflow-wrap: break-word;
+}
+.TextStyles_multiVariantStyles_overflowWrap_normal__13t47mys {
+  overflow-wrap: normal;
+}
+.TextStyles_multiVariantStyles_compound_0__13t47myu {
+  font-weight: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-body-2xs-font-weight-regular);
+}
+.TextStyles_multiVariantStyles_compound_1__13t47myv {
+  font-weight: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-body-2xs-font-weight-semibold);
+}
+.TextStyles_multiVariantStyles_compound_2__13t47myw {
+  font-weight: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-body-xs-font-weight-bold);
+}
+.TextStyles_multiVariantStyles_compound_3__13t47myx {
+  font-weight: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-body-xs-font-weight-regular);
+}
+.TextStyles_multiVariantStyles_compound_4__13t47myy {
+  font-weight: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-body-xs-font-weight-semibold);
+}
+.TextStyles_multiVariantStyles_compound_5__13t47myz {
+  font-weight: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-body-xs-font-weight-bold);
+}
+.TextStyles_multiVariantStyles_compound_6__13t47my10 {
+  font-weight: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-body-sm-font-weight-regular);
+}
+.TextStyles_multiVariantStyles_compound_7__13t47my11 {
+  font-weight: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-body-sm-font-weight-semibold);
+}
+.TextStyles_multiVariantStyles_compound_8__13t47my12 {
+  font-weight: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-body-sm-font-weight-bold);
+}
+.TextStyles_multiVariantStyles_compound_9__13t47my13 {
+  font-weight: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-body-md-font-weight-regular);
+}
+.TextStyles_multiVariantStyles_compound_10__13t47my14 {
+  font-weight: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-body-md-font-weight-semibold);
+}
+.TextStyles_multiVariantStyles_compound_11__13t47my15 {
+  font-weight: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-body-md-font-weight-bold);
+}
+.TextStyles_multiVariantStyles_compound_12__13t47my16 {
+  font-weight: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-body-lg-font-weight-regular);
+}
+.TextStyles_multiVariantStyles_compound_13__13t47my17 {
+  font-weight: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-body-lg-font-weight-semibold);
+}
+.TextStyles_multiVariantStyles_compound_14__13t47my18 {
+  font-weight: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-body-lg-font-weight-bold);
+}
+.TextStyles_multiVariantStyles_compound_15__13t47my19 {
+  font-weight: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-body-xl-font-weight-regular);
+}
+.TextStyles_multiVariantStyles_compound_16__13t47my1a {
+  font-weight: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-body-xl-font-weight-semibold);
+}
+.TextStyles_multiVariantStyles_compound_17__13t47my1b {
+  font-weight: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-body-xl-font-weight-bold);
+}

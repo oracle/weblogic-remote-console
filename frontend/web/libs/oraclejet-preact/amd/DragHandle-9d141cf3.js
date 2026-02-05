@@ -1,0 +1,2 @@
+define(['exports', 'preact/jsx-runtime', './classNames-08d99695', './mergeProps-bcfa6a92', './useActive-bb5dc069', './useTestId-9afc201a', './DragV-a43371f7', './UNSAFE_DragHandle/themes/DragHandleStyles.css'], (function(e,s,t,a,r,c,i,n){"use strict";e.DragHandle=function({testId:e}){const{isActive:l,activeProps:d}=r.useActive(),o=c.useTestId(e),g=t.classNames([n.iconStyle,l?n.activeStyle:n.hoverStyle]);return s.jsx("div",{...a.mergeProps(d,o),draggable:!0,class:g,role:"presentation",children:s.jsx(i.SvgDragV,{})})}}));
+//# sourceMappingURL=DragHandle-9d141cf3.js.map

@@ -1,0 +1,2 @@
+define(['exports', './logger-0f873e29'], (function(e,t){"use strict";e.useComponentTheme=(e,s)=>{const{multiVariantStyles:n,styles:o,variants:r=[],baseTheme:a=""}=e||{},i=Object.keys(r).reduce(((e,t)=>(e[t]=s?.[t],e)),{});n||t.warn("You are missing a theme for your component. You may need to create one or provide a theme in your Environment context.");const m=n?n(i):"";return{styles:o,baseTheme:a,variantClasses:m,classes:`${a} ${m}`}}}));
+//# sourceMappingURL=useComponentTheme-5aa41a8f.js.map

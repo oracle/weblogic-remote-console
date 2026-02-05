@@ -1,0 +1,2 @@
+define(['exports', '../ColorSwatchStyles.css', './ColorSwatchBaseTheme.css', './ColorSwatchVariants.css', 'css!./../../../ColorSwatchStyles.styles.css', 'module', '../../../vanilla-extract-recipes-createRuntimeFn.esm-d881c69a'], (function(e,s,t,a,l,c,o){"use strict";const r={baseTheme:t.baseTheme,multiVariantStyles:a.multiVariantStyles,variants:s.variants,styles:s.styles};e.ColorSwatchRedwoodTheme=r,Object.defineProperty(e,"__esModule",{value:!0})}));
+//# sourceMappingURL=ColorSwatchTheme.js.map

@@ -1,0 +1,13 @@
+.ListViewStyles_reorderableItemDnd__gjiucf0 {
+  flex-direction: column;
+}
+.ListViewStyles_reorderableItemDragger__gjiucf1 {
+  border-radius: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem);
+}
+.ListViewStyles_reorderableItemOverlayFront__gjiucf2 {
+  height: calc(50%);
+  top: 0;
+}
+.ListViewStyles_reorderableItemOverlayRear__gjiucf3 {
+  top: calc(50%);
+}

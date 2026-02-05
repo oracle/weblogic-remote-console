@@ -1,0 +1,185 @@
+{
+  "name": "truncating-text",
+  "version": "19.0.1",
+  "jetVersion": "^19.0.1",
+  "pack": "oj-c",
+  "type": "composite",
+  "dependencyScope": "runtime",
+  "license": "https://opensource.org/licenses/UPL",
+  "implements": [
+    "CTruncatingTextElement"
+  ],
+  "displayName": "Truncating Text",
+  "description": "Truncating Text shows a tooltip containing the full text while also acting as a tab stop when truncation occurs.",
+  "main": "oj-c/truncating-text",
+  "since": "19.0.0",
+  "status": [
+    {
+      "type": "production",
+      "since": "19.0.0"
+    }
+  ],
+  "extension": {
+    "catalog": {
+      "category": "Controls"
+    },
+    "vbdt": {
+      "module": "oj-c/truncating-text"
+    },
+    "oracle": {
+      "icon": "oj-ux-ico-text",
+      "uxSpecs": [
+        "text"
+      ]
+    },
+    "webelement": {
+      "package": "@oracle/oraclejet-core-pack",
+      "version": "19.0.1",
+      "docUrl": "https://www.oracle.com/webfolder/technetwork/jet/cpwdtsdoc/classes/TruncatingTextWebElement.html",
+      "export": "findTruncatingText",
+      "main": "@oracle/oraclejet-core-pack/webdriver"
+    }
+  },
+  "propertyLayout": [
+    {
+      "propertyGroup": "common",
+      "items": [
+        "variant",
+        "size",
+        "weight",
+        "value"
+      ]
+    }
+  ],
+  "properties": {
+    "variant": {
+      "type": "string",
+      "description": "Specifies text color. If set as 'inherit', takes text color from its parent element.",
+      "displayName": "Variant",
+      "help": "#variant",
+      "enumValues": [
+        "inherit",
+        "disabled",
+        "success",
+        "danger",
+        "warning",
+        "primary",
+        "secondary"
+      ]
+    },
+    "size": {
+      "type": "string",
+      "description": "Specifies font size and line height. If set as 'inherit', takes font size and line height from its parent element.",
+      "displayName": "Size",
+      "help": "#size",
+      "enumValues": [
+        "inherit",
+        "sm",
+        "md",
+        "lg",
+        "xs",
+        "2xs",
+        "xl"
+      ]
+    },
+    "weight": {
+      "type": "string",
+      "description": "Specifies the font weight. If set as 'inherit', takes font weight from its parent element.",
+      "displayName": "Weight",
+      "help": "#weight",
+      "enumValues": [
+        "bold",
+        "normal",
+        "inherit",
+        "semiBold"
+      ]
+    },
+    "overflowWrap": {
+      "type": "string",
+      "description": "Specifies the overflow-wrap.",
+      "displayName": "OverflowWrap",
+      "help": "#overflowWrap",
+      "enumValues": [
+        "normal",
+        "anywhere",
+        "breakWord"
+      ]
+    },
+    "hyphens": {
+      "type": "string",
+      "description": "Specifies if hyphens should be included when handling long words with no spaces.",
+      "displayName": "Hyphens",
+      "help": "#hyphens",
+      "enumValues": [
+        "auto",
+        "none"
+      ]
+    },
+    "truncation": {
+      "type": "string",
+      "description": "Determines text behavior when text is truncated. Be aware of setting either lineClamp or truncation. Setting both props would produce a type error. In most cases, lineClamp=1 tries to put the ellipsis at the end of a \"word\". On the other hand, using truncation=\"ellipsis\" will show as much as possible text, then put the ellipsis at the end.",
+      "displayName": "Truncation",
+      "help": "#truncation",
+      "enumValues": [
+        "none",
+        "clip",
+        "ellipsis"
+      ]
+    },
+    "lineClamp": {
+      "type": "number",
+      "description": "Truncates text at a specific number of lines and then displays an ellipsis (…) at the end of the last line. Parent of the element needs to have a specific width so text starts overflowing and produce a truncation.",
+      "displayName": "LineClamp",
+      "help": "#lineClamp"
+    },
+    "value": {
+      "type": "string",
+      "description": "\"Specifies the text to be displayed.",
+      "displayName": "Value",
+      "help": "#value"
+    }
+  },
+  "methods": {
+    "setProperty": {
+      "description": "Sets a property or a single subproperty for complex properties and notifies the component of the change, triggering a corresponding event.",
+      "help": "#setProperty",
+      "params": [
+        {
+          "name": "property",
+          "description": "The property name to set. Supports dot notation for subproperty access.",
+          "type": "string"
+        },
+        {
+          "name": "value",
+          "description": "The new value to set the property to.",
+          "type": "any"
+        }
+      ],
+      "return": "void"
+    },
+    "getProperty": {
+      "description": "Retrieves the value of a property or a subproperty.",
+      "help": "#getProperty",
+      "params": [
+        {
+          "name": "property",
+          "description": "The property name to get. Supports dot notation for subproperty access.",
+          "type": "string"
+        }
+      ],
+      "return": "any"
+    },
+    "setProperties": {
+      "description": "Performs a batch set of properties.",
+      "help": "#setProperties",
+      "params": [
+        {
+          "name": "properties",
+          "description": "An object containing the property and value pairs to set.",
+          "type": "object"
+        }
+      ],
+      "return": "void"
+    }
+  }
+}

@@ -1,0 +1,22 @@
+.BaseSwatchViewStyles_baseStyle__lm6nzs0 {
+  height: 100%;
+  padding: calc(0.5 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  box-sizing: border-box;
+  overflow-y: inherit;
+  overflow-anchor: none;
+}
+.BaseSwatchViewStyles_baseStyle__lm6nzs0:focus {
+  outline-style: none;
+}
+.BaseSwatchViewStyles_itemStyle__lm6nzs1 {
+  width: -moz-max-content;
+  width: max-content;
+}
+.BaseSwatchViewStyles_itemInGridLayout__lm6nzs2 {
+  width: auto;
+}
+.BaseSwatchViewStyles_multiVariantStyles_itemFocused_isItemFocused__lm6nzs3 {
+  outline-style: dotted;
+  outline-width: 1px;
+  outline-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-border-keyboard-focus);
+}

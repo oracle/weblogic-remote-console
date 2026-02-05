@@ -1,0 +1,10 @@
+.ProgressCircleBaseTheme_baseTheme__28qd3w0 {
+  --size__lborgv0: ;
+  --trackWidth__lborgv1: ;
+  --sizes-sm-size__lborgv2: calc(6 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --sizes-sm-trackWidth__lborgv3: 2px;
+  --sizes-md-size__lborgv4: calc(12 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --sizes-md-trackWidth__lborgv5: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem);
+  --sizes-lg-size__lborgv6: calc(24 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --sizes-lg-trackWidth__lborgv7: calc(1.5 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+}

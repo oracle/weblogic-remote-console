@@ -1,0 +1,11 @@
+oj-c-progress-bar:not(.oj-complete) {
+  visibility: hidden;
+}
+
+oj-c-progress-bar {
+  display: block;
+}
+
+oj-c-progress-bar[hidden] {
+  display: none;
+}

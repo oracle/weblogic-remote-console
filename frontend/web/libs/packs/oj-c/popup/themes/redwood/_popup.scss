@@ -1,0 +1,19 @@
+
+@import "oj/utilities/_oj.utilities.modules.scss";
+
+// You may import variables from JET like so:
+// @import "oj/core/themes/redwood/_oj-core.cssvars.scss";
+// @import "oj/core/themes/redwood/_oj-palette.cssvars.scss";
+
+// import the css common to all themes
+@import "../base/_popup.scss";
+
+// Even if this file is imported many times 'module-include-once' ensures the content is included just once .
+@include module-include-once("_popup.redwood") {
+:root {
+  
+  // set your variables inside of :root, an example:
+  //  --oj-c-popup-value-text-color: var(--oj-palette-red-140);
+
+}
+} 

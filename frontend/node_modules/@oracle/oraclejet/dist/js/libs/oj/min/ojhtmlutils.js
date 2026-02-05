@@ -1,0 +1,9 @@
+/**
+ * @license
+ * Copyright (c) 2014, 2025, Oracle and/or its affiliates.
+ * Licensed under The Universal Permissive License (UPL), Version 1.0
+ * as shown at https://oss.oracle.com/licenses/upl/
+ * @ignore
+ */
+define(["exports"],function(e){"use strict";const t={};function r(e){for(var t=e.childNodes,n=t.length,o=0;o<n;o++){var a=t[o];r(a);var i,l,d,c=a.nodeName.toLowerCase();const n="oj-bind-replace-";if(c.substr(0,16)===n){var s=c.substr(16);for(d=document.createElement(s),i=0;i<a.attributes.length;i++)l=a.attributes[i],d.setAttribute(l.name,l.value);var p=d.content?d.content:d;for(i=0;a.childNodes.length>0;)p.appendChild(a.childNodes[0]);e.replaceChild(d,a)}else if("script"===c||"style"===c){for(d=document.createElement(c),i=0;i<a.attributes.length;i++)l=a.attributes[i],d.setAttribute(l.name,l.value);var u=a.innerHTML;d.innerHTML=u.replace(new RegExp(n,"g"),""),e.replaceChild(d,a)}else if(8===a.nodeType){var f=a.nodeValue;a.nodeValue=f.replace(new RegExp(n,"g"),"")}}}t.stringToNodeArray=function(e){var t,n,o,a,i,l=["table","caption","colgroup","col","thead","tfoot","th","tbody","tr","td","template","p"];for(t=0;t<l.length;t++)n=l[t],o=e,a=void 0,i=void 0,a=new RegExp("<"+n+"(?=\\s|>)","gi"),i=new RegExp("</"+n+"(?=\\s|>)","gi"),e=o.replace(a,"<oj-bind-replace-"+n).replace(i,"</oj-bind-replace-"+n);var d=document.createElement("div");d.innerHTML=e,-1!==e.indexOf("<oj-bind-replace-")&&r(d);for(var c=[];d.firstChild;)c.push(d.firstChild),d.removeChild(d.firstChild);return c},t.getTemplateContent=function(e){var t=[];if(1!==e.nodeType||"template"!==e.tagName.toLowerCase())throw new Error("Invalid template node "+e);var r=e.content;return r?t.push(document.importNode(r,!0)):Array.prototype.forEach.call(e.childNodes,function(e){t.push(e.cloneNode(!0))}),t};const n=t.stringToNodeArray,o=t.getTemplateContent;e.getTemplateContent=o,e.stringToNodeArray=n,Object.defineProperty(e,"__esModule",{value:!0})});
+//# sourceMappingURL=ojhtmlutils.js.map

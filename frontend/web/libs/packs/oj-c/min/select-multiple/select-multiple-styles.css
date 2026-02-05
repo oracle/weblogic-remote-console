@@ -1,0 +1,17 @@
+oj-c-select-multiple:not(.oj-complete) {
+  visibility: hidden;
+}
+
+oj-c-select-multiple {
+  display: inline-block;
+  max-width: 100%;
+  width: 100%;
+}
+
+oj-c-select-multiple.in-form-layout {
+  display: block;
+}
+
+oj-c-select-multiple[hidden] {
+  display: none;
+}

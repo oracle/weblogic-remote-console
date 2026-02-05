@@ -1,0 +1,2 @@
+define(['exports', 'preact/jsx-runtime'], (function(e,t){"use strict";e.ChartWithLegend=function({chart:e,legend:r,position:n,isRtl:o}){const i=function(e,t){return"top"===e?"column-reverse":"bottom"===e?"column":"start"===e?t?"row":"row-reverse":t?"row-reverse":"row"}(n,o);return t.jsxs("div",{style:{display:"flex",width:"100%",height:"100%",flexDirection:i},children:[e,r]})},Object.defineProperty(e,"__esModule",{value:!0})}));
+//# sourceMappingURL=UNSAFE_ChartWithLegend.js.map

@@ -1,0 +1,2 @@
+define(['exports'], (function(i){"use strict";i.datePickerPropVars={width:"var(--width__1wy4iwf0)",minWidth:"var(--minWidth__1wy4iwf1)",maxWidth:"var(--maxWidth__1wy4iwf2)",calendarGridRowGap:"var(--calendarGridRowGap__1wy4iwf3)",monthYearGridRowGap:"var(--monthYearGridRowGap__1wy4iwf4)",height:"var(--height__1wy4iwf5)",todayFooterButtonHeight:"var(--todayFooterButtonHeight__1wy4iwf6)"},Object.defineProperty(i,"__esModule",{value:!0})}));
+//# sourceMappingURL=DatePickerContract.css.js.map

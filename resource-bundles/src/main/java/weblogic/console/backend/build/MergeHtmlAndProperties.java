@@ -1,4 +1,4 @@
-// Copyright (c) 2021, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2025, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.console.backend.build;
@@ -106,7 +106,6 @@ public class MergeHtmlAndProperties {
   }
 
   private boolean addProperty(Properties props, BufferedReader in) throws Exception {
-    boolean result;
     // get <div id="propName"...
     String input = in.readLine();
     if (input.startsWith("<div id=")) {

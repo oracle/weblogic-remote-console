@@ -63,6 +63,8 @@ public class ConsoleBackendRuntimeConfig {
   private static String ssoDomainLoginUri;
   private static String proxy;
   private static boolean restrictContentBasedOnRoles = true;
+  private static int serverPort;
+  private static boolean areFilesLocal;
 
   static {
     // Put all of the keys in here even if null
@@ -202,11 +204,27 @@ public class ConsoleBackendRuntimeConfig {
   }
 
   public static String getVersion() {
-    return "2.4.19";
+    return "3.0.0";
   }
 
   public static String getProxy() {
     return proxy;
+  }
+
+  public static boolean isFilesAreLocal() {
+    return areFilesLocal;
+  }
+
+  public static void setFilesAreLocal(boolean filesAreLocal) {
+    areFilesLocal = filesAreLocal;
+  }
+
+  public static int getServerPort() {
+    return serverPort;
+  }
+
+  public static void setServerPort(int port) {
+    serverPort = port;
   }
 
   public static boolean isRestrictContentBasedOnRoles() {

@@ -1,0 +1,11 @@
+oj-c-tab-bar-mixed:not(.oj-complete) {
+  visibility: hidden;
+}
+
+oj-c-tab-bar-mixed {
+  display: block;
+}
+
+oj-c-tab-bar-mixed [hidden] {
+  display: none;
+}

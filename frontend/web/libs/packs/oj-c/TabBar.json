@@ -1,0 +1,1567 @@
+[
+  {
+    "id": "oj-c.TabBar",
+    "name": "TabBar",
+    "memberof": "oj-c",
+    "kind": "class",
+    "meta": {
+      "filename": "tab-bar.tsx",
+      "path": "web/components/oj-c/tab-bar"
+    },
+    "ojcomponent": true,
+    "isvcomponent": true,
+    "since": "17.0.0",
+    "longname": "oj-c.TabBar",
+    "pack": "oj-c",
+    "classdesc": "<h3 id=\"tabBarOverview-section\">\n  JET TabBar\n  <a class=\"bookmarkable-link\" title=\"Bookmarkable Link\" href=\"#tabBarOverview-section\"></a>\n</h3>\n\nThe oj-c-tab-bar enables horizontal navigation.\n\n<h3 id=\"touch-section\">\n  Touch End User Information\n  <a class=\"bookmarkable-link\" title=\"Bookmarkable Link\" href=\"#touch-section\"></a>\n</h3>\n\n<table class=\"keyboard-table\">\n  <thead>\n    <tr>\n      <th>Target</th>\n      <th>Gesture</th>\n      <th>Action</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <td>Tab</td>\n      <td><kbd>Tap</kbd></td>\n      <td>Selects the tab.</td>\n    </tr>\n    <tr>\n      <td>Remove button</td>\n      <td><kbd>Tap</kbd></td>\n      <td>Removes the tab.</td>\n    </tr>\n    <tr>\n      <td>Arrow button</td>\n      <td><kbd>Tap</kbd></td>\n      <td>When tabs are displayed inside a conveyor belt, tapping the arrow button will scroll the conveyor belt.</td>\n    </tr>\n  </tbody>\n</table>\n\n<h3 id=\"keyboard-section\">\n  Keyboard End User Information\n  <a class=\"bookmarkable-link\" title=\"Bookmarkable Link\" href=\"#keyboard-section\"></a>\n</h3>\n\n<table class=\"keyboard-table\">\n  <thead>\n    <tr>\n      <th>Target</th>\n      <th>Key</th>\n      <th>Action</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <td>Tab</td>\n      <td><kbd>Enter or Space</kbd></td>\n      <td>Select the current tab.</td>\n    </tr>\n    <tr>\n      <td>Tab</td>\n      <td><kbd>LeftArrow or RightArrow</kbd></td>\n      <td>Navigate to the previous or next tab.</td>\n    </tr>\n    <tr>\n      <td>Tab</td>\n      <td><kbd>Delete</kbd></td>\n      <td>Remove the current tab.</td>\n    </tr>\n    <tr>\n      <td>Tab</td>\n      <td><kbd>Esc</kbd></td>\n      <td>Hide the tooltip if tooltip is shown.</td>\n    </tr>\n    <tr>\n      <td>Dropdown</td>\n      <td><kbd>UpArrow or DownArrow</kbd></td>\n      <td>Navigate the tab represented as item in the list in the direction of the arrow.</td>\n    </tr>\n    <tr>\n      <td>Dropdown</td>\n      <td><kbd>Enter or Space</kbd></td>\n      <td>Select the highlighted choice from the dropdown and close the dropdown.</td>\n    </tr>\n    <tr>\n      <td>Dropdown</td>\n      <td><kbd>Esc</kbd></td>\n      <td>Close the dropdown.</td>\n    </tr>\n    <tr>\n      <td>Reorder</td>\n      <td><kbd>Command/Ctrl + Shift + LeftArrow (RightArrow in RTL)</kbd></td>\n      <td>Moves the tab before the previous tab.</td>\n    </tr>\n    <tr>\n      <td>Reorder</td>\n      <td><kbd>Command/Ctrl + Shift + RightArrow (LeftArrow in RTL)</kbd></td>\n      <td>Moves the tab after the next tab.</td>\n    </tr>\n  </tbody>\n</table>",
+    "scope": "static",
+    "tagWithoutBrackets": "oj-c-tab-bar",
+    "tagWithBrackets": "<oj-c-tab-bar>",
+    "domInterface": "CTabBarElement",
+    "ojPageTitle": "&lt;oj-c-tab-bar>",
+    "camelCaseName": "TabBar",
+    "ojPageTitlePrefix": "Element: ",
+    "ojtsvcomponent": true,
+    "tstype": {
+      "target": "Type",
+      "value": "interface CTabBarElement<K extends string | number = string | number> extends JetElement<TabBarElementSettableProperties<K>>"
+    },
+    "ojsignature": [
+      {
+        "target": "Type",
+        "value": "interface CTabBarElement<K extends string | number = string | number> extends JetElement<TabBarElementSettableProperties<K>>"
+      }
+    ],
+    "tsdeprecated": [
+      {
+        "type": "supersedes",
+        "since": "19.0.0",
+        "value": [
+          "oj-tab-bar"
+        ]
+      }
+    ],
+    "ojmodule": "tab-bar"
+  },
+  {
+    "id": "oj-c.TabBar#data",
+    "name": "data",
+    "memberof": "oj-c.TabBar",
+    "meta": {
+      "filename": "tab-bar.tsx",
+      "path": "web/components/oj-c/tab-bar"
+    },
+    "kind": "member",
+    "longname": "oj-c.TabBar#data",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "Array<object>|DataProvider"
+      ]
+    },
+    "optional": true,
+    "description": "Specifies the data definitions for the tabs.",
+    "defaultvalue": "[]",
+    "tstype": [
+      {
+        "target": "Type",
+        "value": "Array<oj-c.TabBar.TabData<K>|oj-c.TabBar.TabLinkItemData<K>>|DataProvider<K, oj-c.TabBar.TabData<K> | oj-c.TabBar.TabLinkItemData<K>>",
+        "jsdocOverride": true,
+        "module": {
+          "DataProvider": "ojdataprovider"
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.TabBar#selection",
+    "name": "selection",
+    "memberof": "oj-c.TabBar",
+    "meta": {
+      "filename": "tab-bar.tsx",
+      "path": "web/components/oj-c/tab-bar"
+    },
+    "kind": "member",
+    "longname": "oj-c.TabBar#selection",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "string|number"
+      ]
+    },
+    "optional": true,
+    "ojwriteback": true,
+    "description": "The key of the currently selected tab.",
+    "tstype": [
+      {
+        "target": "Type",
+        "value": "K",
+        "jsdocOverride": true
+      }
+    ]
+  },
+  {
+    "id": "oj-c.TabBar#reorderable",
+    "name": "reorderable",
+    "memberof": "oj-c.TabBar",
+    "meta": {
+      "filename": "tab-bar.tsx",
+      "path": "web/components/oj-c/tab-bar"
+    },
+    "kind": "member",
+    "longname": "oj-c.TabBar#reorderable",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "\"disabled\"",
+        "\"enabled\""
+      ]
+    },
+    "optional": true,
+    "description": "Specifies if the tabs can be reordered within the tab bar.\nNote: Do not use with <code class=\"prettyprint\"> overflow=\"popup\"</code> as reorder is not supported with\npopup.",
+    "ojvalues": [
+      {
+        "name": "enabled",
+        "description": "Enables reordering of items in tabbar.",
+        "displayName": "Enabled",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "disabled",
+        "description": "Disables reordering of items in tabbar.",
+        "displayName": "Disabled",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      }
+    ],
+    "defaultvalue": "\"disabled\""
+  },
+  {
+    "id": "oj-c.TabBar#overflow",
+    "name": "overflow",
+    "memberof": "oj-c.TabBar",
+    "meta": {
+      "filename": "tab-bar.tsx",
+      "path": "web/components/oj-c/tab-bar"
+    },
+    "kind": "member",
+    "longname": "oj-c.TabBar#overflow",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "\"hidden\"",
+        "\"popup\"",
+        "\"conveyor\""
+      ]
+    },
+    "optional": true,
+    "description": "Specifies the overflow behavior",
+    "defaultvalue": "\"hidden\""
+  },
+  {
+    "id": "oj-c.TabBar#display",
+    "name": "display",
+    "memberof": "oj-c.TabBar",
+    "meta": {
+      "filename": "tab-bar.tsx",
+      "path": "web/components/oj-c/tab-bar"
+    },
+    "kind": "member",
+    "longname": "oj-c.TabBar#display",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "\"standard\"",
+        "\"icons\"",
+        "\"stacked\""
+      ]
+    },
+    "optional": true,
+    "description": "Whether to display both the label and icons (\"standard\") or just the icons (\"icons\") or to render stacked display (\"stacked\").\nIn the latter case, the label is displayed in a tooltip instead.",
+    "ojvalues": [
+      {
+        "name": "standard",
+        "description": "Label and icon are shown for all tabs.",
+        "displayName": "Standard",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "icons",
+        "description": "Only icons are shown for all tabs.",
+        "displayName": "Icons",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "stacked",
+        "description": "Stacks the badge over the icon and icon over the label when applicable.",
+        "displayName": "Stacked",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      }
+    ],
+    "defaultvalue": "\"standard\""
+  },
+  {
+    "id": "oj-c.TabBar#layout",
+    "name": "layout",
+    "memberof": "oj-c.TabBar",
+    "meta": {
+      "filename": "tab-bar.tsx",
+      "path": "web/components/oj-c/tab-bar"
+    },
+    "kind": "member",
+    "longname": "oj-c.TabBar#layout",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "\"stretch\"",
+        "\"condense\""
+      ]
+    },
+    "optional": true,
+    "description": "Whether to stretch the tab bar items to occupy available space or to condense items",
+    "ojvalues": [
+      {
+        "name": "stretch",
+        "description": "Stretches the tab bar items to occupy available space ",
+        "displayName": "Stretch",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "condense",
+        "description": "Condenses the space occupied by tab bar items",
+        "displayName": "Condense",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      }
+    ],
+    "defaultvalue": "\"stretch\""
+  },
+  {
+    "id": "oj-c.TabBar#edge",
+    "name": "edge",
+    "memberof": "oj-c.TabBar",
+    "meta": {
+      "filename": "tab-bar.tsx",
+      "path": "web/components/oj-c/tab-bar"
+    },
+    "kind": "member",
+    "longname": "oj-c.TabBar#edge",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "\"top\"",
+        "\"bottom\""
+      ]
+    },
+    "optional": true,
+    "description": "The position of the TabBar.",
+    "defaultvalue": "\"top\""
+  },
+  {
+    "id": "oj-c.TabBar#truncation",
+    "name": "truncation",
+    "memberof": "oj-c.TabBar",
+    "meta": {
+      "filename": "tab-bar.tsx",
+      "path": "web/components/oj-c/tab-bar"
+    },
+    "kind": "member",
+    "longname": "oj-c.TabBar#truncation",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "\"none\"",
+        "\"progressive\""
+      ]
+    },
+    "optional": true,
+    "description": "Truncation applies to the tab labels when there is not enough room to display all tabs.",
+    "defaultvalue": "\"none\""
+  },
+  {
+    "id": "oj-c.TabBar#contextMenuConfig",
+    "name": "contextMenuConfig",
+    "memberof": "oj-c.TabBar",
+    "meta": {
+      "filename": "tab-bar.tsx",
+      "path": "web/components/oj-c/tab-bar"
+    },
+    "kind": "member",
+    "longname": "oj-c.TabBar#contextMenuConfig",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "object"
+      ]
+    },
+    "optional": true,
+    "description": "Specifies a context menu configuration.\nIt takes the keys `accessibleLabel` and `items`,\nwhere `accessibleLabel` is optional and items required . `items` function returns an array\nof menu item object representations that indicates what menu items are going to be part of\nmenu based on some specific context menu context.\n<table>\n<tr><th align='left'>Context Menu Item Type</th><th align='left'>Def</th></tr>\n<tr><td>ContextMenuSeparator</td><td>{ type: 'separator'}</td></tr>\n<tr><td>MenuItem</td><td>{\ntype?: 'item';\nlabel: string;\nkey: string;\ndisabled?: boolean;\nonAction?: () => void;\nstartIcon?: MenuIcon;\nendIcon?: MenuIcon;\nvariant?: 'standard' | 'destructive';\n};</td></tr>\n<tr><td>ContextMenuSubMenu</td><td>{\ntype: 'submenu';\nlabel?: string;\ndisabled?: boolean;\nstartIcon?: string;\nitems?: Array&lt;ContextMenuItems&gt;;\n};</td></tr>\n<tr><td>ContextMenuSelectSingle</td><td>{\ntype: 'selectsingle';\nkey?: string;\nitems?: Array&lt;MenuSelectItem&gt;;\nselection?: string;\nonSelection?: (detail: { value: string }) => void;\n};</td></tr>\n<tr><td>ContextMenuSelectMultiple</td><td>{\ntype: 'selectmultiple';\nkey?: string;\nitems?: Array&lt;MenuSelectItem&gt;;\nselection?: Array&lt;string&gt;;\nonSelection?: (detail: { value: Array&lt;string&gt; }) => void;\n};</td></tr>\n<tr><td>MenuIcon</td><td>{\ntype?: 'class';\n    class: string;\n  }\n| {\n    type: 'img';\n   src: string;\n  };</td></tr>\n<tr><td>MenuSelectItem</td><td>{\nlabel: string;\ndisabled?: boolean;\nendIcon?: MenuIcon;\nvalue: string;\n}</td></tr>\n</table>",
+    "tstype": [
+      {
+        "target": "Type",
+        "value": "oj-c.TabBar.CTabBarContextMenuConfig<K>",
+        "jsdocOverride": true
+      }
+    ]
+  },
+  {
+    "id": "oj-c.TabBar#_doReorderHelper",
+    "name": "_doReorderHelper",
+    "memberof": "oj-c.TabBar",
+    "meta": {
+      "filename": "tab-bar.tsx",
+      "path": "web/components/oj-c/tab-bar"
+    },
+    "kind": "function",
+    "longname": "oj-c.TabBar#_doReorderHelper",
+    "scope": "instance",
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "void"
+          ]
+        }
+      }
+    ],
+    "description": "This is a private method that should only be called by the webelement API.",
+    "params": [
+      {
+        "name": "tabBarKeys",
+        "type": {
+          "names": [
+            "Array<string|number>"
+          ]
+        }
+      }
+    ],
+    "ojhidden": true
+  },
+  {
+    "id": "oj-c.TabBar#setProperty",
+    "name": "setProperty",
+    "memberof": "oj-c.TabBar",
+    "meta": {
+      "filename": "tab-bar.tsx",
+      "path": "web/components/oj-c/tab-bar"
+    },
+    "kind": "function",
+    "longname": "oj-c.TabBar#setProperty",
+    "scope": "instance",
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "void"
+          ]
+        }
+      }
+    ],
+    "description": "Sets a property or a single subproperty for complex properties and notifies the component of the change, triggering a corresponding event.",
+    "params": [
+      {
+        "name": "property",
+        "description": "The property name to set. Supports dot notation for subproperty access.",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "value",
+        "description": "The new value to set the property to.",
+        "type": {
+          "names": [
+            "any"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.TabBar#getProperty",
+    "name": "getProperty",
+    "memberof": "oj-c.TabBar",
+    "meta": {
+      "filename": "tab-bar.tsx",
+      "path": "web/components/oj-c/tab-bar"
+    },
+    "kind": "function",
+    "longname": "oj-c.TabBar#getProperty",
+    "scope": "instance",
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "any"
+          ]
+        }
+      }
+    ],
+    "description": "Retrieves the value of a property or a subproperty.",
+    "params": [
+      {
+        "name": "property",
+        "description": "The property name to get. Supports dot notation for subproperty access.",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.TabBar#setProperties",
+    "name": "setProperties",
+    "memberof": "oj-c.TabBar",
+    "meta": {
+      "filename": "tab-bar.tsx",
+      "path": "web/components/oj-c/tab-bar"
+    },
+    "kind": "function",
+    "longname": "oj-c.TabBar#setProperties",
+    "scope": "instance",
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "void"
+          ]
+        }
+      }
+    ],
+    "description": "Performs a batch set of properties.",
+    "params": [
+      {
+        "name": "properties",
+        "description": "An object containing the property and value pairs to set.",
+        "type": {
+          "names": [
+            "object"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.TabBar#event:ojBeforeSelect",
+    "name": "ojBeforeSelect",
+    "kind": "event",
+    "memberof": "oj-c.TabBar",
+    "meta": {
+      "filename": "tab-bar.tsx",
+      "path": "web/components/oj-c/tab-bar"
+    },
+    "longname": "oj-c.TabBar#event:ojBeforeSelect",
+    "scope": "instance",
+    "description": "Triggered before user selects a tab which includes user gestures or selection is changed programmatically.",
+    "properties": [
+      {
+        "name": "accept",
+        "description": "This method can be called with an application-created Promise to cancel this event asynchronously.  The Promise should be resolved or rejected to accept or cancel the event, respectively.",
+        "type": {
+          "names": [
+            "function"
+          ]
+        }
+      },
+      {
+        "name": "key",
+        "optional": false,
+        "type": {
+          "names": [
+            "string|number"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "K",
+            "jsdocOverride": true,
+            "for": "key"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "oj-c.TabBar#event:ojRemove",
+    "name": "ojRemove",
+    "kind": "event",
+    "memberof": "oj-c.TabBar",
+    "meta": {
+      "filename": "tab-bar.tsx",
+      "path": "web/components/oj-c/tab-bar"
+    },
+    "longname": "oj-c.TabBar#event:ojRemove",
+    "scope": "instance",
+    "description": "Triggered when user performs a remove gesture on a tab. The remove gestures include:\n<ul>\n  <li>User clicks the remove icon in a tab</li>\n  <li>User presses Delete key on a tab</li>\n</ul>",
+    "properties": [
+      {
+        "name": "key",
+        "optional": false,
+        "type": {
+          "names": [
+            "string|number"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "K",
+            "jsdocOverride": true,
+            "for": "key"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "oj-c.TabBar#event:ojReorder",
+    "name": "ojReorder",
+    "kind": "event",
+    "memberof": "oj-c.TabBar",
+    "meta": {
+      "filename": "tab-bar.tsx",
+      "path": "web/components/oj-c/tab-bar"
+    },
+    "longname": "oj-c.TabBar#event:ojReorder",
+    "scope": "instance",
+    "description": "Triggered when user performs a reorder gesture on a tab. The reorder gestures include:\n<ul>\n  <li>User drags a tab and drops it in a new drop location</li>\n  <li>User presses Command + Shift + Arrow key(s) on a tab</li>\n</ul>\nNote: Do not use with <code class=\"prettyprint\"> overflow=\"popup\"</code> as reorder is not supported with\npopup.",
+    "properties": [
+      {
+        "name": "reorderedKeys",
+        "description": "The new order of keys after reorder",
+        "optional": false,
+        "type": {
+          "names": [
+            "Array<string|number>"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "Array<K>",
+            "jsdocOverride": true,
+            "for": "reorderedKeys"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "oj-c.TabBar#event:ojSelectionAction",
+    "name": "ojSelectionAction",
+    "kind": "event",
+    "memberof": "oj-c.TabBar",
+    "meta": {
+      "filename": "tab-bar.tsx",
+      "path": "web/components/oj-c/tab-bar"
+    },
+    "longname": "oj-c.TabBar#event:ojSelectionAction",
+    "scope": "instance",
+    "description": "Triggered when user performs a selection action gesture on a tab. The action gestures include:\n<ul>\n  <li>User clicks anywhere in a tab</li>\n  <li>User taps anywhere in a tab</li>\n  <li>User pressed spacebar or enter key on a tab</li>\n</ul>",
+    "properties": [
+      {
+        "name": "previousValue",
+        "optional": false,
+        "type": {
+          "names": [
+            "string|number"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "K",
+            "jsdocOverride": true,
+            "for": "previousValue"
+          }
+        ]
+      },
+      {
+        "name": "value",
+        "optional": false,
+        "type": {
+          "names": [
+            "string|number"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "K",
+            "jsdocOverride": true,
+            "for": "value"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "oj-c.TabBar.touchDoc",
+    "name": "touchDoc",
+    "kind": "member",
+    "longname": "oj-c.TabBar.touchDoc",
+    "description": "<table class=\"keyboard-table\">\n  <thead>\n    <tr>\n      <th>Target</th>\n      <th>Gesture</th>\n      <th>Action</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <td>Tab</td>\n      <td><kbd>Tap</kbd></td>\n      <td>Selects the tab.</td>\n    </tr>\n    <tr>\n      <td>Remove button</td>\n      <td><kbd>Tap</kbd></td>\n      <td>Removes the tab.</td>\n    </tr>\n    <tr>\n      <td>Arrow button</td>\n      <td><kbd>Tap</kbd></td>\n      <td>When tabs are displayed inside a conveyor belt, tapping the arrow button will scroll the conveyor belt.</td>\n    </tr>\n  </tbody>\n</table>",
+    "memberof": "oj-c.TabBar",
+    "meta": {
+      "filename": "tab-bar.tsx",
+      "path": "web/components/oj-c/tab-bar"
+    },
+    "ojfragment": true
+  },
+  {
+    "id": "oj-c.TabBar.keyboardDoc",
+    "name": "keyboardDoc",
+    "kind": "member",
+    "longname": "oj-c.TabBar.keyboardDoc",
+    "description": "<table class=\"keyboard-table\">\n  <thead>\n    <tr>\n      <th>Target</th>\n      <th>Key</th>\n      <th>Action</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <td>Tab</td>\n      <td><kbd>Enter or Space</kbd></td>\n      <td>Select the current tab.</td>\n    </tr>\n    <tr>\n      <td>Tab</td>\n      <td><kbd>LeftArrow or RightArrow</kbd></td>\n      <td>Navigate to the previous or next tab.</td>\n    </tr>\n    <tr>\n      <td>Tab</td>\n      <td><kbd>Delete</kbd></td>\n      <td>Remove the current tab.</td>\n    </tr>\n    <tr>\n      <td>Tab</td>\n      <td><kbd>Esc</kbd></td>\n      <td>Hide the tooltip if tooltip is shown.</td>\n    </tr>\n    <tr>\n      <td>Dropdown</td>\n      <td><kbd>UpArrow or DownArrow</kbd></td>\n      <td>Navigate the tab represented as item in the list in the direction of the arrow.</td>\n    </tr>\n    <tr>\n      <td>Dropdown</td>\n      <td><kbd>Enter or Space</kbd></td>\n      <td>Select the highlighted choice from the dropdown and close the dropdown.</td>\n    </tr>\n    <tr>\n      <td>Dropdown</td>\n      <td><kbd>Esc</kbd></td>\n      <td>Close the dropdown.</td>\n    </tr>\n    <tr>\n      <td>Reorder</td>\n      <td><kbd>Command/Ctrl + Shift + LeftArrow (RightArrow in RTL)</kbd></td>\n      <td>Moves the tab before the previous tab.</td>\n    </tr>\n    <tr>\n      <td>Reorder</td>\n      <td><kbd>Command/Ctrl + Shift + RightArrow (LeftArrow in RTL)</kbd></td>\n      <td>Moves the tab after the next tab.</td>\n    </tr>\n  </tbody>\n</table>",
+    "memberof": "oj-c.TabBar",
+    "meta": {
+      "filename": "tab-bar.tsx",
+      "path": "web/components/oj-c/tab-bar"
+    },
+    "ojfragment": true
+  },
+  {
+    "id": "oj-c.TabBar.TabData",
+    "name": "TabData",
+    "kind": "typedef",
+    "memberof": "oj-c.TabBar",
+    "meta": {
+      "filename": "tab-bar.tsx",
+      "path": "web/components/oj-c/tab-bar"
+    },
+    "longname": "oj-c.TabBar.TabData",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "scope": "static",
+    "description": "The data item object that represents a tab.",
+    "tsgenerictype": {
+      "target": "Type",
+      "value": "<K extends string | number>",
+      "for": "genericTypeParameters"
+    },
+    "properties": [
+      {
+        "name": "itemKey",
+        "description": "Key of the TabBarItem",
+        "optional": false,
+        "type": {
+          "names": [
+            "string|number"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "K",
+            "jsdocOverride": true,
+            "for": "itemKey"
+          }
+        ]
+      },
+      {
+        "name": "label",
+        "description": "Label of the TabBarItem. For icon only display this label is the content\nfor aria-label and tooltip text of the Tab.",
+        "optional": false,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "icon",
+        "description": "The icon before the label in non-stack case, icon above the label in\nstacked case or the stand alone icon when no label is specified.",
+        "optional": true,
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "{ type?: 'class'; class: string; }|{ type: 'img'; src: string; }",
+            "jsdocOverride": true,
+            "for": "icon"
+          }
+        ]
+      },
+      {
+        "name": "badge",
+        "description": "The content to be rendered inside the Badge component.",
+        "optional": true,
+        "type": {
+          "names": [
+            "number"
+          ]
+        }
+      },
+      {
+        "name": "metadata",
+        "description": "The content to be rendered inside the Text component as a metadata,\nthat appears after the label in non stack case only.",
+        "optional": true,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "severity",
+        "description": "The status icon to be rendered after the label in non stack case only.",
+        "optional": true,
+        "type": {
+          "names": [
+            "\"none\"",
+            "\"error\"",
+            "\"confirmation\"",
+            "\"info\"",
+            "\"warning\""
+          ]
+        }
+      },
+      {
+        "name": "tabPanelId",
+        "description": "Accepts the tabpanel element's ID associated with the tab item",
+        "optional": true,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "isRemovable",
+        "description": "Renders a remove icon allowing the tabs to be removed.",
+        "optional": true,
+        "type": {
+          "names": [
+            "boolean"
+          ]
+        }
+      }
+    ],
+    "ojexports": true
+  },
+  {
+    "id": "oj-c.TabBar.TabLinkItemData",
+    "name": "TabLinkItemData",
+    "kind": "typedef",
+    "memberof": "oj-c.TabBar",
+    "meta": {
+      "filename": "tab-bar.tsx",
+      "path": "web/components/oj-c/tab-bar"
+    },
+    "longname": "oj-c.TabBar.TabLinkItemData",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "scope": "static",
+    "description": "The data item object that represents a tab with link.",
+    "tsgenerictype": {
+      "target": "Type",
+      "value": "<K extends string | number>",
+      "for": "genericTypeParameters"
+    },
+    "properties": [
+      {
+        "name": "itemKey",
+        "description": "Key of the TabBarItem",
+        "optional": false,
+        "type": {
+          "names": [
+            "string|number"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "K",
+            "jsdocOverride": true,
+            "for": "itemKey"
+          }
+        ]
+      },
+      {
+        "name": "label",
+        "description": "Label of the TabBarItem. For icon only display this label is the content\nfor aria-label and tooltip text of the Tab.",
+        "optional": false,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "icon",
+        "description": "The icon before the label in non-stack case, icon above the label in\nstacked case or the stand alone icon when no label is specified.",
+        "optional": true,
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "{ type?: 'class'; class: string; }|{ type: 'img'; src: string; }",
+            "jsdocOverride": true,
+            "for": "icon"
+          }
+        ]
+      },
+      {
+        "name": "badge",
+        "description": "The content to be rendered inside the Badge component.",
+        "optional": true,
+        "type": {
+          "names": [
+            "number"
+          ]
+        }
+      },
+      {
+        "name": "metadata",
+        "description": "The content to be rendered inside the Text component as a metadata,\nthat appears after the label in non stack case only.",
+        "optional": true,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "severity",
+        "description": "The status icon to be rendered after the label in non stack case only.",
+        "optional": true,
+        "type": {
+          "names": [
+            "\"none\"",
+            "\"error\"",
+            "\"confirmation\"",
+            "\"info\"",
+            "\"warning\""
+          ]
+        }
+      },
+      {
+        "name": "tabPanelId",
+        "description": "Accepts the tabpanel element's ID associated with the tab item",
+        "optional": true,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "href",
+        "description": "Sets the URL that the hyperlink points to. If there is no valid URL use \"#\" for href value to navigate to the top of the page.",
+        "optional": false,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      }
+    ],
+    "ojexports": true
+  },
+  {
+    "id": "oj-c.TabBar.CTabBarItemContextMenuContext",
+    "name": "CTabBarItemContextMenuContext",
+    "kind": "typedef",
+    "memberof": "oj-c.TabBar",
+    "meta": {
+      "filename": "tab-bar.tsx",
+      "path": "web/components/oj-c/tab-bar"
+    },
+    "longname": "oj-c.TabBar.CTabBarItemContextMenuContext",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "scope": "static",
+    "description": "",
+    "tsgenerictype": {
+      "target": "Type",
+      "value": "<K>",
+      "for": "genericTypeParameters"
+    },
+    "properties": [
+      {
+        "name": "itemKey",
+        "optional": false,
+        "type": {
+          "names": [
+            "any"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "K",
+            "jsdocOverride": true,
+            "for": "itemKey"
+          }
+        ]
+      },
+      {
+        "name": "hasDefaultMenuItems",
+        "optional": false,
+        "type": {
+          "names": [
+            "boolean"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.TabBar.MenuItem",
+    "name": "MenuItem",
+    "kind": "typedef",
+    "memberof": "oj-c.TabBar",
+    "meta": {
+      "filename": "tab-bar.tsx",
+      "path": "web/components/oj-c/tab-bar"
+    },
+    "longname": "oj-c.TabBar.MenuItem",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "scope": "static",
+    "description": "Specifies a standard menu item.",
+    "properties": [
+      {
+        "name": "type",
+        "description": "Specifies a standard menu item.",
+        "optional": true,
+        "type": {
+          "names": [
+            "\"item\""
+          ]
+        }
+      },
+      {
+        "name": "label",
+        "description": "The menu item label.",
+        "optional": false,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "key",
+        "description": "A unique key associated with the menu item.",
+        "optional": false,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "disabled",
+        "description": "Specifies if the menu item is disabled (enabled by default).",
+        "optional": true,
+        "type": {
+          "names": [
+            "boolean"
+          ]
+        }
+      },
+      {
+        "name": "onAction",
+        "description": "Optional callback function associated with the menu item.",
+        "optional": true,
+        "type": {
+          "names": [
+            "function"
+          ]
+        }
+      },
+      {
+        "name": "startIcon",
+        "description": "Optional icon to render at the start of the menu item.",
+        "optional": true,
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "{ type?: 'class'; class: string; }|{ type: 'img'; src: string; }",
+            "jsdocOverride": true,
+            "for": "startIcon"
+          }
+        ]
+      },
+      {
+        "name": "endIcon",
+        "description": "Optional icon to render at the end of the menu item.",
+        "optional": true,
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "{ type?: 'class'; class: string; }|{ type: 'img'; src: string; }",
+            "jsdocOverride": true,
+            "for": "endIcon"
+          }
+        ]
+      },
+      {
+        "name": "variant",
+        "description": "Specifies the menu item behavior.",
+        "optional": true,
+        "type": {
+          "names": [
+            "\"standard\"",
+            "\"destructive\""
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.TabBar.ContextMenuSeparator",
+    "name": "ContextMenuSeparator",
+    "kind": "typedef",
+    "memberof": "oj-c.TabBar",
+    "meta": {
+      "filename": "tab-bar.tsx",
+      "path": "web/components/oj-c/tab-bar"
+    },
+    "longname": "oj-c.TabBar.ContextMenuSeparator",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "scope": "static",
+    "description": "",
+    "properties": [
+      {
+        "name": "type",
+        "optional": false,
+        "type": {
+          "names": [
+            "\"separator\""
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.TabBar.MenuSelectItem",
+    "name": "MenuSelectItem",
+    "kind": "typedef",
+    "memberof": "oj-c.TabBar",
+    "meta": {
+      "filename": "tab-bar.tsx",
+      "path": "web/components/oj-c/tab-bar"
+    },
+    "longname": "oj-c.TabBar.MenuSelectItem",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "scope": "static",
+    "description": "Specifies a selectable item in a menu item.",
+    "properties": [
+      {
+        "name": "label",
+        "description": "The selectable item label.",
+        "optional": false,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "disabled",
+        "description": "Specifies if the selectable item is disabled (enabled by default).",
+        "optional": true,
+        "type": {
+          "names": [
+            "boolean"
+          ]
+        }
+      },
+      {
+        "name": "endIcon",
+        "description": "Optional icon to render at the end of the selectable item.",
+        "optional": true,
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "{ type?: 'class'; class: string; }|{ type: 'img'; src: string; }",
+            "jsdocOverride": true,
+            "for": "endIcon"
+          }
+        ]
+      },
+      {
+        "name": "value",
+        "description": "The value associated with the selectable item.",
+        "optional": false,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.TabBar.MenuSelection",
+    "name": "MenuSelection",
+    "kind": "typedef",
+    "memberof": "oj-c.TabBar",
+    "meta": {
+      "filename": "tab-bar.tsx",
+      "path": "web/components/oj-c/tab-bar"
+    },
+    "longname": "oj-c.TabBar.MenuSelection",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "scope": "static",
+    "description": "",
+    "properties": [
+      {
+        "name": "at",
+        "description": "Takes an integer value and returns the item at that index,\nallowing for positive and negative integers.\nNegative integers count back from the last item in the array.",
+        "optional": false,
+        "type": {
+          "names": [
+            "function"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "(index: number) => string | undefined",
+            "jsdocOverride": true,
+            "for": "at"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "oj-c.TabBar.SelectMenuItemDetail",
+    "name": "SelectMenuItemDetail",
+    "kind": "typedef",
+    "memberof": "oj-c.TabBar",
+    "meta": {
+      "filename": "tab-bar.tsx",
+      "path": "web/components/oj-c/tab-bar"
+    },
+    "longname": "oj-c.TabBar.SelectMenuItemDetail",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "scope": "static",
+    "description": "",
+    "tsgenerictype": {
+      "target": "Type",
+      "value": "<T extends oj-c.TabBar.MenuSelection>",
+      "for": "genericTypeParameters"
+    },
+    "properties": [
+      {
+        "name": "value",
+        "optional": false,
+        "type": {
+          "names": [
+            "any"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "T",
+            "jsdocOverride": true,
+            "for": "value"
+          }
+        ]
+      },
+      {
+        "name": "menuSelectionGroupKey",
+        "optional": false,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.TabBar.ContextMenuSelectSingle",
+    "name": "ContextMenuSelectSingle",
+    "kind": "typedef",
+    "memberof": "oj-c.TabBar",
+    "meta": {
+      "filename": "tab-bar.tsx",
+      "path": "web/components/oj-c/tab-bar"
+    },
+    "longname": "oj-c.TabBar.ContextMenuSelectSingle",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "scope": "static",
+    "description": "",
+    "properties": [
+      {
+        "name": "type",
+        "description": "Specifies a select single menu item.",
+        "optional": false,
+        "type": {
+          "names": [
+            "\"selectsingle\""
+          ]
+        }
+      },
+      {
+        "name": "key",
+        "description": "A unique key associated with the select single.",
+        "optional": false,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "items",
+        "description": "Specifies the array of select items that make up the select single.",
+        "optional": true,
+        "type": {
+          "names": [
+            "Array<object>"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "Array<oj-c.TabBar.MenuSelectItem>",
+            "jsdocOverride": true,
+            "for": "items"
+          }
+        ]
+      },
+      {
+        "name": "selection",
+        "optional": true,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "onSelection",
+        "optional": true,
+        "type": {
+          "names": [
+            "function"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "(detail: oj-c.TabBar.SelectMenuItemDetail<string>) => void",
+            "jsdocOverride": true,
+            "for": "onSelection"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "oj-c.TabBar.ContextMenuSelectMultiple",
+    "name": "ContextMenuSelectMultiple",
+    "kind": "typedef",
+    "memberof": "oj-c.TabBar",
+    "meta": {
+      "filename": "tab-bar.tsx",
+      "path": "web/components/oj-c/tab-bar"
+    },
+    "longname": "oj-c.TabBar.ContextMenuSelectMultiple",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "scope": "static",
+    "description": "",
+    "properties": [
+      {
+        "name": "type",
+        "description": "Specifies a select multiple menu item.",
+        "optional": false,
+        "type": {
+          "names": [
+            "\"selectmultiple\""
+          ]
+        }
+      },
+      {
+        "name": "key",
+        "description": "A unique key associated with the select multiple.",
+        "optional": false,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "items",
+        "description": "Specifies the array of select items that make up the select multiple.",
+        "optional": true,
+        "type": {
+          "names": [
+            "Array<object>"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "Array<oj-c.TabBar.MenuSelectItem>",
+            "jsdocOverride": true,
+            "for": "items"
+          }
+        ]
+      },
+      {
+        "name": "selection",
+        "optional": true,
+        "type": {
+          "names": [
+            "Array<string>"
+          ]
+        }
+      },
+      {
+        "name": "onSelection",
+        "optional": true,
+        "type": {
+          "names": [
+            "function"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "(detail: oj-c.TabBar.SelectMenuItemDetail<string[]>) => void",
+            "jsdocOverride": true,
+            "for": "onSelection"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "oj-c.TabBar.ContextMenuSubMenu",
+    "name": "ContextMenuSubMenu",
+    "kind": "typedef",
+    "memberof": "oj-c.TabBar",
+    "meta": {
+      "filename": "tab-bar.tsx",
+      "path": "web/components/oj-c/tab-bar"
+    },
+    "longname": "oj-c.TabBar.ContextMenuSubMenu",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "scope": "static",
+    "description": "",
+    "properties": [
+      {
+        "name": "type",
+        "description": "Specifies a submenu menu item.",
+        "optional": false,
+        "type": {
+          "names": [
+            "\"submenu\""
+          ]
+        }
+      },
+      {
+        "name": "key",
+        "description": "A unique key associated with the submenu menu item.",
+        "optional": true,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "label",
+        "description": "The submenu label.",
+        "optional": true,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "disabled",
+        "description": "Specifies if the submenu is disabled (enabled by default).",
+        "optional": true,
+        "type": {
+          "names": [
+            "boolean"
+          ]
+        }
+      },
+      {
+        "name": "startIcon",
+        "description": "Optional icon to render at the start of the submenu.",
+        "optional": true,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "items",
+        "optional": true,
+        "type": {
+          "names": [
+            "Array<string|object>"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "Array<string|oj-c.TabBar.MenuItem|oj-c.TabBar.ContextMenuSeparator|oj-c.TabBar.ContextMenuSubMenu|oj-c.TabBar.ContextMenuSelectSingle|oj-c.TabBar.ContextMenuSelectMultiple>",
+            "jsdocOverride": true,
+            "for": "items"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "oj-c.TabBar.CTabBarContextMenuConfig",
+    "name": "CTabBarContextMenuConfig",
+    "kind": "typedef",
+    "memberof": "oj-c.TabBar",
+    "meta": {
+      "filename": "tab-bar.tsx",
+      "path": "web/components/oj-c/tab-bar"
+    },
+    "longname": "oj-c.TabBar.CTabBarContextMenuConfig",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "scope": "static",
+    "description": "",
+    "tsgenerictype": {
+      "target": "Type",
+      "value": "<K>",
+      "for": "genericTypeParameters"
+    },
+    "properties": [
+      {
+        "name": "items",
+        "optional": false,
+        "type": {
+          "names": [
+            "function"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "(context: oj-c.TabBar.CTabBarItemContextMenuContext<K>) => (\"remove\" | ContextMenuItems | \"defaultMenuItems\" | \"reorder\")[]",
+            "jsdocOverride": true,
+            "for": "items"
+          }
+        ]
+      },
+      {
+        "name": "accessibleLabel",
+        "optional": true,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      }
+    ]
+  }
+]

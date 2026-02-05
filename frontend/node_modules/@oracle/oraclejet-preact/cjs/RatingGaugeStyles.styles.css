@@ -1,0 +1,48 @@
+.RatingGaugeStyles_baseStyle__5rd6cv0 {
+  display: inline-flex;
+  -webkit-tap-highlight-color: transparent;
+}
+.RatingGaugeStyles_baseStyle__5rd6cv0:focus-visible {
+  outline-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-border-keyboard-focus);
+  outline-style: dotted;
+  outline-width: 1px;
+}
+.RatingGaugeStyles_interactiveStyle__5rd6cv1 {
+  cursor: pointer;
+  touch-action: none;
+}
+.RatingGaugeStyles_sizeStyle__5rd6cv2 {
+  height: var(--size__1kgzocsc);
+  width: var(--size__1kgzocsc);
+  margin: var(--margin__1kgzocsd);
+}
+.RatingGaugeStyles_itemStyle__5rd6cv3 {
+  position: relative;
+}
+.RatingGaugeStyles_fractionalStarBaseStyle__5rd6cv4 {
+  top: 0px;
+  left: 0px;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+.RatingGaugeStyles_ratingStarBaseStyle__5rd6cv5 {
+  position: absolute;
+  left: 0px;
+}
+.RatingGaugeStyles_innerRatingStarColor__5rd6cv6 {
+  fill: var(--colorSelected__1kgzocs0);
+}
+.RatingGaugeStyles_outerRatingStarColor__5rd6cv7 {
+  fill: var(--borderColorSelected__1kgzocs1);
+}
+.RatingGaugeStyles_outerDisabledHighContrastBaseStyle__5rd6cv8 {
+  stroke: currentColor;
+  stroke-width: 1px;
+}
+.RatingGaugeStyles_outerDisabledHighContrastSelectedStyle__5rd6cv9 {
+  stroke-dasharray: 3 1;
+}
+.RatingGaugeStyles_outerDisabledHighContrastUnselectedStyle__5rd6cva {
+  stroke-dasharray: 1 3;
+}

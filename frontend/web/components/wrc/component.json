@@ -1,0 +1,31 @@
+{
+  "name": "wrc",
+  "version": "1.0.0",
+  "jetVersion": "^17.0.4",
+  "type": "mono-pack",
+  "displayName": "A user friendly, translatable name of the pack.",
+  "description": "A translatable high-level description for the pack.",
+  "dependencies": {},
+  "contents": [
+    {
+      "name": "resource"
+    },
+    {
+      "name": "assets",
+      "type": "resource"
+    },
+    {
+      "name": "shared",
+      "type": "util"
+    },
+    {
+      "name": "error-boundary"
+    },
+    {
+      "name": "nav-tree"
+    },
+    {
+      "name": "project-menu"
+    }
+  ]
+}

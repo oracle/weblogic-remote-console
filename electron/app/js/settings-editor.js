@@ -25,7 +25,7 @@ const SettingsEditor = (() => {
   const scratchPath = `${app.getPath('userData')}/scratch-settings.json`;
 
   const dontNeedStoreFile = (preferences) => {
-    if (!preferences.networking.trustStoreType)
+    if (!preferences?.networking?.trustStoreType)
       return true;
     if (preferences.networking.trustStoreType === '')
       return true;
@@ -44,7 +44,7 @@ const SettingsEditor = (() => {
   }
 
   const dontNeedKeystoreFile = (preferences) => {
-    return ((!preferences.networking.keyStoreType) || (preferences.networking.keyStoreType === '')) ? true : false;
+    return ((!preferences?.networking?.keyStoreType) || (preferences.networking.keyStoreType === '')) ? true : false;
   };
 
   function keyStoreTypeRequiresStore() {
@@ -162,7 +162,7 @@ const SettingsEditor = (() => {
     for (var pair of otherList) {
       data[pair.substring(0, pair.indexOf('='))]= pair.substring(pair.indexOf('=') + 1);
     }
-    const loggingList = preferences.preferences?.logging.logginglist;
+    const loggingList = preferences.preferences?.logging?.logginglist;
     if (loggingList) {
       for (var entry of loggingList) {
         if (data['weblogic.remote-console-logging'])
@@ -174,18 +174,18 @@ const SettingsEditor = (() => {
     }
     const javaOptionsList = preferences.preferences?.java?.javaStartOptions;
     if (javaOptionsList) {
-      for (var entry of javaOptionsList) {
+      for (var entry2 of javaOptionsList) {
         if (data['weblogic.remoteconsole.java.startoptions'])
           data['weblogic.remoteconsole.java.startoptions'] += ';';
         else
           data['weblogic.remoteconsole.java.startoptions'] = '';
-        data['weblogic.remoteconsole.java.startoptions'] += entry;
+        data['weblogic.remoteconsole.java.startoptions'] += entry2;
       }
     }
     fs.writeFileSync(path, JSON.stringify(data, null, 4));
     decryptData(data);
     if (configSender)
-      configSender(data);
+      configSender({...data, ...require('./user-prefs-json').getSettings()});
   }
 
   function valid(showMessage) {
@@ -193,8 +193,8 @@ const SettingsEditor = (() => {
     if (loggingList) {
       for (var entry of loggingList) {
         const level = entry.substring(entry.indexOf('=') + 1);
-        const levels = [ "SEVERE", "WARNING", "INFO",
-          "CONFIG", "FINE", "FINER", "FINEST", "ALL", "OFF" ];
+        const levels = [ 'SEVERE', 'WARNING', 'INFO',
+          'CONFIG', 'FINE', 'FINER', 'FINEST', 'ALL', 'OFF' ];
         if (!levels.includes(level)) {
           if (showMessage) {
             dialog.showMessageBoxSync(preferences.prefsWindow, {
@@ -264,7 +264,7 @@ const SettingsEditor = (() => {
         try {
           const data = JSON.parse(fs.readFileSync(path).toString());
           decryptData(data);
-          configSender(data);
+          configSender({...data, ...require('./user-prefs-json').getSettings()});
         }
         catch (err) {
           console.error(err);
@@ -505,6 +505,10 @@ const SettingsEditor = (() => {
       });
       load();
       preferences.show();
+    },
+    freshWrite() {
+      load();
+      save();
     }
   };
 })();

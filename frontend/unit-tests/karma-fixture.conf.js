@@ -1,1 +1,0 @@
-fixture.setBase("unit-tests/fixtures");

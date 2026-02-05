@@ -1,0 +1,72 @@
+.NavigationListItemStyles_baseStyle__13sgy010 {
+  min-height: var(--minHeight__1497t563);
+  cursor: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-cursor-clickable);
+  box-sizing: border-box;
+  outline-style: none;
+  display: flex;
+  gap: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem);
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+  color: var(--labelColor__1497t567);
+  -webkit-text-decoration-line: none;
+          text-decoration-line: none;
+  padding-inline-start: calc(var(--paddingHorizontal__1497t566));
+  padding-inline-end: var(--paddingHorizontal__1497t566);
+}
+.NavigationListItemStyles_iconLabelContainer__13sgy011 {
+  display: flex;
+  align-items: center;
+  overflow-x: hidden;
+  overflow-y: hidden;
+}
+.NavigationListItemStyles_iconContainer__13sgy012 {
+  font-size: var(--iconSize__1497t562);
+}
+.NavigationListItemStyles_navigationItemMetadata__13sgy013 {
+  color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-secondary);
+  display: inline-flex;
+}
+.NavigationListItemStyles_navigationlistRemoveIcon__13sgy014 {
+  align-self: center;
+  display: inline-flex;
+}
+.NavigationListItemStyles_selectedStyle__13sgy015 {
+  background-color: var(--backgroundColorSelected__1497t56c);
+  color: var(--labelColorSelected__1497t56b);
+  position: relative;
+}
+.NavigationListItemStyles_selectedStyle__13sgy015::before {
+  content: '';
+  position: absolute;
+  top: calc(50% - var(--borderHeight__1497t565)/2);
+  height: var(--borderHeight__1497t565);
+  width: var(--borderWidth__1497t564);
+  background-color: var(--borderColorSelected__1497t56d);
+  inset-inline-start: 0;
+  clip-path: polygon(0 0, 100% var(--borderWidth__1497t564), 100% calc(var(--borderHeight__1497t565) - var(--borderWidth__1497t564)), 0 100%);
+}
+.NavigationListItemStyles_selectedStyleRtl__13sgy016::before {
+  clip-path: polygon(100% 0, 0 var(--borderWidth__1497t564), 0 calc(var(--borderHeight__1497t565) - var(--borderWidth__1497t564)), 100% 100%);
+}
+.NavigationListItemStyles_labelContainerClasses__13sgy017 {
+  padding: calc(0.75 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem)) 0;
+  font-size: var(--fontSize__1497t560);
+  font-weight: var(--fontWeight__1497t561);
+  line-height: normal;
+}
+.NavigationListItemStyles_navigationListItemLink__13sgy018 {
+  color: inherit;
+  -webkit-text-decoration-line: none;
+          text-decoration-line: none;
+  display: flex;
+  width: 100%;
+}
+.NavigationListItemStyles_navigationListItemLink__13sgy018:hover {
+  -webkit-text-decoration-line: none;
+          text-decoration-line: none;
+  color: var(--labelColorSelected__1497t56b);
+}
+.NavigationListItemStyles_navigationListItemLink__13sgy018:active {
+  color: var(--labelColorSelected__1497t56b);
+}

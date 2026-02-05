@@ -1,0 +1,12 @@
+oj-c-popup:not(.oj-complete){
+  visibility: hidden;
+}
+
+oj-c-popup {
+  display: none;
+}
+
+oj-c-popup[hidden]
+{
+  display: none;
+}

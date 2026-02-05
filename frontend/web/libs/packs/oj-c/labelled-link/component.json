@@ -1,0 +1,306 @@
+{
+  "name": "labelled-link",
+  "version": "19.0.1",
+  "jetVersion": "^19.0.1",
+  "pack": "oj-c",
+  "type": "composite",
+  "dependencyScope": "runtime",
+  "license": "https://opensource.org/licenses/UPL",
+  "implements": [
+    "CLabelledLinkElement"
+  ],
+  "displayName": "LabelledLink",
+  "description": "The Labelled Link component displays a readonly field that has a link for its content.",
+  "help": "oj-c.LabelledLink.html",
+  "main": "oj-c/labelled-link",
+  "status": [
+    {
+      "type": "production",
+      "since": "17.0.0"
+    }
+  ],
+  "extension": {
+    "catalog": {
+      "category": "Forms"
+    },
+    "vbdt": {
+      "module": "oj-c/labelled-link",
+      "defaultColumns": 6,
+      "minColumns": 2,
+      "componentPalette": {
+        "visibility": "never"
+      }
+    },
+    "oracle": {
+      "icon": "oj-ux-ico-link",
+      "uxSpecs": [
+        "input-text"
+      ]
+    },
+    "webelement": {
+      "package": "@oracle/oraclejet-core-pack",
+      "version": "19.0.1",
+      "docUrl": "https://www.oracle.com/webfolder/technetwork/jet/cpwdtsdoc/classes/LabelledLinkWebElement.html",
+      "export": "findLabelledLink",
+      "main": "@oracle/oraclejet-core-pack/webdriver"
+    }
+  },
+  "propertyLayout": [
+    {
+      "propertyGroup": "common",
+      "items": [
+        "labelHint",
+        "textAlign"
+      ]
+    },
+    {
+      "propertyGroup": "data",
+      "items": [
+        "href",
+        "target",
+        "text"
+      ]
+    }
+  ],
+  "since": "16.0.0",
+  "properties": {
+    "columnSpan": {
+      "type": "number",
+      "description": "Specifies how many columns this component should span.",
+      "displayName": "Column Span",
+      "help": "#columnSpan"
+    },
+    "containerReadonly": {
+      "type": "boolean",
+      "description": "Specifies whether an ancestor container, like oj-c-form-layout, is readonly.",
+      "displayName": "Container Readonly",
+      "help": "#containerReadonly",
+      "binding": {
+        "consume": {
+          "name": "containerReadonly"
+        }
+      }
+    },
+    "href": {
+      "type": "string",
+      "description": "Sets the URL that the link points to.",
+      "displayName": "Href",
+      "help": "#href"
+    },
+    "labelEdge": {
+      "type": "string",
+      "description": "Specifies how the label is positioned for the component",
+      "displayName": "Label Edge",
+      "help": "#labelEdge",
+      "propertyEditorValues": {
+        "inside": {
+          "description": "The label will be placed inside the component and above the link (default, if unspecified).",
+          "displayName": "Inside"
+        },
+        "none": {
+          "description": "The component will not create a label, but instead set the aria-labelledby property on the anchor element.",
+          "displayName": "None"
+        },
+        "start": {
+          "description": "The label will be placed before the start of the component.",
+          "displayName": "Start"
+        },
+        "top": {
+          "description": "The label will be placed on top of the component.",
+          "displayName": "Top"
+        }
+      },
+      "enumValues": [
+        "none",
+        "start",
+        "top",
+        "inside"
+      ],
+      "binding": {
+        "consume": {
+          "name": "containerLabelEdge"
+        }
+      }
+    },
+    "labelHint": {
+      "type": "string",
+      "description": "Represents a hint for rendering a label on the component.",
+      "displayName": "Label Hint",
+      "help": "#labelHint",
+      "required": true,
+      "translatable": true
+    },
+    "labelStartWidth": {
+      "type": "number|string",
+      "description": "The width of the label when labelEdge is 'start'.",
+      "displayName": "Label Start Width",
+      "help": "#labelStartWidth",
+      "binding": {
+        "consume": {
+          "name": "labelWidth"
+        }
+      }
+    },
+    "labelWrapping": {
+      "type": "string",
+      "status": [
+        {
+          "type": "deprecated",
+          "since": "18.0.0",
+          "description": "Label truncation for 'start' and 'top' aligned labels is no longer recommended by the Redwood Design System. The default for labelWrapping was 'wrap' and that is now the only suggested pattern by UX design for 'start' and 'top' aligned labels. 'inside' aligned labels are always truncated per UX design and are not affected by this property's value."
+        }
+      ],
+      "description": "Should the labels wrap or truncate when there is not enough available space.",
+      "displayName": "Label Wrapping",
+      "help": "#labelWrapping",
+      "propertyEditorValues": {
+        "truncate": {
+          "description": "Label will truncate if needed.",
+          "displayName": "Truncate"
+        },
+        "wrap": {
+          "description": "Label will wrap if needed.",
+          "displayName": "Wrap"
+        }
+      },
+      "enumValues": [
+        "truncate",
+        "wrap"
+      ],
+      "binding": {
+        "consume": {
+          "name": "labelWrapping"
+        }
+      }
+    },
+    "target": {
+      "type": "string",
+      "description": "Sets the target attribute of the link.",
+      "displayName": "Target",
+      "help": "#target"
+    },
+    "text": {
+      "type": "string",
+      "description": "Specifies the text that should appear in the field.",
+      "displayName": "Text",
+      "help": "#text"
+    },
+    "textAlign": {
+      "type": "string",
+      "description": "Specifies how the text is aligned within the text field",
+      "displayName": "Text Align",
+      "help": "#textAlign",
+      "propertyEditorValues": {
+        "start": {
+          "description": "Aligns text left when reading direction is ltr and right when reading direction is rtl (default, if unspecified).",
+          "displayName": "Start"
+        },
+        "end": {
+          "description": "Aligns text right when reading direction is ltr and left when reading direction is rtl.",
+          "displayName": "End"
+        },
+        "right": {
+          "description": "Aligns text right regardless of reading direction, often used for numbers.",
+          "displayName": "Right"
+        }
+      },
+      "enumValues": [
+        "end",
+        "start",
+        "right"
+      ]
+    },
+    "unsafe_labelledBy": {
+      "type": "string"
+    },
+    "userAssistanceDensity": {
+      "type": "string",
+      "description": "Specifies the density of the form component's user assistance presentation.",
+      "displayName": "User Assistance Density",
+      "help": "#userAssistanceDensity",
+      "propertyEditorValues": {
+        "reflow": {
+          "description": "The field will not reserve any space.",
+          "displayName": "Reflow"
+        },
+        "efficient": {
+          "description": "The field will reserve space to prevent reflow.",
+          "displayName": "Efficient"
+        },
+        "compact": {
+          "description": "The field will not reserve any space.",
+          "displayName": "Compact"
+        }
+      },
+      "enumValues": [
+        "compact",
+        "reflow",
+        "efficient"
+      ],
+      "binding": {
+        "consume": {
+          "name": "containerUserAssistanceDensity"
+        }
+      }
+    }
+  },
+  "events": {
+    "ojAction": {
+      "description": "Triggered when the link is clicked, whether by keyboard, mouse, or touch events. This event is triggered only when the href is not provided. If the href is provided, clicking the link will not trigger this event.",
+      "eventGroup": "common",
+      "displayName": "onOjAction",
+      "help": "#event:action"
+    }
+  },
+  "methods": {
+    "blur": {
+      "description": "Blurs the link.",
+      "return": "void"
+    },
+    "focus": {
+      "description": "Focuses the link.",
+      "return": "void"
+    },
+    "setProperty": {
+      "description": "Sets a property or a single subproperty for complex properties and notifies the component of the change, triggering a corresponding event.",
+      "help": "#setProperty",
+      "params": [
+        {
+          "name": "property",
+          "description": "The property name to set. Supports dot notation for subproperty access.",
+          "type": "string"
+        },
+        {
+          "name": "value",
+          "description": "The new value to set the property to.",
+          "type": "any"
+        }
+      ],
+      "return": "void"
+    },
+    "getProperty": {
+      "description": "Retrieves the value of a property or a subproperty.",
+      "help": "#getProperty",
+      "params": [
+        {
+          "name": "property",
+          "description": "The property name to get. Supports dot notation for subproperty access.",
+          "type": "string"
+        }
+      ],
+      "return": "any"
+    },
+    "setProperties": {
+      "description": "Performs a batch set of properties.",
+      "help": "#setProperties",
+      "params": [
+        {
+          "name": "properties",
+          "description": "An object containing the property and value pairs to set.",
+          "type": "object"
+        }
+      ],
+      "return": "void"
+    }
+  }
+}

@@ -1,0 +1,12 @@
+.TableBaseTheme_baseTheme__10g2zer0 {
+  --gridlineWidth__efrfp90: 1px;
+}
+:root, .oj-density-dependent {
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-table-row-height: calc(calc(12 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem)) + calc(2 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-density-units, 0px)));
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-table-cell-padding-vertical: calc(calc(3 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem)) + var(--oj-c-EXPERIMENTAL-DO-NOT-USE-density-units, 0px));
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-table-cell-padding-horizontal: calc(calc(4 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem)));
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-table-header-row-height: calc(calc(13 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem)) + calc(2 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-density-units, 0px)));
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-table-header-cell-padding-vertical: calc(calc(1.5 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem)) + var(--oj-c-EXPERIMENTAL-DO-NOT-USE-density-units, 0px));
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-table-header-cell-padding-full-horizontal: calc(calc(4 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem)));
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-table-header-cell-padding-half-horizontal: calc(calc(2 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem)));
+}

@@ -1,0 +1,7 @@
+:root, .oj-density-dependent {
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-card-view-gutter-size-xs: calc(3 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-card-view-gutter-size-sm: calc(calc(4 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem)) + var(--oj-c-EXPERIMENTAL-DO-NOT-USE-density-units, 0px));
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-card-view-gutter-size-md: calc(calc(6 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem)) + calc(3 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-density-units, 0px)));
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-card-view-gutter-size-lg: calc(calc(12 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem)) + calc(9 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-density-units, 0px)));
+  --oj-c-EXPERIMENTAL-DO-NOT-USE-card-view-gutter-size-xl: calc(calc(16 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem)) + calc(13 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-density-units, 0px)));
+}

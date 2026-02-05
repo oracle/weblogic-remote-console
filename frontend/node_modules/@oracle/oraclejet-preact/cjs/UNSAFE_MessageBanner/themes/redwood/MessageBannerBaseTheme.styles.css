@@ -1,0 +1,9 @@
+.MessageBannerBaseTheme_baseTheme__1mzbhvy0 {
+  --backgroundColor__l2hi9d0: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-surface-info-low, var(--oj-core-info-secondary-3));
+  --startIconColor__l2hi9d1: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-info, var(--oj-core-info-3));
+  --startIconSize__l2hi9d2: calc(4 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  --summaryTextColor__l2hi9d3: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-info, var(--oj-core-info-3));
+  --summaryTextWeight__l2hi9d4: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-subheading-xs-font-weight, var(--oj-typography-subheading-xs-font-weight));
+  --summaryTextSize__l2hi9d5: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-subheading-xs-font-size, var(--oj-typography-subheading-xs-font-size));
+  --summaryLineHeight__l2hi9d6: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-subheading-xs-line-height);
+}

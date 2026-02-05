@@ -1,0 +1,9 @@
+/**
+ * @license
+ * Copyright (c) 2014, 2025, Oracle and/or its affiliates.
+ * Licensed under The Universal Permissive License (UPL), Version 1.0
+ * as shown at https://oss.oracle.com/licenses/upl/
+ * @ignore
+ */
+define(["ojs/ojtemplateengine-utils"],function(e){"use strict";return new class{constructor(){this._defaultProps=new Map}execute(t,r,o,n,a,c){const p=r.getAttribute("data-oj-as"),l=e.TemplateEngineUtils.getContext(null,t,r,o,n,p,c);if(r.render)return this._executeVDomTemplate(t,r,a,l,c);throw new Error(`The render property is expected on the template for component ${t.id}`)}clean(t,r){return e.PreactTemplate.findTemplateRoots(t,r).forEach(t=>{e.PreactTemplate.clean(t)}),null}resolveProperties(t,r,o,n,a,c,p,l){const s=r.render;if(s){const t=e.TemplateEngineUtils.getResolvedDefaultProps(this._defaultProps,o,n);return e.PreactTemplate.resolveVDomTemplateProps(r,s,o,n,a,t,p)}throw new Error(`The render property is expected on the template for component ${t.id}`)}defineTrackableProperty(e,t,r,o){throw new Error("This template engine does not support trackable property")}_executeVDomTemplate(t,r,o,n,a){const c=r.render(n.$current);e.PreactTemplate.extendTemplate(r,e.PreactTemplate._ROW_CACHE_FACTORY,o=>{r._cachedRows.forEach(r=>{let n=o(r.currentContext);e.PreactTemplate.renderNodes(t,n,r,a)})});const p=document.createElement("div");o&&(p._ojReportBusy=o);const l={currentContext:n.$current,template:r,parentStub:p,computedVNode:null,vnode:void 0,nodes:void 0};return e.PreactTemplate.renderNodes(t,c,l,a),r._cachedRows.push(l),l.nodes}}});
+//# sourceMappingURL=ojtemplateengine-preact.js.map

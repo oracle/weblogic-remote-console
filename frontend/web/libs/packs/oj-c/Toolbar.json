@@ -1,0 +1,2290 @@
+[
+  {
+    "id": "oj-c.Toolbar",
+    "name": "Toolbar",
+    "memberof": "oj-c",
+    "kind": "class",
+    "meta": {
+      "filename": "toolbar.tsx",
+      "path": "web/components/oj-c/toolbar"
+    },
+    "ojcomponent": true,
+    "isvcomponent": true,
+    "since": "18.0.0",
+    "longname": "oj-c.Toolbar",
+    "pack": "oj-c",
+    "classdesc": "<h3 id=\"toolbarOverview-section\">\n  JET Toolbar\n  <a class=\"bookmarkable-link\" title=\"Bookmarkable Link\" href=\"#toolbarOverview-section\"></a>\n</h3>\n<p>Description: A toolbar displays a strip of control elements such as buttons and menu buttons, often grouped by separators.</p>\n\n<pre class=\"prettyprint\"><code>&lt;oj-c-toolbar items=\"[[toolbarItems]]\">\n&lt;/oj-c-toolbar>\n</code></pre>\n\n<h3 id=\"touch-section\">\n  Touch End User Information\n  <a class=\"bookmarkable-link\" title=\"Bookmarkable Link\" href=\"#touch-section\"></a>\n</h3>\n\n<h3 id=\"keyboard-section\">\n  Keyboard End User Information\n  <a class=\"bookmarkable-link\" title=\"Bookmarkable Link\" href=\"#keyboard-section\"></a>\n</h3>\n\n<table class=\"keyboard-table\">\n  <thead>\n    <tr>\n      <th>Target</th>\n      <th>Gesture</th>\n      <th>Action</th>\n    </tr>\n  </thead>\n  <tbody>\n <tr>\n    <td>Navigate right</td>\n    <td>\n      <kbd>Right Arrow Key</kbd> or <kbd>Left Arrow Key(RTL)</kbd>\n    </td>\n    <td>Change focus to next item on the right</td>\n  </tr>\n  <tr>\n    <td>Navigate left</td>\n    <td>\n      <kbd>Left Arrow Key</kbd> or <kbd>Right Arrow Key(RTL)</kbd>\n    </td>\n    <td>Change focus to next item on the left</td>\n  </tr>\n </tbody>\n</table>\n\n<h3 id=\"a11y-section\">\n  Accessibility\n  <a class=\"bookmarkable-link\" title=\"Bookmarkable Link\" href=\"#a11y-section\"></a>\n</h3>\n\n<p>JET Toolbar takes care of focus management, as noted above.\n\n<p>The application is responsible for applying <code class=\"prettyprint\">aria-label</code> and/or\n<code class=\"prettyprint\">aria-controls</code> attributes to the toolbar element, if applicable per the instructions that follow:\n\n<p>If this toolbar is (or might be) placed in context with other toolbars, then the application should apply an\n<code class=\"prettyprint\">aria-label</code> to the toolbar element to distinguish it, e.g. an \"Edit\" toolbar.  The\n<code class=\"prettyprint\">aria-label</code> is optional when there is only one toolbar.\n\n<p>If the toolbar is controlling something else on the page, e.g. bold / italic / underline buttons controlling a rich\ntext editor, then the application should apply an <code class=\"prettyprint\">aria-controls</code> attribute to the toolbar element,\ne.g. <code class=\"prettyprint\">aria-controls=\"myTextEditor\"</code>.\n\n<p>\nDisabled content: JET supports an accessible luminosity contrast ratio,\nas specified in <a href=\"http://www.w3.org/TR/WCAG20/#visual-audio-contrast-contrast\">WCAG 2.0 - Section 1.4.3 \"Contrast\"</a>,\nin the themes that are accessible.  (See the \"Theming\" chapter of the JET Developer Guide for more information on which\nthemes are accessible.)  Note that Section 1.4.3 says that text or images of text that are part of an inactive user\ninterface component have no contrast requirement.  Because disabled content may not meet the minimum contrast ratio\nrequired of enabled content, it cannot be used to convey meaningful information.\n</p>",
+    "scope": "static",
+    "tagWithoutBrackets": "oj-c-toolbar",
+    "tagWithBrackets": "<oj-c-toolbar>",
+    "domInterface": "CToolbarElement",
+    "ojPageTitle": "&lt;oj-c-toolbar>",
+    "camelCaseName": "Toolbar",
+    "ojPageTitlePrefix": "Element: ",
+    "ojtsvcomponent": true,
+    "tstype": {
+      "target": "Type",
+      "value": "interface CToolbarElement extends JetElement<ToolbarElementSettableProperties>"
+    },
+    "ojsignature": [
+      {
+        "target": "Type",
+        "value": "interface CToolbarElement extends JetElement<ToolbarElementSettableProperties>"
+      }
+    ],
+    "tsdeprecated": [
+      {
+        "type": "supersedes",
+        "since": "18.0.0",
+        "value": [
+          "oj-toolbar"
+        ]
+      }
+    ],
+    "ojmodule": "toolbar"
+  },
+  {
+    "id": "oj-c.Toolbar#spacing",
+    "name": "spacing",
+    "memberof": "oj-c.Toolbar",
+    "meta": {
+      "filename": "toolbar.tsx",
+      "path": "web/components/oj-c/toolbar"
+    },
+    "kind": "member",
+    "longname": "oj-c.Toolbar#spacing",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "\"sm\"",
+        "\"lg\""
+      ]
+    },
+    "optional": true,
+    "description": "Specifies the spacing between content. 'sm' spacing is recommended for button variants that don't have a background or border, for example borderless buttons. 'lg' spacing is recommended for button variants that have a background or border, for example outlined or solid buttons.",
+    "ojvalues": [
+      {
+        "name": "sm",
+        "description": "Compact spacing between content.",
+        "displayName": "Small",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "lg",
+        "description": "Default spacing between content.",
+        "displayName": "Large",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.Toolbar#chroming",
+    "name": "chroming",
+    "memberof": "oj-c.Toolbar",
+    "meta": {
+      "filename": "toolbar.tsx",
+      "path": "web/components/oj-c/toolbar"
+    },
+    "kind": "member",
+    "longname": "oj-c.Toolbar#chroming",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "\"borderless\"",
+        "\"outlined\""
+      ]
+    },
+    "optional": true,
+    "description": "Specifies the chroming to be set on content to be placed into the toolbar."
+  },
+  {
+    "id": "oj-c.Toolbar#size",
+    "name": "size",
+    "memberof": "oj-c.Toolbar",
+    "meta": {
+      "filename": "toolbar.tsx",
+      "path": "web/components/oj-c/toolbar"
+    },
+    "kind": "member",
+    "longname": "oj-c.Toolbar#size",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "\"sm\"",
+        "\"md\"",
+        "\"lg\""
+      ]
+    },
+    "optional": true,
+    "description": "Specifies the size of content to be placed into the toolbar."
+  },
+  {
+    "id": "oj-c.Toolbar#items",
+    "name": "items",
+    "memberof": "oj-c.Toolbar",
+    "meta": {
+      "filename": "toolbar.tsx",
+      "path": "web/components/oj-c/toolbar"
+    },
+    "kind": "member",
+    "longname": "oj-c.Toolbar#items",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "Array<object>"
+      ]
+    },
+    "optional": true,
+    "description": "Specifies the content to be placed into the toolbar.",
+    "defaultvalue": "[]",
+    "tstype": [
+      {
+        "target": "Type",
+        "value": "Array<oj-c.Toolbar.ToolbarItems>",
+        "jsdocOverride": true
+      }
+    ]
+  },
+  {
+    "id": "oj-c.Toolbar#toolbarSelection",
+    "name": "toolbarSelection",
+    "memberof": "oj-c.Toolbar",
+    "meta": {
+      "filename": "toolbar.tsx",
+      "path": "web/components/oj-c/toolbar"
+    },
+    "kind": "member",
+    "longname": "oj-c.Toolbar#toolbarSelection",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "object"
+      ]
+    },
+    "optional": true,
+    "ojwriteback": true,
+    "description": "An array containing key/value objects for selection groups.",
+    "defaultvalue": {},
+    "tstype": [
+      {
+        "target": "Type",
+        "value": "Readonly<Record<string, ToolbarSelection>>",
+        "jsdocOverride": true
+      }
+    ]
+  },
+  {
+    "id": "oj-c.Toolbar#setProperty",
+    "name": "setProperty",
+    "memberof": "oj-c.Toolbar",
+    "meta": {
+      "filename": "toolbar.tsx",
+      "path": "web/components/oj-c/toolbar"
+    },
+    "kind": "function",
+    "longname": "oj-c.Toolbar#setProperty",
+    "scope": "instance",
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "void"
+          ]
+        }
+      }
+    ],
+    "description": "Sets a property or a single subproperty for complex properties and notifies the component of the change, triggering a corresponding event.",
+    "params": [
+      {
+        "name": "property",
+        "description": "The property name to set. Supports dot notation for subproperty access.",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "value",
+        "description": "The new value to set the property to.",
+        "type": {
+          "names": [
+            "any"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.Toolbar#getProperty",
+    "name": "getProperty",
+    "memberof": "oj-c.Toolbar",
+    "meta": {
+      "filename": "toolbar.tsx",
+      "path": "web/components/oj-c/toolbar"
+    },
+    "kind": "function",
+    "longname": "oj-c.Toolbar#getProperty",
+    "scope": "instance",
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "any"
+          ]
+        }
+      }
+    ],
+    "description": "Retrieves the value of a property or a subproperty.",
+    "params": [
+      {
+        "name": "property",
+        "description": "The property name to get. Supports dot notation for subproperty access.",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.Toolbar#setProperties",
+    "name": "setProperties",
+    "memberof": "oj-c.Toolbar",
+    "meta": {
+      "filename": "toolbar.tsx",
+      "path": "web/components/oj-c/toolbar"
+    },
+    "kind": "function",
+    "longname": "oj-c.Toolbar#setProperties",
+    "scope": "instance",
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "void"
+          ]
+        }
+      }
+    ],
+    "description": "Performs a batch set of properties.",
+    "params": [
+      {
+        "name": "properties",
+        "description": "An object containing the property and value pairs to set.",
+        "type": {
+          "names": [
+            "object"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.Toolbar#event:ojToolbarAction",
+    "name": "ojToolbarAction",
+    "kind": "event",
+    "memberof": "oj-c.Toolbar",
+    "meta": {
+      "filename": "toolbar.tsx",
+      "path": "web/components/oj-c/toolbar"
+    },
+    "longname": "oj-c.Toolbar#event:ojToolbarAction",
+    "scope": "instance",
+    "description": "Triggered when a toolbar item is clicked, whether by keyboard, mouse, or touch events. Detail indicates which toolbar item was clicked.",
+    "properties": [
+      {
+        "name": "key",
+        "optional": false,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.Toolbar#event:ojToolbarSelection",
+    "name": "ojToolbarSelection",
+    "kind": "event",
+    "memberof": "oj-c.Toolbar",
+    "meta": {
+      "filename": "toolbar.tsx",
+      "path": "web/components/oj-c/toolbar"
+    },
+    "longname": "oj-c.Toolbar#event:ojToolbarSelection",
+    "scope": "instance",
+    "description": "Triggered when a toolbar selection group item is clicked, whether by keyboard, mouse, or touch events. Detail indicates new selection value for group.",
+    "properties": [
+      {
+        "name": "value",
+        "optional": false,
+        "type": {
+          "names": [
+            "string|boolean|Array<string>|object"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "string|boolean|Array<string>|Record<string, string|Array<string>>",
+            "jsdocOverride": true,
+            "for": "value"
+          }
+        ]
+      },
+      {
+        "name": "toolbarSelectionGroupKey",
+        "optional": false,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.Toolbar.touchDoc",
+    "name": "touchDoc",
+    "kind": "member",
+    "longname": "oj-c.Toolbar.touchDoc",
+    "description": "<table class=\"keyboard-table\">\n  <thead>\n    <tr>\n      <th>Target</th>\n      <th>Gesture</th>\n      <th>Action</th>\n    </tr>\n  </thead>\n  <tbody>\n <tr>\n    <td>Navigate right</td>\n    <td>\n      <kbd>Right Arrow Key</kbd> or <kbd>Left Arrow Key(RTL)</kbd>\n    </td>\n    <td>Change focus to next item on the right</td>\n  </tr>\n  <tr>\n    <td>Navigate left</td>\n    <td>\n      <kbd>Left Arrow Key</kbd> or <kbd>Right Arrow Key(RTL)</kbd>\n    </td>\n    <td>Change focus to next item on the left</td>\n  </tr>\n </tbody>\n</table>",
+    "memberof": "oj-c.Toolbar",
+    "meta": {
+      "filename": "toolbar.tsx",
+      "path": "web/components/oj-c/toolbar"
+    },
+    "ojfragment": true
+  },
+  {
+    "id": "oj-c.Toolbar.keyboardDoc",
+    "name": "keyboardDoc",
+    "kind": "member",
+    "longname": "oj-c.Toolbar.keyboardDoc",
+    "description": "<table class=\"keyboard-table\">\n  <thead>\n    <tr>\n      <th>Target</th>\n      <th>Gesture</th>\n      <th>Action</th>\n    </tr>\n  </thead>\n  <tbody>\n <tr>\n    <td>Navigate right</td>\n    <td>\n      <kbd>Right Arrow Key</kbd> or <kbd>Left Arrow Key(RTL)</kbd>\n    </td>\n    <td>Change focus to next item on the right</td>\n  </tr>\n  <tr>\n    <td>Navigate left</td>\n    <td>\n      <kbd>Left Arrow Key</kbd> or <kbd>Right Arrow Key(RTL)</kbd>\n    </td>\n    <td>Change focus to next item on the left</td>\n  </tr>\n </tbody>\n</table>",
+    "memberof": "oj-c.Toolbar",
+    "meta": {
+      "filename": "toolbar.tsx",
+      "path": "web/components/oj-c/toolbar"
+    },
+    "ojfragment": true
+  },
+  {
+    "id": "oj-c.Toolbar.ToolbarButton",
+    "name": "ToolbarButton",
+    "kind": "typedef",
+    "memberof": "oj-c.Toolbar",
+    "meta": {
+      "filename": "toolbar.tsx",
+      "path": "web/components/oj-c/toolbar"
+    },
+    "longname": "oj-c.Toolbar.ToolbarButton",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "scope": "static",
+    "description": "Describes an oj-c-button item in the Toolbar.",
+    "properties": [
+      {
+        "name": "type",
+        "description": "Specifies the desired toolbar item.",
+        "optional": false,
+        "type": {
+          "names": [
+            "\"button\""
+          ]
+        }
+      },
+      {
+        "name": "key",
+        "description": "A unique key associated with the toolbar item.",
+        "optional": false,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "onAction",
+        "description": "Optional callback function associated with the toolbar item.",
+        "optional": true,
+        "type": {
+          "names": [
+            "function"
+          ]
+        }
+      },
+      {
+        "name": "display",
+        "description": "Display just the label, the icons, or all. Label is used as tooltip and should be set in all cases.",
+        "optional": true,
+        "type": {
+          "names": [
+            "\"all\"",
+            "\"label\"",
+            "\"icons\""
+          ]
+        },
+        "ojvalues": [
+          {
+            "name": "all",
+            "description": "Display both the label and icons.",
+            "displayName": "All",
+            "type": {
+              "names": [
+                "string"
+              ]
+            }
+          },
+          {
+            "name": "icons",
+            "description": "Display only the icons.",
+            "displayName": "Icons",
+            "type": {
+              "names": [
+                "string"
+              ]
+            }
+          },
+          {
+            "name": "label",
+            "description": "Display only the text label.",
+            "displayName": "label",
+            "type": {
+              "names": [
+                "string"
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "name": "label",
+        "description": "Text to show in the button.",
+        "optional": false,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "disabled",
+        "description": "Specifies that the button element should be disabled.",
+        "optional": true,
+        "type": {
+          "names": [
+            "boolean"
+          ]
+        }
+      },
+      {
+        "name": "tooltip",
+        "description": "Text to show in the tooltip. This overrides the default tooltip that renders the label when in icon mode.",
+        "optional": true,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "chroming",
+        "description": "Indicates in what states the button has variants in background and border.",
+        "optional": true,
+        "type": {
+          "names": [
+            "\"solid\"",
+            "\"borderless\"",
+            "\"outlined\"",
+            "\"ghost\"",
+            "\"callToAction\"",
+            "\"danger\""
+          ]
+        },
+        "ojvalues": [
+          {
+            "name": "ghost",
+            "description": "Ghost buttons are the least prominent variation. Ghost buttons are useful for performing low-priority tasks, such as manipulating the UI.",
+            "displayName": "Ghost",
+            "type": {
+              "names": [
+                "string"
+              ]
+            }
+          },
+          {
+            "name": "borderless",
+            "description": "Borderless buttons are a more prominent variation. Borderless buttons are useful for supplemental actions that require minimal emphasis.",
+            "displayName": "Borderless",
+            "type": {
+              "names": [
+                "string"
+              ]
+            }
+          },
+          {
+            "name": "outlined",
+            "description": "Outlined buttons are salient, but lighter weight than solid buttons. Outlined buttons are useful for secondary actions.",
+            "displayName": "Outlined",
+            "type": {
+              "names": [
+                "string"
+              ]
+            }
+          },
+          {
+            "name": "solid",
+            "description": "Solid buttons stand out, and direct the user's attention to the most important actions in the UI.",
+            "displayName": "Solid",
+            "type": {
+              "names": [
+                "string"
+              ]
+            }
+          },
+          {
+            "name": "callToAction",
+            "description": "A Call To Action (CTA) button guides the user to take or complete the action that is the main goal of the page or page section. There should only be one CTA button on a page at any given time.",
+            "displayName": "Call To Action",
+            "type": {
+              "names": [
+                "string"
+              ]
+            }
+          },
+          {
+            "name": "danger",
+            "description": "A Danger button alerts the user to a dangerous situation.",
+            "displayName": "Danger",
+            "type": {
+              "names": [
+                "string"
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "name": "startIcon",
+        "description": "Optional icon to render at the start of the button.",
+        "optional": true,
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "{ type?: 'class'; class: string; }|{ type: 'img'; src: string; }",
+            "jsdocOverride": true,
+            "for": "startIcon"
+          }
+        ]
+      },
+      {
+        "name": "endIcon",
+        "description": "Optional icon to render at the end of the button.",
+        "optional": true,
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "{ type?: 'class'; class: string; }|{ type: 'img'; src: string; }",
+            "jsdocOverride": true,
+            "for": "endIcon"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "oj-c.Toolbar.MenuSeparator",
+    "name": "MenuSeparator",
+    "kind": "typedef",
+    "memberof": "oj-c.Toolbar",
+    "meta": {
+      "filename": "toolbar.tsx",
+      "path": "web/components/oj-c/toolbar"
+    },
+    "longname": "oj-c.Toolbar.MenuSeparator",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "scope": "static",
+    "description": "Specifies a menu separator:  <code>{ type: \"separator\" }</code>.",
+    "properties": [
+      {
+        "name": "type",
+        "description": "Specifies a separator menu item.",
+        "optional": false,
+        "type": {
+          "names": [
+            "\"separator\"",
+            "\"divider\""
+          ]
+        },
+        "tsdeprecated": [
+          {
+            "type": "deprecated",
+            "since": "17.0.0",
+            "target": "propertyValue",
+            "value": [
+              "divider"
+            ],
+            "description": "Use 'separator' instead."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "oj-c.Toolbar.MenuItem",
+    "name": "MenuItem",
+    "kind": "typedef",
+    "memberof": "oj-c.Toolbar",
+    "meta": {
+      "filename": "toolbar.tsx",
+      "path": "web/components/oj-c/toolbar"
+    },
+    "longname": "oj-c.Toolbar.MenuItem",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "scope": "static",
+    "description": "Specifies a standard menu item.",
+    "properties": [
+      {
+        "name": "type",
+        "description": "Specifies a standard menu item.",
+        "optional": true,
+        "type": {
+          "names": [
+            "\"item\""
+          ]
+        }
+      },
+      {
+        "name": "label",
+        "description": "The menu item label.",
+        "optional": false,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "key",
+        "description": "A unique key associated with the menu item.",
+        "optional": false,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "disabled",
+        "description": "Specifies if the menu item is disabled (enabled by default).",
+        "optional": true,
+        "type": {
+          "names": [
+            "boolean"
+          ]
+        }
+      },
+      {
+        "name": "onAction",
+        "description": "Optional callback function associated with the menu item.",
+        "optional": true,
+        "type": {
+          "names": [
+            "function"
+          ]
+        }
+      },
+      {
+        "name": "startIcon",
+        "description": "Optional icon to render at the start of the menu item.",
+        "optional": true,
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "{ type?: 'class'; class: string; }|{ type: 'img'; src: string; }",
+            "jsdocOverride": true,
+            "for": "startIcon"
+          }
+        ]
+      },
+      {
+        "name": "endIcon",
+        "description": "Optional icon to render at the end of the menu item.",
+        "optional": true,
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "{ type?: 'class'; class: string; }|{ type: 'img'; src: string; }",
+            "jsdocOverride": true,
+            "for": "endIcon"
+          }
+        ]
+      },
+      {
+        "name": "variant",
+        "description": "Specifies the menu item behavior.",
+        "optional": true,
+        "type": {
+          "names": [
+            "\"standard\"",
+            "\"destructive\""
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.Toolbar.MenuSubMenu",
+    "name": "MenuSubMenu",
+    "kind": "typedef",
+    "memberof": "oj-c.Toolbar",
+    "meta": {
+      "filename": "toolbar.tsx",
+      "path": "web/components/oj-c/toolbar"
+    },
+    "longname": "oj-c.Toolbar.MenuSubMenu",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "scope": "static",
+    "description": "Specifies a menu item representing a submenu.",
+    "properties": [
+      {
+        "name": "key",
+        "description": "A unique key associated with the submenu menu item.",
+        "optional": true,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "type",
+        "description": "Specifies a submenu menu item.",
+        "optional": false,
+        "type": {
+          "names": [
+            "\"submenu\""
+          ]
+        }
+      },
+      {
+        "name": "label",
+        "description": "The submenu label.",
+        "optional": true,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "disabled",
+        "description": "Specifies if the submenu is disabled (enabled by default).",
+        "optional": true,
+        "type": {
+          "names": [
+            "boolean"
+          ]
+        }
+      },
+      {
+        "name": "startIcon",
+        "description": "Optional icon to render at the start of the submenu.",
+        "optional": true,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "items",
+        "description": "Specifies the array of menu items that make up the submenu.",
+        "optional": true,
+        "type": {
+          "names": [
+            "Array<object>"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "Array<oj-c.Toolbar.MenuItems>",
+            "jsdocOverride": true,
+            "for": "items"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "oj-c.Toolbar.MenuSelectItem",
+    "name": "MenuSelectItem",
+    "kind": "typedef",
+    "memberof": "oj-c.Toolbar",
+    "meta": {
+      "filename": "toolbar.tsx",
+      "path": "web/components/oj-c/toolbar"
+    },
+    "longname": "oj-c.Toolbar.MenuSelectItem",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "scope": "static",
+    "description": "Specifies a selectable item in a menu item.",
+    "properties": [
+      {
+        "name": "label",
+        "description": "The selectable item label.",
+        "optional": false,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "disabled",
+        "description": "Specifies if the selectable item is disabled (enabled by default).",
+        "optional": true,
+        "type": {
+          "names": [
+            "boolean"
+          ]
+        }
+      },
+      {
+        "name": "endIcon",
+        "description": "Optional icon to render at the end of the selectable item.",
+        "optional": true,
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "{ type?: 'class'; class: string; }|{ type: 'img'; src: string; }",
+            "jsdocOverride": true,
+            "for": "endIcon"
+          }
+        ]
+      },
+      {
+        "name": "value",
+        "description": "The value associated with the selectable item.",
+        "optional": false,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.Toolbar.MenuSelectSingle",
+    "name": "MenuSelectSingle",
+    "kind": "typedef",
+    "memberof": "oj-c.Toolbar",
+    "meta": {
+      "filename": "toolbar.tsx",
+      "path": "web/components/oj-c/toolbar"
+    },
+    "longname": "oj-c.Toolbar.MenuSelectSingle",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "scope": "static",
+    "description": "Specifies a menu item representing a select single.",
+    "properties": [
+      {
+        "name": "type",
+        "description": "Specifies a select single menu item.",
+        "optional": false,
+        "type": {
+          "names": [
+            "\"selectsingle\""
+          ]
+        }
+      },
+      {
+        "name": "key",
+        "description": "A unique key associated with the select single.",
+        "optional": false,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "items",
+        "description": "Specifies the array of select items that make up the select single.",
+        "optional": true,
+        "type": {
+          "names": [
+            "Array<object>"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "Array<oj-c.Toolbar.MenuSelectItem>",
+            "jsdocOverride": true,
+            "for": "items"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "oj-c.Toolbar.MenuSelectMultiple",
+    "name": "MenuSelectMultiple",
+    "kind": "typedef",
+    "memberof": "oj-c.Toolbar",
+    "meta": {
+      "filename": "toolbar.tsx",
+      "path": "web/components/oj-c/toolbar"
+    },
+    "longname": "oj-c.Toolbar.MenuSelectMultiple",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "scope": "static",
+    "description": "Specifies a menu item representing a select multiple.",
+    "properties": [
+      {
+        "name": "type",
+        "description": "Specifies a select multiple menu item.",
+        "optional": false,
+        "type": {
+          "names": [
+            "\"selectmultiple\""
+          ]
+        }
+      },
+      {
+        "name": "key",
+        "description": "A unique key associated with the select multiple.",
+        "optional": false,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "items",
+        "description": "Specifies the array of select items that make up the select multiple.",
+        "optional": true,
+        "type": {
+          "names": [
+            "Array<object>"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "Array<oj-c.Toolbar.MenuSelectItem>",
+            "jsdocOverride": true,
+            "for": "items"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "oj-c.Toolbar.MenuItems",
+    "name": "MenuItems",
+    "kind": "typedef",
+    "memberof": "oj-c.Toolbar",
+    "meta": {
+      "filename": "toolbar.tsx",
+      "path": "web/components/oj-c/toolbar"
+    },
+    "longname": "oj-c.Toolbar.MenuItems",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "scope": "static",
+    "description": "",
+    "tstype": [
+      {
+        "target": "Type",
+        "value": "oj-c.Toolbar.MenuSeparator|oj-c.Toolbar.MenuItem|oj-c.Toolbar.MenuSubMenu|oj-c.Toolbar.MenuSelectSingle|oj-c.Toolbar.MenuSelectMultiple",
+        "jsdocOverride": true
+      }
+    ]
+  },
+  {
+    "id": "oj-c.Toolbar.ToolbarMenuButton",
+    "name": "ToolbarMenuButton",
+    "kind": "typedef",
+    "memberof": "oj-c.Toolbar",
+    "meta": {
+      "filename": "toolbar.tsx",
+      "path": "web/components/oj-c/toolbar"
+    },
+    "longname": "oj-c.Toolbar.ToolbarMenuButton",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "scope": "static",
+    "description": "Describes an oj-c-menu-button item in the Toolbar.",
+    "properties": [
+      {
+        "name": "type",
+        "description": "Specifies the desired toolbar item.",
+        "optional": false,
+        "type": {
+          "names": [
+            "\"menu-button\""
+          ]
+        }
+      },
+      {
+        "name": "key",
+        "description": "A unique key associated with the toolbar item, only needed for automated testing.",
+        "optional": true,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "display",
+        "description": "Display just the label, the icons, or all. Label is used as tooltip and should be set in all cases.",
+        "optional": true,
+        "type": {
+          "names": [
+            "\"all\"",
+            "\"label\"",
+            "\"icons\""
+          ]
+        },
+        "ojvalues": [
+          {
+            "name": "all",
+            "description": "Display both the label and icons.",
+            "displayName": "All",
+            "type": {
+              "names": [
+                "string"
+              ]
+            }
+          },
+          {
+            "name": "icons",
+            "description": "Display only the icons.",
+            "displayName": "Icons",
+            "type": {
+              "names": [
+                "string"
+              ]
+            }
+          },
+          {
+            "name": "label",
+            "description": "Display only the text label.",
+            "displayName": "label",
+            "type": {
+              "names": [
+                "string"
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "name": "label",
+        "description": "Text to show in the button.",
+        "optional": false,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "disabled",
+        "description": "Specifies that the button element should be disabled.",
+        "optional": true,
+        "type": {
+          "names": [
+            "boolean"
+          ]
+        }
+      },
+      {
+        "name": "tooltip",
+        "description": "Text to show in the tooltip. This overrides the default tooltip that renders the label when in icon mode.",
+        "optional": true,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "items",
+        "description": "Items describe the menu items rendered by the menu button.",
+        "optional": true,
+        "type": {
+          "names": [
+            "Array<object>"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "Array<oj-c.Toolbar.MenuItems>",
+            "jsdocOverride": true,
+            "for": "items"
+          }
+        ]
+      },
+      {
+        "name": "chroming",
+        "description": "Indicates in what states the button has chromings in background and border.",
+        "optional": true,
+        "type": {
+          "names": [
+            "\"solid\"",
+            "\"borderless\"",
+            "\"outlined\"",
+            "\"ghost\""
+          ]
+        },
+        "ojvalues": [
+          {
+            "name": "ghost",
+            "description": "Ghost buttons are the least prominent variation. Ghost buttons are useful for performing low-priority tasks, such as manipulating the UI.",
+            "displayName": "Ghost",
+            "type": {
+              "names": [
+                "string"
+              ]
+            }
+          },
+          {
+            "name": "borderless",
+            "description": "Borderless buttons are a more prominent variation. Borderless buttons are useful for supplemental actions that require minimal emphasis.",
+            "displayName": "Borderless",
+            "type": {
+              "names": [
+                "string"
+              ]
+            }
+          },
+          {
+            "name": "outlined",
+            "description": "Outlined buttons are salient, but lighter weight than solid buttons. Outlined buttons are useful for secondary actions.",
+            "displayName": "Outlined",
+            "type": {
+              "names": [
+                "string"
+              ]
+            }
+          },
+          {
+            "name": "solid",
+            "description": "Solid buttons stand out, and direct the user's attention to the most important actions in the UI.",
+            "displayName": "Solid",
+            "type": {
+              "names": [
+                "string"
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "name": "suffix",
+        "description": "Suffix appended to menu label to indicate last selection.",
+        "optional": true,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "startIcon",
+        "description": "Optional icon to render at the start of the button.",
+        "optional": true,
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "{ type?: 'class'; class: string; }|{ type: 'img'; src: string; }",
+            "jsdocOverride": true,
+            "for": "startIcon"
+          }
+        ]
+      },
+      {
+        "name": "endIcon",
+        "description": "Optional icon to render at the end of the button.",
+        "optional": true,
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "{ type?: 'class'; class: string; }|{ type: 'img'; src: string; }",
+            "jsdocOverride": true,
+            "for": "endIcon"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "oj-c.Toolbar.ToolbarSplitMenuButton",
+    "name": "ToolbarSplitMenuButton",
+    "kind": "typedef",
+    "memberof": "oj-c.Toolbar",
+    "meta": {
+      "filename": "toolbar.tsx",
+      "path": "web/components/oj-c/toolbar"
+    },
+    "longname": "oj-c.Toolbar.ToolbarSplitMenuButton",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "scope": "static",
+    "description": "Describes an oj-c-split-menu-button item in the Toolbar.",
+    "properties": [
+      {
+        "name": "type",
+        "description": "Specifies the desired toolbar item.",
+        "optional": false,
+        "type": {
+          "names": [
+            "\"split-menu-button\""
+          ]
+        }
+      },
+      {
+        "name": "key",
+        "description": "A unique key associated with the toolbar item.",
+        "optional": false,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "onAction",
+        "description": "Optional callback function associated with the toolbar item.",
+        "optional": true,
+        "type": {
+          "names": [
+            "function"
+          ]
+        }
+      },
+      {
+        "name": "label",
+        "description": "Text to show in the button.",
+        "optional": false,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "disabled",
+        "description": "Specifies that the button element should be disabled.",
+        "optional": true,
+        "type": {
+          "names": [
+            "boolean"
+          ]
+        }
+      },
+      {
+        "name": "tooltip",
+        "description": "Text to show in the tooltip.",
+        "optional": true,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "items",
+        "description": "Items describe the menu items rendered by the menu button.",
+        "optional": true,
+        "type": {
+          "names": [
+            "Array<object>"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "Array<oj-c.Toolbar.MenuItems>",
+            "jsdocOverride": true,
+            "for": "items"
+          }
+        ]
+      },
+      {
+        "name": "chroming",
+        "description": "Indicates in what states the button has chromings in background and border.",
+        "optional": true,
+        "type": {
+          "names": [
+            "\"solid\"",
+            "\"outlined\"",
+            "\"callToAction\""
+          ]
+        },
+        "ojvalues": [
+          {
+            "name": "outlined",
+            "description": "Outlined buttons are salient, but lighter weight than solid buttons. Outlined buttons are useful for secondary actions.",
+            "displayName": "Outlined",
+            "type": {
+              "names": [
+                "string"
+              ]
+            }
+          },
+          {
+            "name": "solid",
+            "description": "Solid buttons stand out, and direct the user's attention to the most important actions in the UI.",
+            "displayName": "Solid",
+            "type": {
+              "names": [
+                "string"
+              ]
+            }
+          },
+          {
+            "name": "callToAction",
+            "description": "A Call To Action (CTA) button guides the user to take or complete the action that is the main goal of the page or page section. There should only be one CTA button on a page at any given time.",
+            "displayName": "Call To Action",
+            "type": {
+              "names": [
+                "string"
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "oj-c.Toolbar.ToggleItem",
+    "name": "ToggleItem",
+    "kind": "typedef",
+    "memberof": "oj-c.Toolbar",
+    "meta": {
+      "filename": "toolbar.tsx",
+      "path": "web/components/oj-c/toolbar"
+    },
+    "longname": "oj-c.Toolbar.ToggleItem",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "scope": "static",
+    "description": "",
+    "properties": [
+      {
+        "name": "label",
+        "description": "The toggle item label.",
+        "optional": false,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "value",
+        "description": "The toggle item value.",
+        "optional": false,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "disabled",
+        "description": "Specifies if the toggle item is disabled (enabled by default).",
+        "optional": true,
+        "type": {
+          "names": [
+            "boolean"
+          ]
+        }
+      },
+      {
+        "name": "startIcon",
+        "description": "Optional icon to render at the start of the toggle item.",
+        "optional": true,
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "{ type?: 'class'; class: string; }|{ type: 'img'; src: string; }",
+            "jsdocOverride": true,
+            "for": "startIcon"
+          }
+        ]
+      },
+      {
+        "name": "endIcon",
+        "description": "Optional icon to render at the end of the toggle item.",
+        "optional": true,
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "{ type?: 'class'; class: string; }|{ type: 'img'; src: string; }",
+            "jsdocOverride": true,
+            "for": "endIcon"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "oj-c.Toolbar.ToolbarButtonsetSingle",
+    "name": "ToolbarButtonsetSingle",
+    "kind": "typedef",
+    "memberof": "oj-c.Toolbar",
+    "meta": {
+      "filename": "toolbar.tsx",
+      "path": "web/components/oj-c/toolbar"
+    },
+    "longname": "oj-c.Toolbar.ToolbarButtonsetSingle",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "scope": "static",
+    "description": "Describes an oj-c-buttonset-single item in the Toolbar.",
+    "properties": [
+      {
+        "name": "type",
+        "description": "Specifies the desired toolbar item.",
+        "optional": false,
+        "type": {
+          "names": [
+            "\"buttonset-single\""
+          ]
+        }
+      },
+      {
+        "name": "key",
+        "description": "A unique key associated with the toolbar item.",
+        "optional": false,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "display",
+        "description": "Display just the label, the icons, or all.",
+        "optional": true,
+        "type": {
+          "names": [
+            "\"all\"",
+            "\"label\"",
+            "\"icons\""
+          ]
+        },
+        "ojvalues": [
+          {
+            "name": "all",
+            "description": "Display both the label and icons.",
+            "displayName": "All",
+            "type": {
+              "names": [
+                "string"
+              ]
+            }
+          },
+          {
+            "name": "icons",
+            "description": "Display only the icons.",
+            "displayName": "Icons",
+            "type": {
+              "names": [
+                "string"
+              ]
+            }
+          },
+          {
+            "name": "label",
+            "description": "Display only the text label.",
+            "displayName": "label",
+            "type": {
+              "names": [
+                "string"
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "name": "disabled",
+        "description": "Specifies that the buttonset should be disabled.",
+        "optional": true,
+        "type": {
+          "names": [
+            "boolean"
+          ]
+        }
+      },
+      {
+        "name": "items",
+        "description": "Specifies the toggle buttons rendered by the buttonset.",
+        "optional": true,
+        "type": {
+          "names": [
+            "Array<object>"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "Array<oj-c.Toolbar.ToggleItem>",
+            "jsdocOverride": true,
+            "for": "items"
+          }
+        ]
+      },
+      {
+        "name": "chroming",
+        "description": "Indicates in what states the button has chromings in background and border.",
+        "optional": true,
+        "type": {
+          "names": [
+            "\"borderless\"",
+            "\"outlined\""
+          ]
+        },
+        "ojvalues": [
+          {
+            "name": "borderless",
+            "description": "Borderless buttons are a less prominent variation.",
+            "displayName": "Borderless",
+            "type": {
+              "names": [
+                "string"
+              ]
+            }
+          },
+          {
+            "name": "outlined",
+            "description": "Outlined buttons are a more prominent variation.",
+            "displayName": "Outlined",
+            "type": {
+              "names": [
+                "string"
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "oj-c.Toolbar.ToolbarButtonsetMultiple",
+    "name": "ToolbarButtonsetMultiple",
+    "kind": "typedef",
+    "memberof": "oj-c.Toolbar",
+    "meta": {
+      "filename": "toolbar.tsx",
+      "path": "web/components/oj-c/toolbar"
+    },
+    "longname": "oj-c.Toolbar.ToolbarButtonsetMultiple",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "scope": "static",
+    "description": "Describes an oj-c-buttonset-multiple item in the Toolbar.",
+    "properties": [
+      {
+        "name": "type",
+        "description": "Specifies the desired toolbar item.",
+        "optional": false,
+        "type": {
+          "names": [
+            "\"buttonset-multiple\""
+          ]
+        }
+      },
+      {
+        "name": "key",
+        "description": "A unique key associated with the toolbar item.",
+        "optional": false,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "display",
+        "description": "Display just the label, the icons, or all.",
+        "optional": true,
+        "type": {
+          "names": [
+            "\"all\"",
+            "\"label\"",
+            "\"icons\""
+          ]
+        },
+        "ojvalues": [
+          {
+            "name": "all",
+            "description": "Display both the label and icons.",
+            "displayName": "All",
+            "type": {
+              "names": [
+                "string"
+              ]
+            }
+          },
+          {
+            "name": "icons",
+            "description": "Display only the icons.",
+            "displayName": "Icons",
+            "type": {
+              "names": [
+                "string"
+              ]
+            }
+          },
+          {
+            "name": "label",
+            "description": "Display only the text label.",
+            "displayName": "label",
+            "type": {
+              "names": [
+                "string"
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "name": "disabled",
+        "description": "Specifies that the buttonset should be disabled.",
+        "optional": true,
+        "type": {
+          "names": [
+            "boolean"
+          ]
+        }
+      },
+      {
+        "name": "items",
+        "description": "Specifies the toggle buttons rendered by the buttonset.",
+        "optional": true,
+        "type": {
+          "names": [
+            "Array<object>"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "Array<oj-c.Toolbar.ToggleItem>",
+            "jsdocOverride": true,
+            "for": "items"
+          }
+        ]
+      },
+      {
+        "name": "chroming",
+        "description": "Indicates in what states the button has chromings in background and border.",
+        "optional": true,
+        "type": {
+          "names": [
+            "\"borderless\"",
+            "\"outlined\""
+          ]
+        },
+        "ojvalues": [
+          {
+            "name": "borderless",
+            "description": "Borderless buttons are a less prominent variation.",
+            "displayName": "Borderless",
+            "type": {
+              "names": [
+                "string"
+              ]
+            }
+          },
+          {
+            "name": "outlined",
+            "description": "Outlined buttons are a more prominent variation.",
+            "displayName": "Outlined",
+            "type": {
+              "names": [
+                "string"
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "oj-c.Toolbar.ToolbarToggleButton",
+    "name": "ToolbarToggleButton",
+    "kind": "typedef",
+    "memberof": "oj-c.Toolbar",
+    "meta": {
+      "filename": "toolbar.tsx",
+      "path": "web/components/oj-c/toolbar"
+    },
+    "longname": "oj-c.Toolbar.ToolbarToggleButton",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "scope": "static",
+    "description": "Describes an oj-c-toggle-button item in the Toolbar.",
+    "properties": [
+      {
+        "name": "type",
+        "description": "Specifies the desired toolbar item.",
+        "optional": false,
+        "type": {
+          "names": [
+            "\"toggle-button\""
+          ]
+        }
+      },
+      {
+        "name": "key",
+        "description": "A unique key associated with the toolbar item.",
+        "optional": false,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "display",
+        "description": "Display just the label, the icons, or all. Label is used as tooltip and should be set in all cases.",
+        "optional": true,
+        "type": {
+          "names": [
+            "\"all\"",
+            "\"label\"",
+            "\"icons\""
+          ]
+        },
+        "ojvalues": [
+          {
+            "name": "all",
+            "description": "Display both the label and icons.",
+            "displayName": "All",
+            "type": {
+              "names": [
+                "string"
+              ]
+            }
+          },
+          {
+            "name": "icons",
+            "description": "Display only the icons.",
+            "displayName": "Icons",
+            "type": {
+              "names": [
+                "string"
+              ]
+            }
+          },
+          {
+            "name": "label",
+            "description": "Display only the text label.",
+            "displayName": "label",
+            "type": {
+              "names": [
+                "string"
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "name": "label",
+        "description": "Text to show in the button.",
+        "optional": false,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "disabled",
+        "description": "Specifies that the button element should be disabled.",
+        "optional": true,
+        "type": {
+          "names": [
+            "boolean"
+          ]
+        }
+      },
+      {
+        "name": "tooltip",
+        "description": "Text to show in the tooltip. This overrides the default tooltip that renders the label when in icon mode.",
+        "optional": true,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "chroming",
+        "description": "Indicates in what states the button has variants in background and border.",
+        "optional": true,
+        "type": {
+          "names": [
+            "\"borderless\"",
+            "\"outlined\""
+          ]
+        },
+        "ojvalues": [
+          {
+            "name": "borderless",
+            "description": "Borderless buttons are a less prominent variation.",
+            "displayName": "Borderless",
+            "type": {
+              "names": [
+                "string"
+              ]
+            }
+          },
+          {
+            "name": "outlined",
+            "description": "Outlined buttons are a more prominent variation.",
+            "displayName": "Outlined",
+            "type": {
+              "names": [
+                "string"
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "name": "startIcon",
+        "description": "Optional icon to render at the start of the button.",
+        "optional": true,
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "{ type?: 'class'; class: string; }|{ type: 'img'; src: string; }",
+            "jsdocOverride": true,
+            "for": "startIcon"
+          }
+        ]
+      },
+      {
+        "name": "endIcon",
+        "description": "Optional icon to render at the end of the button.",
+        "optional": true,
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "{ type?: 'class'; class: string; }|{ type: 'img'; src: string; }",
+            "jsdocOverride": true,
+            "for": "endIcon"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "oj-c.Toolbar.ToolbarProgressButton",
+    "name": "ToolbarProgressButton",
+    "kind": "typedef",
+    "memberof": "oj-c.Toolbar",
+    "meta": {
+      "filename": "toolbar.tsx",
+      "path": "web/components/oj-c/toolbar"
+    },
+    "longname": "oj-c.Toolbar.ToolbarProgressButton",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "scope": "static",
+    "description": "Describes an oj-c-progress-button item in the Toolbar.",
+    "properties": [
+      {
+        "name": "type",
+        "description": "Specifies the desired toolbar item.",
+        "optional": false,
+        "type": {
+          "names": [
+            "\"progress-button\""
+          ]
+        }
+      },
+      {
+        "name": "key",
+        "description": "A unique key associated with the toolbar item.",
+        "optional": false,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "onAction",
+        "description": "Optional callback function associated with the toolbar item.",
+        "optional": true,
+        "type": {
+          "names": [
+            "function"
+          ]
+        }
+      },
+      {
+        "name": "display",
+        "description": "Display just the label, the icons, or all. Label is used as tooltip and should be set in all cases.",
+        "optional": true,
+        "type": {
+          "names": [
+            "\"all\"",
+            "\"label\"",
+            "\"icons\""
+          ]
+        },
+        "ojvalues": [
+          {
+            "name": "all",
+            "description": "Display both the label and icons.",
+            "displayName": "All",
+            "type": {
+              "names": [
+                "string"
+              ]
+            }
+          },
+          {
+            "name": "icons",
+            "description": "Display only the icons.",
+            "displayName": "Icons",
+            "type": {
+              "names": [
+                "string"
+              ]
+            }
+          },
+          {
+            "name": "label",
+            "description": "Display only the text label.",
+            "displayName": "label",
+            "type": {
+              "names": [
+                "string"
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "name": "label",
+        "description": "Text to show in the button or as tooltip for icon mode.",
+        "optional": false,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "disabled",
+        "description": "Specifies that the button element should be disabled.",
+        "optional": true,
+        "type": {
+          "names": [
+            "boolean"
+          ]
+        }
+      },
+      {
+        "name": "tooltip",
+        "description": "Text to show in the tooltip. This overrides the default tooltip that renders the label when in icon mode.",
+        "optional": true,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "isLoading",
+        "description": "Specifies if progress should be shown.",
+        "optional": true,
+        "type": {
+          "names": [
+            "boolean"
+          ]
+        }
+      },
+      {
+        "name": "chroming",
+        "description": "Indicates in what states the button has variants in background and border.",
+        "optional": true,
+        "type": {
+          "names": [
+            "\"solid\"",
+            "\"borderless\"",
+            "\"outlined\"",
+            "\"callToAction\""
+          ]
+        },
+        "ojvalues": [
+          {
+            "name": "borderless",
+            "description": "Borderless buttons are a more prominent variation. Borderless buttons are useful for supplemental actions that require minimal emphasis.",
+            "displayName": "Borderless",
+            "type": {
+              "names": [
+                "string"
+              ]
+            }
+          },
+          {
+            "name": "outlined",
+            "description": "Outlined buttons are salient, but lighter weight than solid buttons. Outlined buttons are useful for secondary actions.",
+            "displayName": "Outlined",
+            "type": {
+              "names": [
+                "string"
+              ]
+            }
+          },
+          {
+            "name": "solid",
+            "description": "Solid buttons stand out, and direct the user's attention to the most important actions in the UI.",
+            "displayName": "Solid",
+            "type": {
+              "names": [
+                "string"
+              ]
+            }
+          },
+          {
+            "name": "callToAction",
+            "description": "A Call To Action (CTA) button guides the user to take or complete the action that is the main goal of the page or page section. There should only be one CTA button on a page at any given time.",
+            "displayName": "Call To Action",
+            "type": {
+              "names": [
+                "string"
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "name": "startIcon",
+        "description": "Optional icon to render at the start of the button.",
+        "optional": true,
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "{ type?: 'class'; class: string; }|{ type: 'img'; src: string; }",
+            "jsdocOverride": true,
+            "for": "startIcon"
+          }
+        ]
+      },
+      {
+        "name": "endIcon",
+        "description": "Optional icon to render at the end of the button.",
+        "optional": true,
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "{ type?: 'class'; class: string; }|{ type: 'img'; src: string; }",
+            "jsdocOverride": true,
+            "for": "endIcon"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "oj-c.Toolbar.ToolbarSeparator",
+    "name": "ToolbarSeparator",
+    "kind": "typedef",
+    "memberof": "oj-c.Toolbar",
+    "meta": {
+      "filename": "toolbar.tsx",
+      "path": "web/components/oj-c/toolbar"
+    },
+    "longname": "oj-c.Toolbar.ToolbarSeparator",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "scope": "static",
+    "description": "Describes a separator item in the Toolbar.",
+    "properties": [
+      {
+        "name": "type",
+        "description": "Specifies the desired toolbar item.",
+        "optional": false,
+        "type": {
+          "names": [
+            "\"separator\""
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.Toolbar.ToolbarItems",
+    "name": "ToolbarItems",
+    "kind": "typedef",
+    "memberof": "oj-c.Toolbar",
+    "meta": {
+      "filename": "toolbar.tsx",
+      "path": "web/components/oj-c/toolbar"
+    },
+    "longname": "oj-c.Toolbar.ToolbarItems",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "scope": "static",
+    "description": "",
+    "tstype": [
+      {
+        "target": "Type",
+        "value": "oj-c.Toolbar.ToolbarButton|oj-c.Toolbar.ToolbarMenuButton|oj-c.Toolbar.ToolbarSplitMenuButton|oj-c.Toolbar.ToolbarButtonsetSingle|oj-c.Toolbar.ToolbarButtonsetMultiple|oj-c.Toolbar.ToolbarToggleButton|oj-c.Toolbar.ToolbarProgressButton|oj-c.Toolbar.ToolbarSeparator",
+        "jsdocOverride": true
+      }
+    ]
+  }
+]

@@ -1,0 +1,1063 @@
+[
+  {
+    "id": "oj-c.MeterCircle",
+    "name": "MeterCircle",
+    "memberof": "oj-c",
+    "kind": "class",
+    "meta": {
+      "filename": "meter-circle.tsx",
+      "path": "web/components/oj-c/meter-circle"
+    },
+    "ojcomponent": true,
+    "isvcomponent": true,
+    "since": "14.0.0",
+    "longname": "oj-c.MeterCircle",
+    "pack": "oj-c",
+    "classdesc": "<h3 id=\"meterCircleOverview-section\">\n  JET meter circle\n  <a class=\"bookmarkable-link\" title=\"Bookmarkable Link\" href=\"#meterCircleOverview-section\"></a>\n</h3>\nA meter circle displays information graphically in a circular bar, highlighting a specific metric value's progress in relation to its min, max and thresholds.\n<pre class=\"prettyprint\"><code>&lt;oj-c-meter-circle value='4'>&lt;/oj-c-meter-circle></code></pre>\n<h3 id=\"a11y-section\">\n  Accessibility\n  <a class=\"bookmarkable-link\" title=\"Bookmarkable Link\" href=\"#a11y-section\"></a>\n</h3>\n<p>\nThe application is required to set one of the following attributes on the element with meaningful descriptors as the oj-c-meter-circle element does not provide a default descriptor.\n</p>\n<ul>\n  <li>aria-label</li>\n  <li>aria-labelledby</li>\n  <li>aria-describedby</li>\n</ul>\n\n<p>\nIf the application is using readonly, thresholds or reference lines to provide additional context, they need to include such information for screender readers using either of the following methods:\n <ul>\n  <li>aria-describedby</li>\n  <li>aria-labelledby</li>\n  <li>aria-label</li>\n  <li>datatip</li>\n </ul>\n</p>\n<p>\nIf you are using indicatorColor, applications are responsible for making sure that the color meets the\n<a href=\"https://www.w3.org/TR/WCAG21/#contrast-minimum\">minimum contrast ratio</a>.\n</p>\n\n<h3 id=\"keyboardSection\">\n  Keyboard\n  <a class=\"bookmarkable-link\" title=\"Bookmarkable Link\" href=\"#keyboardSection\"></a>\n</h3>\n\n<table class=\"keyboard-table\">\n  <thead>\n    <tr>\n      <th>Key</th>\n      <th>Action</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <td><kbd>Enter</kbd></td>\n      <td>Submit the current value of the meter circle.</td>\n    </tr>\n    <tr>\n      <td><kbd>Tab</kbd></td>\n      <td>Move focus to next element and submit the current value of the meter circle.</td>\n    </tr>\n    <tr>\n      <td><kbd>Shift + Tab</kbd></td>\n      <td>Move focus to previous element.</td>\n    </tr>\n    <tr>\n      <td><kbd>End</kbd></td>\n      <td>Increase the meter circle's transient value to max value. Value is set after using <kbd>Enter</kbd> or <kbd>Tab</kbd> to submit.</td>\n    </tr>\n    <tr>\n      <td><kbd>Home</kbd></td>\n      <td>Decrease the meter circle's transient value to zero. Value is set after using <kbd>Enter</kbd> or <kbd>Tab</kbd> to submit.</td>\n    </tr>\n    <tr>\n      <td><kbd>UpArrow</kbd></td>\n      <td>Increase the meter circle's transient value. Value is set after using <kbd>Enter</kbd> or <kbd>Tab</kbd> to submit.</td>\n    </tr>\n    <tr>\n      <td><kbd>DownArrow</kbd></td>\n      <td>Decrease the meter circle's transient value. Value is set after using <kbd>Enter</kbd> or <kbd>Tab</kbd> to submit.</td>\n    </tr>\n    <tr>\n      <td><kbd>LeftArrow</kbd></td>\n      <td>Decrease the meter circle's transient value in left-to-right locales. Increase the meter circle's transient value in right-to-left locales. Value is set after using <kbd>Enter</kbd> or <kbd>Tab</kbd> to submit.</td>\n    </tr>\n    <tr>\n      <td><kbd>RightArrow</kbd></td>\n      <td>Increase the meter circle's transient value in left-to-right locales. Decrease the meter circle's transient value in right-to-left locales. Value is set after using <kbd>Enter</kbd> or <kbd>Tab</kbd> to submit.</td>\n    </tr>\n  </tbody>\n</table>\n\n<h3 id=\"touch-section\">\nTouch End User Information\n  <a class=\"bookmarkable-link\" title=\"Bookmarkable Link\" href=\"#touch-section\"></a>\n</h3>\n\n<table class=\"keyboard-table\">\n  <thead>\n    <tr>\n      <th>Gesture</th>\n      <th>Action</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <td><kbd>Drag</kbd></td>\n      <td>Value change when <code class=\"prettyprint\">readonly</code> is <code class=\"prettyprint\">false</code>.</td>\n    </tr>\n  </tbody>\n</table>",
+    "scope": "static",
+    "tagWithoutBrackets": "oj-c-meter-circle",
+    "tagWithBrackets": "<oj-c-meter-circle>",
+    "domInterface": "CMeterCircleElement",
+    "ojPageTitle": "&lt;oj-c-meter-circle>",
+    "camelCaseName": "MeterCircle",
+    "ojPageTitlePrefix": "Element: ",
+    "ojtsvcomponent": true,
+    "tstype": {
+      "target": "Type",
+      "value": "interface CMeterCircleElement extends JetElement<MeterCircleElementSettableProperties>"
+    },
+    "ojsignature": [
+      {
+        "target": "Type",
+        "value": "interface CMeterCircleElement extends JetElement<MeterCircleElementSettableProperties>"
+      }
+    ],
+    "tsdeprecated": [
+      {
+        "type": "supersedes",
+        "since": "15.0.0",
+        "value": [
+          "oj-status-meter-gauge"
+        ]
+      }
+    ],
+    "ojmodule": "meter-circle"
+  },
+  {
+    "id": "oj-c.MeterCircle#max",
+    "name": "max",
+    "memberof": "oj-c.MeterCircle",
+    "meta": {
+      "filename": "meter-circle.tsx",
+      "path": "web/components/oj-c/meter-circle"
+    },
+    "kind": "member",
+    "longname": "oj-c.MeterCircle#max",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "number"
+      ]
+    },
+    "optional": true,
+    "description": "Integer value specifying the maximum value of the meter circle.",
+    "defaultvalue": 100
+  },
+  {
+    "id": "oj-c.MeterCircle#min",
+    "name": "min",
+    "memberof": "oj-c.MeterCircle",
+    "meta": {
+      "filename": "meter-circle.tsx",
+      "path": "web/components/oj-c/meter-circle"
+    },
+    "kind": "member",
+    "longname": "oj-c.MeterCircle#min",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "number"
+      ]
+    },
+    "optional": true,
+    "description": "Integer value specifying the minimum value of the meter circle.",
+    "defaultvalue": 0
+  },
+  {
+    "id": "oj-c.MeterCircle#readonly",
+    "name": "readonly",
+    "memberof": "oj-c.MeterCircle",
+    "meta": {
+      "filename": "meter-circle.tsx",
+      "path": "web/components/oj-c/meter-circle"
+    },
+    "kind": "member",
+    "longname": "oj-c.MeterCircle#readonly",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "boolean"
+      ]
+    },
+    "optional": true,
+    "description": "Defines whether the value of the meter circle can be changed by the end user.",
+    "defaultvalue": false
+  },
+  {
+    "id": "oj-c.MeterCircle#value",
+    "name": "value",
+    "memberof": "oj-c.MeterCircle",
+    "meta": {
+      "filename": "meter-circle.tsx",
+      "path": "web/components/oj-c/meter-circle"
+    },
+    "kind": "member",
+    "longname": "oj-c.MeterCircle#value",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "number|null"
+      ]
+    },
+    "optional": true,
+    "ojwriteback": true,
+    "description": "The value of the meter circle.",
+    "defaultvalue": 0
+  },
+  {
+    "id": "oj-c.MeterCircle#step",
+    "name": "step",
+    "memberof": "oj-c.MeterCircle",
+    "meta": {
+      "filename": "meter-circle.tsx",
+      "path": "web/components/oj-c/meter-circle"
+    },
+    "kind": "member",
+    "longname": "oj-c.MeterCircle#step",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "number"
+      ]
+    },
+    "optional": true,
+    "description": "Specifies the increment by which values can be changed by the end user when readonly is false. The step must be a positive value that is smaller than the difference between the min and max.",
+    "defaultvalue": 1
+  },
+  {
+    "id": "oj-c.MeterCircle#color",
+    "name": "color",
+    "memberof": "oj-c.MeterCircle",
+    "meta": {
+      "filename": "meter-circle.tsx",
+      "path": "web/components/oj-c/meter-circle"
+    },
+    "kind": "member",
+    "longname": "oj-c.MeterCircle#color",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "string"
+      ]
+    },
+    "optional": true,
+    "description": "Specifies the color of the meter circle indicator. Only applies when thresholdDisplay is not set to indicator.",
+    "tsdeprecated": []
+  },
+  {
+    "id": "oj-c.MeterCircle#indicatorSize",
+    "name": "indicatorSize",
+    "memberof": "oj-c.MeterCircle",
+    "meta": {
+      "filename": "meter-circle.tsx",
+      "path": "web/components/oj-c/meter-circle"
+    },
+    "kind": "member",
+    "longname": "oj-c.MeterCircle#indicatorSize",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "number"
+      ]
+    },
+    "optional": true,
+    "description": "Specifies the ratio of relative thickness of the indicator to the plot area.",
+    "tsdeprecated": [],
+    "defaultvalue": 1
+  },
+  {
+    "id": "oj-c.MeterCircle#innerRadius",
+    "name": "innerRadius",
+    "memberof": "oj-c.MeterCircle",
+    "meta": {
+      "filename": "meter-circle.tsx",
+      "path": "web/components/oj-c/meter-circle"
+    },
+    "kind": "member",
+    "longname": "oj-c.MeterCircle#innerRadius",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "number"
+      ]
+    },
+    "optional": true,
+    "description": "Specifies the inner radius, defined by the ratio of the distance from the center of the gauge to the innermost edge of the indicator to plot area. Valid values are ratios from 0 to 1. Depends on the size of the gauge and theme.",
+    "tsdeprecated": []
+  },
+  {
+    "id": "oj-c.MeterCircle#plotArea",
+    "name": "plotArea",
+    "memberof": "oj-c.MeterCircle",
+    "meta": {
+      "filename": "meter-circle.tsx",
+      "path": "web/components/oj-c/meter-circle"
+    },
+    "kind": "member",
+    "longname": "oj-c.MeterCircle#plotArea",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "object"
+      ]
+    },
+    "optional": false,
+    "description": "Specifies the plot area of the meter circle.",
+    "tstype": [
+      {
+        "target": "Type",
+        "value": "oj-c.MeterCircle.PlotArea",
+        "jsdocOverride": true
+      }
+    ]
+  },
+  {
+    "id": "oj-c.MeterCircle#angleExtent",
+    "name": "angleExtent",
+    "memberof": "oj-c.MeterCircle",
+    "meta": {
+      "filename": "meter-circle.tsx",
+      "path": "web/components/oj-c/meter-circle"
+    },
+    "kind": "member",
+    "longname": "oj-c.MeterCircle#angleExtent",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "number"
+      ]
+    },
+    "optional": true,
+    "description": "Specifies the angle extent of a meter circle. Value should be provided in degrees.",
+    "defaultvalue": 360
+  },
+  {
+    "id": "oj-c.MeterCircle#startAngle",
+    "name": "startAngle",
+    "memberof": "oj-c.MeterCircle",
+    "meta": {
+      "filename": "meter-circle.tsx",
+      "path": "web/components/oj-c/meter-circle"
+    },
+    "kind": "member",
+    "longname": "oj-c.MeterCircle#startAngle",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "number"
+      ]
+    },
+    "optional": true,
+    "description": "Specifies the start angle of the plot area relative to the positive x axis. Value should be provided in degrees.",
+    "defaultvalue": 90
+  },
+  {
+    "id": "oj-c.MeterCircle#referenceLines",
+    "name": "referenceLines",
+    "memberof": "oj-c.MeterCircle",
+    "meta": {
+      "filename": "meter-circle.tsx",
+      "path": "web/components/oj-c/meter-circle"
+    },
+    "kind": "member",
+    "longname": "oj-c.MeterCircle#referenceLines",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "Array<object>"
+      ]
+    },
+    "optional": true,
+    "description": "Specifies the array of objects defining the reference lines for the meter circle.",
+    "tstype": [
+      {
+        "target": "Type",
+        "value": "Array<oj-c.MeterCircle.ReferenceLine>",
+        "jsdocOverride": true
+      }
+    ]
+  },
+  {
+    "id": "oj-c.MeterCircle#thresholdDisplay",
+    "name": "thresholdDisplay",
+    "memberof": "oj-c.MeterCircle",
+    "meta": {
+      "filename": "meter-circle.tsx",
+      "path": "web/components/oj-c/meter-circle"
+    },
+    "kind": "member",
+    "longname": "oj-c.MeterCircle#thresholdDisplay",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "\"all\"",
+        "\"plotArea\"",
+        "\"indicator\""
+      ]
+    },
+    "optional": true,
+    "description": "Controls whether the current threshold is displayed on the indicator, in the plot area, or if all the thresholds are displayed in the plot area.",
+    "defaultvalue": "\"indicator\""
+  },
+  {
+    "id": "oj-c.MeterCircle#thresholds",
+    "name": "thresholds",
+    "memberof": "oj-c.MeterCircle",
+    "meta": {
+      "filename": "meter-circle.tsx",
+      "path": "web/components/oj-c/meter-circle"
+    },
+    "kind": "member",
+    "longname": "oj-c.MeterCircle#thresholds",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "Array<object>"
+      ]
+    },
+    "optional": true,
+    "description": "An array of objects defining the thresholds for the meter circle.",
+    "tstype": [
+      {
+        "target": "Type",
+        "value": "Array<oj-c.MeterCircle.Threshold>",
+        "jsdocOverride": true
+      }
+    ]
+  },
+  {
+    "id": "oj-c.MeterCircle#describedBy",
+    "name": "describedBy",
+    "memberof": "oj-c.MeterCircle",
+    "meta": {
+      "filename": "meter-circle.tsx",
+      "path": "web/components/oj-c/meter-circle"
+    },
+    "kind": "member",
+    "longname": "oj-c.MeterCircle#describedBy",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "string|null"
+      ]
+    },
+    "optional": true,
+    "description": "Used to establish a relationship between this component and another element.\nA common use is to tie a label, which can be a text in a div or some other HTML element, and the oj-c-meter-circle together for accessibility.\nThe oj-label element has a label-id, which is used by the described-by attribute to tie the two components together to facilitate correct screen reader behavior."
+  },
+  {
+    "id": "oj-c.MeterCircle#labelledBy",
+    "name": "labelledBy",
+    "memberof": "oj-c.MeterCircle",
+    "meta": {
+      "filename": "meter-circle.tsx",
+      "path": "web/components/oj-c/meter-circle"
+    },
+    "kind": "member",
+    "longname": "oj-c.MeterCircle#labelledBy",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "string|null"
+      ]
+    },
+    "optional": true,
+    "description": "Used to establish a relationship between this component and another element.\nA common use is to tie a label, which can be a text in a div or some other HTML element, and the oj-c-meter-circle together for accessibility.\nThe oj-label element has a label-id, which is used by the labelled-by attribute to tie the two components together to facilitate correct screen reader behavior."
+  },
+  {
+    "id": "oj-c.MeterCircle#size",
+    "name": "size",
+    "memberof": "oj-c.MeterCircle",
+    "meta": {
+      "filename": "meter-circle.tsx",
+      "path": "web/components/oj-c/meter-circle"
+    },
+    "kind": "member",
+    "longname": "oj-c.MeterCircle#size",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "\"sm\"",
+        "\"md\"",
+        "\"lg\"",
+        "\"fit\""
+      ]
+    },
+    "optional": true,
+    "description": "Specifies the size of the meter var.",
+    "ojvalues": [
+      {
+        "name": "sm",
+        "description": "small Meter circle",
+        "displayName": "Small",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "md",
+        "description": "medium Meter circle (default, if unspecified)",
+        "displayName": "Medium",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "lg",
+        "description": "large Meter circle",
+        "displayName": "Large",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "fit",
+        "description": "Meter Circle that fills available width and height.",
+        "displayName": "Fit",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      }
+    ],
+    "defaultvalue": "\"md\""
+  },
+  {
+    "id": "oj-c.MeterCircle#datatip",
+    "name": "datatip",
+    "memberof": "oj-c.MeterCircle",
+    "meta": {
+      "filename": "meter-circle.tsx",
+      "path": "web/components/oj-c/meter-circle"
+    },
+    "kind": "member",
+    "longname": "oj-c.MeterCircle#datatip",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "function"
+      ]
+    },
+    "optional": true,
+    "description": "The function that returns a custom datatip string for given value of meter circle. The function is called with DatatipContext as context. If datatip is undefined,\nmeter circle will use the default datatip. If the returned value of the function is null, no datatip is shown.",
+    "tstype": [
+      {
+        "target": "Type",
+        "value": "(context: oj-c.MeterCircle.DatatipContext) => string | null",
+        "jsdocOverride": true
+      }
+    ]
+  },
+  {
+    "id": "oj-c.MeterCircle#transientValue",
+    "name": "transientValue",
+    "memberof": "oj-c.MeterCircle",
+    "meta": {
+      "filename": "meter-circle.tsx",
+      "path": "web/components/oj-c/meter-circle"
+    },
+    "kind": "member",
+    "longname": "oj-c.MeterCircle#transientValue",
+    "scope": "instance",
+    "type": {
+      "names": [
+        "number"
+      ]
+    },
+    "optional": true,
+    "ojwriteback": true,
+    "readonly": true,
+    "description": "A read-only property for retrieving the transient value from the meter circle. It is triggered when dragging over the meter circle."
+  },
+  {
+    "id": "oj-c.MeterCircle#setProperty",
+    "name": "setProperty",
+    "memberof": "oj-c.MeterCircle",
+    "meta": {
+      "filename": "meter-circle.tsx",
+      "path": "web/components/oj-c/meter-circle"
+    },
+    "kind": "function",
+    "longname": "oj-c.MeterCircle#setProperty",
+    "scope": "instance",
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "void"
+          ]
+        }
+      }
+    ],
+    "description": "Sets a property or a single subproperty for complex properties and notifies the component of the change, triggering a corresponding event.",
+    "params": [
+      {
+        "name": "property",
+        "description": "The property name to set. Supports dot notation for subproperty access.",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "value",
+        "description": "The new value to set the property to.",
+        "type": {
+          "names": [
+            "any"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.MeterCircle#getProperty",
+    "name": "getProperty",
+    "memberof": "oj-c.MeterCircle",
+    "meta": {
+      "filename": "meter-circle.tsx",
+      "path": "web/components/oj-c/meter-circle"
+    },
+    "kind": "function",
+    "longname": "oj-c.MeterCircle#getProperty",
+    "scope": "instance",
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "any"
+          ]
+        }
+      }
+    ],
+    "description": "Retrieves the value of a property or a subproperty.",
+    "params": [
+      {
+        "name": "property",
+        "description": "The property name to get. Supports dot notation for subproperty access.",
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.MeterCircle#setProperties",
+    "name": "setProperties",
+    "memberof": "oj-c.MeterCircle",
+    "meta": {
+      "filename": "meter-circle.tsx",
+      "path": "web/components/oj-c/meter-circle"
+    },
+    "kind": "function",
+    "longname": "oj-c.MeterCircle#setProperties",
+    "scope": "instance",
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "void"
+          ]
+        }
+      }
+    ],
+    "description": "Performs a batch set of properties.",
+    "params": [
+      {
+        "name": "properties",
+        "description": "An object containing the property and value pairs to set.",
+        "type": {
+          "names": [
+            "object"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.MeterCircle#centerTemplate",
+    "name": "centerTemplate",
+    "memberof": "oj-c.MeterCircle",
+    "meta": {
+      "filename": "meter-circle.tsx",
+      "path": "web/components/oj-c/meter-circle"
+    },
+    "kind": "member",
+    "longname": "oj-c.MeterCircle#centerTemplate",
+    "scope": "instance",
+    "description": "The centerTemplate slot is used to specify center content. When the template is executed, the component's binding context is extended with the following properties:",
+    "ojchild": false,
+    "ojslot": true,
+    "properties": [
+      {
+        "name": "innerBounds",
+        "description": "Object containing (x, y, width, height) of the rectangle inscribed in the center area. The inner bounds are useful for inserting content that is guaranteed to fit within the center area. If the angleExtent isn't 360 then we will provide the clipped square.",
+        "optional": false,
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "oj-c.MeterCircle.Bounds",
+            "jsdocOverride": true,
+            "for": "innerBounds"
+          }
+        ]
+      },
+      {
+        "name": "outerBounds",
+        "description": "Object containing (x, y, width, height) of the rectangle circumscribing the center area. The outer bounds are useful for creating background for the entire center area when used with a CSS border-radius. If the angleExtent isn't 360 then we will provide the clipped square.",
+        "optional": false,
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "oj-c.MeterCircle.Bounds",
+            "jsdocOverride": true,
+            "for": "outerBounds"
+          }
+        ]
+      },
+      {
+        "name": "value",
+        "description": "The current value of the meter circle.",
+        "optional": false,
+        "type": {
+          "names": [
+            "number|null"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.MeterCircle.touchDoc",
+    "name": "touchDoc",
+    "kind": "member",
+    "longname": "oj-c.MeterCircle.touchDoc",
+    "description": "<table class=\"keyboard-table\">\n  <thead>\n    <tr>\n      <th>Gesture</th>\n      <th>Action</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <td><kbd>Drag</kbd></td>\n      <td>Value change when <code class=\"prettyprint\">readonly</code> is <code class=\"prettyprint\">false</code>.</td>\n    </tr>\n  </tbody>\n</table>",
+    "memberof": "oj-c.MeterCircle",
+    "meta": {
+      "filename": "meter-circle.tsx",
+      "path": "web/components/oj-c/meter-circle"
+    },
+    "ojfragment": true
+  },
+  {
+    "id": "oj-c.MeterCircle.PlotArea",
+    "name": "PlotArea",
+    "kind": "typedef",
+    "memberof": "oj-c.MeterCircle",
+    "meta": {
+      "filename": "meter-circle.tsx",
+      "path": "web/components/oj-c/meter-circle"
+    },
+    "longname": "oj-c.MeterCircle.PlotArea",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "scope": "static",
+    "description": "",
+    "properties": [
+      {
+        "name": "color",
+        "description": "The color of the plot area.",
+        "optional": true,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "rendered",
+        "description": " Defines if the plot area is to be rendered. The default value is on.",
+        "optional": true,
+        "type": {
+          "names": [
+            "\"off\"",
+            "\"on\""
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.MeterCircle.ReferenceLineLabelStyle",
+    "name": "ReferenceLineLabelStyle",
+    "kind": "typedef",
+    "memberof": "oj-c.MeterCircle",
+    "meta": {
+      "filename": "meter-circle.tsx",
+      "path": "web/components/oj-c/meter-circle"
+    },
+    "longname": "oj-c.MeterCircle.ReferenceLineLabelStyle",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "scope": "static",
+    "description": "",
+    "properties": [
+      {
+        "name": "color",
+        "description": "The color of the text.",
+        "optional": true,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "fontSize",
+        "description": "The font size of the text.",
+        "optional": true,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "fontStyle",
+        "description": "The font style of the text.",
+        "optional": true,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "fontWeight",
+        "description": "The font weight of the text.",
+        "optional": true,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.MeterCircle.ReferenceLine",
+    "name": "ReferenceLine",
+    "kind": "typedef",
+    "memberof": "oj-c.MeterCircle",
+    "meta": {
+      "filename": "meter-circle.tsx",
+      "path": "web/components/oj-c/meter-circle"
+    },
+    "longname": "oj-c.MeterCircle.ReferenceLine",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "scope": "static",
+    "description": "",
+    "properties": [
+      {
+        "name": "color",
+        "description": "<p>The color of the reference line.</p>\n<p>In addition to standard CSS color values, special enumerated values 'danger', 'warning',\nand 'success' are also supported. These special values are mapped to corresponding CSS color values\nbased upon the current theme.</p>",
+        "optional": true,
+        "type": {
+          "names": [
+            "\"danger\"|\"warning\"|\"success\"|string"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "\"danger\"|\"warning\"|\"success\"|string",
+            "jsdocOverride": true
+          }
+        ],
+        "ojvalues": [
+          {
+            "name": "danger",
+            "description": "Maps to theme-specific color indicating a danger condition",
+            "type": {
+              "names": [
+                "string"
+              ]
+            }
+          },
+          {
+            "name": "warning",
+            "description": "Maps to theme-specific color indicating a warning condition",
+            "type": {
+              "names": [
+                "string"
+              ]
+            }
+          },
+          {
+            "name": "success",
+            "description": "Maps to theme-specific color indicating a success condition",
+            "type": {
+              "names": [
+                "string"
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "name": "value",
+        "description": "The value of the reference line.",
+        "optional": false,
+        "type": {
+          "names": [
+            "number"
+          ]
+        }
+      },
+      {
+        "name": "label",
+        "description": "The label for the reference line.",
+        "optional": true,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "style",
+        "description": "The style of the label for the reference line.",
+        "optional": true,
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "oj-c.MeterCircle.ReferenceLineLabelStyle",
+            "jsdocOverride": true,
+            "for": "style"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "oj-c.MeterCircle.Threshold",
+    "name": "Threshold",
+    "kind": "typedef",
+    "memberof": "oj-c.MeterCircle",
+    "meta": {
+      "filename": "meter-circle.tsx",
+      "path": "web/components/oj-c/meter-circle"
+    },
+    "longname": "oj-c.MeterCircle.Threshold",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "scope": "static",
+    "description": "",
+    "properties": [
+      {
+        "name": "accessibleLabel",
+        "description": "A label for the threshold used for accessibility purposes.",
+        "optional": true,
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      },
+      {
+        "name": "color",
+        "description": "<p>The color of the threshold.</p>\n<p>In addition to standard CSS color values, special enumerated values 'danger', 'warning',\nand 'success' are also supported. These special values are mapped to corresponding CSS color values\nbased upon the current theme.</p>",
+        "optional": true,
+        "type": {
+          "names": [
+            "\"danger\"|\"warning\"|\"success\"|string"
+          ]
+        },
+        "tstype": [
+          {
+            "target": "Type",
+            "value": "\"danger\"|\"warning\"|\"success\"|string",
+            "jsdocOverride": true
+          }
+        ],
+        "ojvalues": [
+          {
+            "name": "danger",
+            "description": "Maps to theme-specific color indicating a danger condition",
+            "type": {
+              "names": [
+                "string"
+              ]
+            }
+          },
+          {
+            "name": "warning",
+            "description": "Maps to theme-specific color indicating a warning condition",
+            "type": {
+              "names": [
+                "string"
+              ]
+            }
+          },
+          {
+            "name": "success",
+            "description": "Maps to theme-specific color indicating a success condition",
+            "type": {
+              "names": [
+                "string"
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "name": "max",
+        "description": "The maximum value of the threshold.",
+        "optional": false,
+        "type": {
+          "names": [
+            "number"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.MeterCircle.DatatipContext",
+    "name": "DatatipContext",
+    "kind": "typedef",
+    "memberof": "oj-c.MeterCircle",
+    "meta": {
+      "filename": "meter-circle.tsx",
+      "path": "web/components/oj-c/meter-circle"
+    },
+    "longname": "oj-c.MeterCircle.DatatipContext",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "scope": "static",
+    "description": "Context for datatip function.",
+    "properties": [
+      {
+        "name": "value",
+        "description": "The current value of the meter circle.",
+        "optional": false,
+        "type": {
+          "names": [
+            "number"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "oj-c.MeterCircle.Bounds",
+    "name": "Bounds",
+    "kind": "typedef",
+    "memberof": "oj-c.MeterCircle",
+    "meta": {
+      "filename": "meter-circle.tsx",
+      "path": "web/components/oj-c/meter-circle"
+    },
+    "longname": "oj-c.MeterCircle.Bounds",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "scope": "static",
+    "description": "",
+    "properties": [
+      {
+        "name": "width",
+        "description": "The width of the bounding rectangle.",
+        "optional": false,
+        "type": {
+          "names": [
+            "number"
+          ]
+        }
+      },
+      {
+        "name": "height",
+        "description": "The height of the bounding rectangle.",
+        "optional": false,
+        "type": {
+          "names": [
+            "number"
+          ]
+        }
+      },
+      {
+        "name": "x",
+        "description": "The x position of the bounding rectangle.",
+        "optional": false,
+        "type": {
+          "names": [
+            "number"
+          ]
+        }
+      },
+      {
+        "name": "y",
+        "description": "The y position of the bounding rectangle.",
+        "optional": false,
+        "type": {
+          "names": [
+            "number"
+          ]
+        }
+      }
+    ]
+  }
+]

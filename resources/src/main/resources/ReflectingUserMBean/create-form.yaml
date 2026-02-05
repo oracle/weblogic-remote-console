@@ -3,6 +3,9 @@
 
 introductionHTML: "Create a new user in this authentication provider."
 
+presentation:
+  singleColumn: true
+
 properties:
   - name: Name
   - name: Description

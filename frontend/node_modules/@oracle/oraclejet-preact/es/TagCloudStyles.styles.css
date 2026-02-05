@@ -1,0 +1,36 @@
+.TagCloudStyles_baseStyles__k8a9j70 {
+  position: relative;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+.TagCloudStyles_baseStyles__k8a9j70:focus-visible {
+  outline-width: 0px;
+}
+.TagCloudStyles_dimensionStyle__k8a9j71 {
+  height: calc(112 * var(--oj-c-EXPERIMENTAL-DO-NOT-USE-size-units, 0.25rem));
+  width: 100%;
+}
+.TagCloudStyles_itemBase__k8a9j72 {
+  position: absolute;
+}
+.TagCloudStyles_itemStyle__k8a9j73 {
+  color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-primary);
+}
+.TagCloudStyles_hoverUnselectedItemStyle__k8a9j74 {
+  background-image: linear-gradient(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-overlay-hover), var(--oj-c-EXPERIMENTAL-DO-NOT-USE-overlay-hover));
+}
+.TagCloudStyles_selectedItemStyle__k8a9j75 {
+  color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-inverse);
+  background-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-text-icon-primary);
+}
+.TagCloudStyles_hoveredSelectedItemStyle__k8a9j76 {
+  background-image: linear-gradient(var(--oj-c-EXPERIMENTAL-DO-NOT-USE-overlay-hover), var(--oj-c-EXPERIMENTAL-DO-NOT-USE-overlay-hover));
+}
+.TagCloudStyles_dimmedItemStyle__k8a9j77 {
+  opacity: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-dimmed-opacity);
+}
+.TagCloudStyles_interactiveCursorStyle__k8a9j78 {
+  cursor: pointer;
+}

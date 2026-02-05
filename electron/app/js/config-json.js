@@ -65,10 +65,6 @@ const AppConfig = (() => {
           WindowManagement.corruptFile(AppConfig.getPath());
         }
       }
-    },
-    write: () => {
-      // Creates the file, if it doesn't exists
-      fs.writeFileSync(AppConfig.getPath(), JSON.stringify(_config, null, 4));
     }
   };
 

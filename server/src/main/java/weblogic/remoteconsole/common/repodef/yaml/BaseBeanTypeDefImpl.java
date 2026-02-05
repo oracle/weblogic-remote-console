@@ -9,7 +9,6 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.logging.Logger;
 
 import weblogic.console.utils.Path;
 import weblogic.remoteconsole.common.repodef.BeanActionDef;
@@ -23,9 +22,6 @@ import weblogic.remoteconsole.common.repodef.LocalizableString;
  * Base implentation of the BeanTypeDef interface for yaml-based repos.
  */
 public abstract class BaseBeanTypeDefImpl implements BeanTypeDef {
-
-  private static final Logger LOGGER = Logger.getLogger(BaseBeanTypeDefImpl.class.getName());
-
   private String typeName;
   private BeanRepoDefImpl beanRepoDefImpl;
   private List<BeanPropertyDefImpl> propertyDefImpls;
@@ -57,7 +53,7 @@ public abstract class BaseBeanTypeDefImpl implements BeanTypeDef {
     return this.typeName;
   }
 
-  abstract LocalizableString getDescriptionHTML();
+  public abstract LocalizableString getDescriptionHTML();
 
   protected String getTypeNameLabelKey() {
     return getLocalizationKey("type.label");

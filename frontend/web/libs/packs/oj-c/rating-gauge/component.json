@@ -1,0 +1,270 @@
+{
+  "name": "rating-gauge",
+  "version": "19.0.1",
+  "jetVersion": "^19.0.1",
+  "pack": "oj-c",
+  "type": "composite",
+  "dependencyScope": "runtime",
+  "license": "https://opensource.org/licenses/UPL",
+  "implements": [
+    "CRatingGaugeElement"
+  ],
+  "description": "Rating gauges are typically used to display or accept user feedback on a product or service.",
+  "displayName": "Rating Gauge",
+  "main": "oj-c/rating-gauge",
+  "help": "oj-c.RatingGauge.html",
+  "status": [
+    {
+      "type": "supersedes",
+      "since": "15.0.0",
+      "value": [
+        "oj-rating-gauge"
+      ]
+    }
+  ],
+  "extension": {
+    "catalog": {
+      "category": "Visualizations"
+    },
+    "vbdt": {
+      "module": "oj-c/rating-gauge"
+    },
+    "oracle": {
+      "icon": "oj-ux-ico-gauge-rating",
+      "uxSpecs": [
+        "gauge"
+      ]
+    },
+    "webelement": {
+      "package": "@oracle/oraclejet-core-pack",
+      "version": "19.0.1",
+      "docUrl": "https://www.oracle.com/webfolder/technetwork/jet/cpwdtsdoc/classes/RatingGaugeWebElement.html",
+      "export": "findRatingGauge",
+      "main": "@oracle/oraclejet-core-pack/webdriver"
+    }
+  },
+  "propertyLayout": [
+    {
+      "propertyGroup": "common",
+      "items": [
+        "style"
+      ]
+    },
+    {
+      "propertyGroup": "data",
+      "items": [
+        "value",
+        "max",
+        "step"
+      ]
+    }
+  ],
+  "since": "13.0.0",
+  "requirements": [
+    {
+      "type": "anyOf",
+      "label": "accessibility",
+      "properties": [
+        "aria-label",
+        "aria-labelledby",
+        "aria-describedby",
+        "described-by",
+        "labelled-by"
+      ]
+    }
+  ],
+  "properties": {
+    "max": {
+      "type": "number",
+      "description": "The maximum value of the gauge.",
+      "displayName": "Max",
+      "help": "#max",
+      "minimum": 0,
+      "value": 5
+    },
+    "readonly": {
+      "type": "boolean",
+      "help": "#readonly",
+      "displayName": "Readonly",
+      "value": false
+    },
+    "disabled": {
+      "type": "boolean",
+      "help": "#disabled",
+      "displayName": "Disabled",
+      "value": false
+    },
+    "changed": {
+      "type": "boolean",
+      "description": "Whether there has been a value entered by the user even if it is the same as the initial value.",
+      "displayName": "Changed",
+      "help": "#changed",
+      "writeback": true,
+      "value": false
+    },
+    "value": {
+      "type": "number|null",
+      "description": "The value of the Rating Gauge.",
+      "displayName": "Value",
+      "help": "#value",
+      "minimum": 0,
+      "writeback": true,
+      "value": 0
+    },
+    "step": {
+      "type": "number",
+      "displayName": "Step",
+      "help": "#step",
+      "value": 1
+    },
+    "describedBy": {
+      "type": "string|null",
+      "displayName": "Described By",
+      "help": "#help"
+    },
+    "labelledBy": {
+      "type": "string|null",
+      "displayName": "Labelled By",
+      "help": "#labelledBy"
+    },
+    "size": {
+      "type": "string",
+      "description": "Specifies the size of the rating gauge items.",
+      "displayName": "Size",
+      "help": "#size",
+      "propertyEditorValues": {
+        "sm": {
+          "description": "small Rating Gauge",
+          "displayName": "Small"
+        },
+        "md": {
+          "description": "medium Rating Gauge (default, if unspecified)",
+          "displayName": "Medium"
+        },
+        "lg": {
+          "description": "large Rating Gauge",
+          "displayName": "Large"
+        }
+      },
+      "enumValues": [
+        "sm",
+        "md",
+        "lg"
+      ],
+      "value": "md"
+    },
+    "color": {
+      "type": "string",
+      "description": "Specifies the color of the rating gauge items.",
+      "displayName": "Color",
+      "help": "#color",
+      "propertyEditorValues": {
+        "neutral": {
+          "description": "neutral color Rating Gauge (default, if unspecified)",
+          "displayName": "Neutral"
+        },
+        "gold": {
+          "description": "gold color Rating Gauge",
+          "displayName": "Gold"
+        }
+      },
+      "enumValues": [
+        "gold",
+        "neutral"
+      ],
+      "value": "neutral"
+    },
+    "thresholds": {
+      "type": "Array<object>",
+      "displayName": "Thresholds",
+      "help": "#thresholds",
+      "extension": {
+        "vbdt": {
+          "itemProperties": {
+            "accessibleLabel": {
+              "type": "string"
+            },
+            "color": {
+              "type": "string",
+              "format": "color",
+              "propertyEditorValues": {
+                "danger": {
+                  "description": "Maps to theme-specific color indicating a danger condition"
+                },
+                "warning": {
+                  "description": "Maps to theme-specific color indicating a warning condition"
+                },
+                "success": {
+                  "description": "Maps to theme-specific color indicating a success condition"
+                }
+              }
+            },
+            "max": {
+              "type": "number"
+            }
+          }
+        }
+      }
+    },
+    "datatip": {
+      "type": "function",
+      "displayName": "Datatip",
+      "help": "#datatip"
+    },
+    "tooltip": {
+      "type": "string",
+      "displayName": "Tooltip",
+      "help": "#tooltip"
+    },
+    "transientValue": {
+      "type": "number",
+      "displayName": "transientValue",
+      "help": "#transientValue",
+      "readOnly": true,
+      "writeback": true
+    }
+  },
+  "methods": {
+    "setProperty": {
+      "description": "Sets a property or a single subproperty for complex properties and notifies the component of the change, triggering a corresponding event.",
+      "help": "#setProperty",
+      "params": [
+        {
+          "name": "property",
+          "description": "The property name to set. Supports dot notation for subproperty access.",
+          "type": "string"
+        },
+        {
+          "name": "value",
+          "description": "The new value to set the property to.",
+          "type": "any"
+        }
+      ],
+      "return": "void"
+    },
+    "getProperty": {
+      "description": "Retrieves the value of a property or a subproperty.",
+      "help": "#getProperty",
+      "params": [
+        {
+          "name": "property",
+          "description": "The property name to get. Supports dot notation for subproperty access.",
+          "type": "string"
+        }
+      ],
+      "return": "any"
+    },
+    "setProperties": {
+      "description": "Performs a batch set of properties.",
+      "help": "#setProperties",
+      "params": [
+        {
+          "name": "properties",
+          "description": "An object containing the property and value pairs to set.",
+          "type": "object"
+        }
+      ],
+      "return": "void"
+    }
+  }
+}

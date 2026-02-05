@@ -1,0 +1,1 @@
+{"version":3,"file":"UNSAFE_objectUtils.js","sources":["../../../src/utils/UNSAFE_objectUtils/objectUtils.ts"],"sourcesContent":["import type { Obj } from '@oracle/oraclejet-internal-utilities/typeUtils';\n\n// type guard function\nexport const isObj = (v: unknown): v is Obj => typeof v === 'object';\n"],"names":["v"],"mappings":"qDAGsBA,GAAsC,iBAANA"}

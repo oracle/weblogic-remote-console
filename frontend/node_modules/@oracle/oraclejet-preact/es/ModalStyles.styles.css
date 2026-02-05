@@ -1,0 +1,20 @@
+.ModalStyles_baseStyle__1src2tr0 {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+.ModalStyles_backdropStyle__1src2tr1 {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+.ModalStyles_backdropScrimStyle__1src2tr2 {
+  background-color: var(--oj-c-EXPERIMENTAL-DO-NOT-USE-overlay-scrim);
+}
+.ModalStyles_backdropTransparentStyle__1src2tr3 {
+  background-color: transparent;
+}
