@@ -3,6 +3,7 @@
 
 package weblogic.remoteconsole.common.repodef.schema;
 
+import weblogic.console.schema.BooleanValue;
 import weblogic.console.schema.StringValue;
 import weblogic.console.schema.Value;
 import weblogic.console.schema.beaninfo.BeanActionParamDefSource;
@@ -14,13 +15,17 @@ import weblogic.console.utils.Path;
  */
 public class BeanActionParamDefCustomizerSource extends BeanFieldDefCustomizerSource {
 
-  private StringValue onlineName = new StringValue();
-  private Value<BeanActionParamDefSource> definition = new Value<>(null);
+  private StringValue onlineName = StringValue.create();
+  private BooleanValue readOnly = BooleanValue.create();
+  private BooleanValue secret = BooleanValue.create();
+  private Value<BeanActionParamDefSource> definition = Value.create();
 
   public void merge(BeanActionParamDefCustomizerSource from, Path fromContainedBeanPath) {
     super.merge(from, fromContainedBeanPath);
-    onlineName.merge(from.onlineName, fromContainedBeanPath);
-    definition.merge(from.definition, fromContainedBeanPath);
+    onlineName = onlineName.merge(from.onlineName, fromContainedBeanPath);
+    readOnly = readOnly.merge(from.readOnly, fromContainedBeanPath);
+    secret = secret.merge(from.secret, fromContainedBeanPath);
+    definition = definition.merge(from.definition, fromContainedBeanPath);
   }
 
   // The name of this parameter in online WebLogic admin server connections.
@@ -29,7 +34,27 @@ public class BeanActionParamDefCustomizerSource extends BeanFieldDefCustomizerSo
   }
 
   public void setOnlineName(String value) {
-    onlineName.setValue(value);
+    onlineName = onlineName.setValue(value);
+  }
+
+  // Whether this parameter is a read-only field on the action input form
+  // that is never used to invoke the action.
+  public boolean isReadOnly() {
+    return readOnly.getValue();
+  }
+
+  public void setReadOnly(boolean value) {
+    readOnly = readOnly.setValue(value);
+  }
+
+  // Whether this parameter is a secret.
+  // Only makes sense for string parameters.
+  public boolean isSecret() {
+    return secret.getValue();
+  }
+
+  public void setSecret(boolean value) {
+    secret = secret.setValue(value);
   }
 
   // If this param was not configured in type.yaml or extension.yaml,
@@ -40,7 +65,7 @@ public class BeanActionParamDefCustomizerSource extends BeanFieldDefCustomizerSo
   }
 
   public void setDefinition(BeanActionParamDefSource value) {
-    definition.setValue(value);
+    definition = definition.setValue(value);
   }
 
   @Override

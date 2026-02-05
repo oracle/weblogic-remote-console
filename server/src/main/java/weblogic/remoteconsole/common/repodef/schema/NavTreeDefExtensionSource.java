@@ -12,7 +12,7 @@ import weblogic.console.schema.YamlSource;
  * This POJO mirrors the yaml source file format for extending nav-tree.yaml
  */
 public class NavTreeDefExtensionSource extends YamlSource {
-  private ListValue<NavTreeNodeDefSource> contents = new ListValue<>();
+  private ListValue<NavTreeNodeDefSource> contents = ListValue.create();
 
   // The top level nav tree nodes for this type.
   public List<NavTreeNodeDefSource> getContents() {
@@ -20,7 +20,7 @@ public class NavTreeDefExtensionSource extends YamlSource {
   }
 
   public void setContents(List<NavTreeNodeDefSource> value) {
-    contents.setValue(value);
+    contents = contents.setValue(value);
   }
 
   @Override

@@ -86,8 +86,7 @@ public abstract class YamlReader {
       for (BeanPropertyDefSource property : extensionSource.getProperties()) {
         properties.put(property.getName(), property);
       }
-      source.getProperties().clear();
-      source.getProperties().addAll(properties.values());
+      source.setProperties(new ArrayList<>(properties.values()));
     }
     {
       Map<String,BeanActionDefSource> actions = new HashMap<>();
@@ -99,8 +98,7 @@ public abstract class YamlReader {
       for (BeanActionDefSource action : extensionSource.getActions()) {
         actions.put(action.getName(), action);
       }
-      source.getActions().clear();
-      source.getActions().addAll(actions.values());
+      source.setActions(new ArrayList<>(actions.values()));
     }
   }
 
@@ -143,13 +141,13 @@ public abstract class YamlReader {
   ) {
     // TBD - weed out duplicates?
     for (BeanPropertyDefCustomizerSource property : extensionSource.getProperties()) {
-      source.getProperties().add(property);
+      source.addProperty(property);
     }
     for (BeanChildDefCustomizerSource child : extensionSource.getChildren()) {
-      source.getChildren().add(child);
+      source.addChild(child);
     }
     for (SubTypeDefSource subType : extensionSource.getSubTypes()) {
-      source.getSubTypes().add(subType);
+      source.addSubType(subType);
     }
   }
 
@@ -280,10 +278,12 @@ public abstract class YamlReader {
     NavTreeDefSource source,
     NavTreeDefExtensionSource extensionSource
   ) {
+    List<NavTreeNodeDefSource> newContents = new ArrayList<>(source.getContents());
     // TBD - weed out duplicates?
     for (NavTreeNodeDefSource content : extensionSource.getContents()) {
-      source.getContents().add(content);
+      newContents.add(content);
     }
+    source.setContents(newContents);
   }
 
   public LinksDefSource getLinksDefSource(BeanTypeDef typeDef) {

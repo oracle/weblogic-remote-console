@@ -18,15 +18,12 @@ import weblogic.remoteconsole.common.repodef.BeanPropertyDef;
 import weblogic.remoteconsole.common.repodef.BeanTypeDef;
 import weblogic.remoteconsole.common.repodef.CustomPagePropertyDef;
 import weblogic.remoteconsole.common.repodef.CustomSliceFormDef;
-import weblogic.remoteconsole.common.repodef.CustomSlicesDef;
 import weblogic.remoteconsole.common.repodef.LocalizableString;
 import weblogic.remoteconsole.common.repodef.LocalizedConstants;
 import weblogic.remoteconsole.common.repodef.PageActionDef;
 import weblogic.remoteconsole.common.repodef.PageDef;
 import weblogic.remoteconsole.common.repodef.PagePropertyDef;
-import weblogic.remoteconsole.common.repodef.SliceDef;
 import weblogic.remoteconsole.common.repodef.SliceFormDef;
-import weblogic.remoteconsole.common.repodef.SlicesDef;
 import weblogic.remoteconsole.server.providers.AdminServerDataProvider;
 import weblogic.remoteconsole.server.repo.BeanReaderRepoSearchBuilder;
 import weblogic.remoteconsole.server.repo.BeanReaderRepoSearchResults;
@@ -290,10 +287,10 @@ public class UserGroupMBeanCustomizer {
     SliceFormDef uncustomizedFormDef = uncustomizedPageDef.asSliceFormDef();
     CustomSliceFormDef customizedFormDef = new CustomSliceFormDef(uncustomizedFormDef);
     if (!capabilities.isMemberGroupLister()) {
-      removeSliceIfPresent(customizedFormDef, "Membership");
+      CustomizerUtils.removeSliceIfPresent(customizedFormDef, "Membership");
     }
     if (!capabilities.isPasswordEditor()) {
-      removeSliceIfPresent(customizedFormDef, "Password");
+      CustomizerUtils.removeSliceIfPresent(customizedFormDef, "Password");
     }
     if (!capabilities.isUserEditor()) {
       makePropertyReadOnlyIfPresent(customizedFormDef, "Description");
@@ -309,26 +306,13 @@ public class UserGroupMBeanCustomizer {
     SliceFormDef uncustomizedFormDef = uncustomizedPageDef.asSliceFormDef();
     CustomSliceFormDef customizedFormDef = new CustomSliceFormDef(uncustomizedFormDef);
     if (!capabilities.isMemberGroupLister()) {
-      removeSliceIfPresent(customizedFormDef, "Membership");
+      CustomizerUtils.removeSliceIfPresent(customizedFormDef, "Membership");
     }
     if (!capabilities.isGroupEditor()) {
       makePropertyReadOnlyIfPresent(customizedFormDef, "Description");
       makePropertyReadOnlyIfPresent(customizedFormDef, "Groups");
     }
     return customizedFormDef;
-  }
-
-  private static void removeSliceIfPresent(CustomSliceFormDef formDef, String slice) {
-    SlicesDef oldSlicesDef = formDef.getSlicesDef();
-    List<SliceDef> newContentDefs = new ArrayList<>();
-    for (SliceDef sliceDef : oldSlicesDef.getContentDefs()) {
-      if (!slice.equals(sliceDef.getName())) {
-        newContentDefs.add(sliceDef);
-      }
-    }
-    CustomSlicesDef newSlicesDef = new CustomSlicesDef(oldSlicesDef);
-    newSlicesDef.setContentDefs(newContentDefs);
-    formDef.setSlicesDef(newSlicesDef);
   }
 
   private static void makePropertyReadOnlyIfPresent(CustomSliceFormDef formDef, String property) {

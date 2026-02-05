@@ -941,6 +941,13 @@ properties:
 - defaultValue:
     secureModeValue:
       value: false
+  descriptionHTML: '<p>Debug EJB MDB AQ JMS advanced message recovery processing</p> '
+  name: DebugEjbMdbAqMessageRecovery
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: false
   descriptionHTML: '<p>Debug EJB MDB Connection processing</p> '
   name: DebugEjbMdbConnection
   type: boolean

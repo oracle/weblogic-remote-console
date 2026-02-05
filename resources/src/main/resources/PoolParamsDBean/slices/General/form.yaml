@@ -1,4 +1,4 @@
-# Copyright (c) 2024, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2024, 2025, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 customizePageMethod: weblogic.remoteconsole.customizers.DescriptorBeanCustomizer.customizePage
@@ -6,6 +6,11 @@ customizePageDefMethod: weblogic.remoteconsole.customizers.DescriptorBeanCustomi
 
 introductionHTML: >
   <p>Use this page to manage the pool settings of this outbound connection.</p>
+  <p><b>Note</b>: If you have not explictly set a value on a connection instance
+  (e.g. <code>Initial Capacity</code>), WebLogic will use the value from the instance's group.
+  Similarly, if you have not set a value on a connection group, WebLogic will use the value from <code>ra.xml</code>.
+  Use this deployment's <code>Deployment Plan</code> or <code>Variable Assignments</code> page
+  to see which values have been set on the instances and groups.</p>
 
 properties:
 - name: InitialCapacity

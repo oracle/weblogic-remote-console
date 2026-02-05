@@ -124,6 +124,22 @@ properties:
   type: boolean
   writable: true
 - defaultValue:
+    value:
+      value: domainpki-client-identity
+  descriptionHTML: '<p>Gets the alias of the client certificate for this server when
+    SSLMBean.KeyStores is set to "DomainKeystores".</p> '
+  name: DomainKeystoresClientCertAlias
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: domainpki-server-identity
+  descriptionHTML: '<p>Gets the alias of the server certificate for this server when
+    SSLMBean.KeyStores is set to "DomainKeystores".</p> '
+  name: DomainKeystoresServerCertAlias
+  type: java.lang.String
+  writable: true
+- defaultValue:
     derivedDefault: true
   descriptionHTML: '<p>Indicates whether the server can be reached through the default
     SSL listen port.</p>  <p>If there is no explicit setting for this attribute, it

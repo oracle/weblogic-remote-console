@@ -261,46 +261,58 @@ describe.only('Test Suite: utilities_test for Additions/Modification/Deletion/Vi
         try {
             await admin.goToNavTreeLevelTwoLink(driver,"configuration","Environment","Clusters");
             await driver.sleep(1200);
-            console.log("Click Customizer Toggler");
+            console.log("Click Table Customizer Toggler");
             await driver.findElement(By.id("table-customizer-toggler")).click();
             await driver.sleep(1200);
 
-            console.log("Click Multicast Address");
+            console.log("Click Multicast Address at the Available Column");
             element = driver.findElement(By.xpath("//oj-selector[@id='unselected_checkboxsetMulticastAddress']"));
             driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
-            await driver.sleep(600);
+            await driver.sleep(6400);
+            await element.click();
             console.log("Click Add To Right Arrow");
             await driver.findElement(By.xpath("//oj-button[@id='addToRight']")).click();
-            await driver.sleep(600);
+            await driver.sleep(6400);
             console.log("Click Cancel Button");
-            await driver.findElement(By.xpath("//oj-button[3]/button/div/span/span")).click();
-            await driver.sleep(600);
+            await driver.findElement(By.xpath("//*[@id='cancel']")).click();
+            await driver.sleep(6400);
 
             console.log("Verify if user can click to select Multicast Address again after click Cancel button");
             console.log("Click Multicast Address");
             await driver.findElement(By.xpath("//oj-selector[@id='unselected_checkboxsetMulticastAddress']")).click();
-            await driver.sleep(600);
-            await element.click();
+            await driver.sleep(6400);
+
+            console.log("Click Add To Right Arrow");
+            await driver.findElement(By.xpath("//oj-button[@id='addToRight']")).click();
+            await driver.sleep(6400);
+            console.log("Click Cancel Button");
+            await driver.findElement(By.xpath("//*[@id='cancel']")).click();
+            await driver.sleep(6400);
             console.log("Click Multicast Port");
-            await driver.findElement(By.xpath("//oj-selector[@id='unselected_checkboxsetMulticastPort']")).click();
-            await driver.sleep(600);
+            element = driver.findElement(By.xpath("//oj-selector[@id='unselected_checkboxsetMulticastPort']"));
+            driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
+            await driver.sleep(6400);
+            if (element.isEnabled()) {
+                await element.click();
+            }
             console.log("Click Service Age Threshold");
             await driver.findElement(By.xpath("//oj-selector[@id='unselected_checkboxsetServiceAgeThresholdSeconds']")).click();
-            await driver.sleep(600);
+            await driver.sleep(6400);
             console.log("Click Right Arrow");
             await driver.findElement(By.xpath("//oj-button[@id='addToRight']")).click();
-            await driver.sleep(600);
+            await driver.sleep(6400);
             console.log("Click Apply Button");
             element = driver.findElement(By.xpath("//*[@id='apply']"));
             driver.executeScript("arguments[0].scrollIntoView({block:'center'})", element);
-            await driver.sleep(600);
+            await driver.sleep(6400);
             await element.click();
-            await driver.sleep(600);
+            await driver.sleep(6400);
             console.log("Click Reset Button");
             element = driver.findElement(By.xpath("//*[@id='reset']")).click();
             console.log("Click Middle Container");
             await driver.findElement(By.xpath("//div[@id='middle-container']")).click();
-            await driver.sleep(600);
+            await driver.sleep(6400);
+
             console.log("TEST PASS ");
         } catch (e) {
             await admin.takeScreenshot(driver, file);
@@ -321,7 +333,9 @@ describe.only('Test Suite: utilities_test for Additions/Modification/Deletion/Vi
             await admin.goToNavTreeLevelOneLink(driver,"configuration","Environment");
             await driver.sleep(1200);
             console.log("Enter Element Search for AdminServer");
-            element = driver.findElement(By.xpath("//input[@type='text']"));
+            element = await driver.wait(until.elementLocated(By.xpath("//input[@type='search']")), 10000);
+            await driver.wait(until.elementIsVisible(element), 10000);
+            await driver.wait(until.elementIsEnabled(element), 10000);
             await element.sendKeys("Admin");
             await element.sendKeys(Key.ENTER);
             await driver.sleep(2400);
@@ -369,7 +383,9 @@ describe.only('Test Suite: utilities_test for Additions/Modification/Deletion/Vi
             await admin.goToNavStripImageMenuLink(driver,"configuration");
             await driver.sleep(1200);
             console.log("Enter Element Search for Server");
-            element = driver.findElement(By.xpath("//input[@type='text']"));
+            element = await driver.wait(until.elementLocated(By.xpath("//input[@type='search']")), 10000);
+            await driver.wait(until.elementIsVisible(element), 10000);
+            await driver.wait(until.elementIsEnabled(element), 10000);
             await element.sendKeys("Server");
             await element.sendKeys(Key.ENTER);
             await driver.sleep(8400);
@@ -413,7 +429,7 @@ describe.only('Test Suite: utilities_test for Additions/Modification/Deletion/Vi
                 By.xpath("//div[@id='breadcrumbs-container']/ul/li[2]/oj-menu-button")).click();
             await driver.sleep(8400);
             console.log("Click to switch to AdminJMSServer - Configuration Tree");
-            await driver.findElement(By.xpath("//span[contains(.,'AdminJMSServer - Configuration View Tree')]")).click();
+            await driver.findElement(By.xpath("//span[contains(.,'AdminJMSServer')]")).click();
             await driver.sleep(8400);
             var server_name;
             element = driver.findElement(By.xpath("//oj-input-text[@id='Name']"));

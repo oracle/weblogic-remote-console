@@ -1,4 +1,4 @@
-# Copyright (c) 2020, 2024, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2020, 2025, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 contents:
 - label: Environment
@@ -72,6 +72,19 @@ contents:
   type: group
   contents:
   - child: ServerSecurityRuntime.RealmRuntimes
+    roles:
+      allowed:
+      - Operator
+  - child: DomainKeystoresRuntime
+    label: "Server Keystores"
+    roles:
+      allowed:
+      - Operator
+  - child: CertificateManagementRuntime
+    label: "Server Certificate Management"
+    roles:
+      allowed:
+      - Operator
 - label: Interoperability
   type: group
   contents:

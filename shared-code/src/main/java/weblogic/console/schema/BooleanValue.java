@@ -3,16 +3,65 @@
 
 package weblogic.console.schema;
 
-/**
- * This class manages a boolean value that can be configured in a yaml file.
- */
-public class BooleanValue extends Value<Boolean> {
+import weblogic.console.utils.Deduplicator;
+import weblogic.console.utils.Path;
 
-  public BooleanValue() {
-    this(false);
+/**
+ * This class manages a boolean that can configured in a yaml file.
+ */
+public class BooleanValue extends ReadOnlyValue<Boolean> {
+
+  private static final Deduplicator<BooleanValue> DEDUPLICATOR = new Deduplicator<>("BooleanValue");
+
+  private BooleanValue(
+    Boolean defaultValue,
+    Boolean yamlValue,
+    boolean specifiedInYaml,
+    Path containedBeanPath
+  ) {
+    super(defaultValue, yamlValue, specifiedInYaml, containedBeanPath);
   }
 
-  public BooleanValue(Boolean defaultValue) {
-    super(defaultValue);
+  public static BooleanValue create() {
+    return create(false);
+  }
+
+  public static BooleanValue create(Boolean defaultValue) {
+    return create(defaultValue, null, false, new Path());
+  }
+  
+  private static BooleanValue create(
+    Boolean defaultValue,
+    Boolean yamlValue,
+    boolean specifiedInYaml,
+    Path containedBeanPath
+  ) {
+    return
+      DEDUPLICATOR.deduplicate(
+        new BooleanValue(defaultValue, yamlValue, specifiedInYaml, containedBeanPath)
+      );
+  }
+
+  public BooleanValue setValue(Boolean value) {
+    validateValue(value);
+    return create(getDefaultValue(), value, true, getContainedBeanPath());
+  }
+
+  public BooleanValue copyFrom(BooleanValue from, Path fromContainedBeanPath) {
+    return
+      create(
+        getDefaultValue(),
+        from.getValue(),
+        from.isSpecifiedInYaml(),
+        fromContainedBeanPath.childPath(from.getContainedBeanPath())
+      );
+  }
+
+  public BooleanValue merge(BooleanValue from, Path fromContainedBeanPath) {
+    if (from.isSpecifiedInYaml()) {
+      return copyFrom(from, fromContainedBeanPath);
+    } else {
+      return this;
+    }
   }
 }

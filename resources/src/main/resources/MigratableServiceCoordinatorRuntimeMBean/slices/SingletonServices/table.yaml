@@ -1,0 +1,23 @@
+# Copyright (c) 2025, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+introductionHTML: >
+  <p>Migrates the singleton service to the destination server.<br/>
+   Source and the destination server must be up and running.</p>
+  <p>Note: if you are in an edit session,
+  go to the 'Edit' view after the migration and see if the shopping cart has changes that need to be committed.</p>
+
+getTableRowsMethod: weblogic.remoteconsole.customizers.MigrationCoordinatorMBeanCustomizer.getSingletonServiceSliceTableRows
+actions:
+  - name: "migrateSingleton"
+    label: Migrate Singleton Service
+    rows: one
+displayedColumns:
+  - name: "Name"
+    label: "Singleton Service"
+    definition:
+      type: "java.lang.String"
+      descriptionHTML: Singleton Service for migration
+  - name: "Cluster"
+    definition:
+      type: "java.lang.String"
+      descriptionHTML: Cluster that this singleton service is configured to

@@ -37,13 +37,14 @@ properties:
   type: int
   writable: true
 - defaultValue:
-    value:
-      value: null
+    derivedDefault: true
   descriptionHTML: '<p>The keystore alias for the certificate and private key to be
     used to encrypt and decrypt SAML Assertions.</p>  <p> The certificate is published
     in the SP metadata, which will be used by an external SP to encrypt SAML assertions.</p>  <p>The
     private key is used to decrypt assertions. If the alias is not specified, the
-    server''s configured SSL identity alias is used by default.</p> '
+    server''s configured SSL identity alias is used by default.</p>  <p>If this value
+    is not set, and the server''s KeyStores setting is DomainKeystores, then the default
+    Domain Keystores signing/encryption alias is returned.</p> '
   name: AssertionEncryptionDecryptionKeyAlias
   type: java.lang.String
   writable: true
@@ -403,12 +404,13 @@ properties:
   type: boolean
   writable: true
 - defaultValue:
-    value:
-      value: null
+    derivedDefault: true
   descriptionHTML: '<p>The keystore alias for the key to be used when signing documents.</p>  <p>The
     key is used to generate signatures on all the outgoing documents, such as authentication
     requests and responses. If you do not specify an alias, the server''s configured
-    SSL private key alias from the server''s SSL configuration is used by default.</p> '
+    SSL private key alias from the server''s SSL configuration is used by default.</p>  <p>If
+    this value is not set, and the server''s KeyStores setting is DomainKeystores,
+    then the default Domain Keystores signing/encryption alias is returned.</p> '
   name: SSOSigningKeyAlias
   type: java.lang.String
   writable: true
@@ -511,12 +513,14 @@ properties:
   name: SignAuthnRequests
   type: boolean
   writable: true
-- defaultValue: {
-    }
+- defaultValue:
+    derivedDefault: true
   descriptionHTML: '<p>The string alias used to store and retrieve the server''s private
     key, which is used to establish outgoing TLS/SSL connections.</p>  <p>If you do
     not specify an alias, the server''s configured SSL private key alias from the
-    server''s SSL configuration is used for the TLS alias by default.</p> '
+    server''s SSL configuration is used for the TLS alias by default.</p>  <p>If this
+    value is not set, and the server''s KeyStores setting is DomainKeystores, then
+    the default Domain Keystores client identity alias is returned.</p> '
   name: TransportLayerSecurityKeyAlias
   type: java.lang.String
   writable: true

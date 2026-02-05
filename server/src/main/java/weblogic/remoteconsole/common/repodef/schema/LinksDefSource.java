@@ -13,8 +13,8 @@ import weblogic.console.schema.YamlSource;
  * about the links for a type, e.g. DomainMBean/links.yaml
  */
 public class LinksDefSource extends YamlSource {
-  private ListValue<LinkDefSource> instanceLinks = new ListValue<>();
-  private ListValue<LinkDefSource> collectionLinks = new ListValue<>();
+  private ListValue<LinkDefSource> instanceLinks = ListValue.create();
+  private ListValue<LinkDefSource> collectionLinks = ListValue.create();
 
   // The links for instances of the type, i.e. the links to
   // display for a ServerMBean.
@@ -23,11 +23,11 @@ public class LinksDefSource extends YamlSource {
   }
 
   public void setInstanceLinks(List<LinkDefSource> value) {
-    instanceLinks.setValue(value);
+    instanceLinks = instanceLinks.setValue(value);
   }
 
   public void addInstanceLink(LinkDefSource value) {
-    instanceLinks.add(value);
+    instanceLinks = instanceLinks.add(value);
   }
 
   // The links for collections of the type, i.e. the links to
@@ -37,11 +37,11 @@ public class LinksDefSource extends YamlSource {
   }
 
   public void setCollectionLinks(List<LinkDefSource> value) {
-    collectionLinks.setValue(value);
+    collectionLinks = collectionLinks.setValue(value);
   }
 
   public void addCollectionLink(LinkDefSource value) {
-    collectionLinks.add(value);
+    collectionLinks = collectionLinks.add(value);
   }
 
   @Override

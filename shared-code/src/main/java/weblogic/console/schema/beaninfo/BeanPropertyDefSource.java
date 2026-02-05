@@ -18,28 +18,28 @@ import weblogic.console.schema.Value;
  * which is a superset of what's available from a normal java bean info.
  */
 public class BeanPropertyDefSource extends BeanValueDefSource {
-  private StringValue name = new StringValue();
-  private StringValue descriptionHTML = new StringValue();
-  private BooleanValue key = new BooleanValue();
-  private BooleanValue writable = new BooleanValue();
-  private BooleanValue nullable = new BooleanValue();
-  private BooleanValue restartNeeded = new BooleanValue();
-  private BooleanValue redeployNeeded = new BooleanValue();
-  private BooleanValue encrypted = new BooleanValue();
-  private BooleanValue sensitive = new BooleanValue();
-  private BooleanValue transientVar = new BooleanValue();
-  private ListValue<String> creators = new ListValue<>();
-  private StringValue relationship = new StringValue();
-  private StringValue deprecated = new StringValue();
-  private StringValue obsolete = new StringValue();
-  private BooleanValue exclude = new BooleanValue();
-  private StringValue excludeFromRest = new StringValue();
-  private StringValue restInternal =  new StringValue();
-  private BooleanValue extension =  new BooleanValue();
-  private BooleanValue supported = new BooleanValue(true);
-  private Value<DefaultValueDefSource> defaultValue = new Value<>(null);
-  private Value<RolesDefSource> getRoles = new Value<>(null);
-  private Value<RolesDefSource> setRoles = new Value<>(null);
+  private StringValue name = StringValue.create();
+  private StringValue descriptionHTML = StringValue.create();
+  private BooleanValue key = BooleanValue.create();
+  private BooleanValue writable = BooleanValue.create();
+  private BooleanValue nullable = BooleanValue.create();
+  private BooleanValue restartNeeded = BooleanValue.create();
+  private BooleanValue redeployNeeded = BooleanValue.create();
+  private BooleanValue encrypted = BooleanValue.create();
+  private BooleanValue sensitive = BooleanValue.create();
+  private BooleanValue transientVar = BooleanValue.create();
+  private ListValue<String> creators = ListValue.create();
+  private StringValue relationship = StringValue.create();
+  private StringValue deprecated = StringValue.create();
+  private StringValue obsolete = StringValue.create();
+  private BooleanValue exclude = BooleanValue.create();
+  private StringValue excludeFromRest = StringValue.create();
+  private StringValue restInternal = StringValue.create();
+  private BooleanValue extension = BooleanValue.create();
+  private BooleanValue supported = BooleanValue.create(true);
+  private Value<DefaultValueDefSource> defaultValue = Value.create();
+  private Value<RolesDefSource> getRoles = Value.create();
+  private Value<RolesDefSource> setRoles = Value.create();
 
   // The property's name
   public String getName() {
@@ -47,7 +47,7 @@ public class BeanPropertyDefSource extends BeanValueDefSource {
   }
 
   public void setName(String val) {
-    name.setValue(val);
+    name = name.setValue(val);
   }
 
   // The property's description
@@ -56,7 +56,7 @@ public class BeanPropertyDefSource extends BeanValueDefSource {
   }
 
   public void setDescriptionHTML(String val) {
-    descriptionHTML.setValue(val);
+    descriptionHTML = descriptionHTML.setValue(val);
   }
 
   // Whether this property is used as the key
@@ -67,7 +67,7 @@ public class BeanPropertyDefSource extends BeanValueDefSource {
   }
 
   public void setKey(boolean val) {
-    key.setValue(val);
+    key = key.setValue(val);
   }
 
   // Whether this property is writable (v.s. read-only)
@@ -76,7 +76,7 @@ public class BeanPropertyDefSource extends BeanValueDefSource {
   }
 
   public void setWritable(boolean val) {
-    writable.setValue(val);
+    writable = writable.setValue(val);
   }
 
   // Currently unused.
@@ -85,7 +85,7 @@ public class BeanPropertyDefSource extends BeanValueDefSource {
   }
 
   public void setNullable(boolean val) {
-    nullable.setValue(val);
+    nullable = nullable.setValue(val);
   }
 
   // Whether WebLogic servers need to be restarted before they
@@ -95,7 +95,7 @@ public class BeanPropertyDefSource extends BeanValueDefSource {
   }
 
   public void setRestartNeeded(boolean val) {
-    restartNeeded.setValue(val);
+    restartNeeded = restartNeeded.setValue(val);
   }
 
   // WebLogic specific.  Currently unused.
@@ -104,7 +104,7 @@ public class BeanPropertyDefSource extends BeanValueDefSource {
   }
 
   public void setRedeployNeeded(boolean val) {
-    redeployNeeded.setValue(val);
+    redeployNeeded = redeployNeeded.setValue(val);
   }
 
   // implies secret - could be named better
@@ -116,7 +116,7 @@ public class BeanPropertyDefSource extends BeanValueDefSource {
   }
 
   public void setEncrypted(boolean val) {
-    encrypted.setValue(val);
+    encrypted = encrypted.setValue(val);
   }
 
   // Whether this property is sensitive.
@@ -126,7 +126,7 @@ public class BeanPropertyDefSource extends BeanValueDefSource {
   }
 
   public void setSensitive(boolean val) {
-    sensitive.setValue(val);
+    sensitive = sensitive.setValue(val);
   }
 
   // WebLogic specific.  Currently unused.
@@ -135,7 +135,7 @@ public class BeanPropertyDefSource extends BeanValueDefSource {
   }
 
   public void setTransient(boolean val) {
-    transientVar.setValue(val);
+    transientVar = transientVar.setValue(val);
   }
 
   // WLS specific - only used to determine if this child bean is create-able
@@ -149,11 +149,11 @@ public class BeanPropertyDefSource extends BeanValueDefSource {
   }
 
   public void setCreators(List<String> val) {
-    creators.setValue(val);
+    creators = creators.setValue(val);
   }
 
   public void addCreator(String val) {
-    creators.add(val);
+    creators = creators.add(val);
   }
 
   // Whether this child bean property is creatable.
@@ -171,7 +171,7 @@ public class BeanPropertyDefSource extends BeanValueDefSource {
   }
 
   public void setRelationship(String val) {
-    relationship.setValue(val);
+    relationship = relationship.setValue(val);
   }
 
   // Whether this property holds a sensitive value.
@@ -198,7 +198,7 @@ public class BeanPropertyDefSource extends BeanValueDefSource {
   }
 
   public void setDeprecated(String val) {
-    deprecated.setValue(val);
+    deprecated = deprecated.setValue(val);
   }
 
   public String getObsolete() {
@@ -206,7 +206,7 @@ public class BeanPropertyDefSource extends BeanValueDefSource {
   }
 
   public void setObsolete(String val) {
-    obsolete.setValue(val);
+    obsolete = obsolete.setValue(val);
   }
 
   public boolean isExclude() {
@@ -214,7 +214,7 @@ public class BeanPropertyDefSource extends BeanValueDefSource {
   }
 
   public void setExclude(boolean val) {
-    exclude.setValue(val);
+    exclude = exclude.setValue(val);
   }
 
   // Currently unused.
@@ -223,7 +223,7 @@ public class BeanPropertyDefSource extends BeanValueDefSource {
   }
 
   public void setExcludeFromRest(String val) {
-    excludeFromRest.setValue(val);
+    excludeFromRest = excludeFromRest.setValue(val);
   }
 
   // Currently unused.
@@ -232,7 +232,7 @@ public class BeanPropertyDefSource extends BeanValueDefSource {
   }
 
   public void setRestInternal(String val) {
-    restInternal.setValue(val);
+    restInternal = restInternal.setValue(val);
   }
 
   // Whether this property was defined in extension.yaml,
@@ -242,7 +242,7 @@ public class BeanPropertyDefSource extends BeanValueDefSource {
   }
 
   public void setExtension(boolean val) {
-    extension.setValue(val);
+    extension = extension.setValue(val);
   }
 
   // Currently unused.
@@ -251,7 +251,7 @@ public class BeanPropertyDefSource extends BeanValueDefSource {
   }
 
   public void setSupported(boolean val) {
-    supported.setValue(val);
+    supported = supported.setValue(val);
   }
 
   // The default value to use for this property.
@@ -260,7 +260,7 @@ public class BeanPropertyDefSource extends BeanValueDefSource {
   }
 
   public void setDefaultValue(DefaultValueDefSource val) {
-    defaultValue.setValue(val);
+    defaultValue = defaultValue.setValue(val);
   }
 
   // The roles that are allowed to get this property
@@ -269,7 +269,7 @@ public class BeanPropertyDefSource extends BeanValueDefSource {
   }
 
   public void setGetRoles(RolesDefSource value) {
-    getRoles.setValue(value);
+    getRoles = getRoles.setValue(value);
   }
 
   // The roles that are allowed to set this property
@@ -278,7 +278,7 @@ public class BeanPropertyDefSource extends BeanValueDefSource {
   }
 
   public void setSetRoles(RolesDefSource value) {
-    setRoles.setValue(value);
+    setRoles = setRoles.setValue(value);
   }
 
   @Override

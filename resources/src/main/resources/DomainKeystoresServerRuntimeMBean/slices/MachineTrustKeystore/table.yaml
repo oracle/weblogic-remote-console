@@ -1,0 +1,40 @@
+# Copyright (c) 2025, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+introductionHTML: >
+  <p>This page manages the server's machine's trust keystore.</p>
+
+getTableRowsMethod: weblogic.remoteconsole.customizers.DomainKeystoresMBeanCustomizer.getMachineTrustKeystoreSliceTableRows
+
+displayedColumns:
+- name: Alias
+  definition:
+    type: "java.lang.String"
+    descriptionHTML: The certificate's alias
+- name: Subject
+  definition:
+    type: "java.lang.String"
+    descriptionHTML: The certificate's subject
+- name: NotAfter
+  dateAsLong: true
+  definition:
+    type: long
+    descriptionHTML: The certificate is not valid after this date.
+hiddenColumns:
+- name: EntryType
+  definition:
+    type: "java.lang.String"
+    descriptionHTML: The certificate's type
+- name: Issuer
+  definition:
+    type: "java.lang.String"
+    descriptionHTML: The certificate's issuer
+- name: SerialNumber
+  definition:
+    type: "java.lang.String"
+    descriptionHTML: The certificate's serial number
+- name: NotBefore
+  dateAsLong: true
+  definition:
+    type: long
+    descriptionHTML: The certificate is not valid before this date.

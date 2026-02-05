@@ -1,5 +1,5 @@
 <!--
-Copyright (c) 2020, 2024, Oracle and/or its affiliates. The Universal Permissive License (UPL), Version 1.0
+Copyright (c) 2020, 2025, Oracle and/or its affiliates. The Universal Permissive License (UPL), Version 1.0
  The Universal Permissive License (UPL), Version 1.0
 -->
 <div id="beanpath-history-container" class="oj-flex oj-sm-flex-items-initial oj-sm-flex-wrap-nowrap">
@@ -8,15 +8,15 @@ Copyright (c) 2020, 2024, Oracle and/or its affiliates. The Universal Permissive
   </div>
 
   <a class="cfe-hidden-accesskey-link" href="#"
-    accesskey="B" tabindex="-1" on-click="[[hiddenAccessKeyClickHandler]]" aria-hidden="true"
+     accesskey="B" tabindex="-1" on-click="[[hiddenAccessKeyClickHandler]]" aria-hidden="true"
   >
   </a>
   <div id="beanpath-history-dropdown" class="oj-flex-item  oj-md-align-self-center">
     <oj-combobox-one
-      id="beanpath-history-entries"
-      options="{{beanPathHistoryOptions}}"
-      value='{{selectedBeanPath}}'
-      readonly="false"
+        id="beanpath-history-entries"
+        options="{{beanPathHistoryOptions}}"
+        value='{{selectedBeanPath}}'
+        readonly="false"
     >
     </oj-combobox-one>
   </div>
@@ -30,11 +30,11 @@ Copyright (c) 2020, 2024, Oracle and/or its affiliates. The Universal Permissive
       <img class="button-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.icons.more.iconFile + '.png', alt: i18n.icons.more.tooltip}"/>
     </a>
     <oj-menu
-      id="moreMenu"
-      aria-labelledby="moreMenuLauncher"
-      on-oj-action="[[moreMenuClickListener]]"
-      open-options.launcher="moreMenuLauncher"
-      open-options.initial-focus="firstItem"
+        id="moreMenu"
+        aria-labelledby="moreMenuLauncher"
+        on-oj-action="[[moreMenuClickListener]]"
+        open-options.launcher="moreMenuLauncher"
+        open-options.initial-focus="firstItem"
     >
       <oj-option id="clear" value="clear">
         <img id="[[i18n.menus.history.clear.id]]" class="option-icon" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.menus.history.clear.iconFile + '.png', alt: i18n.menus.history.clear.label}"/>
@@ -48,13 +48,13 @@ Copyright (c) 2020, 2024, Oracle and/or its affiliates. The Universal Permissive
 </div>
 
 <oj-dialog
-  id="recentlyVisitedPagesDialog"
-  dialog-title="[[i18n.dialog.title]]"
-  modality="modal"
-  cancel-behavior="escape"
-  on-oj-focus="[[onOjFocus]]"
-  role="dialog"
-  aria-labelledby="recently-visited-dialog-instructions"
+    id="recentlyVisitedPagesDialog"
+    dialog-title="[[i18n.dialog.title]]"
+    modality="modal"
+    cancel-behavior="escape"
+    on-oj-focus="[[onOjFocus]]"
+    role="dialog"
+    aria-labelledby="recently-visited-dialog-instructions"
 >
   <div slot="body">
     <div id="recently-visited-dialog-instructions" class="cfe-dialog-prompt">
@@ -63,19 +63,19 @@ Copyright (c) 2020, 2024, Oracle and/or its affiliates. The Universal Permissive
 
     <oj-form-layout id="recently-visited-form-layout" aria-labelledby="recently-visited-dialog-instructions" class="oj-formlayout-full-width">
       <oj-table
-        id="pages-history-table"
-        class="oj-table-data-cell-no-padding"
-        aria-label="Recently Visited Pages Table"
-        data="[[pagesHistoryDataProvider]]"
-        scroll-policy='loadMoreOnScroll'
-        scroll-policy-options='{"fetchSize": 10000}'
-        columns='[[columnData]]'
-        display="grid"
-        horizontal-grid-visible="enabled"
-        vertical-grid-visible="enabled"
-        selection-mode='{"row": "single"}'
-        selected.row='{{selectedRows}}'
-        on-selected-changed='[[onSelectedChanged]]'
+          id="pages-history-table"
+          class="oj-table-data-cell-no-padding"
+          aria-label="Recently Visited Pages Table"
+          data="[[pagesHistoryDataProvider]]"
+          scroll-policy='loadMoreOnScroll'
+          scroll-policy-options='{"fetchSize": 10000}'
+          columns='[[getColumnData("pagesHistory")]]'
+          display="grid"
+          horizontal-grid-visible="enabled"
+          vertical-grid-visible="enabled"
+          selection-mode='{"row": "single"}'
+          selected.row='{{selectedRows}}'
+          on-selected-changed='[[onSelectedChangedPagesHistory]]'
       >
         <template slot="noData"></template>
       </oj-table>
@@ -87,6 +87,74 @@ Copyright (c) 2020, 2024, Oracle and/or its affiliates. The Universal Permissive
       <span class="button-label" data-bind="text: [[i18n.buttons.clear.label()]]"></span>
     </oj-button>
     <oj-button id="dlgCancelBtn24">
+      <span class="button-label" data-bind="text: [[i18n.buttons.close.label]]"></span>
+    </oj-button>
+  </div>
+
+</oj-dialog>
+
+<oj-dialog
+    id="pagesBookmarkDialog"
+    dialog-title="[[i18n.dialog.title]]"
+    modality="modal"
+    cancel-behavior="escape"
+    role="dialog"
+    aria-labelledby="pages-bookmark-dialog-instructions"
+>
+  <div slot="body">
+    <div id="pages-bookmark-dialog-instructions" class="cfe-dialog-prompt">
+      <span data-bind="text: [[i18n.dialog.instructions()]]"></span>
+    </div>
+
+    <oj-form-layout id="pages-bookmark-form-layout" aria-labelledby="pages-bookmark-dialog-instructions" class="oj-formlayout-full-width">
+      <oj-table
+          id="pages-bookmark-table"
+          class="oj-table-data-cell-no-padding"
+          aria-label="Page Bookmarks Table"
+          data="[[pagesBookmarkDataProvider]]"
+          scroll-policy='loadMoreOnScroll'
+          scroll-policy-options='{"fetchSize": 10000}'
+          columns='[[getColumnData("pagesBookmark")]]'
+          display="grid"
+          horizontal-grid-visible="enabled"
+          vertical-grid-visible="enabled"
+          selection-mode='{"row": "single"}'
+          selected.row='{{selectedRows}}'
+          on-selected-changed='[[onSelectedChangedPagesBookmark]]'
+      >
+        <template slot="noData"></template>
+        <template slot="rowTemplate" data-oj-as="row">
+          <tr>
+            <td>
+              <oj-button data-oj-clickthrough="disabled" display="icons" chroming="borderless" on-oj-action="[[handleDeletePagesBookmark]]" data-bind="attr: {'data-bookmark-value': row.data._value}">
+                <span slot="endIcon" class="oj-ux-ico-trash"></span>
+                <oj-bind-text value="[[i18n.tooltips.delete.value]]"></oj-bind-text>
+              </oj-button>
+            </td>
+            <td>
+              <oj-bind-text value="[[row.data.tree]]"></oj-bind-text>
+            </td>
+            <td>
+              <oj-bind-text value="[[row.data.page]]"></oj-bind-text>
+            </td>
+            <td>
+              <oj-bind-text value="[[row.data.tab]]"></oj-bind-text>
+            </td>
+          </tr>
+        </template>
+        <template slot="noData"></template>
+      </oj-table>
+    </oj-form-layout>
+  </div>
+
+  <div slot="footer">
+    <oj-button id="dlgResetBtn25" disabled="[[i18n.buttons.reset.disabled()]]">
+      <span class="button-label" data-bind="text: [[i18n.buttons.reset.label()]]"></span>
+    </oj-button>
+    <oj-button id="dlgApplyBtn25" disabled="[[i18n.buttons.apply.disabled()]]">
+      <span class="button-label" data-bind="text: [[i18n.buttons.apply.label()]]"></span>
+    </oj-button>
+    <oj-button id="dlgCancelBtn25">
       <span class="button-label" data-bind="text: [[i18n.buttons.close.label]]"></span>
     </oj-button>
   </div>

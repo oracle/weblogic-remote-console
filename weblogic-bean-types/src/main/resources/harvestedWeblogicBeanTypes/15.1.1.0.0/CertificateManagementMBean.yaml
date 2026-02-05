@@ -1,0 +1,130 @@
+# Copyright (c) 2020, 2025, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+baseTypes:
+- weblogic.management.configuration.ConfigurationPropertiesMBean
+descriptionHTML: '<p>Provides configuration for the WebLogic Certificate Management
+  Service.</p> '
+name: weblogic.management.configuration.CertificateManagementMBean
+properties:
+- defaultValue:
+    value:
+      value: 365
+  descriptionHTML: '<p>Returns the validity period (certificate lifetime) that the
+    Domain Certificates Issuer should set when generating a new Certificate Authority
+    certificate. The validity period is expressed in days.</p> '
+  name: CertificateAuthorityValidityPeriod
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: 1
+  descriptionHTML: '<p>Returns the certificate check interval -- how often the Certificate
+    Management Service should check for/refresh expiring certificates (in days).</p> '
+  name: CertificateCheckInterval
+  type: int
+  writable: true
+- array: true
+  creators:
+  - weblogic.management.configuration.CertificateIssuerPluginMBean
+  defaultValue: {
+    }
+  descriptionHTML: '<p>Returns the CertificateIssuerPlugins for this Domain.</p> '
+  name: CertificateIssuerPlugins
+  relationship: containment
+  type: weblogic.management.configuration.CertificateIssuerPluginMBean
+- defaultValue:
+    value:
+      value: 10
+  descriptionHTML: '<p>Returns the certificate refresh window. The Certificate Management
+    Service will refresh an expiring certificate when its remaining lifetime is less
+    than this number of days.</p> '
+  name: CertificateRefreshWindow
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: 90
+  descriptionHTML: '<p>Returns the validity period (certificate lifetime) that the
+    Domain Certificates Issuer should set when generating a new certificate. The validity
+    period is expressed in days.</p> '
+  name: CertificateValidityPeriod
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Returns true or false to indicate whether the Certificate Management
+    Service is enabled or not.</p> '
+  name: Enabled
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: true
+  descriptionHTML: '<p>Whether the Domain Certificates Issuer should include the self-signed
+    root CA in the certificate chain for a generated certificate.</p> '
+  name: IncludeRootCertificateInChain
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Whether or not the domain should trust the Java Standard Trust
+    certificates, in addition to the Domain Certificate Authority certificate(s) and
+    any Provisioned Trust certificates. Java Standard Trust is a collection of well-known,
+    trusted root certificate authorities distributed (and updated) as part of the
+    JDK.</p> '
+  name: JavaStandardTrustEnabled
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Returns true or false to indicate whether the Provisioned Certificates
+    Issuer is enabled or not.</p> '
+  name: ProvisionedCertificatesIssuerEnabled
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: true
+    value:
+      value: false
+  descriptionHTML: '<p>Returns the single purpose certificates enabled value: whether
+    the Domain Certificates Issuer should generate separate, single-purpose certificates
+    for different purposes (server authentication, client authentication, signing
+    and encryption), or generate one certificate that supports all those purposes.</p> '
+  name: SinglePurposeCertificatesEnabled
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: hostname, address, loopback, listen_address_all, virtual_host_all
+  descriptionHTML: '<p>A space- or comma-separated list of words representing the
+    Subject Alternative Names that the Domain Certificates Issuer should include when
+    generating a server certificate.</p>  <p>Each word must be one of the subject
+    name constants defined by the CertificateConfigurationConstants interface. When
+    generating a certificate, the Certificate Management Service replaces each constant
+    with the corresponding value(s) obtained from the target server''s configuration
+    or the host it''s running on.</p>  <p>The certificate''s CN attribute will be
+    included as a Subject Alternative Name even if it is not explicitly configured
+    here.</p> '
+  name: SubjectAlternativeNames
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: hostname
+  descriptionHTML: '<p>The name the Domain Certificates Issuer should use for the
+    CN attribute of a certificate''s Subject: either the local hostname (<code>hostname</code>)
+    or the server''s listen address (<code>listen_address</code>).</p>  <p>If no listen
+    address is configured for the server, hostname will be used instead, regardless
+    of the value set here.</p>  <p>The CN value will also be added as a Subject Alternative
+    Name (even if it is not explicitly configured as a Subject Alternative Name).</p> '
+  legalValues:
+  - hostname
+  - listen_address
+  name: SubjectCommonName
+  type: java.lang.String
+  writable: true

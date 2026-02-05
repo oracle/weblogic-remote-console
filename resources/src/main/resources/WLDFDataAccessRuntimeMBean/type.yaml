@@ -1,4 +1,4 @@
-# Copyright (c) 2020, 2024, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2020, 2025, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 properties:
@@ -11,17 +11,28 @@ actions:
   disableMBeanJavadoc: true
   actionMethod: weblogic.remoteconsole.customizers.WLDFDataAccessRuntimeMBeanCustomizer.downloadLogs
   helpHTML: >
-    <p>Download log files to the specified directory. If the directory does not exist, it will be created. 
-    Log files are named automatically based on server name, log file type, and time stamp.</p>
-  # don't specify polling since there is no column in the table that are affected by this action
+    <p>Download log files to the specified directory. Log files are named automatically based on server name, 
+    log file type, and time stamp.</p>
+    <p>By default, all available logs are downloaded. 
+    To download logs for a specific period, adjust the Since and Until fields.
+    <br/> The same criteria applies to all selected log files.</p>
   inputForm:
     customizePageMethod: weblogic.remoteconsole.customizers.WLDFDataAccessRuntimeMBeanCustomizer.customizeDownloadLogsInputForm
     introductionHTML: >
-      <p>Download log files to the specified directory. If the directory does not exist, it will be created. 
-      Log files are named automatically based on server name, log file type, and time stamp.</p>
+      <p>Download log files to the specified directory. Log files are named automatically based on server name, 
+      log file type, and time stamp.</p>
+      <p>By default, all available logs are downloaded. 
+      To download logs for a specific period, adjust the Since and Until fields.
+      <br/> The same criteria applies to all selected log files.</p>
     parameters:
       - name: "LogFileDirectory"
         label: "Directory"
         required: true
       - name: "FileFormat"
         required: true
+      - name: "Since"
+      - name: "Until"
+      - name: "MaxRecords"
+        label: "Max Number of Records"
+
+

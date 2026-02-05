@@ -1,0 +1,82 @@
+# Copyright (c) 2025, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions:
+
+- name: "exportTrustedCertificates"
+  type: "void"
+  descriptionHTML: >
+    <p>Export the certificates trusted by the domain; that is,
+    the contents of the "Domain Trust" keystore combined with
+     the contents of the "Provisioned Trust" keystore.</p>
+  parameters:
+  - name: toFileName
+    type: java.lang.String
+    descriptionHTML: "The name of the output file"
+  - name: toFileType
+    type: java.lang.String
+    legalValues:
+    - PKCS12
+    - JKS
+    descriptionHTML: "The type of the output file"
+  - name: toFilePassphrase
+    type: java.lang.String
+    descriptionHTML: "The passphrase for the output file (if needed)"
+  roles:
+    allowed:
+    - Admin
+
+- name: "addProvisionedIdentityCertificate"
+  type: "void"
+  descriptionHTML: "Add a provisioned identity certificate to the domain."
+  parameters:
+  - name: toAlias
+    type: java.lang.String
+    descriptionHTML: "The alias to use for the new provisioned identity certificate"
+  - name: fromFileName
+    type: java.lang.String
+    descriptionHTML: "The name of the input file"
+  - name: fromFileType
+    type: java.lang.String
+    legalValues:
+    - PKCS12
+    - JKS
+    descriptionHTML: "The type of the input file"
+  - name: fromFilePassphrase
+    type: java.lang.String
+    descriptionHTML: " The passphrase for the input file (if needed)"
+  - name: fromAlias
+    type: java.lang.String
+    descriptionHTML: "The alias of the entry in the input file (if needed)"
+  - name: fromAliasPassphrase
+    type: java.lang.String
+    descriptionHTML: "The passphrase for the entry in the input file (if needed)"
+  roles:
+    allowed:
+    - Admin
+
+- name: "addProvisionedTrustCertificate"
+  type: "void"
+  descriptionHTML: "Add a provisioned trust anchor to the domain."
+  parameters:
+  - name: toAlias
+    type: java.lang.String
+    descriptionHTML: "The alias to use for the new provisioned trust anchor"
+  - name: fromFileName
+    type: java.lang.String
+    descriptionHTML: "The name of the input file"
+  - name: fromFileType
+    type: java.lang.String
+    legalValues:
+    - PKCS12
+    - JKS
+    descriptionHTML: "The type of the input file"
+  - name: fromFilePassphrase
+    type: java.lang.String
+    descriptionHTML: " The passphrase for the input file (if needed)"
+  - name: fromAlias
+    type: java.lang.String
+    descriptionHTML: "The alias of the entry in the input file (if needed)"
+  roles:
+    allowed:
+    - Admin

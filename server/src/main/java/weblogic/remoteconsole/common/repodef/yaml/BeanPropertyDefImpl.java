@@ -309,7 +309,7 @@ public class BeanPropertyDefImpl extends BeanValueDefImpl implements BeanPropert
     return setRoles;
   }
 
-  protected BeanPropertyDefSource getSource() {
+  public BeanPropertyDefSource getSource() {
     return source;
   }
 

@@ -1,0 +1,18 @@
+<!--
+  Copyright (c) 2025, Oracle and/or its affiliates.
+  Licensed under The Universal Permissive License (UPL), Version 1.0
+  as shown at https://oss.oracle.com/licenses/upl/
+
+-->
+<oj-bind-if test="[[i18n.icons.bookmarks.visible()]]">
+  <a
+    id="pagesBookmarkIconbarIcon"
+    class="cfe-content-area-header-iconbar-icon"
+    href="#"
+    on-click="[[pagesBookmarkIconClickListener]]"
+  >
+    <span>
+      <img id="pagesBookmarkImage" data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.icons.bookmarks.iconFile() + '.png', alt: i18n.icons.bookmarks.tooltip, title: i18n.icons.bookmarks.tooltip}"/>
+    </span>
+  </a>
+</oj-bind-if>

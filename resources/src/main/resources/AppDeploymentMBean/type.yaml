@@ -1,4 +1,4 @@
-# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2025, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 properties:
 
@@ -43,5 +43,16 @@ properties:
     - value: external_stage
       label: External Stage
 
+- name: SecurityDDModel
+  label: "Security Model"
+  legalValues:
+    - value: "DDOnly"
+      label: "DD Only"
+    - value: "CustomRoles"
+      label: "Custom Roles"
+    - value: "CustomRolesAndPolicies"
+      label: "Custom Roles and Policies"
+    - value: "Advanced"
+      label: "Advanced"
 
 createResourceMethod: weblogic.remoteconsole.customizers.AppDeploymentMBeanCustomizer.createResource

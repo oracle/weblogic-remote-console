@@ -45,19 +45,20 @@ public class WebLogicRestClient {
 
   /**
    * Invoke GET on a WLS REST endpoint.
-   *
-   * @param request
-   *
-   * @return
-   *
-   * @throws WebLogicRestClientException
    */
   public static Response get(WebLogicRestRequest request) throws WebLogicRestClientException {
+    return get(request, MediaType.APPLICATION_JSON);
+  }
+
+  /**
+   * Invoke GET on a WLS REST endpoint.
+   */
+  public static Response get(WebLogicRestRequest request, String accept) throws WebLogicRestClientException {
     WebTarget webTarget = getWebTarget(request);
     MultivaluedMap<String, Object> headers = WebLogicRestClientHelper.createHeaders(request);
     Response response = null;
     try {
-      response = webTarget.request().headers(headers).accept(MediaType.APPLICATION_JSON).get();
+      response = webTarget.request().headers(headers).accept(accept).get();
 
       if (WebLogicRestClientHelper.isErrorResponse("GET", response.getStatus())) {
         response = WebLogicRestClientHelper.getWebLogicRestErrorMessages(response);

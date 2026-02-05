@@ -4,12 +4,15 @@
 package weblogic.remoteconsole.customizers;
 
 import java.io.File;
-import java.io.FileWriter;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -22,13 +25,20 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
 
 import weblogic.console.utils.Path;
+import weblogic.remoteconsole.common.repodef.BeanPropertyDef;
+import weblogic.remoteconsole.common.repodef.BeanTypeDef;
 import weblogic.remoteconsole.common.repodef.LocalizedConstants;
 import weblogic.remoteconsole.common.repodef.PageActionDef;
 import weblogic.remoteconsole.common.utils.Message;
 import weblogic.remoteconsole.server.PersistenceManager;
+import weblogic.remoteconsole.server.repo.BeanReaderRepoSearchBuilder;
+import weblogic.remoteconsole.server.repo.BeanReaderRepoSearchResults;
+import weblogic.remoteconsole.server.repo.BeanSearchResults;
 import weblogic.remoteconsole.server.repo.BeanTreePath;
+import weblogic.remoteconsole.server.repo.DateValue;
 import weblogic.remoteconsole.server.repo.FormProperty;
 import weblogic.remoteconsole.server.repo.InvocationContext;
+import weblogic.remoteconsole.server.repo.LongValue;
 import weblogic.remoteconsole.server.repo.Page;
 import weblogic.remoteconsole.server.repo.Response;
 import weblogic.remoteconsole.server.repo.StringValue;
@@ -40,15 +50,15 @@ import weblogic.remoteconsole.server.utils.WebLogicRestClientException;
 import weblogic.remoteconsole.server.utils.WebLogicRestClientHelper;
 import weblogic.remoteconsole.server.utils.WebLogicRestRequest;
 
-
 /**
  * Custom code for processing the WLDFDataAccessRuntimeMBean
  */
 public class WLDFDataAccessRuntimeMBeanCustomizer {
 
   private static final Logger LOGGER = Logger.getLogger(WLDFDataAccessRuntimeMBeanCustomizer.class.getName());
-  private static final int  RECORD_LIMIT = 400;
+  private static final long  RECORD_LIMIT = Long.MAX_VALUE;
   private static final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss");
+
 
   private WLDFDataAccessRuntimeMBeanCustomizer() {
   }
@@ -58,26 +68,71 @@ public class WLDFDataAccessRuntimeMBeanCustomizer {
    *
    */
   public static void customizeDownloadLogsInputForm(InvocationContext ic, Page page) {
-    getResponseForInputForm(ic, page, false);
-  }
-
-  private static void getResponseForInputForm(InvocationContext ic, Page page, boolean includeFileName) {
     Value logFileDirectoryValue = new StringValue(getDirectoryName(ic));
-    Value logFileNameValue = new StringValue(getFileNameToDownload(ic));
     List<FormProperty> oldProperties = page.asForm().getProperties();
     List<FormProperty> newProperties = null;
-    if (includeFileName) {
-      newProperties = List.of(
-        CustomizerUtils.createFormProperty("LogFileDirectory", oldProperties, logFileDirectoryValue),
-        CustomizerUtils.createFormProperty("LogFileName", oldProperties, logFileNameValue)
-      );
-    } else {
-      newProperties = List.of(
-        CustomizerUtils.createFormProperty("LogFileDirectory", oldProperties, logFileDirectoryValue)
-      );
-    }
+    Date sinceDate = getSinceDate(ic);
+    Date untilDate = new Date(System.currentTimeMillis());
+    newProperties = List.of(
+      CustomizerUtils.createFormProperty("LogFileDirectory", oldProperties, logFileDirectoryValue),
+      CustomizerUtils.createFormProperty("Since", oldProperties, new DateValue(sinceDate)),
+      CustomizerUtils.createFormProperty("Until", oldProperties, new DateValue(untilDate)),
+      CustomizerUtils.createFormProperty("MaxRecords", oldProperties, new LongValue(-1))
+    );
     oldProperties.clear();
     oldProperties.addAll(newProperties);
+  }
+
+
+  private static Date getSinceDate(InvocationContext ic) {
+    String logFile = "";
+    BeanTreePath beanTreePath = null;
+    //if user is downloading multiple logfiles, will leave the Since field empty.
+    if (ic.getIdentifiers() != null) {
+      if (ic.getIdentifiers().size() > 1) {
+        return null;
+      }
+      logFile = ic.getBeanTreePath().getLastSegment().getKey();
+      String serverName = ic.getIdentifiers().get(0);
+      String path =
+        "DomainRuntime.CombinedServerRuntimes."
+        + serverName
+        + ".ServerRuntime.WLDFRuntime.WLDFAccessRuntime.WLDFDataAccessRuntimes."
+        + logFile;
+      beanTreePath = BeanTreePath.create(
+        ic.getBeanTreePath().getBeanRepo(),
+        new Path(path)
+      );
+    } else {
+      if (ic.getIdentities() != null) {
+        if (ic.getIdentities().size() > 1) {
+          return null;
+        }
+        logFile = ic.getIdentities().get(0).getPath().getLastComponent();
+      } else {
+        //for Table (unaggrated) multi downloads
+        logFile = ic.getBeanTreePath().getPath().getLastComponent();
+      }
+      beanTreePath =
+        BeanTreePath.create(
+          ic.getBeanTreePath().getBeanRepo(),
+          ic.getBeanTreePath().getPath().childPath(logFile)
+        );
+    }
+    InvocationContext variableIC = new InvocationContext(ic, beanTreePath);
+    BeanTypeDef typeDef = beanTreePath.getTypeDef();
+    BeanPropertyDef earliestAvailableTimestampPropertyDef =
+      typeDef.getPropertyDef(new Path("EarliestAvailableTimestamp"));
+    BeanReaderRepoSearchBuilder builder =
+      ic.getPageRepo().getBeanRepo().asBeanReaderRepo().createSearchBuilder(variableIC, false);
+    builder.addProperty(beanTreePath, earliestAvailableTimestampPropertyDef);
+    BeanReaderRepoSearchResults searchResults = builder.search().getResults();
+    BeanSearchResults beanResults = searchResults.getBean(beanTreePath);
+    if (beanResults == null) {
+      throw Response.notFoundException();
+    }
+    long earliestAvailableTimestamp =  beanResults.getValue(earliestAvailableTimestampPropertyDef).asLong().getValue();
+    return new Date(earliestAvailableTimestamp);
   }
 
   private static String getFileNameToDownload(InvocationContext ic) {
@@ -96,7 +151,7 @@ public class WLDFDataAccessRuntimeMBeanCustomizer {
         logFile = ic.getBeanTreePath().getPath().getLastComponent();
       }
     // the logfile requested may have "/" or path separator char in it,
-    // eg. JMSMessageLog/AdminJMSServer, we will replace that with "_".
+    // e.g. JMSMessageLog/AdminJMSServer, we will replace that with "_".
     logFile = logFile.replace(File.separator, "_");
     Timestamp timestamp = new Timestamp(System.currentTimeMillis());
     return  serverName + "_" + logFile + "_" + simpleDateFormat.format(timestamp);
@@ -137,6 +192,10 @@ public class WLDFDataAccessRuntimeMBeanCustomizer {
               + file.toString()));
       return response;
     }
+
+    String wlsSince = getDateTime("Since", formProperties);
+    String wlsUntil = getDateTime("Until", formProperties);
+    long wlsMaxRecords = getRecordLimit(formProperties, "MaxRecords");
     String serverName = ic.getBeanTreePath().getPath().getComponents().get(2);
     String logFile = ic.getBeanTreePath().getPath().getLastComponent();
     BeanTreePath beanTreePath = BeanTreePath.create(
@@ -146,7 +205,7 @@ public class WLDFDataAccessRuntimeMBeanCustomizer {
     );
     try {
       new Thread(() -> {
-        customizerLogs(ic, file, outputFormat, beanTreePath);
+        customizerLogs(ic, file, outputFormat, wlsSince, wlsUntil, wlsMaxRecords, beanTreePath);
       }).start();
       // FortifyIssueSuppression Log Forging
       // file name is created based on persistence manager location
@@ -169,6 +228,20 @@ public class WLDFDataAccessRuntimeMBeanCustomizer {
     return "";
   }
 
+  private static long getRecordLimit(List<FormProperty> formProperties, String propName) {
+    FormProperty formProperty = CustomizerUtils.findOptionalFormProperty(propName, formProperties);
+    if (formProperty != null) {
+      long limit = formProperty.getValue().asSettable().getValue().asLong().getValue();
+      //return (limit < 0) ? RECORD_LIMIT : limit;
+      if (limit < 0) {
+        return RECORD_LIMIT;
+      } else {
+        return limit;
+      }
+    }
+    return RECORD_LIMIT;
+  }
+
   private static String getDirectoryName(InvocationContext ic) {
     String persistenceDirectoryPath = PersistenceManager.getPersistenceFilePath(ic);
     String dirName = (persistenceDirectoryPath == null)
@@ -187,69 +260,84 @@ public class WLDFDataAccessRuntimeMBeanCustomizer {
     return WebLogicRestBeanRepo.shortcutAdminServerRuntimePath(ic, restActionPath);
   }
 
+
+  private static String getDateTime(String propName, List<FormProperty> formProperties) {
+    FormProperty dateFormProperty = CustomizerUtils.findOptionalFormProperty(propName, formProperties);
+    if (dateFormProperty != null) {
+      Date date = dateFormProperty.getValue().asSettable().getValue().asDate().getValue();
+      if (date != null) {
+        return (new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX")).format(date);
+      }
+    }
+    return null;
+  }
+
   private static Response<JsonObject> customizerLogs(
       InvocationContext ic,
       File file,
       String outputFormat,
+      String since,
+      String until,
+      long maxRecords,
       BeanTreePath realPath
   ) {
-    //start from record ID of 0. loop starting from the nextRecordId returned, until "nextRecordId" is not available.
-    int fromId = 0;
     Response<JsonObject> response = new Response<>();
-    javax.ws.rs.core.Response restResponse;
-    JsonObject requestBody = Json.createObjectBuilder()
-        .add("limit", Json.createValue(RECORD_LIMIT))
-        .add("fromId", Json.createValue(fromId))
-        .build();
+    JsonObject requestBody = null;
+    if (since != null) {
+      if (until != null) {
+        requestBody = Json.createObjectBuilder()
+          .add("since", Json.createValue(since))
+          .add("until", Json.createValue(until))
+          .add("limit", Json.createValue(maxRecords))    // record limit is a required field.
+          .build();
+      } else {
+        requestBody = Json.createObjectBuilder()
+          .add("since", Json.createValue(since))
+          .add("limit", Json.createValue(maxRecords))    // record limit is a required field.
+          .build();
+      }
+    } else {
+      if (until != null) {
+        requestBody = Json.createObjectBuilder()
+          .add("until", Json.createValue(until))
+          .add("limit", Json.createValue(maxRecords))    // record limit is a required field.
+          .build();
+      } else {
+        requestBody = Json.createObjectBuilder()
+          .add("limit", Json.createValue(maxRecords))    // record limit is a required field.
+          .build();
+      }
+    }
     Path restActionPath = getRestActionPath(ic, realPath, "search");
 
     try {
-      // FortifyIssueSuppression Unreleased Resource: Streams
-      FileWriter fileWriter = new FileWriter(file);
-
       // FortifyIssueSuppression Log Forging
       // file location & name is obtained from persistence manager directory and MBean actions.
       LOGGER.fine("writing out to : " + file.getName());
-      while (fromId >= 0) {
-        LOGGER.fine("Start with record id: " + fromId);
-        restResponse = webLogicRestInvoker_post(
-            ic,
-            restActionPath,
-            requestBody,
-            false,
-            false,
-            false,
-            outputFormat
+      javax.ws.rs.core.Response restResponse =
+        webLogicRestInvoker_post(
+          ic,
+          restActionPath,
+          requestBody,  //request body will have since and until
+          false,
+          false,
+          false,
+          outputFormat
         );
-        if (restResponse == null) {
-          return response.setServiceNotAvailable();
-        }
-        int status = restResponse.getStatus();
-        if (javax.ws.rs.core.Response.Status.NOT_FOUND.getStatusCode() == status) {
-          return response.setNotFound();
-        }
-        if (javax.ws.rs.core.Response.Status.BAD_REQUEST.getStatusCode() == status) {
-          return response.setUserBadRequest();
-        }
-        String content = restResponse.readEntity(String.class);
-        String logs = content.substring(0, content.lastIndexOf(">") + 1);
-        int ix = content.lastIndexOf("nextRecordId=");
-        if (ix == -1) {
-          fromId = -1;
-        } else {
-          String idStart = content.substring(ix + 13);
-          fromId = Integer.parseInt(idStart);
-        }
-        fileWriter.write(logs);
-        if (fromId == -1) {
-          fileWriter.flush();
-          fileWriter.close();
-          LOGGER.fine("End of record reached.");
-        } else {
-          requestBody = Json.createObjectBuilder()
-              .add("limit", Json.createValue(RECORD_LIMIT))
-              .add("fromId", Json.createValue(fromId))
-              .build();
+      if (restResponse == null) {
+        return response.setServiceNotAvailable();
+      }
+      int status = restResponse.getStatus();
+      if (javax.ws.rs.core.Response.Status.NOT_FOUND.getStatusCode() == status) {
+        return response.setNotFound();
+      }
+      if (javax.ws.rs.core.Response.Status.BAD_REQUEST.getStatusCode() == status) {
+        return response.setUserBadRequest();
+      }
+      //both is and os will automatically be closed when the block finishes.
+      try (InputStream is = restResponse.readEntity(InputStream.class)) {
+        try (OutputStream os = new FileOutputStream(file, false)) {
+          is.transferTo(os);
         }
       }
     } catch (IOException ex) {
@@ -334,5 +422,4 @@ public class WLDFDataAccessRuntimeMBeanCustomizer {
     }
     return response;
   }
-
 }

@@ -1,0 +1,19 @@
+# Copyright (c) 2025, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+introductionHTML: "<p>This page lists this Authorization Provider's JDBC security policies.</p>"
+
+displayedColumns:
+- name: jdbc_application
+- name: jdbc_module
+- name: jdbc_resourceType
+- name: jdbc_resource
+- name: jdbc_action
+- name: PolicyStringExpression
+hiddenColumns:
+- name: resourceId
+- name: scope
+
+helpTopics:
+- label: "Securing Resources Using Roles and Policies for Oracle WebLogic Server"
+  href: "roles/index.html"
+  type: "edocs"

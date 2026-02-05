@@ -1,5 +1,5 @@
 /**
-  Copyright (c) 2015, 2020, Oracle and/or its affiliates.
+  Copyright (c) 2015, 2025, Oracle and/or its affiliates.
   Licensed under The Universal Permissive License (UPL), Version 1.0
   as shown at https://oss.oracle.com/licenses/upl/
 
@@ -14,18 +14,24 @@ module.exports = function (configObj) {
     // { connectOpts, serveOpts } = configObj;
     // const express = require('express');
     // const http = require('http');
-    // pass in custom http
+    // pass back custom http
     // configObj['http'] = http;
-    // pass in custom express app
+    // pass back custom express app
     // configObj['express'] = express();
-    // pass in custom options for http.createServer
+    // pass back custom options for http.createServer
     // const serverOptions = {...};
     // configObj['serverOptions'] = serverOptions;
-    // pass in custom server
+    // pass back custom server
     // configObj['server'] = http.createServer(serverOptions, express());
     // const tinylr = require('tiny-lr');
-    // pass in custom live reload server
+    // pass back custom live reload server
     // configObj['liveReloadServer'] = tinylr({ port: PORT });
+    // pass back a replacement set of middleware
+    // configObj['middleware'] = [...];
+    // pass back a set of middleware that goes before the default middleware
+    // configObj['preMiddleware'] = [...];
+    // pass back a set of middleware that goes after the default middleware
+    // configObj['postMiddleware'] = [...];
     resolve(configObj);
   });
 };

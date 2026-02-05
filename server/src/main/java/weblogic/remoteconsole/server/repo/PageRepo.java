@@ -1,4 +1,4 @@
-// Copyright (c) 2021, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2025, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.repo;
@@ -15,6 +15,11 @@ public abstract class PageRepo {
   protected PageRepo(PageRepoDef pageRepoDef, BeanRepo beanRepo) {
     this.pageRepoDef = pageRepoDef;
     this.beanRepo = beanRepo;
+  }
+
+  // Remove any references that this repo has created from the outside world (e.g. session)
+  // back to this repo that will prevent this repo from being garbage collected.
+  public void prepareForRemoval(InvocationContext ic) {
   }
 
   // Get the corresponding repo that returns information describing the pages.

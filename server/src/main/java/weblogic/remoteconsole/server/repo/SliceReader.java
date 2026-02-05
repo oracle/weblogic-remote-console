@@ -120,7 +120,7 @@ class SliceReader extends FormReader {
   ) {
     String methodName = sliceTableDef.getGetTableRowsMethod();
     if (StringUtils.isEmpty(methodName)) {
-      // There isn't a method to get the get the slice's rows.
+      // There isn't a method to get the slice's rows.
       // Return an empty list.
       // Most likely there will be a method to customize the page
       // and that method will fill in the rows.

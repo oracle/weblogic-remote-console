@@ -39,6 +39,7 @@ import static weblogic.remoteconsole.customizers.JDBCSystemResourceMBeanCustomiz
 import static weblogic.remoteconsole.customizers.JDBCSystemResourceMBeanCustomizerUtils.DATASOURCE_TYPE_GRIDLINK;
 import static weblogic.remoteconsole.customizers.JDBCSystemResourceMBeanCustomizerUtils.DATASOURCE_TYPE_MDS;
 import static weblogic.remoteconsole.customizers.JDBCSystemResourceMBeanCustomizerUtils.DATASOURCE_TYPE_UCP;
+import static weblogic.remoteconsole.customizers.JDBCSystemResourceMBeanCustomizerUtils.GENERIC_OTHER_DATABASE;
 import static weblogic.remoteconsole.customizers.JDBCSystemResourceMBeanCustomizerUtils.PROPERTY_DATASOURCE_TYPE;
 import static weblogic.remoteconsole.customizers.JDBCSystemResourceMBeanCustomizerUtils.PROPERTY_DBMS_HOST;
 import static weblogic.remoteconsole.customizers.JDBCSystemResourceMBeanCustomizerUtils.PROPERTY_DBMS_NAME;
@@ -60,6 +61,7 @@ import static weblogic.remoteconsole.customizers.JDBCSystemResourceMBeanCustomiz
 import static weblogic.remoteconsole.customizers.JDBCSystemResourceMBeanCustomizerUtils.genericDatabaseDriverProperty;
 import static weblogic.remoteconsole.customizers.JDBCSystemResourceMBeanCustomizerUtils.getDBMSVendorNames;
 import static weblogic.remoteconsole.customizers.JDBCSystemResourceMBeanCustomizerUtils.getDriverInfoFactory;
+import static weblogic.remoteconsole.customizers.JDBCSystemResourceMBeanCustomizerUtils.otherDatabaseScopedName;
 
 /** 
  * Custom JAXRS resource for creating JDBCSystemResourceMBeans
@@ -272,6 +274,10 @@ public class JDBCSystemResourceMBeanCreatableCollectionResource extends Creatabl
       if (!isOK()) {
         return;
       }
+      if (GENERIC_OTHER_DATABASE.equals(vendorName)) {
+        addOtherDatabaseProperties();
+        return;
+      }
       JDBCDriverInfo driverInfo =
         getDriverInfo(driverNameToFormPropertyName(genericDatabaseDriverProperty(vendorName)));
       if (!isOK()) {
@@ -403,6 +409,42 @@ public class JDBCSystemResourceMBeanCreatableCollectionResource extends Creatabl
       addOptionalMBeanProperty(PROPERTY_GRIDLINK_ONS_WALLET_PASSWORD);
     }
 
+    private void addOtherDatabaseProperties() {
+      String protocol = getRequiredStringProperty(PROPERTY_GLOBAL_TRANSACTIONS_PROTOTOL);
+      if (!isOK()) {
+        return;
+      }
+      if (!"OnePhaseCommit".equals(protocol)) {
+        // We're not using the default protocol.  Write it out.
+        addPropertyValue(
+          PROPERTY_GLOBAL_TRANSACTIONS_PROTOTOL,
+          new SettableValue(new StringValue(protocol), true)
+        );
+      }
+      // FortifyIssueSuppression Password Management: Password in Comment
+      // Comment below does not reveal a secret
+      // Add the weblogic property for the database password (if specified)
+      String password = getOptionalStringProperty(otherDatabaseScopedName(PROPERTY_DBMS_USER_NAME));
+      if (!isOK()) {
+        return;
+      }
+      if (!StringUtils.isEmpty(password)) {
+        addPropertyValue(
+          "JDBCResource.JDBCDriverParams.Password",
+          new SettableValue(new SecretValue(password), true)
+        );
+      }
+      String user = getOptionalStringProperty(otherDatabaseScopedName(PROPERTY_DBMS_USER_NAME));
+      if (!isOK()) {
+        return;
+      }
+      if (!StringUtils.isEmpty(user)) {
+        Properties properties = new Properties();
+        properties.setProperty("user", user);
+        recordDataSourcePropertiesValues(properties);
+      }
+    }
+
     // Add the XA weblogic bean properties needed for the database driver
     private void addTransactionProperties(String dataSourceType, JDBCDriverInfo driverInfo) {
       String protocol = null;
@@ -441,9 +483,10 @@ public class JDBCSystemResourceMBeanCreatableCollectionResource extends Creatabl
 
     // Convert the populated database driver into the corresponding weblogic bean properties
     private void convertDriverInfoToMBeanProperties(String datasourceType, JDBCDriverInfo driverInfo) {
+      boolean isUCP = DATASOURCE_TYPE_UCP.equals(datasourceType);
       // copy the driver class name to the weblogic bean properties
       String driverClassName = driverInfo.getDriverClassName();
-      if (DATASOURCE_TYPE_UCP.equals(datasourceType)) {
+      if (isUCP) {
         if (driverClassName.indexOf("XA") == -1) {
           driverClassName = "oracle.ucp.jdbc.PoolDataSourceImpl";
         } else {
@@ -454,6 +497,14 @@ public class JDBCSystemResourceMBeanCreatableCollectionResource extends Creatabl
         "JDBCResource.JDBCDriverParams.DriverName",
         new SettableValue(new StringValue(driverClassName), true)
       );
+
+      // set the test table name
+      if (!isUCP) {
+        addPropertyValue(
+          "JDBCResource.JDBCConnectionPoolParams.TestTableName",
+          new SettableValue(new StringValue("SQL " + driverInfo.getTestSQL()))
+        );
+      }
 
       // Create a JDBCURLHelper, which maps from driver properties to weblogic properties
       JDBCURLHelper helper = createJDBCURLHelper(driverInfo);
@@ -711,6 +762,9 @@ public class JDBCSystemResourceMBeanCreatableCollectionResource extends Creatabl
     private String getVendorName() {
       String vn = getRequiredStringProperty(PROPERTY_GENERIC_DATABASE_TYPE);
       if (isOK()) {
+        if (GENERIC_OTHER_DATABASE.equals(vn)) {
+          return vn;
+        }
         for (String vendorName : getDBMSVendorNames()) {
           if (vendorName.equals(vn)) {
             return vn;

@@ -1,4 +1,4 @@
-# Copyright (c) 2022, 2024, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2022, 2025, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 subTypeDiscriminatorProperty: Type
 subTypes:
@@ -12,3 +12,73 @@ disableMBeanJavadoc: true
 children:
 - name: JMSSystemResources
   label: JMS Modules
+- name: AdvancedAllRoleMappings
+  label: All
+  creatable: true
+  requiredCapabilities:
+  - AdvancedRoleMappings
+- name: AdvancedAdminRoleMappings
+  label: Admin
+  creatable: true
+  requiredCapabilities:
+  - AdvancedRoleMappings
+- name: AdvancedApplicationRoleMappings
+  label: Application
+  creatable: true
+  requiredCapabilities:
+  - AdvancedRoleMappings
+- name: AdvancedCOMRoleMappings
+  label: COM
+  creatable: true
+  requiredCapabilities:
+  - AdvancedRoleMappings
+- name: AdvancedEISRoleMappings
+  label: EIS
+  creatable: true
+  requiredCapabilities:
+  - AdvancedRoleMappings
+- name: AdvancedEJBRoleMappings
+  label: EJB
+  creatable: true
+  requiredCapabilities:
+  - AdvancedRoleMappings
+- name: AdvancedJDBCRoleMappings
+  label: JDBC
+  creatable: true
+  requiredCapabilities:
+  - AdvancedRoleMappings
+- name: AdvancedJMSRoleMappings
+  label: JMS
+  creatable: true
+  requiredCapabilities:
+  - AdvancedRoleMappings
+- name: AdvancedJMXRoleMappings
+  label: JMX
+  creatable: true
+  requiredCapabilities:
+  - AdvancedRoleMappings
+- name: AdvancedJNDIRoleMappings
+  label: JNDI
+  creatable: true
+  requiredCapabilities:
+  - AdvancedRoleMappings
+- name: AdvancedServerRoleMappings
+  label: Server
+  creatable: true
+  requiredCapabilities:
+  - AdvancedRoleMappings
+- name: AdvancedURLRoleMappings
+  label: URL
+  creatable: true
+  requiredCapabilities:
+  - AdvancedRoleMappings
+- name: AdvancedWebServiceRoleMappings
+  label: Web Service
+  creatable: true
+  requiredCapabilities:
+  - AdvancedRoleMappings
+- name: AdvancedWorkContextRoleMappings
+  label: Work Context
+  creatable: true
+  requiredCapabilities:
+  - AdvancedRoleMappings

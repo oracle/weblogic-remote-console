@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2023, Oracle and/or its affiliates.
+ * Copyright (c) 2023,2025, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
@@ -15,9 +15,10 @@ define(['./actions-strip'],
       ActionsStrip.call(this, viewParams);
       
       TableActionsStrip.prototype = Object.create(ActionsStrip.prototype);
-      
+
       this.connected = function () {
-        self.renderActionsStrip(true);
+        // Render action strip if perspective isn't "view"
+        self.renderActionsStrip(viewParams.perspective.id !== 'view');
       };
     }
     

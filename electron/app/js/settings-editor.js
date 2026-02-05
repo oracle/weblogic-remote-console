@@ -101,6 +101,13 @@ const SettingsEditor = (() => {
       else if (key === 'console.disableHostnameVerification') {
         preferences.value('networking.disableHostnameVerification', data[key]);
       }
+      else if (key === 'weblogic.remoteconsole.java.startoptions') {
+        const list = [];
+        for (var entry of data[key].split(';')) {
+          list.push(entry);
+        }
+        preferences.value('java.javaStartOptions', list);
+      }
       else if (key === 'weblogic.remote-console-logging') {
         const list = [];
         for (var rule of data[key].split(';')) {
@@ -163,6 +170,16 @@ const SettingsEditor = (() => {
         else
           data['weblogic.remote-console-logging'] = '';
         data['weblogic.remote-console-logging'] += entry;
+      }
+    }
+    const javaOptionsList = preferences.preferences?.java?.javaStartOptions;
+    if (javaOptionsList) {
+      for (var entry of javaOptionsList) {
+        if (data['weblogic.remoteconsole.java.startoptions'])
+          data['weblogic.remoteconsole.java.startoptions'] += ';';
+        else
+          data['weblogic.remoteconsole.java.startoptions'] = '';
+        data['weblogic.remoteconsole.java.startoptions'] += entry;
       }
     }
     fs.writeFileSync(path, JSON.stringify(data, null, 4));
@@ -435,6 +452,30 @@ const SettingsEditor = (() => {
                         label: `${I18NUtils.get('wrc-electron.menus.settings.logging-list')}`,
                         help: `${I18NUtils.get('wrc-electron.menus.settings.logging-list.help')}`,
                         key: 'logginglist',
+                        type: 'list'
+                      },
+                      {
+                        type: 'button',
+                        key: 'save',
+                        buttonLabel: `${I18NUtils.get('wrc-electron.common.save')}`,
+                      }
+                    ]
+                  }
+                ]
+              }
+          },
+          {
+              id: 'java',
+              label: `${I18NUtils.get('wrc-electron.menus.settings.section.java.label')}`,
+              icon: 'preferences',
+              form: {
+                groups: [
+                  {
+                    'fields': [
+                      {
+                        label: `${I18NUtils.get('wrc-electron.menus.settings.java-options.label')}`,
+                        help: `${I18NUtils.get('wrc-electron.menus.settings.java-options.help')}`,
+                        key: 'javaStartOptions',
                         type: 'list'
                       },
                       {

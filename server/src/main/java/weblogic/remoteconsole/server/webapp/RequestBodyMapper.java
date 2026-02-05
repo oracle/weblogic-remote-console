@@ -223,8 +223,12 @@ public abstract class RequestBodyMapper<T> {
   }
 
   protected JsonObject asJsonObject(String key, JsonValue value) {
-    if (validateType(value, key, ValueType.OBJECT)) {
-      return value.asJsonObject();
+    if (validateType(value, key, ValueType.OBJECT, ValueType.NULL)) {
+      if (value == JsonValue.NULL) {
+        return JsonValue.EMPTY_JSON_OBJECT;
+      } else {
+        return value.asJsonObject();
+      }
     }
     return null;
   }

@@ -19,7 +19,8 @@ define(
         CONNECTING: {name: 'connecting'},
         PROVIDERS: {name: 'providers'},
         TOKEN: { name: 'token' },
-        LOGOUT: { name: 'logout' }
+        LOGOUT: { name: 'logout' },
+        BOOKMARKS: { name: 'bookmarks'}
       }),
       serviceTypeFromName: function (name) {
         return Object.values(this.ServiceType).find(serviceType => serviceType.name === name);

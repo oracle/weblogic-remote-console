@@ -23,12 +23,12 @@
       */
       // injector:mainReleasePaths
           {
-            'ojs': 'libs/oj/17.1.1/debug',
-            'ojL10n': 'libs/oj/17.1.1/ojL10n',
-            'ojtranslations': 'libs/oj/17.1.1/resources',
+            'ojs': 'libs/oj/19.0.0/debug',
+            'ojL10n': 'libs/oj/19.0.0/ojL10n',
+            'ojtranslations': 'libs/oj/19.0.0/resources',
             'knockout': 'libs/knockout/knockout-3.5.1.debug',
-            'jquery': 'libs/jquery/jquery-3.6.4',
-            'jqueryui-amd': 'libs/jquery/jqueryui-amd-1.13.2',
+            'jquery': 'libs/jquery/jquery-3.7.1',
+            'jqueryui-amd': 'libs/jquery/jqueryui-amd-1.14.1',
             'text': 'libs/require/text',
             'hammerjs': 'libs/hammer/hammer-2.0.8',
             'signals': 'libs/js-signals/signals',
@@ -43,7 +43,7 @@
             'preact/jsx-runtime': 'libs/preact/jsx-runtime/dist/jsxRuntime.umd',
             'proj4': 'libs/proj4js/dist/proj4-src',
             'touchr': 'libs/touchr/touchr',
-            'chai': 'libs/chai/chai-4.3.10',
+            'chai': 'libs/chai/chai-4.5.0',
             'js-yaml' : 'libs/js-yaml/js-yaml.min'
           }
         // endinjector

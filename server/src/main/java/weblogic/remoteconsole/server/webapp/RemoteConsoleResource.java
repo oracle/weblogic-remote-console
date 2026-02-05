@@ -11,6 +11,7 @@ import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.UriInfo;
 
 import weblogic.remoteconsole.server.providers.AdminServerDataProvider;
+import weblogic.remoteconsole.server.providers.Provider;
 import weblogic.remoteconsole.server.providers.Root;
 import weblogic.remoteconsole.server.repo.InvocationContext;
 
@@ -31,6 +32,7 @@ import weblogic.remoteconsole.server.repo.InvocationContext;
 public class RemoteConsoleResource extends BaseResource {
   public static final String PROVIDER_MANAGEMENT_PATH = "providers";
   public static final String ABOUT_PATH = "about";
+  public static final String BOOKMARKS_PATH = "bookmarks";
   public static final String LOGOUT_PATH = "logout";
   public static final String SSO_TOKEN_PATH = "token";
   public static final String DOMAIN_STATUS_PATH = "domainStatus";
@@ -55,6 +57,11 @@ public class RemoteConsoleResource extends BaseResource {
   @Path(ABOUT_PATH)
   public AboutResource getAboutResourceNew() {
     return new AboutResource();
+  }
+
+  @Path(BOOKMARKS_PATH)
+  public BookmarksResource getBookmarksResourceNew() {
+    return new BookmarksResource();
   }
 
   @Path(DOMAIN_STATUS_PATH)
@@ -89,6 +96,7 @@ public class RemoteConsoleResource extends BaseResource {
           + getInvocationContext().getProvider().getName()
       );
     }
+    updateLastUsed();
     return copyContext(new PageRepoResource());
   }
 
@@ -118,6 +126,7 @@ public class RemoteConsoleResource extends BaseResource {
           + getInvocationContext().getProvider().getName()
       );
     }
+    updateLastUsed();
     return copyContext(new PageRepoResource());
   }
 
@@ -130,6 +139,7 @@ public class RemoteConsoleResource extends BaseResource {
           + getInvocationContext().getProvider().getName()
       );
     }
+    updateLastUsed();
     return copyContext(new PageRepoResource());
   }
 
@@ -142,6 +152,7 @@ public class RemoteConsoleResource extends BaseResource {
           + getInvocationContext().getProvider().getName()
       );
     }
+    updateLastUsed();
     return copyContext(new WebLogicRestRuntimeTreeMonitoringResource());
   }
 
@@ -166,5 +177,12 @@ public class RemoteConsoleResource extends BaseResource {
       setInvocationContext(ret);
     }
     return ret;
+  }
+
+  private void updateLastUsed() {
+    Provider provider = getInvocationContext().getProvider();
+    if (provider instanceof AdminServerDataProvider) {
+      ((AdminServerDataProvider)provider).updateLastUsed();
+    }
   }
 }

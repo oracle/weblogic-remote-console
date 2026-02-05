@@ -1,4 +1,4 @@
-// Copyright (c) 2024, Oracle and/or its affiliates.
+// Copyright (c) 2024, 2025, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef.yaml;
@@ -19,9 +19,13 @@ public class UsageTracker {
   static {
     // known and vetted complaints:
 
-    // Aggregated types don't include the actions of the unaggregated types:
+    // Aggregated types don't include the slice tables of the unaggregated types:
     used.add("slice AggregatedJMSServerRuntimeMBean Transactions");
     used.add("slice AggregatedJTARuntimeMBean Transactions");
+    used.add("slice AggregatedDomainKeystoresServerRuntimeMBean MachineIdentityKeystore");
+    used.add("slice AggregatedDomainKeystoresServerRuntimeMBean MachineTrustKeystore");
+    used.add("slice AggregatedDomainKeystoresServerRuntimeMBean ServerIdentityKeystore");
+    used.add("slice AggregatedDomainKeystoresServerRuntimeMBean ServerTrustKeystore");
 
     // Tables for heterogenous types can include columns that only some derived types have:
     used.add("property AggregatedComponentRuntimeMBean ContextRootURL");

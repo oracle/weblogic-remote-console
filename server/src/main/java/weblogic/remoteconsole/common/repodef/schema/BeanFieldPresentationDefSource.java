@@ -23,9 +23,9 @@ public class BeanFieldPresentationDefSource extends YamlSource {
     xxl
   }
 
-  private StringValue inlineFieldHelp = new StringValue();
-  private BooleanValue displayAsHex = new BooleanValue();
-  private Value<Width> width = new Value<>(null);
+  private StringValue inlineFieldHelp = StringValue.create();
+  private BooleanValue displayAsHex = BooleanValue.create();
+  private Value<Width> width = Value.create();
 
   // Returns the inline field help, for example "e.g. jdbc/myDS"
   // By default, properties don't have inline field help.
@@ -34,7 +34,7 @@ public class BeanFieldPresentationDefSource extends YamlSource {
   }
 
   public void setInlineFieldHelp(String val) {
-    inlineFieldHelp.setValue(val);
+    inlineFieldHelp = inlineFieldHelp.setValue(val);
   }
 
   // Returns whether to display this field as hex (v.s. decimal)
@@ -45,7 +45,7 @@ public class BeanFieldPresentationDefSource extends YamlSource {
   }
 
   public void setDisplayAsHex(boolean val) {
-    displayAsHex.setValue(val);
+    displayAsHex = displayAsHex.setValue(val);
   }
 
   // This field's width
@@ -54,7 +54,7 @@ public class BeanFieldPresentationDefSource extends YamlSource {
   }
 
   public void setWidth(Width value) {
-    width.setValue(value);
+    width = width.setValue(value);
   }
 
   public String toString() {

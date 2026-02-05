@@ -1,0 +1,29 @@
+# Copyright (c) 2025 Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+introductionHTML: >
+  <p>This page allows you to manage the WebLogic Certificate Management Service.</p>
+
+sections:
+- title: Certificate Management Service
+  properties:
+  - name: "SecurityConfiguration.CertificateManagement.Enabled"
+  - name: "SecurityConfiguration.CertificateManagement.ProvisionedCertificatesIssuerEnabled"
+  - name: "SecurityConfiguration.CertificateManagement.CertificateCheckInterval"
+  - name: "SecurityConfiguration.CertificateManagement.CertificateRefreshWindow"
+  - name: "SecurityConfiguration.CertificateManagement.JavaStandardTrustEnabled"
+- title: Domain Certificates Issuer
+  properties:
+  - name: "SecurityConfiguration.CertificateManagement.SinglePurposeCertificatesEnabled"
+  - name: "SecurityConfiguration.CertificateManagement.IncludeRootCertificateInChain"
+  - name: "SecurityConfiguration.CertificateManagement.SubjectCommonName"
+  - name: "SecurityConfiguration.CertificateManagement.SubjectAlternativeNames"
+  - name: "SecurityConfiguration.CertificateManagement.CertificateAuthorityValidityPeriod"
+  - name: "SecurityConfiguration.CertificateManagement.CertificateValidityPeriod"
+
+helpTopics:
+- label: "Administering Security for Oracle WebLogic Server"
+  href: "secmg/index.html"
+  type: "edocs"
+# 7/3/25: todo CertificateManagement
+# TBD Add reference to external help about certificate management.  See Robin Thomas

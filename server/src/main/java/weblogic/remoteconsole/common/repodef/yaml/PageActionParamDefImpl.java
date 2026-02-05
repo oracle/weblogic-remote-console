@@ -143,6 +143,24 @@ class PageActionParamDefImpl extends BeanActionParamDefImpl implements PageActio
     return pageLevelCustomizerSource.getDefinition() != null;
   }
 
+  @Override
+  public ValueKind getValueKind() {
+    ValueKind kind = super.getValueKind();
+    if (pageLevelCustomizerSource.isSecret()) {
+      if (kind == ValueKind.STRING) {
+        kind = ValueKind.SECRET;
+      } else {
+        throw configurationError("Only string parameters can be secrets: " + getParamName());
+      }
+    }
+    return kind;
+  }
+
+  @Override
+  public boolean isReadOnly() {
+    return pageLevelCustomizerSource.isReadOnly();
+  }
+
   private void initializeLabel() {
     String englishLabel = getCustomizerSource().getLabel();
     if (StringUtils.isEmpty(englishLabel)) {

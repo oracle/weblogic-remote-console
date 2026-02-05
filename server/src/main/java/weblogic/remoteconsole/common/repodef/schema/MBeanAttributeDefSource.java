@@ -10,8 +10,8 @@ import weblogic.console.schema.YamlSource;
  * This POJO mirrors the yaml source file format for specifying which mbean attribute a property is related to
  */
 public class MBeanAttributeDefSource extends YamlSource {
-  private StringValue type = new StringValue();
-  private StringValue attribute = new StringValue();
+  private StringValue type = StringValue.create();
+  private StringValue attribute = StringValue.create();
 
   // Returns the name of the mbean type, e.g. EJBRuntimeMBean
   public String getType() {
@@ -19,7 +19,7 @@ public class MBeanAttributeDefSource extends YamlSource {
   }
 
   public void setType(String val) {
-    type.setValue(val);
+    type = type.setValue(val);
   }
 
   // Returns the name of the mbean attribute on that type (or one of its singleton children),
@@ -29,7 +29,7 @@ public class MBeanAttributeDefSource extends YamlSource {
   }
 
   public void setAttribute(String val) {
-    attribute.setValue(val);
+    attribute = attribute.setValue(val);
   }
 
   public String toString() {

@@ -55,6 +55,7 @@ fortify-output/**
 owasp-output/**
 frontend/seleniumTest.log
 everypage-oracle-tests/
+everypage-output/
 build-tools/download-bin
 tmp
 
@@ -76,12 +77,19 @@ weblogic-toolkit-ui/
 upload
 upload/**
 
-wls-remote-console-helper-war/signin/package-lock.json
-wls-remote-console-helper-war/ui/package-lock.json
 /bin/
 
 wlsrc
 wlsrc/**
 
 translation-work
-translation-work/**
+.metadata
+
+everypage-output-*
+
+log.txt
+
+weblogic-bean-info-harvester/build
+
+geckodriver
+geckodriver.tar

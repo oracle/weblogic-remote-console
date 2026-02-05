@@ -9,19 +9,30 @@
     <parent>
         <groupId>com.oracle.weblogic</groupId>
         <artifactId>console-backend</artifactId>
-        <version>2.4.16</version>
+        <version>2.4.19</version>
     </parent>
 
     <packaging>jar</packaging>
 
     <artifactId>console-shared-code</artifactId>
     <description>Code that is shared between the Console Back End, The Console REST Extension and the Harvester</description>
-
+    <properties>
+        <shared_code_java_version>8</shared_code_java_version>
+        <maven.compiler.source>${shared_code_java_version}</maven.compiler.source>
+        <maven.compiler.target>${shared_code_java_version}</maven.compiler.target>
+    </properties>
     <build>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
+                <configuration>
+                    <source>${maven.compiler.source}</source>
+                    <target>${maven.compiler.target}</target>
+                    <compilerArgs>
+                        <arg>-Xlint:all</arg>
+                    </compilerArgs>
+                </configuration>
             </plugin>
 
             <plugin>

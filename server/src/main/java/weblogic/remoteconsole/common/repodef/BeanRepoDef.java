@@ -1,9 +1,10 @@
-// Copyright (c) 2021, 2024, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2025, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * This interface describes a bean repository.
@@ -33,6 +34,9 @@ public interface BeanRepoDef {
   // Returns null if the type can't be found.
   public BeanTypeDef getTypeDef(String typeName);
 
-  // ADD supportCapabilities
+  // determines whether this repo supports a set of capabilities
   public boolean supportsCapabilities(List<String> capabilities);
+
+  // determines whether this repo supports a set of roles
+  public boolean isAccessAllowed(Set<String> rolesAllowed);
 }

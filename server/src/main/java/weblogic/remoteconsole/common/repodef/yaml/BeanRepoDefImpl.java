@@ -118,7 +118,8 @@ public abstract class BeanRepoDefImpl implements BeanRepoDef {
     return new PseudoBeanTypeDefImpl(this, pseudoTypeDefSource);
   }
 
-  boolean isAccessAllowed(Set<String> rolesAllowed) {
+  @Override
+  public boolean isAccessAllowed(Set<String> rolesAllowed) {
     return mbeansVersion.isAccessAllowed(rolesAllowed);
   }
 

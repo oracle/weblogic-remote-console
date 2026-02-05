@@ -71,7 +71,7 @@ class AggregatedRuntimeMBeanYamlReader extends WebLogicBeanTypeYamlReader {
     source.setDerivedTypes(NAME_HANDLER.getFabricatedJavaTypes(source.getDerivedTypes()));
     // allow the actions to flow through as-is
     source.setProperties(aggregatePropertyDefs(unaggTypeDef, source.getProperties()));
-    source.getProperties().add(server);
+    source.addProperty(server);
     return source;
   }
 
@@ -341,7 +341,7 @@ class AggregatedRuntimeMBeanYamlReader extends WebLogicBeanTypeYamlReader {
       SubTypeDefSource baseSubType = new SubTypeDefSource();
       baseSubType.setType(NAME_HANDLER.getFabricatedJavaType(unaggTypeDef.getTypeName()));
       baseSubType.setValue(baseTypeValue);
-      source.getSubTypes().add(baseSubType);
+      source.addSubType(baseSubType);
     }
   }
 
@@ -376,9 +376,13 @@ class AggregatedRuntimeMBeanYamlReader extends WebLogicBeanTypeYamlReader {
     source.setHelpTopics(unaggSource.getHelpTopics());
     BeanPropertyDefCustomizerSource serverColumn = new BeanPropertyDefCustomizerSource();
     serverColumn.setName("Server");
-    source.getDisplayedColumns().add(serverColumn);
-    source.getDisplayedColumns().addAll(unaggSource.getProperties());
-    source.getHiddenColumns().addAll(unaggSource.getAdvancedProperties());
+    source.addDisplayedColumn(serverColumn);
+    for (BeanPropertyDefCustomizerSource column : unaggSource.getProperties()) {
+      source.addDisplayedColumn(column);
+    }
+    for (BeanPropertyDefCustomizerSource column : unaggSource.getAdvancedProperties()) {
+      source.addHiddenColumn(column);
+    }
     source.setGetTableRowsMethod("weblogic.remoteconsole.customizers.AggregatedMBeanCustomizer.getSliceTableRows");
     source.setSupportsNavigation(true);
     TablePagePath unaggTablePath = PagePath.newTablePagePath(unaggPagePath.getPagesPath());
@@ -429,8 +433,15 @@ class AggregatedRuntimeMBeanYamlReader extends WebLogicBeanTypeYamlReader {
 
   @Override
   SlicesDefSource getSlicesDefSource(BeanTypeDef typeDef) {
-    // Just use the unaggregated type's slices.
-    return getYamlReader().getSlicesDefSource(NAME_HANDLER.getUnfabricatedTypeDef(typeDef));
+    // First see if there's a custom set of slices for the aggregate
+    // (e.g. for the case when the type only has slice tables)
+    SlicesDefSource rtn =
+      getYamlReader().getDefaultSlicesDefSource(typeDef);
+    if (rtn == null) {
+      // Just use the unaggregated type's slices.
+      rtn = getYamlReader().getSlicesDefSource(NAME_HANDLER.getUnfabricatedTypeDef(typeDef));
+    }
+    return rtn;
   }
 
   @Override

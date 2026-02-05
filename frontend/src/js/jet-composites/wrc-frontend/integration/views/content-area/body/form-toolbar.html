@@ -153,7 +153,7 @@
             href="#"
             on-click="[[pagesHistoryIconClick]]"
           >
-            <img id="pages-history-back-icon" aria-hidden="true"
+            <img id="pages-history-back-icon"
                  data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.icons.pagesHistory.back.iconFile() + '.png', alt: i18n.icons.pagesHistory.back.tooltip, 'title': i18n.icons.pagesHistory.back.tooltip}"/>
           </a>
         </div>
@@ -166,7 +166,7 @@
             href="#"
             on-click="[[pagesHistoryIconClick]]"
           >
-            <img id="pages-history-next-icon" aria-hidden="true"
+            <img id="pages-history-next-icon"
                  data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.icons.pagesHistory.next.iconFile() + '.png', alt: i18n.icons.pagesHistory.next.tooltip, 'title': i18n.icons.pagesHistory.next.tooltip}"/>
           </a>
         </div>
@@ -180,7 +180,7 @@
             on-click="[[pagesHistoryIconClick]]"
             accesskey="."
           >
-            <img id="pages-history-launch-icon" aria-hidden="true"
+            <img id="pages-history-launch-icon"
                  data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.icons.pagesHistory.launch.iconFile() + '.png', alt: i18n.icons.pagesHistory.launch.tooltip, 'title': i18n.icons.pagesHistory.launch.tooltip}"/>
           </a>
         </div>
@@ -191,12 +191,28 @@
                data-key-focuser-id=".cfe-content-area-body-iconbar-icon"
           >
             <a
+              id="pagesBookmarkMenuLauncher"
               href="#"
-              on-click="[[pagesHistoryIconClick]]"
+              on-click="[[launchPagesBookmarkMenu]]"
             >
-              <img id="pages-history-star-icon" aria-hidden="true"
+              <img id="pages-history-star-icon"
                    data-bind="attr: {src: 'js/jet-composites/wrc-frontend/1.0.0/images/' + i18n.icons.pagesHistory.star.iconFile() + '.png', alt: i18n.icons.pagesHistory.star.tooltip, 'title': i18n.icons.pagesHistory.star.tooltip}"/>
             </a>
+            <oj-menu
+              id="pagesBookmarkMenu"
+              aria-labelledby="pagesBookmarkMenuLauncher"
+              on-oj-action="[[pagesBookmarkMenuClickListener]]"
+              open-options.launcher="pagesBookmarkMenuLauncher"
+              open-options.initial-focus="firstItem"
+            >
+              <oj-option :id="[[i18n.menus.bookmarks.add.id]]" value="[[i18n.menus.bookmarks.add.value]]" disabled="[[i18n.menus.bookmarks.add.disabled()]]">
+                <span class="button-label"><oj-bind-text value="[[i18n.menus.bookmarks.add.label]]"></oj-bind-text></span>
+              </oj-option>
+              <oj-option>---</oj-option>
+              <oj-option :id="[[i18n.menus.bookmarks.show.id]]" value="[[i18n.menus.bookmarks.show.value]]">
+                <span class="button-label"><oj-bind-text value="[[i18n.menus.bookmarks.show.label]]"></oj-bind-text></span>
+              </oj-option>
+            </oj-menu>
           </div>
         </oj-bind-if>
 

@@ -11,11 +11,10 @@ import weblogic.console.schema.YamlSource;
  * This POJO mirrors the yaml file format for the default value of a bean property.
  */
 public class DefaultValueDefSource extends YamlSource {
-  private Value<ValueDefSource> secureModeValue = new Value<>(null);
-  private Value<ValueDefSource> productionModeValue = new Value<>(null);
-  private Value<ValueDefSource> value = new Value<>(null);
-  private BooleanValue derivedDefault = new BooleanValue();
-
+  private Value<ValueDefSource> secureModeValue = Value.create();
+  private Value<ValueDefSource> productionModeValue = Value.create();
+  private Value<ValueDefSource> value = Value.create();
+  private BooleanValue derivedDefault = BooleanValue.create();
 
   // The default value to use when the domain is running in secure mode.
   // Null if the mbean doesn't provide a default value for secure mode.
@@ -25,7 +24,7 @@ public class DefaultValueDefSource extends YamlSource {
   }
 
   public void setSecureModeValue(ValueDefSource val) {
-    secureModeValue.setValue(val);
+    secureModeValue = secureModeValue.setValue(val);
   }
 
   // The default value to use then the domain is running in production mode.
@@ -38,7 +37,7 @@ public class DefaultValueDefSource extends YamlSource {
   }
 
   public void setProductionModeValue(ValueDefSource val) {
-    productionModeValue.setValue(val);
+    productionModeValue = productionModeValue.setValue(val);
   }
 
   // The default value to use.
@@ -59,7 +58,7 @@ public class DefaultValueDefSource extends YamlSource {
   }
 
   public void setValue(ValueDefSource val) {
-    value.setValue(val);
+    value = value.setValue(val);
   }
 
   // Whether this property has a derived (i.e. computed) default value.
@@ -70,7 +69,7 @@ public class DefaultValueDefSource extends YamlSource {
   }
 
   public void setDerivedDefault(boolean val) {
-    derivedDefault.setValue(val);
+    derivedDefault = derivedDefault.setValue(val);
   }
 
   @Override

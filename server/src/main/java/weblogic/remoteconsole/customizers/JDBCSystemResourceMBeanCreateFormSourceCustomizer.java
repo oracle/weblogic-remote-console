@@ -19,6 +19,7 @@ import weblogic.remoteconsole.jdbc.utils.JDBCDriverInfo;
 import static weblogic.remoteconsole.customizers.JDBCSystemResourceMBeanCustomizerUtils.DATASOURCE_TYPE_GENERIC;
 import static weblogic.remoteconsole.customizers.JDBCSystemResourceMBeanCustomizerUtils.DATASOURCE_TYPE_GRIDLINK;
 import static weblogic.remoteconsole.customizers.JDBCSystemResourceMBeanCustomizerUtils.DATASOURCE_TYPE_UCP;
+import static weblogic.remoteconsole.customizers.JDBCSystemResourceMBeanCustomizerUtils.GENERIC_OTHER_DATABASE;
 import static weblogic.remoteconsole.customizers.JDBCSystemResourceMBeanCustomizerUtils.PROPERTY_DATASOURCE_TYPE;
 import static weblogic.remoteconsole.customizers.JDBCSystemResourceMBeanCustomizerUtils.PROPERTY_DBMS_HOST;
 import static weblogic.remoteconsole.customizers.JDBCSystemResourceMBeanCustomizerUtils.PROPERTY_DBMS_NAME;
@@ -42,6 +43,7 @@ import static weblogic.remoteconsole.customizers.JDBCSystemResourceMBeanCustomiz
 import static weblogic.remoteconsole.customizers.JDBCSystemResourceMBeanCustomizerUtils.getDBMSVendorNames;
 import static weblogic.remoteconsole.customizers.JDBCSystemResourceMBeanCustomizerUtils.getDriverAttributes;
 import static weblogic.remoteconsole.customizers.JDBCSystemResourceMBeanCustomizerUtils.getDriverInfoFactory;
+import static weblogic.remoteconsole.customizers.JDBCSystemResourceMBeanCustomizerUtils.otherDatabaseScopedName;
 
 /**
   * Customizes the JDBCSystemResourceMBean's createForm's PDY (i.e. wizard)
@@ -84,6 +86,7 @@ class JDBCSystemResourceMBeanCreateFormSourceCustomizer extends BasePageDefSourc
     for (String vendorName : getDBMSVendorNames()) {
       addGenericVendorSection(section, vendorName);
     }
+    addGenericOtherDatabaseDriverSection(section);
   }
 
   // Add the generic section for choosing the database type (vendor)
@@ -101,6 +104,7 @@ class JDBCSystemResourceMBeanCreateFormSourceCustomizer extends BasePageDefSourc
     for (String vendorName : getDBMSVendorNames()) {
       addLegalValue(property, vendorName);
     }
+    addLegalValue(property, GENERIC_OTHER_DATABASE, "Other");
   }
 
   // Add the generic datasource section for a specific vendor
@@ -128,6 +132,18 @@ class JDBCSystemResourceMBeanCreateFormSourceCustomizer extends BasePageDefSourc
       addDriverTransactionsSection(vendorSection, DATASOURCE_TYPE_GENERIC, driverPropertyName, driverInfo);
       addDriverConnectionPropertiesSection(vendorSection, DATASOURCE_TYPE_GENERIC, driverPropertyName, driverInfo);
     }
+  }
+
+  // Add the generic datasource other database driver section
+  private void addGenericOtherDatabaseDriverSection(FormSectionDefSource parent) {
+    // Create a section for the other database driver
+    FormSectionDefSource section = addSectionToSection(parent);
+    section.setUsedIf(createUsedIf(PROPERTY_GENERIC_DATABASE_TYPE, GENERIC_OTHER_DATABASE));
+    BeanPropertyDefCustomizerSource property =
+      addMBeanPropertyToSection(section, PROPERTY_GLOBAL_TRANSACTIONS_PROTOTOL);
+    property.setFormName(otherDatabaseScopedName(PROPERTY_GLOBAL_TRANSACTIONS_PROTOTOL));
+    addOtherDatabaseConnectionProperty(section, PROPERTY_DBMS_USER_NAME);
+    addOtherDatabaseConnectionProperty(section, PROPERTY_DBMS_PASSWORD);
   }
 
   // Add the top level grid link datasource section
@@ -261,6 +277,17 @@ class JDBCSystemResourceMBeanCreateFormSourceCustomizer extends BasePageDefSourc
     );
   }
 
+  private void addOtherDatabaseConnectionProperty(FormSectionDefSource section, String propertyName) {
+    BeanPropertyDefCustomizerSource property =
+      addNonMBeanStringPropertyToSection(
+        section,
+        otherDatabaseScopedName(propertyName),
+        getDriverConnectionPropertyLabel(propertyName),
+        getDefaultDriverConnectionPropertyDescriptionHTML(propertyName)
+      );
+    property.setRequired(false);
+  }
+
   private BeanPropertyDefCustomizerSource createSelectDriverProperty(
     FormSectionDefSource section,
     String driverPropertyName,
@@ -309,7 +336,7 @@ class JDBCSystemResourceMBeanCreateFormSourceCustomizer extends BasePageDefSourc
       property.setFormName(
         driverNameToFormPropertyName(
           driverScopedName(datasourceType, driverInfo, "GlobalTransactionsProtocol")
-         )
+        )
       );
       // Remove the TwoPhaseCommit option since we only let the user configure the global
       // transactions protocol for non-XA drivers and only XA drivers support TwoPhaseCommit.
@@ -454,7 +481,10 @@ class JDBCSystemResourceMBeanCreateFormSourceCustomizer extends BasePageDefSourc
     if (description != null && !"Unused".equals(description)) {
       return description;
     }
-    String attributeName = driverAttribute.getName();
+    return getDefaultDriverConnectionPropertyDescriptionHTML(driverAttribute.getName());
+  }
+
+  private String getDefaultDriverConnectionPropertyDescriptionHTML(String attributeName) {
     if (PROPERTY_DBMS_NAME.equals(attributeName)) {
       return "The name of the database to connect to.";
     }

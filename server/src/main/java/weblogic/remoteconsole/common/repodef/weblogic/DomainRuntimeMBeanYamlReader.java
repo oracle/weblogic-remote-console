@@ -56,7 +56,7 @@ class DomainRuntimeMBeanYamlReader extends WebLogicBeanTypeYamlReader {
       if (AGGREGATED_NAME_HANDLER.isFabricatableType(propertyType)) {
         propertyDef.setType(AGGREGATED_NAME_HANDLER.getFabricatedJavaType(propertyType));
         propertyDef.setName(AGGREGATED_NAME_HANDLER.getFabricatedName(propertyDef.getName()));
-        source.getProperties().add(propertyDef);
+        source.addProperty(propertyDef);
       }
     }
   }
@@ -112,6 +112,16 @@ class DomainRuntimeMBeanYamlReader extends WebLogicBeanTypeYamlReader {
           // been computed for the ServerRuntimeMBean's ApplicationRuntimes property.
           childCustomizer.setLabel(StringUtils.camelCaseToUpperCaseWords(unaggName));
         }
+        if (!StringUtils.isEmpty(childCustomizer.getOnlineName())) {
+          String unaggOnlineName = childCustomizer.getOnlineName();
+          String aggOnlineName =
+            StringUtils.getRestName(
+              AGGREGATED_NAME_HANDLER.getFabricatedName(unaggOnlineName)
+            );
+          childCustomizer.setOnlineName(aggOnlineName);
+        }
+        // Don't need to aggregate childCustomizer.getOfflineName (i.e. for WDT) since
+        // we only aggregate runtime mbeans and WDT doesn't support runtime mbeans.
         domainRuntimeCustomizerSource.addChild(childCustomizer);
       }
     }

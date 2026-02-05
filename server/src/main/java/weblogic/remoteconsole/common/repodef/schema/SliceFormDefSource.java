@@ -13,8 +13,8 @@ import weblogic.console.schema.Value;
  * a slice form page, e.g. ClusterMBean/slices/General/form.yaml
  */
 public class SliceFormDefSource extends FormDefSource {
-  private ListValue<BeanPropertyDefCustomizerSource> advancedProperties = new ListValue<>();
-  private Value<SliceFormPresentationDefSource> presentation = new Value<>(new SliceFormPresentationDefSource());
+  private ListValue<BeanPropertyDefCustomizerSource> advancedProperties = ListValue.create();
+  private Value<SliceFormPresentationDefSource> presentation = Value.create(new SliceFormPresentationDefSource());
 
   // The list of advanced properties to display on this form.
   // (This is separate from the inherited 'properties' which lists
@@ -24,7 +24,7 @@ public class SliceFormDefSource extends FormDefSource {
   }
 
   public void setAdvancedProperties(List<BeanPropertyDefCustomizerSource> value) {
-    advancedProperties.setValue(value);
+    advancedProperties = advancedProperties.setValue(value);
   }
 
   // Returns presentation info about this slice form
@@ -38,7 +38,7 @@ public class SliceFormDefSource extends FormDefSource {
   }
 
   public void setPresentation(SliceFormPresentationDefSource value) {
-    presentation.setValue(value);
+    presentation = presentation.setValue(value);
   }
 
   @Override

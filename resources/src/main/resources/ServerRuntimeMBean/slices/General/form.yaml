@@ -1,4 +1,4 @@
-# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2025, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 introductionHTML: >
   <p>This page provides general runtime information about this server.</p>
@@ -19,3 +19,4 @@ properties:
 - name: WeblogicVersion
 - name: WeblogicHome
 - name: MiddlewareHome
+- name: ServerClasspath

@@ -1,4 +1,4 @@
-// Copyright (c) 2023, Oracle and/or its affiliates.
+// Copyright (c) 2023, 2025, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef.yaml;
@@ -8,6 +8,7 @@ import java.util.Collections;
 import java.util.List;
 
 import weblogic.remoteconsole.common.repodef.ActionInputFormDef;
+import weblogic.remoteconsole.common.repodef.ActionInputFormPresentationDef;
 import weblogic.remoteconsole.common.repodef.PageActionDef;
 import weblogic.remoteconsole.common.repodef.PageActionParamDef;
 import weblogic.remoteconsole.common.repodef.PagePath;
@@ -21,6 +22,7 @@ class ActionInputFormDefImpl extends PageDefImpl implements ActionInputFormDef {
   private PageActionDefImpl actionDefImpl;
   private List<PageActionParamDefImpl> paramDefImpls = new ArrayList<>();
   private List<PageActionParamDef> paramDefs;
+  private ActionInputFormPresentationDefImpl presentationDefImpl;
 
   ActionInputFormDefImpl(PageActionDefImpl actionDefImpl) {
     super(
@@ -36,6 +38,11 @@ class ActionInputFormDefImpl extends PageDefImpl implements ActionInputFormDef {
     finishPropertyBasedInitialization();
     createParamDefImpls(actionDefImpl.getCustomizerSource().getInputForm());
     paramDefs = Collections.unmodifiableList(getParamDefImpls());
+    this.presentationDefImpl =
+      new ActionInputFormPresentationDefImpl(
+        this,
+        actionDefImpl.getCustomizerSource().getInputForm().getPresentation()
+      );
   }
 
   List<PageActionParamDefImpl> getParamDefImpls() {
@@ -60,6 +67,15 @@ class ActionInputFormDefImpl extends PageDefImpl implements ActionInputFormDef {
     for (BeanActionParamDefCustomizerSource pageParamCustomizerSource : inputFormSource.getParameters()) {
       getParamDefImpls().add(PageActionParamDefImpl.create(this, pageParamCustomizerSource));
     }
+  }
+
+  ActionInputFormPresentationDefImpl getPresentationDefImpl() {
+    return presentationDefImpl;
+  }
+
+  @Override
+  public ActionInputFormPresentationDef getPresentationDef() {
+    return getPresentationDefImpl();
   }
 
   @Override

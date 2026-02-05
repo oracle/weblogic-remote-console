@@ -17,13 +17,13 @@ import weblogic.console.schema.YamlSource;
  * which is a superset of what's available from a normal java bean info.
  */
 public class BeanTypeDefSource extends YamlSource {
-  private StringValue name = new StringValue();
-  private StringValue descriptionHTML = new StringValue();
-  private ListValue<String> baseTypes = new ListValue<>();
-  private ListValue<String> derivedTypes = new ListValue<>();
-  private ListValue<BeanPropertyDefSource> properties = new ListValue<>();
-  private ListValue<BeanActionDefSource> actions = new ListValue<>();
-  private Value<RolesDefSource> roles = new Value<>(null);
+  private StringValue name = StringValue.create();
+  private StringValue descriptionHTML = StringValue.create();
+  private ListValue<String> baseTypes = ListValue.create();
+  private ListValue<String> derivedTypes = ListValue.create();
+  private ListValue<BeanPropertyDefSource> properties = ListValue.create();
+  private ListValue<BeanActionDefSource> actions = ListValue.create();
+  private Value<RolesDefSource> roles = Value.create();
 
   // The full name of the type, e.g. weblogic.management.configuration.ServerMBean
   public String getName() {
@@ -31,7 +31,7 @@ public class BeanTypeDefSource extends YamlSource {
   }
 
   public void setName(String value) {
-    name.setValue(value);
+    name = name.setValue(value);
   }
 
   // The english description of this type
@@ -40,7 +40,7 @@ public class BeanTypeDefSource extends YamlSource {
   }
 
   public void setDescriptionHTML(String value) {
-    descriptionHTML.setValue(value);
+    descriptionHTML = descriptionHTML.setValue(value);
   }
 
   // The names of all the types this type extends.
@@ -49,11 +49,11 @@ public class BeanTypeDefSource extends YamlSource {
   }
 
   public void setBaseTypes(List<String> value) {
-    baseTypes.setValue(value);
+    baseTypes = baseTypes.setValue(value);
   }
 
   public void addBaseType(String value) {
-    baseTypes.add(value);
+    baseTypes = baseTypes.add(value);
   }
 
   // The names of all the types that extend this type.
@@ -62,11 +62,11 @@ public class BeanTypeDefSource extends YamlSource {
   }
 
   public void setDerivedTypes(List<String> value) {
-    derivedTypes.setValue(value);
+    derivedTypes = derivedTypes.setValue(value);
   }
 
   public void addDerivedType(String value) {
-    derivedTypes.add(value);
+    derivedTypes = derivedTypes.add(value);
   }
 
   // The properties defined on this type (doesn't include inherited properties)
@@ -75,11 +75,11 @@ public class BeanTypeDefSource extends YamlSource {
   }
 
   public void setProperties(List<BeanPropertyDefSource> value) {
-    properties.setValue(value);
+    properties = properties.setValue(value);
   }
 
   public void addProperty(BeanPropertyDefSource value) {
-    properties.add(value);
+    properties = properties.add(value);
   }
 
   // The actions defined on this type (doesn't include inherited actions)
@@ -88,11 +88,11 @@ public class BeanTypeDefSource extends YamlSource {
   }
 
   public void setActions(List<BeanActionDefSource> value) {
-    actions.setValue(value);
+    actions = actions.setValue(value);
   }
 
   public void addAction(BeanActionDefSource value) {
-    actions.add(value);
+    actions = actions.add(value);
   }
 
   // The roles that are allowed to access this type
@@ -101,7 +101,7 @@ public class BeanTypeDefSource extends YamlSource {
   }
 
   public void setRoles(RolesDefSource value) {
-    roles.setValue(value);
+    roles = roles.setValue(value);
   }
 
   @Override

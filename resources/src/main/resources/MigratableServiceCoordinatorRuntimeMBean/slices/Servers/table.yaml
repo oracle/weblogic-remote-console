@@ -1,0 +1,27 @@
+# Copyright (c) 2025, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+introductionHTML: >
+  <p>Manually restart (migrate) a server and it's services to another machine.
+  Select one server from the table and then press the 'Migrate Server' action to do the migration. </p>
+  <p><b>Note: </b>Whole server migration is allowed only for running server with auto migration enabled.</p>
+
+getTableRowsMethod: weblogic.remoteconsole.customizers.MigrationCoordinatorMBeanCustomizer.getMigrateServerSliceTableRows
+actions:
+  - name: "migrateServer"
+    label: Migrate Server
+    rows: one
+displayedColumns:
+  - name: "Name"
+    label: "Server"
+    definition:
+      type: "java.lang.String"
+      descriptionHTML: Server for migration
+  - name: "Machine"
+    definition:
+      type: "java.lang.String"
+      descriptionHTML: Machine that the server is on.
+  - name: "Cluster"
+    definition:
+      type: "java.lang.String"
+      descriptionHTML: Cluster that this migratable target is part of.

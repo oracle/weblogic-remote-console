@@ -1,4 +1,4 @@
-// Copyright (c) 2021, 2024, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2025, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.providers;
@@ -6,6 +6,7 @@ package weblogic.remoteconsole.server.providers;
 import java.io.File;
 import java.io.FileInputStream;
 import java.util.Collection;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -34,6 +35,7 @@ public class ProviderManager {
     ConsoleBackendRuntime.INSTANCE.getSsoTokenManager();
 
   private Map<String,Provider> providers = new ConcurrentHashMap<>();
+  private List<Provider> orderedList = new LinkedList<>();
 
   public AdminServerDataProvider createAdminServerDataProvider(
     String name,
@@ -42,30 +44,44 @@ public class ProviderManager {
     String authorizationHeader,
     boolean useSso,
     boolean local) {
+    LOGGER.finest("Create AdminServerDataProvider " + name + " " + label);
     // Ignore the authorization header when using SSO tokens
     String auth = useSso ? null : authorizationHeader;
-    AdminServerDataProvider ret = new AdminServerDataProviderImpl(name, label, url, auth, local);
+    AdminServerDataProvider ret = new AdminServerDataProviderImpl(this, name, label, url, auth, local);
     // Obtain an SSO token ID from the SSO token manager
     ret.setSsoTokenId(useSso ? SSO_TOKEN_MANAGER.add(ret) : null);
-    providers.put(name, ret);
+    putProvider(name, ret);
     return ret;
   }
 
+  private void putProvider(String name, Provider provider) {
+    if (providers.put(name, provider) == null) {
+      orderedList.add(provider);
+    }
+  }
+
+  private void removeProvider(String name) {
+    orderedList.remove(providers.remove(name));
+  }
+
   public PropertyListDataProvider createPropertyListDataProvider(String name, String label) {
+    LOGGER.finest("Create PropertyListDataProvider " + name + " " + label);
     PropertyListDataProvider ret = new PropertyListDataProviderImpl(name, label);
-    providers.put(name, ret);
+    putProvider(name, ret);
     return ret;
   }
 
   public WDTModelDataProvider createWDTModelDataProvider(String name, String label) {
+    LOGGER.finest("Create WDTModelDataProvider " + name + " " + label);
     WDTModelDataProvider ret = new WDTModelDataProviderImpl(name, label);
-    providers.put(name, ret);
+    putProvider(name, ret);
     return ret;
   }
 
   public WDTCompositeDataProvider createWDTCompositeDataProvider(String name, String label, List<String> models) {
+    LOGGER.finest("Create WDTCompositeDataProvider" + name + " " + label);
     WDTCompositeDataProvider ret = new WDTCompositeDataProviderImpl(name, label, models, this);
-    providers.put(name, ret);
+    putProvider(name, ret);
     return ret;
   }
 
@@ -94,15 +110,18 @@ public class ProviderManager {
       prov.terminate();
     }
     providers.clear();
+    orderedList.clear();
   }
 
   public void deleteProvider(String name) {
+    LOGGER.finest("Delete provider " + name + providers.get(name).getLabel());
     removeSsoToken(name);
     terminateProvider(name);
-    providers.remove(name);
+    removeProvider(name);
   }
 
   public void terminateProvider(String name) {
+    LOGGER.finest("Terminate provider " + name + providers.get(name).getLabel());
     providers.get(name).terminate();
   }
 
@@ -143,7 +162,7 @@ public class ProviderManager {
   }
 
   public Collection<Provider> getAll() {
-    return providers.values();
+    return orderedList;
   }
 
   public static JsonArray getAllHelp(InvocationContext ic) {
@@ -226,6 +245,12 @@ public class ProviderManager {
     // Somehow the name got confused.  Use the one expected
     if (AdminServerDataProviderImpl.TYPE_NAME.equals(provJSON.getString("providerType"))) {
       provBuilder.add("type", "adminserver");
+    } else if (WDTModelDataProviderImpl.TYPE_NAME.equals(provJSON.getString("providerType"))) {
+      provBuilder.add("type", "model");
+    } else if (WDTCompositeDataProviderImpl.TYPE_NAME.equals(provJSON.getString("providerType"))) {
+      provBuilder.add("type", "composite");
+    } else if (PropertyListDataProviderImpl.TYPE_NAME.equals(provJSON.getString("providerType"))) {
+      provBuilder.add("type", "properties");
     } else {
       provBuilder.add("type", provJSON.getString("providerType"));
     }
@@ -282,7 +307,7 @@ public class ProviderManager {
   private JsonArray getJSONOtherConfiguredProviders(InvocationContext ic) {
     JsonArrayBuilder childrenBuilder = Json.createArrayBuilder();
     boolean foundOne = false;
-    for (Provider prov : providers.values()) {
+    for (Provider prov : orderedList) {
       if (!isProviderLocal(prov)) {
         foundOne = true;
         childrenBuilder.add(convertToPersistenceFormat(prov, ic));

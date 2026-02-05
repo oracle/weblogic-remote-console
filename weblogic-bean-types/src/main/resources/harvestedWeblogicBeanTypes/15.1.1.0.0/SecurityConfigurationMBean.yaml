@@ -53,6 +53,12 @@ properties:
   name: CertRevoc
   relationship: containment
   type: weblogic.management.configuration.CertRevocMBean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Returns the CertificateManagementMBean for the domain.</p> '
+  name: CertificateManagement
+  relationship: containment
+  type: weblogic.management.configuration.CertificateManagementMBean
 - defaultValue:
     value:
       value: 30
@@ -195,6 +201,17 @@ properties:
   supported: false
   type: boolean
   writable: true
+- array: true
+  creators:
+  - weblogic.management.configuration.CredentialSetMBean
+  defaultValue: {
+    }
+  descriptionHTML: '<p>Returns the collection of credential sets. Credential sets
+    contain the properties needed to authenticate with an external service provider
+    (e.g. the OCI Certificate Management Service).</p> '
+  name: CredentialSets
+  relationship: containment
+  type: weblogic.management.configuration.CredentialSetMBean
 - defaultValue:
     value:
       value: false

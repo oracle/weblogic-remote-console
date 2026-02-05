@@ -1,8 +1,12 @@
-# Copyright (c) 2023, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2023, 2025, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 introductionHTML: >
   This page displays basic information about this SAML2 Credential Mapper.
+
+actions:
+- name: importData
+- name: exportData
 
 properties:
 - name: Name

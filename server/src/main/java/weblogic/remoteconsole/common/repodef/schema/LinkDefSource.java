@@ -14,11 +14,11 @@ import weblogic.console.schema.YamlSource;
  * about a link
  */
 public class LinkDefSource extends YamlSource {
-  private StringValue label = new StringValue();
-  private StringValue root = new StringValue();
-  private StringValue resourceData = new StringValue();
-  private StringValue notFoundMessage = new StringValue();
-  private ListValue<String> requiredCapabilities = new ListValue<>();
+  private StringValue label = StringValue.create();
+  private StringValue root = StringValue.create();
+  private StringValue resourceData = StringValue.create();
+  private StringValue notFoundMessage = StringValue.create();
+  private ListValue<String> requiredCapabilities = ListValue.create();
 
   // The name of the root that for this link.
   // Matches the *_ROOT constants in weblogic.remoteconsole.server.providers.Root
@@ -27,7 +27,7 @@ public class LinkDefSource extends YamlSource {
   }
 
   public void setRoot(String value) {
-    root.setValue(value);
+    root = root.setValue(value);
   }
 
   // The template for creating resourceData links
@@ -45,7 +45,7 @@ public class LinkDefSource extends YamlSource {
   }
   
   public void setResourceData(String value) {
-    resourceData.setValue(value);
+    resourceData = resourceData.setValue(value);
   }
 
   // The text to display if the corresponding bean from
@@ -63,7 +63,7 @@ public class LinkDefSource extends YamlSource {
   }
 
   public void setNotFoundMessage(String value) {
-    notFoundMessage.setValue(value);
+    notFoundMessage = notFoundMessage.setValue(value);
   }
 
   // The english label to display for this link on the page
@@ -72,7 +72,7 @@ public class LinkDefSource extends YamlSource {
   }
 
   public void setLabel(String value) {
-    label.setValue(value);
+    label = label.setValue(value);
   }
 
   // The bean repo capabilities that are required for this link to be present
@@ -81,6 +81,6 @@ public class LinkDefSource extends YamlSource {
   }
   
   public void setRequiredCapabilities(List<String> val) {
-    requiredCapabilities.setValue(val);
+    requiredCapabilities = requiredCapabilities.setValue(val);
   }
 }

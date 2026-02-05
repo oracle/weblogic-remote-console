@@ -9,6 +9,7 @@ import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
+import javax.ws.rs.HttpMethod;
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerRequestFilter;
 import javax.ws.rs.container.PreMatching;
@@ -98,6 +99,12 @@ public class SessionFilter implements ContainerRequestFilter {
     if ((segs.size() > 1) && segs.get(1).getPath().equals(RemoteConsoleResource.SSO_TOKEN_PATH)) {
       LOGGER.fine("Setup SsoTokenManager for request!");
       SsoTokenManager.setInRequestContext(requestContext);
+      return;
+    }
+
+    // HTTP OPTIONS is ignored for the session handling of other resources
+    if (requestContext.getMethod().equals(HttpMethod.OPTIONS)) {
+      LOGGER.finest("Ignoring OPTIONS request for session handling!");
       return;
     }
 

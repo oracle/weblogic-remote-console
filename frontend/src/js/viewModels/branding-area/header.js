@@ -211,8 +211,6 @@ define([
 
         this.signalBindings.push(binding);
 
-        this.signalBindings.push(binding);
-
         DataProviderManager.getCapabilities().then(caps => {
           const logoutEnabled = caps && caps.indexOf('Logout') != -1;
 

@@ -16,6 +16,7 @@ import javax.json.JsonValue;
 
 import weblogic.console.utils.StringUtils;
 import weblogic.remoteconsole.common.repodef.ActionInputFormDef;
+import weblogic.remoteconsole.common.repodef.ActionInputFormPresentationDef;
 import weblogic.remoteconsole.common.repodef.BeanActionDef;
 import weblogic.remoteconsole.common.repodef.BeanValueDef;
 import weblogic.remoteconsole.common.repodef.CreateFormDef;
@@ -189,6 +190,7 @@ public class PageDescription {
   private JsonObject actionInputFormDefToJson(ActionInputFormDef inputFormDef) {
     JsonObjectBuilder builder = Json.createObjectBuilder();
     builder.add("properties", actionParamDefsToJson(inputFormDef.getParamDefs()));
+    addIfNotEmpty(builder, "presentation", actionInputFormPresentationDefToJson(inputFormDef.getPresentationDef()));
     return builder.build();
   }
 
@@ -332,6 +334,7 @@ public class PageDescription {
     addIfNotEmpty(builder, "name", paramDef.getFormFieldName());
     // action params always use the same label on the page and help page:
     addIfNotEmpty(builder, "label", paramDef.getLabel());
+    addIfTrue(builder, "readOnly", paramDef.isReadOnly());
     addIfNotEmpty(builder, "helpLabel", paramDef.getLabel());
     addIfNotEmpty(builder, "type", getType(paramDef, true));
     addIfTrue(builder, "array", isArray(paramDef));
@@ -502,6 +505,20 @@ public class PageDescription {
       computeIsSingleColumn(
         presentationDef.isSingleColumn(),
         presentationDef.getCreateFormDef().getAllPropertyDefs().size()
+      );
+    JsonObjectBuilder builder = Json.createObjectBuilder();
+    addIfTrue(builder, "singleColumn", singleColumn);
+    return builder.build();
+  }
+
+  private JsonObject actionInputFormPresentationDefToJson(ActionInputFormPresentationDef presentationDef) {
+    if (presentationDef == null) {
+      return null;
+    }
+    boolean singleColumn =
+      computeIsSingleColumn(
+        presentationDef.isSingleColumn(),
+        presentationDef.getActionInputFormDef().getParamDefs().size()
       );
     JsonObjectBuilder builder = Json.createObjectBuilder();
     addIfTrue(builder, "singleColumn", singleColumn);

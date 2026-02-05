@@ -86,7 +86,7 @@ define([
         }
         else {
           messageSummary = (CoreUtils.isError(response.failureReason) ? response.failureReason.name : oj.Translations.getTranslatedString('wrc-view-model-utils.labels.unexpectedErrorResponse.value'));
-          messageDetails = response.failureReason;
+          messageDetails = (CoreUtils.isError(response.failureReason) ? response.failureReason.stack: response.failureReason);
           // Look for a response message to use for the message details displayed to the user
           if (CoreUtils.isNotUndefinedNorNull(response?.body?.messages)
             && CoreUtils.isNotUndefinedNorNull(response.body.messages[0]?.message)) {
@@ -431,6 +431,16 @@ define([
             arr[index].focus();
           else
             arr[0].focus();
+        }
+      },
+
+      removeAriaLabelledByAttribute: (selector) => {
+        const nodeList = document.querySelectorAll(selector);
+        if (nodeList !== null && nodeList.length > 0) {
+          const arr = Array.from(nodeList);
+          arr.forEach((node) => {
+            node.removeAttribute('aria-labelledby');
+          });
         }
       },
 

@@ -10,10 +10,11 @@ import java.util.Map;
 import weblogic.console.utils.StringUtils;
 import weblogic.remoteconsole.common.repodef.PagePath;
 import weblogic.remoteconsole.common.repodef.schema.PageDefSource;
-import weblogic.remoteconsole.server.repo.BooleanValue;
+import weblogic.remoteconsole.server.repo.BeanTreePath;
 import weblogic.remoteconsole.server.repo.InvocationContext;
 import weblogic.remoteconsole.server.repo.Option;
 import weblogic.remoteconsole.server.repo.SettableValue;
+import weblogic.remoteconsole.server.repo.StringValue;
 import weblogic.remoteconsole.server.repo.Value;
 import weblogic.remoteconsole.server.webapp.BaseResource;
 
@@ -39,13 +40,18 @@ public class JDBCSystemResourceMBeanCustomizer {
 
   // Customize the JDBCSystemResourceMBean collection's JAXRS Resource
   public static BaseResource createResource(InvocationContext ic) {
-    if (ic.getBeanTreePath().isCollection() && ic.getPageRepo().isPageEditorRepo()) {
-      // The tree is editable and the request is for the collection.
-      // Use our own resource so that we can overload create.
-      return new JDBCSystemResourceMBeanCreatableCollectionResource();
+    if (ic.getPageRepo().isPageEditorRepo()) {
+      BeanTreePath btp = ic.getBeanTreePath();
+      if (btp.isCollection()) {
+        // The tree is editable and the request is for the collection.
+        // Use our own resource so that we can overload create.
+        return new JDBCSystemResourceMBeanCreatableCollectionResource();
+      } else if (btp.isCollectionChild()) {
+        // The tree is editable and the request is for an instance
+        // Use our own resource so that we can overload update;
+        return new JDBCSystemResourceMBeanEditableCollectionChildResource();
+      }
     }
-    // This request is either for a collection child or for a read-only collection.
-    // Return null to signal that the standard resource class should be used.
     return null;
   }
 
@@ -115,7 +121,15 @@ public class JDBCSystemResourceMBeanCustomizer {
     ) SettableValue driverNameValue
   ) {
     String driverName = driverNameValue.getValue().asString().getValue();
-    boolean isXADriver = JDBCSystemResourceMBeanCustomizerUtils.isXADriver(driverName);
-    return new SettableValue(new BooleanValue(isXADriver));
+    Boolean isXADriver = JDBCSystemResourceMBeanCustomizerUtils.isXADriver(driverName);
+    String rtn = null;
+    if (isXADriver == null) {
+      rtn = "unknown";
+    } else if (isXADriver) {
+      rtn = "true";
+    } else {
+      rtn = "false";
+    }
+    return new SettableValue(new StringValue(rtn));
   }
 }

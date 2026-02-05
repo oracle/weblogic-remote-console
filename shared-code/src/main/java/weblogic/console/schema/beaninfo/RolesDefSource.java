@@ -13,8 +13,8 @@ import weblogic.console.schema.YamlSource;
  * This POJO mirrors the yaml file format for listing the roles that can access a bean, property or action.
  */
 public class RolesDefSource extends YamlSource {
-  private BooleanValue permitAll = new BooleanValue();
-  private ListValue<String> allowed = new ListValue<>();
+  private BooleanValue permitAll = BooleanValue.create();
+  private ListValue<String> allowed = ListValue.create();
 
   // Whether all roles can access this feature
   public boolean isPermitAll() {
@@ -22,7 +22,7 @@ public class RolesDefSource extends YamlSource {
   }
 
   public void setPermitAll(boolean val) {
-    permitAll.setValue(val);
+    permitAll = permitAll.setValue(val);
   }
 
   // The roles allowed to access this feature (if isPermitAll returns false)
@@ -31,6 +31,6 @@ public class RolesDefSource extends YamlSource {
   }
 
   public void setAllowed(List<String> val) {
-    allowed.setValue(val);
+    allowed = allowed.setValue(val);
   }
 }

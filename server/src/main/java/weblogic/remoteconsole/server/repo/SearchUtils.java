@@ -16,6 +16,7 @@ import weblogic.remoteconsole.common.repodef.PagePropertyDef;
 import weblogic.remoteconsole.common.repodef.PageRepoDef;
 import weblogic.remoteconsole.common.repodef.SliceDef;
 import weblogic.remoteconsole.common.repodef.SliceFormDef;
+import weblogic.remoteconsole.common.repodef.SliceTableDef;
 import weblogic.remoteconsole.common.repodef.SlicesDef;
 
 /**
@@ -37,6 +38,10 @@ public class SearchUtils {
     if (formDef != null) {
       return removePageLevelProperties(formDef.getPropertyDefs());
     }
+    SliceTableDef sliceTableDef = getDefaultSliceTableDef(pageRepoDef, typeDef);
+    if (sliceTableDef != null) {
+      return removePageLevelProperties(sliceTableDef.getDisplayedColumnDefs());
+    }
     throw new AssertionError(typeDef + " is not a table and does not have a slice form");
   }
 
@@ -44,6 +49,16 @@ public class SearchUtils {
     PageDef pageDef = pageRepoDef.getPageDef(pageRepoDef.newSlicePagePath(typeDef, new Path()));
     if (pageDef != null && pageDef.isSliceFormDef()) {
       return pageDef.asSliceFormDef();
+    }
+    // Need to look walk through all of the type's slices and return the 'first'
+    // one that is a slice form.
+    return null;
+  }
+
+  private static SliceTableDef getDefaultSliceTableDef(PageRepoDef pageRepoDef, BeanTypeDef typeDef) {
+    PageDef pageDef = pageRepoDef.getPageDef(pageRepoDef.newSlicePagePath(typeDef, new Path()));
+    if (pageDef != null && pageDef.isSliceTableDef()) {
+      return pageDef.asSliceTableDef();
     }
     // Need to look walk through all of the type's slices and return the 'first'
     // one that is a slice form.

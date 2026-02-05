@@ -1,4 +1,4 @@
-# Copyright (c) 2020, 2024, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2025, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 properties:
 
@@ -99,10 +99,34 @@ properties:
   requiredCapabilities:
   - Before14.1.2.0.0
 
+- name: ServerKeyStores
+  label: "Server Keystores"
+  legalValues:
+  - value: DemoIdentityAndDemoTrust
+    label: "Demo Identity and Demo Trust"
+  - value: CustomIdentityAndJavaStandardTrust
+    label: "Custom Identity and Java Standard Trust"
+  - value: CustomIdentityAndCustomTrust
+    label: "Custom Identity and Custom Trust"
+  - value: CustomIdentityAndCommandLineTrust
+    label: "Custom Identity and Command Line Trust"
+  - value: DomainKeystores
+    label: "Domain Keystores"
+
 children:
 
 - name: SNMPAgent
   label: Domain SNMP Agent
+  requiredCapabilities:
+  - AdminServerConnection
+
+- name: SNMPAgentDeployments
+  requiredCapabilities:
+  - AdminServerConnection
+
+- name: OsgiFrameworks
+  requiredCapabilities:
+  - AdminServerConnection
 
 - name: AppDeployments
   creatable: true
@@ -111,6 +135,14 @@ children:
 
 - name: DBClientDataDirectories
   label: Database Client Data Directories
+  creatable: true
+  asyncCreate: true
+  asyncDelete: true
+  requiredCapabilities:
+  - AdminServerConnection
+
+- name: PluginDeployments
+  label: Plugin Deployments
   creatable: true
   asyncCreate: true
   asyncDelete: true

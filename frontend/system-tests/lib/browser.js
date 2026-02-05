@@ -16,12 +16,20 @@ ffOptions.addArguments('--no-sandbox');
 ffOptions.addArguments('--headless=new');
 ffOptions.addArguments('--disable-gpu');
 
+var prefs = new Map();
+prefs.set("credentials_enable_service", false);
+prefs.set("profile.password_manager_enabled", false);
 
 var chOptions   = new chrome.Options();
 chOptions.addArguments('--no-sandbox');
 chOptions.addArguments('--headless=new');
 chOptions.addArguments('--window-size=1920x1080');
 chOptions.addArguments('--disable-dev-shm-usage');
+chOptions.addArguments('--credentials_enable_service=false');
+chOptions.addArguments('--profile.password_manager_enabled=false')
+chOptions.addArguments('--incognito');
+chOptions.setUserPreferences(prefs);
+
 if (getenv("CHROME_BROWSER")) {
   chOptions.setChromeBinaryPath(getenv("CHROME_BROWSER"));
 }

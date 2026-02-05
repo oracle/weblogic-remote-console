@@ -15,6 +15,7 @@ const UserPrefs = require('./user-prefs-json');
 const SettingsEditor = require('./settings-editor');
 var supportsAutoUpgrades = false;
 var findString = '';
+const path = require('path');
 
 /**
  * See {@link https://stackabuse.com/javascripts-immediately-invoked-function-expressions/}
@@ -35,6 +36,7 @@ const WindowManagement = (() => {
   // persisted in the auto-prefs.json file
   const AutoPrefs = require('./auto-prefs-json');
   
+  let corruption = [];
   let _window;
   let _params;
   let newVersion;
@@ -60,6 +62,25 @@ const WindowManagement = (() => {
         enableRemoteModule: false,
         preload: path.join(__dirname, 'ipcRendererPreload.js')
       }
+    });
+  }
+
+  function saveCorruption(filename, newfilename) {
+    corruption.push({ 'filename': filename, 'newfilename': newfilename });
+  }
+
+  function processSavedCorruption() {
+    for (var corr of corruption) {
+      showCorruption(corr.filename, corr.newfilename);
+    }
+    corruption = [];
+  }
+
+  function showCorruption(filename, newfilename) {
+    dialog.showMessageBoxSync(_window, {
+      title: `${I18NUtils.get('wrc-electron.corrupt-file-title', path.basename(filename))}`,
+      type: 'error',
+      message: `${I18NUtils.get('wrc-electron.corrupt-file-message', filename, newfilename)}`
     });
   }
 
@@ -756,7 +777,14 @@ const WindowManagement = (() => {
         });
       }
       
-      AutoPrefs.read(userDataPath);
+      try {
+        AutoPrefs.read(userDataPath);
+      } catch(err) {
+        log('error', `Cannot read auto preferences file: ${err}`);
+        WindowManagement.corruptFile(AutoPrefs.getPath(userDataPath));
+        // The file is removed by corruptFile()
+        AutoPrefs.read(userDataPath);
+      }
       AutoPrefs.set({
         version: params.version,
         location: (
@@ -785,6 +813,7 @@ const WindowManagement = (() => {
       _window = createBrowserWindow(title, AutoPrefs.get('width'), AutoPrefs.get('height'));
       _window.webContents.session.clearCache();
 
+      processSavedCorruption();
       _window.on('resize', () => {
         AutoPrefs.set({width: _window.getSize()[0], height: _window.getSize()[1]});
         AutoPrefs.write();
@@ -927,6 +956,16 @@ const WindowManagement = (() => {
     hideDockIconMacOS: () => {
       // Ensure the doc icon is hidden for MacOS
       if (OSUtils.isMacOS()) app.dock.hide();
+    },
+    corruptFile: (filename) => {
+      let date = new Date();
+      let newfilename = filename + "-corrupt-" + date.getFullYear() + "-" + date.getMonth() + "-" + date.getDate() + "-" + Math.floor(Math.random() * 10000);
+      fs.rmSync(newfilename, { force: true } );
+      fs.renameSync(filename, newfilename);
+      if (!_window)
+        saveCorruption(filename, newfilename);
+      else
+        showCorruption(filename, newfilename);
     }
   };
   

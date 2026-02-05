@@ -10,7 +10,7 @@ define({
     },
     "buttons": {
       "logout": {
-        "label": "Logout"
+        "label": "Fazer Log-out"
       }
     },
     "icons": {
@@ -1523,7 +1523,33 @@ define({
     "messages": {
       "pageNoLongerExists": {
         "summary": "A Página Não Existe Mais",
-        "detail": "Você foi redirecionado para a página {0} porque {1} foi excluído(a) por outro usuário, ou não existe mais."
+        "detail1": "Você foi redirecionado para a página {0} porque ",
+        "detail2": "{0} foi excluída por outro usuário ou não existe mais."
+      }
+    }
+  },
+  "wrc-pages-bookmark": {
+    "labels": {
+      "ariaLabel": {
+        "value": "Marcadores de Página"
+      }
+    },
+    "menus": {
+      "bookmark": {
+        "add": {
+          "label": "Adicionar Marcador para a Página Atual"
+        },
+        "show": {
+          "label": "Mostrar Marcadores de Página..."
+        }
+      }
+    },
+    "messages": {
+      "pageAlreadyBookmarked": {
+        "summary": "Já existe um marcador para esta página! "
+      },
+      "pagesBookmarkAdded": {
+        "summary": "A página atual foi marcada com sucesso! "
       }
     }
   },
@@ -1681,7 +1707,7 @@ define({
           "value": "Mostrar Histórico de Páginas"
         },
         "star": {
-          "value": "Página Marcador"
+          "value": "Marcadores de Página"
         }
       },
       "pageInfo": {
@@ -1710,7 +1736,10 @@ define({
         "value": "Alertas"
       },
       "pagesHistory": {
-        "value": "Esta janela permite que você veja ou selecione uma página visitada anteriormente."
+        "value": "Aqui estão as páginas visitadas desde a seleção do provedor atual. Clique em qualquer coluna na linha para navegar até a página associada."
+      },
+      "pagesBookmark": {
+        "value": "Aqui estão as páginas marcadas para o tipo de provedor {0}. Clique em qualquer coluna na linha para navegar até a página associada."
       }
     },
     "placeholders": {

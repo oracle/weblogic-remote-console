@@ -18,8 +18,8 @@
 define(['./parsers/yaml', 'text!wrc-frontend/config/console-frontend-jet.yaml', 'text!./baseUrl', './types', './utils', 'ojs/ojlogger'],
 	function (YamlParser, ConfigFileContents, BaseUrl, CoreTypes, CoreUtils, Logger) {
 		let properties = {}, config = {};
-		
-                properties['unique-id'] = new Date().getTime()
+
+		properties['unique-id'] = new Date().getTime()
 		properties['console-frontend.mode'] = CoreTypes.Console.RuntimeMode.DETACHED.name;
 		properties['console-frontend.isReadOnly'] = false;
 		properties['console-backend.providerId'] = '';
@@ -37,8 +37,10 @@ define(['./parsers/yaml', 'text!wrc-frontend/config/console-frontend-jet.yaml', 
 		properties['features.whatsNew.disabled'] = true;
 		properties['features.howDoI.disabled'] = true;
 		properties['features.pageInfo.disabled'] = true;
+		properties['features.pagesHistory.disabled'] = true;
+		properties['features.bookmarks.disabled'] = true;
 		properties['features.iconbarIcons.relocated'] = false;
-		
+
 		YamlParser.parse(ConfigFileContents)
 			.then(data => {
 				config = data;
@@ -69,6 +71,7 @@ define(['./parsers/yaml', 'text!wrc-frontend/config/console-frontend-jet.yaml', 
 				properties['features.pageInfo.disabled'] = config['features']['pageInfo']['disabled'];
 				properties['features.howDoI.disabled'] = config['features']['howDoI']['disabled'];
 				properties['features.pagesHistory.disabled'] = config['features']['pagesHistory']['disabled'];
+				properties['features.bookmarks.disabled'] = config['features']['bookmarks']['disabled'];
 				properties['features.iconbarIcons.relocated'] = config['features']['iconbarIcons']['relocated'];
 				properties['preferences.providerManagement.location'] = config['preferences']['providerManagement']['location'];
 				properties['preferences.providerManagement.newModel.domain.fileContents'] = config['preferences']['providerManagement']['newModel']['domain']['fileContents'];
@@ -84,11 +87,11 @@ define(['./parsers/yaml', 'text!wrc-frontend/config/console-frontend-jet.yaml', 
 			.catch(err => {
 				Logger.error(err);
 			});
-		
+
 		function getBaseUrl() {
 			return getBackendUrl() + '/api';
 		}
-		
+
 		function getUniqueId() {
 			return properties['unique-id']
 		}
@@ -100,24 +103,24 @@ define(['./parsers/yaml', 'text!wrc-frontend/config/console-frontend-jet.yaml', 
 		function getBackendUrl() {
 			return (properties['console-backend.url'] ? properties['console-backend.url'] : getRunningBackendUrl());
 		}
-		
+
 		function getRunningBackendUrl() {
 			let computedBase;
-			
+
 			// use a dynamic BaseUrl if BaseUrl is not specified
 			// which is the case when the frontend and backend
 			// are running on the same host/port
 			if (!BaseUrl || BaseUrl === '') {
 				const host = window.location.host;
 				const protocol = window.location.protocol;
-				
+
 				computedBase = protocol + '//' + host;
 			} else {
 				computedBase = BaseUrl;
 			}
 			return computedBase + (properties['console-backend.basePath'] ? properties['console-backend.basePath'] : '');
 		}
-		
+
 		return {
 			PropertyName: Object.freeze({
 				CFE_MODE: {name: 'console-frontend.mode'},
@@ -154,55 +157,55 @@ define(['./parsers/yaml', 'text!wrc-frontend/config/console-frontend-jet.yaml', 
 				CBE_RETRY_ATTEMPTS: {name: 'console-backend.retryAttempts'},
 				CBE_MODE: {name: 'console-backend.mode'}
 			}),
-			
+
 			getBaseUrl: function () {
 				return getBaseUrl();
 			},
-			
+
 			getBackendUrl: getBackendUrl,
 
 			getUniqueId: function () {
 				return getUniqueId();
 			},
-			
+
 			setBackendUrl: (value) => {
 				properties['console-backend.url'] = value;
 			},
-			
+
 			getDataProviderId: () => {
 				return properties['console-backend.providerId'];
 			},
-			
+
 			setDataProviderId: (value) => {
 				properties['console-backend.providerId'] = value;
 			},
-			
+
 			getStartupProject: () => {
 				return properties['preferences.startup.project'];
 			},
-			
+
 			getStartupTask: () => {
 				return properties['preferences.startup.task.default'];
 			},
-			
+
 			getStartupTaskChooser: () => {
 				return properties['preferences.startup.task.chooser'];
 			},
-			
+
 			setStartupTaskChooser: (value) => {
 				if (value && ['use-dialog', 'use-cards'].includes(value)) {
 					properties['preferences.startup.task.chooser'] = value;
 				}
 			},
-			
+
 			getUseNavstripAsRootNodes: () => {
 				return properties['preferences.navtree.useTreeMenusAsRootNodes'];
 			},
-			
+
 			getAccelerators: () => {
 				return properties['console-frontend.accelerators'];
 			},
-			
+
 			getSettingsActions: () => {
 				return properties['settings.actions'];
 			},
@@ -210,7 +213,7 @@ define(['./parsers/yaml', 'text!wrc-frontend/config/console-frontend-jet.yaml', 
 			getPagesHistoryMaxQueueSize: () => {
 				return ~~properties['preferences.pagesHistory.maxQueueSize'];
 			},
-			
+
 			getPollingMillis: function () {
 				return parseInt(this.getProperty(this.PropertyName.CBE_POLLING_MILLIS));
 			},
@@ -222,39 +225,39 @@ define(['./parsers/yaml', 'text!wrc-frontend/config/console-frontend-jet.yaml', 
 			getRetryAttempts: function () {
 				return parseInt(this.getProperty(this.PropertyName.CBE_RETRY_ATTEMPTS));
 			},
-			
+
 			getAutoSyncMinimumSecs: function () {
 				return parseInt(this.getProperty(this.PropertyName.CFE_AUTO_SYNC_SECS));
 			},
-			
+
 			getAutoDownloadMinimumSecs: function () {
 				return parseInt(this.getProperty(this.PropertyName.CFE_AUTO_DOWNLOAD_TIMER_SECS));
 			},
-			
+
 			getProjectManagementLocation: function () {
 				return this.getProperty(this.PropertyName.CFE_PROJECT_MANAGEMENT_LOCATION);
 			},
-			
+
 			getWDTModelDomainTemplate: function () {
 				return properties['preferences.providerManagement.newModel.domain.fileContents'];
 			},
-			
+
 			getWDTModelSparseTemplate: function () {
 				return properties['preferences.providerManagement.newModel.sparse.fileContents'];
 			},
-			
+
 			getDomainConnectState: function () {
 				return this.getProperty(this.PropertyName.CBE_DOMAIN_CONNECT_STATE);
 			},
-			
+
 			getDocsURL: function () {
 				return properties['console-backend.docs'];
 			},
-			
+
 			getWhatsNewURL: function () {
 				return properties['console-backend.whatsnew'];
 			},
-			
+
 			getLoggingLevel: function () {
 				const level = this.getProperty(
 					this.PropertyName.CFE_LOGGING_DEFAULT_LEVEL
@@ -268,24 +271,24 @@ define(['./parsers/yaml', 'text!wrc-frontend/config/console-frontend-jet.yaml', 
 				}[level]);
 				return levelSwitch(level);
 			},
-			
+
 			isConfiguredSso: function () {
 				const domainLoginUri = this.getSsoDomainLoginUri();
 				return CoreUtils.isNotUndefinedNorNull(domainLoginUri) && (domainLoginUri.length > 0);
 			},
-			
+
 			getSsoTokenClockSkew: function () {
 				return this.getProperty(this.PropertyName.CFE_SSO_TOKEN_CLOCK_SKEW);
 			},
-			
+
 			getSsoMaxPollCount: function () {
 				return this.getProperty(this.PropertyName.CFE_SSO_MAX_POLL_COUNT);
 			},
-			
+
 			getSsoDomainLoginUri: function () {
 				return this.getProperty(this.PropertyName.CFE_SSO_DOMAIN_LOGIN_URI);
 			},
-			
+
 			getProperty: function (name) {
 				let property;
 				if (CoreUtils.isNotUndefinedNorNull(name)) {
@@ -297,7 +300,7 @@ define(['./parsers/yaml', 'text!wrc-frontend/config/console-frontend-jet.yaml', 
 				}
 				return property;
 			},
-			
+
 			setProperty: function (name, value) {
 				if (CoreUtils.isNotUndefinedNorNull(name) && CoreUtils.isNotUndefinedNorNull(value)) {
 					if (CoreUtils.isNotUndefinedNorNull(name.name)) {
@@ -307,40 +310,40 @@ define(['./parsers/yaml', 'text!wrc-frontend/config/console-frontend-jet.yaml', 
 					}
 				}
 			},
-			
+
 			isReadOnly: function () {
 				return this.getProperty(this.PropertyName.CFE_IS_READONLY);
 			},
-			
+
 			// TODO: Have this return a 'deep frozen' copy of this.config
 			getConfig: function () {
 				return config;
 			},
-			
+
 			getMode: function () {
 				return this.getProperty(this.PropertyName.CFE_MODE);
 			},
-			
+
 			getName: function () {
 				return this.getProperty(this.PropertyName.CFE_NAME);
 			},
-			
+
 			getVersion: function () {
 				return this.getProperty(this.PropertyName.CBE_VERSION);
 			},
-			
+
 			getRole: function () {
 				return this.getProperty(this.PropertyName.CFE_ROLE);
 			},
-			
+
 			getDomainName: function () {
 				return this.getProperty(this.PropertyName.CBE_DOMAIN);
 			},
-			
+
 			getDomainVersion: function () {
 				return this.getProperty(this.PropertyName.CBE_WLS_VERSION_ONLINE);
 			},
-			
+
 			setWebLogicUsername: function (value) {
 				// When the usernamne is not defined then overwrite property as null
 				const name = (CoreUtils.isNotUndefinedNorNull(value) ? value : null);
@@ -350,15 +353,15 @@ define(['./parsers/yaml', 'text!wrc-frontend/config/console-frontend-jet.yaml', 
 			getWebLogicUsername: function () {
 				return this.getProperty(this.PropertyName.CBE_WLS_USERNAME);
 			},
-			
+
 			getDomainUrl: function () {
 				return this.getProperty(this.PropertyName.CBE_DOMAIN_URL);
 			},
-			
+
 			getBackendMode: function () {
 				return this.getProperty(this.PropertyName.CBE_MODE);
 			},
-			
+
 			/**
 			 * Get Javascript object associated with the configuration for ``serviceType``.
 			 * @param {ServiceType} serviceType
@@ -376,7 +379,7 @@ define(['./parsers/yaml', 'text!wrc-frontend/config/console-frontend-jet.yaml', 
 					return service['id'] === serviceType.name;
 				});
 			},
-			
+
 			/**
 			 * Get CBE uri for a given ``serviceType`` and ``serviceComponentType``
 			 * @param {ServiceType} serviceType

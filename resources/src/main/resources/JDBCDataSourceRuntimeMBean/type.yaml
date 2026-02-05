@@ -1,4 +1,4 @@
-# Copyright (c) 2020, 2024, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2020, 2025, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 subTypeDiscriminatorProperty: Type
 subTypes:
@@ -44,38 +44,38 @@ properties:
 actions:
 - name: "start"
   label: "Start"
-  successMessage: Created a task to start {0}
-  failureMessage: Failed to start {0}, check this data source''s tasks for more information
+  successMessage: Started {0}
+  failureMessage: Failed to start {0}
 - name: "resume"
   label: "Resume"
-  successMessage: Created a task to resume {0}
-  failureMessage: Failed to resume {0}, check this data source''s tasks for more information
+  successMessage: Resumed {0}
+  failureMessage: Failed to resume {0}
 - name: "suspend"
   label: "Suspend gracefully"
-  successMessage: Created a task to suspend {0}
-  failureMessage: Failed to suspend {0}, check this data source''s tasks for more information
+  successMessage: Suspended {0}
+  failureMessage: Failed to gracefully suspend {0}
 - name: "forceSuspend"
   label: "Force suspend"
-  successMessage: Created a task to force suspend {0}
-  failureMessage: Failed to force suspend {0}, check this data source''s tasks for more information
+  successMessage: Suspended {0}
+  failureMessage: Failed to force suspend {0}
 - name: "shutdown"
   label: "Shutdown"
-  successMessage: Created a task to shutdown {0}
-  failureMessage: Failed to shutdown {0}, check this data source''s tasks for more information
+  successMessage: Shutdown {0}
+  failureMessage: Failed to gracefully shutdown {0}
   helpLabel: "Shutdown gracefully"
 - name: "forceShutdown"
   label: "Force shutdown"
-  successMessage: Created a task to force shutdown {0}
-  failureMessage: Failed to force shutdown {0}, check this data source''s tasks for more information
+  successMessage: Shutdown {0}
+  failureMessage: Failed to force shutdown {0}
 - name: "shrink"
   label: "Shrink"
-  successMessage: Created a task to shrink {0}
-  failureMessage: Failed to shrink {0}, check this data source''s tasks for more information
+  successMessage: Shrank {0}
+  failureMessage: Failed to shrink {0}
 - name: "reset"
   label: "Reset"
-  successMessage: Created a task to reset {0}
-  failureMessage: Failed to reset {0}, check this data source''s tasks for more information
+  successMessage: Reset {0}
+  failureMessage: Failed to reset {0}
 - name: "clearStatementCache"
   label: "Clear cache"
-  successMessage: Created a task to clear the cache of {0}
-  failureMessage: Failed to clear the cache of {0}, check this data source''s tasks for more information
+  successMessage: Cleared the cache of {0}
+  failureMessage: Failed to clear the cache of {0}

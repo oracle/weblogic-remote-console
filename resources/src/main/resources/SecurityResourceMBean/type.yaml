@@ -1,0 +1,350 @@
+# Copyright (c) 2025, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+properties:
+
+# general properties:
+- name: type
+  label: Type
+  writable: createOnly
+- name: scope
+  label: Scope
+- name: resourceId
+  label: Resource Id
+  writable: createOnly
+
+
+# adm properties:
+- name: adm_category
+  label: Category
+  writable: createOnly
+  legalValues:
+  - value: null
+    label: Any Category
+  - value: UserLockout
+    label: User Lockout
+  - value: Configuration
+    label: Configuration
+  - value: FileUpload
+    label: File Upload
+  - value: FileDownload
+    label: File Download
+  - value: ViewLog
+    label: View Log
+  - value: CrossDomain
+    label: Cross Domain
+  - value: AdminChannel
+    label: Admin Channel
+- name: adm_realm
+  label: Realm
+  writable: createOnly
+- name: adm_action
+  label: Action
+  writable: createOnly
+  legalValues:
+  - value: null
+    label: Any Action
+  - value: unlockuser
+    label: unlockuser
+  - value: wl_component_request
+    label: wl_component_request
+  - value: wl_ear_resource_request
+    label: wl_ear_resource_request
+  - value: ear_request
+    label: ear_request
+  - value: wl_xml_entity_request
+    label: wl_xml_entity_request
+  - value: wl_jsp_refresh_request
+    label: wl_jsp_refresh_request
+  - value: file
+    label: file
+  - value: wl_init_replica_request
+    label: wl_init_replica_request
+  - value: wl_file_realm_request
+    label: wl_file_realm_request
+  - value: wl_managed_server_independence_request
+    label: wl_managed_server_independence_request
+
+# app properties:
+- name: app_application
+  label: Application
+  writable: createOnly
+
+# com properties:
+- name: com_application
+  label: Application
+  writable: createOnly
+- name: com_class
+  label: Class
+  writable: createOnly
+
+# eis properties:
+- name: eis_application
+  label: Application
+  writable: createOnly
+- name: eis_module
+  label: Module
+  writable: createOnly
+- name: eis_eis
+  label: EIS
+  writable: createOnly
+- name: eis_destinationId
+  label: Destination
+  writable: createOnly
+
+# ejb properties:
+- name: ejb_application
+  label: Application
+  writable: createOnly
+- name: ejb_module
+  label: Module
+  writable: createOnly
+- name: ejb_ejb
+  label: EJB
+  writable: createOnly
+- name: ejb_method
+  label: Method
+  writable: createOnly
+- name: ejb_methodInterface
+  label: Method Interface
+  writable: createOnly
+  legalValues:
+  - value: null
+    label: Any Method Interface
+  - value: Remote
+    label: Remote
+  - value: LocalHome
+    label: Local Home
+  - value: Local
+    label: Local
+- name: ejb_any_signature
+  label: Any Signature
+  writable: createOnly
+- name: ejb_signature
+  label: Signature
+  writable: createOnly
+
+# jdbc properties:
+- name: jdbc_application
+  label: Application
+  writable: createOnly
+- name: jdbc_module
+  label: Module
+  writable: createOnly
+- name: jdbc_resourceType
+  label: Resource Type
+  writable: createOnly
+  legalValues:
+  - value: null
+    label: Any Resource Type
+  - value: ConnectionPool
+    label: Connection Pool
+  - value: MultiPool
+    label: Multi Pool
+- name: jdbc_resource
+  label: Resource
+  writable: createOnly
+- name: jdbc_action
+  label: Action
+  writable: createOnly
+  legalValues:
+  - value: null
+    label: Any Action
+  - value: reserve
+    label: Reserve
+  - value: admin
+    label: Admin
+  - value: shrink
+    label: Shrink
+  - value: reset
+    label: Reset
+
+# jms properties:
+- name: jms_application
+  label: Application
+  writable: createOnly
+- name: jms_module
+  label: Module
+  writable: createOnly
+- name: jms_destinationType
+  label: Destination Type
+  writable: createOnly
+  legalValues:
+  - value: null
+    label: Any Destination Type
+  - value: topic
+    label: Topic
+  - value: queue
+    label: Queue
+- name: jms_resource
+  label: Resource
+  writable: createOnly
+- name: jms_action
+  label: Action
+  writable: createOnly
+  legalValues:
+  - value: null
+    label: Any Action
+  - value: receive
+    label: Receive
+  - value: browse
+    label: Browse
+
+# jmx properties:
+- name: jmx_operation
+  label: Operation
+  writable: createOnly
+  legalValues:
+  - value: null
+    label: Any Operation
+  - value: get
+    label: Get
+  - value: getEncrypted
+    label: Get Encryted
+  - value: set
+    label: Set
+  - value: setEncrypted
+    label: Set Encrypted
+  - value: find
+    label: Find
+  - value: invoke
+    label: Invoke
+  - value: create
+    label: Create
+  - value: unregister
+    label: Unregister
+- name: jmx_application
+  label: Application
+  writable: createOnly
+- name: jmx_mbeanType
+  label: MBean Type
+  writable: createOnly
+- name: jmx_target
+  label: Target
+  writable: createOnly
+
+# jndi properties:
+- name: jndi_application
+  label: Application
+  writable: createOnly
+- name: jndi_any_path
+  label: Any Path
+  writable: createOnly
+- name: jndi_path
+  label: Path
+  writable: createOnly
+- name: jndi_action
+  label: Action
+  writable: createOnly
+  legalValues:
+  - value: null
+    label: Any Action
+  - value: lookup
+    label: Lookup
+  - value: modify
+    label: Modify
+  - value: list
+    label: List
+
+# svr properties:
+- name: svr_application
+  label: Application
+  writable: createOnly
+- name: svr_server
+  label: Server
+  writable: createOnly
+- name: svr_action
+  label: Action
+  writable: createOnly
+  legalValues:
+  - value: null
+    label: Any Action
+  - value: boot
+    label: Boot
+  - value: shutdown
+    label: Shutdown
+  - value: lock
+    label: Lock
+  - value: unlock
+    label: Unlock
+
+# url properties:
+- name: url_application
+  label: Application
+  writable: createOnly
+- name: url_contextPath
+  label: Context Path
+  writable: createOnly
+- name: url_uri
+  label: URI
+  writable: createOnly
+- name: url_httpMethod
+  label: Http Method
+  writable: createOnly
+  legalValues:
+  - value: null
+    label: Any Method
+  - value: GET
+    label: Get
+  - value: POST
+    label: Post
+  - value: DELETE
+    label: Delete
+  - value: PUT
+    label: Put
+  - value: HEAD
+    label: Head
+  - value: OPTIONS
+    label: Options
+  - value: TRACE
+    label: Trace
+
+# webervices properties:
+- name: webservices_application
+  label: Application
+  writable: createOnly
+- name: webservices_contextPath
+  label: Context Path
+  writable: createOnly
+- name: webservices_webService
+  label: Web Service
+  writable: createOnly
+- name: webservices_method
+  label: Method
+  writable: createOnly
+# WebServiceResource is weird.
+# Its constructor takes signature as a String[]
+# but the corresponding signature value is a formatted String.
+# To compensate, make two separate properties.
+# The create forms will use the array one.
+# The tables and normal forms will use the string one.
+- name: webservices_any_signature
+  label: Any Path
+  writable: createOnly
+- name: webservices_signature_as_array
+  label: Signature
+  writable: createOnly
+- name: webservices_signature
+  label: Signature
+
+# workcontext properties:
+- name: workcontext_action
+  label: Action
+  writable: createOnly
+  legalValues:
+  - value: null
+    label: Any Action
+  - value: create
+    label: Create
+  - value: delete
+    label: Delete
+  - value: modify
+    label: Modify
+  - value: read
+    label: Read
+- name: workcontext_any_path
+  label: Any Path
+  writable: createOnly
+- name: workcontext_path
+  label: Path
+  writable: createOnly

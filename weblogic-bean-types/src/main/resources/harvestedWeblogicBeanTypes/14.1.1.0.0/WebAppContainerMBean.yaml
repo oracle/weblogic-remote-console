@@ -270,6 +270,26 @@ properties:
   restartNeeded: true
   type: boolean
   writable: true
+- array: true
+  defaultValue:
+    value:
+      value: null
+  descriptionHTML: '<p>The Username patterns for the WebLogic Restrict User Management
+    Access Servlet Filter.</p> <p/> <p>Specify username patterns for the WebLogic
+    Restrict User Management Access Servlet (RestrictUserManagementAccess) filter.
+    Username patterns consist of a string array of regular expressions. When the RestrictUserManagementAccess
+    filter matches any of the specified regular expressions with the principal name
+    of the user in the security context for the HTTP request of a WebLogic management
+    application (such as WebLogic Remote Console, REST APIs, and so on), the filter
+    will block the user from accessing the application and terminate the user session.
+    The messages about blocked requests will appear in the server log file. The regular
+    expression must follow the Java <code>Pattern</code> syntax specification.</p>
+    <p/> <p>For example: [".*BootUser"]</p> <p/> <p>By default, no regular expressions
+    are specified and the RestrictUserManagementAccess filter does not block any requests.</p> '
+  name: RestrictUserManagementAccessPatterns
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
 - defaultValue:
     value:
       value: false

@@ -7,11 +7,12 @@
 
 'use strict';
 
-const { app } = require('electron');
+const { app, ipcMain, dialog } = require('electron');
 const OSUtils = require('./os-utils');
 const I18NUtils = require('./i18n-utils');
 const ElectronPreferences = require('electron-preferences');
 const SettingsEditor = require('./settings-editor');
+const UserProjects = require('./user-projects-json');
 const fs = require('fs');
 
 /**
@@ -209,7 +210,22 @@ const UserPrefs = (() => {
           }
         ]
       };
+      ipcMain.removeAllListeners('setPreferences');
       preferences = new ElectronPreferences(preferencesTemplate);
+      preferences.on('save', () => {
+        if (!UserPrefs.get('credentials.storage') && UserProjects.areThereAnyPasswordsStored()) {
+          const result = dialog.showMessageBoxSync(null, {
+            title: `${I18NUtils.get('wrc-electron.menus.preferences.section.credential-storage.clear.question.title')}`,
+            buttons: [ `${I18NUtils.get('wrc-electron.menus.preferences.yes')}`, `${I18NUtils.get('wrc-electron.menus.preferences.no')}` ],
+            type: 'question',
+            message: `${I18NUtils.get('wrc-electron.menus.preferences.section.credential-storage.clear.question')}`,
+          });
+          if (result == 0) {
+            UserProjects.clearPasswords();
+            UserProjects.write();
+          }
+        }
+      });
     },
     read: (userDataPath) => {
       // Ensure that there are file content changes instead of relying on file metadata (e.g. fstat)

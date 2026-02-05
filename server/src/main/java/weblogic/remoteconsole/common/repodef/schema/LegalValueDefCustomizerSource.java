@@ -16,10 +16,10 @@ import weblogic.console.schema.YamlSource;
  * a legal value of a property.
  */
 public class LegalValueDefCustomizerSource extends YamlSource {
-  private ScalarValue value = new ScalarValue();
-  private StringValue label = new StringValue();
-  private BooleanValue omit = new BooleanValue();
-  private ListValue<String> requiredCapabilities = new ListValue<>();
+  private ScalarValue value = ScalarValue.create();
+  private StringValue label = StringValue.create();
+  private BooleanValue omit = BooleanValue.create();
+  private ListValue<String> requiredCapabilities = ListValue.create();
 
   // The legal value to be customized.
   // It's type must match the property's type.
@@ -29,7 +29,7 @@ public class LegalValueDefCustomizerSource extends YamlSource {
   }
 
   public void setValue(Object val) {
-    value.setValue(val);
+    value = value.setValue(val);
   }
 
   // The custom english label to display for 'value'.
@@ -39,7 +39,7 @@ public class LegalValueDefCustomizerSource extends YamlSource {
   }
 
   public void setLabel(String val) {
-    label.setValue(val);
+    label = label.setValue(val);
   }
 
   // Omit this legal value.
@@ -53,7 +53,7 @@ public class LegalValueDefCustomizerSource extends YamlSource {
   }
 
   public void setOmit(boolean val) {
-    omit.setValue(val);
+    omit = omit.setValue(val);
   }
 
   // The bean repo capabilities that are required for this legal value to be present
@@ -62,6 +62,6 @@ public class LegalValueDefCustomizerSource extends YamlSource {
   }
   
   public void setRequiredCapabilities(List<String> val) {
-    requiredCapabilities.setValue(val);
+    requiredCapabilities = requiredCapabilities.setValue(val);
   }
 }

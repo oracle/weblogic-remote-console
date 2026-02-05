@@ -1,0 +1,97 @@
+# Copyright (c) 2025, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions:
+- name: exportTrustedCertificates
+  label: Export Trusted Certificates
+  successMessage: Exported the domain's trusted certificates.
+  failureMessage: Failed to export the domain's trusted certificates.
+  inputForm:
+    introductionHTML: >
+      <p>Export the certificates trusted by the domain; that is,
+      the contents of the "Domain Trust" keystore combined with
+      the contents of the "Provisioned Trust" keystore.</p>
+    parameters:
+    - name: toFileName
+      label: File Name
+    - name: toFileType
+      label: File Type
+      useUnlocalizedLegalValuesAsLabels: true
+    - name: toFilePassphrase
+      label: File Passphase
+      secret: true
+- name: addProvisionedIdentityCertificate
+  label: Import
+  successMessage: Imported the identity certificate.
+  failureMessage: Failed to import the identity certificate.
+  inputForm:
+    introductionHTML: "Add a provisioned identity certificate to the domain."
+    parameters:
+    - name: toAlias
+      label: To Alias
+    - name: fromAlias
+      label: From Alias
+    - name: fromAliasPassphrase
+      label: From Alias Passphrase
+      secret: true
+    - name: fromFileName
+      label: File Name
+    - name: fromFileType
+      label: File Type
+      useUnlocalizedLegalValuesAsLabels: true
+    - name: fromFilePassphrase
+      label: File PassPhrase
+      secret: true
+  polling:
+    reloadSeconds: 1
+    maxAttempts: 1
+- name: addProvisionedTrustCertificate
+  label: Import
+  successMessage: Imported the trust certificate.
+  failureMessage: Failed to import the trust certificate.
+  inputForm:
+    introductionHTML: "Add a provisioned trust certificate to the domain."
+    parameters:
+    - name: toAlias
+      label: To Alias
+    - name: fromAlias
+      label: From Alias
+    - name: fromFileName
+      label: File Name
+    - name: fromFileType
+      label: File Type
+      useUnlocalizedLegalValuesAsLabels: true
+    - name: fromFilePassphrase
+      label: File PassPhrase
+      secret: true
+  polling:
+    reloadSeconds: 1
+    maxAttempts: 1
+- name: removeProvisionedIdentityCertificate
+  label: Delete
+  successMessage: Removed the provisioned identity certificate.
+  failureMessage: Failed to remove the provisioned identity certificate.
+  polling:
+    reloadSeconds: 1
+    maxAttempts: 1
+  actionMethod: weblogic.remoteconsole.customizers.DomainKeystoresMBeanCustomizer.removeProvisionedIdentityCertificate
+  definition:
+    type: "void"
+    descriptionHTML: Remove a provisioned identity certificate from the domain.
+    roles:
+      allowed:
+      - Admin
+- name: removeProvisionedTrustCertificate
+  label: Delete
+  successMessage: Removed the provisioned trust certificate.
+  failureMessage: Failed to remove the provisioned trust certificate.
+  polling:
+    reloadSeconds: 1
+    maxAttempts: 1
+  actionMethod: weblogic.remoteconsole.customizers.DomainKeystoresMBeanCustomizer.removeProvisionedTrustCertificate
+  definition:
+    type: "void"
+    descriptionHTML: Remove a provisioned trust certificate from the domain.
+    roles:
+      allowed:
+      - Admin

@@ -434,6 +434,9 @@ properties:
 - name: DebugEjbLocking
   useUnlocalizedNameAsLabel: true
 
+- name: DebugEjbMdbAqMessageRecovery
+  useUnlocalizedNameAsLabel: true
+
 - name: DebugEjbMdbConnection
   useUnlocalizedNameAsLabel: true
 

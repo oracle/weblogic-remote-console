@@ -1,0 +1,9 @@
+# Copyright (c) 2025, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+slices:
+- name: ProvisionedIdentityKeystore
+- name: ProvisionedTrustKeystore
+- name: DomainTrustKeystore
+- name: DomainCaKeystore
+  label: Domain Certificate Authority Keystore
+- name: Advanced

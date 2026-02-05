@@ -47,19 +47,41 @@ actions:
       iconFile: action-commit-icon-blk_24x24
     - id: forceRollbackSelectedTransactions
       iconFile: action-rollback-icon-blk_24x24
+    - id: rollDomainCertificateAuthority
+      iconFile: action-rollback-icon-blk_24x24
     - id: deleteActions
+      iconFile: delete-icon-blk_24x24
+    - id: removeProvisionedIdentityCertificate
+      iconFile: delete-icon-blk_24x24
+    - id: removeProvisionedIdentityCertificate
+      iconFile: delete-icon-blk_24x24
+    - id: removeProvisionedTrustCertificate
       iconFile: delete-icon-blk_24x24
     - id: exportActions
       iconFile: action-export-3d-icon-blk_24x24
+    - id: exportData
+      iconFile: action-export-3d-icon-blk_24x24
+    - id: exportTrustedCertificates
+      iconFile: action-export-3d-icon-blk_24x24
+    - id: importData
+      iconFile: action-import-3d-icon-blk_24x24
     - id: importMessages
+      iconFile: action-import-3d-icon-blk_24x24
+    - id: addProvisionedIdentityCertificate
+      iconFile: action-import-3d-icon-blk_24x24
+    - id: addProvisionedTrustCertificate
       iconFile: action-import-3d-icon-blk_24x24
     - id: moveActions
       iconFile: action-move-3d-icon-blk_24x24
     - id: edit
       iconFile: action-edit-icon-blk_24x24
+    - id: grabEditLock
+      iconFile: action-edit-icon-blk_24x24
     - id: createPlan
       iconFile: action-create-icon-blk_24x24
     - id: refreshCache
+      iconFile: action-refresh-icon-blk_24x24
+    - id: refreshCertificateActions
       iconFile: action-refresh-icon-blk_24x24
     - id: purgeCompletedDeploymentProgressObjects
       iconFile: delete-icon-blk_24x24
@@ -72,6 +94,14 @@ actions:
     - id: importAssertionSigningCert
       iconFile: action-import-3d-icon-blk_24x24
     - id: publishSingleSignOnServices
+      iconFile: action-publish-icon-blk_24x24
+    - id: migrate
+      iconFile: action-publish-icon-blk_24x24
+    - id: migrateJTA
+      iconFile: action-publish-icon-blk_24x24
+    - id: migrateServer
+      iconFile: action-publish-icon-blk_24x24
+    - id: migrateSingleton
       iconFile: action-publish-icon-blk_24x24
     - id: unlockUser
       iconFile: action-unlock-blk_24x24
@@ -95,7 +125,9 @@ actions:
       iconFile: action-import-3d-icon-blk_24x24
     - id: filter
       iconFile: action-filter-icon-blk_24x24
-
+    - id: viewMessage
+      iconFile: action-view-3d-icon-blk_24x24
+  
   frontend:
     - id: new
       iconFile: new-icon-blk_24x24

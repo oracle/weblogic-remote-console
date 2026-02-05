@@ -18,9 +18,9 @@ import weblogic.console.schema.YamlSource;
  * e.g. ServerLifeCycleRuntimeMBean.yaml
  */
 public class BeanValueDefSource extends YamlSource {
-  private StringValue type = new StringValue();
-  private BooleanValue array = new BooleanValue();
-  private ListValue<Object> legalValues = new ListValue<>();
+  private StringValue type = StringValue.create();
+  private BooleanValue array = BooleanValue.create();
+  private ListValue<Object> legalValues = ListValue.create();
 
   // java type of the value in the WebLogic bean tree,
   // e.g. java.lang.String, boolean, weblogic.management.configuration.ServerMBean
@@ -29,7 +29,7 @@ public class BeanValueDefSource extends YamlSource {
   }
 
   public void setType(String value) {
-    type.setValue(value);
+    type = type.setValue(value);
   }
 
   // Whether this value is an array
@@ -38,7 +38,7 @@ public class BeanValueDefSource extends YamlSource {
   }
 
   public void setArray(boolean val) {
-    array.setValue(val);
+    array = array.setValue(val);
   }
 
   // Whether this value is a secret
@@ -63,10 +63,10 @@ public class BeanValueDefSource extends YamlSource {
 
   public void setLegalValues(List<Object> val) {
     ScalarUtils.validateScalars(val);
-    legalValues.setValue(val);
+    legalValues = legalValues.setValue(val);
   }
 
   public void addLegalValue(Object val) {
-    legalValues.add(val);
+    legalValues = legalValues.add(val);
   }
 }

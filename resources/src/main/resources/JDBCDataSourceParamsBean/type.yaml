@@ -1,5 +1,6 @@
-# Copyright (c) 2020, 2022, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2020, 2025, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
 properties:
 
 - name: JNDINames
@@ -21,16 +22,17 @@ properties:
   label: Row Prefetch Enabled
 
 - name: GlobalTransactionsProtocol
-  helpSummaryHTML: >
-    <p>Select this option to enable non-XA connections from the data source
-    to participate in global transactions.</p>
-
-  helpDetailsHTML: >
-    <p>In most cases, if your application includes global transactions,
-    you should use an XA JDBC driver to create database connections. You
-    may need to enable this option for use with EJBs. If you enable support
-    for global transactions with a non-XA JDBC driver, you must select an
-    option for transaction processing.</p>
+  legalValues:
+  - value: TwoPhaseCommit
+    label: Two-Phase Commit
+  - value: LoggingLastResource
+    label: Logging Last Resource
+  - value: EmulateTwoPhaseCommit
+    label: Emulate Two-Phase Commit
+  - value: OnePhaseCommit
+    label: One-Phase Commit
+  - value: None
+    label: None
 
 - name: KeepConnAfterLocalTx
   label: Keep Connection After Local Transaction

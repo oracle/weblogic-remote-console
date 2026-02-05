@@ -1,0 +1,11 @@
+# Copyright (c) 2020, 2021, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+introductionHTML: >
+  <p>Domain Runtime general monitoring info</p>
+
+properties:
+- name: "Name"
+- name: "Type"
+- name: "ConsoleRuntime.Enabled"
+  label: "Console Enabled"
+- name: "ActivationTime"

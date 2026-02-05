@@ -1,0 +1,19 @@
+# Copyright (c) 2025, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+introductionHTML: "<p>This page lists this Role Mapping Provider's URL role mappings.</p>"
+
+displayedColumns:
+- name: roleName
+- name: url_application
+- name: url_contextPath
+- name: url_uri
+- name: url_httpMethod
+- name: PolicyStringExpression
+hiddenColumns:
+- name: resourceId
+- name: scope
+
+helpTopics:
+- label: "Securing Resources Using Roles and Policies for Oracle WebLogic Server"
+  href: "roles/index.html"
+  type: "edocs"

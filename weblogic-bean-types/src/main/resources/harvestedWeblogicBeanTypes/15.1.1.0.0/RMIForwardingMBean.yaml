@@ -1,0 +1,22 @@
+# Copyright (c) 2020, 2025, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+baseTypes:
+- weblogic.management.configuration.ConfigurationPropertiesMBean
+descriptionHTML: 'MBean for RMI forwarding configuration.  RMI forwarding is a feature
+  that makes cross-domain transactions involving domains managed by the WebLogic Kubernetes
+  Operator possible without requiring each server in a cluster to be individually
+  addressable, where transaction server participants are not able to establish connection
+  directly with one another.  RMI messages destined for a WebLogic server on a host
+  with host name that begins with the name of this MBean will be sent to the configured
+  URL. The messages are then forwarded to a WebLogic server in the destination domain,
+  and eventually to the destination WebLogic server. '
+name: weblogic.management.configuration.RMIForwardingMBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: ' '
+  name: Url
+  restartNeeded: true
+  type: java.lang.String
+  writable: true

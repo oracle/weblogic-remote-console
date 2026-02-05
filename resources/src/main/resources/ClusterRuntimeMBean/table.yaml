@@ -1,7 +1,8 @@
-# Copyright (c) 2020, 2022, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2025, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 displayedColumns:
 - name: "Name"
+- name: "HealthState"
 - name: "ActiveSingletonServices"
 #- name: "CurrentMachine" # excludeFromRest
 - name: "DetailedSecondariesDistribution"
@@ -10,7 +11,6 @@ displayedColumns:
 - name: "FragmentsReceivedCount"
 - name: "FragmentsSentCount"
 - name: "UnicastMessaging.Groups"
-- name: "HealthState"
 - name: "UnicastMessaging.LocalGroupLeaderName"
 - name: "MulticastMessagesLostCount"
 - name: "PrimaryCount"

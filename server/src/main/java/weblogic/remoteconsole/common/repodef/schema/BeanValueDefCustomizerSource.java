@@ -13,18 +13,18 @@ import weblogic.console.utils.Path;
  * value or an action return value).
  */
 public class BeanValueDefCustomizerSource extends YamlSource {
-  private BooleanValue referenceAsReferences = new BooleanValue();
-  private BooleanValue dateAsLong = new BooleanValue();
-  private BooleanValue ordered = new BooleanValue();
-  private BooleanValue multiLineString = new BooleanValue();
-  private BooleanValue dynamicEnum = new BooleanValue();
+  private BooleanValue referenceAsReferences = BooleanValue.create();
+  private BooleanValue dateAsLong = BooleanValue.create();
+  private BooleanValue ordered = BooleanValue.create();
+  private BooleanValue multiLineString = BooleanValue.create();
+  private BooleanValue dynamicEnum = BooleanValue.create();
 
   protected void merge(BeanValueDefCustomizerSource from, Path fromContainedBeanPath) {
-    referenceAsReferences.merge(from.referenceAsReferences, fromContainedBeanPath);
-    dateAsLong.merge(from.dateAsLong, fromContainedBeanPath);
-    ordered.merge(from.ordered, fromContainedBeanPath);
-    multiLineString.merge(from.multiLineString, fromContainedBeanPath);
-    dynamicEnum.merge(from.dynamicEnum, fromContainedBeanPath);
+    referenceAsReferences = referenceAsReferences.merge(from.referenceAsReferences, fromContainedBeanPath);
+    dateAsLong = dateAsLong.merge(from.dateAsLong, fromContainedBeanPath);
+    ordered = ordered.merge(from.ordered, fromContainedBeanPath);
+    multiLineString = multiLineString.merge(from.multiLineString, fromContainedBeanPath);
+    dynamicEnum = dynamicEnum.merge(from.dynamicEnum, fromContainedBeanPath);
   }
 
   // Indicates that even though the value is an array of references,
@@ -37,7 +37,7 @@ public class BeanValueDefCustomizerSource extends YamlSource {
   }
 
   public void setReferenceAsReferences(boolean value) {
-    referenceAsReferences.setValue(value);
+    referenceAsReferences = referenceAsReferences.setValue(value);
   }
 
   // Indicates that even though the value is a long,
@@ -50,7 +50,7 @@ public class BeanValueDefCustomizerSource extends YamlSource {
   }
 
   public void setDateAsLong(boolean value) {
-    dateAsLong.setValue(value);
+    dateAsLong = dateAsLong.setValue(value);
   }
 
   // Whether an array's values' order must be maintained.
@@ -60,7 +60,7 @@ public class BeanValueDefCustomizerSource extends YamlSource {
   }
 
   public void setOrdered(boolean value) {
-    ordered.setValue(value);
+    ordered = ordered.setValue(value);
   }
 
   // Indicates that this value is a multi-lined string
@@ -71,7 +71,7 @@ public class BeanValueDefCustomizerSource extends YamlSource {
   }
 
   public void setMultiLineString(boolean value) {
-    multiLineString.setValue(value);
+    multiLineString = multiLineString.setValue(value);
   }
 
   // Whether options are used to specify instance-based legal values
@@ -80,6 +80,6 @@ public class BeanValueDefCustomizerSource extends YamlSource {
   }
 
   public void setDynamicEnum(boolean val) {
-    dynamicEnum.setValue(val);
+    dynamicEnum = dynamicEnum.setValue(val);
   }
 }

@@ -1,0 +1,121 @@
+# Copyright (c) 2025, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions:
+  - name: "migrate"
+    actionMethod: weblogic.remoteconsole.customizers.MigrationCoordinatorMBeanCustomizer.migrate
+    helpHTML: Select the server that you want the JMS services to migrate to.
+    successMessage: Created a task to migrate JMS services
+    failureMessage: Failed to migrate JMS services, check tasks for more information
+    inputForm:
+      customizePageDefMethod: weblogic.remoteconsole.customizers.MigrationCoordinatorMBeanCustomizer.customizeMigrationActionInputFormDef
+      instanceBasedPDJ: true
+      introductionHTML: >
+        <p>Select the server that you want the JMS services to migrate to.</p>
+        <p>Note: if you are in an edit session,
+          go to the 'Edit' view after the migration and see if the shopping cart has changes that need to be committed.</p>
+      parameters:
+      - name: "destination"
+    definition:
+      type: void
+      parameters:
+      - name: "migratableTarget"
+        type: java.lang.String
+        descriptionHTML: Migratable Target
+      - name: "destination"
+        type: java.lang.String
+        descriptionHTML: Destination Server
+      - name: "sourceUp"
+        type: boolean
+        descriptionHTML: whether the currently active server is up and running.
+      - name: "destinationUp"
+        type: boolean
+        descriptionHTML: whether the destination server is up and running
+
+  - name: "migrateJTA"
+    actionMethod: weblogic.remoteconsole.customizers.MigrationCoordinatorMBeanCustomizer.migrateJTA
+    helpHTML: Migrates the JTA Recovery Manager deployed to a migratable Target to the destination server
+    successMessage: Created a task to migrate JTA
+    failureMessage: Failed to migrate JTA, check tasks for more information
+    inputForm:
+      customizePageDefMethod: weblogic.remoteconsole.customizers.MigrationCoordinatorMBeanCustomizer.customizeMigrationActionInputFormDef
+      instanceBasedPDJ: true
+      introductionHTML: >
+        <p>Select the server that you want the JTA Recovery Manager to migrate to.</p>
+        <p>Note: if you are in an edit session,
+            go to the 'Edit' view after the migration and see if the shopping cart has changes that need to be committed.</p>
+      parameters:
+        - name: "destination"
+    definition:
+      type: void
+      parameters:
+        - name: "migratableTarget"
+          type: java.lang.String
+          descriptionHTML: Migratable Target
+        - name: "destination"
+          type: java.lang.String
+          descriptionHTML: Destination Server
+        - name: "sourceUp"
+          type: boolean
+          descriptionHTML: whether the currently active server is up and running.
+        - name: "destinationUp"
+          type: boolean
+          descriptionHTML: whether the destination server is up and running
+
+  - name: "migrateSingleton"
+    actionMethod: weblogic.remoteconsole.customizers.MigrationCoordinatorMBeanCustomizer.migrateSingleton
+    helpHTML: Migrates the singleton service to the destination server
+    successMessage: Created a task to migrate the singleton service
+    failureMessage: Failed to migrate the singleton service, check tasks for more information
+    inputForm:
+      customizePageDefMethod: weblogic.remoteconsole.customizers.MigrationCoordinatorMBeanCustomizer.customizeMigrateSingletonActionInputFormDef
+      instanceBasedPDJ: true
+      introductionHTML: >
+        <p>Select the server that you want the singleton services to migrate to.</p>
+        <p>Note: if you are in an edit session,
+          go to the 'Edit' view after the migration and see if the shopping cart has changes that need to be committed.</p>
+      parameters:
+        - name: "destination"
+    definition:
+      type: void
+      parameters:
+        - name: "singletonService"
+          type: java.lang.String
+          descriptionHTML: Singleton Service
+        - name: "destination"
+          type: java.lang.String
+          descriptionHTML: Destination Server
+
+  - name: "migrateServer"
+    actionMethod: weblogic.remoteconsole.customizers.MigrationCoordinatorMBeanCustomizer.migrateServer
+    helpHTML: Migrates the server instance and all of its service to a different physical machine.
+    successMessage: Created a task to migrate the server instance.  Track progress under Monitoring Tree -> Dasktop -> Server Tasks
+    failureMessage: Failed to migrate the server instance. Check tasks for more information under Monitoring Tree -> Dasktop -> Server Tasks
+    inputForm:
+      customizePageDefMethod: weblogic.remoteconsole.customizers.MigrationCoordinatorMBeanCustomizer.customizeMigrateServerInputFormDef
+      instanceBasedPDJ: true
+      introductionHTML: >
+        <p>Select the machine that you want the server to migrate to.</p>
+        <p>Note: if you are in an edit session,
+            go to the 'Edit' view after the migration and see if the shopping cart has changes that need to be committed.</p>
+      parameters:
+        - name: "destinationMachine"
+    definition:
+      type: void
+      parameters:
+        - name: "serverName"
+          type: java.lang.String
+          descriptionHTML: Migratable Target
+        - name: "sourceMachine"
+          type: java.lang.String
+          descriptionHTML: Source Machine
+        - name: "destinationMachine"
+          type: java.lang.String
+          descriptionHTML: Destination Machine``
+        - name: "sourceDown"
+          type: boolean
+          descriptionHTML: whether the source machine is running.
+        - name: "destinationDown"
+          type: boolean
+          descriptionHTML: whether the source machine is running.
+

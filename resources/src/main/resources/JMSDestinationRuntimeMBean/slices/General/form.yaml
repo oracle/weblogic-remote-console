@@ -1,4 +1,4 @@
-# Copyright (c) 2020, 2024, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2025, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 introductionHTML: >
   <p>This page displays monitoring information for a JMS destination.</p>
@@ -7,6 +7,7 @@ properties:
 - name: "Name"
 - name: "DestinationName"
 - name: "DestinationType"
+- name: "State"
 - name: "BytesCurrentCount"
 - name: "BytesHighCount"
 - name: "BytesPendingCount"
@@ -26,7 +27,6 @@ properties:
 - name: "MessagesThresholdTime"
 - name: "ProductionPaused"
 - name: "ProductionPausedState"
-- name: "State"
 - name: "SubscriptionMessagesLimit"
 
 advancedProperties:

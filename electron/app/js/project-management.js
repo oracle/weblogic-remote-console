@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2022, 2023, Oracle and/or its affiliates.
+ * Copyright (c) 2022, 2025, Oracle and/or its affiliates.
  * Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
  * @ignore
  */
@@ -357,7 +357,15 @@ const ProjectManagement = (() => {
       return result;
     },
     readProjects: (userDataPath) => {
-      UserProjects.read(userDataPath);
+      try {
+        UserProjects.read(userDataPath);
+      } catch(err) {
+        log('error', `Cannot read project file: ${err}`);
+        const WindowManagement = require('./window-management');
+        WindowManagement.corruptFile(UserProjects.getPath(userDataPath));
+        // The file is removed by corruptFile()
+        UserProjects.read(userDataPath);
+      }
     }
   };
 

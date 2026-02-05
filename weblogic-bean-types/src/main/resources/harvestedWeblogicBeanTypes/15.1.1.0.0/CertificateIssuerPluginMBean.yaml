@@ -1,0 +1,15 @@
+# Copyright (c) 2020, 2025, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+baseTypes:
+- weblogic.management.configuration.PluginConfigurationMBean
+descriptionHTML: '<p>Configures a Certificate Issue Plugin.</p> '
+name: weblogic.management.configuration.CertificateIssuerPluginMBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Returns the properties to be passed to the issuer when the
+    Certificate Service requests a certificate.</p> '
+  name: CertificateRequestProperties
+  type: java.util.Properties
+  writable: true

@@ -1,0 +1,15 @@
+# Copyright (c) 2025, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+introductionHTML: >
+  <p>Use this page manage the underlying string form of the security policy,
+  and to view the corresponding security resource id.</p>
+
+properties:
+- name: PolicyStringExpression
+- name: resourceId
+- name: jdbc_application
+- name: jdbc_module
+- name: jdbc_resourceType
+- name: jdbc_resource
+- name: jdbc_action

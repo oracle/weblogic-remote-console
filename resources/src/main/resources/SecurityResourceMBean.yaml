@@ -1,0 +1,705 @@
+# Copyright (c) 2025, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+name: weblogic.management.security.SecurityResourceMBean
+baseTypes:
+- weblogic.management.WebLogicMBean
+
+properties:
+
+# general properties:
+- name: resourceId
+  type: java.lang.String
+  writable: true
+  defaultValue:
+    value:
+      value: null
+  descriptionHTML: >
+    <p>The security resource id of this resource.</p>
+- name: type
+  type: java.lang.String
+  writable: true
+  defaultValue:
+    value:
+      value: null
+  descriptionHTML: >
+    <p>The type of this resource</p>
+- name: scope
+  type: java.lang.String
+  descriptionHTML: >
+    <p>The scope of this resource</p>
+
+# adm properties:
+- name: adm_category
+  type: java.lang.String
+  writable: true
+  defaultValue:
+    value:
+      value: null
+  legalValues:
+  - null
+  - UserLockout
+  - Configuration
+  - FileUpload
+  - FileDownload
+  - ViewLog
+  - CrossDomain
+  - AdminChannel
+  descriptionHTML: >
+   <p>The category of the Administrative resource</p>
+- name: adm_realm
+  type: java.lang.String
+  writable: true
+  defaultValue:
+    value:
+      value: null
+  descriptionHTML: >
+    <p>The name of the Administrative resource</p>
+- name: adm_action
+  type: java.lang.String
+  writable: true
+  defaultValue:
+    value:
+      value: null
+  legalValues:
+  - null
+  - unlockuser
+  - wl_component_request
+  - wl_ear_resource_request
+  - ear_request
+  - wl_xml_entity_request
+  - wl_jsp_refresh_request
+  - file
+  - wl_init_replica_request
+  - wl_file_realm_request
+  - wl_managed_server_independence_request
+  descriptionHTML: >
+    <p>The action be requested on the Administrative resource.
+    <p>Valid values for the <code>UserLockout</code> category are:
+    <ul>
+      <li><code>unlockuser</code></li>
+    </ul>
+    </p>
+    <p> Valid values for the <code>FileDownload</code> category are:
+    <ul>
+      <li><code>wl_component_request</code></li>
+      <li><code>wl_ear_resource_request</code></li>
+      <li><code>ear_request</code></li>
+      <li><code>wl_xml_entity_request</code></li>
+      <li><code>wl_jsp_refresh_request</code></li>
+      <li><code>file</code></li>
+      <li><code>wl_init_replica_request</code></li>
+      <li><code>wl_file_realm_request</code></li>
+      <li><code>wl_managed_server_independence_request</code></li>
+    </ul>
+    </p>
+
+# app properties:
+- name: app_application
+  type: java.lang.String
+  writable: true
+  defaultValue:
+    value:
+      value: null
+  descriptionHTML: >
+    <p>The name of the application in which the resource is deployed, as it appears
+    in the corresponding <code>&lt;display-name&gt; </code> element.
+    The <code>&lt;display-name&gt;</code> element is associated with an
+    <code>&lt;application&gt;</code> element in the deployment descriptor,
+    in an <code>.ear</code> file.</p>
+    <p>If not specified, the resource is not deployed as part of an application.</p>
+
+# com properties:
+- name: com_application
+  type: java.lang.String
+  writable: true
+  defaultValue:
+    value:
+      value: null
+  descriptionHTML: >
+    <p>Tthe name of the application in which the resource is deployed,
+    as it appears in the corresponding <code>&lt;display-name&gt;</code> element
+    The <code>&lt;display-name&gt;</code> element is associated with an
+    <code>&lt;application&gt;</code> element in the deployment descriptor,
+    in an <code>.ear</code> file.</p>
+    <p>If not specified, the resource is not deployed as part of an application.</p>
+- name: com_class
+  type: java.lang.String
+  writable: true
+  defaultValue:
+    value:
+      value: null
+  descriptionHTML: >
+    <p>The fully-qualified classname of the Java class to be exported to a COM client.</p>
+
+# eis properties:
+- name: eis_application
+  type: java.lang.String
+  writable: true
+  defaultValue:
+    value:
+      value: null
+  descriptionHTML: >
+    <p>The name of the application in which the resource is deployed, as it appears
+    in the corresponding <code>&lt;display-name&gt;</code> element.
+    The <code>&lt;display-name&gt;</code> element is associated with an
+    <code>&lt;application&gt;</code> element in the deployment descriptor,
+    in an <code>.ear</code> file.</p>
+    <p>If not specified, the resource is not deployed as part of an application.</p>
+- name: eis_module
+  type: java.lang.String
+  writable: true
+  defaultValue:
+    value:
+      value: null
+  descriptionHTML: >
+    <p>The name of the module, as it appears in the corresponding <code>&lt;display-name&gt;</code> element.
+    The <code>&lt;display-name&gt;</code> is associated with the <code>&lt;connector&gt;</code>
+    element in the deployment descriptor.</p>
+    <p>Because the <code>&lt;display-name&gt;</code> element is optional in the
+    <code>&lt;connector&gt;</code> element of the deployment descriptor, the name of the
+    <code>.rar</code> file containing the EIS, less the '<code>.rar</code>' extension,
+    may be used in its absence.</p>
+- name: eis_eis
+  type: java.lang.String
+  writable: true
+  defaultValue:
+    value:
+      value: null
+  descriptionHTML: >
+    <p>The name of the EIS resource, as it appears in the corresponding
+    <code>&lt;eis-type&gt;</code> element in the deployment descriptor.</p>
+- name: eis_destinationId
+  type: java.lang.String
+  writable: true
+  defaultValue:
+    value:
+      value: null
+  descriptionHTML: >
+    <p>The specific outbound destination for the resource as it appears in 
+    the corresponding <code>&lt;jndi-name&gt;</code> element in the deployment descriptor.</p>
+
+# ejb properties:
+- name: ejb_application
+  type: java.lang.String
+  writable: true
+  defaultValue:
+    value:
+      value: null
+  descriptionHTML: >
+    <p>The name of the application in which the resource is deployed, as it appears
+    in the corresponding <code>&lt;display-name&gt;</code> element
+    The <code>&lt;display-name&gt;</code> element is associated with an
+    <code>&lt;application&gt;</code> element in the deployment descriptor,
+    in an <code>.ear</code> file.</p>
+    <p>If not specified, the resource is not deployed as part of an application.</p>
+- name: ejb_module
+  type: java.lang.String
+  writable: true
+  defaultValue:
+    value:
+      value: null
+  descriptionHTML: >
+    <p>The name of the module, as it appears in t corresponding <code>&lt;display-name&gt;</code> element.
+    The <code>&lt;display-name&gt;</code> is associated with the <code>&lt;ejb-jar&gt;</code>
+    element in the deployment descriptor.</p>
+    <p>Because the <code>&lt;display-name&gt;</code>  element is optional in the
+    <code>&lt;ejb-jar&gt;</code> element of th deployment descriptor, the name of the
+    <code>.jar</code> file containing the EJB, less the '<code>.jar</code>' extension, may be used in its absence.</p>
+- name: ejb_ejb
+  type: java.lang.String
+  writable: true
+  defaultValue:
+    value:
+      value: null
+  descriptionHTML: >
+    <p>The name of the EJB, as it appears in the corresponding
+    <code>&lt;ejb-name&gt;</code> element in the deployment descriptor.</p>
+- name: ejb_method
+  type: java.lang.String
+  writable: true
+  defaultValue:
+    value:
+      value: null
+  descriptionHTML: >
+   <p>The name of the method on the EJB resource, as it appears in the
+   corresponding <code>&lt;method-name&gt;</code> element in the deployment descriptor.</p>
+   <p>If not specified, the security policy for the resource pertains to all methods that
+   match the other parameters of the resource specification, without consideration of
+   the method name.</p>
+- name: ejb_methodInterface
+  type: java.lang.String
+  writable: true
+  defaultValue:
+    value:
+      value: null
+  legalValues:
+  - null
+  - Remote
+  - LocalHome
+  - Local
+  descriptionHTML: >
+   <p>The EJB interface of the resource, as it appears in the corresponding
+   <code>&lt;method-intf&gt;</code> element in the deployment descriptor.</p>
+   <p>If not specified, the security policy for the resource pertains to all methods
+   that match the other parameters of the resource specification, without consideration
+   of the type of interface on which they occur.</p>
+- name: ejb_any_signature
+  type: boolean
+  writable: true
+  defaultValue:
+    value:
+      value: false
+  descriptionHTML: >
+    <p>Whether the security policy for the resource pertains to all
+     methods that match the other parameters of the resource specification,
+     without consideration of the method signature.</p>
+- name: ejb_signature
+  type: java.lang.String
+  array: true
+  writable: true
+  defaultValue:
+    value:
+      value: null
+  descriptionHTML: >
+   <p> The parameter signature of the target method. Each element
+   contains the fully-qualified Java classname of the corresponding parameter signature,
+   as it appears in the corresponding <code>&lt;method-param&gt;</code> elements
+   (associated with the <code>&lt;method-name&gt;</code> element in the deployment descriptor).</p>
+   <p>The order of the elements must match order of the arguments found in the method signature.
+
+# jdbc properties:
+- name: jdbc_application
+  type: java.lang.String
+  writable: true
+  defaultValue:
+    value:
+      value: null
+  descriptionHTML: >
+    <p>The name of the application in which the resource is deployed or the name
+    of the system resource.</p>
+    <p>If not specified, the resource is a legacy system resource.</p>
+- name: jdbc_module
+  type: java.lang.String
+  writable: true
+  defaultValue:
+    value:
+      value: null
+  descriptionHTML: >
+    <p>The name of the module, as it appears in th corresponding <code>&lt;module&gt;</code> element
+    associated with the <code>weblogic-application.xml</code> deployment descriptor.</p>
+    <p>If not specified, the resource is deployed standalone or that the resource is a legacy system resource.</p>
+- name: jdbc_resourceType
+  type: java.lang.String
+  writable: true
+  defaultValue:
+    value:
+      value: null
+  legalValues:
+  - null
+  - ConnectionPool
+  - MultiPool
+  descriptionHTML: >
+    <p>The type of the JDBC resource.</p>
+- name: jdbc_resource
+  type: java.lang.String
+  writable: true
+  defaultValue:
+    value:
+      value: null
+  descriptionHTML: >
+    <p>The name of the JDBC resource. If the value of the <code>resourceType</code> parameter
+    is <code>ConnectionPool</code>, then this parameter is the name of the connection pool.</p>
+    <p>If not specified, the security policy for the resource pertains to all
+    resource categories that match the other parameters of the resource specification,
+    without consideration for the resource name.</p>
+- name: jdbc_action
+  type: java.lang.String
+  writable: true
+  defaultValue:
+    value:
+      value: null
+  legalValues:
+  - null
+  - reserve
+  - admin
+  - shrink
+  - reset
+  descriptionHTML: >
+    <p>The name of the action being requested on the resource.</p>
+
+# jms properties:
+- name: jms_application
+  type: java.lang.String
+  writable: true
+  defaultValue:
+    value:
+      value: null
+  descriptionHTML: >
+    <p>The name of the application in which the resource is deployed, or the name of the system resource.</p>
+    <p>If not specified, the resource is part of the <code>interop-jms</code> resources.</p>
+- name: jms_module
+  type: java.lang.String
+  writable: true
+  defaultValue:
+    value:
+      value: null
+  descriptionHTML: >
+    <p>The name of the module as it appears in the corresponding <code>&lt;module&gt;</code> element
+    associated with the <code>weblogic-application.xml</code> deployment descriptor.</p>
+    <p>If not specified, the resource is deployed standalone or that the
+    resource is part of the <code>interop-jms</code> resources.</p>
+- name: jms_destinationType
+  type: java.lang.String
+  writable: true
+  defaultValue:
+    value:
+      value: null
+  legalValues:
+  - null
+  - topic
+  - queue
+  descriptionHTML: >
+    <p>The type of the destination resource.</p>
+- name: jms_resource
+  type: java.lang.String
+  writable: true
+  defaultValue:
+    value:
+      value: null
+  descriptionHTML: >
+    <p>The name of the JMS resource.
+    If the destination type is <code>topic</code>, then this parameter is the name of the topic.
+    If the destination type is <code>queue</code>, then this parameter is the name of the queue.</p>
+    <p>If not specified, the security policy for the resource pertains to all
+    methods that match the other parameters of the resource specification,
+    without consideration of the name of the destination on which they occur.</p>
+- name: jms_action
+  type: java.lang.String
+  writable: true
+  defaultValue:
+    value:
+      value: null
+  legalValues:
+  - null
+  - receive
+  - browse
+  descriptionHTML: >
+    <p>The name of the action being requested on the resource.</p>
+    <p>If not specified, the seurity policy for the resource pertains to all
+    actions that match the other parameters resource specification,
+    without consideration for the action name.</p>
+
+# jmx properties:
+- name: jmx_operation
+  type: java.lang.String
+  legalValues:
+    - null
+    - get
+    - getEncrypted
+    - set
+    - setEncrypted
+    - find
+    - invoke
+    - create
+    - unregister
+  writable: true
+  defaultValue:
+    value:
+      value: null
+  descriptionHTML: >
+    <p>he name of the operation being requested on the resource.</p>
+- name: jmx_application
+  type: java.lang.String
+  writable: true
+  defaultValue:
+    value:
+      value: null
+  descriptionHTML: >
+    <p>The name of the application in which the resource is deployed, or the name of the system resource.</p>
+    <p>If not specified, the resource is not part of an application.</p>
+- name: jmx_mbeanType
+  type: java.lang.String
+  writable: true
+  defaultValue:
+    value:
+      value: null
+  descriptionHTML: >
+    <p>The type of the MBean resource on which access is being requested.
+    The type is the fully qualified type, for example, 
+    <code>weblogic.management.configuration.ServerMBean</code> or
+    <code>weblogic.j2ee.descriptor.wl.jmxConnectionFactoryBean</code></p>
+    <p>If not specified, the security policy for the resource pertains to all
+    MBean types that match the other parameters of the resource specification.</p>
+- name: jmx_target
+  type: java.lang.String
+  writable: true
+  defaultValue:
+    value:
+      value: null
+  descriptionHTML: >
+    <p>The target of the MBean resource on whic access is being requested.</p>
+    <p> For an operation of <code>invoke</code> or <code>find</code>, the target is the method name.</p>
+    <p>For an operation of <code>get</code>, <code>getEncrypted</code>, <code>set</code>,
+    or <code>setEncrypted</code>, the target is the property name.</p>
+    <p>For an operation of <code>create</code> or <code>unregister</code>, the target is always not specified.</p>
+    <p>If not specified, the security policy for the resource pertains to all
+    methods or properties that match the other parameters of the resource specification.</p>
+    TBD target description
+
+# jndi properties:
+- name: jndi_application
+  type: java.lang.String
+  writable: true
+  defaultValue:
+    value:
+      value: null
+  descriptionHTML: >
+    <p>The name of the application in which the resource is deployed, as it appears in the
+    corresponding <code>&lt;display-name&gt;</code> element.
+    The <code>&lt;display-name&gt;</code> element is associated with
+    the <code>&lt;application&gt;</code> element in the deployment descriptor,
+    in an <code>.ear</code> file.</p>
+    <p>If not specified, the resource is not deployed as part of an application.</p>
+- name: jndi_any_path
+  type: boolean
+  writable: true
+  defaultValue:
+    value:
+      value: false
+  descriptionHTML: >
+    <p>Whether the security policy for the resource pertains to all
+     methods that match the other parameters of the resource specification,
+     without consideration of the path.</p>
+- name: jndi_path
+  type: java.lang.String
+  array: true
+  writable: true
+  defaultValue:
+    value:
+      value: null
+  descriptionHTML: >
+    <p>The path in the JNDI tree.
+    The order of the elements must match the order of the context branches in the tree,
+    starting with the root and walking out to the leaf level.</p>
+    <p>If not specified, then this is the root resource.</p>
+- name: jndi_action
+  type: java.lang.String
+  writable: true
+  defaultValue:
+    value:
+      value: null
+  legalValues:
+  - null
+  - lookup
+  - modify
+  - list
+  descriptionHTML: >
+    <p>The name of the action being requested on the JNDI resource.</p>
+    <p>If not specified, the security policy for the resource pertains to all
+    actions that match the other parameters of the resource specification, without
+    consideration for the action name.</p>
+    TBD JNDI Action description
+
+# svr properties:
+- name: svr_application
+  type: java.lang.String
+  writable: true
+  defaultValue:
+    value:
+      value: null
+  descriptionHTML: >
+    <p>The name of the application in which the resource is deployed, as it appears in
+    the corresponding <code>&lt;display-name&gt;</code> element.
+    The <code>&lt;display-name&gt;</code> element is associated with an
+    <code>&lt;application&gt;</code> element in the deployment descriptor, in an <code>.ear</code> file.</p>
+    <p>If not specified, the resource is not deployed as part of an application.</p>
+- name: svr_server
+  type: java.lang.String
+  writable: true
+  defaultValue:
+    value:
+      value: null
+  descriptionHTML: >
+    <p>The name of the Server resource.</p>
+- name: svr_action
+  type: java.lang.String
+  writable: true
+  defaultValue:
+    value:
+      value: null
+  legalValues:
+  - null
+  - boot
+  - shutdown
+  - lock
+  - unlock
+  descriptionHTML: >
+    <p>The name of the action being requested on the resource.</p>
+    <p>If not specified, the security policy for the resource pertains to all actions that match
+    the other parameters of the resource specification, without consideration for the action name.</p>
+
+# url properties:
+- name: url_application
+  type: java.lang.String
+  writable: true
+  defaultValue:
+    value:
+      value: null
+  descriptionHTML: >
+    <p>The name of the application in which the resource is deployed,
+    as it appears in the corresponding <code>&lt;display-name&gt;</code> element.
+    The <code>&lt;display-name&gt;</code> element is associated with an <code>&lt;application&gt;</code>
+    element in the deployment descriptor, in an <code>.ear</code> file.</p>
+- name: url_contextPath
+  type: java.lang.String
+  writable: true
+  defaultValue:
+    value:
+      value: null
+  descriptionHTML: >
+    <p>The context path of the Web application</p>
+- name: url_uri
+  type: java.lang.String
+  writable: true
+  defaultValue:
+    value:
+      value: null
+  descriptionHTML: >
+    <p>The URI of the resource.  This is the servlet path and the path info as specified in the
+    Servlet 2.3 spec.  This can be thought of as the URI, relative to the context path.</p>
+- name: url_httpMethod
+  type: java.lang.String
+  writable: true
+  defaultValue:
+    value:
+      value: null
+  legalValues:
+  - null
+  - GET
+  - POST
+  - DELETE
+  - PUT
+  - HEAD
+  - OPTIONS
+  - TRACE
+  descriptionHTML: >
+    <p>The name of the HTTP method on the URL resource, as it appears in the corresponding
+    <code>&lt;http-method&gt;</code> element in the deployment descriptor.</p>
+
+# webservices properties:
+- name: webservices_application
+  type: java.lang.String
+  writable: true
+  defaultValue:
+    value:
+      value: null
+  descriptionHTML: >
+    <p>The name of the application in which the resource is deployed,
+    as it appears in the corresponding <code>&lt;display-name&gt;</code> element.
+    The <code>&lt;display-name&gt;</code> element is associated with
+    an <code>&lt;application&gt;</code> element in the deployment descriptor,
+    in an <code>.ear</code> file.</p>
+- name: webservices_contextPath
+  type: java.lang.String
+  writable: true
+  defaultValue:
+    value:
+      value: null
+  descriptionHTML: >
+    <p>The context path for the Web application.</p>
+- name: webservices_webService
+  type: java.lang.String
+  writable: true
+  defaultValue:
+    value:
+      value: null
+  descriptionHTML: >
+    <p>The name of the Web Service.</p>
+- name: webservices_method
+  type: java.lang.String
+  writable: true
+  defaultValue:
+    value:
+      value: null
+  descriptionHTML: >
+    <p>The name of the service that is to be invoked.</p>
+    <p>If not specified, the security policy for the resource pertains
+    to all methods that match the other parameters of the resource specification,
+    without consideration of the method name.</p>
+# WebServiceResource is weird.
+# Its constructor takes signature as a String[]
+# but the corresponding signature value is a formatted String.
+# To compensate, make two separate properties.
+# The create forms will use the array one.
+# The tables and normal forms will use the string one.
+- name: webservices_any_signature
+  type: boolean
+  writable: true
+  defaultValue:
+    value:
+      value: false
+  descriptionHTML: >
+    <p>Whether the security policy for the resource pertains to all
+     methods that match the other parameters of the resource specification,
+     without consideration of the signature.</p>
+- name: webservices_signature_as_array
+  type: java.lang.String
+  array: true
+  writable: true
+  defaultValue:
+    value:
+      value: null
+  descriptionHTML: >
+    <p>The signature of the target method.
+    Each element contains the type of that parameter,
+    described as a fully-qualified Java class.</p>
+- name: webservices_signature
+  type: java.lang.String
+  defaultValue:
+    value:
+      value: null
+  descriptionHTML: >
+    <p>The signature of the target method.
+    Each element contains the type of that parameter,
+    described as a fully-qualified Java class.</p>
+
+# workcontext properties:
+- name: workcontext_action
+  type: java.lang.String
+  writable: true
+  defaultValue:
+    value:
+      value: null
+  legalValues:
+  - null
+  - create
+  - delete
+  - modify
+  - read
+  descriptionHTML: >
+    <p>The name of the action being requested on the WorkContext resource.</p>
+    <p>If not specified, the security policy for the resource pertains to all actions that match
+    the other parameters of the resource specification, without consideration for the action name.</p>
+- name: workcontext_any_path
+  type: boolean
+  writable: true
+  defaultValue:
+    value:
+      value: false
+  descriptionHTML: >
+    <p>Whether the security policy for the resource pertains to all
+     methods that match the other parameters of the resource specification,
+     without consideration of the path.</p>
+- name: workcontext_path
+  type: java.lang.String
+  array: true
+  writable: true
+  defaultValue:
+    value:
+      value: null
+  descriptionHTML: >
+    <p>The path to distinquish WorkContext.
+    The order of the elements must match the order of the context branches in the tree,
+    starting with the root and walking out to leaf level.
+    <p>If not specified, then this is the root resource.</p>

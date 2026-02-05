@@ -1,4 +1,4 @@
-# Copyright (c) 2022, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2022, 2025, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 contents:
 - child: AppDeployments
@@ -30,3 +30,34 @@ contents:
 - child: JDBCSystemResources
 - child: JMSSystemResources
 - child: Servers
+- label: Advanced
+  type: group
+  contents:
+  - child: AdvancedAdminPolicies
+    forceNotExpandable: true
+  - child: AdvancedApplicationPolicies
+    forceNotExpandable: true
+  - child: AdvancedCOMPolicies
+    forceNotExpandable: true
+  - child: AdvancedEISPolicies
+    forceNotExpandable: true
+  - child: AdvancedEJBPolicies
+    forceNotExpandable: true
+  - child: AdvancedJDBCPolicies
+    forceNotExpandable: true
+  - child: AdvancedJMSPolicies
+    forceNotExpandable: true
+  - child: AdvancedJMXPolicies
+    forceNotExpandable: true
+  - child: AdvancedJNDIPolicies
+    forceNotExpandable: true
+  - child: AdvancedServerPolicies
+    forceNotExpandable: true
+  - child: AdvancedURLPolicies
+    forceNotExpandable: true
+  - child: AdvancedWebServicePolicies
+    forceNotExpandable: true
+  - child: AdvancedWorkContextPolicies
+    forceNotExpandable: true
+  - child: AdvancedNonJMXPolicies
+    forceNotExpandable: true

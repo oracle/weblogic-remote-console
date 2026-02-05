@@ -13,8 +13,8 @@ import weblogic.console.schema.YamlSource;
  * slices that a type supports, e.g. ServerMBean/slices.yaml
  */
 public class SlicesDefSource extends YamlSource {
-  private ListValue<SliceDefSource> slices = new ListValue<>();
-  private ListValue<String> alternateSliceSources = new ListValue<>();
+  private ListValue<SliceDefSource> slices = ListValue.create();
+  private ListValue<String> alternateSliceSources = ListValue.create();
 
   // The list of top level slices this type supports.
   public List<SliceDefSource> getSlices() {
@@ -22,11 +22,11 @@ public class SlicesDefSource extends YamlSource {
   }
 
   public void setSlices(List<SliceDefSource> value) {
-    slices.setValue(value);
+    slices = slices.setValue(value);
   }
 
   public void addSlice(SliceDefSource value) {
-    slices.add(value);
+    slices = slices.add(value);
   }
 
   // List of other directories to search for slice definitions.
@@ -40,11 +40,11 @@ public class SlicesDefSource extends YamlSource {
   }
 
   public void setAlternateSliceSources(List<String> value) {
-    alternateSliceSources.setValue(value);
+    alternateSliceSources = alternateSliceSources.setValue(value);
   }
 
   public void addAlternateSliceSource(String value) {
-    alternateSliceSources.add(value);
+    alternateSliceSources = alternateSliceSources.add(value);
   }
 
   @Override

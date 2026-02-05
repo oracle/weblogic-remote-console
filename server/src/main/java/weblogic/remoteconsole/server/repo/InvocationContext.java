@@ -1,4 +1,4 @@
-// Copyright (c) 2020, 2024, Oracle and/or its affiliates.
+// Copyright (c) 2020, 2025, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.repo;
@@ -131,6 +131,14 @@ public class InvocationContext {
   public InvocationContext(InvocationContext toClone, BeanTreePath beanTreePath) {
     this(toClone);
     setIdentity(beanTreePath);
+  }
+
+  public InvocationContext clone() {
+    return new InvocationContext(this);
+  }
+
+  public InvocationContext clone(BeanTreePath beanTreePath) {
+    return new InvocationContext(this, beanTreePath);
   }
 
   public PageRepo getPageRepo() {
@@ -351,6 +359,12 @@ public class InvocationContext {
   ) {
     if (frontend != null) {
       frontend.storeData(key, referenceObject, data);
+    }
+  }
+
+  public void removeSessionData(String key, Object referenceObject) {
+    if (frontend != null) {
+      frontend.removeData(key, referenceObject);
     }
   }
 

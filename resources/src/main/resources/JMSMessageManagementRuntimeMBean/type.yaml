@@ -1,4 +1,4 @@
-# Copyright (c) 2023, 2024, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2023, 2025, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 actions:
@@ -126,9 +126,31 @@ actions:
     introductionHTML: >
       Delete the selected messages.
   definition:
+    type: int # v.s. Integer
     descriptionHTML: >
       Delete the selected messages.
-    type: int # v.s. Integer
+
+- name: "viewMessage"
+  #mbeanOperation:
+  #  operation: getJMSTextMessage
+  inputForm:
+    customizePageMethod: weblogic.remoteconsole.customizers.JMSMessageManagementRuntimeMBeanCustomizer.customizeViewMessageActionInputForm
+    introductionHTML: >
+      View the selected message.
+    presentation:
+      singleColumn: true
+    parameters:
+    - name: MessageBody
+      multiLineString: true
+      readOnly: true
+      presentation:
+        width: lg #xl #xxl
+      definition:
+        type: java.lang.String
+        descriptionHTML: "The message's body."
+  definition:
+    descriptionHTML: >
+      View the selected message.
 
 children:
 - name: Tasks

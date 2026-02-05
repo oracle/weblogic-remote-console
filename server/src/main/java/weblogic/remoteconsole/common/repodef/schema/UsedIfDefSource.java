@@ -16,17 +16,17 @@ import weblogic.console.utils.Path;
  * about a feature (e.g. a property) is enabled.
  */
 public class UsedIfDefSource extends YamlSource {
-  private StringValue property = new StringValue();
-  private ScalarValues values = new ScalarValues();
-  private BooleanValue hide = new BooleanValue();
+  private StringValue property = StringValue.create();
+  private ScalarValues values = ScalarValues.create();
+  private BooleanValue hide = BooleanValue.create();
 
   public UsedIfDefSource() {
   }
 
   UsedIfDefSource(UsedIfDefSource from, Path fromContainedBeanPath) {
-    property.merge(from.property, fromContainedBeanPath);
-    values.merge(from.values, fromContainedBeanPath);
-    hide.merge(from.hide, fromContainedBeanPath);
+    property = property.merge(from.property, fromContainedBeanPath);
+    values = values.merge(from.values, fromContainedBeanPath);
+    hide = hide.merge(from.hide, fromContainedBeanPath);
   }
 
   // Since Property is relative to the bean that specified it:
@@ -48,7 +48,7 @@ public class UsedIfDefSource extends YamlSource {
   }
 
   public void setProperty(String value) {
-    property.setValue(value);
+    property = property.setValue(value);
   }
 
   // If the current value of 'property' is one of these values,
@@ -60,11 +60,11 @@ public class UsedIfDefSource extends YamlSource {
   }
 
   public void setValues(List<Object> value) {
-    values.setValue(value);
+    values = values.setValue(value);
   }
 
   public void addValue(Object value) {
-    values.add(value);
+    values = values.add(value);
   }
 
   // When the current value of 'property' isn't one of 'values',
@@ -76,6 +76,6 @@ public class UsedIfDefSource extends YamlSource {
   }
 
   public void setHide(boolean value) {
-    hide.setValue(value);
+    hide = hide.setValue(value);
   }
 }

@@ -27,10 +27,10 @@ import weblogic.console.schema.YamlSource;
  * Currently the remote console only uses this to handle JDBC system resources.
  */
 public class PseudoBeanTypeDefSource extends YamlSource {
-  private StringValue name = new StringValue();
-  private StringValue baseType = new StringValue();
-  private ListValue<String> include = new ListValue<>();
-  private ListValue<String> exclude = new ListValue<>();
+  private StringValue name = StringValue.create();
+  private StringValue baseType = StringValue.create();
+  private ListValue<String> include = ListValue.create();
+  private ListValue<String> exclude = ListValue.create();
 
   // the name of this pseudo bean type
   public String getName() {
@@ -38,7 +38,7 @@ public class PseudoBeanTypeDefSource extends YamlSource {
   }
 
   public void setName(String value) {
-    name.setValue(value);
+    name = name.setValue(value);
   }
 
   // The corresponding base bean type's name
@@ -47,7 +47,7 @@ public class PseudoBeanTypeDefSource extends YamlSource {
   }
 
   public void setBaseType(String value) {
-    baseType.setValue(value);
+    baseType = baseType.setValue(value);
   }
 
   // If specified, then the pseudo type will include only these properties
@@ -58,11 +58,11 @@ public class PseudoBeanTypeDefSource extends YamlSource {
   }
 
   public void setInclude(List<String> value) {
-    include.setValue(value);
+    include = include.setValue(value);
   }
 
   public void addInclude(String value) {
-    include.add(value);
+    include = include.add(value);
   }
 
   // If specified, then the pseudo type will include all of the properties
@@ -74,11 +74,11 @@ public class PseudoBeanTypeDefSource extends YamlSource {
   }
 
   public void setExclude(List<String> value) {
-    exclude.setValue(value);
+    exclude = exclude.setValue(value);
   }
 
   public void addExclude(String value) {
-    exclude.add(value);
+    exclude = exclude.add(value);
   }
 
   // Note: the base type's 'subTypes' configures the mapping

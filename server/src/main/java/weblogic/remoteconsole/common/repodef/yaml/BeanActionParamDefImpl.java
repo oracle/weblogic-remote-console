@@ -13,7 +13,7 @@ import weblogic.remoteconsole.server.repo.Value;
 /**
  * yaml-based implemetation of the BeanActionParamDef interface
  */
-class BeanActionParamDefImpl extends BeanValueDefImpl implements BeanActionParamDef {
+public class BeanActionParamDefImpl extends BeanValueDefImpl implements BeanActionParamDef {
 
   private BeanActionDefImpl actionDefImpl;
   private BeanActionParamDefSource source;
@@ -66,7 +66,7 @@ class BeanActionParamDefImpl extends BeanValueDefImpl implements BeanActionParam
     return getDefaultValueForType();
   }
 
-  protected BeanActionParamDefSource getSource() {
+  public BeanActionParamDefSource getSource() {
     return source;
   }
 

@@ -93,6 +93,13 @@ properties:
   type: weblogic.management.runtime.BatchJobRepositoryRuntimeMBean
 - defaultValue: {
     }
+  descriptionHTML: '<p>Gets the Certificate Management runtime MBean for this server.
+    If CertificateManagement is not enabled, this method will return <code>null</code>.</p> '
+  name: CertificateManagementRuntime
+  relationship: containment
+  type: weblogic.management.runtime.CertificateManagementServerRuntimeMBean
+- defaultValue: {
+    }
   descriptionHTML: '<p>Get statistics for system-level class loading.</p> '
   name: ClassLoaderRuntime
   relationship: containment
@@ -160,6 +167,12 @@ properties:
     consistent with dynamic channel updates.</p> '
   name: DefaultURL
   type: java.lang.String
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Gets the Domain Keystores runtime MBean for this server.</p> '
+  name: DomainKeystoresRuntime
+  relationship: containment
+  type: weblogic.management.runtime.DomainKeystoresServerRuntimeMBean
 - defaultValue: {
     }
   descriptionHTML: '<p>Return an MBean which represents Cumulative Status of the XML
@@ -427,6 +440,13 @@ properties:
   name: PersistentStoreRuntimes
   relationship: containment
   type: weblogic.management.runtime.PersistentStoreRuntimeMBean
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: '<p> Returns all deployed Plugins </p> '
+  name: PluginRuntimes
+  relationship: containment
+  type: weblogic.management.runtime.PluginRuntimeMBean
 - array: true
   defaultValue: {
     }

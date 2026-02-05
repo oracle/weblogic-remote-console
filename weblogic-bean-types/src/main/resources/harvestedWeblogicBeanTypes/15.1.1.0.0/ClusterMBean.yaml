@@ -126,8 +126,11 @@ properties:
 - defaultValue: {
     }
   descriptionHTML: '<p>Specifies the channel used to handle communications within
-    a cluster. If no channel is specified the default channel is used.</p> <p>ClusterBroadcastChannel
-    is only are supported if the unicast messaging type is used.</p> '
+    a cluster. If no channel is specified then the servers in the cluster will use
+    the default secure channel (SSL Listen Port), if SecureClusterBroadcastEnabled
+    attribute is true. If SecureClusterBroadcastEnabled attribute is false then servers
+    in the cluster will use the default channel (Plain Listen Port).</p> <p>ClusterBroadcastChannel
+    is only supported if the unicast messaging type is used.</p> '
   name: ClusterBroadcastChannel
   redeployNeeded: true
   restartNeeded: true
@@ -707,6 +710,24 @@ properties:
   writable: true
 - defaultValue:
     derivedDefault: true
+  descriptionHTML: '<p>Servers in a cluster broadcast messages to each other using
+    either unicast or multicast. If a broadcast channel is defined then cluster members
+    broadcast messages using the named Network Access Point (NAP). If no broadcast
+    channel is defined and secured cluster broadcast is enabled then messages will
+    be sent over SSL using the default secured channel. However, this added security
+    for broadcasting cluster messages comes with a significant cluster performance
+    degradation. It should only be enabled if security is of greater concern than
+    performance degradation. If secure cluster broadcast is not enabled then messages
+    will be sent using the default channel.</p> <p>The default value for this attribute
+    is true if all cluster members have SSL enabled, and either secure mode is enabled.
+    Otherwise, the default is false.</p> '
+  name: SecureClusterBroadcastEnabled
+  redeployNeeded: true
+  restartNeeded: true
+  type: boolean
+  writable: true
+- defaultValue:
+    derivedDefault: true
   descriptionHTML: '<p>Servers in a cluster replicate session data. If a replication
     channel is defined then the session data will be sent using the replication channel
     protocol and secured replication settings will be ignored. If no replication channel
@@ -876,3 +897,9 @@ properties:
   restartNeeded: true
   type: boolean
   writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Get attributes related to WebLogic Plugin Routing.</p> '
+  name: WeblogicPluginRouting
+  relationship: containment
+  type: weblogic.management.configuration.WeblogicPluginRoutingMBean

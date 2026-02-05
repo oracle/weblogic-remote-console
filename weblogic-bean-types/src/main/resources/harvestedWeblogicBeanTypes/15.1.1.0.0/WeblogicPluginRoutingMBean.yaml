@@ -1,0 +1,16 @@
+# Copyright (c) 2020, 2025, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+baseTypes:
+- weblogic.management.configuration.ConfigurationMBean
+descriptionHTML: '<p>This bean represents the configuration attributes for WebLogic
+  Plugin Routing.</p> '
+name: weblogic.management.configuration.WeblogicPluginRoutingMBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: '<p>A comma-separated list of serer names that should be excluded
+    from routing by a WebLogic Proxy Plugin.</p> '
+  name: ExcludeClusterMembers
+  type: java.lang.String
+  writable: true

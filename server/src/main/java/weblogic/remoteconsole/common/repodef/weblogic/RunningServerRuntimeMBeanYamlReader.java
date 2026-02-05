@@ -1,9 +1,10 @@
-// Copyright (c) 2022, 2023, Oracle and/or its affiliates.
+// Copyright (c) 2022, 2025, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef.weblogic;
 
 import weblogic.remoteconsole.common.repodef.schema.NavTreeDefSource;
+import weblogic.remoteconsole.common.repodef.schema.NavTreeNodeDefSource;
 
 /**
  * Dynamically creates the yaml that describes the pages and types for a
@@ -43,11 +44,15 @@ class RunningServerRuntimeMBeanYamlReader extends CombinedServerRuntimeMBeanYaml
     NavTreeDefSource source = new NavTreeDefSource();
     // add the delegated non-running server nodes first
     if (notRunningSource != null) {
-      source.getContents().addAll(notRunningSource.getContents());
+      for (NavTreeNodeDefSource content : notRunningSource.getContents()) {
+        source.addContent(content);
+      }
     }
     // then add the delegated running server nodes
     if (runningSource != null) {
-      source.getContents().addAll(runningSource.getContents());
+      for (NavTreeNodeDefSource content : runningSource.getContents()) {
+        source.addContent(content);
+      }
     }
     return source;
   }

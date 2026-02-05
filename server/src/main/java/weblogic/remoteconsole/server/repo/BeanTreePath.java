@@ -58,6 +58,10 @@ public class BeanTreePath extends Value {
     return (beanTreePath.resolved) ? beanTreePath : null;
   }
 
+  public BeanTreePath childPath(String child) {
+    return childPath(new Path(child));
+  }
+
   // Construct a bean tree path for a bean that is a child of the bean identified
   // by this bean tree path.
   public BeanTreePath childPath(Path childPath) {

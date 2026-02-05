@@ -15,6 +15,7 @@ const fs = require('fs');
 const readline = require('readline');
 const { spawn } = require('child_process');
 const { execFile } = require('child_process');
+const yargs = require('yargs');
 
 const { app, ipcMain, shell, dialog, safeStorage } = require('electron');
 
@@ -93,15 +94,12 @@ let cbe;
 
 (() => {
   function updateUserDataPath() {
-    if (process.env.CONSOLE_USER_DATA_DIR) {
-      if (!fs.existsSync(process.env.CONSOLE_USER_DATA_DIR)) {
-        fs.mkdirSync(process.env.CONSOLE_USER_DATA_DIR, { recursive: true });
-      }
+    if (process.env.CONSOLE_USER_DATA_DIR)
       app.setPath('userData', process.env.CONSOLE_USER_DATA_DIR);
-    }
-    else {
+    else
       app.setPath('userData', `${app.getPath('appData')}/weblogic-remote-console`);
-    }
+    if (!fs.existsSync(app.getPath('userData')))
+      fs.mkdirSync(app.getPath('userData'), { recursive: true });
   }
 
   updateUserDataPath();
@@ -122,10 +120,10 @@ let cbe;
   if (!OSUtils.isLinuxOS() && !app.isDefaultProtocolClient('wrc')) {
     if (process.defaultApp) {
       if (process.argv.length >= 2) {
-        app.setAsDefaultProtocolClient("wrc", process.execPath, [path.resolve(process.argv[1])]);
+        app.setAsDefaultProtocolClient('wrc', process.execPath, [path.resolve(process.argv[1])]);
       }
     } else {
-      app.setAsDefaultProtocolClient("wrc");
+      app.setAsDefaultProtocolClient('wrc');
     }
   }
 
@@ -153,7 +151,7 @@ let cbe;
   // work on Linux.  The solution is to make sure LANGUAGE is set on Linux to
   // the right value, as well as setting the command-line option in every
   // platform.
-  const file = userDataPath + "/user-prefs.json";
+  const file = userDataPath + '/user-prefs.json';
   if (!app.commandLine.hasSwitch('lang') && fs.existsSync(file)) {
     const userPrefsEarly = require(file);
     if ((userPrefsEarly?.language?.language !== undefined) &&
@@ -206,7 +204,7 @@ app.on('activate', () => {
 // Safari is a browser that prevents access to localhost
 // and thus the Custom URL is used to pass the token.
 // On other platforms, see the 'whenReady' processing...
-app.on("open-url", (event, url) => {
+app.on('open-url', (event, url) => {
   if (url) {
     logger.log('debug', `Handle Custom URL for process: ${process.pid}`);
     if (event) event.preventDefault();
@@ -241,22 +239,38 @@ function processCmdLineOptions() {
     cbePort = config['server.port'];
   }
 
-  if (app.commandLine.hasSwitch('check-ppid'))
+  const argv = yargs
+    .options({
+      'quiet': {describe: 'Do not put any output on standard output'},
+      'verbose': {describe: 'Show debugging output to standard output'},
+      'check-ppid': {describe: 'Use the parent process ID to check for death.  If it is dead, this process should die'},
+      'check-pid': {describe: 'The process ID to be checked for death.  If it is dead, this process should die', default: 0 },
+      'port': {describe: 'The port to start the java process on'},
+      'stdin': {describe: 'Indicates to read configuration from standard input'},
+      'showPort': {describe: 'The process will output on its standard output the port that the Java process is using', alias: 'showport'},
+      'useTokenNotCookie': {describe: 'Tells the code to use X-Session-Token header instead of cookie', alias: 'usetokennotcookie'}
+    })
+    .help()
+    .argv;
+
+  if (argv.verbose) {
+    logger.setStdoutEnabled();
+  }
+
+  if (argv.checkPpid)
     checkPid = process.ppid;
   else
-    checkPid = app.commandLine.getSwitchValue('check-pid');
+    checkPid = argv.checkPid;
 
   if (checkPid !== 0) {
     setInterval(doCheckPid, checkPpidMillis);
   }
 
-  const portOption = app.commandLine.getSwitchValue('port');
-  if (portOption) {
-    cbePort = portOption;
+  if (argv.portOption) {
+    cbePort = argv.portOption;
   }
 
-  const stdinOption = app.commandLine.hasSwitch('stdin');
-  if (stdinOption) {
+  if (argv.stdinOption) {
     let readlineStdin = readline.createInterface({
       input: process.stdin,
     });
@@ -265,12 +279,12 @@ function processCmdLineOptions() {
     });
   }
 
-  // Windows folds case in arguments it seems
-  showPort = app.commandLine.hasSwitch('showPort') ||
-    app.commandLine.hasSwitch('showport');
-  useTokenNotCookie = app.commandLine.hasSwitch('useTokenNotCookie') ||
-    app.commandLine.hasSwitch('usetokennotcookie');
-  quiet = app.commandLine.hasSwitch('quiet');
+  // Note that the way yargs works is very flexible.  If someone says
+  // "--show-port" or "--showPort" or "--showport", it will put in argv the
+  // value with keys "showPort" *and* "show-port" *and* "showport".
+  showPort = argv.showPort;
+  useTokenNotCookie = argv.useTokenNotCookie;
+  quiet = argv.quiet;
 }
 
 function sendConfig(data) {
@@ -301,7 +315,14 @@ function start_cbe() {
     
   fs.mkdirSync(cbeTempDir);
 
-  let spawnArgs = [
+  let spawnArgs = [ ];
+  const config = AppConfig.getAll();
+  if (config['weblogic.remoteconsole.java.startoptions']) {
+    for (var arg of config['weblogic.remoteconsole.java.startoptions'].split(';')) {
+      spawnArgs.push(arg);
+    }
+  }
+  spawnArgs.push(...[
     `-Djava.io.tmpdir=${cbeTempDir}`,
     `-Dserver.port=${cbePort}`,
     '-jar',
@@ -310,7 +331,7 @@ function start_cbe() {
     `${app.getPath('userData')}`,
     '--showPort',
     '--stdin'
-  ];
+  ]);
   if (useTokenNotCookie) {
     spawnArgs.push('--useTokenNotCookie');
   }
@@ -353,7 +374,7 @@ function start_cbe() {
       started = true;
       doit();
     }
-    logger.log('debug', line);
+    logger.log('debug', `!${line}!`);
   });
   SettingsEditor.setConfigSender(sendConfig);
 }
@@ -417,7 +438,7 @@ app.whenReady()
       if (supportsUpgradeCheck && OSUtils.isLinuxOS && !process.env.APPIMAGE)
         process.env.APPIMAGE = `/${Math.random()}/${Math.random()}`;
 
-      const file = app.getPath('userData') + "/user-prefs.json";
+      const file = app.getPath('userData') + '/user-prefs.json';
       const userPrefsEarly = fs.existsSync(file) ? require(file) : null;
       const upgradeCheckAtStart =
         (userPrefsEarly?.startup?.checkForUpdates === undefined)

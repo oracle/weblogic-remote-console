@@ -12,7 +12,7 @@ import java.util.List;
  * <p>
  * A path is an ordered list of strings that identify something.
  */
-public class Path implements Comparable {
+public class Path implements Comparable, Deduplicatable {
 
   private List<String> components = new ArrayList<>();
 
@@ -207,5 +207,10 @@ public class Path implements Comparable {
   @Override
   public String toString() {
     return this.getDotSeparatedPath();
+  }
+
+  @Override
+  public String getDeduplicationKey() {
+    return toString();
   }
 }

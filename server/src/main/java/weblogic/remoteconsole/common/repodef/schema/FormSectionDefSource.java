@@ -15,12 +15,12 @@ import weblogic.console.schema.YamlSource;
  * a section on a slice form page or create form page.
  */
 public class FormSectionDefSource extends YamlSource {
-  private ListValue<BeanPropertyDefCustomizerSource> properties = new ListValue<>();
-  private ListValue<FormSectionDefSource> sections = new ListValue<>();
-  private StringValue name = new StringValue();
-  private StringValue title = new StringValue();
-  private StringValue introductionHTML = new StringValue();
-  private Value<UsedIfDefSource> usedIf = new Value<>(null);
+  private ListValue<BeanPropertyDefCustomizerSource> properties = ListValue.create();
+  private ListValue<FormSectionDefSource> sections = ListValue.create();
+  private StringValue name = StringValue.create();
+  private StringValue title = StringValue.create();
+  private StringValue introductionHTML = StringValue.create();
+  private Value<UsedIfDefSource> usedIf = Value.create();
 
   // The properties to display in this section.
   // Must be empty if 'sections' is not.
@@ -30,11 +30,11 @@ public class FormSectionDefSource extends YamlSource {
   }
 
   public void setProperties(List<BeanPropertyDefCustomizerSource> value) {
-    properties.setValue(value);
+    properties = properties.setValue(value);
   }
 
   public void addProperty(BeanPropertyDefCustomizerSource value) {
-    properties.add(value);
+    properties = properties.add(value);
   }
 
   // The sections to display in this section.
@@ -45,11 +45,11 @@ public class FormSectionDefSource extends YamlSource {
   }
 
   public void setSections(List<FormSectionDefSource> value) {
-    sections.setValue(value);
+    sections = sections.setValue(value);
   }
 
   public void addSection(FormSectionDefSource value) {
-    sections.add(value);
+    sections = sections.add(value);
   }
 
   // The name of this section (used for generating its resource bundle key).
@@ -59,7 +59,7 @@ public class FormSectionDefSource extends YamlSource {
   }
 
   public void setName(String value) {
-    name.setValue(value);
+    name = name.setValue(value);
   }
 
   // The english text of the title to display for this section.  Optional.
@@ -68,7 +68,7 @@ public class FormSectionDefSource extends YamlSource {
   }
 
   public void setTitle(String value) {
-    title.setValue(value);
+    title = title.setValue(value);
   }
 
   // The english text of the introduction to display for this section.  Optional.
@@ -77,7 +77,7 @@ public class FormSectionDefSource extends YamlSource {
   }
 
   public void setIntroductionHTML(String value) {
-    introductionHTML.setValue(value);
+    introductionHTML = introductionHTML.setValue(value);
   }
 
   // When this section should be enabled.
@@ -87,7 +87,7 @@ public class FormSectionDefSource extends YamlSource {
   }
 
   public void setUsedIf(UsedIfDefSource value) {
-    usedIf.setValue(value);
+    usedIf = usedIf.setValue(value);
   }
 
   @Override

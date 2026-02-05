@@ -1,0 +1,16 @@
+# Copyright (c) 2020, 2025, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+baseTypes:
+- weblogic.management.runtime.RuntimeMBean
+descriptionHTML: '<p>This MBean provides deployment operations for a plugin module.</p> '
+name: weblogic.management.runtime.PluginDeploymentRuntimeMBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: '<p>The plugin deployment''s name.</p> '
+  name: PluginName
+  type: java.lang.String
+roles:
+  allowed:
+  - Deployer

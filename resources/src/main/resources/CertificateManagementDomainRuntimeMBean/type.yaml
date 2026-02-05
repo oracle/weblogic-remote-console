@@ -1,0 +1,38 @@
+# Copyright (c) 2025, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+actions:
+- name: rollDomainCertificateAuthority
+  label: Roll Domain Certificate Authority
+  successMessage: Rolled the domain certificate authority.
+  failureMessage: Failed to roll the domain certificate authority.
+  inputForm: # empty form to force the user to confirm the action
+    introductionHTML: >
+      <p>Generate a new self-signed CA certificate for the domain
+       and refresh the trust stores for servers and machines.</p>
+- name: refreshServerTrustAllServers
+  label: Server Trust Certificates On All Servers
+  successMessage: Refreshed the trust certificates of all servers.
+  failureMessage: Failed to refresh the trust certificates of all servers.
+- name: refreshMachineTrustAllMachines
+  label: Machine Trust Certificates On All Servers
+  successMessage: Refreshed the trust certificates of all machines.
+  failureMessage: Failed to refresh the trust certificates of all machines.
+- name: refreshServerCertificateAllServers
+  label: One Server Identity Certificate On All Servers
+  successMessage: Refreshed the server identity certificate.
+  failureMessage: Failed to refresh the server identity certificate.
+  inputForm:
+    introductionHTML: >
+      <p>Refresh an identity certificate on all servers that use it.</p>
+    parameters:
+    - name: alias
+      label: Alias
+    - name: isActiveOnly
+      label: Only If Active
+    - name: isForceUpdate
+      label: Force Update
+- name: refreshMachineCertificatesAllMachines
+  label: Machine Identity Certificates On All Servers
+  successMessage: Refreshed the identity certificates of all machines.
+  failureMessage: Failed to refresh the identity certificates of all machines.
