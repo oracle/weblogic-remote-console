@@ -9,7 +9,7 @@
   <parent>
     <artifactId>console-backend</artifactId>
     <groupId>com.oracle.weblogic</groupId>
-    <version>3.0.0</version>
+    <version>3.0.1</version>
   </parent>
 
   <packaging>pom</packaging>

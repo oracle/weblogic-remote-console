@@ -1,2 +1,0 @@
-export { TabBarMixed, SelectionActionDetailDeprecated as SelectionActionDetail, KeyDetailDeprecated as KeyDetail, TabDataDeprecated as TabData, TabIconDataDeprecated as TabIconData } from './tab-bar-mixed';
-export { CTabBarMixedElement } from './tab-bar-mixed';

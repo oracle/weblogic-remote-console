@@ -1,1 +1,0 @@
-export { MessageLineElement } from './message-line';

@@ -1,2 +1,0 @@
-define(['exports', '../BaseButtonStyles.css', './BaseButtonVariants.css', 'css!./../../../BaseButtonStyles.styles.css', '../../../vanilla-extract-recipes-createRuntimeFn.esm-d881c69a'], (function(t,e,s,a,n){"use strict";const i={multiVariantStyles:s.multiVariantStyles,variants:e.variants,styles:e.styles};t.BaseButtonStableTheme=i,Object.defineProperty(t,"__esModule",{value:!0})}));
-//# sourceMappingURL=BaseButtonTheme.js.map

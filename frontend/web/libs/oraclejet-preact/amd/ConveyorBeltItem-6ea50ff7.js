@@ -1,2 +1,0 @@
-define(['exports', 'preact/jsx-runtime', './useConveyorBeltItem-ce9e4c40', './UNSAFE_ConveyorBelt/themes/ConveyorBeltStyles.css', './classNames-08d99695'], (function(e,s,t,r,n){"use strict";e.ConveyorBeltItem=({children:e,isCurrent:o})=>{const l=t.useConveyorBeltItem({isCurrent:o});return s.jsx("div",{className:n.classNames([r.styles.conveyorBeltItemStyle]),...l,children:e})}}));
-//# sourceMappingURL=ConveyorBeltItem-6ea50ff7.js.map

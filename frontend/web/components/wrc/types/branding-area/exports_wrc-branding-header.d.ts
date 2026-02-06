@@ -1,1 +1,0 @@
-export { BrandingHeaderElement } from './header';

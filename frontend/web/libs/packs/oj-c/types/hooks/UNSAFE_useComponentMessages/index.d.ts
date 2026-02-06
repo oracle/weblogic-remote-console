@@ -1,1 +1,0 @@
-export { useComponentMessages } from './useComponentMessages';

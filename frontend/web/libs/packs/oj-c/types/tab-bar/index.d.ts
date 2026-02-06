@@ -1,2 +1,0 @@
-export { TabBar, TabData, TabLinkItemData, ReorderDetailDeprecated as ReorderDetail, SelectionActionDetailDeprecated as SelectionActionDetail, KeyDetailDeprecated as KeyDetail, TabIconDataDeprecated as TabIconData } from './tab-bar';
-export { CTabBarElement } from './tab-bar';
