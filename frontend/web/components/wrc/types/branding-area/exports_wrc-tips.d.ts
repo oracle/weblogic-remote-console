@@ -1,1 +1,0 @@
-export { TipsElement } from './tips';

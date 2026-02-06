@@ -1,1 +1,0 @@
-export { SimpleSearchElement } from './simple-search';

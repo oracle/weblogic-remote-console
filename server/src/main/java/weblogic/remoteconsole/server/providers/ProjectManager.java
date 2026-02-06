@@ -245,7 +245,7 @@ public class ProjectManager {
       new File(path).mkdirs();
     }
 
-    String fullPath = path + "/user-projects-new.json";
+    String fullPath = path + "/user-projects.json";
 
     JsonObjectBuilder builder = Json.createObjectBuilder();
     JsonArrayBuilder projectsBuilder = Json.createArrayBuilder();
@@ -294,13 +294,38 @@ public class ProjectManager {
     setCurrentProject(proj);
   }
 
+  private static void checkAndFixTemporaryProjectFileName(String path) {
+    // Check if a "new" file, which isn't really used anymore, is lying around
+    File newFile = new File(path + "/user-projects-new.json");
+    if (!newFile.exists()) {
+      return;
+    }
+    // Now, let's figure out if the "new" file should take precedence
+    File stdFile = new File(path + "/user-projects.json");
+    if (stdFile.exists()) {
+      // Determine which is the latest by last modified time
+      long newTime = newFile.lastModified();
+      long stdTime = stdFile.lastModified();
+      if (newTime > stdTime) {
+        // user-projects-new.json is latest, rename it to user-projects.json
+        // preserve user-projects.json as backup
+        stdFile.renameTo(new File(path + "/user-projects.json.backup"));
+        newFile.renameTo(stdFile);
+        return;
+      }
+    }
+    // Get the "new" file out of the way, as it is unneeded
+    newFile.renameTo(new File(path + "/user-projects-new.json.backup"));
+  }
+
   private void load(InvocationContext ic) {
     String path = PersistenceManager.getPersistenceFilePath(ic);
     if (path == null) {
       makeDefaultProject();
       return;
     }
-    String fullPath = path + "/user-projects-new.json";
+    checkAndFixTemporaryProjectFileName(path);
+    String fullPath = path + "/user-projects.json";
     if (!new File(fullPath).exists()) {
       makeDefaultProject();
       save(ic);
