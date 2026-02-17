@@ -86,7 +86,7 @@ export default function Breadcrumbs({ model }: Props) {
           <span class="oj-ux-ico-warning wrc-insecure-warning-icon"></span>
         )}
         <nav id="breadcrumbs-container" class="oj-flex-item oj-sm-flex-1">
-          <oj-c-conveyor-belt class="oj-sm-11" arrowVisibility="auto">
+          <oj-c-conveyor-belt class="oj-sm-11" arrowVisibility="auto" scrollPosition={9999}>
             <ul class={clazz}>
               {crumbs.map((c: Reference, idx: number) => {
                 const isLast = idx === crumbs.length - 1;

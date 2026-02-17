@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2022, 2025, Oracle and/or its affiliates.
+ * Copyright (c) 2022, 2026, Oracle and/or its affiliates.
  * Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
  * @ignore
  */
@@ -20,7 +20,7 @@ const UserProjects = (() => {
   const CoreUtils = require('./core-utils');
 
   function write(projects) {
-    const filepath = require('electron').app.getPath('userData') + '/user-projects-new.json';
+    const filepath = require('electron').app.getPath('userData') + '/user-projects.json';
     try {
       // Creates the file, if it doesn't already exist.
       // The openstack.org convention is to use 4 spaces
@@ -33,7 +33,7 @@ const UserProjects = (() => {
   }
 
   function read() {
-    const filepath = require('electron').app.getPath('userData') + '/user-projects-new.json';
+    const filepath = require('electron').app.getPath('userData') + '/user-projects.json';
     if (fs.existsSync(filepath)) {
       try {
         const data = JSON.parse(fs.readFileSync(filepath).toString());
