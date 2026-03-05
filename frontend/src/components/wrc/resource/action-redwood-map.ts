@@ -24,6 +24,7 @@ export const ActionRedwoodMap: Record<string, string> = {
     moveUp: 'oj-ux-ico-arrow-circle-up',
     new: 'oj-ux-ico-library-add',
     purgeCompletedDeploymentProgressObjects: 'oj-ux-ico-delete-circle',
+    rename: 'oj-ux-ico-rename',
     save: 'oj-ux-ico-save',
     select: 'oj-ux-ico-select',
     view: 'oj-ux-ico-file-view-details',

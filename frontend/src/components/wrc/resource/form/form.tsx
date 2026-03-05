@@ -67,7 +67,12 @@ const Form = ({ formModel, setModel }: Props) => {
     );
   }
 
-  const valueChangedHandler = (e: ojInputText.valueChanged | ojInputPassword.valueChanged) => {
+  type ValueChangedEvent =
+    | ojInputText.valueChanged
+    | ojInputPassword.valueChanged
+    | { detail: { value: unknown; updatedFrom?: string }; currentTarget?: EventTarget | null };
+
+  const valueChangedHandler = (e: ValueChangedEvent) => {
     const updatedFrom = (e as any)?.detail?.updatedFrom;
     if (updatedFrom && updatedFrom !== "internal") {
       return;

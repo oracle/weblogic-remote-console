@@ -69,6 +69,11 @@ export const fixOrigin = (url: string) => {
 };
 
 export const _post = async (url: string, body: string | FormData) => {
+  // Check kill switch - don't make requests if logout has been initiated
+  if (Global.global.killSwitch && !url.includes('/api/logout')) {
+    return Promise.reject(new Error('Kill switch active - request blocked'));
+  }
+
   const headersTemplate = {
     Accept: "application/json",
     "Unique-Id": Global.global.unique || "",
@@ -94,6 +99,11 @@ export const _post = async (url: string, body: string | FormData) => {
 };
 
 const _delete = async (url: string) => {
+  // Check kill switch - don't make requests if logout has been initiated
+  if (Global.global.killSwitch && !url.includes('/api/logout')) {
+    return Promise.reject(new Error('Kill switch active - request blocked'));
+  }
+
   const headersTemplate = {
     Accept: "application/json",
     "Unique-Id": Global.global.unique || "",
@@ -304,6 +314,11 @@ export const getData = async (
 };
 
 const getDataComponentRaw = async (url: string, context?: string) => {
+  // Check kill switch - don't make requests if logout has been initiated
+  if (Global.global.killSwitch && !url.includes('/api/logout')) {
+    return Promise.reject(new Error('Kill switch active - request blocked'));
+  }
+
   const headers = new Headers();
   headers.append("Unique-Id", Global.global.unique || "");
 
@@ -361,6 +376,10 @@ let _statusTimer: any;
  */
 export const fetchServerStatus = async (): Promise<Response | void> => {
   try {
+    if (Global.global.killSwitch) {
+      return;
+    }
+
     const headers = new Headers();
     headers.append("Unique-Id", Global.global.unique || "");
 

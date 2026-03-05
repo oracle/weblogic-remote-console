@@ -18,17 +18,17 @@ import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
 import javax.json.JsonValue;
-import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ResourceContext;
-import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import weblogic.remoteconsole.common.repodef.LocalizedConstants;
 import weblogic.remoteconsole.server.EncryptDecrypt;
 import weblogic.remoteconsole.server.PersistenceManager;
 import weblogic.remoteconsole.server.repo.Frontend;
 import weblogic.remoteconsole.server.repo.InvocationContext;
+import weblogic.remoteconsole.server.webapp.FailedRequestException;
 import weblogic.remoteconsole.server.webapp.RemoteConsoleResource;
 import weblogic.remoteconsole.server.webapp.WebAppUtils;
 
@@ -58,17 +58,17 @@ public class ProjectManager {
   public Project createProject(String name) {
     Project ret = new Project(name);
     if (projects.containsKey(name)) {
-      throw new WebApplicationException(Response.status(
+      throw new FailedRequestException(
         Status.BAD_REQUEST.getStatusCode(),
           "A project name must be unique"
-      ).build());
+      );
     }
     projects.put(name, ret);
     if (name.contains("/")) {
-      throw new WebApplicationException(Response.status(
+      throw new FailedRequestException(
         Status.BAD_REQUEST.getStatusCode(),
           "A project name may not contain a \"/\""
-      ).build());
+      );
     }
     return ret;
   }
@@ -92,7 +92,6 @@ public class ProjectManager {
   public static void setDefaultProviderGenerator(ProviderInfoGenerator generator) {
     defaultProviderGenerator = generator;
   }
-
 
   public void moveDown(String name) {
     Map<String, Project> holdProjects = projects;
@@ -194,7 +193,11 @@ public class ProjectManager {
   }
 
   public Provider getCurrentLiveProvider() {
-    if (getCurrentConfiguredProvider() != null) {
+    // There is a window in the logout case where the live provider has been
+    // terminated and is, therefore, null, and yet the current configured
+    // provider is still set.
+    if ((getCurrentConfiguredProvider() != null)
+        && (getCurrentConfiguredProvider().getLiveProvider() != null)) {
       return getCurrentConfiguredProvider().getLiveProvider();
     }
     return getProjectManagementProvider();
@@ -348,7 +351,7 @@ public class ProjectManager {
           proj.setCurrent(projJSON.getString("currentProvider"));
         }
         for (JsonObject provJSON : projJSON.getJsonArray("dataProviders").getValuesAs(JsonObject.class)) {
-          proj.addProvider(provJSON.getString("name"), provJSON);
+          proj.addProvider(provJSON.getString("name"), provJSON, ic);
         }
       }
     } catch (Exception e) {
@@ -476,7 +479,7 @@ public class ProjectManager {
         JsonObject json = prov.getJSON();
         // Transient is set for the hosted default provider.  We don't
         // persist it.
-        if (json.containsKey("transient") && !json.getBoolean("transient")) {
+        if (json.containsKey("transient") && json.getBoolean("transient")) {
           continue;
         }
         for (String key : json.keySet()) {
@@ -591,21 +594,24 @@ public class ProjectManager {
       }
     }
 
-    public void addProvider(String name, JsonObject json) {
+    public void addProvider(String name, JsonObject json, InvocationContext ic) {
       if (providers.containsKey(name)) {
-        throw new WebApplicationException(Response.status(
+        throw new FailedRequestException(
           Status.BAD_REQUEST.getStatusCode(),
-            "A provider name must be unique and " + name + " is duplicated"
-        ).build());
+          LocalizedConstants.DUPLICATE_PROVIDER_NAME, ic, name
+        );
       }
       if (RemoteConsoleResource.isReserved(name)
         || name.equals("-current-") || name.equals("-project-")) {
-        throw new WebApplicationException(Response.status(
-          Status.BAD_REQUEST.getStatusCode(),
-            "This name is reserved and cannot be used: " + name
-        ).build());
+        throw new FailedRequestException(
+          LocalizedConstants.RESERVED_NAME_CANNOT_BE_USED, ic, name
+        );
       }
       providers.put(name, new ConfiguredProvider(name, json));
+    }
+
+    public void addProvider(String name, JsonObject json) {
+      addProvider(name, json, null);
     }
 
     public void addProvider(JsonObject json) {

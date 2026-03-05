@@ -6,13 +6,13 @@
 
   <groupId>com.oracle.weblogic.console-backend</groupId>
   <artifactId>build-tools</artifactId>
-  <version>3.0.2</version>
+  <version>3.0.3</version>
   <name>Build Tools</name>
 
   <parent>
       <groupId>com.oracle.weblogic</groupId>
       <artifactId>console-backend</artifactId>
-      <version>3.0.2</version>
+      <version>3.0.3</version>
   </parent>
 
   <properties>
@@ -33,7 +33,7 @@
     <dependency>
         <groupId>com.fasterxml.jackson.jaxrs</groupId>
         <artifactId>jackson-jaxrs-json-provider</artifactId>
-        <version>${version.jackson.jaxrs}</version>
+        <version>${version.jackson}</version>
     </dependency>
     <dependency>
         <groupId>org.glassfish.jersey.core</groupId>

@@ -1,4 +1,4 @@
-// Copyright (c) 2025, Oracle and/or its affiliates.
+// Copyright (c) 2025, 2026, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.providers;
@@ -13,6 +13,7 @@ import javax.ws.rs.core.Response;
 
 import weblogic.remoteconsole.common.repodef.LocalizedConstants;
 import weblogic.remoteconsole.server.ConsoleBackendRuntime;
+import weblogic.remoteconsole.server.ConsoleBackendRuntimeConfig;
 import weblogic.remoteconsole.server.EncryptDecrypt;
 import weblogic.remoteconsole.server.repo.InvocationContext;
 import weblogic.remoteconsole.server.webapp.FailedRequestException;
@@ -90,10 +91,55 @@ public class AdminServerResource extends PdjRdjUtils implements TypedResource {
       builder.add("url", payload.getJsonObject("url").getString("value"));
     }
     JsonObjectBuilder settingsBuilder = Json.createObjectBuilder();
-    if (payload.containsKey("proxyOverride")) {
-      settingsBuilder.add(
-        "proxyOverride",
-        payload.getJsonObject("proxyOverride").getString("value"));
+    if (isSet(payload, "proxyOverride")) {
+      String proxyValue = payload.getJsonObject("proxyOverride").getString("value");
+      if (!proxyValue.isEmpty()) {
+        settingsBuilder.add("proxyOverride", proxyValue);
+      }
+    }
+    if (isSet(payload, "connectTimeoutOverride")) {
+      String connectValue = payload.getJsonObject("connectTimeoutOverride").getString("value");
+      if (!connectValue.isEmpty()) {
+        try {
+          long connectTimeout = Long.parseLong(connectValue);
+          if (connectTimeout < 0) {
+            throw new FailedRequestException(
+              Response.Status.BAD_REQUEST.getStatusCode(),
+              ic.getLocalizer().localizeString(
+                LocalizedConstants.INVALID_TIMEOUT_VALUE_MESSAGE, "connectTimeoutOverride", connectValue)
+            );
+          }
+          settingsBuilder.add("connectTimeoutOverride", connectValue);
+        } catch (NumberFormatException e) {
+          throw new FailedRequestException(
+            Response.Status.BAD_REQUEST.getStatusCode(),
+            ic.getLocalizer().localizeString(
+              LocalizedConstants.INVALID_TIMEOUT_VALUE_MESSAGE, "connectTimeoutOverride", connectValue)
+          );
+        }
+      }
+    }
+    if (isSet(payload, "readTimeoutOverride")) {
+      String readValue = payload.getJsonObject("readTimeoutOverride").getString("value");
+      if (!readValue.isEmpty()) {
+        try {
+          long readTimeout = Long.parseLong(readValue);
+          if (readTimeout < 0) {
+            throw new FailedRequestException(
+              Response.Status.BAD_REQUEST.getStatusCode(),
+              ic.getLocalizer().localizeString(
+                LocalizedConstants.INVALID_TIMEOUT_VALUE_MESSAGE, "readTimeoutOverride", readValue)
+            );
+          }
+          settingsBuilder.add("readTimeoutOverride", readValue);
+        } catch (NumberFormatException e) {
+          throw new FailedRequestException(
+            Response.Status.BAD_REQUEST.getStatusCode(),
+            ic.getLocalizer().localizeString(
+              LocalizedConstants.INVALID_TIMEOUT_VALUE_MESSAGE, "readTimeoutOverride", readValue)
+          );
+        }
+      }
     }
     if (payload.containsKey("webAuthentication")) {
       if (payload.getJsonObject("webAuthentication").getBoolean("value")) {
@@ -105,11 +151,20 @@ public class AdminServerResource extends PdjRdjUtils implements TypedResource {
         settingsBuilder.add("insecure", true);
       }
     }
-    JsonObject settings = settingsBuilder.build();
-    if (settings.size() != 0) {
-      builder.add("settings", settings);
-    }
+    // We actually want to not have a settings object at all if it is empty,
+    // but we'll let the ProviderInstance layer fix that.
+    builder.add("settings", settingsBuilder.build());
     return builder;
+  }
+
+  private static boolean isSet(JsonObject obj, String key) {
+    if (!obj.containsKey(key)) {
+      return false;
+    }
+    if (!obj.getJsonObject(key).containsKey("set")) {
+      return true;
+    }
+    return obj.getJsonObject(key).getBoolean("set");
   }
 
   @Override
@@ -164,6 +219,8 @@ public class AdminServerResource extends PdjRdjUtils implements TypedResource {
     if (!local) {
       builder.add("webAuthentication", valueObject(false, false));
       builder.add("proxyOverride", valueObject(null));
+      builder.add("connectTimeoutOverride", valueObject(null));
+      builder.add("readTimeoutOverride", valueObject(null));
       builder.add("insecure", valueObject(false, false));
       if (settingsJSON != null) {
         settingsJSON = json.getJsonObject("settings");
@@ -181,6 +238,18 @@ public class AdminServerResource extends PdjRdjUtils implements TypedResource {
             builder.add("proxyOverride", valueObject(val));
           }
         }
+        if (settingsJSON.containsKey("connectTimeoutOverride")) {
+          String val = settingsJSON.getString("connectTimeoutOverride");
+          if (!val.equals("")) {
+            builder.add("connectTimeoutOverride", valueObject(val));
+          }
+        }
+        if (settingsJSON.containsKey("readTimeoutOverride")) {
+          String val = settingsJSON.getString("readTimeoutOverride");
+          if (!val.equals("")) {
+            builder.add("readTimeoutOverride", valueObject(val));
+          }
+        }
       }
     }
     return builder;
@@ -190,28 +259,54 @@ public class AdminServerResource extends PdjRdjUtils implements TypedResource {
     InvocationContext ic, JsonArrayBuilder propertiesBuilder) {
     propertiesBuilder.add(pdjObject("webAuthentication", ic.getLocalizer().localizeString(
         LocalizedConstants.USE_WEB_AUTHENTICATION_LABEL), "boolean")
-      .add("helpSummaryHTML", ic.getLocalizer().localizeString(LocalizedConstants.ADMIN_SERVER_HELP_SSO_SUMMARY))
-      .add("detailedHelpHTML", ic.getLocalizer().localizeString(LocalizedConstants.ADMIN_SERVER_HELP_SSO_DETAIL)));
+      .add("helpSummaryHTML", ic.getLocalizer().localizeString(
+        LocalizedConstants.ADMIN_SERVER_HELP_SSO_SUMMARY))
+      .add("detailedHelpHTML", ic.getLocalizer().localizeString(
+        LocalizedConstants.ADMIN_SERVER_HELP_SSO_DETAIL)));
     propertiesBuilder.add(pdjObject("url", ic.getLocalizer().localizeString(
         LocalizedConstants.URL_LABEL), "String", "required")
-      .add("helpSummaryHTML", ic.getLocalizer().localizeString(LocalizedConstants.ADMIN_SERVER_HELP_URL_SUMMARY))
-      .add("detailedHelpHTML", ic.getLocalizer().localizeString(LocalizedConstants.ADMIN_SERVER_HELP_URL_DETAIL)));
+      .add("helpSummaryHTML", ic.getLocalizer().localizeString(
+        LocalizedConstants.ADMIN_SERVER_HELP_URL_SUMMARY))
+      .add("detailedHelpHTML", ic.getLocalizer().localizeString(
+        LocalizedConstants.ADMIN_SERVER_HELP_URL_DETAIL)));
     propertiesBuilder.add(pdjObject("username", ic.getLocalizer().localizeString(
         LocalizedConstants.USER_NAME_LABEL), "String")
-      .add("helpSummaryHTML", ic.getLocalizer().localizeString(LocalizedConstants.ADMIN_SERVER_HELP_USERNAME_SUMMARY))
-      .add("detailedHelpHTML", ic.getLocalizer().localizeString(LocalizedConstants.ADMIN_SERVER_HELP_USERNAME_DETAIL)));
+      .add("helpSummaryHTML", ic.getLocalizer().localizeString(
+        LocalizedConstants.ADMIN_SERVER_HELP_USERNAME_SUMMARY))
+      .add("detailedHelpHTML", ic.getLocalizer().localizeString(
+        LocalizedConstants.ADMIN_SERVER_HELP_USERNAME_DETAIL)));
     propertiesBuilder.add(pdjObject("password", ic.getLocalizer().localizeString(
         LocalizedConstants.PASSWORD_LABEL), "secret")
-      .add("helpSummaryHTML", ic.getLocalizer().localizeString(LocalizedConstants.ADMIN_SERVER_HELP_PASSWORD_SUMMARY))
-      .add("detailedHelpHTML", ic.getLocalizer().localizeString(LocalizedConstants.ADMIN_SERVER_HELP_PASSWORD_DETAIL)));
+      .add("helpSummaryHTML", ic.getLocalizer().localizeString(
+        LocalizedConstants.ADMIN_SERVER_HELP_PASSWORD_SUMMARY))
+      .add("detailedHelpHTML", ic.getLocalizer().localizeString(
+        LocalizedConstants.ADMIN_SERVER_HELP_PASSWORD_DETAIL)));
     propertiesBuilder.add(pdjObject("proxyOverride", ic.getLocalizer().localizeString(
         LocalizedConstants.ADMIN_SERVER_LABEL_PROXY), "String")
-      .add("helpSummaryHTML", ic.getLocalizer().localizeString(LocalizedConstants.ADMIN_SERVER_HELP_PROXY_SUMMARY))
-      .add("detailedHelpHTML", ic.getLocalizer().localizeString(LocalizedConstants.ADMIN_SERVER_HELP_PROXY_DETAIL)));
+      .add("helpSummaryHTML", ic.getLocalizer().localizeString(
+        LocalizedConstants.ADMIN_SERVER_HELP_PROXY_SUMMARY))
+      .add("detailedHelpHTML", ic.getLocalizer().localizeString(
+        LocalizedConstants.ADMIN_SERVER_HELP_PROXY_DETAIL)));
+    propertiesBuilder.add(pdjObject("connectTimeoutOverride", ic.getLocalizer().localizeString(
+        LocalizedConstants.ADMIN_SERVER_LABEL_CONNECT_TIMEOUT_OVERRIDE_MILLIS), "String")
+      .add("helpSummaryHTML", ic.getLocalizer().localizeString(
+        LocalizedConstants.ADMIN_SERVER_HELP_CONNECT_TIMEOUT_OVERRIDE_MILLIS_SUMMARY))
+      .add("detailedHelpHTML", ic.getLocalizer().localizeString(
+        LocalizedConstants.ADMIN_SERVER_HELP_CONNECT_TIMEOUT_OVERRIDE_MILLIS_DETAIL,
+        ConsoleBackendRuntimeConfig.getConnectTimeout())));
+    propertiesBuilder.add(pdjObject("readTimeoutOverride", ic.getLocalizer().localizeString(
+        LocalizedConstants.ADMIN_SERVER_LABEL_READ_TIMEOUT_OVERRIDE_MILLIS), "String")
+      .add("helpSummaryHTML", ic.getLocalizer().localizeString(
+        LocalizedConstants.ADMIN_SERVER_HELP_READ_TIMEOUT_OVERRIDE_MILLIS_SUMMARY))
+      .add("detailedHelpHTML", ic.getLocalizer().localizeString(
+        LocalizedConstants.ADMIN_SERVER_HELP_READ_TIMEOUT_OVERRIDE_MILLIS_DETAIL,
+        ConsoleBackendRuntimeConfig.getReadTimeout())));
     propertiesBuilder.add(pdjObject("insecure", ic.getLocalizer().localizeString(
         LocalizedConstants.MAKE_INSECURE_CONNECTION_LABEL), "boolean")
-      .add("helpSummaryHTML", ic.getLocalizer().localizeString(LocalizedConstants.ADMIN_SERVER_HELP_INSECURE_SUMMARY))
-      .add("detailedHelpHTML", ic.getLocalizer().localizeString(LocalizedConstants.ADMIN_SERVER_HELP_INSECURE_DETAIL)));
+      .add("helpSummaryHTML", ic.getLocalizer().localizeString(
+        LocalizedConstants.ADMIN_SERVER_HELP_INSECURE_SUMMARY))
+      .add("detailedHelpHTML", ic.getLocalizer().localizeString(
+        LocalizedConstants.ADMIN_SERVER_HELP_INSECURE_DETAIL)));
   }
 
   @Override
@@ -219,24 +314,34 @@ public class AdminServerResource extends PdjRdjUtils implements TypedResource {
       InvocationContext ic, JsonArrayBuilder propertiesBuilder) {
     propertiesBuilder.add(pdjObject("webAuthentication", ic.getLocalizer().localizeString(
         LocalizedConstants.USE_WEB_AUTHENTICATION_LABEL), "boolean")
-      .add("helpSummaryHTML", ic.getLocalizer().localizeString(LocalizedConstants.ADMIN_SERVER_HELP_SSO_SUMMARY))
-      .add("detailedHelpHTML", ic.getLocalizer().localizeString(LocalizedConstants.ADMIN_SERVER_HELP_SSO_DETAIL)));
+      .add("helpSummaryHTML", ic.getLocalizer().localizeString(
+        LocalizedConstants.ADMIN_SERVER_HELP_SSO_SUMMARY))
+      .add("detailedHelpHTML", ic.getLocalizer().localizeString(
+        LocalizedConstants.ADMIN_SERVER_HELP_SSO_DETAIL)));
     propertiesBuilder.add(pdjObject("url", ic.getLocalizer().localizeString(
         LocalizedConstants.URL_LABEL), "String", "required")
-      .add("helpSummaryHTML", ic.getLocalizer().localizeString(LocalizedConstants.ADMIN_SERVER_HELP_URL_SUMMARY))
-      .add("detailedHelpHTML", ic.getLocalizer().localizeString(LocalizedConstants.ADMIN_SERVER_HELP_URL_DETAIL)));
+      .add("helpSummaryHTML", ic.getLocalizer().localizeString(
+        LocalizedConstants.ADMIN_SERVER_HELP_URL_SUMMARY))
+      .add("detailedHelpHTML", ic.getLocalizer().localizeString(
+        LocalizedConstants.ADMIN_SERVER_HELP_URL_DETAIL)));
     propertiesBuilder.add(pdjObject("username", ic.getLocalizer().localizeString(
         LocalizedConstants.USER_NAME_LABEL), "String")
-      .add("helpSummaryHTML", ic.getLocalizer().localizeString(LocalizedConstants.ADMIN_SERVER_HELP_USERNAME_SUMMARY))
-      .add("detailedHelpHTML", ic.getLocalizer().localizeString(LocalizedConstants.ADMIN_SERVER_HELP_USERNAME_DETAIL)));
+      .add("helpSummaryHTML", ic.getLocalizer().localizeString(
+        LocalizedConstants.ADMIN_SERVER_HELP_USERNAME_SUMMARY))
+      .add("detailedHelpHTML", ic.getLocalizer().localizeString(
+        LocalizedConstants.ADMIN_SERVER_HELP_USERNAME_DETAIL)));
     propertiesBuilder.add(pdjObject("proxyOverride", ic.getLocalizer().localizeString(
         LocalizedConstants.ADMIN_SERVER_HELP_PROXY_SUMMARY), "String")
-      .add("helpSummaryHTML", ic.getLocalizer().localizeString(LocalizedConstants.ADMIN_SERVER_HELP_PROXY_SUMMARY))
-      .add("detailedHelpHTML", ic.getLocalizer().localizeString(LocalizedConstants.ADMIN_SERVER_HELP_PROXY_DETAIL)));
+      .add("helpSummaryHTML", ic.getLocalizer().localizeString(
+        LocalizedConstants.ADMIN_SERVER_HELP_PROXY_SUMMARY))
+      .add("detailedHelpHTML", ic.getLocalizer().localizeString(
+        LocalizedConstants.ADMIN_SERVER_HELP_PROXY_DETAIL)));
     propertiesBuilder.add(pdjObject("insecure", ic.getLocalizer().localizeString(
         LocalizedConstants.MAKE_INSECURE_CONNECTION_LABEL), "boolean")
-      .add("helpSummaryHTML", ic.getLocalizer().localizeString(LocalizedConstants.ADMIN_SERVER_HELP_INSECURE_SUMMARY))
-      .add("detailedHelpHTML", ic.getLocalizer().localizeString(LocalizedConstants.ADMIN_SERVER_HELP_INSECURE_DETAIL)));
+      .add("helpSummaryHTML", ic.getLocalizer().localizeString(
+        LocalizedConstants.ADMIN_SERVER_HELP_INSECURE_SUMMARY))
+      .add("detailedHelpHTML", ic.getLocalizer().localizeString(
+        LocalizedConstants.ADMIN_SERVER_HELP_INSECURE_DETAIL)));
     return propertiesBuilder;
   }
 
@@ -338,6 +443,8 @@ public class AdminServerResource extends PdjRdjUtils implements TypedResource {
     boolean useSso = false;
     boolean local = false;
     boolean insecure = false;
+    String connectTimeoutOverride = "";
+    String readTimeoutOverride = "";
     if (settingsJSON != null) {
       if (settingsJSON.containsKey("sso")) {
         useSso = settingsJSON.getBoolean("sso");
@@ -347,6 +454,12 @@ public class AdminServerResource extends PdjRdjUtils implements TypedResource {
       }
       if (settingsJSON.containsKey("insecure")) {
         insecure = settingsJSON.getBoolean("insecure");
+      }
+      if (settingsJSON.containsKey("connectTimeoutOverride")) {
+        connectTimeoutOverride = settingsJSON.getString("connectTimeoutOverride");
+      }
+      if (settingsJSON.containsKey("readTimeoutOverride")) {
+        readTimeoutOverride = settingsJSON.getString("readTimeoutOverride");
       }
     }
     String auth = null;
@@ -388,7 +501,9 @@ public class AdminServerResource extends PdjRdjUtils implements TypedResource {
       json.getString("name"),
       json.getString("url"),
       auth,
-      local
+      local,
+      connectTimeoutOverride,
+      readTimeoutOverride
     );
     if (useSso) {
       // Obtain an SSO token ID from the SSO token manager

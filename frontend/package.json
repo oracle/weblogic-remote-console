@@ -18,7 +18,7 @@
     "eslint": "^9.24.0",
     "extract-zip": "^1.7.0",
     "fs-extra": "^8.1.0",
-    "glob": "^10.4.5",
+    "glob": "^10.5.0",
     "jest": "29.6.2",
     "jest-environment-jsdom": "29.6.2",
     "jest-html-reporter": "^4.1.0",
@@ -30,10 +30,13 @@
     "yargs-parser": "13.1.2"
   },
   "overrides": {
-    "preact": "^10.26.10"
+    "preact": "^10.26.10",
+    "ajv": "^8.18.0",
+    "readdir-glob": "^1.1.2",
+    "minimatch": "^10.2.3"
   },
   "engines": {
-    "node": ">=16.0.0"
+    "node": ">=24.3.0"
   },
   "private": true,
   "scripts": {

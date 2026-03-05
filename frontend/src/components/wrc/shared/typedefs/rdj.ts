@@ -159,6 +159,7 @@ export enum ParsedExpressionType {
     And = "and",
     Group = "group",
     Predicate = "predicate",
+    Negate = "negate",
 }
 
 export interface SupportedPredicate {

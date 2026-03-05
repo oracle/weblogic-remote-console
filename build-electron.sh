@@ -251,20 +251,6 @@ set -- --$buildarch "$@"
 
 npx electron-builder -p never "$@"
 
-case "$os" in
-darwin)
-  for mac_dir in dist/mac*
-  do
-    mac_suffix=${mac_dir#dist/mac}
-    # Create a second copy of the executable for use by WKT UI, so that Mac OS thinks
-    # that they are two separate programs and let's you run them.
-    cd $mac_dir
-    cp -p "WebLogic Remote Console.app/Contents/MacOS/WebLogic Remote Console" "WebLogic Remote Console.app/Contents/MacOS/Embeddable Remote Console"
-    zip ../*.zip "WebLogic Remote Console.app/Contents/MacOS/Embeddable Remote Console"
-    cd ../..
-  done
-esac
-
 # Different organizations have different ways of implementing signing.  Therefore,
 # we allow for one to plug in custom signing scripts.
 if [ -x custom/sign ]

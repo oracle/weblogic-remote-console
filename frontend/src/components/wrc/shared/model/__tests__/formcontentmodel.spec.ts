@@ -544,6 +544,27 @@ describe("FormContentModel", () => {
       );
     });
 
+    it("should send numeric 0 as a number for int fields (not a string)", async () => {
+      global.fetch = jest.fn(() =>
+        Promise.resolve({
+          json: () => Promise.resolve({}),
+        }),
+      ) as jest.Mock;
+
+      // Simulate UI providing a string '0' (oj-c-input-text coerces to string)
+      formContentModel.setProperty("anint", "0");
+
+      await formContentModel.update();
+
+      expect(global.fetch).toBeCalledTimes(1);
+
+      const call = (global.fetch as jest.Mock).mock.calls[0];
+      const options = call[1];
+      const parsed = JSON.parse(options.body);
+      expect(parsed?.data?.anint?.value).toBe(0);
+      expect(typeof parsed?.data?.anint?.value).toBe("number");
+    });
+
     it("should update without changes that were redundant", async () => {
       global.fetch = jest.fn(() =>
         Promise.resolve({

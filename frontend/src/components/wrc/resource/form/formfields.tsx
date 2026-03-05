@@ -32,6 +32,8 @@ import { ojTable } from "ojs/ojtable";
 import "oj-c/button";
 import "oj-c/input-text";
 
+import { Switch } from "../../display/switch";
+
 import { CButtonElement } from "oj-c/button";
 import { ElectronAPI } from 'wrc/shared/typedefs/electron';
 import { ojPopup } from 'ojs/ojpopup';
@@ -1333,7 +1335,9 @@ export const getSelectSingle = (
     SelectOption
   >(selections as SelectOption[], { keyAttributes: "value" });
 
-  let selectClass = 'cfe-form-select-one-md';
+  let selectClass = attrs.readonly
+    ? 'cfe-form-readonly-select-one-md'
+    : 'cfe-form-select-one-md';
 
   let clazz = "OLDcfe-form-field oj-flex oj-flex-item";
 
@@ -1376,7 +1380,7 @@ export const getSelectSingle = (
 
   return (
     <div class={clazz}>
-      <span class={`wrc-value-group ${formModel.hasPropertyChanged(fieldDescription.name) && !formModel.isReadOnly(fieldDescription) && !formModel.isDisabled(fieldDescription) ? 'wrc-field-changed' : ''}`}>
+      <span class={`wrc-value-group ${formModel.hasPropertyChanged(fieldDescription.name) && !formModel.isReadOnly(fieldDescription) && !formModel.isDisabled(fieldDescription) ? 'wrc-field-changed' : ''} ${formModel.isReadOnly(fieldDescription) ? 'wrc-align-center' : ''}`}>
         <RestartNeededImage
           fieldDescription={fieldDescription}
           formModel={formModel}
@@ -1684,21 +1688,41 @@ export const getSwitch = (
     ) => void,
   ) =>
     !isDefaulted ? (
-      <oj-switch
-        id={fieldDescription.name}
-        class={clazz}
-        disabled={attrs.disabled || attrs.readonly}
-        displayOptions={{ messages: "none" }}
-        // id={attrs.id}
-        label-edge="none"
-        label-hint={fieldDescription.label}
-        onvalueChanged={valueChangedHandler}
-        value={attrs.value == true}
-        data-property={fieldDescription.name}
-        //   messagesCustom={messages}
-      >
-        <div class=""></div>
-      </oj-switch>
+      <span class="wrc-form-switch-wrapper">
+        {/*
+          Intentionally render two views:
+          1) interactive switch for affordance/editability
+          2) readonly switch-style display for explicit value presentation (On/Off semantics)
+        */}
+        <Switch
+          id={fieldDescription.name}
+          class={clazz}
+          disabled={attrs.disabled || attrs.readonly}
+          displayOptions={{ messages: "none" }}
+          label-edge="none"
+          label-hint={fieldDescription.label}
+          onvalueChanged={valueChangedHandler}
+          value={attrs.value == true}
+          data-property={fieldDescription.name}
+        >
+          <div class=""></div>
+        </Switch>
+        <Switch
+          id={`${fieldDescription.name}-readonly`}
+          class={clazz}
+          disabled={attrs.disabled}
+          displayOptions={{ messages: "none" }}
+          aria-hidden="true"
+          tabindex={-1}
+          label-edge="none"
+          label-hint={fieldDescription.label}
+          value={attrs.value == true}
+          data-property={fieldDescription.name}
+          readonlyDisplay={true}
+        >
+          <div class=""></div>
+        </Switch>
+      </span>
     ) : (
       <DefaultedField />
     );
@@ -1732,8 +1756,12 @@ export const getSwitch = (
 export const getPolicyExpression = (
   fieldDescription: Property,
   formModel: FormContentModel,
-  valueChangedHandler: (e: ojInputText.valueChanged) => void,
-  setModel?: Dispatch<FormContentModel>
+  valueChangedHandler: (e: {
+    detail: {
+      value: unknown;
+    };
+  }) => void,
+  setModel?: Dispatch<FormContentModel>,
 ) => (
   <PolicyExpression
     fieldDescription={fieldDescription}

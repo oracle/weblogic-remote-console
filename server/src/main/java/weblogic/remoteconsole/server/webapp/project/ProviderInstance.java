@@ -1,4 +1,4 @@
-// Copyright (c) 2025, Oracle and/or its affiliates.
+// Copyright (c) 2025, 2026, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.webapp.project;
@@ -7,13 +7,14 @@ import javax.json.Json;
 import javax.json.JsonArray;
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
-import javax.ws.rs.WebApplicationException;
+import javax.json.JsonValue;
 import javax.ws.rs.container.ResourceContext;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
 import javax.ws.rs.core.Response.Status;
 
+import weblogic.remoteconsole.common.repodef.LocalizedConstants;
 import weblogic.remoteconsole.server.providers.ConfiguredProvider;
 import weblogic.remoteconsole.server.providers.PdjRdjUtils;
 import weblogic.remoteconsole.server.providers.ProjectManager;
@@ -30,15 +31,20 @@ public class ProviderInstance extends PdjRdjUtils {
     ProjectManager projectManager = ProjectManager.getFromContext(resContext);
     Project proj = projectManager.getProject(projectName);
     if (proj == null) {
-      throw new WebApplicationException(Response.status(
-        Status.NOT_FOUND.getStatusCode(), "Project not found"
-      ).build());
+      InvocationContext ic =
+        WebAppUtils.getInvocationContextFromResourceContext(resContext);
+      throw new FailedRequestException(
+        Status.NOT_FOUND.getStatusCode(),
+        LocalizedConstants.PROJECT_NOT_FOUND_MESSAGE,
+        ic
+      );
     }
     ConfiguredProvider prov = proj.getProvider(providerName);
     if (prov == null) {
-      throw new WebApplicationException(Response.status(
-        Status.NOT_FOUND.getStatusCode(), "Provider not found"
-      ).build());
+      throw new FailedRequestException(
+        Status.NOT_FOUND.getStatusCode(),
+        "Provider not found"
+      );
     }
     prov.terminate();
     return WebAppUtils.addCookieFromContext(
@@ -55,24 +61,26 @@ public class ProviderInstance extends PdjRdjUtils {
     String providerName,
     JsonObject payload) {
     if (!payload.containsKey("data")) {
-      throw new WebApplicationException(Response.status(
-        Status.BAD_REQUEST.getStatusCode(),
-          "A save form must have a 'data' object").build());
+      throw new FailedRequestException(
+        "A save form must have a 'data' object"
+      );
     }
     InvocationContext ic =
       WebAppUtils.getInvocationContextFromResourceContext(resContext);
     ProjectManager projectManager = ProjectManager.getFromContext(resContext);
     Project proj = projectManager.getProject(projectName);
     if (proj == null) {
-      throw new WebApplicationException(Response.status(
-        Status.NOT_FOUND.getStatusCode(), "Project not found"
-      ).build());
+      throw new FailedRequestException(
+        Status.NOT_FOUND.getStatusCode(),
+        "Project not found"
+      );
     }
     ConfiguredProvider prov = proj.getProvider(providerName);
     if (prov == null) {
-      throw new WebApplicationException(Response.status(
-        Status.NOT_FOUND.getStatusCode(), "Provider not found"
-      ).build());
+      throw new FailedRequestException(
+        Status.NOT_FOUND.getStatusCode(),
+        "Provider not found"
+      );
     }
     JsonObjectBuilder newBuilder = Json.createObjectBuilder(prov.getJSON());
     JsonObject newData = prov.populateFromFormData(
@@ -81,7 +89,16 @@ public class ProviderInstance extends PdjRdjUtils {
     for (String key : newData.keySet()) {
       newBuilder.add(key, newData.get(key));
     }
-    prov.setJSON(newBuilder.build());
+    JsonObject result = newBuilder.build();
+    // Some of the forms produce empty objects. We don't want to save that.
+    for (String key : newData.keySet()) {
+      if (newData.get(key).getValueType() == JsonValue.ValueType.OBJECT) {
+        if (newData.getJsonObject(key).size() == 0) {
+          result = deleteKey(result, key);
+        }
+      }
+    }
+    prov.setJSON(result);
     projectManager.save(ic);
     return WebAppUtils.addCookieFromContext(
       resContext,
@@ -91,6 +108,16 @@ public class ProviderInstance extends PdjRdjUtils {
     ).build();
   }
 
+  private static JsonObject deleteKey(JsonObject obj, String badKey) {
+    JsonObjectBuilder builder = Json.createObjectBuilder();
+    for (String key : obj.keySet()) {
+      if (!key.equals(badKey)) {
+        builder.add(key, obj.get(key));
+      }
+    }
+    return builder.build();
+  }
+
   public static Response performSelect(
     ResourceContext resContext,
     String projectName,
@@ -98,15 +125,17 @@ public class ProviderInstance extends PdjRdjUtils {
     ProjectManager projectManager = ProjectManager.getFromContext(resContext);
     Project proj = projectManager.getProject(projectName);
     if (proj == null) {
-      throw new WebApplicationException(Response.status(
-        Status.NOT_FOUND.getStatusCode(), "Project not found"
-      ).build());
+      throw new FailedRequestException(
+        Status.NOT_FOUND.getStatusCode(),
+        "Project not found"
+      );
     }
     ConfiguredProvider prov = proj.getProvider(providerName);
     if (prov == null) {
-      throw new WebApplicationException(Response.status(
-        Status.NOT_FOUND.getStatusCode(), "Provider not found"
-      ).build());
+      throw new FailedRequestException(
+        Status.NOT_FOUND.getStatusCode(),
+        "Provider not found"
+      );
     }
     try {
       prov.start(WebAppUtils.getInvocationContextFromResourceContext(resContext));
@@ -130,11 +159,10 @@ public class ProviderInstance extends PdjRdjUtils {
           .add(Json.createObjectBuilder()
             .add("message", "Failed to connect")).build();
       }
-      throw new WebApplicationException(
-        Response.status(status)
-          .entity(Json.createObjectBuilder().add("messages", messages).build())
-          .type(MediaType.APPLICATION_JSON)
-      .build());
+      throw new FailedRequestException(
+        status,
+        Json.createObjectBuilder().add("messages", messages).build()
+      );
     }
     InvocationContext ic =
       WebAppUtils.getInvocationContextFromResourceContext(resContext);
@@ -163,7 +191,7 @@ public class ProviderInstance extends PdjRdjUtils {
     String providerName) {
     try {
       return performSelect(resContext, projectName, providerName);
-    } catch (WebApplicationException e) {
+    } catch (FailedRequestException e) {
       Response newResp = getEditViewRDJ(resContext, projectName, providerName);
       ResponseBuilder ret = Response.fromResponse(newResp);
       InvocationContext ic =
@@ -190,15 +218,17 @@ public class ProviderInstance extends PdjRdjUtils {
     ProjectManager projectManager = ProjectManager.getFromContext(resContext);
     ProjectManager.Project proj = projectManager.getProject(projectName);
     if (proj == null) {
-      throw new WebApplicationException(Response.status(
-        Status.NOT_FOUND.getStatusCode(), "Project not found"
-      ).build());
+      throw new FailedRequestException(
+        Status.NOT_FOUND.getStatusCode(),
+        "Project not found"
+      );
     }
     ConfiguredProvider prov = proj.getProvider(providerName);
     if (prov == null) {
-      throw new WebApplicationException(Response.status(
-        Status.NOT_FOUND.getStatusCode(), "Provider not found"
-      ).build());
+      throw new FailedRequestException(
+        Status.NOT_FOUND.getStatusCode(),
+        "Provider not found"
+      );
     }
     JsonObjectBuilder builder = Json.createObjectBuilder();
     InvocationContext ic =
@@ -211,7 +241,8 @@ public class ProviderInstance extends PdjRdjUtils {
     builder.add("data", provBuilder.build());
 
     builder.add("breadCrumbs", Json.createArrayBuilder()
-      .add(resourceDataMaker("Projects", "/api/project/data"))
+      .add(resourceDataMaker(ic.getLocalizer().localizeString(
+        LocalizedConstants.PROJECTS_NAVIGATION_LABEL), "/api/project/data"))
       .add(
         resourceDataMaker(projectName, "/api/project/data/" + projectName)));
 
@@ -265,9 +296,9 @@ public class ProviderInstance extends PdjRdjUtils {
     if (param.equals("select")) {
       return performSelect(resContext, projectName, providerName);
     }
-    throw new WebApplicationException(Response.status(
-      Status.BAD_REQUEST.getStatusCode(),
-        param + " is not supported on a provider instance").build());
+    throw new FailedRequestException(
+      param + " is not supported on a provider instance"
+    );
   }
 
   public static Response processPost(
@@ -288,8 +319,8 @@ public class ProviderInstance extends PdjRdjUtils {
     if (param.equals("")) {
       return performSave(resContext, projectName, providerName, payload);
     }
-    throw new WebApplicationException(Response.status(
-      Status.BAD_REQUEST.getStatusCode(),
-        param + " is not supported on a provider instance").build());
+    throw new FailedRequestException(
+      param + " is not supported on a provider instance"
+    );
   }
 }

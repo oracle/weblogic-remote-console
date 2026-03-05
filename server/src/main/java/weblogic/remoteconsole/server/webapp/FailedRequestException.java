@@ -1,4 +1,4 @@
-// Copyright (c) 2021, 2025, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2026, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.webapp;
@@ -10,6 +10,8 @@ import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 
 import weblogic.console.utils.StringUtils;
+import weblogic.remoteconsole.common.repodef.LocalizableString;
+import weblogic.remoteconsole.server.repo.InvocationContext;
 
 /**
  * If thrown on the request code path, this exception will send back the
@@ -33,6 +35,22 @@ public class FailedRequestException extends WebApplicationException {
     super(javax.ws.rs.core.Response.status(400)
       .entity(Json.createObjectBuilder().add("messages", createMessages(reason)).build())
       .type(MediaType.APPLICATION_JSON).build());
+  }
+
+  public FailedRequestException(int code, LocalizableString key, InvocationContext ic) {
+    this(code, ic.getLocalizer().localizeString(key));
+  }
+
+  public FailedRequestException(LocalizableString key, InvocationContext ic) {
+    this(400, key, ic);
+  }
+
+  public FailedRequestException(int code, LocalizableString key, InvocationContext ic, Object... args) {
+    this(code, ic.getLocalizer().localizeString(key, args));
+  }
+
+  public FailedRequestException(LocalizableString key, InvocationContext ic, Object... args) {
+    this(400, key, ic, args);
   }
 
   public FailedRequestException(JsonObject result) {

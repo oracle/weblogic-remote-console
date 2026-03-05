@@ -70,7 +70,8 @@ export class FormContentModel extends Model {
         (this.isActionInput() || (this.isCreate() && property.required)) &&
         typeof changes[property.name] === "undefined"
       ) {
-        const propertyValue = this.getProperty(property.name) || '';
+        // Preserve 0/false values; only fallback when value is null/undefined
+        const propertyValue = this.getProperty(property.name) ?? '';
 
         changes[property.name] = {
           value: this.getTypedPropertyValue(property.name, propertyValue),
@@ -93,6 +94,21 @@ export class FormContentModel extends Model {
 
     const files: Record<string, File> = {};
 
+    // Remove empty fileContents fields (no upload selected) so the backend
+    // does not receive a string placeholder for file uploads.
+    // Without doing this, the backend would throw an error when it encountered a 
+    // string instead of a fileContents
+    Object.keys(changes).forEach((propertyName) => {
+      const propertyDescription = this.getPropertyDescription(propertyName);
+      if (
+        propertyDescription &&
+        this.isFieldFileContents(propertyDescription) &&
+        changes[propertyName]?.value === ""
+      ) {
+        delete changes[propertyName];
+      }
+    });
+
     // Take out any File types from the changeset and store them in a separate structure
     // This is because the inclusion of a File turns the post request into a multipart form
     // with the form data as one part and files as subsequent parts
@@ -105,17 +121,22 @@ export class FormContentModel extends Model {
       }
     }
 
-    // convert all of the int properties from strings...
+    // convert all of the number properties from strings, ensuring that
+    // numeric 0 stays as a number (not the string "0")
     Object.keys(changes).forEach((propertyName) => {
       const propertyDescription = this.getPropertyDescription(propertyName);
 
       if (propertyDescription && this.isFieldNumber(propertyDescription)) {
         if (typeof changes[propertyName].value === "string") {
-          changes[propertyName].value =
-            this.getTypedPropertyValue(
-              propertyName,
-              changes[propertyName].value as string,
-            ) || changes[propertyName].value;
+          const typed = this.getTypedPropertyValue(
+            propertyName,
+            changes[propertyName].value as string,
+          );
+          // If parseInt/parseFloat yields NaN, keep the original string so
+          // server-side validation can handle it. Otherwise, use the typed value.
+          if (!(typeof typed === 'number' && Number.isNaN(typed))) {
+            changes[propertyName].value = typed as any;
+          }
         }
       }
     });
@@ -151,7 +172,7 @@ export class FormContentModel extends Model {
    */
   async refresh(): Promise<void> {
     if (this.rdjUrl) {
-      let reloadRdjUrl = new URL(this.rdjUrl, window.location.href);
+      const reloadRdjUrl = new URL(this.rdjUrl, window.location.href);
       reloadRdjUrl.searchParams.set('reload', 'true');
       return getData(
         reloadRdjUrl.pathname + reloadRdjUrl.search + reloadRdjUrl.hash,

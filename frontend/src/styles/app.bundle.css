@@ -554,6 +554,33 @@ div.cfe-form-select-one div.oj-text-field-container {
   line-height: 1.2rem;
   min-width: var(--form-input-min-switch-width);
 }
+
+.wrc-form-switch-wrapper {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.wrc-single-col .wrc-form-switch-wrapper {
+  gap: 4px;
+  flex: 0 0 auto;
+  width: max-content;
+}
+
+.wrc-form-switch-wrapper .oj-switch-container {
+  margin-right: 0;
+  margin-left: 0;
+  padding-right: 0;
+  padding-left: 0;
+}
+
+.wrc-form-switch-wrapper .cfe-form-switch {
+  min-width: auto;
+}
+
+.wrc-form-switch-wrapper oj-switch {
+  margin: 0;
+}
 .cfe-form-input-text,
 .cfe-form-input-textarea,
 .cfe-form-readonly-text,
@@ -3857,6 +3884,10 @@ oj-dialog oj-table {
   top: 0.25rem;
   right: 0.25rem;
   z-index: 1;
+}
+
+.policy-expression-node-children {
+  margin-top: 3px;
 }
 
 .wrc-copy-success .oj-ux-ico-copy {

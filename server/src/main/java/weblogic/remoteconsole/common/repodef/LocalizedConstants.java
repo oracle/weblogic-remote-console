@@ -618,6 +618,14 @@ public class LocalizedConstants {
           "Refer to Deployment Tasks dashboard for more information."
       );
 
+  public static final LocalizableString DEPLOYMENT_VERSIONING_REQUIRES_NEW_DEPLOYMENT =
+    addConstant(
+      "deploymentVersioningRequiresNewDeployment",
+      "You are trying to deploy a versioned application with a new version. "
+      + "This requires deployment of a new application from the Edit tree "
+      + "rather than a redeploy/update operation."
+    );
+
   public static final LocalizableString DATA_PROVIDER_HELP_NAME_SUMMARY =
     addConstant(
       "dataProviderHelpNameSummary",
@@ -666,6 +674,50 @@ public class LocalizedConstants {
       + "The format of the entry is either 'DIRECT' to not use a proxy at all or a URL "
       + "(i.e. protocol://host:port - with no path), following the traditional standard for specifying a proxy server. "
       + "The protocol portion can be http, https, socks, socks4 or socks5."
+    );
+
+  public static final LocalizableString ADMIN_SERVER_LABEL_CONNECT_TIMEOUT_OVERRIDE_MILLIS =
+    addConstant(
+      "adminServerLabelConnectTimeoutOverrideMillis",
+      "Connect Timeout Override (ms)"
+    );
+
+  public static final LocalizableString ADMIN_SERVER_HELP_CONNECT_TIMEOUT_OVERRIDE_MILLIS_SUMMARY =
+    addConstant(
+      "adminServerHelpConnectTimeoutOverrideMillisSummary",
+      "Override the global connect timeout for this provider (in milliseconds). Leave empty to use global value."
+    );
+
+  public static final LocalizableString ADMIN_SERVER_HELP_CONNECT_TIMEOUT_OVERRIDE_MILLIS_DETAIL =
+    addConstant(
+      "adminServerHelpConnectTimeoutOverrideMillisDetail",
+      "Overrides the global connect timeout setting for this provider. "
+      + "Enter a number or leave empty to use the global value ({0} ms)."
+    );
+
+  public static final LocalizableString ADMIN_SERVER_LABEL_READ_TIMEOUT_OVERRIDE_MILLIS =
+    addConstant(
+      "adminServerLabelReadTimeoutOverrideMillis",
+      "Read Timeout Override (ms)"
+    );
+
+  public static final LocalizableString ADMIN_SERVER_HELP_READ_TIMEOUT_OVERRIDE_MILLIS_SUMMARY =
+    addConstant(
+      "adminServerHelpReadTimeoutOverrideMillisSummary",
+      "Override the global read timeout for this provider (in milliseconds). Leave empty to use global value."
+    );
+
+  public static final LocalizableString ADMIN_SERVER_HELP_READ_TIMEOUT_OVERRIDE_MILLIS_DETAIL =
+    addConstant(
+      "adminServerHelpReadTimeoutOverrideMillisDetail",
+      "Overrides the global read timeout setting for this provider. "
+      + "Enter a number or leave empty to use the global value ({0} ms)."
+    );
+
+  public static final LocalizableString INVALID_TIMEOUT_VALUE_MESSAGE =
+    addConstant(
+      "invalidTimeoutValueMessage",
+      "Invalid timeout value for {0}: {1}. Must be a non-negative integer or empty."
     );
 
   public static final LocalizableString ADMIN_SERVER_HELP_USERNAME_SUMMARY =
@@ -1306,6 +1358,155 @@ public class LocalizedConstants {
     addConstant(
       "unsupportedProjectParamMessage",
       "{0} is not supported on a project table"
+    );
+
+  public static final LocalizableString PROJECT_NAME_MUST_BE_UNIQUE =
+    addConstant(
+      "projectNameMustBeUnique",
+      "A project name must be unique"
+    );
+
+  public static final LocalizableString MISSING_IMPORT_CONTENTS =
+    addConstant(
+      "missingImportContents",
+      "Missing import contents"
+    );
+
+  public static final LocalizableString UNABLE_TO_PARSE_PROJECT_FILE =
+    addConstant(
+      "unableToParseProjectFile",
+      "Unable to parse project file"
+    );
+
+  public static final LocalizableString PROJECT_FILE_MISSING_PROJECTS =
+    addConstant(
+      "projectFileMissingProjects",
+      "Project file missing 'projects'"
+    );
+
+  public static final LocalizableString RESERVED_NAME_CANNOT_BE_USED =
+    addConstant(
+      "reservedNameCannotBeUsed",
+      "This name is reserved and cannot be used: {0}"
+    );
+
+  public static final LocalizableString DUPLICATE_PROVIDER_NAME =
+    addConstant(
+      "duplicateProviderName",
+      "A provider name must be unique and {0} is duplicated"
+    );
+
+  // Project Table action labels
+  public static final LocalizableString PROJECT_ACTION_CREATE_LABEL =
+    addConstant(
+      "projectActionCreateLabel",
+      "Create"
+    );
+
+  public static final LocalizableString PROJECT_ACTION_IMPORT_LABEL =
+    addConstant(
+      "projectActionImportLabel",
+      "Import"
+    );
+
+  public static final LocalizableString PROJECT_ACTION_EXPORT_LABEL =
+    addConstant(
+      "projectActionExportLabel",
+      "Export"
+    );
+
+  public static final LocalizableString PROJECT_ACTION_MOVE_UP_LABEL =
+    addConstant(
+      "projectActionMoveUpLabel",
+      "Move Up"
+    );
+
+  public static final LocalizableString PROJECT_ACTION_MOVE_DOWN_LABEL =
+    addConstant(
+      "projectActionMoveDownLabel",
+      "Move Down"
+    );
+
+  public static final LocalizableString PROJECT_ACTION_RENAME_LABEL =
+    addConstant(
+      "projectActionRenameLabel",
+      "Rename"
+    );
+
+  public static final LocalizableString PROJECT_ACTION_DELETE_LABEL =
+    addConstant(
+      "projectActionDeleteLabel",
+      "Delete"
+    );
+
+  // Project Table form and labels
+  public static final LocalizableString PROJECT_CREATE_RENAME_INTRODUCTION =
+    addConstant(
+      "projectCreateRenameIntroduction",
+      "Enter new project name"
+    );
+
+  public static final LocalizableString PROJECT_BASE_NAME =
+    addConstant(
+      "projectBaseName",
+      "Project"
+    );
+
+  // Provider Table labels
+  public static final LocalizableString PROVIDER_INACTIVE_STATE_LABEL =
+    addConstant(
+      "providerInactiveStateLabel",
+      "Inactive"
+    );
+
+  public static final LocalizableString PROVIDERS_TABLE_LABEL =
+    addConstant(
+      "providersTableLabel",
+      "Providers"
+    );
+
+  public static final LocalizableString PROJECTS_BREADCRUMB_LABEL =
+    addConstant(
+      "projectsBreadcrumbLabel",
+      "Projects"
+    );
+
+  // Provider Menu labels and descriptions
+  public static final LocalizableString PROVIDER_INFORMATION_MENU_LABEL =
+    addConstant(
+      "providerInformationMenuLabel",
+      "Provider Information"
+    );
+
+  public static final LocalizableString PROVIDER_STATUS_DESCRIPTION =
+    addConstant(
+      "providerStatusDescription",
+      "Status and data about the active provider"
+    );
+
+  public static final LocalizableString GO_TO_PROJECT_PROVIDER_TABLE_LABEL =
+    addConstant(
+      "goToProjectProviderTableLabel",
+      "Go To Project/Provider Table"
+    );
+
+  public static final LocalizableString EDIT_VIEW_PROJECTS_PROVIDERS_DESCRIPTION =
+    addConstant(
+      "editViewProjectsProvidersDescription",
+      "Edit and view full list of projects and providers"
+    );
+
+  public static final LocalizableString ACTIVATE_PROVIDER_MENU_LABEL =
+    addConstant(
+      "activateProviderMenuLabel",
+      "Activate provider"
+    );
+
+  // Status Resource label
+  public static final LocalizableString STATUS_LABEL =
+    addConstant(
+      "statusLabel",
+      "Status"
     );
 
   // Provider Instance related constants

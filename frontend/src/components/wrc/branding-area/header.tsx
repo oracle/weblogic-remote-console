@@ -18,6 +18,7 @@ import Tips from "./tips";
 import { ResourceContext } from "wrc/integration/resource-context";
 
 import { getDataComponent } from "wrc/shared/model/transport";
+import { Global } from "wrc/shared/global";
 import { Response } from "wrc/shared/typedefs/common";
 import { useEffect, useState } from "preact/hooks";
 import { ojDialog } from "ojs/ojdialog";
@@ -42,7 +43,7 @@ export function BrandingHeaderImpl({context}: Props) {
   const appName =
     t["wrc-header"]?.text?.appName;
 
-  const version = '3.0.2';
+  const version = '3.0.3';
 
   // Dark mode state + helpers
   const [darkEnabled, setDarkEnabled] = useState(false);
@@ -314,13 +315,15 @@ export function BrandingHeaderImpl({context}: Props) {
   };
 
   const logoutClickHandler = () => {
-    getDataComponent("/api/logout").then((response: Response) => {
-      const redirectUrl = undefined; // what is this:  resp?.body?.data?.url; ?
-      if (redirectUrl) {
-        window.location.href = redirectUrl;
-      } else {
-        window.location.reload();
-      }
+    // Set kill switch to prevent any HTTP requests during logout
+    Global.global.killSwitch = true;
+
+    getDataComponent("/api/logout").then(() => {
+      // After logout completes, reload the page
+      window.location.reload();
+    }).catch(() => {
+      // If logout fails, restore request flow so the app is not left in a blocked state.
+      Global.global.killSwitch = false;
     });
   };
 
@@ -389,6 +392,7 @@ DataProviderManager.getCapabilities().then(caps => {
                 id='brand'
                 class="oj-sm-align-self-center oj-sm-flex-1"
                 aria-hidden="true"
+                onClick={resetApp}
                 style={{ overflow: "hidden", textOverflow: "ellipsis", minWidth: "0" }}
               >{`${appName} ${version}`}</span>
             </span>
@@ -411,7 +415,7 @@ DataProviderManager.getCapabilities().then(caps => {
                 onojAction={logoutClickHandler}
                 label={t["wrc-header"].buttons.logout.label}
               >
-                <span slot="startIcon" aria-hidden="true"></span>
+                <span slot="startIcon" class="oj-ux-ico-power-on" aria-hidden="true"></span>
               </oj-c-button>
             ) : (
               <></>
