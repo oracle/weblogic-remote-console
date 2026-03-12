@@ -41,7 +41,7 @@ Connect to an Administration Server You can connect to a running WebLogic Server
 Start the Administration Server.
 See Starting and Stopping Servers in Administering Server Startup and Shutdown for Oracle WebLogic Server for instructions.
 Open the Providers drawer and click More ︙.">
-  <meta itemprop="wordCount" content="11272">
+  <meta itemprop="wordCount" content="11296">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Domain Configuration">
   <meta name="twitter:description" content="Use WebLogic Remote Console to make configuration changes to your WebLogic Server domain through its Administration Server.
@@ -151,7 +151,7 @@ Open the Providers drawer and click More ︙.">
     aria-label="Search this site…"
     autocomplete="off"
     
-    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.b05f6f05aeab6e7c3fc8144eff980c5d.json"
+    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.c91eadea726d3adef8baaa146aae00e3.json"
     data-offline-search-base-href="/"
     data-offline-search-max-results="10"
   >
@@ -176,7 +176,7 @@ Open the Providers drawer and click More ︙.">
     aria-label="Search this site…"
     autocomplete="off"
     
-    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.b05f6f05aeab6e7c3fc8144eff980c5d.json"
+    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.c91eadea726d3adef8baaa146aae00e3.json"
     data-offline-search-base-href="/"
     data-offline-search-max-results="10"
   >
@@ -1168,6 +1168,14 @@ See <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-m
 </li>
 <li>
 <p>Shut down the Managed Server. You cannot change the cluster of a running server.</p>
+
+
+<div class="alert alert-primary" role="alert">
+<h4 class="alert-heading">Note</h4>
+
+    As of 15.1.1.0.0, you <em>can</em> change the cluster while the server is running. However, you must restart the server after committing your changes.
+
+</div>
 </li>
 <li>
 <p>In the <strong>Edit Tree</strong>, go to <strong>Environment</strong>, then <strong>Servers</strong>.</p>

@@ -672,6 +672,15 @@ You can add an existing Managed Server to clusters.
 
 2.  Shut down the Managed Server. You cannot change the cluster of a running server.
 
+    {{< alert title="Note" color="primary" >}}
+
+    
+
+    As of 15.1.1.0.0, you *can* change the cluster while the server is running. However, you must restart the server after committing your changes.
+
+    {{< /alert >}}
+
+
 3.  In the **Edit Tree**, go to **Environment**, then **Servers**.
 
 4.  Select the Managed Server you want to add to a cluster.

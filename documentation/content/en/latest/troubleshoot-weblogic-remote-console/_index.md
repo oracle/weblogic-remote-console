@@ -149,6 +149,8 @@ If you experience issues connecting to an Administration Server when using WebLo
 
     You should also make sure that the value of the Remote Console Helper Context Path attribute \(<code>RemoteConsoleHelperMBean.ContextPath</code>\) has not been changed. The default value is <code>console</code>, which WebLogic Remote Console appends to the domain URL. If you modify the context path, it may prevent WebLogic Remote Console from successfully connecting to the Administration Server. Do not change it unless you understand the possible impacts to Desktop WebLogic Remote Console. See [Configure Web Authentication](../administration-server/domain-configuration#GUID-A6191FE0-2A4C-45B6-A138-7FD9B157D28F).
 
+-   Confirm that RESTful Management Services \(<code>RestfulManagementServicesMBean</code>\) are enabled. In some releases of WebLogic Server, they are disabled by default.
+
 -   If the Administration Server resides in a different network than WebLogic Remote Console, then make sure the proxy settings of WebLogic Remote Console are properly configured to allow communication between the two. See [Connect using a Proxy Server](../administration-server/domain-configuration#GUID-D7AD7F50-88F8-4FC9-A28B-CBF98B5FD479).
 
     You may need to add a location match stanza for the <code>management/*</code> endpoint to the domain configuration file, <code>config.xml</code>.

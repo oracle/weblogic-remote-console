@@ -35,7 +35,7 @@ Restart all servers in the domain. Confirm that the Administration Server can re
   <meta itemprop="description" content="Learn how to identify and recover from issues in WebLogic Server or WebLogic Remote Console.
 Perform these preliminary troubleshooting steps to get started:
 Restart all servers in the domain. Confirm that the Administration Server can reach your Managed Servers and clusters. See Investigate Server Connection Issues. Check the log files for any errors. See Review Log Files. Review any known issues. See Known Issues. Update to the latest versions of Desktop WebLogic Remote Console and the WebLogic Remote Console extension. See Upgrade Desktop WebLogic Remote Console. Investigate Server Connection Issues If the Administration Server cannot reach a Managed Server or cluster, you may be able to determine the cause using WebLogic Remote Console.">
-  <meta itemprop="wordCount" content="2209">
+  <meta itemprop="wordCount" content="2228">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Troubleshoot Issues with WebLogic Remote Console">
   <meta name="twitter:description" content="Learn how to identify and recover from issues in WebLogic Server or WebLogic Remote Console.
@@ -143,7 +143,7 @@ Restart all servers in the domain. Confirm that the Administration Server can re
     aria-label="Search this site…"
     autocomplete="off"
     
-    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.b05f6f05aeab6e7c3fc8144eff980c5d.json"
+    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.c91eadea726d3adef8baaa146aae00e3.json"
     data-offline-search-base-href="/"
     data-offline-search-max-results="10"
   >
@@ -168,7 +168,7 @@ Restart all servers in the domain. Confirm that the Administration Server can re
     aria-label="Search this site…"
     autocomplete="off"
     
-    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.b05f6f05aeab6e7c3fc8144eff980c5d.json"
+    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.c91eadea726d3adef8baaa146aae00e3.json"
     data-offline-search-base-href="/"
     data-offline-search-max-results="10"
   >
@@ -448,6 +448,9 @@ Log file entries from previous sessions are saved to a new file in the same dire
 <li>
 <p>Make sure your Administration Server&rsquo;s management endpoint, <code>management/*</code>, is accessible to clients. It may be blocked if your domain is behind a load-balancer or firewall, or is in a Docker container. You will need to expose the endpoint manually.</p>
 <p>You should also make sure that the value of the Remote Console Helper Context Path attribute (<code>RemoteConsoleHelperMBean.ContextPath</code>) has not been changed. The default value is <code>console</code>, which WebLogic Remote Console appends to the domain URL. If you modify the context path, it may prevent WebLogic Remote Console from successfully connecting to the Administration Server. Do not change it unless you understand the possible impacts to Desktop WebLogic Remote Console. See <a href="/weblogic-remote-console/administration-server/domain-configuration/#GUID-A6191FE0-2A4C-45B6-A138-7FD9B157D28F">Configure Web Authentication</a>.</p>
+</li>
+<li>
+<p>Confirm that RESTful Management Services (<code>RestfulManagementServicesMBean</code>) are enabled. In some releases of WebLogic Server, they are disabled by default.</p>
 </li>
 <li>
 <p>If the Administration Server resides in a different network than WebLogic Remote Console, then make sure the proxy settings of WebLogic Remote Console are properly configured to allow communication between the two. See <a href="/weblogic-remote-console/administration-server/domain-configuration/#GUID-D7AD7F50-88F8-4FC9-A28B-CBF98B5FD479">Connect using a Proxy Server</a>.</p>
