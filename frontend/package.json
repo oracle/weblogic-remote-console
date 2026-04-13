@@ -32,6 +32,7 @@
   "overrides": {
     "preact": "^10.26.10",
     "ajv": "^8.18.0",
+    "svgo": "^3.3.3",
     "readdir-glob": "^1.1.2",
     "minimatch": "^10.2.3"
   },

@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2022, 2025, Oracle and/or its affiliates.
+ * Copyright (c) 2022, 2026, Oracle and/or its affiliates.
  * Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
  */
 
@@ -31,22 +31,26 @@ let _isStdoutEnabled;
   const _debug = console.debug;
   const _trace = console.trace;
 
-  console.error = function (line) {
+  console.error = function () {
+    const line = Array.from(arguments).map((arg) => `${arg}`).join(' ');
     fs.appendFileSync(_logFilename, line + os.EOL);
     if (_useConsoleLogging()) _error.apply(console, arguments);
   };
 
-  console.warning = function (line) {
+  console.warning = function () {
+    const line = Array.from(arguments).map((arg) => `${arg}`).join(' ');
     fs.appendFileSync(_logFilename, line + os.EOL);
     if (_useConsoleLogging()) _warning.apply(console, arguments);
   };
 
-  console.debug = function (line) {
+  console.debug = function () {
+    const line = Array.from(arguments).map((arg) => `${arg}`).join(' ');
     fs.appendFileSync(_logFilename, line + os.EOL);
     if (_useConsoleLogging()) _debug.apply(console, arguments);
   };
 
-  console.trace = function (line) {
+  console.trace = function () {
+    const line = Array.from(arguments).map((arg) => `${arg}`).join(' ');
     fs.appendFileSync(_logFilename, line + os.EOL);
     if (_useConsoleLogging()) _trace.apply(console, arguments);
   };
@@ -195,19 +199,6 @@ function _getLogFileName(userDataPath, baseFilename) {
 }
 
 function _rotateLogfile(userDataPath, baseFilename) {
-  function appendLogEntries(file, rotateFilename) {
-    const w = fs.createWriteStream(rotateFilename, {flags: 'a'});
-    const r = fs.createReadStream(file);
-    r.pipe(w);
-    w.on('close', () => {
-      fs.unlink(file, (err) => {
-        if (err) {
-          console.error(err);
-        }
-      });
-    });
-  }
-
   const file = _getLogFileName(userDataPath, baseFilename);
 
   const logDate = (new Date()).toISOString().slice(0, 10);
@@ -217,7 +208,9 @@ function _rotateLogfile(userDataPath, baseFilename) {
     if (!fs.existsSync(rotateFilename)) {
       fs.closeSync(fs.openSync(rotateFilename, 'w'));
     }
-    appendLogEntries(file, rotateFilename);
+    const fileContents = fs.readFileSync(file);
+    fs.appendFileSync(rotateFilename, fileContents);
+    fs.unlinkSync(file);
   }
 
   return file;

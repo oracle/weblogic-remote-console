@@ -63,7 +63,7 @@ export interface PropertyValueHolder {
 
 export interface Option {
     label: string;
-    value: Reference | null;
+    value: Reference | string | null;
 }
 
 export type ActionConfigurations = Record<string, ActionConfiguration>;

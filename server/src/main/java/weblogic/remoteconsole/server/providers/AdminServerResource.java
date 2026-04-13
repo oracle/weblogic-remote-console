@@ -200,7 +200,10 @@ public class AdminServerResource extends PdjRdjUtils implements TypedResource {
       builder.add("username", valueObject(null));
     }
     if ((json.containsKey("password") && json.getString("password").length() > 0)
-      || (json.containsKey("passwordEncrypted") && json.getString("passwordEncrypted").length() > 0)) {
+      || (
+        json.containsKey("passwordEncrypted")
+        && json.getString("passwordEncrypted").length() > 0)
+        && (EncryptDecrypt.decrypt(json.getString("passwordEncrypted")) != null)) {
       builder.add("password", Json.createObjectBuilder()
         .add("set", true)
         .add("value", "*********")
@@ -487,6 +490,9 @@ public class AdminServerResource extends PdjRdjUtils implements TypedResource {
         if (password == null) {
           LOGGER.warning("May be a problem during development: I was trying to decrypt "
             + json.getString("passwordEncrypted") + " and it failed!?");
+          throw new FailedRequestException(
+            Response.Status.UNAUTHORIZED.getStatusCode(), ic.getLocalizer().localizeString(
+              LocalizedConstants.NO_PASSWORD_SPECIFIED_MESSAGE));
         } else {
           json = Json.createObjectBuilder(json)
             .add("password", password).build();

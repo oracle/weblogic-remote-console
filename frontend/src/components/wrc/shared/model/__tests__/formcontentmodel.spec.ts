@@ -149,6 +149,72 @@ describe("FormContentModel", () => {
           "@@MY:TOKEN2@@",
         );
       });
+
+      it("should identify multiLineString fields", () => {
+        const field = {
+          name: "multiline",
+          label: "Multi Line",
+          type: "multiLineString",
+          array: false,
+          helpLabel: "",
+          helpSummaryHTML: "",
+          detailedHelpHTML: "",
+          externalHelp: {
+            title: "",
+            label: "",
+            introLabel: "",
+            href: "",
+          },
+        } as any;
+
+        expect(formContentModel.isFieldMultiLineString(field)).toBe(true);
+        expect(formContentModel.isFieldMultiLineString(field as any)).toBe(true);
+      });
+
+      it("should keep a defaulted multiLineString field unset when given an empty string", () => {
+        const multilineRdj: RDJ = {
+          navigation: "nav",
+          self: { resourceData: "self" },
+          breadCrumbs: [],
+          links: [],
+          changeManager: {} as any,
+          createForm: { resourceData: "createForm" },
+          pageDescription: "pageDescription",
+          data: {},
+        };
+
+        const multilinePdj: PDJ = {
+          introductionHTML: "intro",
+          helpPageTitle: "helpPageTitle",
+          helpTopics: [],
+          sliceForm: {
+            properties: [
+              {
+                name: "multiline",
+                label: "Multi Line",
+                type: "multiLineString",
+                array: false,
+                helpLabel: "",
+                helpSummaryHTML: "",
+                detailedHelpHTML: "",
+                externalHelp: {
+                  title: "",
+                  label: "",
+                  introLabel: "",
+                  href: "",
+                },
+              },
+            ],
+          },
+        };
+
+        const multilineModel = new FormContentModel(multilineRdj, multilinePdj);
+
+        multilineModel.setProperty("multiline", "");
+
+        expect(multilineModel.hasChanges()).toBe(false);
+        expect(multilineModel.getProperty("multiline")).toBeUndefined();
+      });
     });
 
     describe("test int operations", () => {
@@ -365,6 +431,82 @@ describe("FormContentModel", () => {
         );
       });
     });
+
+    describe("test string-dynamic-enum operations", () => {
+      beforeEach(() => {
+        rdj = {
+          navigation: "nav",
+          self: { resourceData: "self" },
+          breadCrumbs: [],
+          links: [],
+          changeManager: {} as any,
+          createForm: { resourceData: "createForm" },
+          pageDescription: "pageDescription",
+          data: {
+            aStringEnum: {
+              set: true,
+              value: "opt1",
+              options: [
+                {
+                  label: "Option 1",
+                  value: "opt1",
+                },
+                {
+                  label: "Option 2",
+                  value: "opt2",
+                },
+              ],
+            },
+          },
+        };
+
+        pdj = {
+          introductionHTML: "intro",
+          helpPageTitle: "helpPageTitle",
+          helpTopics: [],
+          sliceForm: {
+            properties: [
+              {
+                name: "aStringEnum",
+                label: "aStringEnum",
+                helpLabel: "",
+                type: "string-dynamic-enum",
+                array: false,
+                helpSummaryHTML: "",
+                detailedHelpHTML: "",
+                externalHelp: {
+                  title: "",
+                  label: "",
+                  introLabel: "",
+                  href: "",
+                },
+              },
+            ],
+          },
+        };
+        formContentModel = new FormContentModel(rdj, pdj);
+      });
+
+      it("should treat string-dynamic-enum as a select field", () => {
+        const fieldDescription = formContentModel.getPropertyDescription("aStringEnum");
+        expect(fieldDescription).toBeDefined();
+        expect(formContentModel.isFieldSelect(fieldDescription!)).toBe(true);
+      });
+
+      it("should return rdj-backed options for string-dynamic-enum", () => {
+        const fieldDescription = formContentModel.getPropertyDescription("aStringEnum");
+        expect(formContentModel.getSelectionsForProperty(fieldDescription!)).toEqual([
+          { label: "Option 1", value: "opt1" },
+          { label: "Option 2", value: "opt2" },
+        ]);
+      });
+
+      it("should get and set string-dynamic-enum values", () => {
+        expect(formContentModel.getProperty("aStringEnum")).toBe("opt1");
+        formContentModel.setProperty("aStringEnum", "opt2");
+        expect(formContentModel.getProperty("aStringEnum")).toBe("opt2");
+      });
+    });
   });
 
   describe("test update function", () => {
@@ -412,7 +554,7 @@ describe("FormContentModel", () => {
             ],
           },
         },
-      };
+      } as any;
 
       pdj = {
         introductionHTML: "intro",
@@ -597,6 +739,447 @@ describe("FormContentModel", () => {
           method: "POST",
         }),
       );
+    });
+
+    it("should send untouched create-form fields with their current values", async () => {
+      global.fetch = jest.fn(() =>
+        Promise.resolve({
+          json: () => Promise.resolve({}),
+        }),
+      ) as jest.Mock;
+
+      rdj = {
+        navigation: "nav",
+        self: { resourceData: "self" },
+        breadCrumbs: [],
+        links: [],
+        changeManager: {} as any,
+        createForm: { resourceData: "createForm" },
+        pageDescription: "pageDescription",
+        data: {
+          Name: { set: false, value: "" },
+          JDBCResource_JDBCDataSourceParams_GlobalTransactionsProtocol: {
+            set: false,
+            value: "OnePhaseCommit",
+          },
+          ABoolean: { set: false, value: true },
+        },
+      };
+
+      pdj = {
+        introductionHTML: "intro",
+        helpPageTitle: "helpPageTitle",
+        helpTopics: [],
+        createForm: {
+          properties: [
+            {
+              name: "Name",
+              label: "Name",
+              array: false,
+              helpLabel: "",
+              helpSummaryHTML: "",
+              detailedHelpHTML: "",
+              externalHelp: {
+                title: "",
+                label: "",
+                introLabel: "",
+                href: "",
+              },
+            },
+            {
+              name: "JDBCResource_JDBCDataSourceParams_GlobalTransactionsProtocol",
+              label: "Global Transactions Protocol",
+              array: false,
+              helpLabel: "",
+              helpSummaryHTML: "",
+              detailedHelpHTML: "",
+              externalHelp: {
+                title: "",
+                label: "",
+                introLabel: "",
+                href: "",
+              },
+            },
+            {
+              name: "ABoolean",
+              label: "ABoolean",
+              type: "boolean",
+              array: false,
+              helpLabel: "",
+              helpSummaryHTML: "",
+              detailedHelpHTML: "",
+              externalHelp: {
+                title: "",
+                label: "",
+                introLabel: "",
+                href: "",
+              },
+            },
+          ],
+        },
+      } as any;
+
+      formContentModel = new FormContentModel(rdj, pdj);
+      formContentModel.rdjUrl = "bogus";
+
+      await formContentModel.update();
+
+      const call = (global.fetch as jest.Mock).mock.calls[0];
+      const options = call[1];
+      const parsed = JSON.parse(options.body);
+
+      expect(parsed.data.Name.value).toBe("");
+      expect(parsed.data.JDBCResource_JDBCDataSourceParams_GlobalTransactionsProtocol.value).toBe("OnePhaseCommit");
+      expect(parsed.data.ABoolean.value).toBe(true);
+    });
+
+    it("should send untouched empty create-form arrays as null", async () => {
+      global.fetch = jest.fn(() =>
+        Promise.resolve({
+          json: () => Promise.resolve({}),
+        }),
+      ) as jest.Mock;
+
+      rdj = {
+        navigation: "nav",
+        self: { resourceData: "self" },
+        breadCrumbs: [],
+        links: [],
+        changeManager: {} as any,
+        createForm: { resourceData: "createForm" },
+        pageDescription: "pageDescription",
+        data: {
+          JDBCResource_JDBCDataSourceParams_JNDINames: { set: false, value: null },
+          Targets: { set: false, value: null },
+        },
+      };
+
+      pdj = {
+        introductionHTML: "intro",
+        helpPageTitle: "helpPageTitle",
+        helpTopics: [],
+        createForm: {
+          properties: [
+            {
+              name: "JDBCResource_JDBCDataSourceParams_JNDINames",
+              label: "JNDI Names",
+              array: true,
+              helpLabel: "",
+              helpSummaryHTML: "",
+              detailedHelpHTML: "",
+              externalHelp: {
+                title: "",
+                label: "",
+                introLabel: "",
+                href: "",
+              },
+            },
+            {
+              name: "Targets",
+              label: "Targets",
+              array: true,
+              type: "reference-dynamic-enum",
+              helpLabel: "",
+              helpSummaryHTML: "",
+              detailedHelpHTML: "",
+              externalHelp: {
+                title: "",
+                label: "",
+                introLabel: "",
+                href: "",
+              },
+            },
+          ],
+        },
+      } as any;
+
+      formContentModel = new FormContentModel(rdj, pdj);
+      formContentModel.rdjUrl = "bogus";
+
+      await formContentModel.update();
+
+      const call = (global.fetch as jest.Mock).mock.calls[0];
+      const options = call[1];
+      const parsed = JSON.parse(options.body);
+
+      expect(parsed.data.JDBCResource_JDBCDataSourceParams_JNDINames.value).toBeNull();
+      expect(parsed.data.Targets.value).toBeNull();
+    });
+
+    it("should send object default values for untouched create-form reference fields", async () => {
+      global.fetch = jest.fn(() =>
+        Promise.resolve({
+          json: () => Promise.resolve({}),
+        }),
+      ) as jest.Mock;
+
+      rdj = {
+        navigation: "nav",
+        self: { resourceData: "self" },
+        breadCrumbs: [],
+        links: [],
+        changeManager: {} as any,
+        createForm: { resourceData: "createForm" },
+        pageDescription: "pageDescription",
+        data: {
+          Name: { set: false, value: null },
+          ServerToClone: {
+            set: false,
+            value: null,
+            options: [
+              { label: "None", value: null },
+              {
+                label: "AdminServer",
+                value: {
+                  label: "AdminServer",
+                  resourceData: "/api/as-conn-1/edit/data/Domain/Servers/AdminServer",
+                },
+              },
+            ],
+          },
+        },
+      };
+
+      pdj = {
+        introductionHTML: "intro",
+        helpPageTitle: "helpPageTitle",
+        helpTopics: [],
+        createForm: {
+          properties: [
+            {
+              name: "Name",
+              label: "Name",
+              array: false,
+              required: true,
+              helpLabel: "",
+              helpSummaryHTML: "",
+              detailedHelpHTML: "",
+              externalHelp: {
+                title: "",
+                label: "",
+                introLabel: "",
+                href: "",
+              },
+            },
+            {
+              name: "ServerToClone",
+              label: "Copy settings from another server",
+              type: "reference-dynamic-enum",
+              array: false,
+              defaultValue: {},
+              helpLabel: "",
+              helpSummaryHTML: "",
+              detailedHelpHTML: "",
+              externalHelp: {
+                title: "",
+                label: "",
+                introLabel: "",
+                href: "",
+              },
+            },
+          ],
+        },
+      } as any;
+
+      formContentModel = new FormContentModel(rdj, pdj);
+      formContentModel.rdjUrl = "bogus";
+      formContentModel.setProperty("Name", "AnotherServer");
+
+      await formContentModel.update();
+
+      const call = (global.fetch as jest.Mock).mock.calls[0];
+      const options = call[1];
+      const parsed = JSON.parse(options.body);
+
+      expect(parsed.data.Name.value).toBe("AnotherServer");
+      expect(parsed.data.ServerToClone.value).toEqual({});
+    });
+
+    it("should omit untouched null scalar references without explicit default on create", async () => {
+      global.fetch = jest.fn(() =>
+        Promise.resolve({
+          json: () => Promise.resolve({}),
+        }),
+      ) as jest.Mock;
+
+      rdj = {
+        navigation: "nav",
+        self: { resourceData: "self" },
+        breadCrumbs: [],
+        links: [],
+        changeManager: {} as any,
+        createForm: { resourceData: "createForm" },
+        pageDescription: "pageDescription",
+        data: {
+          Name: { set: false, value: null },
+          ServerToClone: { set: false, value: null },
+        },
+      } as any;
+
+      pdj = {
+        introductionHTML: "intro",
+        helpPageTitle: "helpPageTitle",
+        helpTopics: [],
+        createForm: {
+          properties: [
+            {
+              name: "Name",
+              label: "Name",
+              array: false,
+              required: true,
+              helpLabel: "",
+              helpSummaryHTML: "",
+              detailedHelpHTML: "",
+              externalHelp: { title: "", label: "", introLabel: "", href: "" },
+            },
+            {
+              name: "ServerToClone",
+              label: "Copy settings from another server",
+              type: "reference-dynamic-enum",
+              array: false,
+              helpLabel: "",
+              helpSummaryHTML: "",
+              detailedHelpHTML: "",
+              externalHelp: { title: "", label: "", introLabel: "", href: "" },
+            },
+          ],
+        },
+      } as any;
+
+      formContentModel = new FormContentModel(rdj, pdj);
+      formContentModel.rdjUrl = "bogus";
+      formContentModel.setProperty("Name", "sdsd");
+
+      await formContentModel.update();
+
+      const call = (global.fetch as jest.Mock).mock.calls[0];
+      const parsed = JSON.parse(call[1].body);
+      expect(parsed.data.ServerToClone).toBeUndefined();
+    });
+
+    it("should omit explicit null scalar reference changes on create", async () => {
+      global.fetch = jest.fn(() =>
+        Promise.resolve({
+          json: () => Promise.resolve({}),
+        }),
+      ) as jest.Mock;
+
+      rdj = {
+        navigation: "nav",
+        self: { resourceData: "self" },
+        breadCrumbs: [],
+        links: [],
+        changeManager: {} as any,
+        createForm: { resourceData: "createForm" },
+        pageDescription: "pageDescription",
+        data: {
+          Name: { set: false, value: null },
+          ServerToClone: { set: false, value: null },
+        },
+      } as any;
+
+      pdj = {
+        introductionHTML: "intro",
+        helpPageTitle: "helpPageTitle",
+        helpTopics: [],
+        createForm: {
+          properties: [
+            {
+              name: "Name",
+              label: "Name",
+              array: false,
+              required: true,
+              helpLabel: "",
+              helpSummaryHTML: "",
+              detailedHelpHTML: "",
+              externalHelp: { title: "", label: "", introLabel: "", href: "" },
+            },
+            {
+              name: "ServerToClone",
+              label: "Copy settings from another server",
+              type: "reference-dynamic-enum",
+              array: false,
+              helpLabel: "",
+              helpSummaryHTML: "",
+              detailedHelpHTML: "",
+              externalHelp: { title: "", label: "", introLabel: "", href: "" },
+            },
+          ],
+        },
+      } as any;
+
+      formContentModel = new FormContentModel(rdj, pdj);
+      formContentModel.rdjUrl = "bogus";
+      formContentModel.setProperty("Name", "zxcxcxcx");
+      formContentModel.setProperty("ServerToClone", null as any);
+
+      await formContentModel.update();
+
+      const call = (global.fetch as jest.Mock).mock.calls[0];
+      const parsed = JSON.parse(call[1].body);
+      expect(parsed.data.ServerToClone).toBeUndefined();
+    });
+
+    it("should omit untouched reference-dynamic-enum create fields with no defaultValue", async () => {
+      global.fetch = jest.fn(() =>
+        Promise.resolve({
+          json: () => Promise.resolve({}),
+        }),
+      ) as jest.Mock;
+
+      rdj = {
+        navigation: "nav",
+        self: { resourceData: "self" },
+        breadCrumbs: [],
+        links: [],
+        changeManager: {} as any,
+        createForm: { resourceData: "createForm" },
+        pageDescription: "pageDescription",
+        data: {
+          Name: { set: false, value: null },
+          ServerToClone: { set: false, value: null },
+        },
+      } as any;
+
+      pdj = {
+        introductionHTML: "intro",
+        helpPageTitle: "helpPageTitle",
+        helpTopics: [],
+        createForm: {
+          properties: [
+            {
+              name: "Name",
+              label: "Name",
+              array: false,
+              required: true,
+              helpLabel: "",
+              helpSummaryHTML: "",
+              detailedHelpHTML: "",
+              externalHelp: { title: "", label: "", introLabel: "", href: "" },
+            },
+            {
+              name: "ServerToClone",
+              label: "Copy settings from another server",
+              type: "reference-dynamic-enum",
+              array: false,
+              helpLabel: "",
+              helpSummaryHTML: "",
+              detailedHelpHTML: "",
+              externalHelp: { title: "", label: "", introLabel: "", href: "" },
+            },
+          ],
+        },
+      } as any;
+
+      formContentModel = new FormContentModel(rdj, pdj);
+      formContentModel.rdjUrl = "bogus";
+      formContentModel.setProperty("Name", "jkljkkjljl");
+
+      await formContentModel.update();
+
+      const call = (global.fetch as jest.Mock).mock.calls[0];
+      const parsed = JSON.parse(call[1].body);
+      expect(parsed.data.ServerToClone).toBeUndefined();
     });
   });
 });

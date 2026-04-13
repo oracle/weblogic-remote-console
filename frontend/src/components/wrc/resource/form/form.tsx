@@ -17,6 +17,7 @@ import {
   getFileSelectorForNewFile,
   getInputField,
   getLabel,
+  getMultiLineInputField,
   getMultiSelectBox,
   getPropertiesEditor,
   getSecretInputField,
@@ -156,6 +157,29 @@ const Form = ({ formModel, setModel }: Props) => {
     }
   };
 
+  const multiLineValueChangedHandler = (e: ojTextArea.valueChanged) => {
+    const updatedFrom = (e as any)?.detail?.updatedFrom;
+    if (updatedFrom && updatedFrom !== "internal") {
+      return;
+    }
+
+    const propertyId = (e.currentTarget as HTMLElement)?.getAttribute("data-property");
+    if (propertyId) {
+      const newValue = e.detail.value;
+      const currentValue = formModel.getProperty(propertyId);
+      const nullishEmptyEqual =
+        ((currentValue === null || currentValue === undefined) && newValue === "") ||
+        ((newValue === null || newValue === undefined) && currentValue === "");
+      if (newValue === currentValue || nullishEmptyEqual) {
+        return;
+      }
+      formModel.setProperty(propertyId, newValue);
+      if (setModel) {
+        setModel(formModel.clone());
+      }
+    }
+  };
+
   const renderField = (property: string) => {
       const fieldDescription = formModel.getPropertyDescription(property);
       if (!fieldDescription) return <></>;
@@ -185,8 +209,10 @@ const Form = ({ formModel, setModel }: Props) => {
         valueNode = getFileSelectorForNewFile(fieldDescription, formModel, valueChangedHandler, setModel);
       } else if (formModel.isPolicyExpression(fieldDescription)) {
         valueNode = getPolicyExpression(fieldDescription, formModel, valueChangedHandler, setModel);
+      } else if (formModel.isFieldMultiLineString(fieldDescription)) {
+        valueNode = getMultiLineInputField(fieldDescription, formModel, multiLineValueChangedHandler, setModel);
       } else if (formModel.isFieldArray(fieldDescription)) {
-        valueNode = getArrayInputField(fieldDescription, formModel, textAreaValueChangedHandler, setModel);
+        valueNode = getArrayInputField(fieldDescription, formModel, valueChangedHandler, setModel);
       } else if (formModel.isSecretField(fieldDescription)) {
         valueNode = getSecretInputField(fieldDescription, formModel, valueChangedHandler, setModel);
       } else {
