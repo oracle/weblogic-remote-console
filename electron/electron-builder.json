@@ -22,18 +22,12 @@
     "node_modules"
   ],
   "rpm": {
-    "desktop": {
-      "Name": "WebLogic Remote Console"
-    },
     "fpm": [
       "--rpm-rpmbuild-define",
       "_build_id_links none"
     ]
   },
   "deb": {
-    "desktop": {
-      "Name": "WebLogic Remote Console"
-    }
   },
   "mac": {
     "category": "Utility",
@@ -43,9 +37,15 @@
     "hardenedRuntime": true,
     "gatekeeperAssess": false,
     "artifactName": "${productName}-${buildVersion}-${arch}-${os}.${ext}",
-    "entitlements": "./entitlements.mac.plist"
+    "entitlements": "./entitlements.mac.plist",
+    "identity": null
   },
   "linux": {
+    "desktop": {
+      "entry": {
+        "Name": "WebLogic Remote Console"
+      }
+    },
     "target": [
       {
         "target": "rpm"

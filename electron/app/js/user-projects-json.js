@@ -8,6 +8,7 @@
 'use strict';
 
 const { safeStorage } = require('electron');
+const I18NUtils = require('./i18n-utils');
 
 /**
  *
@@ -56,12 +57,15 @@ const UserProjects = (() => {
           for (const prov of proj.dataProviders) {
             if (prov.passwordEncrypted) {
               if (!seen[prov.passwordEncrypted]) {
-                const decrypted = safeStorage.decryptString(Buffer.from(prov.passwordEncrypted, 'base64'));
-                // console.log(`Decrypted is ${decrypted}`);
-                const output = 
-                  `${btoa(decrypted)} ${btoa(prov.passwordEncrypted)}`;
-                // console.log(`Dumping out ${output}`);
-                file.write(`EncryptionService: ${output}\n`);
+                try {
+                  const decrypted = safeStorage.decryptString(Buffer.from(prov.passwordEncrypted, 'base64'));
+                  // console.log(`Decrypted is ${decrypted}`);
+                  const output = 
+                    `${btoa(decrypted)} ${btoa(prov.passwordEncrypted)}`;
+                  file.write(`EncryptionService: ${output}\n`);
+                } catch(err) {
+                  log('error', I18NUtils.get('wrc-electron.messages.bad-decryption', prov.name, err));
+                }
               }
               seen[prov.passwordEncrypted] = 1;
             }

@@ -1,4 +1,4 @@
-// Copyright (c) 2025, Oracle and/or its affiliates.
+// Copyright (c) 2025, 2026, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.webapp.project;
@@ -8,10 +8,12 @@ import java.util.LinkedList;
 import java.util.List;
 import javax.json.JsonArray;
 import javax.json.JsonObject;
-import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.container.ResourceContext;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.Status;
+
+import weblogic.remoteconsole.common.repodef.LocalizedConstants;
+import weblogic.remoteconsole.server.repo.InvocationContext;
+import weblogic.remoteconsole.server.webapp.FailedRequestException;
+import weblogic.remoteconsole.server.webapp.WebAppUtils;
 
 public class ProjectUtils {
   public static String pickAName(Collection<String> checkList, String base) {
@@ -45,12 +47,13 @@ public class ProjectUtils {
       }
     } catch (Exception e) {
       e.printStackTrace();
-      throw new WebApplicationException(Response.status(
-        Status.BAD_REQUEST.getStatusCode(),
-          "Rows contain different data than expected"
-      ).build());
+      InvocationContext ic =
+        WebAppUtils.getInvocationContextFromResourceContext(resContext);
+      throw new FailedRequestException(
+        ic.getLocalizer().localizeString(
+          LocalizedConstants.REQUEST_POORLY_FORMED_MESSAGE)
+      );
     }
     return ret;
   }
-
 }

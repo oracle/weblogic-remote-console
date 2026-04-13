@@ -36,7 +36,7 @@ export function Content() {
 
   const resourceContext: ResourceContext = {
     applicationController: {
-      resetDisplay: () => window.location.href = '/'
+      resetDisplay: () => window.location.reload()
     },
     routerController: {
       // Resource will produce absolute paths like "/api/…"; keep rdj relative and let transport apply backendPrefix.

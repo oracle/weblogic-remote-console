@@ -77,6 +77,8 @@ public class AdminServerDataProviderImpl implements AdminServerDataProvider {
   private boolean isDisabledHostnameVerification = false;
   private boolean isInsecureConnection = false;
   private String proxyOverride = null;
+  private String connectTimeoutOverride;
+  private String readTimeoutOverride;
   private String connectionWarning;
   private boolean isLastConnectionAttemptSuccessful;
   private boolean isAnyConnectionAttemptSuccessful;
@@ -149,14 +151,30 @@ public class AdminServerDataProviderImpl implements AdminServerDataProvider {
     String name,
     String url,
     String authorizationHeader,
-    boolean local
+    boolean local,
+    String connectTimeoutOverride,
+    String readTimeoutOverride
   ) {
     this.name = name;
     this.url = url;
     this.authorizationHeader = authorizationHeader;
     this.local = local;
+    this.connectTimeoutOverride = connectTimeoutOverride;
+    this.readTimeoutOverride = readTimeoutOverride;
     updateLastRootUsed(null);
     makeRoots();
+  }
+
+  private long parseTimeout(String override, long global) {
+    if (StringUtils.isEmpty(override)) {
+      return global;
+    }
+    try {
+      return Long.parseLong(override);
+    } catch (NumberFormatException e) {
+      LOGGER.warning("Invalid timeout override: " + override + ", using global: " + global);
+      return global;
+    }
   }
 
   public static void setLocalConnectionInfoFetcher(LocalConnectionInfoFetcher localConnectionInfoFetcher) {
@@ -320,7 +338,7 @@ public class AdminServerDataProviderImpl implements AdminServerDataProvider {
         }
         if (!isSsoTokenAvailable()) {
           throw new FailedRequestException(
-            Response.Status.REQUEST_TIMEOUT.getStatusCode(), getTokenUnavailable(ic));
+            Response.Status.UNAUTHORIZED.getStatusCode(), getTokenUnavailable(ic));
         }
       }
     }
@@ -342,13 +360,17 @@ public class AdminServerDataProviderImpl implements AdminServerDataProvider {
         authorizationHeader = "Bearer " + token;
       }
       ClientAuthHeader authHeader = new ClientAuthHeader(authorizationHeader);
+      long connectTimeoutMillis = parseTimeout(connectTimeoutOverride, ConsoleBackendRuntimeConfig.getConnectTimeout());
+      long readTimeoutMillis = parseTimeout(readTimeoutOverride, ConsoleBackendRuntimeConfig.getReadTimeout());
       ConnectionManager.ConnectionResponse result =
         CONNECTION_MANAGER.tryConnection(
           url,
           authHeader,
           ic.getLocales(),
           isInsecureConnection,
-          getProxyOverride()
+          getProxyOverride(),
+          connectTimeoutMillis,
+          readTimeoutMillis
         );
       if (result.isSuccess()) {
         // Save the auth header and when needed start local connection timer
@@ -823,9 +845,9 @@ public class AdminServerDataProviderImpl implements AdminServerDataProvider {
               LocalizedConstants.SUGGEST_RESTART_SERVER_MESSAGE))
           .add("link", Json.createObjectBuilder()
             .add("label", ic.getLocalizer().localizeString(
-              LocalizedConstants.WEBLOGIC_REST_DELEGATION_NOT_WORKING_LINK)))
+              LocalizedConstants.WEBLOGIC_REST_DELEGATION_NOT_WORKING_LINK))
             .add("externalLink", ConsoleBackendRuntimeConfig.getDocumentationSite()
-              + "/troubleshoot-weblogic-remote-console/#GUID-2EF5267E-FE34-4D74-BF2F-3F318E47062A"));
+              + "/troubleshoot-weblogic-remote-console/#GUID-2EF5267E-FE34-4D74-BF2F-3F318E47062A")));
         return;
       } catch (Exception exc) {
         LOGGER.log(Level.FINEST, "testWebLogicRestDelegation failed: " + exc.toString(), exc);
@@ -939,6 +961,9 @@ public class AdminServerDataProviderImpl implements AdminServerDataProvider {
         if (response.getStatus() == Response.Status.OK.getStatusCode()) {
           if (ResponseHelper.getEntityAsJson(response).getBoolean("return")) {
             // There are security warnings
+            if (messagesBuilder == null) {
+              messagesBuilder = Json.createArrayBuilder();
+            }
             messagesBuilder.add(Json.createObjectBuilder()
               .add("severity", "error")
               .add("messageSummary", ic.getLocalizer().localizeString(

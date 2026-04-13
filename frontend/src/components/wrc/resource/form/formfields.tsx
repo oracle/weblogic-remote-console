@@ -6,6 +6,7 @@
 import { h } from 'preact';
 import { ComponentChildren, ComponentProps } from "preact";
 import { Dispatch, useContext, useEffect, useRef, useState } from "preact/hooks";
+import { memo } from "preact/compat";
 import MutableArrayDataProvider = require("ojs/ojmutablearraydataprovider");
 
 import { ItemContext } from "@oracle/oraclejet/ojcommontypes";
@@ -31,6 +32,9 @@ import ArrayDataProvider = require("ojs/ojarraydataprovider");
 import { ojTable } from "ojs/ojtable";
 import "oj-c/button";
 import "oj-c/input-text";
+import "oj-c/text-area";
+
+import { Switch } from "../../display/switch";
 
 import { CButtonElement } from "oj-c/button";
 import { ElectronAPI } from 'wrc/shared/typedefs/electron';
@@ -54,22 +58,11 @@ type InputFieldProps = {
   valueChangedHandler: (event: ojInputText.valueChanged) => void;
 };
 
-export const getLabel = (
-  fieldDescription: Property,
-  formModel: FormContentModel,
-) => {
-  const widthHint = formModel.getWidth(fieldDescription);
-
-  // For 'lg' and 'xxl' width fields, the label is rendered within getInputField instead
-  if (widthHint === 'lg' || widthHint === 'xxl') {
-    return null;
-  }
-
+const FieldLabel = ({
+  fieldDescription,
+  formModel,
+}: FieldProps) => {
   const labelText: string = `${fieldDescription.label}${formModel.isRequired(fieldDescription) ? "*" : ""}`;
-
-  // oj-label doesn't support stylized help -- so convert the helpSummaryHTML to a text string
-
-  let help: { definition: string } | undefined;
   let helpSummaryText: string | undefined;
 
   if (fieldDescription.helpSummaryHTML) {
@@ -77,7 +70,6 @@ export const getLabel = (
     tempDiv.innerHTML = fieldDescription.helpSummaryHTML;
 
     helpSummaryText = tempDiv.innerText;
-    help = { definition: helpSummaryText };
   }
 
   const popupRef = useRef<ojPopup>(null);
@@ -145,6 +137,59 @@ export const getLabel = (
       <div class="oj-flex-bar-end"></div>
       </div>
     </>
+  );
+};
+
+export const getLabel = (
+  fieldDescription: Property,
+  formModel: FormContentModel,
+) => {
+  const widthHint = formModel.getWidth(fieldDescription);
+
+  // For 'lg' and 'xxl' width fields, the label is rendered within getInputField instead
+  // multiLineString fields use the outer form row label even when full-width
+  if ((widthHint === 'lg' || widthHint === 'xxl') && !formModel.isFieldMultiLineString(fieldDescription)) {
+    return null;
+  }
+
+  return <FieldLabel fieldDescription={fieldDescription} formModel={formModel} />;
+};
+
+const FullWidthField = ({
+  fieldDescription,
+  formModel,
+  children,
+  className,
+  renderLabel = true,
+}: FieldProps & { children: ComponentChildren; className?: string; renderLabel?: boolean }) => {
+  const classes = ['wrc-lg-width-field'];
+  if (className) classes.push(className);
+
+  return (
+    <div class={classes.join(' ')}>
+      {renderLabel ? (
+        <div class='oj-flex oj-flex-bar oj-sm-align-items-center'>
+          <div class="oj-flex-item oj-flex-bar-start oj-flex oj-sm-flex-wrap-nowrap oj-sm-align-items-center wrc-label-group">
+            <FieldLabel fieldDescription={fieldDescription} formModel={formModel} />
+          </div>
+        </div>
+      ) : null}
+      <div class='oj-flex'>
+        <div class='oj-sm-12'>
+          <span class={`wrc-value-group ${formModel.hasPropertyChanged(fieldDescription.name) && !formModel.isReadOnly(fieldDescription) && !formModel.isDisabled(fieldDescription) ? 'wrc-field-changed' : ''} ${formModel.isReadOnly(fieldDescription) ? 'wrc-align-center' : ''}`}>
+            <RestartNeededImage
+              fieldDescription={fieldDescription}
+              formModel={formModel}
+            />
+            <FieldSettingsLauncher
+              fieldDescription={fieldDescription}
+              formModel={formModel}
+            />
+            {children}
+          </span>
+        </div>
+      </div>
+    </div>
   );
 };
 
@@ -295,6 +340,43 @@ export const getArrayInputField = (
 
   let idCounter = 0;
 
+  return (
+    <MemoizedArrayTableEditor
+      fieldDescription={fieldDescription}
+      formModel={formModel}
+      valueChangedHandler={valueChangedHandler}
+      setModel={setModel}
+      renderRow={renderRow}
+      idCounter={idCounter}
+    />
+  );
+};
+
+type ArrayTableEditorProps = {
+  fieldDescription: Property;
+  formModel: FormContentModel;
+  valueChangedHandler: (event: ojInputText.valueChanged) => void;
+  setModel?: Dispatch<FormContentModel>;
+  renderRow: (
+    row: ojTable.RowTemplateContext<string, TableRow>,
+    data: TableRow[],
+    dataProvider: MutableArrayDataProvider<string, TableRow>,
+    saveDataToModel: (event: ojInputText.valueChanged) => void,
+    isReadOnly: boolean,
+    fieldDescription: Property,
+    formModel: FormContentModel,
+    setModel?: Dispatch<FormContentModel>
+  ) => ComponentChildren;
+  idCounter: number;
+};
+
+const ArrayTableEditor = ({
+  fieldDescription,
+  formModel,
+  valueChangedHandler,
+  setModel,
+  renderRow,
+}: ArrayTableEditorProps) => {
   return getTableEditor({
     fieldDescription,
     formModel,
@@ -309,8 +391,8 @@ export const getArrayInputField = (
       },
     ],
     getData: (modelValue) => {
-      idCounter = 0;
-      return (modelValue || []).map((v: any) => ({ id: idCounter++, value: v }));
+      let nextId = 0;
+      return (modelValue || []).map((v: any) => ({ id: nextId++, value: v }));
     },
     saveData: (data) => data.map(d => d.value),
     newRow: (data) => {
@@ -321,6 +403,24 @@ export const getArrayInputField = (
     renderRow,
   });
 };
+
+const MemoizedArrayTableEditor = memo(ArrayTableEditor, (prevProps, nextProps) => {
+  const propertyName = prevProps.fieldDescription.name;
+
+  return (
+    prevProps.fieldDescription === nextProps.fieldDescription &&
+    JSON.stringify(prevProps.formModel.getProperty(propertyName)) ===
+      JSON.stringify(nextProps.formModel.getProperty(propertyName)) &&
+    prevProps.formModel.isReadOnly(prevProps.fieldDescription) ===
+      nextProps.formModel.isReadOnly(nextProps.fieldDescription) &&
+    prevProps.formModel.isDisabled(prevProps.fieldDescription) ===
+      nextProps.formModel.isDisabled(nextProps.fieldDescription) &&
+    prevProps.formModel.isPropertyDefaulted(propertyName) ===
+      nextProps.formModel.isPropertyDefaulted(propertyName) &&
+    prevProps.formModel.hasPropertyChanged(propertyName) ===
+      nextProps.formModel.hasPropertyChanged(propertyName)
+  );
+});
 
 export const getSecretInputField = (
   fieldDescription: Property,
@@ -562,93 +662,13 @@ export const getInputField = (
   })();
 
   if (isIndirectField) {
-    // Indirect fields should appear on their own line like 'lg'/'xxl' fields
-    const labelText: string = `${fieldDescription.label}${formModel.isRequired(fieldDescription) ? "*" : ""}`;
-
-    let help: { definition: string } | undefined;
-    let helpSummaryText: string | undefined;
-
-    if (fieldDescription.helpSummaryHTML) {
-      const tempDiv = document.createElement("div");
-      tempDiv.innerHTML = fieldDescription.helpSummaryHTML;
-      helpSummaryText = tempDiv.innerText;
-      help = { definition: helpSummaryText };
-    }
-
-    const popupRef = useRef<ojPopup>(null);
-    const buttonRef = useRef<CButtonElement>(null);
-    const [tooltipText, setTooltipText] = useState<string | undefined>(helpSummaryText);
-
-    const showHelpCallback = () => {
-      if (fieldDescription.detailedHelpHTML) {
-        setTooltipText(undefined);
-        popupRef.current!.open(buttonRef.current!);
-      }
-    };
-
-    const labelGroupClass = "oj-flex-item oj-flex-bar-start oj-flex oj-sm-flex-wrap-nowrap oj-sm-align-items-center wrc-label-group";
-
     return (
-      <div class='wrc-lg-width-field oj-sm-12'>
-        <div class='oj-flex oj-flex-bar oj-sm-align-items-center'>
-          <div class={labelGroupClass}>
-            {helpSummaryText ? (<>
-              <oj-popup
-                ref={popupRef}
-                onojOpen={() => setTooltipText(undefined)}
-                onojClose={() => setTooltipText(helpSummaryText)}
-              >
-                <span dangerouslySetInnerHTML={{ __html: fieldDescription.detailedHelpHTML }}></span>
-              </oj-popup>
-
-              <oj-c-button
-                ref={buttonRef}
-                onojAction={showHelpCallback}
-                chroming="ghost"
-                tooltip={tooltipText}
-                aria-label={t?.["wrc-form-toolbar"]?.icons?.help?.tooltip}
-                class="oj-sm-margin-0 oj-sm-padding-0"
-              >
-                <span slot="startIcon" class="oj-ux-ico-help" style="font-size:0.8em;line-height:1;display:inline-block"></span>
-              </oj-c-button>
-
-            </>) : (
-              // Invisible placeholder to prevent label text shifting when no help is available.
-              <oj-c-button
-                chroming="ghost"
-                class="oj-sm-margin-0 oj-sm-padding-0"
-                style="visibility:hidden"
-                aria-hidden="true"
-                disabled={true}
-                tabindex={-1 as any}
-              >
-                <span slot="startIcon" class="oj-ux-ico-help" style="font-size:0.8em;line-height:1;display:inline-block"></span>
-              </oj-c-button>
-            )}
-            <oj-label id={fieldDescription.name + '_LABEL'} class="oj-sm-align-self-center oj-sm-margin-0 oj-sm-padding-0">
-              <span class="wrc-label-text">{labelText}</span>
-            </oj-label>
-          </div>
-        </div>
-        <div class='oj-flex'>
-          <div class='oj-sm-12'>
-            <span class={`wrc-value-group ${formModel.hasPropertyChanged(fieldDescription.name) && !formModel.isReadOnly(fieldDescription) && !formModel.isDisabled(fieldDescription) ? 'wrc-field-changed' : ''} ${formModel.isReadOnly(fieldDescription) ? 'wrc-align-center' : ''}`}>
-              <RestartNeededImage
-                fieldDescription={fieldDescription}
-                formModel={formModel}
-              />
-              <FieldSettingsLauncher
-                fieldDescription={fieldDescription}
-                formModel={formModel}
-              />
-              <IndirectField
-                fieldDescription={fieldDescription}
-                formModel={formModel}
-              />
-            </span>
-          </div>
-        </div>
-      </div>
+      <FullWidthField fieldDescription={fieldDescription} formModel={formModel} className="oj-sm-12">
+        <IndirectField
+          fieldDescription={fieldDescription}
+          formModel={formModel}
+        />
+      </FullWidthField>
     );
   }
 
@@ -711,91 +731,10 @@ export const getInputField = (
   const widthHint = formModel.getWidth(fieldDescription);
 
   if (widthHint === 'lg' || widthHint === 'xxl') {
-    // For 'lg' width, render label and input in block layout
-    const labelText: string = `${fieldDescription.label}${formModel.isRequired(fieldDescription) ? "*" : ""}`;
-
-    let help: { definition: string } | undefined;
-    let helpSummaryText: string | undefined;
-
-    if (fieldDescription.helpSummaryHTML) {
-      const tempDiv = document.createElement("div");
-      tempDiv.innerHTML = fieldDescription.helpSummaryHTML;
-      helpSummaryText = tempDiv.innerText;
-      help = { definition: helpSummaryText };
-    }
-
-    const popupRef = useRef<ojPopup>(null);
-    const buttonRef = useRef<CButtonElement>(null);
-    const [tooltipText, setTooltipText] = useState<string | undefined>(helpSummaryText);
-
-    const showHelpCallback = () => {
-      if (fieldDescription.detailedHelpHTML) {
-        setTooltipText(undefined);
-        popupRef.current!.open(buttonRef.current!);
-      }
-    };
-
-    const labelGroupClass = "oj-flex-item oj-flex-bar-start oj-flex oj-sm-flex-wrap-nowrap oj-sm-align-items-center wrc-label-group";
-
     return (
-      <div class='wrc-lg-width-field'>
-        <div class='oj-flex oj-flex-bar oj-sm-align-items-center'>
-          <div class={labelGroupClass}>
-            {helpSummaryText ? (<>
-              <oj-popup
-                ref={popupRef}
-                onojOpen={() => setTooltipText(undefined)}
-                onojClose={() => setTooltipText(helpSummaryText)}
-              >
-                <span dangerouslySetInnerHTML={{ __html: fieldDescription.detailedHelpHTML }}></span>
-              </oj-popup>
-
-              <oj-c-button
-                ref={buttonRef}
-                onojAction={showHelpCallback}
-                chroming="ghost"
-                tooltip={tooltipText}
-                aria-label={t?.["wrc-form-toolbar"]?.icons?.help?.tooltip}
-                class="oj-sm-margin-0 oj-sm-padding-0"
-              >
-                <span slot="startIcon" class="oj-ux-ico-help" style="font-size:0.8em;line-height:1;display:inline-block"></span>
-              </oj-c-button>
-
-            </>) : (
-              // Invisible placeholder to prevent label text shifting when no help is available.
-              // Uses same component and icon structure to occupy identical space.
-              <oj-c-button
-                chroming="ghost"
-                class="oj-sm-margin-0 oj-sm-padding-0"
-                style="visibility:hidden"
-                aria-hidden="true"
-                disabled={true}
-                tabindex={-1 as any}
-              >
-                <span slot="startIcon" class="oj-ux-ico-help" style="font-size:0.8em;line-height:1;display:inline-block"></span>
-              </oj-c-button>
-            )}
-            <oj-label id={fieldDescription.name + '_LABEL'} class="oj-sm-align-self-center oj-sm-margin-0 oj-sm-padding-0">
-              <span class="wrc-label-text">{labelText}</span>
-            </oj-label>
-          </div>
-        </div>
-        <div class='oj-flex'>
-          <div class='oj-sm-12'>
-            <span class={`wrc-value-group ${formModel.hasPropertyChanged(fieldDescription.name) && !formModel.isReadOnly(fieldDescription) && !formModel.isDisabled(fieldDescription) ? 'wrc-field-changed' : ''} ${attrs.readonly ? 'wrc-align-center' : ''}`}>
-              <RestartNeededImage
-                fieldDescription={fieldDescription}
-                formModel={formModel}
-              />
-              <FieldSettingsLauncher
-                fieldDescription={fieldDescription}
-                formModel={formModel}
-              />
-              {!isDefaulted ? getOjInputTextWithClass(attrs.class || '', valueChangedHandler) : <DefaultedField/>}
-            </span>
-          </div>
-        </div>
-      </div>
+      <FullWidthField fieldDescription={fieldDescription} formModel={formModel}>
+        {!isDefaulted ? getOjInputTextWithClass(attrs.class || '', valueChangedHandler) : <DefaultedField/>}
+      </FullWidthField>
     );
   } else {
     // Normal layout
@@ -815,6 +754,57 @@ export const getInputField = (
       </div>
     );
   }
+};
+
+export const getMultiLineInputField = (
+  fieldDescription: Property,
+  formModel: FormContentModel,
+  valueChangedHandler: (event: any) => void,
+  setModel?: Dispatch<FormContentModel>,
+) => {
+  const value = (formModel.getProperty(fieldDescription.name) as string | undefined) || "";
+  const isDefaulted = formModel.isPropertyDefaulted(fieldDescription.name);
+  const disabled = formModel.isDisabled(fieldDescription);
+  const readonly = formModel.isReadOnly(fieldDescription);
+  const required = formModel.isRequired(fieldDescription);
+  const title = `${formModel.getHint(fieldDescription)}`;
+  const rows = Math.min(10, Math.max(3, (value?.split('\n').length || 1)));
+
+  const getOjTextArea = () => (
+    <oj-c-text-area
+      class="cfe-form-input-textarea"
+      disabled={disabled}
+      displayOptions={{ messages: "none" }}
+      label-edge="none"
+      label-hint={fieldDescription.label}
+      onrawValueChanged={valueChangedHandler as any}
+      placeholder=""
+      readonly={readonly}
+      required={required}
+      rows={rows}
+      title={title}
+      user-assistance-density="reflow"
+      value={value}
+      data-property={fieldDescription.name}
+      id={fieldDescription.name}
+    ></oj-c-text-area>
+  );
+
+  return (
+    <div class='oj-flex oj-flex-item oj-sm-12'>
+      <span class={`wrc-value-group ${formModel.hasPropertyChanged(fieldDescription.name) && !formModel.isReadOnly(fieldDescription) && !formModel.isDisabled(fieldDescription) ? 'wrc-field-changed' : ''} ${formModel.isReadOnly(fieldDescription) ? 'wrc-align-center' : ''}`}>
+        <RestartNeededImage
+          fieldDescription={fieldDescription}
+          formModel={formModel}
+        />
+        <FieldSettingsLauncher
+          fieldDescription={fieldDescription}
+          formModel={formModel}
+        />
+        {!isDefaulted ? getOjTextArea() : <DefaultedField />}
+      </span>
+    </div>
+  );
 };
 
 interface TableRow {
@@ -1236,9 +1226,9 @@ export const MoreMenu = ({ fieldDescription, formModel }: FieldProps) => {
     ];
 
     if (currentValue) {
-      const editLabel = Translations.getTranslatedString(
-        "wrc-pdj-options-sources.menus.more.optionsSources.edit.label",
-        "" + currentValue.label,
+      const editLabel = Translations.applyParameters(
+        t["wrc-pdj-options-sources"].menus.more.optionsSources.edit.label,
+        [currentValue.label],
       );
       menuItems.push({
         value: editLabel,
@@ -1256,9 +1246,7 @@ export const MoreMenu = ({ fieldDescription, formModel }: FieldProps) => {
     //const propertyId = this.id(`${fieldDescription.name}_more`);
     const propertyId = "";
 
-    const tooltip = Translations.getTranslatedString(
-      "wrc-common.tooltips.more.value",
-    );
+    const tooltip = t["wrc-common"].tooltips.more.value;
 
     const onSelect = (selectedValue: any) => {
       context?.routerController?.navigateToAbsolutePath(selectedValue.menuItem.path);
@@ -1333,7 +1321,9 @@ export const getSelectSingle = (
     SelectOption
   >(selections as SelectOption[], { keyAttributes: "value" });
 
-  let selectClass = 'cfe-form-select-one-md';
+  let selectClass = attrs.readonly
+    ? 'cfe-form-readonly-select-one-md'
+    : 'cfe-form-select-one-md';
 
   let clazz = "OLDcfe-form-field oj-flex oj-flex-item";
 
@@ -1376,7 +1366,7 @@ export const getSelectSingle = (
 
   return (
     <div class={clazz}>
-      <span class={`wrc-value-group ${formModel.hasPropertyChanged(fieldDescription.name) && !formModel.isReadOnly(fieldDescription) && !formModel.isDisabled(fieldDescription) ? 'wrc-field-changed' : ''}`}>
+      <span class={`wrc-value-group ${formModel.hasPropertyChanged(fieldDescription.name) && !formModel.isReadOnly(fieldDescription) && !formModel.isDisabled(fieldDescription) ? 'wrc-field-changed' : ''} ${formModel.isReadOnly(fieldDescription) ? 'wrc-align-center' : ''}`}>
         <RestartNeededImage
           fieldDescription={fieldDescription}
           formModel={formModel}
@@ -1684,21 +1674,41 @@ export const getSwitch = (
     ) => void,
   ) =>
     !isDefaulted ? (
-      <oj-switch
-        id={fieldDescription.name}
-        class={clazz}
-        disabled={attrs.disabled || attrs.readonly}
-        displayOptions={{ messages: "none" }}
-        // id={attrs.id}
-        label-edge="none"
-        label-hint={fieldDescription.label}
-        onvalueChanged={valueChangedHandler}
-        value={attrs.value == true}
-        data-property={fieldDescription.name}
-        //   messagesCustom={messages}
-      >
-        <div class=""></div>
-      </oj-switch>
+      <span class="wrc-form-switch-wrapper">
+        {/*
+          Intentionally render two views:
+          1) interactive switch for affordance/editability
+          2) readonly switch-style display for explicit value presentation (On/Off semantics)
+        */}
+        <Switch
+          id={fieldDescription.name}
+          class={clazz}
+          disabled={attrs.disabled || attrs.readonly}
+          displayOptions={{ messages: "none" }}
+          label-edge="none"
+          label-hint={fieldDescription.label}
+          onvalueChanged={valueChangedHandler}
+          value={attrs.value == true}
+          data-property={fieldDescription.name}
+        >
+          <div class=""></div>
+        </Switch>
+        <Switch
+          id={`${fieldDescription.name}-readonly`}
+          class={clazz}
+          disabled={attrs.disabled}
+          displayOptions={{ messages: "none" }}
+          aria-hidden="true"
+          tabindex={-1}
+          label-edge="none"
+          label-hint={fieldDescription.label}
+          value={attrs.value == true}
+          data-property={fieldDescription.name}
+          readonlyDisplay={true}
+        >
+          <div class=""></div>
+        </Switch>
+      </span>
     ) : (
       <DefaultedField />
     );
@@ -1732,8 +1742,12 @@ export const getSwitch = (
 export const getPolicyExpression = (
   fieldDescription: Property,
   formModel: FormContentModel,
-  valueChangedHandler: (e: ojInputText.valueChanged) => void,
-  setModel?: Dispatch<FormContentModel>
+  valueChangedHandler: (e: {
+    detail: {
+      value: unknown;
+    };
+  }) => void,
+  setModel?: Dispatch<FormContentModel>,
 ) => (
   <PolicyExpression
     fieldDescription={fieldDescription}

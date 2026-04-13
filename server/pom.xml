@@ -9,7 +9,7 @@
     <parent>
         <groupId>com.oracle.weblogic</groupId>
         <artifactId>console-backend</artifactId>
-        <version>3.0.2</version>
+        <version>3.0.3</version>
     </parent>
 
     <packaging>jar</packaging>
@@ -62,7 +62,7 @@
         <dependency>
             <groupId>com.fasterxml.jackson.jaxrs</groupId>
             <artifactId>jackson-jaxrs-json-provider</artifactId>
-            <version>${version.jackson.jaxrs}</version>
+            <version>${version.jackson}</version>
         </dependency>
         <dependency>
             <groupId>org.glassfish.jersey.media</groupId>

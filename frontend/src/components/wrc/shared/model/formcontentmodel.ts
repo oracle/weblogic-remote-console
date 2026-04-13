@@ -67,10 +67,20 @@ export class FormContentModel extends Model {
     // Also delete any readonly properties...
     this._getAllProperties().forEach((property) => {
       if (
-        (this.isActionInput() || (this.isCreate() && property.required)) &&
+        (this.isActionInput() || this.isCreate()) &&
         typeof changes[property.name] === "undefined"
       ) {
-        const propertyValue = this.getProperty(property.name) || '';
+        const currentValue = this.getProperty(property.name);
+        const defaultValue = property.defaultValue;
+        const isScalarReference = property.type?.startsWith("reference") && property.array !== true;
+        const propertyValue =
+          typeof currentValue !== "undefined" && currentValue !== null
+            ? currentValue
+            : typeof defaultValue !== "undefined"
+              ? defaultValue
+            : isScalarReference
+              ? null
+            : (this.isFieldArray(property) ? null : '');
 
         changes[property.name] = {
           value: this.getTypedPropertyValue(property.name, propertyValue),
@@ -91,6 +101,21 @@ export class FormContentModel extends Model {
       }
     });
 
+    // Remove empty fileContents fields (no upload selected) so the backend
+    // does not receive a string placeholder for file uploads.
+    // Without doing this, the backend would throw an error when it encountered a 
+    // string instead of a fileContents
+    Object.keys(changes).forEach((propertyName) => {
+      const propertyDescription = this.getPropertyDescription(propertyName);
+      if (
+        propertyDescription &&
+        this.isFieldFileContents(propertyDescription) &&
+        changes[propertyName]?.value === ""
+      ) {
+        delete changes[propertyName];
+      }
+    });
+
     const files: Record<string, File> = {};
 
     // Take out any File types from the changeset and store them in a separate structure
@@ -105,17 +130,22 @@ export class FormContentModel extends Model {
       }
     }
 
-    // convert all of the int properties from strings...
+    // convert all of the number properties from strings, ensuring that
+    // numeric 0 stays as a number (not the string "0")
     Object.keys(changes).forEach((propertyName) => {
       const propertyDescription = this.getPropertyDescription(propertyName);
 
       if (propertyDescription && this.isFieldNumber(propertyDescription)) {
         if (typeof changes[propertyName].value === "string") {
-          changes[propertyName].value =
-            this.getTypedPropertyValue(
-              propertyName,
-              changes[propertyName].value as string,
-            ) || changes[propertyName].value;
+          const typed = this.getTypedPropertyValue(
+            propertyName,
+            changes[propertyName].value as string,
+          );
+          // If parseInt/parseFloat yields NaN, keep the original string so
+          // server-side validation can handle it. Otherwise, use the typed value.
+          if (!(typeof typed === 'number' && Number.isNaN(typed))) {
+            changes[propertyName].value = typed as any;
+          }
         }
       }
     });
@@ -126,6 +156,19 @@ export class FormContentModel extends Model {
       if (changes[propertyName].modelToken && changes[propertyName].value)
         delete changes[propertyName].value;
     });
+
+    if (this.isCreate()) {
+      Object.keys(changes).forEach((propertyName) => {
+        const propertyDescription = this.getPropertyDescription(propertyName);
+        if (
+          propertyDescription?.type?.startsWith("reference") &&
+          propertyDescription.array !== true &&
+          changes[propertyName]?.value === null
+        ) {
+          delete changes[propertyName];
+        }
+      });
+    }
 
     if (this.rdj?.invoker?.resourceData) {
       const rows: PropertyValueHolder | undefined = {
@@ -151,7 +194,7 @@ export class FormContentModel extends Model {
    */
   async refresh(): Promise<void> {
     if (this.rdjUrl) {
-      let reloadRdjUrl = new URL(this.rdjUrl, window.location.href);
+      const reloadRdjUrl = new URL(this.rdjUrl, window.location.href);
       reloadRdjUrl.searchParams.set('reload', 'true');
       return getData(
         reloadRdjUrl.pathname + reloadRdjUrl.search + reloadRdjUrl.hash,
@@ -465,6 +508,16 @@ export class FormContentModel extends Model {
     return fieldDescription.type === "secret";
   }
 
+  /**
+   * whether a field is a multi-line string
+   *
+   * @param {Property} fieldDescription - the field
+   * @returns {boolean} true if field is multiLineString
+   */
+  isFieldMultiLineString(fieldDescription: Property): boolean {
+    return fieldDescription.type === "multiLineString";
+  }
+
   /** Check if the property is one of the number types */
   isFieldNumber(fieldDescription: Property): boolean {
     let result = false;
@@ -495,6 +548,7 @@ export class FormContentModel extends Model {
     return (
       fieldDescription.array !== true &&
       (fieldDescription.type?.startsWith("reference") ||
+        fieldDescription.type === "string-dynamic-enum" ||
         fieldDescription.legalValues !== undefined)
     );
   }
@@ -524,6 +578,9 @@ export class FormContentModel extends Model {
     } else if (fieldDescription.type === "reference-dynamic-enum") {
       return this.getOptionsForReferenceDynamicEnum(fieldDescription.name)
         ?.options;
+    } else if (fieldDescription.type === "string-dynamic-enum") {
+      return this.getOptionsForStringDynamicEnum(fieldDescription.name)
+        ?.options;
     } else if (fieldDescription.type === "reference") { 
       return this.getOptionForReference(fieldDescription.name)
         ?.options;
@@ -541,6 +598,9 @@ export class FormContentModel extends Model {
   getOptionsSources(fieldDescription: Property) {
     if (fieldDescription.type === "reference-dynamic-enum") {
       return this.getOptionsForReferenceDynamicEnum(fieldDescription.name)
+        ?.optionSources;
+    } else if (fieldDescription.type === "string-dynamic-enum") {
+      return this.getOptionsForStringDynamicEnum(fieldDescription.name)
         ?.optionSources;
     }
   }
@@ -676,6 +736,16 @@ export class FormContentModel extends Model {
 
         return { options: data };
       }
+    }
+  }
+
+  private getOptionsForStringDynamicEnum(propertyName: string) {
+    if (this.rdj.data && !Array.isArray(this.rdj.data)) {
+      const data = (this.rdj.data as any)[propertyName] as PropertyValueHolder;
+      return {
+        options: data?.options,
+        optionSources: data?.optionsSources,
+      };
     }
   }
 

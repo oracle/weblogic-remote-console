@@ -17,6 +17,7 @@ import * as Logger from "ojs/ojlogger";
 import { Dialog } from "../../display/dialog";
 import { ojInputText, ojInputTextEventMap } from "ojs/ojinputtext";
 import "oj-c/input-password";
+import "oj-c/text-area";
 import { ojSwitch } from "ojs/ojswitch";
 import "ojs/ojselectsingle";
 import { CButtonElement } from "oj-c/button";
@@ -439,6 +440,21 @@ export default function FieldSettingsDialog({
                   }
                   data-property={fieldDescription.name}
                 />
+              ) : formModel.isFieldMultiLineString(fieldDescription) ? (
+                <oj-c-text-area
+                  class="cfe-form-input-textarea"
+                  rows={4}
+                  label-edge="none"
+                  label-hint={fieldDescription.label}
+                  value={regularValue || ""}
+                  onrawValueChanged={(e: any) =>
+                    setRegularValue((e as any).detail.value)
+                  }
+                  readonly={formModel.isReadOnly(fieldDescription)}
+                  required={formModel.isRequired(fieldDescription)}
+                  disabled={formModel.isDisabled(fieldDescription)}
+                  data-property={fieldDescription.name}
+                ></oj-c-text-area>
               ) : formModel.isSecretField(fieldDescription) ? (
                 <oj-c-input-password
                   id={fieldDescription.name}
