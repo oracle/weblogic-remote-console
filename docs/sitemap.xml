@@ -16,6 +16,8 @@
   </url><url>
     <loc>https://oracle.github.io/weblogic-remote-console/2.4.18/preface/</loc>
   </url><url>
+    <loc>https://oracle.github.io/weblogic-remote-console/2.4.19/preface/</loc>
+  </url><url>
     <loc>https://oracle.github.io/weblogic-remote-console/latest/preface/</loc>
   </url><url>
     <loc>https://oracle.github.io/weblogic-remote-console/2.4.13/</loc>
@@ -30,6 +32,8 @@
   </url><url>
     <loc>https://oracle.github.io/weblogic-remote-console/2.4.18/</loc>
   </url><url>
+    <loc>https://oracle.github.io/weblogic-remote-console/2.4.19/</loc>
+  </url><url>
     <loc>https://oracle.github.io/weblogic-remote-console/overview/</loc>
   </url><url>
     <loc>https://oracle.github.io/weblogic-remote-console/2.4.13/set-console/</loc>
@@ -43,6 +47,8 @@
     <loc>https://oracle.github.io/weblogic-remote-console/2.4.17/set-console/</loc>
   </url><url>
     <loc>https://oracle.github.io/weblogic-remote-console/2.4.18/set-console/</loc>
+  </url><url>
+    <loc>https://oracle.github.io/weblogic-remote-console/2.4.19/set-console/</loc>
   </url><url>
     <loc>https://oracle.github.io/weblogic-remote-console/set-console/</loc>
   </url><url>
@@ -60,6 +66,8 @@
   </url><url>
     <loc>https://oracle.github.io/weblogic-remote-console/2.4.18/set-console/get-know-console/</loc>
   </url><url>
+    <loc>https://oracle.github.io/weblogic-remote-console/2.4.19/set-console/get-know-console/</loc>
+  </url><url>
     <loc>https://oracle.github.io/weblogic-remote-console/set-console/get-know-console/</loc>
   </url><url>
     <loc>https://oracle.github.io/weblogic-remote-console/2.4.13/set-console/contribute-wrc-repository/</loc>
@@ -73,6 +81,8 @@
     <loc>https://oracle.github.io/weblogic-remote-console/2.4.17/set-console/contribute-wrc-repository/</loc>
   </url><url>
     <loc>https://oracle.github.io/weblogic-remote-console/2.4.18/set-console/contribute-wrc-repository/</loc>
+  </url><url>
+    <loc>https://oracle.github.io/weblogic-remote-console/2.4.19/set-console/contribute-wrc-repository/</loc>
   </url><url>
     <loc>https://oracle.github.io/weblogic-remote-console/set-console/contribute-wrc-repository/</loc>
   </url><url>
@@ -88,6 +98,8 @@
   </url><url>
     <loc>https://oracle.github.io/weblogic-remote-console/2.4.18/set-console/support-information/</loc>
   </url><url>
+    <loc>https://oracle.github.io/weblogic-remote-console/2.4.19/set-console/support-information/</loc>
+  </url><url>
     <loc>https://oracle.github.io/weblogic-remote-console/set-console/support-information/</loc>
   </url><url>
     <loc>https://oracle.github.io/weblogic-remote-console/2.4.13/administration-server/</loc>
@@ -101,6 +113,8 @@
     <loc>https://oracle.github.io/weblogic-remote-console/2.4.17/administration-server/</loc>
   </url><url>
     <loc>https://oracle.github.io/weblogic-remote-console/2.4.18/administration-server/</loc>
+  </url><url>
+    <loc>https://oracle.github.io/weblogic-remote-console/2.4.19/administration-server/</loc>
   </url><url>
     <loc>https://oracle.github.io/weblogic-remote-console/administration-server/</loc>
   </url><url>
@@ -116,6 +130,8 @@
   </url><url>
     <loc>https://oracle.github.io/weblogic-remote-console/2.4.18/administration-server/domain-configuration/</loc>
   </url><url>
+    <loc>https://oracle.github.io/weblogic-remote-console/2.4.19/administration-server/domain-configuration/</loc>
+  </url><url>
     <loc>https://oracle.github.io/weblogic-remote-console/administration-server/domain-configuration/</loc>
   </url><url>
     <loc>https://oracle.github.io/weblogic-remote-console/2.4.13/administration-server/securing-domains/</loc>
@@ -129,6 +145,8 @@
     <loc>https://oracle.github.io/weblogic-remote-console/2.4.17/administration-server/securing-domains/</loc>
   </url><url>
     <loc>https://oracle.github.io/weblogic-remote-console/2.4.18/administration-server/securing-domains/</loc>
+  </url><url>
+    <loc>https://oracle.github.io/weblogic-remote-console/2.4.19/administration-server/securing-domains/</loc>
   </url><url>
     <loc>https://oracle.github.io/weblogic-remote-console/administration-server/securing-domains/</loc>
   </url><url>
@@ -152,6 +170,8 @@
   </url><url>
     <loc>https://oracle.github.io/weblogic-remote-console/2.4.18/administration-server/deploying-applications/</loc>
   </url><url>
+    <loc>https://oracle.github.io/weblogic-remote-console/2.4.19/administration-server/deploying-applications/</loc>
+  </url><url>
     <loc>https://oracle.github.io/weblogic-remote-console/administration-server/deploying-applications/</loc>
   </url><url>
     <loc>https://oracle.github.io/weblogic-remote-console/2.4.17/administration-server/monitoring-domains/</loc>
@@ -164,6 +184,8 @@
   </url><url>
     <loc>https://oracle.github.io/weblogic-remote-console/2.4.18/administration-server/monitoring-domains/</loc>
   </url><url>
+    <loc>https://oracle.github.io/weblogic-remote-console/2.4.19/administration-server/monitoring-domains/</loc>
+  </url><url>
     <loc>https://oracle.github.io/weblogic-remote-console/administration-server/monitoring-domains/</loc>
   </url><url>
     <loc>https://oracle.github.io/weblogic-remote-console/2.4.16/administration-server/configuring-services/</loc>
@@ -171,6 +193,8 @@
     <loc>https://oracle.github.io/weblogic-remote-console/2.4.17/administration-server/configuring-services/</loc>
   </url><url>
     <loc>https://oracle.github.io/weblogic-remote-console/2.4.18/administration-server/configuring-services/</loc>
+  </url><url>
+    <loc>https://oracle.github.io/weblogic-remote-console/2.4.19/administration-server/configuring-services/</loc>
   </url><url>
     <loc>https://oracle.github.io/weblogic-remote-console/administration-server/configuring-services/</loc>
   </url><url>
@@ -191,6 +215,8 @@
     <loc>https://oracle.github.io/weblogic-remote-console/2.4.15/administration-server/scheduling-work/</loc>
   </url><url>
     <loc>https://oracle.github.io/weblogic-remote-console/2.4.18/administration-server/configuring-coherence/</loc>
+  </url><url>
+    <loc>https://oracle.github.io/weblogic-remote-console/2.4.19/administration-server/configuring-coherence/</loc>
   </url><url>
     <loc>https://oracle.github.io/weblogic-remote-console/administration-server/configuring-coherence/</loc>
   </url><url>
@@ -238,6 +264,8 @@
   </url><url>
     <loc>https://oracle.github.io/weblogic-remote-console/2.4.18/administration-server/scheduling-work/</loc>
   </url><url>
+    <loc>https://oracle.github.io/weblogic-remote-console/2.4.19/administration-server/scheduling-work/</loc>
+  </url><url>
     <loc>https://oracle.github.io/weblogic-remote-console/administration-server/scheduling-work/</loc>
   </url><url>
     <loc>https://oracle.github.io/weblogic-remote-console/2.4.16/weblogic-deploy-tooling/wdt-composites/</loc>
@@ -252,6 +280,8 @@
   </url><url>
     <loc>https://oracle.github.io/weblogic-remote-console/2.4.18/administration-server/interoperability/</loc>
   </url><url>
+    <loc>https://oracle.github.io/weblogic-remote-console/2.4.19/administration-server/interoperability/</loc>
+  </url><url>
     <loc>https://oracle.github.io/weblogic-remote-console/administration-server/interoperability/</loc>
   </url><url>
     <loc>https://oracle.github.io/weblogic-remote-console/2.4.17/weblogic-deploy-tooling/wdt-composites/</loc>
@@ -262,21 +292,31 @@
   </url><url>
     <loc>https://oracle.github.io/weblogic-remote-console/2.4.18/weblogic-deploy-tooling/</loc>
   </url><url>
+    <loc>https://oracle.github.io/weblogic-remote-console/2.4.19/weblogic-deploy-tooling/</loc>
+  </url><url>
     <loc>https://oracle.github.io/weblogic-remote-console/weblogic-deploy-tooling/</loc>
   </url><url>
     <loc>https://oracle.github.io/weblogic-remote-console/2.4.18/weblogic-deploy-tooling/wdt-model-files/</loc>
+  </url><url>
+    <loc>https://oracle.github.io/weblogic-remote-console/2.4.19/weblogic-deploy-tooling/wdt-model-files/</loc>
   </url><url>
     <loc>https://oracle.github.io/weblogic-remote-console/weblogic-deploy-tooling/wdt-model-files/</loc>
   </url><url>
     <loc>https://oracle.github.io/weblogic-remote-console/2.4.18/weblogic-deploy-tooling/wdt-composites/</loc>
   </url><url>
+    <loc>https://oracle.github.io/weblogic-remote-console/2.4.19/weblogic-deploy-tooling/wdt-composites/</loc>
+  </url><url>
     <loc>https://oracle.github.io/weblogic-remote-console/weblogic-deploy-tooling/wdt-composites/</loc>
   </url><url>
     <loc>https://oracle.github.io/weblogic-remote-console/2.4.18/weblogic-deploy-tooling/property-lists/</loc>
   </url><url>
+    <loc>https://oracle.github.io/weblogic-remote-console/2.4.19/weblogic-deploy-tooling/property-lists/</loc>
+  </url><url>
     <loc>https://oracle.github.io/weblogic-remote-console/weblogic-deploy-tooling/property-lists/</loc>
   </url><url>
     <loc>https://oracle.github.io/weblogic-remote-console/2.4.18/troubleshoot-weblogic-remote-console/</loc>
+  </url><url>
+    <loc>https://oracle.github.io/weblogic-remote-console/2.4.19/troubleshoot-weblogic-remote-console/</loc>
   </url><url>
     <loc>https://oracle.github.io/weblogic-remote-console/troubleshoot-weblogic-remote-console/</loc>
   </url><url>

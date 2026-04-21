@@ -4,9 +4,12 @@ title: Introducing WebLogic Remote Console 3.x!
 ---
 
 {{% alert color="secondary" %}}
-<i class="fa-solid fa-flask-vial"></i>
 
-WebLogic Remote Console 3.x is in **technical preview**. It is available for testing purposes only.
+**WebLogic Remote Console 3.0.3**, the general availability (GA) release of WebLogic Remote Console 3.x, is now available!
+
+Refer to the [current documentation](../latest/_index.md) for the latest information. 
+
+WebLogic Remote Console 3.0.0, 3.0.1, and 3.0.2 releases were made available as **technical previews** for testing purposes only. You should now use release 3.0.3 or later.
 
 {{% /alert %}}
 
@@ -43,30 +46,6 @@ If you want to give feedback, you can do so by:
 
 * Opening an issue in the [WebLogic Remote Console GitHub repository](https://github.com/oracle/weblogic-remote-console) that describes your issue. Make sure to include your environment details (OS, JDK, WebLogic Server) and any relevant logs. 
 
-{{% /alert %}}
-
-## Installing WebLogic Remote Console 3.x
-
-For the duration of the tech preview, WebLogic Remote Console 3.x will only be available by downloading *Desktop* WebLogic Remote Console from the WebLogic Remote Console GitHub repository. 
-
-The production release of WebLogic Remote Console 3.x will include both *Desktop* WebLogic Remote Console and *Hosted* WebLogic Remote Console and will be released concurrently with a future Patch Set Update (PSU) of WebLogic Server. 
-
-1. Make sure your environment meets the system requirements needed to run WebLogic Remote Console. The system requirements for 3.x are the same as the latest GA release of WebLogic Remote Console. See [System Requirements](../latest/set-console/#GUID-FFC1F9AC-7CE7-4BC1-9D3D-BD59CC228C6B).
-1. Go to the [WebLogic Remote Console GitHub repository Releases page](https://github.com/oracle/weblogic-remote-console/releases) and from the **Release 3.x** section, download the WebLogic Remote Console installer meant for your operating system.
-1. If you're jumping from WebLogic Remote Console 2.4.17 or earlier, you should also download the WebLogic Remote Console *extension* for 3.x and install it manually. (The 2.4.18 and 2.4.19 extensions are compatible with WebLogic Remote Console 3.x).
-    
-    1. Download the extension from the  **Release 3.0.2** section. If you are running a 15.1.1.0.0 WebLogic Server domain, download `console-rest-ext-jakarta-3.0.2.war`. Otherwise, download `console-rest-ext-3.0.2.war`.
-    1. Shut down the Administration Server.
-    1. Under *`DOMAIN_HOME/`*, create a folder and name it `management-services-ext`.
-    1. Save the extension file, `console-rest-ext-3.0.2.war` or `console-rest-ext-jakarta-3.0.2.war`, under `management-services-ext/`. 
-    
-        Do not deploy the WebLogic Remote Console extension as an application in your domain.
-    1. Restart the Administration Server.
-1. Install WebLogic Remote Console by following the typical process for installing applications on your operating system.
-1. Open WebLogic Remote Console and connect to a provider.
-
-{{% alert %}} 
-If you want to switch back to using the GA release of WebLogic Remote Console, make sure to uninstall WebLogic Remote Console v3.0.2 *and* delete `DOMAIN_HOME/management-services-ext/console-rest-ext-3.0.2.war`.
 {{% /alert %}}
 
 ## Connecting to a Provider

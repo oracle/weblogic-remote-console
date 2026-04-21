@@ -882,13 +882,13 @@ You can only edit the arguments of the condition. If you want to use a different
 {{< /alert >}}
 
 
-Conditions have three different types of relationships: <code>AND</code>, <code>OR</code>, and <code>Combination</code>.
+Conditions have three different types of relationships: <code>AND</code>, <code>OR</code>, and <code>Group</code>.
 
 -   <code>AND</code>: All of the conditions joined by an <code>AND</code> operator must be met.
 -   <code>OR</code>: At least one of the conditions joined by an <code>OR</code> operator must be met.
--   <code>Combination</code>: Two or more conditions are combined and must be evaluated as a group. Conditions *within* a combination are themselves related to each other through <code>AND</code> or <code>OR</code> operators.
+-   <code>Group</code>: Two or more conditions are combined and must be evaluated as a group. Conditions *within* a group are themselves related to each other through <code>AND</code> or <code>OR</code> operators.
 
-By default, a new condition is added as a simple condition at the top of the list of conditions. To insert a new condition elsewhere, select an existing condition and then click **Add Condition**. You will get a drop-down list with options to add the new condition either above or below the selected condition. The order of conditions is not meaningful to how the policy is interpreted.
+By default, a new condition is added as a simple condition at the top of the list of conditions. To insert a new condition elsewhere, select an existing condition and then click **Add Predicate**. You will get a drop-down list with options to add the new condition either above or below the selected condition. The order of conditions is not meaningful to how the policy is interpreted.
 
 A policy can contain multiple simple or compound conditions or a mix of simple and compound conditions. You can also nest compound conditions.
 
@@ -919,37 +919,39 @@ Description
 
 </th></tr></thead><tbody><tr><td>
 
-Add Condition
+Add Predicate
 
 </td><td>
 
-Adds a new condition to the policy. You can choose to add the new condition above or below another condition.
+Allows you to add a condition \(predicate\) to the policy.
 
 </td></tr><tr><td>
 
-Combine
+Add <code>AND</code>
 
 </td><td>
 
-When multiple conditions are selected, you can combine them to create a compound condition.
+Allows you to chain multiple predicates together.
+
+The user must meet ALL specified predicates.
 
 </td></tr><tr><td>
 
-Uncombine
+Add <code>OR</code>
 
 </td><td>
 
-When a compound condition is selected, you can break it into independent \(simple\) conditions.
+Allows you to chain multiple predicates together.
+
+The user must meet at least ONE of the specified predicates.
 
 </td></tr><tr><td>
 
-Remove
+Add <code>Group</code>
 
 </td><td>
 
-Deletes a simple or compound condition from the policy.
-
-When there are no conditions in a policy, the default policy applies.
+Allows you to create a Group where predicates will be evaluated simultaneously.
 
 </td></tr><tr><td>
 
@@ -961,11 +963,21 @@ Reverses the meaning of a condition. The criteria to access a resource becomes t
 
 </td></tr><tr><td>
 
-Reset
+Delete
 
 </td><td>
 
-Reverts the policy to its last *saved* change, not the last change. It's recommended that you save your policy frequently or you may lose several changes unintentionally using the Reset action.
+Deletes a simple or compound condition from the policy.
+
+When there are no conditions in a policy, the default policy applies.
+
+</td></tr><tr><td>
+
+Cancel
+
+</td><td>
+
+You can use the **Cancel** option to revert the policy to its last *saved* change, not the last change. It's recommended that you save your policy frequently or you may lose several changes unintentionally using the Cancel action.
 
 </td></tr></tbody>
 </table>
@@ -982,15 +994,13 @@ You can create a security policy that only applies to a specific resource instan
 
     *myResourceInstance* is the node path to the resource instance and may contain multiple nodes. For example, to create a policy for a queue in a JMS module, your path would be "…**XACMLAuthorizer**, then **JMS Modules**, then *jmsModuleName*, then **Queues**, then *queueName*."
 
-2.  Click **Add Condition**.
+2.  Click **Add Predicate**.
 
-3.  Select a predicate from the **Predicate List**. Depending on the predicate you choose, you may need to configure arguments for the condition.
+3.  Select a predicate from the **Predicate** dropdown list. Depending on the predicate you choose, you may need to configure arguments for the condition.
 
-4.  Click **OK**.
+4.  Click **Save**.
 
-5.  Click **Save**.
-
-6.  **Optional**: Add more conditions to the policy to increase its complexity.
+5.  **Optional**: Add more conditions as necessary to the policy to increase its complexity.
 
 
 #### Apply a Policy to a JMX Resource {#GUID-BDAEE9EF-4BC3-4047-AC91-3CD163A27D1C}
@@ -1079,9 +1089,9 @@ MBean attributes and operations that represent particularly sensitive data or ac
 
     The WebLogic Security Service evaluates conditions in the order they appear in the list. If you want the new condition to appear above an existing conditions \(and thus be evaluated before it\), select the checkbox beside the existing condition before you proceed.
 
-    1.  Click **Add Condition**.
+    1.  Click **Add Predicate**.
 
-    2.  Select a predicate from the **Predicate List**. Depending on the predicate you choose, you may need to configure arguments for the condition.
+    2.  Select a predicate from the **Predicate** dropdown list. Depending on the predicate you choose, you may need to configure arguments for the condition.
 
     3.  Click **OK**.
 

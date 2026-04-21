@@ -19,26 +19,34 @@
 <link rel="icon" type="image/png" href="/weblogic-remote-console/favicons/android-192x192.png" sizes="192x192">
 
 <title>Get to Know the Console | WebLogic Remote Console</title>
-<meta name="description" content="WebLogic Remote Console is your portal to managing WebLogic Server domains from a unified interface, whether they are running domains or model templates.
-When you launch WebLogic Remote Console for the first time, it opens a Startup Tasks dialog box with options to connect to a new provider, such as an Administration Server or WDT model file. WebLogic Remote Console remembers your connection details so on subsequent visits, it will open on your last project, letting you continue where you left off.">
+<meta name="description" content="WebLogic Remote Console is a graphical user interface that enables you to administer Providers such as WebLogic Server domains, WDT model files (and their composites), and property lists.
+For more information, see Provider Types.
+You can save the connection details for multiple providers in WebLogic Remote Console, making it easy to switch between domains and workflows, streamlining domain management.
+As you add more provider connections, you may want to group them into Projects. Projects allow you to organize provider connections according to any categorization scheme that works for you. You can even save the same provider connection in multiple projects; you are saving the connection details so it doesn’t matter from which project you access a provider.">
 <meta property="og:url" content="https://oracle.github.io/weblogic-remote-console/set-console/get-know-console/">
   <meta property="og:site_name" content="WebLogic Remote Console">
   <meta property="og:title" content="Get to Know the Console">
-  <meta property="og:description" content="WebLogic Remote Console is your portal to managing WebLogic Server domains from a unified interface, whether they are running domains or model templates.
-When you launch WebLogic Remote Console for the first time, it opens a Startup Tasks dialog box with options to connect to a new provider, such as an Administration Server or WDT model file. WebLogic Remote Console remembers your connection details so on subsequent visits, it will open on your last project, letting you continue where you left off.">
+  <meta property="og:description" content="WebLogic Remote Console is a graphical user interface that enables you to administer Providers such as WebLogic Server domains, WDT model files (and their composites), and property lists.
+For more information, see Provider Types.
+You can save the connection details for multiple providers in WebLogic Remote Console, making it easy to switch between domains and workflows, streamlining domain management.
+As you add more provider connections, you may want to group them into Projects. Projects allow you to organize provider connections according to any categorization scheme that works for you. You can even save the same provider connection in multiple projects; you are saving the connection details so it doesn’t matter from which project you access a provider.">
   <meta property="og:locale" content="en">
   <meta property="og:type" content="website">
 
   <meta itemprop="name" content="Get to Know the Console">
-  <meta itemprop="description" content="WebLogic Remote Console is your portal to managing WebLogic Server domains from a unified interface, whether they are running domains or model templates.
-When you launch WebLogic Remote Console for the first time, it opens a Startup Tasks dialog box with options to connect to a new provider, such as an Administration Server or WDT model file. WebLogic Remote Console remembers your connection details so on subsequent visits, it will open on your last project, letting you continue where you left off.">
-  <meta itemprop="wordCount" content="1884">
+  <meta itemprop="description" content="WebLogic Remote Console is a graphical user interface that enables you to administer Providers such as WebLogic Server domains, WDT model files (and their composites), and property lists.
+For more information, see Provider Types.
+You can save the connection details for multiple providers in WebLogic Remote Console, making it easy to switch between domains and workflows, streamlining domain management.
+As you add more provider connections, you may want to group them into Projects. Projects allow you to organize provider connections according to any categorization scheme that works for you. You can even save the same provider connection in multiple projects; you are saving the connection details so it doesn’t matter from which project you access a provider.">
+  <meta itemprop="wordCount" content="1871">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Get to Know the Console">
-  <meta name="twitter:description" content="WebLogic Remote Console is your portal to managing WebLogic Server domains from a unified interface, whether they are running domains or model templates.
-When you launch WebLogic Remote Console for the first time, it opens a Startup Tasks dialog box with options to connect to a new provider, such as an Administration Server or WDT model file. WebLogic Remote Console remembers your connection details so on subsequent visits, it will open on your last project, letting you continue where you left off.">
-<link rel="preload" href="/weblogic-remote-console/scss/main.min.48c25d0a5a23a1e8cae94d6c5e7622061e5345cf098171b1d6ee41d8e309e6c8.css" as="style" integrity="sha256-SMJdClojoejK6U1sXnYiBh5TRc8JgXGx1u5B2OMJ5sg=" crossorigin="anonymous">
-<link href="/weblogic-remote-console/scss/main.min.48c25d0a5a23a1e8cae94d6c5e7622061e5345cf098171b1d6ee41d8e309e6c8.css" rel="stylesheet" integrity="sha256-SMJdClojoejK6U1sXnYiBh5TRc8JgXGx1u5B2OMJ5sg=" crossorigin="anonymous">
+  <meta name="twitter:description" content="WebLogic Remote Console is a graphical user interface that enables you to administer Providers such as WebLogic Server domains, WDT model files (and their composites), and property lists.
+For more information, see Provider Types.
+You can save the connection details for multiple providers in WebLogic Remote Console, making it easy to switch between domains and workflows, streamlining domain management.
+As you add more provider connections, you may want to group them into Projects. Projects allow you to organize provider connections according to any categorization scheme that works for you. You can even save the same provider connection in multiple projects; you are saving the connection details so it doesn’t matter from which project you access a provider.">
+<link rel="preload" href="/weblogic-remote-console/scss/main.min.3bb6570761fbbb25e6691001febc67f331f0953db4e4e1cfb79172c2e6a5819e.css" as="style" integrity="sha256-O7ZXB2H7uyXmaRAB/rxn8zHwlT205OHPt5FywualgZ4=" crossorigin="anonymous">
+<link href="/weblogic-remote-console/scss/main.min.3bb6570761fbbb25e6691001febc67f331f0953db4e4e1cfb79172c2e6a5819e.css" rel="stylesheet" integrity="sha256-O7ZXB2H7uyXmaRAB/rxn8zHwlT205OHPt5FywualgZ4=" crossorigin="anonymous">
 <script
   src="https://code.jquery.com/jquery-3.7.1.min.js"
   integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
@@ -66,8 +74,9 @@ When you launch WebLogic Remote Console for the first time, it opens a Startup T
         <div class="dropdown">
   <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Releases</a>
   <ul class="dropdown-menu">
-    <li><a class="dropdown-item" href="/weblogic-remote-console/overview">Latest (v2.4.19)</a></li>
-    <li><a class="dropdown-item" href="/weblogic-remote-console/preview">Tech Preview (v3.0.0)</a></li>
+    <li><a class="dropdown-item" href="/weblogic-remote-console/overview">Latest (v3.0.3)</a></li>
+    <li><a class="dropdown-item" href="/weblogic-remote-console/preview">Tech Preview (v3.0.2)</a></li>
+    <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.19">v2.4.19</a></li>
     <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.18">v2.4.18</a></li>
     <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.17">v2.4.17</a></li>
     <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.16">v2.4.16</a></li>
@@ -139,7 +148,7 @@ When you launch WebLogic Remote Console for the first time, it opens a Startup T
     aria-label="Search this site…"
     autocomplete="off"
     
-    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.c91eadea726d3adef8baaa146aae00e3.json"
+    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.9a1e60b97d06a8082f60f18b5f00d58a.json"
     data-offline-search-base-href="/"
     data-offline-search-max-results="10"
   >
@@ -164,7 +173,7 @@ When you launch WebLogic Remote Console for the first time, it opens a Startup T
     aria-label="Search this site…"
     autocomplete="off"
     
-    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.c91eadea726d3adef8baaa146aae00e3.json"
+    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.9a1e60b97d06a8082f60f18b5f00d58a.json"
     data-offline-search-base-href="/"
     data-offline-search-max-results="10"
   >
@@ -284,9 +293,7 @@ When you launch WebLogic Remote Console for the first time, it opens a Startup T
         <nav id="TableOfContents">
   <ul>
     <li><a href="#key-elements-of-the-interface">Key Elements of the Interface</a></li>
-    <li><a href="#tools">Tools</a></li>
-    <li><a href="#explore-your-domain">Explore your Domain</a></li>
-    <li><a href="#change-indicators">Change Indicators</a></li>
+    <li><a href="#section_mcl_y1g_y3c">Change Indicators</a></li>
     <li><a href="#GUID-709F9244-296B-443C-827F-AC8B26513FAC">Change Console Preferences</a></li>
     <li><a href="#GUID-BB23744E-D6F9-4D35-8CEB-01EBCF03636F">Bookmark Pages</a></li>
     <li><a href="#GUID-FF37D291-F8C5-4EFB-8A18-DADF035348C9">Customize a Table</a></li>
@@ -325,91 +332,111 @@ When you launch WebLogic Remote Console for the first time, it opens a Startup T
 	<header class="article-meta">
 		
 </header>
-	<p>WebLogic Remote Console is your portal to managing WebLogic Server domains from a unified interface, whether they are running domains or model templates.</p>
-<p>When you launch WebLogic Remote Console for the first time, it opens a <strong>Startup Tasks</strong> dialog box with options to connect to a new provider, such as an Administration Server or WDT model file. WebLogic Remote Console remembers your connection details so on subsequent visits, it will open on your last project, letting you continue where you left off.</p>
-<p>The structure of WebLogic Remote Console remains similar across provider types, with variances as appropriate for the provider type.</p>
+	<p>WebLogic Remote Console is a graphical user interface that enables you to administer <strong>Providers</strong> such as WebLogic Server domains, WDT model files (and their composites), and property lists.</p>
+<p>For more information, see <a href="/weblogic-remote-console/set-console/#GUID-82C1C605-D42E-45EA-AC16-5BA3D5853C96">Provider Types</a>.</p>
+<p>You can save the connection details for multiple providers in WebLogic Remote Console, making it easy to switch between domains and workflows, streamlining domain management.</p>
+<p>As you add more provider connections, you may want to group them into <strong>Projects</strong>. Projects allow you to organize provider connections according to any categorization scheme that works for you. You can even save the same provider connection in multiple projects; you are saving the connection details so it doesn&rsquo;t matter from which project you access a provider.</p>
+<p>For more information, see <a href="/weblogic-remote-console/set-console/get-know-console/#GUID-A6323CCF-02F4-4E77-BDF2-A2DB1623A598">Projects</a>.</p>
 <h2 id="key-elements-of-the-interface">Key Elements of the Interface</h2>
-<p>Open the <img src="/weblogic-remote-console/images/ui-icons/project-management-blk-24x24.png" alt="Providers drawer"> <strong>Providers</strong> drawer to see and manage your saved provider connections.</p>
-<p>Browse the <strong>Navigation Tree</strong> to see the structure of the provider as a node tree. In providers based on domains, such as Administration Servers or WDT model files, the node tree builds upon the MBean structure that defines a WebLogic Server domain. Beside the Navigation Tree is the <strong>NavStrip</strong>. On providers with multiple perspectives, you can also use the icons in the NavStrip to move between perspectives.</p>
-<p>Click <img src="/weblogic-remote-console/images/ui-icons/navigation-icon-toggle-blk-24x24.png" alt="Toggle Navigation Tree visibility"> above the NavStrip to hide the Navigation Tree when you want a bigger editing area. Click it again to bring the Navigation Tree back.</p>
-<p>The <strong>Content Pane</strong> is the main editing area for managing your domains or property lists. As you move through the nodes of the Navigation Tree, the Content Pane updates to match your new position.</p>
-<h2 id="tools">Tools</h2>
-<p>Tools are a set of quick actions that you can use to navigate or manipulate the interface. Icons for these actions are scattered across the top of WebLogic Remote Console.</p>
-<p>Tool icons only appear on pages where they are applicable. For example, the Shopping Cart, used to indicate pending changes to an active domain, only appears in Administration Server providers.</p>
-<table id="TABLE_GQ3_FQF_NZB"><thead><tr><th>
-<p>Tool Icon</p>
-</th><th>
-<p>Description</p>
-</th></tr></thead><tbody><tr><td>
-<p><img src="/weblogic-remote-console/images/ui-icons/home-icon-blk-24x24.png" alt="Home"> Home</p>
-</td><td>
-<p>Sends you to the Home Page of the provider.</p>
-</td></tr><tr><td>
-<p><img src="/weblogic-remote-console/images/ui-icons/shopping-cart-icon-24x24.png" alt="Empty shopping cart"> Shopping Cart</p>
-</td><td>
-<p>Indicates if there are pending changes ready to be committed to a WebLogic Server domain.When the <strong>Shopping Cart</strong> is full, you can click it to see the pending changes and then commit or discard them.</p>
-</td></tr><tr><td>
-<p><img src="/weblogic-remote-console/images/ui-icons/beanpath-history-icon-blk-24x24.png" alt="Visibility of history"> Visibility of History</p>
-</td><td>
-<p>Triggers a record of the pages you visit. When active, a drop-down list appears where you can see, and return to, your previous pages. History is limited to the current perspective. Click <strong>More ︙</strong>, then <strong>Clear History Entries</strong> to delete your navigation history.</p>
-</td></tr><tr><td>
-<p><img src="/weblogic-remote-console/images/ui-icons/project-management-blk-24x24.png" alt="Providers drawer"> Providers</p>
-</td><td>
-<p>Opens the <strong>Providers</strong> drawer where you can manage your provider connections.</p>
-</td></tr><tr><td>
-<p><img src="../../pages-history-back-blk-24x24.png" alt="Back">/<img src="/weblogic-remote-console/images/ui-icons/pages-history-next-blk-24x24.png" alt="Next"> Browse Back and Forward</p>
-</td><td>
-<p>Browses backward or forward through your previously visited pages in WebLogic Remote Console.</p>
-</td></tr><tr><td>
-<p><img src="/weblogic-remote-console/images/ui-icons/pages-history-icon-blk-24x24.png" alt="Pages history"> Pages History</p>
-</td><td>
-<p>Opens the <strong>Pages History</strong> dialog box, which lists the pages that you have previously visited in WebLogic Remote Console.</p>
-</td></tr><tr><td>
-<p><img src="/weblogic-remote-console/images/ui-icons/landing-page-icon-blk-24x24.png" alt="Landing page"> Landing Page</p>
-</td><td>
-<p>Sends you to the Landing Page of the current perspective.</p>
-</td></tr><tr><td>
-<p><img src="/weblogic-remote-console/images/ui-icons/toggle-help-icon-blk-16x16.png" alt="Help"> Help</p>
-</td><td>
-<p>Shows reference information about the attributes present on the current page.</p>
-</td></tr><tr><td>
-<p><img src="/weblogic-remote-console/images/ui-icons/sync-icon-blk-24x24.png" alt="Reload"> Reload</p>
-</td><td>
-<p>Refreshes any forms or tables on the current page with the latest available data.When <strong>Auto Reload Interval</strong> is enabled, this icon will bounce continuously.</p>
-</td></tr><tr><td>
-<p><img src="/weblogic-remote-console/images/ui-icons/sync-interval-icon-blk-24x24.png" alt="Auto-reload interval"> Auto Reload Interval</p>
-</td><td>
-<p>Sets a time interval (in seconds) for how often WebLogic Remote Console should reload a page to refresh its information. If you select another tab or move to another page, automatic reload stops.To stop auto reload, click the bouncing <strong>Reload</strong> icon or click <strong>Auto Reload Interval</strong> and set the interval to <code>0</code>.</p>
-</td></tr><tr><td>
-<p><img src="/weblogic-remote-console/images/ui-icons/action-reset-icon-blk-24x24.png" alt="Refresh page values"> Refresh Page Values</p>
-</td><td>
-<p>Updates the Content Pane with the latest values.</p>
-</td></tr><tr><td>
-<p><strong>☆</strong> Page Bookmarks</p>
-</td><td>
-<p>Saves the current page as a bookmark. You can also view existing bookmarks.</p>
-</td></tr></tbody>
-</table>
-<p>Table 1. Tools. Tool icons that may appear along the top of the Content Pane.</p>
-<h2 id="explore-your-domain">Explore your Domain</h2>
-<p>WebLogic Server domains can be complex structures, so WebLogic Remote Console provides multiple methods to locate your objective.</p>
-<p><strong>Navigation Tree</strong>: Expand the nodes of the Navigation Tree to browse its children and gain a high level understanding of the hierarchical relationship of a WebLogic Server domain.</p>
-<p><strong>Breadcrumbs</strong>: The Content Pane provides a breadcrumb menu to orient you as you descend further into a node branch. You can also click on a node&rsquo;s page title in the Breadcrumb menu to find links to related nodes that take you directly to the related content.</p>
-<p><strong>Search</strong>: Use the search bar to find any MBeans in the domain that match your query. Searches are restricted to within the current provider and perspective. Previous search queries can be found as the last node in the Navigation Tree, nested under the <strong>Recent Searches</strong> node.</p>
-<p><strong>Dashboards</strong>: If you find yourself regularly reviewing specific data within your domain, you may want to make use of Dashboards, which let you curate complex search filters and compare disparate information about your domain. For more information, see <a href="/weblogic-remote-console/administration-server/monitoring-domains/#GUID-1C12C76D-2820-4AD8-9556-46AC52C617AD">Dashboards</a>.</p>
-<h2 id="change-indicators">Change Indicators</h2>
-<p>When you modify an MBean attribute, WebLogic Remote Console adds a black outline to the attribute&rsquo;s field to indicate that it is no longer set to the default value.</p>
-<p>To return an MBean attribute to its default setting, right-click inside the attribute&rsquo;s field and click <strong>Restore to default</strong>. Save and commit the change.</p>
+<p>Most provider types have a <strong>Navigation Tree</strong> that presents the structure of a WebLogic Server domain as a node tree. Expand each top-level node (such as <strong>Environment</strong> or <strong>Security</strong>) to delve into the domain&rsquo;s structure. As you move through the Navigation Tree, the central pane of WebLogic Remote Console will update to display the applicable MBeans attributes and configurations for the currently selected node.</p>
 
 
 <div class="alert alert-primary" role="alert">
 <h4 class="alert-heading">Note</h4>
 
-    The domain configuration file, <code>config.xml</code>, only describes MBean attributes if they are set to non-default values. After you use Restore to default, the (now unnecessary) attribute will be removed from the file.
+    A Property List provider does not have a Navigation Tree; its interface consists of a single page where you enter name-value pairs. In contrast, Administration Server providers have four distinct Navigation Trees, one for each perspective. See <a href="/weblogic-remote-console/administration-server/domain-configuration/#GUID-E1D3A576-47A8-4291-9F56-617B1039168F">Perspectives in the Administration Server Provider</a>.
+
+</div>
+<p>You can also move through the domain structure using the Search field or the Breadcrumbs trail.</p>
+<p>The <strong>Search</strong> field (located in the header banner) finds any MBeans in the domain that match your query. Search results are limited to the current provider and perspective. Previous search queries can be found (and rerun) under the <strong>Recent Searches</strong> node, the last node in the Navigation Tree.</p>
+<p>The <strong>Breadcrumb</strong> trail (located underneath the header bar) indicates the full direct ancestry of your current page. You can use the breadcrumbs in the trail to jump to higher levels in the Navigation Tree. The final breadcrumb in the trail (that is, the current page) enables you to jump to related pages outside of the current page&rsquo;s hierarchy. Select the final breadcrumb to choose from a list of related pages.</p>
+
+
+<div class="alert alert-primary" role="alert">
+<h4 class="alert-heading">Note</h4>
+
+    If you find yourself regularly reviewing specific data within your domain, consider building a <strong>Dashboard</strong>, which lets you curate complex search filters and compare disparate information about your domain. For more information, see <a href="/weblogic-remote-console/administration-server/monitoring-domains/#GUID-1C12C76D-2820-4AD8-9556-46AC52C617AD">Dashboards</a>.
+
+</div>
+<p><a href="/weblogic-remote-console/set-console/get-know-console/#TABLE_GQ3_FQF_NZB">Table 1</a> describes common icons for the various actions available throughout WebLogic Remote Console.</p>
+<table id="TABLE_GQ3_FQF_NZB"><thead><tr><th>
+<p>Icon</p>
+</th><th>
+<p>Description</p>
+</th></tr></thead><tbody><tr><td>
+<p><img src="/weblogic-remote-console/images/ui-icons/ico-git-hub.png" alt="Icon of GitHub logo"> GitHub</p>
+</td><td>
+<p>Opens the WebLogic Remote Console GitHub repository in your browser.</p>
+</td></tr><tr><td>
+<p><img src="/weblogic-remote-console/images/ui-icons/ico-lightbulb.png" alt="Icon of a lightbulb">Console Tips</p>
+</td><td>
+<p>Provides tips on WebLogic Remote Console functionality.</p>
+</td></tr><tr><td>
+<p><img src="/weblogic-remote-console/images/ui-icons/ico-weather-sun.png" alt="Icon of the sun">/<img src="/weblogic-remote-console/images/ui-icons/ico-weather-moon.png" alt="Icon of a crescent moon">Dark/Light mode</p>
+</td><td>
+<p>Switches the user interface between Light and Dark modes.</p>
+</td></tr><tr><td>
+<p><img src="/weblogic-remote-console/images/ui-icons/ico-help-circle-s.png" alt="Icon of question mark inside a circle"> User Documentation</p>
+</td><td>
+<p>Opens the WebLogic Remote Console user documentation in your browser.</p>
+</td></tr><tr><td>
+<p><img src="/weblogic-remote-console/images/ui-icons/ico-star.png" alt="Icon of a star"> Add Bookmark</p>
+</td><td>
+<p>Saves the current page as bookmark so you can quickly refer to it later.</p>
+</td></tr><tr><td>
+<p><img src="/weblogic-remote-console/images/ui-icons/ico-bookmark-favorite.png" alt="Icon of banner with a star">Page Bookmarks</p>
+</td><td>
+<p>Opens a dialog box that lists all of your saved pages.</p>
+</td></tr><tr><td>
+<p><img src="/weblogic-remote-console/images/ui-icons/ico-cart-alt.png" alt="Icon of an empty shopping cart"> Shopping Cart</p>
+</td><td>
+<p>Lists any pending changes in the active Administration Server provider. You can choose whether to commit or discard them.When the <strong>Shopping Cart</strong> is full, you can click it to see the pending changes and then commit or discard them.</p>
+</td></tr><tr><td>
+<p><img src="/weblogic-remote-console/images/ui-icons/ico-clock-history.png" alt="Icon of a clock whose border is a circular arrow"> Show Pages History</p>
+</td><td>
+<p>Opens the <strong>Pages History</strong> dialog box, which lists the pages that you have previously visited in WebLogic Remote Console.</p>
+</td></tr><tr><td>
+<p><img src="/weblogic-remote-console/images/ui-icons/ico-arrow-left.png" alt="Icon of leftward facing arrow inside a circle">/<img src="/weblogic-remote-console/images/ui-icons/ico-arrow-right.png" alt="Icon of right-facing arrow inside a circle">Back/Forward</p>
+</td><td>
+<p>Browses backward or forward through your previously visited pages in WebLogic Remote Console.</p>
+</td></tr><tr><td>
+<p><img src="/weblogic-remote-console/images/ui-icons/ico-help.png" alt="Icon of question mark"> Inline Field Help</p>
+</td><td>
+<p>Shows reference information about the attributes present on the current page. Click again to return to the editable fields.</p>
+</td></tr><tr><td>
+<p><img src="/weblogic-remote-console/images/ui-icons/ico-refresh.png" alt="Icon of an arrow in a circle">Reload</p>
+</td><td>
+<p>Refreshes any forms or tables on the current page with the latest available data. When <strong>Auto Reload Interval</strong> is enabled, this icon will bounce continuously.</p>
+</td></tr><tr><td>
+<p><img src="/weblogic-remote-console/images/ui-icons/ico-reset.png" alt="Icon of an arrow in a circle with a line cutting through the circle"> Auto Reload Interval</p>
+</td><td>
+<p>Sets a time interval (in seconds) for how often WebLogic Remote Console should reload a page to refresh its information. If you select another tab or move to another page, automatic reload stops.To stop auto reload, click the bouncing <strong>Reload</strong> icon or click <strong>Auto Reload Interval</strong> and set the interval to <code>0</code>.</p>
+</td></tr><tr><td colspan="2">
+<p><strong>The following icons appear directly beside fields in WebLogic Remote Console.</strong></p>
+</td></tr><tr><td>
+<p><img src="/weblogic-remote-console/images/ui-icons/ico-target.png" alt="Icon of a bullseye"> Field Settings</p>
+</td><td>
+<p>Opens a dialog box where you edit values, review lengthy field values, or revert existing values to their default values (that is, “unset” them).In WDT model file and WDT Composite model providers, it also provides support for inserting variable values. See <a href="/weblogic-remote-console/weblogic-deploy-tooling/wdt-model-files/#GUID-0C7510AB-67B2-4EF5-8DAB-5A09DC2BD2E8">WDT Model Tokens</a>.</p>
+</td></tr><tr><td>
+<p><strong>|</strong> Change Indicator</p>
+</td><td>
+<p>Indicates that the current value of the marked field is set to a value other than the default value. See <a href="/weblogic-remote-console/set-console/get-know-console/#section_mcl_y1g_y3c">Change Indicators</a>.</p>
+</td></tr></tbody>
+</table>
+<p>Table 1. Page and Field Icons. Icons that may appear throughout WebLogic Remote Console.</p>
+<h2 id="section_mcl_y1g_y3c">Change Indicators</h2>
+<p>When you modify an MBean attribute, WebLogic Remote Console adds a green bar to the left of the attribute&rsquo;s field to indicate that it is no longer set to the default value.</p>
+<p>To return an MBean attribute to its default setting, select the <strong>Field Settings</strong> <img src="/weblogic-remote-console/images/ui-icons/ico-target.png" alt="Icon of a bullseye"> button beside the attribute field, then select <strong>Unset value</strong> and click <strong>OK</strong>. Make sure to save (and commit) the change.</p>
+
+
+<div class="alert alert-primary" role="alert">
+<h4 class="alert-heading">Note</h4>
+
+    The domain configuration file, <code>config.xml</code>, only describes MBean attributes if they are set to non-default values. After you use restore a value to its default, the (now unnecessary) attribute will be removed from the file.
 
 </div>
 <h2 id="GUID-709F9244-296B-443C-827F-AC8B26513FAC">Change Console Preferences</h2>
-<p>You can customize Desktop WebLogic Remote Console to suit your needs.</p>
+<p>You can adjust the preferences of Desktop WebLogic Remote Console including changes to credential management, the interface&rsquo;s language, or auto-update behavior.</p>
 <ol>
 <li>
 <p>Go to <strong>File</strong>, then <strong>Preferences</strong>. (On macOS, go to <strong>WebLogic Remote Console</strong>, then <strong>Application Preferences</strong> ).</p>
@@ -423,27 +450,28 @@ When you launch WebLogic Remote Console for the first time, it opens a Startup T
 </ol>
 <h2 id="GUID-BB23744E-D6F9-4D35-8CEB-01EBCF03636F">Bookmark Pages</h2>
 <p>You can save WebLogic Remote Console pages that you visit frequently.</p>
-<p>Bookmarks are shared between providers of the same type. For example, if you save a page in an Administration Server provider, that page will be bookmarked in every Administration Server provider, but it won&rsquo;t be bookmarked in a WDT Model provider.</p>
+<p>Bookmarks are shared between providers of the same type. For example, if you save a page in an Administration Server provider, that page will be bookmarked in every Administration Server provider, but it won&rsquo;t be available in a WDT Model provider.</p>
 <ul>
 <li>
 <p>To save a page in WebLogic Remote Console as a bookmark:</p>
-</li>
+<ul>
 <li>
-<p>On the page that you want to save, click <strong>Page Bookmarks ☆</strong> in the tool bar, then select <strong>Add Bookmark for Current Page</strong>.</p>
+<p>On the page that you want to save, click <strong>Page Bookmark</strong> <img src="/weblogic-remote-console/images/ui-icons/ico-star.png" alt="Icon of a star"> in the tool bar.</p>
 <p>On pages that are already bookmarked, the star will be filled in.</p>
+</li>
+</ul>
 </li>
 <li>
 <p>To go to a bookmarked page:</p>
-</li>
-<li>
-<p>In the upper top right corner (beside Pages History <img src="/weblogic-remote-console/images/ui-icons/pages-history-icon-blk-24x24.png" alt="Pages history">), click <strong>Page Bookmarks ☆</strong>, then select the page you want to visit.</p>
+<ul>
+<li>In the upper right corner, click <strong>Page Bookmarks</strong> <img src="/weblogic-remote-console/images/ui-icons/ico-bookmark-favorite.png" alt="Icon of banner with a star">, then select the page that you want to visit.</li>
+</ul>
 </li>
 <li>
 <p>To delete a bookmark:</p>
-</li>
-<li>
-<p>In the upper top right corner (beside Pages History <img src="/weblogic-remote-console/images/ui-icons/pages-history-icon-blk-24x24.png" alt="Pages history">), click <strong>Page Bookmarks ☆</strong>, then, in the row for the the page that you want to delete, click <strong>Delete</strong>, then <strong>Apply</strong>.</p>
-<p>If you clicked <strong>Delete</strong> on the wrong bookmark, you can click <strong>Reset</strong> to undo the deletion, if you haven&rsquo;t clicked <strong>Apply</strong> yet.</p>
+<ul>
+<li>In the upper right corner, click <strong>Page Bookmarks</strong> <img src="/weblogic-remote-console/images/ui-icons/ico-bookmark-favorite.png" alt="Icon of banner with a star">, then click the page you want to delete.  WebLogic Remote Console will load that page where you can click the (filled in) <strong>Page Bookmark</strong> <img src="/weblogic-remote-console/images/ui-icons/ico-star.png" alt="Icon of a star"> icon to un-bookmark the page.</li>
+</ul>
 </li>
 </ul>
 <h2 id="GUID-FF37D291-F8C5-4EFB-8A18-DADF035348C9">Customize a Table</h2>
@@ -473,20 +501,26 @@ When you launch WebLogic Remote Console for the first time, it opens a Startup T
 <p>To arrange providers into a collection:</p>
 <ol>
 <li>
-<p>Open <strong>File</strong>, then <strong>New Project</strong>.</p>
+<p>Open the <strong>Projects/Providers</strong> page.</p>
 </li>
 <li>
-<p>Enter a name for the new project.</p>
+<p>In the breadcrumbs trail, select <strong>Projects</strong>.</p>
 </li>
 <li>
-<p>Open the <strong>Providers</strong> drawer and beside the project&rsquo;s name, click <strong>More ︙</strong>. Select one of the following options to add a provider:</p>
+<p>Select <strong>Create</strong>.</p>
+</li>
+<li>
+<p>Enter a name for the new project and select <strong>Done</strong>. WebLogic Remote Console will automatically load the Project page for your new project.</p>
+</li>
+<li>
+<p>Select <strong>Create</strong> to add a provider to the new project. Select one of the following options to add a provider:</p>
 <ul>
-<li>Add Admin Server Connection Provider</li>
-<li>Add WDT Model File Provider</li>
-<li>Add WDT Composite Model File Provider</li>
-<li>Add Property List Provider</li>
-<li>Create Provider for New WDT Model File</li>
-<li>Create Provider for New Property List
+<li>Admin Server Connection Provider</li>
+<li>Existing WDT Model File Provider</li>
+<li>WDT Composite Model File Provider</li>
+<li>Existing Property List Provider</li>
+<li>New WDT Model File Provider</li>
+<li>New Property List Provider
 For more information on the different provider types, see <a href="/weblogic-remote-console/set-console/#GUID-82C1C605-D42E-45EA-AC16-5BA3D5853C96">Provider Types</a></li>
 </ul>
 </li>
@@ -494,13 +528,13 @@ For more information on the different provider types, see <a href="/weblogic-rem
 <p>Fill in any required information.</p>
 </li>
 <li>
-<p>Click <strong>OK</strong> to add the provider to your project.</p>
+<p>Click <strong>Done</strong> to add the provider to the project.</p>
 </li>
 <li>
 <p><strong>Optional</strong>: Add more providers to the project.</p>
 </li>
 </ol>
-<p>You can add or remove providers from the project at any point. To switch to another project, open <strong>File</strong>, then <strong>Switch to project</strong> and choose the project that you want to switch to.</p>
+<p>You can add or remove providers from the project at any point. To switch to another project, return to the <strong>Projects/Providers</strong> page and select another project from the left pane navigation tree.</p>
 <p>Deleting a project will not affect the providers within the project.</p>
 <h3 id="GUID-AD97818F-0740-4E24-8673-9FFF4E32596E">Export a Project</h3>
 <p>If you use WebLogic Remote Console on multiple computers, exporting a project is a convenient way to share a project across multiple computers.</p>
@@ -514,19 +548,19 @@ For more information on the different provider types, see <a href="/weblogic-rem
 </div>
 <ol>
 <li>
-<p>In the Providers drawer, click <strong>More ︙</strong> and select <strong>Export Providers as Project</strong>.</p>
+<p>Open the <strong>Projects/Providers</strong> page.</p>
 </li>
 <li>
-<p>Enter a name for the exported project. When imported into another WebLogic Remote Console, this will be the name of the project.</p>
+<p>In the breadcrumbs trail, select <strong>Projects</strong>.</p>
 </li>
 <li>
-<p>Enter a name for the file of the exported project.</p>
+<p>In the Projects table, select the project that you want to export.</p>
 </li>
 <li>
-<p>Click <strong>OK</strong> and choose a file location to save the exported project file.</p>
+<p>Select <strong>Export</strong> and save the <code>projects.json</code> file to your computer. You can change the file name as desired.</p>
 </li>
 </ol>
-<p>WebLogic Remote Console creates a JSON file with the project details that you can import into other instances of WebLogic Remote Console.</p>
+<p>You can import the <code>projects.json</code> file into other instances of WebLogic Remote Console.</p>
 <h3 id="GUID-F0A7A1C6-87F1-458B-9D31-5FF65E20023D">Import a Project</h3>
 <p>You can import the project details of an existing project to rapidly ramp up productivity in a new installation of WebLogic Remote Console.</p>
 <ol>
@@ -537,23 +571,32 @@ For more information on the different provider types, see <a href="/weblogic-rem
 <p>On the computer where you want to import the file, start WebLogic Remote Console.</p>
 </li>
 <li>
-<p>In the Providers drawer, click <strong>More ︙</strong> and select <strong>Import Project</strong>.</p>
+<p>On the <strong>Projects</strong> page, select <strong>Import</strong>.</p>
 </li>
 <li>
-<p>Click <strong>Upload File</strong> and browse to the exported project file.</p>
+<p>Select <strong>Upload File</strong> and browse to the file location of the exported project file.</p>
 </li>
 <li>
-<p>Click <strong>Import</strong>.</p>
+<p>Click <strong>Done</strong>.</p>
 </li>
 </ol>
+
+
+<div class="alert alert-primary" role="alert">
+<h4 class="alert-heading">Note</h4>
+
+    <p>The behavior of imported projects differs between Desktop WebLogic Remote Console and Hosted WebLogic Remote Console.</p>
 <ul>
 <li>
-<p>In Desktop WebLogic Remote Console, the imported project replaces the current project. To return to the previous project, open <strong>File</strong>, then <strong>Switch to project</strong> and choose the previous project.</p>
+<p>In Desktop WebLogic Remote Console, the console loads the imported project automatically but you can switch back to any of your previously existing projects.</p>
 </li>
 <li>
-<p>In Hosted WebLogic Remote Console, the providers of the imported project are added to the current project.</p>
+<p>In Hosted WebLogic Remote Console, the console <em>adds</em> the providers from the imported project to the current project.</p>
 </li>
 </ul>
+
+
+</div>
 <h2 id="GUID-5C611ED8-29EF-4B21-B181-557C7D192C96">Enable Keyboard Navigation on macOS</h2>
 <p>On devices running macOS, you must specifically enable keyboard navigation before you can use the Tab key (or Shift + Tab keys) to navigate between the controls in WebLogic Remote Console.</p>
 <ol>

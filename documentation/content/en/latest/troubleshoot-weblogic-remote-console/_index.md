@@ -121,6 +121,12 @@ If you try to make a configuration change to the domain and receive an <code>Fai
 
 If you are an administrator, you can take the configuration lock \(and their pending changes\) from the other user. See [Grab the Edit Lock](../administration-server/domain-configuration#GUID-376C1ED1-E4AF-48B8-9BEC-B57D5BDEB9B5).
 
+### How do I do *x* in WebLogic Remote Console 3.x? {#section_vq1_ly2_y3c}
+
+WebLogic Remote Console 3.0.3 is a significant update. For a brief overview of the major changes compared to WebLogic Remote Console 2.4.19, refer to [Introducing WebLogic Remote Console 3.x](https://oracle.github.io/weblogic-remote-console/preview/).
+
+WebLogic Remote Console 3.x is more than a superficial update; significant changes were made to the underlying code. While we've done our best to ensure feature parity from WebLogic Remote Console 2.4,19, you may encounter some unexpected behavior, particularly in the area of WDT model file management. As with any issues you encounter, consider raising a bug in the [WebLogic Remote Console GitHub Repository](https://github.com/oracle/weblogic-remote-console) so we can track the issue. See [Contribute to WebLogic Remote Console](../set-console/contribute-wrc-repository#GUID-0BCE90EE-6760-4A0E-968E-C0EB8C49D66E).
+
 ## Cannot connect to the Administration Server {#GUID-B3D14A11-0144-4B31-BFE3-E6AC59AEFCBE}
 
 WebLogic Remote Console cannot connect to a WebLogic Server Administration Server.

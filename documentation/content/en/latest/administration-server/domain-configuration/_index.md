@@ -15,9 +15,9 @@ You can connect to a running WebLogic Server domain through its Administration S
 
     See [Starting and Stopping Servers](https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=START-GUID-762370A1-00C4-4EBB-92FC-5E33B97B6716) in **Administering Server Startup and Shutdown for Oracle WebLogic Server** for instructions.
 
-2.  Open the **Providers** drawer and click **More ︙**.
+2.  On the **Projects/Providers** page, select **Create**.
 
-3.  From the list, select **Add Admin Server Connection Provider**.
+3.  Select **Admin Server Connection Provider**.
 
 4.  Enter a name for the Administration Server.
 
@@ -49,12 +49,12 @@ You can connect to a running WebLogic Server domain through its Administration S
 
     You can also set a proxy address that applies to all Administration Server connections. See [Connect using a Proxy Server](#GUID-D7AD7F50-88F8-4FC9-A28B-CBF98B5FD479).
 
-10. Click **OK**.
+10. Click **Done**.
 
 
 After you connect successfully, you can begin managing your WebLogic Server domain. To understand how WebLogic Remote Console presents a domain structure, see [Perspectives in the Administration Server Provider](#GUID-E1D3A576-47A8-4291-9F56-617B1039168F).
 
-You can view and update the connection details for an Administration Server provider in the **Providers** drawer.
+You can view and update the connection details for an Administration Server provider on the **Projects / Providers** page.
 
 ### Connect using SSL/TLS {#GUID-660C99D2-4F3F-4276-B3E2-E725A27D1C82}
 
@@ -242,9 +242,9 @@ You can also configure a combination of global and individual settings; the indi
 
 -   To apply proxy server settings to a single Administration Server connection:
 
-    1.  Open the **Providers** drawer.
+    1.  Open the **Projects / Providers** page.
 
-    2.  Beside the Administration Server provider where you want to configure a proxy server, click **Settings**.
+    2.  Select the Administration Server provider where you want to configure a proxy server.
 
     3.  In the **Proxy Override** field, enter the address of the proxy server, including both the host name and port number.
 
@@ -255,7 +255,7 @@ You can also configure a combination of global and individual settings; the indi
         {{< /alert >}}
 
 
-    4.  Click **OK**.
+    4.  Click **Save**.
 
 
 ### Change Network Timeout Settings {#GUID-DE8161AA-2664-4248-AB9E-2147BDB3A65F}
@@ -367,6 +367,15 @@ In WebLogic Remote Console, it is a generally two step process to apply configur
 ### Step One: Edit {}
 
 When you make changes to your domain, they are saved in a Pending state. They are not active in the domain but you can make changes in other areas without losing them and even if you log out of WebLogic Remote Console, the domain will retain those changes.
+
+{{< alert title="Note" color="primary" >}}
+
+
+
+Use the **Field Setting** ![Icon of a bullseye](/weblogic-remote-console/images/ui-icons/ico-target.png) button beside a field to open a dialog box where you edit values, review lengthy field values, or revert existing values to their default values \(that is, “unset” them\).
+
+{{< /alert >}}
+
 
 You can see your pending changes in the Shopping Cart. In the Shopping Cart, click **View Changes**. If you cannot see specific changes in the Shopping Cart, [Install the WebLogic Remote Console Extension](../../set-console#GUID-40440E0F-0310-4830-9B4B-00FC9ABBB591).
 

@@ -35,14 +35,14 @@ Understanding Security for Oracle WebLogic Server Administering Security for Ora
   <meta itemprop="description" content="WebLogic Server offers a robust set of security tools to protect your WebLogic Server environment from unauthorized access. Use WebLogic Remote Console to secure your system.
 For general information on security concepts in WebLogic Server, see:
 Understanding Security for Oracle WebLogic Server Administering Security for Oracle WebLogic Server Securing Resources Using Roles and Policies for Oracle WebLogic Server Securing a Production Environment for Oracle WebLogic Server Address Potential Security Issues WebLogic Server regularly checks your domain to ensure it complies with its recommended security policies. If a domain does not meet the recommendations, a security warning is logged and displayed in WebLogic Remote Console.">
-  <meta itemprop="wordCount" content="16605">
+  <meta itemprop="wordCount" content="16624">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Securing Domains">
   <meta name="twitter:description" content="WebLogic Server offers a robust set of security tools to protect your WebLogic Server environment from unauthorized access. Use WebLogic Remote Console to secure your system.
 For general information on security concepts in WebLogic Server, see:
 Understanding Security for Oracle WebLogic Server Administering Security for Oracle WebLogic Server Securing Resources Using Roles and Policies for Oracle WebLogic Server Securing a Production Environment for Oracle WebLogic Server Address Potential Security Issues WebLogic Server regularly checks your domain to ensure it complies with its recommended security policies. If a domain does not meet the recommendations, a security warning is logged and displayed in WebLogic Remote Console.">
-<link rel="preload" href="/weblogic-remote-console/scss/main.min.48c25d0a5a23a1e8cae94d6c5e7622061e5345cf098171b1d6ee41d8e309e6c8.css" as="style" integrity="sha256-SMJdClojoejK6U1sXnYiBh5TRc8JgXGx1u5B2OMJ5sg=" crossorigin="anonymous">
-<link href="/weblogic-remote-console/scss/main.min.48c25d0a5a23a1e8cae94d6c5e7622061e5345cf098171b1d6ee41d8e309e6c8.css" rel="stylesheet" integrity="sha256-SMJdClojoejK6U1sXnYiBh5TRc8JgXGx1u5B2OMJ5sg=" crossorigin="anonymous">
+<link rel="preload" href="/weblogic-remote-console/scss/main.min.3bb6570761fbbb25e6691001febc67f331f0953db4e4e1cfb79172c2e6a5819e.css" as="style" integrity="sha256-O7ZXB2H7uyXmaRAB/rxn8zHwlT205OHPt5FywualgZ4=" crossorigin="anonymous">
+<link href="/weblogic-remote-console/scss/main.min.3bb6570761fbbb25e6691001febc67f331f0953db4e4e1cfb79172c2e6a5819e.css" rel="stylesheet" integrity="sha256-O7ZXB2H7uyXmaRAB/rxn8zHwlT205OHPt5FywualgZ4=" crossorigin="anonymous">
 <script
   src="https://code.jquery.com/jquery-3.7.1.min.js"
   integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
@@ -70,8 +70,9 @@ Understanding Security for Oracle WebLogic Server Administering Security for Ora
         <div class="dropdown">
   <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Releases</a>
   <ul class="dropdown-menu">
-    <li><a class="dropdown-item" href="/weblogic-remote-console/overview">Latest (v2.4.19)</a></li>
-    <li><a class="dropdown-item" href="/weblogic-remote-console/preview">Tech Preview (v3.0.0)</a></li>
+    <li><a class="dropdown-item" href="/weblogic-remote-console/overview">Latest (v3.0.3)</a></li>
+    <li><a class="dropdown-item" href="/weblogic-remote-console/preview">Tech Preview (v3.0.2)</a></li>
+    <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.19">v2.4.19</a></li>
     <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.18">v2.4.18</a></li>
     <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.17">v2.4.17</a></li>
     <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.16">v2.4.16</a></li>
@@ -143,7 +144,7 @@ Understanding Security for Oracle WebLogic Server Administering Security for Ora
     aria-label="Search this site…"
     autocomplete="off"
     
-    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.c91eadea726d3adef8baaa146aae00e3.json"
+    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.9a1e60b97d06a8082f60f18b5f00d58a.json"
     data-offline-search-base-href="/"
     data-offline-search-max-results="10"
   >
@@ -168,7 +169,7 @@ Understanding Security for Oracle WebLogic Server Administering Security for Ora
     aria-label="Search this site…"
     autocomplete="off"
     
-    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.c91eadea726d3adef8baaa146aae00e3.json"
+    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.9a1e60b97d06a8082f60f18b5f00d58a.json"
     data-offline-search-base-href="/"
     data-offline-search-max-results="10"
   >
@@ -1308,13 +1309,13 @@ The match is case-insensitive.</li>
     You can only edit the arguments of the condition. If you want to use a different predicate for the condition, you must add a new condition.
 
 </div>
-<p>Conditions have three different types of relationships: <code>AND</code>, <code>OR</code>, and <code>Combination</code>.</p>
+<p>Conditions have three different types of relationships: <code>AND</code>, <code>OR</code>, and <code>Group</code>.</p>
 <ul>
 <li><code>AND</code>: All of the conditions joined by an <code>AND</code> operator must be met.</li>
 <li><code>OR</code>: At least one of the conditions joined by an <code>OR</code> operator must be met.</li>
-<li><code>Combination</code>: Two or more conditions are combined and must be evaluated as a group. Conditions <em>within</em> a combination are themselves related to each other through <code>AND</code> or <code>OR</code> operators.</li>
+<li><code>Group</code>: Two or more conditions are combined and must be evaluated as a group. Conditions <em>within</em> a group are themselves related to each other through <code>AND</code> or <code>OR</code> operators.</li>
 </ul>
-<p>By default, a new condition is added as a simple condition at the top of the list of conditions. To insert a new condition elsewhere, select an existing condition and then click <strong>Add Condition</strong>. You will get a drop-down list with options to add the new condition either above or below the selected condition. The order of conditions is not meaningful to how the policy is interpreted.</p>
+<p>By default, a new condition is added as a simple condition at the top of the list of conditions. To insert a new condition elsewhere, select an existing condition and then click <strong>Add Predicate</strong>. You will get a drop-down list with options to add the new condition either above or below the selected condition. The order of conditions is not meaningful to how the policy is interpreted.</p>
 <p>A policy can contain multiple simple or compound conditions or a mix of simple and compound conditions. You can also nest compound conditions.</p>
 
 
@@ -1338,30 +1339,36 @@ The match is case-insensitive.</li>
 </th><th>
 <p>Description</p>
 </th></tr></thead><tbody><tr><td>
-<p>Add Condition</p>
+<p>Add Predicate</p>
 </td><td>
-<p>Adds a new condition to the policy. You can choose to add the new condition above or below another condition.</p>
+<p>Allows you to add a condition (predicate) to the policy.</p>
 </td></tr><tr><td>
-<p>Combine</p>
+<p>Add <code>AND</code></p>
 </td><td>
-<p>When multiple conditions are selected, you can combine them to create a compound condition.</p>
+<p>Allows you to chain multiple predicates together.</p>
+<p>The user must meet ALL specified predicates.</p>
 </td></tr><tr><td>
-<p>Uncombine</p>
+<p>Add <code>OR</code></p>
 </td><td>
-<p>When a compound condition is selected, you can break it into independent (simple) conditions.</p>
+<p>Allows you to chain multiple predicates together.</p>
+<p>The user must meet at least ONE of the specified predicates.</p>
 </td></tr><tr><td>
-<p>Remove</p>
+<p>Add <code>Group</code></p>
 </td><td>
-<p>Deletes a simple or compound condition from the policy.</p>
-<p>When there are no conditions in a policy, the default policy applies.</p>
+<p>Allows you to create a Group where predicates will be evaluated simultaneously.</p>
 </td></tr><tr><td>
 <p>Negate</p>
 </td><td>
 <p>Reverses the meaning of a condition. The criteria to access a resource becomes the opposite of the original condition.</p>
 </td></tr><tr><td>
-<p>Reset</p>
+<p>Delete</p>
 </td><td>
-<p>Reverts the policy to its last <em>saved</em> change, not the last change. It&rsquo;s recommended that you save your policy frequently or you may lose several changes unintentionally using the Reset action.</p>
+<p>Deletes a simple or compound condition from the policy.</p>
+<p>When there are no conditions in a policy, the default policy applies.</p>
+</td></tr><tr><td>
+<p>Cancel</p>
+</td><td>
+<p>You can use the <strong>Cancel</strong> option to revert the policy to its last <em>saved</em> change, not the last change. It&rsquo;s recommended that you save your policy frequently or you may lose several changes unintentionally using the Cancel action.</p>
 </td></tr></tbody>
 </table>
 <p>You can also edit a policy from its <strong>Advanced</strong> tab where the policy is expressed as string. Any changes made to a policy in the Advanced tab are reflected in the main Policy tab, and vice versa.</p>
@@ -1374,19 +1381,16 @@ The match is case-insensitive.</li>
 <p><em>myResourceInstance</em> is the node path to the resource instance and may contain multiple nodes. For example, to create a policy for a queue in a JMS module, your path would be &ldquo;…<strong>XACMLAuthorizer</strong>, then <strong>JMS Modules</strong>, then <em>jmsModuleName</em>, then <strong>Queues</strong>, then <em>queueName</em>.&rdquo;</p>
 </li>
 <li>
-<p>Click <strong>Add Condition</strong>.</p>
+<p>Click <strong>Add Predicate</strong>.</p>
 </li>
 <li>
-<p>Select a predicate from the <strong>Predicate List</strong>. Depending on the predicate you choose, you may need to configure arguments for the condition.</p>
-</li>
-<li>
-<p>Click <strong>OK</strong>.</p>
+<p>Select a predicate from the <strong>Predicate</strong> dropdown list. Depending on the predicate you choose, you may need to configure arguments for the condition.</p>
 </li>
 <li>
 <p>Click <strong>Save</strong>.</p>
 </li>
 <li>
-<p><strong>Optional</strong>: Add more conditions to the policy to increase its complexity.</p>
+<p><strong>Optional</strong>: Add more conditions as necessary to the policy to increase its complexity.</p>
 </li>
 </ol>
 <h4 id="GUID-BDAEE9EF-4BC3-4047-AC91-3CD163A27D1C">Apply a Policy to a JMX Resource</h4>
@@ -1500,10 +1504,10 @@ The match is case-insensitive.</li>
 <p>The WebLogic Security Service evaluates conditions in the order they appear in the list. If you want the new condition to appear above an existing conditions (and thus be evaluated before it), select the checkbox beside the existing condition before you proceed.</p>
 <ol>
 <li>
-<p>Click <strong>Add Condition</strong>.</p>
+<p>Click <strong>Add Predicate</strong>.</p>
 </li>
 <li>
-<p>Select a predicate from the <strong>Predicate List</strong>. Depending on the predicate you choose, you may need to configure arguments for the condition.</p>
+<p>Select a predicate from the <strong>Predicate</strong> dropdown list. Depending on the predicate you choose, you may need to configure arguments for the condition.</p>
 </li>
 <li>
 <p>Click <strong>OK</strong>.</p>

@@ -74,7 +74,7 @@ With WDT model tokens, you can create WDT model files that adapt based on the ap
 
 WebLogic Remote Console supports multiple types of WDT model tokens. All tokens follow this format: <code>@@TYPE:KEY@@</code> where <code>TYPE</code> is the model token type and <code>KEY</code> is the variable value. For more information on the different types of WDT model tokens and their syntax, see Model Tokens in [*WebLogic Deploy Tooling*](https://oracle.github.io/weblogic-deploy-tooling/).
 
-WebLogic Remote Console allows you to insert WDT model tokens in two ways:
+To insert a WDT model token, select the **Field Settings** ![Icon of a bullseye](/weblogic-remote-console/images/ui-icons/ico-target.png)button beside the relevant field to the Field Settings dialog box. WebLogic Remote Console supports two types of WDT model tokens:
 
 -   Standalone WDT model tokens
 -   WDT variables
@@ -104,36 +104,40 @@ You can use both standalone WDT model tokens and WDT variables in the same WDT m
 
 To create a WDT model file for use with the WebLogic Deploy Tooling:
 
-1.  Open the Providers drawer and beside the project name, click **More ︙**. Select **Create Provider for New WDT Model File**.
+1.  On the **Projects / Providers** page, select **Create**, then **New WDT Model File Provider**.
 
 2.  Enter a name for the WDT model file provider.
 
-3.  In the **WDT Model Filename** field, enter a name for the WDT model file. Include <code>.yaml</code> or <code>.json</code> at the end of the file name.
+3.  In the **New WDT Model Filename** field, enter a file name for the WDT model file. Include the file type extension, either <code>.yaml</code> or <code>.json</code>. Then, select **Browse Folder** and browse to the directory where you want to save the new WDT model file.
 
-4.  Click **Pick Directory** and browse to the directory where you want to save the new WDT model file.
+4.  Select **Done** to create the WDT model file.
 
-5.  **Optional**: Enable **Use Sparse Template** to create a WDT model file which does not contain any references to an Administration Server.
+5.  **Optional**: On the **WDT Model File Settings** page, choose a property list provider to associate with the WDT model file. If you don't have a property list provider, you can always add one later.
 
-6.  **Optional**: If you want to use WDT variables with this WDT model file, then from the **WDT Variables** dropdown list, choose a property list provider. If you don't have a property list provider yet, you can add one later.
+    See [Property Lists](../property-lists#GUID-62721515-29E5-4DC4-BBD8-E2D1C8A7529D).
 
-7.  Click **OK** to create the WDT model file.
+6.  Select **Connect/Activate** to start editing the WDT model file.
 
 
 ## Upload a WDT Model File {#GUID-EC821453-1C8A-49DD-A2AB-B5BF58B0B00E}
 
 If you created a WDT model file elsewhere, you can upload it to WebLogic Remote Console and continue to edit it.
 
-1.  Open the Providers drawer and beside the project name, click **More ︙**. Select **Add WDT Model File Provider**.
+1.  On the **Projects / Providers** page, select **Create**, then **Existing WDT Model File Provider**.
 
 2.  Enter a name for the WDT model file provider.
 
-3.  Click **Upload File** and browse to the directory where you saved the WDT model file.
+3.  Select **Upload File** and browse to the directory with the WDT model file.
 
     The WDT model file must be in <code>YAML</code> or <code>JSON</code> format.
 
-4.  **Optional**: If you want to use WDT variables with this WDT model file, then from the **WDT Variables** drop-down list, choose a property list provider. If you don't have a property list provider yet, you can edit this provider's settings later to add one.
+4.  Select **Done** to create the WDT model file.
 
-5.  Click **OK** to upload the WDT model file.
+5.  **Optional**: On the **WDT Model File Settings** page, choose a property list provider to associate with the WDT model file. If you don't have a property list provider, you can always add one later.
+
+    See [Property Lists](../property-lists#GUID-62721515-29E5-4DC4-BBD8-E2D1C8A7529D).
+
+6.  Select **Connect/Activate** to start editing the WDT model file.
 
 
 ## Edit a WDT Model File {#GUID-B0B9CBA4-29E4-417D-8094-5BA8B4522ED7}
@@ -151,11 +155,11 @@ For guidance on where to find specific domain configuration options and how to a
 
 1.  Open the WDT model file that you want to edit.
 
-2.  Click **WDT Model Tree** and go to the node where you want to make your changes.
+2.  Beside the domain configuration that you want to modify, select **Field Settings** ![Icon of a bullseye](/weblogic-remote-console/images/ui-icons/ico-target.png) to open the Field Settings dialog box.
 
-3.  Beside the domain configuration that you want to modify, click **WDT Settings** to open the WDT settings dialog box.
+3.  Set a new value for the field, using one of the following options:
 
-4.  Set a new value for the field, using one of the following options:
+    Some options only appear when the WDT model file is associated with a property list.
 
     |Option|Description|
     |------|-----------|
@@ -167,10 +171,10 @@ For guidance on where to find specific domain configuration options and how to a
     |Select Model Token Variable|Select a WDT model token variable from the list of available options. The WDT model file must be connected with a property list to see this option.|
     |Create Model Token Variable|Enter a Variable Name and Variable Value to create a new WDT model token variable. New model token variables are added to the connected property list. The WDT model file must be connected with a property list to see this option.|
 
-5.  Click **Save Now** to update the <code>YAML</code> file with your changes.
+4.  Select **Save** to update the <code>YAML</code> file with your changes.
 
 
-If you want to restore fields to their default value, right-click on a field and click **Restore to default**.
+If you want to restore fields to their default value, open the **Field Settings** ![Icon of a bullseye](/weblogic-remote-console/images/ui-icons/ico-target.png) dialog box and select **Unset value**. Select **OK** to save the change.
 
 ## Build a WebLogic Server Domain {#GUID-4A5C092D-A16B-4F7F-A5CC-38DCF2293FBE}
 

@@ -35,14 +35,14 @@ Restart all servers in the domain. Confirm that the Administration Server can re
   <meta itemprop="description" content="Learn how to identify and recover from issues in WebLogic Server or WebLogic Remote Console.
 Perform these preliminary troubleshooting steps to get started:
 Restart all servers in the domain. Confirm that the Administration Server can reach your Managed Servers and clusters. See Investigate Server Connection Issues. Check the log files for any errors. See Review Log Files. Review any known issues. See Known Issues. Update to the latest versions of Desktop WebLogic Remote Console and the WebLogic Remote Console extension. See Upgrade Desktop WebLogic Remote Console. Investigate Server Connection Issues If the Administration Server cannot reach a Managed Server or cluster, you may be able to determine the cause using WebLogic Remote Console.">
-  <meta itemprop="wordCount" content="2228">
+  <meta itemprop="wordCount" content="2343">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Troubleshoot Issues with WebLogic Remote Console">
   <meta name="twitter:description" content="Learn how to identify and recover from issues in WebLogic Server or WebLogic Remote Console.
 Perform these preliminary troubleshooting steps to get started:
 Restart all servers in the domain. Confirm that the Administration Server can reach your Managed Servers and clusters. See Investigate Server Connection Issues. Check the log files for any errors. See Review Log Files. Review any known issues. See Known Issues. Update to the latest versions of Desktop WebLogic Remote Console and the WebLogic Remote Console extension. See Upgrade Desktop WebLogic Remote Console. Investigate Server Connection Issues If the Administration Server cannot reach a Managed Server or cluster, you may be able to determine the cause using WebLogic Remote Console.">
-<link rel="preload" href="/weblogic-remote-console/scss/main.min.48c25d0a5a23a1e8cae94d6c5e7622061e5345cf098171b1d6ee41d8e309e6c8.css" as="style" integrity="sha256-SMJdClojoejK6U1sXnYiBh5TRc8JgXGx1u5B2OMJ5sg=" crossorigin="anonymous">
-<link href="/weblogic-remote-console/scss/main.min.48c25d0a5a23a1e8cae94d6c5e7622061e5345cf098171b1d6ee41d8e309e6c8.css" rel="stylesheet" integrity="sha256-SMJdClojoejK6U1sXnYiBh5TRc8JgXGx1u5B2OMJ5sg=" crossorigin="anonymous">
+<link rel="preload" href="/weblogic-remote-console/scss/main.min.3bb6570761fbbb25e6691001febc67f331f0953db4e4e1cfb79172c2e6a5819e.css" as="style" integrity="sha256-O7ZXB2H7uyXmaRAB/rxn8zHwlT205OHPt5FywualgZ4=" crossorigin="anonymous">
+<link href="/weblogic-remote-console/scss/main.min.3bb6570761fbbb25e6691001febc67f331f0953db4e4e1cfb79172c2e6a5819e.css" rel="stylesheet" integrity="sha256-O7ZXB2H7uyXmaRAB/rxn8zHwlT205OHPt5FywualgZ4=" crossorigin="anonymous">
 <script
   src="https://code.jquery.com/jquery-3.7.1.min.js"
   integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
@@ -70,8 +70,9 @@ Restart all servers in the domain. Confirm that the Administration Server can re
         <div class="dropdown">
   <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Releases</a>
   <ul class="dropdown-menu">
-    <li><a class="dropdown-item" href="/weblogic-remote-console/overview">Latest (v2.4.19)</a></li>
-    <li><a class="dropdown-item" href="/weblogic-remote-console/preview">Tech Preview (v3.0.0)</a></li>
+    <li><a class="dropdown-item" href="/weblogic-remote-console/overview">Latest (v3.0.3)</a></li>
+    <li><a class="dropdown-item" href="/weblogic-remote-console/preview">Tech Preview (v3.0.2)</a></li>
+    <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.19">v2.4.19</a></li>
     <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.18">v2.4.18</a></li>
     <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.17">v2.4.17</a></li>
     <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.16">v2.4.16</a></li>
@@ -143,7 +144,7 @@ Restart all servers in the domain. Confirm that the Administration Server can re
     aria-label="Search this site…"
     autocomplete="off"
     
-    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.c91eadea726d3adef8baaa146aae00e3.json"
+    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.9a1e60b97d06a8082f60f18b5f00d58a.json"
     data-offline-search-base-href="/"
     data-offline-search-max-results="10"
   >
@@ -168,7 +169,7 @@ Restart all servers in the domain. Confirm that the Administration Server can re
     aria-label="Search this site…"
     autocomplete="off"
     
-    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.c91eadea726d3adef8baaa146aae00e3.json"
+    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.9a1e60b97d06a8082f60f18b5f00d58a.json"
     data-offline-search-base-href="/"
     data-offline-search-max-results="10"
   >
@@ -300,6 +301,7 @@ Restart all servers in the domain. Confirm that the Administration Server can re
         <li><a href="#section_f5d_yk4_nfc">The WebLogic Remote Console Log File Looks Corrupted</a></li>
         <li><a href="#section_f42_zh3_zfc">Children of Newly Created Nodes do not Appear Automatically</a></li>
         <li><a href="#section_wqg_sqt_pgc">A &lsquo;Failed to start an edit session&rsquo; Error is Appearing</a></li>
+        <li><a href="#section_vq1_ly2_y3c">How do I do <em>x</em> in WebLogic Remote Console 3.x?</a></li>
       </ul>
     </li>
     <li><a href="#GUID-B3D14A11-0144-4B31-BFE3-E6AC59AEFCBE">Cannot connect to the Administration Server</a></li>
@@ -426,6 +428,9 @@ Log file entries from previous sessions are saved to a new file in the same dire
 <h3 id="section_wqg_sqt_pgc">A &lsquo;Failed to start an edit session&rsquo; Error is Appearing</h3>
 <p>If you try to make a configuration change to the domain and receive an <code>Failed to start an edit session</code> error, it might be because another user currently has the configuration lock which blocks other users from overwriting their changes.</p>
 <p>If you are an administrator, you can take the configuration lock (and their pending changes) from the other user. See <a href="/weblogic-remote-console/administration-server/domain-configuration/#GUID-376C1ED1-E4AF-48B8-9BEC-B57D5BDEB9B5">Grab the Edit Lock</a>.</p>
+<h3 id="section_vq1_ly2_y3c">How do I do <em>x</em> in WebLogic Remote Console 3.x?</h3>
+<p>WebLogic Remote Console 3.0.3 is a significant update. For a brief overview of the major changes compared to WebLogic Remote Console 2.4.19, refer to <a href="https://oracle.github.io/weblogic-remote-console/preview/">Introducing WebLogic Remote Console 3.x</a>.</p>
+<p>WebLogic Remote Console 3.x is more than a superficial update; significant changes were made to the underlying code. While we&rsquo;ve done our best to ensure feature parity from WebLogic Remote Console 2.4,19, you may encounter some unexpected behavior, particularly in the area of WDT model file management. As with any issues you encounter, consider raising a bug in the <a href="https://github.com/oracle/weblogic-remote-console">WebLogic Remote Console GitHub Repository</a> so we can track the issue. See <a href="/weblogic-remote-console/set-console/contribute-wrc-repository/#GUID-0BCE90EE-6760-4A0E-968E-C0EB8C49D66E">Contribute to WebLogic Remote Console</a>.</p>
 <h2 id="GUID-B3D14A11-0144-4B31-BFE3-E6AC59AEFCBE">Cannot connect to the Administration Server</h2>
 <p>WebLogic Remote Console cannot connect to a WebLogic Server Administration Server.</p>
 <p>If you experience issues connecting to an Administration Server when using WebLogic Remote Console, then you may need to update the connection settings between the application and the domain. Use the following methods to identify which setting may be causing the issue.</p>

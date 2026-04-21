@@ -19,30 +19,34 @@
 <link rel="icon" type="image/png" href="/weblogic-remote-console/favicons/android-192x192.png" sizes="192x192">
 
 <title>Introducing WebLogic Remote Console 3.x! | WebLogic Remote Console</title>
-<meta name="description" content="WebLogic Remote Console 3.x is in technical preview. It is available for testing purposes only.
-WebLogic Remote Console 3.x is a substantial design update that delivers significant usability improvements to WebLogic Remote Console.
-We’ve also made considerable cosmetic updates in 3.x. MBeans and their configurations remain in the same places, they just look a little different. You can continue to refer to the documentation for the latest GA release of WebLogic Remote Console for guidance on how to administer your domains.">
+<meta name="description" content="WebLogic Remote Console 3.0.3, the general availability (GA) release of WebLogic Remote Console 3.x, is now available!
+Refer to the current documentation for the latest information.
+WebLogic Remote Console 3.0.0, 3.0.1, and 3.0.2 releases were made available as technical previews for testing purposes only. You should now use release 3.0.3 or later.
+WebLogic Remote Console 3.x is a substantial design update that delivers significant usability improvements to WebLogic Remote Console.">
 <meta property="og:url" content="https://oracle.github.io/weblogic-remote-console/preview/">
   <meta property="og:site_name" content="WebLogic Remote Console">
   <meta property="og:title" content="Introducing WebLogic Remote Console 3.x!">
-  <meta property="og:description" content="WebLogic Remote Console 3.x is in technical preview. It is available for testing purposes only.
-WebLogic Remote Console 3.x is a substantial design update that delivers significant usability improvements to WebLogic Remote Console.
-We’ve also made considerable cosmetic updates in 3.x. MBeans and their configurations remain in the same places, they just look a little different. You can continue to refer to the documentation for the latest GA release of WebLogic Remote Console for guidance on how to administer your domains.">
+  <meta property="og:description" content="WebLogic Remote Console 3.0.3, the general availability (GA) release of WebLogic Remote Console 3.x, is now available!
+Refer to the current documentation for the latest information.
+WebLogic Remote Console 3.0.0, 3.0.1, and 3.0.2 releases were made available as technical previews for testing purposes only. You should now use release 3.0.3 or later.
+WebLogic Remote Console 3.x is a substantial design update that delivers significant usability improvements to WebLogic Remote Console.">
   <meta property="og:locale" content="en">
   <meta property="og:type" content="website">
 
   <meta itemprop="name" content="Introducing WebLogic Remote Console 3.x!">
-  <meta itemprop="description" content="WebLogic Remote Console 3.x is in technical preview. It is available for testing purposes only.
-WebLogic Remote Console 3.x is a substantial design update that delivers significant usability improvements to WebLogic Remote Console.
-We’ve also made considerable cosmetic updates in 3.x. MBeans and their configurations remain in the same places, they just look a little different. You can continue to refer to the documentation for the latest GA release of WebLogic Remote Console for guidance on how to administer your domains.">
-  <meta itemprop="wordCount" content="1483">
+  <meta itemprop="description" content="WebLogic Remote Console 3.0.3, the general availability (GA) release of WebLogic Remote Console 3.x, is now available!
+Refer to the current documentation for the latest information.
+WebLogic Remote Console 3.0.0, 3.0.1, and 3.0.2 releases were made available as technical previews for testing purposes only. You should now use release 3.0.3 or later.
+WebLogic Remote Console 3.x is a substantial design update that delivers significant usability improvements to WebLogic Remote Console.">
+  <meta itemprop="wordCount" content="1240">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Introducing WebLogic Remote Console 3.x!">
-  <meta name="twitter:description" content="WebLogic Remote Console 3.x is in technical preview. It is available for testing purposes only.
-WebLogic Remote Console 3.x is a substantial design update that delivers significant usability improvements to WebLogic Remote Console.
-We’ve also made considerable cosmetic updates in 3.x. MBeans and their configurations remain in the same places, they just look a little different. You can continue to refer to the documentation for the latest GA release of WebLogic Remote Console for guidance on how to administer your domains.">
-<link rel="preload" href="/weblogic-remote-console/scss/main.min.48c25d0a5a23a1e8cae94d6c5e7622061e5345cf098171b1d6ee41d8e309e6c8.css" as="style" integrity="sha256-SMJdClojoejK6U1sXnYiBh5TRc8JgXGx1u5B2OMJ5sg=" crossorigin="anonymous">
-<link href="/weblogic-remote-console/scss/main.min.48c25d0a5a23a1e8cae94d6c5e7622061e5345cf098171b1d6ee41d8e309e6c8.css" rel="stylesheet" integrity="sha256-SMJdClojoejK6U1sXnYiBh5TRc8JgXGx1u5B2OMJ5sg=" crossorigin="anonymous">
+  <meta name="twitter:description" content="WebLogic Remote Console 3.0.3, the general availability (GA) release of WebLogic Remote Console 3.x, is now available!
+Refer to the current documentation for the latest information.
+WebLogic Remote Console 3.0.0, 3.0.1, and 3.0.2 releases were made available as technical previews for testing purposes only. You should now use release 3.0.3 or later.
+WebLogic Remote Console 3.x is a substantial design update that delivers significant usability improvements to WebLogic Remote Console.">
+<link rel="preload" href="/weblogic-remote-console/scss/main.min.3bb6570761fbbb25e6691001febc67f331f0953db4e4e1cfb79172c2e6a5819e.css" as="style" integrity="sha256-O7ZXB2H7uyXmaRAB/rxn8zHwlT205OHPt5FywualgZ4=" crossorigin="anonymous">
+<link href="/weblogic-remote-console/scss/main.min.3bb6570761fbbb25e6691001febc67f331f0953db4e4e1cfb79172c2e6a5819e.css" rel="stylesheet" integrity="sha256-O7ZXB2H7uyXmaRAB/rxn8zHwlT205OHPt5FywualgZ4=" crossorigin="anonymous">
 <script
   src="https://code.jquery.com/jquery-3.7.1.min.js"
   integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
@@ -70,8 +74,9 @@ We’ve also made considerable cosmetic updates in 3.x. MBeans and their configu
         <div class="dropdown">
   <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Releases</a>
   <ul class="dropdown-menu">
-    <li><a class="dropdown-item" href="/weblogic-remote-console/overview">Latest (v2.4.19)</a></li>
-    <li><a class="dropdown-item" href="/weblogic-remote-console/preview">Tech Preview (v3.0.0)</a></li>
+    <li><a class="dropdown-item" href="/weblogic-remote-console/overview">Latest (v3.0.3)</a></li>
+    <li><a class="dropdown-item" href="/weblogic-remote-console/preview">Tech Preview (v3.0.2)</a></li>
+    <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.19">v2.4.19</a></li>
     <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.18">v2.4.18</a></li>
     <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.17">v2.4.17</a></li>
     <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.16">v2.4.16</a></li>
@@ -143,7 +148,7 @@ We’ve also made considerable cosmetic updates in 3.x. MBeans and their configu
     aria-label="Search this site…"
     autocomplete="off"
     
-    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.c91eadea726d3adef8baaa146aae00e3.json"
+    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.9a1e60b97d06a8082f60f18b5f00d58a.json"
     data-offline-search-base-href="/"
     data-offline-search-max-results="10"
   >
@@ -168,7 +173,7 @@ We’ve also made considerable cosmetic updates in 3.x. MBeans and their configu
     aria-label="Search this site…"
     autocomplete="off"
     
-    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.c91eadea726d3adef8baaa146aae00e3.json"
+    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.9a1e60b97d06a8082f60f18b5f00d58a.json"
     data-offline-search-base-href="/"
     data-offline-search-max-results="10"
   >
@@ -197,7 +202,6 @@ We’ve also made considerable cosmetic updates in 3.x. MBeans and their configu
         <nav id="TableOfContents">
   <ul>
     <li><a href="#key-differences-between-2x-and-3x">Key Differences Between 2.x and 3.x</a></li>
-    <li><a href="#installing-weblogic-remote-console-3x">Installing WebLogic Remote Console 3.x</a></li>
     <li><a href="#connecting-to-a-provider">Connecting to a Provider</a>
       <ul>
         <li><a href="#page-icons">Page Icons</a></li>
@@ -233,8 +237,9 @@ We’ve also made considerable cosmetic updates in 3.x. MBeans and their configu
 <div class="alert alert-secondary" role="alert">
 
 
-    <p><i class="fa-solid fa-flask-vial"></i></p>
-<p>WebLogic Remote Console 3.x is in <strong>technical preview</strong>. It is available for testing purposes only.</p>
+    <p><strong>WebLogic Remote Console 3.0.3</strong>, the general availability (GA) release of WebLogic Remote Console 3.x, is now available!</p>
+<p>Refer to the <a href="/weblogic-remote-console/overview/">current documentation</a> for the latest information.</p>
+<p>WebLogic Remote Console 3.0.0, 3.0.1, and 3.0.2 releases were made available as <strong>technical previews</strong> for testing purposes only. You should now use release 3.0.3 or later.</p>
 
 </div>
 <p>WebLogic Remote Console 3.x is a substantial design update that delivers significant usability improvements to WebLogic Remote Console.</p>
@@ -291,52 +296,6 @@ We’ve also made considerable cosmetic updates in 3.x. MBeans and their configu
 <p>Opening an issue in the <a href="https://github.com/oracle/weblogic-remote-console">WebLogic Remote Console GitHub repository</a> that describes your issue. Make sure to include your environment details (OS, JDK, WebLogic Server) and any relevant logs.</p>
 </li>
 </ul>
-
-</div>
-<h2 id="installing-weblogic-remote-console-3x">Installing WebLogic Remote Console 3.x</h2>
-<p>For the duration of the tech preview, WebLogic Remote Console 3.x will only be available by downloading <em>Desktop</em> WebLogic Remote Console from the WebLogic Remote Console GitHub repository.</p>
-<p>The production release of WebLogic Remote Console 3.x will include both <em>Desktop</em> WebLogic Remote Console and <em>Hosted</em> WebLogic Remote Console and will be released concurrently with a future Patch Set Update (PSU) of WebLogic Server.</p>
-<ol>
-<li>
-<p>Make sure your environment meets the system requirements needed to run WebLogic Remote Console. The system requirements for 3.x are the same as the latest GA release of WebLogic Remote Console. See <a href="/weblogic-remote-console/set-console/#GUID-FFC1F9AC-7CE7-4BC1-9D3D-BD59CC228C6B">System Requirements</a>.</p>
-</li>
-<li>
-<p>Go to the <a href="https://github.com/oracle/weblogic-remote-console/releases">WebLogic Remote Console GitHub repository Releases page</a> and from the <strong>Release 3.x</strong> section, download the WebLogic Remote Console installer meant for your operating system.</p>
-</li>
-<li>
-<p>If you&rsquo;re jumping from WebLogic Remote Console 2.4.17 or earlier, you should also download the WebLogic Remote Console <em>extension</em> for 3.x and install it manually. (The 2.4.18 and 2.4.19 extensions are compatible with WebLogic Remote Console 3.x).</p>
-<ol>
-<li>
-<p>Download the extension from the  <strong>Release 3.0.2</strong> section. If you are running a 15.1.1.0.0 WebLogic Server domain, download <code>console-rest-ext-jakarta-3.0.2.war</code>. Otherwise, download <code>console-rest-ext-3.0.2.war</code>.</p>
-</li>
-<li>
-<p>Shut down the Administration Server.</p>
-</li>
-<li>
-<p>Under <em><code>DOMAIN_HOME/</code></em>, create a folder and name it <code>management-services-ext</code>.</p>
-</li>
-<li>
-<p>Save the extension file, <code>console-rest-ext-3.0.2.war</code> or <code>console-rest-ext-jakarta-3.0.2.war</code>, under <code>management-services-ext/</code>.</p>
-<p>Do not deploy the WebLogic Remote Console extension as an application in your domain.</p>
-</li>
-<li>
-<p>Restart the Administration Server.</p>
-</li>
-</ol>
-</li>
-<li>
-<p>Install WebLogic Remote Console by following the typical process for installing applications on your operating system.</p>
-</li>
-<li>
-<p>Open WebLogic Remote Console and connect to a provider.</p>
-</li>
-</ol>
-
-
-<div class="alert alert-primary" role="alert">
-
-
-    If you want to switch back to using the GA release of WebLogic Remote Console, make sure to uninstall WebLogic Remote Console v3.0.2 <em>and</em> delete <code>DOMAIN_HOME/management-services-ext/console-rest-ext-3.0.2.war</code>.
 
 </div>
 <h2 id="connecting-to-a-provider">Connecting to a Provider</h2>

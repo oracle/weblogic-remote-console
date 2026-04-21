@@ -24,7 +24,7 @@ languages:
       description: A guide for using WebLogic Remote Console to manage WebLogic Server domains.
   # cSpell:disable
 
-# TODO update paths to include '/3**' when major version increases to 3.x
+# TODO update paths to include '/4**' when major version increases to 4.x
 
 cascade:
   - type: 'docs'
@@ -36,7 +36,7 @@ cascade:
     exclude_search: true
     archived_version: true
     # params.version is a vestigial attribute from original version-banner partial
-    version: 2
+    version: 3
     # version: 
     #   url: '{/:section}'
 
@@ -87,19 +87,21 @@ params:
     showLightDarkModeMenu: true
 
   # wrc version
-  console_version: 2.4.19
+  console_version: 3.0.3
   # console rest extension version
-  console_rest_ext: console-rest-ext-2.4.19.war
+  console_rest_ext: console-rest-ext-3.0.3.war
 
   # Menu title if your navbar has a versions selector to access old versions of your site.
   # This menu appears only if you have at least one [params.versions] set.
   version_menu: Releases
   url_latest_version: '/weblogic-remote-console/overview'
   versions:
-    - version: Latest (v2.4.19)
+    - version: Latest (v3.0.3)
       url: '/weblogic-remote-console/overview'
-    - version: Tech Preview (v3.0.0)
+    - version: Tech Preview (v3.0.2)
       url: '/weblogic-remote-console/preview'
+    - version: v2.4.19
+      url: '/weblogic-remote-console/2.4.19'
     - version: v2.4.18
       url: '/weblogic-remote-console/2.4.18'
     - version: v2.4.17
