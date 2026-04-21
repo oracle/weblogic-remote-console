@@ -16,9 +16,6 @@ import javax.json.Json;
 import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
-import javax.ws.rs.WebApplicationException;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.Status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.yaml.snakeyaml.Yaml;
@@ -287,9 +284,7 @@ public class WDTModelDataProviderImpl implements WDTModelDataProvider {
         writer.write(init, 0, init.length());
       }
     } catch (Exception e) {
-      throw new WebApplicationException(Response.status(
-        Status.UNAUTHORIZED.getStatusCode(),
-         e.getMessage()).build());
+      throw new FailedRequestException(e.getMessage());
     }
   }
 
@@ -297,9 +292,7 @@ public class WDTModelDataProviderImpl implements WDTModelDataProvider {
     try (FileWriter writer = new FileWriter(fileName)) {
       writer.write(contents, 0, contents.length());
     } catch (Exception e) {
-      throw new WebApplicationException(Response.status(
-        Status.UNAUTHORIZED.getStatusCode(),
-         e.getMessage()).build());
+      throw new FailedRequestException(e.getMessage());
     }
   }
 
@@ -309,9 +302,7 @@ public class WDTModelDataProviderImpl implements WDTModelDataProvider {
     try (FileWriter writer = new FileWriter(fileName)) {
       drepo.download(writer, ic);
     } catch (Exception e) {
-      throw new WebApplicationException(Response.status(
-        Status.UNAUTHORIZED.getStatusCode(),
-         e.getMessage()).build());
+      throw new FailedRequestException(e.getMessage());
     }
   }
 

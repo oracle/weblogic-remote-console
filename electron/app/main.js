@@ -564,12 +564,12 @@ ipcMain.handle('set-property', async (event, arg) => {
  *    console.log(JSON.stringify(failure));
  *  });
  */
-ipcMain.handle("file-creating", async (event, arg) => {
+ipcMain.handle('file-creating', async (event, arg) => {
   const dialogParams = {
     defaultPath: arg.filepath,
-    properties: ["createDirectory"],
+    properties: ['createDirectory'],
     filters: {
-      name: "Supported Formats",
+      name: 'Supported Formats',
       extensions: FileUtils.fileExtensions,
     },
   };
@@ -579,7 +579,7 @@ ipcMain.handle("file-creating", async (event, arg) => {
       if (arg.fileContents) {
         return FileUtils.writeFileAsync(result.filePath, arg.fileContents).then(
           (reply) => {
-            reply["filePath"] = result.filePath;
+            reply['filePath'] = result.filePath;
             return Promise.resolve(reply);
           }
         );
@@ -587,7 +587,7 @@ ipcMain.handle("file-creating", async (event, arg) => {
         return Promise.resolve({ succeeded: true, filePath: result.filePath });
       }
     } else {
-      return Promise.resolve({ succeeded: false, filePath: "" });
+      return Promise.resolve({ succeeded: false, filePath: '' });
     }
   });
 });

@@ -13,7 +13,6 @@ import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
 import javax.json.JsonString;
-import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.container.ResourceContext;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -33,6 +32,7 @@ import weblogic.remoteconsole.server.providers.WDTResource;
 import weblogic.remoteconsole.server.repo.InvocationContext;
 import weblogic.remoteconsole.server.repo.PersistedTableCustomizations;
 import weblogic.remoteconsole.server.repo.TableCustomizationsManager;
+import weblogic.remoteconsole.server.webapp.FailedRequestException;
 import weblogic.remoteconsole.server.webapp.WebAppUtils;
 
 public class ProviderTable extends PdjRdjUtils {
@@ -194,10 +194,11 @@ public class ProviderTable extends PdjRdjUtils {
     JsonArrayBuilder providerTableBuilder = Json.createArrayBuilder();
     ProjectManager.Project proj = projectManager.getProject(projectName);
     if (proj == null) {
-      throw new WebApplicationException(Response.status(
-        Status.NOT_FOUND.getStatusCode(), ic.getLocalizer().localizeString(
-          LocalizedConstants.PROJECT_NOT_FOUND_MESSAGE)
-      ).build());
+      throw new FailedRequestException(
+        Status.NOT_FOUND.getStatusCode(),
+        LocalizedConstants.PROJECT_NOT_FOUND_MESSAGE,
+        ic
+      );
     }
     // If somebody clicks on this project, that becomes the "current"
     projectManager.setCurrentProjectByUser(ic, proj);
@@ -206,7 +207,8 @@ public class ProviderTable extends PdjRdjUtils {
       JsonObjectBuilder provBuilder = Json.createObjectBuilder();
       provBuilder.add("name", valueObject(prov.getName()));
       provBuilder.add("type", valueObject(prov.getJSON().getString("type")));
-      provBuilder.add("state", valueObject("Inactive"));
+      provBuilder.add("state", valueObject(ic.getLocalizer().localizeString(
+        LocalizedConstants.PROVIDER_INACTIVE_STATE_LABEL)));
       // Put in an empty value for "more" in case the specific provider doesn't
       provBuilder.add("more", valueObject(""));
       provBuilder.add("ordering", valueObject(Integer.toString(++i)));
@@ -227,7 +229,8 @@ public class ProviderTable extends PdjRdjUtils {
     builder.add("data", providerTableBuilder);
 
     JsonArrayBuilder breadCrumbsBuilder = Json.createArrayBuilder();
-    breadCrumbsBuilder.add(resourceDataMaker("Projects", "/api/project/data"));
+    breadCrumbsBuilder.add(resourceDataMaker(ic.getLocalizer().localizeString(
+      LocalizedConstants.PROJECTS_NAVIGATION_LABEL), "/api/project/data"));
     builder.add("breadCrumbs", breadCrumbsBuilder);
 
     builder.add("links", Json.createArrayBuilder());
@@ -249,10 +252,11 @@ public class ProviderTable extends PdjRdjUtils {
             + "?param=showCreateForm" + createType)));
     }
     builder.add("actions", actionsBuilder);
-
+            
     builder.add("self", Json.createObjectBuilder()
       .add("kind", "nonCreatableCollection")
-      .add("label", "Providers")
+      .add("label", ic.getLocalizer().localizeString(
+        LocalizedConstants.PROVIDER_TABLE_PROVIDERS_LABEL))
       .add("resourceData", "/api/project/data/" + projectName));
 
     builder.add("tableCustomizer", 
@@ -283,24 +287,25 @@ public class ProviderTable extends PdjRdjUtils {
       WebAppUtils.getInvocationContextFromResourceContext(resContext);
     TypedResource typedResource = typedResourceFromType(operationType);
     if (typedResource == null) {
-      throw new WebApplicationException(Response.status(
-        Status.BAD_REQUEST.getStatusCode(), ic.getLocalizer().localizeString(
-          LocalizedConstants.BAD_TYPE_MESSAGE)
-      ).build());
+      throw new FailedRequestException(
+        LocalizedConstants.BAD_TYPE_MESSAGE,
+        ic
+      );
     }
     ProjectManager projectManager = ProjectManager.getFromContext(resContext);
     Project proj = projectManager.getProject(projectName);
     if (proj == null) {
-      throw new WebApplicationException(Response.status(
-        Status.NOT_FOUND.getStatusCode(), ic.getLocalizer().localizeString(
-          LocalizedConstants.PROJECT_NOT_FOUND_MESSAGE)
-      ).build());
+      throw new FailedRequestException(
+        Status.NOT_FOUND.getStatusCode(),
+        LocalizedConstants.PROJECT_NOT_FOUND_MESSAGE,
+        ic
+      );
     }
     if (!payload.containsKey("data")) {
-      throw new WebApplicationException(Response.status(
-        Status.BAD_REQUEST.getStatusCode(),
-          ic.getLocalizer().localizeString(
-            LocalizedConstants.CREATE_FORM_MISSING_DATA_MESSAGE)).build());
+      throw new FailedRequestException(
+        LocalizedConstants.CREATE_FORM_MISSING_DATA_MESSAGE,
+        ic
+      );
     }
     JsonObject data = payload.getJsonObject("data");
     JsonObject result = typedResource.populateFromFormData(
@@ -316,10 +321,11 @@ public class ProviderTable extends PdjRdjUtils {
         newFile.createNewFile();
       } catch (Exception e) {
         e.printStackTrace();
-        throw new WebApplicationException(Response.status(
-          Status.BAD_REQUEST.getStatusCode(), ic.getLocalizer().localizeString(
-            LocalizedConstants.CANNOT_CREATE_FILE_MESSAGE, newFile.getName())
-        ).build());
+        throw new FailedRequestException(
+          LocalizedConstants.CANNOT_CREATE_FILE_MESSAGE,
+          ic,
+          newFile.getName()
+        );
       }
     }
     projectManager.save(ic);
@@ -340,18 +346,19 @@ public class ProviderTable extends PdjRdjUtils {
     InvocationContext ic =
       WebAppUtils.getInvocationContextFromResourceContext(resContext);
     if (doList.size() != 1) {
-      throw new WebApplicationException(Response.status(
-        Status.BAD_REQUEST.getStatusCode(), ic.getLocalizer().localizeString(
-          LocalizedConstants.MOVES_ONLY_ONE_ROW_MESSAGE)
-      ).build());
+      throw new FailedRequestException(
+        LocalizedConstants.MOVES_ONLY_ONE_ROW_MESSAGE,
+        ic
+      );
     }
     ProjectManager projectManager = ProjectManager.getFromContext(resContext);
     Project proj = projectManager.getProject(projectName);
     if (proj == null) {
-      throw new WebApplicationException(Response.status(
-        Status.NOT_FOUND.getStatusCode(), ic.getLocalizer().localizeString(
-          LocalizedConstants.PROJECT_NOT_FOUND_MESSAGE)
-      ).build());
+      throw new FailedRequestException(
+        Status.NOT_FOUND.getStatusCode(),
+        LocalizedConstants.PROJECT_NOT_FOUND_MESSAGE,
+        ic
+      );
     }
     for (String provName : doList) {
       if (provName.indexOf('/') != -1) {
@@ -426,18 +433,19 @@ public class ProviderTable extends PdjRdjUtils {
     InvocationContext ic =
       WebAppUtils.getInvocationContextFromResourceContext(resContext);
     if (doList.size() != 1) {
-      throw new WebApplicationException(Response.status(
-        Status.BAD_REQUEST.getStatusCode(), ic.getLocalizer().localizeString(
-          LocalizedConstants.MOVES_ONLY_ONE_ROW_MESSAGE)
-      ).build());
+      throw new FailedRequestException(
+        LocalizedConstants.MOVES_ONLY_ONE_ROW_MESSAGE,
+        ic
+      );
     }
     ProjectManager projectManager = ProjectManager.getFromContext(resContext);
     Project proj = projectManager.getProject(projectName);
     if (proj == null) {
-      throw new WebApplicationException(Response.status(
-        Status.NOT_FOUND.getStatusCode(), ic.getLocalizer().localizeString(
-          LocalizedConstants.PROJECT_NOT_FOUND_MESSAGE)
-      ).build());
+      throw new FailedRequestException(
+        Status.NOT_FOUND.getStatusCode(),
+        LocalizedConstants.PROJECT_NOT_FOUND_MESSAGE,
+        ic
+      );
     }
     for (String provName : doList) {
       if (provName.indexOf('/') != -1) {
@@ -470,10 +478,11 @@ public class ProviderTable extends PdjRdjUtils {
     ProjectManager projectManager = ProjectManager.getFromContext(resContext);
     Project proj = projectManager.getProject(projectName);
     if (proj == null) {
-      throw new WebApplicationException(Response.status(
-        Status.NOT_FOUND.getStatusCode(), ic.getLocalizer().localizeString(
-          LocalizedConstants.PROJECT_NOT_FOUND_MESSAGE)
-      ).build());
+      throw new FailedRequestException(
+        Status.NOT_FOUND.getStatusCode(),
+        LocalizedConstants.PROJECT_NOT_FOUND_MESSAGE,
+        ic
+      );
     }
     for (String provName : doList) {
       if (provName.indexOf('/') != -1) {
@@ -564,10 +573,11 @@ public class ProviderTable extends PdjRdjUtils {
     }
     InvocationContext ic =
       WebAppUtils.getInvocationContextFromResourceContext(resContext);
-    throw new WebApplicationException(Response.status(
-      Status.BAD_REQUEST.getStatusCode(),
-        ic.getLocalizer().localizeString(
-          LocalizedConstants.UNSUPPORTED_PARAM_MESSAGE, param)).build());
+    throw new FailedRequestException(
+      LocalizedConstants.UNSUPPORTED_PARAM_MESSAGE,
+      ic,
+      param
+    );
   }
 
   public static Response processPost(
@@ -601,9 +611,10 @@ public class ProviderTable extends PdjRdjUtils {
     }
     InvocationContext ic =
       WebAppUtils.getInvocationContextFromResourceContext(resContext);
-    throw new WebApplicationException(Response.status(
-      Status.BAD_REQUEST.getStatusCode(),
-        ic.getLocalizer().localizeString(
-          LocalizedConstants.UNSUPPORTED_PARAM_MESSAGE, param)).build());
+    throw new FailedRequestException(
+      LocalizedConstants.UNSUPPORTED_PARAM_MESSAGE,
+      ic,
+      param
+    );
   }
 }

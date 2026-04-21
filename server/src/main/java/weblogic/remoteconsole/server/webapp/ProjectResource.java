@@ -16,15 +16,14 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
-import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.container.ResourceContext;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.PathSegment;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.Status;
 
 import org.glassfish.jersey.media.multipart.FormDataParam;
+import weblogic.remoteconsole.common.repodef.LocalizedConstants;
 import weblogic.remoteconsole.server.providers.PdjRdjUtils;
 import weblogic.remoteconsole.server.repo.InvocationContext;
 import weblogic.remoteconsole.server.webapp.project.NavTree;
@@ -85,10 +84,12 @@ public class ProjectResource extends PdjRdjUtils {
         param,
         path);
     }
-    return WebAppUtils.addCookieFromContext(resContext,
-      Response.status(
-        Status.BAD_REQUEST.getStatusCode(), "This request is poorly formed")
-    ).build();
+    InvocationContext ic =
+      WebAppUtils.getInvocationContextFromResourceContext(resContext);
+    throw new FailedRequestException(
+      ic.getLocalizer().localizeString(
+        LocalizedConstants.REQUEST_POORLY_FORMED_MESSAGE)
+    );
   }
 
   @POST
@@ -133,10 +134,12 @@ public class ProjectResource extends PdjRdjUtils {
         throw new Exception("Too big");
       }
     } catch (Exception e) {
-      throw new WebApplicationException(Response.status(
-        Status.BAD_REQUEST.getStatusCode(),
-          "Problem reading data"
-      ).build());
+      InvocationContext ic =
+        WebAppUtils.getInvocationContextFromResourceContext(resContext);
+      throw new FailedRequestException(
+        ic.getLocalizer().localizeString(
+          LocalizedConstants.REQUEST_POORLY_FORMED_MESSAGE)
+      );
     }
     JsonObject payload;
     try {
@@ -145,10 +148,12 @@ public class ProjectResource extends PdjRdjUtils {
         .add("data", Json.createObjectBuilder(requestBody.getJsonObject("data"))
             .add("generatedContents", contents.toString())).build();
     } catch (Exception e) {
-      throw new WebApplicationException(Response.status(
-        Status.BAD_REQUEST.getStatusCode(),
-          "Problem reading data"
-      ).build());
+      InvocationContext ic =
+        WebAppUtils.getInvocationContextFromResourceContext(resContext);
+      throw new FailedRequestException(
+        ic.getLocalizer().localizeString(
+          LocalizedConstants.REQUEST_POORLY_FORMED_MESSAGE)
+      );
     }
     if (param == null) {
       param = "";
@@ -185,10 +190,12 @@ public class ProjectResource extends PdjRdjUtils {
         throw new Exception("Too big");
       }
     } catch (Exception e) {
-      throw new WebApplicationException(Response.status(
-        Status.BAD_REQUEST.getStatusCode(),
-          "Problem reading data"
-      ).build());
+      InvocationContext ic =
+        WebAppUtils.getInvocationContextFromResourceContext(resContext);
+      throw new FailedRequestException(
+        ic.getLocalizer().localizeString(
+          LocalizedConstants.REQUEST_POORLY_FORMED_MESSAGE)
+      );
     }
     JsonObject payload;
     try {
@@ -197,10 +204,12 @@ public class ProjectResource extends PdjRdjUtils {
         .add("data", Json.createObjectBuilder(requestBody.getJsonObject("data"))
             .add("generatedContents", contents.toString())).build();
     } catch (Exception e) {
-      throw new WebApplicationException(Response.status(
-        Status.BAD_REQUEST.getStatusCode(),
-          "Problem reading data"
-      ).build());
+      InvocationContext ic =
+        WebAppUtils.getInvocationContextFromResourceContext(resContext);
+      throw new FailedRequestException(
+        ic.getLocalizer().localizeString(
+          LocalizedConstants.REQUEST_POORLY_FORMED_MESSAGE)
+      );
     }
     return post(param, pathSegments, resContext, payload);
   }
@@ -236,10 +245,12 @@ public class ProjectResource extends PdjRdjUtils {
         param,
         payload);
     }
-    throw new WebApplicationException(Response.status(
-      Status.BAD_REQUEST.getStatusCode(),
-        "Moves only take one argument, the project name"
-    ).build());
+    InvocationContext ic =
+      WebAppUtils.getInvocationContextFromResourceContext(resContext);
+    throw new FailedRequestException(
+      ic.getLocalizer().localizeString(
+        LocalizedConstants.REQUEST_POORLY_FORMED_MESSAGE)
+    );
   }
 
   @POST

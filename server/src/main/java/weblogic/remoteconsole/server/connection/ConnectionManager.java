@@ -1,4 +1,4 @@
-// Copyright (c) 2020, 2025, Oracle and/or its affiliates.
+// Copyright (c) 2020, 2026, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.connection;
@@ -172,7 +172,9 @@ public class ConnectionManager {
     Set<String> capabilities,
     List<RemoteConsoleExtensionImpl> extensionImpls,
     String username,
-    Client client
+    Client client,
+    long connectTimeoutMillis,
+    long readTimeoutMillis
   ) {
     Connection result = null;
 
@@ -192,13 +194,30 @@ public class ConnectionManager {
         extensionImpls,
         username,
         client,
-        getConnectTimeout(),
-        getReadTimeout()
+        connectTimeoutMillis,
+        readTimeoutMillis
       );
     connections.put(id, result);
 
     // Done.
     return result;
+  }
+
+  Connection newConnection(
+    String domainUrl,
+    String domainName,
+    String adminServerName,
+    WebLogicVersion weblogicVersion,
+    String consoleExtensionVersion,
+    Set<String> capabilities,
+    List<RemoteConsoleExtensionImpl> extensionImpls,
+    String username,
+    Client client
+  ) {
+    long connectTimeoutMillis = getConnectTimeout();
+    long readTimeoutMillis = getReadTimeout();
+    return newConnection(domainUrl, domainName, adminServerName, weblogicVersion,
+      consoleExtensionVersion, capabilities, extensionImpls, username, client, connectTimeoutMillis, readTimeoutMillis);
   }
 
   /**
@@ -217,13 +236,25 @@ public class ConnectionManager {
     List<Locale> locales,
     boolean insecure,
     String proxyOverride) {
+    long connectTimeoutMillis = getConnectTimeout();
+    long readTimeoutMillis = getReadTimeout();
+    return tryConnection(domainUrl, auth, locales, insecure, proxyOverride, connectTimeoutMillis, readTimeoutMillis);
+  }
 
+  public ConnectionResponse tryConnection(
+    String domainUrl,
+    ClientAuthHeader auth,
+    List<Locale> locales,
+    boolean insecure,
+    String proxyOverride,
+    long connectTimeoutMillis,
+    long readTimeoutMillis) {
     maybeDisableHostnameVerification();
     // Setup the JAX-RS client for use with the connection using the suppplied authorization header
     ClientBuilder builder =
       ClientBuilder.newBuilder()
-        .connectTimeout(getConnectTimeout(), TimeUnit.MILLISECONDS)
-        .readTimeout(getReadTimeout(), TimeUnit.MILLISECONDS)
+        .connectTimeout(connectTimeoutMillis, TimeUnit.MILLISECONDS)
+        .readTimeout(readTimeoutMillis, TimeUnit.MILLISECONDS)
         .register(JacksonJsonProvider.class)
         .register(MultiPartFeature.class)
         .register(ClientAuthFeature.authorization(auth));
@@ -254,7 +285,7 @@ public class ConnectionManager {
     }
 
     // Try to get WebLogic version from RESTful Management endpoint
-    ConnectionResponse result = connect(domainUrl, username, client, locales);
+    ConnectionResponse result = connect(domainUrl, username, client, locales, connectTimeoutMillis, readTimeoutMillis);
 
     // Return the result and IFF successful with the insecure flag then log the connection state!
     if (insecure && result.isSuccess()) {
@@ -382,9 +413,17 @@ public class ConnectionManager {
    * @param username The username
    * @param client The JAX-RS client
    * @param locales The locales used to obtain a message
+   * @param connectTimeoutMillis The connect timeout in millis
+   * @param readTimeoutMillis The read timeout in millis
    * @return The connection response; The connection id is available when status is successful
    */
-  private ConnectionResponse connect(String domainUrl, String username, Client client, List<Locale> locales) {
+  private ConnectionResponse connect(
+    String domainUrl,
+    String username,
+    Client client,
+    List<Locale> locales,
+    long connectTimeoutMillis,
+    long readTimeoutMillis) {
     // Try to connect to the admin server's domainConfig endpoint to get the domain's name
     // and info about the console rest extension
     ConnectionResponse domainConfigResponse =
@@ -478,7 +517,9 @@ public class ConnectionManager {
           capabilities,
           extensionImpls,
           username,
-          client
+          client,
+          connectTimeoutMillis,
+          readTimeoutMillis
         )
       );
   }
@@ -730,7 +771,7 @@ public class ConnectionManager {
             // enabled and the user is trying to connect via the normal SSL port.
             //
             // WLS always returns a 403 with a non-localized message that says:
-            //   Console/Management requests or requests with &lt;require-admin-traffic&gt;
+            //   Console/Management requests or requests with <require-admin-traffic>
             //   specified to &#39;true&#39; can only be made through an administration channel
             if (message.contains("require-admin-traffic") && respStatus == Status.FORBIDDEN) {
               // Switch from a 403 to a 404 and replace the message with a friendlier one

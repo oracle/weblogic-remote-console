@@ -1,4 +1,4 @@
-// Copyright (c) 2020, 2025, Oracle and/or its affiliates.
+// Copyright (c) 2020, 2026, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.customizers;
@@ -25,6 +25,7 @@ import weblogic.remoteconsole.server.repo.InvocationContext;
 import weblogic.remoteconsole.server.repo.Page;
 import weblogic.remoteconsole.server.repo.PropertiesValue;
 import weblogic.remoteconsole.server.repo.Response;
+import weblogic.remoteconsole.server.repo.StringValue;
 import weblogic.remoteconsole.server.repo.Value;
 
 /**
@@ -109,14 +110,31 @@ public class AppDeploymentRuntimeMBeanCustomizer {
     Value sourcePathValue = sourcePathProperty.getValue().asSettable().getValue();
     FormProperty planPathProperty = CustomizerUtils.findRequiredFormProperty("PlanPath", formProperties);
     Value planPathValue = planPathProperty.getValue().asSettable().getValue();
+    
+    Value normalizedPlanPathValue = normalizeRedeployPlanPathValue(planPathValue);
     // Now invoke the low level update action:
     return
       customizeAction(
           ic,
           "redeploy_targets_applicationPath_plan_deploymentOptions",
           new Properties(),
-          Map.of("applicationPath", sourcePathValue, "plan", planPathValue)
+          Map.of("applicationPath", sourcePathValue, "plan", normalizedPlanPathValue)
       );
+  }
+
+  static Value normalizeRedeployPlanPathValue(Value planPathValue) {
+    // Frontend form fields may submit blank strings for optional paths.
+    // Treat blank plan path as null to preserve expected clear-plan semantics.
+    Value normalizedPlanPathValue = planPathValue;
+    if (normalizedPlanPathValue == null) {
+      normalizedPlanPathValue = new StringValue(null);
+    } else if (normalizedPlanPathValue.isString()) {
+      String planPath = normalizedPlanPathValue.asString().getValue();
+      if (planPath != null && planPath.trim().isEmpty()) {
+        normalizedPlanPathValue = new StringValue(null);
+      }
+    }
+    return normalizedPlanPathValue;
   }
 
   /**

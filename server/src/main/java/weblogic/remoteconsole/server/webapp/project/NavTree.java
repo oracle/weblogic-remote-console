@@ -1,4 +1,4 @@
-// Copyright (c) 2025, Oracle and/or its affiliates.
+// Copyright (c) 2025, 2026, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.webapp.project;
@@ -65,7 +65,8 @@ public class NavTree extends PdjRdjUtils {
     //   .add("contents", projectsBuilder.build()));
     // builder.add("contents", projectsSingletonCollectionBuilder.build());
     builder.add("resourceData",
-      resourceDataMaker("Projects", "/api/project/data"));
+      resourceDataMaker(ic.getLocalizer().localizeString(
+        LocalizedConstants.PROJECTS_NAVIGATION_LABEL), "/api/project/data"));
     builder.add("contents", projectsBuilder.build());
     return
       WebAppUtils.addCookieFromContext(resContext,

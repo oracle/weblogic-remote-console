@@ -115,30 +115,44 @@ const Table = ({ tableContent, pageContext, bare, onSelectionChanged }: Props) =
   const selectedChangedListener = (
     event: ojTable.selectedChanged<any, any>,
   ) => {
-    const row = event.detail.value.row as KeySetImpl<any>;
+    const row = event.detail.value.row as KeySetImpl<string>;
     const column = event.detail.value.column as KeySetImpl<any>;
 
-    if (row.isAddAll()) {
-      selectedItems.row = new KeySetImpl(allAvailableKeys);
+    // Convert JET "select all" semantics into an explicit set of keys that
+    // respects any subsequent unselects. When isAddAll() is true, the keyset
+    // represents "all keys minus deleted". Build an explicit key list using
+    // has(key) across the available keys so actions receive only the intended rows.
+    let resolvedRowKeys: KeySetImpl<string>;
+    if (row?.isAddAll && row.isAddAll()) {
+      const keys = (allAvailableKeys || []).filter((k) => row.has(k));
+      resolvedRowKeys = new KeySetImpl<string>(keys);
     } else {
-      selectedItems.row = row;
+      resolvedRowKeys = row as KeySetImpl<string>;
     }
 
-    selectedItems.column = column;
+    // Update state immutably so Preact re-renders dependents
+    setSelectedItems({ row: resolvedRowKeys, column });
+    onSelectionChanged?.(resolvedRowKeys);
 
-    setSelectedItems(selectedItems);
-    onSelectionChanged?.(selectedItems.row);
-
-    updateActionsDisabled();
+    updateActionsDisabled(resolvedRowKeys);
   };
 
-  const getSelectionCount = (keys: KeySetImpl<string>) => Array.from(keys?.values?.() || []).length;
+  const getSelectionCount = (keys: KeySetImpl<string>) => {
+    if (!keys) return 0;
+    // If using JET's addAll mode, count selected by checking each known key with has()
+    if ((keys as any)?.isAddAll && (keys as any).isAddAll()) {
+      return (allAvailableKeys || []).filter((k) => (keys as any).has(k)).length;
+    }
+    const iter = (keys as any)?.values?.();
+    return Array.from(iter || []).length;
+  };
 
-  const updateActionsDisabled = () => {
+  const updateActionsDisabled = (keys?: KeySetImpl<string>) => {
     const newEnabledActions: string[] = [];
    
     const updateActionDisabled = (action: Action) => {
-      const count = getSelectionCount(selectedItems.row);
+      const effectiveKeys = keys ?? selectedItems.row;
+      const count = getSelectionCount(effectiveKeys);
       let isEnabled: boolean;
 
       switch (action.rows) {
@@ -228,8 +242,9 @@ const Table = ({ tableContent, pageContext, bare, onSelectionChanged }: Props) =
 
     if (changedSelectedItems) {
       // make sure the oj-table sees the change:
+      const newRowKeys = selectedItems.row as KeySetImpl<string>;
       setSelectedItems({ ...selectedItems });
-      updateActionsDisabled();
+      updateActionsDisabled(newRowKeys);
     }
   }
 
@@ -427,11 +442,20 @@ const Table = ({ tableContent, pageContext, bare, onSelectionChanged }: Props) =
   const selectorCellRenderer = (cell: any) => {
     const key = (cell?.row?._rowSelector) ?? (cell?.data?._rowSelector);
     const onSelectorKeysChanged = (e: any) => {
-      const newKeys = e?.detail?.value;
+      const newKeys = e?.detail?.value as KeySetImpl<string> | undefined;
       if (newKeys) {
-        setSelectedItems({ ...selectedItems, row: newKeys });
-        onSelectionChanged?.(newKeys);
-        updateActionsDisabled();
+        // Normalize to an explicit key set so actions and counts are accurate
+        let normalized: KeySetImpl<string>;
+        const isAddAll = (newKeys as any)?.isAddAll?.();
+        if (isAddAll) {
+          const keys = (allAvailableKeys || []).filter((k) => (newKeys as any).has(k));
+          normalized = new KeySetImpl<string>(keys);
+        } else {
+          normalized = newKeys as KeySetImpl<string>;
+        }
+        setSelectedItems({ ...selectedItems, row: normalized });
+        onSelectionChanged?.(normalized);
+        updateActionsDisabled(normalized);
       }
     };
     return (

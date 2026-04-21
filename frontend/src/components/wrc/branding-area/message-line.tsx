@@ -127,9 +127,9 @@ function MessageLineImpl({ context }: Props) {
                 ) : null}
 
                 <span
-                  class={`cfe-message-line-text oj-text-color-primary ${
-                    severity === "info" ? "oj-sm-margin-start-3x" : "oj-sm-margin-start-2x"
-                  }`}
+                  class={`cfe-message-line-text ${
+                    severity === "error" ? "oj-text-color-danger" : "oj-text-color-primary"
+                  } ${severity === "info" ? "oj-sm-margin-start-3x" : "oj-sm-margin-start-2x"}`}
                   dangerouslySetInnerHTML={{ __html: summaryHTML }}
                 ></span>
 
