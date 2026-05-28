@@ -12,12 +12,13 @@
 // at the top.
 const path = require('path');
 const fs = require('fs');
+const http = require('http');
 const readline = require('readline');
 const { spawn } = require('child_process');
 const { execFile } = require('child_process');
 const yargs = require('yargs');
 
-const { app, ipcMain, shell, dialog, safeStorage } = require('electron');
+const { app, ipcMain, dialog, safeStorage } = require('electron');
 
 const logger = require('./js/console-logger');
 
@@ -44,6 +45,7 @@ const Watcher = require('./js/watcher');
 // Declare variable for IIFE class used to manage window
 // and menu for app
 const AppWindow = require('./js/window-management');
+const ExternalUrlUtils = require('./js/external-url-utils');
 
 const instDir = path.dirname(app.getPath('exe'));
 const { homepage, productName, version, copyright } = require(`${instDir}/package.json`);
@@ -74,7 +76,6 @@ const AppConstants = Object.freeze({
   JAVA_BINARY: 'customjre/bin/java',
   LOG_BASEFILENAME: 'out'
 });
-
 let logOptions;
 let windows = [];
 let checkPid = 0;
@@ -89,6 +90,8 @@ let quiet = false;
 let lines = [];
 let cbe;
 let cbeUrl = '';
+const BACKEND_WARMUP_TIMEOUT_MILLIS = 2000;
+const BACKEND_WARMUP_PATHS = ['/'];
 
 (() => {
   function updateUserDataPath() {
@@ -217,9 +220,10 @@ function doCheckPid() {
   }
 }
 
-function doit() {
-  if (!isHeadlessMode()) {
-    cbeUrl = `http://localhost:${cbePort}/`;
+async function doit() {
+  cbeUrl = `http://localhost:${cbePort}/`;
+  await warmupBackend(cbePort);
+  if (windows.length > 0) {
     AppWindow.load(cbeUrl);
   }
 }
@@ -284,6 +288,47 @@ function processCmdLineOptions() {
   showPort = argv.showPort;
   useTokenNotCookie = argv.useTokenNotCookie;
   quiet = argv.quiet;
+}
+
+function warmupBackendRequest(port, requestPath) {
+  return new Promise((resolve) => {
+    const startMillis = Date.now();
+    const req = http.get(
+      {
+        hostname: '127.0.0.1',
+        port: port,
+        path: requestPath
+      },
+      (res) => {
+        res.resume();
+        res.on('end', () => {
+          logger.log(
+            'debug',
+            `Backend warmup ${requestPath} completed with status ${res.statusCode} in ${Date.now() - startMillis} ms.`
+          );
+          resolve();
+        });
+      }
+    );
+
+    req.setTimeout(BACKEND_WARMUP_TIMEOUT_MILLIS, () => {
+      logger.log('debug', `Backend warmup ${requestPath} timed out after ${BACKEND_WARMUP_TIMEOUT_MILLIS} ms.`);
+      req.destroy();
+    });
+
+    req.on('error', (err) => {
+      logger.log('debug', `Backend warmup ${requestPath} failed: ${err}`);
+      resolve();
+    });
+
+    req.on('close', () => {
+      resolve();
+    });
+  });
+}
+
+async function warmupBackend(port) {
+  await Promise.all(BACKEND_WARMUP_PATHS.map((requestPath) => warmupBackendRequest(port, requestPath)));
 }
 
 function sendConfig(data) {
@@ -380,7 +425,7 @@ function start_cbe() {
       started = true;
       doit();
     } else if (line.startsWith('URL: ')) {
-      shell.openExternal(line.replace('URL: ', ''));
+      ExternalUrlUtils.openExternalURL(line.replace('URL: ', ''), 'backend-stdout-url');
     } else if (line.startsWith('EncryptionService: ')) {
       if (safeStorage.isEncryptionAvailable()) {
         const decrypted = atob(line.replace('EncryptionService: ', ''));
@@ -442,71 +487,75 @@ app.whenReady()
     logger.rotateLog(logOptions);
     processCmdLineOptions();
 
-    if (!isHeadlessMode()) {
+    const headless = isHeadlessMode();
+
+    if (!headless) {
       // Attempt to obtain the single instance lock.  This is not used as a
       // "lock", really, but as a signifier that we have a running instance
       // that is not headless.  See app.on for "activate" above.
       app.requestSingleInstanceLock();
-
-      // No way to prompt for updates in a headless process
-      const supportsUpgradeCheck = !isHeadlessMode();
-
-      // On Linux, only AppImages can be updated in place
-      const supportsAutoUpgrades = supportsUpgradeCheck &&
-        !(OSUtils.isLinuxOS() && !process.env.APPIMAGE);
-
-      // This is, obviously, a hack.  Here's the deal:
-      // the Auto-Updater will only check for updates on Linux if the file is
-      // an AppImage.  However, we want something a little different.  We want
-      // to be able to *check* for a new image no matter what format, but only
-      // *do* the update if it is a supported format.  So, we'll lie to the
-      // Auto-Updater by setting the APPIMAGE, but our code will know better.
-      // We'll know it isn't real because it isn't really a file.  This will
-      // no longer be necessary in the near future when the Auto Updater
-      // supports all formats on Linux.
-      if (supportsUpgradeCheck && OSUtils.isLinuxOS && !process.env.APPIMAGE)
-        process.env.APPIMAGE = `/${Math.random()}/${Math.random()}`;
-
-      const file = app.getPath('userData') + '/user-prefs.json';
-      const userPrefsEarly = fs.existsSync(file) ? require(file) : null;
-      const upgradeCheckAtStart =
-        (userPrefsEarly?.startup?.checkForUpdates === undefined)
-        ? true
-        : userPrefsEarly.startup.checkForUpdates;
-
-      const params = {
-        version: version,
-        productName: productName,
-        copyright: copyright,
-        homepage: homepage,
-        feedURL: feedURL,
-        supportsUpgradeCheck: supportsUpgradeCheck,
-        upgradeCheckAtStart: upgradeCheckAtStart,
-        supportsAutoUpgrades: supportsAutoUpgrades
-      };
-
-      const mainWindow = AppWindow.initialize(
-        I18NUtils.get('wrc-electron.messages.initializing'),
-        params,
-        path.dirname(app.getPath('exe')),
-        app.getPath('userData'),
-        createNewWindow
-      );
-      windows.push(mainWindow);
-
-      // Handle window closing
-      mainWindow.on('closed', () => {
-        windows = windows.filter(w => w !== mainWindow);
-        if (windows.length === 0) {
-          app.quit();
-        }
-      });
-
-      AppWindow.renderAppMenu();
     }
-    else {
+
+    // No way to prompt for updates in a headless process
+    const supportsUpgradeCheck = !headless;
+
+    // On Linux, only AppImages can be updated in place
+    const supportsAutoUpgrades = supportsUpgradeCheck &&
+      !(OSUtils.isLinuxOS() && !process.env.APPIMAGE);
+
+    // This is, obviously, a hack.  Here's the deal:
+    // the Auto-Updater will only check for updates on Linux if the file is
+    // an AppImage.  However, we want something a little different.  We want
+    // to be able to *check* for a new image no matter what format, but only
+    // *do* the update if it is a supported format.  So, we'll lie to the
+    // Auto-Updater by setting the APPIMAGE, but our code will know better.
+    // We'll know it isn't real because it isn't really a file.  This will
+    // no longer be necessary in the near future when the Auto Updater
+    // supports all formats on Linux.
+    if (supportsUpgradeCheck && OSUtils.isLinuxOS && !process.env.APPIMAGE)
+      process.env.APPIMAGE = `/${Math.random()}/${Math.random()}`;
+
+    const file = app.getPath('userData') + '/user-prefs.json';
+    const userPrefsEarly = fs.existsSync(file) ? require(file) : null;
+    const upgradeCheckAtStart =
+      (userPrefsEarly?.startup?.checkForUpdates === undefined)
+      ? true
+      : userPrefsEarly.startup.checkForUpdates;
+
+    const params = {
+      version: version,
+      productName: productName,
+      copyright: copyright,
+      homepage: homepage,
+      feedURL: feedURL,
+      supportsUpgradeCheck: supportsUpgradeCheck,
+      upgradeCheckAtStart: upgradeCheckAtStart,
+      supportsAutoUpgrades: supportsAutoUpgrades
+    };
+
+    const mainWindow = AppWindow.initialize(
+      productName,
+      params,
+      path.dirname(app.getPath('exe')),
+      app.getPath('userData'),
+      createNewWindow
+    );
+    windows.push(mainWindow);
+
+    // Handle window closing
+    mainWindow.on('closed', () => {
+      windows = windows.filter(w => w !== mainWindow);
+      if (windows.length === 0) {
+        app.quit();
+      }
+    });
+
+    if (!headless) {
+      AppWindow.renderAppMenu();
+    } else {
       AppWindow.hideDockIconMacOS();
     }
+
     Watcher.initialize(app.getPath('userData'), windows[0], [UserPrefs, AutoPrefs, AppConfig]);
     start_cbe();
   })
@@ -530,13 +579,27 @@ ipcMain.handle('preference-reading', async (event, arg) => {
   return UserPrefs.get(arg);
 });
 
-ipcMain.handle('file-choosing', async (event, dialogParams) => {
-  console.trace('FIXME file-choosing in electron is going away');
-  return null;
+ipcMain.handle('file-choosing', async (event, arg) => {
+  const openDialogParams = {
+    defaultPath: arg?.filepath,
+    properties: ['openFile'],
+    filters: {
+      name: 'Supported Formats',
+      extensions: FileUtils.fileExtensions,
+    },
+  };
+
+  return AppWindow.showFileChoosingOpenDialog(openDialogParams).then((result) => {
+    if (!result.canceled && result.filePaths && result.filePaths.length > 0) {
+      return Promise.resolve({ succeeded: true, filePath: result.filePaths[0] });
+    }
+
+    return Promise.resolve({ succeeded: false, filePath: '' });
+  });
 });
 
 ipcMain.handle('external-url-opening', async (event, arg) => {
-  AppWindow.openExternalURL(arg);
+  return AppWindow.openExternalURL(arg);
 });
 
 

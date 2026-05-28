@@ -1,4 +1,4 @@
-// Copyright (c) 2023, 2025, Oracle and/or its affiliates.
+// Copyright (c) 2023, 2026, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.customizers;
@@ -137,7 +137,7 @@ public class JMSMessageManagementRuntimeMBeanCustomizer {
     String messageType = metaData.getString("messageType");
     if (!("text".equals(messageType) || "xml".equals(messageType))) {
       page.setLocalizedIntroductionHTML(
-        ic.getLocalizer().localizeString(
+        ic.getLocalizer().localizeHtmlString(
           LocalizedConstants.JMS_CANNOT_VIEW_MESSAGE_BODY_BECAUSE_WRONG_TYPE,
           messageID
         )
@@ -146,7 +146,7 @@ public class JMSMessageManagementRuntimeMBeanCustomizer {
     }
     if (messageSize > MAX_DISPLAYABLE_MESSAGE_SIZE) {
       page.setLocalizedIntroductionHTML(
-        ic.getLocalizer().localizeString(
+        ic.getLocalizer().localizeHtmlString(
           LocalizedConstants.JMS_CANNOT_VIEW_MESSAGE_BODY_BECAUSE_TOO_BIG,
           messageID
         )
@@ -158,14 +158,14 @@ public class JMSMessageManagementRuntimeMBeanCustomizer {
     if (messageLength > MAX_DISPLAYED_MESSAGE_BODY_LENGTH) {
       messageBody = messageBody.substring(0, MAX_DISPLAYED_MESSAGE_BODY_LENGTH) + "...";
       page.setLocalizedIntroductionHTML(
-        ic.getLocalizer().localizeString(
+        ic.getLocalizer().localizeHtmlString(
           LocalizedConstants.JMS_DISPLAYED_TRIMMED_MESSAGE_BODY,
           messageID
         )
       );
     } else {
       page.setLocalizedIntroductionHTML(
-        ic.getLocalizer().localizeString(
+        ic.getLocalizer().localizeHtmlString(
           LocalizedConstants.JMS_DISPLAYED_MESSAGE_BODY,
           messageID
         )
@@ -384,7 +384,7 @@ public class JMSMessageManagementRuntimeMBeanCustomizer {
           );
       } else {
         return
-          ic.getLocalizer().localizeString(
+          ic.getLocalizer().localizeHtmlString(
             LocalizedConstants.SOME_UNFILTERED_JMS_MESSAGES,
             totalUnfilteredMessages,
             returnedMessages,
@@ -395,7 +395,7 @@ public class JMSMessageManagementRuntimeMBeanCustomizer {
     } else {
       if (totalFilteredMessages == 0) {
         return
-          ic.getLocalizer().localizeString(
+          ic.getLocalizer().localizeHtmlString(
             LocalizedConstants.NO_FILTERED_JMS_MESSAGES,
             totalUnfilteredMessages,
             messageSelector
@@ -403,7 +403,7 @@ public class JMSMessageManagementRuntimeMBeanCustomizer {
       } else {
         if (returnedMessages == totalFilteredMessages) {
           return
-            ic.getLocalizer().localizeString(
+            ic.getLocalizer().localizeHtmlString(
               LocalizedConstants.ALL_FILTERED_JMS_MESSAGES,
               totalUnfilteredMessages,
               totalFilteredMessages,
@@ -411,7 +411,7 @@ public class JMSMessageManagementRuntimeMBeanCustomizer {
             );
         } else {
           return
-            ic.getLocalizer().localizeString(
+            ic.getLocalizer().localizeHtmlString(
               LocalizedConstants.SOME_FILTERED_JMS_MESSAGES,
               totalUnfilteredMessages,
               totalFilteredMessages,

@@ -1,4 +1,4 @@
-// Copyright (c) 2022, 2025, Oracle Corporation and/or its affiliates.
+// Copyright (c) 2022, 2026, Oracle Corporation and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.repo;
@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import weblogic.console.utils.StringUtils;
-import weblogic.remoteconsole.common.utils.DateUtils;
 
 /**
  * Handle filtering a property value as part of a general search
@@ -99,10 +98,14 @@ public abstract class SearchValueFilterHandler {
       return new StringValue("" + value.asBeanTreePath().toString());
     }
     if (value.isDate()) {
-      return new StringValue(DateUtils.formatDate(value.asDate().getValue()));
+      return new StringValue(
+        getFinder().getInvocationContext().getLocalizer().formatDate(value.asDate().getValue())
+      );
     }
     if (value.isDateAsLong()) {
-      return new StringValue(DateUtils.formatDate(value.asDateAsLong().asDate().getValue()));
+      return new StringValue(
+        getFinder().getInvocationContext().getLocalizer().formatDate(value.asDateAsLong().asDate().getValue())
+      );
     }
     // value.isProperties ?
     return null;
@@ -114,11 +117,13 @@ public abstract class SearchValueFilterHandler {
 
   protected LongValue getValueAsLong(Value value) {
     if (value.isDate()) {
-      long val = DateUtils.getRoundedDateAsLong(value.asDate().getValue());
+      long val = getFinder().getInvocationContext().getLocalizer().getRoundedDateAsLong(value.asDate().getValue());
       return new LongValue(val);
     }
     if (value.isDateAsLong()) {
-      long val = DateUtils.getRoundedDateAsLong(value.asDateAsLong().asDate().getValue());
+      long val = getFinder().getInvocationContext().getLocalizer().getRoundedDateAsLong(
+        value.asDateAsLong().asDate().getValue()
+      );
       return new LongValue(val);
     }
     if (value.isLong()) {
@@ -276,4 +281,3 @@ public abstract class SearchValueFilterHandler {
     }
   }
 }
-

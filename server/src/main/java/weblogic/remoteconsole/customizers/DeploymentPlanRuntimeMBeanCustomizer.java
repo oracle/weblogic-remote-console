@@ -1,4 +1,4 @@
-// Copyright (c) 2023, 2025, Oracle and/or its affiliates.
+// Copyright (c) 2023, 2026, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.customizers;
@@ -190,7 +190,7 @@ public class DeploymentPlanRuntimeMBeanCustomizer {
     String standardIntro =
       ic.getLocalizer().localizeString(page.getPageDef().getIntroductionHTML());
     String extraIntro =
-      ic.getLocalizer().localizeString(
+      ic.getLocalizer().localizeHtmlString(
         LocalizedConstants.VARIABLE_ASSIGNMENT_INTRO,
         beanResults.getValue(moduleNamePropertyDef).asString().getValue(),
         beanResults.getValue(uriPropertyDef).asString().getValue(),

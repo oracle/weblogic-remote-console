@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2023, 2025, Oracle and/or its affiliates.
+ * Copyright (c) 2023, 2026, Oracle and/or its affiliates.
  * Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
  * @ignore
  */
@@ -10,8 +10,9 @@
 const logger = require('./console-logger');
 const { autoUpdater } = require('electron-updater');
 const I18NUtils = require('./i18n-utils');
+const { validateUpdateFeedURL } = require('./update-feed-url-utils');
 autoUpdater.autoDownload = false;
-autoUpdater.allowDowngrade = true;
+autoUpdater.allowDowngrade = false;
 const { dialog } = require('electron');
 
 let failed;
@@ -141,7 +142,12 @@ async function doUpdate(window) {
 }
 
 function setFeedURL(feedURL) {
-  autoUpdater.setFeedURL(feedURL);
+  try {
+    autoUpdater.setFeedURL(validateUpdateFeedURL(feedURL));
+  } catch (error) {
+    log.error(error.message);
+    throw error;
+  }
 }
 
 module.exports = {

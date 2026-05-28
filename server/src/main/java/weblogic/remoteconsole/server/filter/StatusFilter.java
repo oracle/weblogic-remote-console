@@ -1,4 +1,4 @@
-// Copyright (c) 2025, Oracle and/or its affiliates.
+// Copyright (c) 2025, 2026, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.filter;
@@ -143,6 +143,16 @@ public class StatusFilter implements ContainerResponseFilter {
     return ret;
   }
 
+  static boolean breadCrumbMatchesNavPart(
+    String resourceData,
+    String navPart,
+    String beanPath
+  ) {
+    String decodedResourceData = URLDecoder.decode(resourceData, StandardCharsets.UTF_8);
+    return decodedResourceData.endsWith('/' + navPart)
+      || ((beanPath != null) && decodedResourceData.endsWith('/' + beanPath));
+  }
+
   // Okay, walk through the navigation and whatever is missing from
   // the breadcrumbs, fill them in with shoWlist, with a param that
   // says the path
@@ -224,11 +234,16 @@ public class StatusFilter implements ContainerResponseFilter {
     for (int i = 0; i < navParts.length - 1; i++) {
       path.addComponents(navParts[i]);
       decodedPath.addComponents(URLDecoder.decode(navParts[i], StandardCharsets.UTF_8));
+      NavTreePath fullNavTreePath = new NavTreePath(ic.getPageRepo(), decodedPath);
+      NavTreePathSegment segment = fullNavTreePath.getLastSegment();
+      String beanPath = (segment.getBeanTreePath() == null)
+        ? null
+        : segment.getBeanTreePath().getPath().getSlashSeparatedPath();
       boolean found = false;
       for (int walk = curCrumbRead; walk < origBreadCrumbs.size(); walk++) {
         String tryRDJ =
           origBreadCrumbs.getJsonObject(walk).getString("resourceData");
-        if (tryRDJ.endsWith('/' + navParts[i])) {
+        if (breadCrumbMatchesNavPart(tryRDJ, navParts[i], beanPath)) {
           curCrumbRead = walk + 1;
           ret.add(origBreadCrumbs.getJsonObject(walk));
           found = true;
@@ -238,8 +253,6 @@ public class StatusFilter implements ContainerResponseFilter {
       if (found) {
         continue;
       }
-      NavTreePath fullNavTreePath = new NavTreePath(ic.getPageRepo(), decodedPath);
-      NavTreePathSegment segment = fullNavTreePath.getLastSegment();
       LocalizableString labelLocalizable = segment.getNavTreeNodeDef().getLabel();
       String label = ic.getLocalizer().localizeString(labelLocalizable);
       ret.add(Json.createObjectBuilder()

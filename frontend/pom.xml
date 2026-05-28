@@ -10,7 +10,7 @@
   <parent>
     <groupId>com.oracle.weblogic</groupId>
     <artifactId>console-backend</artifactId>
-    <version>3.0.3</version>
+    <version>3.0.4</version>
   </parent>
 
   <packaging>pom</packaging>
@@ -24,6 +24,7 @@
     <eslint-js.report>eslint-js.html</eslint-js.report>
     <eslint-js.root>src/js</eslint-js.root>
     <node-js.executable>node</node-js.executable>
+    <ojet.build.release.flag></ojet.build.release.flag>
   </properties>
 
   <dependencies>
@@ -71,7 +72,7 @@
             <phase>compile</phase>
             <configuration>
               <executable>ojet</executable>
-              <commandlineArgs>build ${ojet.build.user-options}</commandlineArgs>
+              <commandlineArgs>build ${ojet.build.release.flag} ${ojet.build.user-options}</commandlineArgs>
             </configuration>
           </execution>
           <execution>
@@ -94,4 +95,19 @@
     </plugins>
 
   </build>
+
+  <profiles>
+    <profile>
+      <id>ojet-release-build</id>
+      <activation>
+        <property>
+          <name>ojet.release</name>
+          <value>true</value>
+        </property>
+      </activation>
+      <properties>
+        <ojet.build.release.flag>--release</ojet.build.release.flag>
+      </properties>
+    </profile>
+  </profiles>
 </project>

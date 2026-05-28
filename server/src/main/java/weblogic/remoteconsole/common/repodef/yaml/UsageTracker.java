@@ -1,20 +1,20 @@
-// Copyright (c) 2024, 2025, Oracle and/or its affiliates.
+// Copyright (c) 2024, 2026, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef.yaml;
 
 import java.util.Set;
-import java.util.TreeSet;
+import java.util.concurrent.ConcurrentSkipListSet;
 
 /**
  * Yaml-based implementation of the BeanRepoDef interface.
  */
 public class UsageTracker {
 
-  private static boolean trackUsage = false;
+  private static volatile boolean trackUsage = false;
 
-  private static Set<String> used = new TreeSet<>();
-  private static Set<String> notFound = new TreeSet<>();
+  private static Set<String> used = new ConcurrentSkipListSet<>();
+  private static Set<String> notFound = new ConcurrentSkipListSet<>();
 
   static {
     // known and vetted complaints:

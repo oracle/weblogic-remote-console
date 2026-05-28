@@ -157,7 +157,7 @@ public class ProviderInstance extends PdjRdjUtils {
       if (messages == null) {
         messages = Json.createArrayBuilder() 
           .add(Json.createObjectBuilder()
-            .add("message", "Failed to connect")).build();
+            .add("message", LocalizedConstants.CANT_CONNECT_TO_ADMIN_SERVER.getEnglishText())).build();
       }
       throw new FailedRequestException(
         status,

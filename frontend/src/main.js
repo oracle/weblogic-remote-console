@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2014, 2025, Oracle and/or its affiliates.
+ * Copyright (c) 2014, 2026, Oracle and/or its affiliates.
  * Licensed under The Universal Permissive License (UPL), Version 1.0
  * as shown at https://oss.oracle.com/licenses/upl/
  * @ignore
@@ -44,8 +44,7 @@
   'preact/compat': 'libs/preact/compat/dist/compat.umd',
   'preact/jsx-runtime': 'libs/preact/jsx-runtime/dist/jsxRuntime.umd',
   'proj4': 'libs/proj4js/dist/proj4-src',
-  'touchr': 'libs/touchr/touchr'
-  ,
+        'touchr': 'libs/touchr/touchr',
         'chai': 'libs/chai/chai-4.5.0'
       }
       // endinjector
@@ -55,9 +54,7 @@
 
 // requirejs.config({
 //   paths: {
-//     'wrc': 'src/components/wrc',
-//     'oj-wrc': 'src/components/oj-wrc',
-//     'nav-tree': 'src/components/wrc/nav-tree'
+//     'wrc': 'src/wrc',
 //   }
 // });
 

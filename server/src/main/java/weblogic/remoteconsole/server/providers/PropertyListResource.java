@@ -1,12 +1,10 @@
-// Copyright (c) 2025, Oracle and/or its affiliates.
+// Copyright (c) 2025, 2026, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.providers;
 
 import java.io.File;
 import java.io.StringReader;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
 import java.util.Properties;
 import javax.json.Json;
 import javax.json.JsonArrayBuilder;
@@ -18,6 +16,7 @@ import weblogic.remoteconsole.common.repodef.LocalizedConstants;
 import weblogic.remoteconsole.server.ConsoleBackendRuntimeConfig;
 import weblogic.remoteconsole.server.PersistenceManager;
 import weblogic.remoteconsole.server.repo.InvocationContext;
+import weblogic.remoteconsole.server.utils.HostedFilePathUtils;
 import weblogic.remoteconsole.server.webapp.FailedRequestException;
 import weblogic.remoteconsole.server.webapp.project.ProjectUtils;
 
@@ -51,33 +50,42 @@ public class PropertyListResource extends PdjRdjUtils implements TypedResource {
     JsonObjectBuilder builder) {
     builder.add("type", "properties");
     String name = null;
-    if (operationType.startsWith("New")) {
-      if (payload.containsKey("name")) {
-        name = payload.getJsonObject("name").getString("value");
-      } else {
-        String proposedName = (String) ic.getFrontend().getData("proposed", "name");
-        if (proposedName != null) {
-          name = proposedName;
-        }
-      }
-      if (name == null) {
-        throw new FailedRequestException(
-          Response.Status.BAD_REQUEST.getStatusCode(), ic.getLocalizer().localizeString(
-            LocalizedConstants.NO_NAME_SPECIFIED_MESSAGE));
-      }
-      builder.add("name", name);
-      ic.getFrontend().removeData("proposed", "name");
-    } else {
+    if ((prov != null) && (prov.getJSON() != null)) {
       name = prov.getJSON().getString("name");
     }
+    if (payload.containsKey("name")) {
+      name = payload.getJsonObject("name").getString("value");
+    } else {
+      String proposedName = (String) ic.getFrontend().getData("proposed", "name");
+      if (proposedName != null) {
+        name = proposedName;
+      }
+    }
+    if (name == null) {
+      throw new FailedRequestException(
+        Response.Status.BAD_REQUEST.getStatusCode(), ic.getLocalizer().localizeString(
+          LocalizedConstants.NO_NAME_SPECIFIED_MESSAGE));
+    }
+    builder.add("name", name);
+    ic.getFrontend().removeData("proposed", "name");
     String contents = null;
     if (payload.containsKey("generatedContents")) {
       contents = payload.getString("generatedContents");
     }
     String fileName = null;
     if (payload.containsKey("file")) {
-      fileName = payload.getJsonObject("file").getString("value");
-      builder.add("file", fileName);
+      String submittedFileName = payload.getJsonObject("file").getString("value");
+      if (ConsoleBackendRuntimeConfig.isFilesAreLocal()) {
+        if (submittedFileName == null || submittedFileName.isEmpty()) {
+          throw new FailedRequestException(
+            Response.Status.BAD_REQUEST.getStatusCode(), ic.getLocalizer().localizeString(
+              LocalizedConstants.NEED_PROPER_FILE_NAME_MESSAGE));
+        }
+        fileName = submittedFileName;
+        builder.add("file", fileName);
+      } else {
+        throw new FailedRequestException(LocalizedConstants.REQUEST_POORLY_FORMED_MESSAGE, ic);
+      }
     } else if (!ConsoleBackendRuntimeConfig.isFilesAreLocal()) {
       fileName = fileNameFromName(ic, name);
     }
@@ -149,8 +157,6 @@ public class PropertyListResource extends PdjRdjUtils implements TypedResource {
   ) {
     builder.add("introductionHTML", ic.getLocalizer().localizeString(
       LocalizedConstants.PROPERTY_LIST_BROWSE_INTRODUCTION));
-    builder.add("presentation", Json.createObjectBuilder()
-      .add("singleColumn", true));
     JsonArrayBuilder propertiesBuilder = Json.createArrayBuilder()
         .add(pdjObject("name", ic.getLocalizer().localizeString(
           LocalizedConstants.NAME_LABEL), "String", "required")
@@ -159,8 +165,9 @@ public class PropertyListResource extends PdjRdjUtils implements TypedResource {
           .add("detailedHelpHTML", ic.getLocalizer().localizeString(
             LocalizedConstants.DATA_PROVIDER_HELP_NAME_DETAIL)));
     if (ConsoleBackendRuntimeConfig.isFilesAreLocal()) {
+      String filePropertyType = operationType.startsWith("New") ? "newFilename" : "filename";
       propertiesBuilder.add(pdjObject("file", ic.getLocalizer().localizeString(
-        LocalizedConstants.PROPERTY_LIST_FILENAME_LABEL), "filename", "required")
+        LocalizedConstants.PROPERTY_LIST_FILENAME_LABEL), filePropertyType, "required")
         .add("helpSummaryHTML", ic.getLocalizer().localizeString(
           LocalizedConstants.PROPERTY_LIST_PROVIDER_HELP_FILE_SUMMARY))
         .add("detailedHelpHTML", ic.getLocalizer().localizeString(
@@ -173,6 +180,8 @@ public class PropertyListResource extends PdjRdjUtils implements TypedResource {
         .add("type", "fileContents"));
     }
     builder.add("actionInputForm", Json.createObjectBuilder()
+      .add("presentation", Json.createObjectBuilder()
+        .add("singleColumn", true))
       .add("properties", propertiesBuilder));
     return builder;
   }
@@ -228,9 +237,7 @@ public class PropertyListResource extends PdjRdjUtils implements TypedResource {
     JsonObject json = prov.getJSON();
     String fileName;
     if (!ConsoleBackendRuntimeConfig.isFilesAreLocal()) {
-      fileName = PersistenceManager.getPersistenceFilePath(ic) + "/"
-        + URLEncoder.encode(
-        json.getString("name"), StandardCharsets.UTF_8).replaceAll("%20", " ");
+      fileName = fileNameFromName(ic, json.getString("name"));
     } else {
       if (!json.containsKey("file") || !(new File(json.getString("file")).exists())) {
         throw new FailedRequestException(
@@ -247,8 +254,21 @@ public class PropertyListResource extends PdjRdjUtils implements TypedResource {
   }
 
   private static String fileNameFromName(InvocationContext ic, String name) {
-    return PersistenceManager.getPersistenceFilePath(ic) + "/"
-      + URLEncoder.encode(name, StandardCharsets.UTF_8).replaceAll("%20", " ");
+    try {
+      return HostedFilePathUtils.resolveHostedFileFromName(
+        new File(PersistenceManager.getPersistenceFilePath(ic)),
+        name
+      ).getPath();
+    } catch (IllegalArgumentException e) {
+      throw new FailedRequestException(LocalizedConstants.REQUEST_POORLY_FORMED_MESSAGE, ic);
+    }
+  }
+
+  private static String hostedFilePath(InvocationContext ic, String hostedFileName) {
+    return HostedFilePathUtils.resolveHostedFile(
+      new File(PersistenceManager.getPersistenceFilePath(ic)),
+      hostedFileName
+    ).getPath();
   }
 
 }

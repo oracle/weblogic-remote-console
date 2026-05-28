@@ -15,7 +15,7 @@ module.exports = function (configObj) {
     const { execFileSync } = require("child_process");
     const fs = require("fs");
     
-    const destinationDir = './web/components/wrc/shared/resources/nls';
+    const destinationDir = './web/wrc/shared/resources/nls';
 
     fs.mkdirSync(destinationDir, { recursive: true });
 

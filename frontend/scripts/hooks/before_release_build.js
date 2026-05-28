@@ -8,7 +8,7 @@
 'use strict';
 
 module.exports = function (configObj) {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     console.log("Running before_release_build hook.");
     
     console.log('Generating all nls bundles');
@@ -16,7 +16,7 @@ module.exports = function (configObj) {
     const { execFileSync } = require("child_process");
     const fs = require("fs");
     
-    const destinationDir = './web/components/wrc/shared/resources/nls';
+    const destinationDir = './web/wrc/shared/resources/nls';
 
     fs.mkdirSync(destinationDir, { recursive: true });
 
@@ -31,7 +31,7 @@ module.exports = function (configObj) {
       [ 'nls/create-translation-bundles.js', '-p', 'nls', '-o', `${destinationDir}` ],
       { stdio: 'inherit', env: env },
     );
-    
-  	resolve(configObj);
+
+    resolve(configObj);
   });
 };

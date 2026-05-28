@@ -1,4 +1,4 @@
-// Copyright (c) 2022, 2025, Oracle Corporation and/or its affiliates.
+// Copyright (c) 2022, 2026, Oracle Corporation and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server;
@@ -150,6 +150,10 @@ public class PersistenceManager<T> {
    * Used for reporting problems in the data in this feature's persistent file.
    */
   public void reportBadFormat(InvocationContext ic, String problem) {
+    // FortifyIssueSuppression Log Forging
+    // The path is from the configured Remote Console persistence location, not request input.
+    // Desktop persistence is local-user controlled; hosted persistence is confined under the hosted
+    // persistence base. The full path is logged to identify the corrupt persistence file.
     LOGGER.severe("Bad format " + getPersistenceFile(ic).getAbsolutePath() + " : " + problem);
   }
 

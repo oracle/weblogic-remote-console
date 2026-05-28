@@ -82,7 +82,7 @@
     "Server States" : {
       "type" : "FilteringDashboard",
       "path" : "DomainRuntime.CombinedServerRuntimes",
-      "description" : "<p>This dashboard displays the state of each server.</p><p>The 'Server LifeCycle State' column is the Administration Server's view of the server's state.</p><p>The 'State' column is the server's view of its state and is not available if the server isn't running or the Administration Server is not able to contact the server.</p>",
+      "description" : "This dashboard displays the state of each server. The 'Server LifeCycle State' column is the Administration Server's view of the server's state. The 'State' column is the server's view of its state and is not available if the server isn't running or the Administration Server is not able to contact the server.",
       "defaultColumns" : [
         "BeanKeyResult_CombinedServerRuntimes",
         "ServerLifeCycleRuntime_State",

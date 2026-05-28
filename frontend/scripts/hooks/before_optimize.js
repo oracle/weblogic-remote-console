@@ -8,8 +8,8 @@
 'use strict';
 
 module.exports = function (configObj) {
-  return new Promise((resolve, reject) => {
-  	console.log("Running before_optimize hook.");
-  	resolve(configObj);
+  return new Promise((resolve) => {
+    console.log("Running before_optimize hook.");
+    resolve(configObj);
   });
 };

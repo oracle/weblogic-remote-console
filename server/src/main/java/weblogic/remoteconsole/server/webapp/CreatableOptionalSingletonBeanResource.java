@@ -1,4 +1,4 @@
-// Copyright (c) 2021, 2023, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2026, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.webapp;
@@ -111,7 +111,7 @@ public class CreatableOptionalSingletonBeanResource extends BeanResource {
       return getActionInputForm(action, requestBody);
     }
     if (UPDATE.equals(action)) {
-      return updateSliceForm(requestBody); // TBD parts?
+      return updateSliceForm(requestBody, parts);
     }
     return invokeAction(action, requestBody, parts);
   }
@@ -134,7 +134,18 @@ public class CreatableOptionalSingletonBeanResource extends BeanResource {
   }
 
   protected Response updateSliceForm(JsonObject requestBody) {
-    return UpdateHelper.update(getInvocationContext(), requestBody);
+    return createUpdateHelper().updateBean(getInvocationContext(), requestBody);
+  }
+
+  protected Response updateSliceForm(JsonObject requestBody, FormDataMultiPart parts) {
+    if (parts == null) {
+      return updateSliceForm(requestBody);
+    }
+    return createUpdateHelper().updateBean(getInvocationContext(), requestBody, parts);
+  }
+
+  protected UpdateHelper createUpdateHelper() {
+    return new UpdateHelper();
   }
 
   protected Response createOptionalSingleton(JsonObject requestBody, FormDataMultiPart parts) {

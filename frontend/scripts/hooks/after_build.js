@@ -8,9 +8,8 @@
 'use strict';
 
 module.exports = function (configObj) {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     console.log("Running after_build hook.");
-    
-  	resolve(configObj);
+    resolve(configObj);
   });
 };

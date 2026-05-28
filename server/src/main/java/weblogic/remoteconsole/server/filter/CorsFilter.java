@@ -1,4 +1,4 @@
-// Copyright (c) 2020, 2025, Oracle and/or its affiliates.
+// Copyright (c) 2020, 2026, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.filter;
@@ -14,6 +14,7 @@ import javax.ws.rs.container.ContainerResponseFilter;
 import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.ext.Provider;
 
+import weblogic.remoteconsole.server.ConsoleBackendRuntimeConfig;
 import weblogic.remoteconsole.server.token.SsoTokenManager;
 
 @Provider
@@ -22,7 +23,6 @@ public class CorsFilter implements ContainerResponseFilter {
     (System.getenv("BACKEND_FRONTEND_INPUT_OUTPUT_TRACE") != null);
   private static final Logger LOGGER = Logger.getLogger(CorsFilter.class.getName());
   private static final String ORIGIN_LOCALHOST_8000 = "http://localhost:8000";
-  private static final String ORIGIN_LOCALHOST_8050 = "http://localhost:8050";
 
   // From https://www.baeldung.com/cors-in-jax-rs
   @Override
@@ -30,33 +30,35 @@ public class CorsFilter implements ContainerResponseFilter {
     List<String> origin = req.getHeaders().get("Origin");
     if ((origin != null) && !origin.isEmpty()) {
       String allowOrigin = origin.get(0);
-      if (!ORIGIN_LOCALHOST_8000.equals(allowOrigin) && !ORIGIN_LOCALHOST_8050.equals(allowOrigin)) {
-        LOGGER.fine("Origin=" + allowOrigin);
-        // Handle CORS headers based on SSO token manager which was
-        // established from the session filter for the token endpoint,
-        // otherwise, the CORS request is not allowed!
-        SsoTokenManager ssoTokenManager = SsoTokenManager.getFromRequestContext(req);
-        if ((ssoTokenManager != null) &&  ssoTokenManager.isAllowedOrigin(allowOrigin)) {
-          res
-            .getHeaders()
-            .add("Access-Control-Allow-Origin", allowOrigin);
-          res
-            .getHeaders()
-            .add("Access-Control-Request-Private-Network", "true");
-          res
-            .getHeaders()
-            .add("Access-Control-Allow-Headers", "content-type, accept, origin");
-          res
-            .getHeaders()
-            .add("Access-Control-Allow-Methods", "POST, GET, OPTIONS");
+      boolean corsAllowed = false;
+      LOGGER.fine("Origin=" + allowOrigin);
+      // Handle CORS headers based on SSO token manager which was
+      // established from the session filter for the token endpoint,
+      // otherwise, the CORS request is not allowed!
+      SsoTokenManager ssoTokenManager = SsoTokenManager.getFromRequestContext(req);
+      if ((ssoTokenManager != null) &&  ssoTokenManager.isAllowedOrigin(allowOrigin)) {
+        corsAllowed = true;
+        res
+          .getHeaders()
+          .add("Access-Control-Allow-Origin", allowOrigin);
+        res
+          .getHeaders()
+          .add("Access-Control-Request-Private-Network", "true");
+        res
+          .getHeaders()
+          .add("Access-Control-Allow-Headers", "content-type, accept, origin");
+        res
+          .getHeaders()
+          .add("Access-Control-Allow-Methods", "POST, GET, OPTIONS");
 
-          // Set status for a pre-flight request...
-          if (req.getMethod().equals(HttpMethod.OPTIONS)) {
-            res.setStatusInfo(Status.OK);
-          }
+        // Set status for a pre-flight request...
+        if (req.getMethod().equals(HttpMethod.OPTIONS)) {
+          res.setStatusInfo(Status.OK);
         }
-      } else {
-        // Allow localhost:8000 - ojet serve
+      } else if (ConsoleBackendRuntimeConfig.isDevelopmentCorsOriginEnabled()
+          && ORIGIN_LOCALHOST_8000.equals(allowOrigin)) {
+        corsAllowed = true;
+        // Allow localhost:8000 - ojet serve, when explicitly enabled for development
         res
           .getHeaders()
           .add("Access-Control-Allow-Origin", allowOrigin);
@@ -75,9 +77,11 @@ public class CorsFilter implements ContainerResponseFilter {
           res.setStatus(200);
         }
       }
-      res
-        .getHeaders()
-        .add("Access-Control-Expose-Headers", "x-session-token");
+      if (corsAllowed) {
+        res
+          .getHeaders()
+          .add("Access-Control-Expose-Headers", "x-session-token");
+      }
       
     }
 

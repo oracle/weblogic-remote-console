@@ -446,6 +446,7 @@ public class AdminServerResource extends PdjRdjUtils implements TypedResource {
     boolean useSso = false;
     boolean local = false;
     boolean insecure = false;
+    String proxyOverride = "";
     String connectTimeoutOverride = "";
     String readTimeoutOverride = "";
     if (settingsJSON != null) {
@@ -457,6 +458,9 @@ public class AdminServerResource extends PdjRdjUtils implements TypedResource {
       }
       if (settingsJSON.containsKey("insecure")) {
         insecure = settingsJSON.getBoolean("insecure");
+      }
+      if (settingsJSON.containsKey("proxyOverride")) {
+        proxyOverride = settingsJSON.getString("proxyOverride");
       }
       if (settingsJSON.containsKey("connectTimeoutOverride")) {
         connectTimeoutOverride = settingsJSON.getString("connectTimeoutOverride");
@@ -518,6 +522,9 @@ public class AdminServerResource extends PdjRdjUtils implements TypedResource {
     }
     if (insecure) {
       ret.setInsecureConnection(true);
+    }
+    if (!proxyOverride.isEmpty()) {
+      ret.setProxyOverride(proxyOverride);
     }
     ret.start(ic);
     return ret;

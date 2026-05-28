@@ -1,4 +1,4 @@
-// Copyright (c) 2021, 2025, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2026, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.webapp;
@@ -16,7 +16,6 @@ import javax.json.JsonValue.ValueType;
 import org.glassfish.jersey.media.multipart.FormDataMultiPart;
 import weblogic.console.utils.Path;
 import weblogic.console.utils.StringUtils;
-import weblogic.remoteconsole.common.utils.DateUtils;
 import weblogic.remoteconsole.common.utils.UrlUtils;
 import weblogic.remoteconsole.server.repo.BeanTreePath;
 import weblogic.remoteconsole.server.repo.InvocationContext;
@@ -297,7 +296,7 @@ public abstract class RequestBodyMapper<T> {
     String dateAsString = asString(key, value);
     if (isOK()) {
       try {
-        return DateUtils.parseDate(dateAsString);
+        return getInvocationContext().getLocalizer().parseDate(dateAsString);
       } catch (ParseException e) {
         badFormat(e.getMessage());
       }

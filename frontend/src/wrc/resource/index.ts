@@ -1,0 +1,15 @@
+/**
+ * @license UPL-1.0
+ * Copyright (c) 2025, Oracle and/or its affiliates.
+ * The Universal Permissive License (UPL), Version 1.0
+ */
+// Do not change this file.
+export { Resource, UserContext } from "./resource";
+export type { Context, BeforeNavigateEvent } from "./resource";
+declare global {
+namespace preact.JSX {
+      interface IntrinsicElements {
+      'wrc-resource': any;
+      }
+    }
+  }

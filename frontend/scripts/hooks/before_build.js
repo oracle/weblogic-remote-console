@@ -8,11 +8,12 @@
 'use strict';
 
 module.exports = function (configObj) {
-  return new Promise((resolve, reject) => {
-  	console.log("Running before_build hook.");
+  return new Promise((resolve) => {
+    console.log("Running before_build hook.");
 
-    const { cpSync } = require('fs');
-    cpSync('./src/components/wrc/branding-area/tips.ini', './web/components/wrc/branding-area/tips.ini');
+    const { cpSync, mkdirSync } = require('fs');
+    mkdirSync('./web/wrc/branding-area', { recursive: true });
+    cpSync('./src/wrc/branding-area/tips.ini', './web/wrc/branding-area/tips.ini');
 
     resolve(configObj);
   });

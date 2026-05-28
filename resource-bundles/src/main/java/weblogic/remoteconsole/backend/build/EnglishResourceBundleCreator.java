@@ -1,12 +1,17 @@
-// Copyright (c) 2020, 2025, Oracle and/or its affiliates.
+// Copyright (c) 2020, 2026, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.backend.build;
 
 import java.io.FileOutputStream;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 import java.util.logging.Logger;
 
 import weblogic.console.backend.build.PropertiesSorter;
@@ -85,14 +90,7 @@ public class EnglishResourceBundleCreator extends WebLogicPageDefWalker {
       LOGGER.info("EnglishResourceBundleCreator.main");
       String bundleDir = args[0];
       UsageTracker.trackUsage();
-      for (WebLogicVersion weblogicVersion : WebLogicVersions.getSupportedVersions()) {
-        WebLogicMBeansVersion mbeansVersion =
-          WebLogicMBeansVersions.getVersion(
-            weblogicVersion,
-            WebLogicMBeansVersion.ALL_CAPABILITIES
-          );
-        (new EnglishResourceBundleCreator(mbeansVersion, bundleDir)).create();
-      }
+      createResourceBundles(bundleDir, WebLogicVersions.getSupportedVersions());
       UsageTracker.reportMissing();
     } catch (Throwable t) {
       t.printStackTrace();
@@ -100,6 +98,40 @@ public class EnglishResourceBundleCreator extends WebLogicPageDefWalker {
       // This is a utility and terminating the JVM is fine.
       System.exit(1);
     }
+  }
+
+  private static void createResourceBundles(
+    String bundleDir,
+    Collection<WebLogicVersion> weblogicVersions
+  ) throws Exception {
+    int defaultThreads = Math.max(1, Math.min(Runtime.getRuntime().availableProcessors(), weblogicVersions.size()));
+    int threads = Math.max(1, Integer.getInteger("resource.bundle.threads", defaultThreads));
+    ExecutorService executor = Executors.newFixedThreadPool(threads);
+    try {
+      List<Future<?>> futures = new ArrayList<>();
+      for (WebLogicVersion weblogicVersion : weblogicVersions) {
+        futures.add(
+          executor.submit(() -> {
+            createResourceBundle(bundleDir, weblogicVersion);
+            return null;
+          })
+        );
+      }
+      for (Future<?> future : futures) {
+        future.get();
+      }
+    } finally {
+      executor.shutdownNow();
+    }
+  }
+
+  private static void createResourceBundle(String bundleDir, WebLogicVersion weblogicVersion) throws Exception {
+    WebLogicMBeansVersion mbeansVersion =
+      WebLogicMBeansVersions.getVersion(
+        weblogicVersion,
+        WebLogicMBeansVersion.ALL_CAPABILITIES
+      );
+    (new EnglishResourceBundleCreator(mbeansVersion, bundleDir)).create();
   }
 
   private void create() throws Exception {

@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2021, 2023, 2025 Oracle and/or its affiliates.
+ * Copyright (c) 2021, 2026 Oracle and/or its affiliates.
  * Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
  * @ignore
  */
@@ -66,6 +66,7 @@ contextBridge.exposeInMainWorld(
       }
     },
     getFilePath: (file) => webUtils.getPathForFile(file),
+    getOpenFile: (file) => ipcRenderer.invoke('file-choosing', file),
     getSaveAs: (file) => ipcRenderer.invoke('file-creating', file),
   }
 );
