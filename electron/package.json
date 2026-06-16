@@ -2,10 +2,10 @@
   "name": "weblogic-remote-console",
   "productName": "WebLogic Remote Console",
   "homepage": "https://github.com/oracle/weblogic-remote-console",
-  "version": "3.0.3",
+  "version": "3.0.4",
   "main": "app/main.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "node --test test/*.test.js",
     "start": "electron . dev",
     "pack": "electron-builder --dir",
     "dist": "electron-builder -p never",
@@ -42,6 +42,7 @@
   "overrides": {
     "tar": "^7.5.8",
     "glob": "^11.1.0",
-    "serialize-javascript": "^7.0.3"
+    "serialize-javascript": "^7.0.5",
+    "picomatch": "^4.0.4"
   }
 }

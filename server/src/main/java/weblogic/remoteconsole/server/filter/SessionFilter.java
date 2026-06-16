@@ -1,11 +1,10 @@
-// Copyright (c) 2022, 2025, Oracle Corporation and/or its affiliates.
+// Copyright (c) 2022, 2026, Oracle Corporation and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.filter;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
@@ -58,6 +57,18 @@ import weblogic.remoteconsole.server.webapp.WebAppUtils;
 public class SessionFilter implements ContainerRequestFilter {
   @Context
   private HttpServletRequest requestServletContext;
+  private static final FrontendSessionResolver.FrontendStore FRONTEND_STORE =
+    new FrontendSessionResolver.FrontendStore() {
+      @Override
+      public Frontend find(String id, String subId) {
+        return FrontendManager.find(id, subId);
+      }
+
+      @Override
+      public Frontend create(String id, String subId) {
+        return FrontendManager.create(id, subId);
+      }
+    };
   private static boolean inputOutputTrace =
     (System.getenv("BACKEND_FRONTEND_INPUT_OUTPUT_TRACE") != null);
   private static final Logger LOGGER = Logger.getLogger(SessionFilter.class.getName());
@@ -111,10 +122,21 @@ public class SessionFilter implements ContainerRequestFilter {
 
     Frontend frontend = null;
     String windowId = reqContext.getHeaderString("Unique-Id");
+    boolean requiresExistingFrontend = SessionRequestGuard.requiresExistingFrontend(reqContext);
+    FrontendSessionResolver.Resolution frontendResolution;
     if (requestServletContext != null) {
-      frontend = FrontendManager.find(requestServletContext.getSession().getId(), windowId);
+      frontendResolution = FrontendSessionResolver.resolveHosted(
+        requiresExistingFrontend,
+        windowId,
+        requestServletContext.getSession().getId(),
+        FRONTEND_STORE
+      );
+      if (frontendResolution.isRejected()) {
+        abortRequest(reqContext);
+        return;
+      }
+      frontend = frontendResolution.getFrontend();
       if (frontend == null) {
-        frontend = FrontendManager.create(requestServletContext.getSession().getId(), windowId);
         LOGGER.fine("Creating a new frontend, using the session context: " + frontend);
       } else {
         LOGGER.fine("Using request servlet context to use frontend: " + frontend);
@@ -130,20 +152,20 @@ public class SessionFilter implements ContainerRequestFilter {
           sessionId = new Cookie("whocares", header);
         }
       }
-      if (sessionId == null) {
-        // Create frontend instance
-        LOGGER.fine("Creating a new frontend, because the session id is null");
-        frontend = FrontendManager.create(UUID.randomUUID().toString(), windowId);
+      frontendResolution = FrontendSessionResolver.resolveStandalone(
+        requiresExistingFrontend,
+        windowId,
+        (sessionId != null) ? sessionId.getValue() : null,
+        reqContext.getHeaderString("X-Session-Token"),
+        FRONTEND_STORE
+      );
+      if (frontendResolution.isRejected()) {
+        abortRequest(reqContext);
+        return;
+      }
+      frontend = frontendResolution.getFrontend();
+      if (frontendResolution.shouldStoreCookie()) {
         WebAppUtils.storeCookieInContext(reqContext, frontend);
-      } else {
-        frontend = FrontendManager.find(sessionId.getValue(), windowId);
-        if (frontend == null) {
-          LOGGER.fine("Creating a new frontend, because we can't find the sessionId/windowId combo");
-          // We have a session ID and we're going to assume it is legit (no
-          // reason not to) but couldn't find the sessionId/windowId combo.
-          // We'll make a new frontend using the combo
-          frontend = FrontendManager.create(sessionId.getValue(), windowId);
-        }
       }
     }
     frontend.storeInRequestContext(reqContext);
@@ -160,6 +182,14 @@ public class SessionFilter implements ContainerRequestFilter {
     if (isProviderBasedPath(reqContext)) {
       setupConnectionAndRewriteURL(reqContext, frontend, ic);
     }
+  }
+
+  private static void abortRequest(ContainerRequestContext reqContext) {
+    reqContext.abortWith(Response.status(Status.FORBIDDEN).build());
+    LOGGER.fine(
+      "Aborted Console Backend request due to missing existing frontend binding for guarded request: "
+      + reqContext.getMethod() + " " + reqContext.getUriInfo().getRequestUri()
+    );
   }
 
   private static boolean isProviderBasedPath(ContainerRequestContext reqContext) {

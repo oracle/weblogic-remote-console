@@ -68,7 +68,6 @@ public class ConnectionManager {
   private static final String CONSOLE_EXTENSION_CAPABILITIES = "capabilities";
   private static final String CONSOLE_EXTENSION_EXTENSIONS = "extensions";
   private static final String CONSOLE_EXTENSION_V1 = "1";
-
   // Placeholder when username is not known from authorization
   public static final String DEFAULT_USERNAME_UNKNOWN = "<unknown>";
 
@@ -752,7 +751,7 @@ public class ConnectionManager {
       // The status returned is from WebLogic, however a ConnectionException
       // is mapped to Status 500 internally, thus use 404 as connection response here!
       if (respStatus == Status.INTERNAL_SERVER_ERROR) {
-        return newConnectionResponse(Status.NOT_FOUND, client, "Not able to connect");
+        return newUnableToConnectResponse(client);
       } else if (respStatus != Status.OK) {
         String defaultMessage = response.getStatusInfo().getReasonPhrase();
         String message = defaultMessage;
@@ -789,6 +788,7 @@ public class ConnectionManager {
             // Deliberately blank, message will be default if there's an exception
           }
         }
+        message = normalizeUnableToConnectMessage(respStatus, message);
         return newConnectionResponse(respStatus, client, message);
       }
 
@@ -807,7 +807,7 @@ public class ConnectionManager {
           + exc.toString()
       );
       LOGGER.log(Level.FINE, "Connection attempt failed with exception: " + exc.toString(), exc);
-      return newConnectionResponse(Status.NOT_FOUND, client, "Not able to connect");
+      return newUnableToConnectResponse(client);
     }
   }
 
@@ -976,6 +976,27 @@ public class ConnectionManager {
       client.close();
     }
     return new ConnectionResponse(status, message);
+  }
+
+  private ConnectionResponse newUnableToConnectResponse(Client client) {
+    return newConnectionResponse(Status.NOT_FOUND, client, getUnableToConnectMessage());
+  }
+
+  private String normalizeUnableToConnectMessage(Status status, String message) {
+    if (status != Status.NOT_FOUND || StringUtils.isEmpty(message)) {
+      return message;
+    }
+    String normalized = message.strip().toLowerCase(Locale.US);
+    if (normalized.equals("connection refused")
+      || normalized.endsWith(": connection refused")
+      || normalized.contains("connection refused (connection refused)")) {
+      return getUnableToConnectMessage();
+    }
+    return message;
+  }
+
+  private String getUnableToConnectMessage() {
+    return LocalizedConstants.CANT_CONNECT_TO_ADMIN_SERVER.getEnglishText();
   }
 
   /**

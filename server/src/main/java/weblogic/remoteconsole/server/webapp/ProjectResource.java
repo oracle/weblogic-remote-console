@@ -254,10 +254,15 @@ public class ProjectResource extends PdjRdjUtils {
   }
 
   @POST
+  @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
   @Path("/navtree")
   public Response postNavtreeRequest(
-    @Context ResourceContext resContext) {
+    @Context ResourceContext resContext,
+    InputStream requestBodyStream) {
+    InvocationContext ic =
+      WebAppUtils.getInvocationContextFromResourceContext(resContext);
+    WebAppUtils.drainEntityStream(requestBodyStream, ic);
     return NavTree.postNavtreeRequest(resContext);
   }
 }

@@ -84,15 +84,29 @@ public class PropertyListDataProviderImpl implements PropertyListDataProvider {
     try (FileOutputStream fos = new FileOutputStream(fileName)) {
       properties.store(fos, name);
     } catch (Exception e) {
-      throw new WebApplicationException(Response.status(
-        Status.BAD_REQUEST.getStatusCode(),
-         e.getMessage()).build());
+      throw createCannotCreateFileException(ic, fileName, e);
     }
   }
 
   @Override
   public void save(InvocationContext ic) {
     save(ic, properties, fileName, getName());
+  }
+
+  private static FailedRequestException createCannotCreateFileException(
+      InvocationContext ic,
+      String fileName,
+      Exception cause
+  ) {
+    String message = ic.getLocalizer().localizeString(
+      LocalizedConstants.CANNOT_CREATE_FILE_MESSAGE,
+      fileName
+    );
+    String causeMessage = cause.getMessage();
+    if (causeMessage != null && !causeMessage.isEmpty()) {
+      message = message + ": " + causeMessage;
+    }
+    return new FailedRequestException(message, cause);
   }
 
   @Override

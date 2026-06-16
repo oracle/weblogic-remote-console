@@ -3,7 +3,6 @@
 
 package weblogic.remoteconsole.server.webapp.project;
 
-import java.io.File;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
@@ -313,21 +312,7 @@ public class ProviderTable extends PdjRdjUtils {
         operationType,
         data,
         Json.createObjectBuilder()).build();
-    proj.addProvider(result);
-    if (operationType.startsWith("New") && data.containsKey("file")) {
-      File newFile = new File(data.getJsonObject("file").getString("value"));
-      try {
-        newFile.getParentFile().mkdirs();
-        newFile.createNewFile();
-      } catch (Exception e) {
-        e.printStackTrace();
-        throw new FailedRequestException(
-          LocalizedConstants.CANNOT_CREATE_FILE_MESSAGE,
-          ic,
-          newFile.getName()
-        );
-      }
-    }
+    proj.addProvider(result.getString("name"), result, ic);
     projectManager.save(ic);
     JsonObjectBuilder builder = Json.createObjectBuilder();
     builder.add("resourceData", Json.createObjectBuilder().add("resourceData",

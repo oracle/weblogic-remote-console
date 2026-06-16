@@ -1,6 +1,6 @@
 /**
  * @license UPL-1.0
- * Copyright (c) 2025, Oracle and/or its affiliates.
+ * Copyright (c) 2025, 2026, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  */
 
@@ -8,7 +8,7 @@
  * Ambient declaration for the global resource context injected by the legacy app (appController.js).
  * This allows TypeScript/Preact code to safely reference window.wrcResourceContext with proper typing.
  */
-import type { ResourceContext } from "../components/wrc/integration/resource-context";
+import type { ResourceContext } from "../wrc/integration/resource-context";
 
 declare global {
   interface Window {

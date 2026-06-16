@@ -1,8 +1,14 @@
-// Copyright (c) 2021, 2025, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2026, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.webapp;
 
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
 import java.util.Map;
 import java.util.Properties;
 import javax.json.Json;
@@ -18,6 +24,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.StreamingOutput;
 
 import weblogic.remoteconsole.common.repodef.LocalizableString;
 import weblogic.remoteconsole.common.repodef.LocalizedConstants;
@@ -128,7 +135,8 @@ public class PropertyListPageRepoResource extends BaseResource {
   @Path(Root.NAV_TREE_RESOURCE)
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
-  public javax.ws.rs.core.Response getNavTree(JsonObject requestBody) {
+  public javax.ws.rs.core.Response getNavTree(InputStream requestBodyStream) {
+    WebAppUtils.readJsonObject(requestBodyStream, getInvocationContext());
     JsonObjectBuilder entity = Json.createObjectBuilder();
     JsonArrayBuilder contents = Json.createArrayBuilder();
 
@@ -149,5 +157,21 @@ public class PropertyListPageRepoResource extends BaseResource {
     entity.add("contents", contents.build());
     return Response.ok().entity(
       entity.build()).type(MediaType.APPLICATION_JSON).build();
+  }
+
+  @GET
+  @Path("download")
+  @Produces(MediaType.APPLICATION_OCTET_STREAM)
+  public Response getDownloadContent() {
+    PropertyListDataProvider provider = (PropertyListDataProvider) getInvocationContext().getProvider();
+    StreamingOutput stream = new StreamingOutput() {
+      @Override
+      public void write(OutputStream os) throws IOException {
+        Writer writer = new BufferedWriter(new OutputStreamWriter(os));
+        provider.getProperties().store(writer, provider.getName());
+        writer.flush();
+      }
+    };
+    return Response.ok(stream).build();
   }
 }

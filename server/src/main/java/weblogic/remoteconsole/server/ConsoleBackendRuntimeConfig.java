@@ -56,6 +56,7 @@ public class ConsoleBackendRuntimeConfig {
   private static long readTimeoutMillis;
   private static boolean disableHostnameVerification;
   private static boolean enableSameSiteCookieValue;
+  private static boolean enableDevelopmentCorsOrigin;
   private static String valueSameSiteCookie;
   private static long ssoTimerSeconds;
   private static long ssoTimeoutSeconds;
@@ -73,6 +74,7 @@ public class ConsoleBackendRuntimeConfig {
     defaultProperties.put("readTimeoutMillis", "20000");
     defaultProperties.put("disableHostnameVerification", "false");
     defaultProperties.put("enableSameSiteCookieValue", "false");
+    defaultProperties.put("enableDevelopmentCorsOrigin", "false");
     defaultProperties.put("valueSameSiteCookie", "Lax");
     defaultProperties.put("ssoTimerSeconds", "30");
     defaultProperties.put("ssoTimeoutSeconds", "300");
@@ -154,6 +156,7 @@ public class ConsoleBackendRuntimeConfig {
     readTimeoutMillis = Integer.parseInt(propGet("readTimeoutMillis"));
     disableHostnameVerification = Boolean.parseBoolean(propGet("disableHostnameVerification"));
     enableSameSiteCookieValue = Boolean.parseBoolean(propGet("enableSameSiteCookieValue"));
+    enableDevelopmentCorsOrigin = Boolean.parseBoolean(propGet("enableDevelopmentCorsOrigin"));
     valueSameSiteCookie = propGet("valueSameSiteCookie");
     ssoTimerSeconds = Integer.parseInt(propGet("ssoTimerSeconds"));
     ssoTimeoutSeconds = Integer.parseInt(propGet("ssoTimeoutSeconds"));
@@ -183,6 +186,10 @@ public class ConsoleBackendRuntimeConfig {
     return valueSameSiteCookie;
   }
 
+  public static boolean isDevelopmentCorsOriginEnabled() {
+    return enableDevelopmentCorsOrigin;
+  }
+
   public static boolean isHostnameVerificationDisabled() {
     return disableHostnameVerification;
   }
@@ -204,7 +211,7 @@ public class ConsoleBackendRuntimeConfig {
   }
 
   public static String getVersion() {
-    return "3.0.3";
+    return "3.0.4";
   }
 
   public static String getProxy() {

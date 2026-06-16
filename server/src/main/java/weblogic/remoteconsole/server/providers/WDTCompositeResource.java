@@ -1,4 +1,4 @@
-// Copyright (c) 2025, Oracle and/or its affiliates.
+// Copyright (c) 2025, 2026, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.providers;
@@ -118,8 +118,9 @@ public class WDTCompositeResource extends PdjRdjUtils implements TypedResource {
         valuesBuilder.add(Json.createObjectBuilder()
           .add("name", string)
           .add("value", Json.createObjectBuilder()
+            .add("name", string)
             .add("label", string)
-            .add("resourceData", string)));
+            .add("resourceData", "/api/project/" + proj.getName() + "/" + string)));
       }
     }
 
@@ -172,7 +173,7 @@ public class WDTCompositeResource extends PdjRdjUtils implements TypedResource {
     builder.add("introductionHTML", ic.getLocalizer().localizeString(
       LocalizedConstants.WDT_COMPOSITE_SETTINGS_INTRODUCTION));
     JsonArrayBuilder actionsBuilder = Json.createArrayBuilder();
-    if (prov.getLiveProvider() == null) {
+    if ((prov == null) || (prov.getLiveProvider() == null)) {
       actionsBuilder.add(Json.createObjectBuilder()
         .add("name", "select")
         .add("label", ic.getLocalizer().localizeString(LocalizedConstants.ACTIVATE_ACTION_LABEL)));

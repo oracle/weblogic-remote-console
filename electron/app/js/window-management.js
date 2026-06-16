@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2022, 2025, Oracle and/or its affiliates.
+ * Copyright (c) 2022, 2026, Oracle and/or its affiliates.
  * Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
  * @ignore
  */
@@ -11,6 +11,7 @@ const fs = require('fs');
 const OSUtils = require('./os-utils');
 const { execFile } = require('child_process');
 const I18NUtils = require('./i18n-utils');
+const {log} = require('./console-logger');
 const UserPrefs = require('./user-prefs-json');
 const SettingsEditor = require('./settings-editor');
 var supportsAutoUpgrades = false;
@@ -24,12 +25,13 @@ const path = require('path');
 const WindowManagement = (() => {
   const path = require('path');
   
-  const {app, BrowserWindow, Menu, dialog, shell} = require('electron');
+  const {app, BrowserWindow, Menu, dialog} = require('electron');
   const prompt = require('electron-prompt');
   
   const ConfigJSON = require('./config-json');
   const AutoUpdateUtils = require('./auto-update-utils');
   const CoreUtils = require('./core-utils');
+  const ExternalUrlUtils = require('./external-url-utils');
   const OSUtils = require('./os-utils');
   // Declare variable for IIFE class used to manage data
   // persisted in the auto-prefs.json file
@@ -41,6 +43,8 @@ const WindowManagement = (() => {
   let _createNewWindowCallback;
   let newVersion;
   let downloadURL = 'https://github.com/oracle/weblogic-remote-console/releases';
+  let allowedAppOrigins = new Set();
+  let startupScreenURL;
   
   /**
    * Creates a new instance of the ``BrowserWindow`` class, using the specified parameter values.
@@ -51,11 +55,12 @@ const WindowManagement = (() => {
    * @private
    */
   function createBrowserWindow(title, width, height) {
-    return new BrowserWindow({
+    const win = new BrowserWindow({
       width: width,
       height: height,
-      show: true,
+      show: !app.commandLine.hasSwitch('headless'),
       title: title,
+      backgroundColor: '#f6f4f2',
       webPreferences: {
         nodeIntegration: false,
         contextIsolation: true,
@@ -63,6 +68,107 @@ const WindowManagement = (() => {
         preload: path.join(__dirname, 'ipcRendererPreload.js')
       }
     });
+
+    startupScreenURL = getStartupScreenURL(title);
+    win.loadURL(startupScreenURL);
+    configureNavigationPolicy(win);
+
+    return win;
+  }
+
+  function rememberAllowedAppOrigin(url) {
+    try {
+      const parsed = new URL(url);
+      if (['http:', 'https:'].includes(parsed.protocol.toLowerCase())
+          && ['localhost', '127.0.0.1'].includes(parsed.hostname.toLowerCase())) {
+        allowedAppOrigins.add(parsed.origin);
+      }
+    } catch (err) {
+      log('error', `Unable to remember allowed app origin for url='${url}': ${err}`);
+    }
+  }
+
+  function isAllowedAppNavigation(url) {
+    try {
+      const parsed = new URL(url);
+      if (url === startupScreenURL) {
+        return true;
+      }
+      return allowedAppOrigins.has(parsed.origin);
+    } catch (err) {
+      return false;
+    }
+  }
+
+  function configureNavigationPolicy(win) {
+    win.webContents.setWindowOpenHandler(({ url }) => {
+      ExternalUrlUtils.openExternalURL(url, 'window-open');
+      return { action: 'deny' };
+    });
+
+    win.webContents.on('will-navigate', (event, url) => {
+      if (isAllowedAppNavigation(url)) {
+        return;
+      }
+      event.preventDefault();
+      ExternalUrlUtils.openExternalURL(url, 'will-navigate');
+    });
+  }
+
+  function getStartupScreenURL(title) {
+    const safeTitle = CoreUtils.isUndefinedOrNull(title) ? '' : title;
+    const html = `<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>${safeTitle}</title>
+    <style>
+      :root {
+        color-scheme: light;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        background:
+          radial-gradient(circle at top, rgba(111, 158, 84, 0.14), transparent 42%),
+          linear-gradient(180deg, #faf8f6 0%, #f1ece8 100%);
+        color: #3a3632;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      }
+
+      .indicator {
+        width: 42px;
+        height: 42px;
+        border-radius: 999px;
+        border: 3px solid rgba(58, 54, 50, 0.12);
+        border-top-color: #6f9e54;
+        animation: spin 0.9s linear infinite;
+      }
+
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="indicator" aria-hidden="true"></div>
+  </body>
+</html>`;
+    return `data:text/html;charset=UTF-8,${encodeURIComponent(html)}`;
+  }
+
+  function shouldClearStartupCache(previousVersion, currentVersion) {
+    return (
+      (previousVersion !== null) &&
+      (previousVersion !== undefined) &&
+      (previousVersion !== currentVersion)
+    );
   }
 
   function saveCorruption(filename, newfilename) {
@@ -332,7 +438,7 @@ const WindowManagement = (() => {
                     )
                       .then((choice) => {
                         if (choice.response === 0)
-                          shell.openExternal(downloadURL).then();
+                          ExternalUrlUtils.openExternalURL(downloadURL, 'check-for-updates');
                         else if (choice.response === 1)
                           AutoUpdateUtils.doUpdate(_window);
                       });
@@ -348,7 +454,7 @@ const WindowManagement = (() => {
                     )
                       .then((choice) => {
                         if (choice.response === 0)
-                          shell.openExternal(downloadURL).then();
+                          ExternalUrlUtils.openExternalURL(downloadURL, 'check-for-updates');
                       });
                   }
                 }
@@ -372,7 +478,10 @@ const WindowManagement = (() => {
       {
         label: `${I18NUtils.get('wrc-electron.menus.help.visit.value', _params.productName)}`,
         click() {
-          shell.openExternal('https://github.com/oracle/weblogic-remote-console').then();
+          ExternalUrlUtils.openExternalURL(
+            'https://github.com/oracle/weblogic-remote-console',
+            'help-visit'
+          );
         }
       },
       { type: 'separator' },
@@ -398,7 +507,7 @@ const WindowManagement = (() => {
       {
         label: `${I18NUtils.get('wrc-electron.dialog.help.checkForUpdates.newVersionAvailable.message', new URL(downloadURL).host, newVersion)}`,
         click() {
-          shell.openExternal(downloadURL).then();
+          ExternalUrlUtils.openExternalURL(downloadURL, 'updates-menu');
         }
       }
     ];
@@ -572,6 +681,7 @@ const WindowManagement = (() => {
    * @returns {BrowserWindow}
    */
   function createNewWindow(url) {
+    rememberAllowedAppOrigin(url);
     const newWindow = createBrowserWindow('', AutoPrefs.get('width'), AutoPrefs.get('height'));
     newWindow.loadURL(url);
     return newWindow;
@@ -596,13 +706,16 @@ const WindowManagement = (() => {
         });
       }
       
+      let previousVersion;
       try {
         AutoPrefs.read(userDataPath);
+        previousVersion = AutoPrefs.get('version');
       } catch(err) {
         log('error', `Cannot read auto preferences file: ${err}`);
         WindowManagement.corruptFile(AutoPrefs.getPath(userDataPath));
         // The file is removed by corruptFile()
         AutoPrefs.read(userDataPath);
+        previousVersion = AutoPrefs.get('version');
       }
       AutoPrefs.set({
         version: params.version,
@@ -631,7 +744,12 @@ const WindowManagement = (() => {
       supportsAutoUpgrades = _params.supportsAutoUpgrades;
       
       _window = createBrowserWindow(title, AutoPrefs.get('width'), AutoPrefs.get('height'));
-      _window.webContents.session.clearCache();
+      if (shouldClearStartupCache(previousVersion, params.version)) {
+        _window.webContents.session.clearCache()
+          .catch((err) => {
+            log('error', `Unable to clear browser cache after version change: ${err}`);
+          });
+      }
 
       processSavedCorruption();
       _window.on('resize', () => {
@@ -644,6 +762,7 @@ const WindowManagement = (() => {
       return _window;
     },
     load: (cbeUrl) => {
+      rememberAllowedAppOrigin(cbeUrl);
       if (_window) _window.loadURL(cbeUrl);
     },
     destroy: () => {
@@ -764,9 +883,9 @@ const WindowManagement = (() => {
         _window.focus();
       }
     },
-    openExternalURL: (url) => {
+    openExternalURL: async (url) => {
       // open url in a browser and prevent default
-      shell.openExternal(url);
+      await ExternalUrlUtils.openExternalURL(url, 'external-url-opening');
       return { action: 'deny' };
     },
     hideDockIconMacOS: () => {

@@ -1,4 +1,4 @@
-// Copyright (c) 2021, 2025, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2026, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.webapp;
@@ -6,6 +6,7 @@ package weblogic.remoteconsole.server.webapp;
 import java.util.List;
 import javax.json.JsonObject;
 
+import org.glassfish.jersey.media.multipart.FormDataMultiPart;
 import weblogic.remoteconsole.common.repodef.PageDef;
 import weblogic.remoteconsole.server.repo.FormProperty;
 import weblogic.remoteconsole.server.repo.InvocationContext;
@@ -20,10 +21,26 @@ public class UpdateHelper {
   }
 
   public static javax.ws.rs.core.Response update(InvocationContext ic, JsonObject requestBody) {
-    return (new UpdateHelper()).updateBean(ic, requestBody);
+    return update(ic, requestBody, null);
+  }
+
+  public static javax.ws.rs.core.Response update(
+    InvocationContext ic,
+    JsonObject requestBody,
+    FormDataMultiPart parts
+  ) {
+    return (new UpdateHelper()).updateBean(ic, requestBody, parts);
   }
 
   public javax.ws.rs.core.Response updateBean(InvocationContext ic, JsonObject requestBody) {
+    return updateBean(ic, requestBody, null);
+  }
+
+  public javax.ws.rs.core.Response updateBean(
+    InvocationContext ic,
+    JsonObject requestBody,
+    FormDataMultiPart parts
+  ) {
     Response<Void> response = new Response<>();
     // Make sure the bean exists
     Response<Void> existsResponse =
@@ -49,7 +66,8 @@ public class UpdateHelper {
       return javax.ws.rs.core.Response.status(javax.ws.rs.core.Response.Status.METHOD_NOT_ALLOWED).build();
     }
     // Unmarshal the request body.
-    Response<List<FormProperty>> unmarshalResponse = FormRequestBodyMapper.fromRequestBody(actualIc, requestBody);
+    Response<List<FormProperty>> unmarshalResponse =
+      FormRequestBodyMapper.fromRequestBody(actualIc, requestBody, parts);
     if (!unmarshalResponse.isSuccess()) {
       response.copyUnsuccessfulResponse(unmarshalResponse);
       return VoidResponseMapper.toResponse(actualIc, response);

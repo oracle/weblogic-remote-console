@@ -1,10 +1,11 @@
-// Copyright (c) 2021, 2025, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2026, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef;
 
+import java.text.DateFormat;
 import java.text.MessageFormat;
-import java.text.SimpleDateFormat;
+import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -19,8 +20,6 @@ import weblogic.remoteconsole.common.utils.SupportedLocales;
 public class Localizer {
   private Locale locale;
   private ResourceBundle resourceBundle;
-
-  private static final String DISPLAYED_DATE_TIME_FORMAT = "EEE MMM dd kk:mm:ss z yyyy";
 
   // Create a localizer for this resource bundle name and the first available language
   // from the client's list of preferred languages
@@ -54,7 +53,29 @@ public class Localizer {
 
   // Format a date for this locale.
   public String formatDate(Date date) {
-    return (date != null) ? new SimpleDateFormat(DISPLAYED_DATE_TIME_FORMAT).format(date) : "";
+    return (date != null) ? getDateFormat().format(date) : "";
+  }
+
+  // Parse a date in this locale.
+  public Date parseDate(String dateAsString) throws ParseException {
+    if (StringUtils.isEmpty(dateAsString)) {
+      return null;
+    }
+    return getDateFormat().parse(dateAsString);
+  }
+
+  // Convert a Date to a long that's rounded to the user-visible format
+  // (helps with making >=, ... predictable)
+  public long getRoundedDateAsLong(Date date) {
+    if (date == null) {
+      return 0;
+    }
+    try {
+      Date roundedDate = parseDate(formatDate(date));
+      return roundedDate.getTime();
+    } catch (ParseException e) {
+      throw new AssertionError(date.toString(), e);
+    }
   }
 
   // Get the localized string for a localizable string in this locale.
@@ -64,6 +85,33 @@ public class Localizer {
       return pattern;
     }
     return MessageFormat.format(pattern, args);
+  }
+
+  // Get the localized HTML string for a localizable string in this locale.
+  // The localized pattern itself is trusted HTML. The substituted args are escaped
+  // so that user-controlled or externally-sourced values render as text.
+  public String localizeHtmlString(LocalizableString localizableString, Object... args) {
+    String pattern = getPattern(localizableString);
+    if (StringUtils.isEmpty(pattern) || args.length < 1) {
+      return pattern;
+    }
+    Object[] escapedArgs = new Object[args.length];
+    for (int i = 0; i < args.length; i++) {
+      escapedArgs[i] = escapeHtml(args[i]);
+    }
+    return MessageFormat.format(pattern, escapedArgs);
+  }
+
+  private String escapeHtml(Object value) {
+    if (value == null) {
+      return "";
+    }
+    return value.toString()
+      .replace("&", "&amp;")
+      .replace("<", "&lt;")
+      .replace(">", "&gt;")
+      .replace("\"", "&quot;")
+      .replace("'", "&#39;");
   }
 
   private String getPattern(LocalizableString localizableString) {
@@ -87,5 +135,11 @@ public class Localizer {
     }
     String translated = resourceBundle.getString(key);
     return translated;
+  }
+
+  private DateFormat getDateFormat() {
+    DateFormat format = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.LONG, locale);
+    format.setLenient(false);
+    return format;
   }
 }

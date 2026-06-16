@@ -31,13 +31,7 @@
         "./node_modules/preact"
       ],
       "wrc/*": [
-        "./src/components/wrc/*"
-      ],
-      "oj-wrc/*": [
-        "./src/components/oj-wrc/*"
-      ],
-      "nav-tree/*": [
-        "src/components/wrc/nav-tree/*"
+        "./src/wrc/*"
       ]
     },
     "declaration": true,

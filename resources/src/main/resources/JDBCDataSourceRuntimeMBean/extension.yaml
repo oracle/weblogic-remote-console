@@ -1,4 +1,4 @@
-# Copyright (c) 2023, Oracle and/or its affiliates.
+# Copyright (c) 2023, 2026, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 actions:
@@ -92,6 +92,11 @@ actions:
 
 - name: "testPool"
   type: "java.lang.String"
+  roles:
+    allowed:
+    - Deployer
+    - Operator
+    - Monitor
   descriptionHTML: >
     <p>Tests the connection pool in the data source by reserving and releasing a connection from it.</p> 
     <p>If the pool configuration attribute TestConnectionsOnReserve is enabled, the acquired connection is

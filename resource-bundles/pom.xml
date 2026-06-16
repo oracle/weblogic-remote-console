@@ -11,7 +11,7 @@
     <parent>
         <groupId>com.oracle.weblogic</groupId>
         <artifactId>console-backend</artifactId>
-        <version>3.0.3</version>
+        <version>3.0.4</version>
     </parent>
 
     <packaging>jar</packaging>
@@ -27,7 +27,7 @@
         <dependency>
             <groupId>com.oracle.weblogic</groupId>
             <artifactId>console-backend-server</artifactId>
-            <version>3.0.3</version>
+            <version>3.0.4</version>
         </dependency>
     </dependencies>
 
@@ -66,9 +66,6 @@
                     <mainClass>${mainClass}</mainClass>
                     <executable>java</executable>
                     <arguments>
-                        <argument>-Xdebug</argument>
-                        <argument>-Xnoagent</argument>
-                        <argument>-Djava.compiler=NONE</argument>
                         <!--argument>-Xrunjdwp:transport=dt_socket,address=8787,server=y,suspend=y</argument-->
                         <argument>-cp</argument>
                         <argument>..${file.separator}core${file.separator}target${file.separator}classes${path.separator}target${file.separator}classes${path.separator}${maven.compile.classpath}</argument>

@@ -1,11 +1,9 @@
-// Copyright (c) 2025, Oracle and/or its affiliates.
+// Copyright (c) 2025, 2026, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.providers;
 
 import java.io.File;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
 import java.util.LinkedList;
 import java.util.List;
 import javax.json.Json;
@@ -19,6 +17,7 @@ import weblogic.remoteconsole.common.repodef.LocalizedConstants;
 import weblogic.remoteconsole.server.ConsoleBackendRuntimeConfig;
 import weblogic.remoteconsole.server.PersistenceManager;
 import weblogic.remoteconsole.server.repo.InvocationContext;
+import weblogic.remoteconsole.server.utils.HostedFilePathUtils;
 import weblogic.remoteconsole.server.webapp.FailedRequestException;
 import weblogic.remoteconsole.server.webapp.project.ProjectUtils;
 
@@ -64,8 +63,18 @@ public class WDTResource extends PdjRdjUtils implements TypedResource {
     }
     String fileName = null;
     if (payload.containsKey("file")) {
-      fileName = payload.getJsonObject("file").getString("value");
-      builder.add("file", fileName);
+      String submittedFileName = payload.getJsonObject("file").getString("value");
+      if (ConsoleBackendRuntimeConfig.isFilesAreLocal()) {
+        if (submittedFileName == null || submittedFileName.isEmpty()) {
+          throw new FailedRequestException(
+            Response.Status.BAD_REQUEST.getStatusCode(), ic.getLocalizer().localizeString(
+              LocalizedConstants.NEED_PROPER_FILE_NAME_MESSAGE));
+        }
+        fileName = submittedFileName;
+        builder.add("file", fileName);
+      } else {
+        throw new FailedRequestException(LocalizedConstants.REQUEST_POORLY_FORMED_MESSAGE, ic);
+      }
     } else if (!ConsoleBackendRuntimeConfig.isFilesAreLocal()) {
       fileName = fileNameFromName(ic, name);
     }
@@ -315,8 +324,21 @@ public class WDTResource extends PdjRdjUtils implements TypedResource {
   }
 
   private static String fileNameFromName(InvocationContext ic, String name) {
-    return PersistenceManager.getPersistenceFilePath(ic) + "/"
-      + URLEncoder.encode(name, StandardCharsets.UTF_8).replaceAll("%20", " ");
+    try {
+      return HostedFilePathUtils.resolveHostedFileFromName(
+        new File(PersistenceManager.getPersistenceFilePath(ic)),
+        name
+      ).getPath();
+    } catch (IllegalArgumentException e) {
+      throw new FailedRequestException(LocalizedConstants.REQUEST_POORLY_FORMED_MESSAGE, ic);
+    }
+  }
+
+  private static String hostedFilePath(InvocationContext ic, String hostedFileName) {
+    return HostedFilePathUtils.resolveHostedFile(
+      new File(PersistenceManager.getPersistenceFilePath(ic)),
+      hostedFileName
+    ).getPath();
   }
 
   @Override

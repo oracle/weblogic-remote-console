@@ -85,25 +85,11 @@ public class LocalizedConstants {
       "Troubleshoot"
     );
 
-  public static final LocalizableString WEBLOGIC_REST_DELEGATION_NOT_WORKING_DETAILS_LABEL =
-    addConstant(
-      "weblogicRestDelegationNotWorkingDetailsLabel",
-      "Details"
-    );
-
   // Indicates that a WLS domain version isn't one that the remote console supports.
   public static final LocalizableString UNSUPPORTED_DOMAIN_VERSION =
     addConstant(
       "unsupportedDomainVersion",
       "Unsupported WebLogic domain version"
-    );
-
-  // Indicates that a bean couldn't be deleted and it was probably because
-  // the user needs to delete references to it first.
-  public static final LocalizableString DELETE_REFERENCES_FIRST =
-    addConstant(
-      "deleteReferencesFirst",
-      "We recommend that you remove references to an object before you delete it."
     );
 
   // The title for per-property external javadoc help links
@@ -176,12 +162,6 @@ public class LocalizedConstants {
     addConstant(
       "label.configuration.description",
       "Examine read-only configuration of the WebLogic domain"
-    );
-
-  public static final LocalizableString MODEL_CONFIGURATION_DESCRIPTION =
-    addConstant(
-      "label.model.configuration.description",
-      "Maintain model files associated with the WebLogic Deploy Tooling tool."
     );
 
   public static final LocalizableString PROPERTY_LIST_CONFIGURATION_LABEL =
@@ -530,9 +510,6 @@ public class LocalizedConstants {
 
   public static final LocalizableString TX_STATUS_UNKNOWN =
     addConstant("txStatusUnknown", "unknown");
-
-  public static final LocalizableString MBEAN_EXTERNAL_HELP_INTRO_LABEL =
-    addConstant("mbeanExternalHelpIntroLabel", "MBean:");
 
   public static final LocalizableString MBEAN_ATTRIBUTE_EXTERNAL_HELP_INTRO_LABEL =
     addConstant("mbeanPropertyExternalHelpIntroLabel", "MBean Attribute:");
@@ -1044,12 +1021,6 @@ public class LocalizedConstants {
       "Enter settings for existing model file provider"
     );
 
-  public static final LocalizableString WDT_COMPOSITE_VARIABLES_LABEL =
-    addConstant(
-      "wdtCompositeVariablesLabel",
-      "WDT Variables"
-    );
-
   // WDT Resource related constants
   public static final LocalizableString WDT_MODEL_EDITOR_FALLBACK_DESCRIPTION =
     addConstant(
@@ -1129,12 +1100,6 @@ public class LocalizedConstants {
       "WDT Composite Provider Name"
     );
 
-  public static final LocalizableString WDT_COMPOSITE_PROVIDER_MODELS_LABEL =
-    addConstant(
-      "wdtCompositeProviderModelsLabel",
-      "WDT Composite Provider Models"
-    );
-
   public static final LocalizableString PROPERTY_LIST_PROVIDERS_LABEL =
     addConstant(
       "propertyListProvidersLabel",
@@ -1200,12 +1165,6 @@ public class LocalizedConstants {
     addConstant(
       "passwordLabel",
       "Password"
-    );
-
-  public static final LocalizableString FILENAME_LABEL =
-    addConstant(
-      "filenameLabel",
-      "Filename"
     );
 
   // Admin Server Resource related constants
@@ -1318,12 +1277,6 @@ public class LocalizedConstants {
       "Projects"
     );
 
-  public static final LocalizableString PROJECT_TABLE_INTRODUCTION =
-    addConstant(
-      "projectTableIntroduction",
-      "This page is used to create, name and delete projects.\n<p>Projects are groups of providers"
-    );
-
   public static final LocalizableString PROJECT_IMPORT_INTRODUCTION =
     addConstant(
       "projectImportIntroduction",
@@ -1346,18 +1299,6 @@ public class LocalizedConstants {
     addConstant(
       "badContentMessage",
       "The content is not appropriate for this type"
-    );
-
-  public static final LocalizableString BAD_PROJECT_PAYLOAD_MESSAGE =
-    addConstant(
-      "badProjectPayloadMessage",
-      "The post payload for creating a project is bad"
-    );
-
-  public static final LocalizableString UNSUPPORTED_PROJECT_PARAM_MESSAGE =
-    addConstant(
-      "unsupportedProjectParamMessage",
-      "{0} is not supported on a project table"
     );
 
   public static final LocalizableString PROJECT_NAME_MUST_BE_UNIQUE =
@@ -1397,24 +1338,6 @@ public class LocalizedConstants {
     );
 
   // Project Table action labels
-  public static final LocalizableString PROJECT_ACTION_CREATE_LABEL =
-    addConstant(
-      "projectActionCreateLabel",
-      "Create"
-    );
-
-  public static final LocalizableString PROJECT_ACTION_IMPORT_LABEL =
-    addConstant(
-      "projectActionImportLabel",
-      "Import"
-    );
-
-  public static final LocalizableString PROJECT_ACTION_EXPORT_LABEL =
-    addConstant(
-      "projectActionExportLabel",
-      "Export"
-    );
-
   public static final LocalizableString PROJECT_ACTION_MOVE_UP_LABEL =
     addConstant(
       "projectActionMoveUpLabel",
@@ -1440,98 +1363,11 @@ public class LocalizedConstants {
     );
 
   // Project Table form and labels
-  public static final LocalizableString PROJECT_CREATE_RENAME_INTRODUCTION =
-    addConstant(
-      "projectCreateRenameIntroduction",
-      "Enter new project name"
-    );
-
-  public static final LocalizableString PROJECT_BASE_NAME =
-    addConstant(
-      "projectBaseName",
-      "Project"
-    );
-
   // Provider Table labels
   public static final LocalizableString PROVIDER_INACTIVE_STATE_LABEL =
     addConstant(
       "providerInactiveStateLabel",
       "Inactive"
-    );
-
-  public static final LocalizableString PROVIDERS_TABLE_LABEL =
-    addConstant(
-      "providersTableLabel",
-      "Providers"
-    );
-
-  public static final LocalizableString PROJECTS_BREADCRUMB_LABEL =
-    addConstant(
-      "projectsBreadcrumbLabel",
-      "Projects"
-    );
-
-  // Provider Menu labels and descriptions
-  public static final LocalizableString PROVIDER_INFORMATION_MENU_LABEL =
-    addConstant(
-      "providerInformationMenuLabel",
-      "Provider Information"
-    );
-
-  public static final LocalizableString PROVIDER_STATUS_DESCRIPTION =
-    addConstant(
-      "providerStatusDescription",
-      "Status and data about the active provider"
-    );
-
-  public static final LocalizableString GO_TO_PROJECT_PROVIDER_TABLE_LABEL =
-    addConstant(
-      "goToProjectProviderTableLabel",
-      "Go To Project/Provider Table"
-    );
-
-  public static final LocalizableString EDIT_VIEW_PROJECTS_PROVIDERS_DESCRIPTION =
-    addConstant(
-      "editViewProjectsProvidersDescription",
-      "Edit and view full list of projects and providers"
-    );
-
-  public static final LocalizableString ACTIVATE_PROVIDER_MENU_LABEL =
-    addConstant(
-      "activateProviderMenuLabel",
-      "Activate provider"
-    );
-
-  // Status Resource label
-  public static final LocalizableString STATUS_LABEL =
-    addConstant(
-      "statusLabel",
-      "Status"
-    );
-
-  // Provider Instance related constants
-  public static final LocalizableString PROVIDER_NOT_FOUND_MESSAGE =
-    addConstant(
-      "providerNotFoundMessage",
-      "Provider not found"
-    );
-
-  public static final LocalizableString SAVE_FORM_MISSING_DATA_MESSAGE =
-    addConstant(
-      "saveFormMissingDataMessage",
-      "A save form must have a 'data' object"
-    );
-
-  public static final LocalizableString FAILED_TO_CONNECT_MESSAGE =
-    addConstant(
-      "failedToConnectMessage",
-      "Failed to connect"
-    );
-
-  public static final LocalizableString UNSUPPORTED_PROVIDER_PARAM_MESSAGE =
-    addConstant(
-      "unsupportedProviderParamMessage",
-      "{0} is not supported on a provider instance"
     );
 
   public static final LocalizableString WDT_COMPOSITE_PROVIDER_HELP_MODELS_DETAIL =

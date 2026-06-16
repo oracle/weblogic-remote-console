@@ -284,7 +284,7 @@ public class WDTModelDataProviderImpl implements WDTModelDataProvider {
         writer.write(init, 0, init.length());
       }
     } catch (Exception e) {
-      throw new FailedRequestException(e.getMessage());
+      throw createCannotCreateFileException(ic, fileName, e);
     }
   }
 
@@ -292,7 +292,7 @@ public class WDTModelDataProviderImpl implements WDTModelDataProvider {
     try (FileWriter writer = new FileWriter(fileName)) {
       writer.write(contents, 0, contents.length());
     } catch (Exception e) {
-      throw new FailedRequestException(e.getMessage());
+      throw createCannotCreateFileException(ic, fileName, e);
     }
   }
 
@@ -302,8 +302,24 @@ public class WDTModelDataProviderImpl implements WDTModelDataProvider {
     try (FileWriter writer = new FileWriter(fileName)) {
       drepo.download(writer, ic);
     } catch (Exception e) {
-      throw new FailedRequestException(e.getMessage());
+      throw createCannotCreateFileException(ic, fileName, e);
     }
+  }
+
+  private static FailedRequestException createCannotCreateFileException(
+      InvocationContext ic,
+      String fileName,
+      Exception cause
+  ) {
+    String message = ic.getLocalizer().localizeString(
+      LocalizedConstants.CANNOT_CREATE_FILE_MESSAGE,
+      fileName
+    );
+    String causeMessage = cause.getMessage();
+    if (causeMessage != null && !causeMessage.isEmpty()) {
+      message = message + ": " + causeMessage;
+    }
+    return new FailedRequestException(message, cause);
   }
 
   @Override

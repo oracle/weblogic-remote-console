@@ -9,7 +9,7 @@ import { useEffect, useMemo, useRef, useState } from "preact/hooks";
 import { Databus } from "wrc/integration/databus";
 import { ResourceContext } from "wrc/integration/resource-context";
 import { NavTree } from "wrc/nav-tree/nav-tree";
-import { Resource } from "wrc/resource";
+import { Resource } from "wrc/resource/resource";
 import { StatusData } from "wrc/shared/typedefs/rdj";
 import { getBackendBase } from "wrc/shared/backend-url";
 import signals = require("signals");
@@ -140,12 +140,17 @@ export function Content() {
         requestAnimationFrame(() => {
           if (autoOpenedRef.current) return;
           autoOpenedRef.current = true;
-          const btn = document.getElementById('navtree-toggler-link') as HTMLElement | null;
-          if (btn) {
-            // Reuse header toggle logic to adjust height and init resizer
-            (btn as HTMLElement).click();
+          if (!(drawer as any).startOpened) {
+            const btn = document.getElementById('navtree-toggler-link') as HTMLElement | null;
+            if (btn) {
+              // Reuse header toggle logic to adjust height and init resizer
+              btn.click();
+            } else {
+              // Fallback: set property directly
+              (drawer as any).startOpened = true;
+            }
           } else {
-            // Fallback: set property directly
+            // Ensure the drawer stays open when initial markup already requests it.
             (drawer as any).startOpened = true;
           }
         });
@@ -176,6 +181,7 @@ export function Content() {
           <oj-c-drawer-layout
             id="drawer-layout"
             start-display="reflow"
+            startOpened={true}
           >
             <div id="navtree-container2" slot="start">
               <nav class="oj-flex-item" aria-label={t["wrc-content"]?.ariaLabel?.navigationPanel}>
@@ -185,7 +191,7 @@ export function Content() {
                       unique={uniqueId}
                       context={resourceContext}
                       navtreeUrl="/api/project/navtree"
-                      url=""
+                      url={rdjUrl}
                       backendPrefix={backendPrefix}
                     />
                   </div>
@@ -214,6 +220,7 @@ export function Content() {
                     <div class="oj-flex oj-sm-flex-direction-column wrc-resource-wrapper">
                       <Resource
                         rdj={rdjUrl}
+                        unique={uniqueId}
                         context={resourceContext}
                         pageContext="main"
                         backendPrefix={backendPrefix}

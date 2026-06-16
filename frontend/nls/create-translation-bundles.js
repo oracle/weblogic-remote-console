@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (c) 2021, 2024, Oracle and/or its affiliates.
+ * Copyright (c) 2021, 2026, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  * @ignore
  */
@@ -262,7 +262,7 @@ function getLocaleCodes(filenames, altBundle) {
 function writeTranslationBundle(translationBundle, fileSpec) {
   const path = fileSpec.mkdirPath.join("/");
   if (!fs.existsSync(path)){
-    fs.mkdirSync(path, 0o744);
+    fs.mkdirSync(path, { recursive: true, mode: 0o744 });
   }
   fs.writeFileSync(
     `${path}/${fileSpec.fileName}`, 

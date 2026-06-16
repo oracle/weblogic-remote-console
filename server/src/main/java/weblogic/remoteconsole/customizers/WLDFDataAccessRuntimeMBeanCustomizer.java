@@ -1,4 +1,4 @@
-// Copyright (c) 2022, 2025, Oracle and/or its affiliates.
+// Copyright (c) 2022, 2026, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.customizers;
@@ -12,6 +12,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
@@ -27,9 +28,14 @@ import javax.ws.rs.core.MultivaluedMap;
 import weblogic.console.utils.Path;
 import weblogic.remoteconsole.common.repodef.BeanPropertyDef;
 import weblogic.remoteconsole.common.repodef.BeanTypeDef;
+import weblogic.remoteconsole.common.repodef.CustomActionInputFormDef;
+import weblogic.remoteconsole.common.repodef.CustomPageActionParamDef;
 import weblogic.remoteconsole.common.repodef.LocalizedConstants;
 import weblogic.remoteconsole.common.repodef.PageActionDef;
+import weblogic.remoteconsole.common.repodef.PageActionParamDef;
+import weblogic.remoteconsole.common.repodef.PageDef;
 import weblogic.remoteconsole.common.utils.Message;
+import weblogic.remoteconsole.server.ConsoleBackendRuntimeConfig;
 import weblogic.remoteconsole.server.PersistenceManager;
 import weblogic.remoteconsole.server.repo.BeanReaderRepoSearchBuilder;
 import weblogic.remoteconsole.server.repo.BeanReaderRepoSearchResults;
@@ -44,6 +50,7 @@ import weblogic.remoteconsole.server.repo.Response;
 import weblogic.remoteconsole.server.repo.StringValue;
 import weblogic.remoteconsole.server.repo.Value;
 import weblogic.remoteconsole.server.repo.weblogic.WebLogicRestBeanRepo;
+import weblogic.remoteconsole.server.utils.HostedFilePathUtils;
 import weblogic.remoteconsole.server.utils.ResponseHelper;
 import weblogic.remoteconsole.server.utils.WebLogicRestClient;
 import weblogic.remoteconsole.server.utils.WebLogicRestClientException;
@@ -67,6 +74,32 @@ public class WLDFDataAccessRuntimeMBeanCustomizer {
    * Customize to return the default directory for downloading log file.
    *
    */
+  public static PageDef customizeDownloadLogsInputFormDef(
+      InvocationContext ic,
+      PageDef uncustomizedPageDef
+  ) {
+    if (ConsoleBackendRuntimeConfig.isFilesAreLocal()) {
+      return uncustomizedPageDef;
+    }
+    CustomActionInputFormDef customizedInputFormDef =
+      new CustomActionInputFormDef(uncustomizedPageDef.asActionInputFormDef());
+    customizedInputFormDef.setPresentationDef(uncustomizedPageDef.asActionInputFormDef().getPresentationDef());
+    List<PageActionParamDef> customizedParamDefs = new ArrayList<>();
+    for (PageActionParamDef uncustomizedParamDef : customizedInputFormDef.getParamDefs()) {
+      if ("LogFileDirectory".equals(uncustomizedParamDef.getParamName())) {
+        customizedParamDefs.add(
+          new CustomPageActionParamDef(uncustomizedParamDef)
+            .inputFormDef(customizedInputFormDef)
+            .readOnly(true)
+        );
+      } else {
+        customizedParamDefs.add(uncustomizedParamDef);
+      }
+    }
+    customizedInputFormDef.setParamDefs(customizedParamDefs);
+    return customizedInputFormDef;
+  }
+
   public static void customizeDownloadLogsInputForm(InvocationContext ic, Page page) {
     Value logFileDirectoryValue = new StringValue(getDirectoryName(ic));
     List<FormProperty> oldProperties = page.asForm().getProperties();
@@ -152,7 +185,7 @@ public class WLDFDataAccessRuntimeMBeanCustomizer {
       }
     // the logfile requested may have "/" or path separator char in it,
     // e.g. JMSMessageLog/AdminJMSServer, we will replace that with "_".
-    logFile = logFile.replace(File.separator, "_");
+    logFile = logFile.replace("/", "_").replace("\\", "_");
     Timestamp timestamp = new Timestamp(System.currentTimeMillis());
     return  serverName + "_" + logFile + "_" + simpleDateFormat.format(timestamp);
   }
@@ -176,20 +209,34 @@ public class WLDFDataAccessRuntimeMBeanCustomizer {
     final String fileFormat = getFormProperty(formProperties, "FileFormat");
     final String extension = (fileFormat.equals("JSON")) ? ".json" : ".txt";
     final String outputFormat = (fileFormat.equals("JSON")) ? MediaType.APPLICATION_JSON : MediaType.TEXT_PLAIN;
-    final String logFileDirectory = getFormProperty(formProperties, "LogFileDirectory");
     if (logFileName == null) {
       logFileName = getFormProperty(formProperties, "LogFileName");
     }
-    final String fullFilePath = logFileDirectory + File.separatorChar + logFileName + extension;
-    File file = new File(fullFilePath);
+    File file = null;
     try {
-      Files.createDirectories(Paths.get(logFileDirectory));
+      String logFileDirectory = getFormProperty(formProperties, "LogFileDirectory");
+      if (ConsoleBackendRuntimeConfig.isFilesAreLocal()) {
+        if (logFileDirectory == null || logFileDirectory.isBlank()) {
+          return downloadLogFileBadRequest(response, ic, logFileName + extension);
+        }
+        final String fullFilePath = logFileDirectory + File.separatorChar + logFileName + extension;
+        file = new File(fullFilePath);
+        Files.createDirectories(Paths.get(logFileDirectory));
+      } else {
+        File hostedDownloadsDirectory = getHostedDownloadsDirectory(ic);
+        if (!isHostedLogFileDirectoryAllowed(logFileDirectory, hostedDownloadsDirectory)) {
+          return downloadLogFileBadRequest(response, ic, logFileDirectory);
+        }
+        String persistenceFilePath = PersistenceManager.getPersistenceFilePath(ic);
+        file = HostedFilePathUtils.resolveHostedDownloadFile(new File(persistenceFilePath), logFileName, extension);
+        Files.createDirectories(file.getParentFile().toPath());
+      }
     } catch (Exception ex) {
       response.setServiceNotAvailable();
       //ex.printStackTrace();
       response.addMessage(new Message(Message.Severity.FAILURE,
           ic.getLocalizer().localizeString(LocalizedConstants.DOWNLOADLOGFILE_ERROR)
-              + file.toString()));
+              + logFileName));
       return response;
     }
 
@@ -199,13 +246,14 @@ public class WLDFDataAccessRuntimeMBeanCustomizer {
     String serverName = ic.getBeanTreePath().getPath().getComponents().get(2);
     String logFile = ic.getBeanTreePath().getPath().getLastComponent();
     BeanTreePath beanTreePath = BeanTreePath.create(
-        ic.getBeanTreePath().getBeanRepo(),
-        new Path("DomainRuntime.ServerRuntimes" + "." + serverName + "."
-            + "WLDFRuntime.WLDFAccessRuntime.WLDFDataAccessRuntimes" + "." + logFile)
+      ic.getBeanTreePath().getBeanRepo(),
+      new Path("DomainRuntime.ServerRuntimes" + "." + serverName + "."
+        + "WLDFRuntime.WLDFAccessRuntime.WLDFDataAccessRuntimes" + "." + logFile)
     );
     try {
+      final File outputFile = file;
       new Thread(() -> {
-        customizerLogs(ic, file, outputFormat, wlsSince, wlsUntil, wlsMaxRecords, beanTreePath);
+        customizerLogs(ic, outputFile, outputFormat, wlsSince, wlsUntil, wlsMaxRecords, beanTreePath);
       }).start();
       // FortifyIssueSuppression Log Forging
       // file name is created based on persistence manager location
@@ -228,6 +276,30 @@ public class WLDFDataAccessRuntimeMBeanCustomizer {
     return "";
   }
 
+  private static Response<Value> downloadLogFileBadRequest(
+      Response<Value> response,
+      InvocationContext ic,
+      String value
+  ) {
+    response.setUserBadRequest();
+    response.addMessage(new Message(
+      Message.Severity.FAILURE,
+      ic.getLocalizer().localizeString(LocalizedConstants.DOWNLOADLOGFILE_ERROR) + value
+    ));
+    return response;
+  }
+
+  private static boolean isHostedLogFileDirectoryAllowed(String submittedDirectory, File hostedDownloadsDirectory) {
+    if (submittedDirectory == null || submittedDirectory.isBlank()) {
+      return true;
+    }
+    try {
+      return new File(submittedDirectory).getCanonicalFile().equals(hostedDownloadsDirectory.getCanonicalFile());
+    } catch (IOException e) {
+      return false;
+    }
+  }
+
   private static long getRecordLimit(List<FormProperty> formProperties, String propName) {
     FormProperty formProperty = CustomizerUtils.findOptionalFormProperty(propName, formProperties);
     if (formProperty != null) {
@@ -243,10 +315,17 @@ public class WLDFDataAccessRuntimeMBeanCustomizer {
   }
 
   private static String getDirectoryName(InvocationContext ic) {
+    if (!ConsoleBackendRuntimeConfig.isFilesAreLocal()) {
+      return getHostedDownloadsDirectory(ic).getPath();
+    }
     String persistenceDirectoryPath = PersistenceManager.getPersistenceFilePath(ic);
     String dirName = (persistenceDirectoryPath == null)
         ? System.getProperty("java.io.tmpdir") : persistenceDirectoryPath + "/downloads";
     return dirName;
+  }
+
+  private static File getHostedDownloadsDirectory(InvocationContext ic) {
+    return HostedFilePathUtils.getHostedDownloadsDirectory(new File(PersistenceManager.getPersistenceFilePath(ic)));
   }
 
   private static Path getRestActionPath(InvocationContext ic, BeanTreePath beanPath, String actionName) {

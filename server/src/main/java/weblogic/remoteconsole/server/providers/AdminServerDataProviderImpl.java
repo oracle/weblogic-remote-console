@@ -785,6 +785,7 @@ public class AdminServerDataProviderImpl implements AdminServerDataProvider {
     }
 
     private void getDomainStatus() {
+      messages = null;
       testWebLogicRestDelegation(getAdminServerName());
       getNeedServerRestart();
       getSecurityWarnings();

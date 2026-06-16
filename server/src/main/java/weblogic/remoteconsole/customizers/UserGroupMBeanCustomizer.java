@@ -1,4 +1,4 @@
-// Copyright (c) 2024, 2025, Oracle and/or its affiliates.
+// Copyright (c) 2024, 2026, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.customizers;
@@ -125,7 +125,7 @@ public class UserGroupMBeanCustomizer {
     if (supportsFiltering(ic)) {
       String nameFilter = getNameFilter(ic);
       if (nameFilter != null) {
-        sb.append(ic.getLocalizer().localizeString(filter, nameFilter));
+        sb.append(ic.getLocalizer().localizeHtmlString(filter, nameFilter));
       }
     }
     // The extension will return one more than the maximum so that we can tell
@@ -145,7 +145,7 @@ public class UserGroupMBeanCustomizer {
       String providerStatus = getProviderStatus(ic);
       if (providerStatus != null) {
         sb.append(
-          ic.getLocalizer().localizeString(
+          ic.getLocalizer().localizeHtmlString(
             LocalizedConstants.SECURITY_PROVIDER_DATA_NOT_AVAILABLE,
             providerStatus
           )

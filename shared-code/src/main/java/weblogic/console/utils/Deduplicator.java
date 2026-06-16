@@ -1,17 +1,18 @@
-// Copyright (c) 2025, Oracle and/or its affiliates.
+// Copyright (c) 2025, 2026, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.console.utils;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
+import java.util.concurrent.atomic.LongAdder;
 
 public class Deduplicator<T extends Deduplicatable> {
 
-  private String type;
-  private Map<String,T> deduplicated = new HashMap<>();
-  private long undeduplicatedCount = 0;
-  private long deduplicatedCount = 0;
+  private final String type;
+  private final ConcurrentMap<String,T> deduplicated = new ConcurrentHashMap<>();
+  private final LongAdder undeduplicatedCount = new LongAdder();
+  private final LongAdder deduplicatedCount = new LongAdder();
 
   public Deduplicator(String type) {
     this.type = type;
@@ -23,20 +24,19 @@ public class Deduplicator<T extends Deduplicatable> {
       // this instance cannot be deduplicated
       return unduplicated;
     }
-    T rtn = deduplicated.get(key);
+    T rtn = deduplicated.putIfAbsent(key, unduplicated);
     if (rtn == null) {
       rtn = unduplicated;
-      deduplicated.put(key, rtn);
-      deduplicatedCount++;
+      deduplicatedCount.increment();
     }
-    undeduplicatedCount++;
+    undeduplicatedCount.increment();
     /*
-    if (undeduplicatedCount % 10000 == 0) {
+    if (undeduplicatedCount.longValue() % 10000 == 0) {
       System.out.println(
         "DEBUG deduplicate"
         + " " + type
-        + " " + undeduplicatedCount
-        + " " + deduplicatedCount
+        + " " + undeduplicatedCount.longValue()
+        + " " + deduplicatedCount.longValue()
         + " " + deduplicated.size()
       );
     }

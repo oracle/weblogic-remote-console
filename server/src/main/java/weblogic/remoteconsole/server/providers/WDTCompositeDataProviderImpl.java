@@ -1,4 +1,4 @@
-// Copyright (c) 2021, 2025, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2026, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.providers;
@@ -119,8 +119,14 @@ public class WDTCompositeDataProviderImpl implements Provider {
       throw new FailedRequestException(getNoModelMessage(ic));
     }
 
+    boolean startedPreviously = (editRoot.getPageRepo() != null);
+    lastProviderNoModel = null;
+
     // IFF the models have been updated then update the PageRepo so these changes are visible to the composite...
     List<Map<String, Object>> currentModels = getCurrentModels(ic);
+    if (currentModels.isEmpty() || (!startedPreviously && (lastProviderNoModel != null))) {
+      throw new FailedRequestException(getNoModelMessage(ic));
+    }
     models = currentModels;
     setPageRepo(ic);
     return true;
@@ -148,7 +154,13 @@ public class WDTCompositeDataProviderImpl implements Provider {
     List<WDTModelDataProvider> wdtProviders = new ArrayList<>(modelNames.size());
     modelNames.forEach(name -> {
       ConfiguredProvider prov = ic.getProjectManager().getCurrentProject().getProvider(name);
-      prov.start(ic);
+      if (prov == null) {
+        LOGGER.finest("WDTCompositeDataProviderImpl unable to find WDT model provider: " + name);
+        lastProviderNoModel = " (" + name + ")";
+        return;
+      }
+      InvocationContext providerIC = ic.clone();
+      prov.start(providerIC);
       WDTModelDataProvider provider = (WDTModelDataProvider) prov.getLiveProvider();
       boolean added = ((provider != null) ? wdtProviders.add(provider) : false);
       if (!added) {
@@ -161,7 +173,7 @@ public class WDTCompositeDataProviderImpl implements Provider {
     // Obtain the list of WDT models from the WDT model providers
     List<Map<String, Object>> wdtModels = new ArrayList<>(wdtProviders.size());
     wdtProviders.forEach(provider -> {
-      Map<String, Object> model = provider.getModel(ic);
+      Map<String, Object> model = provider.getModel(ic.clone());
       boolean added = ((model != null) ? wdtModels.add(model) : false);
       if (!added) {
         // Log and note the provider name for the model that was not found...

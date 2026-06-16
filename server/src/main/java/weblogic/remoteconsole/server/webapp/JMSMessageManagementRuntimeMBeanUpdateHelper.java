@@ -1,4 +1,4 @@
-// Copyright (c) 2023, 2025, Oracle and/or its affiliates.
+// Copyright (c) 2023, 2026, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.webapp;
@@ -6,6 +6,7 @@ package weblogic.remoteconsole.server.webapp;
 import java.util.List;
 import javax.json.JsonObject;
 
+import org.glassfish.jersey.media.multipart.FormDataMultiPart;
 import weblogic.console.utils.Path;
 import weblogic.remoteconsole.customizers.JMSMessageManagementRuntimeMBeanCustomizer;
 import weblogic.remoteconsole.server.repo.FormProperty;
@@ -22,6 +23,14 @@ public class JMSMessageManagementRuntimeMBeanUpdateHelper {
   }
 
   public static javax.ws.rs.core.Response update(InvocationContext ic, JsonObject requestBody) {
+    return update(ic, requestBody, null);
+  }
+
+  public static javax.ws.rs.core.Response update(
+    InvocationContext ic,
+    JsonObject requestBody,
+    FormDataMultiPart parts
+  ) {
     Response<Void> response = new Response<>();
     Response<InvocationContext> icResponse =
       ic.getPageRepo().asPageReaderRepo().getActualSliceInvocationContext(ic);
@@ -33,7 +42,7 @@ public class JMSMessageManagementRuntimeMBeanUpdateHelper {
     if (!isMessageFiltersSlice(actualIc)) {
       return javax.ws.rs.core.Response.status(javax.ws.rs.core.Response.Status.METHOD_NOT_ALLOWED).build();
     }
-    response = doUpdate(actualIc, requestBody);
+    response = doUpdate(actualIc, requestBody, parts);
     return VoidResponseMapper.toResponse(actualIc, response);
   }
 
@@ -47,10 +56,14 @@ public class JMSMessageManagementRuntimeMBeanUpdateHelper {
     return false;
   }
 
-  private static Response<Void> doUpdate(InvocationContext ic, JsonObject requestBody) {
+  private static Response<Void> doUpdate(
+    InvocationContext ic,
+    JsonObject requestBody,
+    FormDataMultiPart parts
+  ) {
     Response<Void> response = new Response<>();
     // Unmarshal the request body
-    Response<List<FormProperty>> unmarshalResponse = FormRequestBodyMapper.fromRequestBody(ic, requestBody);
+    Response<List<FormProperty>> unmarshalResponse = FormRequestBodyMapper.fromRequestBody(ic, requestBody, parts);
     if (!unmarshalResponse.isSuccess()) {
       return response.copyUnsuccessfulResponse(unmarshalResponse);
     }
