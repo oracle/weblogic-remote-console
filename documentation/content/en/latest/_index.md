@@ -6,7 +6,7 @@ url: overview
 
 Oracle WebLogic Remote Console is a graphical user interface that administers Oracle WebLogic Server domains.
 
-WebLogic Remote Console relies on REST APIs to provide flexibility, enabling it to connect to domains in varied environments: on physical or virtual machines, in containers or Kubernetes pods, in the cloud. Additionally, you can use WebLogic Remote Console to manage WebLogic Deploy Tooling \(WDT\) metadata models - meaning you can build domain templates and then manage them within the same environment.
+WebLogic Remote Console relies on REST APIs to provide flexibility, enabling it to connect to domains in varied environments: on physical or virtual machines, in containers or Kubernetes pods, or in the cloud. Additionally, you can use WebLogic Remote Console to manage WebLogic Deploy Tooling \(WDT\) metadata models - meaning you can build domain templates and then manage them within the same environment.
 
 WebLogic Remote Console is compatible with WebLogic Server 12.2.1.4.0 or later and adjusts its user interface to match the features available to the relevant WebLogic Server release.
 

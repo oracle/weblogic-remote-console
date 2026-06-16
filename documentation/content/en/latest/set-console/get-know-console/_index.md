@@ -71,7 +71,7 @@ Provides tips on WebLogic Remote Console functionality.
 
 </td></tr><tr><td>
 
-![Icon of the sun](/weblogic-remote-console/images/ui-icons/ico-weather-sun.png)/![Icon of a crescent moon](/weblogic-remote-console/images/ui-icons/ico-weather-moon.png)Dark/Light mode
+![Icon of the sun](../../ico-weather-sun.png)/![Icon of a crescent moon](/weblogic-remote-console/images/ui-icons/ico-weather-moon.png)Dark/Light mode
 
 </td><td>
 
@@ -87,7 +87,7 @@ Opens the WebLogic Remote Console user documentation in your browser.
 
 </td></tr><tr><td>
 
-![Icon of a star](/weblogic-remote-console/images/ui-icons/ico-star.png) Add Bookmark
+![Icon of a star](/weblogic-remote-console/images/ui-icons/ico-star.png)Add Bookmark
 
 </td><td>
 
@@ -119,7 +119,7 @@ Opens the **Pages History** dialog box, which lists the pages that you have prev
 
 </td></tr><tr><td>
 
-![Icon of leftward facing arrow inside a circle](/weblogic-remote-console/images/ui-icons/ico-arrow-left.png)/![Icon of right-facing arrow inside a circle](/weblogic-remote-console/images/ui-icons/ico-arrow-right.png)Back/Forward
+![Icon of leftward facing arrow inside a circle](../../ico-arrow-left.png)/![Icon of right-facing arrow inside a circle](/weblogic-remote-console/images/ui-icons/ico-arrow-right.png)Back/Forward
 
 </td><td>
 
@@ -184,7 +184,7 @@ To return an MBean attribute to its default setting, select the **Field Settings
 
 
 
-The domain configuration file, <code>config.xml</code>, only describes MBean attributes if they are set to non-default values. After you use restore a value to its default, the \(now unnecessary\) attribute will be removed from the file.
+The domain configuration file, <code>config.xml</code>, only describes MBean attributes if they are set to non-default values. After you restore a value to its default, the \(now unnecessary\) attribute will be removed from the file.
 
 {{< /alert >}}
 
@@ -207,15 +207,16 @@ You can save WebLogic Remote Console pages that you visit frequently.
 Bookmarks are shared between providers of the same type. For example, if you save a page in an Administration Server provider, that page will be bookmarked in every Administration Server provider, but it won't be available in a WDT Model provider.
 
 -   To save a page in WebLogic Remote Console as a bookmark:
-    -   On the page that you want to save, click **Page Bookmark** ![Icon of a star](/weblogic-remote-console/images/ui-icons/ico-star.png) in the tool bar.
+-   On the page that you want to save, click **Page Bookmarks ☆** in the tool bar.
 
-        On pages that are already bookmarked, the star will be filled in.
+    On pages that are already bookmarked, the star will be filled in.
 
 -   To go to a bookmarked page:
-    -   In the upper right corner, click **Page Bookmarks** ![Icon of banner with a star](/weblogic-remote-console/images/ui-icons/ico-bookmark-favorite.png), then select the page that you want to visit.
+-   In the upper right corner, click **Page Bookmarks** ![Icon of banner with a star](/weblogic-remote-console/images/ui-icons/ico-bookmark-favorite.png), then select the page that you want to visit.
 
 -   To delete a bookmark:
-    -   In the upper right corner, click **Page Bookmarks** ![Icon of banner with a star](/weblogic-remote-console/images/ui-icons/ico-bookmark-favorite.png), then click the page you want to delete.  WebLogic Remote Console will load that page where you can click the (filled in) **Page Bookmark** ![Icon of a star](/weblogic-remote-console/images/ui-icons/ico-star.png) icon to un-bookmark the page.
+-   In the upper right corner, click **Page Bookmarks** ![Icon of banner with a star](/weblogic-remote-console/images/ui-icons/ico-bookmark-favorite.png), then click the page you want to delete. WebLogic Remote Console will load that page where you can click the \(filled in\) **Page Bookmarks ☆** icon to un-bookmark the page.
+
 
 ## Customize a Table {#GUID-FF37D291-F8C5-4EFB-8A18-DADF035348C9}
 
@@ -264,7 +265,7 @@ To arrange providers into a collection:
     -   Existing Property List Provider
     -   New WDT Model File Provider
     -   New Property List Provider
-    For more information on the different provider types, see [Provider Types](..#GUID-82C1C605-D42E-45EA-AC16-5BA3D5853C96)
+    For more information on the different provider types, see [Provider Types](..#GUID-82C1C605-D42E-45EA-AC16-5BA3D5853C96).
 
 6.  Fill in any required information.
 

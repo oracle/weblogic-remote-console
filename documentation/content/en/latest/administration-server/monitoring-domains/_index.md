@@ -1,5 +1,5 @@
 ---
-weight: 173
+weight: 174
 title: Monitoring Domains
 ---
 
@@ -147,7 +147,7 @@ For more information on WebLogic logging services, see [Understanding WebLogic L
 
     Logs are segregated by server instance.
 
-4.  Specify where you want to download the log file and and the file format. You can also restrict which records should be included.
+4.  Specify where you want to download the log file and the file format. You can also restrict which records should be included.
 
 
 ### Configure Logs {#GUID-B5244A71-B792-42E1-ACFF-B0DDC9A53E67}
@@ -208,7 +208,7 @@ For example, you can filter out messages of a certain severity level, or from a 
 
 WebLogic Server offers multiple methods for filtering log messages and you can use these methods simultaneously. Choose the methods that work for your environment. For more information, see [Filtering WebLogic Server Log Messages](https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=WLLOG-GUID-601DAF57-58CC-4E13-B509-129884A8E6C3) in **Configuring Log Files and Filtering Log Messages for Oracle WebLogic Server**.
 
-1.  In the **Edit Tree**, go to **Environment**, then *myServer*.
+1.  In the **Edit Tree**, go to **Environment**, then **Servers**, then *myServer*.
 
 2.  Click on the **Logging** tab.
 
@@ -251,7 +251,7 @@ WebLogic Server offers multiple methods for filtering log messages and you can u
 
 ### Create a Log Filter {#GUID-0D37D991-A698-4D2C-8163-DC3B1A0BBC65}
 
-Log filters provide control over the log messages that get published. A filter uses custom logic to evaluate the log message content, which you use to accept or reject a log message
+Log filters provide control over the log messages that get published. A filter uses custom logic to evaluate the log message content, which you use to accept or reject a log message.
 
 For example, to filter out messages of a certain severity level, from a particular subsystem, or according to specified criteria. Only the log messages that satisfy the filter criteria get published. You can create separate filters for the messages that each server instance writes to its server log file, standard out, memory buffer, or broadcasts to the domain-wide message log.
 
@@ -293,11 +293,11 @@ WebLogic Server sets a threshold size limit of 2,097,152 kilobytes before it for
     -   **By Time** - rotates log messages after a specified time interval passes.
     -   **By Size or Time** - rotates log messages if the file size reaches the specified size or if the specified time interval passes, whichever occurs first.
     -   **None** - log messages are not automatically rotated. You must manually erase the contents of the file when the size becomes too large.
-3.  <a id="STEP_Z2F_JLF_B2C"></a>If you chose **By Size** as the Rotation Type.
+3.  <a id="STEP_Z2F_JLF_B2C"></a>If you chose **By Size** as the Rotation Type:
 
     1.  In the **Rotation file size** field, enter the file size that triggers the server to move log messages to a separate file. After the log file reaches the specified size, the next time the server checks the file size it renames the current log file by appending a 5-digit integer; for example, <code>SERVER_NAME.log00007</code>. After the server renames the file, subsequent messages accumulate in a new file named <code>SERVER_NAME.log</code>.
 
-4.  <a id="STEP_TQJ_JLF_B2C"></a>If you chose **By Time** as the Rotation Type.
+4.  <a id="STEP_TQJ_JLF_B2C"></a>If you chose **By Time** as the Rotation Type:
 
     1.  In the **Begin rotation time** field, enter the start time
 
@@ -366,9 +366,9 @@ If you plan to audit configuration changes, then you must configure the WebLogic
 3.  From the **Configuration Audit Type** drop-down list, select the method to use for auditing configuration change events.
 
     -   **None**: No audit configuration change events are written.
-    -   **Log**:Configuration events will be written to the server log.
+    -   **Log**: Configuration events will be written to the server log.
     -   **Audit**: Configuration events will be directed to the Security Framework and handled by the Auditing provider.
-    -   **LogAudit**: Configuration events will written to the server log as well as directed to the Security Framework and handled by the Auditing provider.
+    -   **LogAudit**: Configuration events will be written to the server log as well as directed to the Security Framework and handled by the Auditing provider.
 4.  Click **Save**.
 
 

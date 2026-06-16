@@ -1,5 +1,5 @@
 ---
-weight: 274
+weight: 275
 title: WDT Composite Models
 ---
 
@@ -26,7 +26,7 @@ There must be at least two WDT model file providers in the active project.
 
 3.  Click inside the **WDT Models** field and select the WDT model files that you want to appear in the WDT Composite Model in the order that you want them to appear. Only WDT model files in the current project will appear in the drop-down list.
 
-    Choose the order that the WDT model files are added to the composite carefully. Each subsequent WDT model file overrides the properties of the previous file. If there are any conflicting properties, the properties of the last WDT model file added to the composite takes precedence.
+    Choose the order that the WDT model files are added to the composite carefully. Each subsequent WDT model file overrides the properties of the previous file. When properties conflict, the properties of the last WDT model file that was added to the composite take precedence.
 
 4.  Click **OK** to create the WDT composite model.
 

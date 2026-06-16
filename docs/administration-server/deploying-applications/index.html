@@ -35,7 +35,7 @@ Supported Deployment Units A deployment unit refers to a Jakarta EE application 
   <meta itemprop="description" content="You can use WebLogic Remote Console to manage the deployment process of applications to WebLogic Server.
 For general information on the application deployment process, see Understanding WebLogic Server Deployment in Deploying Applications to Oracle WebLogic Server.
 Supported Deployment Units A deployment unit refers to a Jakarta EE application (an enterprise application or Web application) or a standalone Jakarta EE module (such as an EJB or resource adapter) that has been organized according to the Jakarta EE specification and can be deployed to WebLogic Server.">
-  <meta itemprop="wordCount" content="3056">
+  <meta itemprop="wordCount" content="3057">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Deploying Applications">
   <meta name="twitter:description" content="You can use WebLogic Remote Console to manage the deployment process of applications to WebLogic Server.
@@ -70,15 +70,12 @@ Supported Deployment Units A deployment unit refers to a Jakarta EE application 
         <div class="dropdown">
   <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Releases</a>
   <ul class="dropdown-menu">
-    <li><a class="dropdown-item" href="/weblogic-remote-console/overview">Latest (v3.0.3)</a></li>
+    <li><a class="dropdown-item" href="/weblogic-remote-console/overview">Latest (v3.0.4)</a></li>
+    <li><a class="dropdown-item" href="/weblogic-remote-console/3.0.3">v3.0.3</a></li>
     <li><a class="dropdown-item" href="/weblogic-remote-console/preview">Tech Preview (v3.0.2)</a></li>
     <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.19">v2.4.19</a></li>
     <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.18">v2.4.18</a></li>
     <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.17">v2.4.17</a></li>
-    <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.16">v2.4.16</a></li>
-    <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.15">v2.4.15</a></li>
-    <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.14">v2.4.14</a></li>
-    <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.13">v2.4.13</a></li>
     </ul>
 </div></li>
       <li class="td-light-dark-menu nav-item dropdown">
@@ -144,7 +141,7 @@ Supported Deployment Units A deployment unit refers to a Jakarta EE application 
     aria-label="Search this site…"
     autocomplete="off"
     
-    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.9a1e60b97d06a8082f60f18b5f00d58a.json"
+    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.b138faf837a92f50a8a9ce6032bbbca7.json"
     data-offline-search-base-href="/"
     data-offline-search-max-results="10"
   >
@@ -169,7 +166,7 @@ Supported Deployment Units A deployment unit refers to a Jakarta EE application 
     aria-label="Search this site…"
     autocomplete="off"
     
-    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.9a1e60b97d06a8082f60f18b5f00d58a.json"
+    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.b138faf837a92f50a8a9ce6032bbbca7.json"
     data-offline-search-base-href="/"
     data-offline-search-max-results="10"
   >
@@ -366,7 +363,7 @@ Supported Deployment Units A deployment unit refers to a Jakarta EE application 
 <p>Client Application Archive</p>
 </li>
 </ul>
-<p>For more information on each deployment unit, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=DEPGD-GUID-DC6C0B59-7560-4A6F-964B-201480072A3D">Supported Deployment Units</a> in <strong>Deploying Applications to Oracle WebLogic Server</strong></p>
+<p>For more information on each deployment unit, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=DEPGD-GUID-DC6C0B59-7560-4A6F-964B-201480072A3D">Supported Deployment Units</a> in <strong>Deploying Applications to Oracle WebLogic Server</strong>.</p>
 
 
 <div class="alert alert-primary" role="alert">
@@ -440,7 +437,7 @@ Supported Deployment Units A deployment unit refers to a Jakarta EE application 
 <p>Click <strong>Start</strong> and choose either:</p>
 <ul>
 <li><strong>Servicing all requests</strong>: to make the application immediately available to all clients.</li>
-<li><strong>Servicing only administration request</strong>: to make the application available in Administration Mode only.</li>
+<li><strong>Servicing only administration requests</strong>: to make the application available in Administration Mode only.</li>
 </ul>
 </li>
 </ol>
@@ -575,12 +572,12 @@ Supported Deployment Units A deployment unit refers to a Jakarta EE application 
 <p>In the <strong>Monitoring Tree</strong>, go to <strong>Deployments</strong>, then <strong>Application Management</strong> and select the application that you want to update.</p>
 </li>
 <li>
-<p>Click <strong>Update/Reploy</strong> and choose one of the options:</p>
+<p>Click <strong>Update/Redeploy</strong> and choose one of the options:</p>
 <ul>
 <li><strong>Update - Deployment Plan on Server</strong>: Updates the application using a new deployment plan located on the server. Use this option if all of your changes are dynamic.</li>
 <li><strong>Update - Deployment Plan on Local Machine</strong>: Updates the application using a new deployment plan located on the local machine and then uploads it to the Administration Server&rsquo;s upload directory. Use this option if all of your changes are dynamic.</li>
 <li><strong>Redeploy - Deployment Source and Plan on Server</strong>: Updates a deployment plan located on the server and redeploys the application. Use this option if your changes include non-dynamic changes that require the application to restart.</li>
-<li><strong>Redeploy - Deployment Source and Plan on Local Machine</strong>: Updates a deployment plan located on the local machine and redeploys the application. Use this option if your changes include non-dynamic changes that the application to restart.</li>
+<li><strong>Redeploy - Deployment Source and Plan on Local Machine</strong>: Updates a deployment plan located on the local machine and redeploys the application. Use this option if your changes include non-dynamic changes that require the application to restart.</li>
 </ul>
 </li>
 <li>

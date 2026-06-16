@@ -1,5 +1,5 @@
 ---
-weight: 159
+weight: 160
 title: Deploying Applications
 ---
 
@@ -32,7 +32,7 @@ The following deployment units are supported:
 -   Client Application Archive
 
 
-For more information on each deployment unit, see [Supported Deployment Units](https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=DEPGD-GUID-DC6C0B59-7560-4A6F-964B-201480072A3D) in **Deploying Applications to Oracle WebLogic Server**
+For more information on each deployment unit, see [Supported Deployment Units](https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=DEPGD-GUID-DC6C0B59-7560-4A6F-964B-201480072A3D) in **Deploying Applications to Oracle WebLogic Server**.
 
 {{< alert title="Note" color="primary" >}}
 
@@ -96,7 +96,7 @@ When you start an application, you can make it immediately available to clients,
 3.  Click **Start** and choose either:
 
     -   **Servicing all requests**: to make the application immediately available to all clients.
-    -   **Servicing only administration request**: to make the application available in Administration Mode only.
+    -   **Servicing only administration requests**: to make the application available in Administration Mode only.
 
 ## Stop an Application {#GUID-1E6C78A0-AFA0-44BE-BFC3-9CE77FB1E483}
 
@@ -215,12 +215,12 @@ If the application is deployed in a production environment, review [Overview of 
 
 1.  In the **Monitoring Tree**, go to **Deployments**, then **Application Management** and select the application that you want to update.
 
-2.  Click **Update/Reploy** and choose one of the options:
+2.  Click **Update/Redeploy** and choose one of the options:
 
     -   **Update - Deployment Plan on Server**: Updates the application using a new deployment plan located on the server. Use this option if all of your changes are dynamic.
     -   **Update - Deployment Plan on Local Machine**: Updates the application using a new deployment plan located on the local machine and then uploads it to the Administration Server's upload directory. Use this option if all of your changes are dynamic.
     -   **Redeploy - Deployment Source and Plan on Server**: Updates a deployment plan located on the server and redeploys the application. Use this option if your changes include non-dynamic changes that require the application to restart.
-    -   **Redeploy - Deployment Source and Plan on Local Machine**: Updates a deployment plan located on the local machine and redeploys the application. Use this option if your changes include non-dynamic changes that the application to restart.
+    -   **Redeploy - Deployment Source and Plan on Local Machine**: Updates a deployment plan located on the local machine and redeploys the application. Use this option if your changes include non-dynamic changes that require the application to restart.
 3.  **Optional**: If necessary for your selection, enter the file path to the new deployment plan.
 
 4.  Click **Done** to update or redeploy the application.

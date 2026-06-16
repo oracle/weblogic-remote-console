@@ -1,5 +1,5 @@
 ---
-weight: 231
+weight: 232
 title: Configuring Coherence
 ---
 
@@ -284,7 +284,7 @@ To override a cache configuration file at runtime, the cache configuration file 
 
     This JNDI name is prefixed with <code>cache-config/</code> and must match the value in the <code>override-property</code> of your <code>cache-configuration-ref</code> entry in <code>coherence-application.xml</code>.
 
-    For example, JNDI name of <code>ExamplesGAR</code> must match the <code>override-property</code> of <code>cache-config/ExamplesGAR</code>.
+    For example, the JNDI name of <code>ExamplesGAR</code> must match the <code>override-property</code> of <code>cache-config/ExamplesGAR</code>.
 
 6.  In the **Cache Configuration File** field, enter the full path to the cache configuration file. Alternatively, you may specify a URL.
 
@@ -465,11 +465,11 @@ You should also create a Coherence data tier and a Coherence application tier. S
 
 ## Create a Managed Coherence Server {#GUID-48BEE50E-2995-4C42-96EF-2F28416512FC}
 
-A Managed Coherence server is a Managed Server that is configured to be Coherence cluster member and provide in-memory distributed caching for applications.
+A Managed Coherence server is a Managed Server that is configured to be a Coherence cluster member and provide in-memory distributed caching for applications.
 
 1.  Create a WebLogic Server Managed Server, as described in [Create a Managed Server](../domain-configuration#GUID-50C0A18E-83F6-4865-ABF7-6127D0D0F49D).
 
-2.  On the Managed Server that you just created, from the **Cluster** drop-down list, select a cluster that is acting as a Coherence deployment tier.
+2.  On the Managed Server that you just created, in the **Cluster** drop-down list, select a cluster that is acting as a Coherence deployment tier.
 
     For information on Coherence deployment tiers, see [Coherence Deployment Tiers](#GUID-26E0D6DA-EB7D-4BCA-8707-49C3162A5CF1).
 
@@ -513,7 +513,7 @@ To set up Coherence for production use, follow the steps outlined in [Configure 
 
 7.  Click **Save**.
 
-8.  Create and package a Coherence Grid Archive \(GAR\) module for any application modules \(Web application, EJB, etc.\) that use Coherence. See [Creating Coherence Applications for WebLogic Server](https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=WLCOH-GUID-C34A3F98-55D5-4D5A-8BCC-E3EBC718B57D) in **Developing Oracle Coherence Applications for Oracle WebLogic Server**.
+8.  Create and package a Coherence Grid Archive \(GAR\) module for any application modules \(Web application, EJB, and so on.\) that use Coherence. See [Creating Coherence Applications for WebLogic Server](https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=WLCOH-GUID-C34A3F98-55D5-4D5A-8BCC-E3EBC718B57D) in **Developing Oracle Coherence Applications for Oracle WebLogic Server**.
 
 9.  Deploy your Coherence GAR module to your WebLogic Server domain. Standalone GARs are deployed in the same way as other Jakarta EE modules. See [Deploying Coherence Applications in WebLogic Server](https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=WLCOH-GUID-9284398A-509D-4BC0-9007-502CCCA4D758) in **Developing Oracle Coherence Applications for Oracle WebLogic Server**.
 

@@ -32,7 +32,7 @@ WDT model files are simplistic representations of a domain. They are generally w
   <meta itemprop="name" content="WDT Model Files">
   <meta itemprop="description" content="WDT metadata model files are descriptions of a WebLogic Server domain configuration. These models are not connected to a running WebLogic Server domain; you make edits to a model file and then use WebLogic Deploy Tooling (WDT) to build or modify live domains.
 WDT model files are simplistic representations of a domain. They are generally written in YAML but WebLogic Remote Console also accepts models in JSON format. For brevity, a WDT model file only describes departures from the default configuration.">
-  <meta itemprop="wordCount" content="1200">
+  <meta itemprop="wordCount" content="1201">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="WDT Model Files">
   <meta name="twitter:description" content="WDT metadata model files are descriptions of a WebLogic Server domain configuration. These models are not connected to a running WebLogic Server domain; you make edits to a model file and then use WebLogic Deploy Tooling (WDT) to build or modify live domains.
@@ -66,15 +66,12 @@ WDT model files are simplistic representations of a domain. They are generally w
         <div class="dropdown">
   <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Releases</a>
   <ul class="dropdown-menu">
-    <li><a class="dropdown-item" href="/weblogic-remote-console/overview">Latest (v3.0.3)</a></li>
+    <li><a class="dropdown-item" href="/weblogic-remote-console/overview">Latest (v3.0.4)</a></li>
+    <li><a class="dropdown-item" href="/weblogic-remote-console/3.0.3">v3.0.3</a></li>
     <li><a class="dropdown-item" href="/weblogic-remote-console/preview">Tech Preview (v3.0.2)</a></li>
     <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.19">v2.4.19</a></li>
     <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.18">v2.4.18</a></li>
     <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.17">v2.4.17</a></li>
-    <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.16">v2.4.16</a></li>
-    <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.15">v2.4.15</a></li>
-    <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.14">v2.4.14</a></li>
-    <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.13">v2.4.13</a></li>
     </ul>
 </div></li>
       <li class="td-light-dark-menu nav-item dropdown">
@@ -140,7 +137,7 @@ WDT model files are simplistic representations of a domain. They are generally w
     aria-label="Search this site…"
     autocomplete="off"
     
-    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.9a1e60b97d06a8082f60f18b5f00d58a.json"
+    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.b138faf837a92f50a8a9ce6032bbbca7.json"
     data-offline-search-base-href="/"
     data-offline-search-max-results="10"
   >
@@ -165,7 +162,7 @@ WDT model files are simplistic representations of a domain. They are generally w
     aria-label="Search this site…"
     autocomplete="off"
     
-    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.9a1e60b97d06a8082f60f18b5f00d58a.json"
+    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.b138faf837a92f50a8a9ce6032bbbca7.json"
     data-offline-search-base-href="/"
     data-offline-search-max-results="10"
   >
@@ -386,9 +383,9 @@ appDeployments:
 <li>WDT variables</li>
 </ul>
 <h3 id="standalone-wdt-model-tokens">Standalone WDT Model Tokens</h3>
-<p>Standalone WDT model token are tokens that replaced when the WDT model file is passed through WebLogic Deploy Tooling or through another external process. WebLogic Remote Console knows nothing about the value of the token and cannot update it.</p>
+<p>Standalone WDT model token are tokens that are replaced when the WDT model file is passed through WebLogic Deploy Tooling or through another external process. WebLogic Remote Console knows nothing about the value of the token and cannot update it.</p>
 <h3 id="wdt-variables">WDT Variables</h3>
-<p>WDT variables allow you to manage WDT model tokens and their values from within WebLogic Remote Console. First, you create a property list with a set of tokens and their values, then you assign a property list to a WDT model file. After they are linked, any properties that you create in the property list become available to insert into the associated WDT model file. By centralizing model tokens in a property lists, you can easily update their values and review available tokens.</p>
+<p>WDT variables allow you to manage WDT model tokens and their values from within WebLogic Remote Console. First, you create a property list with a set of tokens and their values, then you assign a property list to a WDT model file. After they are linked, any properties that you create in the property list become available to insert into the associated WDT model file. By centralizing model tokens in a property list, you can easily update their values and review available tokens.</p>
 <p>For more information, see <a href="/weblogic-remote-console/weblogic-deploy-tooling/property-lists/#GUID-62721515-29E5-4DC4-BBD8-E2D1C8A7529D">Property Lists</a>.</p>
 <p>Each WDT model file can only pull from one property list, but you can use the same property list for multiple WDT model files.</p>
 

@@ -41,7 +41,7 @@ Connect to an Administration Server You can connect to a running WebLogic Server
 Start the Administration Server.
 See Starting and Stopping Servers in Administering Server Startup and Shutdown for Oracle WebLogic Server for instructions.
 On the Projects/Providers page, select Create.">
-  <meta itemprop="wordCount" content="11326">
+  <meta itemprop="wordCount" content="11330">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Domain Configuration">
   <meta name="twitter:description" content="Use WebLogic Remote Console to make configuration changes to your WebLogic Server domain through its Administration Server.
@@ -78,15 +78,12 @@ On the Projects/Providers page, select Create.">
         <div class="dropdown">
   <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Releases</a>
   <ul class="dropdown-menu">
-    <li><a class="dropdown-item" href="/weblogic-remote-console/overview">Latest (v3.0.3)</a></li>
+    <li><a class="dropdown-item" href="/weblogic-remote-console/overview">Latest (v3.0.4)</a></li>
+    <li><a class="dropdown-item" href="/weblogic-remote-console/3.0.3">v3.0.3</a></li>
     <li><a class="dropdown-item" href="/weblogic-remote-console/preview">Tech Preview (v3.0.2)</a></li>
     <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.19">v2.4.19</a></li>
     <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.18">v2.4.18</a></li>
     <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.17">v2.4.17</a></li>
-    <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.16">v2.4.16</a></li>
-    <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.15">v2.4.15</a></li>
-    <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.14">v2.4.14</a></li>
-    <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.13">v2.4.13</a></li>
     </ul>
 </div></li>
       <li class="td-light-dark-menu nav-item dropdown">
@@ -152,7 +149,7 @@ On the Projects/Providers page, select Create.">
     aria-label="Search this site…"
     autocomplete="off"
     
-    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.9a1e60b97d06a8082f60f18b5f00d58a.json"
+    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.b138faf837a92f50a8a9ce6032bbbca7.json"
     data-offline-search-base-href="/"
     data-offline-search-max-results="10"
   >
@@ -177,7 +174,7 @@ On the Projects/Providers page, select Create.">
     aria-label="Search this site…"
     autocomplete="off"
     
-    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.9a1e60b97d06a8082f60f18b5f00d58a.json"
+    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.b138faf837a92f50a8a9ce6032bbbca7.json"
     data-offline-search-base-href="/"
     data-offline-search-max-results="10"
   >
@@ -758,7 +755,7 @@ On the Projects/Providers page, select Create.">
 </td></tr><tr><td>
 <p>To specify a custom logging configuration file so you can control the logging information that WebLogic Remote Console collects.</p>
 <p>The custom logging configuration file must follow the Java format for configuration files. You can see an example of a Java logging configuration file at <code>$JAVA_HOME/conf/logging.properties</code>.</p>
-<p>If a problem occurs with your custom logging configuration file, WebLogic Remote Console will fallback to use its default logging configuration file. <code>STDOUT</code> includes a log message indicating which file was used.</p>
+<p>If a problem occurs with your custom logging configuration file, WebLogic Remote Console will fall back to use its default logging configuration file. <code>STDOUT</code> includes a log message indicating which file was used.</p>
 </td><td>
 <p><code>java.util.logging.config.file=&lt;path-to-logging.properties&gt;</code></p>
 </td></tr></tbody>
@@ -766,7 +763,7 @@ On the Projects/Providers page, select Create.">
 <h2 id="GUID-1CD33411-D8B9-4CAB-88FE-1D043B5FEEEE">Configuring a WebLogic Server Domain</h2>
 <p>After you connect to an Administration Server with WebLogic Remote Console, you are ready to make configuration changes to your domain.</p>
 <p>For a comprehensive explanation of domain configuration in WebLogic Server, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=DOMCF-GUID-64E1CAC9-78A5-491C-BE42-6CBB81AA774B">Understanding Oracle WebLogic Server Domains</a> in <strong>Understanding Domain Configuration for Oracle WebLogic Server</strong>.</p>
-<p>In WebLogic Remote Console, it is a generally two step process to apply configuration changes to your domain.</p>
+<p>In WebLogic Remote Console, it is generally a two-step process to apply configuration changes to your domain.</p>
 <h3 id="step-one-edit">Step One: Edit</h3>
 <p>When you make changes to your domain, they are saved in a Pending state. They are not active in the domain but you can make changes in other areas without losing them and even if you log out of WebLogic Remote Console, the domain will retain those changes.</p>
 
@@ -785,7 +782,7 @@ On the Projects/Providers page, select Create.">
 <h4 class="alert-heading">Note</h4>
 
     <p>The configuration lock only prevents conflicts from <em>other</em> users. If you use the same user account to log in to another WebLogic Server system administration tool such as the WebLogic Scripting Tool (WLST), then WebLogic Server considers both sessions as the same edit session.</p>
-<p>Avoid using making changes using multiple tools simultaneously. When one session commits its changes, it releases the configuration lock and discards changes from the other session.</p>
+<p>Avoid making changes with multiple tools simultaneously. When one session commits its changes, it releases the configuration lock and discards changes from the other session.</p>
 
 
 </div>
@@ -807,7 +804,7 @@ On the Projects/Providers page, select Create.">
 <div class="alert alert-primary" role="alert">
 <h4 class="alert-heading">Note</h4>
 
-    Any actions are performed within the Monitoring Tree or Security Data tree perspectives do not require a commit step. They are active immediately after the changes are saved.
+    Any actions that are performed within the Monitoring Tree or Security Data tree perspectives do not require a commit step. They are active immediately after the changes are saved.
 
 </div>
 <h3 id="GUID-376C1ED1-E4AF-48B8-9BEC-B57D5BDEB9B5">Grab the Edit Lock</h3>
@@ -835,7 +832,7 @@ On the Projects/Providers page, select Create.">
 </li>
 </ol>
 <h3 id="GUID-6A1B7D7D-174F-417F-907D-900442FF0A87">Back Up Configuration Files</h3>
-<p>You can set WebLogic Server to save a domain&rsquo;s existing configuration state before pending changes are committed. If you ever need to reverse a change, then WebLogic Server has the previous set of configuration files (including the central configuration file, <code>config.xml</code>) available as a back up.</p>
+<p>You can set WebLogic Server to save a domain&rsquo;s existing configuration state before pending changes are committed. If you ever need to reverse a change, then WebLogic Server has the previous set of configuration files (including the central configuration file, <code>config.xml</code>) available as a backup.</p>
 <ol>
 <li>
 <p>In the <strong>Edit Tree</strong>, go to <strong>Environment</strong>, then <strong>Domain</strong>.</p>
@@ -1108,7 +1105,7 @@ On the Projects/Providers page, select Create.">
 </li>
 <li>
 <p>Update any other fields where you want to override the default values provided by the Node Manager.</p>
-<p>WebLogic Remote Console <em>replaces</em> the Node Manager default values, it does not append the new values to the default values. For more information, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=NODEM-GUID-726AB710-EE45-4756-918B-6BCF7EEBF8EA">Reviewing nodemanager.properties</a> in <strong>Administering Node Manager for Oracle WebLogic Server</strong>.</p>
+<p>WebLogic Remote Console <em>replaces</em> the Node Manager default values; it does not append the new values to the default values. For more information, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=NODEM-GUID-726AB710-EE45-4756-918B-6BCF7EEBF8EA">Reviewing nodemanager.properties</a> in <strong>Administering Node Manager for Oracle WebLogic Server</strong>.</p>
 <p>All paths refer to paths on the Node Manager machine.</p>
 <ul>
 <li>
@@ -1417,7 +1414,7 @@ See <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-m
 <div class="alert alert-primary" role="alert">
 <h4 class="alert-heading">Note</h4>
 
-    You cannot change the machine of a server that&rsquo;s running, therefore you cannot use WebLogic Remote Console to change the machine of the Administration Server. Use an offline tool, such as WLST Offline instead.
+    You cannot change the machine of a server that&rsquo;s running, therefore you cannot use WebLogic Remote Console to change the machine of the Administration Server. Instead, use an offline tool, such as WLST Offline.
 
 </div>
 <ol>
@@ -1604,7 +1601,7 @@ See <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-m
 </ol>
 </li>
 <li>
-<p>If you use Node Manager to shutdown server instances, perform the following steps on every server that will run the shutdown class.</p>
+<p>If you use Node Manager to shut down server instances, perform the following steps on every server that will run the shutdown class.</p>
 <ol>
 <li>
 <p>Go to <strong>Environment</strong>, then <strong>Servers</strong>, then select the server you want to modify.</p>
@@ -1640,7 +1637,7 @@ See <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-m
 <div class="alert alert-primary" role="alert">
 <h4 class="alert-heading">Note</h4>
 
-    After you delete a shutdown class, it will run the first time you shut down the server. When you shut down the sever subsequently, it will no longer run.
+    After you delete a shutdown class, it will run the first time you shut down the server. When you shut down the server subsequently, it will no longer run.
 
 </div>
 <h2 id="GUID-8364D22A-C92B-45F0-A385-CD350646809E">Configure Network Connections</h2>
@@ -1718,7 +1715,7 @@ See <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-m
 <li>Listen port</li>
 <li>External listen address</li>
 <li>External listen port
-The external listen address and port are used to support Network Address Translation (NAT) firewalls. These should match the IP address or DNS name that clients use to access application on the server.</li>
+The external listen address and port are used to support Network Address Translation (NAT) firewalls. These should match the IP address or DNS name that clients use to access applications on the server.</li>
 </ul>
 </li>
 <li>
@@ -1750,7 +1747,7 @@ The external listen address and port are used to support Network Address Transla
 <div class="alert alert-primary" role="alert">
 <h4 class="alert-heading">Note</h4>
 
-    You cannot disable both <strong>Listen Port Enabled</strong> or <strong>SSL Listen Port Enabled</strong>. At least one type of listen port must be active.
+    You cannot disable both <strong>Listen Port Enabled</strong> and <strong>SSL Listen Port Enabled</strong>. At least one type of listen port must be active.
 
 </div>
 <ol>
@@ -1847,7 +1844,7 @@ The external listen address and port are used to support Network Address Transla
 <p>On the <strong>Protocols</strong> tab, go to the <strong>IIOP</strong> subtab.</p>
 </li>
 <li>
-<p>Turn on the <strong>Enable IIOP</strong>.</p>
+<p>Turn on the <strong>Enable IIOP</strong> option.</p>
 </li>
 <li>
 <p>If you want to modify the default configuration of IIOP (including the default IIOP user credentials), click <strong>Show Advanced Fields</strong> and update the options as necessary.</p>
@@ -1919,7 +1916,7 @@ The external listen address and port are used to support Network Address Transla
 </ol>
 <p>Changes to the domain mode can affect the default URL of the Administration Server, specifically the protocol and the port number. When SSL/TLS and the administration port are enabled (by default, both are enabled in secured production mode), the default URL is<code>https://<em>hostname</em>:9002</code>. When SSL/TLS and the administration port are disabled (by default, both are disabled in development mode), the default URL is <code>http://<em>hostname</em>:7001</code>.</p>
 <h2 id="GUID-EC12E5AC-4E0A-41A5-8F3F-23E3670F3979">Resume a Server</h2>
-<p>If a server in the <code>STANDBY</code> or <code>ADMIN</code> state, when you are ready for the server to receive requests other than administration requests, you can resume the server to transition it into the <code>RUNNING</code> state.</p>
+<p>If a server is in the <code>STANDBY</code> or <code>ADMIN</code> state, when you are ready for the server to receive requests other than administration requests, you can resume the server to transition it into the <code>RUNNING</code> state.</p>
 <p>For more information on the different server states, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=START-GUID-2C1BF849-3578-4BB8-A929-B491C10FF365">Understanding Server Life Cycle</a> in <strong>Administering Server Startup and Shutdown for Oracle WebLogic Server</strong>.</p>
 <ol>
 <li>
@@ -1954,17 +1951,17 @@ The external listen address and port are used to support Network Address Transla
 <ol>
 <li>
 <p><strong>Optional</strong>: If you want to shut down a server gracefully and allow some WebLogic Server subsystems to complete existing tasks, then you can configure graceful shutdown settings.</p>
-<p>These options only apply when a server is shutdown gracefully. A forceful shutdown ignores them.</p>
+<p>These options only apply when a server is shut down gracefully. A forceful shutdown ignores them.</p>
 <ol>
 <li>
-<p>In the <strong>Edit Tree</strong>, go to <strong>Environment</strong>, then <strong>Servers</strong>, then select the server where you want to apply grace shutdown settings.</p>
+<p>In the <strong>Edit Tree</strong>, go to <strong>Environment</strong>, then <strong>Servers</strong>, then select the server where you want to apply graceful shutdown settings.</p>
 </li>
 <li>
 <p>On the <strong>Advanced</strong> tab, select the <strong>Start/Stop</strong> sub-tab.</p>
 </li>
 <li>
 <p>Turn on <strong>Ignore Sessions During Shutdown</strong> to force the server to drop all HTTP sessions immediately instead of waiting for them to complete or timeout.</p>
-<p>Waiting for abandoned HTTP sessions to timeout can significantly lengthen the graceful shutdown process because the default session timeout is one hour.</p>
+<p>Waiting for abandoned HTTP sessions to time out can significantly lengthen the graceful shutdown process because the default session timeout is one hour.</p>
 </li>
 <li>
 <p>Specify a <strong>Graceful Shutdown Timeout</strong> in seconds to determine how long the server should wait before forcing a shutdown.</p>
@@ -2085,7 +2082,7 @@ If the cluster is a mixed cluster, with both configured and dynamic servers, you
 <p>On the <strong>JMS</strong> tab, select a migratable target and click <strong>Migrate JMS</strong>.</p>
 </li>
 <li>
-<p>From the <strong>Destination</strong> dropdown list, choose the server where you want to send the JMS service.</p>
+<p>From the <strong>Destination</strong> drop-down list, choose the server where you want to send the JMS service.</p>
 </li>
 <li>
 <p>Click <strong>Done</strong>.</p>
@@ -2102,7 +2099,7 @@ If the cluster is a mixed cluster, with both configured and dynamic servers, you
 <p>On the <strong>JTA</strong> tab, select a migratable target and click <strong>Migrate JTA</strong>.</p>
 </li>
 <li>
-<p>From the <strong>Destination</strong> dropdown list, choose the server where you want to send the JTA service.</p>
+<p>From the <strong>Destination</strong> drop-down list, choose the server where you want to send the JTA service.</p>
 </li>
 <li>
 <p>Click <strong>Done</strong>.</p>
@@ -2119,7 +2116,7 @@ If the cluster is a mixed cluster, with both configured and dynamic servers, you
 <p>On the <strong>Singleton Services</strong> tab, select a singleton service and click <strong>Migrate Singleton Service</strong>.</p>
 </li>
 <li>
-<p>From the <strong>Destination</strong> dropdown list, choose the server where you want to send the singleton service.</p>
+<p>From the <strong>Destination</strong> drop-down list, choose the server where you want to send the singleton service.</p>
 </li>
 <li>
 <p>Click <strong>Done</strong>.</p>
@@ -2144,7 +2141,7 @@ If the cluster is a mixed cluster, with both configured and dynamic servers, you
 <p>On the <strong>Servers</strong> tab, select a server and click <strong>Migrate Server</strong>.</p>
 </li>
 <li>
-<p>From the <strong>Destination</strong> dropdown list, choose the machine where you want to send the server.</p>
+<p>From the <strong>Destination</strong> drop-down list, choose the machine where you want to send the server.</p>
 </li>
 <li>
 <p>Click <strong>Done</strong>.</p>

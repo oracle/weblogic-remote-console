@@ -1,5 +1,5 @@
 ---
-weight: 192
+weight: 193
 title: Configuring Services
 ---
 
@@ -24,7 +24,7 @@ You can manage the following JDBC data source types from WebLogic Remote Console
 -   Universal Connection Pool \(UCP\) Data Sources
 
 
-For more information on using data sources with WebLogic Server, see [Understanding JDBC Data Sources](https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=INTRO-GUID-B4D35DB2-DCD1-4E79-9109-49999B0A7D46) in **Understanding Oracle WebLogic Server** and [Configure Database Connectivity](https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=JDBCA-GUID-23E710AA-35CA-48DC-9A6D-D2221B6C582A)in **Administering JDBC Data Sources for Oracle WebLogic Server**.
+For more information on using data sources with WebLogic Server, see [Understanding JDBC Data Sources](https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=INTRO-GUID-B4D35DB2-DCD1-4E79-9109-49999B0A7D46) in **Understanding Oracle WebLogic Server** and [Configure Database Connectivity](https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=JDBCA-GUID-23E710AA-35CA-48DC-9A6D-D2221B6C582A) in **Administering JDBC Data Sources for Oracle WebLogic Server**.
 
 ### JDBC Drivers {}
 
@@ -376,7 +376,7 @@ It is important to regularly check that the database connections in a data sourc
 
     5.  In the **Test Table Name** field, enter the name of a small table to use in a query to test database connections. The standard query is <code>select 1 from table_name</code>. If you prefer to use a different query as a connection test, enter <code>SQL</code> followed by a space and the SQL code you want to use to test database connections.
 
-    6.  Enable the **Test Connections on Reserve** option to test the database connection before giving it to your application when your application requests a connection form the data source.
+    6.  Enable the **Test Connections on Reserve** option to test the database connection before giving it to your application when your application requests a connection from the data source.
 
         The test adds a small delay in serving the client's request for a connection from the pool, but ensures that the client receives a viable connection.
 
@@ -405,13 +405,13 @@ For more information about using JDBC over RMI, see [Using the WebLogic RMI Driv
 
 1.  **Optional**: If you plan to choose the <code>Secure</code> option, you must first configure an SSL/TLS listen port channel. See [Specify Listen Ports](../domain-configuration#GUID-9084C04C-06CC-4E14-85B6-CFC755E7A428).
 
-2.  In the **Edit Tree**, go to **Environment**, then **Servers**. Click **Show Advanced Fields**.
+2.  In the **Edit Tree**, go to **Environment**, then **Servers**, then *myServer*. Click **Show Advanced Fields**.
 
 3.  Select an option from the **RMI JDBC Security** drop-down list:
 
     -   <code>Secure</code>: Rejects all incoming application JDBC calls over RMI by remote clients and servers. Internal interserver JDBC calls over RMI operations are allowed for the Logging Last Resource, Emulate Two-Phase Commit and One-Phase Commit Global Transactions Protocol options. The <code>Secure</code> option requires that all the servers are configured with an SSL listen port. If not, all operations fail with an exception.
     -   <code>Compatibility</code>: Allows uncontrolled access to DataSource objects for all incoming JDBC application calls over RMI. This setting should only be used when strong network security is in place.
-    -   <code>Disabled</code>: Disables all JDBC calls over RMI, including the internal RMI operations for Logging Last Resource, Emulate Two-PhaseCommit and One-Phase Commit Global Transactions Protocol options.
+    -   <code>Disabled</code>: Disables all JDBC calls over RMI, including the internal RMI operations for Logging Last Resource, Emulate Two-Phase Commit and One-Phase Commit Global Transactions Protocol options.
     For more information, see [Security Considerations for WebLogic RMI Drivers](https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=JDBCP-GUID-F382C8BC-60E8-4E54-9662-3AC4D9DAAD6F) in **Developing JDBC Applications for Oracle WebLogic Server**.
 
     As of WebLogic Server 14.1.2.0.0, the default value for **RMI JDBC Security** is <code>Secure</code>.
@@ -552,7 +552,7 @@ For more information, see [Overview of JMS Modules](https://docs.oracle.com/pls/
 
     A new node will appear under **JMS Modules** in the Navigation Tree for your JMS system module.
 
-6.  Expand the new node for your JMS system module to see its children which are the JMS system resources that you can configure. See [Configure Resources for JMS System Modules](#GUID-723C3B6E-6C57-48E7-B265-C4FF90D270A6).
+6.  Expand the new node for your JMS system module to see its children, which are the JMS system resources that you can configure. See [Configure Resources for JMS System Modules](#GUID-723C3B6E-6C57-48E7-B265-C4FF90D270A6).
 
 
 #### Configure Resources for JMS System Modules {#GUID-723C3B6E-6C57-48E7-B265-C4FF90D270A6}
@@ -565,7 +565,7 @@ For more information, see [Configurable JMS Resources in Modules](https://docs.o
 
 2.  Select the JMS system module that you want to configure resources for.
 
-3.  In the Navigation Tree, as child nodes of JMS system module that you selected, click the resource that you want to configure.
+3.  The JMS system resources appear as child nodes of the selected JMS system module in the Navigation Tree. Click the resource that you want to configure.
 
     The following JMS system resources are available:
 
@@ -633,7 +633,7 @@ For more information, see [SAF Service Agents](https://docs.oracle.com/pls/topic
 
 8.  On the **Target** tab, from the **Target** drop-down list, select the server instance, cluster, or migratable target where you want to deploy the SAF agent.
 
-    When targeting a cluster, a SAF Agent must use a custom store with **Distribution Policy** set to <code>Distributed</code> and is targeted to the same cluster.
+    When targeting a cluster, a SAF Agent must use a custom store with **Distribution Policy** set to <code>Distributed</code>, and the store must be targeted to the same cluster.
 
     If a SAF agent is targeted to a migratable target, it cannot be targeted to any other server targets, including an entire cluster.
 
@@ -986,14 +986,14 @@ By setting up a foreign JNDI provider, you can look up and use a remote object w
 
 You can configure two different types of XML resources for WebLogic Server.
 
--   XML registries, which you can use to specify alternative server-wide XML parsers and transformers for WebLogic Server to use when it parses and transforms XML documents. You can also use the XML registry to specify local copies of external entities and caching instructions for these entities. See [Create an XML registry](#GUID-1C568EDE-9E40-4D32-B677-109974FE574F).
+-   XML registries, which you can use to specify alternative server-wide XML parsers and transformers for WebLogic Server to use when it parses and transforms XML documents. You can also use the XML registry to specify local copies of external entities and caching instructions for these entities. See [Create an XML Registry](#GUID-1C568EDE-9E40-4D32-B677-109974FE574F).
 -   XML entity caches, which you can use to configure the cache that WebLogic Server uses to cache external entities. See [Create an XML Entity Cache](#GUID-E1012B5E-38F5-498D-86F7-309D4904B602).
 
 You can create as many XML registries and entity caches as you like. However, you can only associate one of each type with a particular server instance of WebLogic Server.
 
 For more information on how XML resources are used in WebLogic Server, see [**Developing XML Applications for Oracle WebLogic Server**](https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=XMLPG-GUID-27BB3783-6FBB-4DA5-8F5C-1F8902ABB74F).
 
-### Create an XML registry {#GUID-1C568EDE-9E40-4D32-B677-109974FE574F}
+### Create an XML Registry {#GUID-1C568EDE-9E40-4D32-B677-109974FE574F}
 
 An XML Registry is a facility for configuring and administering the XML resources of WebLogic Server. XML resources include the default parser, transformer factories, and external entity resolution.
 
@@ -1034,11 +1034,11 @@ Next, you must associate the XML registry with a WebLogic Server instance. See [
 
 A WebLogic Server can only have one XML registry associated with it. However, you can target the same XML registry to multiple WebLogic Server instances.
 
-1.  If you haven't done so already, create an XML registry. See [Create an XML registry](#GUID-1C568EDE-9E40-4D32-B677-109974FE574F).
+1.  If you haven't done so already, create an XML registry. See [Create an XML Registry](#GUID-1C568EDE-9E40-4D32-B677-109974FE574F).
 
 2.  In the **Edit Tree**, go to **Environment**, then **Servers**.
 
-3.  Choose the server to which you want the XML registry.
+3.  Choose the server to which you want the XML registry to target.
 
 4.  Enable **Show Advanced Fields** and then from the **XML Registry** drop-down list, select the XML registry that you want to target to this server.
 
@@ -1221,7 +1221,7 @@ Value of the <code>mail.user</code> property.
 
 </td></tr><tr><td>
 
-<code>mail.protocol.user</code>
+<code>mail.from</code>
 
 </td><td>
 

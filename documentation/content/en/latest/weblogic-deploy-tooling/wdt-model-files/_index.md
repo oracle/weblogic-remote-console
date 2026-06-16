@@ -1,5 +1,5 @@
 ---
-weight: 268
+weight: 269
 title: WDT Model Files
 ---
 
@@ -81,11 +81,11 @@ To insert a WDT model token, select the **Field Settings** ![Icon of a bullseye]
 
 ### Standalone WDT Model Tokens {}
 
-Standalone WDT model token are tokens that replaced when the WDT model file is passed through WebLogic Deploy Tooling or through another external process. WebLogic Remote Console knows nothing about the value of the token and cannot update it.
+Standalone WDT model token are tokens that are replaced when the WDT model file is passed through WebLogic Deploy Tooling or through another external process. WebLogic Remote Console knows nothing about the value of the token and cannot update it.
 
 ### WDT Variables {}
 
-WDT variables allow you to manage WDT model tokens and their values from within WebLogic Remote Console. First, you create a property list with a set of tokens and their values, then you assign a property list to a WDT model file. After they are linked, any properties that you create in the property list become available to insert into the associated WDT model file. By centralizing model tokens in a property lists, you can easily update their values and review available tokens.
+WDT variables allow you to manage WDT model tokens and their values from within WebLogic Remote Console. First, you create a property list with a set of tokens and their values, then you assign a property list to a WDT model file. After they are linked, any properties that you create in the property list become available to insert into the associated WDT model file. By centralizing model tokens in a property list, you can easily update their values and review available tokens.
 
 For more information, see [Property Lists](../property-lists#GUID-62721515-29E5-4DC4-BBD8-E2D1C8A7529D).
 

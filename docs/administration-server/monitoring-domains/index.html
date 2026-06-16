@@ -41,7 +41,7 @@ For general information on monitoring, diagnostic, and tuning tools in WebLogic 
 Monitor Servers Review the servers in your domain to ensure they are functioning as expected.
 In the Monitoring Tree, go to Environment, then Servers.
 Use the Servers table to monitor and compare properties across the different server instances in your domain.">
-  <meta itemprop="wordCount" content="3613">
+  <meta itemprop="wordCount" content="3616">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Monitoring Domains">
   <meta name="twitter:description" content="Use WebLogic Remote Console to monitor WebLogic Server and its related resources and services.
@@ -78,15 +78,12 @@ Use the Servers table to monitor and compare properties across the different ser
         <div class="dropdown">
   <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Releases</a>
   <ul class="dropdown-menu">
-    <li><a class="dropdown-item" href="/weblogic-remote-console/overview">Latest (v3.0.3)</a></li>
+    <li><a class="dropdown-item" href="/weblogic-remote-console/overview">Latest (v3.0.4)</a></li>
+    <li><a class="dropdown-item" href="/weblogic-remote-console/3.0.3">v3.0.3</a></li>
     <li><a class="dropdown-item" href="/weblogic-remote-console/preview">Tech Preview (v3.0.2)</a></li>
     <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.19">v2.4.19</a></li>
     <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.18">v2.4.18</a></li>
     <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.17">v2.4.17</a></li>
-    <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.16">v2.4.16</a></li>
-    <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.15">v2.4.15</a></li>
-    <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.14">v2.4.14</a></li>
-    <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.13">v2.4.13</a></li>
     </ul>
 </div></li>
       <li class="td-light-dark-menu nav-item dropdown">
@@ -152,7 +149,7 @@ Use the Servers table to monitor and compare properties across the different ser
     aria-label="Search this site…"
     autocomplete="off"
     
-    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.9a1e60b97d06a8082f60f18b5f00d58a.json"
+    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.b138faf837a92f50a8a9ce6032bbbca7.json"
     data-offline-search-base-href="/"
     data-offline-search-max-results="10"
   >
@@ -177,7 +174,7 @@ Use the Servers table to monitor and compare properties across the different ser
     aria-label="Search this site…"
     autocomplete="off"
     
-    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.9a1e60b97d06a8082f60f18b5f00d58a.json"
+    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.b138faf837a92f50a8a9ce6032bbbca7.json"
     data-offline-search-base-href="/"
     data-offline-search-max-results="10"
   >
@@ -471,7 +468,7 @@ Use the Servers table to monitor and compare properties across the different ser
 <p>Logs are segregated by server instance.</p>
 </li>
 <li>
-<p>Specify where you want to download the log file and and the file format. You can also restrict which records should be included.</p>
+<p>Specify where you want to download the log file and the file format. You can also restrict which records should be included.</p>
 </li>
 </ol>
 <h3 id="GUID-B5244A71-B792-42E1-ACFF-B0DDC9A53E67">Configure Logs</h3>
@@ -534,7 +531,7 @@ Use the Servers table to monitor and compare properties across the different ser
 <p>WebLogic Server offers multiple methods for filtering log messages and you can use these methods simultaneously. Choose the methods that work for your environment. For more information, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=WLLOG-GUID-601DAF57-58CC-4E13-B509-129884A8E6C3">Filtering WebLogic Server Log Messages</a> in <strong>Configuring Log Files and Filtering Log Messages for Oracle WebLogic Server</strong>.</p>
 <ol>
 <li>
-<p>In the <strong>Edit Tree</strong>, go to <strong>Environment</strong>, then <em>myServer</em>.</p>
+<p>In the <strong>Edit Tree</strong>, go to <strong>Environment</strong>, then <strong>Servers</strong>, then <em>myServer</em>.</p>
 </li>
 <li>
 <p>Click on the <strong>Logging</strong> tab.</p>
@@ -587,7 +584,7 @@ Use the Servers table to monitor and compare properties across the different ser
 </li>
 </ol>
 <h3 id="GUID-0D37D991-A698-4D2C-8163-DC3B1A0BBC65">Create a Log Filter</h3>
-<p>Log filters provide control over the log messages that get published. A filter uses custom logic to evaluate the log message content, which you use to accept or reject a log message</p>
+<p>Log filters provide control over the log messages that get published. A filter uses custom logic to evaluate the log message content, which you use to accept or reject a log message.</p>
 <p>For example, to filter out messages of a certain severity level, from a particular subsystem, or according to specified criteria. Only the log messages that satisfy the filter criteria get published. You can create separate filters for the messages that each server instance writes to its server log file, standard out, memory buffer, or broadcasts to the domain-wide message log.</p>
 <ol>
 <li>
@@ -633,13 +630,13 @@ Use the Servers table to monitor and compare properties across the different ser
 </ul>
 </li>
 <li>
-<p><a id="STEP_Z2F_JLF_B2C"></a>If you chose <strong>By Size</strong> as the Rotation Type.</p>
+<p><a id="STEP_Z2F_JLF_B2C"></a>If you chose <strong>By Size</strong> as the Rotation Type:</p>
 <ol>
 <li>In the <strong>Rotation file size</strong> field, enter the file size that triggers the server to move log messages to a separate file. After the log file reaches the specified size, the next time the server checks the file size it renames the current log file by appending a 5-digit integer; for example, <code>SERVER_NAME.log00007</code>. After the server renames the file, subsequent messages accumulate in a new file named <code>SERVER_NAME.log</code>.</li>
 </ol>
 </li>
 <li>
-<p><a id="STEP_TQJ_JLF_B2C"></a>If you chose <strong>By Time</strong> as the Rotation Type.</p>
+<p><a id="STEP_TQJ_JLF_B2C"></a>If you chose <strong>By Time</strong> as the Rotation Type:</p>
 <ol>
 <li>
 <p>In the <strong>Begin rotation time</strong> field, enter the start time</p>
@@ -722,9 +719,9 @@ Use the Servers table to monitor and compare properties across the different ser
 <p>From the <strong>Configuration Audit Type</strong> drop-down list, select the method to use for auditing configuration change events.</p>
 <ul>
 <li><strong>None</strong>: No audit configuration change events are written.</li>
-<li><strong>Log</strong>:Configuration events will be written to the server log.</li>
+<li><strong>Log</strong>: Configuration events will be written to the server log.</li>
 <li><strong>Audit</strong>: Configuration events will be directed to the Security Framework and handled by the Auditing provider.</li>
-<li><strong>LogAudit</strong>: Configuration events will written to the server log as well as directed to the Security Framework and handled by the Auditing provider.</li>
+<li><strong>LogAudit</strong>: Configuration events will be written to the server log as well as directed to the Security Framework and handled by the Auditing provider.</li>
 </ul>
 </li>
 <li>

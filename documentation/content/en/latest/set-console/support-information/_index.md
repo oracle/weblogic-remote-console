@@ -76,7 +76,7 @@ If you needed to expose <code>console/*</code> to access the WebLogic Server Adm
 
 Yes, you can. First, make sure that the domain’s Administration Server is publicly accessible so WebLogic Remote Console can establish a connection to it. Then, in WebLogic Remote Console, enter your credentials and the publicly accessible URL for the WebLogic Administration Server.
 
-### Can I connect WebLogic Remote Console to domains running on other cloud providers such as Amazon Web Services, Google Cloud, Microsoft Azure and so on? {}
+### Can I connect WebLogic Remote Console to domains running on other cloud providers such as Amazon Web Services, Google Cloud, Microsoft Azure, and so on? {}
 
 Yes, you can connect to other cloud providers. You’ll need to make sure the domain’s Administration Server is publicly accessible to allow a connection between WebLogic Remote Console and the cloud provider. Then, in WebLogic Remote Console, enter your credentials and the publicly accessible URL for the WebLogic Administration Server.
 
@@ -96,7 +96,7 @@ It depends on the WebLogic Server release that you have installed. The Administr
 
 However, if you're running WebLogic Server 14.1.1.0.0 or earlier, then you can continue to use the Administration Console for domain management alongside WebLogic Remote Console. Any changes you make in WebLogic Remote Console are reflected in the Administration Console.
 
-As with any combination of system administration tools, avoid using them simultaneously as it can cause configuration conflicts and unexpected behavior.
+As with any combination of system administration tools, you should avoid using them simultaneously as doing so can cause configuration conflicts and unexpected behavior.
 
 To see a full list of the tools that you can use to administer WebLogic Server, see [Overview of WebLogic Server System Administration](https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=INTRO-GUID-3CAB0785-3188-402F-9138-50E62444E51E) in **Understanding Oracle WebLogic Server**.
 

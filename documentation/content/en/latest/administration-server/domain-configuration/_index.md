@@ -347,7 +347,7 @@ To specify a custom logging configuration file so you can control the logging in
 
 The custom logging configuration file must follow the Java format for configuration files. You can see an example of a Java logging configuration file at <code>$JAVA_HOME/conf/logging.properties</code>.
 
-If a problem occurs with your custom logging configuration file, WebLogic Remote Console will fallback to use its default logging configuration file. <code>STDOUT</code> includes a log message indicating which file was used.
+If a problem occurs with your custom logging configuration file, WebLogic Remote Console will fall back to use its default logging configuration file. <code>STDOUT</code> includes a log message indicating which file was used.
 
 </td><td>
 
@@ -362,7 +362,7 @@ After you connect to an Administration Server with WebLogic Remote Console, you 
 
 For a comprehensive explanation of domain configuration in WebLogic Server, see [Understanding Oracle WebLogic Server Domains](https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=DOMCF-GUID-64E1CAC9-78A5-491C-BE42-6CBB81AA774B) in **Understanding Domain Configuration for Oracle WebLogic Server**.
 
-In WebLogic Remote Console, it is a generally two step process to apply configuration changes to your domain.
+In WebLogic Remote Console, it is generally a two-step process to apply configuration changes to your domain.
 
 ### Step One: Edit {}
 
@@ -387,7 +387,7 @@ WebLogic Remote Console protects your edits from being overwritten by other user
 
 The configuration lock only prevents conflicts from *other* users. If you use the same user account to log in to another WebLogic Server system administration tool such as the WebLogic Scripting Tool \(WLST\), then WebLogic Server considers both sessions as the same edit session.
 
-Avoid using making changes using multiple tools simultaneously. When one session commits its changes, it releases the configuration lock and discards changes from the other session.
+Avoid making changes with multiple tools simultaneously. When one session commits its changes, it releases the configuration lock and discards changes from the other session.
 
 {{< /alert >}}
 
@@ -411,7 +411,7 @@ You may not need to restart all servers to apply non-dynamic changes. In the **M
 
 {{< alert title="Note" color="primary" >}}
 
- Any actions are performed within the Monitoring Tree or Security Data tree perspectives do not require a commit step. They are active immediately after the changes are saved.
+ Any actions that are performed within the Monitoring Tree or Security Data tree perspectives do not require a commit step. They are active immediately after the changes are saved.
 
 {{< /alert >}}
 
@@ -440,7 +440,7 @@ Only administrators can take the edit lock from another user.
 
 ### Back Up Configuration Files {#GUID-6A1B7D7D-174F-417F-907D-900442FF0A87}
 
-You can set WebLogic Server to save a domain's existing configuration state before pending changes are committed. If you ever need to reverse a change, then WebLogic Server has the previous set of configuration files \(including the central configuration file, <code>config.xml</code>\) available as a back up.
+You can set WebLogic Server to save a domain's existing configuration state before pending changes are committed. If you ever need to reverse a change, then WebLogic Server has the previous set of configuration files \(including the central configuration file, <code>config.xml</code>\) available as a backup.
 
 1.  In the **Edit Tree**, go to **Environment**, then **Domain**.
 
@@ -619,7 +619,7 @@ In most environments, Node Manager can start a server without requiring you to s
 
 5.  Update any other fields where you want to override the default values provided by the Node Manager.
 
-    WebLogic Remote Console *replaces* the Node Manager default values, it does not append the new values to the default values. For more information, see [Reviewing nodemanager.properties](https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=NODEM-GUID-726AB710-EE45-4756-918B-6BCF7EEBF8EA) in **Administering Node Manager for Oracle WebLogic Server**.
+    WebLogic Remote Console *replaces* the Node Manager default values; it does not append the new values to the default values. For more information, see [Reviewing nodemanager.properties](https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=NODEM-GUID-726AB710-EE45-4756-918B-6BCF7EEBF8EA) in **Administering Node Manager for Oracle WebLogic Server**.
 
     All paths refer to paths on the Node Manager machine.
 
@@ -876,7 +876,7 @@ As part of the process for setting up Node Manager to administer Managed Servers
 
 
 
-You cannot change the machine of a server that's running, therefore you cannot use WebLogic Remote Console to change the machine of the Administration Server. Use an offline tool, such as WLST Offline instead.
+You cannot change the machine of a server that's running, therefore you cannot use WebLogic Remote Console to change the machine of the Administration Server. Instead, use an offline tool, such as WLST Offline.
 
 {{< /alert >}}
 
@@ -1021,7 +1021,7 @@ You can create custom Java classes that extend server features or that perform s
 
     3.  Restart the server.
 
-11. If you use Node Manager to shutdown server instances, perform the following steps on every server that will run the shutdown class.
+11. If you use Node Manager to shut down server instances, perform the following steps on every server that will run the shutdown class.
 
     1.  Go to **Environment**, then **Servers**, then select the server you want to modify.
 
@@ -1051,7 +1051,7 @@ You can create custom Java classes that extend server features or that perform s
 
 
 
-After you delete a shutdown class, it will run the first time you shut down the server. When you shut down the sever subsequently, it will no longer run.
+After you delete a shutdown class, it will run the first time you shut down the server. When you shut down the server subsequently, it will no longer run.
 
 {{< /alert >}}
 
@@ -1128,7 +1128,7 @@ A network channel is a configurable resource that defines the attributes of a ne
     -   Listen port
     -   External listen address
     -   External listen port
-    The external listen address and port are used to support Network Address Translation \(NAT\) firewalls. These should match the IP address or DNS name that clients use to access application on the server.
+    The external listen address and port are used to support Network Address Translation \(NAT\) firewalls. These should match the IP address or DNS name that clients use to access applications on the server.
 
 6.  **Optional**: If you want this custom network channel to use a custom identity keystore that is different from the one used by the Managed Server, read [Steps to Configure a Channel-Specific Identity Keystore](https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=SECMG-GUID-0DBA0F7A-FE96-4198-9054-264B7CAB8E56) and update the properties on the **Channel Security** tab as appropriate.
 
@@ -1156,7 +1156,7 @@ Define the listen ports for secure and non-secure communication.
 
 {{< alert title="Note" color="primary" >}}
 
- You cannot disable both **Listen Port Enabled** or **SSL Listen Port Enabled**. At least one type of listen port must be active.
+ You cannot disable both **Listen Port Enabled** and **SSL Listen Port Enabled**. At least one type of listen port must be active.
 
 {{< /alert >}}
 
@@ -1243,7 +1243,7 @@ For information about using RMI-IIOP in your applications, see [Understanding We
 
 2.  On the **Protocols** tab, go to the **IIOP** subtab.
 
-3.  Turn on the **Enable IIOP**.
+3.  Turn on the **Enable IIOP** option.
 
 4.  If you want to modify the default configuration of IIOP \(including the default IIOP user credentials\), click **Show Advanced Fields** and update the options as necessary.
 
@@ -1326,7 +1326,7 @@ Changes to the domain mode can affect the default URL of the Administration Serv
 
 ## Resume a Server {#GUID-EC12E5AC-4E0A-41A5-8F3F-23E3670F3979}
 
-If a server in the <code>STANDBY</code> or <code>ADMIN</code> state, when you are ready for the server to receive requests other than administration requests, you can resume the server to transition it into the <code>RUNNING</code> state.
+If a server is in the <code>STANDBY</code> or <code>ADMIN</code> state, when you are ready for the server to receive requests other than administration requests, you can resume the server to transition it into the <code>RUNNING</code> state.
 
 For more information on the different server states, see [Understanding Server Life Cycle](https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=START-GUID-2C1BF849-3578-4BB8-A929-B491C10FF365) in **Administering Server Startup and Shutdown for Oracle WebLogic Server**.
 
@@ -1360,15 +1360,15 @@ If you shut down the Administration Server, you won't be able to manage the doma
 
 1.  **Optional**: If you want to shut down a server gracefully and allow some WebLogic Server subsystems to complete existing tasks, then you can configure graceful shutdown settings.
 
-    These options only apply when a server is shutdown gracefully. A forceful shutdown ignores them.
+    These options only apply when a server is shut down gracefully. A forceful shutdown ignores them.
 
-    1.  In the **Edit Tree**, go to **Environment**, then **Servers**, then select the server where you want to apply grace shutdown settings.
+    1.  In the **Edit Tree**, go to **Environment**, then **Servers**, then select the server where you want to apply graceful shutdown settings.
 
     2.  On the **Advanced** tab, select the **Start/Stop** sub-tab.
 
     3.  Turn on **Ignore Sessions During Shutdown** to force the server to drop all HTTP sessions immediately instead of waiting for them to complete or timeout.
 
-        Waiting for abandoned HTTP sessions to timeout can significantly lengthen the graceful shutdown process because the default session timeout is one hour.
+        Waiting for abandoned HTTP sessions to time out can significantly lengthen the graceful shutdown process because the default session timeout is one hour.
 
     4.  Specify a **Graceful Shutdown Timeout** in seconds to determine how long the server should wait before forcing a shutdown.
 
@@ -1477,7 +1477,7 @@ Make sure your environment is properly configured for migration. See [Server and
 
     1.  On the **JMS** tab, select a migratable target and click **Migrate JMS**.
 
-    2.  From the **Destination** dropdown list, choose the server where you want to send the JMS service.
+    2.  From the **Destination** drop-down list, choose the server where you want to send the JMS service.
 
     3.  Click **Done**.
 
@@ -1487,7 +1487,7 @@ Make sure your environment is properly configured for migration. See [Server and
 
     1.  On the **JTA** tab, select a migratable target and click **Migrate JTA**.
 
-    2.  From the **Destination** dropdown list, choose the server where you want to send the JTA service.
+    2.  From the **Destination** drop-down list, choose the server where you want to send the JTA service.
 
     3.  Click **Done**.
 
@@ -1497,7 +1497,7 @@ Make sure your environment is properly configured for migration. See [Server and
 
     1.  On the **Singleton Services** tab, select a singleton service and click **Migrate Singleton Service**.
 
-    2.  From the **Destination** dropdown list, choose the server where you want to send the singleton service.
+    2.  From the **Destination** drop-down list, choose the server where you want to send the singleton service.
 
     3.  Click **Done**.
 
@@ -1516,7 +1516,7 @@ Make sure your environment is properly configured for migration. See [Server and
 
     1.  On the **Servers** tab, select a server and click **Migrate Server**.
 
-    2.  From the **Destination** dropdown list, choose the machine where you want to send the server.
+    2.  From the **Destination** drop-down list, choose the machine where you want to send the server.
 
     3.  Click **Done**.
 

@@ -35,7 +35,7 @@ NoteCoherence can also be installed in a standalone mode that does not rely on 
   <meta itemprop="description" content="Oracle Coherence enables organizations to predictably scale mission-critical applications by providing fast and reliable access to frequently used data. By automatically and dynamically partitioning data in memory across multiple servers, Coherence enables continuous data availability and transactional integrity, even in the event of a server failure.
 WebLogic Server domains include a Coherence container that simplifies the management and deployment of Coherence clusters and Coherence-based applications.
 NoteCoherence can also be installed in a standalone mode that does not rely on WebLogic Server. WebLogic Remote Console cannot administer standalone Coherence installations, therefore this documentation focuses solely on using Coherence with WebLogic Server.">
-  <meta itemprop="wordCount" content="3941">
+  <meta itemprop="wordCount" content="3945">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Configuring Coherence">
   <meta name="twitter:description" content="Oracle Coherence enables organizations to predictably scale mission-critical applications by providing fast and reliable access to frequently used data. By automatically and dynamically partitioning data in memory across multiple servers, Coherence enables continuous data availability and transactional integrity, even in the event of a server failure.
@@ -70,15 +70,12 @@ NoteCoherence can also be installed in a standalone mode that does not rely on 
         <div class="dropdown">
   <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Releases</a>
   <ul class="dropdown-menu">
-    <li><a class="dropdown-item" href="/weblogic-remote-console/overview">Latest (v3.0.3)</a></li>
+    <li><a class="dropdown-item" href="/weblogic-remote-console/overview">Latest (v3.0.4)</a></li>
+    <li><a class="dropdown-item" href="/weblogic-remote-console/3.0.3">v3.0.3</a></li>
     <li><a class="dropdown-item" href="/weblogic-remote-console/preview">Tech Preview (v3.0.2)</a></li>
     <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.19">v2.4.19</a></li>
     <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.18">v2.4.18</a></li>
     <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.17">v2.4.17</a></li>
-    <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.16">v2.4.16</a></li>
-    <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.15">v2.4.15</a></li>
-    <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.14">v2.4.14</a></li>
-    <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.13">v2.4.13</a></li>
     </ul>
 </div></li>
       <li class="td-light-dark-menu nav-item dropdown">
@@ -144,7 +141,7 @@ NoteCoherence can also be installed in a standalone mode that does not rely on 
     aria-label="Search this site…"
     autocomplete="off"
     
-    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.9a1e60b97d06a8082f60f18b5f00d58a.json"
+    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.b138faf837a92f50a8a9ce6032bbbca7.json"
     data-offline-search-base-href="/"
     data-offline-search-max-results="10"
   >
@@ -169,7 +166,7 @@ NoteCoherence can also be installed in a standalone mode that does not rely on 
     aria-label="Search this site…"
     autocomplete="off"
     
-    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.9a1e60b97d06a8082f60f18b5f00d58a.json"
+    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.b138faf837a92f50a8a9ce6032bbbca7.json"
     data-offline-search-base-href="/"
     data-offline-search-max-results="10"
   >
@@ -639,7 +636,7 @@ NoteCoherence can also be installed in a standalone mode that does not rely on 
 <li>
 <p>In the <strong>JNDI Name</strong> field, enter the JNDI name to which the cache configuration file is bound.</p>
 <p>This JNDI name is prefixed with <code>cache-config/</code> and must match the value in the <code>override-property</code> of your <code>cache-configuration-ref</code> entry in <code>coherence-application.xml</code>.</p>
-<p>For example, JNDI name of <code>ExamplesGAR</code> must match the <code>override-property</code> of <code>cache-config/ExamplesGAR</code>.</p>
+<p>For example, the JNDI name of <code>ExamplesGAR</code> must match the <code>override-property</code> of <code>cache-config/ExamplesGAR</code>.</p>
 </li>
 <li>
 <p>In the <strong>Cache Configuration File</strong> field, enter the full path to the cache configuration file. Alternatively, you may specify a URL.</p>
@@ -850,13 +847,13 @@ NoteCoherence can also be installed in a standalone mode that does not rely on 
 </ol>
 <p>You should also create a Coherence data tier and a Coherence application tier. See <a href="/weblogic-remote-console/administration-server/configuring-coherence/#GUID-F9B1FB82-B316-4CD1-824F-03A0984EE59A">Create a Coherence Data Tier</a> and <a href="/weblogic-remote-console/administration-server/configuring-coherence/#GUID-8A5079EB-A4AD-4C47-B6F3-576C6A4EE515">Create a Coherence Application Tier</a>.</p>
 <h2 id="GUID-48BEE50E-2995-4C42-96EF-2F28416512FC">Create a Managed Coherence Server</h2>
-<p>A Managed Coherence server is a Managed Server that is configured to be Coherence cluster member and provide in-memory distributed caching for applications.</p>
+<p>A Managed Coherence server is a Managed Server that is configured to be a Coherence cluster member and provide in-memory distributed caching for applications.</p>
 <ol>
 <li>
 <p>Create a WebLogic Server Managed Server, as described in <a href="/weblogic-remote-console/administration-server/domain-configuration/#GUID-50C0A18E-83F6-4865-ABF7-6127D0D0F49D">Create a Managed Server</a>.</p>
 </li>
 <li>
-<p>On the Managed Server that you just created, from the <strong>Cluster</strong> drop-down list, select a cluster that is acting as a Coherence deployment tier.</p>
+<p>On the Managed Server that you just created, in the <strong>Cluster</strong> drop-down list, select a cluster that is acting as a Coherence deployment tier.</p>
 <p>For information on Coherence deployment tiers, see <a href="/weblogic-remote-console/administration-server/configuring-coherence/#GUID-26E0D6DA-EB7D-4BCA-8707-49C3162A5CF1">Coherence Deployment Tiers</a>.</p>
 </li>
 <li>
@@ -901,7 +898,7 @@ NoteCoherence can also be installed in a standalone mode that does not rely on 
 <p>Click <strong>Save</strong>.</p>
 </li>
 <li>
-<p>Create and package a Coherence Grid Archive (GAR) module for any application modules (Web application, EJB, etc.) that use Coherence. See <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=WLCOH-GUID-C34A3F98-55D5-4D5A-8BCC-E3EBC718B57D">Creating Coherence Applications for WebLogic Server</a> in <strong>Developing Oracle Coherence Applications for Oracle WebLogic Server</strong>.</p>
+<p>Create and package a Coherence Grid Archive (GAR) module for any application modules (Web application, EJB, and so on.) that use Coherence. See <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=WLCOH-GUID-C34A3F98-55D5-4D5A-8BCC-E3EBC718B57D">Creating Coherence Applications for WebLogic Server</a> in <strong>Developing Oracle Coherence Applications for Oracle WebLogic Server</strong>.</p>
 </li>
 <li>
 <p>Deploy your Coherence GAR module to your WebLogic Server domain. Standalone GARs are deployed in the same way as other Jakarta EE modules. See <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=WLCOH-GUID-9284398A-509D-4BC0-9007-502CCCA4D758">Deploying Coherence Applications in WebLogic Server</a> in <strong>Developing Oracle Coherence Applications for Oracle WebLogic Server</strong>.</p>

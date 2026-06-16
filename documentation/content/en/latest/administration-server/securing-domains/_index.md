@@ -668,7 +668,7 @@ The WebLogic Security providers store their data in the embedded LDAP server. Wh
 
 WebLogic Server employs users and groups to control access to its resources.
 
-Users are entities that can be authenticated in a security realm. A user can be a person, such as application end user, or a software entity, such as a client application, or other instances of a WebLogic Server. As a result of authentication, a user is assigned an identity or principal. Each user is given a unique identity within the security realm. Users may be placed into groups that are associated with security roles, or can be directly associated with security roles.
+Users are entities that can be authenticated in a security realm. A user can be a person, such as an application end user, or a software entity, such as a client application, or other instances of WebLogic Server. As a result of authentication, a user is assigned an identity or principal. Each user is given a unique identity within the security realm. Users may be placed into groups that are associated with security roles, or can be directly associated with security roles.
 
 Groups are logically ordered sets of users. Users are organized into groups that can have different levels of access to WebLogic resources, depending on their job functions. Managing groups is more efficient than managing large numbers of users individually. All user and group names must be unique within a security realm.
 
@@ -800,11 +800,11 @@ For more information, see [**Securing Resources Using Roles and Policies for Ora
 
 ### Security Roles {#GUID-97E19315-7FE5-402F-ADB7-DD7351A49039}
 
-A security role is an identity granted to users or groups based on specific conditions. Multiple users or groups can be granted the same security role and a user or group can be assigned more than one role. Security roles are used by policies to control access a WebLogic resource.
+A security role is an identity granted to users or groups based on specific conditions. Multiple users or groups can be granted the same security role and a user or group can be assigned more than one role. Security roles are used by policies to control access to a WebLogic resource.
 
 WebLogic Server provides a default set of roles that you can use with any policy. These are called global roles and you can create your own if the default global roles do not meet your needs.
 
-You can also create roles that are only used by policies for a specific resource. These are called scoped roles. For example, You can create a scoped role for a specific EJB that contains highly sensitive business logic. When you create a policy for the EJB, you can specify that only the scoped role can access the EJB.
+You can also create roles that are only used by policies for a specific resource. These are called scoped roles. For example, you can create a scoped role for a specific EJB that contains highly sensitive business logic. When you create a policy for the EJB, you can specify that only the scoped role can access the EJB.
 
 If two roles conflict, the role of a narrower scope overrides the role of the broader scope. For example, a scoped role for an EJB resource overrides a global role or a scoped role for the enterprise application that contains the EJB.
 
@@ -851,7 +851,7 @@ Create a new role that can only be used with policies that apply to specific res
 4.  Click **Create**.
 
 
-After a role is created, you can build a policy that uses conditions to determine which users or groups it encompasses. We recommend that whenever possible, that you use the Group condition which grants the security role to all members of a specified group.
+After a role is created, you can build a policy that uses conditions to determine which users or groups it encompasses. We recommend that whenever possible, you use the Group condition which grants the security role to all members of a specified group.
 
 ### Security Policies {#GUID-A58BF20A-1E41-4AB3-8682-7EFE898A4169}
 
@@ -896,7 +896,7 @@ A policy can contain multiple simple or compound conditions or a mix of simple a
 
 
 
-Why should you use compound conditions? Consider the following scenario: a resource exists where you want Administrators to always have access, but to restrict Deployer access to between 9 a.m. and 5 p.m EST. The following policy would address both requirements:
+Why should you use compound conditions? Consider the following scenario: a resource exists where you want Administrators to always have access, but to restrict Deployer access to between 9 a.m. and 5 p.m. EST. The following policy would address both requirements:
 
 -   Condition 1 \(simple\): Role: Admin
 
@@ -982,7 +982,7 @@ You can use the **Cancel** option to revert the policy to its last *saved* chang
 </td></tr></tbody>
 </table>
 
-You can also edit a policy from its **Advanced** tab where the policy is expressed as string. Any changes made to a policy in the Advanced tab are reflected in the main Policy tab, and vice versa.
+You can also edit a policy from its **Advanced** tab where the policy is expressed as a string. Any changes made to a policy in the Advanced tab are reflected in the main Policy tab, and vice versa.
 
 To delete a policy, simply delete all of its conditions. Confirm that the default security policy for the resource instance will provide adequate access control before you delete a policy.
 
@@ -1087,7 +1087,7 @@ MBean attributes and operations that represent particularly sensitive data or ac
 
 9.  <a id="step_u5m_phx_xfc"></a>Build a security policy for the JMX resource.
 
-    The WebLogic Security Service evaluates conditions in the order they appear in the list. If you want the new condition to appear above an existing conditions \(and thus be evaluated before it\), select the checkbox beside the existing condition before you proceed.
+    The WebLogic Security Service evaluates conditions in the order they appear in the list. If you want the new condition to appear above an existing condition \(and thus be evaluated before it\), select the checkbox beside the existing condition before you proceed.
 
     1.  Click **Add Predicate**.
 
@@ -1106,7 +1106,7 @@ Transport Layer Security \(TLS\) and its predecessor, Secure Sockets Layer \(SSL
 
 Authentication allows a server and optionally a client to verify the identity of the application on the other end of a network connection. Encryption makes data transmitted over the network intelligible only to the intended recipient.
 
-WebLogic Server supports SSL/TLS on a dedicated listen port which defaults to 7002. To establish an SSL/TLS connection, a Web browser connects to WebLogic Server by supplying the SSL/TLS listen port and the HTTPs protocol in the connection URL, for example, <code>https://myserver:7002</code>.
+WebLogic Server supports SSL/TLS on a dedicated listen port which defaults to 7002. To establish an SSL/TLS connection, a Web browser connects to WebLogic Server by supplying the SSL/TLS listen port and the HTTPS protocol in the connection URL, for example, <code>https://myserver:7002</code>.
 
 You can configure SSL/TLS as either one-way or two-way.
 
@@ -1164,7 +1164,7 @@ Configure the identity and trust keystores for WebLogic Server. See [Configure K
 
     2.  Choose whether to enable the **Client Certificate Enforced** option. When enabled, a client is required to present a certificate. If a certificate is not presented, the SSL/TLS connection is terminated. When disabled, the SSL/TLS connection continues even if a certificate is not presented by the client.
 
-    You may also want to force all administration clients use two way SSL/TLS. If an administration client attempts to connect to a server on a channel that does not require two-way SSL/TLS, then the connection is rejected.
+    You may also want to force all administration clients to use two way SSL/TLS. If an administration client attempts to connect to a server on a channel that does not require two-way SSL/TLS, then the connection is rejected.
 
     1.  Under **Environment**, then **Domain**, click the **Security** tab and enable **Show Advanced Fields**.
 
@@ -1179,13 +1179,13 @@ Configure the identity and trust keystores for WebLogic Server. See [Configure K
 
 A host name verifier ensures the host name in the URL to which the client connects matches the host name in the digital certificate that the server sends back as part of the SSL/TLS connection. If the host name in the certificate matches the local machine’s host name, host name verification passes if the URL specifies <code>localhost</code>, <code>127.0.0.1</code>, or the default IP address of the local machine.
 
-A host name verifier is useful when a SSL/TLS client \(or a WebLogic Server acting as an SSL/TLS client\) connects to an application server on a remote host. Host name verification is performed only by a SSL/TLS client. By default, WebLogic Server has host name verification enabled and we recommend keeping it enabled for production environments.
+A host name verifier is useful when an SSL/TLS client \(or a WebLogic Server acting as an SSL/TLS client\) connects to an application server on a remote host. Host name verification is performed only by an SSL/TLS client. By default, WebLogic Server has host name verification enabled and we recommend keeping it enabled for production environments.
 
 {{< alert title="Note" color="primary" >}}
 
 
 
-The following steps only apply when a WebLogic Server instance is acting as an SSL/TLS client. Stand alone SSL/TLS clients specify the use of host name verification using command-line arguments or the API.
+The following steps only apply when a WebLogic Server instance is acting as an SSL/TLS client. Standalone SSL/TLS clients specify the use of host name verification using command-line arguments or the API.
 
 {{< /alert >}}
 
@@ -1277,7 +1277,7 @@ See [Using the Certificate Management Service](https://docs.oracle.com/pls/topic
 
 6.  If you want the domain trust to include Java Standard Trust, turn on the **Java Standard Trust Enabled** option.
 
-7.  If you want to modify how often the Certificate Management Service checks pending certificate expiration, specify, in days, in the **Certificate Check Interval** field.
+7.  If you want to modify how often the Certificate Management Service checks pending certificate expiration, specify the interval, in days, in the **Certificate Check Interval** field.
 
     You can also configure the **Certificate Refresh Window** field, which controls how close to expiration a certificate must reach before it is automatically refreshed.
 
@@ -1529,7 +1529,7 @@ You can export the contents of the <code>domain-trust</code> and <code>provision
 4.  Click **Done**.
 
 
-When you want to use these trusted certificates into another domain using the Certificate Managemnt Service, follow the instructions at [Import Certificates into the Provisioned Trust or Identity Keystores](#GUID-D59FB74D-24F4-43E5-AB6A-B48818A043EF).
+When you want to use these trusted certificates into another domain using the Certificate Management Service, follow the instructions at [Import Certificates into the Provisioned Trust or Identity Keystores](#GUID-D59FB74D-24F4-43E5-AB6A-B48818A043EF).
 
 #### Roll Domain CA Certificate {#GUID-D9A7049D-B7D2-49E1-9729-A903A8976572}
 
@@ -1591,7 +1591,7 @@ The OPSS Keystore Service \(KSS\) provides an alternative mechanism to manage ke
 
 ### Configure Keystores {#GUID-E7406380-0590-42EA-8C3F-C5C302D0A692}
 
-WebLogic Server uses private keys, digital certificates, and trusted certificates issues by certification authorities to establish and verify server identity and trust. You can use JKS or PKCS12 keystores for identity and trust.
+WebLogic Server uses private keys, digital certificates, and trusted certificates issued by certification authorities to establish and verify server identity and trust. You can use JKS or PKCS12 keystores for identity and trust.
 
 For more information, see [Configuring Keystores](https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=SECMG-GUID-7F03EB9C-9755-430B-8B86-17199E0C01DC) in **Administering Security for Oracle WebLogic Server**.
 
@@ -1684,7 +1684,7 @@ Ensure that you have configured the identity and trust keystores for WebLogic Se
 
 5.  **Optional**: If you want a certificate whose revocation status cannot be determined to fail SSL/TLS certificate path validation, turn on the **Fail on Unknown Revocation Status** option.
 
-    When this option disabled, if an X.509 certificate’s revocation status cannot be determined, but the SSL/TLS certificate path validation is otherwise successful, the certificate will be accepted.
+    When this option is disabled, if an X.509 certificate’s revocation status cannot be determined, but the SSL/TLS certificate path validation is otherwise successful, the certificate will be accepted.
 
 6.  Click **Save**.
 
@@ -1756,7 +1756,7 @@ For more information, see [Configuring Cross-Domain Security](https://docs.oracl
 
 4.  Create a user for cross domain security and assign it to the <code>CrossDomainConnectors</code> group. See [Create a User](#GUID-7A265AF1-F634-45EE-B685-C969A95DC476).
 
-    For more information on, see [Configuring Cross-Domain Users](https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=SECMG-GUID-6732713E-C103-4808-9D8C-0E4CA70DCC5A) in **Administering Security for Oracle WebLogic Server**.
+    For more information, see [Configuring Cross-Domain Users](https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=SECMG-GUID-6732713E-C103-4808-9D8C-0E4CA70DCC5A) in **Administering Security for Oracle WebLogic Server**.
 
 5.  Configure a cross-domain security credential mapping for the cross-domain security user.
 
@@ -1794,6 +1794,42 @@ Instead of enabling global trust between domains, consider using the CrossDomain
 4.  Click **Save**.
 
 5.  Perform the same procedure in each domain for which you want to enable global trust, entering the exact same password.
+
+
+## Restrict User Access to Management Applications {#GUID-74CA421B-FC7C-41C1-B1C6-8D8B482285A3}
+
+Use the WebLogic Restrict User Management Access servlet filter, <code>RestrictUserManagementAccess</code>, to control which users have access to the WebLogic Server Administration Console, or to WebLogic Remote Console and other RESTful management resources.
+
+{{< alert title="Note" color="primary" >}}
+
+
+
+Domains running WebLogic Server 14.1.2.0.0 or earlier must install the April 2025 \(or later\) Patch Set Update \(PSU\) to use this feature.
+
+{{< /alert >}}
+
+
+When enabled, if the WebLogic Restrict User Management Access Servlet filter detects that an HTTP request to the WebLogic Server Administration Console or a RESTful management application originates from a restricted user, it blocks user access and terminates the user session.
+
+The WebLogic Restrict User Management Access servlet filter is disabled by default.
+
+For more information, see [Restricting User Access to Management Applications](https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=SECMG-GUID-2E082C41-56B7-44DE-997D-993E777EA34F) in **Administering Security for Oracle WebLogic Server**.
+
+1.  In the **Edit** Tree, go to **Environment**, then **Domain**.
+
+2.  On the **Web Application** tab, scroll down to the **Restrict User Management Access Patterns** setting.
+
+3.  Click **+** to add a new row, then double-click the new row cell to enter a regular expression pattern that matches the principal name of the users you want to block.
+
+    Entries in <code>RestrictUserManagementAccessPatterns</code> must consist of a string array of regular expressions that follow the Java Pattern syntax specification. For example: `["^.*BootUser$", "^svc_.*$", "^automation_.*$"]`.
+
+    Construct your regular expression patterns carefully so that you do not unintentionally block users with an overly broad pattern.
+
+4.  Repeat as needed to add more patterns.
+
+5.  Click **Save**.
+
+6.  Commit your changes and restart the domain.
 
 
 ## Configure Connection Filtering {#GUID-96104A94-1BBE-4DC0-9D02-69197EA51530}
@@ -2117,7 +2153,7 @@ A SAML 2.0 Identity Provider partner is an entity that generates SAML 2.0 assert
 
 2.  In the **Security Data Tree**, go to **Realms**, then *myRealm*, then **Authentication Providers** and select the SAML 2.0 Identity Assertion provider that you configured.
 
-3.  Click **Partners** node.
+3.  Click the **Partners** node.
 
 4.  Click **New**.
 
@@ -2234,4 +2270,3 @@ You can update the RDBMS security store settings. However, you should avoid modi
 
 
 If the JMS topic with which the RDBMS security store is configured goes down, see [Managing the RDBMS Security Store](https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=SECMG-GUID-7AE06479-0168-4277-AA84-6D5C87F1A004) in **Administering Security for Oracle WebLogic Server** for important information about restoring it.
-

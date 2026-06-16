@@ -1,5 +1,5 @@
 ---
-weight: 278
+weight: 279
 title: Troubleshoot Issues with WebLogic Remote Console
 ---
 
@@ -41,7 +41,7 @@ If you experience any issues with WebLogic Remote Console, then you can check it
 
 1.  Open **Help**, then **Toggle Developer Tools** and select the **Console** tab.
 
-2.  Read the log messages to see they provide enough information to determine the cause of your issue.
+2.  Read the log messages to see if they provide enough information to determine the cause of your issue.
 
 3.  WebLogic Remote Console also generates a log file, <code>out.log</code>, for each session. Open the log file and review its contents.
 
@@ -123,11 +123,11 @@ If you are an administrator, you can take the configuration lock \(and their pen
 
 ### How do I do *x* in WebLogic Remote Console 3.x? {#section_vq1_ly2_y3c}
 
-WebLogic Remote Console 3.0.3 is a significant update. For a brief overview of the major changes compared to WebLogic Remote Console 2.4.19, refer to [Introducing WebLogic Remote Console 3.x](https://oracle.github.io/weblogic-remote-console/preview/).
+WebLogic Remote Console 3.0.4 is a significant update. For a brief overview of the major changes compared to WebLogic Remote Console 2.4.19, refer to [Introducing WebLogic Remote Console 3.x](https://oracle.github.io/weblogic-remote-console/preview/).
 
 WebLogic Remote Console 3.x is more than a superficial update; significant changes were made to the underlying code. While we've done our best to ensure feature parity from WebLogic Remote Console 2.4,19, you may encounter some unexpected behavior, particularly in the area of WDT model file management. As with any issues you encounter, consider raising a bug in the [WebLogic Remote Console GitHub Repository](https://github.com/oracle/weblogic-remote-console) so we can track the issue. See [Contribute to WebLogic Remote Console](../set-console/contribute-wrc-repository#GUID-0BCE90EE-6760-4A0E-968E-C0EB8C49D66E).
 
-## Cannot connect to the Administration Server {#GUID-B3D14A11-0144-4B31-BFE3-E6AC59AEFCBE}
+## Cannot Connect to the Administration Server {#GUID-B3D14A11-0144-4B31-BFE3-E6AC59AEFCBE}
 
 WebLogic Remote Console cannot connect to a WebLogic Server Administration Server.
 
@@ -151,7 +151,7 @@ If you experience issues connecting to an Administration Server when using WebLo
 
     If you can connect successfully over HTTPS, then the problem is likely that WebLogic Remote Console does not trust the SSL certificate of the Administration Server. You can either import the Administration Server’s certificate into your client’s keystore, or, if you’re using demo certificates, enable the **Make Insecure Connection** option when you connect to the Administration Server.
 
--   Make sure your Administration Server's management endpoint, <code>management/*</code>, is accessible to clients. It may be blocked if your domain is behind a load-balancer or firewall, or is in a Docker container. You will need to expose the endpoint manually.
+-   Make sure your Administration Server's management endpoint, <code>management/*</code>, is accessible to clients. It may be blocked if your domain is behind a load balancer or firewall, or is in a Docker container. You will need to expose the endpoint manually.
 
     You should also make sure that the value of the Remote Console Helper Context Path attribute \(<code>RemoteConsoleHelperMBean.ContextPath</code>\) has not been changed. The default value is <code>console</code>, which WebLogic Remote Console appends to the domain URL. If you modify the context path, it may prevent WebLogic Remote Console from successfully connecting to the Administration Server. Do not change it unless you understand the possible impacts to Desktop WebLogic Remote Console. See [Configure Web Authentication](../administration-server/domain-configuration#GUID-A6191FE0-2A4C-45B6-A138-7FD9B157D28F).
 
@@ -205,7 +205,7 @@ You can test the REST connection using curl.
 
         **Note**: Adding <code>-k</code> makes this connection insecure. It tells curl to skip the verification step that it normally performs on secure connections.
 
-    If this command fails, then a more general connectivity issue is affecting your domain. See [Cannot connect to the Administration Server](#GUID-B3D14A11-0144-4B31-BFE3-E6AC59AEFCBE).
+    If this command fails, then a more general connectivity issue is affecting your domain. See [Cannot Connect to the Administration Server](#GUID-B3D14A11-0144-4B31-BFE3-E6AC59AEFCBE).
 
 -   To get the Administration Server’s runtime statistics *indirectly*:
 

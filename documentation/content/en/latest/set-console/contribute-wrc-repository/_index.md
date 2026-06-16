@@ -9,7 +9,7 @@ Contributions from the community to the WebLogic Remote Console project help us 
 
 1.  Open an issue in the [WebLogic Remote Console GitHub repository](https://github.com/oracle/weblogic-remote-console) that describes the issue you plan to address or the enhancement request.
 
-    If you only want to raise a bug or file an enhancement request, you can stop here - you're done! Thank you for helping to improve WebLogic Remote Console.
+    If you only want to raise a bug or file an enhancement request, you can stop here. Thank you for helping to improve WebLogic Remote Console.
 
     If you're raising a bug, please make sure to include your environment details \(OS, JDK, WebLogic Server release\) and any applicable log reports.
 
@@ -23,7 +23,7 @@ Contributions from the community to the WebLogic Remote Console project help us 
 
 6.  If the base image was changed, update the samples.
 
-7.  Commit your changes. Make sure to include a git commit signoff that lists your name and the email address that matches its entry in the OCA Signatories list. For example, <code>Signed-off-by: Your Name you@example.org</code>. You can add this automatically by adding the <code>--signoff</code> option to your git commit command: <code>git commit--signoff</code>.
+7.  Commit your changes. Make sure to include a git commit signoff that lists your name and the email address that matches its entry in the OCA Signatories list. For example, <code>Signed-off-by: Your Name you@example.org</code>. You can add this automatically by adding the <code>--signoff</code> option to your git commit command: <code>git commit --signoff</code>.
 
 8.  Submit the pull request. Include a link to its related issue and describe what you hope to accomplish with your changes and how to validate them.
 
