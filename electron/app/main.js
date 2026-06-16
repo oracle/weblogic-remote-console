@@ -427,8 +427,10 @@ function start_cbe() {
     } else if (line.startsWith('URL: ')) {
       ExternalUrlUtils.openExternalURL(line.replace('URL: ', ''), 'backend-stdout-url');
     } else if (line.startsWith('EncryptionService: ')) {
+      const esValue = line.replace('EncryptionService: ', '');
+      line = 'EncryptionService: <redacted>';
       if (safeStorage.isEncryptionAvailable()) {
-        const decrypted = atob(line.replace('EncryptionService: ', ''));
+        const decrypted = atob(esValue);
         const encrypted = safeStorage.encryptString(decrypted);
         const output = 
           `${btoa(decrypted)} ${btoa(encrypted.toString('base64'))}`;

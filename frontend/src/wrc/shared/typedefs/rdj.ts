@@ -17,10 +17,12 @@ export interface RDJ {
     invoker?: Reference;
     data?: Record<string, PropertyValueHolder> | Datum[] | ListDatum[];
     deletable?:      boolean;
+    displayedColumns?: string[];
     pageDescription: string;
     inlinePageDescription?: PDJ;
     actions?: ActionConfigurations;
     selected?: string[];
+    tableCustomizer?: string;
     fileSaver?: {
         mimeType: string;
         contents: any;

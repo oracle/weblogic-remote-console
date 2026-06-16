@@ -3,11 +3,13 @@
  * Copyright (c) 2025, 2026, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  */
-import { render } from "@testing-library/preact";
+import { createEvent, fireEvent, render, waitFor } from "@testing-library/preact";
 import { Model } from "wrc/shared/model/common";
 import { Action, PDJ } from "wrc/shared/typedefs/pdj";
 import { RDJ } from "wrc/shared/typedefs/rdj";
 import { Actions, invokePendingAction } from "../actions";
+import { UserContext } from "../resource";
+import { broadcastMessageResponse } from "wrc/shared/controller/notification-utils";
 import Context = require("ojs/ojcontext");
 
 jest.mock("wrc/shared/model/common", () => {
@@ -32,6 +34,11 @@ jest.mock("wrc/shared/model/common", () => {
   };
   return { Model: jest.fn(() => a) };
 });
+
+jest.mock("wrc/shared/controller/notification-utils", () => ({
+  broadcastErrorMessage: jest.fn(),
+  broadcastMessageResponse: jest.fn(),
+}));
 
 describe("Actions component", () => {
   it("should only enable actions marked as enabled", async () => {
@@ -86,5 +93,57 @@ describe("Actions component", () => {
     await actionPromise;
 
     expect(setPendingActionName).toHaveBeenNthCalledWith(2, undefined);
+  });
+
+  it("should broadcast an input-form action message response instead of treating it as an RDJ", async () => {
+    const action = { name: "createPlan", label: "Create Plan" } as Action;
+    const messageResponse = {
+      messages: [
+        {
+          severity: "error",
+          message: "The application already has a deployment plan.",
+          property: "",
+        },
+      ],
+    };
+    const response = {
+      ok: false,
+      status: 400,
+      text: jest.fn().mockResolvedValue(JSON.stringify(messageResponse)),
+    } as unknown as Response;
+    const model = {
+      getActions: jest.fn().mockReturnValue([action]),
+      getActionFormInput: jest.fn().mockReturnValue("/inputForm"),
+      invokeAction: jest.fn().mockResolvedValue(response),
+      isPolling: jest.fn().mockReturnValue(false),
+    } as unknown as Model;
+    const ctx = { rdj: "/api/test", showHelp: false };
+
+    const content = render(
+      <UserContext.Provider value={ctx}>
+        <Actions
+          model={model}
+          enabledActions={["createPlan"]}
+          onActionSelected={jest.fn()}
+          onActionPolling={jest.fn()}
+        ></Actions>
+      </UserContext.Provider>,
+    );
+
+    const button = content.getByTestId("createPlan") as HTMLElement;
+    fireEvent(
+      button,
+      createEvent(
+        "ojAction",
+        button,
+        { target: button },
+        { EventType: "CustomEvent" },
+      ),
+    );
+
+    expect(model.invokeAction).toHaveBeenCalledWith(action, []);
+    await waitFor(() => {
+      expect(broadcastMessageResponse).toHaveBeenCalledWith(ctx, messageResponse);
+    });
   });
 });

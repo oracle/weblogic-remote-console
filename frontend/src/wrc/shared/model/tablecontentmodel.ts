@@ -1,14 +1,14 @@
 /**
  * @license UPL-1.0
- * Copyright (c) 2025, Oracle and/or its affiliates.
+ * Copyright (c) 2025, 2026, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  */
 
-import { Action, Column } from "../typedefs/pdj";
+import { Action, Column, PDJ } from "../typedefs/pdj";
 import { HelpData } from "../typedefs/common";
 import { Datum, PropertyValue, PropertyValueArrayMember, RDJ, Reference } from '../typedefs/rdj';
 import { extractHelpData } from "./model-utils";
-import { getData } from "./transport";
+import { _post, getData } from "./transport";
 import { Model } from "./common";
 import { UnresolvedReference } from "./formcontentmodel";
 
@@ -29,6 +29,11 @@ export enum SORT_ORDER  {
 
 export class TableContentModel extends Model {
   selectedColumnsForDisplay: Column[] | undefined;
+
+  constructor(rdj: RDJ, pdj: PDJ) {
+    super(rdj, pdj);
+    this.syncColumnsForDisplayFromRdj();
+  }
 
   canCreate() {
     return this.getCreateForm() !== undefined;
@@ -78,15 +83,25 @@ export class TableContentModel extends Model {
   }
 
   getHiddenColumns() {
-    return this.pdj.table?.hiddenColumns;
+    return this.pdj.table?.hiddenColumns || this.pdj.sliceTable?.hiddenColumns;
   }
 
   public selectColumnsForDisplay(columns: Column[]) {
     this.selectedColumnsForDisplay = columns;
   }
 
+  public async saveColumnsForDisplay(columns: Column[]) {
+    await this.persistColumnsForDisplay(columns.map((column) => column.name));
+    this.selectColumnsForDisplay(columns);
+  }
+
   public resetColumnsForDisplay() {
     delete this.selectedColumnsForDisplay;
+  }
+
+  public async saveResetColumnsForDisplay() {
+    await this.persistColumnsForDisplay();
+    this.resetColumnsForDisplay();
   }
 
   public hasColumnDisplayCustomizations() {
@@ -99,11 +114,16 @@ export class TableContentModel extends Model {
         ...(this.getDisplayedColumns() || []),
         ...(this.getHiddenColumns() || []),
       ];
-      const displayed = allColumns.filter((c) =>
-        this.selectedColumnsForDisplay?.find((s) => s.name === c.name),
+      const selectedColumnNames = new Set(
+        this.selectedColumnsForDisplay.map((column) => column.name),
       );
+      const displayed = this.selectedColumnsForDisplay
+        .map((selectedColumn) =>
+          allColumns.find((column) => column.name === selectedColumn.name),
+        )
+        .filter((column): column is Column => !!column);
       const hidden = allColumns.filter(
-        (c) => !this.selectedColumnsForDisplay?.find((s) => s.name === c.name),
+        (column) => !selectedColumnNames.has(column.name),
       );
 
       return { displayed, hidden };
@@ -197,6 +217,47 @@ export class TableContentModel extends Model {
     return this.rdj.selected;
   }
 
+  private syncColumnsForDisplayFromRdj() {
+    const displayedColumnNames = this.rdj.displayedColumns;
+    if (!displayedColumnNames || displayedColumnNames.length === 0) {
+      this.resetColumnsForDisplay();
+      return;
+    }
+
+    const allColumns = [
+      ...(this.getDisplayedColumns() || []),
+      ...(this.getHiddenColumns() || []),
+    ];
+    const displayedColumns = displayedColumnNames
+      .map((displayedColumnName) =>
+        allColumns.find((column) => column.name === displayedColumnName),
+      )
+      .filter((column): column is Column => !!column);
+
+    if (displayedColumns.length > 0) {
+      this.selectColumnsForDisplay(displayedColumns);
+    } else {
+      this.resetColumnsForDisplay();
+    }
+  }
+
+  private async persistColumnsForDisplay(displayedColumnNames?: string[]) {
+    if (!this.rdj.tableCustomizer) {
+      return;
+    }
+
+    const payload =
+      displayedColumnNames !== undefined
+        ? { displayedColumns: displayedColumnNames }
+        : {};
+    const response = await _post(this.rdj.tableCustomizer, JSON.stringify(payload));
+    if (response.ok === false) {
+      throw new Error(
+        `HTTP ${response.status}${response.statusText ? ` ${response.statusText}` : ""} from ${this.rdj.tableCustomizer}`,
+      );
+    }
+  }
+
   async refresh() {
     if (this.rdjUrl) {
       let reloadRdjUrl = new URL(this.rdjUrl, window.origin);
@@ -208,6 +269,7 @@ export class TableContentModel extends Model {
         if (pdj) {
           this.pdj = pdj;
         }
+        this.syncColumnsForDisplayFromRdj();
       });
     }
   }

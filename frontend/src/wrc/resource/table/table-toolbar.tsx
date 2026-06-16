@@ -22,6 +22,7 @@ import { ActionRedwoodMap } from "../action-redwood-map";
 import { TableContentModel } from "../../shared/model/tablecontentmodel";
 import { UserContext } from "../resource";
 import ToolbarIcons from "../shared/toolbaricons";
+import { broadcastErrorMessage } from "wrc/shared/controller/notification-utils";
 import * as Logger from "ojs/ojlogger";
 
 type Props = Readonly<{
@@ -113,6 +114,16 @@ const TableToolbar = ({ tableContent, setTableContent, showHelp, onHelpClick, pa
     display: modelDisplayColumns,
   });
 
+  const customizerColumnsKey = (columns: {
+    available: SelectOption[];
+    display: SelectOption[];
+  }) => {
+    return [
+      columns.available.map((column) => String(column.key || "")).join("|"),
+      columns.display.map((column) => String(column.key || "")).join("|"),
+    ].join("::");
+  };
+
   // flag to indicate whether there are changes yet to be committed to the model -- for controlling apply/cancel button enablement
   const [hasCustomizerChanges, setHasCustomizerChanges] = useState(false);
 
@@ -164,18 +175,26 @@ const TableToolbar = ({ tableContent, setTableContent, showHelp, onHelpClick, pa
     });
   };
 
+  useEffect(() => {
+    syncMultiSelectWithModel();
+  }, [tableContent]);
+
   // force a refresh of all table components
   function refreshTable() {
     if (setTableContent && tableContent) setTableContent(tableContent.clone());
   }
 
   // Discard all of the table customizations that have been applied, restoring to default
-  const customizeResetButtonAction = (event: ToolbarActionEvent) => {
-    tableContent?.resetColumnsForDisplay();
+  const customizeResetButtonAction = async (event: ToolbarActionEvent) => {
+    try {
+      await tableContent?.saveResetColumnsForDisplay();
 
-    syncMultiSelectWithModel();
+      syncMultiSelectWithModel();
 
-    refreshTable();
+      refreshTable();
+    } catch (err) {
+      broadcastErrorMessage(ctx, err as Error);
+    }
   };
 
   // Discard current state and return to last applied state...
@@ -184,7 +203,7 @@ const TableToolbar = ({ tableContent, setTableContent, showHelp, onHelpClick, pa
   };
 
   // send desired columns to the model
-  const customizeApplyButtonAction = (event: ToolbarActionEvent) => {
+  const customizeApplyButtonAction = async (event: ToolbarActionEvent) => {
     const newDisplayColumns: Column[] = [];
 
     const allColumns = [
@@ -199,14 +218,24 @@ const TableToolbar = ({ tableContent, setTableContent, showHelp, onHelpClick, pa
         newDisplayColumns.push(columnElement);
       }
     });
-    tableContent?.selectColumnsForDisplay(newDisplayColumns);
 
-    syncMultiSelectWithModel();
+    try {
+      await tableContent?.saveColumnsForDisplay(newDisplayColumns);
 
-    refreshTable();
+      syncMultiSelectWithModel();
+
+      refreshTable();
+    } catch (err) {
+      broadcastErrorMessage(ctx, err as Error);
+    }
   };
   const columnChangeHandler = (event: ChangeEvent) => {
-    setPendingColumns({ available: event.available, display: event.chosen });
+    const nextColumns = { available: event.available, display: event.chosen };
+    if (customizerColumnsKey(nextColumns) === customizerColumnsKey(pendingColumns)) {
+      return;
+    }
+    setCurrentColumns(nextColumns);
+    setPendingColumns(nextColumns);
   };
 
   const renderCustomizer = () => {
@@ -217,6 +246,7 @@ const TableToolbar = ({ tableContent, setTableContent, showHelp, onHelpClick, pa
           style={{ display: "inline-flex" }}
         >
           <MultiSelect
+            key={customizerColumnsKey(currentColumns)}
             chosen={currentColumns.display}
             available={currentColumns.available}
             changeHandler={columnChangeHandler}

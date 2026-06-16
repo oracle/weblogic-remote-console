@@ -130,6 +130,7 @@ export interface Table {
 export interface SliceTable {
     slices?: Slice[];
     displayedColumns:     Column[];
+    hiddenColumns?:       Column[];
     requiresRowSelection: boolean;
     rowSelectionProperty: string;
     navigationProperty:   string;

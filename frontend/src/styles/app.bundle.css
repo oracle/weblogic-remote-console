@@ -992,6 +992,12 @@ oj-dialog[id="confirmDialog"] {
   margin-bottom: 0.3125rem;
   background-color: var(--dialog-body-background-color);
 }
+oj-dialog[id="logoutSuccessDialog"] {
+  width: var(--confirmDialog-width);
+}
+oj-dialog[id="logoutSuccessDialog"] div.oj-dialog-header h1.oj-dialog-title {
+  font-size: 1rem;
+}
 oj-dialog[id="recentlyVisitedPagesDialog"]
 {
   width: var(--recentlyVisitedDialog-width);

@@ -1,4 +1,4 @@
-// Copyright (c) 2021, 2024, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2026, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.repodef;
@@ -91,6 +91,12 @@ public class LocalizedConsoleRestExtensionConstants {
     addConstant(
       "planPathNotUnderDomainRoot",
       "The plan path ''{0}'' must be under domain home:  ''{1}''"
+    );
+
+    addConstant(
+      "planPathOutsideDomainRootCompatibilityOverride",
+      "For the plan path to be outside the domain home, set the system property "
+        + "''weblogic.management.extension.enforce.domainPath=false'' on the administration server."
     );
 
     // {0} is the plan path
