@@ -645,6 +645,15 @@ const PolicyExpression = ({ fieldDescription, formModel, valueChangedHandler, se
     }
   };
 
+  const wrapRootPredicate = (type: ParsedExpressionType.And | ParsedExpressionType.Or | ParsedExpressionType.Group) => {
+    if (isReadOnly || currentParsedExpression?.type !== ParsedExpressionType.Predicate) return;
+
+    updateParsedExpression({
+      type,
+      children: [currentParsedExpression]
+    });
+  };
+
   const visualBuilder = expression ? (
     <div style={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
       <div class="builder-header" style={{ marginBottom: '16px' }}>
@@ -695,6 +704,28 @@ const PolicyExpression = ({ fieldDescription, formModel, valueChangedHandler, se
                   children: [],
                 })
               }
+            />
+          </div>
+        )}
+        {!isReadOnly && currentParsedExpression?.type === ParsedExpressionType.Predicate && (
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginTop: '8px' }}>
+            <oj-c-button
+              data-testid="add-and-root"
+              chroming="outlined"
+              label={t["wrc-policy-expression"].buttons.addAnd.label}
+              onojAction={() => wrapRootPredicate(ParsedExpressionType.And)}
+            />
+            <oj-c-button
+              data-testid="add-or-root"
+              chroming="outlined"
+              label={t["wrc-policy-expression"].buttons.addOr.label}
+              onojAction={() => wrapRootPredicate(ParsedExpressionType.Or)}
+            />
+            <oj-c-button
+              data-testid="add-group-root"
+              chroming="outlined"
+              label={t["wrc-policy-expression"].buttons.addGroup.label}
+              onojAction={() => wrapRootPredicate(ParsedExpressionType.Group)}
             />
           </div>
         )}

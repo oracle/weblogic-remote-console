@@ -16,12 +16,13 @@ import { ContentModelFactory } from "../shared/model/contentmodelfactory";
 import { FormContentModel } from "../shared/model/formcontentmodel";
 import { Action, Polling } from "../shared/typedefs/pdj";
 import { RDJ, Reference } from "../shared/typedefs/rdj";
+import { Response as MessageResponse } from "../shared/typedefs/common";
 import { ActionInputForm } from "./form/actioninput";
 import { UserContext } from "./resource";
 import { KeySetImpl } from "ojs/ojkeyset";
 import { ActionRedwoodMap } from "./action-redwood-map";
 import { parseResponseJson, saveBlobToFile } from "../shared/model/transport";
-import { broadcastErrorMessage } from "wrc/shared/controller/notification-utils";
+import { broadcastErrorMessage, broadcastMessageResponse } from "wrc/shared/controller/notification-utils";
 import Context = require("ojs/ojcontext");
 
 type Props = {
@@ -39,6 +40,9 @@ type PendingActionOptions = {
   invoke: () => Promise<void>;
   onError: (err: Error) => void;
 };
+
+const isMessageResponse = (value: RDJ | MessageResponse): value is MessageResponse =>
+  Array.isArray((value as MessageResponse)?.messages);
 
 export const invokePendingAction = async ({
   pendingActionName,
@@ -142,7 +146,14 @@ export const Actions = ({ model, enabledActions, selectedKeys, onActionSelected,
     if (model.getActionFormInput(action)) {
       const references = [...selectedKeys?.values() || []] as string[];
       const response = await model.invokeAction(action, references);
-      const rdj: RDJ = await parseResponseJson<RDJ>(response);
+      const actionInputResponse = await parseResponseJson<RDJ | MessageResponse>(response);
+
+      if (!response.ok && isMessageResponse(actionInputResponse)) {
+        broadcastMessageResponse(ctx, actionInputResponse);
+        return;
+      }
+
+      const rdj = actionInputResponse as RDJ;
 
       // Check for fileSaver - if present, download file and skip normal processing
       if (rdj.fileSaver) {

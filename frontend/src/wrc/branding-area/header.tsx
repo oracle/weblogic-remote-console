@@ -16,11 +16,12 @@ import SimpleSearch from "./simple-search";
 import "oj-c/button";
 import Tips from "./tips";
 import { ResourceContext } from "../integration/resource-context";
+import LogoutSuccessDialog, { LogoutSuccessDialogRef } from "./logout-success-dialog";
 
 import { getDataComponent } from "wrc/shared/model/transport";
 import { Global } from "wrc/shared/global";
 import { Response } from "wrc/shared/typedefs/common";
-import { useEffect, useState } from "preact/hooks";
+import { useEffect, useRef, useState } from "preact/hooks";
 import { ojDialog } from "ojs/ojdialog";
 import Context = require("ojs/ojcontext");
 import { requireAsset } from "wrc/shared/url";
@@ -44,13 +45,15 @@ type AboutResponse = {
  * @ojmetadata main "wrc/branding-area"
  */
 export function BrandingHeaderImpl({context}: Props) {
+  const logoutSuccessDialogRef = useRef<LogoutSuccessDialogRef>(null);
+
   const ariaLabel =
     t["wrc-header"]?.region?.ariaLabel?.value;
 
   const appName =
     t["wrc-header"]?.text?.appName;
 
-  const version = '3.0.4';
+  const version = '3.0.5';
 
   // Dark mode state + helpers
   const [darkEnabled, setDarkEnabled] = useState(false);
@@ -383,8 +386,8 @@ export function BrandingHeaderImpl({context}: Props) {
     Global.global.killSwitch = true;
 
     getDataComponent("/api/logout").then(() => {
-      // After logout completes, reload the page
-      window.location.reload();
+      // After logout completes, show success dialog before reloading the page
+      logoutSuccessDialogRef.current?.open();
     }).catch(() => {
       // If logout fails, restore request flow so the app is not left in a blocked state.
       Global.global.killSwitch = false;
@@ -545,6 +548,10 @@ DataProviderManager.getCapabilities().then(caps => {
         </div>
       </div>
       <Tips></Tips>
+      <LogoutSuccessDialog
+        ref={logoutSuccessDialogRef}
+        onProceed={() => window.location.reload()}
+      />
       <MessageLine context={context} />
     </>
   );

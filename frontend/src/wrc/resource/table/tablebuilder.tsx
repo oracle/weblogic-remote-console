@@ -7,7 +7,7 @@
 import { Action, Column, Polling } from "../../shared/typedefs/pdj";
 import ArrayDataProvider = require("ojs/ojarraydataprovider");
 import * as t from "ojL10n!wrc/shared/resources/nls/frontend";
-import { KeySetImpl } from "ojs/ojkeyset";
+import { AllKeySetImpl, KeySetImpl } from "ojs/ojkeyset";
 import "ojs/ojtable";
 import { ojTable, TableElement } from "ojs/ojtable";
 import { Reference, Resource } from "../../shared/typedefs/rdj";
@@ -19,7 +19,7 @@ import { cellCompare, SORT_ORDER, TableContentModel } from "../../shared/model/t
 import "ojs/ojmenu";
 import "ojs/ojnavigationlist";
 import "ojs/ojselector";
-import { Dispatch, useContext, useEffect, useRef, useState } from "preact/hooks";
+import { Dispatch, useContext, useEffect, useMemo, useRef, useState } from "preact/hooks";
 import { Response } from "wrc/shared/typedefs/common";
 import { Help } from "../shared/help";
 import { TableIntro } from "./tableintro";
@@ -115,24 +115,36 @@ const Table = ({ tableContent, pageContext, bare, onSelectionChanged }: Props) =
 
   let rowDataProvider: ArrayDataProvider<Reference, Record<string, TableCellValue>> | undefined;
   let columnDefinitionsByName = new Map<string, Column>();
+  let allAvailableKeys: string[]|undefined;
 
-  const selectedChangedListener = (
-    event: ojTable.selectedChanged<any, any>,
-  ) => {
-    const row = event.detail.value.row as KeySetImpl<string>;
-    const column = event.detail.value.column as KeySetImpl<any>;
+  const normalizeRowKeys = (row?: KeySetImpl<string> | AllKeySetImpl<string>): KeySetImpl<string> => {
+    if (!row) return new KeySetImpl<string>();
 
     // Convert JET "select all" semantics into an explicit set of keys that
     // respects any subsequent unselects. When isAddAll() is true, the keyset
     // represents "all keys minus deleted". Build an explicit key list using
     // has(key) across the available keys so actions receive only the intended rows.
-    let resolvedRowKeys: KeySetImpl<string>;
-    if (row?.isAddAll && row.isAddAll()) {
+    if (row.isAddAll && row.isAddAll()) {
       const keys = (allAvailableKeys || []).filter((k) => row.has(k));
-      resolvedRowKeys = new KeySetImpl<string>(keys);
-    } else {
-      resolvedRowKeys = row as KeySetImpl<string>;
+      return new KeySetImpl<string>(keys);
     }
+
+    return row as KeySetImpl<string>;
+  };
+
+  const areAllAvailableRowsSelected = (keys: KeySetImpl<string>) => {
+    const availableKeys = allAvailableKeys || [];
+    return availableKeys.length > 0 &&
+      getSelectionCount(keys) === availableKeys.length &&
+      availableKeys.every((key) => keys.has(key));
+  };
+
+  const selectedChangedListener = (
+    event: ojTable.selectedChanged<any, any>,
+  ) => {
+    const row = event.detail.value.row as KeySetImpl<string> | AllKeySetImpl<string> | undefined;
+    const column = (event.detail.value.column || new KeySetImpl<any>()) as KeySetImpl<any>;
+    const resolvedRowKeys = normalizeRowKeys(row);
 
     // Update state immutably so Preact re-renders dependents
     setSelectedItems({ row: resolvedRowKeys, column });
@@ -251,8 +263,6 @@ const Table = ({ tableContent, pageContext, bare, onSelectionChanged }: Props) =
       updateActionsDisabled(newRowKeys);
     }
   }
-
-  let allAvailableKeys: string[]|undefined;
 
   const setupRowDataProvider = () => {
     const rowArray: Record<string, TableCellValue>[] = [];
@@ -406,6 +416,18 @@ const Table = ({ tableContent, pageContext, bare, onSelectionChanged }: Props) =
     };
     return actions?.some(requires) || false;
   })();
+  const allRowsSelected = hasSelectionActions && areAllAvailableRowsSelected(selectedItems.row);
+  const tableSelectedItems = useMemo(() => {
+    if (!allRowsSelected) return selectedItems;
+
+    return {
+      ...selectedItems,
+      // Let oj-table see JET's canonical "all rows selected" key set so the
+      // header selector is checked rather than indeterminate. Our state remains
+      // explicit so action enablement and payloads continue to use concrete rows.
+      row: new AllKeySetImpl<string>(),
+    };
+  }, [allRowsSelected, selectedItems]);
 
   const cellClickHandler = (event: MouseEvent) => {    
     if ((event.target as HTMLElement | null)?.closest?.('a[data-wrc-proxy-download-link="true"]')) {
@@ -470,15 +492,7 @@ const Table = ({ tableContent, pageContext, bare, onSelectionChanged }: Props) =
     const onSelectorKeysChanged = (e: any) => {
       const newKeys = e?.detail?.value as KeySetImpl<string> | undefined;
       if (newKeys) {
-        // Normalize to an explicit key set so actions and counts are accurate
-        let normalized: KeySetImpl<string>;
-        const isAddAll = (newKeys as any)?.isAddAll?.();
-        if (isAddAll) {
-          const keys = (allAvailableKeys || []).filter((k) => (newKeys as any).has(k));
-          normalized = new KeySetImpl<string>(keys);
-        } else {
-          normalized = newKeys as KeySetImpl<string>;
-        }
+        const normalized = normalizeRowKeys(newKeys);
         setSelectedItems({ ...selectedItems, row: normalized });
         onSelectionChanged?.(normalized);
         updateActionsDisabled(normalized);
@@ -535,7 +549,7 @@ const Table = ({ tableContent, pageContext, bare, onSelectionChanged }: Props) =
             display="grid"
             scroll-policy="loadMoreOnScroll"
             scroll-policy-options='{"fetchSize": 10000}'
-            selected={selectedItems}
+            selected={tableSelectedItems}
             selectionMode={{ row: hasSelectionActions ? "multiple" : "single", column: "none", }}
             onselectedChanged={selectedChangedListener}
             columns={displayColumns}
