@@ -211,13 +211,13 @@ For an overview of the functionality provided by the WebLogic Remote Console ext
 
 2.  Under <code>*DOMAIN\_HOME*/</code>, create a folder and name it <code>management-services-ext</code>.
 
-3.  Download the latest WebLogic Remote Console extension, <code>console-rest-ext-3.0.4.war</code>, from the [WebLogic Remote Console GitHub Repository](https://github.com/oracle/weblogic-remote-console/releases) releases page.
+3.  Download the latest WebLogic Remote Console extension, <code>console-rest-ext-3.0.5.war</code>, from the [WebLogic Remote Console GitHub Repository](https://github.com/oracle/weblogic-remote-console/releases) releases page.
 
     {{< alert title="Note" color="primary" >}}
 
     
 
-    <code>console-rest-ext-jakarta-3.0.4.war</code> is intended for domains running WebLogic Server 15.1.1.0.0 or later; you should not need to install it manually.
+    <code>console-rest-ext-jakarta-3.0.5.war</code> is intended for domains running WebLogic Server 15.1.1.0.0 or later; you should not need to install it manually.
 
     {{< /alert >}}
 
@@ -337,7 +337,7 @@ When a newer version of Desktop WebLogic Remote Console is available, an alert w
     {{< /alert >}}
 
 
-    For the best experience, you should keep the versions of WebLogic Remote Console and its extension in sync with each other. That is, when you are running WebLogic Remote Console 3.0.4, you should have <code>console-rest-ext-3.0.4.war</code> installed.
+    For the best experience, you should keep the versions of WebLogic Remote Console and its extension in sync with each other. That is, when you are running WebLogic Remote Console 3.0.5, you should have <code>console-rest-ext-3.0.5.war</code> installed.
 
     1.  While connected to the domain, select the **More ︙** icon beside the Administration Server provider name and then select **Provider Information** to open the **WebLogic Remote Console - Status** dialog box.
 
@@ -349,9 +349,9 @@ When a newer version of Desktop WebLogic Remote Console is available, an alert w
 
     5.  Download the WebLogic Remote Console extension that matches your WebLogic Remote Console from the [WebLogic Remote Console GitHub Repository](https://github.com/oracle/weblogic-remote-console/releases). It will be within the matching WebLogic Remote Console release section.
 
-        -   For domains running WebLogic Server 14.1.2.0.0 or earlier, download <code>console-rest-ext-3.0.4.war</code>
+        -   For domains running WebLogic Server 14.1.2.0.0 or earlier, download <code>console-rest-ext-3.0.5.war</code>
 
-        -   For domains running WebLogic Server 15.1.1.0.0 or later, download <code>console-rest-ext-jakarta-3.0.4.war</code>.
+        -   For domains running WebLogic Server 15.1.1.0.0 or later, download <code>console-rest-ext-jakarta-3.0.5.war</code>.
 
     6.  Save the extension under <code>*DOMAIN\_HOME*/management-services-ext/</code>.
 

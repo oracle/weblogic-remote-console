@@ -123,9 +123,9 @@ If you are an administrator, you can take the configuration lock \(and their pen
 
 ### How do I do *x* in WebLogic Remote Console 3.x? {#section_vq1_ly2_y3c}
 
-WebLogic Remote Console 3.0.4 is a significant update. For a brief overview of the major changes compared to WebLogic Remote Console 2.4.19, refer to [Introducing WebLogic Remote Console 3.x](https://oracle.github.io/weblogic-remote-console/preview/).
+Significant design changes were implemented in WebLogic Remote Console 3.x. For a brief overview of the major changes compared to WebLogic Remote Console 2.4.19, refer to [Introducing WebLogic Remote Console 3.x](https://oracle.github.io/weblogic-remote-console/preview/).
 
-WebLogic Remote Console 3.x is more than a superficial update; significant changes were made to the underlying code. While we've done our best to ensure feature parity from WebLogic Remote Console 2.4,19, you may encounter some unexpected behavior, particularly in the area of WDT model file management. As with any issues you encounter, consider raising a bug in the [WebLogic Remote Console GitHub Repository](https://github.com/oracle/weblogic-remote-console) so we can track the issue. See [Contribute to WebLogic Remote Console](../set-console/contribute-wrc-repository#GUID-0BCE90EE-6760-4A0E-968E-C0EB8C49D66E).
+While we have done our best to ensure feature parity from WebLogic Remote Console 2.4,19, you may encounter some unexpected behavior, particularly in the area of WDT model file management. As with any issues you encounter, consider raising a bug in the [WebLogic Remote Console GitHub Repository](https://github.com/oracle/weblogic-remote-console) so we can track the issue. See [Contribute to WebLogic Remote Console](../set-console/contribute-wrc-repository#GUID-0BCE90EE-6760-4A0E-968E-C0EB8C49D66E).
 
 ## Cannot Connect to the Administration Server {#GUID-B3D14A11-0144-4B31-BFE3-E6AC59AEFCBE}
 
@@ -278,4 +278,3 @@ If <code>auto-prefs.json</code> does become corrupted, you can reset it, but all
     -   macOS: <code>/Users/*user*/Library/Application Support/weblogic-remote-console/auto-prefs.json</code>
     -   Windows: <code>C:\Users\*user*\AppData\Roaming\weblogic-remote-console\auto-prefs.json</code>
 3.  Restart WebLogic Remote Console.
-

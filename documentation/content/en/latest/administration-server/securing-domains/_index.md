@@ -2270,3 +2270,4 @@ You can update the RDBMS security store settings. However, you should avoid modi
 
 
 If the JMS topic with which the RDBMS security store is configured goes down, see [Managing the RDBMS Security Store](https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=SECMG-GUID-7AE06479-0168-4277-AA84-6D5C87F1A004) in **Administering Security for Oracle WebLogic Server** for important information about restoring it.
+

@@ -41,7 +41,7 @@ Connect to an Administration Server You can connect to a running WebLogic Server
 Start the Administration Server.
 See Starting and Stopping Servers in Administering Server Startup and Shutdown for Oracle WebLogic Server for instructions.
 On the Projects/Providers page, select Create.">
-  <meta itemprop="wordCount" content="11330">
+  <meta itemprop="wordCount" content="11346">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Domain Configuration">
   <meta name="twitter:description" content="Use WebLogic Remote Console to make configuration changes to your WebLogic Server domain through its Administration Server.
@@ -78,7 +78,8 @@ On the Projects/Providers page, select Create.">
         <div class="dropdown">
   <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Releases</a>
   <ul class="dropdown-menu">
-    <li><a class="dropdown-item" href="/weblogic-remote-console/overview">Latest (v3.0.4)</a></li>
+    <li><a class="dropdown-item" href="/weblogic-remote-console/overview">Latest (v3.0.5)</a></li>
+    <li><a class="dropdown-item" href="/weblogic-remote-console/3.0.4">v3.0.4</a></li>
     <li><a class="dropdown-item" href="/weblogic-remote-console/3.0.3">v3.0.3</a></li>
     <li><a class="dropdown-item" href="/weblogic-remote-console/preview">Tech Preview (v3.0.2)</a></li>
     <li><a class="dropdown-item" href="/weblogic-remote-console/2.4.19">v2.4.19</a></li>
@@ -149,7 +150,7 @@ On the Projects/Providers page, select Create.">
     aria-label="Search this site…"
     autocomplete="off"
     
-    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.b138faf837a92f50a8a9ce6032bbbca7.json"
+    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.a9a42040c0d3e80098f4813a561d4e78.json"
     data-offline-search-base-href="/"
     data-offline-search-max-results="10"
   >
@@ -174,7 +175,7 @@ On the Projects/Providers page, select Create.">
     aria-label="Search this site…"
     autocomplete="off"
     
-    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.b138faf837a92f50a8a9ce6032bbbca7.json"
+    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.a9a42040c0d3e80098f4813a561d4e78.json"
     data-offline-search-base-href="/"
     data-offline-search-max-results="10"
   >
@@ -751,7 +752,19 @@ On the Projects/Providers page, select Create.">
 </td></tr><tr><td>
 <p>To specify an alternative location for the JDK.</p>
 </td><td>
-<p><code>javaPath=<em>pathToJDK</em></code></p>
+<p><code>javaPath=<path-to-JDK></code></p>
+<p>Enter the full path to the Java binary. For example:</p>
+<ul>
+<li>
+<p>Linux: <code>javaPath=/usr/lib/jvm/java-21/bin/java</code></p>
+</li>
+<li>
+<p>macOS: <code>javaPath=/Library/Java/JavaVirtualMachines/jdk-21/Contents/Home/bin/java</code></p>
+</li>
+<li>
+<p>Windows: <code>javaPath=C:\java\jdk-21\bin\java</code></p>
+</li>
+</ul>
 </td></tr><tr><td>
 <p>To specify a custom logging configuration file so you can control the logging information that WebLogic Remote Console collects.</p>
 <p>The custom logging configuration file must follow the Java format for configuration files. You can see an example of a Java logging configuration file at <code>$JAVA_HOME/conf/logging.properties</code>.</p>
