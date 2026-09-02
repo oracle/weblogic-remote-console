@@ -9,7 +9,7 @@ import ArrayDataProvider = require("ojs/ojarraydataprovider");
 import * as t from "ojL10n!wrc/shared/resources/nls/frontend";
 import { AllKeySetImpl, KeySetImpl } from "ojs/ojkeyset";
 import "ojs/ojtable";
-import { ojTable, TableElement } from "ojs/ojtable";
+import { ojTable } from "ojs/ojtable";
 import { Reference, Resource } from "../../shared/typedefs/rdj";
 import Translations = require("ojs/ojtranslation");
 
@@ -78,6 +78,7 @@ const Table = ({ tableContent, pageContext, bare, onSelectionChanged }: Props) =
     row: new KeySetImpl<string>(),
     column: new KeySetImpl<string>(),
   });
+  const tableRef = useRef<HTMLElement | null>(null);
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [drawerWidth, setDrawerWidth] = useState(0);
 
@@ -429,35 +430,47 @@ const Table = ({ tableContent, pageContext, bare, onSelectionChanged }: Props) =
     };
   }, [allRowsSelected, selectedItems]);
 
-  const cellClickHandler = (event: MouseEvent) => {    
-    if ((event.target as HTMLElement | null)?.closest?.('a[data-wrc-proxy-download-link="true"]')) {
-      return;
-    }
+  const activateRow = (rowKey: unknown) => {
+    if (typeof rowKey !== "string") return;
 
-    const key = (event?.currentTarget as TableElement<any,any>)?.currentRow?.rowKey;
+    try {
+      const reference = JSON.parse(rowKey) as Reference;
+      const resourceData = reference?.resourceData;
 
-    if (key) {
-
-      const target = event?.target as HTMLSpanElement;
-
-      // if they click on the text within a cell, target will be the span containing the text. need to get parent cell
-      let cellIndex = (target.offsetParent as HTMLTableCellElement)?.cellIndex;
-
-      // if they click on the space around the span containing text rather than on the text itself, 
-      // get target will be the cell
-      if (!cellIndex) {
-        cellIndex = (target as HTMLTableCellElement).cellIndex;
+      if (typeof resourceData === "string" && resourceData.length > 0) {
+        ctx?.context?.routerController?.navigateToAbsolutePath(resourceData);
       }
-
-      if (cellIndex || !hasSelectionActions) {
-        event.stopImmediatePropagation();
-
-        const reference = JSON.parse(key) as Reference;
-
-        ctx?.context?.routerController?.navigateToAbsolutePath(reference.resourceData || '');
-      }
+    } catch (_error) {
+      // Rows without a Reference are data-only and do not have a destination to activate.
     }
-  }
+  };
+
+  const rowActionHandler = (event: ojTable.ojRowAction<string, Record<string, TableCellValue>>) => {
+    activateRow(event.detail.context.key);
+  };
+
+  const tableKeyDownHandler = (event: KeyboardEvent) => {
+    if (event.key !== "Enter") return;
+
+    const target = event.target as HTMLElement | null;
+    const selector = target?.closest("oj-selector") as (HTMLElement & { rowKey?: unknown }) | null;
+
+    // JET deliberately excludes selector controls from rowAction. Handle only
+    // body selectors here so the header's Select All control keeps its behavior.
+    if (!selector || !selector.closest(".oj-table-body")) return;
+
+    event.preventDefault();
+    event.stopPropagation();
+    activateRow(selector.rowKey ?? selector.getAttribute("row-key"));
+  };
+
+  useEffect(() => {
+    const table = tableRef.current;
+    if (!table) return;
+
+    table.addEventListener("keydown", tableKeyDownHandler, true);
+    return () => table.removeEventListener("keydown", tableKeyDownHandler, true);
+  }, [tableKeyDownHandler]);
 
   const cellRenderer = ( cell: ojTable.CellTemplateContext<any, any>) => {
     const columnKey = cell.columnKey as string | undefined;
@@ -544,6 +557,7 @@ const Table = ({ tableContent, pageContext, bare, onSelectionChanged }: Props) =
             <div className="cfe-table-container-scrollable">
           <oj-table
             id="table"
+            ref={tableRef as any}
             aria-labelledby="intro"
             class="wlstable"
             display="grid"
@@ -554,7 +568,7 @@ const Table = ({ tableContent, pageContext, bare, onSelectionChanged }: Props) =
             onselectedChanged={selectedChangedListener}
             columns={displayColumns}
             data={rowDataProvider}
-            onClick={cellClickHandler}
+            onojRowAction={rowActionHandler}
             columnsDefault={serverSorted ? { sortable: 'disabled' } : {}}
           >
             {hasSelectionActions ? <template slot="selectorCellTemplate" render={selectorCellRenderer} /> : <></>}

@@ -1,4 +1,4 @@
-# Copyright (c) 2020, 2025, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2026, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 baseTypes:
@@ -265,6 +265,48 @@ properties:
   name: JASPIC
   relationship: containment
   type: weblogic.management.configuration.JASPICMBean
+- defaultValue:
+    value:
+      value: ''
+  descriptionHTML: '<p>Returns a comma-separated list of additional JNDI initial context
+    factory class names that are allowed for server-side JNDI lookup contexts.</p>  <p>Each
+    entry is the fully-qualified class name of an <code>InitialContextFactory</code>
+    implementation. The reserved value <code>*</code> allows all initial context factories
+    and must be the only configured entry when used. Package wildcard entries are
+    not supported.</p> '
+  name: JNDIAdditionalInitialContextFactoriesAllowed
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: ''
+  descriptionHTML: '<p>Returns a comma-separated list of additional JNDI Reference
+    factory class names that are allowed for server-side reference materialization.</p>  <p>Each
+    entry is the fully-qualified class name of a JNDI reference object factory. The
+    reserved value <code>*</code> allows all reference object factories and must be
+    the only configured entry when used. Package wildcard entries are not supported.</p> '
+  name: JNDIAdditionalReferenceFactoriesAllowed
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: ''
+  descriptionHTML: '<p>Returns a comma-separated list of JNDI outbound connection
+    entries that are allowed for server-side JNDI lookup inputs.</p>  <p>Each entry
+    may be a <code>scheme:hostname</code>, <code>*:hostname</code>, <code>scheme:*</code>,
+    or <code>*:*</code> pair. The scheme component may use the <code>scheme/s</code>
+    shorthand to allow both the secure and non-secure variants of a protocol, for
+    example <code>ldap/s:hostname1</code> is equivalent to <code>ldap:hostname1,ldaps:hostname1</code>.</p>  <p>The
+    hostname component may be an exact hostname, a suffix wildcard such as <code>*.oracle.com</code>,
+    an IPv4 or IPv6 literal, a CIDR range, or <code>*</code>. An empty host component,
+    such as <code>ldap:</code>, allows the specified scheme for any host. An empty
+    scheme component, such as <code>:hostname1</code>, allows any scheme for the specified
+    host. Ports, paths, query strings, fragments, usernames, and passwords in provider
+    URLs are ignored for matching. Internationalized domain names are converted to
+    ASCII/Punycode before comparison.</p> '
+  name: JNDIOutboundConnectionsAllowed
+  type: java.lang.String
+  writable: true
 - defaultValue: {
     }
   descriptionHTML: '<p>The password that the Administration Server uses to communicate

@@ -30,6 +30,7 @@ import { ComponentMessageItem } from '@oracle/oraclejet-preact/UNSAFE_ComponentM
 import ListDataProviderView = require("ojs/ojlistdataproviderview");
 import ArrayDataProvider = require("ojs/ojarraydataprovider");
 import { ojTable } from "ojs/ojtable";
+import Context = require("ojs/ojcontext");
 import "oj-c/button";
 import "oj-c/input-text";
 import "oj-c/text-area";
@@ -265,7 +266,7 @@ const FieldSettingsLauncher = ({
 
   const open = () => {
     const evt = new CustomEvent("open-field-settings", {
-      detail: { fieldDescription },
+      detail: { fieldDescription, formModel },
     });
     document.dispatchEvent(evt);
   };
@@ -282,6 +283,123 @@ const FieldSettingsLauncher = ({
     </oj-c-button>
   );
 };
+
+const TableRowDeleteButton = ({
+  fieldDescription,
+  deleteRow,
+}: {
+  fieldDescription: Property;
+  deleteRow: () => void;
+}) => {
+  const deleteLabel = t["wrc-pdj-fields"]?.["cfe-property-list-editor"]?.labels.deleteButtonTooltip;
+  const buttonRef = useRef<CButtonElement>(null);
+
+  const deleteWithEnter = (event: KeyboardEvent) => {
+    if (event.key !== "Enter") return;
+
+    // oj-table uses Enter to move its current row. Capture the event on the
+    // control so keyboard activation has the same effect as clicking Delete.
+    event.preventDefault();
+    event.stopPropagation();
+
+    const deleteButton = buttonRef.current;
+    if (!deleteButton) return;
+    const table = deleteButton.closest("oj-table");
+    const deleteButtons = table
+      ? Array.from(table.querySelectorAll<HTMLElement>("oj-c-button[data-testid='delete']"))
+      : [];
+    const deletedButtonIndex = deleteButtons.indexOf(deleteButton);
+
+    deleteRow();
+
+    // Let oj-table finish its model and focus-management work before moving
+    // focus to the equivalent action in the next remaining row. When the last
+    // row is deleted, use the preceding row; when none remain, use Add.
+    window.requestAnimationFrame(() => {
+      if (!table) return;
+
+      Context.getContext(table).getBusyContext().whenReady().then(() => {
+        const remainingButtons = Array.from(
+          table.querySelectorAll<HTMLElement>("oj-c-button[data-testid='delete']"),
+        );
+        const nextButton = remainingButtons[
+          Math.min(deletedButtonIndex, remainingButtons.length - 1)
+        ];
+        const focusTarget = nextButton || table.querySelector<HTMLElement>("oj-c-button[data-testid='add']");
+
+        try {
+          focusTarget?.focus();
+        } catch (_error) {
+          // The JET adapter used by unit tests does not upgrade button methods.
+          // A browser-rendered control is upgraded before this callback runs.
+        }
+      });
+    });
+  };
+
+  useEffect(() => {
+    const button = buttonRef.current;
+    if (!button) return;
+
+    // JET's tab-managed focus dispatches the keyboard event from within the
+    // Core Pack button. A native capture listener receives it before oj-table
+    // can turn Enter into table navigation.
+    button.addEventListener("keydown", deleteWithEnter, true);
+    return () => button.removeEventListener("keydown", deleteWithEnter, true);
+  }, [deleteRow]);
+
+  return (
+    <oj-c-button
+      ref={buttonRef}
+      display="icons"
+      chroming="borderless"
+      data-property={fieldDescription.name}
+      data-testid="delete"
+      label={deleteLabel}
+      onojAction={deleteRow}
+    >
+      <span slot="endIcon" class="oj-ux-ico-trash"></span>
+      {deleteLabel}
+    </oj-c-button>
+  );
+};
+
+const TableAddButton = ({ addRow }: { addRow: () => void }) => {
+  const addLabel = t["wrc-pdj-fields"]?.["cfe-property-list-editor"]?.labels.addButtonTooltip;
+  const buttonRef = useRef<CButtonElement>(null);
+
+  const addWithEnter = (event: KeyboardEvent) => {
+    if (event.key !== "Enter") return;
+
+    event.preventDefault();
+    event.stopPropagation();
+    addRow();
+  };
+
+  useEffect(() => {
+    const button = buttonRef.current;
+    if (!button) return;
+
+    button.addEventListener("keydown", addWithEnter, true);
+    return () => button.removeEventListener("keydown", addWithEnter, true);
+  }, [addRow]);
+
+  return (
+    <oj-c-button
+      ref={buttonRef}
+      data-testid="add"
+      display="icons"
+      chroming="borderless"
+      label={addLabel}
+      onojAction={addRow}
+    >
+      <span slot="endIcon" class="oj-ux-ico-plus"></span>
+      {addLabel}
+    </oj-c-button>
+  );
+};
+
+const TABLE_ACTION_COLUMN_WIDTH = "60px";
 
 export const getArrayInputField = (
   fieldDescription: Property,
@@ -317,37 +435,28 @@ export const getArrayInputField = (
       }
     };
 
+    const value = String(row.data["value"] ?? "");
+
     return (
       <>
         <tr>
           {row.mode == "navigation" && (
-            <td>{row.data["value"]}</td>
+            <td aria-label={value}>{value}</td>
           )}
           {row.mode == "edit" && (
             <td>
               <oj-input-text
                 data-property={fieldDescription.name}
-                value={row.data["value"]}
+                value={value}
                 class="editable"
+                aria-label={fieldDescription.label}
                 onvalueChanged={updateValue}
               ></oj-input-text>
             </td>
           )}
           {!isReadOnly && (
             <td>
-              <oj-c-button
-                display="icons"
-                chroming="borderless"
-                data-property={fieldDescription.name}
-                label={t["wrc-pdj-fields"]?.["cfe-property-list-editor"]?.labels.deleteButtonTooltip}
-                onojAction={deleteRow}
-              >
-                <span slot="endIcon" class="oj-ux-ico-trash"></span>
-                {
-                  t["wrc-pdj-fields"]?.["cfe-property-list-editor"]?.labels
-                    .deleteButtonTooltip
-                }
-              </oj-c-button>
+              <TableRowDeleteButton fieldDescription={fieldDescription} deleteRow={deleteRow} />
             </td>
           )}
         </tr>
@@ -404,7 +513,7 @@ const ArrayTableEditor = ({
         headerText: "Value",
         field: "value",
         resizable: "enabled",
-        width: "93%"
+        width: `calc(100% - ${TABLE_ACTION_COLUMN_WIDTH})`
       },
     ],
     getData: (modelValue) => {
@@ -816,6 +925,38 @@ interface TableRow {
   [key: string]: any;
 }
 
+const tableAddKeydownHandlers = new WeakSet<HTMLElement>();
+
+const registerTableAddKeydownHandler = (
+  table: HTMLElement | null,
+) => {
+  if (!table) return;
+
+  if (tableAddKeydownHandlers.has(table)) return;
+
+  table.addEventListener("keydown", (event: KeyboardEvent) => {
+    if (
+      event.key !== "Enter" ||
+      (event.target as Element | null)?.closest(
+        "oj-c-button[data-testid='add'], oj-c-button[data-testid='delete']",
+      ) ||
+      !table.querySelector(".cfe-table-add-header.oj-table-active-element")
+    ) return;
+
+    // oj-table keeps DOM focus on the table while arrow keys move its active
+    // header. Enter moves focus into Plus; subsequent Enter uses the same
+    // button handler as the focus-after-delete path.
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    table
+      .querySelector<HTMLElement>(
+        ".cfe-table-add-header.oj-table-active-element oj-c-button[data-testid='add']",
+      )
+      ?.focus();
+  }, true);
+  tableAddKeydownHandlers.add(table);
+};
+
 interface TableEditorOptions {
   fieldDescription: Property;
   formModel: FormContentModel;
@@ -865,9 +1006,10 @@ const getTableEditor = (options: TableEditorOptions) => {
         headerTemplate: "addColumnTemplate",
         template: "actionTemplate",
         sortable: "disabled",
-        // width of delete button column in tables.
-        // ideally this could be specified as 'auto', but oj-table will not set below 100px.
-        width: "7%",
+        frozenEdge: "end",
+        // Reserve enough space for the Plus/Delete icon button in narrow,
+        // two-column form layouts. A percentage can shrink below the button.
+        width: TABLE_ACTION_COLUMN_WIDTH,
       });
     }
 
@@ -883,24 +1025,14 @@ const getTableEditor = (options: TableEditorOptions) => {
       dataProvider.data = data;
     };
 
+    const tableRef = (table: HTMLElement | null) => {
+      registerTableAddKeydownHandler(table);
+    };
+
     const addColumn = (
       cell: ojTable.CellTemplateContext<string, TableRow>,
     ) => {
-      return (
-        <oj-c-button
-          data-testid="add"
-          display="icons"
-          chroming="borderless"
-          label={t["wrc-pdj-fields"]?.["cfe-property-list-editor"]?.labels.addButtonTooltip}
-          onojAction={addButtonHandler}
-        >
-          <span slot="endIcon" class="oj-ux-ico-plus"></span>
-          {
-            t["wrc-pdj-fields"]?.["cfe-property-list-editor"]?.labels
-              .addButtonTooltip
-          }
-        </oj-c-button>
-      );
+      return <TableAddButton addRow={addButtonHandler} />;
     };
 
     const tableRenderRow = (
@@ -922,6 +1054,7 @@ const getTableEditor = (options: TableEditorOptions) => {
     return (
       <div id="properties-table-container" data-testid="properties-table-container" class={ "" }>
         <oj-table
+          ref={tableRef as any}
           class={attrs.class}
           editMode={attrs.editMode}
           columns={attrs.columns}
@@ -1040,19 +1173,7 @@ export const getPropertiesEditor = (
           {!isReadOnly && (
             <>
               <td>
-                <oj-c-button
-                  display="icons"
-                  chroming="borderless"
-                  data-property={fieldDescription.name}
-                  label={t["wrc-pdj-fields"]?.["cfe-property-list-editor"]?.labels.deleteButtonTooltip}
-                  onojAction={deleteRow}
-                >
-                  <span slot="endIcon" class="oj-ux-ico-trash"></span>
-                  {
-                    t["wrc-pdj-fields"]?.["cfe-property-list-editor"]?.labels
-                      .deleteButtonTooltip
-                  }
-                </oj-c-button>
+                <TableRowDeleteButton fieldDescription={fieldDescription} deleteRow={deleteRow} />
               </td>
             </>
           )}
@@ -1083,7 +1204,7 @@ export const getPropertiesEditor = (
         sortProperty: "value",
         field: "value",
         resizable: "enabled",
-        width: "60%"
+        width: `calc(68% - ${TABLE_ACTION_COLUMN_WIDTH})`
       },
     ],
     getData: (modelValue) => {

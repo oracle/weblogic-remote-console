@@ -2,15 +2,15 @@
   "name": "weblogic-remote-console",
   "productName": "WebLogic Remote Console",
   "homepage": "https://github.com/oracle/weblogic-remote-console",
-  "version": "3.0.5",
+  "version": "3.0.6",
   "main": "app/main.js",
   "scripts": {
     "test": "node --test test/*.test.js",
     "start": "electron . dev",
     "pack": "electron-builder --dir",
     "dist": "electron-builder -p never",
-    "eslint": "node_modules/eslint/bin/eslint.js  -f compact app/*.js app/js/*.js",
-    "eslint-wib": "node_modules\\.bin\\eslint  -f compact app/*.js app/js/*.js"
+    "eslint": "node_modules/eslint/bin/eslint.js -f stylish app/*.js app/js/*.js",
+    "eslint-wib": "node_modules\\.bin\\eslint -f stylish app/*.js app/js/*.js"
   },
   "repository": {
     "type": "git",
@@ -24,25 +24,27 @@
   "description": "WebLogic Remote Console",
   "copyright": "Copyright (c) 2021, 2026, Oracle and/or its affiliates.",
   "dependencies": {
+    "ajv": "^8.20.0",
     "chokidar": "^4.0.0",
-    "yargs": "^17.0.0",
-    "ajv": "^8.18.0",
-    "electron-log": "^5.0.0",
+    "electron-log": "^5.4.4",
     "electron-preferences": "^2.8.2",
     "electron-prompt": "^1.7.0",
-    "electron-updater": "^6.3.9",
-    "fs-extra": "^11.0.0",
-    "properties-reader": "^2.3.0"
+    "electron-updater": "^6.8.9",
+    "fs-extra": "^11.3.6",
+    "properties-reader": "^2.3.0",
+    "yargs": "^17.7.3"
   },
   "devDependencies": {
-    "electron": "^35.0.0",
-    "electron-builder": "^26.8.1",
+    "electron": "^43.1.1",
+    "electron-builder": "^26.15.3",
     "eslint": "^9.0.0"
   },
   "overrides": {
-    "tar": "^7.5.8",
+    "tar": "^7.5.22",
     "glob": "^11.1.0",
-    "serialize-javascript": "^7.0.5",
-    "picomatch": "^4.0.4"
+    "serialize-javascript": "^7.0.5"
+  },
+  "allowScripts": {
+    "electron-winstaller@5.4.0": true
   }
 }

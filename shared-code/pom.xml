@@ -9,7 +9,7 @@
     <parent>
         <groupId>com.oracle.weblogic</groupId>
         <artifactId>console-backend</artifactId>
-        <version>3.0.5</version>
+        <version>3.0.6</version>
     </parent>
 
     <packaging>jar</packaging>
@@ -23,18 +23,6 @@
     </properties>
     <build>
         <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <configuration>
-                    <source>${maven.compiler.source}</source>
-                    <target>${maven.compiler.target}</target>
-                    <compilerArgs>
-                        <arg>-Xlint:all</arg>
-                    </compilerArgs>
-                </configuration>
-            </plugin>
-
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-checkstyle-plugin</artifactId>

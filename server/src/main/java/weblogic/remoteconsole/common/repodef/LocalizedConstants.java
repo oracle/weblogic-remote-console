@@ -106,6 +106,13 @@ public class LocalizedConstants {
       "Already exists: {0}"
     );
 
+  // Indicates that the user is not allowed to access an existing bean.
+  public static final LocalizableString ENTITY_ACCESS_FORBIDDEN =
+    addConstant(
+      "entityAccessForbidden",
+      "Access to ''{0}'' is forbidden."
+    );
+
   // The label to use to refer to a null reference (e.g. setting a Server's Machine to null)
   public static final LocalizableString NULL_REFERENCE =
     addConstant(

@@ -8,6 +8,7 @@ import { Global } from "../global";
 import { tryGetDatabus } from "../../integration/databus-accessor";
 import { emitRefresh } from "../refresh";
 import { Action, PDJ } from "../typedefs/pdj";
+import { Message, ResponseError } from "../typedefs/common";
 import {
   PropertyValueHolder,
   RDJ,
@@ -23,12 +24,6 @@ export type DownloadRequest = {
   filename?: string;
   mimeType?: string;
   url: string;
-};
-
-type ResponseLikeError = Error & {
-  body?: string;
-  status?: number;
-  url?: string;
 };
 
 const createUniqueHeaders = () => {
@@ -77,17 +72,52 @@ const normalizeResponseBody = (bodyText?: string): string | undefined => {
   return `${normalized.slice(0, 497)}...`;
 };
 
+const getResponseMessages = (bodyText?: string): Message[] | undefined => {
+  if (!bodyText?.trim()) return undefined;
+
+  try {
+    const parsedBody = JSON.parse(bodyText) as { messages?: unknown };
+    if (!Array.isArray(parsedBody?.messages)) return undefined;
+
+    const messages = parsedBody.messages.flatMap((value): Message[] => {
+      if (!value || typeof value !== "object") return [];
+
+      const candidate = value as Record<string, unknown>;
+      if (typeof candidate.severity !== "string") return [];
+      if (typeof candidate.message !== "string" && typeof candidate.detail !== "string") return [];
+
+      return [{
+        severity: candidate.severity,
+        ...(typeof candidate.message === "string" ? { message: candidate.message } : {}),
+        ...(typeof candidate.detail === "string" ? { detail: candidate.detail } : {}),
+        ...(typeof candidate.property === "string" ? { property: candidate.property } : {}),
+      }];
+    });
+
+    return messages.length > 0 ? messages : undefined;
+  } catch (_error) {
+    return undefined;
+  }
+};
+
 const buildResponseError = (
   response: Response,
   requestUrl?: string,
   bodyText?: string,
-): ResponseLikeError => {
-  const body = normalizeResponseBody(bodyText);
+): ResponseError => {
+  const messages = getResponseMessages(bodyText);
+  const body = messages ? undefined : normalizeResponseBody(bodyText);
+  const messageSummary = messages
+    ?.map((message) => message.detail || message.message)
+    .filter(Boolean)
+    .join("; ");
   const target = requestUrl || response.url || "request";
   const statusText = `HTTP ${response.status}${response.statusText ? ` ${response.statusText}` : ""}`;
 
   let message: string;
-  if (body) {
+  if (messageSummary) {
+    message = `${statusText} from ${target}: ${messageSummary}`;
+  } else if (body) {
     message = response.ok
       ? `Unexpected non-JSON response from ${target}: ${body}`
       : `${statusText} from ${target}: ${body}`;
@@ -97,11 +127,13 @@ const buildResponseError = (
     message = `${statusText} from ${target}`;
   }
 
-  const error = new Error(message) as ResponseLikeError;
+  const error = new Error(message) as ResponseError;
   error.name = "Request Failed";
   error.status = response.status;
   error.url = target;
   if (body) error.body = body;
+  if (messages) error.messages = messages;
+  if (bodyText) error.rawResponseBody = bodyText;
   return error;
 };
 
@@ -427,6 +459,9 @@ const getDataComponentRaw = async (url: string, context?: string) => {
       bodyText = await res.text();
     } catch (_e) {
       bodyText = "";
+    }
+    if (bodyText) {
+      Logger.log(() => `HTTP ${res.status} response from ${fixedUrl}: ${bodyText}`);
     }
     throw buildResponseError(res, fixedUrl, bodyText);
   }

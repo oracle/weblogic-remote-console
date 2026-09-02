@@ -4,11 +4,11 @@
  * The Universal Permissive License (UPL), Version 1.0
  */
 import * as t from "ojL10n!wrc/shared/resources/nls/frontend";
-import { Dispatch, useContext, useState } from "preact/hooks";
+import { Dispatch, useContext, useEffect, useState } from "preact/hooks";
 import { requireAsset } from "wrc/shared/url";
 import { Response } from "wrc/shared/typedefs/common";
 import { FormContentModel } from "../../shared/model/formcontentmodel";
-import { Action } from "../../shared/typedefs/pdj";
+import { Action, Property } from "../../shared/typedefs/pdj";
 import { UserContext } from "../resource";
 import Form from "./form";
 import { FormIntro } from "./formintro";
@@ -18,6 +18,7 @@ import { ActionRedwoodMap } from "../action-redwood-map";
 import { Help } from "../shared/help";
 import "oj-c/button";
 import { isSuccessful } from "wrc/shared/messages";
+import FieldSettingsDialog from "./field-settings-dialog";
 
 type Props = {
   formModel?: FormContentModel;
@@ -29,6 +30,8 @@ type Props = {
 
 export const ActionInputForm = ({ formModel, setModel, callback, completed, action }: Props) => {
   const [showHelp, setShowHelp] = useState(false);
+  const [fieldSettingsOpen, setFieldSettingsOpen] = useState(false);
+  const [fieldSettingsField, setFieldSettingsField] = useState<Property | undefined>(undefined);
   const helpImageSrc = !showHelp
     ? requireAsset("wrc/assets/images/toggle-help-on-blk_24x24.png")
     : requireAsset("wrc/assets/images/toggle-help-off-blk_24x24.png");
@@ -42,6 +45,23 @@ export const ActionInputForm = ({ formModel, setModel, callback, completed, acti
   };
 
   const ctx = useContext(UserContext);
+
+  useEffect(() => {
+    const handler = (e: Event) => {
+      const detail = (e as CustomEvent).detail as {
+        fieldDescription: Property;
+        formModel: FormContentModel;
+      };
+      if (detail?.fieldDescription && detail.formModel === formModel) {
+        setFieldSettingsField(detail.fieldDescription);
+        setFieldSettingsOpen(true);
+      }
+    };
+    document.addEventListener("open-field-settings", handler as EventListener);
+    return () => {
+      document.removeEventListener("open-field-settings", handler as EventListener);
+    };
+  }, [formModel]);
 
   const onSave = () => {
     formModel
@@ -75,6 +95,16 @@ export const ActionInputForm = ({ formModel, setModel, callback, completed, acti
   if (formModel) {
     return (
       <div slot="body">
+        <FieldSettingsDialog
+          open={fieldSettingsOpen}
+          formModel={formModel}
+          fieldDescription={fieldSettingsField}
+          onClose={() => {
+            setFieldSettingsOpen(false);
+            setFieldSettingsField(undefined);
+          }}
+          onApply={() => setModel?.(formModel.clone())}
+        />
         <div id="overlay-toolbar-container" class="oj-flex">
           <div
             id="overlay-form-toolbar-buttons"

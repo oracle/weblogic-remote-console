@@ -1,4 +1,4 @@
-// Copyright (c) 2021, 2025, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2026, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.repo;
@@ -56,7 +56,8 @@ public abstract class PageReaderRepo extends PageRepo {
   public Response<Page> getPage(InvocationContext ic) {
     LOGGER.finest("PageReaderRepo.getPage " + ic.getPagePath() + " " + ic.getBeanTreePath());
     if (ic.getPagePath().isSlicePagePath()) {
-      return customizePage(ic, (new SliceReader(ic)).getSlice());
+      SliceReader reader = new SliceReader(ic);
+      return reader.addSliceContextToForbidden(customizePage(ic, reader.getSlice()));
     } else if (ic.getPagePath().isCreateFormPagePath()) {
       return customizePage(ic, (new CreateFormReader(ic)).getCreateForm());
     } else if (ic.getPagePath().isTablePagePath()) {

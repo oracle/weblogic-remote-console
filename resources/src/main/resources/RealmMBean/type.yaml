@@ -1,4 +1,4 @@
-# Copyright (c) 2020, 2024, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2026, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 referenceable: true
@@ -19,6 +19,9 @@ properties:
 
 - name: AutoRestartOnNonDynamicChanges
   label: Automatically Restart After Non-Dynamic Changes
+
+- name: WebLogicJwtVirtualUserEnabled
+  label: WebLogic JWT Virtual User Enabled
 
 - name: RetireTimeoutSeconds
   label: Retire Timeout

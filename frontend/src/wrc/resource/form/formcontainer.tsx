@@ -30,6 +30,7 @@ import { KeySetImpl } from "ojs/ojkeyset";
 import { subscribeToRefresh, RefreshDetail } from "wrc/shared/refresh";
 import { isSuccessful } from "wrc/shared/messages";
 import { parseResponseJson } from "wrc/shared/model/transport";
+import { parseIfJson } from "wrc/shared/model/model-utils";
 import * as Logger from "ojs/ojlogger";
 import * as t from "ojL10n!wrc/shared/resources/nls/frontend";
 
@@ -117,11 +118,14 @@ export const FormContainer = ({ model, pageContext }: Props) => {
     return unsubscribe;
   }, [contentModel]);
 
-  // Listen once for global launcher events and open single FieldSettings dialog
+  // Listen for launcher events emitted by the form this container displays.
   useEffect(() => {
     const handler = (e: Event) => {
-      const detail = (e as CustomEvent).detail as { fieldDescription: Property };
-      if (detail?.fieldDescription) {
+      const detail = (e as CustomEvent).detail as {
+        fieldDescription: Property;
+        formModel: FormContentModel;
+      };
+      if (detail?.fieldDescription && detail.formModel === contentModel) {
         setFieldSettingsField(detail.fieldDescription);
         setFieldSettingsOpen(true);
       }
@@ -130,7 +134,7 @@ export const FormContainer = ({ model, pageContext }: Props) => {
     return () => {
       document.removeEventListener("open-field-settings", handler as EventListener);
     };
-  }, []);
+  }, [contentModel]);
 
   const getToolbarArea = () => {
     if (contentModel instanceof FormContentModel) {
@@ -273,7 +277,7 @@ export const FormContainer = ({ model, pageContext }: Props) => {
     }
 
     const references = (contentModel instanceof TableContentModel)
-      ? ([...selectedKeys.values()].map((r) => JSON.parse(r as string)))
+      ? ([...selectedKeys.values()].map((r) => parseIfJson(r)))
       : undefined;
 
     await contentModel

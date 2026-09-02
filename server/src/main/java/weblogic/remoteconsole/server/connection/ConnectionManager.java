@@ -642,6 +642,11 @@ public class ConnectionManager {
             .add("type", "weblogic.management.configuration.AllowListMBean")
         )
         .add(
+          "FeatureCompatibility",
+          Json.createObjectBuilder()
+            .add("type", "weblogic.management.configuration.FeatureCompatibilityMBean")
+        )
+        .add(
           "GarbageCollection",
           Json.createObjectBuilder()
             .add("type", "weblogic.management.runtime.JVMRuntimeMBean")

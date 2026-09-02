@@ -176,6 +176,13 @@ export default function FieldSettingsDialog({
 
   if (!fieldDescription) return <></>;
 
+  const isFieldReadOnly =
+    formModel.isReadOnly(fieldDescription) ||
+    formModel.isPropertyMissingFromRDJ(fieldDescription.name);
+  const effectiveFieldDescription = isFieldReadOnly && !fieldDescription.readOnly
+    ? { ...fieldDescription, readOnly: true }
+    : fieldDescription;
+
   // Build options for select-single
   const selections = useMemo(() => {
     if (!formModel.isFieldSelect(fieldDescription)) return [];
@@ -199,8 +206,12 @@ export default function FieldSettingsDialog({
     return opt.data.label ?? opt.data.value;
   };
 
-  const supportsTokens = !isIndirectField && formModel.canSupportTokens && !!fieldDescription.supportsModelTokens;
-  const supportsUnresolvedRef = !isIndirectField && (
+  const supportsTokens =
+    !isIndirectField &&
+    !isFieldReadOnly &&
+    formModel.canSupportTokens &&
+    !!fieldDescription.supportsModelTokens;
+  const supportsUnresolvedRef = !isIndirectField && !isFieldReadOnly && (
     fieldDescription.type === "reference-dynamic-enum" || fieldDescription.type === "reference"
   );
 
@@ -211,14 +222,14 @@ export default function FieldSettingsDialog({
     const currentVal = formModel.getProperty(name);
     let didChange = false;
 
-    if (isIndirectField) {
+    if (isIndirectField || isFieldReadOnly) {
       dialogRef.current?.close();
       return;
     }
 
     if (entryType === ENTRY_TYPE.unset) {
       // Do not allow unsetting a read-only field
-      if (!formModel.isReadOnly(fieldDescription)) {
+      if (!isFieldReadOnly) {
         if (currentVal !== undefined) {
           formModel.setProperty(name);
           didChange = true;
@@ -282,7 +293,7 @@ export default function FieldSettingsDialog({
             onvalueChanged={(ev) => setEntryType(ev.detail.value as ENTRY_TYPE)}
             style={{width:'100%'}}
           >
-            <oj-option value={ENTRY_TYPE.unset} disabled={!formModel.hasPropertyChanged(fieldDescription.name) || formModel.isReadOnly(fieldDescription)}>
+            <oj-option value={ENTRY_TYPE.unset} disabled={!formModel.hasPropertyChanged(fieldDescription.name) || isFieldReadOnly}>
               {t["wrc-wdt-form"].wdtOptionsDialog.default}
             </oj-option>
 
@@ -293,7 +304,7 @@ export default function FieldSettingsDialog({
                 ? t["wrc-wdt-form"].wdtOptionsDialog.selectValue
                 : formModel.isFieldMultiSelect(fieldDescription)
                 ? t["wrc-wdt-form"].wdtOptionsDialog.multiSelectUnset
-                : (formModel.isReadOnly(fieldDescription)
+                : (isFieldReadOnly
                   ? t["wrc-wdt-form"].wdtOptionsDialog.seeValue
                   : t["wrc-wdt-form"].wdtOptionsDialog.enterValue)}
             </oj-option>
@@ -328,7 +339,7 @@ export default function FieldSettingsDialog({
                 </div>
               ) : formModel.isFieldProperties(fieldDescription) ? (
                 getPropertiesEditor(
-                  fieldDescription,
+                  effectiveFieldDescription,
                   (workingModel ?? formModel),
                   (e: ojInputText.valueChanged | ojSwitch.valueChanged) => {
                     const val = (e as any).detail.value;
@@ -350,7 +361,7 @@ export default function FieldSettingsDialog({
                   onvalueChanged={(e: ojSwitch.valueChanged) => setRegularValue(!!e.detail.value)}
                   value={!!regularValue}
                   data-property={fieldDescription.name}
-                  readonly={formModel.isReadOnly(fieldDescription)}
+                  readonly={isFieldReadOnly}
                 />
               ) : formModel.isFieldSelect(fieldDescription) ? (
                 <oj-select-single
@@ -364,7 +375,7 @@ export default function FieldSettingsDialog({
                   onvalueChanged={(e: ojInputText.valueChanged) => setRegularValue(e.detail.value)}
                   required={formModel.isRequired(fieldDescription)}
                   disabled={formModel.isDisabled(fieldDescription)}
-                  readonly={formModel.isReadOnly(fieldDescription)}
+                  readonly={isFieldReadOnly}
                   data-property={fieldDescription.name}
                 />
               ) : formModel.isFieldFileContents(fieldDescription) ? (
@@ -390,11 +401,19 @@ export default function FieldSettingsDialog({
                     style="display:none"
                   />
 
-                  <oj-c-button chroming="borderless" onojAction={() => fileContentsInputRef.current?.click()}>
+                  <oj-c-button
+                    chroming="borderless"
+                    disabled={isFieldReadOnly}
+                    onojAction={() => fileContentsInputRef.current?.click()}
+                  >
                     <span slot="startIcon" class="oj-ux-ico-upload"></span>
                   </oj-c-button>
 
-                  <oj-c-button chroming="borderless" onojAction={() => setRegularValue(undefined)}>
+                  <oj-c-button
+                    chroming="borderless"
+                    disabled={isFieldReadOnly}
+                    onojAction={() => setRegularValue(undefined)}
+                  >
                     <span slot="startIcon" class="oj-ux-ico-eraser"></span>
                   </oj-c-button>
                 </div>
@@ -408,7 +427,7 @@ export default function FieldSettingsDialog({
                       setRegularValue((e as any).detail.value)
                     }
                     placeholder=""
-                    readonly={formModel.isReadOnly(fieldDescription)}
+                    readonly={isFieldReadOnly}
                     required={formModel.isRequired(fieldDescription)}
                     title={`${formModel.getTitle(fieldDescription)}`}
                     user-assistance-density="reflow"
@@ -417,7 +436,7 @@ export default function FieldSettingsDialog({
                     id={fieldDescription.name}
                   />
 
-                  {(window as any).electron_api ? (
+                  {(window as any).electron_api && !isFieldReadOnly ? (
                     <oj-c-button
                       chroming="borderless"
                       onojAction={async () => {
@@ -442,7 +461,7 @@ export default function FieldSettingsDialog({
                       setRegularValue((e as any).detail.value)
                     }
                     placeholder=""
-                    readonly={formModel.isReadOnly(fieldDescription)}
+                    readonly={isFieldReadOnly}
                     required={formModel.isRequired(fieldDescription)}
                     title={`${formModel.getTitle(fieldDescription)}`}
                     user-assistance-density="reflow"
@@ -450,7 +469,7 @@ export default function FieldSettingsDialog({
                     data-property={fieldDescription.name}
                     id={fieldDescription.name}
                   />
-                  {(window as any).electron_api ? (
+                  {(window as any).electron_api && !isFieldReadOnly ? (
                     <oj-c-button
                       chroming="borderless"
                       onojAction={async () => {
@@ -478,6 +497,7 @@ export default function FieldSettingsDialog({
                   onrawValueChanged={(e: ojInputTextEventMap["rawValueChanged"]) =>
                     setRegularValue((e as any).detail.value)
                   }
+                  readonly={isFieldReadOnly}
                   data-property={fieldDescription.name}
                 />
               ) : formModel.isFieldMultiLineString(fieldDescription) ? (
@@ -490,7 +510,7 @@ export default function FieldSettingsDialog({
                   onrawValueChanged={(e: any) =>
                     setRegularValue((e as any).detail.value)
                   }
-                  readonly={formModel.isReadOnly(fieldDescription)}
+                  readonly={isFieldReadOnly}
                   required={formModel.isRequired(fieldDescription)}
                   disabled={formModel.isDisabled(fieldDescription)}
                   data-property={fieldDescription.name}
@@ -507,7 +527,7 @@ export default function FieldSettingsDialog({
                     setRegularValue((e as any).detail.value)
                   }
                   placeholder=""
-                  readonly={formModel.isReadOnly(fieldDescription)}
+                  readonly={isFieldReadOnly}
                   required={formModel.isRequired(fieldDescription)}
                   title={formModel.getTitle(fieldDescription)}
                   user-assistance-density="reflow"
@@ -523,7 +543,7 @@ export default function FieldSettingsDialog({
                     setRegularValue((e as any).detail.value)
                   }
                   placeholder=""
-                  readonly={formModel.isReadOnly(fieldDescription)}
+                  readonly={isFieldReadOnly}
                   required={formModel.isRequired(fieldDescription)}
                   title={`${formModel.getHint(fieldDescription)}`}
                   user-assistance-density="reflow"

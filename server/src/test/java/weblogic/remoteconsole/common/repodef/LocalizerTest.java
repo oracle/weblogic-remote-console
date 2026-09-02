@@ -36,4 +36,14 @@ public class LocalizerTest {
       actual
     );
   }
+
+  @Test
+  public void shouldSubstituteBeanNameInForbiddenMessage() {
+    Localizer localizer = new Localizer("console_backend_resource_bundle", Locale.ENGLISH);
+
+    String actual =
+      localizer.localizeString(LocalizedConstants.ENTITY_ACCESS_FORBIDDEN, "AdminServer");
+
+    assertEquals("Access to 'AdminServer' is forbidden.", actual);
+  }
 }

@@ -109,7 +109,7 @@ function ShoppingCartMenuImpl() {
 
   const iconClass = shoppingCartFull
     ? "oj-ux-ico-cart-full"
-    : "oj-ux-ico-cart-alt";
+    : "oj-ux-ico-cart-empty";
   const tooltip = t["wrc-content-area-header"].icons.shoppingcart.tooltip;
 
   if (!shoppingCartVisible) return null;

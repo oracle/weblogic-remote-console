@@ -1,4 +1,4 @@
-# Copyright (c) 2020, 2025, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2026, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 baseTypes:
@@ -30,6 +30,14 @@ properties:
   - limited
   name: GroupMembershipSearching
   type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: true
+  descriptionHTML: '<p>Whether to attempt password validation using a legacy Argon2
+    algorithm if a password is not validated using the standard algorithm.</p> '
+  name: LegacyArgon2FallbackEnabled
+  type: boolean
   writable: true
 - defaultValue:
     value:

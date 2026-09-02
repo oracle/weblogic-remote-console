@@ -1,4 +1,4 @@
-// Copyright (c) 2021, 2025, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2026, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.repo.weblogic;
@@ -168,7 +168,7 @@ public class WebLogicRestInvoker {
     return WebLogicRestRequest.builder().root(WebLogicRestRequest.CURRENT_WEBLOGIC_REST_API_ROOT);
   }
 
-  private static Response<JsonObject> restResponseToResponse(
+  static Response<JsonObject> restResponseToResponse(
     InvocationContext ic,
     javax.ws.rs.core.Response restResponse,
     boolean allowCreated,
@@ -186,6 +186,9 @@ public class WebLogicRestInvoker {
     }
     if (Status.NOT_FOUND.getStatusCode() == status) {
       return response.setNotFound();
+    }
+    if (Status.FORBIDDEN.getStatusCode() == status) {
+      return response.setForbidden();
     }
     if (Status.BAD_REQUEST.getStatusCode() == status) {
       return response.setUserBadRequest();

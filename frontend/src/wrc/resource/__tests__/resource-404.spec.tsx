@@ -1,6 +1,6 @@
 /**
  * @license UPL-1.0
- * Copyright (c) 2025, Oracle and/or its affiliates.
+ * Copyright (c) 2025, 2026, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  */
 import { render, waitFor } from "@testing-library/preact";
@@ -91,5 +91,43 @@ describe("Resource - 4xx handling", () => {
     expect(broadcastMessage).toHaveBeenCalled();
     const firstCallArg = broadcastMessage.mock.calls[0]?.[0];
     expect(firstCallArg?.severity?.toLowerCase?.()).toBe("error");
+  });
+
+  it("broadcasts structured messages and navigates to a safe path when RDJ load fails with 403", async () => {
+    const err: any = new Error("HTTP 403 Forbidden");
+    err.status = 403;
+    err.messages = [{ severity: "error", message: "Forbidden" }];
+    err.rawResponseBody = JSON.stringify({
+      messages: err.messages,
+      statusData: { providers: { current: { name: "Operator" } } },
+    });
+    jest.spyOn(transport, "getData").mockRejectedValue(err);
+
+    const navigateToAbsolutePath = jest.fn();
+    const broadcastMessage = jest.fn();
+    const resourceContext: any = {
+      routerController: {
+        navigateToAbsolutePath,
+        selectRoot: () => {},
+      },
+      broadcastMessage,
+    };
+
+    const content = render(
+      <div data-oj-binding-provider="preact">
+        <Resource rdj="/api/-current-/forbidden" context={resourceContext} />
+      </div>
+    );
+
+    await Context.getContext(content.container).getBusyContext().whenReady();
+    await waitFor(() =>
+      expect(navigateToAbsolutePath).toHaveBeenCalledWith("/api/-current-/group")
+    );
+
+    expect(broadcastMessage).toHaveBeenCalledTimes(1);
+    const firstCallArg = broadcastMessage.mock.calls[0][0];
+    expect(firstCallArg.severity).toBe("error");
+    expect(JSON.stringify(firstCallArg)).toContain("Forbidden");
+    expect(JSON.stringify(firstCallArg)).not.toContain("statusData");
   });
 });

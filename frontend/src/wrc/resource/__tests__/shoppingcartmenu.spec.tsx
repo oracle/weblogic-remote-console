@@ -79,7 +79,7 @@ import { UserContext } from "../resource";
 import ShoppingCartMenu from "../shoppingcartmenu";
 
 describe("ShoppingCartMenu", () => {
-  it("hides the launcher when the shopping cart state is off", () => {
+  it("updates the launcher and icon for the shopping cart state", () => {
     const subscribers: Array<(event: any) => void> = [];
     const databus = {
       subscribe: (callback: (event: any) => void) => {
@@ -108,6 +108,17 @@ describe("ShoppingCartMenu", () => {
     });
 
     expect(container.querySelector("#shoppingCartMenuLauncher")).not.toBeNull();
+    expect(
+      container.querySelector("span.oj-ux-ico-cart-empty"),
+    ).not.toBeNull();
+
+    act(() => {
+      subscribers[0]({ shoppingcart: { state: "full" } });
+    });
+
+    expect(
+      container.querySelector("span.oj-ux-ico-cart-full"),
+    ).not.toBeNull();
 
     act(() => {
       subscribers[0]({ shoppingcart: { state: "off" } });

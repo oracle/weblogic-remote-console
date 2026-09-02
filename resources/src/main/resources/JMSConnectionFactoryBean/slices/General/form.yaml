@@ -1,4 +1,4 @@
-# Copyright (c) 2020, 2021, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2020, 2026, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 introductionHTML: >
@@ -11,6 +11,11 @@ properties:
 - name: "DefaultTargetingEnabled"
 - name: "JNDIName"
 - name: "SubDeploymentName"
+  getMethod: weblogic.remoteconsole.customizers.TargetableBeanCustomizer.getSubDeploymentName
+  usedIf:
+    property: DefaultTargetingEnabled
+    values:
+    - false
 advancedProperties:
 - name: "LocalJNDIName"
 helpTopics:
@@ -23,4 +28,3 @@ helpTopics:
 - label: "Understanding WebLogic JMS"
   href: "jmspg/overview.html"
   type: "edocs"
-

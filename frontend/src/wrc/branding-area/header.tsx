@@ -53,7 +53,7 @@ export function BrandingHeaderImpl({context}: Props) {
   const appName =
     t["wrc-header"]?.text?.appName;
 
-  const version = '3.0.5';
+  const version = '3.0.6';
 
   // Dark mode state + helpers
   const [darkEnabled, setDarkEnabled] = useState(false);

@@ -1,4 +1,4 @@
-# Copyright (c) 2020, 2025, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2026, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 baseTypes:
@@ -447,6 +447,15 @@ properties:
   restartNeeded: true
   type: boolean
   writable: true
+- defaultValue: {
+    }
+  descriptionHTML: 'The feature compatibility configuration for this Domain.  <p>The
+    FeatureCompatibility MBean contains dynamic feature compatibility controls for
+    WebLogic Server features. These controls preserve legacy behavior by default and
+    enable feature-specific tightened behavior when explicitly enabled.</p> '
+  name: FeatureCompatibility
+  relationship: containment
+  type: weblogic.management.configuration.FeatureCompatibilityMBean
 - array: true
   creators:
   - weblogic.management.configuration.FileStoreMBean
