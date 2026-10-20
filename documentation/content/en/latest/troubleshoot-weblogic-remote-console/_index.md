@@ -1,5 +1,5 @@
 ---
-weight: 279
+weight: 280
 title: Troubleshoot Issues with WebLogic Remote Console
 ---
 
@@ -123,7 +123,7 @@ If you are an administrator, you can take the configuration lock \(and their pen
 
 ### How do I do *x* in WebLogic Remote Console 3.x? {#section_vq1_ly2_y3c}
 
-Significant design changes were implemented in WebLogic Remote Console 3.x. For a brief overview of the major changes compared to WebLogic Remote Console 2.4.19, refer to [Introducing WebLogic Remote Console 3.x](https://oracle.github.io/weblogic-remote-console/preview/).
+Significant changes to WebLogic Remote Console were implemented in 3.x. For a brief overview of the major changes compared to WebLogic Remote Console 2.4.19, refer to [Introducing WebLogic Remote Console 3.x](https://oracle.github.io/weblogic-remote-console/preview/).
 
 While we have done our best to ensure feature parity from WebLogic Remote Console 2.4,19, you may encounter some unexpected behavior, particularly in the area of WDT model file management. As with any issues you encounter, consider raising a bug in the [WebLogic Remote Console GitHub Repository](https://github.com/oracle/weblogic-remote-console) so we can track the issue. See [Contribute to WebLogic Remote Console](../set-console/contribute-wrc-repository#GUID-0BCE90EE-6760-4A0E-968E-C0EB8C49D66E).
 
@@ -278,3 +278,4 @@ If <code>auto-prefs.json</code> does become corrupted, you can reset it, but all
     -   macOS: <code>/Users/*user*/Library/Application Support/weblogic-remote-console/auto-prefs.json</code>
     -   Windows: <code>C:\Users\*user*\AppData\Roaming\weblogic-remote-console\auto-prefs.json</code>
 3.  Restart WebLogic Remote Console.
+

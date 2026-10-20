@@ -405,7 +405,7 @@ Avoid making changes with multiple tools simultaneously. When one session commit
 
 When you are satisfied with your changes, you must commit them for the changes to apply to the domain. Open the Shopping Cart and then click **Commit Changes**.
 
-Some configuration changes apply to the domain immediately - these are called dynamic changes. Other configuration changes require a server restart to take effect and are called non-dynamic changes. A server restart required icon ![Restart required](/weblogic-remote-console/images/ui-icons/restart-required-blk-24x24.png) appears beside any attribute that is non-dynamic.
+Some configuration changes apply to the domain immediately - these are called dynamic changes. Other configuration changes require a server restart to take effect and are called non-dynamic changes. A server restart required icon ![Restart required](/weblogic-remote-console/images/ui-icons/restart-required-blk_24x24.png) appears beside any attribute that is non-dynamic.
 
 {{< alert title="Note" color="primary" >}}
 
@@ -525,7 +525,16 @@ To prevent unauthorized changes to your WebLogic Server domains, WebLogic Remote
 
 If you log in as a user whose role has limited permissions, WebLogic Remote Console automatically adjusts its user interface to conceal the areas to which you do not have access. Users with the administrator role have full access to WebLogic Remote Console.
 
-If you want to see the full user interface of WebLogic Remote Console, regardless of your current role, then open **File** then **Settings**. \(On macOS, go to WebLogic Remote Console, then **Settings**.\) Under the **Role Checking** section, set **Restrict Content Based On Role** to **No** and click **Save**. A user with limited permissions can now *see* everything but they are still blocked from performing any actions beyond the scope of their role.
+If you want to see the full user interface of WebLogic Remote Console, regardless of your current role, then you can choose to disable role based content restriction.
+
+-   In Desktop WebLogic Remote Console, open **File** then **Settings**. \(On macOS, go to WebLogic Remote Console, then **Settings**.\) Under the **Role Checking** section, set **Restrict Content Based On Role** to **No** and click **Save**.
+
+-   For Hosted WebLogic Remote Console, use WLST Online to set the new behavior. Call <code>cmo.getRemoteConsoleHelperMBean.setRestrictContentBasedOnRoles(False)</code>, then save and activate the change. You must restart the Administration Server for this change to take effect.
+
+    -   You can also temporarily override the domain configuration setting: in <code>JAVA_OPTIONS</code>, set <code>-Dconsole.restrictContentBasedOnRoles=false</code>.
+
+
+A user with limited permissions can now *see* everything but they are still blocked from performing any actions beyond the scope of their role.
 
 {{< alert title="Note" color="primary" >}}
 
@@ -597,7 +606,7 @@ Start a Managed Server from WebLogic Remote Console.
 
     2.  [Assign a Server Instance to a Machine](#GUID-47BC8E98-37A5-4F87-BB5A-F4DC4E40E5D5).
 
-    3.  [Configure Startup Arguments for a Managed Server](#GUID-C1986FE5-E41C-41CC-880E-D6C78A691A7C).
+    3.  [Configure Startup Arguments](#GUID-C1986FE5-E41C-41CC-880E-D6C78A691A7C).
 
 3.  **Optional**: Change the startup mode for the Managed Server. The default is <code>RUNNING</code>. See [Specify a Startup Mode](#GUID-2802C481-742D-4EC6-8094-1734C19288C4).
 
@@ -612,13 +621,13 @@ Start a Managed Server from WebLogic Remote Console.
 
 Node Manager starts the server on the target machine. When the Node Manager finishes its start sequence, the server's state is indicated in the **State** column.
 
-### Configure Startup Arguments for a Managed Server {#GUID-C1986FE5-E41C-41CC-880E-D6C78A691A7C}
+### Configure Startup Arguments {#GUID-C1986FE5-E41C-41CC-880E-D6C78A691A7C}
 
 In most environments, Node Manager can start a server without requiring you to specify startup options. However, if you have modified your environment, such as adding classes to the WebLogic Server class path, you must specify startup options before you can use WebLogic Remote Console to start a server.
 
 1.  In the **Edit Tree**, go to **Environment**, then **Servers**.
 
-2.  Select the Managed Server that you want to configure startup arguments for.
+2.  Select the server that you want to configure startup arguments for.
 
 3.  On the **Advanced** tab, select the **Node Manager** subtab.
 
@@ -632,7 +641,7 @@ In most environments, Node Manager can start a server without requiring you to s
 
     All paths refer to paths on the Node Manager machine.
 
-    -   If you provide values for the **Class Path** field, make sure that you provide the full class path required to start the Managed Server.
+    -   If you provide values for the **Class Path** field, make sure that you provide the full class path required to start the server.
 
     -   If you want to add **Arguments**, make sure you prepend <code>-D</code> before each argument, like so <code>-Dweblogic.management.startupMode=*MODE*</code> .
 
@@ -640,7 +649,7 @@ In most environments, Node Manager can start a server without requiring you to s
 
 6.  Click **Save**.
 
-7.  Repeat for every applicable Managed Server.
+7.  Repeat for every applicable server.
 
 
 ### Specify a Startup Mode {#GUID-2802C481-742D-4EC6-8094-1734C19288C4}
@@ -1310,7 +1319,7 @@ Production Mode
 
 Enable the **Production Mode** option to convert your domain to production mode. {{< alert title="Note" color="primary" >}} As of WebLogic Server 14.1.2.0.0, when you select production mode, *secured* production mode is enabled by default.
 
-If you want to apply the features of basic production mode only, then you must explicitly disable the **Secured Production Mode** option. If you use Node Manager to start your Managed Servers, then you must also add the <code>-Dweblogic.securemode.SecureModeEnabled=false</code> startup argument to each Managed Server. See [Configure Startup Arguments for a Managed Server](#GUID-C1986FE5-E41C-41CC-880E-D6C78A691A7C).
+If you want to apply the features of basic production mode only, then you must explicitly disable the **Secured Production Mode** option. If you use Node Manager to start your Managed Servers, then you must also add the <code>-Dweblogic.securemode.SecureModeEnabled=false</code> startup argument to each Managed Server. See [Configure Startup Arguments](#GUID-C1986FE5-E41C-41CC-880E-D6C78A691A7C).
 
 {{< /alert >}}
 
@@ -1537,3 +1546,4 @@ Make sure your environment is properly configured for migration. See [Server and
     -   For whole server, go to **Migration Data Runtimes**
 
 Following migration, you should go to the **Edit Tree** and open the Shopping Cart to check if there are any pending changes that need to be committed.
+

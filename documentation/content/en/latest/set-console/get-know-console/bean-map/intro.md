@@ -18,5 +18,5 @@ The Map of the Console is split into two sections, both of which have subsection
     * Jump to [Monitoring Tree](#monitoring)
     * Jump to [Configuration View/Configuration Edit Trees](#edit)
     * Jump to [Security Data Tree](#securityData)
-* **Page Summaries**: Use this section to learn about the specific attributes of an MBean: how they are labeled in the UI, which page tab they're located on, and a short description of the field (plus a link to their respective page in the [WebLogic Server MBean Reference](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/wlmbr/core/index.html)). MBeans in the Page Summaries section are listed alphabetically.
+* **Page Summaries**: Use this section to learn about the specific attributes of an MBean: how they are labeled in the UI, which page tab they're located on, and a short description of the field (plus a link to their respective page in the [WebLogic Server MBean Reference](https://docs.oracle.com/en/middleware/standalone/weblogic-server/15.1.1/wlmbr/core/index.html)). MBeans in the Page Summaries section are listed alphabetically.
     * Jump to [Page Summaries](#bean-tree)

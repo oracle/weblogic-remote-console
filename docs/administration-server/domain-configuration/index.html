@@ -41,7 +41,7 @@ Connect to an Administration Server You can connect to a running WebLogic Server
 Start the Administration Server.
 See Starting and Stopping Servers in Administering Server Startup and Shutdown for Oracle WebLogic Server for instructions.
 On the Projects/Providers page, select Create.">
-  <meta itemprop="wordCount" content="11346">
+  <meta itemprop="wordCount" content="11391">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Domain Configuration">
   <meta name="twitter:description" content="Use WebLogic Remote Console to make configuration changes to your WebLogic Server domain through its Administration Server.
@@ -78,7 +78,8 @@ On the Projects/Providers page, select Create.">
         <div class="dropdown">
   <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Releases</a>
   <ul class="dropdown-menu">
-    <li><a class="dropdown-item" href="/weblogic-remote-console/overview">Latest (v3.0.5)</a></li>
+    <li><a class="dropdown-item" href="/weblogic-remote-console/overview">Latest (v3.0.6)</a></li>
+    <li><a class="dropdown-item" href="/weblogic-remote-console/3.0.5">v3.0.5</a></li>
     <li><a class="dropdown-item" href="/weblogic-remote-console/3.0.4">v3.0.4</a></li>
     <li><a class="dropdown-item" href="/weblogic-remote-console/3.0.3">v3.0.3</a></li>
     <li><a class="dropdown-item" href="/weblogic-remote-console/preview">Tech Preview (v3.0.2)</a></li>
@@ -150,7 +151,7 @@ On the Projects/Providers page, select Create.">
     aria-label="Search this site…"
     autocomplete="off"
     
-    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.a9a42040c0d3e80098f4813a561d4e78.json"
+    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.96d922ec2447f58333e343cd538b48c3.json"
     data-offline-search-base-href="/"
     data-offline-search-max-results="10"
   >
@@ -175,7 +176,7 @@ On the Projects/Providers page, select Create.">
     aria-label="Search this site…"
     autocomplete="off"
     
-    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.a9a42040c0d3e80098f4813a561d4e78.json"
+    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.96d922ec2447f58333e343cd538b48c3.json"
     data-offline-search-base-href="/"
     data-offline-search-max-results="10"
   >
@@ -322,7 +323,7 @@ On the Projects/Providers page, select Create.">
       <ul>
         <li><a href="#GUID-50C0A18E-83F6-4865-ABF7-6127D0D0F49D">Create a Managed Server</a></li>
         <li><a href="#GUID-5068F3C9-B5A4-4CF3-84B0-B2449942AD40">Start a Managed Server</a></li>
-        <li><a href="#GUID-C1986FE5-E41C-41CC-880E-D6C78A691A7C">Configure Startup Arguments for a Managed Server</a></li>
+        <li><a href="#GUID-C1986FE5-E41C-41CC-880E-D6C78A691A7C">Configure Startup Arguments</a></li>
         <li><a href="#GUID-2802C481-742D-4EC6-8094-1734C19288C4">Specify a Startup Mode</a></li>
       </ul>
     </li>
@@ -801,7 +802,7 @@ On the Projects/Providers page, select Create.">
 </div>
 <h3 id="step-two-commit">Step Two: Commit</h3>
 <p>When you are satisfied with your changes, you must commit them for the changes to apply to the domain. Open the Shopping Cart and then click <strong>Commit Changes</strong>.</p>
-<p>Some configuration changes apply to the domain immediately - these are called dynamic changes. Other configuration changes require a server restart to take effect and are called non-dynamic changes. A server restart required icon <img src="/weblogic-remote-console/images/ui-icons/restart-required-blk-24x24.png" alt="Restart required"> appears beside any attribute that is non-dynamic.</p>
+<p>Some configuration changes apply to the domain immediately - these are called dynamic changes. Other configuration changes require a server restart to take effect and are called non-dynamic changes. A server restart required icon <img src="/weblogic-remote-console/images/ui-icons/restart-required-blk_24x24.png" alt="Restart required"> appears beside any attribute that is non-dynamic.</p>
 
 
 <div class="alert alert-primary" role="alert">
@@ -992,7 +993,19 @@ On the Projects/Providers page, select Create.">
 <h2 id="GUID-BA0BFEB9-FA9D-4063-90E0-1D44551FB2E2">Access Limitations</h2>
 <p>To prevent unauthorized changes to your WebLogic Server domains, WebLogic Remote Console limits its functionality based on a user&rsquo;s role.</p>
 <p>If you log in as a user whose role has limited permissions, WebLogic Remote Console automatically adjusts its user interface to conceal the areas to which you do not have access. Users with the administrator role have full access to WebLogic Remote Console.</p>
-<p>If you want to see the full user interface of WebLogic Remote Console, regardless of your current role, then open <strong>File</strong> then <strong>Settings</strong>. (On macOS, go to WebLogic Remote Console, then <strong>Settings</strong>.) Under the <strong>Role Checking</strong> section, set <strong>Restrict Content Based On Role</strong> to <strong>No</strong> and click <strong>Save</strong>. A user with limited permissions can now <em>see</em> everything but they are still blocked from performing any actions beyond the scope of their role.</p>
+<p>If you want to see the full user interface of WebLogic Remote Console, regardless of your current role, then you can choose to disable role based content restriction.</p>
+<ul>
+<li>
+<p>In Desktop WebLogic Remote Console, open <strong>File</strong> then <strong>Settings</strong>. (On macOS, go to WebLogic Remote Console, then <strong>Settings</strong>.) Under the <strong>Role Checking</strong> section, set <strong>Restrict Content Based On Role</strong> to <strong>No</strong> and click <strong>Save</strong>.</p>
+</li>
+<li>
+<p>For Hosted WebLogic Remote Console, use WLST Online to set the new behavior. Call <code>cmo.getRemoteConsoleHelperMBean.setRestrictContentBasedOnRoles(False)</code>, then save and activate the change. You must restart the Administration Server for this change to take effect.</p>
+<ul>
+<li>You can also temporarily override the domain configuration setting: in <code>JAVA_OPTIONS</code>, set <code>-Dconsole.restrictContentBasedOnRoles=false</code>.</li>
+</ul>
+</li>
+</ul>
+<p>A user with limited permissions can now <em>see</em> everything but they are still blocked from performing any actions beyond the scope of their role.</p>
 
 
 <div class="alert alert-primary" role="alert">
@@ -1081,7 +1094,7 @@ On the Projects/Providers page, select Create.">
 <p><a href="/weblogic-remote-console/administration-server/domain-configuration/#GUID-47BC8E98-37A5-4F87-BB5A-F4DC4E40E5D5">Assign a Server Instance to a Machine</a>.</p>
 </li>
 <li>
-<p><a href="/weblogic-remote-console/administration-server/domain-configuration/#GUID-C1986FE5-E41C-41CC-880E-D6C78A691A7C">Configure Startup Arguments for a Managed Server</a>.</p>
+<p><a href="/weblogic-remote-console/administration-server/domain-configuration/#GUID-C1986FE5-E41C-41CC-880E-D6C78A691A7C">Configure Startup Arguments</a>.</p>
 </li>
 </ol>
 </li>
@@ -1100,14 +1113,14 @@ On the Projects/Providers page, select Create.">
 </li>
 </ol>
 <p>Node Manager starts the server on the target machine. When the Node Manager finishes its start sequence, the server&rsquo;s state is indicated in the <strong>State</strong> column.</p>
-<h3 id="GUID-C1986FE5-E41C-41CC-880E-D6C78A691A7C">Configure Startup Arguments for a Managed Server</h3>
+<h3 id="GUID-C1986FE5-E41C-41CC-880E-D6C78A691A7C">Configure Startup Arguments</h3>
 <p>In most environments, Node Manager can start a server without requiring you to specify startup options. However, if you have modified your environment, such as adding classes to the WebLogic Server class path, you must specify startup options before you can use WebLogic Remote Console to start a server.</p>
 <ol>
 <li>
 <p>In the <strong>Edit Tree</strong>, go to <strong>Environment</strong>, then <strong>Servers</strong>.</p>
 </li>
 <li>
-<p>Select the Managed Server that you want to configure startup arguments for.</p>
+<p>Select the server that you want to configure startup arguments for.</p>
 </li>
 <li>
 <p>On the <strong>Advanced</strong> tab, select the <strong>Node Manager</strong> subtab.</p>
@@ -1122,7 +1135,7 @@ On the Projects/Providers page, select Create.">
 <p>All paths refer to paths on the Node Manager machine.</p>
 <ul>
 <li>
-<p>If you provide values for the <strong>Class Path</strong> field, make sure that you provide the full class path required to start the Managed Server.</p>
+<p>If you provide values for the <strong>Class Path</strong> field, make sure that you provide the full class path required to start the server.</p>
 </li>
 <li>
 <p>If you want to add <strong>Arguments</strong>, make sure you prepend <code>-D</code> before each argument, like so <code>-Dweblogic.management.startupMode=<em>MODE</em></code> .</p>
@@ -1134,7 +1147,7 @@ On the Projects/Providers page, select Create.">
 <p>Click <strong>Save</strong>.</p>
 </li>
 <li>
-<p>Repeat for every applicable Managed Server.</p>
+<p>Repeat for every applicable server.</p>
 </li>
 </ol>
 <h3 id="GUID-2802C481-742D-4EC6-8094-1734C19288C4">Specify a Startup Mode</h3>
@@ -1909,7 +1922,7 @@ The external listen address and port are used to support Network Address Transla
 <h4 class="alert-heading">Note</h4>
 
     <p>As of WebLogic Server 14.1.2.0.0, when you select production mode, <em>secured</em> production mode is enabled by default.</p>
-<p>If you want to apply the features of basic production mode only, then you must explicitly disable the <strong>Secured Production Mode</strong> option. If you use Node Manager to start your Managed Servers, then you must also add the <code>-Dweblogic.securemode.SecureModeEnabled=false</code> startup argument to each Managed Server. See <a href="/weblogic-remote-console/administration-server/domain-configuration/#GUID-C1986FE5-E41C-41CC-880E-D6C78A691A7C">Configure Startup Arguments for a Managed Server</a>.</p>
+<p>If you want to apply the features of basic production mode only, then you must explicitly disable the <strong>Secured Production Mode</strong> option. If you use Node Manager to start your Managed Servers, then you must also add the <code>-Dweblogic.securemode.SecureModeEnabled=false</code> startup argument to each Managed Server. See <a href="/weblogic-remote-console/administration-server/domain-configuration/#GUID-C1986FE5-E41C-41CC-880E-D6C78A691A7C">Configure Startup Arguments</a>.</p>
 
 
 </div></p>

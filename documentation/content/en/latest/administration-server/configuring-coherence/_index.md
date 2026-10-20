@@ -1,5 +1,5 @@
 ---
-weight: 232
+weight: 233
 title: Configuring Coherence
 ---
 

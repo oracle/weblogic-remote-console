@@ -61,6 +61,42 @@ The same issue may affect multiple servers within your domain simultaneously. As
 {{< /alert >}}
 
 
+## Setting Security Feature Gates {#GUID-8994D38D-C20F-432D-B08E-9DA2C78B608E}
+
+Occasionally, Patch Set Updates \(PSUs\) and Critical Security Patch Updates \(CSPUs\) deliver security fixes that introduce backward incompatible changes to existing behavior. To limit the impact of these changes, WebLogic Server added security feature gates that grant you the flexibility to enable or disable the new behavior while you test and mitigate the impacts on your system.
+
+{{< alert title="Note" color="primary" >}}
+
+
+
+Oracle strongly recommends enabling these features as soon as feasible. They provide significant security benefits, and delaying their implementation increases your system's vulnerability.
+
+New security fixes and their feature gates are delivered in PSUs and CSPUs on an as-needed basis. For the latest information, refer to **Security Advice and Post-Install Information for Oracle WebLogic Server PSUs \(Doc ID 2764668.1\)** on [My Oracle Support](http://support.oracle.com/support).
+
+{{< /alert >}}
+
+
+For more information on gated security features and how to fix or avoid potentially breaking changes, see [Managing Gated Security Features](https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=SECMG-GUID-0DF7028E-2065-4176-AA0C-6746B102F19D) in **Administering Security for Oracle WebLogic Server**.
+
+To enable or disable a security feature gate:
+
+1.  In the **Edit Tree**, go to **Environment**, then **Domain**.
+
+2.  Select the **Feature Compatibility** tab.
+
+3.  Set the security feature gate to the status and behavior that you want to implement.
+
+    -   Enabling a feature gate \(setting it to <code>true</code>\) enables the new, more secure behavior.
+    -   Disabling a feature gate \(setting it to <code>false</code>\) preserves the legacy, less secure behavior.
+    If you don't see a feature gate, confirm that you have applied the latest available PSU or CSPU.
+
+4.  **Optional**: Certain features gates require additional configuration on other MBeans to fully implement the new behavior. These multi-configuration feature gates are grouped together.
+
+    For example, if you enable **JNDI Additional Factories Allow Lists Enabled**, you should also add allowlists to **JNDI Additional Initial Context Factories Allowed** and **JNDI Additional Reference Factories Allowed** to achieve the full benefits.
+
+5.  Click **Save**.
+
+
 ## Security Realms {#GUID-CBC31FBB-68EB-445A-972C-F0F70378AF1A}
 
 A security realm is a collection of mechanisms designed to protect WebLogic Server resources. Each security realm consists of a set of configured security providers, users, groups, security roles, and security policies. A user must be defined in a security realm in order to access any WebLogic resources belonging to that realm.
@@ -1821,7 +1857,7 @@ For more information, see [Restricting User Access to Management Applications](h
 
 3.  Click **+** to add a new row, then double-click the new row cell to enter a regular expression pattern that matches the principal name of the users you want to block.
 
-    Entries in <code>RestrictUserManagementAccessPatterns</code> must consist of a string array of regular expressions that follow the Java Pattern syntax specification. For example: `["^.*BootUser$", "^svc_.*$", "^automation_.*$"]`.
+    Entries in <code>RestrictUserManagementAccessPatterns</code> must consist of a string array of regular expressions that follow the Java Pattern syntax specification. For example: <code>["^.*BootUser$", "^svc_.*$", "^automation_.*$"]</code>.
 
     Construct your regular expression patterns carefully so that you do not unintentionally block users with an overly broad pattern.
 

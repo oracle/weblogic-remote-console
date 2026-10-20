@@ -35,7 +35,7 @@ Understanding Security for Oracle WebLogic Server Administering Security for Ora
   <meta itemprop="description" content="WebLogic Server offers a robust set of security tools to protect your WebLogic Server environment from unauthorized access. Use WebLogic Remote Console to secure your system.
 For general information on security concepts in WebLogic Server, see:
 Understanding Security for Oracle WebLogic Server Administering Security for Oracle WebLogic Server Securing Resources Using Roles and Policies for Oracle WebLogic Server Securing a Production Environment for Oracle WebLogic Server Address Potential Security Issues WebLogic Server regularly checks your domain to ensure it complies with its recommended security policies. If a domain does not meet the recommendations, a security warning is logged and displayed in WebLogic Remote Console.">
-  <meta itemprop="wordCount" content="16873">
+  <meta itemprop="wordCount" content="17168">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Securing Domains">
   <meta name="twitter:description" content="WebLogic Server offers a robust set of security tools to protect your WebLogic Server environment from unauthorized access. Use WebLogic Remote Console to secure your system.
@@ -70,7 +70,8 @@ Understanding Security for Oracle WebLogic Server Administering Security for Ora
         <div class="dropdown">
   <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Releases</a>
   <ul class="dropdown-menu">
-    <li><a class="dropdown-item" href="/weblogic-remote-console/overview">Latest (v3.0.5)</a></li>
+    <li><a class="dropdown-item" href="/weblogic-remote-console/overview">Latest (v3.0.6)</a></li>
+    <li><a class="dropdown-item" href="/weblogic-remote-console/3.0.5">v3.0.5</a></li>
     <li><a class="dropdown-item" href="/weblogic-remote-console/3.0.4">v3.0.4</a></li>
     <li><a class="dropdown-item" href="/weblogic-remote-console/3.0.3">v3.0.3</a></li>
     <li><a class="dropdown-item" href="/weblogic-remote-console/preview">Tech Preview (v3.0.2)</a></li>
@@ -142,7 +143,7 @@ Understanding Security for Oracle WebLogic Server Administering Security for Ora
     aria-label="Search this site…"
     autocomplete="off"
     
-    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.a9a42040c0d3e80098f4813a561d4e78.json"
+    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.96d922ec2447f58333e343cd538b48c3.json"
     data-offline-search-base-href="/"
     data-offline-search-max-results="10"
   >
@@ -167,7 +168,7 @@ Understanding Security for Oracle WebLogic Server Administering Security for Ora
     aria-label="Search this site…"
     autocomplete="off"
     
-    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.a9a42040c0d3e80098f4813a561d4e78.json"
+    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.96d922ec2447f58333e343cd538b48c3.json"
     data-offline-search-base-href="/"
     data-offline-search-max-results="10"
   >
@@ -291,6 +292,7 @@ Understanding Security for Oracle WebLogic Server Administering Security for Ora
         <li><a href="#GUID-965B4726-4622-454D-8049-C6B37A2EE867">Security Warning Fixes</a></li>
       </ul>
     </li>
+    <li><a href="#GUID-8994D38D-C20F-432D-B08E-9DA2C78B608E">Setting Security Feature Gates</a></li>
     <li><a href="#GUID-CBC31FBB-68EB-445A-972C-F0F70378AF1A">Security Realms</a>
       <ul>
         <li><a href="#SECTION_HWH_VBM_NCC">Required Security Providers</a></li>
@@ -440,6 +442,43 @@ Understanding Security for Oracle WebLogic Server Administering Security for Ora
     The same issue may affect multiple servers within your domain simultaneously. As you review the Security Warnings Report, make sure that you fix the issue on every affected server. Depending on the problem and its resolution, you may need to restart servers to update the Security Warnings Report.
 
 </div>
+<h2 id="GUID-8994D38D-C20F-432D-B08E-9DA2C78B608E">Setting Security Feature Gates</h2>
+<p>Occasionally, Patch Set Updates (PSUs) and Critical Security Patch Updates (CSPUs) deliver security fixes that introduce backward incompatible changes to existing behavior. To limit the impact of these changes, WebLogic Server added security feature gates that grant you the flexibility to enable or disable the new behavior while you test and mitigate the impacts on your system.</p>
+
+
+<div class="alert alert-primary" role="alert">
+<h4 class="alert-heading">Note</h4>
+
+    <p>Oracle strongly recommends enabling these features as soon as feasible. They provide significant security benefits, and delaying their implementation increases your system&rsquo;s vulnerability.</p>
+<p>New security fixes and their feature gates are delivered in PSUs and CSPUs on an as-needed basis. For the latest information, refer to <strong>Security Advice and Post-Install Information for Oracle WebLogic Server PSUs (Doc ID 2764668.1)</strong> on <a href="http://support.oracle.com/support">My Oracle Support</a>.</p>
+
+
+</div>
+<p>For more information on gated security features and how to fix or avoid potentially breaking changes, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=SECMG-GUID-0DF7028E-2065-4176-AA0C-6746B102F19D">Managing Gated Security Features</a> in <strong>Administering Security for Oracle WebLogic Server</strong>.</p>
+<p>To enable or disable a security feature gate:</p>
+<ol>
+<li>
+<p>In the <strong>Edit Tree</strong>, go to <strong>Environment</strong>, then <strong>Domain</strong>.</p>
+</li>
+<li>
+<p>Select the <strong>Feature Compatibility</strong> tab.</p>
+</li>
+<li>
+<p>Set the security feature gate to the status and behavior that you want to implement.</p>
+<ul>
+<li>Enabling a feature gate (setting it to <code>true</code>) enables the new, more secure behavior.</li>
+<li>Disabling a feature gate (setting it to <code>false</code>) preserves the legacy, less secure behavior.
+If you don&rsquo;t see a feature gate, confirm that you have applied the latest available PSU or CSPU.</li>
+</ul>
+</li>
+<li>
+<p><strong>Optional</strong>: Certain features gates require additional configuration on other MBeans to fully implement the new behavior. These multi-configuration feature gates are grouped together.</p>
+<p>For example, if you enable <strong>JNDI Additional Factories Allow Lists Enabled</strong>, you should also add allowlists to <strong>JNDI Additional Initial Context Factories Allowed</strong> and <strong>JNDI Additional Reference Factories Allowed</strong> to achieve the full benefits.</p>
+</li>
+<li>
+<p>Click <strong>Save</strong>.</p>
+</li>
+</ol>
 <h2 id="GUID-CBC31FBB-68EB-445A-972C-F0F70378AF1A">Security Realms</h2>
 <p>A security realm is a collection of mechanisms designed to protect WebLogic Server resources. Each security realm consists of a set of configured security providers, users, groups, security roles, and security policies. A user must be defined in a security realm in order to access any WebLogic resources belonging to that realm.</p>
 <p>For more information, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=SCOVR-GUID-385F4F0A-A846-44C1-9AD5-8326CD14DA85">Security Realms</a> in <strong>Understanding Security for Oracle WebLogic Server</strong>.</p>
@@ -2396,7 +2435,7 @@ in <strong>Administering Security for Oracle WebLogic Server</strong>.</li>
 </li>
 <li>
 <p>Click <strong>+</strong> to add a new row, then double-click the new row cell to enter a regular expression pattern that matches the principal name of the users you want to block.</p>
-<p>Entries in <code>RestrictUserManagementAccessPatterns</code> must consist of a string array of regular expressions that follow the Java Pattern syntax specification. For example: <code>[&quot;^.*BootUser$&quot;, &quot;^svc_.*$&quot;, &quot;^automation_.*$&quot;]</code>.</p>
+<p>Entries in <code>RestrictUserManagementAccessPatterns</code> must consist of a string array of regular expressions that follow the Java Pattern syntax specification. For example: <code>[&quot;^.<em>BootUser$&quot;, &ldquo;^svc_.</em>$&rdquo;, &ldquo;^automation_.*$&rdquo;]</code>.</p>
 <p>Construct your regular expression patterns carefully so that you do not unintentionally block users with an overly broad pattern.</p>
 </li>
 <li>
