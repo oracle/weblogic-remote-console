@@ -920,6 +920,27 @@ export class FormContentModel extends Model {
   }
 
   /**
+   * Whether the page describes a property that is not present in the current
+   * resource data. This can happen when the console connects to an older
+   * WebLogic Server release that does not support an attribute available in
+   * newer releases.
+   *
+   * This is intentionally different from isPropertyDefaulted. A property that
+   * the user restored to its default still has an entry in the original RDJ
+   * and must remain editable until the form is saved.
+   *
+   * @param {string} propertyName - property to check
+   * @returns {boolean} true if the property has no entry in the RDJ
+   */
+  isPropertyMissingFromRDJ(propertyName: string): boolean {
+    if (this.isCreate() || this.isActionInput() || Array.isArray(this.rdj.data)) {
+      return false;
+    }
+
+    return !Object.prototype.hasOwnProperty.call(this.rdj.data || {}, propertyName);
+  }
+
+  /**
    * Get the value of a property, either edited (pending change) or from server
    *
    * @param {string} propertyName - property to get

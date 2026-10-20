@@ -289,8 +289,8 @@ public class JMSMessageManagementRuntimeMBeanCustomizer {
       for (BeanSearchResults destResults : searchResults.getCollection(jmsServerDestsBTP)) {
         BeanTreePath destBTP = destResults.getBeanTreePath();
         String destType = destResults.getValue(destTypePropDef).asString().getValue();
-        // Only let the user move the messages to another Queue.
-        if ("Queue".equals(destType)) {
+        // The user can move the messages to another Queue or Topic.
+        if ("Queue".equals(destType) || "Topic".equals(destType)) {
           String destName = destBTP.getLastSegment().getKey();
           if (thisJMSServerName.equals(jmsServerName) && thisDestName.equals(destName)) {
             // skip it - no point in moving messages from yourself to yourself

@@ -316,7 +316,7 @@ public class WDTModelDataProviderImpl implements WDTModelDataProvider {
       fileName
     );
     String causeMessage = cause.getMessage();
-    if (causeMessage != null && !causeMessage.isEmpty()) {
+    if (fileName != null && causeMessage != null && !causeMessage.isEmpty()) {
       message = message + ": " + causeMessage;
     }
     return new FailedRequestException(message, cause);

@@ -67,4 +67,32 @@ describe("notification-utils", () => {
     expect(firstCallArg.html.string).not.toContain("<img");
     expect(firstCallArg.html.string).not.toContain("<b>");
   });
+
+  it("uses the escaped message renderer for structured response errors", () => {
+    const broadcastMessage = jest.fn();
+    const ctx: any = { context: { broadcastMessage } };
+    const error: any = new Error("HTTP 403 from /api/test: Forbidden");
+    error.status = 403;
+    error.messages = [
+      { severity: "error", message: '<img src=x onerror="alert(1)">Forbidden' },
+      { severity: "error", message: "Operation is not permitted" },
+    ];
+    error.rawResponseBody = JSON.stringify({
+      messages: error.messages,
+      statusData: { providers: { current: { name: "Operator" } } },
+    });
+
+    broadcastErrorMessage(ctx, error);
+
+    expect(broadcastMessage).toHaveBeenCalledTimes(1);
+    const firstCallArg = broadcastMessage.mock.calls[0][0];
+    expect(firstCallArg.severity).toBe("error");
+    expect(firstCallArg.html.string).toContain(
+      "&lt;img src=x onerror=&quot;alert(1)&quot;&gt;Forbidden",
+    );
+    expect(firstCallArg.html.string).toContain("Operation is not permitted");
+    expect(firstCallArg.html.string).not.toContain("<img");
+    expect(firstCallArg.html.string).not.toContain("statusData");
+    expect(firstCallArg.detail).toBeUndefined();
+  });
 });

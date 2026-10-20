@@ -1,4 +1,4 @@
-// Copyright (c) 2020, 2025, Oracle and/or its affiliates.
+// Copyright (c) 2020, 2026, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.webapp;
@@ -24,6 +24,7 @@ import javax.ws.rs.core.Response.Status;
 import weblogic.remoteconsole.common.repodef.BeanChildDef;
 import weblogic.remoteconsole.common.repodef.BeanTypeDef;
 import weblogic.remoteconsole.common.repodef.LocalizableString;
+import weblogic.remoteconsole.common.repodef.LocalizedConstants;
 import weblogic.remoteconsole.common.repodef.NavTreeNodeDef;
 import weblogic.remoteconsole.common.repodef.yaml.BaseBeanTypeDefImpl;
 import weblogic.remoteconsole.common.repodef.yaml.HelpHTMLUtils;
@@ -41,18 +42,35 @@ public class GroupResource {
   public Response getList(
     @Context ResourceContext resContext,
     @PathParam("pathSegments") List<PathSegment> pathSegments) {
-    // Things can disappear, due to WebLogic Server failure.  Just return a 503
+    List<String> segs = new LinkedList<>();
     try {
-      List<String> segs = new LinkedList<>();
       for (PathSegment in : pathSegments) {
         segs.add(in.getPath());
       }
       return getListFromStrings(resContext, segs);
     } catch (ResponseException e) {
-      throw new WebApplicationException(Response.status(
-        Status.SERVICE_UNAVAILABLE.getStatusCode(),
-         e.getMessage()).build());
+      InvocationContext ic =
+        WebAppUtils.getInvocationContextFromResourceContext(resContext);
+      String groupName = segs.isEmpty() ? null : segs.get(segs.size() - 1);
+      return mapResponseException(ic, e, groupName);
     }
+  }
+
+  static Response mapResponseException(
+    InvocationContext ic,
+    ResponseException exception,
+    String groupName
+  ) {
+    weblogic.remoteconsole.server.repo.Response<Void> response =
+      new weblogic.remoteconsole.server.repo.Response<>();
+    if (exception.getResponse().isForbidden() && groupName != null && !groupName.isEmpty()) {
+      String forbiddenMessage =
+        ic.getLocalizer().localizeString(LocalizedConstants.ENTITY_ACCESS_FORBIDDEN, groupName);
+      response.setForbidden().addFailureMessage(forbiddenMessage);
+    } else {
+      response.copyUnsuccessfulResponse(exception.getResponse());
+    }
+    return VoidResponseMapper.toResponse(ic, response);
   }
 
   public Response getListFromStrings(ResourceContext resContext, List<String> segs) {

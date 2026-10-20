@@ -1,4 +1,4 @@
-# Copyright (c) 2020, 2025, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2026, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 baseTypes:
@@ -518,5 +518,15 @@ properties:
       value: false
   descriptionHTML: '<p>Not used in this release.</p> '
   name: ValidateDDSecurityData
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: 'Determines whether the WebLogic JWT token is enabled for virtual
+    user support. When enabled, the WebLogic JWT token will contain user and group
+    information. '
+  name: WebLogicJwtVirtualUserEnabled
+  restartNeeded: true
   type: boolean
   writable: true

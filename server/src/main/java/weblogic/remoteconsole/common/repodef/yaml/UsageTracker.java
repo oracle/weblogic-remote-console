@@ -39,6 +39,9 @@ public class UsageTracker {
     used.add("property IPlanetAuthenticatorMBean UserDescriptionAttribute");
     used.add("property NovellAuthenticatorMBean UserDescriptionAttribute");
     used.add("property OracleVirtualDirectoryAuthenticatorMBean UserDescriptionAttribute");
+
+    // This property is supported in some releases but not all.
+    used.add("property DomainMBean FeatureCompatibility.StrictReplicationAuthorizationEnabled");
   }
 
   public static void trackUsage() {

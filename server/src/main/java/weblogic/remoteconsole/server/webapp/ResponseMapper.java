@@ -68,6 +68,13 @@ public abstract class ResponseMapper<T> {
           .entity(getEntityBuilder().build())
           .build();
     }
+    if (getResponse().isForbidden()) {
+      return
+        javax.ws.rs.core.Response
+          .status(javax.ws.rs.core.Response.Status.FORBIDDEN)
+          .entity(getEntityBuilder().build())
+          .build();
+    }
     if (getResponse().isServiceNotAvailable()) {
       return
         javax.ws.rs.core.Response

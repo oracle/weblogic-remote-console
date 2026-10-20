@@ -127,6 +127,32 @@ export function shouldApplyStatusRoot(
   return !activeRoot || activeRoot === statusRoot;
 }
 
+export async function handleNavtreeRequest(
+  request: Promise<Response>,
+  requestUrl: string,
+  applyResponse: (body: string) => void,
+): Promise<void> {
+  try {
+    const response = await request;
+    const body = await response.text();
+
+    if (!response.ok) {
+      Logger.log(
+        () =>
+          `Nav tree request failed with HTTP ${response.status} from ${requestUrl}: ${body}`,
+      );
+      return;
+    }
+
+    applyResponse(body);
+  } catch (error) {
+    Logger.log(
+      () =>
+        `Nav tree request failed for ${requestUrl}: ${error instanceof Error ? error.message : String(error)}`,
+    );
+  }
+}
+
 
 /**
  *
@@ -494,16 +520,18 @@ function NavTreeImpl({ navtreeUrl, url, context, unique, backendPrefix }: Props)
     const requestUrl = navtreeUrlStateRef.current;
     if (requestUrl) {
       const requestId = ++navtreeRequestIdRef.current;
-      _post(requestUrl, JSON.stringify(payload))
-        .then((r) => r.text())
-        .then((s) => {
+      void handleNavtreeRequest(
+        _post(requestUrl, JSON.stringify(payload)),
+        requestUrl,
+        (responseBody) => {
           if (
             requestId === navtreeRequestIdRef.current &&
             requestUrl === navtreeUrlStateRef.current
           ) {
-            setNavtreeString(s);
+            setNavtreeString(responseBody);
           }
-        });
+        },
+      );
     }
   };
 

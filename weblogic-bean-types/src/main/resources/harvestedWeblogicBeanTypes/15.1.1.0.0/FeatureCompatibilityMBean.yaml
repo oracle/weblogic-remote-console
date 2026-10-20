@@ -1,0 +1,111 @@
+# Copyright (c) 2020, 2026, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+baseTypes:
+- weblogic.management.configuration.ConfigurationMBean
+descriptionHTML: '<p>Controls feature compatibility behavior for WebLogic Server features.</p>  <p>The
+  compatibility attributes on this MBean preserve legacy behavior when disabled. Enabling
+  them applies the corresponding tightened security behavior.</p> '
+name: weblogic.management.configuration.FeatureCompatibilityMBean
+properties:
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Returns whether unauthenticated IIOP request service-context
+    valuetypes are filtered by the unauthenticated deserialization allowlist.</p>  <p>When
+    enabled, WebLogic Server applies the unauthenticated deserialization filter while
+    reading IIOP request service contexts. When disabled, WebLogic Server preserves
+    legacy IIOP service-context unmarshalling behavior.</p>  <p>A value of <code>true</code>
+    enables the tightened filtering. A value of <code>false</code> preserves legacy
+    behavior.</p> '
+  name: IIOPUnauthenticatedServiceContextValueTypeFilteringEnabled
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Returns whether the JNDI additional factory allowlists are
+    enabled.</p>  <p>When enabled, WebLogic Server applies the <code>SecurityConfigurationMBean.JNDIAdditionalInitialContextFactoriesAllowed</code>
+    and <code>SecurityConfigurationMBean.JNDIAdditionalReferenceFactoriesAllowed</code>
+    allowlists before caller-supplied JNDI factories can be used. When disabled, WebLogic
+    Server preserves legacy initial context factory and reference factory behavior.</p> '
+  name: JNDIAdditionalFactoriesAllowListsEnabled
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Returns whether policy enforcement is enabled for authorization
+    of JNDI namespace binding changes.</p>  <p>When enabled, WebLogic Server applies
+    tightened authorization and protocol checks before namespace write operations
+    such as <code>bind</code>, <code>rebind</code>, <code>unbind</code>, <code>rename</code>,
+    subcontext creation, sharable namespace mutation, or IIOP CosNaming mutation can
+    change server-side JNDI bindings. When disabled, WebLogic Server preserves legacy
+    remote JNDI mutation and protocol-specific mutation behavior.</p>  <p>A value
+    of <code>true</code> enables the tightened policy for this category. A value of
+    <code>false</code> preserves legacy behavior.</p> '
+  name: JNDIBindingAuthorizationPolicyEnabled
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Returns whether the JNDI outbound connection allowlist is enabled.</p>  <p>When
+    enabled, WebLogic Server applies the <code>SecurityConfigurationMBean.JNDIOutboundConnectionsAllowed</code>
+    allowlist to JNDI provider URLs and URL-shaped lookup inputs. When disabled, WebLogic
+    Server preserves legacy outbound JNDI connection behavior.</p> '
+  name: JNDIOutboundConnectionsAllowListEnabled
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: -1
+  descriptionHTML: '<p>Returns the maximum serialized WorkContext size, in bytes.</p>  <p>WebLogic
+    Server rejects serialized WorkContext payloads larger than this value. A value
+    of <code>-1</code> preserves legacy behavior by allowing unlimited serialized
+    WorkContext payload size.</p> '
+  name: SerializedWorkContextMaximumSize
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Returns whether strict authorization is enabled for WebLogic
+    replication calls.</p>  <p>When enabled, plaintext replication callers must present
+    a trusted server identity from a known cluster peer before dispatch or replication
+    payload deserialization. When disabled, WebLogic Server preserves legacy replication
+    authorization behavior during domain rolling patching.</p>  <p>A value of <code>true</code>
+    enables the tightened authorization. A value of <code>false</code> preserves legacy
+    behavior.</p> '
+  name: StrictReplicationAuthorizationEnabled
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Returns whether T3 server routing is limited to trusted servers.</p>  <p>When
+    enabled, WebLogic Server requires routed T3 destinations to be known or configured
+    before forwarding traffic. When disabled, WebLogic Server preserves legacy T3
+    server routing compatibility for trusted server-to-server messages whose destination
+    is supplied on the wire.</p>  <p>A value of <code>true</code> enables the tightened
+    routing checks. A value of <code>false</code> preserves the legacy routing behavior.</p> '
+  name: T3RouteOnlyToTrustedServersEnabled
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Returns whether tightened validation is enabled for WorkContext
+    implementation classes read from WorkArea input streams.</p>  <p>When enabled,
+    WebLogic Server validates WorkContext class names and resolved classes before
+    constructing WorkContext implementations on WorkArea input paths such as T3, JMS,
+    and IIOP. The tightened policy limits unauthenticated or untrusted inbound input
+    to WebLogic built-in and product WorkContext implementations. Trusted, authenticated,
+    internal, or locally originated compatibility paths preserve SerializableWorkContext
+    behavior, but do not permit arbitrary custom WorkContext implementations when
+    this attribute is enabled.</p>  <p>A value of <code>true</code> enables the tightened
+    WorkContext class checks. A value of <code>false</code> preserves legacy behavior
+    for patch compatibility.</p> '
+  name: WorkContextClassValidationEnabled
+  type: boolean
+  writable: true

@@ -13,6 +13,8 @@ import {
   saveBlobToFile,
 } from "../transport";
 import * as backendUrl from "../../backend-url";
+import { setDatabus } from "../../../integration/databus-accessor";
+import * as Logger from "ojs/ojlogger";
 
 describe("transport downloads", () => {
   const originalBackendPrefix = Global.global.backendPrefix;
@@ -102,6 +104,13 @@ describe("transport downloads", () => {
 });
 
 describe("transport response parsing", () => {
+  const originalFetch = global.fetch;
+
+  afterEach(() => {
+    global.fetch = originalFetch;
+    jest.restoreAllMocks();
+  });
+
   it("surfaces non-json error text instead of a JSON syntax error", async () => {
     const response = {
       ok: false,
@@ -148,6 +157,87 @@ describe("transport response parsing", () => {
     } as any);
 
     await expect(getDataComponent("/api/test")).resolves.toEqual({ answer: 42 });
+  });
+
+  it("keeps structured GET error messages separate from status data and logs the raw body verbosely", async () => {
+    const statusData = {
+      shoppingcart: { state: "empty", resourceData: "/api/shoppingcart" },
+      providers: { current: {}, providers: [] },
+    };
+    const responseBody = JSON.stringify({
+      messages: [
+        { severity: "error", message: "Forbidden" },
+        { severity: "error", message: "Operation is not permitted" },
+      ],
+      statusData,
+    });
+    const dispatch = jest.fn();
+    const logger = jest.spyOn(Logger, "log").mockImplementation(() => undefined);
+    setDatabus({ get: () => ({ dispatch } as any), subscribe: jest.fn() } as any);
+    jest.spyOn(backendUrl, "buildUrl").mockResolvedValue("/api/test");
+    global.fetch = jest.fn().mockResolvedValue({
+      ok: false,
+      status: 403,
+      statusText: "Forbidden",
+      text: jest.fn().mockResolvedValue(responseBody),
+      clone: jest.fn().mockReturnValue({
+        json: jest.fn().mockResolvedValue({ messages: [], statusData }),
+      }),
+      url: "/api/test",
+    } as any);
+
+    let caught: any;
+    try {
+      await getDataComponent("/api/test");
+    } catch (error) {
+      caught = error;
+    }
+
+    expect(caught).toMatchObject({
+      name: "Request Failed",
+      status: 403,
+      url: "/api/test",
+      messages: [
+        { severity: "error", message: "Forbidden" },
+        { severity: "error", message: "Operation is not permitted" },
+      ],
+      rawResponseBody: responseBody,
+    });
+    expect(caught.body).toBeUndefined();
+    expect(caught.message).not.toContain("statusData");
+    expect(dispatch).toHaveBeenCalledWith(statusData);
+    expect(logger).toHaveBeenCalledTimes(1);
+    const logMessageFactory = logger.mock.calls[0][0] as () => string;
+    expect(logMessageFactory()).toContain(responseBody);
+  });
+
+  it("uses normalized response text when a failed GET has no structured messages", async () => {
+    jest.spyOn(Logger, "log").mockImplementation(() => undefined);
+    jest.spyOn(backendUrl, "buildUrl").mockResolvedValue("/api/test");
+    global.fetch = jest.fn().mockResolvedValue({
+      ok: false,
+      status: 500,
+      statusText: "Internal Server Error",
+      text: jest.fn().mockResolvedValue("Backend exploded"),
+      clone: jest.fn().mockReturnValue({
+        json: jest.fn().mockRejectedValue(new Error("not-json")),
+      }),
+      url: "/api/test",
+    } as any);
+
+    let caught: any;
+    try {
+      await getDataComponent("/api/test");
+    } catch (error) {
+      caught = error;
+    }
+
+    expect(caught).toMatchObject({
+      status: 500,
+      body: "Backend exploded",
+      rawResponseBody: "Backend exploded",
+    });
+    expect(caught.messages).toBeUndefined();
   });
 
   it("falls back to response.json when text is unavailable", async () => {

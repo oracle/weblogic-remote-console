@@ -1,8 +1,23 @@
 #!/bin/bash
 set -e
-if [ -z "$JAVA_HOME" ]
+JAVA_HOME_TO_USE="${CONSOLE_RUN_JAVA_HOME:-${JAVA_HOME:-}}"
+if [ -z "$JAVA_HOME_TO_USE" ]
 then
-  echo JAVA_HOME must be set >&2
+  echo CONSOLE_RUN_JAVA_HOME or JAVA_HOME must be set >&2
+  exit 1
+fi
+if [ ! -x "$JAVA_HOME_TO_USE"/bin/java ]
+then
+  echo Cannot find java under "$JAVA_HOME_TO_USE" >&2
+  exit 1
+fi
+JAVA_VERSION="$("$JAVA_HOME_TO_USE"/bin/java --version 2>/dev/null || true)"
+JAVA_FEATURE_VERSION="$(printf '%s\n' "$JAVA_VERSION" | awk 'NR == 1 { version = $2; gsub(/"/, "", version); sub(/^1[.]/, "", version); sub(/[.].*$/, "", version); print version }')"
+if [ "$JAVA_FEATURE_VERSION" != 25 ]
+then
+  echo Expected JDK 25 for quick-run, but "$JAVA_HOME_TO_USE" reports: >&2
+  echo "$JAVA_VERSION" >&2
+  echo Set CONSOLE_RUN_JAVA_HOME or JAVA_HOME to a JDK 25 home. >&2
   exit 1
 fi
 case "$0" in
@@ -37,9 +52,22 @@ mkdir -p $DISTDIR
 
 ./gen-messages $DISTDIR/resources/nls ../frontend/nls/frontend*.properties
 
-if [ ! -r $DISTDIR/customjre ]
+if [ -L $DISTDIR/customjre ]
 then
-  ln -s "$JAVA_HOME" $DISTDIR/customjre
+  rm -f $DISTDIR/customjre
+fi
+if [ -e $DISTDIR/customjre ]
+then
+  echo $DISTDIR/customjre exists and is not a symbolic link >&2
+  if [ -x $DISTDIR/customjre/bin/java ]
+  then
+    "$DISTDIR"/customjre/bin/java --version >&2 || true
+  else
+    echo Cannot find java under $DISTDIR/customjre >&2
+  fi
+elif [ ! -r $DISTDIR/customjre ]
+then
+  ln -s "$JAVA_HOME_TO_USE" $DISTDIR/customjre
 fi
 
 rm -rf $DISTDIR/backend

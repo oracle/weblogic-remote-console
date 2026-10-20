@@ -1,4 +1,4 @@
-# Copyright (c) 2024, 2025, Oracle and/or its affiliates.
+# Copyright (c) 2024, 2026, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 baseTypes:
@@ -9,16 +9,6 @@ properties:
   type: java.lang.String
   descriptionHTML: >
     The type of deployment: Enterprise Application, EJB Jar, Resource Adapter, Web Application, and so on.
-  legalValues:
-  - value: ear
-    label: Enterprise Application
-  - value: ejb
-    label: EJB Jar
-  - value: rar
-    label: Resource Adapter
-  - value: war
-    label: Web Application
-
   legalValues:
   - ear
   - ejb

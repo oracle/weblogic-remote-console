@@ -1,4 +1,4 @@
-// Copyright (c) 2021, 2025, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2026, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.repo;
@@ -9,15 +9,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import weblogic.console.utils.Path;
 import weblogic.console.utils.StringUtils;
 import weblogic.remoteconsole.common.repodef.BeanPropertyDef;
 import weblogic.remoteconsole.common.repodef.BeanTypeDef;
+import weblogic.remoteconsole.common.repodef.LocalizedConstants;
 import weblogic.remoteconsole.common.repodef.PageDef;
 import weblogic.remoteconsole.common.repodef.PagePropertyDef;
+import weblogic.remoteconsole.common.repodef.SliceDef;
 import weblogic.remoteconsole.common.repodef.SliceFormDef;
 import weblogic.remoteconsole.common.repodef.SlicePagePath;
 import weblogic.remoteconsole.common.repodef.SliceTableDef;
+import weblogic.remoteconsole.common.repodef.SlicesDef;
 import weblogic.remoteconsole.common.utils.CustomizerInvocationUtils;
+import weblogic.remoteconsole.server.providers.Root;
 
 /**
  * This class manages reading a slice form or slice table
@@ -43,6 +48,80 @@ class SliceReader extends FormReader {
       return getSliceTable(pageDef.asSliceTableDef());
     }
     throw new AssertionError("Slice is not a form or table: " + pageDef);
+  }
+
+  Response<Page> addSliceContextToForbidden(Response<Page> pageResponse) {
+    if (!pageResponse.isForbidden()) {
+      return pageResponse;
+    }
+    String sliceLabel = getRequestedSliceLabel();
+    if (StringUtils.isEmpty(sliceLabel)) {
+      return pageResponse;
+    }
+    String forbiddenMessage =
+      getLocalizer().localizeString(LocalizedConstants.ENTITY_ACCESS_FORBIDDEN, sliceLabel);
+    return addSliceContextToForbidden(pageResponse, forbiddenMessage);
+  }
+
+  static Response<Page> addSliceContextToForbidden(
+    Response<Page> pageResponse,
+    String forbiddenMessage
+  ) {
+    if (
+        !pageResponse.isForbidden()
+        || hasContextualFailureMessage(pageResponse)
+        || StringUtils.isEmpty(forbiddenMessage)
+    ) {
+      return pageResponse;
+    }
+    return new Response<Page>().setForbidden().addFailureMessage(forbiddenMessage);
+  }
+
+  private static boolean hasContextualFailureMessage(Response<?> response) {
+    return response.getMessages().stream().anyMatch(
+      message ->
+        StringUtils.notEmpty(message.getText())
+        && !"Forbidden".equalsIgnoreCase(message.getText().trim())
+    );
+  }
+
+  private String getRequestedSliceLabel() {
+    SlicePagePath pagePath = getPagePath().asSlicePagePath();
+    String fallback = pagePath.getSlicePath().getLastComponent();
+    if (StringUtils.isEmpty(fallback)) {
+      return null;
+    }
+    SlicesDef slicesDef = getPageRepoDef().getSlicesDef(pagePath.getPagesPath().getTypeDef());
+    if (slicesDef == null) {
+      return fallback;
+    }
+    SliceDef requestedSliceDef =
+      findRequestedSliceDef(slicesDef.getContentDefs(), pagePath.getSlicePath());
+    if (requestedSliceDef == null) {
+      return fallback;
+    }
+    return getLocalizer().localizeString(requestedSliceDef.getLabel());
+  }
+
+  static SliceDef findRequestedSliceDef(List<SliceDef> sliceDefs, Path requestedSlicePath) {
+    SliceDef requestedSliceDef = null;
+    for (String sliceName : requestedSlicePath.getComponents()) {
+      requestedSliceDef = findSliceDef(sliceDefs, sliceName);
+      if (requestedSliceDef == null) {
+        return null;
+      }
+      sliceDefs = requestedSliceDef.getContentDefs();
+    }
+    return requestedSliceDef;
+  }
+
+  private static SliceDef findSliceDef(List<SliceDef> sliceDefs, String sliceName) {
+    for (SliceDef sliceDef : sliceDefs) {
+      if (sliceDef.getName().equals(sliceName)) {
+        return sliceDef;
+      }
+    }
+    return null;
   }
 
   private Response<PageDef> getActualPageDef() {
@@ -186,6 +265,14 @@ class SliceReader extends FormReader {
     }
     BeanReaderRepoSearchResults searchResults = searchResponse.getResults();
     BeanSearchResults beanResults = searchResults.getBean(getBeanTreePath());
+    if (shouldCheckBeanExists(
+      beanResults != null,
+      getBeanTreePath().isOptionalSingleton(),
+      pageDef.getCustomizePageMethod(),
+      isEditCollectionChild()
+    )) {
+      return classifyMissingEditBean(checkBeanExistsWithoutSetState());
+    }
     if (beanResults == null) {
       if (!getBeanTreePath().isOptionalSingleton()) {
         if (StringUtils.isEmpty(pageDef.getCustomizePageMethod())) {
@@ -210,6 +297,57 @@ class SliceReader extends FormReader {
     addLinks(form, true); // true since it's an instance
     addModelTokens(form); // when repo supports model tokens
     return response.setSuccess(form);
+  }
+
+  static boolean shouldCheckBeanExists(
+    boolean beanPresent,
+    boolean optionalSingleton,
+    String customizePageMethod,
+    boolean editCollectionChild
+  ) {
+    return
+      !beanPresent
+      && !optionalSingleton
+      && StringUtils.isEmpty(customizePageMethod)
+      && editCollectionChild;
+  }
+
+  private boolean isEditCollectionChild() {
+    InvocationContext ic = getInvocationContext();
+    return
+      ic.getPageRepo() != null
+      && Root.EDIT_NAME.equals(ic.getPageRepo().getPageRepoDef().getName())
+      && ic.getPagePath() != null
+      && ic.getPagePath().isSlicePagePath()
+      && getBeanTreePath().isCollectionChild();
+  }
+
+  private Response<Boolean> checkBeanExistsWithoutSetState() {
+    return
+      getBeanRepo()
+        .asBeanReaderRepo()
+        .exists(getInvocationContext(), getBeanTreePath());
+  }
+
+  private Response<Page> classifyMissingEditBean(Response<Boolean> existsResponse) {
+    String beanName = getBeanTreePath().getPath().getLastComponent();
+    String forbiddenMessage =
+      getLocalizer().localizeString(LocalizedConstants.ENTITY_ACCESS_FORBIDDEN, beanName);
+    return classifyMissingEditBean(existsResponse, forbiddenMessage);
+  }
+
+  static Response<Page> classifyMissingEditBean(
+    Response<Boolean> existsResponse,
+    String forbiddenMessage
+  ) {
+    Response<Page> response = new Response<>();
+    if (!existsResponse.isSuccess()) {
+      return response.copyUnsuccessfulResponse(existsResponse);
+    }
+    if (existsResponse.getResults()) {
+      return response.addFailureMessage(forbiddenMessage).setForbidden();
+    }
+    return response.setNotFound();
   }
 
   private Response<Void> addFormProperties(

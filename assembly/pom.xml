@@ -9,7 +9,7 @@
   <parent>
     <artifactId>console-backend</artifactId>
     <groupId>com.oracle.weblogic</groupId>
-    <version>3.0.5</version>
+    <version>3.0.6</version>
   </parent>
 
   <packaging>pom</packaging>
@@ -31,6 +31,7 @@
   </dependencies>
 
   <build>
+    <finalName>console</finalName>
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -43,7 +44,6 @@
               <goal>single</goal>
             </goals>
             <configuration>
-              <finalName>console</finalName>
               <descriptors>
                 <descriptor>assembly/jar.xml</descriptor>
               </descriptors>

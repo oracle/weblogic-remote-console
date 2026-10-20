@@ -1,4 +1,4 @@
-// Copyright (c) 2021, 2025, Oracle and/or its affiliates.
+// Copyright (c) 2021, 2026, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.server.repo;
@@ -27,6 +27,9 @@ public class Response<T> {
 
     // The top level bean for this page (or one its parent beans) doesn't exist
     NOT_FOUND,
+
+    // The user is not authorized to access the requested WebLogic resource or operation
+    FORBIDDEN,
 
     // problems accessing the bean store, e.g. can't connect to
     // the admin server's WLS REST api, could be because of
@@ -104,6 +107,15 @@ public class Response<T> {
 
   public Response<T> setNotFound() {
     setStatus(Status.NOT_FOUND);
+    return this;
+  }
+
+  public boolean isForbidden() {
+    return Status.FORBIDDEN == getStatus();
+  }
+
+  public Response<T> setForbidden() {
+    setStatus(Status.FORBIDDEN);
     return this;
   }
 

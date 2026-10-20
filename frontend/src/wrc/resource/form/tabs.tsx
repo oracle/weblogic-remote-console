@@ -10,12 +10,14 @@ import 'oj-c/conveyor-belt';
 
 import { CTabBarElement, TabData } from 'oj-c/tab-bar';
 import { ComponentChildren, h } from 'preact';
-import { Dispatch, StateUpdater } from 'preact/hooks';
+import { Dispatch, StateUpdater, useContext, useEffect, useRef, useState } from 'preact/hooks';
 import { FormContentModel } from '../../shared/model/formcontentmodel';
 import { Slice } from '../../shared/typedefs/pdj';
 import { ContentModelFactory } from "../../shared/model/contentmodelfactory";
 import { TableContentModel } from "wrc/shared/model/tablecontentmodel";
 import { ListContentModel } from "wrc/shared/model/listcontentmodel";
+import { broadcastErrorMessage } from "wrc/shared/controller/notification-utils";
+import { UserContext } from "../resource";
 
 type ModelWithSlices = FormContentModel | TableContentModel;
 
@@ -27,6 +29,63 @@ type Props = {
   pageContext?: string;
 };
 
+type LoadSliceOptions = {
+  modelFactory: Pick<ContentModelFactory, "build">;
+  pageContext?: string;
+  setLoading: Dispatch<boolean>;
+  setModel: Dispatch<StateUpdater<FormContentModel | TableContentModel | ListContentModel>>;
+  slice: string;
+  onError: (error: Error) => void;
+};
+
+export const loadSlice = async ({
+  modelFactory,
+  pageContext,
+  setLoading,
+  setModel,
+  slice,
+  onError,
+}: LoadSliceOptions): Promise<boolean> => {
+  setLoading(true);
+  try {
+    const contentModel = await modelFactory.build(slice, pageContext);
+    if (contentModel) {
+      setModel(contentModel);
+      return true;
+    }
+    return false;
+  } catch (err) {
+    onError(err instanceof Error ? err : new Error(String(err)));
+    return false;
+  } finally {
+    setLoading(false);
+  }
+};
+
+export const getSlicePath = (rdjUrl: string): string => {
+  try {
+    const url = new URL(rdjUrl, 'http://localhost');
+    return url.searchParams.get('slice') || '';
+  } catch {
+    return '';
+  }
+};
+
+export const getSelectedSegmentForLevel = (
+  selectedSlicePath: string,
+  navigationPath: string,
+  slices: Slice[],
+): string | undefined => {
+  if (selectedSlicePath && selectedSlicePath.startsWith(navigationPath)) {
+    const remaining = selectedSlicePath.substring(navigationPath.length);
+    const segment = remaining.split('.')[0];
+    if (segment && slices.some((slice) => slice.name === segment)) {
+      return segment;
+    }
+  }
+  return slices[0]?.name;
+};
+
 /**
  * Create the form tabstrip container
  * 
@@ -36,18 +95,25 @@ type Props = {
  * @param Props.setRefresh - to refresh Form components, setRefresh(!refresh)
  */
 const Tabs = ({ children, model, setModel, setLoading, pageContext }: Props) => {
+    const ctx = useContext(UserContext);
     const slices = model.getSlices();
+    const successfulSlicePath = getSlicePath(model.rdjUrl);
+    const [selectedSlicePath, setSelectedSlicePath] = useState(successfulSlicePath);
+    const selectionRequestRef = useRef(0);
+    const successfulSlicePathRef = useRef(successfulSlicePath);
+    const renderedSlicePath =
+      successfulSlicePathRef.current === successfulSlicePath
+        ? selectedSlicePath
+        : successfulSlicePath;
 
-    // derive currently selected slice path from model's rdjUrl
-    const getActiveSlicePath = (): string => {
-      try {
-        const u = new URL(model.rdjUrl, 'http://localhost');
-        return u.searchParams.get('slice') || '';
-      } catch {
-        return '';
+    useEffect(() => {
+      if (successfulSlicePathRef.current !== successfulSlicePath) {
+        successfulSlicePathRef.current = successfulSlicePath;
+        selectionRequestRef.current += 1;
+        setSelectedSlicePath(successfulSlicePath);
+        setLoading(false);
       }
-    };
-    const activeSlicePath = getActiveSlicePath();
+    }, [setLoading, successfulSlicePath]);
 
     /**
      * Use tail recursion to build stacked oj-c-tab-bars since a slice may have children,
@@ -62,40 +128,54 @@ const Tabs = ({ children, model, setModel, setLoading, pageContext }: Props) => 
         const data: TabData<string>[] = slices.map(slice => { return { label: slice.label, itemKey: slice.name } });
 
         // when user clicks on a tab, update the model with a new one to refresh form
-        const handleSelectionAction = (event: CTabBarElement.selectionChanged) => {
-          setLoading(true);
+        const handleSelectionAction = (event: CTabBarElement.ojSelectionAction) => {
           const newItemKey = `${event.detail.value}`; // coerce to a string as that's what it is
+          if (`${event.detail.previousValue}` === newItemKey) {
+            return;
+          }
 
           // path to + the name of the new tab e.g. Protocols.Http
           const fullyQualifiedNewSlice = navigationPath + newItemKey;
+          const requestId = ++selectionRequestRef.current;
+          setSelectedSlicePath(fullyQualifiedNewSlice);
 
           // Create a new content model based on the existing rdj url and newly selected slice
           const modelFactory = new ContentModelFactory(model.rdjUrl);
-          modelFactory.build(fullyQualifiedNewSlice, pageContext).then((contentModel) => {
-            if (contentModel) {
-              setModel(contentModel);
-              setLoading(false);
+          void loadSlice({
+            modelFactory,
+            pageContext,
+            setLoading: (loading) => {
+              if (loading || selectionRequestRef.current === requestId) {
+                setLoading(loading);
+              }
+            },
+            setModel: (contentModel) => {
+              if (selectionRequestRef.current === requestId) {
+                setModel(contentModel);
+              }
+            },
+            slice: fullyQualifiedNewSlice,
+            onError: (error) => {
+              if (selectionRequestRef.current === requestId) {
+                broadcastErrorMessage(ctx, error);
+              }
+            },
+          }).then((loaded) => {
+            if (!loaded && selectionRequestRef.current === requestId) {
+              setSelectedSlicePath(successfulSlicePathRef.current);
             }
           });
         };
 
-        const getSelectedSegmentForLevel = (navPath: string, allSlices: Slice[]) => {
-          if (activeSlicePath && activeSlicePath.startsWith(navPath)) {
-            const remaining = activeSlicePath.substring(navPath.length);
-            const segment = remaining.split('.')[0];
-            if (segment && allSlices.some((s) => s.name === segment)) return segment;
-          }
-          return allSlices[0]?.name;
-        };
-
-        const currentlySelectedTab = getSelectedSegmentForLevel(navigationPath, slices);
+        const currentlySelectedTab =
+          getSelectedSegmentForLevel(renderedSlicePath, navigationPath, slices);
         const selectedSlice = slices.find((s) => s.name === currentlySelectedTab);
 
         return (
             <>
                 <oj-c-conveyor-belt arrowVisibility="auto" class="oj-sm-12">
                   <oj-c-tab-bar selection={currentlySelectedTab}
-                      onselectionChanged={handleSelectionAction}
+                      onojSelectionAction={handleSelectionAction}
                       accesskey="]" edge="top" layout="condense" data={data}>
                   </oj-c-tab-bar>
                 </oj-c-conveyor-belt>

@@ -242,10 +242,16 @@ const Form = ({ formModel, setModel }: Props) => {
       }
 
       return (
-        <div class={`wrc-field oj-flex-item oj-sm-padding-2x-bottom ${isSingle ? 'oj-sm-12' : 'oj-sm-6'}`}>
-          <div class={labelNode ? "wrc-c-row" : ""}>
+        <div
+          class={`wrc-field oj-flex-item oj-sm-padding-2x-bottom ${isSingle ? 'oj-sm-12' : 'oj-sm-6'}`}
+          style={{ minWidth: 0 }}
+        >
+          <div
+            class={labelNode ? "wrc-c-row" : ""}
+            style={labelNode ? { gridTemplateColumns: "var(--wrc-c-label-width, 32%) minmax(0, 1fr)" } : undefined}
+          >
             {labelNode ? <div class="wrc-c-label">{labelNode}</div> : <></>}
-            <div class="wrc-c-value">{valueNode}</div>
+            <div class="wrc-c-value" style={{ minWidth: 0 }}>{valueNode}</div>
           </div>
         </div>
       );
@@ -296,7 +302,7 @@ const Form = ({ formModel, setModel }: Props) => {
     if (propsNodes.length === 0) return <>{childNodes}</>;
 
     return (
-      <oj-c-collapsible expanded={true}>
+      <oj-c-collapsible class="oj-sm-12" expanded={true}>
         <div slot="header" class={`wrc-section-header wrc-label-text ${isDark ? 'oj-color-invert oj-c-colorscheme-dependent oj-bg-neutral-180' : 'oj-bg-neutral-30'}`}>
           {section.title}
         </div>

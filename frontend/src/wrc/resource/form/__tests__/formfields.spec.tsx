@@ -56,6 +56,17 @@ const buildFilenameModel = () => {
   return { fieldDescription, model };
 };
 
+const createStringFieldDescription = (name: string, label: string): Property => ({
+  array: false,
+  name,
+  label,
+  type: "String",
+  helpLabel: "",
+  helpSummaryHTML: "",
+  detailedHelpHTML: "",
+  externalHelp: { title: "", label: "", introLabel: "", href: "" },
+});
+
 const mockedGetDataComponentText = jest.requireMock("wrc/shared/model/transport")
   .getDataComponentText as jest.Mock;
 
@@ -122,6 +133,10 @@ describe("Form Fields", () => {
 
       fireEvent.click(ojAddButton!);
 
+      // The editable table consumes Enter for row navigation unless the Add
+      // control handles it before the event reaches the table.
+      expect(fireEvent.keyDown(ojAddButton!, { key: "Enter", cancelable: true })).toBe(false);
+
       await Context.getContext(container).getBusyContext().whenReady();
 
       (ojTable as ojTable<string, string>)?.refresh();
@@ -140,6 +155,248 @@ describe("Form Fields", () => {
       expect(text).toContain("My Value");
       expect(text).toContain("Select Row");
     }, 60000);
+
+    it("deletes a properties row with Enter", async () => {
+      const fieldDescription = {
+        array: false,
+        type: "properties",
+        name: "JavaMailProperties",
+        label: "Java Mail Properties",
+      } as Property;
+      const model = new FormContentModel(
+        {
+          data: {
+            JavaMailProperties: { value: { "mail.smtp.port": "465", "mail.imap.port": "993" } },
+          },
+        } as unknown as RDJ,
+        { sliceForm: { properties: [fieldDescription] } } as unknown as PDJ,
+      );
+
+      const { container } = render(
+        <div data-oj-binding-provider="preact">
+          <Form formModel={model}></Form>
+        </div>,
+      );
+      await Context.getContext(container).getBusyContext().whenReady();
+
+      const deleteButton = container.querySelector("oj-c-button[data-testid='delete']");
+      expect(deleteButton).not.toBeNull();
+
+      fireEvent.keyDown(deleteButton!, { key: "Enter" });
+      await Context.getContext(container).getBusyContext().whenReady();
+
+      expect(model.getProperty("JavaMailProperties")).toEqual({ "mail.imap.port": "993" });
+    }, 60000);
+
+    it("deletes an array row with Enter", async () => {
+      const fieldDescription = {
+        array: true,
+        type: "string",
+        name: "Recipients",
+        label: "Recipients",
+      } as Property;
+      const model = new FormContentModel(
+        {
+          data: {
+            Recipients: { value: [{ value: "first@example.com" }, { value: "second@example.com" }] },
+          },
+        } as unknown as RDJ,
+        { sliceForm: { properties: [fieldDescription] } } as unknown as PDJ,
+      );
+
+      const { container } = render(
+        <div data-oj-binding-provider="preact">
+          <Form formModel={model}></Form>
+        </div>,
+      );
+      await Context.getContext(container).getBusyContext().whenReady();
+
+      const deleteButton = container.querySelector("oj-c-button[data-testid='delete']");
+      expect(deleteButton).not.toBeNull();
+
+      fireEvent.keyDown(deleteButton!, { key: "Enter" });
+      await Context.getContext(container).getBusyContext().whenReady();
+
+      expect(model.getProperty("Recipients")).toEqual(["second@example.com"]);
+    }, 60000);
+  });
+
+  it("includes the owning form model in Field Settings launcher events", async () => {
+    const fieldDescription: Property = {
+      array: false,
+      name: "Name",
+      label: "Name",
+      type: "String",
+      helpLabel: "",
+      helpSummaryHTML: "",
+      detailedHelpHTML: "",
+      externalHelp: { title: "", label: "", introLabel: "", href: "" },
+    };
+    const model = new FormContentModel(
+      { data: { Name: { value: "example" } } } as unknown as RDJ,
+      { sliceForm: { properties: [fieldDescription] } } as unknown as PDJ,
+    );
+    const listener = jest.fn();
+    document.addEventListener("open-field-settings", listener);
+
+    try {
+      const { container } = render(
+        <div data-oj-binding-provider="preact">
+          <Form formModel={model} />
+        </div>,
+      );
+      await Context.getContext(container).getBusyContext().whenReady();
+
+      const launcher = container.querySelector("span.oj-ux-ico-target")?.closest("oj-c-button");
+      expect(launcher).not.toBeNull();
+      fireEvent(launcher!, new CustomEvent("ojAction"));
+
+      expect(listener).toHaveBeenCalledTimes(1);
+      expect(listener.mock.calls[0][0].detail).toEqual({ fieldDescription, formModel: model });
+    } finally {
+      document.removeEventListener("open-field-settings", listener);
+    }
+  });
+
+  it("renders a defaulted field when a page property is missing from the RDJ", async () => {
+    const presentField = createStringFieldDescription(
+      "PresentProperty",
+      "Present Property",
+    );
+    const missingField = createStringFieldDescription(
+      "MissingProperty",
+      "Missing Property",
+    );
+    const model = new FormContentModel(
+      {
+        data: {
+          PresentProperty: { value: "present value" },
+        },
+      } as unknown as RDJ,
+      {
+        sliceForm: {
+          properties: [presentField, missingField],
+        },
+      } as unknown as PDJ,
+    );
+
+    const { container } = render(
+      <div data-oj-binding-provider="preact">
+        <Form formModel={model} />
+      </div>,
+    );
+    await Context.getContext(container).getBusyContext().whenReady();
+
+    expect(
+      container.querySelector(
+        "oj-c-input-text[data-property='PresentProperty']",
+      ),
+    ).not.toBeNull();
+    expect(container.textContent).toContain("Missing Property");
+
+    const defaultedFields = container.querySelectorAll(
+      "oj-input-text.wrc-defaulted-field",
+    );
+    expect(defaultedFields).toHaveLength(1);
+    expect((defaultedFields[0] as any).disabled).toBe(true);
+    expect((defaultedFields[0] as any).readonly).toBe(true);
+  });
+
+  it("treats a field missing from the RDJ as read-only in Field Settings", async () => {
+    const fieldDescription = createStringFieldDescription(
+      "MissingProperty",
+      "Missing Property",
+    );
+    const model = new FormContentModel(
+      { data: {} } as unknown as RDJ,
+      {
+        sliceForm: {
+          properties: [fieldDescription],
+        },
+      } as unknown as PDJ,
+    );
+    const onApply = jest.fn();
+
+    const { container } = render(
+      <div data-oj-binding-provider="preact">
+        <FieldSettingsDialog
+          open={false}
+          formModel={model}
+          fieldDescription={fieldDescription}
+          onClose={() => undefined}
+          onApply={onApply}
+        />
+      </div>,
+    );
+
+    expect(model.isPropertyMissingFromRDJ(fieldDescription.name)).toBe(true);
+
+    const input = container.querySelector(
+      "oj-input-text[data-property='MissingProperty']",
+    );
+    expect(input).not.toBeNull();
+    expect((input as any).readonly).toBe(true);
+
+    Object.defineProperty(container.querySelector("#fieldSettingsDialog"), "close", {
+      configurable: true,
+      value: jest.fn(),
+    });
+
+    fireEvent(
+      input!,
+      new CustomEvent("rawValueChanged", {
+        detail: { value: "unsupported value" },
+      }),
+    );
+    fireEvent(
+      container.querySelector("#dlgOkBtn")!,
+      new CustomEvent("ojAction"),
+    );
+
+    expect(model.hasChanges()).toBe(false);
+    expect(onApply).not.toHaveBeenCalled();
+  });
+
+  it("keeps a supported field restored to default editable in Field Settings", async () => {
+    const fieldDescription = createStringFieldDescription(
+      "SupportedProperty",
+      "Supported Property",
+    );
+    const model = new FormContentModel(
+      {
+        data: {
+          SupportedProperty: { set: true, value: "configured value" },
+        },
+      } as unknown as RDJ,
+      {
+        sliceForm: {
+          properties: [fieldDescription],
+        },
+      } as unknown as PDJ,
+    );
+
+    model.setProperty(fieldDescription.name);
+
+    const { container } = render(
+      <div data-oj-binding-provider="preact">
+        <FieldSettingsDialog
+          open={false}
+          formModel={model}
+          fieldDescription={fieldDescription}
+          onClose={() => undefined}
+          onApply={() => undefined}
+        />
+      </div>,
+    );
+
+    expect(model.isPropertyDefaulted(fieldDescription.name)).toBe(true);
+    expect(model.isPropertyMissingFromRDJ(fieldDescription.name)).toBe(false);
+
+    const input = container.querySelector(
+      "oj-input-text[data-property='SupportedProperty']",
+    );
+    expect(input).not.toBeNull();
+    expect((input as any).readonly).toBe(false);
   });
 
   describe("Filename fields", () => {

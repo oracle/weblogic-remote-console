@@ -34,7 +34,8 @@ jest.mock("../formtoolbar", () => ({
 
 jest.mock("../field-settings-dialog", () => ({
   __esModule: true,
-  default: () => <div />,
+  default: ({ open, formModel }: any) =>
+    open ? <div data-testid="field-settings-dialog">{String(formModel.version)}</div> : <div />,
 }));
 
 jest.mock("../tabs", () => ({
@@ -44,7 +45,15 @@ jest.mock("../tabs", () => ({
 
 jest.mock("../slicetable", () => ({
   __esModule: true,
-  default: () => <div />,
+  default: ({ onSelectionChanged }: any) => (
+    <button
+      onClick={() =>
+        onSelectionChanged({ values: () => ["wlsoci1412ee_server_1"] })
+      }
+    >
+      Select Monitoring Row
+    </button>
+  ),
 }));
 
 jest.mock("../../table/tableintro", () => ({
@@ -128,7 +137,29 @@ jest.mock("../../../shared/model/formcontentmodel", () => {
 });
 
 jest.mock("../../../shared/model/tablecontentmodel", () => {
-  class TableContentModel {}
+  class TableContentModel {
+    action: any;
+
+    getActions() {
+      return this.action ? [this.action] : [];
+    }
+
+    getPageTitle() {
+      return "Monitoring";
+    }
+
+    stopPolling() {
+      return undefined;
+    }
+
+    startPolling() {
+      return undefined;
+    }
+
+    isPolling() {
+      return false;
+    }
+  }
   return { TableContentModel };
 });
 
@@ -140,9 +171,14 @@ jest.mock("../../../shared/model/listcontentmodel", () => {
 import { UserContext } from "../../resource";
 import { FormContainer } from "../formcontainer";
 import { FormContentModel } from "../../../shared/model/formcontentmodel";
+import { TableContentModel } from "../../../shared/model/tablecontentmodel";
 import { broadcastErrorMessage } from "wrc/shared/controller/notification-utils";
 
 describe("FormContainer", () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
   it("refreshes the rendered model before invoking a save-first action", async () => {
     const action = {
       name: "connect",
@@ -185,6 +221,62 @@ describe("FormContainer", () => {
       expect(formModel.invokeAction).toHaveBeenCalledWith(action, undefined);
       expect(screen.getByTestId("form-version").textContent).toBe("1");
       expect(broadcastErrorMessage).toHaveBeenCalled();
+    });
+  });
+
+  it("preserves a plain Monitoring row identifier when invoking an action", async () => {
+    const action = {
+      name: "shutdown",
+      label: "Shutdown",
+      rows: "one",
+    };
+
+    const tableModel = new TableContentModel({} as any, {} as any) as any;
+    tableModel.action = action;
+    tableModel.invokeAction = jest.fn().mockResolvedValue({
+      json: jest.fn().mockResolvedValue({ ok: true, messages: [] }),
+    });
+
+    render(
+      <UserContext.Provider value={{ rdj: "/api/test", showHelp: false }}>
+        <FormContainer model={tableModel} pageContext="main" />
+      </UserContext.Provider>,
+    );
+
+    fireEvent.click(screen.getByText("Select Monitoring Row"));
+    fireEvent.click(screen.getByText("Run Action"));
+
+    await waitFor(() => {
+      expect(tableModel.invokeAction).toHaveBeenCalledWith(
+        action,
+        ["wlsoci1412ee_server_1"],
+      );
+      expect(broadcastErrorMessage).not.toHaveBeenCalled();
+    });
+  });
+
+  it("only opens Field Settings for its displayed form model", async () => {
+    const formModel = new FormContentModel({} as any, {} as any) as any;
+    formModel.version = 1;
+    const actionInputModel = new FormContentModel({} as any, {} as any) as any;
+    actionInputModel.version = 2;
+
+    render(
+      <UserContext.Provider value={{ rdj: "/api/test", showHelp: false }}>
+        <FormContainer model={formModel} pageContext="main" />
+      </UserContext.Provider>,
+    );
+
+    document.dispatchEvent(new CustomEvent("open-field-settings", {
+      detail: { fieldDescription: { name: "Name", label: "Name" }, formModel: actionInputModel },
+    }));
+    expect(screen.queryByTestId("field-settings-dialog")).toBeNull();
+
+    document.dispatchEvent(new CustomEvent("open-field-settings", {
+      detail: { fieldDescription: { name: "Name", label: "Name" }, formModel },
+    }));
+    await waitFor(() => {
+      expect(screen.getByTestId("field-settings-dialog").textContent).toBe("1");
     });
   });
 });

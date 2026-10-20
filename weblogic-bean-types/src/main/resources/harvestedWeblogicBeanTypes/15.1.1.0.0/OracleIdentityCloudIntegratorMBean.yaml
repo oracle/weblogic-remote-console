@@ -1,4 +1,4 @@
-# Copyright (c) 2020, 2025, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2026, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 baseTypes:
@@ -11,6 +11,18 @@ descriptionHTML: '<p>This MBean specifies configuration attributes for the Oracl
   (identity assertion) using Oracle Identity Cloud Service tokens.</p> '
 name: weblogic.security.providers.authentication.OracleIdentityCloudIntegratorMBean
 properties:
+- array: true
+  defaultValue:
+    value:
+      value: &id001 [
+        ]
+  descriptionHTML: '<p>The list of HTTP servlet request context paths that will be
+    allowed to consume an access token from the Oracle Identity Cloud Service.            When
+    no access token context paths are configured, all context paths will be allowed
+    to consume access tokens.</p> '
+  name: AccessTokenContextPaths
+  type: java.lang.String
+  writable: true
 - defaultValue:
     value:
       value: 300
@@ -401,8 +413,7 @@ properties:
 - array: true
   defaultValue:
     value:
-      value: &id001 [
-        ]
+      value: *id001
   descriptionHTML: '<p>The names of HTTP headers sent on requests that the synchronization
     filter uses to look for remote user information.</p> '
   name: SyncFilterUserHeaderNames

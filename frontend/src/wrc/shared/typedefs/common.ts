@@ -1,6 +1,6 @@
 /**
  * @license UPL-1.0
- * Copyright (c) 2025, Oracle and/or its affiliates.
+ * Copyright (c) 2025, 2026, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  */
 
@@ -17,8 +17,16 @@ export interface Message {
   severity: string;
   message?: string;
   detail?: string;
-  property: string;
+  property?: string;
 }
+
+export type ResponseError = Error & {
+  body?: string;
+  messages?: Message[];
+  rawResponseBody?: string;
+  status?: number;
+  url?: string;
+};
 
 export interface HelpData {
   detailedHelpHTML?: string;

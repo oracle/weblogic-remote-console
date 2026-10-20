@@ -1,6 +1,6 @@
 /**
  * @license UPL-1.0
- * Copyright (c) 2025, Oracle and/or its affiliates.
+ * Copyright (c) 2025, 2026, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  */
 
@@ -34,6 +34,7 @@ export const TableIntro = ({ tableContent }: { tableContent: TableContentModel }
       {introHTML ? (
         <div
           id="intro"
+          tabIndex={0}
           class={`cfe-table-form-instructions ${isDark ? "oj-bg-neutral-180" : "oj-bg-info-20"} wrc-table-intro`}
           dangerouslySetInnerHTML={{ __html: introHTML }}
         />

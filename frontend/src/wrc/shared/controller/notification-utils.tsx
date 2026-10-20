@@ -5,7 +5,7 @@
  */
 
 import type { Context } from "../../resource/resource";
-import { Response } from "../typedefs/common";
+import { Message, Response, ResponseError } from "../typedefs/common";
 import * as HtmlUtils from "ojs/ojhtmlutils";
 
 const escapeHtml = (value?: string) => {
@@ -19,8 +19,35 @@ const escapeHtml = (value?: string) => {
     .replaceAll("'", "&#39;");
 };
 
+const broadcastMessages = (ctx: Context | null, messages?: Message[]) => {
+  if (!messages?.length || !ctx?.context?.broadcastMessage) return;
+
+  const overallSeverity =
+    messages.find((message) => message.severity)?.severity || "info";
+
+  // Work around backwards compatibility with the MVVM header content. ojMessage does
+  // not contain an html property, so escape the server text before creating DOM nodes.
+  const html =
+    "<ul>" +
+    messages.map(
+      (message) => `<li>${escapeHtml(message.detail || message.message)}</li>`,
+    ).join("") +
+    "</ul>";
+
+  const untypedBroadcastMessageFunc = ctx.context.broadcastMessage as any;
+  untypedBroadcastMessageFunc({
+    html: { view: HtmlUtils.stringToNodeArray(html), string: html },
+    severity: overallSeverity.toLowerCase(),
+  });
+};
+
 export const broadcastErrorMessage = (ctx: Context | null, err: Error) => {
-  const typedError = err as Error & { body?: string; status?: number };
+  const typedError = err as ResponseError;
+  if (typedError.messages?.length) {
+    broadcastMessages(ctx, typedError.messages);
+    return;
+  }
+
   const detail = typedError.body || err.message;
   const summary =
     typedError.status != null && typedError.status >= 400
@@ -42,26 +69,5 @@ export const broadcastMessageResponse = (
   ctx: Context | null,
   messageResponse: Response,
 ) => {
-  // broadcast messages to UI, this logic needs to be moved
-  if (messageResponse?.messages && ctx?.context && ctx.context.broadcastMessage) {
-    const overallSeverity =
-      messageResponse.messages.find((message) => message.severity)?.severity ||
-      "info";
-
-    // workaround for backwards compatiblity with the mvvm header-content..
-    // ojMessage does not contain an html property (which the frontend was using as an
-    // undocumented feature) and there is no other way to pass html content...
-    const html =
-      "<ul>" +
-      messageResponse.messages.map(
-        (message) => `<li>${escapeHtml(message.detail || message.message)}</li>`,
-      ).join("") +
-      "</ul>";
-
-    const untypedBroadcastMessageFunc = ctx.context?.broadcastMessage as any;
-    untypedBroadcastMessageFunc({
-      html: { view: HtmlUtils.stringToNodeArray(html), string: html },
-      severity: overallSeverity.toLowerCase(),
-    });
-  }
+  broadcastMessages(ctx, messageResponse?.messages);
 };

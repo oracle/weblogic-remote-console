@@ -1,4 +1,4 @@
-// Copyright (c) 2020, 2025, Oracle and/or its affiliates.
+// Copyright (c) 2020, 2026, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.common.utils;
@@ -32,19 +32,26 @@ public class WebLogicVersions {
   // Must be newest to oldest.
   static {
 
-    // No 15.1.1.0.0 specific docs yet since 15.1.1 hasn't shipped yet
-    // The 15.1.1.0.0 release is in progress
+    // Use 26.1.0.0.0 expected public docs link
+    addVersion(
+      "26.1.0.0.0",
+      "wls2610",
+      "https://docs.oracle.com/en/middleware/standalone/weblogic-server/26.1.0",
+      "https://docs.oracle.com/en/middleware/standalone/coherence/26.1.0",
+      "wlmbr/mbeans"
+    );
+
     addVersion(
       "15.1.1.0.0",
-      "wls14120",
-      "https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2",
-      "https://docs.oracle.com/en/middleware/fusion-middleware/coherence/14.1.2",
+      "wls1511",
+      "https://docs.oracle.com/en/middleware/standalone/weblogic-server/15.1.1",
+      "https://docs.oracle.com/en/middleware/standalone/coherence/15.1.1",
       "wlmbr/mbeans"
     );
 
     addVersion(
       "14.1.2.0.0",
-      "wls14120",
+      "fmw1412",
       "https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2",
       "https://docs.oracle.com/en/middleware/fusion-middleware/coherence/14.1.2",
       "wlmbr/mbeans"
@@ -55,26 +62,6 @@ public class WebLogicVersions {
       "wls14110",
       "https://docs.oracle.com/en/middleware/standalone/weblogic-server/14.1.1.0",
       "https://docs.oracle.com/en/middleware/standalone/coherence/14.1.1.0",
-      "wlmbr/mbeans"
-    );
-
-    // No 12.2.1.6.0 specific docs yet:
-    // The 12.2.1.6.0 release is used by Oracle applications and is not a public release
-    addVersion(
-      "12.2.1.6.0",
-      "fmw122140",
-      "https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/12.2.1.4",
-      "https://docs.oracle.com/en/middleware/fusion-middleware/coherence/12.2.1.4",
-      "wlmbr/mbeans"
-    );
-
-    // No 12.2.1.5.0 specific docs yet:
-    // The 12.2.1.5.0 release is used by Oracle applications and is not a public release
-    addVersion(
-      "12.2.1.5.0",
-      "fmw122140",
-      "https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/12.2.1.4",
-      "https://docs.oracle.com/en/middleware/fusion-middleware/coherence/12.2.1.4",
       "wlmbr/mbeans"
     );
 

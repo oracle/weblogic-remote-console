@@ -1,0 +1,46 @@
+# Copyright (c) 2026, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+introductionHTML: >
+  <p>Use this page to configure feature compatibility settings for this domain.
+  These settings preserve legacy behavior by default and can enable the corresponding
+  tightened behavior.</p>
+
+presentation:
+  singleColumn: true
+
+sections:
+- title: JNDI
+  properties:
+  - name: FeatureCompatibility.JNDIAdditionalFactoriesAllowListsEnabled
+  - name: SecurityConfiguration.JNDIAdditionalInitialContextFactoriesAllowed
+    usedIf:
+      property: FeatureCompatibility.JNDIAdditionalFactoriesAllowListsEnabled
+      values:
+      - true
+  - name: SecurityConfiguration.JNDIAdditionalReferenceFactoriesAllowed
+    usedIf:
+      property: FeatureCompatibility.JNDIAdditionalFactoriesAllowListsEnabled
+      values:
+      - true
+  - name: FeatureCompatibility.JNDIOutboundConnectionsAllowListEnabled
+  - name: SecurityConfiguration.JNDIOutboundConnectionsAllowed
+    usedIf:
+      property: FeatureCompatibility.JNDIOutboundConnectionsAllowListEnabled
+      values:
+      - true
+  - name: FeatureCompatibility.JNDIBindingAuthorizationPolicyEnabled
+
+- title: Networking
+  properties:
+  - name: FeatureCompatibility.T3RouteOnlyToTrustedServersEnabled
+  - name: FeatureCompatibility.StrictReplicationAuthorizationEnabled
+
+- title: IIOP
+  properties:
+  - name: FeatureCompatibility.IIOPUnauthenticatedServiceContextValueTypeFilteringEnabled
+
+- title: Work Context
+  properties:
+  - name: FeatureCompatibility.WorkContextClassValidationEnabled
+  - name: FeatureCompatibility.SerializedWorkContextMaximumSize
