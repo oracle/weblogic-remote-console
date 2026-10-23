@@ -1,0 +1,86 @@
+# Copyright (c) 2020, 2026, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+baseTypes:
+- weblogic.management.configuration.ConfigurationMBean
+descriptionHTML: '<p> The local setting of an HTTP/2 connection on a web server. </p> '
+name: weblogic.management.configuration.Http2ConfigMBean
+properties:
+- defaultValue:
+    derivedDefault: true
+  descriptionHTML: '<p> Gets the number of CONTINUATION frames allowed per stream.
+    </p> '
+  name: ContinuationFramesLimit
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: 60
+  descriptionHTML: '<p>Gets the frame count limit reset interval</p> '
+  name: FrameCountLimitResetInterval
+  restartNeeded: true
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: 4096
+  descriptionHTML: '<p> The server''s maximum size of the header compression table
+    used to decode header blocks, in octets. </p> '
+  name: HeaderTableSize
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: 65535
+  descriptionHTML: '<p> The server''s initial window size (in octets) for stream-level
+    flow control. This setting affects the window size of all streams. </p> '
+  name: InitialWindowSize
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: 300
+  descriptionHTML: '<p> The maximum number of concurrent streams that the server will
+    allow. This limit is directional: it applies to the number of streams that the
+    server permits the receiver to create. </p> '
+  name: MaxConcurrentStreams
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: 16384
+  descriptionHTML: '<p> The size of the largest frame payload that the server is willing
+    to receive, in octets. </p> '
+  name: MaxFrameSize
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: 1000
+  descriptionHTML: '<p> The maximum number of decoded HTTP/2 header fields that the
+    server accepts in one header field list. This is a local inbound protection and
+    is not an HTTP/2 SETTINGS parameter. Pseudo-header fields, repeated fields, and
+    each separately encoded Cookie field count toward the limit. Initial headers and
+    trailers have independent limits on newly established connections. </p> '
+  name: MaxHeaderCount
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: 131072
+  descriptionHTML: '<p> The maximum decoded size, in bytes, of an HTTP/2 request header
+    block that WebLogic Server accepts. The default is 131072 bytes. The size is the
+    sum of each field name and value, plus 32 bytes for each field. Initial request
+    headers and request trailers are checked separately. If a client exceeds this
+    limit, WebLogic Server rejects that HTTP/2 stream and keeps the connection available
+    for other streams. WebLogic Server also advertises this limit to clients. </p> '
+  name: MaxHeaderListSize
+  type: int
+  writable: true
+- defaultValue:
+    derivedDefault: true
+  descriptionHTML: '<p> Gets the maximum number of stream resets(RST_STREAM frames)
+    allowed per connection. </p> '
+  name: MaxStreamResets
+  type: int
+  writable: true

@@ -1,0 +1,11 @@
+# Copyright (c) 2020, 2026, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+baseTypes:
+- weblogic.management.security.ProviderMBean
+descriptionHTML: 'The base MBean for all MBean implementations that manage Authentication
+  providers. If your Authentication provider uses the WebLogic Security SSPI to provide
+  login services, then your MBean must extend <code>weblogic.management.security.authentication.Authenticator</code>.
+  If your Authentication provider uses the WebLogic Security SSPI to provide identity-assertion
+  services, then your MBean must extend <code>weblogic.management.security.authentication.IdentityAsserter</code>. '
+name: weblogic.management.security.authentication.AuthenticationProviderMBean

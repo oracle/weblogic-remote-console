@@ -1,0 +1,7 @@
+# Copyright (c) 2026, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+# Session monitoring identifiers are server-local. The aggregated application
+# runtime page retains its summary slice rather than presenting mixed-server IDs.
+slices:
+- name: General

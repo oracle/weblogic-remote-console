@@ -3,8 +3,8 @@
 
 introductionHTML: >
   <p>Use this page to configure feature compatibility settings for this domain.
-  These settings preserve legacy behavior by default and can enable the corresponding
-  tightened behavior.</p>
+  These protections are enabled by default. Disable a configurable setting only
+  when needed to preserve compatibility with legacy behavior.</p>
 
 presentation:
   singleColumn: true
@@ -30,17 +30,35 @@ sections:
       values:
       - true
   - name: FeatureCompatibility.JNDIBindingAuthorizationPolicyEnabled
+  - name: FeatureCompatibility.SpringJtaDeserializationJndiLookupDisabled
 
 - title: Networking
   properties:
+  - name: FeatureCompatibility.T3LegacyCrossDomainCredentialJVMIDReplayProtectionEnabled
+  - name: FeatureCompatibility.CrossDomainT3SConnectionTrustValidationEnabled
   - name: FeatureCompatibility.T3RouteOnlyToTrustedServersEnabled
+  - name: FeatureCompatibility.WLProxyClientCertificateChainValidationEnabled
   - name: FeatureCompatibility.StrictReplicationAuthorizationEnabled
+  - name: FeatureCompatibility.SAML2StrictArtifactResolutionEnabled
+  - name: FeatureCompatibility.JAXWSRejectUnknownSEIOperationsEnabled
 
 - title: IIOP
   properties:
+  - name: FeatureCompatibility.IIOPTypedReadResolveProxyValidationEnabled
   - name: FeatureCompatibility.IIOPUnauthenticatedServiceContextValueTypeFilteringEnabled
+  - name: FeatureCompatibility.IIOPStrictRemoteBusinessInterfaceValidationEnabled
 
 - title: Work Context
   properties:
   - name: FeatureCompatibility.WorkContextClassValidationEnabled
   - name: FeatureCompatibility.SerializedWorkContextMaximumSize
+  - name: FeatureCompatibility.WorkContextInputMaximumASCIIFieldSize
+
+- title: Web Services Atomic Transactions
+  properties:
+  - name: FeatureCompatibility.WSATIgnoreUnknownReplayCompletionEnabled
+  - name: FeatureCompatibility.WSATRegistrationSecretEnabled
+
+- title: Diagnostics
+  properties:
+  - name: FeatureCompatibility.WLDFScriptActionPathRestrictionEnabled

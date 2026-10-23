@@ -1,0 +1,23 @@
+# Copyright (c) 2020, 2026, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+baseTypes:
+- weblogic.management.configuration.BaseExecutorServiceMBean
+descriptionHTML: 'Configuration MBean representing parameters of ManagedExecutorService
+  template. '
+name: weblogic.management.configuration.ManagedExecutorServiceTemplateMBean
+properties:
+- defaultValue:
+    value:
+      value: -1
+  descriptionHTML: 'Configures queueing behavior used together with jakarta.enterprise.concurrent.ManagedExecutorDefinition.maxAsync().
+    This attribute applies to annotation-configured instances and is therefore defined
+    on template MBeans rather than BaseExecutorServiceMBean. <p> When the number of
+    running asynchronous tasks reaches maxAsync: </p> <ul> <li>maxQueued &lt; 0 means
+    queueing is unbounded.</li> <li>maxQueued == 0 means no queue is used and submissions
+    are rejected.</li> <li>maxQueued &gt; 0 means at most maxQueued tasks can wait
+    in the queue.</li> </ul> '
+  name: MaxQueued
+  restartNeeded: true
+  type: int
+  writable: true

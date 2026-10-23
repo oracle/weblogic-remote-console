@@ -2,7 +2,7 @@
   "name": "weblogic-remote-console",
   "productName": "WebLogic Remote Console",
   "homepage": "https://github.com/oracle/weblogic-remote-console",
-  "version": "3.0.6",
+  "version": "3.0.7",
   "main": "app/main.js",
   "scripts": {
     "test": "node --test test/*.test.js",
@@ -35,7 +35,7 @@
     "yargs": "^17.7.3"
   },
   "devDependencies": {
-    "electron": "^43.1.1",
+    "electron": "^43.8.4",
     "electron-builder": "^26.15.3",
     "eslint": "^9.0.0"
   },

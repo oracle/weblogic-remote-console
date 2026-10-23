@@ -1,0 +1,19 @@
+# Copyright (c) 2020, 2026, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+baseTypes:
+- weblogic.descriptor.SettableBean
+descriptionHTML: ' '
+name: weblogic.coherence.app.descriptor.wl.InitParamsBean
+properties:
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: '<p> An array of init param representing initialization parameters.
+    </p> '
+  name: InitParams
+  relationship: containment
+  type: weblogic.coherence.app.descriptor.wl.InitParamBean
+roles:
+  allowed:
+  - Deployer

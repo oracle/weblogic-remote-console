@@ -53,7 +53,7 @@ export function BrandingHeaderImpl({context}: Props) {
   const appName =
     t["wrc-header"]?.text?.appName;
 
-  const version = '3.0.6';
+  const version = '3.0.7';
 
   // Dark mode state + helpers
   const [darkEnabled, setDarkEnabled] = useState(false);
@@ -131,20 +131,16 @@ export function BrandingHeaderImpl({context}: Props) {
 
   const adjustDrawerLayoutHeight = () => {
     const header = document.querySelector('header') as HTMLElement | null;
+    const middle = document.getElementById('middle-container') as HTMLElement | null;
     const drawer = document.getElementById('drawer-layout') as HTMLElement | null;
     const nav = document.getElementById('navtree-container2') as HTMLElement | null;
-    const rightPanel = document.querySelector('#drawer-layout > main.right_panel') as HTMLElement | null;
 
     const vh = window.innerHeight || document.documentElement.clientHeight || 0;
-    const headerH = header ? header.getBoundingClientRect().height : 0;
-    const height = Math.max(0, Math.floor(vh - headerH));
+    const contentTop = middle?.getBoundingClientRect().top ?? header?.getBoundingClientRect().bottom ?? 0;
+    const height = middle?.clientHeight || Math.max(0, Math.floor(vh - contentTop));
 
     if (drawer) drawer.style.height = `${height}px`;
     if (nav) nav.style.height = `${height}px`;
-    if (rightPanel) {
-      rightPanel.style.minHeight = `${height}px`;
-      rightPanel.style.height = `${height}px`;
-    }
   };
 
   const getStoredWidth = async (): Promise<number | string | undefined> => {

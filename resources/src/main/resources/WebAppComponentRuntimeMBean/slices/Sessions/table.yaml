@@ -1,0 +1,28 @@
+# Copyright (c) 2026, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+introductionHTML: >
+  <p>Use this page to view statistics about the sessions associated with this web application.</p>
+
+getTableRowsMethod: weblogic.remoteconsole.customizers.WebAppComponentRuntimeMBeanCustomizer.getSessionsSliceTableRows
+
+displayedColumns:
+- name: ContextRoot
+  label: Context Root
+  definition:
+    type: java.lang.String
+- name: TimeLastAccessed
+  label: Last Accessed Time
+  dateAsLong: true
+  definition:
+    type: long
+- name: MaxInactiveInterval
+  label: Max Inactive Interval
+  definition:
+    type: long
+- name: MonitoringId
+  label: Monitoring ID
+  definition:
+    type: java.lang.String
+    descriptionHTML: >
+      The monitoring identifier for the HTTP session. This is not the session's JSESSIONID value.

@@ -127,14 +127,12 @@ public class WLDFDataAccessRuntimeMBeanCustomizer {
       }
       logFile = ic.getBeanTreePath().getLastSegment().getKey();
       String serverName = ic.getIdentifiers().get(0);
-      String path =
-        "DomainRuntime.CombinedServerRuntimes."
-        + serverName
-        + ".ServerRuntime.WLDFRuntime.WLDFAccessRuntime.WLDFDataAccessRuntimes."
-        + logFile;
       beanTreePath = BeanTreePath.create(
         ic.getBeanTreePath().getBeanRepo(),
-        new Path(path)
+        Path.fromComponents(
+          "DomainRuntime", "CombinedServerRuntimes", serverName, "ServerRuntime",
+          "WLDFRuntime", "WLDFAccessRuntime", "WLDFDataAccessRuntimes", logFile
+        )
       );
     } else {
       if (ic.getIdentities() != null) {
@@ -247,8 +245,10 @@ public class WLDFDataAccessRuntimeMBeanCustomizer {
     String logFile = ic.getBeanTreePath().getPath().getLastComponent();
     BeanTreePath beanTreePath = BeanTreePath.create(
       ic.getBeanTreePath().getBeanRepo(),
-      new Path("DomainRuntime.ServerRuntimes" + "." + serverName + "."
-        + "WLDFRuntime.WLDFAccessRuntime.WLDFDataAccessRuntimes" + "." + logFile)
+      Path.fromComponents(
+        "DomainRuntime", "ServerRuntimes", serverName,
+        "WLDFRuntime", "WLDFAccessRuntime", "WLDFDataAccessRuntimes", logFile
+      )
     );
     try {
       final File outputFile = file;

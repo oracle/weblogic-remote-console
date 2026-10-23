@@ -1,0 +1,19 @@
+# Copyright (c) 2020, 2026, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+baseTypes:
+- weblogic.descriptor.SettableBean
+descriptionHTML: '<p>This abstract bean is the base interface for all WLDF*Bean interfaces.</p> '
+name: weblogic.diagnostics.descriptor.WLDFBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: '<p> Return the unique id of this bean instance.</p> '
+  name: Id
+  type: long
+- defaultValue:
+    derivedDefault: true
+  descriptionHTML: '<p>The name of the WebLogic Diagnostic Framework (WLDF) bean.</p> '
+  key: true
+  name: Name
+  type: java.lang.String

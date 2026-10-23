@@ -1,0 +1,56 @@
+# Copyright (c) 2020, 2026, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+baseTypes:
+- weblogic.management.runtime.TaskRuntimeMBean
+descriptionHTML: '<p>Represents a running or completed migration operation.</p> '
+name: weblogic.management.runtime.MigrationTaskRuntimeMBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Provides the identity of the server to which the migration
+    is moving.</p> '
+  exclude: true
+  name: DestinationServer
+  supported: false
+  type: weblogic.management.configuration.ServerMBean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Indicates whether the migration task moves a JTA recovery manager.</p> '
+  name: JTA
+  type: boolean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Provides the MigratableTarget object that is being migrated.</p> '
+  exclude: true
+  name: MigratableTarget
+  supported: false
+  type: weblogic.management.configuration.MigratableTargetMBean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Indicates whether the Task is still running.</p> '
+  name: Running
+  type: boolean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Provides the identity of the server from which the migration
+    is moving.</p> '
+  exclude: true
+  name: SourceServer
+  supported: false
+  type: weblogic.management.configuration.ServerMBean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Provides an int describing the status of this Task.</p> '
+  name: StatusCode
+  type: int
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Indicates whether the Task was successful, failed or was canceled.</p> '
+  name: Terminal
+  type: boolean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Indicates whether the Task is waiting for user input.</p> '
+  name: WaitingForUser
+  type: boolean

@@ -7,6 +7,7 @@
 export const ActionRedwoodMap: Record<string, string> = {
     __DELETE: 'oj-ux-ico-trash',
     cancel: 'oj-ux-ico-cancel',
+    certificateAuthorityActions: 'oj-ux-ico-certification',
     clearSearches: 'oj-ux-ico-eraser',
     createActions: 'oj-ux-ico-add-create-page',
     dashboard: 'oj-ux-ico-dashboard-landing-page-template',
@@ -25,6 +26,7 @@ export const ActionRedwoodMap: Record<string, string> = {
     new: 'oj-ux-ico-library-add',
     purgeCompletedDeploymentProgressObjects: 'oj-ux-ico-delete-circle',
     rename: 'oj-ux-ico-rename',
+    rollDomainCertificateAuthority: 'oj-ux-ico-rotations-lock',
     save: 'oj-ux-ico-save',
     select: 'oj-ux-ico-select',
     view: 'oj-ux-ico-file-view-details',

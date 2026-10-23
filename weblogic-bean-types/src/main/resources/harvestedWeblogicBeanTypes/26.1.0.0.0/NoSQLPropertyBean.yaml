@@ -1,0 +1,50 @@
+# Copyright (c) 2020, 2026, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+baseTypes:
+- weblogic.descriptor.SettableBean
+descriptionHTML: 'Represents a named NoSQL provider property. '
+name: weblogic.j2ee.descriptor.wl.NoSQLPropertyBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: 'Returns the plaintext value of the encrypted property. '
+  encrypted: true
+  getRoles:
+    allowed:
+    - Deployer
+  name: EncryptedValue
+  setRoles:
+    allowed:
+    - Deployer
+  transient: true
+  type: java.lang.String
+  writable: true
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: 'Returns the value in the encrypted form stored in the descriptor. '
+  encrypted: true
+  getRoles:
+    allowed:
+    - Deployer
+  name: EncryptedValueEncrypted
+  type: byte
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: 'The name of the property. '
+  key: true
+  name: Name
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: 'The value of the property. '
+  name: Value
+  type: java.lang.String
+  writable: true
+roles:
+  allowed:
+  - Deployer

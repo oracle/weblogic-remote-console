@@ -1,0 +1,10 @@
+# Copyright (c) 2020, 2026, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+baseTypes:
+- weblogic.management.runtime.MessageCursorRuntimeMBean
+descriptionHTML: 'This runtime MBean represents a handle to a server-side JMS message
+  result set.  It is used for paging through large sets of messages. Messages are
+  returned in an array of CompositeData objects that contain the message header fields
+  and additional attributes. '
+name: weblogic.management.runtime.JMSMessageCursorRuntimeMBean

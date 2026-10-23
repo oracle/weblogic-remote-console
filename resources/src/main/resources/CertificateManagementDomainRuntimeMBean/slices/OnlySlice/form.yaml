@@ -1,4 +1,4 @@
-# Copyright (c) 2025, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2025, 2026, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 introductionHTML: >
   <p>Use this page to perform domain-wide credential management,
@@ -6,11 +6,24 @@ introductionHTML: >
   <p><b>Note</b>: View the page help for more information.</p>
 
 actions:
+- name: certificateAuthorityActions
+  label: Manage Certificate Authorities
+  actions:
+  - name: purgeExpiredCertificateAuthorities
+    requiredCapabilities:
+    - 26.1.0.0.0OrAfter
+  - name: removeCertificateAuthority
+    requiredCapabilities:
+    - 26.1.0.0.0OrAfter
+  - name: rollDomainCertificateAuthority
 - name: refreshCertificateActions
   label: Refresh Certificates
   actions:
   - name: refreshServerCertificateAllServers
   - name: refreshServerTrustAllServers
   - name: refreshMachineCertificatesAllMachines
+    requiredCapabilities:
+    - Before26.1.0.0.0
   - name: refreshMachineTrustAllMachines
-- name: rollDomainCertificateAuthority
+    requiredCapabilities:
+    - Before26.1.0.0.0

@@ -1,4 +1,4 @@
-# Copyright (c) 2020, 2025, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2020, 2026, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 introductionHTML: >
@@ -21,6 +21,8 @@ properties:
   - name: "PlanStagingMode"
   - name: "DeploymentPrincipalName"
   - name: "CacheInAppDirectory"
+  - name: "LegacyEmptyBeansXmlDiscovery"
+  - name: "ValidatePersistenceXmlSchema"
 
 helpTopics:
   - label: "Developing Web Applications, Servlets, and JSPs for Oracle WebLogic Server"

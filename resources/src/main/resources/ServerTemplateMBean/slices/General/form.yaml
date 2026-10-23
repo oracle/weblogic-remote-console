@@ -1,4 +1,4 @@
-# Copyright (c) 2022, 2024, Oracle and/or its affiliates.
+# Copyright (c) 2022, 2026, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 introductionHTML: >
   <p>Use this page to configure general features of this server such as default network communications.</p>
@@ -49,6 +49,7 @@ advancedProperties:
 - name: "TransactionSecureChannelName"
 - name: "TransactionPublicChannelName"
 - name: "TransactionPublicSecureChannelName"
+- name: "WeblogicPluginAllowedProxyHosts"
 helpTopics:
 - label: "Using Security Assertion Markup Language (SAML) Tokens For Identity "
   href: "http://www.oracle.com/pls/topic/lookup?ctx=@FMW_VERSION@&amp;id=WSSOV297"

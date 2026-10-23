@@ -1,0 +1,54 @@
+# Copyright (c) 2020, 2026, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+baseTypes:
+- weblogic.management.WebLogicMBean
+- weblogic.descriptor.SettableBean
+descriptionHTML: '<p>The tagging interface for configuration MBeans.</p> '
+name: weblogic.management.configuration.ConfigurationMBean
+properties:
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Return whether the MBean was created dynamically or is persisted
+    to config.xml</p> '
+  name: DynamicallyCreated
+  transient: true
+  type: boolean
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Return the unique id of this MBean instance</p> '
+  name: Id
+  type: long
+- defaultValue:
+    derivedDefault: true
+  descriptionHTML: '<p>The user-specified name of this MBean instance.</p>  <p>This
+    name is included as one of the key properties in the MBean''s <code>javax.management.ObjectName</code>:</p>  <p><code>Name=<i>user-specified-name</i></code></p> '
+  key: true
+  name: Name
+  nullable: true
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p>Optional information that you can include to describe this
+    configuration.</p>  <p>WebLogic Server saves this note in the domain''s configuration
+    file (<code>config.xml</code>) as XML PCDATA. All left angle brackets (&lt;) are
+    converted to the XML entity <code>&amp;lt;</code>. Carriage returns/line feeds
+    are preserved.</p>  <p>Note: If you create or edit a note from the Administration
+    Console, the Administration Console does not preserve carriage returns/line feeds.</p> '
+  name: Notes
+  setRoles:
+    allowed:
+    - Deployer
+    - Operator
+  type: java.lang.String
+  writable: true
+- array: true
+  defaultValue: {
+    }
+  descriptionHTML: '<p>Return all tags on this Configuration MBean</p> '
+  name: Tags
+  type: java.lang.String
+  writable: true

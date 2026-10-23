@@ -22,6 +22,9 @@ import { BrandingHeaderImpl } from "wrc/branding-area/header";
 import { DatabusProvider } from "wrc/integration/DatabusContext";
 import { setDatabus } from "wrc/integration/databus-accessor";
 import * as t from "ojL10n!wrc/shared/resources/nls/frontend";
+import { applyMessageTimeoutPolicy } from "./message-utils";
+
+const NARROW_VIEWPORT_QUERY = "(max-width: 720px)";
 
 export function Content() {
   // Resolve base once and pass into the outermost Resource/NavTree.
@@ -31,6 +34,9 @@ export function Content() {
 
   const [uniqueId] = useState(String(Date.now()));
   const [messages, setMessages] = useState<Array<ojMessage.Message>>([]);
+  const [isNarrowViewport, setIsNarrowViewport] = useState(() =>
+    typeof window !== "undefined" && window.matchMedia(NARROW_VIEWPORT_QUERY).matches
+  );
   
   const messageProvider = useMemo(() => new ArrayDataProvider<any, ojMessage.Message>(messages), messages);
 
@@ -44,23 +50,12 @@ export function Content() {
       selectRoot: (_root: string): void => { },
     },
     broadcastMessage: (message: ojMessage.Message) => {
-      // Mirror legacy popupMessageSent handler: clear when falsy, else push with auto-timeout logic
-      // Note: If message.autoTimeout === -1 the message will be sticky; otherwise default/clamp to 1500ms for info/confirmation
+      // Mirror legacy popupMessageSent handler: clear when falsy, else push with timeout policy.
       if (!message) {
         setMessages([]);
         return {};
       }
-      const m = { ...message };
-     
-      if (m.severity && (m.severity === "confirmation" || m.severity === "info")) {
-        if (typeof m.autoTimeout === "undefined") {
-          m.autoTimeout = 1500;
-        }
-        const value = parseInt(String(m.autoTimeout));
-        if (isNaN(value) || m.autoTimeout < 1000 || m.autoTimeout > 60000) {
-          m.autoTimeout = 1500;
-        }
-      }
+      const m = applyMessageTimeoutPolicy(message);
       setMessages(prev => [...prev, m]);
       return {};
     },
@@ -113,6 +108,15 @@ export function Content() {
   // Make databus available to non-UI modules
   useEffect(() => { setDatabus(databus); }, [databus]);
 
+  useEffect(() => {
+    const mediaQuery = window.matchMedia(NARROW_VIEWPORT_QUERY);
+    const updateViewportMode = () => setIsNarrowViewport(mediaQuery.matches);
+
+    updateViewportMode();
+    mediaQuery.addEventListener("change", updateViewportMode);
+    return () => mediaQuery.removeEventListener("change", updateViewportMode);
+  }, []);
+
   const messageRenderer = (message: any) => { 
   if (message?.data?.html?.string) {
     return (<oj-message message={message.data}>
@@ -134,6 +138,13 @@ export function Content() {
   useEffect(() => {
     const drawer = document.getElementById('drawer-layout') as HTMLElement | null;
     if (!drawer) return;
+    autoOpenedRef.current = false;
+
+    if (isNarrowViewport) {
+      (drawer as any).startOpened = false;
+      return;
+    }
+
     try {
       const bc = Context.getContext(drawer).getBusyContext();
       bc.whenReady().then(() => {
@@ -163,7 +174,7 @@ export function Content() {
         (drawer as any).startOpened = true;
       });
     }
-  }, []);
+  }, [isNarrowViewport]);
 
   return (
     <DatabusProvider databus={databus}>
@@ -180,8 +191,8 @@ export function Content() {
         >
           <oj-c-drawer-layout
             id="drawer-layout"
-            start-display="reflow"
-            startOpened={true}
+            start-display={isNarrowViewport ? "overlay" : "reflow"}
+            startOpened={!isNarrowViewport}
           >
             <div id="navtree-container2" slot="start">
               <nav class="oj-flex-item" aria-label={t["wrc-content"]?.ariaLabel?.navigationPanel}>

@@ -1,0 +1,16 @@
+# Copyright (c) 2020, 2026, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+baseTypes:
+- weblogic.management.configuration.ConfigurationMBean
+descriptionHTML: 'This interface provides access to the JPA configuration attributes.  The
+  methods defined herein are applicable for JPA configuration at the domain level. '
+name: weblogic.management.configuration.JPAMBean
+properties:
+- defaultValue:
+    value:
+      value: org.eclipse.persistence.jpa.PersistenceProvider
+  descriptionHTML: '<p>The configured default JPA provider for the domain.</p> '
+  name: DefaultJPAProvider
+  type: java.lang.String
+  writable: true

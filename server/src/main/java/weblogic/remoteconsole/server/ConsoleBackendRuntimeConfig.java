@@ -66,6 +66,8 @@ public class ConsoleBackendRuntimeConfig {
   private static boolean restrictContentBasedOnRoles = true;
   private static int serverPort;
   private static boolean areFilesLocal;
+  // Controls whether provider forms and tables offer the browser login option for this deployment.
+  private static boolean webAuthenticationOptionSupported = true;
 
   static {
     // Put all of the keys in here even if null
@@ -211,7 +213,7 @@ public class ConsoleBackendRuntimeConfig {
   }
 
   public static String getVersion() {
-    return "3.0.6";
+    return "3.0.7";
   }
 
   public static String getProxy() {
@@ -224,6 +226,14 @@ public class ConsoleBackendRuntimeConfig {
 
   public static void setFilesAreLocal(boolean filesAreLocal) {
     areFilesLocal = filesAreLocal;
+  }
+
+  public static boolean isWebAuthenticationOptionSupported() {
+    return webAuthenticationOptionSupported;
+  }
+
+  public static void setWebAuthenticationOptionSupported(boolean supported) {
+    webAuthenticationOptionSupported = supported;
   }
 
   public static int getServerPort() {

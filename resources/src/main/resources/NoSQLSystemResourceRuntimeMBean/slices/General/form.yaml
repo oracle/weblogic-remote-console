@@ -1,0 +1,19 @@
+# Copyright (c) 2026, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+introductionHTML: >
+  <p>This page displays the read-only runtime status for this NoSQL system resource.</p>
+
+properties:
+- name: Name
+- name: State
+- name: ProviderName
+- name: DatabaseType
+- name: DescriptorFileName
+- name: ActiveRuntimeCount
+- name: SuccessfulRuntimeCreationCount
+- name: FailedRuntimeCreationCount
+- name: RuntimeCloseCount
+- name: LastRuntimeCreationTime
+- name: LastFailureTime
+- name: LastFailureMessage

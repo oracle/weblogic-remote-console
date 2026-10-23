@@ -15,11 +15,13 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class ConsoleBackendRuntimeConfigTest {
   private static final String SYSTEM_PROPERTY = "console.restrictContentBasedOnRoles";
   private String previousSystemProperty;
+  private boolean previousWebAuthenticationOptionSupported;
 
   @BeforeEach
   void clearSystemProperty() {
     previousSystemProperty = System.getProperty(SYSTEM_PROPERTY);
     System.clearProperty(SYSTEM_PROPERTY);
+    previousWebAuthenticationOptionSupported = ConsoleBackendRuntimeConfig.isWebAuthenticationOptionSupported();
   }
 
   @AfterEach
@@ -30,6 +32,12 @@ public class ConsoleBackendRuntimeConfigTest {
       System.setProperty(SYSTEM_PROPERTY, previousSystemProperty);
     }
     ConsoleBackendRuntimeConfig.init(null);
+    ConsoleBackendRuntimeConfig.setWebAuthenticationOptionSupported(previousWebAuthenticationOptionSupported);
+  }
+
+  @Test
+  void defaultsToSupportingWebAuthenticationOption() {
+    assertTrue(ConsoleBackendRuntimeConfig.isWebAuthenticationOptionSupported());
   }
 
   @Test

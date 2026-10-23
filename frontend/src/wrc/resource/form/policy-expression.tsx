@@ -395,6 +395,7 @@ const PolicyExpression = ({ fieldDescription, formModel, valueChangedHandler, se
                   chroming="borderless"
                   size="sm"
                   display="icons"
+                  aria-label={t["wrc-form-toolbar"].buttons.delete.label}
                   onojAction={() => onDelete(path)}
                 >
                   <span slot="startIcon" class="oj-ux-ico-trash"></span>
@@ -414,6 +415,7 @@ const PolicyExpression = ({ fieldDescription, formModel, valueChangedHandler, se
               <oj-label class="oj-sm-margin-bottom-1">{t["wrc-policy-expression"].labels.predicate.value}</oj-label>
               <oj-c-select-single
                 data-testid={`predicate-select-${path.join('-')}`}
+                labelHint={t["wrc-policy-expression"].labels.predicate.value}
                 value={node.name || ""}
                 data={selectionDataProvider}
                 itemText={itemText}
@@ -456,6 +458,7 @@ const PolicyExpression = ({ fieldDescription, formModel, valueChangedHandler, se
                   chroming="borderless"
                   size="sm"
                   display="icons"
+                  aria-label={t["wrc-form-toolbar"].buttons.delete.label}
                   onojAction={() => onDelete(path)}
                 >
                   <span slot="startIcon" class="oj-ux-ico-trash"></span>

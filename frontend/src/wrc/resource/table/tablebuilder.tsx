@@ -218,8 +218,10 @@ const Table = ({ tableContent, pageContext, bare, onSelectionChanged }: Props) =
       const drawer = document.getElementById('drawer-layout') as any;
       if (drawer) {
         const isOpen = !!drawer.startOpened;
+        const startDisplay = drawer.startDisplay || drawer.getAttribute('start-display');
+        const isOverlay = startDisplay === 'overlay';
         setDrawerOpen(isOpen);
-        if (isOpen) {
+        if (isOpen && !isOverlay) {
           const width = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--wrc-start-width')) || 0;
           setDrawerWidth(width);
           document.documentElement.style.setProperty('--table-container-width', `calc(100vw - ${width}px)`);

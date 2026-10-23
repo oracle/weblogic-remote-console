@@ -1,0 +1,7 @@
+# Copyright (c) 2020, 2026, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+descriptionHTML: 'A bean which implements this interfaces supports the isSet and unSet
+  methods such that a caller can test if a bean has been changed from its default
+  value and also cause the value to be set back to the default. '
+name: weblogic.descriptor.SettableBean

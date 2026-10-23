@@ -1,0 +1,18 @@
+# Copyright (c) 2026, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+properties:
+- name: CrossDomainT3SConnectionTrustValidationEnabled
+  label: Cross Domain T3S Connection Trust Validation Enabled
+
+- name: WLProxyClientCertificateChainValidationEnabled
+  label: WL Proxy Client Certificate Chain Validation Enabled
+
+- name: JAXWSRejectUnknownSEIOperationsEnabled
+  label: JAX-WS Reject Unknown SEI Operations Enabled
+
+- name: SAML2StrictArtifactResolutionEnabled
+  label: SAML 2.0 Strict Artifact Resolution Enabled
+
+- name: SpringJtaDeserializationJndiLookupDisabled
+  label: Spring JTA Deserialization JNDI Lookup Disabled

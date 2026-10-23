@@ -6,7 +6,7 @@
  * VDOM implementation of Shopping Cart menu in the content-area header.
  * - Renders a ghost chromed oj-c-button with a shopping cart icon.
  * - Opens an oj-menu anchored to the launcher button.
- * - "commit" and "discard" actions are placeholders that console.log when clicked.
+ * - Commits or discards changes and displays backend response messages.
  */
 
 import "oj-c/button";
@@ -18,7 +18,10 @@ import { ComponentProps, ComponentType } from "preact";
 import { useContext, useEffect, useState, useRef } from "preact/hooks";
 import { Dialog } from "../display/dialog";
 import { Resource, UserContext } from "./resource";
-import { _post, getDataComponent } from "wrc/shared/model/transport";
+import { _post, getDataComponent, parseResponseJson } from "wrc/shared/model/transport";
+import { broadcastErrorMessage, broadcastMessageResponse } from "wrc/shared/controller/notification-utils";
+import { isSuccessful } from "wrc/shared/messages";
+import type { Response } from "wrc/shared/typedefs/common";
 import { emitRefresh } from "wrc/shared/refresh";
 import Context = require("ojs/ojcontext");
 import * as Logger from "ojs/ojlogger";
@@ -84,23 +87,31 @@ function ShoppingCartMenuImpl() {
       }
       case DISCARD:
         Logger.info("[shoppingcart] discard changes clicked");
-        _post("/api/-current-/edit/changeManager/discardChanges", "{}").then(
-          () => {
-            // dummy call to update cart status
-            getDataComponent("/api/-current-/edit/changeManager");
-            // Refresh content + nav-tree since values may have reverted
+        _post("/api/-current-/edit/changeManager/discardChanges", "{}")
+          .then((response) => parseResponseJson<Response>(response, "/api/-current-/edit/changeManager/discardChanges"))
+          .then(async (messageResponse) => {
+            broadcastMessageResponse(ctx, messageResponse);
+            if (!isSuccessful(messageResponse)) return;
+
+            // Update cart status.
+            await getDataComponent("/api/-current-/edit/changeManager");
+            // Refresh content + nav-tree since values may have reverted.
             emitRefresh({ scope: { content: true, navtree: true } });
-          },
-        );
+          })
+          .catch((err: Error) => broadcastErrorMessage(ctx, err));
         break;
       case COMMIT:
         Logger.info("[shoppingcart] commit changes clicked");
-        _post("/api/-current-/edit/changeManager/commitChanges", "{}").then(
-          () => {
-            // dummy call to update cart status
-            getDataComponent("/api/-current-/edit/changeManager/");
-          },
-        );
+        _post("/api/-current-/edit/changeManager/commitChanges", "{}")
+          .then((response) => parseResponseJson<Response>(response, "/api/-current-/edit/changeManager/commitChanges"))
+          .then((messageResponse) => {
+            broadcastMessageResponse(ctx, messageResponse);
+            if (!isSuccessful(messageResponse)) return;
+
+            // Update cart status.
+            return getDataComponent("/api/-current-/edit/changeManager");
+          })
+          .catch((err: Error) => broadcastErrorMessage(ctx, err));
         break;
       default:
         Logger.warn("[shoppingcart] unknown action", value);

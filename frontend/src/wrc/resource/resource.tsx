@@ -205,7 +205,7 @@ function ResourceImpl({ rdj, pdj, unique, context, pageContext, showHelp = false
             const untypedBroadcastMessageFunc = resolvedContext.broadcastMessage as any;
             untypedBroadcastMessageFunc({
               summary,
-              html: { view: HtmlUtils.stringToNodeArray(html), string: html },
+              html: { string: html },
               severity: "info",
               autoTimeout: -1
             });

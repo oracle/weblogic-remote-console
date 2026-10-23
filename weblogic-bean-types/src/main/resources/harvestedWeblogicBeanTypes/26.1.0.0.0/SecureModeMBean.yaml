@@ -1,0 +1,296 @@
+# Copyright (c) 2020, 2026, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+baseTypes:
+- weblogic.management.configuration.ConfigurationMBean
+descriptionHTML: '<p>Controls the behavior of Secure Mode in the current WebLogic
+  Server domain. Attributes control whether secure mode is enabled and control the
+  validation that is performed during startup.</p>  <p>The WarnOnDisabled attributes
+  for FeatureCompatibilityMBean apply in production domains whether or not secure
+  mode is enabled.</p> '
+name: weblogic.management.configuration.SecureModeMBean
+properties:
+- defaultValue:
+    value:
+      value: true
+  descriptionHTML: '<p>Returns whether restrictive policies will be used for JMX authorization.</p>  <p>If
+    secure mode is enabled and restrictive policies are enabled, then the default
+    policies for JMX only allow MBean access to the standard WLS roles (Admin, Deployer,
+    Operator, or Monitor). If changed as part of a non-dynamic activation, then the
+    ServerSecurityRuntimeMBean.resetDefaultPolicies method should also be invoked.
+    </p> '
+  name: RestrictiveJMXPolicies
+  type: boolean
+  writable: true
+- defaultValue:
+    derivedDefault: true
+  descriptionHTML: '<p>Returns whether the domain will run in secure mode.</p>  <p>In
+    secure mode, the configuration defaults are those recommended for securing a domain.
+    The authorization policies for JNDI and MBean access are more restrictive in secure
+    mode. In addition, WLS will validate the domain configuration and log warnings
+    and errors for any insecure settings.</p>  <p> Secure mode requires the domain
+    to be in production mode. </p> '
+  name: SecureModeEnabled
+  restartNeeded: true
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: true
+  descriptionHTML: '<p>Returns whether a warning should be logged if anonymous RMI
+    requests are enabled. </p>  <p>If the warning is enabled, then a message will
+    be logged if anonymous RMI requests are enabled.</p> '
+  name: WarnOnAnonymousRequests
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: true
+  descriptionHTML: '<p>Returns whether warnings should be logged if auditing not enabled.
+    </p>  <p>If secure mode is enabled and warnings are enabled, then messages will
+    be logged if auditing is not enabled.</p> '
+  name: WarnOnAuditing
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: true
+  descriptionHTML: 'Returns whether a warning should be generated when the FeatureCompatibilityMBean.isCrossDomainT3SConnectionTrustValidationEnabled
+    attribute is disabled. '
+  name: WarnOnDisabledCrossDomainT3SConnectionTrustValidation
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: true
+  descriptionHTML: 'Returns whether a warning should be generated when the FeatureCompatibilityMBean.isIIOPStrictRemoteBusinessInterfaceValidationEnabled
+    attribute is disabled. '
+  name: WarnOnDisabledIIOPStrictRemoteBusinessInterfaceValidation
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: true
+  descriptionHTML: 'Returns whether a warning should be generated when the FeatureCompatibilityMBean.isIIOPTypedReadResolveProxyValidationEnabled
+    attribute is disabled. '
+  name: WarnOnDisabledIIOPTypedReadResolveProxyValidation
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: true
+  descriptionHTML: 'Returns whether a warning should be generated when the FeatureCompatibilityMBean.isIIOPUnauthenticatedServiceContextValueTypeFilteringEnabled
+    attribute is disabled. '
+  name: WarnOnDisabledIIOPUnauthenticatedServiceContextValueTypeFiltering
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: true
+  descriptionHTML: 'Returns whether a warning should be generated when the FeatureCompatibilityMBean.isJAXWSRejectUnknownSEIOperationsEnabled
+    attribute is disabled. '
+  name: WarnOnDisabledJAXWSRejectUnknownSEIOperations
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: true
+  descriptionHTML: 'Returns whether a warning should be generated when the FeatureCompatibilityMBean.isJNDIAdditionalFactoriesAllowListsEnabled
+    attribute is disabled. '
+  name: WarnOnDisabledJNDIAdditionalFactoriesAllowLists
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: true
+  descriptionHTML: 'Returns whether a warning should be generated when the FeatureCompatibilityMBean.isJNDIBindingAuthorizationPolicyEnabled
+    attribute is disabled. '
+  name: WarnOnDisabledJNDIBindingAuthorizationPolicy
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: true
+  descriptionHTML: 'Returns whether a warning should be generated when the FeatureCompatibilityMBean.isJNDIOutboundConnectionsAllowListEnabled
+    attribute is disabled. '
+  name: WarnOnDisabledJNDIOutboundConnectionsAllowList
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: true
+  descriptionHTML: 'Returns whether a warning should be generated when the FeatureCompatibilityMBean.isSAML2StrictArtifactResolutionEnabled
+    attribute is disabled. '
+  name: WarnOnDisabledSAML2StrictArtifactResolution
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: true
+  descriptionHTML: 'Returns whether a warning should be generated when the FeatureCompatibilityMBean.getSerializedWorkContextMaximumSize
+    attribute has a disabled value. '
+  name: WarnOnDisabledSerializedWorkContextMaximumSize
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: true
+  descriptionHTML: 'Returns whether a warning should be generated when the FeatureCompatibilityMBean.isSpringJtaDeserializationJndiLookupDisabled
+    attribute is disabled. '
+  name: WarnOnDisabledSpringJtaDeserializationJndiLookupDisabled
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: true
+  descriptionHTML: 'Returns whether a warning should be generated when the FeatureCompatibilityMBean.isT3LegacyCrossDomainCredentialJVMIDReplayProtectionEnabled
+    attribute is disabled. '
+  name: WarnOnDisabledT3LegacyCrossDomainCredentialJVMIDReplayProtection
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: true
+  descriptionHTML: 'Returns whether a warning should be generated when the FeatureCompatibilityMBean.isT3RouteOnlyToTrustedServersEnabled
+    attribute is disabled. '
+  name: WarnOnDisabledT3RouteOnlyToTrustedServers
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: true
+  descriptionHTML: 'Returns whether a warning should be generated when the FeatureCompatibilityMBean.isWLDFScriptActionPathRestrictionEnabled
+    attribute is disabled. '
+  name: WarnOnDisabledWLDFScriptActionPathRestriction
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: true
+  descriptionHTML: 'Returns whether a warning should be generated when the FeatureCompatibilityMBean.isWLProxyClientCertificateChainValidationEnabled
+    attribute is disabled. '
+  name: WarnOnDisabledWLProxyClientCertificateChainValidation
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: true
+  descriptionHTML: 'Returns whether a warning should be generated when the FeatureCompatibilityMBean.isWSATIgnoreUnknownReplayCompletionEnabled
+    attribute is disabled. '
+  name: WarnOnDisabledWSATIgnoreUnknownReplayCompletion
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: true
+  descriptionHTML: 'Returns whether a warning should be generated when the FeatureCompatibilityMBean.isWSATRegistrationSecretEnabled
+    attribute is disabled. '
+  name: WarnOnDisabledWSATRegistrationSecret
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: true
+  descriptionHTML: 'Returns whether a warning should be generated when the FeatureCompatibilityMBean.isWorkContextClassValidationEnabled
+    attribute is disabled. '
+  name: WarnOnDisabledWorkContextClassValidation
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: true
+  descriptionHTML: 'Returns whether a warning should be generated when the FeatureCompatibilityMBean.getWorkContextInputMaximumASCIIFieldSize
+    attribute has a disabled value. '
+  name: WarnOnDisabledWorkContextInputMaximumASCIIFieldSize
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: true
+  descriptionHTML: '<p>Returns whether warnings should be logged if applications are
+    not secure. </p>  <p>If secure mode is enabled and warnings are enabled, then
+    messages will be logged for insecure application elements.</p> '
+  name: WarnOnInsecureApplications
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: true
+  descriptionHTML: '<p>Returns whether warnings should be logged if data sources are
+    not secure. </p>  <p>If production mode is enabled and warnings are enabled, then
+    messages will be logged for insecure data sources.</p> '
+  name: WarnOnInsecureDataSources
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: true
+  descriptionHTML: '<p>Returns whether warnings should be logged if the File System
+    is not secure. </p>  <p>If secure mode is enabled and warnings are enabled, then
+    messages will be logged for insecure file system setting.</p> '
+  name: WarnOnInsecureFileSystem
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: true
+  descriptionHTML: '<p>Returns whether warnings should be logged if the SSL configuration
+    is not secure. </p>  <p>If secure mode is enabled and warnings are enabled, then
+    messages will be logged for insecure SSL configuration settings.</p> '
+  name: WarnOnInsecureSSL
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Returns whether warnings should be logged if the Java Security
+    Manager is not enabled. </p>  <p>If secure mode is enabled and warning is enabled,
+    then a messages will be logged if the Java Security Manager is not enabled.</p> '
+  name: WarnOnJavaSecurityManager
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: true
+  descriptionHTML: '<p>Returns whether a warning should be logged if required WebLogic
+    Server or Coherence CPU patches are not applied. </p>  <p>If the warning is enabled,
+    then a message will be logged if required CPU patches are not applied.</p> '
+  name: WarnOnPatches
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: true
+  descriptionHTML: '<p>Returns whether a warning should be logged if ports configuration
+    is insecure.</p>  <p>If the warning is enabled, then a message will be logged
+    if the network port configuration is insecure.</p> '
+  name: WarnOnPorts
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: true
+  descriptionHTML: '<p>Returns whether a warning should be logged if samples are installed.</p>  <p>If
+    the warning is enabled, then a message will be logged if samples are installed.</p> '
+  name: WarnOnSamples
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: true
+  descriptionHTML: '<p>Returns whether a warning should be logged if the user lockout
+    configuration is not secure. </p>  <p>If the warning is enabled, then a message
+    will be logged if the user lockout settings are not secure.</p> '
+  name: WarnOnUserLockout
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: true
+  descriptionHTML: '<p>Returns whether a warning should be logged if usernames or
+    password configuration is insecure.</p>  <p>If the warning is enabled and the
+    domain is in secured production mode, then a message will be logged if  well known
+    administrator usernames are present or password validation configuration is insecure.</p> '
+  name: WarnOnUsernamePasswords
+  type: boolean
+  writable: true

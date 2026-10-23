@@ -1,4 +1,4 @@
-# Copyright (c) 2020, 2023, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2026, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 properties:
 
@@ -30,6 +30,12 @@ properties:
     mapping, and audit providers configured in the domain must support the
     <code>IdentityDomainAwareProviderMBean</code> interface's administrative
     identity domain.</p>
+
+- name: IIOPEnabled
+  label: Enable IIOP
+
+- name: JMSDotNetClientEnabled
+  label: Enable WebLogic JMS Client for Microsoft .NET
 
 # deprecated
 # - name: AnonymousAdminLookupEnabled
@@ -172,4 +178,3 @@ properties:
 
 children:
 - name: JASPIC
-
