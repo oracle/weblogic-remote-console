@@ -1,4 +1,4 @@
-# Copyright (c) 2023, Oracle and/or its affiliates.
+# Copyright (c) 2023, 2026, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 introductionHTML: >
@@ -21,6 +21,25 @@ properties:
 - name: "SecurityConfiguration.SecureMode.WarnOnAuditing"
 - name: "SecurityConfiguration.SecureMode.WarnOnSamples"
 - name: "SecurityConfiguration.SecureMode.WarnOnJavaSecurityManager"
+- name: "SecurityConfiguration.SecureMode.WarnOnDisabledIIOPTypedReadResolveProxyValidation"
+- name: "SecurityConfiguration.SecureMode.WarnOnDisabledIIOPUnauthenticatedServiceContextValueTypeFiltering"
+- name: "SecurityConfiguration.SecureMode.WarnOnDisabledJNDIAdditionalFactoriesAllowLists"
+- name: "SecurityConfiguration.SecureMode.WarnOnDisabledJNDIBindingAuthorizationPolicy"
+- name: "SecurityConfiguration.SecureMode.WarnOnDisabledJNDIOutboundConnectionsAllowList"
+- name: "SecurityConfiguration.SecureMode.WarnOnDisabledSerializedWorkContextMaximumSize"
+- name: "SecurityConfiguration.SecureMode.WarnOnDisabledT3LegacyCrossDomainCredentialJVMIDReplayProtection"
+- name: "SecurityConfiguration.SecureMode.WarnOnDisabledCrossDomainT3SConnectionTrustValidation"
+- name: "SecurityConfiguration.SecureMode.WarnOnDisabledT3RouteOnlyToTrustedServers"
+- name: "SecurityConfiguration.SecureMode.WarnOnDisabledWLDFScriptActionPathRestriction"
+- name: "SecurityConfiguration.SecureMode.WarnOnDisabledWLProxyClientCertificateChainValidation"
+- name: "SecurityConfiguration.SecureMode.WarnOnDisabledWSATIgnoreUnknownReplayCompletion"
+- name: "SecurityConfiguration.SecureMode.WarnOnDisabledWSATRegistrationSecret"
+- name: "SecurityConfiguration.SecureMode.WarnOnDisabledWorkContextClassValidation"
+- name: "SecurityConfiguration.SecureMode.WarnOnDisabledWorkContextInputMaximumASCIIFieldSize"
+- name: "SecurityConfiguration.SecureMode.WarnOnDisabledIIOPStrictRemoteBusinessInterfaceValidation"
+- name: "SecurityConfiguration.SecureMode.WarnOnDisabledJAXWSRejectUnknownSEIOperations"
+- name: "SecurityConfiguration.SecureMode.WarnOnDisabledSAML2StrictArtifactResolution"
+- name: "SecurityConfiguration.SecureMode.WarnOnDisabledSpringJtaDeserializationJndiLookupDisabled"
 
 helpTopics:
 - label: "Administering Security for Oracle WebLogic Server"
@@ -29,5 +48,3 @@ helpTopics:
 - label: "Enabling Trust Between WebLogic Server Domains"
   href: "secmg/domain.html#SECMG404"
   type: "edocs"
-
-

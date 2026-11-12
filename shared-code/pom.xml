@@ -9,7 +9,7 @@
     <parent>
         <groupId>com.oracle.weblogic</groupId>
         <artifactId>console-backend</artifactId>
-        <version>3.0.6</version>
+        <version>3.0.7</version>
     </parent>
 
     <packaging>jar</packaging>
@@ -21,6 +21,13 @@
         <maven.compiler.source>${shared_code_java_version}</maven.compiler.source>
         <maven.compiler.target>${shared_code_java_version}</maven.compiler.target>
     </properties>
+    <dependencies>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
     <build>
         <plugins>
             <plugin>

@@ -1,4 +1,4 @@
-# Copyright (c) 2020, 2025, Oracle and/or its affiliates.
+# Copyright (c) 2020, 2026, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 introductionHTML: >
@@ -33,6 +33,7 @@ properties:
 - name: "WebAppContainer.Http2Config.InitialWindowSize"
 - name: "WebAppContainer.Http2Config.MaxFrameSize"
 - name: "WebAppContainer.Http2Config.MaxHeaderListSize"
+- name: "WebAppContainer.Http2Config.MaxHeaderCount"
 - name: "WebAppContainer.Http2Config.FrameCountLimitResetInterval"
 - name: "WebAppContainer.Http2Config.ContinuationFramesLimit"
 - name: "WebAppContainer.Http2Config.MaxStreamResets"
@@ -48,6 +49,7 @@ properties:
 - name: "WebAppContainer.FormAuthXFrameOptionsHeaderValue"
 - name: "WebAppContainer.MaxRequestParameterCount"
 - name: "WebAppContainer.RestrictUserManagementAccessPatterns"
+- name: "WebAppContainer.WeblogicPluginAllowedProxyHosts"
 
 helpTopics:
 - label: "Developing JTA Applications for Oracle WebLogic Server "

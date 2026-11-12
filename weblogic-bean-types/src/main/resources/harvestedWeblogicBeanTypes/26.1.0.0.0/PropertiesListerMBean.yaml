@@ -1,0 +1,8 @@
+# Copyright (c) 2020, 2026, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+baseTypes:
+- weblogic.management.utils.ListerMBean
+descriptionHTML: 'The PropertiesListerMBean interface defines a method used to return
+  a <code>java.util.Properties</code> of key=value pairs. '
+name: weblogic.management.utils.PropertiesListerMBean

@@ -1,7 +1,24 @@
-# Copyright (c) 2025, Oracle and/or its affiliates.
+# Copyright (c) 2025, 2026, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 actions:
+- name: purgeExpiredCertificateAuthorities
+  type: void
+  descriptionHTML: >
+    <p>Removes expired certificate authorities from the domain's trust stores.</p>
+- name: removeCertificateAuthority
+  type: void
+  descriptionHTML: >
+    <p>Removes a certificate authority from the specified source store.</p>
+  parameters:
+  - name: sourceStore
+    type: java.lang.String
+    descriptionHTML: >
+      <p>The source store that contains the certificate authority.</p>
+  - name: alias
+    type: java.lang.String
+    descriptionHTML: >
+      <p>The alias of the certificate authority to remove.</p>
 - name: rollDomainCertificateAuthority
   type: void
   descriptionHTML: >

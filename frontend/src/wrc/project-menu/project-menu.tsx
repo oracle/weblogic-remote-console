@@ -30,6 +30,8 @@ function ProjectMenuImpl() {
   const ctx = useContext(UserContext);
 
   const [providers, setProviders] = useState<ResourceData[]>();
+  const menuRef = useRef<ojMenu | null>(null);
+  const launcherRef = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
     const databus = ctx?.databus;
@@ -84,7 +86,11 @@ function ProjectMenuImpl() {
   };
 
   const openListener = () => {
-    (document.getElementById("project-menu-dialog") as ojMenu).open();
+    const menu = menuRef.current;
+    const launcher = launcherRef.current;
+    if (menu && launcher) {
+      menu.open(undefined, { launcher });
+    }
   };
 
   const PROVIDER_INFO_RDJ = "/api/-current-/status/form";
@@ -96,6 +102,7 @@ function ProjectMenuImpl() {
   return (
     <>
       <oj-c-button
+        ref={launcherRef}
         id="projectMenuButton"
         class="oj-sm-margin-0 oj-sm-padding-0"
         chroming="ghost"
@@ -105,6 +112,7 @@ function ProjectMenuImpl() {
         <span slot="startIcon" class="oj-ux-ico-overflow-v"></span>
       </oj-c-button>
       <oj-menu
+        ref={menuRef}
         id="project-menu-dialog"
         slot="menu"
         onojMenuAction={menuItemAction}

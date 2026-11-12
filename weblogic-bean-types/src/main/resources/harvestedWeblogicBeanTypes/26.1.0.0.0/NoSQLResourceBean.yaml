@@ -1,0 +1,70 @@
+# Copyright (c) 2020, 2026, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+baseTypes:
+- weblogic.descriptor.SettableBean
+descriptionHTML: 'Root descriptor bean for a WebLogic NoSQL system resource.  <p>Descriptor
+  changes are dynamic. Compatible provider-property changes replace provider runtimes
+  without invalidating application manager or repository handles. Changes that affect
+  resource selection or provider compatibility invalidate affected applications, which
+  must then be fully redeployed before using NoSQL again.</p> '
+name: weblogic.j2ee.descriptor.wl.NoSQLResourceBean
+properties:
+- defaultValue:
+    value:
+      value: DOCUMENT
+  descriptionHTML: 'Returns the provider-neutral Jakarta Data database type for this
+    resource.  <p>The legal values identify database types that may be supported by
+    providers installed in the domain. A legal descriptor value does not imply that
+    every provider supports that type. When a resource is targeted, WebLogic validates
+    the selected provider and database-type combination. The built-in oracle-nosql
+    provider currently supports DOCUMENT.</p> '
+  legalValues:
+  - DOCUMENT
+  - KEY_VALUE
+  - COLUMN
+  - GRAPH
+  name: DatabaseType
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: 'Returns whether this resource is selected when a Jakarta Data
+    repository does not specify a data store. '
+  name: DefaultResource
+  type: boolean
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: 'Returns the JNDI name assigned to this NoSQL resource. '
+  name: JNDIName
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: 'Returns the unique name that identifies this NoSQL resource in
+    the WebLogic domain. '
+  key: true
+  name: Name
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: 'Returns the provider-specific configuration properties for this
+    NoSQL resource. '
+  name: Properties
+  relationship: containment
+  type: weblogic.j2ee.descriptor.wl.NoSQLPropertiesBean
+- defaultValue: {
+    }
+  descriptionHTML: 'Returns the name of the NoSQL provider used by this resource.  Note:
+    Initial implementation only supports oracle-nosql. The list of supported providers
+    in 26.1 are TBD. '
+  legalValues:
+  - oracle-nosql
+  name: ProviderName
+  type: java.lang.String
+  writable: true
+roles:
+  allowed:
+  - Deployer

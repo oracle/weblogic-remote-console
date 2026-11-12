@@ -1,4 +1,4 @@
-# Copyright (c) 2020, 2022, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2020, 2026, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 properties:
 
@@ -41,3 +41,17 @@ properties:
     <p>Specifies whether warnings should be logged if the Java Security
     Manager is not enabled.</p>
 
+- name: WarnOnDisabledCrossDomainT3SConnectionTrustValidation
+  label: Warn On Disabled Cross Domain T3S Connection Trust Validation
+
+- name: WarnOnDisabledWLProxyClientCertificateChainValidation
+  label: Warn On Disabled WL Proxy Client Certificate Chain Validation
+
+- name: WarnOnDisabledJAXWSRejectUnknownSEIOperations
+  label: Warn On Disabled JAX-WS Reject Unknown SEI Operations
+
+- name: WarnOnDisabledSAML2StrictArtifactResolution
+  label: Warn On Disabled SAML 2.0 Strict Artifact Resolution
+
+- name: WarnOnDisabledSpringJtaDeserializationJndiLookupDisabled
+  label: Warn On Enabled Spring JTA Deserialization JNDI Lookup

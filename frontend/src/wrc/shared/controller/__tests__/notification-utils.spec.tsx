@@ -66,6 +66,8 @@ describe("notification-utils", () => {
     expect(firstCallArg.html.string).toContain("&lt;b&gt;bad&lt;/b&gt;&amp;&quot;&#39;");
     expect(firstCallArg.html.string).not.toContain("<img");
     expect(firstCallArg.html.string).not.toContain("<b>");
+    expect(firstCallArg.detail).toBe('bad&"\'.');
+    expect(firstCallArg.detail).not.toContain("<");
   });
 
   it("uses the escaped message renderer for structured response errors", () => {
@@ -75,7 +77,7 @@ describe("notification-utils", () => {
     error.status = 403;
     error.messages = [
       { severity: "error", message: '<img src=x onerror="alert(1)">Forbidden' },
-      { severity: "error", message: "Operation is not permitted" },
+      { severity: "error", message: "Operation is not permitted." },
     ];
     error.rawResponseBody = JSON.stringify({
       messages: error.messages,
@@ -93,6 +95,6 @@ describe("notification-utils", () => {
     expect(firstCallArg.html.string).toContain("Operation is not permitted");
     expect(firstCallArg.html.string).not.toContain("<img");
     expect(firstCallArg.html.string).not.toContain("statusData");
-    expect(firstCallArg.detail).toBeUndefined();
+    expect(firstCallArg.detail).toBe("Forbidden. Operation is not permitted.");
   });
 });

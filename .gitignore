@@ -38,7 +38,8 @@ everypage-oracle-tests/
 everypage-output/
 build-tools/download-bin
 tmp
-
+.gitignore
+copy-of-docs
 electron/dist/**
 electron/extraFiles/**
 electron/node_modules/**

@@ -1,4 +1,4 @@
-# Copyright (c) 2025 Oracle and/or its affiliates.
+# Copyright (c) 2025, 2026, Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 introductionHTML: >
@@ -10,7 +10,10 @@ sections:
   - name: "SecurityConfiguration.CertificateManagement.Enabled"
   - name: "SecurityConfiguration.CertificateManagement.ProvisionedCertificatesIssuerEnabled"
   - name: "SecurityConfiguration.CertificateManagement.CertificateCheckInterval"
+  - name: "SecurityConfiguration.CertificateManagement.CertificateCheckTime"
+  - name: "SecurityConfiguration.CertificateManagement.CertificateCheckTimeMaximumOffset"
   - name: "SecurityConfiguration.CertificateManagement.CertificateRefreshWindow"
+  - name: "SecurityConfiguration.CertificateManagement.ExpiredCertificateAuthorityRetentionDays"
   - name: "SecurityConfiguration.CertificateManagement.JavaStandardTrustEnabled"
 - title: Domain Certificates Issuer
   properties:
@@ -18,8 +21,17 @@ sections:
   - name: "SecurityConfiguration.CertificateManagement.IncludeRootCertificateInChain"
   - name: "SecurityConfiguration.CertificateManagement.SubjectCommonName"
   - name: "SecurityConfiguration.CertificateManagement.SubjectAlternativeNames"
+  - name: "SecurityConfiguration.CertificateManagement.SubjectNamePolicy"
+  - name: "SecurityConfiguration.CertificateManagement.CertificateAuthorityKeyProfile"
+  - name: "SecurityConfiguration.CertificateManagement.CertificateAuthoritySignatureAlgorithm"
   - name: "SecurityConfiguration.CertificateManagement.CertificateAuthorityValidityPeriod"
+  - name: "SecurityConfiguration.CertificateManagement.CertificateKeyProfile"
   - name: "SecurityConfiguration.CertificateManagement.CertificateValidityPeriod"
+- title: Keystore Access
+  properties:
+  - name: "SecurityConfiguration.CertificateManagement.KeystoreFileLockingEnabled"
+  - name: "SecurityConfiguration.CertificateManagement.KeystoreFileLockTimeout"
+  - name: "SecurityConfiguration.CertificateManagement.KeystoreFileWatchingEnabled"
 
 helpTopics:
 - label: "Administering Security for Oracle WebLogic Server"

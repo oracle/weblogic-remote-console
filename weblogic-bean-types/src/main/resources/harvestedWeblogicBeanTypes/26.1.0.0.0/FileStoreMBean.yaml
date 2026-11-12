@@ -1,0 +1,13 @@
+# Copyright (c) 2020, 2026, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+baseTypes:
+- weblogic.management.configuration.GenericFileStoreMBean
+- weblogic.management.configuration.PersistentStoreMBean
+descriptionHTML: '<p>Defines an instance of the persistent store on the specified
+  target that will keep its persistent objects in files on the filesystem. It may
+  be used by JMS and by other subsystems.</p> '
+name: weblogic.management.configuration.FileStoreMBean
+roles:
+  allowed:
+  - Deployer

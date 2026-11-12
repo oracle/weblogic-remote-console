@@ -1,0 +1,9 @@
+# Copyright (c) 2020, 2026, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+baseTypes:
+- weblogic.management.runtime.CursorRuntimeMBean
+descriptionHTML: '<p>This interface specifies methods for cursor result sets comprised
+  of messages.  Given a cursor handle and an identifier, they return a complete message
+  in CompositeData representation.</p> '
+name: weblogic.management.runtime.MessageCursorRuntimeMBean

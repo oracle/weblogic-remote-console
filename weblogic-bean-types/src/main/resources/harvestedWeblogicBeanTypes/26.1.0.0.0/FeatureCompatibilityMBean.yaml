@@ -1,0 +1,304 @@
+# Copyright (c) 2020, 2026, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+baseTypes:
+- weblogic.management.configuration.ConfigurationMBean
+descriptionHTML: '<p>Controls feature compatibility behavior for WebLogic Server features.</p>  <p>The
+  compatibility attributes on this MBean preserve legacy behavior when disabled. Enabling
+  them applies the corresponding tightened security behavior. These protections are
+  enabled by default.</p> '
+name: weblogic.management.configuration.FeatureCompatibilityMBean
+properties:
+- defaultValue:
+    value:
+      value: true
+  descriptionHTML: 'Returns whether reused cross-domain T3S connections require trust
+    validation. When enabled, a reverse cross-domain lookup cannot reuse an established
+    T3S connection and must pass a fresh SSL trust check. Changes take effect after
+    the server is restarted. '
+  name: CrossDomainT3SConnectionTrustValidationEnabled
+  redeployNeeded: true
+  restartNeeded: true
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: true
+  descriptionHTML: '<p>Controls strict validation of IIOP business interfaces used
+    during client stub generation.</p>  <p>When enabled, WebLogic Server rejects a
+    business interface that is not recognized as a remote interface. When disabled,
+    WebLogic Server permits a locally visible plain business interface for a legacy
+    IIOP client only when the IOR has no codebase.</p> '
+  name: IIOPStrictRemoteBusinessInterfaceValidationEnabled
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: true
+  descriptionHTML: 'Controls strict validation of typed IIOP serialization wrappers.
+    When enabled, incompatible wire classes, including serialization wrappers, are
+    rejected before readResolve(). When disabled, legacy typed IIOP readResolve proxy
+    behavior is preserved. '
+  name: IIOPTypedReadResolveProxyValidationEnabled
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: true
+  descriptionHTML: '<p>Returns whether unauthenticated IIOP request service-context
+    valuetypes are filtered by the unauthenticated deserialization allowlist.</p>  <p>When
+    enabled, WebLogic Server applies the unauthenticated deserialization filter while
+    reading IIOP request service contexts. When disabled, WebLogic Server preserves
+    legacy IIOP service-context unmarshalling behavior.</p>  <p>A value of <code>true</code>
+    enables the tightened filtering. A value of <code>false</code> preserves legacy
+    behavior.</p> '
+  name: IIOPUnauthenticatedServiceContextValueTypeFilteringEnabled
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: true
+  descriptionHTML: '<p>Specifies whether JAX-WS SEI endpoints reject requests whose
+    SOAP operation does not resolve to an SEI method before invoking downstream tubes.</p>  <p>When
+    enabled, an unknown operation receives an Invalid operation SOAP fault before
+    downstream processing, including WorkContext processing. When disabled, the request
+    follows the legacy path, which invokes downstream tubes without method-level authorization
+    for that operation. This protection is enabled by default. A change takes effect
+    for subsequent requests without restarting the server.</p> '
+  name: JAXWSRejectUnknownSEIOperationsEnabled
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: true
+  descriptionHTML: '<p>Returns whether the JNDI additional factory allowlists are
+    enabled.</p>  <p>When enabled, WebLogic Server applies the <code>SecurityConfigurationMBean.JNDIAdditionalInitialContextFactoriesAllowed</code>
+    and <code>SecurityConfigurationMBean.JNDIAdditionalReferenceFactoriesAllowed</code>
+    allowlists before caller-supplied JNDI factories can be used. When disabled, WebLogic
+    Server preserves legacy initial context factory and reference factory behavior.</p> '
+  name: JNDIAdditionalFactoriesAllowListsEnabled
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: true
+  descriptionHTML: '<p>Returns whether policy enforcement is enabled for authorization
+    of JNDI namespace binding changes.</p>  <p>When enabled, WebLogic Server applies
+    tightened authorization and protocol checks before namespace write operations
+    such as <code>bind</code>, <code>rebind</code>, <code>unbind</code>, <code>rename</code>,
+    subcontext creation, sharable namespace mutation, or IIOP CosNaming mutation can
+    change server-side JNDI bindings. When disabled, WebLogic Server preserves legacy
+    remote JNDI mutation and protocol-specific mutation behavior.</p>  <p>A value
+    of <code>true</code> enables the tightened policy for this category. A value of
+    <code>false</code> preserves legacy behavior.</p> '
+  name: JNDIBindingAuthorizationPolicyEnabled
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: true
+  descriptionHTML: '<p>Returns whether the JNDI outbound connection allowlist is enabled.</p>  <p>When
+    enabled, WebLogic Server applies the <code>SecurityConfigurationMBean.JNDIOutboundConnectionsAllowed</code>
+    allowlist to JNDI provider URLs and URL-shaped lookup inputs. When disabled, WebLogic
+    Server preserves legacy outbound JNDI connection behavior.</p> '
+  name: JNDIOutboundConnectionsAllowListEnabled
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: true
+  descriptionHTML: '<p>Specifies whether SAML 2.0 artifact-resolution requesters must
+    be authenticated before accessing the artifact cache.</p>  <p>When enabled, WebLogic
+    Server requires an enabled partner matching the request issuer, validates configured
+    authentication and any supplied or required signature, and consumes the artifact
+    only for an authenticated intended recipient. A verified signature or a partner-matched
+    TLS client certificate is required; shared Basic authentication alone does not
+    identify a partner.</p>  <p>This protection is enabled by default. Configure request
+    signing or partner-matched TLS client authentication at both partners. Set this
+    attribute to false only when legacy interoperability is required; doing so permits
+    artifact retrieval before authentication and disables this protection. Unsetting
+    the attribute restores the enabled default. A change takes effect for subsequent
+    requests without restarting the server.</p> '
+  name: SAML2StrictArtifactResolutionEnabled
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: 65535
+  descriptionHTML: '<p>Specifies the maximum allowed size, in bytes, of a serialized
+    SerializableWorkContext payload read from a WorkArea input stream.</p>  <p>A value
+    of -1 disables the compatibility limit and preserves legacy behavior. To enable
+    the limit, set this attribute to a positive byte count. A value of zero leaves
+    the byte limit unapplied but keeps the additional unauthenticated deserialization
+    filter enabled. Raise the value only if legitimate WorkContext payloads require
+    more space.</p>  <p>When this MBean is available, its effective value, including
+    the default, takes precedence over the legacy <code>weblogic.workarea.serializableWorkContext.maxLength</code>
+    JVM property.</p> '
+  name: SerializedWorkContextMaximumSize
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: true
+  descriptionHTML: '<p>Controls whether Spring JtaTransactionManager skips resolving
+    serialized JNDI names while deserializing.</p>  <p>When enabled, transient JTA
+    handles are not restored from serialized JNDI names. When disabled, WebLogic Server
+    preserves the legacy Spring behavior of resolving serialized JNDI names during
+    deserialization. WebLogic''s configured JTA lookup during normal bean initialization
+    is not affected.</p> '
+  name: SpringJtaDeserializationJndiLookupDisabled
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: true
+  deprecated: '26.1.0.0.0 Strict cluster compatibility handling is always enabled
+    and this attribute cannot be configured. '
+  descriptionHTML: '<p>Returns whether strict handling is enabled for compatibility-sensitive
+    cluster security features.</p>  <p>When disabled, WebLogic Server preserves legacy
+    cluster behavior for rolling patching. When enabled, WebLogic Server uses the
+    strict replicated session wire format and strict dynamic-proxy interface validation
+    for replicated session attributes. Future cluster security changes that require
+    coordinated rollout can use this compatibility gate.</p>  <p>In WebLogic Server
+    26.1.0.0.0 and later, this attribute cannot be configured and strict cluster compatibility
+    handling is always enabled. Peer-advertised version information cannot disable
+    strict handling.</p>  <p>In lower-version PSU patch streams that support this
+    attribute, strict handling is enabled by default. An administrator can explicitly
+    disable it when legacy cluster behavior is required during domain rolling patching,
+    and should re-enable it after every participating server is patched.</p> '
+  exclude: true
+  name: StrictClusterCompatibilityEnabled
+  restartNeeded: true
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: true
+  deprecated: '26.1.0.0.0 Strict replication authorization is always enforced and
+    this attribute cannot be configured. '
+  descriptionHTML: '<p>Returns whether strict authorization is enabled for WebLogic
+    replication calls.</p>  <p>In WebLogic Server 26.1.0.0.0 and later, this attribute
+    cannot be configured and strict replication authorization is always enforced.</p>  <p>In
+    lower-version PSU patch streams that support this attribute, enabling it requires
+    plaintext replication callers to present a trusted server identity from a known
+    cluster peer before dispatch or replication payload deserialization. Leaving it
+    disabled preserves legacy replication authorization behavior during domain rolling
+    patching.</p> '
+  exclude: true
+  name: StrictReplicationAuthorizationEnabled
+  restartNeeded: true
+  supported: false
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: true
+  descriptionHTML: '<p>Specifies whether T3 RJVM identify processing should enable
+    replay protection for JVMIDs signed by legacy cross-domain credentials.</p>  <p>Enabling
+    this attribute prevents a replayable legacy cross-domain credential-signed JVMID
+    from promoting a freshly identified inbound RJVM to trusted-server state. Set
+    this attribute to false to preserve legacy global-domain-trust behavior.</p> '
+  name: T3LegacyCrossDomainCredentialJVMIDReplayProtectionEnabled
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: true
+  descriptionHTML: '<p>Returns whether T3 server routing is limited to trusted servers.</p>  <p>When
+    enabled, WebLogic Server requires routed T3 destinations to be known or configured
+    before forwarding traffic. When disabled, WebLogic Server preserves legacy T3
+    server routing compatibility for trusted server-to-server messages whose destination
+    is supplied on the wire.</p>  <p>A value of <code>true</code> enables the tightened
+    routing checks. A value of <code>false</code> preserves the legacy routing behavior.</p> '
+  name: T3RouteOnlyToTrustedServersEnabled
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: true
+  descriptionHTML: 'Controls whether WLDF script actions require the script path to
+    resolve under <code>DOMAIN_HOME/bin/scripts</code>. '
+  name: WLDFScriptActionPathRestrictionEnabled
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: true
+  descriptionHTML: '<p>Returns whether WebLogic Server validates certificate chains
+    supplied in the <code>WL-Proxy-Client-Cert</code> header before using them for
+    X.509 identity assertion.</p>  <p>When enabled, WebLogic Server validates the
+    proxy-supplied certificate chain against the configured WebLogic Server client
+    certificate trust anchors before setting the <code>jakarta.servlet.request.X509Certificate</code>
+    request attribute. Invalid, untrusted, expired, malformed, or otherwise unverifiable
+    certificates are rejected. When disabled, WebLogic Server preserves the legacy
+    proxy client certificate behavior.</p> '
+  name: WLProxyClientCertificateChainValidationEnabled
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: true
+  descriptionHTML: '<p>Specifies whether WS-AT replay completion requests with no
+    matching local transaction should be ignored instead of rolling back a recovery
+    resource created from the caller-supplied ReplyTo endpoint.</p>  <p>Enabling this
+    attribute selects the hardened unknown-transaction replay completion behavior.
+    Set this attribute to <code>false</code> to preserve legacy behavior.</p> '
+  name: WSATIgnoreUnknownReplayCompletionEnabled
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: true
+  descriptionHTML: '<p>Controls whether WS-AT registration requires proof that the
+    caller received the exported coordination context before participant enlistment.</p>  <p>Enabling
+    this attribute emits a per-transaction registration secret in WLS-generated coordination
+    contexts and requires unauthenticated registration requests to echo the matching
+    secret before enlistment. Set this attribute to <code>false</code> to preserve
+    legacy WS-AT interoperability.</p> '
+  name: WSATRegistrationSecretEnabled
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: true
+  descriptionHTML: '<p>Returns whether tightened validation is enabled for WorkContext
+    implementation classes read from WorkArea input streams.</p>  <p>When enabled,
+    WebLogic Server validates WorkContext class names and resolved classes before
+    constructing WorkContext implementations on T3, JMS, IIOP, legacy XML SOAP, and
+    other WorkArea readers that apply this attribute. The tightened policy on those
+    readers limits unauthenticated or untrusted inbound input to WebLogic built-in
+    and product WorkContext implementations. Protocol compatibility paths can preserve
+    SerializableWorkContext behavior, but authentication alone does not permit arbitrary
+    custom WorkContext implementations when this attribute is enabled.</p>  <p>Legacy
+    XML WorkArea SOAP, when explicitly enabled with <code>weblogic.wsee.workarea.workContext.oldFormat.support</code>,
+    applies these class checks before class initialization, construction, and readContext.
+    The format opt-in is independent: this attribute does not enable that format.
+    Disabling this attribute preserves legacy XML class admission; existing XML structural
+    checks remain in effect.</p>  <p>Custom WorkContexts created by server application
+    code can propagate through collocated RMI calls between applications. WorkContexts
+    admitted by the applicable WorkArea input factories, including XML and binary
+    SOAP, retain their received origin. Subsequent collocated copies apply inbound
+    validation under the effective policy, including to contexts received while this
+    attribute was disabled. Deferred received SerializableWorkContext payloads retain
+    their separate payload validation.</p>  <p>A value of <code>true</code> enables
+    the tightened WorkContext class checks. A value of <code>false</code> preserves
+    legacy behavior for patch compatibility.</p> '
+  name: WorkContextClassValidationEnabled
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: 65535
+  descriptionHTML: '<p>Specifies the maximum allowed size, in bytes, of an ASCII field
+    read from the WorkArea binary encoding in which the field length is represented
+    by a four-byte signed integer. This limit does not apply to transport-specific
+    WorkContext encodings, including T3 and IIOP, which use separate decoding paths
+    and are not governed by this attribute.</p>  <p>A value of <code>-1</code> leaves
+    the cap unapplied and preserves legacy behavior. Every value greater than or equal
+    to <code>0</code> is a literal byte cap; <code>0</code> has no special meaning
+    and permits only zero-length ASCII fields. Raise the value only if legitimate
+    WorkContext fields require more space.</p> '
+  name: WorkContextInputMaximumASCIIFieldSize
+  type: int
+  writable: true

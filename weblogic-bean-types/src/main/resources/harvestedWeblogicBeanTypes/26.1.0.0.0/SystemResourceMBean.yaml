@@ -1,0 +1,19 @@
+# Copyright (c) 2020, 2026, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+baseTypes:
+- weblogic.management.configuration.BasicDeploymentMBean
+- weblogic.management.configuration.ConfigurationExtensionMBean
+descriptionHTML: '<p>A system resource is a resource whose definition is part of the
+  system configuration rather than an application. The descriptor for the resource
+  is linked through config.xml but resides in a separate descriptor file. The beans
+  representing this descriptor are exposed through JMX</p> '
+name: weblogic.management.configuration.SystemResourceMBean
+properties:
+- defaultValue:
+    derivedDefault: true
+  descriptionHTML: ' '
+  name: SourcePath
+  restartNeeded: true
+  type: java.lang.String
+  writable: true

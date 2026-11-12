@@ -1,4 +1,4 @@
-# Copyright (c) 2020, 2022, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2020, 2026, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 properties:
 - name: "Name"
@@ -6,6 +6,7 @@ properties:
 - name: "CompletedLongRunningRequests"
 - name: "CompletedShortRunningRequests"
 - name: "FailedRequests"
+- name: "HungTasks"
 - name: "ModuleName"
 - name: "RejectedLongRunningRequests"
 - name: "RejectedShortRunningRequests"

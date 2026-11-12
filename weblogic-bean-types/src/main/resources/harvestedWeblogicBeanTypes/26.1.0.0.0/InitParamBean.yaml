@@ -1,0 +1,29 @@
+# Copyright (c) 2020, 2026, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+baseTypes:
+- weblogic.descriptor.SettableBean
+descriptionHTML: ' '
+name: weblogic.coherence.app.descriptor.wl.InitParamBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: '<p> The parameter type. </p> '
+  name: ParamType
+  nullable: true
+  redeployNeeded: true
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: '<p> The parameter value. </p> '
+  name: ParamValue
+  nullable: true
+  redeployNeeded: true
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+roles:
+  allowed:
+  - Deployer

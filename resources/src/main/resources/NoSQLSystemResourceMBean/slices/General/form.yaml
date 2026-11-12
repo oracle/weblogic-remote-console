@@ -1,0 +1,35 @@
+# Copyright (c) 2026, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+introductionHTML: >
+  <p>Configure the provider-neutral settings for this NoSQL system resource.</p>
+  <p>Updating a resource used by an application can require that application to be fully redeployed before it can use the updated resource.</p>
+
+properties:
+- name: Name
+- name: NoSQLResource.ProviderName
+  label: Provider
+  required: true
+  legalValues:
+  - value: oracle-nosql
+    label: oracle-nosql
+  helpHTML: >
+    <p>Select the NoSQL provider to use for this resource.</p>
+- name: NoSQLResource.DatabaseType
+  legalValues:
+  - value: DOCUMENT
+    label: DOCUMENT
+  - value: KEY_VALUE
+    label: KEY_VALUE
+  - value: COLUMN
+    label: COLUMN
+  - value: GRAPH
+    label: GRAPH
+  helpHTML: >
+    <p>Select the NoSQL database model. Only DOCUMENT is supported for now.</p>
+- name: NoSQLResource.JNDIName
+- name: NoSQLResource.DefaultResource
+  helpHTML: >
+    <p>Select this resource for Jakarta Data repositories that do not specify a data store.
+    The application must explicitly bind to this resource, and the resource must be targeted to its server.
+    Exactly one of the application's bound, locally targeted resources must be marked as default.</p>

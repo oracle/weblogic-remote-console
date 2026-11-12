@@ -8,6 +8,8 @@ import type { Context } from "../../resource/resource";
 import { Message, Response, ResponseError } from "../typedefs/common";
 import * as HtmlUtils from "ojs/ojhtmlutils";
 
+const HTML_TAG_PATTERN = /<[^>]*>/g;
+
 const escapeHtml = (value?: string) => {
   if (!value) return "";
 
@@ -17,6 +19,15 @@ const escapeHtml = (value?: string) => {
     .replaceAll(">", "&gt;")
     .replaceAll('"', "&quot;")
     .replaceAll("'", "&#39;");
+};
+
+const getPlainText = (value?: string) => {
+  if (!value) return "";
+
+  // JET announces detail through its live region. Remove backend markup so it
+  // is not announced, without assigning untrusted content to an HTML sink.
+  // The separately rendered HTML is escaped in escapeHtml() above.
+  return value.replace(HTML_TAG_PATTERN, "");
 };
 
 const broadcastMessages = (ctx: Context | null, messages?: Message[]) => {
@@ -33,11 +44,17 @@ const broadcastMessages = (ctx: Context | null, messages?: Message[]) => {
       (message) => `<li>${escapeHtml(message.detail || message.message)}</li>`,
     ).join("") +
     "</ul>";
+  const detail = messages
+    .map((message) => getPlainText(message.detail || message.message).trim())
+    .filter(Boolean)
+    .map((message) => /[.!?]$/.test(message) ? message : `${message}.`)
+    .join(" ");
 
   const untypedBroadcastMessageFunc = ctx.context.broadcastMessage as any;
   untypedBroadcastMessageFunc({
-    html: { view: HtmlUtils.stringToNodeArray(html), string: html },
+    html: {  string: html },
     severity: overallSeverity.toLowerCase(),
+    detail,
   });
 };
 

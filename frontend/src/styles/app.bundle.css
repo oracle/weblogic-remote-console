@@ -1737,12 +1737,22 @@ a:active,
   --oj-navigation-list-item-label-color-selected: var(--oj-core-text-color);
   --oj-navigation-list-item-border-color-selected: var(--oj-core-divider-color);
 }
-html, body {
-  min-width: var(--body-min-width);
-  min-height: var(--body-min-height);
+html,
+body {
+  min-width: 0;
+  min-height: 0;
+}
+html {
+  overflow: hidden;
 }
 body {
+  /* JET menus use a popup layer associated with their launcher. Do not clip
+     that layer at the document root; html still owns the page scroll lock. */
+  overflow: visible;
   touch-action: manipulation;
+}
+body.oj-component-modal-open {
+  min-height: 100vh;
 }
 footer {
   background-color: var(--header-background-color);
@@ -2931,12 +2941,21 @@ oj-popup[id="headerTitleProviderActionsPopup"] span.cfe-project-provider-iconbar
 #drawer-layout > main.right_panel {
   flex: 1 1 auto;
   min-width: 0; 
-  overflow: auto; 
+  overflow: auto;
+}
+/* oj-c-drawer-layout places the main slot inside its own overflow container.
+   Style that scroll owner so its horizontal and vertical bars stay consistent. */
+#drawer-layout div:has(> main.right_panel)::-webkit-scrollbar {
+  width: 11px;
+  height: 11px;
 }
 #navtree-container2 {
   position: relative;
   height: 100%;
-  width: 100%;
+  width: var(--wrc-start-width, 320px) !important;
+  min-width: 0 !important;
+  max-width: calc(100vw - 20px);
+  flex: 0 0 var(--wrc-start-width, 320px);
   display: flex;
   box-sizing: border-box;
   padding-right: 16px; 
@@ -2948,6 +2967,7 @@ oj-popup[id="headerTitleProviderActionsPopup"] span.cfe-project-provider-iconbar
 #navtree-container2 .left_panel,
 #navtree-container2 .left_panel > div {
   width: 100%;
+  min-width: 0;
   height: 100%;
   box-sizing: border-box;
 }
@@ -2972,7 +2992,11 @@ oj-popup[id="headerTitleProviderActionsPopup"] span.cfe-project-provider-iconbar
   min-width: 0;
 }
 #drawer-layout {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
   height: 100%;
+  box-sizing: border-box;
 }
 #drawer-layout > main.right_panel {
   height: 100%;
@@ -3049,7 +3073,11 @@ oj-popup[id="headerTitleProviderActionsPopup"] span.cfe-project-provider-iconbar
 }
 .wrc-nav-tree oj-navigation-list a.oj-navigationlist-item-content .oj-navigationlist-item-label
 {
-	color: black; 
+  color: black;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 .wrc-nav-tree oj-navigation-list .oj-navigationlist-focused-element {
   color: black;
@@ -3948,10 +3976,11 @@ oj-dialog oj-table {
   color: var(--oj-color-success);
 }
 
-/* Table container width adjustment for drawer */
+/* Keep horizontal overflow local to wide tables so it cannot stretch the application shell. */
 .cfe-table-container-scrollable {
   width: var(--table-container-width, 100vw);
-  overflow: auto;
+  overflow-x: auto;
+  overflow-y: visible;
 }
 
 /* Insecure connection warning indicator */

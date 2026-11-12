@@ -1,0 +1,19 @@
+# Copyright (c) 2020, 2026, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+baseTypes:
+- weblogic.management.security.ProviderMBean
+- weblogic.management.security.ImportMBean
+- weblogic.management.security.ExportMBean
+- weblogic.management.utils.NameListerMBean
+descriptionHTML: "<p>The GroupCertRegManager is used to manage a certificate trust\
+  \ group in  \t\t\t\tthe certificate registry that is stored in the embedded LDAP\
+  \  \t\t\t\tserver.</p> "
+name: weblogic.security.providers.pk.GroupCertRegManagerMBean
+properties:
+- defaultValue:
+    value:
+      value: GroupCertRegManager
+  descriptionHTML: ' '
+  name: Name
+  type: java.lang.String

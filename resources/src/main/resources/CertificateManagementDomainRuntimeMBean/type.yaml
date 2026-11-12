@@ -1,7 +1,26 @@
-# Copyright (c) 2025, Oracle Corporation and/or its affiliates.
+# Copyright (c) 2025, 2026, Oracle Corporation and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 actions:
+- name: purgeExpiredCertificateAuthorities
+  label: Purge Expired Certificate Authorities
+  successMessage: Purged expired certificate authorities.
+  failureMessage: Failed to purge expired certificate authorities.
+  inputForm: # empty form to force the user to confirm the action
+    introductionHTML: >
+      <p>Remove expired certificate authority material from the domain's trust stores.</p>
+- name: removeCertificateAuthority
+  label: Remove Certificate Authority
+  successMessage: Removed the certificate authority.
+  failureMessage: Failed to remove the certificate authority.
+  inputForm:
+    introductionHTML: >
+      <p>Remove the certificate authority identified by the source store and alias.</p>
+    parameters:
+    - name: sourceStore
+      label: Source Store
+    - name: alias
+      label: Alias
 - name: rollDomainCertificateAuthority
   label: Roll Domain Certificate Authority
   successMessage: Rolled the domain certificate authority.

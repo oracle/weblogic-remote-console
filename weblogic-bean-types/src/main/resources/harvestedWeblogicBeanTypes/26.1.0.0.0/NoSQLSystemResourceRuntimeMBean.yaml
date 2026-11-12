@@ -1,0 +1,81 @@
+# Copyright (c) 2020, 2026, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+baseTypes:
+- weblogic.management.runtime.RuntimeMBean
+descriptionHTML: 'Read-only operational state for the server-applied generation of
+  one NoSQL system resource.  <p>NoSQL configuration changes are dynamic. Compatible
+  provider-property updates refresh this MBean and replace provider runtimes attributed
+  to the prior configuration generation while preserving application handles. Selection-affecting
+  or incompatible updates invalidate affected applications. Untargeting or removing
+  the resource unregisters this MBean.</p> '
+name: weblogic.management.runtime.NoSQLSystemResourceRuntimeMBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: 'Returns the number of currently active provider runtimes attributed
+    to this resource. Activating a compatible provider-property update drains and
+    closes runtimes from the prior configuration generation; subsequent calls create
+    replacement runtimes lazily. '
+  name: ActiveRuntimeCount
+  type: int
+- defaultValue: {
+    }
+  descriptionHTML: 'Returns the Jakarta Data database type from the currently server-applied
+    descriptor generation. '
+  name: DatabaseType
+  type: java.lang.String
+- defaultValue: {
+    }
+  descriptionHTML: 'Returns the descriptor file for the currently server-applied NoSQL
+    system resource generation. '
+  name: DescriptorFileName
+  type: java.lang.String
+- defaultValue: {
+    }
+  descriptionHTML: 'Returns the total number of failed provider runtime creation attempts
+    for this resource. '
+  name: FailedRuntimeCreationCount
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: 'Returns a diagnostic message for the most recent provider runtime
+    creation failure, or <code>null</code> if none has occurred. '
+  name: LastFailureMessage
+  type: java.lang.String
+- defaultValue: {
+    }
+  descriptionHTML: 'Returns the time of the most recent provider runtime creation
+    failure, in milliseconds since the epoch, or <code>0</code> if none has occurred. '
+  name: LastFailureTime
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: 'Returns the time the most recent provider runtime was created,
+    in milliseconds since the epoch, or <code>0</code> if none has been created. '
+  name: LastRuntimeCreationTime
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: 'Returns the provider name from the currently server-applied descriptor
+    generation. '
+  name: ProviderName
+  type: java.lang.String
+- defaultValue: {
+    }
+  descriptionHTML: 'Returns the total number of provider runtimes closed for this
+    resource. '
+  name: RuntimeCloseCount
+  type: long
+- defaultValue: {
+    }
+  descriptionHTML: 'Returns the lifecycle state of the currently server-applied NoSQL
+    system resource generation. '
+  name: State
+  type: java.lang.String
+- defaultValue: {
+    }
+  descriptionHTML: 'Returns the total number of provider runtimes successfully created
+    for this resource. '
+  name: SuccessfulRuntimeCreationCount
+  type: long

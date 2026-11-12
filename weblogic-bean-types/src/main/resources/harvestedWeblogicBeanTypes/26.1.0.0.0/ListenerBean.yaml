@@ -1,0 +1,27 @@
+# Copyright (c) 2020, 2026, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+descriptionHTML: ' '
+name: weblogic.j2ee.descriptor.wl.ListenerBean
+properties:
+- defaultValue: {
+    }
+  descriptionHTML: ' '
+  name: ListenerClass
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: ' '
+  name: ListenerUri
+  restartNeeded: true
+  type: java.lang.String
+  writable: true
+- defaultValue: {
+    }
+  descriptionHTML: ' '
+  name: RunAsPrincipalName
+  restartNeeded: true
+  type: java.lang.String
+  writable: true

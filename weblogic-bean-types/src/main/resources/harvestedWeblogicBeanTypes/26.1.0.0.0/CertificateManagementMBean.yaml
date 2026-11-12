@@ -1,0 +1,275 @@
+# Copyright (c) 2020, 2026, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+baseTypes:
+- weblogic.management.configuration.ConfigurationPropertiesMBean
+descriptionHTML: '<p>Provides configuration for the WebLogic Certificate Management
+  Service.</p> '
+name: weblogic.management.configuration.CertificateManagementMBean
+properties:
+- defaultValue:
+    value:
+      value: RSA-2048
+  descriptionHTML: '<p>Returns the configured Certificate Authority key profile.</p>  <p>The
+    dynamic profile is used for a future Domain or Machine Certificate Authority generation
+    or rollover. Updating it does not alter existing CA material or force regeneration.</p> '
+  name: CertificateAuthorityKeyProfile
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: SHA256withRSA
+  descriptionHTML: '<p>Returns the configured signature algorithm for Certificate
+    Authorities.</p>  <p>A future Certificate Authority uses this algorithm to sign
+    both its self-signed certificate and the leaf certificates it issues. An existing
+    Certificate Authority continues to use its current signer until it is regenerated
+    or rolled over.</p> '
+  name: CertificateAuthoritySignatureAlgorithm
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: 365
+  descriptionHTML: '<p>Returns the validity period (certificate lifetime) that the
+    Domain Certificates Issuer should set when generating a new Certificate Authority
+    certificate. The validity period is expressed in days.</p> '
+  name: CertificateAuthorityValidityPeriod
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: 1
+  descriptionHTML: '<p>Returns the certificate check interval -- how often the Certificate
+    Management Service should check for/refresh expiring certificates (in days).</p> '
+  name: CertificateCheckInterval
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: null
+  descriptionHTML: '<p>Returns the optional local server time at which the Certificate
+    Management Service begins each certificate check. The value uses <code>H:mm</code>
+    format, with an hour from <code>0</code> through <code>23</code> and a two-digit
+    minute.</p>  <p>If this value is not set, the service retains its legacy fixed-rate
+    scheduling behavior. If it is set, the first check is scheduled for this local
+    time after the configured getCertificateCheckInterval(), and subsequent checks
+    use the same calendar-day interval.</p> '
+  name: CertificateCheckTime
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: 900
+  descriptionHTML: '<p>Returns the maximum random offset, in seconds, added to a configured
+    certificate check time. The service samples one offset from zero through this
+    value when the schedule is established, then reuses it for that scheduling lifecycle.
+    An offset can move a check into the next local calendar date, but is always less
+    than one day.</p> '
+  name: CertificateCheckTimeMaximumOffset
+  type: int
+  writable: true
+- array: true
+  creators:
+  - weblogic.management.configuration.CertificateIssuerPluginMBean
+  defaultValue: {
+    }
+  descriptionHTML: '<p>Returns the CertificateIssuerPlugins for this Domain.</p> '
+  name: CertificateIssuerPlugins
+  relationship: containment
+  type: weblogic.management.configuration.CertificateIssuerPluginMBean
+- defaultValue:
+    value:
+      value: RSA-2048
+  descriptionHTML: '<p>Returns the configured leaf certificate key profile.</p>  <p>The
+    dynamic profile is used when a future leaf certificate is generated or renewed.
+    Updating it does not alter existing certificate material or force regeneration.</p> '
+  name: CertificateKeyProfile
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: 10
+  descriptionHTML: '<p>Returns the certificate refresh window. The Certificate Management
+    Service will refresh an expiring certificate when its remaining lifetime is less
+    than this number of days.</p> '
+  name: CertificateRefreshWindow
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: 90
+  descriptionHTML: '<p>Returns the validity period (certificate lifetime) that the
+    Domain Certificates Issuer should set when generating a new certificate. The validity
+    period is expressed in days.</p> '
+  name: CertificateValidityPeriod
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Returns true or false to indicate whether the Certificate Management
+    Service is enabled or not.</p> '
+  name: Enabled
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: 7
+  descriptionHTML: '<p>Returns the number of days an expired Certificate Authority
+    remains trusted in the Admin Server''s <code>domain-trust</code> or <code>provisioned-trust</code>
+    source store before automatic cleanup removes it.</p>  <p>A value of <code>0</code>
+    disables automatic Certificate Authority cleanup. It does not disable Administrator-initiated
+    cleanup.</p> '
+  name: ExpiredCertificateAuthorityRetentionDays
+  type: int
+  writable: true
+- defaultValue:
+    value:
+      value: true
+  descriptionHTML: '<p>Whether the Domain Certificates Issuer should include the self-signed
+    root CA in the certificate chain for a generated certificate.</p> '
+  name: IncludeRootCertificateInChain
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Whether or not the domain should trust the Java Standard Trust
+    certificates, in addition to the Domain Certificate Authority certificate(s) and
+    any Provisioned Trust certificates. Java Standard Trust is a collection of well-known,
+    trusted root certificate authorities distributed (and updated) as part of the
+    JDK.</p> '
+  name: JavaStandardTrustEnabled
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: 60000
+  descriptionHTML: '<p>Returns the maximum number of milliseconds WebLogic Server
+    waits to acquire a cross-process Certificate Management keystore file lock.</p>  <p>This
+    process-lifetime setting requires a server restart. Node Manager uses the matching
+    <code>KeystoreFileLockTimeout</code> property in <code>nodemanager.properties</code>.
+    The <code>weblogic.keystore.filelock.timeout</code> system property is a bootstrap
+    override and takes precedence when specified.</p> '
+  name: KeystoreFileLockTimeout
+  restartNeeded: true
+  type: long
+  writable: true
+- defaultValue:
+    value:
+      value: true
+  descriptionHTML: '<p>Returns whether WebLogic Server uses cross-process file locks
+    when accessing shared Certificate Management keystores.</p>  <p>This process-lifetime
+    setting requires a server restart. Node Manager uses the matching <code>KeystoreFileLockingEnabled</code>
+    property in <code>nodemanager.properties</code>. The <code>weblogic.keystore.filelock.enabled</code>
+    system property is a bootstrap override and takes precedence when specified. If
+    locking is disabled, it must be disabled consistently in every process that accesses
+    the same machine keystores.</p> '
+  name: KeystoreFileLockingEnabled
+  restartNeeded: true
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: true
+  descriptionHTML: '<p>Returns whether WebLogic Server watches Certificate Management
+    keystore files for changes made by another process.</p>  <p>This process-lifetime
+    setting requires a server restart. Node Manager uses the matching <code>KeystoreFileWatchingEnabled</code>
+    property in <code>nodemanager.properties</code>. The <code>weblogic.keystore.filewatch.enabled</code>
+    system property is a bootstrap override and takes precedence when specified.</p>  <p>WebLogic
+    Server and Node Manager enable watching by default. Set the matching Node Manager
+    property to <code>false</code> to disable both file watching and managed-identity
+    revision polling. When enabled, Node Manager restarts after identity replacement
+    or removal so a removed listener credential is not retained.</p> '
+  name: KeystoreFileWatchingEnabled
+  restartNeeded: true
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: false
+  descriptionHTML: '<p>Returns true or false to indicate whether the Provisioned Certificates
+    Issuer is enabled or not.</p> '
+  name: ProvisionedCertificatesIssuerEnabled
+  type: boolean
+  writable: true
+- defaultValue:
+    secureModeValue:
+      value: true
+    value:
+      value: false
+  descriptionHTML: '<p>Returns the single purpose certificates enabled value: whether
+    the Domain Certificates Issuer should generate separate, single-purpose certificates
+    for different purposes (server authentication, client authentication, signing
+    and encryption), or generate one certificate that supports all those purposes.</p> '
+  name: SinglePurposeCertificatesEnabled
+  type: boolean
+  writable: true
+- defaultValue:
+    value:
+      value: hostname, address, loopback, listen_address_all, virtual_host_all
+  descriptionHTML: '<p>A space- or comma-separated list of words representing the
+    Subject Alternative Names that the Domain Certificates Issuer should include when
+    generating a server certificate.</p>  <p>Each word must be one of the subject
+    name constants defined by the CertificateConfigurationConstants interface. When
+    generating a certificate, the Certificate Management Service replaces each constant
+    with the corresponding value(s) obtained from the target server''s configuration
+    or the host it''s running on.</p>  <p>Virtual host names are included only when
+    the virtual host is targeted to the server for which the certificate is issued.
+    A named virtual host, listen address, or network channel listen address that is
+    not configured for that server is omitted without causing certificate issuance
+    to fail.</p>  <p>The preferred endpoint identity selected by getSubjectCommonName()
+    is included even if it is not explicitly configured here. When no fully qualified
+    hostname is available, the authenticated host address is included as an IP Subject
+    Alternative Name when permitted by the configured subject name policy.</p> '
+  name: SubjectAlternativeNames
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: hostname
+  descriptionHTML: '<p>The fully qualified endpoint identity the Domain Certificates
+    Issuer should prefer for a server certificate''s Subject common name and first
+    Subject Alternative Name: either the local hostname (<code>hostname</code>) or
+    the server''s listen address (<code>listen_address</code>).</p>  <p>If no fully
+    qualified listen address is configured for the server, the fully qualified hostname
+    will be used instead, regardless of the value set here. If neither is available,
+    the authenticated host address is used as an IP Subject Alternative Name when
+    permitted by the configured subject name policy.</p>  <p>When a fully qualified
+    hostname is available, the Subject uses that value in <code>CN=fully-qualified-hostname</code>
+    and identifies the server in <code>OU=Server: server-name</code>. When no fully
+    qualified hostname is available, the Subject instead identifies the server in
+    <code>CN=Server: server-name</code> and omits the server organizational unit.
+    The domain organizational unit is present in both forms.</p> '
+  legalValues:
+  - hostname
+  - listen_address
+  name: SubjectCommonName
+  type: java.lang.String
+  writable: true
+- defaultValue:
+    value:
+      value: CONFIGURED_PLUS_HOST
+  descriptionHTML: '<p>Controls which host names and literal IP addresses the Domain
+    Certificates Issuer may place in a certificate subject.</p>  <p><code>CONFIGURED_ONLY</code>
+    permits a server''s configured listen address, network-channel listen addresses,
+    and targeted virtual-host names. For a machine certificate it permits the configured
+    Node Manager listen address. <code>CONFIGURED_PLUS_HOST</code> additionally permits
+    the hostname and address authenticated in the certificate request. <code>CONFIGURED_PLUS_ANY</code>
+    retains legacy behavior and permits any requested identity. The <code>localhost</code>
+    DNS name and numeric loopback addresses are permitted in every mode.</p>  <p>A
+    server certificate request fails if its preferred endpoint identity or any requested
+    Subject Alternative Name is not permitted. A machine certificate request silently
+    discards names that are not permitted. It prefers a permitted fully qualified
+    hostname for the Subject common name. If none is available, a permitted authenticated
+    host address is placed in an IP Subject Alternative Name and the Subject identifies
+    the machine in <code>CN=Machine: machine-name</code> without the machine organizational
+    unit. Under <code>CONFIGURED_ONLY</code>, this fallback is available when the
+    configured Node Manager listen address is that host address.</p> '
+  legalValues:
+  - CONFIGURED_ONLY
+  - CONFIGURED_PLUS_HOST
+  - CONFIGURED_PLUS_ANY
+  name: SubjectNamePolicy
+  type: java.lang.String
+  writable: true

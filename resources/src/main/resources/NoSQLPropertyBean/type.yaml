@@ -1,0 +1,15 @@
+# Copyright (c) 2026, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+properties:
+- name: Name
+  writable: createOnly
+
+- name: EncryptedValue
+  label: Encrypted Value
+  helpSummaryHTML: >
+    <p>Use this protected value for provider settings that contain a credential or other secret.</p>
+
+- name: Value
+  helpSummaryHTML: >
+    <p>Use this literal value for a non-secret provider setting.</p>

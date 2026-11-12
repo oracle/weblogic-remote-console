@@ -41,6 +41,32 @@
   max-width: 90vw;
 }
 
+/* Overlay forms already fit within the dialog's viewport. Do not make the
+   body wrapper as tall as the entire dialog (including its header), since
+   that creates a false vertical overflow. Also clip the container's small
+   layout-width mismatch so it does not create a horizontal scrollbar. */
+oj-dialog#overlayFormDialog .oj-dialog-body-wrapper {
+  height: auto !important;
+  max-height: 100%;
+}
+oj-dialog#overlayFormDialog .oj-dialog-content {
+  width: auto;
+  height: auto;
+  min-height: 0;
+  max-height: calc(80vh - 4rem);
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+/* The slotted form overflows the JET body, rather than .oj-dialog-content.
+   Make that actual overflow owner scrollable at high zoom. */
+oj-dialog#overlayFormDialog .oj-dialog-body {
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
+}
+oj-dialog#overlayFormDialog .oj-dialog-container {
+  overflow: hidden;
+}
+
 /* Defensive: if oj-dialog uses a window wrapper, keep caps there too */
 .cfe-generic-dialog .oj-dialog-window {
   width: auto;

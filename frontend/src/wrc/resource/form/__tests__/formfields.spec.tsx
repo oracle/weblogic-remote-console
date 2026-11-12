@@ -9,10 +9,11 @@ import { h } from "preact";
 import { ojTable } from "ojs/ojtable";
 import { FormContentModel } from "wrc/shared/model/formcontentmodel";
 import { PDJ, Property } from "wrc/shared/typedefs/pdj";
-import { RDJ } from "wrc/shared/typedefs/rdj";
+import { ParsedExpressionType, RDJ } from "wrc/shared/typedefs/rdj";
 import Form from "../form";
 import FieldSettingsDialog from "../field-settings-dialog";
 import { getFileSelectorForNewFile } from "../formfields";
+import PolicyExpression from "../policy-expression";
 import Context = require("ojs/ojcontext");
 
 jest.mock("wrc/display/dialog", () => ({
@@ -100,12 +101,12 @@ describe("Form Fields", () => {
       const model = new FormContentModel(
         {
           data: {
-            MyPropertyList: { value: { MyProperty: "My Value" } },
+            MyProperties: { value: { MyProperty: "My Value" } },
           },
         } as unknown as RDJ,
         {
           sliceForm: {
-            properties: [{ name: "MyPropertyList", type: "properties" }],
+            properties: [fieldDescription],
           },
         } as unknown as PDJ,
       );
@@ -123,6 +124,8 @@ describe("Form Fields", () => {
       expect(ojTable?.classList.contains("cfe-model-properties-table")).toBe(
         true,
       );
+      expect(ojTable?.getAttribute("data-property")).toBe("MyProperties");
+      expect(ojTable?.getAttribute("aria-label")).toBe("My Properties");
       expect(ojTable?.textContent?.includes("MyPropertyMy Value"));
 
       const ojAddButton = ojTable?.querySelector(
@@ -211,6 +214,10 @@ describe("Form Fields", () => {
       );
       await Context.getContext(container).getBusyContext().whenReady();
 
+      const ojTable = container.querySelector("oj-table");
+      expect(ojTable?.getAttribute("data-property")).toBe("Recipients");
+      expect(ojTable?.getAttribute("aria-label")).toBe("Recipients");
+
       const deleteButton = container.querySelector("oj-c-button[data-testid='delete']");
       expect(deleteButton).not.toBeNull();
 
@@ -220,6 +227,107 @@ describe("Form Fields", () => {
       expect(model.getProperty("Recipients")).toEqual(["second@example.com"]);
     }, 60000);
   });
+
+  it("labels policy expression delete buttons", () => {
+    const fieldDescription = createStringFieldDescription("Policy", "Policy");
+    const expression = {
+      parsedExpression: {
+        type: ParsedExpressionType.And,
+        children: [{ type: ParsedExpressionType.Predicate, name: "" }],
+      },
+      supportedPredicates: [],
+    };
+    const formModel = {
+      getProperty: () => expression,
+      hasPropertyChanged: () => false,
+      isReadOnly: () => false,
+    } as unknown as FormContentModel;
+
+    const { container } = render(
+      <PolicyExpression
+        fieldDescription={fieldDescription}
+        formModel={formModel}
+        valueChangedHandler={jest.fn()}
+      />,
+    );
+
+    const deleteButtons = container.querySelectorAll(
+      "oj-c-button[data-testid='delete-node']",
+    );
+    expect(deleteButtons).toHaveLength(2);
+    deleteButtons.forEach((button) => {
+      expect(button.getAttribute("aria-label")).toBe("Remove");
+    });
+  });
+
+  it("provides programmatic labels for the reported runtime text fields", async () => {
+    const runtimeFields = [
+      createStringFieldDescription("State", "State"),
+      createStringFieldDescription("Troubleshooting", "Troubleshooting"),
+      createStringFieldDescription("HealthState", "Health State"),
+      createStringFieldDescription("OverallHealthState", "Overall Health State"),
+    ];
+    const model = new FormContentModel(
+      {
+        data: {
+          State: { value: "RUNNING" },
+          Troubleshooting: { value: "No issues detected" },
+          HealthState: { value: "OK" },
+          OverallHealthState: { value: "OK" },
+        },
+      } as unknown as RDJ,
+      { sliceForm: { properties: runtimeFields } } as unknown as PDJ,
+    );
+
+    const { container } = render(
+      <div data-oj-binding-provider="preact">
+        <Form formModel={model} />
+      </div>,
+    );
+    await Context.getContext(container).getBusyContext().whenReady();
+
+    for (const field of runtimeFields) {
+      const input = container.querySelector(
+        `oj-c-input-text[data-property='${field.name}']`,
+      );
+      expect(input?.getAttribute("label-hint")).toBe(field.label);
+      expect(input?.getAttribute("aria-label")).toBe(field.label);
+    }
+  }, 60000);
+
+  it("provides the field label to legacy single-select controls", async () => {
+    const fieldDescription = {
+      ...createStringFieldDescription("OverallHealthState", "Overall Health State"),
+      legalValues: [
+        { label: "Okay", value: "ok" },
+        { label: "Warn", value: "warn" },
+      ],
+      readOnly: true,
+    } as Property;
+    const model = new FormContentModel(
+      {
+        data: {
+          OverallHealthState: { value: "ok" },
+        },
+      } as unknown as RDJ,
+      { sliceForm: { properties: [fieldDescription], readOnly: true } } as unknown as PDJ,
+    );
+
+    const { container } = render(
+      <div data-oj-binding-provider="preact">
+        <Form formModel={model} />
+      </div>,
+    );
+    await Context.getContext(container).getBusyContext().whenReady();
+
+    const select = container.querySelector(
+      "oj-select-single[data-property='OverallHealthState']",
+    );
+    expect(select?.getAttribute("label-hint")).toBe("Overall Health State");
+    expect(select?.querySelector("input")?.getAttribute("aria-label")).toBe(
+      "Overall Health State",
+    );
+  }, 60000);
 
   it("includes the owning form model in Field Settings launcher events", async () => {
     const fieldDescription: Property = {

@@ -34,6 +34,7 @@ advancedProperties:
 - name: "MessagingPerformancePreference"
 - name: "UnitOfWorkHandlingPolicy"
 - name: "IncompleteWorkExpirationTime"
+- name: "MaximumUnitOfWorkMessages"
 helpTopics:
 - label: "Configuring Messaging "
   href: "jmsad/basic_config.html"

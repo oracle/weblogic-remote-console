@@ -1,4 +1,4 @@
-// Copyright (c) 2020, 2025, Oracle Corporation and/or its affiliates.
+// Copyright (c) 2020, 2026, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.console.utils;
@@ -17,6 +17,14 @@ public class Path implements Comparable, Deduplicatable {
   private List<String> components = new ArrayList<>();
 
   public Path() {
+  }
+
+  /**
+   * Construct a path from literal components, preserving dots within each component.
+   * Null and empty components are omitted.
+   */
+  public static Path fromComponents(String... components) {
+    return new Path(components);
   }
 
   public Path(String dotSeparatedPath) {

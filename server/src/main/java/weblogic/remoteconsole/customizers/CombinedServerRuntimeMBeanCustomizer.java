@@ -1,4 +1,4 @@
-// Copyright (c) 2022, 2025, Oracle and/or its affiliates.
+// Copyright (c) 2022, 2026, Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 package weblogic.remoteconsole.customizers;
@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import weblogic.console.utils.Path;
-import weblogic.console.utils.StringUtils;
 import weblogic.remoteconsole.common.repodef.BeanActionDef;
 import weblogic.remoteconsole.common.repodef.BeanPropertyDef;
 import weblogic.remoteconsole.common.repodef.PageActionDef;
@@ -89,7 +88,7 @@ public class CombinedServerRuntimeMBeanCustomizer {
   ) {
     return
       delegateAction(ic,
-      "DomainRuntime.ServerRuntimes",
+      "ServerRuntimes",
       "SingleSignOnServicesRuntime",
       "publish",
       formProperties
@@ -122,7 +121,7 @@ public class CombinedServerRuntimeMBeanCustomizer {
       throw Response.notFoundException();
     }
     boolean adminServer = isAdminServer(ic, searchResults);
-    BeanTreePath realPath = getRealBeanTreePath(ic, "DomainRuntime.ServerLifeCycleRuntimes", "");
+    BeanTreePath realPath = getRealBeanTreePath(ic, "ServerLifeCycleRuntimes", "");
     BeanActionDef actionDef =
       realPath.getTypeDef().getActionDef(new Path("shutdown_timeout_ignoreSessions"));
     List<BeanActionArg> args = List.of(
@@ -215,7 +214,9 @@ public class CombinedServerRuntimeMBeanCustomizer {
   }
 
   private static BeanTreePath getServerBeanPath(InvocationContext ic) {
-    return BeanTreePath.create(ic.getBeanTreePath().getBeanRepo(), new Path("Domain.Servers." + getServerName(ic)));
+    return BeanTreePath.create(
+      ic.getBeanTreePath().getBeanRepo(), Path.fromComponents("Domain", "Servers", getServerName(ic))
+    );
   }
 
   private static Value getRequiredPropertyValue(BeanSearchResults searchResults, BeanPropertyDef propertyDef) {
@@ -227,11 +228,11 @@ public class CombinedServerRuntimeMBeanCustomizer {
   }
 
   private static Response<Value> delegateToServerLifeCycleRuntimeAction(InvocationContext ic, String action) {
-    return delegateAction(ic, "DomainRuntime.ServerLifeCycleRuntimes", "", action, List.of());
+    return delegateAction(ic, "ServerLifeCycleRuntimes", "", action, List.of());
   }
 
   private static Response<Value> delegateToServerRuntimeAction(InvocationContext ic, String action) {
-    return delegateAction(ic, "DomainRuntime.ServerRuntimes", "", action, List.of());
+    return delegateAction(ic, "ServerRuntimes", "", action, List.of());
   }
 
   private static Response<Value> delegateAction(
@@ -267,12 +268,10 @@ public class CombinedServerRuntimeMBeanCustomizer {
   ) {
     // The bean path for the real runtime mbean to invoke is either
     // DomainRuntime/ServerRuntimes or ServerLifeCycleRuntimes/serverName
-    StringBuilder sb = new StringBuilder();
-    sb.append(realCollection).append(".").append(getServerName(ic));
-    if (!StringUtils.isEmpty(singletonChild)) {
-      sb.append(".").append(singletonChild);
-    }
-    return BeanTreePath.create(ic.getBeanTreePath().getBeanRepo(),new Path(sb.toString()));
+    return BeanTreePath.create(
+      ic.getBeanTreePath().getBeanRepo(),
+      Path.fromComponents("DomainRuntime", realCollection, getServerName(ic), singletonChild)
+    );
   }
 
   private static String getServerName(InvocationContext ic) {

@@ -176,9 +176,12 @@ public class AdminServerResource extends PdjRdjUtils implements TypedResource {
     ic.getFrontend().storeData("proposed", "name", proposedName);
     builder
       .add("url", Json.createObjectBuilder()
-        .add("value", "http://localhost:7001"))
-      .add("webAuthentication", Json.createObjectBuilder()
-        .add("value", false))
+        .add("value", "http://localhost:7001"));
+    if (ConsoleBackendRuntimeConfig.isWebAuthenticationOptionSupported()) {
+      builder.add("webAuthentication", Json.createObjectBuilder()
+        .add("value", false));
+    }
+    builder
       .add("insecure", Json.createObjectBuilder()
         .add("value", false))
       .add("name", Json.createObjectBuilder()
@@ -220,14 +223,17 @@ public class AdminServerResource extends PdjRdjUtils implements TypedResource {
       }
     }
     if (!local) {
-      builder.add("webAuthentication", valueObject(false, false));
+      if (ConsoleBackendRuntimeConfig.isWebAuthenticationOptionSupported()) {
+        builder.add("webAuthentication", valueObject(false, false));
+      }
       builder.add("proxyOverride", valueObject(null));
       builder.add("connectTimeoutOverride", valueObject(null));
       builder.add("readTimeoutOverride", valueObject(null));
       builder.add("insecure", valueObject(false, false));
       if (settingsJSON != null) {
         settingsJSON = json.getJsonObject("settings");
-        if (settingsJSON.containsKey("sso")
+        if (ConsoleBackendRuntimeConfig.isWebAuthenticationOptionSupported()
+          && settingsJSON.containsKey("sso")
           && settingsJSON.getBoolean("sso")) {
           builder.add("webAuthentication", valueObject("true"));
         }
@@ -260,12 +266,7 @@ public class AdminServerResource extends PdjRdjUtils implements TypedResource {
 
   private void addFormProperties(
     InvocationContext ic, JsonArrayBuilder propertiesBuilder) {
-    propertiesBuilder.add(pdjObject("webAuthentication", ic.getLocalizer().localizeString(
-        LocalizedConstants.USE_WEB_AUTHENTICATION_LABEL), "boolean")
-      .add("helpSummaryHTML", ic.getLocalizer().localizeString(
-        LocalizedConstants.ADMIN_SERVER_HELP_SSO_SUMMARY))
-      .add("detailedHelpHTML", ic.getLocalizer().localizeString(
-        LocalizedConstants.ADMIN_SERVER_HELP_SSO_DETAIL)));
+    addWebAuthenticationProperty(ic, propertiesBuilder);
     propertiesBuilder.add(pdjObject("url", ic.getLocalizer().localizeString(
         LocalizedConstants.URL_LABEL), "String", "required")
       .add("helpSummaryHTML", ic.getLocalizer().localizeString(
@@ -315,12 +316,7 @@ public class AdminServerResource extends PdjRdjUtils implements TypedResource {
   @Override
   public JsonArrayBuilder addSpecialTableProperties(
       InvocationContext ic, JsonArrayBuilder propertiesBuilder) {
-    propertiesBuilder.add(pdjObject("webAuthentication", ic.getLocalizer().localizeString(
-        LocalizedConstants.USE_WEB_AUTHENTICATION_LABEL), "boolean")
-      .add("helpSummaryHTML", ic.getLocalizer().localizeString(
-        LocalizedConstants.ADMIN_SERVER_HELP_SSO_SUMMARY))
-      .add("detailedHelpHTML", ic.getLocalizer().localizeString(
-        LocalizedConstants.ADMIN_SERVER_HELP_SSO_DETAIL)));
+    addWebAuthenticationProperty(ic, propertiesBuilder);
     propertiesBuilder.add(pdjObject("url", ic.getLocalizer().localizeString(
         LocalizedConstants.URL_LABEL), "String", "required")
       .add("helpSummaryHTML", ic.getLocalizer().localizeString(
@@ -346,6 +342,17 @@ public class AdminServerResource extends PdjRdjUtils implements TypedResource {
       .add("detailedHelpHTML", ic.getLocalizer().localizeString(
         LocalizedConstants.ADMIN_SERVER_HELP_INSECURE_DETAIL)));
     return propertiesBuilder;
+  }
+
+  private void addWebAuthenticationProperty(InvocationContext ic, JsonArrayBuilder propertiesBuilder) {
+    if (ConsoleBackendRuntimeConfig.isWebAuthenticationOptionSupported()) {
+      propertiesBuilder.add(pdjObject("webAuthentication", ic.getLocalizer().localizeString(
+          LocalizedConstants.USE_WEB_AUTHENTICATION_LABEL), "boolean")
+        .add("helpSummaryHTML", ic.getLocalizer().localizeString(
+          LocalizedConstants.ADMIN_SERVER_HELP_SSO_SUMMARY))
+        .add("detailedHelpHTML", ic.getLocalizer().localizeString(
+          LocalizedConstants.ADMIN_SERVER_HELP_SSO_DETAIL)));
+    }
   }
 
   @Override
