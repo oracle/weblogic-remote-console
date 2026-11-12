@@ -1,5 +1,5 @@
 ---
-weight: 270
+weight: 280
 title: WDT Model Files
 ---
 
@@ -108,36 +108,40 @@ To create a WDT model file for use with the WebLogic Deploy Tooling:
 
 2.  Enter a name for the WDT model file provider.
 
-3.  In the **New WDT Model Filename** field, enter a file name for the WDT model file. Include the file type extension, either <code>.yaml</code> or <code>.json</code>. Then, select **Browse Folder** and browse to the directory where you want to save the new WDT model file.
+3.  Specify the initial model:
 
-4.  Select **Done** to create the WDT model file.
+    -   **Desktop WebLogic Remote Console:** Select the file chooser icon beside **New WDT Model Filename**, then choose a location and filename for the new model. Include the <code>.yaml</code> or <code>.json</code> extension.
+    -   **Hosted WebLogic Remote Console:** Leave **Initial File Contents** empty to create an empty model. To start from an existing model, select the file chooser icon beside **Initial File Contents**, then choose a YAML or JSON file on your computer. When you select **Done**, its contents are uploaded to create the model on the server.
+4.  Select **Done** to create the provider.
 
-5.  **Optional**: On the **WDT Model File Settings** page, choose a property list provider to associate with the WDT model file. If you don't have a property list provider, you can always add one later.
+5.  **Optional**: Optionally, on the **WDT Model File Settings** page, choose a property list provider to associate with the model. If you don’t have a property list provider, you can add one later. See [Property Lists](../property-lists#GUID-62721515-29E5-4DC4-BBD8-E2D1C8A7529D).
 
-    See [Property Lists](../property-lists#GUID-62721515-29E5-4DC4-BBD8-E2D1C8A7529D).
-
-6.  Select **Connect/Activate** to start editing the WDT model file.
+6.  Select **Connect/Activate** to begin editing the model.
 
 
 ## Upload a WDT Model File {#GUID-EC821453-1C8A-49DD-A2AB-B5BF58B0B00E}
 
 If you created a WDT model file elsewhere, you can upload it to WebLogic Remote Console and continue to edit it.
 
-1.  On the **Projects / Providers** page, select **Create**, then **Existing WDT Model File Provider**.
+-   For Desktop WebLogic Remote Console:
 
-2.  Enter a name for the WDT model file provider.
+    Desktop WebLogic Remote Console uses the selected local file directly.
 
-3.  Select **Upload File** and browse to the directory with the WDT model file.
+    1.  On the **Projects / Providers** page, select **Create**, then **Existing WDT Model File Provider**.
 
-    The WDT model file must be in <code>YAML</code> or <code>JSON</code> format.
+    2.  Enter a name for the WDT model file provider.
 
-4.  Select **Done** to create the WDT model file.
+    3.  Select the file chooser icon beside **WDT Model Filename**, then choose the existing YAML or JSON model file on your computer.
 
-5.  **Optional**: On the **WDT Model File Settings** page, choose a property list provider to associate with the WDT model file. If you don't have a property list provider, you can always add one later.
+    4.  Select **Done** to create the provider.
 
-    See [Property Lists](../property-lists#GUID-62721515-29E5-4DC4-BBD8-E2D1C8A7529D).
+    5.  **Optional**: Optionally, on the **WDT Model File Settings** page, choose a property list provider to associate with the model. If you don’t have a property list provider, you can add one later. See [Property Lists](../property-lists#GUID-62721515-29E5-4DC4-BBD8-E2D1C8A7529D).
 
-6.  Select **Connect/Activate** to start editing the WDT model file.
+    6.  Select **Connect/Activate** to begin editing the model.
+
+-   For Hosted WebLogic Remote Console:
+
+    Follow the Hosted WebLogic Remote Console instructions in [Create a WDT Model File](#GUID-1ECF1B50-BE85-413F-8417-34A8E0CC8FB0). Select the file chooser icon beside **Initial File Contents**, then choose the existing YAML or JSON model file on your computer. When you select **Done**, the file’s contents are uploaded to create the model on the server.
 
 
 ## Edit a WDT Model File {#GUID-B0B9CBA4-29E4-417D-8094-5BA8B4522ED7}

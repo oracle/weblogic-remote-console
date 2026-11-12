@@ -35,7 +35,7 @@ Supported Deployment Units A deployment unit refers to a Jakarta EE application 
   <meta itemprop="description" content="You can use WebLogic Remote Console to manage the deployment process of applications to WebLogic Server.
 For general information on the application deployment process, see Understanding WebLogic Server Deployment in Deploying Applications to Oracle WebLogic Server.
 Supported Deployment Units A deployment unit refers to a Jakarta EE application (an enterprise application or Web application) or a standalone Jakarta EE module (such as an EJB or resource adapter) that has been organized according to the Jakarta EE specification and can be deployed to WebLogic Server.">
-  <meta itemprop="wordCount" content="3057">
+  <meta itemprop="wordCount" content="3351">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Deploying Applications">
   <meta name="twitter:description" content="You can use WebLogic Remote Console to manage the deployment process of applications to WebLogic Server.
@@ -70,7 +70,8 @@ Supported Deployment Units A deployment unit refers to a Jakarta EE application 
         <div class="dropdown">
   <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Releases</a>
   <ul class="dropdown-menu">
-    <li><a class="dropdown-item" href="/weblogic-remote-console/overview">Latest (v3.0.6)</a></li>
+    <li><a class="dropdown-item" href="/weblogic-remote-console/overview">Latest (v3.0.7)</a></li>
+    <li><a class="dropdown-item" href="/weblogic-remote-console/3.0.6">v3.0.6</a></li>
     <li><a class="dropdown-item" href="/weblogic-remote-console/3.0.5">v3.0.5</a></li>
     <li><a class="dropdown-item" href="/weblogic-remote-console/3.0.4">v3.0.4</a></li>
     <li><a class="dropdown-item" href="/weblogic-remote-console/3.0.3">v3.0.3</a></li>
@@ -143,7 +144,7 @@ Supported Deployment Units A deployment unit refers to a Jakarta EE application 
     aria-label="Search this site…"
     autocomplete="off"
     
-    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.96d922ec2447f58333e343cd538b48c3.json"
+    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.eee1e0c10cf40e1fc207302393707862.json"
     data-offline-search-base-href="/"
     data-offline-search-max-results="10"
   >
@@ -168,7 +169,7 @@ Supported Deployment Units A deployment unit refers to a Jakarta EE application 
     aria-label="Search this site…"
     autocomplete="off"
     
-    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.96d922ec2447f58333e343cd538b48c3.json"
+    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.eee1e0c10cf40e1fc207302393707862.json"
     data-offline-search-base-href="/"
     data-offline-search-max-results="10"
   >
@@ -300,6 +301,7 @@ Supported Deployment Units A deployment unit refers to a Jakarta EE application 
     <li><a href="#GUID-240675E5-E13F-4335-B0B1-E9684DAFB6A9">Update or Redeploy an Application</a></li>
     <li><a href="#GUID-632CF2ED-7A6A-4AEB-B3D9-345FB5736153">Test Application Deployment</a></li>
     <li><a href="#GUID-ECC35452-5C21-4714-B1AA-AAEC6B0BA786">Remove an Application from a Domain</a></li>
+    <li><a href="#GUID-72197863-51C4-4EBB-972D-4C15439FBA81">Web Services</a></li>
     <li><a href="#GUID-BE65E318-925C-4CEC-9041-76A7214AFA6A">Install a Jakarta EE Library</a>
       <ul>
         <li><a href="#GUID-04280303-0DAE-4C09-AFC4-957C1406C611">Redeploy a Jakarta EE Library</a></li>
@@ -381,6 +383,9 @@ Supported Deployment Units A deployment unit refers to a Jakarta EE application 
 </li>
 <li>
 <p>15.1.1.0.0 supports the Jakarta EE 9.1 Platform specification.</p>
+</li>
+<li>
+<p>26.1.0.0.0 supports the Jakarta EE 11 Platform specification.</p>
 </li>
 </ul>
 
@@ -622,6 +627,12 @@ Supported Deployment Units A deployment unit refers to a Jakarta EE application 
 <p>Select the application that you want to remove and click <strong>Delete</strong>.</p>
 </li>
 </ol>
+<h2 id="GUID-72197863-51C4-4EBB-972D-4C15439FBA81">Web Services</h2>
+<p>A Web service is a Java class or a stateless session EJB that contains additional artifacts so that it can be invoked using SOAP. The additional artifacts include Web service-specific deployment descriptors, a WSDL file (public contract of the Web service), and data binding components to convert data between its internal Java representation and its external XML representation used in the request and response SOAP messages.</p>
+<p>The WebLogic Web services programming model centers around Java Web Service (JWS) files and Ant tasks that execute on the JWS files. JWS files are Java files that use JWS metadata annotations to specify the shape and behavior of the Web service. Programmers begin creating a Web service by either programming the JWS file from scratch, or generating a stubbed-out version from an existing WSDL file (public contract of the Web service) and updating it with their business logic Java code. Programmers then use the <code>jwsc</code> Ant task to generate, from the JWS file, a deployable application or module for the target WebLogic Server release. These tasks are iterative; programmers keep coding and generating the Web service until it works as they want.</p>
+<p>Programmers can use the JAX-WS implementation type when programming a Web service. JAX-WS uses JWS files and metadata annotations.</p>
+<p>Web services are deployed as either Web applications or EJBs, depending on their implementation. The Web applications or EJBs can be deployed on their own, or as part of an Enterprise application.</p>
+<p>Programmers also use the WebLogic Remote Console to test that the generated Web service deploys and works correctly. Later, administrators perform similar tasks on the completed Web service, such as installing, starting, and further configuring the Web service, as described in the sections below.</p>
 <h2 id="GUID-BE65E318-925C-4CEC-9041-76A7214AFA6A">Install a Jakarta EE Library</h2>
 <p>A Jakarta EE library can be a standalone EJB or Web application module, multiple EJB or Web application modules packaged in an enterprise application (EAR), or a single plain JAR file that is registered with the Jakarta EE application container upon deployment. After the library has been installed and started, other deployed modules can reference the library.</p>
 <p>Installing a Jakarta EE library means making its physical file or directory known to WebLogic Server. A Jakarta EE library can be installed as an archived EAR file or as an exploded directory. After you have installed the Jakarta EE library, other deployed modules can start using it.</p>

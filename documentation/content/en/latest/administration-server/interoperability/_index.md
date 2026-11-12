@@ -1,5 +1,5 @@
 ---
-weight: 263
+weight: 273
 title: Interoperating with Oracle Tuxedo
 ---
 
@@ -37,7 +37,7 @@ Next, you must create at least one local Tuxedo access point. See [Create a Loca
 
 ### Configure WTC Servers {#GUID-DB9133EB-73F7-480C-B4A9-6A1AB3AA8C35}
 
-After you create an WTC server, you can configure how it to determine how WebLogic Server should interact with the Tuxedo environment.
+After you create a WTC server, you can configure how it to determine how WebLogic Server interacts with the Tuxedo environment.
 
 1.  In the **Edit Tree**, go to **Interoperability**, then **WTC Servers**, then *myWTCServer*, and select the configuration parameter you want to edit.
 
@@ -61,7 +61,7 @@ Local Tuxedo access points provide configuration information to connect availabl
 
 </td></tr><tr><td>
 
-Remote Acess Point
+Remote Access Point
 
 </td><td>
 

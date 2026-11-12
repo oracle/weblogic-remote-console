@@ -1,5 +1,5 @@
 ---
-weight: 269
+weight: 279
 title: WebLogic Deploy Tooling
 ---
 

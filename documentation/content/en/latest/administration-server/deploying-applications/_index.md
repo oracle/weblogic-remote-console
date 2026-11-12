@@ -1,5 +1,5 @@
 ---
-weight: 161
+weight: 165
 title: Deploying Applications
 ---
 
@@ -45,6 +45,8 @@ WebLogic Server
 -   14.1.1.0.0 and 14.1.2.0.0 support the Java EE 8 Platform specification \(or the functionally equivalent Jakarta EE 8 Platform specification\).
 
 -   15.1.1.0.0 supports the Jakarta EE 9.1 Platform specification.
+
+-   26.1.0.0.0 supports the Jakarta EE 11 Platform specification.
 
 
 {{< /alert >}}
@@ -256,6 +258,18 @@ To temporarily make a deployed application unavailable to WebLogic Server client
 
 2.  Select the application that you want to remove and click **Delete**.
 
+
+## Web Services {#GUID-72197863-51C4-4EBB-972D-4C15439FBA81}
+
+A Web service is a Java class or a stateless session EJB that contains additional artifacts so that it can be invoked using SOAP. The additional artifacts include Web service-specific deployment descriptors, a WSDL file \(public contract of the Web service\), and data binding components to convert data between its internal Java representation and its external XML representation used in the request and response SOAP messages.
+
+The WebLogic Web services programming model centers around Java Web Service \(JWS\) files and Ant tasks that execute on the JWS files. JWS files are Java files that use JWS metadata annotations to specify the shape and behavior of the Web service. Programmers begin creating a Web service by either programming the JWS file from scratch, or generating a stubbed-out version from an existing WSDL file \(public contract of the Web service\) and updating it with their business logic Java code. Programmers then use the <code>jwsc</code> Ant task to generate, from the JWS file, a deployable application or module for the target WebLogic Server release. These tasks are iterative; programmers keep coding and generating the Web service until it works as they want.
+
+Programmers can use the JAX-WS implementation type when programming a Web service. JAX-WS uses JWS files and metadata annotations.
+
+Web services are deployed as either Web applications or EJBs, depending on their implementation. The Web applications or EJBs can be deployed on their own, or as part of an Enterprise application.
+
+Programmers also use the WebLogic Remote Console to test that the generated Web service deploys and works correctly. Later, administrators perform similar tasks on the completed Web service, such as installing, starting, and further configuring the Web service, as described in the sections below.
 
 ## Install a Jakarta EE Library {#GUID-BE65E318-925C-4CEC-9041-76A7214AFA6A}
 

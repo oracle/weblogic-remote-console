@@ -41,7 +41,7 @@ For general information on monitoring, diagnostic, and tuning tools in WebLogic 
 Monitor Servers Review the servers in your domain to ensure they are functioning as expected.
 In the Monitoring Tree, go to Environment, then Servers.
 Use the Servers table to monitor and compare properties across the different server instances in your domain.">
-  <meta itemprop="wordCount" content="3616">
+  <meta itemprop="wordCount" content="3637">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Monitoring Domains">
   <meta name="twitter:description" content="Use WebLogic Remote Console to monitor WebLogic Server and its related resources and services.
@@ -78,7 +78,8 @@ Use the Servers table to monitor and compare properties across the different ser
         <div class="dropdown">
   <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Releases</a>
   <ul class="dropdown-menu">
-    <li><a class="dropdown-item" href="/weblogic-remote-console/overview">Latest (v3.0.6)</a></li>
+    <li><a class="dropdown-item" href="/weblogic-remote-console/overview">Latest (v3.0.7)</a></li>
+    <li><a class="dropdown-item" href="/weblogic-remote-console/3.0.6">v3.0.6</a></li>
     <li><a class="dropdown-item" href="/weblogic-remote-console/3.0.5">v3.0.5</a></li>
     <li><a class="dropdown-item" href="/weblogic-remote-console/3.0.4">v3.0.4</a></li>
     <li><a class="dropdown-item" href="/weblogic-remote-console/3.0.3">v3.0.3</a></li>
@@ -151,7 +152,7 @@ Use the Servers table to monitor and compare properties across the different ser
     aria-label="Search this site…"
     autocomplete="off"
     
-    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.96d922ec2447f58333e343cd538b48c3.json"
+    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.eee1e0c10cf40e1fc207302393707862.json"
     data-offline-search-base-href="/"
     data-offline-search-max-results="10"
   >
@@ -176,7 +177,7 @@ Use the Servers table to monitor and compare properties across the different ser
     aria-label="Search this site…"
     autocomplete="off"
     
-    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.96d922ec2447f58333e343cd538b48c3.json"
+    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.eee1e0c10cf40e1fc207302393707862.json"
     data-offline-search-base-href="/"
     data-offline-search-max-results="10"
   >
@@ -684,7 +685,7 @@ Use the Servers table to monitor and compare properties across the different ser
 <p>Click the <strong>Logging</strong> tab.</p>
 </li>
 <li>
-<p>On the <strong>Platform Logger Levels</strong> subtab, click <strong>+</strong> to add a new row. Then, enter the logging level name under the <strong>Properties Name</strong> column and the logging level under <strong>Properties Value</strong> column.</p>
+<p>On the <strong>Platform Logger Levels</strong> subtab, click <strong>+</strong> to add a new row. In <strong>Properties Name</strong>, enter the logger name, for example <code>com.example.application</code>. In <strong>Properties Value</strong>, enter the desired logging level, such as <code>FINE</code> or <code>WARNING</code>.</p>
 </li>
 <li>
 <p>Click <strong>Save</strong>.</p>
@@ -709,7 +710,8 @@ Use the Servers table to monitor and compare properties across the different ser
 <h2 id="GUID-BB85D9BB-5E36-4067-AA9F-E01EBFF027CD">Enable Configuration Auditing</h2>
 <p>You can configure the Administration Server to emit audit messages that enable auditing of configuration changes in a domain.</p>
 <p>This provides a record of changes to the configuration of any resource within a domain or invokes management operations on any resource within a domain. Configuration audit records can be saved to a log file, sent to an Auditing provider in the security realm, or both.</p>
-<p>If you plan to audit configuration changes, then you must configure the WebLogic Auditing Provider first. See <a href="/weblogic-remote-console/administration-server/securing-domains/#GUID-553E0BEB-BD7E-44EF-AD4D-782F1A01C3B8">Configure an Auditing Provider</a>.</p>
+<p>If you plan to select <strong>Audit</strong> or <strong>LogAudit</strong> for <strong>Configuration Audit Type</strong>, first configure an Auditing provider. See <a href="/weblogic-remote-console/administration-server/securing-domains/#GUID-553E0BEB-BD7E-44EF-AD4D-782F1A01C3B8">Configure an Auditing Provider</a>.</p>
+<p><strong>Log</strong> writes configuration events to the Administration Server log and does not require an Auditing provider.</p>
 <ol>
 <li>
 <p>In the <strong>Edit Tree</strong>, go to <strong>Environment</strong>, then <strong>Domain</strong>.</p>

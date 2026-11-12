@@ -32,7 +32,7 @@ NoteStay up-to-date with the latest release of WebLogic Remote Console to get t
   <meta itemprop="name" content="Support Information">
   <meta itemprop="description" content="WebLogic Remote Console offers several avenues to receive support and help.
 NoteStay up-to-date with the latest release of WebLogic Remote Console to get the latest features and fixes. If you experience issues, try upgrading to the latest release, which may address your issue. For more information, see Upgrade Desktop WebLogic Remote Console.Oracle Documentation In addition to the current guide, you can retrieve information on WebLogic Remote Console from within the user interface. Click the Help icon in the Tool Bar or in dialog boxes to reveal descriptions of the fields on your current page.">
-  <meta itemprop="wordCount" content="1467">
+  <meta itemprop="wordCount" content="1499">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Support Information">
   <meta name="twitter:description" content="WebLogic Remote Console offers several avenues to receive support and help.
@@ -66,7 +66,8 @@ NoteStay up-to-date with the latest release of WebLogic Remote Console to get t
         <div class="dropdown">
   <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Releases</a>
   <ul class="dropdown-menu">
-    <li><a class="dropdown-item" href="/weblogic-remote-console/overview">Latest (v3.0.6)</a></li>
+    <li><a class="dropdown-item" href="/weblogic-remote-console/overview">Latest (v3.0.7)</a></li>
+    <li><a class="dropdown-item" href="/weblogic-remote-console/3.0.6">v3.0.6</a></li>
     <li><a class="dropdown-item" href="/weblogic-remote-console/3.0.5">v3.0.5</a></li>
     <li><a class="dropdown-item" href="/weblogic-remote-console/3.0.4">v3.0.4</a></li>
     <li><a class="dropdown-item" href="/weblogic-remote-console/3.0.3">v3.0.3</a></li>
@@ -139,7 +140,7 @@ NoteStay up-to-date with the latest release of WebLogic Remote Console to get t
     aria-label="Search this site…"
     autocomplete="off"
     
-    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.96d922ec2447f58333e343cd538b48c3.json"
+    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.eee1e0c10cf40e1fc207302393707862.json"
     data-offline-search-base-href="/"
     data-offline-search-max-results="10"
   >
@@ -164,7 +165,7 @@ NoteStay up-to-date with the latest release of WebLogic Remote Console to get t
     aria-label="Search this site…"
     autocomplete="off"
     
-    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.96d922ec2447f58333e343cd538b48c3.json"
+    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.eee1e0c10cf40e1fc207302393707862.json"
     data-offline-search-base-href="/"
     data-offline-search-max-results="10"
   >
@@ -375,20 +376,14 @@ NoteStay up-to-date with the latest release of WebLogic Remote Console to get t
 <h2 id="GUID-7B03E877-CDAC-4E81-B86F-353BE86B7057">Frequently Asked Questions</h2>
 <p>This section provides answers to frequently asked questions about WebLogic Remote Console.</p>
 <h3 id="my-domain-is-behind-a-firewall-how-do-i-connect-to-weblogic-remote-console">My domain is behind a firewall. How do I connect to WebLogic Remote Console?</h3>
-<p>For WebLogic Remote Console to connect to a domain&rsquo;s Administration Server, the management endpoint of the domain, <code>management/*</code>, must be publicly accessible. If your Administration Server is behind a firewall or load balancer, or otherwise externally unavailable, you will need to expose the endpoint manually.</p>
-<p>If you use Hosted WebLogic Remote Console, you will also need to expose <code>rconsole/*</code>.</p>
-
-
-<div class="alert alert-primary" role="alert">
-<h4 class="alert-heading">Note</h4>
-
-    If you needed to expose <code>console/<em></code> to access the WebLogic Server Administration Console for your domain, follow the same procedure to expose <code>management/</em></code> for WebLogic Remote Console.
-
-</div>
+<p>The Administration Server’s <code>management/*</code> endpoint must be reachable from the WebLogic Remote Console backend. Configure the firewall or load balancer to permit the required administrative access. Public Internet access is not required.</p>
+<p>For Desktop WebLogic Remote Console, the connection originates from the computer running the console. For Hosted WebLogic Remote Console, your browser must also be able to reach <code>rconsole/*</code> and the applicable authentication endpoint.</p>
+<p>Restrict access to authorized administrative clients and use HTTPS.</p>
 <h3 id="can-i-connect-weblogic-remote-console-to-domains-running-in-weblogic-on-oracle-cloud-infrastructure">Can I connect WebLogic Remote Console to domains running in WebLogic on Oracle Cloud Infrastructure?</h3>
-<p>Yes, you can. First, make sure that the domain’s Administration Server is publicly accessible so WebLogic Remote Console can establish a connection to it. Then, in WebLogic Remote Console, enter your credentials and the publicly accessible URL for the WebLogic Administration Server.</p>
+<p>Yes. Ensure that the Administration Server’s management endpoint is reachable from the WebLogic Remote Console backend through your OCI network configuration. Enter the Administration Server’s reachable HTTPS URL and authenticate with an authorized account.</p>
 <h3 id="can-i-connect-weblogic-remote-console-to-domains-running-on-other-cloud-providers-such-as-amazon-web-services-google-cloud-microsoft-azure-and-so-on">Can I connect WebLogic Remote Console to domains running on other cloud providers such as Amazon Web Services, Google Cloud, Microsoft Azure, and so on?</h3>
-<p>Yes, you can connect to other cloud providers. You’ll need to make sure the domain’s Administration Server is publicly accessible to allow a connection between WebLogic Remote Console and the cloud provider. Then, in WebLogic Remote Console, enter your credentials and the publicly accessible URL for the WebLogic Administration Server.</p>
+<p>Yes, you can connect to other cloud providers. Ensure that the Administration Server’s management endpoint is reachable from the WebLogic Remote Console backend. Enter its reachable HTTPS URL and authenticate with an authorized account.</p>
+<p>Follow your cloud provider’s networking guidance to configure the required administrative access. Public Internet access is not required.</p>
 <p>Visit your cloud providers&rsquo; documentation for more specific instructions on how to expose the <code>management/*</code> endpoint of the WebLogic Server.</p>
 <h3 id="can-i-connect-weblogic-remote-console-to-domains-running-in-kubernetes-with-the-weblogic-kubernetes-operator">Can I connect WebLogic Remote Console to domains running in Kubernetes with the WebLogic Kubernetes Operator?</h3>
 <p>Yes. For details on how to set up access to WebLogic Server domains running on Kubernetes, see <a href="https://oracle.github.io/weblogic-kubernetes-operator/managing-domains/accessing-the-domain/remote-admin-console/">Use the WebLogic Remote Console</a> in the <strong>WebLogic Kubernetes Operator User Guide</strong>.</p>
@@ -403,7 +398,8 @@ NoteStay up-to-date with the latest release of WebLogic Remote Console to get t
 <p>No, older releases of WebLogic Remote Console will continue to work with newer releases of WebLogic Server. However, we recommend that you update WebLogic Remote Console (and its extension) as frequently as possible to take advantage of any fixes and improvements, both to WebLogic Remote Console itself and those added in WebLogic Server patches.</p>
 <p>For example, if new fields or WebLogic MBeans were added in a WebLogic Server update, then outdated versions of WebLogic Remote Console will not detect or display those fields.</p>
 <h3 id="are-there-any-security-risks-associated-with-weblogic-remote-console">Are there any security risks associated with WebLogic Remote Console?</h3>
-<p>No, WebLogic Remote Console accesses WebLogic Administration Servers through its standard WebLogic REST API, which is available out of the box. However, since your computer will be accessing potentially sensitive data, you need to make sure it is protected and secure.</p>
+<p>WebLogic Remote Console accesses Administration Servers using WebLogic Server’s RESTful management APIs and the permissions of the authenticated user.</p>
+<p>As with other administrative tools, protect the computers used to run and access the console, and safeguard administrative credentials. Use HTTPS with trusted certificates, restrict network access to management endpoints, and grant users only the privileges they need. Keep WebLogic Remote Console, WebLogic Remote Console, and the applicable extension up to date.</p>
 <h3 id="why-does-weblogic-remote-console-disagree-with-attributes-that-i-set-at-the-command-line">Why does WebLogic Remote Console disagree with attributes that I set at the command line?</h3>
 <p>When you make changes to the domain configuration using system properties, the properties override but do <em>not</em> change the <code>config.xml</code> file. The <strong>Edit Tree</strong> perspective, which is generated from <code>config.xml</code>, will only show the state of the domain as specified in the configuration file. In contrast, the <strong>Configuration View Tree</strong> perspective shows the current and effective state of the domain, including command line options.</p>
 <p>See <a href="/weblogic-remote-console/administration-server/domain-configuration/#GUID-E1D3A576-47A8-4291-9F56-617B1039168F">Perspectives in the Administration Server Provider</a>.</p>
@@ -424,7 +420,8 @@ NoteStay up-to-date with the latest release of WebLogic Remote Console to get t
 <p>As of WebLogic Server 14.1.2.0.0, the WebLogic Remote Console extension is included in the WebLogic Server installation and updated with each Patch Set Update (PSU). You should not need to install the extension manually.</p>
 <h3 id="section_vs2_hzq_4fc">Can I still use Java EE 7/8? I see a lot of Jakarta EE references in the documentation.</h3>
 <p>Yes, <em>if you are using WebLogic Remote Console with WebLogic Server 12.2.1.4.0</em> (which supports Java EE 7) or <em>WebLogic Server 14.1.1.0.0 and 14.1.2.0.0</em> (which support Java EE 8, and the functionally equivalent Jakarta EE 8).</p>
-<p>If you are using WebLogic Remote Console with WebLogic Server 15.1.1.0.0, then your applications must comply with the Jakarta EE 9.1 specification instead.</p>
+<p>If you are using WebLogic Remote Console with WebLogic Server 15.1.1.0.0, then your applications must comply with the Jakarta EE 9.1 specification.</p>
+<p>If you are using WebLogic Remote Console with WebLogic Server 26.1.0.0.0, then your applications must comply with the Jakarta EE 11 specification.</p>
 
   <div class="section-index">
     

@@ -529,7 +529,21 @@ If you want to see the full user interface of WebLogic Remote Console, regardles
 
 -   In Desktop WebLogic Remote Console, open **File** then **Settings**. \(On macOS, go to WebLogic Remote Console, then **Settings**.\) Under the **Role Checking** section, set **Restrict Content Based On Role** to **No** and click **Save**.
 
--   For Hosted WebLogic Remote Console, use WLST Online to set the new behavior. Call <code>cmo.getRemoteConsoleHelperMBean.setRestrictContentBasedOnRoles(False)</code>, then save and activate the change. You must restart the Administration Server for this change to take effect.
+-   For Hosted WebLogic Remote Console, use WLST Online to change role-based content restriction. Connect to the Administration Server as an authorized administrator and run the following commands:
+
+    ``` {#codeblock_dyr_wmc_clc}
+    connect()
+    edit()
+    startEdit()
+    cd('/')
+    cmo.getRemoteConsoleHelper().setRestrictContentBasedOnRoles(False)
+    save()
+    activate()
+    disconnect()
+    
+    ```
+
+    You must restart the Administration Server for this change to take effect.
 
     -   You can also temporarily override the domain configuration setting: in <code>JAVA_OPTIONS</code>, set <code>-Dconsole.restrictContentBasedOnRoles=false</code>.
 
@@ -643,7 +657,11 @@ In most environments, Node Manager can start a server without requiring you to s
 
     -   If you provide values for the **Class Path** field, make sure that you provide the full class path required to start the server.
 
-    -   If you want to add **Arguments**, make sure you prepend <code>-D</code> before each argument, like so <code>-Dweblogic.management.startupMode=*MODE*</code> .
+    -   Enter JVM arguments in the **Arguments** field, separated by spaces. Prefix Java system properties with <code>-D</code>, for example <code>-Dweblogic.management.startupMode=ADMIN</code>. Use JVM options such as <code>-Xms512m</code> or <code>-Xmx2g</code> in their standard form. For example,
+
+        ```
+        -Xms512m -Xmx2g -Dweblogic.management.startupMode=ADMIN
+        ```
 
         See [weblogic.Server Command-Line Reference](https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=ADMRF-GUID-2B7D4D3D-FB03-4D2D-ADBA-A4172C3502B7) in **Command Reference for Oracle WebLogic Server** for information on the Java options that set runtime behavior of a WebLogic Server instance and [Configuring Node Manager to Use Start and Stop Scripts](https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=NODEM-GUID-64200729-17FB-4113-B213-CA962380D769) in **Administering Node Manager for Oracle WebLogic Server** for information on how <code>JAVA_OPTIONS</code> are combined and how duplicate values are handled.
 
@@ -731,7 +749,9 @@ Create a cluster that dynamically scales depending on the resource needs of your
 
     If you do not have a server template or if you want to create a new one, click **More ︙** beside the **Server Template** drop-down list and select **Create New Server Template**. Enter a unique name for the new server template.
 
-4.  In the **Dynamic Cluster Size** field, enter the maximum number of running dynamic server instances allowed for scale up operations in this dynamic cluster. This number is the sum of the Dynamic Cluster Size and the additional number of dynamic server instances allowed for scale up operations.
+4.  In the **Dynamic Cluster Size** field, enter the current number of dynamic server instances to create.
+
+    If you plan to use elasticity, configure **Max Dynamic Cluster Size** as the upper limit for scaling and **Min Dynamic Cluster Size** as the minimum number of running server instances that elasticity should attempt to maintain.
 
 5.  In the **Server Name Prefix**, specify the naming convention you want to use for the dynamic servers in your cluster.
 
@@ -807,7 +827,9 @@ By default, the singleton service iterates through all servers in the cluster to
 
 Server templates define non-default settings and attributes that you can apply to a set of server instances.
 
-When you create a server template and then apply it to Managed Servers, you can specify configuration attributes once and then propagate the new attribute settings to server instances without manually configuring each one. When you need to update an attribute, you can simply change the value in the server template, and the new value takes effect in all of the server instances that use that server template. You can also add a server template to a cluster, then all of the servers within the cluster will inherit the server template. See [Server Templates](https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=DOMCF-GUID-00800F4A-317B-45CB-AFE6-EB2FC129DF68) in **Understanding Domain Configuration for Oracle WebLogic Server**.
+When you create a server template and then apply it to Managed Servers, you can specify configuration attributes once and then propagate the new attribute settings to server instances without manually configuring each one. When you need to update an attribute, you can simply change the value in the server template, and the new value takes effect in all of the server instances that use that server template.
+
+You can assign a server template to an individual Managed Server. For a dynamic cluster, select the template used to create its dynamic servers. Explicitly configured servers are assigned their templates individually. See [Server Templates](https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=DOMCF-GUID-00800F4A-317B-45CB-AFE6-EB2FC129DF68) in **Understanding Domain Configuration for Oracle WebLogic Server**.
 
 If you need to define any server-specific attributes, you can easily override the server template at the individual server level.
 
@@ -824,7 +846,7 @@ After you create a server template, you can configure its attributes as you woul
 
 ### Apply a Server Template {#GUID-DD6EAFA9-5E7C-4B5C-AE2E-C4B9E4DEA3DD}
 
-Server templates define common configuration attributes for a set of server instances in one centralized location. When you apply a server template to a Managed Server or a cluster, the server instances inherit the configurations from the server template.
+Server templates allow you to define common configuration attributes for server instances.
 
 -   To apply a server template to a standalone Managed Server:
 
@@ -836,15 +858,17 @@ Server templates define common configuration attributes for a set of server inst
 
     4.  Click **Save**.
 
--   To apply a server template to a cluster:
+-   To apply a server template to a dynamic cluster:
 
     1.  In the **Edit Tree**, go to **Environment**, then **Clusters**.
 
     2.  Select the cluster where you would like to apply the server template.
 
-    3.  From the **Template** drop-down list, select a template. You can also click **More ︙** to create and apply a new server template.
+    3.  On the **Dynamic** tab, select a template from the **Server Template**. You can also click **More ︙** to create and apply a new server template.
 
     4.  Click **Save**.
+
+    In a mixed cluster, this selection applies to the dynamic servers. Assign templates individually to explicitly configured servers.
 
 
 ## Configure Machines {#GUID-2B9396AC-B40B-4AB2-B055-EA8FB52DED0B}
@@ -871,7 +895,14 @@ As part of the machine configuration process, you'll also configure each machine
 
     2.  In the **Listen Address** field, enter the DNS name or IP address upon which Node Manager listens for incoming requests.
 
-        If you identify the Listen Address by IP address, you must disable Host Name Verification on Administration Servers that will access Node Manager. For more information and instructions, see [Using Host Name Verification](https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=SECMG-GUID-B64AA53F-67AE-404B-A4DE-C18D9D745753) in **Administering Security for Oracle WebLogic Server** and [Enable Host Name Verification](../securing-domains#GUID-2B9A775D-A1E1-4A4B-B773-96CC37D9FBF0).
+        {{< alert title="Note" color="primary" >}}
+
+        
+
+        For SSL connections to Node Manager, use a listen address that matches the identity in the Node Manager certificate and configure the required trust on the Administration Server. If you use an IP address, verify that the certificate and the configured hostname verifier support IP-address matching. See [Using Host Name Verification](https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=SECMG-GUID-B64AA53F-67AE-404B-A4DE-C18D9D745753) in **Administering Security for Oracle WebLogic Server** and [Enable Host Name Verification](../securing-domains#GUID-2B9A775D-A1E1-4A4B-B773-96CC37D9FBF0).
+
+        {{< /alert >}}
+
 
     3.  In the **Listen Port** field, enter the port value where Node Manager listens for incoming requests.
 
@@ -1237,7 +1268,7 @@ T3 is an Oracle proprietary remote network protocol that implements the Remote M
 
 3.  In the **Maximum Message Size** field, enter the maximum number of bytes allowed in messages that are received over all supported protocols, unless overridden by a protocol-specific setting or a custom channel setting.
 
-4.  **Optional**: Turn on the **Enable Tunneling** option and then enter values in the **Tunneling Client Ping** and **Tunneling Client Timeout** fields.
+4.  **Optional**: If your application requires HTTP tunneling, turn on the **Enable Tunneling** option and then enter values in the **Tunneling Client Ping** and **Tunneling Client Timeout** fields. Otherwise, leave tunneling disabled.
 
     {{< alert title="Note" color="primary" >}}
 

@@ -32,7 +32,7 @@ WDT model files are simplistic representations of a domain. They are generally w
   <meta itemprop="name" content="WDT Model Files">
   <meta itemprop="description" content="WDT metadata model files are descriptions of a WebLogic Server domain configuration. These models are not connected to a running WebLogic Server domain; you make edits to a model file and then use WebLogic Deploy Tooling (WDT) to build or modify live domains.
 WDT model files are simplistic representations of a domain. They are generally written in YAML but WebLogic Remote Console also accepts models in JSON format. For brevity, a WDT model file only describes departures from the default configuration.">
-  <meta itemprop="wordCount" content="1201">
+  <meta itemprop="wordCount" content="1300">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="WDT Model Files">
   <meta name="twitter:description" content="WDT metadata model files are descriptions of a WebLogic Server domain configuration. These models are not connected to a running WebLogic Server domain; you make edits to a model file and then use WebLogic Deploy Tooling (WDT) to build or modify live domains.
@@ -66,7 +66,8 @@ WDT model files are simplistic representations of a domain. They are generally w
         <div class="dropdown">
   <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Releases</a>
   <ul class="dropdown-menu">
-    <li><a class="dropdown-item" href="/weblogic-remote-console/overview">Latest (v3.0.6)</a></li>
+    <li><a class="dropdown-item" href="/weblogic-remote-console/overview">Latest (v3.0.7)</a></li>
+    <li><a class="dropdown-item" href="/weblogic-remote-console/3.0.6">v3.0.6</a></li>
     <li><a class="dropdown-item" href="/weblogic-remote-console/3.0.5">v3.0.5</a></li>
     <li><a class="dropdown-item" href="/weblogic-remote-console/3.0.4">v3.0.4</a></li>
     <li><a class="dropdown-item" href="/weblogic-remote-console/3.0.3">v3.0.3</a></li>
@@ -139,7 +140,7 @@ WDT model files are simplistic representations of a domain. They are generally w
     aria-label="Search this site…"
     autocomplete="off"
     
-    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.96d922ec2447f58333e343cd538b48c3.json"
+    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.eee1e0c10cf40e1fc207302393707862.json"
     data-offline-search-base-href="/"
     data-offline-search-max-results="10"
   >
@@ -164,7 +165,7 @@ WDT model files are simplistic representations of a domain. They are generally w
     aria-label="Search this site…"
     autocomplete="off"
     
-    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.96d922ec2447f58333e343cd538b48c3.json"
+    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.eee1e0c10cf40e1fc207302393707862.json"
     data-offline-search-base-href="/"
     data-offline-search-max-results="10"
   >
@@ -408,21 +409,28 @@ appDeployments:
 <p>Enter a name for the WDT model file provider.</p>
 </li>
 <li>
-<p>In the <strong>New WDT Model Filename</strong> field, enter a file name for the WDT model file. Include the file type extension, either <code>.yaml</code> or <code>.json</code>. Then, select <strong>Browse Folder</strong> and browse to the directory where you want to save the new WDT model file.</p>
+<p>Specify the initial model:</p>
+<ul>
+<li><strong>Desktop WebLogic Remote Console:</strong> Select the file chooser icon beside <strong>New WDT Model Filename</strong>, then choose a location and filename for the new model. Include the <code>.yaml</code> or <code>.json</code> extension.</li>
+<li><strong>Hosted WebLogic Remote Console:</strong> Leave <strong>Initial File Contents</strong> empty to create an empty model. To start from an existing model, select the file chooser icon beside <strong>Initial File Contents</strong>, then choose a YAML or JSON file on your computer. When you select <strong>Done</strong>, its contents are uploaded to create the model on the server.</li>
+</ul>
 </li>
 <li>
-<p>Select <strong>Done</strong> to create the WDT model file.</p>
+<p>Select <strong>Done</strong> to create the provider.</p>
 </li>
 <li>
-<p><strong>Optional</strong>: On the <strong>WDT Model File Settings</strong> page, choose a property list provider to associate with the WDT model file. If you don&rsquo;t have a property list provider, you can always add one later.</p>
-<p>See <a href="/weblogic-remote-console/weblogic-deploy-tooling/property-lists/#GUID-62721515-29E5-4DC4-BBD8-E2D1C8A7529D">Property Lists</a>.</p>
+<p><strong>Optional</strong>: Optionally, on the <strong>WDT Model File Settings</strong> page, choose a property list provider to associate with the model. If you don’t have a property list provider, you can add one later. See <a href="/weblogic-remote-console/weblogic-deploy-tooling/property-lists/#GUID-62721515-29E5-4DC4-BBD8-E2D1C8A7529D">Property Lists</a>.</p>
 </li>
 <li>
-<p>Select <strong>Connect/Activate</strong> to start editing the WDT model file.</p>
+<p>Select <strong>Connect/Activate</strong> to begin editing the model.</p>
 </li>
 </ol>
 <h2 id="GUID-EC821453-1C8A-49DD-A2AB-B5BF58B0B00E">Upload a WDT Model File</h2>
 <p>If you created a WDT model file elsewhere, you can upload it to WebLogic Remote Console and continue to edit it.</p>
+<ul>
+<li>
+<p>For Desktop WebLogic Remote Console:</p>
+<p>Desktop WebLogic Remote Console uses the selected local file directly.</p>
 <ol>
 <li>
 <p>On the <strong>Projects / Providers</strong> page, select <strong>Create</strong>, then <strong>Existing WDT Model File Provider</strong>.</p>
@@ -431,20 +439,24 @@ appDeployments:
 <p>Enter a name for the WDT model file provider.</p>
 </li>
 <li>
-<p>Select <strong>Upload File</strong> and browse to the directory with the WDT model file.</p>
-<p>The WDT model file must be in <code>YAML</code> or <code>JSON</code> format.</p>
+<p>Select the file chooser icon beside <strong>WDT Model Filename</strong>, then choose the existing YAML or JSON model file on your computer.</p>
 </li>
 <li>
-<p>Select <strong>Done</strong> to create the WDT model file.</p>
+<p>Select <strong>Done</strong> to create the provider.</p>
 </li>
 <li>
-<p><strong>Optional</strong>: On the <strong>WDT Model File Settings</strong> page, choose a property list provider to associate with the WDT model file. If you don&rsquo;t have a property list provider, you can always add one later.</p>
-<p>See <a href="/weblogic-remote-console/weblogic-deploy-tooling/property-lists/#GUID-62721515-29E5-4DC4-BBD8-E2D1C8A7529D">Property Lists</a>.</p>
+<p><strong>Optional</strong>: Optionally, on the <strong>WDT Model File Settings</strong> page, choose a property list provider to associate with the model. If you don’t have a property list provider, you can add one later. See <a href="/weblogic-remote-console/weblogic-deploy-tooling/property-lists/#GUID-62721515-29E5-4DC4-BBD8-E2D1C8A7529D">Property Lists</a>.</p>
 </li>
 <li>
-<p>Select <strong>Connect/Activate</strong> to start editing the WDT model file.</p>
+<p>Select <strong>Connect/Activate</strong> to begin editing the model.</p>
 </li>
 </ol>
+</li>
+<li>
+<p>For Hosted WebLogic Remote Console:</p>
+<p>Follow the Hosted WebLogic Remote Console instructions in <a href="/weblogic-remote-console/weblogic-deploy-tooling/wdt-model-files/#GUID-1ECF1B50-BE85-413F-8417-34A8E0CC8FB0">Create a WDT Model File</a>. Select the file chooser icon beside <strong>Initial File Contents</strong>, then choose the existing YAML or JSON model file on your computer. When you select <strong>Done</strong>, the file’s contents are uploaded to create the model on the server.</p>
+</li>
+</ul>
 <h2 id="GUID-B0B9CBA4-29E4-417D-8094-5BA8B4522ED7">Edit a WDT Model File</h2>
 <p>To make changes to a WDT model file:</p>
 

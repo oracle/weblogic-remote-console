@@ -1,5 +1,5 @@
 ---
-weight: 233
+weight: 242
 title: Configuring Coherence
 ---
 
@@ -24,7 +24,7 @@ To learn more about standalone Coherence, see [Introducing the Oracle Coherence 
 
 Coherence is integrated within WebLogic Server as a container subsystem, known as a Coherence cluster. The use of a container aligns the lifecycle of a Coherence member with the lifecycle of a Managed Server: starting or stopping a server JVM starts and stops a Coherence cluster member.
 
-A WebLogic Server domain can contain a single Coherence cluster that can be associated with multiple WebLogic Server clusters. Within a Coherence cluster are Coherence cluster members.
+A WebLogic Server domain typically contains a single Coherence cluster that can be associated with multiple WebLogic Server clusters. Within a Coherence cluster are Coherence cluster members.
 
 Managed Coherence servers are Managed Servers that are configured to be Coherence cluster members. Managed Coherence servers provide in-memory distributed caching for applications to increase application scalability, availability, and performance.
 
@@ -299,6 +299,10 @@ To override a cache configuration file at runtime, the cache configuration file 
 
 Use WebLogic Server authorization to restrict access to specific Coherence caches.
 
+WebLogic Server authorization for Coherence resources is enabled by default. The default policy allows Everyone. To restrict access to a cache or service, define the authorized users with a scoped role and configure a resource-specific policy that grants access to that role.
+
+For more information about Coherence security, see [Securing Oracle Coherence in Oracle WebLogic Server](https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=COHSG-GUID-D80F3D67-668C-4C91-B340-0A96B26B05D8) in **Securing Oracle Coherence**.
+
 1.  If you haven't already done so, create a Coherence cluster. See [Create a Coherence Cluster](#GUID-D042E373-ED9F-4EC1-B0F4-89DFD803DF0C).
 
 2.  In the **Edit Tree**, go to **Environment**, then **Coherence Clusters**, then *myCoherenceCluster*, then **Coherence Caches**.
@@ -309,12 +313,18 @@ Use WebLogic Server authorization to restrict access to specific Coherence cache
 
 5.  Click **Create** and commit your changes.
 
-6.  Apply a security role that is scoped to the Coherence cache. See [Create a Scoped Role](../securing-domains#GUID-CB641FD2-694F-452C-AC47-8E126374EF8D).
+6.  Create a role scoped to the Coherence cache and configure its membership. See [Create a Scoped Role](../securing-domains#GUID-CB641FD2-694F-452C-AC47-8E126374EF8D). Then create a security policy for the same cache using a **Role** condition for that scoped role. See [Create a Policy for Resource Instances](../securing-domains#GUID-4D84C60C-9BBC-4DF2-B721-7F361F6D656A).
+
+    In this resource’s policy, replace any **Everyone** condition that would grant broader access than intended. Verify access to the protected operations with both authorized and unauthorized users.
 
 
 ### Secure a Coherence Service Configuration {#GUID-FB54E265-1370-4543-9FE4-A65AE0EDED58}
 
 You can use WebLogic Server authorization to restrict access to Coherence services. Specifying authorization on a cache service affects access to all the caches that are created by that service.
+
+WebLogic Server authorization for Coherence resources is enabled by default. The default policy allows Everyone. To restrict access to a cache or service, define the authorized users with a scoped role and configure a resource-specific policy that grants access to that role.
+
+For more information about Coherence security, see [Securing Oracle Coherence in Oracle WebLogic Server](https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=COHSG-GUID-D80F3D67-668C-4C91-B340-0A96B26B05D8) in **Securing Oracle Coherence**.
 
 1.  In the **Edit Tree**, go to **Environment**, then **Coherence Clusters**, then *myCoherenceCluster*, then **Coherence Services**.
 
@@ -333,7 +343,9 @@ You can use WebLogic Server authorization to restrict access to Coherence servic
 
 4.  Click **Create** and commit your changes.
 
-5.  Apply a security role that is scoped to the Coherence service. See [Create a Scoped Role](../securing-domains#GUID-CB641FD2-694F-452C-AC47-8E126374EF8D).
+5.  Create a role scoped to the Coherence service and configure its membership. See [Create a Scoped Role](../securing-domains#GUID-CB641FD2-694F-452C-AC47-8E126374EF8D). Then create a security policy for the same service using a **Role** condition for that scoped role. See [Create a Policy for Resource Instances](../securing-domains#GUID-4D84C60C-9BBC-4DF2-B721-7F361F6D656A).
+
+    In this resource’s policy, replace any **Everyone** condition that would grant broader access than intended. Verify access to the protected operations with both authorized and unauthorized users.
 
 
 ### Specify a Coherence Well Known Address {#GUID-E028304F-5CF5-4FD8-82A7-B74338196538}
@@ -402,7 +414,7 @@ For more information on Coherence data tiers, see [Configuring and Managing a Co
 
 2.  Create a WebLogic Server cluster as described in [Create a Cluster](../domain-configuration#GUID-EEE59519-29C3-4003-828A-9A3DC25059DA).
 
-3.  On the WebLogic Server cluster that you just created, go to the **Advanced** tab, then the **Coherence** subtab.
+3.  On the WebLogic Server cluster that you just created, select the **Coherence** tab.
 
 4.  From the **Coherence Cluster System Resource** drop-down list, select the Coherence cluster.
 
@@ -425,7 +437,7 @@ For more information on Coherence application tiers, see [Configuring and Managi
 
 2.  Create a WebLogic Server cluster as described in [Create a Cluster](../domain-configuration#GUID-EEE59519-29C3-4003-828A-9A3DC25059DA).
 
-3.  On the WebLogic Server cluster that you just created, go to the **Advanced** tab, then the **Coherence** subtab.
+3.  On the WebLogic Server cluster that you just created, select the **Coherence** tab.
 
 4.  From the **Coherence Cluster System Resource** drop-down list, select the Coherence cluster.
 
@@ -450,7 +462,7 @@ For details on Coherence\*Extend and creating extend clients, see [Introduction 
 
 2.  Create a WebLogic Server cluster as described in [Create a Cluster](../domain-configuration#GUID-EEE59519-29C3-4003-828A-9A3DC25059DA).
 
-3.  On the WebLogic Server cluster that you just created, go to the **Advanced** tab, then the **Coherence** subtab.
+3.  On the WebLogic Server cluster that you just created, select the **Coherence** tab.
 
 4.  From the **Coherence Cluster System Resource** drop-down list, select the Coherence cluster.
 
@@ -462,6 +474,16 @@ For details on Coherence\*Extend and creating extend clients, see [Introduction 
 
 
 You should also create a Coherence data tier and a Coherence application tier. See [Create a Coherence Data Tier](#GUID-F9B1FB82-B316-4CD1-824F-03A0984EE59A) and [Create a Coherence Application Tier](#GUID-8A5079EB-A4AD-4C47-B6F3-576C6A4EE515).
+
+### Configure a Coherence Extend Client Tier {#GUID-17755545-5EA7-4730-BBA6-9558D6C32B6C}
+
+Coherence\*Extend clients connect to a Coherence proxy tier to access Coherence caches without joining the Coherence cluster.
+
+Use WebLogic Remote Console to configure the WebLogic-hosted proxy tier as described in [Create a Coherence Proxy Tier](#GUID-042599BA-C133-43E0-8572-30B84149BB4F).
+
+To configure the Extend client application and its client cache configuration, see [Introduction to Coherence\*Extend](https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&id=COHCG-GUID-E935592F-DCA2-44BD-96D5-E276DFA3D3F9) in **Developing Remote Clients for Oracle Coherence**. Use the documentation corresponding to your Coherence release.
+
+WebLogic Remote Console manages the WebLogic-hosted proxy tier; it does not create or administer an external Extend client process.
 
 ## Create a Managed Coherence Server {#GUID-48BEE50E-2995-4C42-96EF-2F28416512FC}
 

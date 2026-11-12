@@ -35,7 +35,7 @@ Each WebLogic data source contains a pool of database connections. Applications 
   <meta itemprop="description" content="Use WebLogic Remote Console to manage services in a WebLogic Server domain.
 Data Sources You can connect WebLogic Server to databases by adding JDBC data sources to your domain. A data source is a Jakarta EE standard method of configuring connectivity to a database.
 Each WebLogic data source contains a pool of database connections. Applications look up the data source on the JNDI tree or in the local application context and then use a database connection from the pool of connections. Data sources and their connection pools provide connection management processes that help keep your system running efficiently.">
-  <meta itemprop="wordCount" content="10446">
+  <meta itemprop="wordCount" content="11041">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Configuring Services">
   <meta name="twitter:description" content="Use WebLogic Remote Console to manage services in a WebLogic Server domain.
@@ -70,7 +70,8 @@ Each WebLogic data source contains a pool of database connections. Applications 
         <div class="dropdown">
   <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Releases</a>
   <ul class="dropdown-menu">
-    <li><a class="dropdown-item" href="/weblogic-remote-console/overview">Latest (v3.0.6)</a></li>
+    <li><a class="dropdown-item" href="/weblogic-remote-console/overview">Latest (v3.0.7)</a></li>
+    <li><a class="dropdown-item" href="/weblogic-remote-console/3.0.6">v3.0.6</a></li>
     <li><a class="dropdown-item" href="/weblogic-remote-console/3.0.5">v3.0.5</a></li>
     <li><a class="dropdown-item" href="/weblogic-remote-console/3.0.4">v3.0.4</a></li>
     <li><a class="dropdown-item" href="/weblogic-remote-console/3.0.3">v3.0.3</a></li>
@@ -143,7 +144,7 @@ Each WebLogic data source contains a pool of database connections. Applications 
     aria-label="Search this site…"
     autocomplete="off"
     
-    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.96d922ec2447f58333e343cd538b48c3.json"
+    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.eee1e0c10cf40e1fc207302393707862.json"
     data-offline-search-base-href="/"
     data-offline-search-max-results="10"
   >
@@ -168,7 +169,7 @@ Each WebLogic data source contains a pool of database connections. Applications 
     aria-label="Search this site…"
     autocomplete="off"
     
-    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.96d922ec2447f58333e343cd538b48c3.json"
+    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.eee1e0c10cf40e1fc207302393707862.json"
     data-offline-search-base-href="/"
     data-offline-search-max-results="10"
   >
@@ -324,6 +325,7 @@ Each WebLogic data source contains a pool of database connections. Applications 
         <li><a href="#GUID-A9DF992A-74D4-4746-BDE9-79ACCCF7D2B9">Target an XML Registry to a Server</a></li>
         <li><a href="#GUID-E1012B5E-38F5-498D-86F7-309D4904B602">Create an XML Entity Cache</a></li>
         <li><a href="#GUID-0A422838-CDA6-4845-BA69-FED12DB72E6E">Target an XML Entity Cache to a Server</a></li>
+        <li><a href="#GUID-1419D51D-24D4-49AE-882D-C7018C136721">Configure External Entity Resolution</a></li>
       </ul>
     </li>
     <li><a href="#GUID-FACD70A2-6CEF-40A0-9A71-DBC51EF8A869">Configure Access to Jakarta Mail</a></li>
@@ -333,6 +335,12 @@ Each WebLogic data source contains a pool of database connections. Applications 
         <li><a href="#GUID-8F422CD7-1013-41E9-9908-D3FC8C105E97">View Current Transactions</a></li>
         <li><a href="#GUID-BE784D71-17F7-4883-B558-4FA4EC3CFBAC">Enable Local Domain Security for JTA Communication</a></li>
         <li><a href="#GUID-5A5742F5-BCA8-4687-9F09-A670BD5C171B">Specify the JTA Security Interoperability Mode</a></li>
+      </ul>
+    </li>
+    <li><a href="#GUID-484B1F1A-E39A-40FC-AE22-FE7171022411">Create a NoSQL System Resource</a>
+      <ul>
+        <li><a href="#GUID-D98B41A3-C4AC-48FD-AF5E-DF5ED75735C1">Add Properties to a NoSQL System Resource</a></li>
+        <li><a href="#GUID-31FEA28A-1932-4297-91E4-6FBD8FBF0EC6">Monitor NoSQL System Resources</a></li>
       </ul>
     </li>
   </ul>
@@ -375,7 +383,7 @@ Each WebLogic data source contains a pool of database connections. Applications 
 <p>JDBC Multi Data Sources</p>
 </li>
 <li>
-<p>Active GridLink Multi Data Sources</p>
+<p>Active GridLink Data Sources</p>
 </li>
 <li>
 <p>Universal Connection Pool (UCP) Data Sources</p>
@@ -939,7 +947,7 @@ For more information, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=
 <li><strong>Queue</strong> - defines a point-to-point (PTP) destination, which enables one application to send a message to another.</li>
 <li><strong>Connection Factory</strong> - defines a set of connection configuration parameters that enable JMS clients to create JMS connections.</li>
 <li><strong>Distributed Topic</strong> - a single unit of JMS topics that are accessible as a single, logical topic to a client. The members of the distributed topic are usually distributed across multiple servers within a cluster, with each topic member belonging to a separate JMS server.</li>
-<li><strong>Distributed Queue</strong> - a single unit of JMS queues that are accessible as a single, logical topic to a client. The members of the distributed queue are usually distributed across multiple servers within a cluster, with each topic member belonging to a separate JMS server.</li>
+<li><strong>Distributed Queue</strong> - a set of JMS queues accessed as one logical queue by clients. Its members can reside on different JMS servers.</li>
 <li><strong>Foreign Server</strong> - represents a third-party JMS provider that is outside WebLogic Server. It contains information that allows a local server instance to reach a remote JNDI provider, thereby allowing for a number of foreign connection factory and destination objects to be defined on one JNDI directory.</li>
 <li><strong>SAF Imported Destination</strong> - defines a collection of imported SAF (store-and-forward) queues or topics that represent JMS destinations in a remote server instance or cluster.</li>
 <li><strong>Remote SAF Context</strong> - specifies SAF login context that a SAF imported queue or topic uses to connect to a remote destination.</li>
@@ -992,7 +1000,7 @@ For guidance on how to configure JMS modules, see <a href="https://docs.oracle.c
 <ul>
 <li><strong>Both</strong>: Configures an agent that has sending and receiving agent functionality.</li>
 <li><strong>Sending-only</strong>: Configures an agent that stores messages in persistent storage, forwards messages to the receiving side, and re-transmits messages when acknowledgments do not come back in time.</li>
-<li><strong>Receiving-only</strong>: Configures an agent that detects and eliminates duplicate messages sent by a receiving agent, and delivers messages to the final destination.
+<li><strong>Receiving-only</strong>: Configures an agent that detects and eliminates duplicate messages sent by a sending agent, and delivers messages to the final destination.
 JMS SAF users should select <strong>Sending-only</strong> as JMS SAF doesn&rsquo;t require a configured receiving agent.</li>
 </ul>
 </li>
@@ -1375,9 +1383,9 @@ JMS SAF users should select <strong>Sending-only</strong> as JMS SAF doesn&rsquo
 <p>An XML Registry is a facility for configuring and administering the XML resources of WebLogic Server. XML resources include the default parser, transformer factories, and external entity resolution.</p>
 <p>In particular, use an XML registry to specify:</p>
 <ul>
-<li>An alternative, server-wide XML parser, used by default when parsing XML documents, instead of the parser that is installed by default. You do this by specifying the names of the classes that implement the <code>javax.xml.parsers.DocumentBuilderFactory</code> and <code>javax.xml.parsers.SaxParserFactory</code> interfaces; these implementing classes are used to parse XML in DOM and SAX mode, respectively.</li>
+<li>An alternative, server-wide XML parser, used by default when parsing XML documents, instead of the parser that is installed by default. Specify implementation classes that extend <code>javax.xml.parsers.DocumentBuilderFactory</code> and <code>javax.xml.parsers.SAXParserFactory</code> interfaces for parsing XML in DOM and SAX mode, respectively.</li>
 <li>A specific XML parser that should be used to parse a particular document type.</li>
-<li>An alternative server-wide transformer instead of the default transformer. You do this by specifying the name of the class that implements the <code>javax.xml.transform.TransformerFactory</code> interface, used to transform XML documents.</li>
+<li>An alternative server-wide transformer instead of the default transformer. Specify an implementation class that extends <code>javax.xml.transform.TransformerFactory</code> to transform XML documents.</li>
 <li>External entities that are to be resolved by using local copies of the entities. After you specify these entities, the Administration Server stores local copies of them in the file system and automatically distributes them to the server’s parser at parse time. This feature eliminates the need to construct and set SAX EntityResolvers.</li>
 <li>External entities to be cached by WebLogic Server after retrieval from the Web. Specify how long these external entities should be cached before WebLogic Server re-retrieves them and when WebLogic should first retrieve the entities, either at application run time or when WebLogic Server starts.</li>
 </ul>
@@ -1398,13 +1406,13 @@ JMS SAF users should select <strong>Sending-only</strong> as JMS SAF doesn&rsquo
 <p><strong>Optional</strong>: If you don&rsquo;t plan to use the default parser and transformer, you must specify your alternative settings.</p>
 <ol>
 <li>
-<p>In the <strong>Document Builder Factory</strong> field, enter the fully qualified name of the class that implements the <code>javax.xml.parsers.DocumentBuilderFactory</code> interface.</p>
+<p>In the <strong>Document Builder Factory</strong> field, enter the fully qualified name of an implementation class that extends <code>javax.xml.parsers.DocumentBuilderFactory</code>.</p>
 </li>
 <li>
-<p>In the <strong>SAX Parser Factory</strong> field, enter the fully qualified name of the class that implements the <code>javax.xml.parsers.SaxParserFactory</code> interface.</p>
+<p>In the <strong>SAX Parser Factory</strong> field, enter the fully qualified name of an implementation class that extends <code>javax.xml.parsers.SAXParserFactory</code>.</p>
 </li>
 <li>
-<p>In the <strong>Transformer Factory</strong> field, enter the fully qualified name of the class that implements the <code>javax.xml.transform.TransformerFactory</code> interface.</p>
+<p>In the <strong>Transformer Factory</strong> field, enter the fully qualified name of an implementation class that extends <code>javax.xml.transform.TransformerFactory</code>.</p>
 </li>
 <li>
 <p>Click <strong>Save</strong>.</p>
@@ -1470,6 +1478,36 @@ JMS SAF users should select <strong>Sending-only</strong> as JMS SAF doesn&rsquo
 </li>
 <li>
 <p>Click <strong>Save</strong>.</p>
+</li>
+</ol>
+<h3 id="GUID-1419D51D-24D4-49AE-882D-C7018C136721">Configure External Entity Resolution</h3>
+<p>An XML registry entry specifies how WebLogic Server resolves an external entity, such as a DTD, using its public identifier, system identifier, or both.</p>
+<p>Before you begin, create an XML registry and associate it with the appropriate WebLogic Server instance. See <a href="/weblogic-remote-console/administration-server/configuring-services/#GUID-1C568EDE-9E40-4D32-B677-109974FE574F">Create an XML Registry</a> and <a href="/weblogic-remote-console/administration-server/configuring-services/#GUID-A9DF992A-74D4-4746-BDE9-79ACCCF7D2B9">Target an XML Registry to a Server</a>.</p>
+<p>If you want to use a local copy of an entity, place the file under <code>DOMAIN_HOME/xml/registries/registryName</code> on the Administration Server’s host. Replace <code>DOMAIN_HOME</code> with your domain directory and <code>registryName</code> with the XML registry’s name. Create the directory if necessary.</p>
+<ol>
+<li>
+<p>In the <strong>Edit Tree</strong>, go to <strong>Services</strong>, then <strong>XML Registries</strong>, and select your registry.</p>
+</li>
+<li>
+<p>Open <strong>XML Entity Spec Registry Entries</strong>.</p>
+</li>
+<li>
+<p>Click <strong>New</strong> and enter a name for the entry.</p>
+</li>
+<li>
+<p>Enter the <strong>Public ID</strong>, <strong>System ID</strong>, or both, matching the identifiers used in the XML document.</p>
+</li>
+<li>
+<p>In <strong>Entity URI</strong>, specify the location of the external entity. For a local copy, enter its path relative to the registry directory. For example, enter <code>dtds/example.dtd</code> for a file stored at <code>DOMAIN_HOME/xml/registries/registryName/dtds/example.dtd</code>.</p>
+</li>
+<li>
+<p>Click <strong>Create</strong>.</p>
+</li>
+<li>
+<p><strong>Optional</strong>: Optionally, open the new entry and configure <strong>When To Cache</strong> and <strong>Cache Timeout Interval</strong>. The timeout is specified in seconds; <code>-1</code> uses the XML registry’s timeout setting. Click <strong>Save</strong>.</p>
+</li>
+<li>
+<p>Commit your changes.</p>
 </li>
 </ol>
 <h2 id="GUID-FACD70A2-6CEF-40A0-9A71-DBC51EF8A869">Configure Access to Jakarta Mail</h2>
@@ -1720,6 +1758,88 @@ Session session = (Session) ic.lookup(&#34;myMailSession&#34;);
 </li>
 <li>
 <p>Click <strong>Save</strong>.</p>
+</li>
+</ol>
+<h2 id="GUID-484B1F1A-E39A-40FC-AE22-FE7171022411">Create a NoSQL System Resource</h2>
+<p>Use NoSQL system resources to define how applications access a NoSQL database.</p>
+<p>WebLogic Server integrates Eclipse JNoSQL, an implementation of Jakarta NoSQL that provides a standard Java API and mapping model for NoSQL databases. Administrators can use a WebLogic NoSQL system resource to configure a NoSQL provider and its database type, JNDI name, and connection properties. The NoSQL system resources can be targeted to a server or cluster.</p>
+<p>For more information, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=WLNSQ-GUID-2F286DE7-E7A6-433B-BC62-809D0706B25A"><strong>Administering NoSQL Resources for Oracle WebLogic Server</strong></a>.</p>
+
+
+<div class="alert alert-primary" role="alert">
+<h4 class="alert-heading">Note</h4>
+
+    NoSQL system resources are only supported in domains running WebLogic Server 26.1.0.0.0 or later.
+
+</div>
+<ol>
+<li>
+<p>In the <strong>Edit Tree</strong>, go to <strong>Services</strong>, then <strong>NoSQL System Resources</strong>.</p>
+</li>
+<li>
+<p>Click <strong>New</strong>.</p>
+</li>
+<li>
+<p>Enter a name for the new NoSQL system resource.</p>
+</li>
+<li>
+<p>From the <strong>Provider</strong> drop-down list, select a NoSQL provider.</p>
+<p>For a list of supported providers, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=WLNSQ-GUID-4C976657-9E6D-45B9-B50B-9785D639514B">Plan a NoSQL Resource</a> in <strong>Administering NoSQL Resources for Oracle WebLogic Server</strong></p>
+</li>
+<li>
+<p>From the <strong>Database Type</strong>, select the model of the database that you want to connect to.</p>
+</li>
+<li>
+<p>In the <strong>JNDI Name</strong> field, enter the JNDI path to the location where this NoSQL system resource will be bound. Applications look up the NoSQL system resource on the JNDI tree by this name when reserving a connection.</p>
+</li>
+<li>
+<p>Enable <strong>Default Resource</strong> if you want to define this resource for Jakarta Data repositories that do not specify a data store. The application must explicitly bind to this resource, and the resource must be targeted to its server. Exactly one of the application&rsquo;s bound, locally targeted resources must be marked as default.</p>
+</li>
+<li>
+<p>Choose the servers or clusters to which you want the NoSQL system resource to target.</p>
+</li>
+<li>
+<p>Click <strong>Create</strong>.</p>
+</li>
+</ol>
+<h3 id="GUID-D98B41A3-C4AC-48FD-AF5E-DF5ED75735C1">Add Properties to a NoSQL System Resource</h3>
+<p>Specify provider-specific configuration settings for a NoSQL system resource database connection.</p>
+<ol>
+<li>
+<p>If you haven&rsquo;t already done so, create a NoSQL system resource. See <a href="/weblogic-remote-console/administration-server/configuring-services/#GUID-484B1F1A-E39A-40FC-AE22-FE7171022411">Create a NoSQL System Resource</a>.</p>
+</li>
+<li>
+<p>In the <strong>Edit Tree</strong>, go to <strong>Services</strong>, then <strong>NoSQL System Resources</strong>, then <em>myNoSQLSystemResource</em>, then <strong>Properties</strong>.</p>
+</li>
+<li>
+<p>Click <strong>New</strong>.</p>
+</li>
+<li>
+<p>Enter a name for the property for the NoSQL system resource.</p>
+<p>For the specific names of the properties required by each NoSQL provider, see <a href="https://github.com/eclipse-jnosql/jnosql-databases">Eclipse JNoSQL databases GitHub repository</a></p>
+</li>
+<li>
+<p>Click <strong>Create</strong>.</p>
+</li>
+<li>
+<p>Enter only one of <strong>Value</strong> or <strong>Encrypted Value</strong>.</p>
+</li>
+<li>
+<p>Click <strong>Save</strong>.</p>
+</li>
+</ol>
+<h3 id="GUID-31FEA28A-1932-4297-91E4-6FBD8FBF0EC6">Monitor NoSQL System Resources</h3>
+<p>You can monitor runtime statistics for a NoSQL system resource.</p>
+<p>For more information, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=WLNSQ-GUID-2F286DE7-E7A6-433B-BC62-809D0706B25A"><strong>Administering NoSQL Resources for Oracle WebLogic Server</strong></a>.</p>
+<ol>
+<li>
+<p>In the <strong>Monitoring Tree</strong>, go to <strong>Environment</strong>, then <strong>Servers</strong>, select a server where the NoSQL system resource is targeted. <em>myServer</em> <strong>NoSQL System Resources</strong>.</p>
+</li>
+<li>
+<p>From the navigation tree, select <strong>Services</strong>, then <strong>NoSQL System Resources</strong>.</p>
+</li>
+<li>
+<p>Select the NoSQL system resource whose runtime information you want to view.</p>
 </li>
 </ol>
 

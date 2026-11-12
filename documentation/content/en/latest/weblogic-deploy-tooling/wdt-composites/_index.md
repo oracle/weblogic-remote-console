@@ -1,5 +1,5 @@
 ---
-weight: 276
+weight: 286
 title: WDT Composite Models
 ---
 
@@ -18,17 +18,21 @@ WDT composite models are multiple WDT model files that have been merged together
 
 Combine two or more WDT model files.
 
-There must be at least two WDT model file providers in the active project.
+Before you begin, ensure that the project contains at least two WDT model file providers.
 
-1.  Open the Providers drawer and beside the project name, click **More ︙**. Select **Add WDT Composite Model File Provider**.
+1.  Open the **Projects / Providers** page for the project. If a provider is active, open its **More** menu and select **Go To Project/Provider Table**.
 
-2.  Enter a name for the WDT Composite Model.
+2.  Select **Create**, then **WDT Composite Model File Provider**.
 
-3.  Click inside the **WDT Models** field and select the WDT model files that you want to appear in the WDT Composite Model in the order that you want them to appear. Only WDT model files in the current project will appear in the drop-down list.
+3.  Enter a name for the WDT composite model.
 
-    Choose the order that the WDT model files are added to the composite carefully. Each subsequent WDT model file overrides the properties of the previous file. When properties conflict, the properties of the last WDT model file that was added to the composite take precedence.
+4.  In **WDT Models**, select the model files in the order you want them applied. Only model files in the current project are listed.
 
-4.  Click **OK** to create the WDT composite model.
+    Each subsequent model file overrides conflicting properties from earlier files. The last model file takes precedence.
+
+5.  Click **Done** to create the provider.
+
+6.  Click **Activate** to view the combined model.
 
 
 The selected WDT model files are merged and you can view the combined set in the **WDT Composite Model Tree**.

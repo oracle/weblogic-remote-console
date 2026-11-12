@@ -35,7 +35,7 @@ Understanding Security for Oracle WebLogic Server Administering Security for Ora
   <meta itemprop="description" content="WebLogic Server offers a robust set of security tools to protect your WebLogic Server environment from unauthorized access. Use WebLogic Remote Console to secure your system.
 For general information on security concepts in WebLogic Server, see:
 Understanding Security for Oracle WebLogic Server Administering Security for Oracle WebLogic Server Securing Resources Using Roles and Policies for Oracle WebLogic Server Securing a Production Environment for Oracle WebLogic Server Address Potential Security Issues WebLogic Server regularly checks your domain to ensure it complies with its recommended security policies. If a domain does not meet the recommendations, a security warning is logged and displayed in WebLogic Remote Console.">
-  <meta itemprop="wordCount" content="17168">
+  <meta itemprop="wordCount" content="17637">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Securing Domains">
   <meta name="twitter:description" content="WebLogic Server offers a robust set of security tools to protect your WebLogic Server environment from unauthorized access. Use WebLogic Remote Console to secure your system.
@@ -70,7 +70,8 @@ Understanding Security for Oracle WebLogic Server Administering Security for Ora
         <div class="dropdown">
   <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Releases</a>
   <ul class="dropdown-menu">
-    <li><a class="dropdown-item" href="/weblogic-remote-console/overview">Latest (v3.0.6)</a></li>
+    <li><a class="dropdown-item" href="/weblogic-remote-console/overview">Latest (v3.0.7)</a></li>
+    <li><a class="dropdown-item" href="/weblogic-remote-console/3.0.6">v3.0.6</a></li>
     <li><a class="dropdown-item" href="/weblogic-remote-console/3.0.5">v3.0.5</a></li>
     <li><a class="dropdown-item" href="/weblogic-remote-console/3.0.4">v3.0.4</a></li>
     <li><a class="dropdown-item" href="/weblogic-remote-console/3.0.3">v3.0.3</a></li>
@@ -143,7 +144,7 @@ Understanding Security for Oracle WebLogic Server Administering Security for Ora
     aria-label="Search this site…"
     autocomplete="off"
     
-    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.96d922ec2447f58333e343cd538b48c3.json"
+    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.eee1e0c10cf40e1fc207302393707862.json"
     data-offline-search-base-href="/"
     data-offline-search-max-results="10"
   >
@@ -168,7 +169,7 @@ Understanding Security for Oracle WebLogic Server Administering Security for Ora
     aria-label="Search this site…"
     autocomplete="off"
     
-    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.96d922ec2447f58333e343cd538b48c3.json"
+    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.eee1e0c10cf40e1fc207302393707862.json"
     data-offline-search-base-href="/"
     data-offline-search-max-results="10"
   >
@@ -426,7 +427,31 @@ Understanding Security for Oracle WebLogic Server Administering Security for Ora
 <li>
 <p>Follow the steps suggested in Resolution Information to fix the problem.</p>
 <p>The same issue can affect multiple servers within your domain simultaneously. Make sure to fix the issue on every affected server.</p>
-<p>If you think certain policies don&rsquo;t apply to your environment or are not feasible to implement with your business needs, you can disable individual security checks, with the exception of the minimum JDK version check.</p>
+</li>
+<li>
+<p><strong>Optional</strong>: If you think certain policies don&rsquo;t apply to your environment or are not feasible to implement with your business needs, you can disable individual security checks, with the exception of the minimum JDK version check.</p>
+<ol>
+<li>
+<p>In the <strong>Edit Tree</strong>, go to <strong>Environment</strong>, then <strong>Domain</strong>.</p>
+</li>
+<li>
+<p>Select the <strong>Security</strong> tab, then the <strong>Warnings</strong> subtab.</p>
+</li>
+<li>
+<p>Disable security checks as needed.</p>
+
+
+<div class="alert alert-primary" role="alert">
+<h4 class="alert-heading">Note</h4>
+
+    Whenever possible, Oracle recommends resolving security issues rather than disabling security checks.
+
+</div>
+</li>
+<li>
+<p>Click <strong>Save</strong>.</p>
+</li>
+</ol>
 </li>
 <li>
 <p>If necessary, restart the servers to apply the fix and clear the security warnings.</p>
@@ -450,6 +475,7 @@ Understanding Security for Oracle WebLogic Server Administering Security for Ora
 <h4 class="alert-heading">Note</h4>
 
     <p>Oracle strongly recommends enabling these features as soon as feasible. They provide significant security benefits, and delaying their implementation increases your system&rsquo;s vulnerability.</p>
+<p>In WebLogic Server 26.1.0.0.0 or later, some feature gates are deprecated. meaning that the feature behavior that they controlled is now permanently enabled. Although the feature gate option appears in the user interface, disabling it has no impact on actual behavior.</p>
 <p>New security fixes and their feature gates are delivered in PSUs and CSPUs on an as-needed basis. For the latest information, refer to <strong>Security Advice and Post-Install Information for Oracle WebLogic Server PSUs (Doc ID 2764668.1)</strong> on <a href="http://support.oracle.com/support">My Oracle Support</a>.</p>
 
 
@@ -466,10 +492,15 @@ Understanding Security for Oracle WebLogic Server Administering Security for Ora
 <li>
 <p>Set the security feature gate to the status and behavior that you want to implement.</p>
 <ul>
-<li>Enabling a feature gate (setting it to <code>true</code>) enables the new, more secure behavior.</li>
-<li>Disabling a feature gate (setting it to <code>false</code>) preserves the legacy, less secure behavior.
-If you don&rsquo;t see a feature gate, confirm that you have applied the latest available PSU or CSPU.</li>
+<li>
+<p>Enabling a feature gate (setting it to <code>true</code>) enables the new, more secure behavior.</p>
+</li>
+<li>
+<p>Disabling a feature gate (setting it to <code>false</code>) preserves the legacy, less secure behavior.</p>
+<p><strong>Note</strong>: If you disable a feature gate, it triggers an entry in the Security Warnings Report.</p>
+</li>
 </ul>
+<p>If you don&rsquo;t see a feature gate, confirm that you have applied the latest available PSU or CSPU.</p>
 </li>
 <li>
 <p><strong>Optional</strong>: Certain features gates require additional configuration on other MBeans to fully implement the new behavior. These multi-configuration feature gates are grouped together.</p>
@@ -1433,7 +1464,7 @@ The match is case-insensitive.</li>
 </ol>
 <h4 id="GUID-BDAEE9EF-4BC3-4047-AC91-3CD163A27D1C">Apply a Policy to a JMX Resource</h4>
 <p>Use WebLogic Remote Console to edit the default security policies for an MBean, MBean attribute, or MBean operation, or to create new policies.</p>
-<p>Many tasks that you complete in WebLogic Remote Console use Java Management Extensions (JMX) to invoke an operation in an underlying managed bean (MBean) or modify an MBean attribute. Oracle provides a default set of JMX resources and policies to protect WebLogic Server MBeans. See <a href="https://docs.oracle.com/en/middleware/standalone/weblogic-server/15.1.1/wlmbr/common/mbeansecroles.html">Default Security Policies for MBeans</a> in <strong>MBean Reference for Oracle WebLogic Server</strong>.</p>
+<p>Many tasks that you complete in WebLogic Remote Console use Java Management Extensions (JMX) to invoke an operation in an underlying managed bean (MBean) or modify an MBean attribute. Oracle provides a default set of JMX resources and policies to protect WebLogic Server MBeans. See <a href="https://docs.oracle.com/en/middleware/standalone/weblogic-server/26.1.0/wlmbr/common/mbeansecroles.html">Default Security Policies for MBeans</a> in <strong>MBean Reference for Oracle WebLogic Server</strong>.</p>
 
 
 <div class="alert alert-primary" role="alert">
@@ -1702,11 +1733,15 @@ For more information, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=
 <p>All the server SSL/TLS attributes are dynamic. When modified using WebLogic Remote Console, they cause the corresponding SSL/TLS server or channel SSL/TLS server to restart and use the new settings for new connections. Old connections will continue to run with the old configuration.</p>
 <h3 id="GUID-9F87B333-4F7E-461B-876A-1345105CC86C">Restart SSL/TLS</h3>
 <p>All server SSL/TLS attributes are dynamic. You can modify these attributes and then apply your changes without rebooting WebLogic Server. Instead, only the corresponding SSL/TLS server or channel SSL/TLS server will restart and use the new settings for new connections. Existing connections continue to run with the old configuration.</p>
+
+
+<div class="alert alert-primary" role="alert">
+<h4 class="alert-heading">Note</h4>
+
+    If your SSL/TLS changes also involve security realm or security provider configuration changes, consider enabling automatic realm restart before activating those changes. Automatic realm restart allows the realm to restart automatically when non-dynamic changes to the realm or its providers are activated. Restarting SSL/TLS channels alone does not apply changes that require a realm restart. See <a href="/weblogic-remote-console/administration-server/securing-domains/#GUID-65011AC0-166C-414C-8FD5-A085E7599FA7">Enable Automatic Realm Restart</a>.
+
+</div>
 <ol>
-<li>
-<p>If you haven&rsquo;t done so already, turn on automatic realm restart in the default security realm. See <a href="/weblogic-remote-console/administration-server/securing-domains/#GUID-65011AC0-166C-414C-8FD5-A085E7599FA7">Enable Automatic Realm Restart</a>.</p>
-<p>If automatic realm restart is not enabled, old connections will continue to run with the old configuration and you must restart WebLogic Server after restarting SSL/TLS to ensure that all the SSL/TLS connections exist according to the specified configuration.</p>
-</li>
 <li>
 <p>In the <strong>Monitoring Tree</strong>, go to <strong>Environment</strong>, then <strong>Servers</strong>.</p>
 </li>
@@ -1718,27 +1753,32 @@ For more information, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=
 </li>
 </ol>
 <h3 id="GUID-5099B065-CD89-448F-8913-C497AA4C5159">Configure the Certificate Management Service</h3>
-<p>The Certificate Management Service ensures that the certificates configured for use on each server are present in the server&rsquo;s keystore and valid.</p>
-<p>
+<p>Use the Certificate Management Service to simplify and streamline the management of SSL/TLS certificates in a WebLogic Server domain.</p>
+
 
 <div class="alert alert-primary" role="alert">
 <h4 class="alert-heading">Note</h4>
 
-    This feature is only available on domains running WebLogic Server 15.1.1.0.0 or later.
+    This feature is only available on domains running WebLogic Server 26.1.0.0.0 or later. Although the Certificate Management Service was originally released in WebLogic Server 15.1.1.0.0, that release was a technical preview and several implementation details have changed between releases.
 
 </div>
+<p>See <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=SECMG-GUID-E2CFF5AD-3CAE-48D8-AA52-77A17433AD48">Managing Certificates with the Certificate Management Service</a> in <strong>Administering Security for Oracle WebLogic Server</strong>.</p>
+<ol>
+<li>
+<p>Ensure that an Administration Server HTTPS endpoint is reachable. Either enable the domain-wide Administration Port or the Administration Server SSL listen port. See <a href="/weblogic-remote-console/administration-server/domain-configuration/#GUID-BC689DFE-0598-46B4-8E30-82B87D9CB354">Configure the Domain-Wide Administration Port</a>.</p>
 
 
 <div class="alert alert-primary" role="alert">
 <h4 class="alert-heading">Note</h4>
 
-    The Certificate Management Service is available as a Technical Preview in this release of WebLogic Server <em>for testing purposes only</em>. Do not use it in production environments. For more information, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=SECMG-GUID-E2CFF5AD-3CAE-48D8-AA52-77A17433AD48">Using the Certificate Management Service</a> in <strong>Administering Security for Oracle WebLogic Server</strong>.
+    <p>You will need to configure SSL/TLS and set up keystores as part of this process.</p>
+<ul>
+<li>For development environments, you can use the demo identity and trust certificates.</li>
+<li>For production environments, you should select one of the custom keystore options.
+You can replace the keystores with Domain Keystores as needed after you finish configuring Certificate Management Service.</li>
+</ul>
 
-</div></p>
-<p>See <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=SECMG-GUID-E2CFF5AD-3CAE-48D8-AA52-77A17433AD48">Using the Certificate Management Service</a> in <strong>Administering Security for Oracle WebLogic Server</strong>.</p>
-<ol>
-<li>
-<p>Make sure SSL/TLS is enabled on the domain or relevant servers. See <a href="/weblogic-remote-console/administration-server/securing-domains/#GUID-E4A623A5-532D-443B-BA39-0E13B004EB94">Set Up SSL/TLS</a>.</p>
+</div>
 </li>
 <li>
 <p>In the <strong>Edit Tree</strong>, go to <strong>Environment</strong>, then <strong>Domain</strong>.</p>
@@ -1750,37 +1790,50 @@ For more information, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=
 <p>Turn on the <strong>Enabled</strong> option.</p>
 </li>
 <li>
-<p>If you plan to use the Provisioned Certificates Issuer to manually add certificates to the Domain Keystores, turn on the <strong>Provisioned Certificates Issuer Enabled</strong> option.</p>
-<p>For more information, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=SECMG-GUID-F5C45552-EA03-411A-B363-7259EC359499">Certificate Issuers</a> in <strong>Administering Security for Oracle WebLogic Server</strong>.</p>
-</li>
-<li>
-<p>If you want the domain trust to include Java Standard Trust, turn on the <strong>Java Standard Trust Enabled</strong> option.</p>
-</li>
-<li>
-<p>If you want to modify how often the Certificate Management Service checks pending certificate expiration, specify the interval, in days, in the <strong>Certificate Check Interval</strong> field.</p>
-<p>You can also configure the <strong>Certificate Refresh Window</strong> field, which controls how close to expiration a certificate must reach before it is automatically refreshed.</p>
+<p>Modify Certificate Management Service attributes as desired.</p>
+<p>For descriptions of the available attributes, see <a href="https://docs.oracle.com/en/middleware/standalone/weblogic-server/26.1.0/wlmbr/mbeans/CertificateManagementMBean.html">CertificateManagementMBean</a> in <strong>MBean Reference for Oracle WebLogic Server</strong>.</p>
 </li>
 <li>
 <p>Click <strong>Save</strong> and commit your changes.</p>
 </li>
-</ol>
-
-
-<div class="alert alert-primary" role="alert">
-<h4 class="alert-heading">Note</h4>
-
-    Enabling the Certificate Management Service does not automatically enable Domain Keystores (a set of identity and trust keystores managed by the Certificate Management Service) too. If you want to use Domain Keystores, you must configure the domain (or servers within the domain) separately after you finish configuring the Certificate Management Service. This ensures that servers have sufficient time to obtain their certificates before trying to use them. See <a href="/weblogic-remote-console/administration-server/securing-domains/#GUID-E7406380-0590-42EA-8C3F-C5C302D0A692">Configure Keystores</a>.
-
-</div>
-<h4 id="GUID-05C4776F-DE57-4205-9DDE-E93BA4591C37">Configure the Domain Certificates Issuer</h4>
-<p>The Domain Certificates Issuer issues server certificates on behalf of the WebLogic Server domain, using the domain&rsquo;s CA certificate.</p>
-<p>For more information, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=SECMG-GUID-F5C45552-EA03-411A-B363-7259EC359499">Certificate Issuers</a> in <strong>Administering Security for Oracle WebLogic Server</strong>.</p>
-<ol>
 <li>
-<p>Make sure you have enabled the Certificate Management Service. See <a href="/weblogic-remote-console/administration-server/securing-domains/#GUID-5099B065-CD89-448F-8913-C497AA4C5159">Configure the Certificate Management Service</a>.</p>
+<p>Next, you should enable Domain Keystores, a set of identity and trust keystores managed by the Certificate Management Service:</p>
 </li>
 <li>
-<p>Make sure that <strong>Domain Keystores</strong> is selected as the Keystore type on the domain or at least one server. See <a href="/weblogic-remote-console/administration-server/securing-domains/#GUID-E7406380-0590-42EA-8C3F-C5C302D0A692">Configure Keystores</a>.</p>
+<p>Specify the keystore type at the server or server template level. In WebLogic Server 15.1.1.0.0 and later, you can also set keystore type at the domain level which will propagate the setting to all servers in the domain, unless otherwise set and overridden by a server&rsquo;s configuration. .</p>
+</li>
+<li>
+<p>In the <strong>Edit Tree</strong>, go to <strong>Environment</strong>, then one of:</p>
+<ul>
+<li><strong>Servers</strong>, then <em>myServer</em>.</li>
+<li><strong>Server Template</strong>, then <em>myServerTemplate</em>.</li>
+<li><strong>Domain</strong>.</li>
+</ul>
+</li>
+<li>
+<p>Click the <strong>Security</strong> tab, then the <strong>Keystores</strong> subtab.</p>
+</li>
+<li>
+<p><a id="step_cbj_qcx_skc"></a>From the <strong>Keystores</strong> drop-down list, select <strong>Domain Keystores</strong>.</p>
+</li>
+<li>
+<p>Click <strong>Save</strong>.</p>
+</li>
+<li>
+<p>Repeat on all applicable servers.</p>
+</li>
+<li>
+<p><a id="step_ydg_xcx_skc"></a><strong>Optional</strong>: If you plan to use Node Manager to start Managed Servers, then you must also update the <code>nodemanager.properties</code> file.</p>
+<p>See <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=NODEM-GUID-4D366B55-8E50-490A-9070-73E24A301EBF">Configure Node Manager with Domain Keystores</a> and <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=NODEM-GUID-ED02A005-A23A-4CF3-81F7-95805817CD77">Node Manager Properties</a> in <strong>Administering Node Manager for Oracle WebLogic Server</strong>.</p>
+</li>
+</ol>
+<h4 id="GUID-05C4776F-DE57-4205-9DDE-E93BA4591C37">Configure the Domain Certificate Issuer</h4>
+<p>The Domain Certificate Issuer is a built-in certificate issuer that issues certificates on behalf of the Domain CA and the Machine CA.</p>
+<p>For more information, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=SECMG-GUID-D2D47B3D-A4E9-496C-89F3-0BC24A0FDAA1">Domain Certificate Issuer</a> in <strong>Administering Security for Oracle WebLogic Server</strong>.</p>
+<ol>
+<li>
+<p>If you haven&rsquo;t already, enable the Certificate Management Service and specify Domain Keystores as the keystore type on the domain or at least one server. See <a href="/weblogic-remote-console/administration-server/securing-domains/#GUID-5099B065-CD89-448F-8913-C497AA4C5159">Configure the Certificate Management Service</a>.</p>
+<p>The Domain Certificate Issuer is automatically enabled with the Certificate Management Service but you can modify its settings as needed.</p>
 </li>
 <li>
 <p>In the <strong>Edit Tree</strong>, go to <strong>Environment</strong>, then <strong>Domain</strong>.</p>
@@ -1789,7 +1842,27 @@ For more information, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=
 <p>Click the <strong>Security</strong> tab, then the <strong>Certificate Management</strong> subtab.</p>
 </li>
 <li>
-<p>Under the <strong>Domain Certificates Issuer</strong> section, modify attributes as desired.</p>
+<p>Under the <strong>Domain Certificates Issuer</strong> section, modify the attributes as desired.</p>
+</li>
+<li>
+<p>Click <strong>Save</strong>.</p>
+</li>
+</ol>
+<h4 id="GUID-110872FD-5B76-4F4F-890F-B89E76132A01">Configure the Provisioned Certificate Issuer</h4>
+<p>The Provisioned Certificate Issuer distributes private keys and certificate chains that a WebLogic Server administrator imports into the domain.</p>
+<p>For more information, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=SECMG-GUID-037CA3FC-2804-4353-BAD8-5EDEBB5C7210">Provisioned Certificate Issuer</a> in <strong>Administering Security for Oracle WebLogic Server</strong>.</p>
+<ol>
+<li>
+<p>If you haven&rsquo;t already, enable the Certificate Management Service and specify Domain Keystores as the keystore type on the domain or at least one server. See <a href="/weblogic-remote-console/administration-server/securing-domains/#GUID-5099B065-CD89-448F-8913-C497AA4C5159">Configure the Certificate Management Service</a>.</p>
+</li>
+<li>
+<p>In the <strong>Edit Tree</strong>, go to <strong>Environment</strong>, then <strong>Domain</strong>.</p>
+</li>
+<li>
+<p>Click the <strong>Security</strong> tab, then the <strong>Certificate Management</strong> subtab.</p>
+</li>
+<li>
+<p>Under the <strong>Certificate Management Service</strong> section, turn on the <strong>Provisioned Certificates Issuer Enabled</strong> option.</p>
 </li>
 <li>
 <p>Click <strong>Save</strong>.</p>
@@ -1802,17 +1875,12 @@ For more information, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=
 <div class="alert alert-primary" role="alert">
 <h4 class="alert-heading">Note</h4>
 
-    <p>This procedure assumes you are using certificates issued by the Domain Certificates Issuer. You can also use single purpose certificates obtained from other issuers supported by the Certificate Management Service but you need to confirm that they are suitable for their designated purpose. WebLogic Server will not validate them.</p>
-<p>See step <a href="/weblogic-remote-console/administration-server/securing-domains/#step_zbb_zvw_vgc">8</a> for the MBeans (and their attributes) where you can specify the certificate aliases.</p>
-
+    This procedure assumes you are using certificates issued by the Domain Certificates Issuer. You can designate certificates obtained from other certificate issuers as single purpose but it is your responsibility to confirm that they are suited to their designated purpose.
 
 </div>
 <ol>
 <li>
-<p>Make sure you have enabled the Certificate Management Service. See <a href="/weblogic-remote-console/administration-server/securing-domains/#GUID-5099B065-CD89-448F-8913-C497AA4C5159">Configure the Certificate Management Service</a>.</p>
-</li>
-<li>
-<p>Make sure that <strong>Domain Keystores</strong> is selected as the Keystore type on the domain or at least one server. See <a href="/weblogic-remote-console/administration-server/securing-domains/#GUID-E7406380-0590-42EA-8C3F-C5C302D0A692">Configure Keystores</a>.</p>
+<p>If you haven&rsquo;t already, enable the Certificate Management Service and specify Domain Keystores as the keystore type on the domain or at least one server. See <a href="/weblogic-remote-console/administration-server/securing-domains/#GUID-5099B065-CD89-448F-8913-C497AA4C5159">Configure the Certificate Management Service</a>.</p>
 </li>
 <li>
 <p>In the <strong>Edit Tree</strong>, go to <strong>Environment</strong>, then <strong>Domain</strong>.</p>
@@ -1830,18 +1898,7 @@ For more information, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=
 <p><strong>Optional</strong>: If your servers were already using (multi-purpose) certificates issued by the Domain Certificates Issuer, then you must refresh certificates on the server to apply these changes. See <a href="/weblogic-remote-console/administration-server/securing-domains/#GUID-E59BD9C4-6363-469E-9050-6098E1D7202A">Refresh Certificates</a>.</p>
 </li>
 <li>
-<p><a id="step_zbb_zvw_vgc"></a>Assign the certificate aliases appropriately. The aliases for the single purpose certificates may be used with the <code>SSLMBean</code>, <code>NetworkAccessPointMBean</code>, <code>SingleSignOnServicesMBean</code>, and <code>SAML2CredentialMapperMBean</code> as follows:</p>
-<ul>
-<li>
-<p>To specify a certificate for client authentication, use the <code>domainpki-client-identity</code> alias with <code>SSLMBean.DomainKeystoresClientCertAlias</code> or <code>NetworkAccessPointMBean.DomainKeystoresClientCertAlias</code> (or both).</p>
-</li>
-<li>
-<p>To specify a certificate for server authentication, use the <code>domainpki-server-identity</code> alias with <code>SSLMBean.DomainKeystoresServerCertAlias</code> or <code>NetworkAccessPointMBean.DomainKeystoresServerCertAlias</code> (or both).</p>
-</li>
-<li>
-<p>To specify a certificate for signing and encryption, use the <code>domainpki-sign-encrypt</code> alias with <code>SingleSignOnServicesMBean.SSOSigningKeyAlias</code> or <code>SAML2CredentialMapperMBean.SigningKeyAlias</code> (or both).</p>
-</li>
-</ul>
+<p><a id="step_zbb_zvw_vgc"></a>Assign the certificate aliases as applicable. See <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=SECMG-GUID-67739083-0E54-4F3A-AD05-12BCF236FDFF">Single Purpose Certificates</a> in <strong>Administering Security for Oracle WebLogic Server</strong> for the MBeans (and their attributes) where you can specify the certificate aliases.</p>
 
 
 <div class="alert alert-primary" role="alert">
@@ -1852,32 +1909,14 @@ For more information, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=
 
 
 </div>
-<p>Attributes for the <code>SSLMBean</code> are located on the <strong>Environment</strong>: <strong>Servers</strong>: <em>myserver</em>: <strong>Security</strong> (tab): <strong>SSL</strong> (subtab) page.</p>
-<p>Attributes for the <code>NetworkAccessPointMBean</code> are located on the <strong>Environment</strong>: <strong>Servers</strong>: <em>myserver</em>: <strong>Channels</strong>: <em>myChannel</em>: <strong>Channel Security</strong> (tab) page.</p>
-<p>The <code>SingleSignOnServicesMBean.SSOSigningKeyAlias</code> attribute is located on the <strong>Environment</strong>: <strong>Servers</strong>: <em>myserver</em>: <strong>Security</strong> (tab): <strong>SAML 2.0 General</strong> (subtab) page.</p>
-<p>The <code>SAML2CredentialMapperMBean.SigningKeyAlias</code> attribute is located on the <strong>Security</strong>: <strong>Realms</strong>: <em>myrealm</em>: <strong>Credential Mappers</strong>: <em>mySAML2CredMapper</em>: <strong>SAML2 Credential Mapper Parameters</strong> (tab) page.</p>
 </li>
 </ol>
 <h4 id="GUID-D59FB74D-24F4-43E5-AB6A-B48818A043EF">Import Certificates into the Provisioned Trust or Identity Keystores</h4>
-<p>You can add and manage external certificates with the Certificate Management Service by using the Provisioned Certificates Issuer to import them into the Domain Keystores.</p>
-<p>See <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=SECMG-GUID-F5C45552-EA03-411A-B363-7259EC359499">Certificate Issuers</a> in <strong>Administering Security for Oracle WebLogic Server</strong>.</p>
+<p>You can add and manage external certificates with the Certificate Management Service by using the Provisioned Certificate Issuer to import them into the Domain Keystores.</p>
+<p>See <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=SECMG-GUID-037CA3FC-2804-4353-BAD8-5EDEBB5C7210">Provisioned Certificate Issuer</a> in <strong>Administering Security for Oracle WebLogic Server</strong>.</p>
 <ol>
 <li>
-<p>Make sure the Certificate Management Service is configured to support provisioned keystores.</p>
-<ol>
-<li>
-<p>In the <strong>Edit Tree</strong>, go to <strong>Environment</strong>, then <strong>Domain</strong>.</p>
-</li>
-<li>
-<p>Click the <strong>Security</strong> tab, then the <strong>Certificate Management</strong> subtab.</p>
-</li>
-<li>
-<p>Turn on the <strong>Provisioned Certificates Issuer Enabled</strong> option if you want to import identity certificates. Provisioned trust certificates are always available when the Certificate Management Service is running.</p>
-</li>
-<li>
-<p>Click <strong>Save</strong>.</p>
-</li>
-</ol>
+<p>If you haven&rsquo;t already, enable the Provisioned Certificates Issuer as described in <a href="/weblogic-remote-console/administration-server/securing-domains/#GUID-110872FD-5B76-4F4F-890F-B89E76132A01">Configure the Provisioned Certificate Issuer</a>.</p>
 </li>
 <li>
 <p>In the <strong>Monitoring Tree</strong>, go to <strong>Security</strong>, then <strong>Domain Keystores</strong>.</p>
@@ -1917,6 +1956,9 @@ For more information, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=
 <p>For general information on the OCI Certificates service, see <a href="https://docs.oracle.com/en-us/iaas/Content/certificates/overview.htm">OCI Certificates</a> in <strong>OCI Documentation</strong>.</p>
 <ol>
 <li>
+<p>If you haven&rsquo;t done so already, create a credential set for use with the OCI Certificates Plug-in Certificate Issuer as described in <a href="/weblogic-remote-console/administration-server/securing-domains/#GUID-39135673-9820-4207-978D-A3F3B468183E">Create a Credential Set</a>.</p>
+</li>
+<li>
 <p>In the <strong>Edit Tree</strong>, go to <strong>Security</strong>, then <strong>Certificate Issuer Plugins</strong>.</p>
 </li>
 <li>
@@ -1929,19 +1971,22 @@ For more information, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=
 <p>Turn on the <strong>Enabled</strong> option.</p>
 </li>
 <li>
-<p>From the <strong>Credential Set</strong> drop-down list, select a credential set to use with the OCI Certificates Plug-in Certificate Issuer. If you haven&rsquo;t created a credential set yet, then see <a href="/weblogic-remote-console/administration-server/securing-domains/#GUID-39135673-9820-4207-978D-A3F3B468183E">Configure a Credential Set</a>.</p>
+<p>From the <strong>Credential Set</strong> drop-down list, select a credential set to use with the OCI Certificates Plug-in Certificate Issuer.</p>
 </li>
 <li>
 <p>From the <strong>Deployment</strong> drop-down list, select <code>cert-issuer-for-oci-cert-svc</code>.</p>
 </li>
 <li>
-<p>If your OCI Certificates instance requires additional configuration properties, you can add them as <strong>Initialization Properties</strong> (any miscellaneous properties that the OCI Certificates Plug-in Certificate Issuer might need) or as <strong>Certificate Request Properties</strong> (properties that are passed to the issuer when the Certificate Management Service requests a certificate from the OCI Certificates Plug-in Certificate Issuer) or both.</p>
+<p>Under the <strong>Certificate Request Properties</strong> section, click <strong>+</strong> to add a new row. Specify the certificate request properties that are passed to the issuer when the Certificate Management Service requests a certificate from the OCI Certificates Plug-in Certificate Issuer. See <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=SECMG-GUID-312B3FDB-5EBD-41FA-B7D7-7E90462FB80B">OCI Certificates Plug-in Certificate Issuer</a> in <strong>Administering Security for Oracle WebLogic Server</strong>.</p>
+</li>
+<li>
+<p>Leave the <strong>Initialization Properties</strong> section empty.</p>
 </li>
 <li>
 <p>Click <strong>Save</strong>.</p>
 </li>
 </ol>
-<h4 id="GUID-39135673-9820-4207-978D-A3F3B468183E">Configure a Credential Set</h4>
+<h5 id="GUID-39135673-9820-4207-978D-A3F3B468183E">Create a Credential Set</h5>
 <p>You can group a set of encrypted properties for use when authenticating to the OCI Certificates Plug-in Certificate Issuer.</p>
 <ol>
 <li>
@@ -1952,21 +1997,23 @@ For more information, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=
 </li>
 <li>
 <p>Click <strong>Create</strong>.</p>
-<p>A new node branch representing your credential set will appear under Credential Sets in the Navigation Tree.</p>
+<p>A new node branch representing your credential set will appear under <strong>Credential Sets</strong> in the Navigation Tree.</p>
 </li>
 <li>
-<p>Click <strong>Encrypted Properties</strong> under your new credential set node.</p>
+<p>Under your new credential set node, click <strong>Encrypted Properties</strong>.</p>
 </li>
 <li>
 <p>Click <strong>New</strong> to create a key-value pair that represents a set of credentials needed to access your OCI Certificates service.</p>
+<p>At minimum, you must create the encrypted property pairs described in <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=SECMG-GUID-312B3FDB-5EBD-41FA-B7D7-7E90462FB80B">OCI Certificates Plug-in Certificate Issuer</a> in <strong>Administering Security for Oracle WebLogic Server</strong>.</p>
 </li>
 <li>
 <p>Click <strong>Save</strong>.</p>
 </li>
 <li>
-<p>Add more encrypted properties as needed for your OCI Certificates service.</p>
+<p>Add more encrypted property pairs as needed for your OCI Certificates service.</p>
 </li>
 </ol>
+<p>You can create multiple credential sets, each consisting of multiple encrypted properties. You can also use the same credential set with multiple OCI Certificates Plug-in Certificate Issuers.</p>
 <h4 id="GUID-C465CD24-FD20-413D-9E4E-4C0359051BBF">Review Certificates Managed by Certificate Management Service</h4>
 <p>You can see the individual certificates contained within keystores managed by WebLogic Server.</p>
 <ul>
@@ -2014,12 +2061,6 @@ For more information, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=
 <li>
 <p><strong>Server Trust Certificates On All Servers</strong></p>
 </li>
-<li>
-<p><strong>Machine Identity Certificates On All Servers</strong></p>
-</li>
-<li>
-<p><strong>Machine Trust Certificates On All Servers</strong></p>
-</li>
 </ul>
 </li>
 <li>
@@ -2050,9 +2091,6 @@ For more information, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=
 </li>
 <li>
 <p><strong>Server Trust</strong></p>
-</li>
-<li>
-<p><strong>Machine Identity Certificates</strong></p>
 </li>
 <li>
 <p><strong>Machine Trust Certificates</strong></p>
@@ -2088,14 +2126,16 @@ For more information, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=
 </li>
 </ol>
 <p>When you want to use these trusted certificates into another domain using the Certificate Management Service, follow the instructions at <a href="/weblogic-remote-console/administration-server/securing-domains/#GUID-D59FB74D-24F4-43E5-AB6A-B48818A043EF">Import Certificates into the Provisioned Trust or Identity Keystores</a>.</p>
-<h4 id="GUID-D9A7049D-B7D2-49E1-9729-A903A8976572">Roll Domain CA Certificate</h4>
-<p>You can generate a new self-signed CA certificate for the domain.</p>
+<h4 id="GUID-D9A7049D-B7D2-49E1-9729-A903A8976572">Roll Domain and Machine CA Certificates</h4>
+<p>You can manually generate new Domain and Machine CA certificates and private keys for the domain.</p>
 
 
 <div class="alert alert-primary" role="alert">
 <h4 class="alert-heading">Note</h4>
 
-    You do not have to roll the Domain CA certificate because it is close to its expiration date. It will roll automatically.
+    <p>The Domain CA and Machine CA roll automatically according to the schedule specified by the <code>CertificateManagementMBean</code> attributes, <code>CertificateValidityPeriod</code> and <code>CertificateAuthorityValidityPeriod</code>.</p>
+<p>You should only need to roll it manually if you want to immediately apply new configurations or replace faulty CA material.</p>
+
 
 </div>
 <ol>
@@ -2103,12 +2143,57 @@ For more information, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=
 <p>In the <strong>Monitoring Tree</strong>, go to <strong>Security</strong>, then <strong>Domain Certificate Management</strong>.</p>
 </li>
 <li>
-<p>Click <strong>Roll Domain Certificate Authority</strong>.</p>
+<p>Click <strong>Manage Certificate Authority</strong>.</p>
 </li>
 <li>
-<p>Confirm that you want to proceed with rolling the Domain CA.</p>
+<p>Select <strong>Roll Domain Certificate Authority</strong>.</p>
+</li>
+<li>
+<p>Confirm that you want to proceed with rolling the Domain and Machine CA certificates.</p>
 </li>
 </ol>
+<h4 id="GUID-21187D38-0601-44FF-A401-4AB61C08C59A">Purge Expired CA Trust Anchors</h4>
+<p>You can remove expired CA trust anchors from the Administration Server&rsquo;s <code>domain-trust</code> and <code>provisioned-trust</code> keystores.</p>
+<ol>
+<li>
+<p>In the <strong>Monitoring Tree</strong>, go to <strong>Security</strong>, then <strong>Domain Certificate Management</strong>.</p>
+</li>
+<li>
+<p>Click <strong>Manage Certificate Authority</strong>.</p>
+</li>
+<li>
+<p>Select <strong>Purge Expired Certificate Authorities</strong>.</p>
+</li>
+<li>
+<p>Confirm that you want to proceed with purging any expired CA trust anchors authority from <code>domain-trust</code> and <code>provisioned-trust</code>.</p>
+</li>
+</ol>
+<p>The local trust replicas on Managed Servers and Node Manager will retain the purged CA trust anchors until they are refreshed, either automatically as scheduled or manually. See <a href="/weblogic-remote-console/administration-server/securing-domains/#GUID-E59BD9C4-6363-469E-9050-6098E1D7202A">Refresh Certificates</a>.</p>
+<h4 id="GUID-6FAB0835-0B08-4B2B-B619-E73B097EB419">Remove Certificate Authority</h4>
+<p>You can delete a specified CA trust anchor from the Administration Server&rsquo;s <code>domain-trust</code> or <code>provisioned-trust</code> keystores. This will not delete CA private keys or certificates issued by that CA.</p>
+<p>After the change reaches server and Node Manager trust replicas, certificate chains that depend exclusively on the removed CA are no longer trusted.</p>
+<p>WebLogic Server prevents the removal of the active or newest generated Domain CA and Machine CA trust anchors.</p>
+<ol>
+<li>
+<p>In the <strong>Monitoring Tree</strong>, go to <strong>Security</strong>, then <strong>Domain Certificate Management</strong>.</p>
+</li>
+<li>
+<p>Click <strong>Manage Certificate Authority</strong>.</p>
+</li>
+<li>
+<p>Select <strong>Remove Certificate Authority</strong>.</p>
+</li>
+<li>
+<p>In the <strong>Source Store</strong> field, enter location of the certificate authority, either <code>domain-trust</code> or <code>provisioned-trust</code>.</p>
+</li>
+<li>
+<p>In the <strong>Alias</strong> field, enter the certificate alias.</p>
+</li>
+<li>
+<p>Click <strong>Done</strong>.</p>
+</li>
+</ol>
+<p>The local trust replicas on Managed Servers and Node Manager will retain the deleted CA trust anchors until they are refreshed, either automatically as scheduled or manually. See <a href="/weblogic-remote-console/administration-server/securing-domains/#GUID-E59BD9C4-6363-469E-9050-6098E1D7202A">Refresh Certificates</a>.</p>
 <h2 id="GUID-219D9EBA-79E1-430F-AECD-28B4A41FDAE9">Identity and Trust</h2>
 <p>WebLogic Server uses private keys, digital certificates, and trusted certificates issued by certificate authorities to establish and verify server identity and trust.</p>
 <p>WebLogic Server provides a default identity keystore and a default trust keystore. These default keystores are appropriate for testing and development purposes only.</p>
@@ -2211,7 +2296,7 @@ For more information, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=
 <p>To use a KSS keystore for demo identity and trust, you must first enable the <strong>Use KSS For Demo</strong> option (on the <strong>Environment: Domain</strong> page, under the <strong>Security</strong> tab (click <strong>Show Advanced Fields</strong>)) which determines whether the Demo Identity and Demo Trust key stores should be obtained from the Oracle Key Store Service (KSS).</p>
 </li>
 <li>
-<p><strong>Custom Identity and Java Standard Trust</strong> - Select this option to use an identity keystore you created and the trusted CAs that are defined in the <code>cacerts</code> file in the <code><em>JAVA_HOME</em>/jre/lib/security</code> directory.</p>
+<p><strong>Custom Identity and Java Standard Trust</strong> - Select this option to use an identity keystore you created and the trusted CA certificates in the standard <code>cacerts</code> truststore of the JDK used to run WebLogic Server. For JDK 9 and later, the file is <code>JAVA_HOME/lib/security/cacerts</code>. For JDK 8, the file is <code>JAVA_HOME/jre/lib/security/cacerts</code>.</p>
 </li>
 <li>
 <p><strong>Custom Identity and Custom Trust</strong> - Select this option to use both identity and trust keystores that you created.</p>
@@ -2234,27 +2319,7 @@ For more information, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=
 <p><strong>Optional</strong>: If you are updating a keystore configuration and have SSL/TLS configured already, you can check that all SSL/TLS connections exist according to the specified connection. In the <strong>Monitoring Tree</strong>, go to <strong>Environment</strong>, then <strong>Servers</strong>. Restart the applicable servers.</p>
 </li>
 <li>
-<p><a id="STEP_NPS_VMH_2CC"></a><strong>Optional</strong>: If you plan to use Node Manager to start Managed Servers and selected either custom keystores or domain keystores as your keystore type, then you must also update the <code>nodemanager.properties</code> file with the appropriate properties.</p>
-<ul>
-<li>
-<p>If you selected a custom keystore option, then at minimum, you must update the following node manager properties as applicable to your environment:</p>
-<ul>
-<li><code>CustomIdentityAlias</code></li>
-<li><code>CustomIdentityKeyStoreFileName</code></li>
-<li><code>CustomIdentityPrivateKeyPassPhrase</code></li>
-<li><code>CustomIdentityKeyStorePassPhrase</code></li>
-<li><code>KeyStores</code></li>
-</ul>
-</li>
-<li>
-<p>If you selected Domain Keystores, then set the following properties:</p>
-<ul>
-<li><code>KeyStores=DomainKeystores</code></li>
-<li>For per-host Node Manager configurations only, also set <code>DomainKeystoresDomain</code> to the domain that hosts the machine keystores for the Node Manager instance. The domain name must match one of the domains specified in the <code>nodemanager.domains</code> file.
-See <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=NODEM-GUID-ED02A005-A23A-4CF3-81F7-95805817CD77">Node Manager Properties</a> in <strong>Administering Node Manager for Oracle WebLogic Server</strong>.</li>
-</ul>
-</li>
-</ul>
+<p><a id="STEP_NPS_VMH_2CC"></a><strong>Optional</strong>: If you plan to use Node Manager to start Managed Servers and selected either custom keystores or domain keystores as your keystore type, then you must also update the <code>nodemanager.properties</code> file with the appropriate properties. See <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=NODEM-GUID-3E43A270-55C5-462D-8272-D007F3DA3D7E">Configure Node Manager with Custom Keystores</a> or <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=NODEM-GUID-4D366B55-8E50-490A-9070-73E24A301EBF">Configure Node Manager with Domain Keystores</a> in <strong>Administering Node Manager for Oracle WebLogic Server</strong>.</p>
 </li>
 </ol>
 <h3 id="GUID-C8C53705-3C69-4525-AE9D-39BBB6478C44">Enable Certificate Revocation Checking</h3>
@@ -2284,6 +2349,26 @@ See <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-m
 </li>
 </ol>
 <p>You can configure certificate authority overrides to the certificate revocation configuration. See <a href="/weblogic-remote-console/administration-server/securing-domains/#GUID-E94764E7-FE43-49E7-A6F5-8699F2039103">Configure Certificate Authority Overrides</a>.</p>
+<h4 id="GUID-F3265DE2-5BB7-4F03-BE1D-D954420617DB">Customize OCSP Settings</h4>
+<p>The Online Certificate Status Protocol (OCSP) is an automated certificate checking network protocol defined in RFC 2560. As part of certificate validation, WebLogic Server queries the revocation status of a certificate by issuing an OCSP request to an OCSP responder. Certificate status is maintained by the OCSP responder. Acceptance of the certificate is suspended until the responder returns an OCSP response, indicating whether the certificate is still trusted by the CA that issued it.</p>
+<p>Before you begin, enable certificate revocation checking as described in <a href="/weblogic-remote-console/administration-server/securing-domains/#GUID-C8C53705-3C69-4525-AE9D-39BBB6478C44">Enable Certificate Revocation Checking</a>. These settings apply when the selected revocation-checking method includes OCSP.</p>
+<ol>
+<li>
+<p>In the <strong>Edit Tree</strong>, go to <strong>Environment</strong>, then <strong>Domain</strong>.</p>
+</li>
+<li>
+<p>On the <strong>Security</strong> tab, click the <strong>SSL Certificate Revocation Checking</strong> tab, then the <strong>OCSP</strong> subtab.</p>
+</li>
+<li>
+<p>Configure <strong>Enable Nonce</strong> and <strong>Enable Response Cache</strong> according to your certificate revocation-checking requirements.</p>
+</li>
+<li>
+<p>If needed, select <strong>Show Advanced Fields</strong> to configure <strong>Response Timeout (seconds)</strong>, <strong>Time Tolerance (seconds)</strong>, <strong>Capacity</strong>, and <strong>Refresh Period (percent)</strong>.</p>
+</li>
+<li>
+<p>Click <strong>Save</strong>.</p>
+</li>
+</ol>
 <h4 id="GUID-E94764E7-FE43-49E7-A6F5-8699F2039103">Configure Certificate Authority Overrides</h4>
 <p>Configuring a certificate authority override allows you to specify CR checking behavior that is specific to certificates issued by a particular certificate authority (CA). A certificate authority override always supersedes the corresponding certificate revocation (CR) checking configuration that is set at the domain level.</p>
 <p>A certificate authority override can be used to supersede, for a given CA, any domain-wide CR checking configuration settings, with the exception of the CRL local cache, which is configured on a domain-wide basis only.</p>
@@ -2738,7 +2823,7 @@ weblogic.oif.serialGlobalFilter=\
 <p>A SAML 2.0 Service Provider partner is an entity that consumes the SAML 2.0 assertions generated by the Identity Provider site.</p>
 <ol>
 <li>
-<p>Obtain, using a trusted and secure mechanism, the metadata file from your federated partner that describes the partner, the binding support, certificates and keys, and so on. See <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=SECMG-GUID-A2518F8E-1BC6-4714-B7F7-A6309DC9360E">Obtain Your Service Provider Partner&rsquo;s Metadata File</a> in <strong>Administering Security for Oracle WebLogic Server</strong>.</p>
+<p>Coordinate with your Service Provider partner to obtain the audience URIs, including partner lookup strings, confirmation method, signing requirements, and other assertion settings needed for your WS-Security SAML configuration.</p>
 </li>
 <li>
 <p>In the <strong>Security Data Tree</strong>, go to <strong>Realms</strong>, then <em>myRealm</em>, then <strong>Credential Mappers</strong> and select the SAML 2.0 credential mapping provider that you configured for the server.</p>
@@ -2762,7 +2847,7 @@ weblogic.oif.serialGlobalFilter=\
 <p>Turn on the <strong>Enabled</strong> option to enable interactions between this server and this Service Provider partner.</p>
 </li>
 <li>
-<p>Modify the settings as necessary for your environment. For descriptions of the settings and when you might want to configure them, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=SECMG-GUID-5B5DDD42-3176-48B8-AE23-635B8F30466E">Create and Configure Web Single Sign-On Service Provider Partners</a> in <strong>Administering Security for Oracle WebLogic Server</strong>.</p>
+<p>Modify the settings as necessary for your environment. For descriptions of the settings and their use, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=WSSOV-GUID-6965897A-0826-4BEB-897D-1524A1F1901D">Using Security Assertion Markup Language (SAML) Tokens For Identity</a> in <strong>Securing WebLogic Web Services for Oracle WebLogic Server</strong>.</p>
 </li>
 <li>
 <p>Click <strong>Save</strong>.</p>
@@ -2841,7 +2926,7 @@ weblogic.oif.serialGlobalFilter=\
 <p>A SAML 2.0 Identity Provider partner is an entity that generates SAML 2.0 assertions consumed by the Service Provider site.</p>
 <ol>
 <li>
-<p>Obtain, using a trusted and secure mechanism, the metadata file from your federated partner that describes the partner, the binding support, certificates and keys, and so on. See <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=SECMG-GUID-6E250FB2-3794-4BC3-B6E7-401F3FD7CECF">Obtain Your Identity Provider Partner&rsquo;s Metadata File</a> in <strong>Administering Security for Oracle WebLogic Server</strong>.</p>
+<p>Coordinate with your Identity Provider partner to obtain the issuer identifier, audience URIs, including partner lookup strings, confirmation requirements, and assertion-signing certificate using a trusted and secure mechanism.</p>
 </li>
 <li>
 <p>In the <strong>Security Data Tree</strong>, go to <strong>Realms</strong>, then <em>myRealm</em>, then <strong>Authentication Providers</strong> and select the SAML 2.0 Identity Assertion provider that you configured.</p>
@@ -2865,7 +2950,7 @@ weblogic.oif.serialGlobalFilter=\
 <p>Turn on the <strong>Enabled</strong> option to enable interactions between this server and this Identity Provider partner.</p>
 </li>
 <li>
-<p>Modify the settings as necessary for your environment. For descriptions of the settings and when you might want to configure them, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=SECMG-GUID-939BFCCB-40F6-43EA-A5A5-6C36B017FF32">Create and Configure Web Single Sign-On Identity Provider Partners</a> in <strong>Administering Security for Oracle WebLogic Server</strong>.</p>
+<p>Modify the settings as necessary for your environment. For descriptions of the settings and their use, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=WSSOV-GUID-6965897A-0826-4BEB-897D-1524A1F1901D">Using Security Assertion Markup Language (SAML) Tokens For Identity</a> in <strong>Securing WebLogic Web Services for Oracle WebLogic Server</strong>.</p>
 </li>
 <li>
 <p>Click <strong>Save</strong>.</p>

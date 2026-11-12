@@ -21,26 +21,26 @@
 <title>WDT Composite Models | WebLogic Remote Console</title>
 <meta name="description" content="WDT composite models are multiple WDT model files that have been merged together. WDT composite models are read-only files that are useful for comparison.
 NoteIf there are conflicting properties between WDT model files, then the last WDT model file added overrides the properties of the previous file.Create a WDT Composite Model Combine two or more WDT model files.
-There must be at least two WDT model file providers in the active project.">
+Before you begin, ensure that the project contains at least two WDT model file providers.">
 <meta property="og:url" content="https://oracle.github.io/weblogic-remote-console/weblogic-deploy-tooling/wdt-composites/">
   <meta property="og:site_name" content="WebLogic Remote Console">
   <meta property="og:title" content="WDT Composite Models">
   <meta property="og:description" content="WDT composite models are multiple WDT model files that have been merged together. WDT composite models are read-only files that are useful for comparison.
 NoteIf there are conflicting properties between WDT model files, then the last WDT model file added overrides the properties of the previous file.Create a WDT Composite Model Combine two or more WDT model files.
-There must be at least two WDT model file providers in the active project.">
+Before you begin, ensure that the project contains at least two WDT model file providers.">
   <meta property="og:locale" content="en">
   <meta property="og:type" content="website">
 
   <meta itemprop="name" content="WDT Composite Models">
   <meta itemprop="description" content="WDT composite models are multiple WDT model files that have been merged together. WDT composite models are read-only files that are useful for comparison.
 NoteIf there are conflicting properties between WDT model files, then the last WDT model file added overrides the properties of the previous file.Create a WDT Composite Model Combine two or more WDT model files.
-There must be at least two WDT model file providers in the active project.">
-  <meta itemprop="wordCount" content="259">
+Before you begin, ensure that the project contains at least two WDT model file providers.">
+  <meta itemprop="wordCount" content="227">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="WDT Composite Models">
   <meta name="twitter:description" content="WDT composite models are multiple WDT model files that have been merged together. WDT composite models are read-only files that are useful for comparison.
 NoteIf there are conflicting properties between WDT model files, then the last WDT model file added overrides the properties of the previous file.Create a WDT Composite Model Combine two or more WDT model files.
-There must be at least two WDT model file providers in the active project.">
+Before you begin, ensure that the project contains at least two WDT model file providers.">
 <link rel="preload" href="/weblogic-remote-console/scss/main.min.3bb6570761fbbb25e6691001febc67f331f0953db4e4e1cfb79172c2e6a5819e.css" as="style" integrity="sha256-O7ZXB2H7uyXmaRAB/rxn8zHwlT205OHPt5FywualgZ4=" crossorigin="anonymous">
 <link href="/weblogic-remote-console/scss/main.min.3bb6570761fbbb25e6691001febc67f331f0953db4e4e1cfb79172c2e6a5819e.css" rel="stylesheet" integrity="sha256-O7ZXB2H7uyXmaRAB/rxn8zHwlT205OHPt5FywualgZ4=" crossorigin="anonymous">
 <script
@@ -70,7 +70,8 @@ There must be at least two WDT model file providers in the active project.">
         <div class="dropdown">
   <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Releases</a>
   <ul class="dropdown-menu">
-    <li><a class="dropdown-item" href="/weblogic-remote-console/overview">Latest (v3.0.6)</a></li>
+    <li><a class="dropdown-item" href="/weblogic-remote-console/overview">Latest (v3.0.7)</a></li>
+    <li><a class="dropdown-item" href="/weblogic-remote-console/3.0.6">v3.0.6</a></li>
     <li><a class="dropdown-item" href="/weblogic-remote-console/3.0.5">v3.0.5</a></li>
     <li><a class="dropdown-item" href="/weblogic-remote-console/3.0.4">v3.0.4</a></li>
     <li><a class="dropdown-item" href="/weblogic-remote-console/3.0.3">v3.0.3</a></li>
@@ -143,7 +144,7 @@ There must be at least two WDT model file providers in the active project.">
     aria-label="Search this site…"
     autocomplete="off"
     
-    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.96d922ec2447f58333e343cd538b48c3.json"
+    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.eee1e0c10cf40e1fc207302393707862.json"
     data-offline-search-base-href="/"
     data-offline-search-max-results="10"
   >
@@ -168,7 +169,7 @@ There must be at least two WDT model file providers in the active project.">
     aria-label="Search this site…"
     autocomplete="off"
     
-    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.96d922ec2447f58333e343cd538b48c3.json"
+    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.eee1e0c10cf40e1fc207302393707862.json"
     data-offline-search-base-href="/"
     data-offline-search-max-results="10"
   >
@@ -326,20 +327,26 @@ There must be at least two WDT model file providers in the active project.">
 </div>
 <h2 id="GUID-099438C8-E18F-49E5-8963-DD229B77910A">Create a WDT Composite Model</h2>
 <p>Combine two or more WDT model files.</p>
-<p>There must be at least two WDT model file providers in the active project.</p>
+<p>Before you begin, ensure that the project contains at least two WDT model file providers.</p>
 <ol>
 <li>
-<p>Open the Providers drawer and beside the project name, click <strong>More ︙</strong>. Select <strong>Add WDT Composite Model File Provider</strong>.</p>
+<p>Open the <strong>Projects / Providers</strong> page for the project. If a provider is active, open its <strong>More</strong> menu and select <strong>Go To Project/Provider Table</strong>.</p>
 </li>
 <li>
-<p>Enter a name for the WDT Composite Model.</p>
+<p>Select <strong>Create</strong>, then <strong>WDT Composite Model File Provider</strong>.</p>
 </li>
 <li>
-<p>Click inside the <strong>WDT Models</strong> field and select the WDT model files that you want to appear in the WDT Composite Model in the order that you want them to appear. Only WDT model files in the current project will appear in the drop-down list.</p>
-<p>Choose the order that the WDT model files are added to the composite carefully. Each subsequent WDT model file overrides the properties of the previous file. When properties conflict, the properties of the last WDT model file that was added to the composite take precedence.</p>
+<p>Enter a name for the WDT composite model.</p>
 </li>
 <li>
-<p>Click <strong>OK</strong> to create the WDT composite model.</p>
+<p>In <strong>WDT Models</strong>, select the model files in the order you want them applied. Only model files in the current project are listed.</p>
+<p>Each subsequent model file overrides conflicting properties from earlier files. The last model file takes precedence.</p>
+</li>
+<li>
+<p>Click <strong>Done</strong> to create the provider.</p>
+</li>
+<li>
+<p>Click <strong>Activate</strong> to view the combined model.</p>
 </li>
 </ol>
 <p>The selected WDT model files are merged and you can view the combined set in the <strong>WDT Composite Model Tree</strong>.</p>

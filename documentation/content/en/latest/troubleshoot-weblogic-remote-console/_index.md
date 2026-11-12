@@ -1,5 +1,5 @@
 ---
-weight: 280
+weight: 290
 title: Troubleshoot Issues with WebLogic Remote Console
 ---
 
@@ -9,11 +9,17 @@ Learn how to identify and recover from issues in WebLogic Server or WebLogic Rem
 
 Perform these preliminary troubleshooting steps to get started:
 
--   Restart all servers in the domain.
--   Confirm that the Administration Server can reach your Managed Servers and clusters. See [Investigate Server Connection Issues](#GUID-6C3E82A1-BEC6-4CEF-A964-4C795C5436F7).
--   Check the log files for any errors. See [Review Log Files](#GUID-0492B07F-0F69-4944-9B8B-C1EAD42DF655).
--   Review any known issues. See [Known Issues](#GUID-A2824DAE-C040-43E0-A645-041FDFB8936F).
--   Update to the latest versions of Desktop WebLogic Remote Console and the WebLogic Remote Console extension. See [Upgrade Desktop WebLogic Remote Console](../set-console#GUID-281298E0-AEE6-4DEC-ADF1-949780E75D76).
+1.  Record the error, affected provider, time of occurrence, WebLogic Remote Console version, and WebLogic Server version.
+2.  Check the console and Administration Server log files for errors.
+
+    See [Review Log Files](#GUID-0492B07F-0F69-4944-9B8B-C1EAD42DF655).
+
+3.  Confirm that the Administration Server can reach your Managed Servers and clusters. See [Investigate Server Connection Issues](#GUID-6C3E82A1-BEC6-4CEF-A964-4C795C5436F7).
+4.  Review [Known Issues](#GUID-A2824DAE-C040-43E0-A645-041FDFB8936F) and check the installed console and extension versions against the applicable release notes.
+
+    See [Upgrade Desktop WebLogic Remote Console](../set-console#GUID-281298E0-AEE6-4DEC-ADF1-949780E75D76).
+
+5.  Restart an affected console component or WebLogic Server when the identified issue or a configuration change requires it.
 
 ## Investigate Server Connection Issues {#GUID-6C3E82A1-BEC6-4CEF-A964-4C795C5436F7}
 
@@ -134,7 +140,6 @@ WebLogic Remote Console cannot connect to a WebLogic Server Administration Serve
 If you experience issues connecting to an Administration Server when using WebLogic Remote Console, then you may need to update the connection settings between the application and the domain. Use the following methods to identify which setting may be causing the issue.
 
 -   Test access to the Administration Server using <code>curl</code>. Make sure to use a WebLogic user that is assigned one of the following roles: Admin, Deployer, Operator or Monitor.
-
     -   For HTTP connections, run:
 
         ```
@@ -147,9 +152,11 @@ If you experience issues connecting to an Administration Server when using WebLo
         curl -v -k --user *username*:*password* https://*adminServerHost*:*adminServerPort*/management/weblogic/latest/domainConfig
         ```
 
-        **Note**: Adding <code>-k</code> makes this connection insecure. It tells curl to skip the verification step that it normally performs on secure connections.
+        **Note**: The <code>-k</code> option is equivalent to <code>--insecure</code>. It skips server certificate verification, allowing you to test connectivity without certificate trust validation preventing the connection. To also test certificate verification, repeat the HTTPS command without <code>-k</code>.
 
-    If you can connect successfully over HTTPS, then the problem is likely that WebLogic Remote Console does not trust the SSL certificate of the Administration Server. You can either import the Administration Server’s certificate into your client’s keystore, or, if you’re using demo certificates, enable the **Make Insecure Connection** option when you connect to the Administration Server.
+        If the HTTPS command succeeds with <code>-k</code> but fails without it with a certificate verification error, investigate the server certificate, hostname, and curl’s trust configuration.
+
+        Compare these results with the error reported by WebLogic Remote Console to help distinguish connectivity problems from certificate trust problems. Curl and WebLogic Remote Console may use different trust configurations, so a successful curl connection does not by itself establish whether the console trusts the Administration Server’s certificate. See [Connect using SSL/TLS](../administration-server/domain-configuration#GUID-660C99D2-4F3F-4276-B3E2-E725A27D1C82) for configuring certificate trust in WebLogic Remote Console.
 
 -   Make sure your Administration Server's management endpoint, <code>management/*</code>, is accessible to clients. It may be blocked if your domain is behind a load balancer or firewall, or is in a Docker container. You will need to expose the endpoint manually.
 
@@ -159,7 +166,7 @@ If you experience issues connecting to an Administration Server when using WebLo
 
 -   If the Administration Server resides in a different network than WebLogic Remote Console, then make sure the proxy settings of WebLogic Remote Console are properly configured to allow communication between the two. See [Connect using a Proxy Server](../administration-server/domain-configuration#GUID-D7AD7F50-88F8-4FC9-A28B-CBF98B5FD479).
 
-    You may need to add a location match stanza for the <code>management/*</code> endpoint to the domain configuration file, <code>config.xml</code>.
+    If an HTTP server, reverse proxy, ingress, or load balancer fronts the Administration Server, check its routing configuration to ensure that requests for <code>management/*</code> are forwarded to the Administration Server. Refer to that component’s documentation for the appropriate configuration file and routing or location directives.
 
 
 ## Features are Missing from WebLogic Remote Console {#GUID-954E44B6-5421-40C4-B9A7-77B5C24EF8D2}
@@ -185,9 +192,9 @@ If you believe a feature is missing and it is not a case of inadequate permissio
 
 WebLogic Remote Console reports that it is experiencing REST communication issues between servers.
 
-When REST communication is blocked, it may prevent further configuration to the domain or cause the Monitoring Tree perspective to report inaccurate statuses for Managed Servers.
+When REST communication is blocked, it may prevent further configuration of the domain or cause the Monitoring Tree perspective to report inaccurate statuses for Managed Servers.
 
-You can test the REST connection using curl.
+You can test the REST connection using <code>curl</code>.
 
 -   To get the Administration Server’s runtime statistics *directly*:
 
@@ -203,9 +210,7 @@ You can test the REST connection using curl.
         curl -v -k --user *username*:*password* https://*adminServerHost*:*adminServerPort*/management/weblogic/latest/serverRuntime
         ```
 
-        **Note**: Adding <code>-k</code> makes this connection insecure. It tells curl to skip the verification step that it normally performs on secure connections.
-
-    If this command fails, then a more general connectivity issue is affecting your domain. See [Cannot Connect to the Administration Server](#GUID-B3D14A11-0144-4B31-BFE3-E6AC59AEFCBE).
+    If the direct request fails, see [Cannot Connect to the Administration Server](#GUID-B3D14A11-0144-4B31-BFE3-E6AC59AEFCBE).
 
 -   To get the Administration Server’s runtime statistics *indirectly*:
 
@@ -221,10 +226,17 @@ You can test the REST connection using curl.
         curl -v -k --user *username*:*password* https://*adminServerHost*:*adminServerPort*/management/weblogic/latest/domainRuntime/serverRuntimes/*adminServerName*
         ```
 
-        **Note**: Adding <code>-k</code> makes this connection insecure. It tells curl to skip the verification step that it normally performs on secure connections.
 
-    If this command fails, then the problem is a REST communication failure between servers.
+{{< alert title="Note" color="primary" >}}
 
+
+
+The HTTPS examples use <code>-k</code>, equivalent to <code>--insecure</code>, to test connectivity without verifying the Administration Server’s certificate. Repeat the commands without <code>-k</code> to also test certificate verification using curl’s trust configuration.
+
+{{< /alert >}}
+
+
+If the direct request succeeds but the indirect request fails, investigate the REST communication path and the Administration Server logs. The <code>-k</code> option affects curl’s verification of the Administration Server’s certificate; it does not change certificate verification between WebLogic servers.
 
 ### Potential Causes {}
 

@@ -41,7 +41,7 @@ Connect to an Administration Server You can connect to a running WebLogic Server
 Start the Administration Server.
 See Starting and Stopping Servers in Administering Server Startup and Shutdown for Oracle WebLogic Server for instructions.
 On the Projects/Providers page, select Create.">
-  <meta itemprop="wordCount" content="11391">
+  <meta itemprop="wordCount" content="11461">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Domain Configuration">
   <meta name="twitter:description" content="Use WebLogic Remote Console to make configuration changes to your WebLogic Server domain through its Administration Server.
@@ -78,7 +78,8 @@ On the Projects/Providers page, select Create.">
         <div class="dropdown">
   <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Releases</a>
   <ul class="dropdown-menu">
-    <li><a class="dropdown-item" href="/weblogic-remote-console/overview">Latest (v3.0.6)</a></li>
+    <li><a class="dropdown-item" href="/weblogic-remote-console/overview">Latest (v3.0.7)</a></li>
+    <li><a class="dropdown-item" href="/weblogic-remote-console/3.0.6">v3.0.6</a></li>
     <li><a class="dropdown-item" href="/weblogic-remote-console/3.0.5">v3.0.5</a></li>
     <li><a class="dropdown-item" href="/weblogic-remote-console/3.0.4">v3.0.4</a></li>
     <li><a class="dropdown-item" href="/weblogic-remote-console/3.0.3">v3.0.3</a></li>
@@ -151,7 +152,7 @@ On the Projects/Providers page, select Create.">
     aria-label="Search this site…"
     autocomplete="off"
     
-    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.96d922ec2447f58333e343cd538b48c3.json"
+    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.eee1e0c10cf40e1fc207302393707862.json"
     data-offline-search-base-href="/"
     data-offline-search-max-results="10"
   >
@@ -176,7 +177,7 @@ On the Projects/Providers page, select Create.">
     aria-label="Search this site…"
     autocomplete="off"
     
-    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.96d922ec2447f58333e343cd538b48c3.json"
+    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.eee1e0c10cf40e1fc207302393707862.json"
     data-offline-search-base-href="/"
     data-offline-search-max-results="10"
   >
@@ -999,7 +1000,16 @@ On the Projects/Providers page, select Create.">
 <p>In Desktop WebLogic Remote Console, open <strong>File</strong> then <strong>Settings</strong>. (On macOS, go to WebLogic Remote Console, then <strong>Settings</strong>.) Under the <strong>Role Checking</strong> section, set <strong>Restrict Content Based On Role</strong> to <strong>No</strong> and click <strong>Save</strong>.</p>
 </li>
 <li>
-<p>For Hosted WebLogic Remote Console, use WLST Online to set the new behavior. Call <code>cmo.getRemoteConsoleHelperMBean.setRestrictContentBasedOnRoles(False)</code>, then save and activate the change. You must restart the Administration Server for this change to take effect.</p>
+<p>For Hosted WebLogic Remote Console, use WLST Online to change role-based content restriction. Connect to the Administration Server as an authorized administrator and run the following commands:</p>
+<pre tabindex="0"><code>connect()
+edit()
+startEdit()
+cd(&#39;/&#39;)
+cmo.getRemoteConsoleHelper().setRestrictContentBasedOnRoles(False)
+save()
+activate()
+disconnect()
+</code></pre><p>You must restart the Administration Server for this change to take effect.</p>
 <ul>
 <li>You can also temporarily override the domain configuration setting: in <code>JAVA_OPTIONS</code>, set <code>-Dconsole.restrictContentBasedOnRoles=false</code>.</li>
 </ul>
@@ -1138,8 +1148,9 @@ On the Projects/Providers page, select Create.">
 <p>If you provide values for the <strong>Class Path</strong> field, make sure that you provide the full class path required to start the server.</p>
 </li>
 <li>
-<p>If you want to add <strong>Arguments</strong>, make sure you prepend <code>-D</code> before each argument, like so <code>-Dweblogic.management.startupMode=<em>MODE</em></code> .</p>
-<p>See <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=ADMRF-GUID-2B7D4D3D-FB03-4D2D-ADBA-A4172C3502B7">weblogic.Server Command-Line Reference</a> in <strong>Command Reference for Oracle WebLogic Server</strong> for information on the Java options that set runtime behavior of a WebLogic Server instance and <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=NODEM-GUID-64200729-17FB-4113-B213-CA962380D769">Configuring Node Manager to Use Start and Stop Scripts</a> in <strong>Administering Node Manager for Oracle WebLogic Server</strong> for information on how <code>JAVA_OPTIONS</code> are combined and how duplicate values are handled.</p>
+<p>Enter JVM arguments in the <strong>Arguments</strong> field, separated by spaces. Prefix Java system properties with <code>-D</code>, for example <code>-Dweblogic.management.startupMode=ADMIN</code>. Use JVM options such as <code>-Xms512m</code> or <code>-Xmx2g</code> in their standard form. For example,</p>
+<pre tabindex="0"><code>-Xms512m -Xmx2g -Dweblogic.management.startupMode=ADMIN
+</code></pre><p>See <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=ADMRF-GUID-2B7D4D3D-FB03-4D2D-ADBA-A4172C3502B7">weblogic.Server Command-Line Reference</a> in <strong>Command Reference for Oracle WebLogic Server</strong> for information on the Java options that set runtime behavior of a WebLogic Server instance and <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=NODEM-GUID-64200729-17FB-4113-B213-CA962380D769">Configuring Node Manager to Use Start and Stop Scripts</a> in <strong>Administering Node Manager for Oracle WebLogic Server</strong> for information on how <code>JAVA_OPTIONS</code> are combined and how duplicate values are handled.</p>
 </li>
 </ul>
 </li>
@@ -1239,7 +1250,8 @@ See <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-m
 <p>If you do not have a server template or if you want to create a new one, click <strong>More ︙</strong> beside the <strong>Server Template</strong> drop-down list and select <strong>Create New Server Template</strong>. Enter a unique name for the new server template.</p>
 </li>
 <li>
-<p>In the <strong>Dynamic Cluster Size</strong> field, enter the maximum number of running dynamic server instances allowed for scale up operations in this dynamic cluster. This number is the sum of the Dynamic Cluster Size and the additional number of dynamic server instances allowed for scale up operations.</p>
+<p>In the <strong>Dynamic Cluster Size</strong> field, enter the current number of dynamic server instances to create.</p>
+<p>If you plan to use elasticity, configure <strong>Max Dynamic Cluster Size</strong> as the upper limit for scaling and <strong>Min Dynamic Cluster Size</strong> as the minimum number of running server instances that elasticity should attempt to maintain.</p>
 </li>
 <li>
 <p>In the <strong>Server Name Prefix</strong>, specify the naming convention you want to use for the dynamic servers in your cluster.</p>
@@ -1329,7 +1341,8 @@ See <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-m
 <p>By default, the singleton service iterates through all servers in the cluster to determine the list of candidate servers for migration.</p>
 <h2 id="GUID-59447716-10A6-4CD0-B191-2427DFF24F14">Create a Server Template</h2>
 <p>Server templates define non-default settings and attributes that you can apply to a set of server instances.</p>
-<p>When you create a server template and then apply it to Managed Servers, you can specify configuration attributes once and then propagate the new attribute settings to server instances without manually configuring each one. When you need to update an attribute, you can simply change the value in the server template, and the new value takes effect in all of the server instances that use that server template. You can also add a server template to a cluster, then all of the servers within the cluster will inherit the server template. See <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=DOMCF-GUID-00800F4A-317B-45CB-AFE6-EB2FC129DF68">Server Templates</a> in <strong>Understanding Domain Configuration for Oracle WebLogic Server</strong>.</p>
+<p>When you create a server template and then apply it to Managed Servers, you can specify configuration attributes once and then propagate the new attribute settings to server instances without manually configuring each one. When you need to update an attribute, you can simply change the value in the server template, and the new value takes effect in all of the server instances that use that server template.</p>
+<p>You can assign a server template to an individual Managed Server. For a dynamic cluster, select the template used to create its dynamic servers. Explicitly configured servers are assigned their templates individually. See <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=DOMCF-GUID-00800F4A-317B-45CB-AFE6-EB2FC129DF68">Server Templates</a> in <strong>Understanding Domain Configuration for Oracle WebLogic Server</strong>.</p>
 <p>If you need to define any server-specific attributes, you can easily override the server template at the individual server level.</p>
 <ol>
 <li>
@@ -1347,7 +1360,7 @@ See <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-m
 </ol>
 <p>After you create a server template, you can configure its attributes as you would configure a traditional Managed Server.</p>
 <h3 id="GUID-DD6EAFA9-5E7C-4B5C-AE2E-C4B9E4DEA3DD">Apply a Server Template</h3>
-<p>Server templates define common configuration attributes for a set of server instances in one centralized location. When you apply a server template to a Managed Server or a cluster, the server instances inherit the configurations from the server template.</p>
+<p>Server templates allow you to define common configuration attributes for server instances.</p>
 <ul>
 <li>
 <p>To apply a server template to a standalone Managed Server:</p>
@@ -1367,7 +1380,7 @@ See <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-m
 </ol>
 </li>
 <li>
-<p>To apply a server template to a cluster:</p>
+<p>To apply a server template to a dynamic cluster:</p>
 <ol>
 <li>
 <p>In the <strong>Edit Tree</strong>, go to <strong>Environment</strong>, then <strong>Clusters</strong>.</p>
@@ -1376,12 +1389,13 @@ See <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-m
 <p>Select the cluster where you would like to apply the server template.</p>
 </li>
 <li>
-<p>From the <strong>Template</strong> drop-down list, select a template. You can also click <strong>More ︙</strong> to create and apply a new server template.</p>
+<p>On the <strong>Dynamic</strong> tab, select a template from the <strong>Server Template</strong>. You can also click <strong>More ︙</strong> to create and apply a new server template.</p>
 </li>
 <li>
 <p>Click <strong>Save</strong>.</p>
 </li>
 </ol>
+<p>In a mixed cluster, this selection applies to the dynamic servers. Assign templates individually to explicitly configured servers.</p>
 </li>
 </ul>
 <h2 id="GUID-2B9396AC-B40B-4AB2-B055-EA8FB52DED0B">Configure Machines</h2>
@@ -1414,7 +1428,14 @@ See <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-m
 </li>
 <li>
 <p>In the <strong>Listen Address</strong> field, enter the DNS name or IP address upon which Node Manager listens for incoming requests.</p>
-<p>If you identify the Listen Address by IP address, you must disable Host Name Verification on Administration Servers that will access Node Manager. For more information and instructions, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=SECMG-GUID-B64AA53F-67AE-404B-A4DE-C18D9D745753">Using Host Name Verification</a> in <strong>Administering Security for Oracle WebLogic Server</strong> and <a href="/weblogic-remote-console/administration-server/securing-domains/#GUID-2B9A775D-A1E1-4A4B-B773-96CC37D9FBF0">Enable Host Name Verification</a>.</p>
+
+
+<div class="alert alert-primary" role="alert">
+<h4 class="alert-heading">Note</h4>
+
+    For SSL connections to Node Manager, use a listen address that matches the identity in the Node Manager certificate and configure the required trust on the Administration Server. If you use an IP address, verify that the certificate and the configured hostname verifier support IP-address matching. See <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=SECMG-GUID-B64AA53F-67AE-404B-A4DE-C18D9D745753">Using Host Name Verification</a> in <strong>Administering Security for Oracle WebLogic Server</strong> and <a href="/weblogic-remote-console/administration-server/securing-domains/#GUID-2B9A775D-A1E1-4A4B-B773-96CC37D9FBF0">Enable Host Name Verification</a>.
+
+</div>
 </li>
 <li>
 <p>In the <strong>Listen Port</strong> field, enter the port value where Node Manager listens for incoming requests.</p>
@@ -1845,7 +1866,7 @@ The external listen address and port are used to support Network Address Transla
 <p>In the <strong>Maximum Message Size</strong> field, enter the maximum number of bytes allowed in messages that are received over all supported protocols, unless overridden by a protocol-specific setting or a custom channel setting.</p>
 </li>
 <li>
-<p><strong>Optional</strong>: Turn on the <strong>Enable Tunneling</strong> option and then enter values in the <strong>Tunneling Client Ping</strong> and <strong>Tunneling Client Timeout</strong> fields.</p>
+<p><strong>Optional</strong>: If your application requires HTTP tunneling, turn on the <strong>Enable Tunneling</strong> option and then enter values in the <strong>Tunneling Client Ping</strong> and <strong>Tunneling Client Timeout</strong> fields. Otherwise, leave tunneling disabled.</p>
 
 
 <div class="alert alert-primary" role="alert">

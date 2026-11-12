@@ -35,7 +35,7 @@ NoteCoherence can also be installed in a standalone mode that does not rely on 
   <meta itemprop="description" content="Oracle Coherence enables organizations to predictably scale mission-critical applications by providing fast and reliable access to frequently used data. By automatically and dynamically partitioning data in memory across multiple servers, Coherence enables continuous data availability and transactional integrity, even in the event of a server failure.
 WebLogic Server domains include a Coherence container that simplifies the management and deployment of Coherence clusters and Coherence-based applications.
 NoteCoherence can also be installed in a standalone mode that does not rely on WebLogic Server. WebLogic Remote Console cannot administer standalone Coherence installations, therefore this documentation focuses solely on using Coherence with WebLogic Server.">
-  <meta itemprop="wordCount" content="3945">
+  <meta itemprop="wordCount" content="4244">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Configuring Coherence">
   <meta name="twitter:description" content="Oracle Coherence enables organizations to predictably scale mission-critical applications by providing fast and reliable access to frequently used data. By automatically and dynamically partitioning data in memory across multiple servers, Coherence enables continuous data availability and transactional integrity, even in the event of a server failure.
@@ -70,7 +70,8 @@ NoteCoherence can also be installed in a standalone mode that does not rely on 
         <div class="dropdown">
   <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Releases</a>
   <ul class="dropdown-menu">
-    <li><a class="dropdown-item" href="/weblogic-remote-console/overview">Latest (v3.0.6)</a></li>
+    <li><a class="dropdown-item" href="/weblogic-remote-console/overview">Latest (v3.0.7)</a></li>
+    <li><a class="dropdown-item" href="/weblogic-remote-console/3.0.6">v3.0.6</a></li>
     <li><a class="dropdown-item" href="/weblogic-remote-console/3.0.5">v3.0.5</a></li>
     <li><a class="dropdown-item" href="/weblogic-remote-console/3.0.4">v3.0.4</a></li>
     <li><a class="dropdown-item" href="/weblogic-remote-console/3.0.3">v3.0.3</a></li>
@@ -143,7 +144,7 @@ NoteCoherence can also be installed in a standalone mode that does not rely on 
     aria-label="Search this site…"
     autocomplete="off"
     
-    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.96d922ec2447f58333e343cd538b48c3.json"
+    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.eee1e0c10cf40e1fc207302393707862.json"
     data-offline-search-base-href="/"
     data-offline-search-max-results="10"
   >
@@ -168,7 +169,7 @@ NoteCoherence can also be installed in a standalone mode that does not rely on 
     aria-label="Search this site…"
     autocomplete="off"
     
-    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.96d922ec2447f58333e343cd538b48c3.json"
+    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.eee1e0c10cf40e1fc207302393707862.json"
     data-offline-search-base-href="/"
     data-offline-search-max-results="10"
   >
@@ -309,6 +310,7 @@ NoteCoherence can also be installed in a standalone mode that does not rely on 
         <li><a href="#GUID-F9B1FB82-B316-4CD1-824F-03A0984EE59A">Create a Coherence Data Tier</a></li>
         <li><a href="#GUID-8A5079EB-A4AD-4C47-B6F3-576C6A4EE515">Create a Coherence Application Tier</a></li>
         <li><a href="#GUID-042599BA-C133-43E0-8572-30B84149BB4F">Create a Coherence Proxy Tier</a></li>
+        <li><a href="#GUID-17755545-5EA7-4730-BBA6-9558D6C32B6C">Configure a Coherence Extend Client Tier</a></li>
       </ul>
     </li>
     <li><a href="#GUID-48BEE50E-2995-4C42-96EF-2F28416512FC">Create a Managed Coherence Server</a></li>
@@ -354,7 +356,7 @@ NoteCoherence can also be installed in a standalone mode that does not rely on 
 </div>
 <h2 id="coherence-clusters-and-managed-coherence-servers">Coherence Clusters and Managed Coherence Servers</h2>
 <p>Coherence is integrated within WebLogic Server as a container subsystem, known as a Coherence cluster. The use of a container aligns the lifecycle of a Coherence member with the lifecycle of a Managed Server: starting or stopping a server JVM starts and stops a Coherence cluster member.</p>
-<p>A WebLogic Server domain can contain a single Coherence cluster that can be associated with multiple WebLogic Server clusters. Within a Coherence cluster are Coherence cluster members.</p>
+<p>A WebLogic Server domain typically contains a single Coherence cluster that can be associated with multiple WebLogic Server clusters. Within a Coherence cluster are Coherence cluster members.</p>
 <p>Managed Coherence servers are Managed Servers that are configured to be Coherence cluster members. Managed Coherence servers provide in-memory distributed caching for applications to increase application scalability, availability, and performance.</p>
 <p>Managed servers can be explicitly associated with a Coherence cluster or they can be associated with a WebLogic Server cluster that is associated with a Coherence cluster.</p>
 <p>Managed Coherence servers that are part of a WebLogic Server cluster inherit their Coherence settings from the WebLogic Server cluster. WebLogic Server clusters are typically used to set up Coherence deployment tiers that organize managed Coherence servers based on their role in the Coherence cluster.</p>
@@ -655,6 +657,8 @@ NoteCoherence can also be installed in a standalone mode that does not rely on 
 </ol>
 <h3 id="GUID-4C734AB5-62A9-4DBF-8FCC-9CAF4DC842CB">Secure Coherence Caches</h3>
 <p>Use WebLogic Server authorization to restrict access to specific Coherence caches.</p>
+<p>WebLogic Server authorization for Coherence resources is enabled by default. The default policy allows Everyone. To restrict access to a cache or service, define the authorized users with a scoped role and configure a resource-specific policy that grants access to that role.</p>
+<p>For more information about Coherence security, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=COHSG-GUID-D80F3D67-668C-4C91-B340-0A96B26B05D8">Securing Oracle Coherence in Oracle WebLogic Server</a> in <strong>Securing Oracle Coherence</strong>.</p>
 <ol>
 <li>
 <p>If you haven&rsquo;t already done so, create a Coherence cluster. See <a href="/weblogic-remote-console/administration-server/configuring-coherence/#GUID-D042E373-ED9F-4EC1-B0F4-89DFD803DF0C">Create a Coherence Cluster</a>.</p>
@@ -672,11 +676,14 @@ NoteCoherence can also be installed in a standalone mode that does not rely on 
 <p>Click <strong>Create</strong> and commit your changes.</p>
 </li>
 <li>
-<p>Apply a security role that is scoped to the Coherence cache. See <a href="/weblogic-remote-console/administration-server/securing-domains/#GUID-CB641FD2-694F-452C-AC47-8E126374EF8D">Create a Scoped Role</a>.</p>
+<p>Create a role scoped to the Coherence cache and configure its membership. See <a href="/weblogic-remote-console/administration-server/securing-domains/#GUID-CB641FD2-694F-452C-AC47-8E126374EF8D">Create a Scoped Role</a>. Then create a security policy for the same cache using a <strong>Role</strong> condition for that scoped role. See <a href="/weblogic-remote-console/administration-server/securing-domains/#GUID-4D84C60C-9BBC-4DF2-B721-7F361F6D656A">Create a Policy for Resource Instances</a>.</p>
+<p>In this resource’s policy, replace any <strong>Everyone</strong> condition that would grant broader access than intended. Verify access to the protected operations with both authorized and unauthorized users.</p>
 </li>
 </ol>
 <h3 id="GUID-FB54E265-1370-4543-9FE4-A65AE0EDED58">Secure a Coherence Service Configuration</h3>
 <p>You can use WebLogic Server authorization to restrict access to Coherence services. Specifying authorization on a cache service affects access to all the caches that are created by that service.</p>
+<p>WebLogic Server authorization for Coherence resources is enabled by default. The default policy allows Everyone. To restrict access to a cache or service, define the authorized users with a scoped role and configure a resource-specific policy that grants access to that role.</p>
+<p>For more information about Coherence security, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=COHSG-GUID-D80F3D67-668C-4C91-B340-0A96B26B05D8">Securing Oracle Coherence in Oracle WebLogic Server</a> in <strong>Securing Oracle Coherence</strong>.</p>
 <ol>
 <li>
 <p>In the <strong>Edit Tree</strong>, go to <strong>Environment</strong>, then <strong>Coherence Clusters</strong>, then <em>myCoherenceCluster</em>, then <strong>Coherence Services</strong>.</p>
@@ -699,7 +706,8 @@ NoteCoherence can also be installed in a standalone mode that does not rely on 
 <p>Click <strong>Create</strong> and commit your changes.</p>
 </li>
 <li>
-<p>Apply a security role that is scoped to the Coherence service. See <a href="/weblogic-remote-console/administration-server/securing-domains/#GUID-CB641FD2-694F-452C-AC47-8E126374EF8D">Create a Scoped Role</a>.</p>
+<p>Create a role scoped to the Coherence service and configure its membership. See <a href="/weblogic-remote-console/administration-server/securing-domains/#GUID-CB641FD2-694F-452C-AC47-8E126374EF8D">Create a Scoped Role</a>. Then create a security policy for the same service using a <strong>Role</strong> condition for that scoped role. See <a href="/weblogic-remote-console/administration-server/securing-domains/#GUID-4D84C60C-9BBC-4DF2-B721-7F361F6D656A">Create a Policy for Resource Instances</a>.</p>
+<p>In this resource’s policy, replace any <strong>Everyone</strong> condition that would grant broader access than intended. Verify access to the protected operations with both authorized and unauthorized users.</p>
 </li>
 </ol>
 <h3 id="GUID-E028304F-5CF5-4FD8-82A7-B74338196538">Specify a Coherence Well Known Address</h3>
@@ -777,7 +785,7 @@ NoteCoherence can also be installed in a standalone mode that does not rely on 
 <p>Create a WebLogic Server cluster as described in <a href="/weblogic-remote-console/administration-server/domain-configuration/#GUID-EEE59519-29C3-4003-828A-9A3DC25059DA">Create a Cluster</a>.</p>
 </li>
 <li>
-<p>On the WebLogic Server cluster that you just created, go to the <strong>Advanced</strong> tab, then the <strong>Coherence</strong> subtab.</p>
+<p>On the WebLogic Server cluster that you just created, select the <strong>Coherence</strong> tab.</p>
 </li>
 <li>
 <p>From the <strong>Coherence Cluster System Resource</strong> drop-down list, select the Coherence cluster.</p>
@@ -804,7 +812,7 @@ NoteCoherence can also be installed in a standalone mode that does not rely on 
 <p>Create a WebLogic Server cluster as described in <a href="/weblogic-remote-console/administration-server/domain-configuration/#GUID-EEE59519-29C3-4003-828A-9A3DC25059DA">Create a Cluster</a>.</p>
 </li>
 <li>
-<p>On the WebLogic Server cluster that you just created, go to the <strong>Advanced</strong> tab, then the <strong>Coherence</strong> subtab.</p>
+<p>On the WebLogic Server cluster that you just created, select the <strong>Coherence</strong> tab.</p>
 </li>
 <li>
 <p>From the <strong>Coherence Cluster System Resource</strong> drop-down list, select the Coherence cluster.</p>
@@ -832,7 +840,7 @@ NoteCoherence can also be installed in a standalone mode that does not rely on 
 <p>Create a WebLogic Server cluster as described in <a href="/weblogic-remote-console/administration-server/domain-configuration/#GUID-EEE59519-29C3-4003-828A-9A3DC25059DA">Create a Cluster</a>.</p>
 </li>
 <li>
-<p>On the WebLogic Server cluster that you just created, go to the <strong>Advanced</strong> tab, then the <strong>Coherence</strong> subtab.</p>
+<p>On the WebLogic Server cluster that you just created, select the <strong>Coherence</strong> tab.</p>
 </li>
 <li>
 <p>From the <strong>Coherence Cluster System Resource</strong> drop-down list, select the Coherence cluster.</p>
@@ -848,6 +856,11 @@ NoteCoherence can also be installed in a standalone mode that does not rely on 
 </li>
 </ol>
 <p>You should also create a Coherence data tier and a Coherence application tier. See <a href="/weblogic-remote-console/administration-server/configuring-coherence/#GUID-F9B1FB82-B316-4CD1-824F-03A0984EE59A">Create a Coherence Data Tier</a> and <a href="/weblogic-remote-console/administration-server/configuring-coherence/#GUID-8A5079EB-A4AD-4C47-B6F3-576C6A4EE515">Create a Coherence Application Tier</a>.</p>
+<h3 id="GUID-17755545-5EA7-4730-BBA6-9558D6C32B6C">Configure a Coherence Extend Client Tier</h3>
+<p>Coherence*Extend clients connect to a Coherence proxy tier to access Coherence caches without joining the Coherence cluster.</p>
+<p>Use WebLogic Remote Console to configure the WebLogic-hosted proxy tier as described in <a href="/weblogic-remote-console/administration-server/configuring-coherence/#GUID-042599BA-C133-43E0-8572-30B84149BB4F">Create a Coherence Proxy Tier</a>.</p>
+<p>To configure the Extend client application and its client cache configuration, see <a href="https://docs.oracle.com/pls/topic/lookup?ctx=en/middleware/fusion-middleware/weblogic-remote-console/administer&amp;id=COHCG-GUID-E935592F-DCA2-44BD-96D5-E276DFA3D3F9">Introduction to Coherence*Extend</a> in <strong>Developing Remote Clients for Oracle Coherence</strong>. Use the documentation corresponding to your Coherence release.</p>
+<p>WebLogic Remote Console manages the WebLogic-hosted proxy tier; it does not create or administer an external Extend client process.</p>
 <h2 id="GUID-48BEE50E-2995-4C42-96EF-2F28416512FC">Create a Managed Coherence Server</h2>
 <p>A Managed Coherence server is a Managed Server that is configured to be a Coherence cluster member and provide in-memory distributed caching for applications.</p>
 <ol>

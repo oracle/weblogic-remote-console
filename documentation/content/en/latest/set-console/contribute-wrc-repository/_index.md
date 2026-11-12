@@ -7,6 +7,15 @@ title: Contribute to WebLogic Remote Console
 
 Contributions from the community to the WebLogic Remote Console project help us build a better experience together. You can contribute by raising a bug or enhancement request or by submitting pull requests to address an issue yourself.
 
+{{< alert title="Note" color="primary" >}}
+
+
+
+Report suspected security vulnerabilities privately to <code>secalert_us@oracle.com</code>, following the [WebLogic Remote Console](https://github.com/oracle/weblogic-remote-console) repository's Security Policy. Use GitHub issues for other bugs and enhancement requests.
+
+{{< /alert >}}
+
+
 1.  Open an issue in the [WebLogic Remote Console GitHub repository](https://github.com/oracle/weblogic-remote-console) that describes the issue you plan to address or the enhancement request.
 
     If you only want to raise a bug or file an enhancement request, you can stop here. Thank you for helping to improve WebLogic Remote Console.
@@ -34,11 +43,13 @@ Thank you for your contribution. We will assign reviewers to your pull request.
 
 If you want to contribute to the WebLogic Remote Console project or just want a better understanding of how WebLogic Remote Console works, then you can generate the project from its source code to create a local build.
 
+The file paths below are relative to the root of your cloned WebLogic Remote Console git repository.
+
 1.  Make sure the following software is installed in your local environment.
 
-    -   Java SE 11 or later
-    -   Maven 3.6.1 or later
-    -   Node.js 18.0.0 or later
+    -   Java SE 21 for compilation, targeting Java SE 11 bytecode, and Java SE 25 for runtime and testing.
+    -   Maven 3.6.1 or later.
+    -   Node.js 24.18.0 or later.
     To verify that you have installed the correct versions of the listed software, run:
 
     ```
@@ -89,11 +100,13 @@ WebLogic Remote Console in development mode is distinct from Hosted WebLogic Rem
 {{< /alert >}}
 
 
+The file paths below are relative to the root of your cloned WebLogic Remote Console git repository.
+
 You must have a modern internet browser installed to run WebLogic Remote Console in the browser.
 
 1.  Build WebLogic Remote Console from its source code. Follow the instructions at [Build from Source](#GUID-39A8D735-4891-4F9D-87F3-7F216219F8D0) through step [5](#step_lfx_pzz_yhc).
 
-2.  Copy <code>/installer/target/console.zip</code> to a new directory and extract its contents.
+2.  From the repository root, copy <code>installer/target/console.zip</code> to a new directory and extract its contents there.
 
 3.  Open a command window and navigate to the new directory.
 

@@ -21,26 +21,42 @@
 <title>Troubleshoot Issues with WebLogic Remote Console | WebLogic Remote Console</title>
 <meta name="description" content="Learn how to identify and recover from issues in WebLogic Server or WebLogic Remote Console.
 Perform these preliminary troubleshooting steps to get started:
-Restart all servers in the domain. Confirm that the Administration Server can reach your Managed Servers and clusters. See Investigate Server Connection Issues. Check the log files for any errors. See Review Log Files. Review any known issues. See Known Issues. Update to the latest versions of Desktop WebLogic Remote Console and the WebLogic Remote Console extension. See Upgrade Desktop WebLogic Remote Console. Investigate Server Connection Issues If the Administration Server cannot reach a Managed Server or cluster, you may be able to determine the cause using WebLogic Remote Console.">
+Record the error, affected provider, time of occurrence, WebLogic Remote Console version, and WebLogic Server version.
+Check the console and Administration Server log files for errors.
+See Review Log Files.
+Confirm that the Administration Server can reach your Managed Servers and clusters. See Investigate Server Connection Issues.
+Review Known Issues and check the installed console and extension versions against the applicable release notes.">
 <meta property="og:url" content="https://oracle.github.io/weblogic-remote-console/troubleshoot-weblogic-remote-console/">
   <meta property="og:site_name" content="WebLogic Remote Console">
   <meta property="og:title" content="Troubleshoot Issues with WebLogic Remote Console">
   <meta property="og:description" content="Learn how to identify and recover from issues in WebLogic Server or WebLogic Remote Console.
 Perform these preliminary troubleshooting steps to get started:
-Restart all servers in the domain. Confirm that the Administration Server can reach your Managed Servers and clusters. See Investigate Server Connection Issues. Check the log files for any errors. See Review Log Files. Review any known issues. See Known Issues. Update to the latest versions of Desktop WebLogic Remote Console and the WebLogic Remote Console extension. See Upgrade Desktop WebLogic Remote Console. Investigate Server Connection Issues If the Administration Server cannot reach a Managed Server or cluster, you may be able to determine the cause using WebLogic Remote Console.">
+Record the error, affected provider, time of occurrence, WebLogic Remote Console version, and WebLogic Server version.
+Check the console and Administration Server log files for errors.
+See Review Log Files.
+Confirm that the Administration Server can reach your Managed Servers and clusters. See Investigate Server Connection Issues.
+Review Known Issues and check the installed console and extension versions against the applicable release notes.">
   <meta property="og:locale" content="en">
   <meta property="og:type" content="website">
 
   <meta itemprop="name" content="Troubleshoot Issues with WebLogic Remote Console">
   <meta itemprop="description" content="Learn how to identify and recover from issues in WebLogic Server or WebLogic Remote Console.
 Perform these preliminary troubleshooting steps to get started:
-Restart all servers in the domain. Confirm that the Administration Server can reach your Managed Servers and clusters. See Investigate Server Connection Issues. Check the log files for any errors. See Review Log Files. Review any known issues. See Known Issues. Update to the latest versions of Desktop WebLogic Remote Console and the WebLogic Remote Console extension. See Upgrade Desktop WebLogic Remote Console. Investigate Server Connection Issues If the Administration Server cannot reach a Managed Server or cluster, you may be able to determine the cause using WebLogic Remote Console.">
-  <meta itemprop="wordCount" content="2330">
+Record the error, affected provider, time of occurrence, WebLogic Remote Console version, and WebLogic Server version.
+Check the console and Administration Server log files for errors.
+See Review Log Files.
+Confirm that the Administration Server can reach your Managed Servers and clusters. See Investigate Server Connection Issues.
+Review Known Issues and check the installed console and extension versions against the applicable release notes.">
+  <meta itemprop="wordCount" content="2427">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Troubleshoot Issues with WebLogic Remote Console">
   <meta name="twitter:description" content="Learn how to identify and recover from issues in WebLogic Server or WebLogic Remote Console.
 Perform these preliminary troubleshooting steps to get started:
-Restart all servers in the domain. Confirm that the Administration Server can reach your Managed Servers and clusters. See Investigate Server Connection Issues. Check the log files for any errors. See Review Log Files. Review any known issues. See Known Issues. Update to the latest versions of Desktop WebLogic Remote Console and the WebLogic Remote Console extension. See Upgrade Desktop WebLogic Remote Console. Investigate Server Connection Issues If the Administration Server cannot reach a Managed Server or cluster, you may be able to determine the cause using WebLogic Remote Console.">
+Record the error, affected provider, time of occurrence, WebLogic Remote Console version, and WebLogic Server version.
+Check the console and Administration Server log files for errors.
+See Review Log Files.
+Confirm that the Administration Server can reach your Managed Servers and clusters. See Investigate Server Connection Issues.
+Review Known Issues and check the installed console and extension versions against the applicable release notes.">
 <link rel="preload" href="/weblogic-remote-console/scss/main.min.3bb6570761fbbb25e6691001febc67f331f0953db4e4e1cfb79172c2e6a5819e.css" as="style" integrity="sha256-O7ZXB2H7uyXmaRAB/rxn8zHwlT205OHPt5FywualgZ4=" crossorigin="anonymous">
 <link href="/weblogic-remote-console/scss/main.min.3bb6570761fbbb25e6691001febc67f331f0953db4e4e1cfb79172c2e6a5819e.css" rel="stylesheet" integrity="sha256-O7ZXB2H7uyXmaRAB/rxn8zHwlT205OHPt5FywualgZ4=" crossorigin="anonymous">
 <script
@@ -70,7 +86,8 @@ Restart all servers in the domain. Confirm that the Administration Server can re
         <div class="dropdown">
   <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Releases</a>
   <ul class="dropdown-menu">
-    <li><a class="dropdown-item" href="/weblogic-remote-console/overview">Latest (v3.0.6)</a></li>
+    <li><a class="dropdown-item" href="/weblogic-remote-console/overview">Latest (v3.0.7)</a></li>
+    <li><a class="dropdown-item" href="/weblogic-remote-console/3.0.6">v3.0.6</a></li>
     <li><a class="dropdown-item" href="/weblogic-remote-console/3.0.5">v3.0.5</a></li>
     <li><a class="dropdown-item" href="/weblogic-remote-console/3.0.4">v3.0.4</a></li>
     <li><a class="dropdown-item" href="/weblogic-remote-console/3.0.3">v3.0.3</a></li>
@@ -143,7 +160,7 @@ Restart all servers in the domain. Confirm that the Administration Server can re
     aria-label="Search this site…"
     autocomplete="off"
     
-    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.96d922ec2447f58333e343cd538b48c3.json"
+    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.eee1e0c10cf40e1fc207302393707862.json"
     data-offline-search-base-href="/"
     data-offline-search-max-results="10"
   >
@@ -168,7 +185,7 @@ Restart all servers in the domain. Confirm that the Administration Server can re
     aria-label="Search this site…"
     autocomplete="off"
     
-    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.96d922ec2447f58333e343cd538b48c3.json"
+    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.eee1e0c10cf40e1fc207302393707862.json"
     data-offline-search-base-href="/"
     data-offline-search-max-results="10"
   >
@@ -339,13 +356,25 @@ Restart all servers in the domain. Confirm that the Administration Server can re
 </header>
 	<p>Learn how to identify and recover from issues in WebLogic Server or WebLogic Remote Console.</p>
 <p>Perform these preliminary troubleshooting steps to get started:</p>
-<ul>
-<li>Restart all servers in the domain.</li>
-<li>Confirm that the Administration Server can reach your Managed Servers and clusters. See <a href="/weblogic-remote-console/troubleshoot-weblogic-remote-console/#GUID-6C3E82A1-BEC6-4CEF-A964-4C795C5436F7">Investigate Server Connection Issues</a>.</li>
-<li>Check the log files for any errors. See <a href="/weblogic-remote-console/troubleshoot-weblogic-remote-console/#GUID-0492B07F-0F69-4944-9B8B-C1EAD42DF655">Review Log Files</a>.</li>
-<li>Review any known issues. See <a href="/weblogic-remote-console/troubleshoot-weblogic-remote-console/#GUID-A2824DAE-C040-43E0-A645-041FDFB8936F">Known Issues</a>.</li>
-<li>Update to the latest versions of Desktop WebLogic Remote Console and the WebLogic Remote Console extension. See <a href="/weblogic-remote-console/set-console/#GUID-281298E0-AEE6-4DEC-ADF1-949780E75D76">Upgrade Desktop WebLogic Remote Console</a>.</li>
-</ul>
+<ol>
+<li>
+<p>Record the error, affected provider, time of occurrence, WebLogic Remote Console version, and WebLogic Server version.</p>
+</li>
+<li>
+<p>Check the console and Administration Server log files for errors.</p>
+<p>See <a href="/weblogic-remote-console/troubleshoot-weblogic-remote-console/#GUID-0492B07F-0F69-4944-9B8B-C1EAD42DF655">Review Log Files</a>.</p>
+</li>
+<li>
+<p>Confirm that the Administration Server can reach your Managed Servers and clusters. See <a href="/weblogic-remote-console/troubleshoot-weblogic-remote-console/#GUID-6C3E82A1-BEC6-4CEF-A964-4C795C5436F7">Investigate Server Connection Issues</a>.</p>
+</li>
+<li>
+<p>Review <a href="/weblogic-remote-console/troubleshoot-weblogic-remote-console/#GUID-A2824DAE-C040-43E0-A645-041FDFB8936F">Known Issues</a> and check the installed console and extension versions against the applicable release notes.</p>
+<p>See <a href="/weblogic-remote-console/set-console/#GUID-281298E0-AEE6-4DEC-ADF1-949780E75D76">Upgrade Desktop WebLogic Remote Console</a>.</p>
+</li>
+<li>
+<p>Restart an affected console component or WebLogic Server when the identified issue or a configuration change requires it.</p>
+</li>
+</ol>
 <h2 id="GUID-6C3E82A1-BEC6-4CEF-A964-4C795C5436F7">Investigate Server Connection Issues</h2>
 <p>If the Administration Server cannot reach a Managed Server or cluster, you may be able to determine the cause using WebLogic Remote Console.</p>
 <ol>
@@ -444,10 +473,11 @@ Log file entries from previous sessions are saved to a new file in the same dire
 <li>
 <p>For HTTPS connections, run:</p>
 <pre tabindex="0"><code>curl -v -k --user *username*:*password* https://*adminServerHost*:*adminServerPort*/management/weblogic/latest/domainConfig
-</code></pre><p><strong>Note</strong>: Adding <code>-k</code> makes this connection insecure. It tells curl to skip the verification step that it normally performs on secure connections.</p>
+</code></pre><p><strong>Note</strong>: The <code>-k</code> option is equivalent to <code>&ndash;insecure</code>. It skips server certificate verification, allowing you to test connectivity without certificate trust validation preventing the connection. To also test certificate verification, repeat the HTTPS command without <code>-k</code>.</p>
+<p>If the HTTPS command succeeds with <code>-k</code> but fails without it with a certificate verification error, investigate the server certificate, hostname, and curl’s trust configuration.</p>
+<p>Compare these results with the error reported by WebLogic Remote Console to help distinguish connectivity problems from certificate trust problems. Curl and WebLogic Remote Console may use different trust configurations, so a successful curl connection does not by itself establish whether the console trusts the Administration Server’s certificate. See <a href="/weblogic-remote-console/administration-server/domain-configuration/#GUID-660C99D2-4F3F-4276-B3E2-E725A27D1C82">Connect using SSL/TLS</a> for configuring certificate trust in WebLogic Remote Console.</p>
 </li>
 </ul>
-<p>If you can connect successfully over HTTPS, then the problem is likely that WebLogic Remote Console does not trust the SSL certificate of the Administration Server. You can either import the Administration Server’s certificate into your client’s keystore, or, if you’re using demo certificates, enable the <strong>Make Insecure Connection</strong> option when you connect to the Administration Server.</p>
 </li>
 <li>
 <p>Make sure your Administration Server&rsquo;s management endpoint, <code>management/*</code>, is accessible to clients. It may be blocked if your domain is behind a load balancer or firewall, or is in a Docker container. You will need to expose the endpoint manually.</p>
@@ -458,7 +488,7 @@ Log file entries from previous sessions are saved to a new file in the same dire
 </li>
 <li>
 <p>If the Administration Server resides in a different network than WebLogic Remote Console, then make sure the proxy settings of WebLogic Remote Console are properly configured to allow communication between the two. See <a href="/weblogic-remote-console/administration-server/domain-configuration/#GUID-D7AD7F50-88F8-4FC9-A28B-CBF98B5FD479">Connect using a Proxy Server</a>.</p>
-<p>You may need to add a location match stanza for the <code>management/*</code> endpoint to the domain configuration file, <code>config.xml</code>.</p>
+<p>If an HTTP server, reverse proxy, ingress, or load balancer fronts the Administration Server, check its routing configuration to ensure that requests for <code>management/*</code> are forwarded to the Administration Server. Refer to that component’s documentation for the appropriate configuration file and routing or location directives.</p>
 </li>
 </ul>
 <h2 id="GUID-954E44B6-5421-40C4-B9A7-77B5C24EF8D2">Features are Missing from WebLogic Remote Console</h2>
@@ -476,8 +506,8 @@ Log file entries from previous sessions are saved to a new file in the same dire
 </div>
 <h2 id="GUID-2EF5267E-FE34-4D74-BF2F-3F318E47062A">REST Communication Issues</h2>
 <p>WebLogic Remote Console reports that it is experiencing REST communication issues between servers.</p>
-<p>When REST communication is blocked, it may prevent further configuration to the domain or cause the Monitoring Tree perspective to report inaccurate statuses for Managed Servers.</p>
-<p>You can test the REST connection using curl.</p>
+<p>When REST communication is blocked, it may prevent further configuration of the domain or cause the Monitoring Tree perspective to report inaccurate statuses for Managed Servers.</p>
+<p>You can test the REST connection using <code>curl</code>.</p>
 <ul>
 <li>
 <p>To get the Administration Server’s runtime statistics <em>directly</em>:</p>
@@ -489,10 +519,9 @@ Log file entries from previous sessions are saved to a new file in the same dire
 <li>
 <p>For HTTPS, run:</p>
 <pre tabindex="0"><code>curl -v -k --user *username*:*password* https://*adminServerHost*:*adminServerPort*/management/weblogic/latest/serverRuntime
-</code></pre><p><strong>Note</strong>: Adding <code>-k</code> makes this connection insecure. It tells curl to skip the verification step that it normally performs on secure connections.</p>
-</li>
+</code></pre></li>
 </ul>
-<p>If this command fails, then a more general connectivity issue is affecting your domain. See <a href="/weblogic-remote-console/troubleshoot-weblogic-remote-console/#GUID-B3D14A11-0144-4B31-BFE3-E6AC59AEFCBE">Cannot Connect to the Administration Server</a>.</p>
+<p>If the direct request fails, see <a href="/weblogic-remote-console/troubleshoot-weblogic-remote-console/#GUID-B3D14A11-0144-4B31-BFE3-E6AC59AEFCBE">Cannot Connect to the Administration Server</a>.</p>
 </li>
 <li>
 <p>To get the Administration Server’s runtime statistics <em>indirectly</em>:</p>
@@ -504,12 +533,19 @@ Log file entries from previous sessions are saved to a new file in the same dire
 <li>
 <p>For HTTPS, run:</p>
 <pre tabindex="0"><code>curl -v -k --user *username*:*password* https://*adminServerHost*:*adminServerPort*/management/weblogic/latest/domainRuntime/serverRuntimes/*adminServerName*
-</code></pre><p><strong>Note</strong>: Adding <code>-k</code> makes this connection insecure. It tells curl to skip the verification step that it normally performs on secure connections.</p>
+</code></pre></li>
+</ul>
 </li>
 </ul>
-<p>If this command fails, then the problem is a REST communication failure between servers.</p>
-</li>
-</ul>
+
+
+<div class="alert alert-primary" role="alert">
+<h4 class="alert-heading">Note</h4>
+
+    The HTTPS examples use <code>-k</code>, equivalent to <code>&ndash;insecure</code>, to test connectivity without verifying the Administration Server’s certificate. Repeat the commands without <code>-k</code> to also test certificate verification using curl’s trust configuration.
+
+</div>
+<p>If the direct request succeeds but the indirect request fails, investigate the REST communication path and the Administration Server logs. The <code>-k</code> option affects curl’s verification of the Administration Server’s certificate; it does not change certificate verification between WebLogic servers.</p>
 <h3 id="potential-causes">Potential Causes</h3>
 <p>If the direct connection to the Administration Server succeeded but the indirect connection failed, this may indicate an SSL/TLS handshake error or some other SSL/TLS issue. Enable JDK SSL/TLS debugging on the Administration Server and then re-run the indirect curl command to help you identify the SSL/TLS connection issue.</p>
 <p>If you receive a <code>SocketException: Permission denied</code> error, then check if your VPN is interfering with communication to the Administration Server. Disconnect from the VPN and try to connect again. If the connection is successful, you may be able to work around the issue by setting the listen address of the Administration Server to <code>localhost</code>, <code>127.0.0.1</code>, or another NIC specific address and re-enabling the VPN.</p>

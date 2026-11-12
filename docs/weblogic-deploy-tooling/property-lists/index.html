@@ -35,7 +35,7 @@ You may want to create a single property list that applies to multiple WDT model
   <meta itemprop="description" content="Property lists are simple key-value pairs that facilitate the WDT variable feature in WDT model files. Use property lists to create a collection of key-value pairs that WebLogic Remote Console can insert into a WDT model file.
 For more information on how property lists can enhance WDT model files, see WDT Model Tokens.
 You may want to create a single property list that applies to multiple WDT model files or multiple, discrete files for each WDT model file, depending on your usage.">
-  <meta itemprop="wordCount" content="413">
+  <meta itemprop="wordCount" content="487">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Property Lists">
   <meta name="twitter:description" content="Property lists are simple key-value pairs that facilitate the WDT variable feature in WDT model files. Use property lists to create a collection of key-value pairs that WebLogic Remote Console can insert into a WDT model file.
@@ -70,7 +70,8 @@ You may want to create a single property list that applies to multiple WDT model
         <div class="dropdown">
   <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Releases</a>
   <ul class="dropdown-menu">
-    <li><a class="dropdown-item" href="/weblogic-remote-console/overview">Latest (v3.0.6)</a></li>
+    <li><a class="dropdown-item" href="/weblogic-remote-console/overview">Latest (v3.0.7)</a></li>
+    <li><a class="dropdown-item" href="/weblogic-remote-console/3.0.6">v3.0.6</a></li>
     <li><a class="dropdown-item" href="/weblogic-remote-console/3.0.5">v3.0.5</a></li>
     <li><a class="dropdown-item" href="/weblogic-remote-console/3.0.4">v3.0.4</a></li>
     <li><a class="dropdown-item" href="/weblogic-remote-console/3.0.3">v3.0.3</a></li>
@@ -143,7 +144,7 @@ You may want to create a single property list that applies to multiple WDT model
     aria-label="Search this site…"
     autocomplete="off"
     
-    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.96d922ec2447f58333e343cd538b48c3.json"
+    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.eee1e0c10cf40e1fc207302393707862.json"
     data-offline-search-base-href="/"
     data-offline-search-max-results="10"
   >
@@ -168,7 +169,7 @@ You may want to create a single property list that applies to multiple WDT model
     aria-label="Search this site…"
     autocomplete="off"
     
-    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.96d922ec2447f58333e343cd538b48c3.json"
+    data-offline-search-index-json-src="/weblogic-remote-console/offline-search-index.eee1e0c10cf40e1fc207302393707862.json"
     data-offline-search-base-href="/"
     data-offline-search-max-results="10"
   >
@@ -323,21 +324,29 @@ You may want to create a single property list that applies to multiple WDT model
 <p>If you delete a property list that&rsquo;s connected to a WDT model file, the WDT model file will remain unchanged but all WDT variables are converted to standalone WDT model tokens.</p>
 <h2 id="GUID-8A4D1F37-7E9A-47B7-BD7D-4EC0B69426FA">Create a Property List</h2>
 <p>Create a property list to collect key-value pairs for use with WDT model files.</p>
+<p>Follow the instructions for your console environment.</p>
 <ol>
 <li>
-<p>Open the Providers drawer and beside the project name, click <strong>More ︙</strong>. Select <strong>Create Provider for New Property List</strong>.</p>
+<p>Open the <strong>Projects / Providers</strong> page for the project. If a provider is active, open its <strong>More</strong> menu and select <strong>Go To Project/Provider Table</strong>.</p>
+</li>
+<li>
+<p>Select <strong>Create</strong>, then <strong>New Property List File Provider</strong>.</p>
 </li>
 <li>
 <p>Enter a name for the property list provider.</p>
 </li>
 <li>
-<p>In the <strong>Property List Filename</strong> field, enter a name for the property list file. Include <code>.properties</code> or<code>.props</code> at the end of the file name.</p>
+<p>Specify the file for your console environment:</p>
+<ul>
+<li><strong>Desktop WebLogic Remote Console:</strong> Select the file chooser icon beside <strong>Property List Filename</strong> and choose a location and filename for the new file. Use a <code>.properties</code> or <code>.props</code> extension.</li>
+<li><strong>Hosted WebLogic Remote Console:</strong> Leave <strong>Initial File Contents</strong> empty to create an empty property list, or select the file chooser icon beside <strong>Initial File Contents</strong> and choose an existing property list file on your computer. When you click <strong>Done</strong>, the selected file’s contents are uploaded to create the property list on the server.</li>
+</ul>
 </li>
 <li>
-<p>Click <strong>Pick Directory</strong> and browse to the directory where you want to save the new property list file.</p>
+<p>Click <strong>Done</strong> to create the provider.</p>
 </li>
 <li>
-<p>Click <strong>OK</strong> to create the file.</p>
+<p>Click <strong>Activate</strong> to edit the property list.</p>
 </li>
 </ol>
 <p>You can now use the property list to hold WDT variables for WDT model files.

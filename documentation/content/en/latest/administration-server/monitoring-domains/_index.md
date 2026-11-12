@@ -1,5 +1,5 @@
 ---
-weight: 175
+weight: 180
 title: Monitoring Domains
 ---
 
@@ -338,7 +338,7 @@ See [Configuring java.util.logging Logger Levels](https://docs.oracle.com/pls/to
 
     2.  Click the **Logging** tab.
 
-    3.  On the **Platform Logger Levels** subtab, click **+** to add a new row. Then, enter the logging level name under the **Properties Name** column and the logging level under **Properties Value** column.
+    3.  On the **Platform Logger Levels** subtab, click **+** to add a new row. In **Properties Name**, enter the logger name, for example <code>com.example.application</code>. In **Properties Value**, enter the desired logging level, such as <code>FINE</code> or <code>WARNING</code>.
 
     4.  Click **Save**.
 
@@ -357,7 +357,9 @@ You can configure the Administration Server to emit audit messages that enable a
 
 This provides a record of changes to the configuration of any resource within a domain or invokes management operations on any resource within a domain. Configuration audit records can be saved to a log file, sent to an Auditing provider in the security realm, or both.
 
-If you plan to audit configuration changes, then you must configure the WebLogic Auditing Provider first. See [Configure an Auditing Provider](../securing-domains#GUID-553E0BEB-BD7E-44EF-AD4D-782F1A01C3B8).
+If you plan to select **Audit** or **LogAudit** for **Configuration Audit Type**, first configure an Auditing provider. See [Configure an Auditing Provider](../securing-domains#GUID-553E0BEB-BD7E-44EF-AD4D-782F1A01C3B8).
+
+**Log** writes configuration events to the Administration Server log and does not require an Auditing provider.
 
 1.  In the **Edit Tree**, go to **Environment**, then **Domain**.
 

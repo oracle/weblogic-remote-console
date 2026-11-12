@@ -1,5 +1,5 @@
 ---
-weight: 278
+weight: 288
 title: Property Lists
 ---
 
@@ -21,15 +21,21 @@ If you delete a property list that's connected to a WDT model file, the WDT mode
 
 Create a property list to collect key-value pairs for use with WDT model files.
 
-1.  Open the Providers drawer and beside the project name, click **More ︙**. Select **Create Provider for New Property List**.
+Follow the instructions for your console environment.
 
-2.  Enter a name for the property list provider.
+1.  Open the **Projects / Providers** page for the project. If a provider is active, open its **More** menu and select **Go To Project/Provider Table**.
 
-3.  In the **Property List Filename** field, enter a name for the property list file. Include <code>.properties</code> or<code>.props</code> at the end of the file name.
+2.  Select **Create**, then **New Property List File Provider**.
 
-4.  Click **Pick Directory** and browse to the directory where you want to save the new property list file.
+3.  Enter a name for the property list provider.
 
-5.  Click **OK** to create the file.
+4.  Specify the file for your console environment:
+
+    -   **Desktop WebLogic Remote Console:** Select the file chooser icon beside **Property List Filename** and choose a location and filename for the new file. Use a <code>.properties</code> or <code>.props</code> extension.
+    -   **Hosted WebLogic Remote Console:** Leave **Initial File Contents** empty to create an empty property list, or select the file chooser icon beside **Initial File Contents** and choose an existing property list file on your computer. When you click **Done**, the selected file’s contents are uploaded to create the property list on the server.
+5.  Click **Done** to create the provider.
+
+6.  Click **Activate** to edit the property list.
 
 
 You can now use the property list to hold WDT variables for WDT model files.{{< alert title="Note" color="primary" >}}

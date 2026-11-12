@@ -59,26 +59,21 @@ This section provides answers to frequently asked questions about WebLogic Remot
 
 ### My domain is behind a firewall. How do I connect to WebLogic Remote Console? {}
 
-For WebLogic Remote Console to connect to a domain's Administration Server, the management endpoint of the domain, <code>management/*</code>, must be publicly accessible. If your Administration Server is behind a firewall or load balancer, or otherwise externally unavailable, you will need to expose the endpoint manually.
+The Administration Server’s <code>management/*</code> endpoint must be reachable from the WebLogic Remote Console backend. Configure the firewall or load balancer to permit the required administrative access. Public Internet access is not required.
 
-If you use Hosted WebLogic Remote Console, you will also need to expose <code>rconsole/*</code>.
+For Desktop WebLogic Remote Console, the connection originates from the computer running the console. For Hosted WebLogic Remote Console, your browser must also be able to reach <code>rconsole/*</code> and the applicable authentication endpoint.
 
-{{< alert title="Note" color="primary" >}}
-
-
-
-If you needed to expose <code>console/*</code> to access the WebLogic Server Administration Console for your domain, follow the same procedure to expose <code>management/*</code> for WebLogic Remote Console.
-
-{{< /alert >}}
-
+Restrict access to authorized administrative clients and use HTTPS.
 
 ### Can I connect WebLogic Remote Console to domains running in WebLogic on Oracle Cloud Infrastructure? {}
 
-Yes, you can. First, make sure that the domain’s Administration Server is publicly accessible so WebLogic Remote Console can establish a connection to it. Then, in WebLogic Remote Console, enter your credentials and the publicly accessible URL for the WebLogic Administration Server.
+Yes. Ensure that the Administration Server’s management endpoint is reachable from the WebLogic Remote Console backend through your OCI network configuration. Enter the Administration Server’s reachable HTTPS URL and authenticate with an authorized account.
 
 ### Can I connect WebLogic Remote Console to domains running on other cloud providers such as Amazon Web Services, Google Cloud, Microsoft Azure, and so on? {}
 
-Yes, you can connect to other cloud providers. You’ll need to make sure the domain’s Administration Server is publicly accessible to allow a connection between WebLogic Remote Console and the cloud provider. Then, in WebLogic Remote Console, enter your credentials and the publicly accessible URL for the WebLogic Administration Server.
+Yes, you can connect to other cloud providers. Ensure that the Administration Server’s management endpoint is reachable from the WebLogic Remote Console backend. Enter its reachable HTTPS URL and authenticate with an authorized account.
+
+Follow your cloud provider’s networking guidance to configure the required administrative access. Public Internet access is not required.
 
 Visit your cloud providers' documentation for more specific instructions on how to expose the <code>management/*</code> endpoint of the WebLogic Server.
 
@@ -108,7 +103,9 @@ For example, if new fields or WebLogic MBeans were added in a WebLogic Server up
 
 ### Are there any security risks associated with WebLogic Remote Console? {}
 
-No, WebLogic Remote Console accesses WebLogic Administration Servers through its standard WebLogic REST API, which is available out of the box. However, since your computer will be accessing potentially sensitive data, you need to make sure it is protected and secure.
+WebLogic Remote Console accesses Administration Servers using WebLogic Server’s RESTful management APIs and the permissions of the authenticated user.
+
+As with other administrative tools, protect the computers used to run and access the console, and safeguard administrative credentials. Use HTTPS with trusted certificates, restrict network access to management endpoints, and grant users only the privileges they need. Keep WebLogic Remote Console, WebLogic Remote Console, and the applicable extension up to date.
 
 ### Why does WebLogic Remote Console disagree with attributes that I set at the command line? {}
 
@@ -139,5 +136,7 @@ As of WebLogic Server 14.1.2.0.0, the WebLogic Remote Console extension is inclu
 
 Yes, *if you are using WebLogic Remote Console with WebLogic Server 12.2.1.4.0* \(which supports Java EE 7\) or *WebLogic Server 14.1.1.0.0 and 14.1.2.0.0* \(which support Java EE 8, and the functionally equivalent Jakarta EE 8\).
 
-If you are using WebLogic Remote Console with WebLogic Server 15.1.1.0.0, then your applications must comply with the Jakarta EE 9.1 specification instead.
+If you are using WebLogic Remote Console with WebLogic Server 15.1.1.0.0, then your applications must comply with the Jakarta EE 9.1 specification.
+
+If you are using WebLogic Remote Console with WebLogic Server 26.1.0.0.0, then your applications must comply with the Jakarta EE 11 specification.
 
